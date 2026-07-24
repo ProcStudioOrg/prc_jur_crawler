@@ -1,0 +1,15 @@
+Tribunal,Estado(s),Sistema,Instância,DJe Citacao,DJe Intimacao
+TRF1,"AC, AM, AP, BA, DF, GO, MA, MT, PA, PI, RO, RR, TO",PJe,"1a  JFAC, JFAM, JFAP, JFBA, JFDF, JFGO, JFMA, JFMT, JFPA, JFPI, JFRO, JFRR, JFTO",Simultâneo,Simultâneo,,Exclusivo
+TRF1,"AC, AM, AP, BA, DF, GO, MA, MT, PA, PI, RO, RR, TO",PJe,2a  TRF1,Simultâneo,Simultâneo,,Simultâneo
+TRF2,"RJ, ES",e-Proc,"1a  JFRJ, JFES",Simultâneo,Simultâneo
+TRF2,"RJ, ES",e-Proc,2a  TRF2,Simultâneo,Simultâneo
+TRF3,"SP, MS",PJe,"1a  JFSP, JFMS",Simultâneo,Simultâneo
+TRF3,"SP, MS",PJe,2a  TRF3,Simultâneo,Simultâneo
+TRF4,"PR, SC, RS",e-Proc,"1a  JFPR, JFSC, JFRS",Simultâneo,Simultâneo
+TRF4,"PR, SC, RS",e-Proc,2a  TRF4,Simultâneo,Simultâneo
+TRF5,"AL, CE, PB, PE, RN, SE",PJe,"1a  JFAL, JFCE, JFPB, JFPE, JFRN, JFSE",Simultâneo,Simultâneo
+TRF5,"AL, CE, PB, PE, RN, SE",PJe,2a  TRF5,Simultâneo,Simultâneo
+TRF5,"AL, CE, PB, PE, RN, SE",PJe JEF,1a,Simultâneo,Simultâneo
+TRF5,"AL, CE, PB, PE, RN, SE",PJe JEF,2a,Simultâneo,Simultâneo
+TRF6,MG,PJe,1a,Simultâneo,Simultâneo
+TRF6,MG,PJe,2a,Simultâneo,Simultâneo

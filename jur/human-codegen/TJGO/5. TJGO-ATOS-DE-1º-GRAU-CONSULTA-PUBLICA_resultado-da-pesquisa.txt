@@ -1,0 +1,357 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DE GOIÁS (TJGO)
+CONSULTA PÚBLICA DE ATOS JUDICIAIS – 1º GRAU - RESULTADO DA PESQUISA
+============================================================
+
+LINK:
+https://www.tjgo.jus.br/sdm2/consultaPublica/consultarAtoJudicialPublicado
+
+============================================================
+OBJETIVO
+============================================================
+
+Mostrar o resultado da pesquisa efetuada através do link: https://www.tjgo.jus.br/sdm2/consultaPublica/consultarAtoJudicialPublicado apresentado na tela anterior
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Registros Encontrados
+
+Tipo:
+Indicador numérico
+
+Obrigatório:
+Não
+
+Descrição:
+Informa a quantidade total de registros localizados pelo sistema para o conteúdo pesquisado.
+
+O indicador é apresentado acima da tabela de resultados, no lado direito.
+
+Ação:
+Não possui ação direta.
+
+Comportamento observado:
+
+• O número é atualizado conforme o conteúdo pesquisado.
+
+• No exemplo documentado, a pesquisa pelo termo “FURTO” apresentou 108.768 registros encontrados.
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Número do Processo
+
+Tipo:
+Coluna da tabela de resultados
+
+Obrigatório:
+Não
+
+Descrição:
+Apresenta o número do processo ao qual pertence o ato judicial localizado.
+
+Ação:
+Permite identificar o processo relacionado a cada resultado apresentado.
+
+Comportamento observado:
+
+• Cada linha da tabela apresenta um número de processo.
+
+• Os números são exibidos sem pontuação ou separadores.
+
+• Na imagem analisada, os números não apresentam destaque visual típico de link.
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Tipo do Ato
+
+Tipo:
+Coluna da tabela de resultados
+
+Obrigatório:
+Não
+
+Descrição:
+Informa a natureza do ato judicial encontrado na pesquisa.
+
+Entre os tipos de atos apresentados na consulta documentada estão:
+
+• Decisão;
+• Despacho.
+
+Ação:
+Permite identificar o tipo de ato judicial correspondente ao resultado.
+
+Comportamento observado:
+
+• Cada registro apresenta apenas um tipo de ato.
+
+• As células dessa coluna possuem destaque visual por meio de cor de fundo.
+
+• Diferentes tipos de ato podem ser representados por cores distintas.
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Data do Ato
+
+Tipo:
+Coluna da tabela de resultados
+
+Obrigatório:
+Não
+
+Descrição:
+Apresenta a data relacionada ao ato judicial localizado.
+
+Ação:
+Permite identificar temporalmente cada registro apresentado na pesquisa.
+
+Comportamento observado:
+
+• A data é apresentada no formato dia/mês/ano.
+
+• Cada linha da tabela apresenta uma data correspondente ao respectivo ato judicial.
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Destaques
+
+Tipo:
+Coluna da tabela de resultados
+
+Obrigatório:
+Não
+
+Descrição:
+Apresenta um trecho do conteúdo do ato judicial no qual foi localizado o texto utilizado na pesquisa.
+
+O trecho permite visualizar o contexto em que o conteúdo pesquisado aparece no documento.
+
+Ação:
+Consultar o trecho exibido para verificar a relação entre o resultado e o termo pesquisado.
+
+Comportamento observado:
+
+• O termo localizado aparece destacado em amarelo.
+
+• O sistema pode destacar mais de uma ocorrência dentro do mesmo trecho.
+
+• O tamanho do texto apresentado varia de acordo com o conteúdo de cada ato.
+
+• A pesquisa aparenta localizar correspondências parciais.
+
+• No exemplo documentado, a pesquisa pelo termo “FURTO” também destacou palavras como “Furtado”, pois apresentam a mesma sequência de caracteres.
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+Lista de resultados
+
+Tipo:
+Lista de registros
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Apresenta os atos judiciais localizados conforme o termo informado na pesquisa.
+
+Cada resultado é exibido individualmente, contendo informações como:
+
+• Número do Processo;
+• Tipo do Ato;
+• Data do Ato;
+• Destaques.
+
+Ação:
+
+Permite consultar os atos judiciais encontrados.
+
+Comportamento observado:
+
+• Os resultados são apresentados em sequência na mesma página.
+
+• Cada resultado corresponde a um ato judicial.
+
+• Os registros permanecem organizados em colunas.
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+Linhas de resultados
+
+Tipo:
+Registros da tabela
+
+Obrigatório:
+Não
+
+Descrição:
+Apresentam individualmente os atos judiciais localizados pelo sistema.
+
+Cada registro apresentado corresponde a um ato judicial localizado pelo sistema e reúne as seguintes informações:
+
+• número do processo;
+• tipo do ato;
+• data do ato;
+• trecho contendo o termo pesquisado.
+
+Ação:
+Examinar individualmente os dados de cada resultado.
+
+Comportamento observado:
+
+• Os registros não são apresentados em ordem cronológica aparente na imagem analisada.
+
+• Um mesmo termo pode aparecer em atos de tipos e datas diferentes.
+
+• O conteúdo destacado pode corresponder à palavra pesquisada ou a uma ocorrência parcial dela.
+
+============================================================
+ELEMENTO 08
+============================================================
+
+Nome:
+Destaque do termo pesquisado
+
+Tipo:
+Realce textual
+
+Obrigatório:
+Não
+
+Descrição:
+Identifica visualmente as ocorrências relacionadas ao termo informado na consulta.
+
+Ação:
+Permite localizar rapidamente o conteúdo pesquisado dentro do trecho do ato judicial.
+
+Comportamento observado:
+
+• O termo é apresentado com fundo amarelo.
+
+• Podem existir vários destaques na mesma linha.
+
+• O realce pode alcançar palavras que contenham o termo pesquisado, ainda que não correspondam exatamente à palavra informada.
+
+============================================================
+ELEMENTO 09
+============================================================
+
+Nome:
+Paginação dos resultados
+
+Tipo:
+Controle de navegação
+
+Obrigatório:
+Não
+
+Descrição:
+Permite acessar outras páginas quando a quantidade de registros encontrados é superior ao limite de exibição da página atual.
+
+Ação:
+Selecionar os controles de paginação apresentados após a relação de resultados para avançar ou retornar entre as páginas.
+
+Comportamento observado:
+
+• A consulta pode apresentar quantidade elevada de registros.
+
+• Os resultados são distribuídos em diferentes páginas.
+
+• Os controles de paginação devem ser utilizados para consultar os demais registros.
+
+• A paginação não aparece no recorte da imagem de referência, pois está localizada após a lista de resultados exibidos.
+
+============================================================
+PASSO A PASSO DA CONSULTA
+============================================================
+
+1. Acessar o link:
+
+https://www.tjgo.jus.br/sdm2/consultaPublica/consultarAtoJudicialPublicado
+
+2. Localizar o campo “Informe o texto ou o número do processo”.
+
+3. Informar uma palavra, termo, expressão ou número de processo.
+
+4. Clicar no botão “Pesquisar”.
+
+5. Aguardar o processamento da consulta.
+
+6. Verificar a quantidade apresentada em “Registros Encontrados”.
+
+7. Analisar os resultados apresentados na tabela.
+
+8. Consultar as informações das colunas:
+
+• Número do Processo;
+• Tipo do Ato;
+• Data do Ato;
+• Destaques.
+
+9. Observar os trechos destacados em amarelo.
+
+10. Utilizar a paginação para consultar os demais registros, quando necessário.
+
+============================================================
+EXEMPLO DE PESQUISA
+============================================================
+
+Conteúdo pesquisado:
+FURTO
+
+Resultado observado:
+
+• O sistema apresentou 108.768 registros encontrados.
+
+• Os registros foram exibidos em uma tabela.
+
+• O termo pesquisado apareceu destacado em amarelo nos trechos dos atos judiciais.
+
+• Foram apresentados atos classificados como “Decisão” e “Despacho”.
+
+• A pesquisa também destacou palavras que continham a sequência pesquisada, como o sobrenome “Furtado”.
+
+============================================================
+OBSERVAÇÕES GERAIS
+============================================================
+
+• A consulta pode ser realizada por texto livre ou pelo número do processo.
+
+• A página não apresenta filtros adicionais para restringir os resultados por data, órgão julgador, unidade judicial, magistrado ou tipo de ato.
+
+• A pesquisa textual aparenta considerar correspondências parciais, e não apenas a palavra exata informada.
+
+• O termo pesquisado é destacado em amarelo nos trechos apresentados.
+
+• A consulta é destinada apenas aos atos de processos físicos realizados após março de 2014.
+
+• Para processos eletrônicos, deve ser utilizado o link “CLIQUE AQUI” disponível na própria página.
+
+• Os resultados são apresentados na mesma página do formulário de pesquisa.
+
+• Quando a consulta retornar muitos registros, será necessário utilizar os controles de paginação localizados após a tabela.
+
+PRINT:
+06. TJGO-ATOS-DE-1º-GRAU-CONSULTA-PUBLICA_print_resultado-da-pesquisa.png
+

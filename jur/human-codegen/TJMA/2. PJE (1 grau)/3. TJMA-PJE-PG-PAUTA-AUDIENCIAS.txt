@@ -1,0 +1,143 @@
+==================================================================
+TELA: PAUTA DE AUDIÊNCIAS (PJe - 1º GRAU)
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/pje-audience-schedule-form
+
+Objetivo da tela:
+Permitir a consulta das pautas de audiências do sistema PJe (1º Grau) mediante a definição do órgão julgador e do intervalo de datas.
+
+Descrição:
+A tela disponibiliza filtros para emissão do relatório de pautas de audiências, permitindo restringir os resultados pelo órgão julgador e pelo período desejado.
+
+==================================================================
+ELEMENTO 01
+==================================================================
+
+Nome:
+Órgão Julgador.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Selecionar o órgão julgador cujas pautas de audiências serão consultadas.
+
+Ações possíveis:
+
+1. Abrir a lista de órgãos julgadores.
+2. Percorrer as opções disponíveis.
+3. Selecionar um órgão julgador.
+
+Comportamento observado:
+
+• A lista apresenta diversos órgãos julgadores cadastrados no sistema.
+
+• Entre as opções observadas encontram-se:
+
+- 10ª Vara Cível de São Luís
+- 10ª Vara da Fazenda Pública de São Luís
+- 10º Juizado Especial Cível e das Relações de Consumo de São Luís
+- 11ª Vara Cível de São Luís
+- 11ª Vara da Fazenda Pública de São Luís
+- 11º Juizado Especial Cível e das Relações de Consumo de São Luís
+- 12ª Vara Cível de São Luís
+- 12ª Vara da Fazenda Pública de São Luís
+- 12º Juizado Especial Cível e das Relações de Consumo de São Luís
+- 13ª Vara Cível de São Luís
+- 13º Juizado Especial Cível e das Relações de Consumo de São Luís
+- 14ª Vara Cível de São Luís
+- 14º Juizado Especial Cível e das Relações de Consumo de São Luís
+- 15ª Vara Cível de São Luís
+- 16ª Vara Cível de São Luís
+- 1ª Central das Garantias da Comarca da Ilha de São Luís
+- 1ª Central das Garantias da Comarca de Alcântara
+- 1ª Central das Garantias da Comarca de Alto Parnaíba
+- 1ª Central das Garantias da Comarca de Amarante do Maranhão
+- 1ª Central das Garantias da Comarca de Anajatuba
+
+• A seleção define o órgão julgador utilizado na consulta.
+
+==================================================================
+ELEMENTO 02
+==================================================================
+
+Nome:
+Data de Início.
+
+Tipo:
+Campo de data com calendário.
+
+Objetivo:
+Definir a data inicial do período pesquisado.
+
+Ações possíveis:
+
+1. Clicar no campo.
+2. Abrir o calendário.
+3. Navegar entre meses.
+4. Selecionar uma data.
+
+Comportamento observado:
+
+• Ao clicar no campo, o sistema exibe um calendário mensal.
+
+• O calendário permite navegar entre meses utilizando as setas laterais.
+
+• A data selecionada é automaticamente preenchida no campo.
+
+==================================================================
+ELEMENTO 03
+==================================================================
+
+Nome:
+Data de Término.
+
+Tipo:
+Campo de data com calendário.
+
+Objetivo:
+Definir a data final do período pesquisado.
+
+Ações possíveis:
+
+1. Clicar no campo.
+2. Abrir o calendário.
+3. Navegar entre meses.
+4. Selecionar uma data.
+
+Comportamento observado:
+
+• O funcionamento é idêntico ao campo "Data de Início".
+
+• A data escolhida delimita o encerramento do período pesquisado.
+
+Print relacionado:
+5. TJMA-PJE-PG-PAUTA-AUDIENCIAS_print_calendario-datas-inicio-termmino.png
+
+==================================================================
+ELEMENTO 04
+==================================================================
+
+Nome:
+Consultar.
+
+Tipo:
+Botão.
+
+Objetivo:
+Executar a pesquisa utilizando os filtros informados.
+
+Ações possíveis:
+
+1. Clicar no botão "CONSULTAR".
+
+Comportamento observado:
+
+• Após a definição do órgão julgador e do intervalo de datas, o sistema gera o relatório correspondente às audiências encontradas.
+
+Prints:
+
+• 4. TJMA-PJE-PG-PAUTA-AUDIENCIAS_print_combo-orgao-julgador.png
+• 5. TJMA-PJE-PG-PAUTA-AUDIENCIAS_print_calendario-datas-inicio-termmino.png

@@ -1,0 +1,234 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DE SÃO PAULO (TJSP)
+EPROC – CONSULTA PROCESSUAL
+============================================================
+
+URL:
+
+https://eproc-consulta.tjsp.jus.br/consulta_1g/externo_controlador.php
+
+Objetivo:
+
+Documentar o funcionamento da página "Consulta Processual", acessada por meio do link "Consulta Processual" disponível nos resultados da pesquisa de jurisprudência do EPROC.
+
+============================================================
+COMPORTAMENTO OBSERVADO
+============================================================
+
+Na tela de resultados da pesquisa de jurisprudência é disponibilizado o link "Consulta Processual".
+
+Ao clicar nesse link, o sistema redireciona o usuário para uma nova página do sistema de Consulta Processual.
+
+É carregada uma nova URL contendo automaticamente o número do processo selecionado.
+
+O usuário pode alterar o tipo de pesquisa, informar os dados necessários e executar uma nova consulta diretamente nesta página.
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+
+Tipo de Pesquisa.
+
+Tipo:
+
+Lista suspensa (Combo Box).
+
+Objetivo:
+
+Permitir selecionar o critério utilizado para localizar um processo.
+
+Comportamento observado:
+
+Ao clicar no campo "Tipo de Pesquisa", o sistema exibe uma lista suspensa contendo as opções disponíveis para consulta.
+
+Opções observadas:
+
+• Número do Processo, Chave;
+• Nome da Parte;
+• CPF/CNPJ;
+• OAB.
+
+Por padrão, permanece selecionada a opção:
+
+• Número do Processo, Chave.
+
+Ao selecionar outra opção, os critérios de pesquisa poderão ser alterados conforme o tipo escolhido.
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+
+Campo "Nº Processo".
+
+Tipo:
+
+Campo de texto.
+
+Objetivo:
+
+Permitir informar o número do processo que será consultado.
+
+Comportamento observado:
+
+Quando a página é aberta por meio do link "Consulta Processual", o sistema preenche automaticamente este campo com o número do processo correspondente ao resultado selecionado.
+
+O conteúdo do campo pode ser alterado pelo usuário.
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+
+Ícone de ajuda.
+
+Tipo:
+
+Botão de ajuda.
+
+Objetivo:
+
+Disponibilizar informações auxiliares relacionadas ao preenchimento do número do processo.
+
+Comportamento observado:
+
+Ao lado do campo "Nº Processo" é exibido um ícone de ajuda identificado pelo símbolo "?".
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+
+Campo "Chave".
+
+Tipo:
+
+Campo de texto.
+
+Objetivo:
+
+Permitir informar a chave de acesso do processo, quando necessária.
+
+Comportamento observado:
+
+O campo é apresentado vazio e permanece disponível para preenchimento pelo usuário.
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+
+Validação de segurança.
+
+Tipo:
+
+Componente Cloudflare.
+
+Objetivo:
+
+Validar o acesso antes da realização da consulta.
+
+Comportamento observado:
+
+Após a validação, o sistema apresenta a mensagem:
+
+"Sucesso!"
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+
+Botão "Consultar".
+
+Tipo:
+
+Botão.
+
+Objetivo:
+
+Executar a consulta utilizando os critérios informados.
+
+Comportamento observado:
+
+O botão encontra-se disponível na parte superior e na parte inferior da página.
+
+Ao ser acionado, o sistema realiza a pesquisa utilizando os dados informados.
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+
+Botão "Voltar".
+
+Tipo:
+
+Botão.
+
+Objetivo:
+
+Retornar à página anteriormente acessada.
+
+Comportamento observado:
+
+O botão encontra-se disponível ao lado do botão "Consultar", tanto na parte superior quanto na parte inferior da página.
+
+============================================================
+ELEMENTO 08
+============================================================
+
+Nome:
+
+Menu lateral.
+
+Tipo:
+
+Menu de navegação.
+
+Objetivo:
+
+Permitir acesso às demais funcionalidades disponibilizadas pelo sistema.
+
+Comportamento observado:
+
+Na lateral esquerda da página são exibidas diversas opções de navegação, dentre elas:
+
+• CEJUSC Virtual;
+• Entrar no Sistema;
+• Acessibilidade;
+• Audiências;
+• Auxiliares da Justiça;
+• Cadastre-se AQUI!;
+• Consulta Pública;
+• Consulta Unificada;
+• Criminal Comum e Juizado Especial;
+• Custas Processuais;
+• Execução Fiscal e Fazenda Pública;
+• Fale Conosco;
+• Jurisprudência;
+• Legislação;
+• Sessões de Julgamento;
+• Tutoriais.
+
+Algumas opções apresentam seta indicativa de expansão para exibição de submenus.
+
+============================================================
+COMPORTAMENTO GERAL
+============================================================
+
+Ao acessar a Consulta Processual por meio do link disponibilizado na pesquisa de jurisprudência, o sistema abre uma nova página específica para consulta processual.
+
+O número do processo é automaticamente transportado para o campo correspondente.
+
+O usuário pode alterar o tipo de pesquisa, editar os dados informados, realizar uma nova consulta ou retornar à página anterior utilizando os botões disponíveis.
+
+O menu lateral permanece acessível durante toda a navegação, permitindo o acesso às demais funcionalidades do sistema.

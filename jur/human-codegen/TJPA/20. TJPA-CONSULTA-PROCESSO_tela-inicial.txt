@@ -1,0 +1,45 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DO PARÁ (TJPA)
+SISTEMA DE PESQUISA DE JURISPRUDÊNCIA
+CONSULTA POR PROCESSO / ACÓRDÃO / DECISÃO MONOCRÁTICA
+============================================================
+
+URL:
+https://jurisprudencia.tjpa.jus.br/
+
+Objetivo:
+Permitir a localização direta de um processo, acórdão ou decisão monocrática mediante a informação do respectivo número identificador.
+
+Descrição geral:
+
+A tela é acessada por meio da aba "Consultar por Processo / Acórdão / Decisão Monocrática", disponível no Sistema de Pesquisa de Jurisprudência do TJPA.
+
+A interface apresenta um campo único para inserção do número do documento, acompanhado dos botões "Pesquisar" e "Limpar".
+
+O sistema orienta o usuário a informar o número do processo no formato CNJ ou o número do documento que deseja consultar.
+
+Ações possíveis:
+
+1. Clicar no campo de pesquisa.
+2. Informar o número do processo, acórdão ou decisão monocrática.
+3. Editar ou excluir o número informado.
+4. Clicar no botão "Pesquisar" para executar a consulta.
+5. Clicar no botão "Limpar" para remover o conteúdo preenchido.
+
+Comportamento observado:
+
+• Ao selecionar a aba correspondente, a interface da pesquisa geral é substituída pela tela de consulta direta.
+
+• O campo aceita a inserção do número do processo no formato CNJ ou do número do documento.
+
+• O botão "Pesquisar" executa a consulta com base no número informado.
+
+• O botão "Limpar" esvazia o campo de pesquisa e mantém a tela disponível para uma nova consulta.
+
+• A tela possui estrutura simplificada e não apresenta os operadores, filtros de origem ou campos específicos disponíveis na pesquisa geral.
+
+• Caso o número informado corresponda a um documento existente na base, o sistema apresenta o resultado relacionado à consulta.
+
+Print:
+
+21. TJPA-CONSULTA-PROCESSO_print_tela-inicial.png

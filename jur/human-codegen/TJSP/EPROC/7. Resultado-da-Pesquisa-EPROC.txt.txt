@@ -1,0 +1,238 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DE SÃO PAULO (TJSP)
+PESQUISA DE JULGADOS DE 1º GRAU – EPROC
+============================================================
+
+URL:
+
+https://esaj.tjsp.jus.br/cjpg/pesquisar.do
+
+Objetivo:
+
+Permitir a pesquisa de julgados de 1º Grau por meio de pesquisa livre e filtros específicos, apresentando os resultados diretamente na mesma página.
+
+============================================================
+EXECUÇÃO DA PESQUISA
+============================================================
+
+Procedimento realizado:
+
+1. Acessar a página "Consulta de Julgados de 1º Grau".
+2. Informar um termo de pesquisa no campo "Pesquisa Livre".
+3. Clicar no botão "Consultar".
+
+Comportamento observado:
+
+• A pesquisa é executada na mesma página.
+• O sistema não abre nova guia.
+• O sistema não abre nova janela.
+• Os resultados são exibidos logo abaixo dos parâmetros de consulta.
+• Os filtros permanecem disponíveis para realização de novas pesquisas ou refinamento dos resultados.
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+
+Quantidade de resultados.
+
+Tipo:
+
+Texto informativo.
+
+Objetivo:
+
+Informar a quantidade total de resultados encontrados e quais registros estão sendo exibidos na página atual.
+
+Comportamento observado:
+
+Exemplo observado:
+
+Resultados 1 a 10 de 612702.
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+
+Lista de julgados.
+
+Tipo:
+
+Área de resultados.
+
+Objetivo:
+
+Exibir os julgados encontrados de acordo com os critérios informados na pesquisa.
+
+Cada resultado apresenta as seguintes informações:
+
+• Número do processo;
+• Classe;
+• Assunto;
+• Magistrado;
+• Comarca;
+• Foro;
+• Vara;
+• Data de disponibilização;
+• Trecho da decisão.
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+
+Número do processo.
+
+Tipo:
+
+Link.
+
+Objetivo:
+
+Permitir o acesso ao inteiro teor do julgado correspondente ao resultado selecionado.
+
+Comportamento observado:
+
+• O número do processo é apresentado como um link.
+
+• Ao clicar sobre o número do processo, o sistema abre o inteiro teor do julgado.
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+
+Trecho da decisão.
+
+Tipo:
+
+Texto informativo.
+
+Objetivo:
+
+Apresentar parte do conteúdo do julgado localizado pela pesquisa.
+
+Comportamento observado:
+
+• O sistema exibe um trecho da decisão contendo o termo pesquisado.
+
+• O trecho pode ser expandido por meio do botão "+".
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+
+Botão "+".
+
+Tipo:
+
+Botão.
+
+Objetivo:
+
+Expandir o trecho da decisão exibido no resultado.
+
+Comportamento observado:
+
+Ao clicar no botão "+", o sistema expande o conteúdo da decisão diretamente na página de resultados.
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+
+Paginação.
+
+Tipo:
+
+Controle de navegação.
+
+Objetivo:
+
+Permitir a navegação entre as páginas de resultados.
+
+Comportamento observado:
+
+No canto superior direito da área de resultados é exibida a paginação.
+
+Exemplo observado:
+
+1 2 3 4 5 >
+
+• O número da página atual permanece destacado.
+
+• Ao clicar nos demais números, o sistema navega para a página correspondente.
+
+• Ao clicar no símbolo ">", o sistema avança para as próximas páginas de resultados.
+
+A navegação ocorre na mesma página.
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+
+Painel "Termos mais frequentes".
+
+Tipo:
+
+Painel lateral.
+
+Objetivo:
+
+Apresentar os termos mais recorrentes encontrados nos resultados da pesquisa.
+
+Comportamento observado:
+
+Quando houver termos relacionados, estes serão apresentados em forma de lista.
+
+Cada termo possui uma caixa de seleção.
+
+Após selecionar um ou mais termos, o usuário poderá clicar no botão:
+
+"Adicionar à pesquisa"
+
+para incorporá-los aos critérios da pesquisa.
+
+No teste realizado, foi exibida a mensagem:
+
+"Nenhum termo relacionado."
+
+============================================================
+COMPORTAMENTO GERAL
+============================================================
+
+Após a realização da pesquisa, o sistema mantém a tela de consulta aberta e apresenta os resultados logo abaixo dos parâmetros informados.
+
+Cada resultado contém informações resumidas do julgado e permite acessar seu conteúdo completo por meio do número do processo.
+
+O sistema disponibiliza recursos para expansão do trecho da decisão, navegação entre páginas de resultados e refinamento da pesquisa por meio dos termos mais frequentes.
+
+============================================================
+PRINTS
+============================================================
+
+Print 01
+
+Tela de resultados da pesquisa.
+
+Print 02
+
+Resultado individual contendo as informações do julgado.
+
+Print 03
+
+Painel "Termos mais frequentes".
+
+Print 04
+
+Paginação dos resultados.

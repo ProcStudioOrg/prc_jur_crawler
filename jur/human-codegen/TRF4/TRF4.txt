@@ -1,0 +1,19 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('https://eproc-jur.trf4.jus.br/eproc2trf4/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar');
+  await page.getByRole('link', { name: 'Pesquisa avançada' }).click();
+  await page.getByRole('combobox', { name: 'TRF4' }).click();
+  await page.locator('#bs-select-1-2').click();
+  await page.locator('#bs-select-1-0').click();
+  await page.locator('.row').first().click();
+  await page.getByRole('group', { name: 'Data da decisão / julgamento' }).getByLabel('Data de InÃcio').click();
+  await page.getByRole('group', { name: 'Data da decisão / julgamento' }).getByLabel('Data de Fim').click();
+  await page.getByRole('group', { name: 'Data da disponibilização /' }).getByLabel('Data de InÃcio').click();
+  await page.getByRole('group', { name: 'Data da disponibilização /' }).getByLabel('Data de Fim').click();
+  await page.getByRole('searchbox', { name: 'Texto para pesquisa' }).click();
+  await page.getByRole('searchbox', { name: 'Texto para pesquisa' }).fill('Direito Previdenci');
+  await page.getByRole('searchbox', { name: 'Texto para pesquisa' }).press('Dead');
+  await page.getByRole('searchbox', { name: 'Texto para pesquisa' }).fill('Direito Previdenciário');
+  await page.locator('#btnConsultar_form_inicial').click();
+});

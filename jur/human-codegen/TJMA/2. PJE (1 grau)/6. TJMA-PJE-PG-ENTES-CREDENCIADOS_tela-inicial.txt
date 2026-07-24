@@ -1,0 +1,189 @@
+==================================================================
+TELA: RELATÓRIO DE ENTES PÚBLICOS E EMPRESAS CREDENCIADAS (PJe - 1º GRAU)
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/pje1g-installed_attorneys-form
+
+Objetivo da tela:
+Permitir a consulta de Entes Públicos e Empresas Credenciadas cadastradas no sistema PJe, possibilitando a utilização de filtros específicos para localização das informações.
+
+Descrição:
+A tela apresenta um interruptor para habilitar os campos de pesquisa. Quando desabilitado, apenas o CAPTCHA e o botão de consulta ficam disponíveis. Ao habilitar o interruptor, são exibidos os campos adicionais de pesquisa.
+
+==================================================================
+ELEMENTO 01
+==================================================================
+
+Nome:
+Habilitar os campos de pesquisa.
+
+Tipo:
+Interruptor (Switch).
+
+Objetivo:
+Exibir ou ocultar os filtros avançados de pesquisa.
+
+Estados observados:
+
+• Desativado (padrão)
+• Ativado
+
+Ações possíveis:
+
+1. Clicar para ativar.
+2. Clicar novamente para desativar.
+
+Comportamento observado:
+
+Quando DESATIVADO:
+
+• Os campos de pesquisa permanecem ocultos.
+• Permanecem disponíveis apenas:
+  - CAPTCHA;
+  - Campo para digitação do código de validação;
+  - Botão "CONSULTAR".
+
+Quando ATIVADO:
+
+São exibidos os seguintes campos:
+
+• Nome da Procuradoria;
+• Nome da Empresa ou Ente representado;
+• CNPJ.
+
+==================================================================
+ELEMENTO 02
+==================================================================
+
+Nome:
+Nome da Procuradoria.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Permitir informar o nome da Procuradoria para restringir a pesquisa.
+
+Ações possíveis:
+
+1. Digitar o nome da Procuradoria.
+2. Editar o conteúdo informado.
+3. Apagar o conteúdo.
+
+Comportamento observado:
+
+• Campo disponível somente quando o interruptor "Habilitar os campos de pesquisa" estiver ativado.
+
+==================================================================
+ELEMENTO 03
+==================================================================
+
+Nome:
+Nome da Empresa ou Ente representado.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Permitir informar o nome da empresa ou do ente representado.
+
+Ações possíveis:
+
+1. Digitar o nome.
+2. Editar o conteúdo.
+3. Limpar o campo.
+
+Comportamento observado:
+
+• Campo exibido apenas quando os filtros avançados estiverem habilitados.
+
+==================================================================
+ELEMENTO 04
+==================================================================
+
+Nome:
+CNPJ.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Permitir informar o CNPJ da empresa ou ente representado.
+
+Ações possíveis:
+
+1. Digitar o CNPJ.
+2. Editar o valor informado.
+3. Apagar o conteúdo.
+
+Comportamento observado:
+
+• O campo apresenta máscara de preenchimento para CNPJ.
+
+==================================================================
+ELEMENTO 05
+==================================================================
+
+Nome:
+CAPTCHA.
+
+Tipo:
+Imagem de verificação.
+
+Objetivo:
+Validar que a consulta está sendo realizada por um usuário.
+
+Ações possíveis:
+
+1. Visualizar o código.
+2. Solicitar novo código através do botão de atualização.
+
+Comportamento observado:
+
+• Um código alfanumérico é exibido na imagem.
+• O código pode ser renovado utilizando o botão de atualização.
+
+==================================================================
+ELEMENTO 06
+==================================================================
+
+Nome:
+Campo "Digite o valor da imagem".
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Permitir informar o código exibido no CAPTCHA.
+
+Ações possíveis:
+
+1. Digitar o código apresentado.
+2. Corrigir o valor informado.
+3. Apagar o conteúdo.
+
+Comportamento observado:
+
+• O preenchimento é obrigatório para realização da consulta.
+
+==================================================================
+ELEMENTO 07
+==================================================================
+
+Nome:
+Consultar.
+
+Tipo:
+Botão.
+
+Objetivo:
+Executar a consulta utilizando os filtros preenchidos.
+
+Ações possíveis:
+
+1. Clicar no botão "CONSULTAR".
+
+Comportamento observado:
+
+• O sistema realiza a pesquisa considerando os filtros informados e a validação do CAPTCHA.

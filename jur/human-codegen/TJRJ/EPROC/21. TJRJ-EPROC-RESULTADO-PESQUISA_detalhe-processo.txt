@@ -1,0 +1,61 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO DE JANEIRO (TJRJ)
+CONSULTA À JURISPRUDÊNCIA – SISTEMA eproc
+DETALHES DO PROCESSO
+============================================================
+
+URL:
+https://eproc2g-ws.tjrj.jus.br/eproc/externo_controlador.php?acao=processo_seleciona_publica&acao_origem=processo_consulta_publica&acao_retorno=processo_consulta_publica&num_processo=08014624920228190012
+
+Objetivo:
+Apresentar as informações completas do processo judicial relacionado ao julgamento selecionado.
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Detalhes do Processo.
+
+Tipo:
+Página de consulta processual.
+
+Objetivo:
+Exibir todas as informações públicas disponíveis do processo selecionado, permitindo a consulta de seus dados cadastrais, partes, assuntos, movimentações e demais informações processuais.
+
+Ações possíveis:
+
+- Visualizar os dados gerais do processo.
+- Consultar a capa do processo.
+- Visualizar os assuntos vinculados ao processo.
+- Consultar as partes e seus representantes.
+- Navegar pelas demais informações disponíveis na página.
+- Imprimir a consulta.
+- Retornar à tela anterior.
+
+Comportamento observado:
+
+- A página é aberta em uma nova janela ou aba do navegador.
+
+- São apresentados os dados completos do processo selecionado.
+
+- A seção **Capa do Processo** exibe informações como:
+  • Número do processo;
+  • Data de autuação;
+  • Situação processual;
+  • Órgão julgador;
+  • Colegiado;
+  • Relator(a);
+  • Classe processual;
+  • Processos relacionados, quando existentes.
+
+- A seção **Assuntos** apresenta os assuntos cadastrados para o processo, contendo código, descrição e indicação do assunto principal.
+
+- A seção **Partes e Representantes** apresenta as partes processuais e seus respectivos representantes, quando disponíveis.
+
+- Conforme o processo consultado, podem ser exibidas outras seções contendo informações complementares, como movimentações processuais e demais dados públicos.
+
+- No canto superior direito são disponibilizados os botões **Imprimir** e **Voltar**.
+
+Print:
+22. TJRJ-EPROC-RESULTADO-PESQUISA_print_detalhe-processo.png

@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+
+# Playwright
+playwright-report/
+playwright/.cache/
+test-results/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build output
+dist/
+build/
+
+# Coverage
+coverage/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+.venv/
+env/
+*.egg-info/
+.eggs/
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Python databases
+*.sqlite
+*.sqlite3
+*.db
+
+# Output folders
+output/
+
+# Claude
+.claude/

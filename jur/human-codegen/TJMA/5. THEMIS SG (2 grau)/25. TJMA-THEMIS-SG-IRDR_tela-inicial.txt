@@ -1,0 +1,55 @@
+===============================================================
+TELA: INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (IRDR)
+===============================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/sg-repetitive-demands-incident-form
+
+Objetivo da tela:
+Permitir a consulta dos Incidentes de Resolução de Demandas Repetitivas (IRDR) cadastrados no sistema.
+
+Descrição:
+A tela disponibiliza um filtro para seleção da classe do incidente e um botão para executar a consulta.
+
+===============================================================
+ELEMENTO 01
+===============================================================
+
+Nome:
+Campo "Classe"
+
+Tipo:
+Campo de seleção (lista suspensa).
+
+Obrigatório:
+Não.
+
+Descrição:
+Permite selecionar a classe do Incidente de Resolução de Demandas Repetitivas (IRDR) que será utilizada como filtro da consulta.
+
+Ação:
+Clique na seta localizada à direita do campo para visualizar e selecionar uma das classes disponíveis no sistema.
+
+===============================================================
+ELEMENTO 02
+===============================================================
+
+Nome:
+Botão "CONSULTAR"
+
+Tipo:
+Botão de ação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Executa a consulta dos Incidentes de Resolução de Demandas Repetitivas conforme os filtros informados.
+
+Ação:
+Após selecionar a classe desejada, clique no botão "CONSULTAR" para realizar a pesquisa.
+
+Prints:
+
+• 26. TJMA-THEMIS-SG-IRDR_print_tela-inicial.png
+• 27. TJMA-THEMIS-SG-IRDR_print_campo-classe.png

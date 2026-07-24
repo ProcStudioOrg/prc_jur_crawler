@@ -1,0 +1,123 @@
+===============================================================
+TELA: CONSULTA PROCESSUAL DE SEGUNDO GRAU
+===============================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/sg-public-search-form
+
+Objetivo da tela:
+Permitir a consulta de processos de segundo grau por diferentes critérios de pesquisa.
+
+Descrição:
+A tela disponibiliza um filtro do tipo lista suspensa para seleção do tipo de pesquisa, um campo para informar a chave de busca, um CAPTCHA para validação da consulta, um campo para digitação do código da imagem e o botão "CONSULTAR".
+
+===============================================================
+ELEMENTO 01
+===============================================================
+
+Nome:
+Combo "Tipo"
+
+Tipo:
+Lista suspensa.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Permite selecionar o tipo de pesquisa que será utilizado para localizar o processo.
+
+Opções disponíveis:
+
+• Número do Processo (Protocolo)
+• Numeração Única
+• Parte
+• Advogado
+• OAB
+
+Ação:
+Clique na seta localizada à direita do campo para visualizar e selecionar uma das opções disponíveis.
+
+===============================================================
+ELEMENTO 02
+===============================================================
+
+Nome:
+Campo "Chave de busca"
+
+Tipo:
+Campo de texto.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Campo destinado à digitação da informação correspondente ao tipo de pesquisa selecionado.
+
+Exemplo apresentado na tela:
+9999999999
+
+Ação:
+Digite o valor correspondente ao critério de pesquisa escolhido.
+
+===============================================================
+ELEMENTO 03
+===============================================================
+
+Nome:
+CAPTCHA
+
+Tipo:
+Validação de segurança.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Exibe um código de verificação em imagem para validação da consulta.
+
+Ação:
+Caso não seja possível visualizar o código, clique no ícone de atualização para gerar uma nova imagem.
+
+===============================================================
+ELEMENTO 04
+===============================================================
+
+Nome:
+Campo "Digite o valor da imagem"
+
+Tipo:
+Campo de texto.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Campo destinado à digitação do código apresentado no CAPTCHA.
+
+Ação:
+Digite exatamente os caracteres exibidos na imagem de validação.
+
+===============================================================
+ELEMENTO 05
+===============================================================
+
+Nome:
+Botão "CONSULTAR"
+
+Tipo:
+Botão de ação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Executa a pesquisa utilizando os critérios informados.
+
+Ação:
+Após preencher todos os campos obrigatórios e informar corretamente o CAPTCHA, clique no botão "CONSULTAR" para realizar a pesquisa.
+
+Prints:
+
+• 4. TJMA-THEMIS-SG-CONSULTA-PROCESSSUAL_print_tela-inicial.png
+• 5. TJMA-THEMIS-SG-CONSULTA-PROCESSSUAL_print_combo-tipo.png

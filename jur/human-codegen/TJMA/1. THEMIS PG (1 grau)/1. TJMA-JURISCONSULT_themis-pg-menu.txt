@@ -1,0 +1,123 @@
+==================================================================
+TELA: SERVIÇOS ASSOCIADOS AO THEMIS PG (1º GRAU)
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/submenu
+
+Objetivo da tela:
+Apresentar os serviços disponíveis do sistema Themis PG (1º Grau), permitindo ao usuário acessar funcionalidades relacionadas ao processamento judicial.
+
+Descrição:
+A tela lista todos os serviços disponíveis para o módulo Themis PG (1º Grau). Cada serviço possui um botão de pesquisa (ícone de lupa), que direciona o usuário para a tela correspondente.
+
+==================================================================
+
+ELEMENTO 01
+==================================================================
+
+Nome:
+Campo "Filtrar".
+
+Tipo:
+Campo de pesquisa.
+
+Objetivo:
+Permitir localizar rapidamente um serviço disponível na lista.
+
+Ações possíveis:
+
+1. Digitar o nome total ou parcial de um serviço.
+2. Filtrar os serviços exibidos.
+
+Comportamento observado:
+
+À medida que o usuário digita, a lista é filtrada automaticamente, exibindo apenas os serviços compatíveis com o texto informado.
+
+==================================================================
+
+ELEMENTO 02
+==================================================================
+
+Nome:
+Consulta Processual.
+
+Tipo:
+Serviço.
+
+Objetivo:
+Consultar processos de primeiro grau.
+
+Ações possíveis:
+
+1. Acessar a tela de Consulta Processual.
+
+Comportamento observado:
+
+Ao clicar no ícone de pesquisa (lupa), o sistema abre a tela correspondente ao serviço.
+
+==================================================================
+
+ELEMENTO 03
+==================================================================
+
+Nome:
+Pautas de Audiências.
+
+Tipo:
+Serviço.
+
+Objetivo:
+Consultar pautas de audiências.
+
+Ações possíveis:
+
+1. Acessar a tela de Pautas de Audiências.
+
+Comportamento observado:
+
+Ao clicar no ícone de pesquisa (lupa), o sistema abre a tela correspondente ao serviço.
+
+==================================================================
+
+ELEMENTO 04
+==================================================================
+
+Nome:
+Processos aptos para julgamento / devolvidos para a secretaria.
+
+Tipo:
+Serviço.
+
+Objetivo:
+Consultar processos aptos para julgamento ou devolvidos à secretaria.
+
+Ações possíveis:
+
+1. Acessar a tela do serviço.
+
+Comportamento observado:
+
+Ao clicar no ícone de pesquisa (lupa), o sistema abre a tela correspondente.
+
+==================================================================
+
+ELEMENTO 05
+==================================================================
+
+Nome:
+Validar Documento PDF.
+
+Tipo:
+Serviço.
+
+Objetivo:
+Permitir validar documentos em formato PDF.
+
+Ações possíveis:
+
+1. Acessar a tela de validação de documentos.
+
+Comportamento observado:
+
+Ao clicar no ícone de pesquisa (lupa), o sistema abre a funcionalidade de validação de documentos PDF.

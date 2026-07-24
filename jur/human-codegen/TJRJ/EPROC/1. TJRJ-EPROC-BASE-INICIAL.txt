@@ -1,0 +1,545 @@
+============================================================
+TELA: CONSULTA À JURISPRUDÊNCIA - EPROC
+============================================================
+
+URL:
+
+https://eproc1g.tjrj.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+
+Objetivo da tela:
+
+Permitir a pesquisa de jurisprudência produzida no sistema eproc por meio de pesquisa textual livre e filtros avançados, possibilitando a localização de acórdãos e decisões monocráticas cadastradas na base de jurisprudência.
+
+Descrição geral:
+
+A tela disponibiliza um campo de pesquisa livre, operadores de pesquisa, filtros avançados e demais recursos que permitem restringir os resultados conforme critérios específicos.
+
+Também oferece acesso às bases auxiliares de consulta, como Súmulas, Precedentes, Enunciados, Ementários, Legislação e Publicações.
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Operadores de Pesquisa.
+
+Tipo:
+Grupo de operadores lógicos.
+
+Operadores disponíveis:
+
+• "..."
+• E
+• OU
+• NÃO
+• PROX
+• *
+
+Objetivo:
+
+Permitir a construção de pesquisas mais refinadas utilizando operadores lógicos.
+
+Ações possíveis:
+
+1. Selecionar um operador.
+2. Combinar operadores com palavras ou expressões.
+3. Construir pesquisas compostas.
+
+Comportamento observado:
+
+• Cada operador possui comportamento específico.
+
+• Ao posicionar o cursor sobre o operador, o sistema apresenta uma descrição (tooltip) explicando sua finalidade:
+
+- "..." - pesquisa documentos que contenham a expressão informada. Ex: "faixa de fronteira"
+- E - pesquisa documentos que contenham todas as palavras ou expressões informadas. Ex: crime e "faixa de fronteira"
+- OU - pesquisa documentos que contenham pelo menos uma das palavras ou expressões informadas. Ex: drogas ou entorpecentes
+- NÃO - pesquisa documentos que contenham a primeira palavra ou expressões informadas, mas que não contenham a segunda palavra ou expressão informada. Ex: crime não "sonegação fiscal"
+- PROX - pesquisa documentos onde as palavras ou expressões informadas encontram-se próximas do texto. Ex: aposentadoria prox contribuição
+- * - pesquisa documentos que contenham o inpicio da palavra ou expressão informada. Ex: "embarg*" (retomará registros com palavras embargo, embrgou, emgargante).
+
+• Os operadores podem ser utilizados em conjunto para restringir ou ampliar os resultados da pesquisa.
+
+Observação:
+
+As funcionalidades individuais de cada operador encontram-se documentadas nos respectivos prints capturados.
+
+Print:
+
+2. TJRJ-EPROC-BASE-INICIAL_print_tela-inicial.png
+
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Pesquisa Livre.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Permitir a pesquisa de julgados utilizando palavras, expressões ou operadores de pesquisa.
+
+Ações possíveis:
+
+1. Clicar no campo.
+2. Digitar palavras ou expressões.
+3. Editar o texto informado.
+4. Excluir parcial ou totalmente o conteúdo.
+5. Executar a pesquisa utilizando o botão "Pesquisar".
+
+Comportamento observado:
+
+• O campo aceita pesquisa textual livre.
+
+• Permite informar palavras, expressões ou termos jurídicos.
+
+• A pesquisa pode ser combinada com operadores lógicos.
+
+• Os operadores podem ser utilizados individualmente ou em conjunto.
+
+• O conteúdo informado permanece disponível até que seja alterado ou removido pelo usuário.
+
+Print:
+
+2. TJRJ-EPROC-BASE-INICIAL_print_tela-inicial.png
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Pesquisa Avançada.
+
+Tipo:
+Link expansível.
+
+Objetivo:
+
+Exibir ou ocultar os filtros avançados da pesquisa.
+
+Ações possíveis:
+
+1. Clicar em "Pesquisa avançada".
+2. Expandir os filtros.
+3. Recolher os filtros.
+
+Comportamento observado:
+
+• Inicialmente os filtros permanecem ocultos.
+
+• Ao clicar em "Pesquisa avançada", o sistema expande a área contendo os filtros disponíveis.
+
+• Um novo clique recolhe novamente a área expandida.
+
+Print:
+
+2. TJRJ-EPROC-BASE-INICIAL_print_tela-inicial.png
+
+============================================================
+OBSERVAÇÃO
+============================================================
+
+Os elementos exibidos após a expansão da Pesquisa Avançada serão documentados individualmente nas próximas seções deste documento.
+
+Print:
+
+1. TJRJ-EPROC-BASE-INICIAL_print_tela-inicial.png
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Origem.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Definir a base de origem da jurisprudência que será utilizada na pesquisa.
+
+Ações possíveis:
+
+1. Visualizar o valor atualmente selecionado.
+2. Selecionar outra origem disponível, quando houver.
+3. Utilizar a origem selecionada em conjunto com os demais filtros da pesquisa.
+
+Comportamento observado:
+
+• Ao expandir a Pesquisa Avançada, o campo Origem é apresentado preenchido com o valor padrão **TJRJ**.
+
+• O campo restringe a pesquisa à base de jurisprudência correspondente à origem selecionada.
+
+• A origem escolhida permanece selecionada até que seja alterada pelo usuário.
+
+Print:
+
+3. TJRJ-EPROC-BASE-INICIAL_print_pesquisa-avancada.png
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Tipo de Documento.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Permitir restringir a pesquisa conforme o tipo de documento jurisprudencial.
+
+Ações possíveis:
+
+1. Clicar na lista suspensa.
+2. Selecionar um ou mais tipos de documento disponíveis.
+3. Remover seleções realizadas.
+
+Comportamento observado:
+
+• Inicialmente o campo permanece sem seleção.
+
+• Ao abrir a lista são apresentados os tipos de documentos disponíveis para consulta:
+- Acórdão;
+- Decisão Monocrática
+
+• O filtro passa a ser considerado na execução da pesquisa.
+
+• Existem os campos selecionar todos e desmarcar todos que pode ser selecionados.
+
+Prints:
+
+4. TJRJ-EPROC-BASE-INICIAL_print_combo-tipo-documento.png
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+Somente jurisprudência selecionada (Precedentes relevantes).
+
+Tipo:
+Caixa de seleção (Checkbox).
+
+Objetivo:
+Limitar a pesquisa apenas aos precedentes previamente classificados como relevantes.
+
+Ações possíveis:
+
+1. Marcar a opção.
+2. Desmarcar a opção.
+
+Comportamento observado:
+
+• Quando marcada, a pesquisa considera apenas a jurisprudência previamente selecionada como precedente relevante.
+
+• Quando desmarcada, a pesquisa considera toda a base disponível.
+
+Print:
+
+2. TJRJ-EPROC-BASE-INICIAL_print_tela-inicial
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+Agrupar Resultados.
+
+Tipo:
+Caixa de seleção (Checkbox).
+
+Objetivo:
+Agrupar os resultados semelhantes apresentados pela pesquisa.
+
+Ações possíveis:
+
+1. Marcar a opção.
+2. Desmarcar a opção.
+
+Comportamento observado:
+
+• A opção permanece marcada por padrão.
+
+• Quando habilitada, o sistema agrupa julgados semelhantes na listagem de resultados.
+
+• Quando desabilitada, os resultados são apresentados individualmente.
+
+Print:
+
+2. TJRJ-EPROC-BASE-INICIAL_print_tela-inicial
+
+============================================================
+ELEMENTO 08
+============================================================
+
+Nome:
+Pesquisar em.
+
+Tipo:
+Botões de opção (Radio Button).
+
+Opções:
+
+• Inteiro teor.
+• Ementa.
+
+Objetivo:
+Definir em qual parte do documento será realizada a pesquisa textual.
+
+Ações possíveis:
+
+1. Selecionar "Inteiro teor".
+2. Selecionar "Ementa".
+
+Comportamento observado:
+
+• Apenas uma opção pode permanecer selecionada por vez.
+
+• O sistema realiza a pesquisa exclusivamente no campo escolhido.
+
+• Por padrão, a pesquisa é realizada no **Inteiro teor**.
+
+Print:
+
+2. TJRJ-EPROC-BASE-INICIAL_print_tela-inicial
+
+Campos Específicos:
+============================================================
+ELEMENTO 09
+============================================================
+
+Nome:
+Processo.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Permitir pesquisar julgados a partir do número do processo.
+
+Ações possíveis:
+
+1. Clicar no campo "Processo".
+2. Digitar o número do processo.
+3. Editar ou apagar o número informado.
+4. Combinar este campo com os demais filtros da pesquisa avançada.
+
+Comportamento observado:
+
+• O campo aceita a digitação do número do processo.
+
+• O filtro pode ser utilizado isoladamente ou em conjunto com os demais campos específicos.
+
+Print:
+
+2. TJRJ-EPROC-BASE-INICIAL_print_tela-inicial
+
+============================================================
+ELEMENTO 10
+============================================================
+
+Nome:
+Classe processual.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Permitir restringir a pesquisa conforme a classe processual.
+
+Ações possíveis:
+
+1. Clicar no campo "Classe processual".
+2. Visualizar as opções disponíveis.
+3. Selecionar uma ou mais classes processuais.
+4. Utilizar o campo de busca interno para localizar uma classe específica.
+
+Comportamento observado:
+
+• Ao clicar no campo, o sistema exibe uma lista de classes processuais.
+
+• A lista possui campo de pesquisa interno.
+
+• Também são exibidas as opções "Selecionar Todos" e "Desmarcar Todos".
+
+Print:
+
+5. TJRJ-EPROC-BASE-INICIAL_print_combo-classe-processual
+
+============================================================
+ELEMENTO 11
+============================================================
+
+Nome:
+Data da decisão / julgamento.
+
+Tipo:
+Campos de data com calendário.
+
+Objetivo:
+Permitir delimitar o período da decisão ou julgamento.
+
+Ações possíveis:
+
+1. Clicar no campo de data inicial.
+2. Selecionar uma data no calendário.
+3. Clicar no campo de data final.
+4. Selecionar a data final desejada.
+
+Comportamento observado:
+
+• O sistema disponibiliza campos para data inicial e data final.
+
+• Ao clicar no ícone de calendário, é exibido um seletor de datas.
+
+Print:
+
+6. TJRJ-EPROC-BASE-INICIAL_print_calendario-data-decisao-inicial
+
+============================================================
+ELEMENTO 12
+============================================================
+
+Nome:
+Data da disponibilização / publicação.
+
+Tipo:
+Campos de data com calendário.
+
+Objetivo:
+Permitir restringir a pesquisa conforme o período de disponibilização ou publicação do documento.
+
+Ações possíveis:
+
+1. Clicar no campo de data inicial.
+2. Selecionar a data desejada.
+3. Clicar no campo de data final.
+4. Selecionar a data final.
+
+Comportamento observado:
+
+• O campo permite informar período inicial e final.
+
+• O filtro pode ser combinado com os demais campos específicos.
+
+Print:
+
+2. TJRJ-EPROC-BASE-INICIAL_print_tela-inicial
+
+============================================================
+ELEMENTO 13
+============================================================
+
+Nome:
+Relator / Relatora.
+
+Tipo:
+Lista suspensa pesquisável.
+
+Objetivo:
+Permitir restringir a pesquisa por relator ou relatora.
+
+Ações possíveis:
+
+1. Clicar no campo "Relator / Relatora".
+2. Visualizar a lista de opções.
+3. Pesquisar pelo nome desejado.
+4. Selecionar uma ou mais opções.
+
+Comportamento observado:
+
+• Ao clicar no campo, o sistema exibe lista pesquisável.
+
+• São exibidas as opções "Selecionar Todos" e "Desmarcar Todos".
+
+Print:
+
+7. TJRJ-EPROC-BASE-INICIAL_print_combo-relator
+
+============================================================
+ELEMENTO 14
+============================================================
+
+Nome:
+Órgão julgador.
+
+Tipo:
+Lista suspensa pesquisável.
+
+Objetivo:
+Permitir restringir a pesquisa por órgão julgador.
+
+Ações possíveis:
+
+1. Clicar no campo "Órgão julgador".
+2. Visualizar a lista de órgãos disponíveis.
+3. Utilizar o campo de busca interno.
+4. Selecionar uma ou mais opções.
+
+Comportamento observado:
+
+• Ao clicar no campo, o sistema exibe uma lista pesquisável.
+
+• São exibidas as opções "Selecionar Todos" e "Desmarcar Todos".
+
+Print:
+
+8. TJRJ-EPROC-BASE-INICIAL_print_combo-orgao-julgador
+
+============================================================
+ELEMENTO 15
+============================================================
+
+Nome:
+Limpar filtros.
+
+Tipo:
+Link de ação.
+
+Objetivo:
+Remover os filtros informados na pesquisa avançada.
+
+Ações possíveis:
+
+1. Clicar em "Limpar filtros".
+
+Comportamento observado:
+
+• O sistema limpa os critérios informados nos filtros da pesquisa avançada.
+
+• A tela permanece disponível para nova pesquisa.
+
+Print:
+
+9. TJRJ-EPROC-BASE-INICIAL_print_pesquisa-avancada.png
+
+============================================================
+ELEMENTO 16
+============================================================
+
+Nome:
+Botão Pesquisar.
+
+Tipo:
+Botão de ação.
+
+Objetivo:
+Executar a pesquisa considerando os critérios informados.
+
+Ações possíveis:
+
+1. Clicar no botão "Pesquisar".
+
+Comportamento observado:
+
+• O sistema processa os termos e filtros informados.
+
+• Em seguida, abre a tela de resultados da pesquisa.
+
+Print:
+
+9. TJRJ-EPROC-BASE-INICIAL_print_pesquisa-avancada.png

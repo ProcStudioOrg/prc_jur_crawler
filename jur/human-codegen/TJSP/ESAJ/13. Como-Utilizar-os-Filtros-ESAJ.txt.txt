@@ -1,0 +1,155 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DE SÃO PAULO (TJSP)
+COMO UTILIZAR OS FILTROS – CONSULTA DE JURISPRUDÊNCIA
+============================================================
+
+URL:
+https://esaj.tjsp.jus.br/WebHelp//#id_operadores_logicos.htm
+
+Objetivo:
+Apresentar orientações para utilização dos operadores lógicos disponíveis na Consulta de Jurisprudência do sistema e-SAJ, permitindo pesquisas mais precisas.
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Operador E.
+
+Tipo:
+Operador lógico.
+
+Objetivo:
+Localizar documentos que contenham todas as palavras informadas na pesquisa.
+
+Comportamento observado:
+
+• Quando nenhum operador é informado, o sistema utiliza automaticamente o operador "E".
+
+• Exemplo apresentado pelo sistema:
+furto E assalto E carro
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Operador OU.
+
+Tipo:
+Operador lógico.
+
+Objetivo:
+Localizar documentos que contenham todas as palavras informadas ou apenas uma delas.
+
+Comportamento observado:
+
+• Permite ampliar os resultados da pesquisa, retornando documentos que contenham qualquer um dos termos pesquisados.
+
+• Exemplo apresentado pelo sistema:
+bicicleta OU carro OU motocicleta
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Operador NÃO.
+
+Tipo:
+Operador lógico.
+
+Objetivo:
+Excluir palavras ou expressões específicas dos resultados da pesquisa.
+
+Comportamento observado:
+
+• O sistema retorna documentos que não contenham o termo informado após o operador.
+
+• Exemplo apresentado pelo sistema:
+NÃO assassinato
+
+Nesse exemplo, serão exibidos documentos que não contenham a palavra "assassinato".
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Operador ?.
+
+Tipo:
+Operador curinga (substituição de um caractere).
+
+Objetivo:
+Permitir a substituição de um único caractere desconhecido durante a pesquisa.
+
+Comportamento observado:
+
+• O operador substitui apenas uma letra da palavra pesquisada.
+
+• Não pode ser utilizado no início do termo pesquisado.
+
+• Exemplo apresentado pelo sistema:
+ca?a
+
+Resultados possíveis:
+casa
+cada
+cara
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Operador "*".
+
+Tipo:
+Operador para pesquisa por frase exata.
+
+Objetivo:
+Localizar documentos que contenham exatamente a frase informada.
+
+Comportamento observado:
+
+• A frase deve ser escrita entre aspas.
+
+• Para resultados mais precisos, recomenda-se utilizar frases com até cinco palavras.
+
+• Exemplo apresentado pelo sistema:
+"área de preservação permanente"
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+Combinação de operadores.
+
+Tipo:
+Orientação de pesquisa.
+
+Objetivo:
+Informar que os operadores lógicos podem ser utilizados em conjunto para construir pesquisas mais específicas.
+
+Comportamento observado:
+
+• Os operadores podem ser combinados em qualquer ordem, conforme a necessidade da pesquisa.
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+Pesquisa complexa.
+
+Tipo:
+Exemplo de utilização.
+
+Objetivo:
+Demonstrar a utilização combinada de operadores lógicos para pesquisas mais refinadas.
+
+Comportamento observado:
+
+• O sistema apresenta um exemplo de pesquisa envolvendo operadores lógicos, frases entre aspas e agrupamento por parênteses para melhorar a precisão dos resultados.

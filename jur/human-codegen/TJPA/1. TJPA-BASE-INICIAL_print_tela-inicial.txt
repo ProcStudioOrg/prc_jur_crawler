@@ -1,0 +1,141 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DO PARÁ (TJPA)
+BASE INICIAL
+============================================================
+
+URL:
+https://tjpa.jus.br/PortalExterno/
+
+============================================================
+TELA
+============================================================
+
+Nome:
+Página inicial do Portal Externo do Tribunal de Justiça do Estado do Pará.
+
+Objetivo:
+Disponibilizar o acesso aos principais serviços do Tribunal, incluindo consultas processuais, jurisprudência, sistemas judiciais, notícias institucionais e demais serviços eletrônicos.
+
+URL:
+https://tjpa.jus.br/PortalExterno/
+
+Print:
+1. TJPA-BASE-INICIAL_print_tela-inicial.png
+
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Menu principal.
+
+Tipo:
+Barra de navegação.
+
+Opções observadas:
+
+• Início.
+• Sobre.
+• Consultas.
+• Comunicação.
+• Acervo Digital.
+• Ações e Programas.
+• Transparência.
+• Estatística.
+• Memória.
+• Carta de Serviços.
+
+Objetivo:
+Permitir a navegação entre as principais áreas institucionais do Portal Externo.
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Consulta Processual Unificada.
+
+Tipo:
+Campo de pesquisa.
+
+Objetivo:
+Permitir a consulta rápida de processos diretamente pela página inicial.
+
+Ações possíveis:
+
+• Digitar o número do processo.
+• Executar a pesquisa utilizando o botão correspondente.
+
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Área de destaques.
+
+Tipo:
+Painel de notícias.
+
+Objetivo:
+Exibir notícias, comunicados e informações institucionais em destaque.
+
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Acesso rápido.
+
+Tipo:
+Painel de atalhos.
+
+Objetivo:
+Disponibilizar acesso direto aos principais serviços eletrônicos do Tribunal.
+
+Serviços observados:
+
+• Portal PJe.
+• Diário da Justiça Eletrônico.
+• Nugepnac.
+• Atos Normativos.
+• Jurisprudência.
+• Emissão de Certidão.
+• Módulos de Autenticação.
+• Sistema Eletrônico de Informações (SEI).
+• Sessões de Julgamento.
+
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Links institucionais.
+
+Tipo:
+Painel de serviços.
+
+Objetivo:
+Disponibilizar acesso a sistemas, programas e serviços institucionais do Tribunal.
+
+Exemplos observados:
+
+• Balcão Virtual.
+• Informações sobre atendimento ao público.
+• CEJUSC Virtual.
+• CALC-TJPA.
+• Portal Memória.
+• NUPMEC.
+• Gestão Judiciária.
+• CEAV-TJPA.
+• Demais programas institucionais.
+
+
+============================================================
+RESULTADO ESPERADO
+============================================================
+
+A página inicial permite ao usuário acessar os principais serviços disponibilizados pelo Tribunal de Justiça do Estado do Pará, servindo como ponto de entrada para consultas processuais, pesquisa de jurisprudência, sistemas judiciais e demais serviços eletrônicos.

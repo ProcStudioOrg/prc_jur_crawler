@@ -1,0 +1,118 @@
+==================================================================
+TELA: CONCLUSOS POR ORDEM CRONOLÓGICA
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/chronological-order-finished-form
+
+Objetivo da tela:
+Permitir consultar o Relatório de Conclusos por Ordem Cronológica, filtrando os processos por Comarca, Unidade Judicial e Cargo.
+
+Descrição:
+A tela apresenta três listas suspensas (Comarca, Unidade Judicial e Cargo) e um botão para executar a consulta. A seleção da Comarca determina as Unidades Judiciais disponíveis. Após preencher os filtros desejados, a consulta é realizada por meio do botão "CONSULTAR".
+
+
+==================================================================
+ELEMENTO 01
+==================================================================
+
+Nome:
+Combo "Comarca".
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Selecionar a comarca utilizada como filtro da consulta.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Selecionar uma comarca.
+
+Comportamento observado:
+
+• Ao selecionar uma comarca, o sistema atualiza automaticamente a lista de Unidades Judiciais disponíveis.
+
+Opções disponíveis:
+
+• Relação completa das Comarcas do Tribunal de Justiça do Maranhão.
+
+==================================================================
+ELEMENTO 02
+==================================================================
+
+Nome:
+Combo "Unidade Judicial".
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Selecionar a Unidade Judicial pertencente à comarca escolhida.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Selecionar uma Unidade Judicial.
+
+Comportamento observado:
+
+• As opções são carregadas de acordo com a comarca selecionada.
+• O conteúdo varia conforme a comarca escolhida.
+
+==================================================================
+ELEMENTO 03
+==================================================================
+
+Nome:
+Combo "Cargo".
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Selecionar o cargo utilizado como filtro da consulta.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Selecionar um cargo.
+
+Comportamento observado:
+
+• A lista apresenta os cargos disponíveis para consulta conforme a Unidade Judicial selecionada.
+
+Opções disponíveis:
+
+• Todos.
+• Juiz de Direito Titular do 3º Cargo.
+• Juiz de Direito Titular do 2º Cargo.
+• Juiz de Direito Titular do 1º Cargo.
+
+==================================================================
+ELEMENTO 04
+==================================================================
+
+Nome:
+Botão "CONSULTAR".
+
+Tipo:
+Botão.
+
+Objetivo:
+Executar a consulta utilizando os filtros selecionados.
+
+Ações possíveis:
+
+1. Clicar em "CONSULTAR".
+
+Comportamento observado:
+
+• O sistema gera o relatório de processos conclusos por ordem cronológica conforme os critérios informados.
+
+Prints:
+
+• 4. TJMA-CONCLUSOS-ORDEM-CRONOLOGICA_print-tela-inicial.png
+• 5. TJMA-CONCLUSOS-ORDEM-CRONOLOGICA_print-combo-comarca.png
+• 6. TJMA-CONCLUSOS-ORDEM-CRONOLOGICA_print-combo-cargo.png

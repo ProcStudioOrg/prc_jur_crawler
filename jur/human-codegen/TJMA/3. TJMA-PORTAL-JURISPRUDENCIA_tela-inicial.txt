@@ -1,0 +1,343 @@
+==================================================================
+TELA: PESQUISA DE JURISPRUDÊNCIAS
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/sg-jurisprudence-form
+
+Objetivo da tela:
+Permitir a pesquisa de jurisprudências do Tribunal de Justiça do Estado do Maranhão utilizando diversos critérios de busca e filtros avançados.
+
+Descrição:
+Nesta tela o usuário informa os critérios desejados para localizar jurisprudências. A pesquisa pode ser realizada por ementa, inteiro teor, número do processo, relator, órgão julgador, classe judicial, período de publicação e demais filtros disponíveis.
+
+==================================================================
+
+ELEMENTO 01
+==================================================================
+
+Nome:
+Relatório.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Selecionar o tipo de relatório de jurisprudência que será consultado.
+
+Ações possíveis:
+
+1. Abrir a lista de opções: Acórdãos; Acórdãos - Turma Recursal; Decisões Democráticas; Decisões Democráticas - Turma Recursal; Súmulas e Precedentes; Sentenças de 1º Grau; Sentenças - Juizado Especial.
+2. Selecionar o relatório desejado.
+
+Comportamento observado:
+
+Ao selecionar uma opção, a pesquisa passa a considerar o tipo de relatório escolhido.
+
+==================================================================
+
+ELEMENTO 02
+==================================================================
+
+Nome:
+Pesquisar pelo(a).
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Definir o critério principal utilizado para a pesquisa.
+
+Ações possíveis:
+
+1. Abrir a lista de opções: Ementa, Inteiro Teor; Advogado(s); Classe; Número(s) do acórdão; Número(s) do Processo.
+2. Selecionar o tipo de pesquisa.
+
+Comportamento observado:
+
+O critério selecionado determina a forma como a chave de busca será interpretada.
+
+==================================================================
+
+ELEMENTO 03
+==================================================================
+
+Nome:
+Chave de busca.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Informar o termo que será utilizado na pesquisa.
+
+Ações possíveis:
+
+1. Digitar palavra, expressão ou informação correspondente ao critério selecionado.
+
+Comportamento observado:
+
+O sistema utiliza o conteúdo informado para localizar as jurisprudências compatíveis.
+
+==================================================================
+
+ELEMENTO 04
+==================================================================
+
+Nome:
+Sistema.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Filtrar a pesquisa pelo sistema de origem da jurisprudência.
+
+Ações possíveis:
+
+1. Abrir a lista de opções: Todos; Themis SG; PJE 2G 
+2. Selecionar um sistema.
+
+Comportamento observado:
+
+A pesquisa é limitada ao sistema selecionado.
+
+==================================================================
+
+ELEMENTO 05
+==================================================================
+
+Nome:
+Relator.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Filtrar a pesquisa pelo relator do julgamento.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Selecionar um relator.
+
+Comportamento observado:
+
+A pesquisa retorna apenas jurisprudências relacionadas ao relator informado.
+
+==================================================================
+
+ELEMENTO 06
+==================================================================
+
+Nome:
+Revisor.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Filtrar a pesquisa pelo revisor do processo.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Selecionar um revisor.
+
+Comportamento observado:
+
+A pesquisa considera apenas os registros vinculados ao revisor selecionado.
+
+==================================================================
+
+ELEMENTO 07
+==================================================================
+
+Nome:
+Classe Judicial.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Filtrar a pesquisa pela classe processual.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Selecionar uma classe judicial.
+
+Comportamento observado:
+
+A pesquisa considera apenas processos pertencentes à classe selecionada.
+
+==================================================================
+
+ELEMENTO 08
+==================================================================
+
+Nome:
+Órgão Julgador.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Filtrar a pesquisa pelo órgão responsável pelo julgamento.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Selecionar um órgão julgador.
+
+Comportamento observado:
+
+A pesquisa retorna apenas jurisprudências do órgão selecionado.
+
+==================================================================
+
+ELEMENTO 09
+==================================================================
+
+Nome:
+Condição.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Definir a forma de tratamento dos termos informados na pesquisa.
+
+Ações possíveis:
+
+1. Abrir a lista de opções: E; OU; Termo Único.
+2. Selecionar uma condição de pesquisa.
+
+Comportamento observado:
+
+A condição escolhida altera a forma como o sistema interpreta os termos informados.
+
+==================================================================
+
+ELEMENTO 10
+==================================================================
+
+Nome:
+Data Início Publicação.
+
+Tipo:
+Campo de data.
+
+Objetivo:
+Informar a data inicial do período de publicação das jurisprudências.
+
+Ações possíveis:
+
+1. Informar uma data.
+2. Selecionar uma data pelo calendário.
+
+Comportamento observado:
+
+A pesquisa considera apenas publicações realizadas a partir da data informada.
+
+==================================================================
+
+ELEMENTO 11
+==================================================================
+
+Nome:
+Data Final Publicação.
+
+Tipo:
+Campo de data.
+
+Objetivo:
+Informar a data final do período de publicação das jurisprudências.
+
+Ações possíveis:
+
+1. Informar uma data.
+2. Selecionar uma data pelo calendário.
+
+Comportamento observado:
+
+A pesquisa considera apenas publicações realizadas até a data informada.
+
+==================================================================
+
+ELEMENTO 12
+==================================================================
+
+Nome:
+Captcha.
+
+Tipo:
+Imagem de validação.
+
+Objetivo:
+Validar que a consulta está sendo realizada por um usuário.
+
+Ações possíveis:
+
+1. Visualizar o código.
+2. Solicitar um novo código utilizando o botão de atualização.
+
+Comportamento observado:
+
+O sistema exige o preenchimento correto do código antes da realização da pesquisa.
+
+==================================================================
+
+ELEMENTO 13
+==================================================================
+
+Nome:
+Digite o valor da imagem.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Informar o código exibido no captcha.
+
+Ações possíveis:
+
+1. Digitar os caracteres exibidos.
+
+Comportamento observado:
+
+O sistema valida o conteúdo informado antes de executar a consulta.
+
+==================================================================
+
+ELEMENTO 14
+==================================================================
+
+Nome:
+Consultar.
+
+Tipo:
+Botão.
+
+Objetivo:
+Executar a pesquisa utilizando os critérios informados.
+
+Ações possíveis:
+
+1. Realizar a pesquisa.
+
+Comportamento observado:
+
+Após a validação dos campos obrigatórios e do captcha, o sistema apresenta os resultados correspondentes aos filtros informados.
+
+Prints:
+4. TJMA-PORTAL-JURISPRUDENCIA_print_tela-inicial
+5. TJMA-JURISCONSULT_print_combo-relatorio.png
+6. TJMA-JURISCONSULT_print_combo-pesquisar-pelo.png
+7. TJMA-JURISCONSULT_print_combo-sistema.png
+8. TJMA-JURISCONSULT_print_combo-relator.png
+9. TJMA-JURISCONSULT_print_combo-revisor.png
+10. TJMA-JURISCONSULT_print_combo-classe-judicial.png
+11. TJMA-JURISCONSULT_print_combo-orgao-julgador.png
+12. TJMA-JURISCONSULT_print_combo-condicao.png
+13. TJMA-JURISCONSULT_print_calendario-data-inicio-publicacao.png

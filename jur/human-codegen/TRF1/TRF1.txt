@@ -1,0 +1,84 @@
+https://jurisprudencia.cjf.jus.br/trf1/index.xhtml
+
+h2: Pesquisa livre 
+    input text: É aqui que faz a Pesquisa
+        checkbox:
+            Mostrar informação resumida [ ] true/false
+            Pesquisa avançada [ ] true/false
+                true:
+                    label: Número 
+                        input text
+                    label: Classe
+                        input text
+                    label: Relator
+                        input text
+                    label: Revisor
+                        input text
+                    label: Relator Convocado
+                        input text
+                    label: Relator para Acórdão
+                        input text
+                    label: Órgão Julgador
+                        input text
+                    label: Origem
+                        input text
+                    label: Ementa/Decisão
+                        input text
+                    label: Referência legislativa
+                        input text
+                    label: Data (dd/mm/aaaa)
+                        input text
+                            input text
+                                Tipo: 
+                                    Julgamento
+                                    Publicação
+    Checkbox:
+        [ ] Acórdãos
+        [ ] Súmulas
+        [ ] Arguições
+        [ ] Decisões Monocráticas
+        [ ] Todos
+    Fonte:
+        [ ] TRF1
+        [ ] JEF1
+    Button:
+        Pesquisar
+        Limpar
+
+Após clicar no botão "Pesquisar" na mesma página vai aparecer o seguinte:
+
+    label: Critério de pesquisa
+        aqui fica o que foi preenchido no formulário em cima 
+    label: Acórdãos
+            número de documentos encontrados
+    
+    label: (Exibindo n - n de n, Página: n/n) (esses n são números)
+        button: botão para voltar na primeira página
+            button: botão para voltar na página anterior
+                button: botão do números de página para navegar 
+                    button: botão avançar para página anterior
+                        button: botão para avançar para a ultima página
+                            select: número de documentos que serão exibidos na página.
+                            (10, 30 e 50)
+    
+    label: acórdão (número do documento)
+        Aba: Documento
+        o documento possui esses dados:
+            Tipo
+            Número
+            Classe
+            Relator(a)
+            Origem
+            Órgão julgador
+            Data
+            Data da publicação
+            Fonte da publicação
+            Ementa
+            Decisão
+            Inteiro teor: tem um link "acesse aqui" https://pje2g-consultapublica.trf1.jus.br/consultapublica/ConsultaPublica/listView.seam ou pode ser essa página:
+            https://arquivo.trf1.jus.br/PesquisaMenuArquivo.asp?p1="n do documento" (substituir "n do documento" pelo número do documento sem as aspas duplas. Para conseguir ver o documento completo)
+        
+        Aba: Inteiro Teor (quando clica abre essa página: https://jurisprudencia.cjf.jus.br/trf1/%3Ca%20href=%22https://arquivo.trf1.jus.br/PesquisaMenuArquivo.asp?p1="n do documento"%22%20target=%22_blank%22%20%3EAcesse%20Aqui%3C/a%3E esse link não está funcionando, aparece uma página de erro.)
+            button com icon de documento: abre um card mostrando apenas a Ementa
+            button com icom de impressão: abre um card para imprimir os dados do documento 
+

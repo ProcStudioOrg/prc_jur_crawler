@@ -1,0 +1,107 @@
+Tribunal,Estado(s),Sistema,Instância,Citações/Intimações,Anexos,Audiências,Dá ciência,Info
+TJAC,Acre,ESAJ,1a,Sim,"Sim, ciência não necessária",Não disponibilizado pelo tribunal,Não,
+TJAC,Acre,ESAJ,2a,Sim,"Sim, ciência não necessária",Não disponibilizado pelo tribunal,Não,
+TJAC,Acre,e-Proc,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,https://eproc1g.tjac.jus.br/
+TJAC,Acre,e-Proc,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,https://portal-eproc.tjac.jus.br/
+TJAL,Alagoas,ESAJ,1a,Sim,"Sim, ciência não necessária",Não disponibilizado pelo tribunal,Sim,https://www2.tjal.jus.br/esaj/
+TJAL,Alagoas,ESAJ,2a,Sim,"Sim, ciência não necessária",Não disponibilizado pelo tribunal,Sim,https://www2.tjal.jus.br/esaj/
+TJAL,Alagoas,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não encontrado
+TJAP,Amapá,Tucujuris,1a,Implementação provavelmente rápida,Não,Não,Não,https://tucujuris.tjap.jus.br/pages/login/
+TJAP,Amapá,Tucujuris,2a,Implementação provavelmente rápida,Não,Não,Não,https://tucujuris.tjap.jus.br/pages/login/
+TJAP,Amapá,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,https://pje.tjap.jus.br/1g/login.seam
+TJAP,Amapá,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,https://pje.tjap.jus.br/2g/login.seam
+TJAM,Amazonas,ESAJ,1a,Sim,"Sim, ciência não necessária",Não disponibilizado pelo tribunal,Sim,https://consultasaj.tjam.jus.br/
+TJAM,Amazonas,ESAJ,2a,Sim,"Sim, ciência não necessária",Não disponibilizado pelo tribunal,Sim,https://consultasaj.tjam.jus.br/
+TJAM,Amazonas,Projudi,1a,Sim,"Sim, ciência necessária",Sim,Sim,https://projudi.tjam.jus.br/projudi/
+TJBA,Bahia,ESAJ,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJBA,Bahia,ESAJ,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJBA,Bahia,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,https://pje.tjba.jus.br/pje/login.seam
+TJBA,Bahia,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,https://pje2g.tjba.jus.br/pje/login.seam
+TJBA,Bahia,Projudi,1a,Sim,"Sim, ciência necessária",Não disponibilizado pelo tribunal,Sim,https://projudi.tjba.jus.br/projudi/
+TJBA,Bahia,Projudi,2a,Sim,"Sim, ciência necessária",Não disponibilizado pelo tribunal,Sim,https://projudi.tjba.jus.br/projudi/
+TJCE,Ceará,ESAJ,1a,Sim,"Sim, ciência não necessária",Não disponibilizado pelo tribunal,Sim,https://esaj.tjce.jus.br/esaj
+TJCE,Ceará,ESAJ,2a,Sim,"Sim, ciência não necessária",Sim,Sim,https://esaj.tjce.jus.br/esaj
+TJCE,Ceará,PJe,1a,Sim,"Sim, ciência necessária",Sim,Implementação provavelmente rápida,https://pje.tjce.jus.br/pje1grau/login.seam
+TJCE,Ceará,PJe,2a,Sim,"Sim, ciência necessária",Sim,Implementação provavelmente rápida,https://pje.tjce.jus.br/pje2grau/login.seam
+TJCE,Ceará,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJCE,Ceará,Projudi,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJDFT,Distrito Federal e Territórios,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,https://pje.tjdft.jus.br/pje/login.seam
+TJDFT,Distrito Federal e Territórios,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,https://pje2i.tjdft.jus.br/pje/login.seam
+TJDFT,Distrito Federal e Territórios,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJDFT,Distrito Federal e Territórios,Projudi,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJES,Espírito Santo,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,https://pje.tjes.jus.br/pje/login.seam
+TJES,Espírito Santo,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,https://pje.tjes.jus.br/pje2g/
+TJES,Espírito Santo,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJES,Espírito Santo,Projudi,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJGO,Goiás,Projudi,1a,Sim,"Sim, ciência não necessária",Sim,Sim,
+TJGO,Goiás,Projudi,2a,Sim,"Sim, ciência não necessária",Sim,Sim,
+TJMA,Maranhão,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJMA,Maranhão,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJMA,Maranhão,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJMA,Maranhão,Projudi,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJMT,Mato Grosso,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJMT,Mato Grosso,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJMT,Mato Grosso,Projudi,1a,Sim,"Sim, ciência necessária",Não disponibilizado pelo tribunal,Implementação provavelmente rápida,
+TJMT,Mato Grosso,Projudi,2a,Sim,"Sim, ciência necessária",Não disponibilizado pelo tribunal,Implementação provavelmente rápida,
+TJMS,Mato Grosso do Sul,ESAJ,1a,Sim,"Sim, ciência não necessária",Não disponibilizado pelo tribunal,Sim,
+TJMS,Mato Grosso do Sul,ESAJ,2a,Sim,"Sim, ciência não necessária",Não disponibilizado pelo tribunal,Sim,
+TJMG,Minas Gerais,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJMG,Minas Gerais,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJMG,Minas Gerais,Projudi,1a,Sim,"Sim, ciência necessária",Não disponibilizado pelo tribunal,Implementação provavelmente rápida,
+TJMG,Minas Gerais,Projudi,2a,Sim,"Sim, ciência necessária",Não disponibilizado pelo tribunal,Implementação provavelmente rápida,
+TJMG,Minas Gerais,Próprio,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJMG,Minas Gerais,Próprio - JPe Themis,2a,Implementação provavelmente rápida,Não,Não,Não,
+TJPA,Pará,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJPA,Pará,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJPA,Pará,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não,
+TJPA,Pará,Projudi,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não,
+TJPA,Pará,Libra,1a,Implementação provavelmente rápida,Não,Não,Não,https://libra.tjpa.jus.br/libra/autenticacao/inicio.action
+TJPA,Pará,Libra,2a,Implementação provavelmente rápida,Não,Não,Não,https://libra.tjpa.jus.br/libra/autenticacao/inicio.action
+TJPB,Paraíba,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,https://pje.tjpb.jus.br/pje/
+TJPB,Paraíba,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,https://pjesg.tjpb.jus.br/pje2g/
+TJPB,Paraíba,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJPB,Paraíba,Projudi,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJPR,Paraná,Projudi,1a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJPR,Paraná,Projudi,2a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJPE,Pernambuco,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJPE,Pernambuco,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJPE,Pernambuco,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJPE,Pernambuco,Projudi,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJPI,Piauí,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJPI,Piauí,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJPI,Piauí,Projudi,1a,Sim,"Sim, ciência necessária",Não disponibilizado pelo tribunal,Não,
+TJPI,Piauí,Projudi,2a,Sim,"Sim, ciência necessária",Não disponibilizado pelo tribunal,Não,
+TJRJ,Rio de Janeiro,Próprio,1a,Sim,"Sim, ciência necessária",Não,Sim,
+TJRJ,Rio de Janeiro,Próprio,2a,Sim,"Sim, ciência necessária",Não,Sim,
+TJRJ,Rio de Janeiro,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJRJ,Rio de Janeiro,Projudi,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJRJ,Rio de Janeiro,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJRJ,Rio de Janeiro,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJRN,Rio Grande do Norte,ESAJ,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJRN,Rio Grande do Norte,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJRN,Rio Grande do Norte,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJRN,Rio Grande do Norte,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJRN,Rio Grande do Norte,Projudi,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJRS,Rio Grande do Sul,PJe,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJRS,Rio Grande do Sul,Próprio,1a,Sim,"Sim, ciência não necessária",Não,Não,
+TJRS,Rio Grande do Sul,Próprio,2a,Sim,"Sim, ciência não necessária",Não,Não,
+TJRS,Rio Grande do Sul,e-Proc,1a,Sim,"Sim, ciência não necessária",Implementação provavelmente rápida,Sim,
+TJRS,Rio Grande do Sul,e-Proc,2a,Sim,"Sim, ciência não necessária",Implementação provavelmente rápida,Sim,
+TJRO,Rondônia,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJRO,Rondônia,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJRO,Rondônia,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJRR,Roraima,PJe,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJRR,Roraima,PJe,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJRR,Roraima,Projudi,1a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJRR,Roraima,Projudi,2a,Sim,"Sim, ciência necessária",Sim,Sim,
+TJSC,Santa Catarina,ESAJ,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJSC,Santa Catarina,ESAJ,2a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,
+TJSC,Santa Catarina,e-Proc,1a,Sim,"Sim, ciência não necessária",Implementação provavelmente rápida,Sim,
+TJSC,Santa Catarina,e-Proc,2a,Sim,"Sim, ciência não necessária",Implementação provavelmente rápida,Sim,
+TJSP,São Paulo,ESAJ,1a,Sim,"Sim, ciência não necessária",Não disponibilizado pelo tribunal,Sim,
+TJSP,São Paulo,ESAJ,2a,Sim,"Sim, ciência não necessária",Não disponibilizado pelo tribunal,Sim,
+TJSE,Sergipe,Próprio,1a,Sim,Não disponibilizado pelo tribunal,Não,Sim,
+TJSE,Sergipe,Próprio,2a,Sim,Não disponibilizado pelo tribunal,Não,Sim,
+TJTO,Tocantins,e-Proc,1a,Sim,"Sim, ciência não necessária",Implementação provavelmente rápida,Sim,
+TJTO,Tocantins,e-Proc,2a,Sim,"Sim, ciência não necessária",Implementação provavelmente rápida,Sim,
+TJTO,Tocantins,Projudi,1a,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,Não disponibilizado pelo tribunal,

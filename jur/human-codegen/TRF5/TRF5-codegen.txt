@@ -1,0 +1,243 @@
+# TRF5 Crawler - Documentacao Tecnica para Codegen
+# Gerado via MCP Playwright em 2026-02-04
+
+## URL Base
+https://juliapesquisa.trf5.jus.br/julia-pesquisa/pesquisa#consulta
+
+## URL de Resultados
+https://juliapesquisa.trf5.jus.br/julia-pesquisa/pesquisa#resultado
+(A URL nao muda durante a paginacao, o conteudo e carregado via JavaScript)
+
+## Estrutura do Formulario de Pesquisa
+
+### 1. Tipo de Consulta (Radio Buttons)
+| Opcao           | Seletor                                    | Valor    |
+|-----------------|---------------------------------------------|----------|
+| Segundo Grau    | radio "Consultar Segundo Grau" [checked]    | default  |
+| Turma Recursal  | radio "Turma Recursal"                      |          |
+| TRU             | radio "TRU"                                 |          |
+
+Quando "Turma Recursal" selecionado, aparecem checkboxes de estados:
+- AL, CE, PB, PE, RN, SE
+
+### 2. Campo Pesquisa Livre
+- Seletor: textbox "Pesquisa Livre"
+- Placeholder: "Informe o termo desejado"
+- Operadores disponiveis: "e", "ou", "nao", "prox", "adj", "$"
+
+### 3. Numero do Processo
+- Seletor: textbox "Número do Processo"
+- Placeholder: "Informe o número do processo"
+
+### 4. Relator(a)
+- Seletor: textbox "Relator(a)" (funciona como combobox)
+- Placeholder: "Selecione o(a) relator(a)"
+- Opcoes: Lista de desembargadores em ordem alfabetica
+
+### 5. Orgao Julgador
+- Seletor: textbox "Órgao Julgador" (funciona como combobox)
+- Placeholder: "Selecione o órgão julgador"
+- Opcoes: PLENO, PRESIDÊNCIA, 1ª SEÇÃO, 2ª SEÇÃO, 3ª SEÇÃO, 1ª TURMA, 2ª TURMA, 3ª TURMA, 4ª TURMA, etc.
+
+### 6. Data Julgamento/Publicacao
+- Data Inicio: textbox "Julgamento/publicação" placeholder="de (dd/mm/aaaa)"
+- Data Fim: textbox "até (dd/mm/aaaa)"
+
+### 7. Botoes de Acao
+- Limpar: button "Limpar"
+- Pesquisar: button "Pesquisar"
+
+## Estrutura dos Resultados
+
+### Cabecalho dos Resultados
+- Criterio: generic "expressão: \"{query}\""
+- Total: generic "{n} documentos localizados"
+
+### Estrutura de Cada Documento
+Cada resultado esta em uma row/gridcell com a seguinte estrutura:
+
+```
+row:
+  gridcell:
+    generic: "Documento #{n}"
+    generic (navegacao):
+      generic "Documento anterior" [cursor=pointer]
+      generic "Próximo documento" [cursor=pointer]
+    generic (metadados):
+      generic: "Processo:"
+      link " {numeroProcesso}":
+        /url: https://www.trf5.jus.br/index.php/consulta-processual-fisico-e-eletronico
+      generic: "Órgão Julgador:"
+      generic: {orgaoJulgador}
+      generic: "Classe:"
+      generic: {classe}
+      generic: "Data Julgamento:"
+      generic: {dataJulgamento}
+      generic: "Relator(a):"
+      generic: {relator}
+      generic: "Data Autuação:"
+      generic: {dataAutuacao}
+      generic: "Texto"
+      link " Copiar texto"
+      generic (ementa):
+        text: {textoEmenta}
+        text: "(PROCESSO: {numero}, {classe}, {relator}, {turma}, JULGAMENTO: {data})"
+```
+
+### Campos Extraiveis de Cada Documento
+| Campo           | Localizacao/Seletor                                    |
+|-----------------|--------------------------------------------------------|
+| Numero Processo | link dentro de gridcell (texto do link)                |
+| Orgao Julgador  | generic apos "Órgão Julgador:"                         |
+| Classe          | generic apos "Classe:"                                 |
+| Data Julgamento | generic apos "Data Julgamento:"                        |
+| Relator         | generic apos "Relator(a):"                             |
+| Data Autuacao   | generic apos "Data Autuação:"                          |
+| Ementa/Texto    | ultimo generic dentro do gridcell (multiplos text)     |
+
+### Paginacao
+- Status: status "1 - 10 de 10.000 registros"
+- Anterior: link "Anterior"
+- Proximo: link "Próximo"
+- Paginas numeradas: links com numeros
+
+## Comportamento Esperado do Crawler
+
+### 1. navigateToSearch()
+```javascript
+await page.goto('https://juliapesquisa.trf5.jus.br/julia-pesquisa/pesquisa#consulta', { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('input[placeholder="Informe o termo desejado"]', { timeout: 30000 });
+```
+
+### 2. configureFilters(filters)
+Filtros disponiveis:
+- tipoConsulta: 'segundoGrau' | 'turmaRecursal' | 'tru'
+- estados: array de estados (AL, CE, PB, PE, RN, SE) - apenas para turmaRecursal
+- numeroProcesso: string
+- relator: string
+- orgaoJulgador: string
+- dataInicio: DD/MM/YYYY
+- dataFim: DD/MM/YYYY
+
+```javascript
+// Selecionar tipo de consulta
+if (filters.tipoConsulta === 'turmaRecursal') {
+  await page.click('text=Turma Recursal');
+} else if (filters.tipoConsulta === 'tru') {
+  await page.click('text=TRU');
+}
+
+// Numero do processo
+if (filters.numeroProcesso) {
+  await page.fill('input[placeholder="Informe o número do processo"]', filters.numeroProcesso);
+}
+
+// Relator (combobox)
+if (filters.relator) {
+  await page.click('input[placeholder="Selecione o(a) relator(a)"]');
+  await page.click(`text=${filters.relator}`);
+}
+
+// Orgao Julgador (combobox)
+if (filters.orgaoJulgador) {
+  await page.click('input[placeholder="Selecione o órgão julgador"]');
+  await page.click(`text=${filters.orgaoJulgador}`);
+}
+
+// Datas
+if (filters.dataInicio) {
+  await page.fill('input[placeholder="de (dd/mm/aaaa)"]', filters.dataInicio);
+}
+if (filters.dataFim) {
+  await page.fill('input[placeholder="até (dd/mm/aaaa)"]', filters.dataFim);
+}
+```
+
+### 3. executeSearch(query)
+```javascript
+// Preencher campo de pesquisa
+await page.fill('input[placeholder="Informe o termo desejado"]', query);
+
+// Clicar em pesquisar
+await page.click('button:has-text("Pesquisar")');
+
+// Aguardar resultados (URL muda para #resultado)
+await page.waitForURL(/.*#resultado/, { timeout: 30000 });
+await page.waitForSelector('text=documentos localizados', { timeout: 30000 });
+```
+
+### 4. extractResults()
+```javascript
+const results = [];
+const rows = await page.locator('div[role="row"]').all();
+
+for (const row of rows) {
+  const gridcell = row.locator('div[role="gridcell"]');
+  if (!(await gridcell.count())) continue;
+
+  // Extrair numero do processo
+  const processoLink = gridcell.locator('a').first();
+  const numeroProcesso = (await processoLink.textContent())?.trim().replace(/\s/g, '') || '';
+
+  // Extrair metadados via labels
+  const getText = async (label) => {
+    const el = gridcell.locator(`text=${label}`).locator('xpath=following-sibling::*[1]');
+    return (await el.textContent())?.trim() || '';
+  };
+
+  const orgaoJulgador = await getText('Órgão Julgador:');
+  const classe = await getText('Classe:');
+  const dataJulgamento = await getText('Data Julgamento:');
+  const relator = await getText('Relator(a):');
+  const dataAutuacao = await getText('Data Autuação:');
+
+  // Extrair ementa (ultimo bloco de texto)
+  const ementaEl = gridcell.locator('div').last();
+  const ementa = (await ementaEl.innerText())?.trim() || '';
+
+  results.push({
+    numeroProcesso,
+    orgaoJulgador,
+    classe,
+    dataJulgamento,
+    relator,
+    dataAutuacao,
+    ementa: ementa.substring(0, 15000)
+  });
+}
+
+return results;
+```
+
+### 5. hasNextPage()
+```javascript
+const nextBtn = page.locator('a:has-text("Próximo")');
+return await nextBtn.isVisible() && await nextBtn.isEnabled();
+```
+
+### 6. goToNextPage()
+```javascript
+await page.click('a:has-text("Próximo")');
+await page.waitForTimeout(1500);
+await page.waitForSelector('div[role="gridcell"]', { timeout: 30000 });
+```
+
+### 7. getTotalResults()
+```javascript
+const statusText = await page.locator('div[role="status"]').textContent();
+const match = statusText.match(/de\s+([\d.]+)\s*registros/);
+return match ? parseInt(match[1].replace(/\./g, ''), 10) : null;
+```
+
+## Notas Importantes
+
+1. O site usa SPA (Single Page Application) - a URL nao muda durante a paginacao
+2. Os resultados sao carregados dinamicamente via JavaScript
+3. Os campos Relator e Orgao Julgador funcionam como combobox (clicar para abrir lista)
+4. O sistema se chama "Julia | Pesquisa Inteligente"
+5. Por padrao, mostra 10 resultados por pagina
+6. O maximo de resultados exibidos e 10.000
+7. O numero do processo vem sem formatacao (apenas digitos)
+8. A ementa vem com quebras de linha e formatacao
+9. Existe navegacao entre documentos individuais (anterior/proximo documento)
+10. Os estados (AL, CE, PB, PE, RN, SE) sao relevantes apenas para Turma Recursal

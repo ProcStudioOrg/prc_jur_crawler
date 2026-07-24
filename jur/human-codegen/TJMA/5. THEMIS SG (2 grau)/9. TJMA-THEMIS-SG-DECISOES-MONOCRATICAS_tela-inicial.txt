@@ -1,0 +1,126 @@
+===============================================================
+TELA: DECISÕES MONOCRÁTICAS
+===============================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/sg-monocratic-decisions-form
+
+Objetivo da tela:
+Permitir a consulta do relatório de decisões monocráticas do segundo grau por Câmara e diferentes critérios de pesquisa.
+
+Descrição:
+A tela disponibiliza um filtro para seleção da Câmara, um filtro para definição do tipo de pesquisa, um campo para informar a chave de busca correspondente e um botão para executar a consulta.
+
+===============================================================
+ELEMENTO 01
+===============================================================
+
+Nome:
+Combo "Câmara"
+
+Tipo:
+Lista suspensa.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Permite selecionar a Câmara ou órgão julgador que será utilizado como filtro da consulta.
+
+Opções disponíveis:
+
+• TRIBUNAL PLENO
+• CÂMARAS CÍVEIS REUNIDAS
+• PRIMEIRA CÂMARA CÍVEL
+• SEGUNDA CÂMARA CÍVEL
+• TERCEIRA CÂMARA CÍVEL
+• QUARTA CÂMARA CÍVEL
+• QUINTA CÂMARA CÍVEL
+• SEXTA CÂMARA CÍVEL
+• SÉTIMA CÂMARA CÍVEL
+• OITAVA CÂMARA CÍVEL
+• CÂMARAS CRIMINAIS REUNIDAS
+• PRIMEIRA CÂMARA CRIMINAL
+• SEGUNDA CÂMARA CRIMINAL
+• TERCEIRA CÂMARA CRIMINAL
+• CÂMARA ESPECIAL DE FÉRIAS
+• GABINETE DA PRESIDÊNCIA
+• GABINETE DA VICE-PRESIDÊNCIA
+• CORREGEDORIA GERAL DA JUSTIÇA
+• PRIMEIRAS CÂMARAS CÍVEIS REUNIDAS
+• SEGUNDAS CÂMARAS CÍVEIS REUNIDAS
+
+Ação:
+Clique na seta localizada à direita do campo para visualizar e selecionar uma das opções disponíveis.
+
+===============================================================
+ELEMENTO 02
+===============================================================
+
+Nome:
+Combo "Pesquisar pelo(a)"
+
+Tipo:
+Lista suspensa.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Permite selecionar o critério que será utilizado para localizar as decisões monocráticas.
+
+Opções disponíveis:
+
+• Relator do Processo
+• Número do processo
+• Data da Decisão
+
+Ação:
+Clique na seta localizada à direita do campo para visualizar e selecionar uma das opções disponíveis.
+
+===============================================================
+ELEMENTO 03
+===============================================================
+
+Nome:
+Campo de pesquisa
+
+Tipo:
+Campo de texto.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Campo destinado à digitação da informação correspondente ao critério selecionado no filtro "Pesquisar pelo(a)".
+
+Observação:
+Quando o critério selecionado for "Data da Decisão", o campo passa a utilizar o formato de data (dd/mm/aaaa).
+
+Ação:
+Digite a informação correspondente ao critério de pesquisa selecionado.
+
+===============================================================
+ELEMENTO 04
+===============================================================
+
+Nome:
+Botão "CONSULTAR"
+
+Tipo:
+Botão de ação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Realiza a pesquisa das decisões monocráticas utilizando os filtros informados.
+
+Ação:
+Após selecionar a Câmara, definir o critério de pesquisa e preencher o campo correspondente, clique no botão "CONSULTAR" para executar a consulta.
+
+Prints:
+
+• 10. TJMA-THEMIS-SG-DECISOES-MONOCRATICAS_print_tela-inicial.png
+• 11. TJMA-THEMIS-SG-DECISOES-MONOCRATICAS_print_combo-camara.png
+• 12. TJMA-THEMIS-SG-DECISOES-MONOCRATICAS_print_combo-pesquisar-pelo.png

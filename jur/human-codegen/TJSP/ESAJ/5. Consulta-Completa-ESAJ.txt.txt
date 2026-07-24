@@ -1,0 +1,467 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DE SÃO PAULO (TJSP)
+CONSULTA COMPLETA – ESAJ
+============================================================
+
+URL:
+https://esaj.tjsp.jus.br/cjsg/consultaCompleta.do?servico=780002
+
+Objetivo:
+Permitir a realização de pesquisas avançadas de jurisprudência por meio da combinação de pesquisa livre e filtros específicos disponibilizados pelo sistema e-SAJ.
+
+Descrição Geral:
+
+A tela "Consulta Completa" disponibiliza mecanismos de pesquisa avançada para localização de acórdãos, decisões monocráticas, homologações de acordo e demais julgados cadastrados no sistema de jurisprudência do Tribunal de Justiça de São Paulo.
+
+O usuário pode combinar palavras-chave, operadores lógicos e diversos filtros para refinar os resultados da pesquisa.
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Pesquisa Livre.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Permitir pesquisar jurisprudência utilizando palavras, expressões e operadores lógicos.
+
+Ações possíveis:
+
+• Clicar no campo.
+• Digitar texto.
+• Editar o conteúdo.
+• Apagar o conteúdo.
+
+Comportamento observado:
+
+• O campo aceita texto livre.
+
+• O cursor é posicionado automaticamente ao clicar no campo.
+
+• É possível utilizar operadores lógicos para refinar a pesquisa.
+
+• Ao posicionar o cursor sobre o título do campo é exibida a seguinte tooltip:
+
+"Pesquisa Livre"
+
+Busca acórdãos que contenham as palavras/expressões desejadas no seu inteiro teor.
+
+------------------------------------------------------------
+
+Botão "E"
+
+Objetivo:
+Pesquisar documentos que contenham todas as palavras informadas.
+
+Tooltip apresentada:
+
+Busca todas as palavras desejadas. 
+
+Quando nenhum operador é indicado, o "E" é utilizado por padrão.
+
+Exemplo:
+
+furto E carro E estacionamento
+
+------------------------------------------------------------
+
+Botão "OU"
+
+Objetivo:
+
+Pesquisar documentos que contenham uma ou mais palavras informadas.
+
+Tooltip apresentada:
+
+Busca alguma(s) ou todas as palavras desejadas.
+
+Exemplo:
+
+bicicleta OU carro OU motocicleta
+
+------------------------------------------------------------
+
+Botão "NÃO"
+
+Objetivo:
+
+Excluir determinada palavra da pesquisa.
+
+Tooltip apresentada:
+
+Busca uma palavra e não outra.
+
+Exemplo:
+
+corrupção NÃO passiva
+
+------------------------------------------------------------
+
+Botão "..."
+
+Objetivo:
+
+Pesquisar frases exatas.
+
+Tooltip apresentada:
+
+Busca uma frase completa que esteja entre aspas.
+
+Exemplo:
+
+"mandado de segurança"
+
+------------------------------------------------------------
+
+Link:
+
+Como utilizar os filtros
+
+Objetivo:
+
+Abrir a página de ajuda contendo instruções sobre operadores lógicos utilizados na pesquisa.
+
+Comportamento observado:
+
+Ao clicar no link é aberta a seguinte página:
+
+https://esaj.tjsp.jus.br/WebHelp//#id_operadores_logicos.htm
+
+------------------------------------------------------------
+
+Checkbox
+
+Pesquisar por sinônimos
+
+Objetivo:
+
+Permitir que o sistema considere sinônimos durante a pesquisa.
+
+Comportamento observado:
+
+• Pode ser marcado ou desmarcado.
+
+• Quando marcado, amplia o alcance da pesquisa utilizando palavras de significado semelhante.
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+
+Pesquisa por Campos Específicos.
+
+Objetivo:
+
+Permitir refinar a pesquisa utilizando filtros específicos.
+
+Campos disponíveis:
+
+• Ementa
+
+• Número do recurso
+
+• Número do registro
+
+• Relator(a)
+
+• Magistrado prolator
+
+• Classe
+
+• Assunto
+
+• Comarca
+
+• Órgão julgador
+
+• Data do julgamento
+
+• Data de publicação
+
+Todos os campos permitem edição manual quando aplicável.
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Campo:
+
+Relator(a)
+
+Tipo:
+
+Campo de pesquisa com janela modal.
+
+Objetivo:
+
+Pesquisar e selecionar o relator responsável pelo julgamento.
+
+Componentes da janela:
+
+• Campo para pesquisa.
+
+• Botão Procurar.
+
+• Lista de relatores.
+
+• Barra de rolagem.
+
+• Checkbox para seleção.
+
+• Quantidade de registros encontrados.
+
+• Botão Selecionar.
+
+• Botão Todos.
+
+• Botão Nenhum.
+
+• Botão Fechar.
+
+Comportamento observado:
+
+Ao clicar na lupa ao lado do campo é aberta uma janela modal contendo todos os relatores cadastrados.
+
+O usuário pode pesquisar pelo nome do relator e selecionar um ou mais registros.
+
+Após clicar em "Selecionar", o nome escolhido é inserido automaticamente no campo da consulta.
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Campo:
+
+Magistrado prolator.
+
+Tipo:
+
+Campo de pesquisa com janela modal.
+
+Objetivo:
+
+Selecionar o magistrado prolator da decisão.
+
+Comportamento observado:
+
+Possui funcionamento semelhante ao campo Relator(a), disponibilizando pesquisa por nome e seleção através de janela modal.
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Campo:
+
+Classe.
+
+Tipo:
+
+Campo de pesquisa com janela modal.
+
+Objetivo:
+
+Selecionar a classe processual utilizada como filtro da pesquisa.
+
+Comportamento observado:
+
+Ao clicar na lupa é aberta uma janela contendo todas as classes cadastradas para seleção.
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Campo:
+
+Assunto.
+
+Tipo:
+
+Campo de pesquisa com janela modal.
+
+Objetivo:
+
+Filtrar os resultados pelo assunto processual.
+
+Comportamento observado:
+
+A seleção ocorre por meio de janela modal aberta através da lupa existente ao lado do campo.
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Campo:
+
+Comarca.
+
+Tipo:
+
+Campo de pesquisa com janela modal.
+
+Objetivo:
+
+Filtrar a pesquisa por comarca.
+
+Comportamento observado:
+
+Ao clicar na lupa é aberta uma lista de comarcas disponíveis para seleção.
+
+============================================================
+ELEMENTO 08
+============================================================
+
+Campo:
+
+Órgão julgador.
+
+Tipo:
+
+Campo de pesquisa com janela modal.
+
+Objetivo:
+
+Permitir selecionar o órgão responsável pelo julgamento.
+
+Comportamento observado:
+
+A pesquisa é realizada através de janela modal aberta pela lupa ao lado do campo.
+
+============================================================
+ELEMENTO 09
+============================================================
+
+Campo:
+
+Data do julgamento.
+
+Tipo:
+
+Período.
+
+Objetivo:
+
+Filtrar decisões pela data de julgamento.
+
+Comportamento observado:
+
+Permite informar uma data inicial e uma data final.
+
+Formato aceito:
+
+dd/mm/aaaa
+
+============================================================
+ELEMENTO 10
+============================================================
+
+Campo:
+
+Data de publicação.
+
+Tipo:
+
+Período.
+
+Objetivo:
+
+Filtrar decisões pela data de publicação.
+
+Comportamento observado:
+
+Permite informar um intervalo de datas.
+
+Formato aceito:
+
+dd/mm/aaaa
+
+============================================================
+ELEMENTO 11
+============================================================
+
+Grupo:
+
+Origem.
+
+Objetivo:
+
+Selecionar a origem das decisões pesquisadas.
+
+Opções disponíveis:
+
+• 2º Grau (marcado por padrão)
+
+• Colégios Recursais
+
+============================================================
+ELEMENTO 12
+============================================================
+
+Grupo:
+
+Tipo de Publicação.
+
+Objetivo:
+
+Selecionar quais tipos de decisões serão pesquisadas.
+
+Opções disponíveis:
+
+• Acórdãos (marcado por padrão)
+
+• Homologações de Acordo
+
+• Decisões Monocráticas
+
+============================================================
+ELEMENTO 13
+============================================================
+
+Grupo:
+
+Ordenar por.
+
+Objetivo:
+
+Definir a ordenação dos resultados da pesquisa.
+
+Opções disponíveis:
+
+• Data de publicação (marcado por padrão)
+
+• Relevância
+
+============================================================
+ELEMENTO 14
+============================================================
+
+Botão:
+
+Pesquisar.
+
+Objetivo:
+
+Executar a pesquisa utilizando todos os filtros informados.
+
+Comportamento observado:
+
+Ao clicar no botão, o sistema processa os parâmetros informados e apresenta a lista de resultados compatíveis.
+
+============================================================
+ELEMENTO 15
+============================================================
+
+Botão:
+
+Limpar.
+
+Objetivo:
+
+Remover todas as informações preenchidas na tela.
+
+Comportamento observado:
+
+Todos os campos retornam ao estado inicial da página.

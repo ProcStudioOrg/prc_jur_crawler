@@ -1,0 +1,84 @@
+===============================================================
+TELA: PAUTAS DE JULGAMENTO
+===============================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/sg-judgment-schedule-form
+
+Objetivo da tela:
+Permitir a consulta das pautas de julgamento do segundo grau por diferentes critérios de pesquisa.
+
+Descrição:
+A tela disponibiliza um filtro em formato de lista suspensa para definição do tipo de consulta, um campo para informar a chave de pesquisa correspondente e um botão para executar a consulta.
+
+===============================================================
+ELEMENTO 01
+===============================================================
+
+Nome:
+Combo "Pesquisar pelo(a)"
+
+Tipo:
+Lista suspensa.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Permite selecionar o critério que será utilizado para localizar a pauta de julgamento.
+
+Opções disponíveis:
+
+• Data da Pauta
+• Relator do Processo
+• Número do processo
+• Data do Voto de Julgamento
+
+Ação:
+Clique na seta localizada à direita do campo para visualizar e selecionar uma das opções disponíveis.
+
+===============================================================
+ELEMENTO 02
+===============================================================
+
+Nome:
+Campo de pesquisa
+
+Tipo:
+Campo de texto.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Campo destinado à digitação da informação correspondente ao critério selecionado no filtro "Pesquisar pelo(a)".
+
+Observação:
+Quando a opção "Data da Pauta" estiver selecionada, o campo apresenta a máscara de preenchimento "xx/xx/xxxx".
+
+Ação:
+Digite a informação correspondente ao critério de pesquisa selecionado.
+
+===============================================================
+ELEMENTO 03
+===============================================================
+
+Nome:
+Botão "CONSULTAR"
+
+Tipo:
+Botão de ação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Realiza a pesquisa das pautas de julgamento utilizando os critérios informados.
+
+Ação:
+Após selecionar o tipo de pesquisa e preencher o campo correspondente, clique no botão "CONSULTAR" para executar a consulta.
+
+Prints:
+
+• 7. TJMA-THEMIS-SG-PAUTAS-JULGAMENTO_print_tela-inicial.png
+• 8. TJMA-THEMIS-SG-PAUTAS-JULGAMENTO_print_combo-pesquisar-pelo.png

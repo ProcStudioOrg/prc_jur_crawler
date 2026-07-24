@@ -1,0 +1,124 @@
+===============================================================
+TELA: PRECATÓRIO
+===============================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/sg-precatory-form
+
+Objetivo da tela:
+Permitir a consulta de processos de precatório do segundo grau por diferentes critérios de pesquisa.
+
+Descrição:
+A tela disponibiliza um filtro em formato de lista suspensa para definição do tipo de pesquisa, um campo para informar a chave de busca, um CAPTCHA para validação da consulta, um campo para digitação do código da imagem e um botão para executar a pesquisa.
+
+===============================================================
+ELEMENTO 01
+===============================================================
+
+Nome:
+Combo "Tipo"
+
+Tipo:
+Lista suspensa.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Permite selecionar o critério que será utilizado para localizar o processo de precatório.
+
+Opções disponíveis:
+
+• Número do Processo
+• Numeração Única
+• Parte
+• Advogado
+• OAB
+• CPF
+
+Ação:
+Clique na seta localizada à direita do campo para visualizar e selecionar uma das opções disponíveis.
+
+===============================================================
+ELEMENTO 02
+===============================================================
+
+Nome:
+Campo "Chave de busca"
+
+Tipo:
+Campo de texto.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Campo destinado à digitação da informação correspondente ao tipo de pesquisa selecionado.
+
+Exemplo apresentado na tela:
+9999999999
+
+Ação:
+Digite o valor correspondente ao critério de pesquisa escolhido.
+
+===============================================================
+ELEMENTO 03
+===============================================================
+
+Nome:
+CAPTCHA
+
+Tipo:
+Validação de segurança.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Exibe um código de verificação em imagem para validação da consulta.
+
+Ação:
+Caso não seja possível visualizar o código apresentado, clique no ícone de atualização para gerar uma nova imagem.
+
+===============================================================
+ELEMENTO 04
+===============================================================
+
+Nome:
+Campo "Digite o valor da imagem"
+
+Tipo:
+Campo de texto.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Campo destinado à digitação do código apresentado no CAPTCHA.
+
+Ação:
+Digite exatamente os caracteres exibidos na imagem de validação.
+
+===============================================================
+ELEMENTO 05
+===============================================================
+
+Nome:
+Botão "CONSULTAR"
+
+Tipo:
+Botão de ação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Realiza a consulta dos processos de precatório utilizando os critérios informados.
+
+Ação:
+Após selecionar o tipo de pesquisa, preencher a chave de busca e informar corretamente o CAPTCHA, clique no botão "CONSULTAR" para executar a pesquisa.
+
+Prints:
+
+• 14. TJMA-THEMIS-SG-PRECATORIO_print_tela-inicial.png
+• 15. TJMA-THEMIS-SG-PRECATORIO_print_combo-tipo.png

@@ -1,0 +1,189 @@
+# TRF1 Crawler - Documentação Técnica para Codegen
+# Gerado via MCP Playwright em 2026-02-03
+
+## URL Base
+https://jurisprudencia.cjf.jus.br/trf1/index.xhtml
+
+## Estrutura do Formulário de Pesquisa
+
+### 1. Campo de Pesquisa Livre
+- ID: formulario:textoLivre
+- Tipo: text
+- Descrição: Campo principal de busca por palavras/expressões
+
+### 2. Checkboxes de Controle
+- Mostrar informação resumida: formulario:lista_resumida_input
+- Pesquisa avançada: formulario:ckbAvancada_input (IMPORTANTE: clicar para expandir campos avançados)
+
+### 3. Campos da Pesquisa Avançada (visíveis após marcar "Pesquisa avançada")
+| Campo              | ID                          | Tipo   |
+|--------------------|------------------------------|--------|
+| Número             | formulario:j_idt28           | text   |
+| Classe             | formulario:j_idt30           | text   |
+| Relator            | formulario:j_idt32           | text   |
+| Revisor            | formulario:j_idt34           | text   |
+| Relator Convocado  | formulario:j_idt36           | text   |
+| Relator p/ Acórdão | formulario:j_idt38           | text   |
+| Órgão Julgador     | formulario:j_idt40           | text   |
+| Origem             | formulario:j_idt42           | text   |
+| Ementa/Decisão     | formulario:j_idt44           | text   |
+| Ref. Legislativa   | formulario:j_idt46           | text   |
+| Data Início        | formulario:j_idt48_input     | date (dd/mm/aaaa) |
+| Data Fim           | formulario:j_idt50_input     | date (dd/mm/aaaa) |
+
+### 4. Tipo de Data (Combobox)
+- ID: formulario:combo_tipo_data_input
+- Opções:
+  - value: "DTDP" -> "Julgamento"
+  - value: "DTPP" -> "Publicação"
+
+### 5. Tipos de Documento (Checkboxes)
+| Tipo               | ID                                | value      |
+|--------------------|-----------------------------------|------------|
+| Acórdãos           | formulario:selectTiposDocumento:0 | ACORDAO    |
+| Súmulas            | formulario:selectTiposDocumento:1 | SUMULA     |
+| Arguições          | formulario:selectTiposDocumento:2 | ARGUICAO   |
+| Decisões Monocr.   | formulario:selectTiposDocumento:3 | DECISAOMONO|
+| Todos              | formulario:j_idt57_input          | (marcar todos) |
+
+### 6. Fonte (Checkboxes)
+| Fonte | ID                    | value |
+|-------|-----------------------|-------|
+| TRF1  | formulario:j_idt62:0  | TRF1  |
+| JEF1  | formulario:j_idt62:1  | JEF1  |
+
+### 7. Botões
+- Pesquisar: #formulario\\:j_idt69 ou button[class*="pesquisar"]
+- Limpar: #formulario\\:j_idt70
+
+## Estrutura dos Resultados
+
+### Informações da Pesquisa
+- Critério de pesquisa: Exibido na área de resultados
+- Total de documentos: Link com texto "N Documento(s) encontrado(s)"
+
+### Paginação
+- Seletor de linhas por página: formulario:tabelaDocumentos:j_id23 (10, 30, 50)
+- Info de página: "(Exibindo X - Y de Z, Página: N/M)"
+- Navegação:
+  - Primeira página: .ui-paginator-first
+  - Página anterior: .ui-paginator-prev
+  - Próxima página: .ui-paginator-next:not(.ui-state-disabled)
+  - Última página: .ui-paginator-last
+  - Páginas numeradas: .ui-paginator-pages a
+
+### Estrutura de Cada Resultado
+Cada resultado está em uma table com class "Lista de jurisprudência".
+
+Campos extraíveis de cada documento:
+| Campo              | Seletor/Localização                          |
+|--------------------|----------------------------------------------|
+| Tipo               | row "Tipo" -> próxima row                    |
+| Número             | row "Número" -> próxima row (dois formatos)  |
+| Classe             | row "Classe" -> próxima row                  |
+| Relator(a)         | row "Relator(a)" -> próxima row              |
+| Origem             | row "Origem" -> próxima row                  |
+| Órgão Julgador     | row "Órgão julgador" -> próxima row          |
+| Data (Julgamento)  | row "Data" -> próxima row                    |
+| Data da Publicação | row "Data da publicação" -> próxima row      |
+| Fonte da Publicação| row "Fonte da publicação" -> próxima row     |
+| Ementa             | row "Ementa" -> próxima row (texto longo)    |
+| Decisão            | row "Decisão" -> próxima row                 |
+| Inteiro Teor       | link "Acesse Aqui" -> href                   |
+
+### Abas de Cada Documento
+- Aba "Documento": exibe dados estruturados
+- Aba "Inteiro Teor": link para documento completo
+
+## Seletores CSS para Extração
+
+```javascript
+// Extração de dados de um documento
+const extrairDocumento = async (docElement) => {
+  const getValorCampo = (campo) => {
+    const rows = docElement.querySelectorAll('tr');
+    for (let i = 0; i < rows.length; i++) {
+      if (rows[i].textContent.trim() === campo && rows[i+1]) {
+        return rows[i+1].textContent.trim();
+      }
+    }
+    return '';
+  };
+
+  return {
+    tipo: getValorCampo('Tipo'),
+    numero: getValorCampo('Número'),
+    classe: getValorCampo('Classe'),
+    relator: getValorCampo('Relator(a)'),
+    origem: getValorCampo('Origem'),
+    orgaoJulgador: getValorCampo('Órgão julgador'),
+    dataJulgamento: getValorCampo('Data'),
+    dataPublicacao: getValorCampo('Data da publicação'),
+    fontePublicacao: getValorCampo('Fonte da publicação'),
+    ementa: getValorCampo('Ementa'),
+    decisao: getValorCampo('Decisão'),
+    inteiroTeor: docElement.querySelector('a[href*="pje2g"]')?.href ||
+                 docElement.querySelector('a[href*="arquivo.trf1"]')?.href || ''
+  };
+};
+```
+
+## URLs de Inteiro Teor
+- PJe: https://pje2g.trf1.jus.br/consultapublica/ConsultaPublica/listView.seam
+- Arquivo: https://arquivo.trf1.jus.br/PesquisaMenuArquivo.asp?p1={NUMERO}
+
+## Comportamento Esperado do Crawler
+
+### 1. navigateToSearch()
+```javascript
+await page.goto('https://jurisprudencia.cjf.jus.br/trf1/index.xhtml');
+await page.waitForLoadState('networkidle');
+// Expandir pesquisa avançada
+await page.locator('#formulario\\:ckbAvancada_input').click();
+await page.waitForSelector('#formulario\\:pesquisaAvancada:not([style*="display: none"])');
+```
+
+### 2. configureFilters(filters)
+Filtros disponíveis:
+- dataInicio (dd/mm/aaaa)
+- dataFim (dd/mm/aaaa)
+- tipoData ('DTDP' para Julgamento, 'DTPP' para Publicação)
+- relator (nome do desembargador)
+- orgaoJulgador (ex: "PRIMEIRA TURMA")
+- classe (ex: "APELAÇÃO CÍVEL")
+- tiposDocumento (array: ['ACORDAO', 'SUMULA', etc])
+- fontes (array: ['TRF1', 'JEF1'])
+
+### 3. executeSearch(query)
+```javascript
+await page.fill('#formulario\\:textoLivre', query);
+await page.click('button:has-text("Pesquisar")');
+await page.waitForLoadState('networkidle');
+await page.waitForSelector('.ui-datatable-data');
+```
+
+### 4. extractResults()
+- Seletor container: .ui-datatable-data > tr
+- Cada linha contém uma tabela "Lista detalhada de jurisprudência"
+
+### 5. hasNextPage()
+```javascript
+const nextBtn = page.locator('.ui-paginator-next:not(.ui-state-disabled)');
+return await nextBtn.isVisible();
+```
+
+### 6. goToNextPage()
+```javascript
+await page.click('.ui-paginator-next:not(.ui-state-disabled)');
+await page.waitForLoadState('networkidle');
+```
+
+## Notas Importantes
+
+1. O site usa PrimeFaces/JSF - os IDs podem ter formato "formulario:campo"
+2. Escaping necessário em seletores: # -> \\:
+3. A pesquisa avançada precisa ser expandida via JavaScript click (elemento intercepta pointer events)
+4. Os campos de data usam DatePicker - preencher diretamente no input funciona
+5. A paginação é AJAX - aguardar networkidle após navegação
+6. Checkboxes são PrimeFaces - usar .click() no parent div pode ser necessário
+7. Os resultados são exibidos em tabelas aninhadas com estrutura label-valor

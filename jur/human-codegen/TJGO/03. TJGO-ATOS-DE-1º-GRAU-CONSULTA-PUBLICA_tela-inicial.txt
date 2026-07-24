@@ -1,0 +1,164 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DE GOIÁS (TJGO)
+CONSULTA PÚBLICA DE ATOS JUDICIAIS – 1º GRAU
+============================================================
+
+LINK:
+https://www.tjgo.jus.br/sdm2/consultaPublica/consultarAtoJudicialPublicado
+
+
+============================================================
+OBJETIVO
+============================================================
+
+Permitir a consulta pública de atos judiciais relacionados aos processos físicos de 1º Grau do Tribunal de Justiça do Estado de Goiás.
+
+A pesquisa pode ser realizada por meio de texto livre ou pelo número do processo. Após a execução da consulta, o sistema apresenta os registros encontrados em uma tabela, contendo o número do processo, o tipo do ato, a data do ato e os trechos em que o conteúdo pesquisado foi localizado.
+
+A página informa que a ferramenta contempla somente atos de processos físicos realizados após março de 2014. Para consultar processos eletrônicos, o sistema disponibiliza um link específico de acesso.
+
+============================================================
+TELA 01 – CONSULTA PÚBLICA DE ATOS JUDICIAIS
+============================================================
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Consulta pública de atos judiciais – 1º grau
+
+Tipo:
+Título da funcionalidade
+
+Obrigatório:
+Não
+
+Descrição:
+Identifica a página destinada à consulta pública de atos judiciais de processos físicos de 1º Grau.
+
+O título é exibido na parte superior do quadro principal da página.
+
+Ação:
+Não possui ação direta.
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Informe o texto ou o número do processo
+
+Tipo:
+Campo de texto
+
+Obrigatório:
+Sim, para realizar a pesquisa
+
+Descrição:
+Permite informar o conteúdo que será utilizado na consulta.
+
+A pesquisa pode ser feita mediante:
+
+• palavra;
+• termo;
+• expressão;
+• nome;
+• trecho textual;
+• número do processo.
+
+O texto “Informe o texto ou o número do processo” é exibido no interior do campo antes do preenchimento.
+
+Ação:
+Clicar no campo e digitar o texto ou o número do processo que será pesquisado.
+
+Comportamento observado:
+
+• O campo aceita texto livre.
+
+• O campo também pode ser utilizado para informar o número de um processo.
+
+• No exemplo documentado, foi informado o termo “FURTO”.
+
+• Após a execução da pesquisa, o termo informado permanece visível no campo.
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Pesquisar
+
+Tipo:
+Botão
+
+Obrigatório:
+Sim, para executar a consulta
+
+Descrição:
+Executa a pesquisa de acordo com o conteúdo informado no campo “Informe o texto ou o número do processo”.
+
+Ação:
+Clicar no botão “Pesquisar” após preencher o campo de consulta.
+
+Comportamento observado:
+
+• Ao clicar no botão, o sistema processa a consulta.
+
+• Quando são localizados registros, os resultados são apresentados na mesma página, abaixo do formulário.
+
+• O campo de pesquisa e o botão permanecem disponíveis após a exibição dos resultados, permitindo a realização de uma nova consulta.
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Somente atos de processos físicos realizados após março de 2014
+
+Tipo:
+Texto informativo
+
+Obrigatório:
+Não
+
+Descrição:
+Informa a abrangência temporal e processual da consulta.
+
+O aviso esclarece que a ferramenta apresenta somente atos relacionados a processos físicos realizados após março de 2014.
+
+Ação:
+Não possui ação direta.
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+CLIQUE AQUI
+
+Tipo:
+Link
+
+Obrigatório:
+Não
+
+Descrição:
+Disponibiliza acesso à página destinada à consulta de processos eletrônicos.
+
+O link aparece após a informação:
+
+“Para processo eletrônico CLIQUE AQUI.”
+
+Ação:
+Clicar no link para acessar o ambiente de consulta relacionado aos processos eletrônicos.
+
+Comportamento observado:
+
+• O link é apresentado em destaque e sublinhado.
+
+• Ao ser selecionado, direciona o usuário para outro ambiente de consulta.
+
+PRINTS:
+
+04. TJGO-ATOS-DE-1º-GRAU-CONSULTA-PUBLICA_print_tela-inicial.png

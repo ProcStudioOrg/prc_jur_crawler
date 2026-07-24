@@ -1,0 +1,271 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO DE JANEIRO (TJRJ)
+CONSULTA À JURISPRUDÊNCIA – SISTEMA eproc
+TELA DE RESULTADOS DA PESQUISA
+============================================================
+
+URL:
+https://eproc1g.tjrj.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados
+
+Objetivo:
+Apresentar os documentos localizados conforme os critérios informados na pesquisa, permitindo sua visualização, refinamento, impressão e acesso aos documentos relacionados.
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Tela de resultados.
+
+Tipo:
+Página de resultados.
+
+Objetivo:
+Exibir os documentos encontrados após a execução da pesquisa.
+
+Comportamento observado:
+
+• A página informa a quantidade total de documentos encontrados.
+
+• Os resultados são apresentados em blocos individuais.
+
+• Cada bloco apresenta informações resumidas do julgamento.
+
+• O usuário pode navegar pelos resultados sem retornar à tela inicial.
+
+Print:
+10. TJRJ-EPROC-RESULTADO-PESQUISA_print_tela-resultado.png
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Filtros laterais.
+
+Tipo:
+Painel de filtros.
+
+Objetivo:
+Permitir o refinamento dos resultados apresentados.
+
+Comportamento observado:
+
+• Permanecem disponíveis o termo pesquisado e os filtros utilizados.
+
+• O usuário pode alterar critérios de pesquisa diretamente nesta tela.
+
+• Os filtros podem ser combinados para restringir os resultados.
+
+Print:
+11. TJRJ-EPROC-RESULTADO-PESQUISA_print_filtros-laterais.png
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Inteiro teor.
+
+Tipo:
+Botão de documento.
+
+Objetivo:
+Permitir visualizar o inteiro teor do julgamento.
+
+Comportamento observado:
+
+• Ao selecionar a opção, o sistema abre o documento correspondente.
+
+• O documento é exibido em formato próprio para consulta.
+
+Print:
+12. TJRJ-EPROC-RESULTADO-PESQUISA_print_inteiro-teor.png
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Consulta processual.
+
+Tipo:
+Botão.
+
+Objetivo:
+Permitir acessar os detalhes completos do processo judicial.
+
+Comportamento observado:
+
+• Ao clicar no número do processo, o sistema abre uma nova página contendo os dados processuais completos.
+
+• Essa funcionalidade possui documentação própria.
+
+Print:
+13. TJRJ-EPROC-RESULTADO-PESQUISA_print_consulta-processual.pdf.png
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Visualizar/copiar o acórdão em PDF.
+
+Tipo:
+Botão.
+
+Objetivo:
+Exibir a versão resumida do acórdão.
+
+Comportamento observado:
+
+• O documento é aberto em nova visualização.
+
+• O texto pode ser copiado.
+
+Print:
+14. TJRJ-EPROC-RESULTADO-PESQUISA_print_visualizar-copia-acordao.pdf.png
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+Imprimir PDF.
+
+Tipo:
+Botão.
+
+Objetivo:
+Permitir a impressão do documento PDF exibido.
+
+Comportamento observado:
+
+• Aciona a rotina de impressão do navegador ou do visualizador de PDF.
+
+Print:
+15. TJRJ-EPROC-RESULTADO-PESQUISA_print_botao-imprimir.pdf.png
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+Tipo de documento.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Filtrar os resultados pelo tipo de documento.
+
+Comportamento observado:
+
+• Permite selecionar o tipo de documento desejado.
+
+• Após a seleção, os resultados podem ser refinados.
+
+Print:
+16. TJRJ-EPROC-RESULTADO-PESQUISA_print_combo-tipo-documento.png
+
+============================================================
+ELEMENTO 08
+============================================================
+
+Nome:
+Classe processual.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Filtrar os resultados pela classe processual.
+
+Comportamento observado:
+
+• Exibe as classes disponíveis.
+
+• Permite restringir a pesquisa conforme a classe selecionada.
+
+Print:
+17. TJRJ-EPROC-RESULTADO-PESQUISA_print_combo-classe-processual.png
+
+============================================================
+ELEMENTO 09
+============================================================
+
+Nome:
+Calendário — Data da decisão.
+
+Tipo:
+Seletor de data.
+
+Objetivo:
+Filtrar os resultados pela data da decisão ou julgamento.
+
+Comportamento observado:
+
+• Permite selecionar data inicial e final.
+
+• O período informado é utilizado como critério adicional de pesquisa.
+
+Print:
+18. TJRJ-EPROC-RESULTADO-PESQUISA_print_calendario-data-decisao.png
+
+============================================================
+ELEMENTO 10
+============================================================
+
+Nome:
+Relator / Relatora.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Filtrar os resultados pelo relator responsável pelo julgamento.
+
+Comportamento observado:
+
+• Exibe os relatores cadastrados.
+
+• Permite restringir os resultados ao magistrado selecionado.
+
+Print:
+19. TJRJ-EPROC-RESULTADO-PESQUISA_print_combo-relator-relatora.png
+
+============================================================
+ELEMENTO 11
+============================================================
+
+Nome:
+Órgão julgador.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Filtrar os resultados pelo órgão julgador.
+
+Comportamento observado:
+
+• Exibe os órgãos julgadores disponíveis.
+
+• Permite restringir a pesquisa ao órgão selecionado.
+
+Print:
+20. TJRJ-EPROC-RESULTADO-PESQUISA_print_combo-orgao-julgador.png
+
+============================================================
+RESULTADO ESPERADO
+============================================================
+
+A tela apresenta os documentos encontrados conforme os critérios informados, permitindo refinamento da pesquisa, acesso ao inteiro teor, visualização e impressão dos documentos, além da consulta detalhada do processo.
+
+============================================================
+DOCUMENTAÇÃO RELACIONADA
+============================================================
+
+O acesso à Consulta Processual, aberto por meio do número do processo, é documentado em arquivo próprio:
+
+22. TJRJ-EPROC-RESULTADO-PESQUISA_print_detalhe-processo

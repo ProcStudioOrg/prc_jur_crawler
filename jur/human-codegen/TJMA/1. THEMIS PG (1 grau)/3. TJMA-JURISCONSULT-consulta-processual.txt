@@ -1,0 +1,256 @@
+==================================================================
+TELA: CONSULTA PROCESSUAL DE PRIMEIRO GRAU
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/pg-public-search-form
+
+Objetivo da tela:
+Permitir a consulta pública de processos de primeiro grau utilizando diferentes tipos de pesquisa.
+
+Descrição:
+A tela possibilita pesquisar processos selecionando o tipo de consulta e informando os dados correspondentes.
+
+==================================================================
+ELEMENTO 01
+==================================================================
+
+Nome:
+Todas as comarcas.
+
+Tipo:
+Interruptor (Switch).
+
+Objetivo:
+Permitir definir se a pesquisa será realizada em todas as comarcas do Tribunal de Justiça do Maranhão ou em uma comarca específica.
+
+Ações possíveis:
+
+1. Ativar o interruptor.
+2. Desativar o interruptor.
+
+Comportamento observado:
+
+No estado desativado, o sistema restringe a pesquisa a uma comarca específica e exibe o campo "Comarca" para seleção da unidade desejada.
+
+Estado observado:
+
+Desativado.
+
+==================================================================
+ELEMENTO 02
+==================================================================
+
+Nome:
+Comarca.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Permitir selecionar a comarca onde será realizada a pesquisa processual.
+
+Ações possíveis:
+
+1. Abrir a lista de comarcas.
+2. Selecionar uma comarca específica.
+
+Comportamento observado:
+
+Quando a opção "Todas as comarcas" está desativada, este campo é exibido obrigatoriamente para que o usuário informe a comarca desejada.
+
+Ao selecionar uma comarca, a pesquisa ficará restrita aos processos pertencentes à unidade escolhida.
+
+Opções observadas:
+
+• RIACHAO (99)
+• ROSARIO (100)
+• SANTA HELENA (102)
+• SANTA INES (103)
+• SANTA LUZIA (104)
+• SANTA LUZIA DO PARUA (105)
+• SANTA QUITERIA (106)
+• SANTA RITA (107)
+• SANTO ANTONIO DOS LOPES (108)
+• SAO BENTO (110)
+• SAO BERNARDO (111)
+• SAO DOMINGOS DO AZEITAO (214)
+• SAO DOMINGOS DO MARANHAO (112)
+• SAO FRANCISCO DO MARANHAO (114)
+• SAO JOAO BATISTA (115)
+• SAO JOAO DOS PATOS (116)
+• SAO JOSE DE RIBAMAR (117)
+• SAO LUIS (118)
+ETC...
+
+Observação:
+
+A lista é extensa e contém todas as comarcas cadastradas no sistema.
+
+==================================================================
+ELEMENTO 03
+==================================================================
+
+Nome:
+Tipo.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Permitir selecionar o tipo de identificador utilizado para localizar o processo.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Selecionar um tipo de pesquisa.
+
+Comportamento observado:
+
+Após selecionar uma opção, o sistema adapta o campo "Chave de busca" para receber o valor correspondente.
+
+Opções disponíveis:
+
+• Número do Processo (Protocolo)
+• Numeração Única
+• Numeração Única Origem
+
+
+QUANDO O SWITCH "TODAS AS COMARCAS" ESTÁ ATIVADO:
+==================================================================
+
+ELEMENTO 01
+==================================================================
+
+Nome:
+Combo "Tipo".
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Selecionar o tipo de pesquisa que será utilizada.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Selecionar um tipo de pesquisa.
+
+Comportamento observado:
+
+Ao selecionar um tipo, o sistema adapta automaticamente os campos necessários para a consulta.
+
+Opções disponíveis:
+
+• Parte (Nome)
+• Parte (CPF ou CNPJ)
+• Advogado
+• OAB
+
+==================================================================
+
+ELEMENTO 02
+==================================================================
+
+Nome:
+Campo "Chave de busca".
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Receber o valor correspondente ao tipo de pesquisa selecionado.
+
+Comportamento observado:
+
+Quando o tipo "Parte (Nome)" está selecionado, o sistema apresenta campos auxiliares para complementar a pesquisa, como:
+
+• Pai
+• Mãe
+• Data de Nascimento
+
+==================================================================
+
+ELEMENTO 03
+==================================================================
+
+Nome:
+Captcha.
+
+Tipo:
+Validação de segurança.
+
+Objetivo:
+Confirmar que a consulta está sendo realizada por um usuário.
+
+Ações possíveis:
+
+1. Informar o código exibido.
+2. Atualizar o captcha.
+
+==================================================================
+
+ELEMENTO 04
+==================================================================
+
+Nome:
+Botão "CONSULTAR".
+
+Tipo:
+Botão.
+
+Objetivo:
+Executar a pesquisa utilizando os filtros informados.
+
+==================================================================
+TELA: AVISO - CONSULTA PROCESSUAL DE PRIMEIRO GRAU
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/pg-public-search-form
+
+Objetivo da tela:
+Exibir orientações importantes sobre a indisponibilidade de consultas públicas por parte ou advogado para processos físicos migrados.
+
+Descrição:
+Ao acessar determinadas modalidades de consulta, o sistema apresenta uma janela modal contendo informações e orientações ao usuário.
+
+==================================================================
+
+ELEMENTO 01
+==================================================================
+
+Nome:
+Janela "Aviso".
+
+Tipo:
+Janela modal.
+
+Objetivo:
+Informar limitações da consulta pública e orientar sobre os meios corretos para localizar processos.
+
+Conteúdo apresentado:
+
+• Consultas por Parte e Advogado estão desativadas para processos físicos migrados.
+
+• Para processos migrados devem ser utilizados os sistemas judiciais ativos (PJe e SEEU).
+
+• Para consultar movimentações de processos físicos, utilizar o número único ou número antigo do processo.
+
+• Para obter a relação de processos vinculados ao advogado, utilizar a opção "Certidão Estadual - Certidão de Prática Forense on-line".
+
+Ações possíveis:
+
+1. Ler as orientações.
+2. Fechar a janela utilizando o botão "X".
+
+Comportamento observado:
+
+Após fechar a janela, o usuário retorna normalmente à tela de pesquisa.
+
+Prints:
+4. TJMA-JURISCONSULT_print_consulta-processual-primeiro-grau
+5. TJMA-THEMIS-PG_print_combo-comarca
+6. TJMA-THEMIS-PG_print_combo-tipo-consulta
+7. TJMA-THEMIS-PG_print_tipo-parte-nome
+8. TJMA-JURISCONSULT_print_aviso-consulta-processual-primeiro-grau

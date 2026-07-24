@@ -1,0 +1,188 @@
+===============================================================
+TELA: SERVIÇOS ASSOCIADOS AO THEMIS SG (2º GRAU)
+===============================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/submenu
+
+Objetivo da tela:
+Permitir o acesso aos serviços disponíveis do módulo Themis SG (2º Grau), direcionando o usuário para as respectivas telas de consulta.
+
+Descrição:
+A tela apresenta um campo de filtro para localizar rapidamente um serviço e uma lista contendo os serviços disponíveis. Cada serviço possui um ícone de pesquisa (lupa), utilizado para abrir sua respectiva tela de consulta.
+
+===============================================================
+ELEMENTO 01
+===============================================================
+
+Nome:
+Campo "Filtrar"
+
+Tipo:
+Campo de texto.
+
+Obrigatório:
+Não.
+
+Descrição:
+Permite localizar rapidamente um serviço da lista digitando parte do seu nome.
+
+Ação:
+À medida que o usuário digita, a lista de serviços é filtrada automaticamente.
+
+===============================================================
+ELEMENTO 02
+===============================================================
+
+Nome:
+Consulta Processual
+
+Tipo:
+Link de navegação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Acessa a tela de consulta de processos do segundo grau.
+
+Ação:
+Clicar no ícone de pesquisa (lupa).
+
+===============================================================
+ELEMENTO 03
+===============================================================
+
+Nome:
+Pautas de Julgamento
+
+Tipo:
+Link de navegação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Acessa a tela de consulta das pautas de julgamento.
+
+Ação:
+Clicar no ícone de pesquisa (lupa).
+
+===============================================================
+ELEMENTO 04
+===============================================================
+
+Nome:
+Decisões Monocráticas
+
+Tipo:
+Link de navegação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Acessa a tela de consulta das decisões monocráticas.
+
+Ação:
+Clicar no ícone de pesquisa (lupa).
+
+===============================================================
+ELEMENTO 05
+===============================================================
+
+Nome:
+Precatório
+
+Tipo:
+Link de navegação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Acessa a tela de consulta de precatórios.
+
+Ação:
+Clicar no ícone de pesquisa (lupa).
+
+===============================================================
+ELEMENTO 06
+===============================================================
+
+Nome:
+Acórdão Online
+
+Tipo:
+Link de navegação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Acessa a tela de consulta de acórdãos online.
+
+Ação:
+Clicar no ícone de pesquisa (lupa).
+
+===============================================================
+ELEMENTO 07
+===============================================================
+
+Nome:
+Ações de Constitucionalidade
+
+Tipo:
+Link de navegação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Acessa a tela de consulta das ações de constitucionalidade.
+
+Ação:
+Clicar no ícone de pesquisa (lupa).
+
+===============================================================
+ELEMENTO 08
+===============================================================
+
+Nome:
+Incidente de Resolução de Demandas Repetitivas
+
+Tipo:
+Link de navegação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Acessa a tela de consulta dos incidentes de resolução de demandas repetitivas.
+
+Ação:
+Clicar no ícone de pesquisa (lupa).
+
+===============================================================
+ELEMENTO 09
+===============================================================
+
+Nome:
+Prontos para Julgamento
+
+Tipo:
+Link de navegação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Acessa a tela de consulta dos processos prontos para julgamento.
+
+Ação:
+Clicar no ícone de pesquisa (lupa).
+
+
+Prints:
+
+• 2. TJMA-THEMIS-SG_print_tela-inicial.png

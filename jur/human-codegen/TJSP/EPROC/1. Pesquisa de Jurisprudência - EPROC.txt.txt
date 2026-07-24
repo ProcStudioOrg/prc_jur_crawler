@@ -1,0 +1,505 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DE SÃO PAULO (TJSP)
+BANCO DE SENTENÇAS – ESAJ
+============================================================
+
+URL:
+https://esaj.tjsp.jus.br/cjpg/
+
+============================================================
+SEÇÃO 01 – BANCO DE SENTENÇAS – ESAJ
+============================================================
+
+Objetivo:
+Permitir a pesquisa de sentenças judiciais do Tribunal de Justiça do Estado de São Paulo por meio de pesquisa livre e filtros específicos, como número do processo, classe processual, assunto, magistrado, vara, período de datas e ordenação dos resultados.
+
+=================================================================
+ELEMENTO 01
+=================================================================
+
+Nome:
+Pesquisa Livre.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+
+Inserir palavras, expressões ou operadores para localizar sentenças.
+
+Ações possíveis:
+
+1. Clicar dentro do campo.
+2. Digitar palavras ou expressões.
+3. Utilizar operadores de pesquisa.
+4. Editar o conteúdo digitado.
+5. Remover o conteúdo digitado.
+
+Comportamento observado:
+
+• O campo permite a inserção de texto livre para localização de sentenças.
+
+• Ao clicar no campo "Pesquisa Livre", o sistema exibe uma dica (tooltip) com a seguinte orientação:
+
+"Pesquisa Livre"
+Busca decisões que contenham as palavras/expressões desejadas no seu inteiro teor.
+
+=================================================================
+ELEMENTO 02
+=================================================================
+
+Nome:
+Operadores de pesquisa.
+
+Tipo:
+Conjunto de operadores lógicos.
+
+Objetivo:
+
+Permitir a construção de pesquisas utilizando operadores booleanos e caracteres curingas.
+
+Ações possíveis:
+
+1. Posicionar o cursor sobre um operador para visualizar sua descrição.
+2. Utilizar os operadores na construção da pesquisa.
+
+Comportamento observado:
+
+• Ao posicionar o cursor sobre um operador, o sistema exibe uma descrição da funcionalidade e um exemplo de utilização.
+
+Operadores disponíveis:
+
+------------------------------------------------------------
+
+Operador:
+E
+
+Função:
+
+Busca todas as palavras desejadas.
+
+Observação:
+
+Quando nenhum operador é informado, o operador "E" é utilizado automaticamente pelo sistema.
+
+Exemplo apresentado pelo sistema:
+
+furto E carro E estacionamento
+
+------------------------------------------------------------
+
+Operador:
+OU
+
+Função:
+
+Busca alguma ou todas as palavras desejadas.
+
+Exemplo apresentado pelo sistema:
+
+bicicleta OU carro OU motocicleta
+
+------------------------------------------------------------
+
+Operador:
+NÃO
+
+Função:
+
+Busca uma palavra e exclui outra da pesquisa.
+
+Exemplo apresentado pelo sistema:
+
+corrupção NÃO passiva
+
+------------------------------------------------------------
+
+Operador:
+?
+
+Função:
+
+Substitui um único caractere.
+
+Exemplo apresentado pelo sistema:
+
+vici?
+
+Resultados possíveis:
+
+vício
+vicia
+vicie
+
+------------------------------------------------------------
+
+Operador:
+*
+
+Função:
+
+Substitui um conjunto de caracteres.
+
+Exemplo apresentado pelo sistema:
+
+vici*
+
+Resultados possíveis:
+
+viciado
+viciada
+vicioso
+
+------------------------------------------------------------
+
+Operador:
+" "
+
+Função:
+
+Pesquisa uma expressão exata.
+
+Exemplo apresentado pelo sistema:
+
+"mandado de segurança"
+
+=================================================================
+ELEMENTO 03
+=================================================================
+
+Nome:
+Pesquisar por sinônimos.
+
+Tipo:
+Caixa de seleção (Checkbox).
+
+Objetivo:
+
+Permitir que o sistema considere palavras sinônimas durante a pesquisa.
+
+Ações possíveis:
+
+1. Marcar a opção.
+2. Desmarcar a opção.
+
+Comportamento observado:
+
+• Quando marcada, a pesquisa considera também termos sinônimos aos informados.
+
+=================================================================
+ELEMENTO 04
+=================================================================
+
+Nome:
+Tipo do número.
+
+Tipo:
+Botões de opção (Radio Button).
+
+Objetivo:
+
+Definir o tipo de identificação que será utilizado na pesquisa.
+
+Opções disponíveis:
+
+• Número do processo (selecionado por padrão);
+
+• Outros.
+
+Comportamento observado:
+
+• Apenas uma opção pode permanecer selecionada por vez.
+
+=================================================================
+ELEMENTO 05
+=================================================================
+
+Nome:
+Número do processo.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+
+Permitir a pesquisa utilizando o número do processo.
+
+Ações possíveis:
+
+1. Clicar dentro do campo.
+2. Digitar o número do processo.
+
+Comportamento observado:
+
+• O campo aceita a digitação do número conforme o tipo selecionado em "Tipo do número".
+
+=================================================================
+ELEMENTO 06
+=================================================================
+
+Nome:
+Classe.
+
+Tipo:
+Campo de seleção.
+
+Objetivo:
+
+Permitir filtrar a pesquisa por classe processual.
+
+Ações possíveis:
+
+1. Digitar diretamente no campo.
+2. Clicar no botão de pesquisa (lupa).
+3. Clicar no botão "Limpar campo".
+
+Comportamento observado:
+
+• O campo permite a digitação manual da classe processual.
+
+• Ao clicar na lupa, o sistema abre uma janela modal para seleção da classe processual.
+
+• A janela apresenta uma estrutura hierárquica composta por classes e subclasses.
+
+• Cada item pode ser expandido (+) ou recolhido (-).
+
+• Cada classe ou subclasse possui uma caixa de seleção (checkbox).
+
+• Na parte superior da janela existem os botões:
+- Procurar;
+- Limpar.
+
+• Na parte inferior da janela existem os botões:
+- Selecionar;
+- Todos;
+- Nenhum;
+- Cancelar.
+
+• Ao clicar em "Todos", todas as opções disponíveis são marcadas.
+
+• Ao clicar em "Nenhum", todas as opções marcadas são desmarcadas.
+
+• Ao clicar em "Selecionar", as classes escolhidas são inseridas no campo.
+
+• Ao clicar em "Cancelar", a janela é fechada sem aplicar alterações.
+
+• Ao clicar no botão "Limpar campo", o conteúdo informado é removido.
+
+=================================================================
+ELEMENTO 07
+=================================================================
+
+Nome:
+Assunto.
+
+Tipo:
+Campo de seleção.
+
+Objetivo:
+
+Permitir filtrar a pesquisa por assunto processual.
+
+Ações possíveis:
+
+1. Digitar diretamente no campo.
+2. Clicar na lupa.
+3. Clicar em "Limpar campo".
+
+Comportamento observado:
+
+• O funcionamento é idêntico ao elemento Classe.
+
+• A janela modal apresenta assuntos organizados em estrutura hierárquica.
+
+• Os itens podem ser expandidos (+) ou recolhidos (-).
+
+• Cada item possui checkbox para seleção.
+
+• A janela disponibiliza os botões:
+- Procurar;
+- Limpar;
+- Selecionar;
+- Todos;
+- Nenhum;
+- Cancelar.
+
+• O botão "Limpar campo" remove o conteúdo selecionado.
+
+=================================================================
+ELEMENTO 08
+=================================================================
+
+Nome:
+Magistrado.
+
+Tipo:
+Campo de seleção.
+
+Objetivo:
+
+Permitir filtrar a pesquisa pelo magistrado responsável pela decisão.
+
+Ações possíveis:
+
+1. Digitar diretamente no campo.
+2. Clicar na lupa.
+3. Clicar no botão "Limpar campo".
+
+Comportamento observado:
+
+• O campo permite a digitação manual do nome do magistrado.
+
+• Ao clicar na lupa, o sistema abre uma janela modal contendo a relação de magistrados cadastrados.
+
+• A janela apresenta um campo de pesquisa na parte superior.
+
+• Os magistrados são exibidos em formato de lista, cada um acompanhado por uma caixa de seleção (checkbox).
+
+• Na parte superior da janela estão disponíveis os botões:
+- Procurar;
+- Limpar.
+
+• Na parte inferior da janela estão disponíveis os botões:
+- Selecionar;
+- Todos;
+- Nenhum;
+- Fechar.
+
+• Ao clicar em "Todos", todos os magistrados são selecionados.
+
+• Ao clicar em "Nenhum", todas as seleções são removidas.
+
+• Ao clicar em "Selecionar", os magistrados escolhidos são inseridos no campo.
+
+• Ao clicar em "Fechar", a janela é encerrada sem aplicar alterações.
+
+• Ao clicar no botão "Limpar campo", o conteúdo informado é removido.
+
+=================================================================
+ELEMENTO 09
+=================================================================
+
+Nome:
+Data.
+
+Tipo:
+Período de datas.
+
+Objetivo:
+
+Permitir filtrar a pesquisa por intervalo de datas.
+
+Campos disponíveis:
+
+• Data inicial.
+
+• Data final.
+
+Ações possíveis:
+
+1. Informar a data inicial.
+2. Informar a data final.
+
+Comportamento observado:
+
+• Os campos aceitam datas no formato dd/mm/aaaa.
+
+=================================================================
+ELEMENTO 10
+=================================================================
+
+Nome:
+Vara.
+
+Tipo:
+Campo de seleção.
+
+Objetivo:
+
+Permitir filtrar a pesquisa pela Vara.
+
+Ações possíveis:
+
+1. Digitar diretamente no campo.
+2. Clicar na lupa.
+3. Clicar em "Limpar campo".
+
+Comportamento observado:
+
+• O funcionamento é semelhante aos campos Classe e Assunto.
+
+• A lupa abre uma janela modal contendo as Varas disponíveis.
+
+• As opções podem ser pesquisadas e selecionadas.
+
+• A janela apresenta os botões:
+- Procurar;
+- Limpar;
+- Selecionar;
+- Todos;
+- Nenhum;
+- Cancelar.
+
+• O botão "Limpar campo" remove o conteúdo selecionado.
+
+=================================================================
+ELEMENTO 11
+=================================================================
+
+Nome:
+Ordenar por.
+
+Tipo:
+Botões de opção (Radio Button).
+
+Objetivo:
+
+Definir a ordenação dos resultados.
+
+Opções disponíveis:
+
+• Data decrescente (selecionada por padrão);
+
+• Data crescente.
+
+Comportamento observado:
+
+• Apenas uma opção pode permanecer selecionada por vez.
+
+=================================================================
+BOTÃO 01
+=================================================================
+
+Nome:
+Consultar.
+
+Objetivo:
+
+Executar a pesquisa utilizando os filtros informados.
+
+Ações possíveis:
+
+1. Clicar no botão.
+
+Comportamento observado:
+
+• O sistema realiza a pesquisa considerando todos os filtros preenchidos.
+
+=================================================================
+BOTÃO 02
+=================================================================
+
+Nome:
+Limpar.
+
+Objetivo:
+
+Limpar todos os filtros da tela.
+
+Ações possíveis:
+
+1. Clicar no botão.
+
+Comportamento observado:
+
+• Todos os campos retornam ao estado inicial.

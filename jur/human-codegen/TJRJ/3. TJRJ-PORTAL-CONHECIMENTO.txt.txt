@@ -1,0 +1,43 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO DE JANEIRO (TJRJ)
+PORTAL DO CONHECIMENTO - JURISPRUDÊNCIA
+============================================================
+
+URL:
+https://www.tjrj.jus.br/web/portal-conhecimento/jurisprudencia
+
+Objetivo:
+Documentar a página inicial da área de Jurisprudência do Portal do Conhecimento e o acesso ao Sistema de Consulta à Jurisprudência.
+
+============================================================
+TELA INICIAL
+============================================================
+
+A página Jurisprudência do Portal do Conhecimento reúne serviços relacionados à pesquisa de decisões judiciais, súmulas, enunciados, precedentes e outros conteúdos disponibilizados pelo Tribunal de Justiça do Estado do Rio de Janeiro.
+
+Para acessar o sistema de pesquisa de jurisprudência, utilize a opção **Sistema de Consulta à Jurisprudência**.
+
+============================================================
+PROCEDIMENTO
+============================================================
+
+1. Acessar a página **Jurisprudência** do Portal do Conhecimento.
+
+2. Localizar a opção:
+
+Sistema de Consulta à Jurisprudência.
+
+3. Clicar em **Sistema de Consulta à Jurisprudência**.
+
+============================================================
+RESULTADO ESPERADO
+============================================================
+
+O sistema exibe a página inicial do Sistema de Consulta à Jurisprudência, permitindo ao usuário realizar pesquisas nas bases disponibilizadas pelo Tribunal de Justiça do Estado do Rio de Janeiro.
+
+============================================================
+PRINT
+============================================================
+
+Arquivo:
+TJRJ-PORTAL-CONHECIMENTO_print.png

@@ -1,0 +1,95 @@
+target page: https://portal.tcu.gov.br/jurisprudencia
+routes to search: 
+	Acórdãos
+		getByRole('link').filter({ hasText: 'Acórdãos' })
+	Jurisprudência selecionada
+		getByRole('link').filter({ hasText: 'Jurisprudência selecionada' })
+	Súmulas
+		getByRole('link').filter({ hasText: 'Súmulas' })
+	Resposta a Consultas
+		getByRole('link').filter({ hasText: 'Resposta a Consultas' })		
+
+Ignore remaining elements of this page; 
+
+	Jurisprudência: Todas as Bases TAB: 
+		await page.getByText('Jurisprudência (todas as').click();
+     	await page.getByRole('combobox', { name: 'Pesquisar por...' }).click();
+ 		await page.locator('app-barra-botoes-de-pesquisa').getByRole('button', { name: 'Pesquisar' }).click();
+
+
+	Acórdãos
+		will redirect to: https://pesquisa.apps.tcu.gov.br/pesquisa/acordao-completo
+			we must be on Acórdãos TAB:
+				getByRole('tab', { name: 'Acórdãos' })
+	
+			getByRole('combobox', { name: 'Pesquisar por...' })
+				Example of generic search: 
+					  await page.getByRole('combobox', { name: 'Pesquisar por...' }).fill('previdencia');		
+
+			operators (for fine refine search): 
+				e:
+				ou:
+				adj: 
+				não: 
+				prox: 
+				mesmo: 
+				$:
+				
+				--- 
+				
+				e:
+					Incluir operador de pesquisa E para localizar documentos que contenham todas as palavras digitadas. Operador padrão – não precisa ser digitado. Exemplo: contas E regulares
+				ou:
+					Incluir operador de pesquisa OU para localizar documentos que contenham qualquer uma e ou todas as palavras digitadas. Exemplo: regulares OU irregulares
+				adj:
+					Incluir operador de pesquisa ADJ para localizar documentos que contenham como adjacentes as palavras digitadas, na ordem especificada, em um mesmo campo do tema. Um número x pode ser utilizado para definir a distância entre palavras. Exemplo ADJx. Se nenhum valor for especificado, os termos digitados serão adjacentes. Exemplo: contas ADJ2 regulares
+				não:
+					Incluir operador de pesquisa NÃO para localizar documentos que contenham a primeira palavra digitada e não contenham a segunda palavra. Exemplo: regulares NÃO ressalvas
+				prox: 
+					Incluir operador de pesquisa PROX para localizar documentos que contenham como adjacentes as palavras digitadas, em qualquer ordem, em um mesmo campo do tema. Um número x pode ser utilizado para definir a distância entre as palavras (PROXx). Se não for especificada, a distância será de até uma palavra entre as palavras digitadas. Ex: regulares PROX2 contas
+				mesmo: 
+					Incluir operador de pesquisa MESMO para localizar documentos que contenham todos as palavras digitadas, em qualquer ordem, em um determinado campo do documento. Exemplo: irregulares MESMO multa
+				$:
+					Incluir operador de pesquisa $ para substituir qualquer palavra ou parte de uma palavra, seja uma letra, prefixo, radical ou sufixo. Exemplo: preclu$ retornará como resultado "preclusão", "precluso", entre outros.
+
+				
+				These will be reflected in the search box as: E OU ADJ NAO MESMO $
+				These can also be filtered by field (no campo...)
+					locator('.mat-mdc-form-field-infix.ng-tns-c19-28')
+
+
+				We will NOT use the second fileter (no campo) 
+
+				Other filter: 
+
+				ACORDÃO: we will not use this 
+					Numero / Ano
+					Colegiado 
+					Relator
+					CODEGEN NOT PROVIDED (NO USE)
+
+				PROCESSO: we will not use this 
+					Numero / Ano
+					Tipo
+					Nome do orgao ou entidade 
+					CODEGEN NOT PROVIDED (NO USE)
+
+				DATA DA SESSÃO (DATE): This is important ! 
+					getByRole('group', { name: 'DATA DA SESSÃO' })
+					
+					From: 
+						await page.getByText('A partir de...').click();
+						await page.getByRole('textbox', { name: 'Informe uma data inicial para' }).click();
+
+					To: 
+					  	await page.getByText('Até...').click();
+						getByRole('textbox', { name: 'Informe uma data final para' })
+
+			SEARCH BUTTON: 
+				  await page.locator('app-barra-botoes-de-pesquisa').getByRole('button', { name: 'Pesquisar' }).click();
+
+
+
+				
+	Jurisprudência selecionada -> IGNORE THIS TAB 
+	Remaining Tabs -> IGNORE THEM

@@ -1,0 +1,1094 @@
+#!/usr/bin/env node
+
+const { Command } = require('commander');
+const path = require('path');
+const fs = require('fs');
+const TRF4Crawler = require('../src/TRF4Crawler');
+const TRF1Crawler = require('../src/TRF1Crawler');
+const TRF2Crawler = require('../src/TRF2Crawler');
+const TRF3Crawler = require('../src/TRF3Crawler');
+const TRF5Crawler = require('../src/TRF5Crawler');
+const TCUCrawler = require('../src/TCUCrawler');
+const TJPRCrawler = require('../src/TJPRCrawler');
+const TJSPCrawler = require('../src/TJSPCrawler');
+const TJPACrawler = require('../src/TJPACrawler');
+const TJPAChecker = require('../src/TJPAChecker');
+const TJGOCrawler = require('../src/TJGOCrawler');
+const TJGOChecker = require('../src/TJGOChecker');
+const TJGONavigator = require('../src/TJGONavigator');
+
+const program = new Command();
+
+program
+  .name('jur')
+  .description('CLI for searching Brazilian court jurisprudence')
+  .version('1.0.0');
+
+program
+  .command('trf4')
+  .description('Search TRF4 (Tribunal Regional Federal da 4a Regiao) jurisprudence')
+  .requiredOption('-q, --query <text>', 'Search query')
+  .option('-di, --data-inicio <date>', 'Decision start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Decision end date (DD/MM/YYYY)')
+  .option('-dpi, --data-pub-inicio <date>', 'Publication start date (DD/MM/YYYY)')
+  .option('-dpf, --data-pub-fim <date>', 'Publication end date (DD/MM/YYYY)')
+  .option('--origem <tipo>', 'Origin: trf4 (default) or turmas-recursais', 'trf4')
+  .option('--fetch-inteiro-teor', 'Download full text of each result')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados')
+  .option('--max-results <number>', 'Maximum total results to collect')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'results.json')
+  .option('--orgaos <orgaos>', 'Origin filter comma-separated: TRF4,TRU4,"Turmas Recursais","Varas Federais"')
+  .option('-v, --visible', 'Show browser window (disable headless mode)')
+  .option('--headed', 'Alias for --visible: show browser window for debugging')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    log('='.repeat(60));
+    log('TRF4 Jurisprudencia Crawler');
+    log('='.repeat(60));
+    log(`Query: ${opts.query}`);
+    log(`Origem: ${opts.origem}`);
+    log(`Data Decisao Inicio: ${opts.dataInicio || 'not set'}`);
+    log(`Data Decisao Fim: ${opts.dataFim || 'not set'}`);
+    log(`Data Publicacao Inicio: ${opts.dataPubInicio || 'not set'}`);
+    log(`Data Publicacao Fim: ${opts.dataPubFim || 'not set'}`);
+    log(`Orgaos: ${opts.orgaos || 'all (default)'}`);
+    log(`Max Pages: ${opts.maxPages}`);
+    log(`Max Results: ${opts.maxResults || 'unlimited'}`);
+    log(`Fetch Inteiro Teor: ${!!opts.fetchInteiroTeor}`);
+    log(`Output: ${opts.fetchInteiroTeor ? opts.outputDir : opts.output}`);
+    log(`Headless: ${!(opts.visible || opts.headed)}`);
+    log('='.repeat(60));
+
+    const headless = !(opts.visible || opts.headed);
+    const crawler = new TRF4Crawler({
+      headless,
+      slowMo: headless ? 0 : 100,
+      timeout: 60000,
+    });
+
+    try {
+      const filters = {
+        origem: opts.origem !== 'trf4' ? opts.origem : null,
+        dataDecisaoInicio: opts.dataInicio || null,
+        dataDecisaoFim: opts.dataFim || null,
+        dataDisponibilizacaoInicio: opts.dataPubInicio || null,
+        dataDisponibilizacaoFim: opts.dataPubFim || null,
+        orgaos: opts.orgaos ? opts.orgaos.split(',').map(o => o.trim()) : null,
+      };
+
+      const searchOptions = {
+        maxPages: parseInt(opts.maxPages, 10),
+      };
+      if (opts.maxResults) {
+        searchOptions.maxResults = parseInt(opts.maxResults, 10);
+      }
+
+      const results = await crawler.search(opts.query, filters, searchOptions);
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+      if (results.totalResults) {
+        log(`Total results on server: ${results.totalResults}`);
+      }
+
+      if (opts.fetchInteiroTeor) {
+        const { batchDownload } = require('../src/inteiroTeorFetcher');
+        log(`\nDownloading inteiro teor for ${results.length} results...`);
+        const outputDir = path.resolve(opts.outputDir);
+        const downloaded = await batchDownload(results, outputDir, { log });
+
+        const successCount = downloaded.filter(r => r.arquivo).length;
+        const failCount = downloaded.filter(r => !r.arquivo).length;
+        log(`\nDownload complete: ${successCount} success, ${failCount} failed`);
+        log(`Files saved to: ${outputDir}`);
+
+        if (jsonMode) {
+          process.stdout.write(
+            JSON.stringify({
+              success: true,
+              totalResults: results.totalResults || null,
+              count: results.length,
+              downloaded: successCount,
+              failed: failCount,
+              outputDir,
+            }) + '\n'
+          );
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+
+        if (jsonMode) {
+          process.stdout.write(
+            JSON.stringify({
+              success: true,
+              totalResults: results.totalResults || null,
+              count: results.length,
+              output: outputPath,
+            }) + '\n'
+          );
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: false, error: error.message }) + '\n'
+        );
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('trf1')
+  .description('Search TRF1 (Tribunal Regional Federal da 1a Regiao) jurisprudence')
+  .requiredOption('-q, --query <text>', 'Search query')
+  .option('-di, --data-inicio <date>', 'Start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'End date (DD/MM/YYYY)')
+  .option('-td, --tipo-data <type>', 'Date type: DTDP (Julgamento) or DTPP (Publicacao)', 'DTDP')
+  .option('-r, --relator <name>', 'Relator (Desembargador) name')
+  .option('-oj, --orgao-julgador <orgao>', 'Judging body (ex: "PRIMEIRA TURMA")')
+  .option('-c, --classe <classe>', 'Case class')
+  .option('-n, --numero <numero>', 'Case number')
+  .option('-t, --tipos <tipos>', 'Document types comma-separated: ACORDAO,SUMULA,ARGUICAO,DECISAOMONO', 'ACORDAO')
+  .option('-f, --fontes <fontes>', 'Sources comma-separated: TRF1,JEF1', 'TRF1')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'results-trf1.json')
+  .option('-v, --visible', 'Show browser window (disable headless mode)')
+  .option('--headed', 'Alias for --visible: show browser window for debugging')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    log('='.repeat(60));
+    log('TRF1 Jurisprudencia Crawler');
+    log('='.repeat(60));
+    log(`Query: ${opts.query}`);
+    log(`Data Inicio: ${opts.dataInicio || 'not set'}`);
+    log(`Data Fim: ${opts.dataFim || 'not set'}`);
+    log(`Tipo Data: ${opts.tipoData}`);
+    log(`Relator: ${opts.relator || 'not set'}`);
+    log(`Orgao Julgador: ${opts.orgaoJulgador || 'not set'}`);
+    log(`Classe: ${opts.classe || 'not set'}`);
+    log(`Numero: ${opts.numero || 'not set'}`);
+    log(`Tipos Documento: ${opts.tipos}`);
+    log(`Fontes: ${opts.fontes}`);
+    log(`Max Pages: ${opts.maxPages}`);
+    log(`Output: ${opts.output}`);
+    log(`Headless: ${!(opts.visible || opts.headed)}`);
+    log('='.repeat(60));
+
+    const headless = !(opts.visible || opts.headed);
+    const crawler = new TRF1Crawler({
+      headless,
+      slowMo: headless ? 0 : 100,
+      timeout: 60000,
+    });
+
+    try {
+      const filters = {
+        dataInicio: opts.dataInicio || null,
+        dataFim: opts.dataFim || null,
+        tipoData: opts.tipoData || null,
+        relator: opts.relator || null,
+        orgaoJulgador: opts.orgaoJulgador || null,
+        classe: opts.classe || null,
+        numero: opts.numero || null,
+        tiposDocumento: opts.tipos ? opts.tipos.split(',').map(t => t.trim()) : null,
+        fontes: opts.fontes ? opts.fontes.split(',').map(f => f.trim()) : null,
+      };
+
+      const results = await crawler.search(opts.query, filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+      });
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+
+      const outputPath = path.resolve(opts.output);
+      fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: true, count: results.length, output: outputPath }) + '\n'
+        );
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: false, error: error.message }) + '\n'
+        );
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('trf2')
+  .description('Search TRF2 (Tribunal Regional Federal da 2a Regiao) jurisprudence')
+  .requiredOption('-q, --query <text>', 'Search query')
+  .option('-di, --data-inicio <date>', 'Start date for judgment (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'End date for judgment (DD/MM/YYYY)')
+  .option('-r, --relator <name>', 'Relator (Desembargador) name')
+  .option('-oj, --orgao <orgao>', 'Orgao Colegiado (ex: "1a. TURMA ESPECIALIZADA")')
+  .option('-c, --classe <classe>', 'Case class (ex: "Apelacao Civel")')
+  .option('-cp, --competencia <comp>', 'Competence area')
+  .option('-n, --numero <numero>', 'Process number')
+  .option('-ord, --ordenacao <tipo>', 'Sort order: RELEV (relevantes), DESC (recentes), ASC (antigos)', 'RELEV')
+  .option('--trf', 'Filter only TRF da 2a Regiao')
+  .option('--tru', 'Filter only TRU e Turmas Recursais')
+  .option('--ementa', 'Search only in ementa')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'results-trf2.json')
+  .option('-v, --visible', 'Show browser window (disable headless mode)')
+  .option('--headed', 'Alias for --visible: show browser window for debugging')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    log('='.repeat(60));
+    log('TRF2 Jurisprudencia Crawler');
+    log('='.repeat(60));
+    log(`Query: ${opts.query}`);
+    log(`Data Inicio: ${opts.dataInicio || 'not set'}`);
+    log(`Data Fim: ${opts.dataFim || 'not set'}`);
+    log(`Relator: ${opts.relator || 'not set'}`);
+    log(`Orgao Colegiado: ${opts.orgao || 'not set'}`);
+    log(`Classe: ${opts.classe || 'not set'}`);
+    log(`Competencia: ${opts.competencia || 'not set'}`);
+    log(`Numero Processo: ${opts.numero || 'not set'}`);
+    log(`Ordenacao: ${opts.ordenacao}`);
+    log(`TRF apenas: ${opts.trf || false}`);
+    log(`TRU apenas: ${opts.tru || false}`);
+    log(`Somente Ementa: ${opts.ementa || false}`);
+    log(`Max Pages: ${opts.maxPages}`);
+    log(`Output: ${opts.output}`);
+    log(`Headless: ${!(opts.visible || opts.headed)}`);
+    log('='.repeat(60));
+
+    const headless = !(opts.visible || opts.headed);
+    const crawler = new TRF2Crawler({
+      headless,
+      slowMo: headless ? 0 : 100,
+      timeout: 60000,
+    });
+
+    try {
+      const filters = {
+        dataInicio: opts.dataInicio || null,
+        dataFim: opts.dataFim || null,
+        relator: opts.relator || null,
+        orgaoColegiado: opts.orgao || null,
+        classe: opts.classe || null,
+        competencia: opts.competencia || null,
+        numeroProcesso: opts.numero || null,
+        ordenacao: opts.ordenacao || null,
+        segundoGrau: opts.trf || false,
+        primeiroGrau: opts.tru || false,
+        somenteEmenta: opts.ementa || false,
+      };
+
+      const results = await crawler.search(opts.query, filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+      });
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+
+      const outputPath = path.resolve(opts.output);
+      fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: true, count: results.length, output: outputPath }) + '\n'
+        );
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: false, error: error.message }) + '\n'
+        );
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('trf3')
+  .description('Search TRF3 (Tribunal Regional Federal da 3a Regiao) jurisprudence')
+  .requiredOption('-q, --query <text>', 'Search query')
+  .option('-di, --data-inicio <date>', 'Start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'End date (DD/MM/YYYY)')
+  .option('-td, --tipo-data <type>', 'Date type: Publicação or Julgamento', 'Publicação')
+  .option('-r, --relator <name>', 'Relator (Desembargador) name')
+  .option('-oj, --orgao <orgao>', 'Judging body (ex: "9ª Turma")')
+  .option('-c, --classe <classe>', 'Case class (ex: "ApCiv - APELAÇÃO CÍVEL")')
+  .option('-n, --numero <numero>', 'Process number')
+  .option('-e, --ementa <text>', 'Text to search in ementa')
+  .option('-b, --base <base>', 'Database: 0=TRF3, 1=Turmas Recursais, 2=Monocraticas', '0')
+  .option('-rpp, --results-per-page <number>', 'Results per page: 10, 30 or 50', '10')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'results-trf3.json')
+  .option('-v, --visible', 'Show browser window (disable headless mode)')
+  .option('--headed', 'Alias for --visible: show browser window for debugging')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    const baseNames = { '0': 'TRF3', '1': 'Turmas Recursais', '2': 'Monocráticas' };
+
+    log('='.repeat(60));
+    log('TRF3 Jurisprudencia Crawler');
+    log('='.repeat(60));
+    log(`Query: ${opts.query}`);
+    log(`Data Inicio: ${opts.dataInicio || 'not set'}`);
+    log(`Data Fim: ${opts.dataFim || 'not set'}`);
+    log(`Tipo Data: ${opts.tipoData}`);
+    log(`Relator: ${opts.relator || 'not set'}`);
+    log(`Orgao Julgador: ${opts.orgao || 'not set'}`);
+    log(`Classe: ${opts.classe || 'not set'}`);
+    log(`Numero Processo: ${opts.numero || 'not set'}`);
+    log(`Ementa: ${opts.ementa || 'not set'}`);
+    log(`Base: ${baseNames[opts.base] || opts.base}`);
+    log(`Resultados por Pagina: ${opts.resultsPerPage}`);
+    log(`Max Pages: ${opts.maxPages}`);
+    log(`Output: ${opts.output}`);
+    log(`Headless: ${!(opts.visible || opts.headed)}`);
+    log('='.repeat(60));
+
+    const headless = !(opts.visible || opts.headed);
+    const crawler = new TRF3Crawler({
+      headless,
+      slowMo: headless ? 0 : 100,
+      timeout: 60000,
+      base: parseInt(opts.base, 10),
+    });
+
+    try {
+      const filters = {
+        numeroProcesso: opts.numero || null,
+        relator: opts.relator || null,
+        dataInicio: opts.dataInicio || null,
+        dataFim: opts.dataFim || null,
+        tipoData: opts.tipoData || null,
+        classe: opts.classe || null,
+        orgaoJulgador: opts.orgao || null,
+        ementa: opts.ementa || null,
+        resultadosPorPagina: parseInt(opts.resultsPerPage, 10),
+      };
+
+      const results = await crawler.search(opts.query, filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+      });
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+
+      const outputPath = path.resolve(opts.output);
+      fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: true, count: results.length, output: outputPath }) + '\n'
+        );
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: false, error: error.message }) + '\n'
+        );
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('trf5')
+  .description('Search TRF5 (Tribunal Regional Federal da 5a Regiao) jurisprudence')
+  .requiredOption('-q, --query <text>', 'Search query')
+  .option('-di, --data-inicio <date>', 'Start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'End date (DD/MM/YYYY)')
+  .option('-r, --relator <name>', 'Relator (Desembargador) name')
+  .option('-oj, --orgao <orgao>', 'Orgao Julgador (ex: "1ª TURMA", "PLENO")')
+  .option('-n, --numero <numero>', 'Process number')
+  .option('-t, --tipo <tipo>', 'Consultation type: segundoGrau, turmaRecursal, tru', 'segundoGrau')
+  .option('-e, --estados <estados>', 'States for turmaRecursal (comma-separated: AL,CE,PB,PE,RN,SE)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'results-trf5.json')
+  .option('-v, --visible', 'Show browser window (disable headless mode)')
+  .option('--headed', 'Alias for --visible: show browser window for debugging')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    log('='.repeat(60));
+    log('TRF5 Jurisprudencia Crawler (Julia)');
+    log('='.repeat(60));
+    log(`Query: ${opts.query}`);
+    log(`Data Inicio: ${opts.dataInicio || 'not set'}`);
+    log(`Data Fim: ${opts.dataFim || 'not set'}`);
+    log(`Relator: ${opts.relator || 'not set'}`);
+    log(`Orgao Julgador: ${opts.orgao || 'not set'}`);
+    log(`Numero Processo: ${opts.numero || 'not set'}`);
+    log(`Tipo Consulta: ${opts.tipo}`);
+    log(`Estados: ${opts.estados || 'not set'}`);
+    log(`Max Pages: ${opts.maxPages}`);
+    log(`Output: ${opts.output}`);
+    log(`Headless: ${!(opts.visible || opts.headed)}`);
+    log('='.repeat(60));
+
+    const headless = !(opts.visible || opts.headed);
+    const crawler = new TRF5Crawler({
+      headless,
+      slowMo: headless ? 0 : 100,
+      timeout: 60000,
+      tipoConsulta: opts.tipo,
+      estados: opts.estados ? opts.estados.split(',').map(e => e.trim()) : [],
+    });
+
+    try {
+      const filters = {
+        tipoConsulta: opts.tipo || null,
+        estados: opts.estados ? opts.estados.split(',').map(e => e.trim()) : null,
+        numeroProcesso: opts.numero || null,
+        relator: opts.relator || null,
+        orgaoJulgador: opts.orgao || null,
+        dataInicio: opts.dataInicio || null,
+        dataFim: opts.dataFim || null,
+      };
+
+      const results = await crawler.search(opts.query, filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+      });
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+
+      const outputPath = path.resolve(opts.output);
+      fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: true, count: results.length, output: outputPath }) + '\n'
+        );
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: false, error: error.message }) + '\n'
+        );
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tcu')
+  .description('Search TCU (Tribunal de Contas da Uniao) jurisprudence - Acordaos')
+  .requiredOption('-q, --query <text>', 'Search query (supports operators: E, OU, ADJ, NAO, PROX, MESMO, $)')
+  .option('-di, --data-inicio <date>', 'Session start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Session end date (DD/MM/YYYY)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'results-tcu.json')
+  .option('-v, --visible', 'Show browser window (disable headless mode)')
+  .option('--headed', 'Alias for --visible: show browser window for debugging')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    log('='.repeat(60));
+    log('TCU Jurisprudencia Crawler (Acordaos)');
+    log('='.repeat(60));
+    log(`Query: ${opts.query}`);
+    log(`Data Sessao Inicio: ${opts.dataInicio || 'not set'}`);
+    log(`Data Sessao Fim: ${opts.dataFim || 'not set'}`);
+    log(`Max Pages: ${opts.maxPages}`);
+    log(`Output: ${opts.output}`);
+    log(`Headless: ${!(opts.visible || opts.headed)}`);
+    log('='.repeat(60));
+
+    const headless = !(opts.visible || opts.headed);
+    const crawler = new TCUCrawler({
+      headless,
+      slowMo: headless ? 0 : 100,
+      timeout: 60000,
+    });
+
+    try {
+      const filters = {
+        dataInicio: opts.dataInicio || null,
+        dataFim: opts.dataFim || null,
+      };
+
+      const results = await crawler.search(opts.query, filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+      });
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+
+      const outputPath = path.resolve(opts.output);
+      fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: true, count: results.length, output: outputPath }) + '\n'
+        );
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: false, error: error.message }) + '\n'
+        );
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjpr')
+  .description('Search TJPR (Tribunal de Justica do Parana) jurisprudence')
+  .requiredOption('-q, --query <text>', 'Search query (supports operators: E, OU, !NAO, PROX, $)')
+  .option('-di, --data-inicio <date>', 'Judgment start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Judgment end date (DD/MM/YYYY)')
+  .option('-l, --local <scope>', 'Search scope: 1=EMENTA, 2=INTEIRO TEOR, 99=AMBAS', '2')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'results-tjpr.json')
+  .option('--fetch-inteiro-teor', 'Download full text of each result (visits each processo page)')
+  .option('--output-dir <dir>', 'Directory for downloaded inteiro teor files', './resultados-tjpr')
+  .option('-v, --visible', 'Show browser window (disable headless mode)')
+  .option('--headed', 'Alias for --visible: show browser window for debugging')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    const scopeNames = { '1': 'EMENTA', '2': 'INTEIRO TEOR', '99': 'AMBAS' };
+
+    log('='.repeat(60));
+    log('TJPR Jurisprudencia Crawler');
+    log('='.repeat(60));
+    log(`Query: ${opts.query}`);
+    log(`Data Julgamento Inicio: ${opts.dataInicio || 'not set'}`);
+    log(`Data Julgamento Fim: ${opts.dataFim || 'not set'}`);
+    log(`Local Pesquisa: ${scopeNames[opts.local] || opts.local}`);
+    log(`Max Pages: ${opts.maxPages}`);
+    log(`Fetch Inteiro Teor: ${!!opts.fetchInteiroTeor}`);
+    log(`Output: ${opts.fetchInteiroTeor ? opts.outputDir : opts.output}`);
+    log(`Headless: ${!(opts.visible || opts.headed)}`);
+    log('='.repeat(60));
+
+    const headless = !(opts.visible || opts.headed);
+    const crawler = new TJPRCrawler({
+      headless,
+      slowMo: headless ? 0 : 100,
+      timeout: 60000,
+    });
+
+    try {
+      const filters = {
+        dataJulgamentoInicio: opts.dataInicio || null,
+        dataJulgamentoFim: opts.dataFim || null,
+        localPesquisa: opts.local || '2',
+      };
+
+      const results = await crawler.search(opts.query, filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+      });
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        log(`\nDownloading inteiro teor for ${results.length} results...`);
+        const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
+
+        const successCount = downloaded.filter(r => r.arquivo).length;
+        const failCount = downloaded.filter(r => !r.arquivo).length;
+        log(`\nDownload complete: ${successCount} success, ${failCount} failed`);
+        log(`Files saved to: ${outputDir}`);
+
+        if (jsonMode) {
+          process.stdout.write(
+            JSON.stringify({
+              success: true,
+              count: results.length,
+              downloaded: successCount,
+              failed: failCount,
+              outputDir,
+            }) + '\n'
+          );
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+
+        if (jsonMode) {
+          process.stdout.write(
+            JSON.stringify({ success: true, count: results.length, output: outputPath }) + '\n'
+          );
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: false, error: error.message }) + '\n'
+        );
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjpa')
+  .description('Search TJPA (Tribunal de Justica do Para) jurisprudence')
+  .option('-q, --query <text>', 'Search query (operadores nativos: OU, E, NAO, "expressao exata")')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de processo CNJ ou numero do acordao/decisao')
+  .option('-di, --data-inicio <date>', 'Judgment start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Judgment end date (DD/MM/YYYY)')
+  .option('-dpi, --data-pub-inicio <date>', 'Publication start date (DD/MM/YYYY)')
+  .option('-dpf, --data-pub-fim <date>', 'Publication end date (DD/MM/YYYY)')
+  .option('-r, --relator <names>', 'Relator name(s), comma-separated (exact names from /filtros)')
+  .option('-oj, --orgao <orgao>', 'Orgao Julgador Colegiado (ex: "1ª Câmara Cível Isolada")')
+  .option('-c, --classe <classe>', 'Case class')
+  .option('-a, --assunto <assunto>', 'Subject')
+  .option('--origem <origem>', 'Origin: tjpa (default), turmas, ambas', 'tjpa')
+  .option('-t, --tipo <tipo>', 'Document type: acordao, monocratica, ambos', 'ambos')
+  .option('--escopo <escopo>', 'Search scope: ementa (default) or inteiroTeor', 'ementa')
+  .option('--tipo-consulta <tc>', 'Query type: free (Formato Livre, default) or anywords (Qualquer Palavra)', 'free')
+  .option('-ord, --ordenacao <tipo>', 'Sort: relevancia (default), recentes, antigos', 'relevancia')
+  .option('--full-text', 'Include inteiro teor text in the JSON results')
+  .option('--fetch-inteiro-teor', 'Download full text of each result as .txt files')
+  .option('--output-dir <dir>', 'Directory for downloaded inteiro teor files', './resultados-tjpa')
+  .option('--verificar [amostra]', 'Audit results: re-query N sampled processos against the base (default 5)')
+  .option('--max-results <number>', 'Maximum total results to collect')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (20 results/page)', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'results-tjpa.json')
+  .option('-v, --visible', 'Ignored (TJPA uses direct API, no browser)')
+  .option('--headed', 'Ignored (TJPA uses direct API, no browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    try {
+      // Modo consulta direta por numero (TJPAChecker)
+      if (opts.numero) {
+        const checker = new TJPAChecker();
+        const digits = opts.numero.replace(/\D/g, '');
+        const res = digits.length >= 14
+          ? await checker.consultarProcesso(opts.numero)
+          : await checker.consultarDocumento(opts.numero);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        } else {
+          console.log(JSON.stringify(res, null, 2));
+        }
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (!opts.query) {
+        throw new Error('Informe -q "<termos>" para pesquisa livre ou -n <numero> para consulta direta');
+      }
+
+      log('='.repeat(60));
+      log('TJPA Jurisprudencia Crawler (API direta)');
+      log('='.repeat(60));
+      log(`Query: ${opts.query}`);
+      log(`Data Julgamento: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log(`Data Publicacao: ${opts.dataPubInicio || '-'} a ${opts.dataPubFim || '-'}`);
+      log(`Origem: ${opts.origem} | Tipo: ${opts.tipo} | Escopo: ${opts.escopo}`);
+      log(`Relator: ${opts.relator || '-'} | Orgao: ${opts.orgao || '-'}`);
+      log(`Max Pages: ${opts.maxPages} | Ordenacao: ${opts.ordenacao}`);
+      log('='.repeat(60));
+
+      const crawler = new TJPACrawler({
+        timeout: 60000,
+        includeFullText: !!opts.fullText,
+        log,
+      });
+
+      const filters = {
+        dataJulgamentoInicio: opts.dataInicio || null,
+        dataJulgamentoFim: opts.dataFim || null,
+        dataPublicacaoInicio: opts.dataPubInicio || null,
+        dataPublicacaoFim: opts.dataPubFim || null,
+        origem: opts.origem,
+        tipo: opts.tipo,
+        escopo: opts.escopo,
+        tipoConsulta: opts.tipoConsulta,
+        ordenacao: opts.ordenacao,
+        classe: opts.classe || null,
+        assunto: opts.assunto || null,
+        relatores: opts.relator ? opts.relator.split(',').map(r => r.trim()) : null,
+        orgaoJulgadorColegiado: opts.orgao || null,
+      };
+
+      const searchOptions = { maxPages: parseInt(opts.maxPages, 10) };
+      if (opts.maxResults) searchOptions.maxResults = parseInt(opts.maxResults, 10);
+
+      if (jsonMode) {
+        // silencia logs internos do crawler em modo JSON
+        const origLog = console.log;
+        console.log = () => {};
+        var results = await crawler.search(opts.query, filters, searchOptions);
+        console.log = origLog;
+      } else {
+        var results = await crawler.search(opts.query, filters, searchOptions);
+      }
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+      if (results.totalResults) log(`Total results on server: ${results.totalResults}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+        const checker = new TJPAChecker();
+        verificacao = await checker.verificarResultados(results, { amostra, log });
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        log(`\nDownloading inteiro teor for ${results.length} results...`);
+        const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
+        const successCount = downloaded.filter(r => r.arquivo).length;
+        const failCount = downloaded.filter(r => !r.arquivo).length;
+        log(`\nDownload complete: ${successCount} success, ${failCount} failed`);
+        log(`Files saved to: ${outputDir}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults || null,
+            count: results.length,
+            downloaded: successCount,
+            failed: failCount,
+            outputDir,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults || null,
+            count: results.length,
+            output: outputPath,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjgo')
+  .description('Search TJGO (Tribunal de Justica de Goias) jurisprudence — Novo Modulo PROJUDI')
+  .option('-q, --query <text>', 'Search query (aspas duplas = frase exata; palavras soltas = E implicito)')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de processo CNJ (TJGOChecker)')
+  .option('-i, --instancia <inst>', 'Instancia: todas (default), 1grau, turmas, tribunal', 'todas')
+  .option('-a, --area <area>', 'Area: todas (default), civel, criminal', 'todas')
+  .option('-om, --orgao-materia <nome>', 'Orgao/Materia (nome ou codigo; use --listar-orgaos)')
+  .option('-u, --unidade <nome>', 'Unidade especifica (serventia; resolvida pela lupa)')
+  .option('-mag, --magistrado <nome>', 'Magistrado(a) (resolvido pela lupa)')
+  .option('-ta, --tipo-ato <nome>', 'Tipo de Ato: Acordao, Ementa, Sentenca, Decisao, Decisao Monocratica, ...')
+  .option('-p, --processo <numero>', 'Filtro por numero do processo (dentro da busca)')
+  .option('-di, --data-inicio <date>', 'Publication start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Publication end date (DD/MM/YYYY)')
+  .option('--listar-orgaos', 'Lista as opcoes do combo Orgao/Materia e sai')
+  .option('--listar-tipos-ato', 'Lista os Tipos de Ato disponiveis e sai')
+  .option('--unidades <termo>', 'Consulta a lupa de serventias por termo e sai')
+  .option('--magistrados <termo>', 'Consulta a lupa de magistrados por termo e sai')
+  .option('--full-text', 'Include full decision text in the JSON results')
+  .option('--fetch-inteiro-teor', 'Save full text of each result as .txt files (sem novo acesso a rede)')
+  .option('--output-dir <dir>', 'Directory for saved full-text files', './resultados-tjgo')
+  .option('--verificar [amostra]', 'Audit results: re-query N sampled processos against the base (default 5)')
+  .option('--max-results <number>', 'Maximum total results to collect')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (50 results/page)', 10)
+  .option('--qtde <n>', 'Results per page: 10, 20 or 50', '50')
+  .option('-o, --output <file>', 'Output JSON file', 'results-tjgo.json')
+  .option('-v, --visible', 'Ignored (TJGO uses direct HTTP, no browser)')
+  .option('--headed', 'Ignored (TJGO uses direct HTTP, no browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    try {
+      // Modos utilitarios de listagem (lupas / combo embutido)
+      if (opts.listarOrgaos) {
+        const lista = TJGONavigator.ORGAOS_MATERIA;
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, orgaosMateria: lista }) + '\n');
+        else console.table(lista.map(o => ({ codigo: o.codigo, descricao: o.descricao, area: o.areaId, instancia: o.servTipoId })));
+        process.exit(0);
+      }
+      if (opts.listarTiposAto) {
+        const lista = TJGONavigator.TIPOS_ATO;
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, tiposAto: lista }) + '\n');
+        else console.table(lista);
+        process.exit(0);
+      }
+      if (opts.unidades !== undefined || opts.magistrados !== undefined) {
+        const navigator = new TJGONavigator();
+        const res = opts.unidades !== undefined
+          ? await navigator.consultarServentias(opts.unidades)
+          : await navigator.consultarMagistrados(opts.magistrados);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else {
+          console.log(`Total na base: ${res.total} (mostrando ${res.itens.length})`);
+          console.table(res.itens);
+        }
+        process.exit(0);
+      }
+
+      // Modo consulta direta por numero (TJGOChecker)
+      if (opts.numero) {
+        const checker = new TJGOChecker();
+        const res = await checker.consultarProcesso(opts.numero);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        } else {
+          console.log(JSON.stringify(res, null, 2));
+        }
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (!opts.query && !opts.processo && !opts.magistrado && !opts.unidade) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero> para consulta direta, ou um filtro forte: -p/-mag/-u)');
+      }
+
+      log('='.repeat(60));
+      log('TJGO Jurisprudencia Crawler (HTTP direto, Novo Modulo PROJUDI)');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '-'}`);
+      log(`Instancia: ${opts.instancia} | Area: ${opts.area} | Orgao/Materia: ${opts.orgaoMateria || '-'}`);
+      log(`Unidade: ${opts.unidade || '-'} | Magistrado: ${opts.magistrado || '-'} | Tipo de Ato: ${opts.tipoAto || '-'}`);
+      log(`Processo: ${opts.processo || '-'}`);
+      log(`Data Publicacao: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log(`Max Pages: ${opts.maxPages} (${opts.qtde}/pagina)`);
+      log('='.repeat(60));
+
+      const crawler = new TJGOCrawler({
+        timeout: 60000,
+        pageSize: parseInt(opts.qtde, 10),
+        includeFullText: !!opts.fullText || !!opts.fetchInteiroTeor,
+        log,
+      });
+
+      const filters = {
+        instancia: opts.instancia,
+        area: opts.area,
+        orgaoMateria: opts.orgaoMateria || null,
+        serventia: opts.unidade || null,
+        magistrado: opts.magistrado || null,
+        tipoAto: opts.tipoAto || null,
+        processo: opts.processo || null,
+        dataPublicacaoInicio: opts.dataInicio || null,
+        dataPublicacaoFim: opts.dataFim || null,
+      };
+
+      const searchOptions = { maxPages: parseInt(opts.maxPages, 10) };
+      if (opts.maxResults) searchOptions.maxResults = parseInt(opts.maxResults, 10);
+
+      if (jsonMode) {
+        const origLog = console.log;
+        console.log = () => {};
+        var results = await crawler.search(opts.query, filters, searchOptions);
+        console.log = origLog;
+      } else {
+        var results = await crawler.search(opts.query, filters, searchOptions);
+      }
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+      if (results.totalResults) log(`Total results on server: ${results.totalResults}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+        const checker = new TJGOChecker();
+        verificacao = await checker.verificarResultados(results, { amostra, log });
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        log(`\nSaving full text for ${results.length} results...`);
+        const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
+        const successCount = downloaded.filter(r => r.arquivo).length;
+        const failCount = downloaded.filter(r => !r.arquivo).length;
+        log(`\nSave complete: ${successCount} success, ${failCount} failed`);
+        log(`Files saved to: ${outputDir}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults || null,
+            count: results.length,
+            downloaded: successCount,
+            failed: failCount,
+            outputDir,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults || null,
+            count: results.length,
+            output: outputPath,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjsp')
+  .description('Search TJSP (Tribunal de Justica de Sao Paulo) jurisprudence')
+  .requiredOption('-q, --query <text>', 'Search query (supports operators: E, OU, NAO, "")')
+  .option('-di, --data-inicio <date>', 'Judgment start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Judgment end date (DD/MM/YYYY)')
+  .option('-dpi, --data-pub-inicio <date>', 'Publication start date (DD/MM/YYYY)')
+  .option('-dpf, --data-pub-fim <date>', 'Publication end date (DD/MM/YYYY)')
+  .option('--2grau', 'Include 2° grau (default: true)')
+  .option('--no-2grau', 'Exclude 2° grau')
+  .option('--recursal', 'Include Colégios Recursais (default: true)')
+  .option('--no-recursal', 'Exclude Colégios Recursais')
+  .option('--acordaos', 'Include Acórdãos (default: true)')
+  .option('--no-acordaos', 'Exclude Acórdãos')
+  .option('--homologacoes', 'Include Homologações de Acordo')
+  .option('--decisoes-mono', 'Include Decisões Monocráticas')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'results-tjsp.json')
+  .option('-v, --visible', 'Show browser window (disable headless mode)')
+  .option('--headed', 'Alias for --visible: show browser window for debugging')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    log('='.repeat(60));
+    log('TJSP Jurisprudencia Crawler');
+    log('='.repeat(60));
+    log(`Query: ${opts.query}`);
+    log(`Data Julgamento Inicio: ${opts.dataInicio || 'not set'}`);
+    log(`Data Julgamento Fim: ${opts.dataFim || 'not set'}`);
+    log(`Data Publicacao Inicio: ${opts.dataPubInicio || 'not set'}`);
+    log(`Data Publicacao Fim: ${opts.dataPubFim || 'not set'}`);
+    log(`Origem 2° grau: ${opts['2grau'] !== false}`);
+    log(`Origem Recursal: ${opts.recursal !== false}`);
+    log(`Max Pages: ${opts.maxPages}`);
+    log(`Output: ${opts.output}`);
+    log(`Headless: ${!(opts.visible || opts.headed)}`);
+    log('='.repeat(60));
+
+    const headless = !(opts.visible || opts.headed);
+    const crawler = new TJSPCrawler({
+      headless,
+      slowMo: headless ? 0 : 100,
+      timeout: 60000,
+    });
+
+    try {
+      const filters = {
+        dataJulgamentoInicio: opts.dataInicio || null,
+        dataJulgamentoFim: opts.dataFim || null,
+        dataPublicacaoInicio: opts.dataPubInicio || null,
+        dataPublicacaoFim: opts.dataPubFim || null,
+        origem2grau: opts['2grau'] !== false,
+        origemRecursal: opts.recursal !== false,
+        tipoAcordao: opts.acordaos !== false,
+        tipoHomologacao: opts.homologacoes || false,
+        tipoDecisaoMono: opts.decisoesMono || false,
+      };
+
+      const results = await crawler.search(opts.query, filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+      });
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+
+      const outputPath = path.resolve(opts.output);
+      fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: true, count: results.length, output: outputPath }) + '\n'
+        );
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: false, error: error.message }) + '\n'
+        );
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program.parse();

@@ -1,0 +1,88 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DE SÃO PAULO (TJSP)
+CONSULTA DE JURISPRUDÊNCIA – ESAJ
+============================================================
+
+URL:
+https://esaj.tjsp.jus.br/esaj/?servico=780000
+
+Objetivo:
+Permitir o acesso aos serviços de Consulta de Jurisprudência do e-SAJ, disponibilizando as opções de Consulta Simples e Consulta Completa.
+
+============================================================
+SEÇÃO 01 – CONSULTA DE JURISPRUDÊNCIA – ESAJ
+============================================================
+
+1.0 Navegação
+
+ELEMENTO 01
+
+Nome:
+Consulta de Jurisprudência – ESAJ.
+
+Tipo:
+Link de acesso.
+
+Objetivo:
+Acessar o serviço de Consulta de Jurisprudência do e-SAJ.
+
+Ações possíveis:
+
+1. Clicar na opção "Consulta de Jurisprudência".
+
+Comportamento observado:
+
+• O sistema redireciona para a página "Consultas de Jurisprudência".
+
+URL:
+https://esaj.tjsp.jus.br/esaj/?servico=780000
+
+============================================================
+SEÇÃO 02 – TELA INICIAL
+============================================================
+
+ELEMENTO 01
+
+Nome:
+Consulta Simples.
+
+Tipo:
+Link de acesso.
+
+Objetivo:
+Permitir a realização de pesquisas simplificadas de jurisprudência.
+
+Ações possíveis:
+
+1. Clicar na opção "Consulta Simples".
+
+Comportamento observado:
+
+• O sistema abre a tela "Consulta Simples".
+
+URL:
+https://esaj.tjsp.jus.br/cjsg/consultaSimples.do?servico=780001
+
+------------------------------------------------------------
+
+ELEMENTO 02
+
+Nome:
+Consulta Completa.
+
+Tipo:
+Link de acesso.
+
+Objetivo:
+Permitir a realização de pesquisas avançadas de jurisprudência por meio de diversos filtros.
+
+Ações possíveis:
+
+1. Clicar na opção "Consulta Completa".
+
+Comportamento observado:
+
+• O sistema abre a tela "Consulta Completa".
+
+URL:
+https://esaj.tjsp.jus.br/cjsg/consultaCompleta.do?servico=780002

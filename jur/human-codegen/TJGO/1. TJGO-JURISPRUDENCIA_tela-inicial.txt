@@ -1,0 +1,490 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DE GOIÁS (TJGO)
+ATOS JUDICIAIS / JURISPRUDÊNCIA
+============================================================
+
+URL:
+https://www.tjgo.jus.br/index.php/processos/atos-judiciais-jurisprudencia
+
+============================================================
+TELA 01 – PÁGINA INICIAL DE ATOS JUDICIAIS / JURISPRUDÊNCIA
+============================================================
+
+Objetivo da tela
+
+Disponibilizar acesso aos serviços de consulta de atos judiciais, pesquisa de jurisprudência, precedentes, revistas, súmulas e jurisprudência administrativa do Tribunal de Justiça do Estado de Goiás.
+
+A página funciona como um ponto central de navegação. Ao selecionar um dos links disponíveis, o usuário é direcionado à página ou ao sistema correspondente.
+
+=================================================================
+ELEMENTO 01
+=================================================================
+
+Nome:
+Atos de 1º Grau.
+
+Tipo:
+Seção expansível.
+
+Localização:
+Lado esquerdo da página, abaixo do título "Atos Judiciais/Jurisprudência".
+
+Objetivo:
+Agrupar os serviços relacionados à consulta e à validação de atos judiciais de processos de 1º Grau.
+
+Ações possíveis:
+
+1. Visualizar as opções apresentadas na seção.
+2. Selecionar o link "Consulta".
+3. Selecionar o link "Validar Hash".
+
+Comportamento observado:
+
+• A seção apresenta os links "Consulta" e "Validar Hash".
+
+• Cada link direciona o usuário para uma funcionalidade específica.
+
+=================================================================
+ELEMENTO 02
+=================================================================
+
+Nome:
+Consulta.
+
+Tipo:
+Link.
+
+Localização:
+Dentro da seção "Atos de 1º Grau".
+
+Objetivo:
+Acessar o sistema de consulta pública de atos judiciais de processos de 1º Grau.
+
+Ações possíveis:
+
+1. Clicar no link "Consulta".
+2. Acessar a tela de consulta pública.
+3. Informar um texto ou o número de um processo.
+4. Realizar a pesquisa.
+
+Comportamento observado:
+
+• Ao clicar no link, o sistema abre a página "Consulta pública de atos judiciais – 1º grau".
+
+• A página permite realizar a pesquisa por texto ou pelo número do processo.
+
+• A funcionalidade informa que a consulta contempla atos de processos físicos realizados após março de 2014.
+
+• Para processos eletrônicos, a página disponibiliza um link específico de acesso.
+
+=================================================================
+ELEMENTO 03
+=================================================================
+
+Nome:
+Validar Hash.
+
+Tipo:
+Link.
+
+Localização:
+Dentro da seção "Atos de 1º Grau", abaixo do link "Consulta".
+
+Objetivo:
+Acessar a funcionalidade de validação de atos judiciais por meio do código do documento.
+
+Ações possíveis:
+
+1. Clicar no link "Validar Hash".
+2. Informar o código do documento.
+3. Informar o código de verificação exibido na imagem.
+4. Clicar em "Validar".
+
+Comportamento observado:
+
+• Ao clicar no link, o sistema abre a página "Informe o código de validação do ato".
+
+• A página apresenta um campo para o código do documento.
+
+• A página apresenta uma imagem com código de verificação e um campo para sua digitação.
+
+• O botão "Validar" executa a verificação do documento informado.
+
+=================================================================
+ELEMENTO 04
+=================================================================
+
+Nome:
+IAC.
+
+Tipo:
+Link.
+
+Localização:
+Lado esquerdo da página, abaixo da seção "Atos de 1º Grau".
+
+Objetivo:
+Acessar a página do Incidente de Assunção de Competência do TJGO.
+
+Ações possíveis:
+
+1. Clicar no link "IAC".
+2. Visualizar os temas cadastrados.
+3. Consultar as informações apresentadas.
+4. Acessar a versão em PDF, quando disponível.
+
+Comportamento observado:
+
+• Ao clicar no link, o sistema abre a página "Incidente de Assunção de Competência".
+
+• A página apresenta uma listagem de temas e informações relacionadas aos incidentes.
+
+• Trata-se de uma página informativa, sem formulário próprio de pesquisa.
+
+• Por não apresentar mecanismo específico de pesquisa, não será elaborado arquivo de instruções separado para essa página.
+
+=================================================================
+ELEMENTO 05
+=================================================================
+
+Nome:
+IRDR.
+
+Tipo:
+Link.
+
+Localização:
+Lado esquerdo da página, abaixo do link "IAC".
+
+Objetivo:
+Acessar a página do Incidente de Resolução de Demandas Repetitivas do TJGO.
+
+Ações possíveis:
+
+1. Clicar no link "IRDR".
+2. Visualizar os temas cadastrados.
+3. Consultar as informações apresentadas.
+4. Acessar a versão em PDF, quando disponível.
+
+Comportamento observado:
+
+• Ao clicar no link, o sistema abre a página "Incidente de Resolução de Demandas Repetitivas (IRDR)".
+
+• A página apresenta uma listagem de temas e informações relacionadas aos incidentes.
+
+• Trata-se de uma página informativa, sem formulário próprio de pesquisa.
+
+• Por não apresentar mecanismo específico de pesquisa, não será elaborado arquivo de instruções separado para essa página.
+
+=================================================================
+ELEMENTO 06
+=================================================================
+
+Nome:
+Revista Goiana de Jurisprudência.
+
+Tipo:
+Link.
+
+Localização:
+Lado esquerdo da página, abaixo do link "IRDR".
+
+Objetivo:
+Acessar as edições da Revista Goiana de Jurisprudência disponibilizadas pelo TJGO.
+
+Ações possíveis:
+
+1. Clicar no link.
+2. Visualizar as edições disponíveis.
+3. Selecionar uma edição ou documento para consulta.
+
+Comportamento observado:
+
+• O link direciona para uma página de conteúdo jurídico e documental.
+
+• A página não apresenta formulário próprio de pesquisa de jurisprudência.
+
+• Por possuir caráter informativo e documental, não será elaborado arquivo de instruções separado para essa página.
+
+=================================================================
+ELEMENTO 07
+=================================================================
+
+Nome:
+Revista de Direito Concreto.
+
+Tipo:
+Link.
+
+Localização:
+Lado esquerdo da página, abaixo do link "Revista Goiana de Jurisprudência".
+
+Objetivo:
+Acessar as publicações da Revista de Direito Concreto disponibilizadas pelo TJGO.
+
+Ações possíveis:
+
+1. Clicar no link.
+2. Visualizar as publicações disponíveis.
+3. Selecionar um documento para consulta.
+
+Comportamento observado:
+
+• O link direciona para uma página de conteúdo jurídico e documental.
+
+• A página não apresenta formulário próprio de pesquisa de jurisprudência.
+
+• Por possuir caráter informativo e documental, não será elaborado arquivo de instruções separado para essa página.
+
+=================================================================
+ELEMENTO 08
+=================================================================
+
+Nome:
+Revista de Súmulas.
+
+Tipo:
+Link.
+
+Localização:
+Lado esquerdo da página, abaixo do link "Revista de Direito Concreto".
+
+Objetivo:
+Acessar as publicações relacionadas às súmulas do TJGO.
+
+Ações possíveis:
+
+1. Clicar no link.
+2. Visualizar as publicações disponíveis.
+3. Selecionar um documento para consulta.
+
+Comportamento observado:
+
+• O link direciona para uma página de conteúdo jurídico e documental.
+
+• A página não apresenta formulário próprio de pesquisa de jurisprudência.
+
+• Por possuir caráter informativo e documental, não será elaborado arquivo de instruções separado para essa página.
+
+=================================================================
+ELEMENTO 09
+=================================================================
+
+Nome:
+Súmulas.
+
+Tipo:
+Link.
+
+Localização:
+Lado esquerdo da página, abaixo do link "Revista de Súmulas".
+
+Objetivo:
+Acessar as súmulas disponibilizadas pelo Tribunal de Justiça do Estado de Goiás.
+
+Ações possíveis:
+
+1. Clicar no link.
+2. Visualizar as súmulas disponíveis.
+3. Selecionar uma súmula ou documento para consulta.
+
+Comportamento observado:
+
+• O link direciona para uma página de consulta de conteúdo jurídico.
+
+• A página não apresenta formulário próprio de pesquisa de jurisprudência.
+
+• Por possuir caráter informativo e documental, não será elaborado arquivo de instruções separado para essa página.
+
+=================================================================
+ELEMENTO 10
+=================================================================
+
+Nome:
+Revista IRDR.
+
+Tipo:
+Link.
+
+Localização:
+Lado esquerdo da página, abaixo do link "Súmulas".
+
+Objetivo:
+Acessar as publicações relacionadas aos Incidentes de Resolução de Demandas Repetitivas.
+
+Ações possíveis:
+
+1. Clicar no link.
+2. Visualizar as publicações disponíveis.
+3. Selecionar um documento para consulta.
+
+Comportamento observado:
+
+• O link direciona para uma página de conteúdo jurídico e documental.
+
+• A página não apresenta formulário próprio de pesquisa de jurisprudência.
+
+• Por possuir caráter informativo e documental, não será elaborado arquivo de instruções separado para essa página.
+
+=================================================================
+ELEMENTO 11
+=================================================================
+
+Nome:
+NOVO Módulo de Pesquisa de Jurisprudência – PROJUDI.
+
+Tipo:
+Link.
+
+Localização:
+Área central da página, abaixo do título "Jurisprudência".
+
+Objetivo:
+Acessar o novo módulo de pesquisa de jurisprudência do TJGO.
+
+Ações possíveis:
+
+1. Clicar no link.
+2. Acessar o formulário de pesquisa de jurisprudência.
+3. Informar termos de pesquisa.
+4. Utilizar os filtros disponibilizados.
+5. Executar a consulta.
+
+Comportamento observado:
+
+• Ao clicar no link, o sistema abre o Novo Módulo de Pesquisa de Jurisprudência do PROJUDI.
+
+• O módulo apresenta filtros para refinar a pesquisa, como termo de busca, instância, órgão ou matéria, unidade específica, magistrado, tipo de ato, número do processo e período de publicação.
+
+• Esse módulo possui documentação própria em pasta específica.
+
+=================================================================
+ELEMENTO 12
+=================================================================
+
+Nome:
+Módulo Antigo – Pesquisa de Jurisprudência.
+
+Tipo:
+Link.
+
+Localização:
+Área central da página, abaixo do link "NOVO Módulo de Pesquisa de Jurisprudência – PROJUDI".
+
+Objetivo:
+Acessar o módulo anterior de pesquisa de jurisprudência do TJGO.
+
+Ações possíveis:
+
+1. Clicar no link.
+2. Acessar o formulário de pesquisa.
+3. Preencher os filtros desejados.
+4. Executar a consulta.
+5. Visualizar os resultados encontrados.
+
+Comportamento observado:
+
+• Ao clicar no link, o sistema abre o módulo antigo de pesquisa de jurisprudência.
+
+• O módulo apresenta interface e filtros próprios.
+
+• Esse módulo possui documentação própria em pasta específica.
+
+=================================================================
+ELEMENTO 13
+=================================================================
+
+Nome:
+Jurisprudência Administrativa.
+
+Tipo:
+Seção.
+
+Localização:
+Área central da página, abaixo dos módulos de pesquisa de jurisprudência.
+
+Objetivo:
+Agrupar os links relacionados à consulta de jurisprudência administrativa do TJGO.
+
+Ações possíveis:
+
+1. Visualizar os links disponíveis.
+2. Selecionar "Órgão Especial".
+3. Selecionar "Conselho Superior da Magistratura".
+
+Comportamento observado:
+
+• A seção apresenta os links "Órgão Especial" e "Conselho Superior da Magistratura".
+
+=================================================================
+ELEMENTO 14
+=================================================================
+
+Nome:
+Órgão Especial.
+
+Tipo:
+Link.
+
+Localização:
+Dentro da seção "Jurisprudência Administrativa".
+
+Objetivo:
+Acessar a página de consulta de jurisprudência administrativa do Órgão Especial.
+
+Ações possíveis:
+
+1. Clicar no link "Órgão Especial".
+2. Acessar a página de jurisprudência administrativa.
+3. Utilizar os recursos de consulta disponibilizados.
+4. Visualizar os documentos encontrados.
+
+Comportamento observado:
+
+• Ao clicar no link, o sistema abre a página de jurisprudência administrativa do Órgão Especial.
+
+• A funcionalidade possui fluxo próprio de consulta e documentação específica.
+
+=================================================================
+ELEMENTO 15
+=================================================================
+
+Nome:
+Conselho Superior da Magistratura.
+
+Tipo:
+Link.
+
+Localização:
+Dentro da seção "Jurisprudência Administrativa", abaixo do link "Órgão Especial".
+
+Objetivo:
+Acessar a página destinada à jurisprudência administrativa do Conselho Superior da Magistratura.
+
+Ações possíveis:
+
+1. Clicar no link "Conselho Superior da Magistratura".
+2. Aguardar o carregamento da página de destino.
+
+Comportamento observado:
+
+• Ao clicar no link, o sistema direciona o usuário para uma página em branco.
+
+• Não são exibidos campos, documentos, resultados ou mensagem de erro.
+
+• O comportamento observado pode indicar ausência de conteúdo ou indisponibilidade da página no momento do acesso.
+
+============================================================
+OBSERVAÇÕES GERAIS
+============================================================
+
+• A página inicial de Atos Judiciais/Jurisprudência funciona como um menu central de acesso aos diferentes serviços disponibilizados pelo TJGO.
+
+• Os módulos que apresentam formulários, filtros ou fluxos próprios de consulta devem possuir documentação específica.
+
+• As páginas de IAC, IRDR, revistas e súmulas apresentam conteúdo predominantemente informativo ou documental, sem mecanismo próprio de pesquisa. Por esse motivo, não serão elaborados arquivos separados para cada uma delas, salvo orientação posterior.
+
+• O link "Conselho Superior da Magistratura" foi testado e direcionou para uma página em branco, sem conteúdo visível.
+
+Print:
+2. TJGO-JURISPRUDENCIA_print_tela-inicial

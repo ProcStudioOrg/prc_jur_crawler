@@ -1,0 +1,359 @@
+# TRF3 Crawler - Documentacao Tecnica para Codegen
+# Gerado via MCP Playwright em 2026-02-04
+
+## URL Base
+https://web.trf3.jus.br/jurisprudencia/
+
+## URLs por Tipo de Base
+- TRF3 (Acordaos): https://web.trf3.jus.br/jurisprudencia/home/index/0
+- Monocraticas: https://web.trf3.jus.br/jurisprudencia/home/index/2
+- Turmas Recursais (JEF): https://web.trf3.jus.br/jurisprudencia/home/index/1
+
+## URL de Resultados
+https://web.trf3.jus.br/jurisprudencia/Home/ListaResumida/{base}?np={pagina}
+- base: 1 (TRF3), 2 (Monocraticas), 3 (Turmas Recursais)
+- np: numero da pagina (0-indexed)
+
+## Estrutura do Formulario de Pesquisa
+
+### 1. Botoes de Selecao de Base
+| Base              | Seletor                                            | URL Param |
+|-------------------|-----------------------------------------------------|-----------|
+| TRF3              | generic[cursor=pointer]:has-text("TRF3")            | 0         |
+| Monocraticas      | link:has-text("Monocráticas")                       | 2         |
+| Turmas Recursais  | link:has-text("Turmas Recursais")                   | 1         |
+
+### 2. Campo de Pesquisa Principal
+- Seletor: textbox[placeholder="Digite sua Pesquisa"]
+- Tipo: textbox
+- Descricao: Campo principal de busca por palavras/expressoes
+
+### 3. Botao de Opcoes (Configuracoes)
+- Seletor: button:has-text("Opções")
+- Opcoes disponiveis:
+  - Mostrar Lista Resumida: checkbox
+  - Resultados por pagina: select (10, 30, 50)
+  - Operador Padrao: "e"
+
+### 4. Pesquisa Avancada
+Botao: button:has-text("Abrir pesquisa Avançada")
+
+#### Campos da Pesquisa Avancada
+
+| Campo             | Seletor                                    | Tipo      |
+|-------------------|---------------------------------------------|-----------|
+| Numero Processo   | textbox[name="Número do Processo:"]         | text      |
+| Relator           | combobox[name="Relator(a):"]                | select    |
+| Data Inicio       | textbox[name="Data:"] (primeiro)            | date      |
+| Data Fim          | textbox (segundo apos "a")                  | date      |
+| Tipo Data         | combobox (apos datas)                       | select    |
+| Classe            | combobox[name="Classe:"]                    | select    |
+| Numero Classe     | textbox[name="Número da Classe:"]           | text      |
+| Orgao Julgador    | combobox[name="Órgão Julgador:"]            | select    |
+| Ementa            | textbox[name="Ementa:"]                     | text      |
+| Indexacao         | textbox[name="Indexação:"]                  | text      |
+| Legislacao        | textbox[name="Legislação:"]                 | text      |
+
+### 5. Tipo de Data
+- Seletor: combobox (apos campos de data)
+- Opcoes:
+  - "Publicação" (padrao)
+  - "Julgamento"
+
+### 6. Relatores (Amostra)
+- ADENIR SILVA
+- ADRIANA DELBONI TARICCO
+- ADRIANA PILEGGI
+- CARLOS MUTA
+- CONSUELO YOSHIDA
+- DIVA MALERBI
+- FAUSTO DE SANCTIS
+- GILBERTO JORDAN
+- HÉLIO NOGUEIRA
+- MAIRAN MAIA
+- MARISA SANTOS
+- NELTON DOS SANTOS
+- (lista completa disponivel no select)
+
+### 7. Classes Processuais (Amostra)
+- ACC - AÇÃO CIVIL COLETIVA
+- ACP - AÇÃO CIVIL PÚBLICA
+- APN - AÇÃO PENAL
+- AI - AGRAVO DE INSTRUMENTO
+- ApCiv - APELAÇÃO CÍVEL
+- ApCrim - APELAÇÃO CRIMINAL
+- ApelRemNec - APELAÇÃO / REMESSA NECESSÁRIA
+- AR - AÇÃO RESCISÓRIA
+- HC - HABEAS CORPUS
+- MS - MANDADO DE SEGURANÇA
+- (lista completa disponivel no select)
+
+### 8. Orgaos Julgadores
+- 1ª Seção
+- 1ª Turma
+- 2ª Turma
+- 3ª Turma
+- 4ª Turma
+- 5ª Turma
+- 6ª Turma
+- 7ª Turma
+- 8ª Turma
+- 9ª Turma
+- 10ª Turma
+- 11ª Turma
+- Órgão Especial
+- Presidência
+- Vice Presidência
+- TRIBUNAL PLENO
+
+### 9. Botoes de Acao
+- Pesquisar: button:has-text("Pesquisar")
+- Limpar: button:has-text("Limpar")
+- Mostrar Operadores: button:has-text(">>")
+
+### 10. Operadores de Busca
+- "..." (aspas duplas - busca exata)
+- e (AND)
+- ou (OR)
+- adj (adjacente)
+- não (NOT)
+- prox (proximidade)
+- mesmo (mesmo paragrafo)
+- com (mesmo documento)
+- $ (truncamento)
+
+## Estrutura dos Resultados
+
+### Informacoes da Pagina
+- Total de resultados: generic "1 ~ {total}"
+- Pagina atual: extrair de URL np={pagina}
+- Resultados por pagina: combobox (10, 30, 50)
+
+### Paginacao
+- Primeira pagina: link:has-text("Primeira página") -> np=0
+- Pagina anterior: link:has-text("Página anterior")
+- Proxima pagina: link:has-text("Próxima página")
+- Ultima pagina: link:has-text("Última página")
+- Paginas numeradas: links com numeros
+
+### Estrutura de Cada Resultado
+
+Cada resultado esta em um listitem dentro de list[ref], contendo:
+
+```
+listitem:
+  link[url=/jurisprudencia/Home/ListaColecao/9?np={n}]:
+    generic: {n}/{total})              # Contagem
+    generic: {numeroProcesso}           # Numero do processo
+    generic (botoes):
+      button "Imprimir Inteiro Teor"
+      button "Exibir a íntegra do acórdão"
+      button "Consultar Processo"
+      button "Copiar ementa para a área de transferência"
+      button "Copiar inteiro teor para a área de transferência"
+      button "Exibir o documento em formato PDF para imprimir ou salvar"
+    generic (metadados):
+      generic: {classe}                 # Ex: ApCiv - APELAÇÃO CÍVEL
+      generic: {orgaoJulgador}          # Ex: 9ª Turma
+      generic: {relator}                # Ex: Desembargador Federal NOME
+      generic: {dataPublicacao}         # Ex: "DJEN DATA: 03/02/2026"
+      generic: {dataJulgamento}         # Ex: "Julgamento: 26/01/2026"
+    generic (ementa):
+      text: PODER JUDICIÁRIO
+      text: Tribunal Regional Federal da 3ª Região
+      text: {orgao}
+      text: {endereco}
+      text: {tipoProcesso} Nº {numeroProcesso}
+      text: APELANTE/APELADO: ...
+      text: EMENTA
+      text: {textoEmenta}
+```
+
+### Campos Extraiveis de Cada Documento
+
+| Campo             | Localizacao/Seletor                                      |
+|-------------------|----------------------------------------------------------|
+| Numero Processo   | generic dentro do link (segundo generic)                 |
+| Classe            | primeiro generic dos metadados                           |
+| Orgao Julgador    | segundo generic dos metadados                            |
+| Relator           | terceiro generic dos metadados (comeca com "Desembargador") |
+| Data Publicacao   | generic com "DATA:" ou "DJEN"                            |
+| Data Julgamento   | generic com "Julgamento:"                                |
+| Ementa            | ultimo generic com multiplos text                        |
+
+## URLs de Consulta
+
+### Integra do Acordao
+https://web.trf3.jus.br/acordaos/Acordao/PesquisarDocumento?processo={numeroProcesso}
+
+### Consulta Processo (PJe)
+https://pje2g.trf3.jus.br/pje/ConsultaPublica/listView.seam?numProcesso={numeroProcesso}
+
+### PDF/Inteiro Teor
+Via botao "Imprimir Inteiro Teor" ou link no resultado
+
+## Comportamento Esperado do Crawler
+
+### 1. navigateToSearch()
+```javascript
+await page.goto('https://web.trf3.jus.br/jurisprudencia/', { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('input[placeholder="Digite sua Pesquisa"]', { timeout: 30000 });
+
+// Selecionar base (opcional)
+// 0 = TRF3, 1 = Turmas Recursais, 2 = Monocraticas
+if (base !== 0) {
+  const baseUrls = {
+    1: '/jurisprudencia/home/index/1',
+    2: '/jurisprudencia/home/index/2'
+  };
+  await page.click(`a[href="${baseUrls[base]}"]`);
+  await page.waitForLoadState('networkidle');
+}
+```
+
+### 2. configureFilters(filters)
+Filtros disponiveis:
+- numeroProcesso (string)
+- relator (string) - nome do desembargador
+- dataInicio (DD/MM/YYYY)
+- dataFim (DD/MM/YYYY)
+- tipoData ('Publicação' ou 'Julgamento')
+- classe (string) - codigo da classe
+- orgaoJulgador (string) - nome do orgao
+- ementa (string) - texto na ementa
+- resultadosPorPagina (10, 30, 50)
+
+```javascript
+// Abrir pesquisa avancada
+await page.click('button:has-text("Abrir pesquisa Avançada")');
+await page.waitForTimeout(500);
+
+// Configurar filtros
+if (filters.numeroProcesso) {
+  await page.fill('input[placeholder*="Número"]', filters.numeroProcesso);
+}
+
+if (filters.relator) {
+  await page.selectOption('select[aria-label*="Relator"]', { label: filters.relator });
+}
+
+if (filters.dataInicio) {
+  const dataInputs = await page.locator('input[type="text"]').filter({ hasText: '' }).all();
+  // Primeiro input de data
+  await dataInputs[0].fill(filters.dataInicio);
+}
+
+if (filters.dataFim) {
+  // Segundo input de data
+  await dataInputs[1].fill(filters.dataFim);
+}
+
+if (filters.tipoData) {
+  await page.selectOption('select:has(option:has-text("Publicação"))', filters.tipoData);
+}
+
+if (filters.classe) {
+  await page.selectOption('select[aria-label*="Classe"]', { label: filters.classe });
+}
+
+if (filters.orgaoJulgador) {
+  await page.selectOption('select[aria-label*="Órgão"]', { label: filters.orgaoJulgador });
+}
+
+if (filters.ementa) {
+  await page.fill('input[placeholder*="Ementa"]', filters.ementa);
+}
+```
+
+### 3. executeSearch(query)
+```javascript
+// Preencher campo de busca
+await page.fill('input[placeholder="Digite sua Pesquisa"]', query);
+
+// Clicar em pesquisar
+await page.click('button:has-text("Pesquisar")');
+
+// Aguardar resultados
+await page.waitForURL(/ListaResumida/, { timeout: 30000 });
+await page.waitForSelector('ul li a[href*="ListaColecao"]', { timeout: 30000 });
+```
+
+### 4. extractResults()
+```javascript
+const results = [];
+const items = await page.locator('ul li').filter({ has: page.locator('a[href*="ListaColecao"]') }).all();
+
+for (const item of items) {
+  const result = await item.evaluate(el => {
+    const link = el.querySelector('a[href*="ListaColecao"]');
+    const generics = link.querySelectorAll(':scope > div, :scope > span');
+
+    // Extrair numero do processo
+    const numeroProcesso = generics[1]?.textContent?.trim() || '';
+
+    // Extrair metadados
+    const metaContainer = generics[3] || generics[2];
+    const metas = metaContainer?.querySelectorAll(':scope > div, :scope > span') || [];
+
+    const classe = metas[0]?.textContent?.trim() || '';
+    const orgaoJulgador = metas[1]?.textContent?.trim() || '';
+    const relator = metas[2]?.textContent?.trim() || '';
+    const dataPublicacao = metas[3]?.textContent?.trim() || '';
+    const dataJulgamento = metas[4]?.textContent?.trim() || '';
+
+    // Extrair ementa
+    const ementaContainer = generics[generics.length - 1];
+    const ementa = ementaContainer?.innerText?.trim() || '';
+
+    return {
+      numeroProcesso,
+      classe,
+      orgaoJulgador,
+      relator,
+      dataPublicacao,
+      dataJulgamento,
+      ementa: ementa.substring(0, 15000)
+    };
+  });
+
+  if (result.numeroProcesso) {
+    results.push(result);
+  }
+}
+
+return results;
+```
+
+### 5. hasNextPage()
+```javascript
+const nextBtn = page.locator('a:has-text("Próxima página")');
+return await nextBtn.isVisible() && !(await nextBtn.isDisabled());
+```
+
+### 6. goToNextPage()
+```javascript
+await page.click('a:has-text("Próxima página")');
+await page.waitForLoadState('networkidle');
+await page.waitForSelector('ul li a[href*="ListaColecao"]', { timeout: 30000 });
+await page.waitForTimeout(1000);
+```
+
+### 7. getTotalResults()
+```javascript
+const totalText = await page.locator('div:has-text("~")').first().textContent();
+const match = totalText.match(/~\s*(\d+)/);
+return match ? parseInt(match[1], 10) : null;
+```
+
+## Notas Importantes
+
+1. O site usa navegacao por URLs parametrizadas (np=pagina)
+2. Os resultados sao exibidos em lista (ul/li) com links internos
+3. A pesquisa avancada e um painel expansivel (nao modal)
+4. Os selectboxes de Relator, Classe e Orgao tem muitas opcoes
+5. O formato de data e DD/MM/AAAA
+6. Por padrao, exibe 10 resultados por pagina
+7. A ementa vem formatada com quebras de linha e formatacao
+8. Links de integra e consulta processo sao separados do resultado
+9. Existe um endpoint separado para acordaos: /acordaos/Acordao/PesquisarDocumento
+10. O PJe usa outro dominio: pje2g.trf3.jus.br

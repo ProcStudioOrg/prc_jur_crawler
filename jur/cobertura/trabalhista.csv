@@ -1,0 +1,49 @@
+Tribunal,Estado(s),Sistema,Instância,Citações/Intimações,Anexos,Audiências,Dá ciência,Info
+TRT1,Rio de Janeiro,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT1,Rio de Janeiro,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT2,São Paulo,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT2,São Paulo,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT3,Minas Gerais,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT3,Minas Gerais,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT4,Rio Grande do Sul,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT4,Rio Grande do Sul,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT5,Bahia,PJe,1a,Sim,"Sim, ciência necessária",Sim,Implementação provavelmente rápida,
+TRT5,Bahia,PJe,2a,Sim,"Sim, ciência necessária",Não disponibilizado pelo tribunal,Implementação provavelmente rápida,
+TRT6,Pernambuco,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT6,Pernambuco,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT7,Ceará,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT7,Ceará,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,
+TRT8,Pará e Amapá,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT8,Pará e Amapá,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT9,Paraná,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT9,Paraná,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT10,Distrito Federal e Tocantins,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim
+TRT10,Distrito Federal e Tocantins,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim
+TRT11,Amazonas e Roraima,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT11,Amazonas e Roraima,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT12,Santa Catarina,PJe,1a,Sim,"Sim, ciência necessária",Sim,Implementação provavelmente rápida
+TRT12,Santa Catarina,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT13,Paraíba,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT13,Paraíba,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT14,Rondônia e Acre,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT14,Rondônia e Acre,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT15,São Paulo (Campinas - Interior),PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT15,São Paulo (Campinas - Interior),PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT16,Maranhão,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT16,Maranhão,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT17,Espírito Santo,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT17,Espírito Santo,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT18,Goiás,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT18,Goiás,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT19,Alagoas,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT19,Alagoas,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT20,Sergipe,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT20,Sergipe,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT21,Rio Grande do Norte,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT21,Rio Grande do Norte,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT22,Piauí,PJe,1a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT22,Piauí,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT23,Mato Grosso,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim
+TRT23,Mato Grosso,PJe,2a,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida,Implementação provavelmente rápida
+TRT24,Mato Grosso do Sul,PJe,1a,Sim,"Sim, ciência necessária",Sim,Sim
+TRT24,Mato Grosso do Sul,PJe,2a,Sim,"Sim, ciência necessária",Sim,Sim

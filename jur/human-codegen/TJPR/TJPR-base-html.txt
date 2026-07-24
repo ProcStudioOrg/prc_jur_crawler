@@ -1,0 +1,26 @@
+Main Input:
+    <input type="text" name="criterioPesquisa" maxlength="150" size="85" value="" id="criterioPesquisa">
+
+Operators: E - OU - !NAOw - PROX - $
+    <input type="button" id="btE" class="buttonexp" value="E" onclick="javascript:getOperador('E');">
+
+Data de Julgamento:
+    <input type="text" name="dataJulgamentoInicio" value="" id="dataJulgamentoInicio" class="text input_mask mask_date_br">
+
+    <input type="text" name="dataJulgamentoFim" value="" id="dataJulgamentoFim" class="text input_mask mask_date_br">
+
+Filtros:
+    <select name="idLocalPesquisa" id="idLocalPesquisa">
+
+        <option value="1" selected="selected" id="amb_1">EMENTA</option>
+
+        <option value="2" id="amb_2">INTEIRO TEOR</option>
+
+        <option value="99" id="amb_99">AMBAS</option></select>
+
+Pesquisar Button:
+    <input type="submit" name="iniciar" value="Pesquisar" style="width: 100px;" class="button">
+
+=> Inspect Pagination
+=> Inspect how the "Jurisprudencia is presented
+=> Inspect if results come in JSON or another format

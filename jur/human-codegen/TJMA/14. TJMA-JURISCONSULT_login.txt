@@ -1,0 +1,170 @@
+==================================================================
+TELA: LOGIN – JURISCONSULT
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/login
+
+Objetivo da tela:
+Permitir a autenticação de usuários no sistema JurisConsult mediante o uso das credenciais de acesso ao sistema SENTINELA.
+
+Descrição:
+Nesta tela o usuário informa sua matrícula ou CPF e senha para acessar o sistema. O acesso utiliza as mesmas credenciais cadastradas no sistema SENTINELA.
+
+Observação:
+O sistema exibe a mensagem:
+"Para acessar o sistema é necessário usar as mesmas credenciais de acesso ao sistema SENTINELA."
+
+==================================================================
+
+ELEMENTO 01
+==================================================================
+
+Nome:
+Matrícula ou CPF.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Informar a matrícula funcional ou o CPF do usuário.
+
+Ações possíveis:
+
+1. Digitar a matrícula.
+2. Digitar o CPF.
+
+Comportamento observado:
+
+O sistema valida o valor informado. Quando o dado é inválido, é exibida a mensagem:
+"Matrícula ou CPF inválido."
+
+==================================================================
+
+ELEMENTO 02
+==================================================================
+
+Nome:
+Senha.
+
+Tipo:
+Campo de senha.
+
+Objetivo:
+Informar a senha de acesso do usuário.
+
+Ações possíveis:
+
+1. Digitar a senha.
+
+Comportamento observado:
+
+Os caracteres digitados permanecem ocultos durante o preenchimento.
+
+==================================================================
+
+ELEMENTO 03
+==================================================================
+
+Nome:
+Login.
+
+Tipo:
+Botão.
+
+Objetivo:
+Realizar a autenticação do usuário no sistema.
+
+Ações possíveis:
+
+1. Efetuar o login.
+
+Comportamento observado:
+
+Após o preenchimento das credenciais válidas, o sistema realiza a autenticação e concede acesso às funcionalidades disponíveis para o perfil do usuário. Caso existam inconsistências nas informações informadas, o acesso não é realizado e o sistema exibe a mensagem correspondente.
+
+==================================================================
+TELA: FALHA AO EFETUAR LOGIN
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/login
+
+Objetivo da tela:
+Informar ao usuário que a autenticação não foi realizada devido à inconsistência nas credenciais informadas.
+
+Descrição:
+Após a tentativa de autenticação, o sistema exibe uma janela modal comunicando que a matrícula/CPF e/ou senha informados são inválidos e que uma nova tentativa deverá ser realizada.
+
+==================================================================
+
+ELEMENTO 01
+==================================================================
+
+Nome:
+Janela de erro.
+
+Tipo:
+Janela modal.
+
+Objetivo:
+Apresentar a mensagem de falha na autenticação.
+
+Ações possíveis:
+
+1. Visualizar a mensagem de erro.
+2. Confirmar a leitura da mensagem.
+
+Comportamento observado:
+
+A janela modal é exibida sobre a tela de login, impedindo novas interações até que seja fechada.
+
+==================================================================
+
+ELEMENTO 02
+==================================================================
+
+Nome:
+Mensagem de erro.
+
+Tipo:
+Mensagem informativa.
+
+Objetivo:
+Informar o motivo da falha na autenticação.
+
+Ações possíveis:
+
+1. Ler a mensagem apresentada.
+
+Comportamento observado:
+
+O sistema apresenta a seguinte mensagem:
+
+"Verifique se sua matrícula/cpf e senha estão corretos e tente novamente."
+
+==================================================================
+
+ELEMENTO 03
+==================================================================
+
+Nome:
+OK.
+
+Tipo:
+Botão.
+
+Objetivo:
+Fechar a janela de mensagem.
+
+Ações possíveis:
+
+1. Fechar a janela modal.
+
+Comportamento observado:
+
+Ao clicar no botão "OK", a janela é fechada e o usuário retorna à tela de login para realizar uma nova tentativa de autenticação.
+
+Prints:
+15. TJMA-JURISCONSULT_print_login
+16. TJMA-JURISCONSULT_print_falha-login

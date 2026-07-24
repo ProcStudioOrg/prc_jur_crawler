@@ -1,0 +1,123 @@
+https://web.trf3.jus.br/jurisprudencia/
+
+div:
+    3 button:
+        TRF3 (esse começa ativo - https://web.trf3.jus.br/jurisprudencia/home/index/0)
+        Monocráticas (quando muda para esse fica https://web.trf3.jus.br/jurisprudencia/home/index/2)
+        Turmas Recursais (JEF) (quando muda para esse fica https://web.trf3.jus.br/jurisprudencia/home/index/1)
+
+div:
+    header: Pesquisa de Jurisprudência 
+        icon engrenagem: Opções
+            [ ] Mostrar Lista Resumida true/false (já fica ativo)
+            label: Resultados (é o total de documentos que seram exibidos)
+                select: (por padrão é o 10) 
+                    10
+                    30
+                    50
+            label: Operador Padrão: e
+    input text: 
+        placeholder: Digite sua Pesquisa 
+        icon button: seach
+        icon plus: Pesquisa Avançada
+            label: Número do Processo
+                input text
+            label: Relator(a)
+                select: (São muitos nomes em ordem alfabética, vou dizer os 5 primeiros, mas é para pegar todos)
+                    ADENIR SILVA
+                    ADRIANA DELBONI TARICCO
+                    ADRIANA PILEGGI
+                    ADRIANA TARICCO
+                    ALDA BASTO
+
+            label: Data
+                input date - a - input date - select:
+                    Publicação
+                    Julgamento
+            label: Classe
+                select: (São muitas classes em ordem alfabética, vou dizer os 5 primeiros, mas é para pegar todos)
+                    ACC - AÇÃO CIVIL COLETIVA
+                    ACI - AÇÃO CIVIL DE IMPROBIDADE ADMINISTRATIVA
+                    ACP - AÇÃO CIVIL PÚBLICA
+                    APN - AÇÃO PENAL 
+                    APN - AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO
+            label: Número da Classe
+                input text
+            label: Órgão Julgador
+                select: (São varios órgãos em ordem númerica, vou dizer os 5 primeiros, mas é para pegar todos)
+                    1ª Seção
+                    1ª Turma
+                    10ª Turma
+                    11ª Turma
+                    2ª Seção
+            label: Ementa
+                input text
+            label: Indexação
+                input text
+            label: Legislação
+                input text
+                    icon plus:
+                        input: filtro de Legislação
+                            select: (são muitas opções, vou dizer os 5 primeiros, mas pegue todos)
+                                EST ACO 32 1999
+                                FED OJU 354
+                                CÓDIGO JUDICIÁRIO DO ESTADO DE SÃO PAULO EST DLC 3 1969
+                                LEI DA ANISTIA FED LEI 6683 1976
+
+    botão: Mostrar operadores
+        9 operadores:
+            "..."
+            e
+            ou
+            adj
+            não
+            prox
+            mesmo
+            com
+            $
+
+    icon de dúvida: Ajuda: conectores (esse icone leva para essa página: https://web.trf3.jus.br/jurisprudencia-ajuda/)
+
+Ao pesquisar algo e clicar no icone search, muda para essa página: https://web.trf3.jus.br/jurisprudencia/Home/ListaResumida/1?np=0
+
+div:
+    button: Nova Pesquisa
+    button: Voltar
+
+    button icon flecha dupla esquerda: Primeira página
+    button icon flecha esquerda: página anterior
+    button icon flecha direita: próxima página
+    button icon flecha dupla direita: última página
+
+div paginação:
+    span seção total: 
+        1 (quantidade página) ~ 379687 (quantidade total) (esses números podem mudar dependendo da pesquisa)
+
+    span seção paginas:
+        são vários números em ordem númerica, para mudar de página.
+    
+    select: 
+        10
+        30
+        50
+        span:
+            resultados por página. Mostrando n resultado(s).
+
+div:
+    header: Pesquisa de Jurisprudência - Base TRF3
+    span: Critério: (mostra o que foi pesquisado lá no formulário)
+
+    div: Processo
+        span: contagem de página
+        span: número do processo (https://web.trf3.jus.br/jurisprudencia/Home/ListaColecao/9?np=[contagem página])
+        icons:
+            mark-text: abre um PDF para imprimir o teor Inteiro
+            mark: Exibi a íntegra do acórdão (https://web.trf3.jus.br/acordaos/Acordao/PesquisarDocumento?processo=[número do processo])
+            search: Consulta processo (https://pje2g.trf3.jus.br/pje/ConsultaPublica/listView.seam?numProcesso=[número do processo])
+            clipboard: copia o texto da ementa para área de transferencia 
+            clipboard plus: copia o teor inteiro para área de transferencia 
+            printer: abre um documento PDF para imprimir
+    div: informações basicas
+    div: ementa
+
+No final da página tem o mesmo div de paginação

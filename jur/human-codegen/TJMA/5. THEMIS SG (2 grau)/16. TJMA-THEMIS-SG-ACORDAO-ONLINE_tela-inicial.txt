@@ -1,0 +1,145 @@
+===============================================================
+TELA: ACÓRDÃO ONLINE
+===============================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/sg-online-judicial-decision-form
+
+Objetivo da tela:
+Permitir a consulta de acórdãos do segundo grau por relator, câmara e critério de pesquisa.
+
+Descrição:
+A tela apresenta inicialmente um quadro informativo com os dias de funcionamento do Pleno e das Câmaras Cíveis e Criminais. Abaixo, disponibiliza filtros para seleção do relator, da câmara e do tipo de pesquisa, além do botão para execução da consulta.
+
+===============================================================
+ELEMENTO 01
+===============================================================
+
+Nome:
+Quadro "Dias de Funcionamento do Pleno e das Câmaras"
+
+Tipo:
+Painel informativo.
+
+Obrigatório:
+Não.
+
+Descrição:
+Apresenta os dias de realização das sessões do Tribunal Pleno, das Câmaras Cíveis Isoladas, Câmaras Cíveis Reunidas, Câmaras Criminais Reunidas e Câmaras Criminais.
+
+Ação:
+Somente consulta. Não permite interação.
+
+===============================================================
+ELEMENTO 02
+===============================================================
+
+Nome:
+Combo "Relator"
+
+Tipo:
+Lista suspensa.
+
+Obrigatório:
+Não.
+
+Descrição:
+Permite selecionar um relator específico para filtrar a consulta de acórdãos.
+
+Opções disponíveis:
+Lista contendo todos os desembargadores e magistrados cadastrados no sistema, além da opção "Todos".
+
+Ação:
+Clique na seta localizada à direita do campo para visualizar e selecionar uma opção.
+
+===============================================================
+ELEMENTO 03
+===============================================================
+
+Nome:
+Combo "Câmara"
+
+Tipo:
+Lista suspensa.
+
+Obrigatório:
+Não.
+
+Descrição:
+Permite selecionar a Câmara responsável pelo julgamento.
+
+Opções disponíveis:
+
+• TRIBUNAL PLENO
+• CÂMARAS CÍVEIS REUNIDAS
+• PRIMEIRA CÂMARA CÍVEL
+• SEGUNDA CÂMARA CÍVEL
+• TERCEIRA CÂMARA CÍVEL
+• QUARTA CÂMARA CÍVEL
+• QUINTA CÂMARA CÍVEL
+• SEXTA CÂMARA CÍVEL
+• SÉTIMA CÂMARA CÍVEL
+• OITAVA CÂMARA CÍVEL
+• CÂMARAS CRIMINAIS REUNIDAS
+• PRIMEIRA CÂMARA CRIMINAL
+• SEGUNDA CÂMARA CRIMINAL
+• TERCEIRA CÂMARA CRIMINAL
+• CÂMARA ESPECIAL DE FÉRIAS
+• GABINETE DA PRESIDÊNCIA
+• GABINETE DA VICE-PRESIDÊNCIA
+• CORREGEDORIA GERAL DA JUSTIÇA
+• PRIMEIRAS CÂMARAS CÍVEIS REUNIDAS
+• SEGUNDAS CÂMARAS CÍVEIS REUNIDAS etc.
+
+Ação:
+Clique na seta localizada à direita do campo para visualizar e selecionar uma das opções.
+
+===============================================================
+ELEMENTO 04
+===============================================================
+
+Nome:
+Combo "Pesquisar pelo(a)"
+
+Tipo:
+Lista suspensa.
+
+Obrigatório:
+Sim.
+
+Descrição:
+Define o critério utilizado para localizar os acórdãos.
+
+Opções disponíveis:
+
+• Número do processo
+• Data do Voto de Julgamento
+
+Ação:
+Clique na seta localizada à direita do campo para selecionar o critério desejado.
+
+===============================================================
+ELEMENTO 05
+===============================================================
+
+Nome:
+Botão "CONSULTAR"
+
+Tipo:
+Botão de ação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Executa a pesquisa de acórdãos conforme os filtros informados.
+
+Ação:
+Após selecionar os filtros desejados, clique no botão "CONSULTAR" para realizar a pesquisa.
+
+Prints:
+
+• 17. TJMA-THEMIS-SG-ACORDAO-ONLINE_print_tela-inicial.png
+• 18. TJMA-THEMIS-SG-ACORDAO-ONLINE_print_combo-relator.png
+• 19. TJMA-THEMIS-SG-ACORDAO-ONLINE_print_combo-camara.png
+• 20. TJMA-THEMIS-SG-ACORDAO-ONLINE_print_combo-pesquisar-pelo.png

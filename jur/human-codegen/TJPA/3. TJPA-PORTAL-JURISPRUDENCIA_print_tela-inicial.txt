@@ -1,0 +1,225 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DO PARÁ (TJPA)
+PORTAL DE JURISPRUDÊNCIA
+============================================================
+
+URL:
+https://tjpa.jus.br/PortalExterno/hotsite/jurisprudencia/
+
+============================================================
+TELA
+============================================================
+
+Nome:
+Portal de Jurisprudência do Tribunal de Justiça do Estado do Pará.
+
+Objetivo:
+Disponibilizar o acesso às ferramentas de pesquisa de jurisprudência, banco de julgados, súmulas, informativos, normativos e demais conteúdos relacionados à jurisprudência do TJPA.
+
+URL:
+https://tjpa.jus.br/PortalExterno/hotsite/jurisprudencia/
+
+Print:
+4. TJPA-PORTAL-JURISPRUDENCIA_print_tela-inicial.png
+
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Campo de pesquisa.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Permitir a pesquisa de conteúdos disponibilizados no Portal de Jurisprudência, incluindo súmulas, assuntos e julgados.
+
+Ações possíveis:
+
+• Clicar no campo.
+• Digitar palavras ou expressões.
+• Editar o conteúdo.
+• Apagar o conteúdo.
+
+Quando digitamos, aparece o ícone "x" que quando clicado, apaga o conteúdo.
+
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Botão Buscar.
+
+Tipo:
+Botão.
+
+Objetivo:
+Executar a pesquisa utilizando o texto informado no campo de pesquisa.
+
+Ações possíveis:
+
+• Clicar no botão "Buscar".
+
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Apresentação.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Exibir informações institucionais sobre o Portal de Jurisprudência.
+
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Normativos.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Permitir acesso aos atos normativos relacionados à jurisprudência.
+
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Informativos de Jurisprudência.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Permitir acesso aos informativos de jurisprudência publicados pelo Tribunal.
+
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+Banco de Jurisprudência.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Permitir acesso ao sistema de consulta ao banco de acórdãos, decisões e demais julgados do Tribunal.
+
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+Súmulas do TJPA.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Permitir consulta às súmulas editadas pelo Tribunal de Justiça do Estado do Pará.
+
+
+============================================================
+ELEMENTO 08
+============================================================
+
+Nome:
+Jurisprudência por Assunto.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Permitir consulta da jurisprudência organizada por assuntos.
+
+
+============================================================
+ELEMENTO 09
+============================================================
+
+Nome:
+Aplicação das Súmulas na Área do Direito.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Disponibilizar material relacionado à aplicação das súmulas por área do Direito.
+
+
+============================================================
+ELEMENTO 10
+============================================================
+
+Nome:
+Contatos e Endereço.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Exibir os canais de contato e informações da unidade responsável pela jurisprudência.
+
+
+============================================================
+ELEMENTO 11
+============================================================
+
+Nome:
+Ramos do Direito.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Permitir navegação pelos julgados organizados por ramo do Direito.
+
+
+============================================================
+ELEMENTO 12
+============================================================
+
+Nome:
+Solicitação de Pesquisa.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Permitir ao usuário solicitar pesquisas de jurisprudência ao setor responsável.
+
+
+============================================================
+ELEMENTO 13
+============================================================
+
+Nome:
+Pesquisa de Satisfação.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Permitir que o usuário avalie os serviços disponibilizados pelo Portal de Jurisprudência.
+
+
+============================================================
+RESULTADO ESPERADO
+============================================================
+
+A página funciona como portal central da jurisprudência do TJPA, permitindo ao usuário acessar as diversas ferramentas e bases de consulta disponíveis, bem como conteúdos institucionais relacionados à pesquisa de julgados.

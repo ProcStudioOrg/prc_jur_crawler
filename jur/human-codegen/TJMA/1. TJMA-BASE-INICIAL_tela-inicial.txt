@@ -1,0 +1,81 @@
+==================================================================
+TELA: PORTAL DO TRIBUNAL DE JUSTIÇA DO ESTADO DO MARANHÃO (TJMA)
+==================================================================
+
+Link:
+https://www.tjma.jus.br
+
+Objetivo da tela:
+Permitir o acesso ao Portal do Tribunal de Justiça do Maranhão e disponibilizar atalhos para os sistemas e serviços institucionais, incluindo a consulta de jurisprudência.
+
+Descrição:
+Nesta tela o usuário acessa o Portal TJMA e navega até o serviço de Jurisprudências por meio dos atalhos disponíveis na página inicial.
+
+==================================================================
+
+ELEMENTO 01
+==================================================================
+
+Nome:
+Menu principal.
+
+Tipo:
+Menu de navegação.
+
+Objetivo:
+Disponibilizar acesso às principais áreas do Portal TJMA.
+
+Ações possíveis:
+
+1. Navegar entre os menus institucionais.
+
+Comportamento observado:
+
+Os menus direcionam para as respectivas áreas do Portal.
+
+==================================================================
+
+ELEMENTO 02
+==================================================================
+
+Nome:
+Acesso Rápido.
+
+Tipo:
+Painel de atalhos.
+
+Objetivo:
+Disponibilizar acesso rápido aos principais sistemas e serviços do Tribunal.
+
+Ações possíveis:
+
+1. Selecionar um dos atalhos disponíveis.
+
+Comportamento observado:
+
+Ao clicar em um atalho, o sistema redireciona para o serviço correspondente.
+
+==================================================================
+
+ELEMENTO 03
+==================================================================
+
+Nome:
+Jurisprudências.
+
+Tipo:
+Atalho.
+
+Objetivo:
+Acessar o sistema de consulta de jurisprudências do TJMA.
+
+Ações possíveis:
+
+1. Abrir o sistema de Jurisprudências.
+
+Comportamento observado:
+
+Ao clicar no atalho "Jurisprudências", o sistema abre a página destinada às consultas de jurisprudência.
+
+Print:
+2. TJMA-BASE-INICIAL_print_tela-inicial

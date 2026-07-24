@@ -1,0 +1,311 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DE SÃO PAULO (TJSP)
+RESULTADO DA PESQUISA – ESAJ
+============================================================
+
+URL:
+
+https://esaj.tjsp.jus.br/cjsg/resultadoCompleta.do
+
+Objetivo:
+
+Apresentar os resultados encontrados após a realização da pesquisa de jurisprudência, permitindo ao usuário visualizar informações resumidas dos acórdãos e acessar seu conteúdo completo por diferentes formas de visualização.
+
+============================================================
+EXECUÇÃO DA PESQUISA
+============================================================
+
+Procedimento realizado:
+
+1. Acessar a página "Consulta Completa".
+2. Informar um termo de pesquisa.
+3. Clicar no botão "Pesquisar".
+
+Comportamento observado:
+
+• A pesquisa é executada na mesma aba do navegador.
+• O sistema não abre nova guia.
+• O sistema não abre nova janela.
+• Após o processamento da pesquisa, é exibida automaticamente a lista de acórdãos encontrados.
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+
+Quantidade de resultados.
+
+Tipo:
+
+Texto informativo.
+
+Objetivo:
+
+Informar a quantidade total de acórdãos localizados e indicar quais registros estão sendo exibidos na página atual.
+
+Comportamento observado:
+
+Exemplo:
+
+Resultados 21 a 40 de (quantidade total).
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+
+Lista de Acórdãos.
+
+Tipo:
+
+Área de resultados.
+
+Objetivo:
+
+Exibir os acórdãos encontrados na pesquisa realizada.
+
+Cada resultado apresenta as seguintes informações:
+
+• Número do processo;
+• Classe/Assunto;
+• Relator(a);
+• Comarca;
+• Órgão julgador;
+• Data do julgamento;
+• Data de publicação;
+• Ementa.
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+
+Número do processo.
+
+Tipo:
+
+Link.
+
+Objetivo:
+
+Permitir o acesso ao inteiro teor do acórdão correspondente ao resultado selecionado.
+
+Comportamento observado:
+
+• O número do processo é exibido como um link.
+
+• Ao clicar sobre o número do processo, o sistema abre o inteiro teor do acórdão em formato PDF.
+
+• A abertura ocorre na mesma aba do navegador.
+
+• O documento é exibido utilizando o visualizador de PDF disponível no navegador.
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+
+Ícone PDF.
+
+Tipo:
+
+Botão.
+
+Objetivo:
+
+Permitir a abertura do acórdão em formato PDF.
+
+Comportamento observado:
+
+Ao clicar no ícone PDF, o sistema abre o inteiro teor do acórdão em formato PDF na mesma aba do navegador.
+
+O documento é exibido utilizando o visualizador de PDF disponível no navegador.
+
+
+============================================================
+ELEMENTO 05
+============================================================
+Nome:
+
+Ícone de visualização da ementa.
+
+Tipo:
+
+Botão.
+
+Objetivo:
+
+Permitir a visualização da ementa do acórdão em formato texto.
+
+Comportamento observado:
+
+Ao clicar no ícone, o sistema abre uma janela modal intitulada:
+
+"Ementa sem formatação"
+
+A janela apresenta:
+
+• texto integral da ementa;
+• barra de rolagem vertical;
+• botão de fechamento ("X").
+
+A janela permanece sobreposta à página de resultados até ser fechada pelo usuário.
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+
+Quantidade de ocorrências do termo pesquisado.
+
+Tipo:
+
+Texto informativo.
+
+Objetivo:
+
+Informar quantas vezes o termo pesquisado foi localizado no inteiro teor do documento correspondente.
+
+Comportamento observado:
+
+A informação é exibida em destaque na cor vermelha.
+
+Exemplos observados:
+
+• "1 ocorrência encontrada no inteiro teor do documento."
+
+• "4 ocorrências encontradas no inteiro teor do documento."
+
+• "18 ocorrências encontradas no inteiro teor do documento."
+
+A quantidade varia conforme o conteúdo de cada acórdão.
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+
+Expansão da ementa.
+
+Tipo:
+
+Botão.
+
+Objetivo:
+
+Permitir expandir a ementa diretamente na página de resultados.
+
+Comportamento observado:
+
+Ao final da ementa é exibido o símbolo "+".
+
+Ao clicar no botão, o texto da ementa é expandido na própria página.
+
+============================================================
+ELEMENTO 08
+============================================================
+
+Nome:
+
+Paginação.
+
+Tipo:
+
+Controle de navegação.
+
+Objetivo:
+
+Permitir navegar entre as páginas de resultados.
+
+Comportamento observado:
+
+No canto superior e inferior direito é exibida a paginação.
+
+Exemplo observado:
+
+< 1 2 3 4 5 >
+
+• O número da página atual aparece destacado.
+
+• Ao clicar nos números, o sistema navega para a página correspondente.
+
+• Ao clicar no símbolo "<", o sistema retorna para a página anterior, quando disponível.
+
+• Ao clicar no símbolo ">", o sistema avança para a próxima página.
+
+A navegação ocorre na mesma aba do navegador.
+
+============================================================
+ELEMENTO 09
+============================================================
+
+Nome:
+
+Painel "Termos mais frequentes".
+
+Tipo:
+
+Painel lateral.
+
+Objetivo:
+
+Apresentar palavras recorrentes encontradas nos resultados da pesquisa.
+
+Comportamento observado:
+
+Cada termo possui uma caixa de seleção.
+
+Após selecionar um ou mais termos, o usuário pode clicar no botão:
+
+"Adicionar à pesquisa"
+
+para incluir os termos como novos critérios de pesquisa.
+
+============================================================
+ELEMENTO 10
+============================================================
+
+Nome:
+
+Painel "Filtrar no resultado".
+
+Tipo:
+
+Painel lateral.
+
+Objetivo:
+
+Permitir refinar os resultados já obtidos.
+
+Filtros disponíveis:
+
+• Classe;
+• Relator;
+• Comarca;
+• Órgão Julgador.
+
+Botões disponíveis:
+
+• Refinar resultado;
+• Limpar.
+
+============================================================
+COMPORTAMENTO GERAL
+============================================================
+
+Após a realização da pesquisa, o sistema apresenta uma lista paginada de acórdãos contendo informações resumidas de cada decisão judicial.
+
+Além da visualização das informações básicas, o usuário pode:
+
+• abrir o inteiro teor do acórdão em PDF;
+• visualizar a ementa em uma janela modal sem formatação;
+• expandir a ementa diretamente na página de resultados;
+• navegar entre as páginas de resultados;
+• adicionar termos frequentes à pesquisa;
+• refinar os resultados utilizando filtros específicos.

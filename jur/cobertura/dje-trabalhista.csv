@@ -1,0 +1,49 @@
+Tribunal,Estado(s),Sistema,Instância,DJe Citacao,DJe Intimacao
+TRT1,Rio de Janeiro,PJe,1a,Simultâneo,Simultâneo,,Exclusivo
+TRT1,Rio de Janeiro,PJe,2a,Simultâneo,Simultâneo,,Simultâneo
+TRT2,São Paulo,PJe,1a,Simultâneo,Simultâneo
+TRT2,São Paulo,PJe,2a,Simultâneo,Simultâneo
+TRT3,Minas Gerais,PJe,1a,Simultâneo,Simultâneo
+TRT3,Minas Gerais,PJe,2a,Simultâneo,Simultâneo
+TRT4,Rio Grande do Sul,PJe,1a,Simultâneo,Simultâneo
+TRT4,Rio Grande do Sul,PJe,2a,Simultâneo,Simultâneo
+TRT5,Bahia,PJe,1a,Simultâneo,Simultâneo
+TRT5,Bahia,PJe,2a,Simultâneo,Simultâneo
+TRT6,Pernambuco,PJe,1a,Simultâneo,Simultâneo
+TRT6,Pernambuco,PJe,2a,Simultâneo,Simultâneo
+TRT7,Ceará,PJe,1a,Simultâneo,Simultâneo
+TRT7,Ceará,PJe,2a,Simultâneo,Simultâneo
+TRT8,Pará e Amapá,PJe,1a,Simultâneo,Simultâneo
+TRT8,Pará e Amapá,PJe,2a,Simultâneo,Simultâneo
+TRT9,Paraná,PJe,1a,Simultâneo,Simultâneo
+TRT9,Paraná,PJe,2a,Simultâneo,Simultâneo
+TRT10,Distrito Federal e Tocantins,PJe,1a,Simultâneo,Simultâneo
+TRT10,Distrito Federal e Tocantins,PJe,2a,Simultâneo,Simultâneo
+TRT11,Amazonas e Roraima,PJe,1a,Simultâneo,Simultâneo
+TRT11,Amazonas e Roraima,PJe,2a,Simultâneo,Simultâneo
+TRT12,Santa Catarina,PJe,1a,Simultâneo,Simultâneo
+TRT12,Santa Catarina,PJe,2a,Simultâneo,Simultâneo
+TRT13,Paraíba,PJe,1a,Simultâneo,Simultâneo
+TRT13,Paraíba,PJe,2a,Simultâneo,Simultâneo
+TRT14,Rondônia e Acre,PJe,1a,Simultâneo,Simultâneo
+TRT14,Rondônia e Acre,PJe,2a,Simultâneo,Simultâneo
+TRT15,São Paulo (Campinas - Interior),PJe,1a,Simultâneo,Simultâneo
+TRT15,São Paulo (Campinas - Interior),PJe,2a,Simultâneo,Simultâneo
+TRT16,Maranhão,PJe,1a,Simultâneo,Simultâneo
+TRT16,Maranhão,PJe,2a,Simultâneo,Simultâneo
+TRT17,Espírito Santo,PJe,1a,Simultâneo,Simultâneo
+TRT17,Espírito Santo,PJe,2a,Simultâneo,Simultâneo
+TRT18,Goiás,PJe,1a,Simultâneo,Simultâneo
+TRT18,Goiás,PJe,2a,Simultâneo,Simultâneo
+TRT19,Alagoas,PJe,1a,Simultâneo,Simultâneo
+TRT19,Alagoas,PJe,2a,Simultâneo,Simultâneo
+TRT20,Sergipe,PJe,1a,Simultâneo,Simultâneo
+TRT20,Sergipe,PJe,2a,Simultâneo,Simultâneo
+TRT21,Rio Grande do Norte,PJe,1a,Simultâneo,Simultâneo
+TRT21,Rio Grande do Norte,PJe,2a,Simultâneo,Simultâneo
+TRT22,Piauí,PJe,1a,Simultâneo,Simultâneo
+TRT22,Piauí,PJe,2a,Simultâneo,Simultâneo
+TRT23,Mato Grosso,PJe,1a,Simultâneo,Simultâneo
+TRT23,Mato Grosso,PJe,2a,Simultâneo,Simultâneo
+TRT24,Mato Grosso do Sul,PJe,1a,Exclusivo,Simultâneo
+TRT24,Mato Grosso do Sul,PJe,2a,Exclusivo,Simultâneo

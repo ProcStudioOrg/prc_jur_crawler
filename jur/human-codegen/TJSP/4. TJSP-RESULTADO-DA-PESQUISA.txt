@@ -1,0 +1,169 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DE SÃO PAULO (TJSP)
+RESULTADO DA PESQUISA – TELA GERAL
+============================================================
+
+URL DE ORIGEM:
+Página inicial de pesquisa de jurisprudência do TJSP.
+
+URL DE DESTINO:
+https://eproc1g.tjsp.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados
+
+Objetivo:
+Documentar o comportamento do sistema após a execução da pesquisa, indicando o redirecionamento para a tela de resultados e os elementos exibidos na nova página.
+
+============================================================
+COMPORTAMENTO OBSERVADO
+============================================================
+
+Após informar um termo de pesquisa e clicar no botão "Pesquisar", o sistema redireciona o usuário para uma nova URL de resultados.
+
+A pesquisa não é exibida na mesma tela inicial.
+
+O sistema carrega uma nova página de resultados no seguinte endereço:
+
+https://eproc1g.tjsp.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Mensagem informativa.
+
+Tipo:
+Texto informativo.
+
+Objetivo:
+Informar que foram encontrados mais de 1000 documentos para o termo pesquisado e orientar o usuário a utilizar mais parâmetros para refinar a pesquisa.
+
+Comportamento observado:
+O sistema exibe uma mensagem em destaque informando que estão sendo exibidos os primeiros 10 registros.
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Quantidade de documentos encontrados.
+
+Tipo:
+Texto informativo.
+
+Objetivo:
+Indicar a quantidade de documentos localizados.
+
+Comportamento observado:
+Exemplo observado:
+5617 documentos encontrados.
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Lista de resultados.
+
+Tipo:
+Área de resultados.
+
+Objetivo:
+Apresentar os documentos encontrados na pesquisa.
+
+Informações exibidas:
+• Processo;
+• Classe;
+• Órgão julgador;
+• Magistrado;
+• Data do julgamento;
+• Data da publicação;
+• UF;
+• Decisão.
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Painel lateral de filtros.
+
+Tipo:
+Área de filtros.
+
+Objetivo:
+Permitir o refinamento da pesquisa.
+
+Filtros exibidos:
+• Assunto;
+• Classe;
+• Data de julgamento;
+• Data de publicação;
+• Órgão julgador;
+• Precedente Relevante;
+• Relator / Magistrado;
+• Unidade Federativa.
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Critério de ordenação.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Permitir alterar a ordem dos resultados.
+
+Opção observada:
+mais recentes.
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+Navegação dos resultados.
+
+Tipo:
+Botões de navegação.
+
+Objetivo:
+Permitir avançar, voltar e controlar a quantidade de registros exibidos.
+
+Elementos observados:
+• Primeiro registro;
+• Registro anterior;
+• Próximo registro;
+• Último registro;
+• Campo de quantidade de registros por página.
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+Ícones de ação do resultado.
+
+Tipo:
+Botões/ícones.
+
+Objetivo:
+Disponibilizar ações relacionadas ao resultado exibido.
+
+Ícones observados:
+• Ícone de lista/documento;
+• Ícone de lupa;
+• Ícone de PDF/documento.
+
+============================================================
+COMPORTAMENTO GERAL DA NOVA TELA
+============================================================
+
+A nova tela apresenta os resultados encontrados, mantendo o termo pesquisado no campo de busca.
+
+Os documentos são exibidos em lista, com o primeiro resultado já expandido na tela.
+
+A lateral esquerda permanece disponível para nova pesquisa, limpeza de filtros, aplicação de filtros adicionais e alteração do critério de ordenação.
+

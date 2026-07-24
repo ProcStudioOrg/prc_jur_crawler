@@ -1,0 +1,87 @@
+===============================================================
+TELA: PRONTOS PARA JULGAMENTO
+===============================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/sg-ready-judgment-form
+
+Objetivo da tela:
+Permitir a consulta do relatório de processos prontos para julgamento, utilizando filtros por relator e câmara.
+
+Descrição:
+A tela disponibiliza dois campos de seleção em formato de lista suspensa, destinados à escolha do relator e da câmara, além de um botão para executar a consulta.
+
+===============================================================
+ELEMENTO 01
+===============================================================
+
+Nome:
+Combo "Relator"
+
+Tipo:
+Lista suspensa.
+
+Obrigatório:
+Não identificado na tela.
+
+Descrição:
+Permite selecionar o relator que será utilizado como filtro na consulta dos processos prontos para julgamento.
+
+Opções disponíveis:
+Lista contendo os relatores cadastrados no sistema.
+
+Ação:
+Clique na seta localizada à direita do campo para visualizar e selecionar um relator.
+
+Comportamento observado:
+Ao abrir o campo, o sistema exibe a relação de relatores disponíveis para seleção.
+
+===============================================================
+ELEMENTO 02
+===============================================================
+
+Nome:
+Combo "Câmaras"
+
+Tipo:
+Lista suspensa.
+
+Obrigatório:
+Não identificado na tela.
+
+Descrição:
+Permite selecionar a câmara que será utilizada como filtro na consulta dos processos prontos para julgamento.
+
+Opções disponíveis:
+Lista contendo as câmaras cadastradas no sistema.
+
+Ação:
+Clique na seta localizada à direita do campo para visualizar e selecionar uma câmara.
+
+Comportamento observado:
+Ao abrir o campo, o sistema exibe a relação de câmaras disponíveis para seleção.
+
+===============================================================
+ELEMENTO 03
+===============================================================
+
+Nome:
+Botão "CONSULTAR"
+
+Tipo:
+Botão de ação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Executa a consulta do relatório de processos prontos para julgamento conforme os filtros informados.
+
+Ação:
+Após selecionar o relator e a câmara desejados, clique no botão "CONSULTAR" para realizar a pesquisa.
+
+Prints:
+
+• 29. TJMA-THEMIS-SG-PRONTOS-PARA-JULGAMENTO_print_tela-inicial.png
+• 30. TJMA-THEMIS-SG-PRONTOS-PARA-JULGAMENTO_print_campo-relator.png
+• 31. TJMA-THEMIS-SG-PRONTOS-PARA-JULGAMENTO_print_campo-camara.png

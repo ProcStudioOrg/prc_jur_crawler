@@ -1,0 +1,100 @@
+===============================================================
+TELA: AÇÕES DE CONSTITUCIONALIDADE
+===============================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/sg-constitutionality-actions-form
+
+Objetivo da tela:
+Permitir a consulta das Ações de Constitucionalidade cadastradas no sistema, utilizando filtros por tipo de ação e intervalo de datas.
+
+Descrição:
+A tela disponibiliza um filtro para seleção do tipo de ação, dois campos de data (início e fim) para definição do período da pesquisa e um botão para executar a consulta.
+
+===============================================================
+ELEMENTO 01
+===============================================================
+
+Nome:
+Combo "Ação"
+
+Tipo:
+Lista suspensa.
+
+Obrigatório:
+Não.
+
+Descrição:
+Permite selecionar o tipo de Ação de Constitucionalidade que será utilizado como filtro da consulta.
+
+Opções disponíveis:
+
+• Todas
+• Ação Direta de Inconstitucionalidade
+• Ação Declaratória de Constitucionalidade
+
+Ação:
+Clique na seta localizada à direita do campo para visualizar e selecionar uma das opções disponíveis.
+
+===============================================================
+ELEMENTO 02
+===============================================================
+
+Nome:
+Campo "Data Início"
+
+Tipo:
+Campo de data com calendário.
+
+Obrigatório:
+Não.
+
+Descrição:
+Permite informar a data inicial do período que será considerado na pesquisa.
+
+Ação:
+A data pode ser digitada manualmente no formato DD/MM/AAAA ou selecionada por meio do calendário exibido ao clicar no campo.
+
+===============================================================
+ELEMENTO 03
+===============================================================
+
+Nome:
+Campo "Data Fim"
+
+Tipo:
+Campo de data com calendário.
+
+Obrigatório:
+Não.
+
+Descrição:
+Permite informar a data final do período da pesquisa.
+
+Ação:
+A data pode ser digitada manualmente no formato DD/MM/AAAA ou selecionada utilizando o calendário disponível.
+
+===============================================================
+ELEMENTO 04
+===============================================================
+
+Nome:
+Botão "CONSULTAR"
+
+Tipo:
+Botão de ação.
+
+Obrigatório:
+Não.
+
+Descrição:
+Executa a consulta das Ações de Constitucionalidade conforme os filtros informados.
+
+Ação:
+Após preencher os filtros desejados, clique no botão "CONSULTAR" para realizar a pesquisa.
+
+Prints:
+
+• 22. TJMA-THEMIS-SG-ACOES-DE-CONSTITUCIONALIDADE_print_tela-inicial.png
+• 23. TJMA-THEMIS-SG-ACOES-DE-CONSTITUCIONALIDADE_print_combo-acao.png
+• 24. TJMA-THEMIS-SG-ACOES-DE-CONSTITUCIONALIDADE_print_calendario-data-inicio-fim.png

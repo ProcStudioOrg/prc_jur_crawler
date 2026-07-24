@@ -1,0 +1,20 @@
+Por favor analise primeiro o meu buscador por CLI do TRF4 nos seguinte arquivos: 
+
+/home/vivihzg/code/crawlers/jur/src/: 
+	BaseCrawler.js
+	index.js
+	TRF4Crawler.js
+
+Depois analise:
+/home/vivihzg/code/crawlers/jur/human-codegen/TRF3
+
+O objetivo é fazer um crawler completo por CLI, para ser usado por IA. A partir da análise dos textos humanos crie um arquivo chamado TRF3-codgen.txt usando o MCP playwright para fazer isso. 
+
+Depois leia o conteúdo do arquivo e passe para executar o CLI do TRF1: Não misture os arquivos. 
+
+No CLI Final espera-se: 
+	- Filtro de datas
+	- Filtro de tribunal
+	- Filtro de desembargador
+	- ???? > CONTINUAR 
+

@@ -1,0 +1,49 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO DE JANEIRO (TJRJ)
+CONSULTA À JURISPRUDÊNCIA
+============================================================
+
+URL:
+https://www.tjrj.jus.br/web/portal-conhecimento/consulta-a-jurisprudencia
+
+Objetivo:
+Documentar a página de Consulta à Jurisprudência, utilizada para direcionar o usuário ao ambiente de pesquisa correspondente ao sistema em que a decisão foi proferida.
+
+============================================================
+TELA INICIAL
+============================================================
+
+A página Consulta à Jurisprudência apresenta informações sobre os ambientes disponíveis para pesquisa de jurisprudência do Tribunal de Justiça do Estado do Rio de Janeiro.
+
+As consultas podem ser realizadas nos seguintes ambientes:
+
+• eJURIS (Sistema Legado): reúne a base de acórdãos e decisões monocráticas provenientes do sistema eJUD.
+
+• eproc (Novo Sistema): disponibiliza decisões proferidas nos processos que tramitam no sistema eproc.
+
+============================================================
+PROCEDIMENTO
+============================================================
+
+1. Acessar a página **Consulta à Jurisprudência**.
+
+2. Ler as informações apresentadas sobre os ambientes de consulta.
+
+3. Selecionar o ambiente desejado:
+
+• Jurisprudência Sistema eJURIS (Sistema Legado); ou
+
+• Jurisprudência Sistema eproc (Novo Sistema).
+
+============================================================
+RESULTADO ESPERADO
+============================================================
+
+O sistema direciona o usuário para o ambiente de pesquisa correspondente ao sistema selecionado.
+
+============================================================
+PRINT
+============================================================
+
+Arquivo:
+TJRJ-CONSULTA-JURISPRUDENCIA_print.png

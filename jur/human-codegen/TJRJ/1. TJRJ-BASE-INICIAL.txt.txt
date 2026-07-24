@@ -1,0 +1,51 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO DE JANEIRO (TJRJ)
+PORTAL INICIAL
+============================================================
+
+URL:
+https://www.tjrj.jus.br/
+
+Objetivo:
+Documentar a tela inicial do Portal do Tribunal de Justiça do Estado do Rio de Janeiro e o caminho de acesso à área de jurisprudência.
+
+============================================================
+TELA INICIAL
+============================================================
+
+A tela inicial do Portal do TJRJ apresenta o menu principal de navegação, localizado na parte superior da página.
+
+Entre as opções disponíveis no menu principal, consta a opção:
+
+• Advogado.
+
+A área de jurisprudência é acessada a partir desse menu.
+
+============================================================
+PROCEDIMENTO
+============================================================
+
+1. Acessar o Portal do Tribunal de Justiça do Estado do Rio de Janeiro.
+
+2. Localizar o menu superior da página.
+
+3. Clicar na opção:
+
+Advogado.
+
+4. Selecionar a opção:
+
+Jurisprudência.
+
+============================================================
+RESULTADO ESPERADO
+============================================================
+
+O sistema direciona o usuário para a página de jurisprudência do Portal do Conhecimento do TJRJ.
+
+============================================================
+PRINT
+============================================================
+
+Arquivo:
+TJRJ-BASE-INICIAL_print.png

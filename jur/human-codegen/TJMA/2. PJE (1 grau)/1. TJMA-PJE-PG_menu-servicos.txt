@@ -1,0 +1,87 @@
+==================================================================
+TELA: SERVIÇOS ASSOCIADOS AO PJe (1º GRAU)
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/submenu
+
+Objetivo da tela:
+Apresentar os serviços públicos disponíveis relacionados ao sistema PJe (1º Grau), permitindo que o usuário selecione a funcionalidade desejada.
+
+Descrição:
+A tela exibe os serviços disponíveis para consulta no módulo PJe (1º Grau). Cada serviço é apresentado em formato de lista e pode ser acessado por meio do ícone de pesquisa localizado à direita.
+
+==================================================================
+ELEMENTO 01
+==================================================================
+
+Nome:
+Campo "Filtrar".
+
+Tipo:
+Campo de pesquisa.
+
+Objetivo:
+Localizar rapidamente um serviço disponível na lista.
+
+Ações possíveis:
+
+1. Digitar parte do nome do serviço.
+2. Filtrar dinamicamente os serviços exibidos.
+
+Comportamento observado:
+
+• O sistema reduz a lista conforme o texto informado.
+
+==================================================================
+ELEMENTO 02
+==================================================================
+
+Nome:
+Serviço "Pauta de Audiências".
+
+Tipo:
+Item de menu.
+
+Objetivo:
+Acessar a consulta de pautas de audiências do sistema PJe (1º Grau).
+
+Descrição exibida:
+
+"Consultar Pautas de Audiências."
+
+Ações possíveis:
+
+1. Clicar sobre o ícone de pesquisa localizado à direita.
+
+Comportamento observado:
+
+• Ao selecionar o serviço, o sistema abre a tela de consulta de pautas de audiências.
+
+==================================================================
+ELEMENTO 03
+==================================================================
+
+Nome:
+Serviço "Relatório de Entes Públicos e Empresas Credenciadas".
+
+Tipo:
+Item de menu.
+
+Objetivo:
+Acessar o relatório de Procuradoria contendo Empresas Públicas, Empresas Privadas e Entes Públicos Credenciados.
+
+Descrição exibida:
+
+"Relatório de Procuradoria (Empresas Públicas ou Privadas e Entes Públicos Credenciados)."
+
+Ações possíveis:
+
+1. Clicar sobre o ícone de pesquisa localizado à direita.
+
+Comportamento observado:
+
+• Ao selecionar o serviço, o sistema abre a tela correspondente ao relatório de Entes Públicos e Empresas Credenciadas.
+
+Print:
+2. TJMA-PJE-PG_print_menu-servicos.png

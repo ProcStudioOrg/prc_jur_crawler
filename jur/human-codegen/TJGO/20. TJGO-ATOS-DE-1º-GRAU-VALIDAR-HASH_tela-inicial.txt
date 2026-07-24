@@ -1,0 +1,189 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DE GOIÁS (TJGO)
+VALIDAÇÃO DE ATOS JUDICIAIS – VALIDAR HASH
+============================================================
+
+LINK:
+https://www.tjgo.jus.br/sdm2/consultaPublica/validaCodigoAtoJudicial
+
+CAMINHO DE ACESSO:
+
+Atos Judiciais/Jurisprudência
+→ Atos de 1º Grau
+→ Validar Hash
+
+============================================================
+OBJETIVO
+============================================================
+
+Permitir a validação de um ato judicial por meio do código identificador do documento.
+
+Para realizar a verificação, o usuário deve informar o código do documento e preencher o código de segurança apresentado na imagem. Após o preenchimento, o sistema permite executar a validação do ato judicial.
+
+============================================================
+TELA 01 – VALIDAÇÃO DE ATO JUDICIAL
+============================================================
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Informe o código de validação do ato
+
+Tipo:
+Título da funcionalidade
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Identifica a página destinada à validação de atos judiciais por meio do código do documento.
+
+O título é apresentado na parte superior do quadro principal da página.
+
+Ação:
+
+Não possui ação direta.
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Código do Documento
+
+Tipo:
+Campo de texto
+
+Obrigatório:
+Sim.
+
+Descrição:
+
+Permite informar o código identificador do ato judicial que será validado.
+
+O código deve corresponder ao identificador disponibilizado no próprio documento judicial.
+
+Ação:
+
+Clicar no campo e digitar o código do documento que será submetido à validação.
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Imagem do código de segurança
+
+Tipo:
+Imagem de verificação
+
+Obrigatório:
+Sim.
+
+Descrição:
+
+Apresenta uma sequência de caracteres utilizada como mecanismo de segurança para confirmar que a consulta está sendo realizada por uma pessoa.
+
+No exemplo documentado, a imagem apresenta um código composto por letras.
+
+Ação:
+
+Visualizar os caracteres exibidos na imagem para reproduzi-los no campo correspondente.
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Campo do código de segurança
+
+Tipo:
+Campo de texto
+
+Obrigatório:
+Sim.
+
+Descrição:
+
+Permite informar os caracteres exibidos na imagem de verificação.
+
+O preenchimento deve reproduzir o código apresentado na imagem.
+
+Ação:
+
+Clicar no campo e digitar os caracteres visualizados na imagem de segurança.
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Validar
+
+Tipo:
+Botão
+
+Obrigatório:
+Sim, para executar a validação.
+
+Descrição:
+
+Executa a verificação do ato judicial utilizando o código do documento e o código de segurança informados.
+
+Ação:
+
+Clicar no botão “Validar” após o preenchimento dos campos obrigatórios.
+
+Comportamento esperado:
+
+• O sistema processa os códigos informados.
+
+• Quando o código do documento for válido, o sistema apresenta as informações relacionadas ao ato judicial.
+
+• Quando os dados estiverem incorretos ou incompletos, o sistema poderá apresentar mensagem de validação ou de erro.
+
+============================================================
+PASSO A PASSO
+============================================================
+
+1. Acessar o link:
+
+https://www.tjgo.jus.br/sdm2/consultaPublica/validaCodigoAtoJudicial
+
+2. Localizar o campo “Código do Documento”.
+
+3. Informar o código identificador apresentado no ato judicial.
+
+4. Visualizar os caracteres exibidos na imagem de segurança.
+
+5. Digitar os caracteres no campo localizado ao lado da imagem.
+
+6. Clicar no botão “Validar”.
+
+7. Aguardar o processamento da verificação.
+
+8. Consultar as informações ou mensagens apresentadas pelo sistema.
+
+============================================================
+OBSERVAÇÕES GERAIS
+============================================================
+
+• Os campos “Código do Documento” e código de segurança devem ser preenchidos para que a validação seja executada.
+
+• O código do documento deve ser copiado conforme apresentado no ato judicial.
+
+• O código de segurança é apresentado em formato de imagem.
+
+• Caso os caracteres da imagem não estejam legíveis, pode ser necessário atualizar a página para obter um novo código.
+
+• A validação somente poderá ser concluída quando os dados informados corresponderem aos registros existentes no sistema.
+
+• Na imagem de referência, não foi realizada uma validação completa. Por esse motivo, não foi documentada a tela de resultado.
+
+
+PRINT:
+
+21. TJGO-ATOS-DE-1º-GRAU-VALIDAR-HASH_print_tela-inicial.png

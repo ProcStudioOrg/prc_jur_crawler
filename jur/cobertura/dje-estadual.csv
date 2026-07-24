@@ -1,0 +1,104 @@
+Tribunal,Estado(s),Sistema,Instância,DJe Citacao,DJe Intimacao
+TJAC,Acre,ESAJ,1a,Simultâneo,Simultâneo,,Exclusivo
+TJAC,Acre,ESAJ,2a,Simultâneo,Simultâneo,,Simultâneo
+TJAL,Alagoas,ESAJ,1a,Simultâneo,Simultâneo
+TJAL,Alagoas,ESAJ,2a,Simultâneo,Simultâneo
+TJAL,Alagoas,Projudi,1a,Simultâneo,Simultâneo
+TJAP,Amapá,Tucujuris,1a,Simultâneo,Simultâneo
+TJAP,Amapá,Tucujuris,2a,Simultâneo,Simultâneo
+TJAP,Amapá,PJe,1a,Simultâneo,Simultâneo
+TJAM,Amazonas,ESAJ,1a,Simultâneo,Simultâneo
+TJAM,Amazonas,ESAJ,2a,Simultâneo,Simultâneo
+TJAM,Amazonas,Projudi,1a,Simultâneo,Simultâneo
+TJBA,Bahia,ESAJ,1a,Simultâneo,Simultâneo
+TJBA,Bahia,ESAJ,2a,Simultâneo,Simultâneo
+TJBA,Bahia,PJe,1a,Simultâneo,Simultâneo
+TJBA,Bahia,PJe,2a,Simultâneo,Simultâneo
+TJBA,Bahia,Projudi,1a,Simultâneo,Simultâneo
+TJBA,Bahia,Projudi,2a,Simultâneo,Simultâneo
+TJCE,Ceará,ESAJ,1a,Simultâneo,Simultâneo
+TJCE,Ceará,ESAJ,2a,Simultâneo,Simultâneo
+TJCE,Ceará,PJe,1a,Simultâneo,Simultâneo
+TJCE,Ceará,PJe,2a,Simultâneo,Simultâneo
+TJCE,Ceará,Projudi,1a,Simultâneo,Simultâneo
+TJCE,Ceará,Projudi,2a,Simultâneo,Simultâneo
+TJDFT,Distrito Federal e Territórios,PJe,1a,Simultâneo,Simultâneo
+TJDFT,Distrito Federal e Territórios,PJe,2a,Simultâneo,Simultâneo
+TJDFT,Distrito Federal e Territórios,PJe,1a,Simultâneo,Simultâneo
+TJDFT,Distrito Federal e Territórios,PJe,2a,Simultâneo,Simultâneo
+TJES,Espírito Santo,PJe,1a,Exclusivo,Exclusivo
+TJES,Espírito Santo,PJe,2a,Exclusivo,Exclusivo
+TJES,Espírito Santo,Projudi,1a,Simultâneo,Simultâneo
+TJES,Espirito Santo,Projudi,2a,Simultâneo,Simultâneo
+TJGO,Goiás,Projudi,1a,Simultâneo,Simultâneo
+TJGO,Goiás,Projudi,2a,Simultâneo,Simultâneo
+TJMA,Maranhão,PJe,1a,Simultâneo,Simultâneo
+TJMA,Maranhão,PJe,2a,Simultâneo,Simultâneo
+TJMA,Maranhão,Projudi,1a,Simultâneo,Simultâneo
+TJMA,Maranhão,Projudi,2a,Simultâneo,Simultâneo
+TJMT,Mato Grosso,PJe,1a,Simultâneo,Simultâneo
+TJMT,Mato Grosso,PJe,2a,Simultâneo,Simultâneo
+TJMT,Mato Grosso,Projudi,1a,Simultâneo,Simultâneo
+TJMT,Mato Grosso,Projudi,2a,Simultâneo,Simultâneo
+TJMS,Mato Grosso do Sul,ESAJ,1a,Simultâneo,Simultâneo
+TJMS,Mato Grosso do Sul,ESAJ,2a,Simultâneo,Simultâneo
+TJMG,Minas Gerais,PJe,1a,Simultâneo,Simultâneo
+TJMG,Minas Gerais,PJe,2a,Simultâneo,Simultâneo
+TJMG,Minas Gerais,Projudi,1a,Simultâneo,Simultâneo
+TJMG,Minas Gerais,Projudi,2a,Simultâneo,Simultâneo
+TJMG,Minas Gerais,Próprio,1a,Simultâneo,Simultâneo
+TJMG,Minas Gerais,Próprio - JPe Themis,2a,Simultâneo,Simultâneo
+TJPA,Pará,PJe,1a,Simultâneo,Simultâneo
+TJPA,Pará,PJe,2a,Simultâneo,Simultâneo
+TJPA,Pará,Projudi,1a,Simultâneo,Simultâneo
+TJPA,Pará,Projudi,2a,Simultâneo,Simultâneo
+TJPA,Pará,Libra,1a,Simultâneo,Simultâneo
+TJPA,Pará,Libra,2a,Simultâneo,Simultâneo
+TJPB,Paraíba,PJe,1a,Simultâneo,Simultâneo
+TJPB,Paraíba,PJe,2a,Simultâneo,Simultâneo
+TJPB,Paraíba,Projudi,1a,Simultâneo,Simultâneo
+TJPB,Paraíba,Projudi,2a,Simultâneo,Simultâneo
+TJPR,Paraná,Projudi,1a,Simultâneo,Simultâneo
+TJPR,Paraná,Projudi,2a,Simultâneo,Simultâneo
+TJPE,Pernambuco,PJe,1a,Simultâneo,Simultâneo
+TJPE,Pernambuco,PJe,2a,Simultâneo,Simultâneo
+TJPE,Pernambuco,Projudi,1a,Simultâneo,Simultâneo
+TJPE,Pernambuco,Projudi,2a,Simultâneo,Simultâneo
+TJPI,Piauí,PJe,1a,Simultâneo,Simultâneo
+TJPI,Piauí,PJe,2a,Simultâneo,Simultâneo
+TJPI,Piauí,Projudi,1a,Simultâneo,Simultâneo
+TJPI,Piauí,Projudi,2a,Simultâneo,Simultâneo
+TJRJ,Rio de Janeiro,Próprio,1a,Simultâneo,Simultâneo
+TJRJ,Rio de Janeiro,Próprio,2a,Simultâneo,Simultâneo
+TJRJ,Rio de Janeiro,Projudi,1a,Simultâneo,Simultâneo
+TJRJ,Rio de Janeiro,Projudi,2a,Simultâneo,Simultâneo
+TJRJ,Rio de Janeiro,PJe,1a,Simultâneo,Simultâneo
+TJRJ,Rio de Janeiro,PJe,2a,Simultâneo,Simultâneo
+TJRN,Rio Grande do Norte,ESAJ,1a,Simultâneo,Simultâneo
+TJRN,Rio Grande do Norte,PJe,1a,Simultâneo,Simultâneo
+TJRN,Rio Grande do Norte,PJe,2a,Simultâneo,Simultâneo
+TJRN,Rio Grande do Norte,Projudi,1a,Simultâneo,Simultâneo
+TJRN,Rio Grande do Norte,Projudi,2a,Simultâneo,Simultâneo
+TJRS,Rio Grande do Sul,PJe,1a,Simultâneo,Simultâneo
+TJRS,Rio Grande do Sul,Próprio,1a,Simultâneo,Simultâneo
+TJRS,Rio Grande do Sul,Próprio,2a,Simultâneo,Simultâneo
+TJRS,Rio Grande do Sul,e-Proc,1a,Simultâneo,Simultâneo
+TJRS,Rio Grande do Sul,e-Proc,2a,Simultâneo,Simultâneo
+TJRO,Rondônia,PJe,1a,Simultâneo,Simultâneo
+TJRO,Rondônia,PJe,2a,Simultâneo,Simultâneo
+TJRO,Rondônia,Projudi,1a,Simultâneo,Simultâneo
+TJRR,Roraima,PJe,1a,Simultâneo,Simultâneo
+TJRR,Roraima,PJe,2a,Simultâneo,Simultâneo
+TJRR,Roraima,Projudi,1a,Simultâneo,Simultâneo
+TJRR,Roraima,Projudi,2a,Simultâneo,Simultâneo
+TJSC,Santa Catarina,ESAJ,1a,Simultâneo,Simultâneo
+TJSC,Santa Catarina,ESAJ,2a,Simultâneo,Simultâneo
+TJSC,Santa Catarina,e-Proc,1a,Simultâneo,Simultâneo
+TJSC,Santa Catarina,e-Proc,2a,Simultâneo,Simultâneo
+TJSP,São Paulo,ESAJ,1a,Simultâneo,Simultâneo
+TJSP,São Paulo,ESAJ,2a,Simultâneo,Simultâneo
+TJSE,Sergipe,Próprio,1a,Exclusivo,Simultâneo
+TJSE,Sergipe,Próprio,2a,Exclusivo,Simultâneo
+TJTO,Tocantins,e-Proc,1a,Simultâneo,Simultâneo
+TJTO,Tocantins,e-Proc,2a,Simultâneo,Simultâneo
+TJTO,Tocantins,Projudi,1a,Simultâneo,Simultâneo

@@ -1,0 +1,86 @@
+==================================================================
+TELA: SERVIÇOS ASSOCIADOS AO CONCLUSOS POR ORDEM CRONOLÓGICA (1º GRAU)
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/submenu
+
+Objetivo da tela:
+Exibir os serviços públicos relacionados às Consultas de Processos em Conclusão por Ordem Cronológica do 1º Grau.
+
+Descrição:
+A tela apresenta um campo para filtragem dos serviços disponíveis e a lista de consultas acessíveis ao usuário. Cada serviço possui um botão de pesquisa para acesso à respectiva funcionalidade.
+
+==================================================================
+ELEMENTO 01
+==================================================================
+
+Nome:
+Filtro de serviços.
+
+Tipo:
+Campo de pesquisa.
+
+Objetivo:
+Permitir localizar rapidamente um serviço disponível na lista.
+
+Ações possíveis:
+
+1. Digitar parte do nome do serviço.
+2. Editar o texto informado.
+3. Limpar o conteúdo.
+
+Comportamento observado:
+
+• A lista é filtrada dinamicamente conforme o texto digitado.
+
+==================================================================
+ELEMENTO 02
+==================================================================
+
+Nome:
+Consulta 1º Grau.
+
+Tipo:
+Item de menu.
+
+Objetivo:
+Disponibilizar acesso à consulta de processos em conclusão por ordem cronológica do 1º Grau.
+
+Descrição apresentada:
+
+"Consultar processos em conclusos por ordem cronológica do 1º Grau."
+
+Ações possíveis:
+
+1. Clicar sobre o nome do serviço.
+2. Clicar no ícone de pesquisa localizado à direita.
+
+Comportamento observado:
+
+• O sistema abre a tela de consulta correspondente.
+
+==================================================================
+ELEMENTO 03
+==================================================================
+
+Nome:
+Ícone de Pesquisa.
+
+Tipo:
+Botão.
+
+Objetivo:
+Acessar diretamente o serviço "Consulta 1º Grau".
+
+Ações possíveis:
+
+1. Clicar no ícone de lupa.
+
+Comportamento observado:
+
+• Redireciona o usuário para a tela de consulta de processos em conclusos por ordem cronológica do 1º Grau.
+
+Print:
+
+• 2. TJMA-PJE-CONCLUSOS-ORDEM-CRONOLOGICA_print-tela-inicial.png

@@ -1,0 +1,239 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DE SÃO PAULO (TJSP)
+RESULTADO DA PESQUISA – EPROC
+============================================================
+
+URL:
+https://esaj.tjsp.jus.br/cjpg/pesquisar.do
+
+Objetivo:
+Descrever o comportamento do sistema após a execução de uma pesquisa de julgados de 1º Grau, apresentando os resultados encontrados, os elementos exibidos na tela e as ações disponíveis ao usuário.
+
+============================================================
+EXECUÇÃO DA PESQUISA
+============================================================
+
+Procedimento realizado:
+
+1. Acessar a página "Consulta de Julgados de 1º Grau".
+2. Informar um termo no campo "Pesquisa Livre".
+3. Clicar no botão "Consultar".
+
+Comportamento observado:
+
+• A pesquisa é executada na mesma página.
+• O sistema não abre nova guia.
+• O sistema não abre nova janela.
+• Os resultados são exibidos abaixo dos parâmetros de consulta.
+• Os filtros permanecem visíveis na parte superior da tela.
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Quantidade de resultados.
+
+Tipo:
+Texto informativo.
+
+Objetivo:
+Informar a quantidade total de resultados encontrados e quais registros estão sendo exibidos na página atual.
+
+Comportamento observado:
+
+Exemplo observado:
+Resultados 1 a 10 de (quantidade total).
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Lista de julgados.
+
+Tipo:
+Área de resultados.
+
+Objetivo:
+Exibir os julgados encontrados conforme os critérios informados.
+
+Cada resultado apresenta:
+
+• Número do processo;
+• Classe;
+• Assunto;
+• Magistrado;
+• Comarca;
+• Foro;
+• Vara;
+• Data de disponibilização;
+• Trecho da decisão.
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Número do processo.
+
+Tipo:
+Link.
+
+Objetivo:
+Permitir o acesso ao inteiro teor do julgado correspondente.
+
+Comportamento observado:
+
+• O número do processo aparece em destaque como link.
+• Ao clicar sobre o número do processo, o sistema abre o inteiro teor do julgado.
+• A abertura ocorre na mesma aba do navegador.
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Ícone PDF.
+
+Tipo:
+Botão/ícone de ação.
+
+Objetivo:
+Permitir a abertura do julgado em formato PDF.
+
+Comportamento observado:
+
+• Ao lado do número do processo é exibido um ícone de PDF.
+• Ao clicar no ícone PDF, o sistema abre o documento correspondente em formato PDF.
+• O PDF é aberto na mesma aba do navegador ou no visualizador de PDF configurado no navegador.
+• O comportamento é semelhante ao clique no número do processo, pois ambos permitem acessar o inteiro teor do julgado.
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Trecho da decisão.
+
+Tipo:
+Texto informativo.
+
+Objetivo:
+Apresentar parte do conteúdo do julgado localizado pela pesquisa.
+
+Comportamento observado:
+
+• O sistema exibe um trecho da decisão contendo o termo pesquisado.
+• O termo pesquisado aparece destacado dentro do texto.
+• O trecho apresentado permite ao usuário visualizar rapidamente o contexto em que o termo foi localizado.
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+Botão "+".
+
+Tipo:
+Botão de expansão.
+
+Objetivo:
+Expandir o trecho da decisão exibido no resultado.
+
+Comportamento observado:
+
+• Ao final do trecho da decisão é exibido o símbolo "+".
+• Ao clicar no botão "+", o sistema expande o conteúdo do trecho diretamente na página de resultados.
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+Paginação.
+
+Tipo:
+Controle de navegação.
+
+Objetivo:
+Permitir navegar entre as páginas de resultados.
+
+Comportamento observado:
+
+• No canto superior direito da área de resultados é exibida a paginação.
+
+Exemplo observado:
+1 2 3 4 5 >
+
+• O número da página atual permanece destacado.
+• Ao clicar nos demais números, o sistema navega para a página correspondente.
+• Ao clicar no símbolo ">", o sistema avança para as próximas páginas de resultados.
+• A navegação ocorre na mesma aba do navegador.
+
+============================================================
+ELEMENTO 08
+============================================================
+
+Nome:
+Painel "Termos mais frequentes".
+
+Tipo:
+Painel lateral.
+
+Objetivo:
+Apresentar os termos mais recorrentes relacionados aos resultados da pesquisa.
+
+Comportamento observado:
+
+• O painel aparece no lado direito da tela de resultados.
+• Quando houver termos relacionados, eles são apresentados em lista com caixas de seleção.
+• Após selecionar um ou mais termos, o usuário pode clicar no botão "Adicionar à pesquisa".
+• No teste realizado, foi exibida a mensagem: "Nenhum termo relacionado."
+
+============================================================
+ELEMENTO 09
+============================================================
+
+Nome:
+Botão "Adicionar à pesquisa".
+
+Tipo:
+Botão.
+
+Objetivo:
+Adicionar termos selecionados no painel "Termos mais frequentes" aos critérios da pesquisa.
+
+Comportamento observado:
+
+• O botão fica localizado no painel lateral "Termos mais frequentes".
+• Quando não há termo relacionado selecionável, o botão permanece visível, mas sem aplicação prática no teste observado.
+
+============================================================
+COMPORTAMENTO GERAL
+============================================================
+
+Após a realização da pesquisa, o sistema mantém a tela de consulta aberta e exibe os resultados abaixo dos parâmetros informados.
+
+Cada resultado apresenta informações resumidas do julgado e permite acessar o conteúdo completo por meio do número do processo ou do ícone PDF.
+
+A tela também disponibiliza recursos de paginação, expansão do trecho da decisão e painel lateral de termos mais frequentes para possível refinamento da pesquisa.
+
+============================================================
+PRINTS
+============================================================
+
+Print 01:
+Tela de resultados da pesquisa.
+
+Print 02:
+Resultado individual com número do processo e ícone PDF.
+
+Print 03:
+Painel "Termos mais frequentes".
+
+Print 04:
+Paginação dos resultados.
+
+Print 05:
+Julgado aberto em PDF, quando acessado pelo número do processo ou pelo ícone PDF.

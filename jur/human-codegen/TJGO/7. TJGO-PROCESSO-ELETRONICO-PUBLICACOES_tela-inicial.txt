@@ -1,0 +1,463 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DE GOIÁS (TJGO)
+PROCESSO JUDICIAL – PUBLICAÇÕES
+============================================================
+
+LINK:
+https://projudi.tjgo.jus.br/ConsultaPublicacao
+
+CAMINHO DE ACESSO:
+
+Atos Judiciais/Jurisprudência
+→ Atos de 1º Grau
+→ Consulta
+→ CLIQUE AQUI (Processo eletrônico)
+
+
+============================================================
+OBJETIVO
+============================================================
+
+Permitir a pesquisa de publicações referentes aos processos eletrônicos do Tribunal de Justiça do Estado de Goiás.
+
+A pesquisa pode ser realizada por pesquisa livre, utilizando operadores booleanos e operadores de proximidade, ou por meio de filtros específicos, possibilitando restringir os resultados por texto, número do processo, serventia, magistrado responsável, tipo de arquivo e período de publicação.
+
+Após a execução da consulta, o sistema apresenta uma listagem das publicações encontradas contendo o número do processo, dados da publicação e o trecho onde foi localizado o termo pesquisado.
+
+============================================================
+TELA 01 – PESQUISA DE PUBLICAÇÕES
+============================================================
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Operadores de Pesquisa
+
+Tipo:
+Botões
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Disponibiliza operadores para construção de pesquisas avançadas.
+
+Operadores disponíveis:
+
+• E
+• OU
+• ADJ
+• NÃO
+• PROX
+• $
+
+Ação:
+
+Ao posicionar o cursor sobre cada operador, o sistema apresenta uma explicação sobre sua utilização acompanhada de um exemplo.
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Pesquisa Livre
+
+Tipo:
+Grupo de pesquisa
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Permite realizar pesquisas textuais utilizando operadores de pesquisa disponibilizados pelo sistema.
+
+Ação:
+
+Informar um termo de pesquisa e utilizar, quando desejado, os operadores disponibilizados.
+
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Campo de Pesquisa Livre
+
+Tipo:
+Campo de texto
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Permite informar palavras, expressões ou números para pesquisa de publicações.
+
+Ação:
+
+Digitar o conteúdo desejado.
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Pesquisa por Campo Específico
+
+Tipo:
+Grupo de pesquisa
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Permite restringir a pesquisa utilizando filtros específicos.
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Texto
+
+Tipo:
+Campo de texto
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Permite realizar pesquisa textual.
+
+Observação apresentada pelo sistema:
+
+Operação padrão: E.
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+Número do Processo
+
+Tipo:
+Campo de texto
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Permite pesquisar utilizando o número do processo.
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+Serventia
+
+Tipo:
+Campo de pesquisa
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Permite informar uma serventia.
+
+Possui botão de pesquisa.
+
+Ao clicar na lupa, o sistema abre a janela "Consulta de Serventia".
+
+============================================================
+ELEMENTO 08
+============================================================
+
+Nome:
+Magistrado Responsável
+
+Tipo:
+Campo de pesquisa
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Permite pesquisar pelo magistrado responsável.
+
+Possui botão de pesquisa.
+
+Ao clicar na lupa, o sistema abre a janela "Consulta de Magistrado".
+
+============================================================
+ELEMENTO 09
+============================================================
+
+Nome:
+Tipo de Arquivo
+
+Tipo:
+Campo de pesquisa
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Permite informar o tipo de arquivo.
+
+Possui botão de pesquisa.
+
+Ao clicar na lupa, o sistema abre a janela "Consulta de Tipo de Arquivo".
+
+============================================================
+ELEMENTO 10
+============================================================
+
+Nome:
+Data Inicial
+
+Tipo:
+Campo de data
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Permite informar a data inicial da pesquisa.
+
+Possui calendário para seleção da data.
+
+============================================================
+ELEMENTO 11
+============================================================
+
+Nome:
+Data Final
+
+Tipo:
+Campo de data
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Permite informar a data final da pesquisa.
+
+Possui calendário para seleção da data.
+
+============================================================
+ELEMENTO 12
+============================================================
+
+Nome:
+CAPTCHA Cloudflare
+
+Tipo:
+Validação de segurança
+
+Obrigatório:
+Sim.
+
+Descrição:
+
+Necessário para execução da pesquisa.
+
+============================================================
+ELEMENTO 13
+============================================================
+
+Nome:
+Consultar
+
+Tipo:
+Botão
+
+Obrigatório:
+Sim.
+
+Descrição:
+
+Executa a pesquisa utilizando os filtros informados.
+
+============================================================
+ELEMENTO 14
+============================================================
+
+Nome:
+Limpar
+
+Tipo:
+Botão
+
+Obrigatório:
+Não.
+
+Descrição:
+
+Remove os critérios informados na pesquisa.
+
+============================================================
+TELAS AUXILIARES
+============================================================
+
+Consulta de Serventia
+
+Permite pesquisar serventias cadastradas.
+
+Consulta de Magistrado
+
+Permite pesquisar magistrados cadastrados.
+
+Consulta de Tipo de Arquivo
+
+Permite pesquisar os tipos de arquivos disponíveis.
+
+============================================================
+TELA 02 – RESULTADO DA PESQUISA
+============================================================
+
+Após clicar no botão "Consultar", o sistema permanece na mesma página e apresenta os resultados abaixo dos filtros utilizados.
+
+============================================================
+ELEMENTO 15
+============================================================
+
+Nome:
+Quantidade de Resultados
+
+Tipo:
+Texto informativo
+
+Descrição:
+
+Informa o número total de publicações encontradas para o termo pesquisado.
+
+Exemplo observado:
+
+108.771 RESULTADOS ENCONTRADOS PARA: "FURTO"
+
+============================================================
+ELEMENTO 16
+============================================================
+
+Nome:
+Lista de Publicações
+
+Tipo:
+Lista de resultados
+
+Descrição:
+
+Apresenta as publicações localizadas conforme os critérios informados.
+
+Cada publicação apresenta, entre outras informações:
+
+• número do processo;
+
+• data;
+
+• órgão julgador;
+
+• tipo da publicação;
+
+• trecho da publicação.
+
+============================================================
+ELEMENTO 17
+============================================================
+
+Nome:
+Número do Processo
+
+Tipo:
+Link
+
+Descrição:
+
+Permite acessar diretamente a publicação correspondente ao processo selecionado.
+
+============================================================
+ELEMENTO 18
+============================================================
+
+Nome:
+Trechos destacados
+
+Tipo:
+Texto destacado
+
+Descrição:
+
+O sistema destaca em amarelo as ocorrências do termo pesquisado dentro do conteúdo das publicações.
+
+============================================================
+ELEMENTO 19
+============================================================
+
+Nome:
+Paginação
+
+Tipo:
+Controle de navegação
+
+Descrição:
+
+Permite navegar entre as páginas de resultados da pesquisa.
+
+============================================================
+OBSERVAÇÕES
+============================================================
+
+• Os operadores de pesquisa apresentam explicações ao posicionar o cursor sobre cada botão.
+
+• A pesquisa pode utilizar pesquisa livre, pesquisa por campos específicos ou ambas simultaneamente.
+
+• Os campos Serventia, Magistrado Responsável e Tipo de Arquivo possuem janelas auxiliares de consulta.
+
+• Os campos de data utilizam calendário para seleção.
+
+• O CAPTCHA deve ser validado antes da execução da pesquisa.
+
+• Os resultados são apresentados abaixo do formulário de pesquisa, permanecendo os filtros disponíveis para novas consultas.
+
+• O termo pesquisado permanece destacado em amarelo nos trechos encontrados.
+
+• Os números dos processos são apresentados como links para consulta da publicação correspondente.
+
+PRINTS:
+
+08. TJGO-PROCESSO-ELETRONICO-PUBLICACOES_print_tela-inicial.png
+
+09. TJGO-PROCESSO-ELETRONICO-PUBLICACOES-PESQUISA-LIVRE_print_operador-e.png
+
+10. TJGO-PROCESSO-ELETRONICO-PUBLICACOES-PESQUISA-LIVRE_print_operador-ou.png
+
+11. TJGO-PROCESSO-ELETRONICO-PUBLICACOES-PESQUISA-LIVRE_print_operador-adj.png
+
+12. TJGO-PROCESSO-ELETRONICO-PUBLICACOES-PESQUISA-LIVRE_print_operador-nao.png
+
+13. TJGO-PROCESSO-ELETRONICO-PUBLICACOES-PESQUISA-LIVRE_print_operador-prox.png
+
+14. TJGO-PROCESSO-ELETRONICO-PUBLICACOES-PESQUISA-LIVRE_print_operador-cifrao.png
+
+15. TJGO-PROCESSO-ELETRONICO-PUBLICACOES-PESQUISA-CAMPO-ESPECIFICO_print_consulta-serventia.png
+
+16. TJGO-PROCESSO-ELETRONICO-PUBLICACOES-PESQUISA-CAMPO-ESPECIFICO_print_consulta-magistrado.png
+
+17. TJGO-PROCESSO-ELETRONICO-PUBLICACOES-PESQUISA-CAMPO-ESPECIFICO_print_consulta-tipo-de-arquivo.png
+
+18. TJGO-PROCESSO-ELETRONICO-PUBLICACOES-PESQUISA-CAMPO-ESPECIFICO_print_calendario-data-inicial-final.png
+
+19. TJGO-PROCESSO-ELETRONICO-PUBLICACOES_print_resultado-da-pesquisa.png

@@ -1,0 +1,659 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DO ESTADO DO PARÁ (TJPA)
+SISTEMA DE PESQUISA DE JURISPRUDÊNCIA
+============================================================
+
+URL:
+https://jurisprudencia.tjpa.jus.br/
+
+Objetivo:
+Permitir a pesquisa de jurisprudência do Tribunal de Justiça do Estado do Pará por meio de pesquisa livre, operadores lógicos, seleção da origem dos julgados e filtros específicos relacionados ao processo e ao julgamento.
+
+Print:
+6. TJPA-SISTEMA-PESQUISA_print_tela-inicial.png
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Aba "Consultar Jurisprudência do TJPA".
+
+Tipo:
+Aba de navegação.
+
+Objetivo:
+Disponibilizar a pesquisa geral de jurisprudência do Tribunal de Justiça do Estado do Pará por meio de pesquisa livre, operadores de pesquisa, seleção da origem dos julgados e filtros específicos.
+
+Ações possíveis:
+
+1. Selecionar a aba "Consultar Jurisprudência do TJPA".
+2. Informar palavras ou expressões no campo Pesquisa Livre.
+3. Utilizar operadores de pesquisa para combinar os termos informados.
+4. Selecionar a origem da pesquisa.
+5. Expandir o painel "Pesquisa por campos específicos".
+6. Informar filtros adicionais para restringir os resultados.
+7. Executar a pesquisa utilizando o botão "Pesquisar".
+8. Limpar os critérios informados utilizando o botão "Limpar".
+
+Comportamento observado:
+
+• Esta aba permanece selecionada por padrão quando o sistema é acessado.
+
+• Ao ser selecionada, o sistema apresenta a interface destinada à pesquisa geral de jurisprudência.
+
+• A tela disponibiliza os seguintes recursos:
+  - Campo Pesquisa Livre;
+  - Operadores de pesquisa;
+  - Seleção da origem dos julgados;
+  - Painel "Pesquisa por campos específicos";
+  - Botões "Pesquisar" e "Limpar".
+
+• A pesquisa pode ser realizada utilizando apenas o campo "Pesquisa Livre" ou em conjunto com os filtros específicos disponíveis.
+
+• Os critérios informados permanecem disponíveis para edição até que sejam alterados pelo usuário ou que o botão "Limpar" seja acionado.
+
+• Após a execução da pesquisa, os resultados são apresentados na própria aplicação, sem alteração da URL do sistema.
+
+Observações:
+
+• Esta é a aba principal do sistema de pesquisa de jurisprudência.
+
+• A funcionalidade "Consultar por Processo / Acórdão / Decisão Monocrática" encontra-se disponível em aba específica e possui comportamento distinto.
+
+Print:
+
+6. TJPA-SISTEMA-PESQUISA_print_tela-inicial.png
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Aba "Consultar por Processo / Acórdão / Decisão Monocrática".
+
+Tipo:
+Aba de navegação.
+
+Objetivo:
+Permitir a consulta direta mediante o número do processo, acórdão ou decisão monocrática.
+
+Ações possíveis:
+
+1. Selecionar a aba.
+2. Informar o número do documento.
+3. Executar a pesquisa.
+
+Comportamento observado:
+
+• Ao selecionar esta aba, o sistema altera a interface da pesquisa.
+
+• Esta funcionalidade é documentada em arquivo próprio por possuir tela específica.
+
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Pesquisa Livre.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Permitir a localização de julgados por meio da inserção de palavras, expressões, termos jurídicos ou frases relacionadas ao assunto pesquisado.
+
+Ações possíveis:
+
+1. Clicar no campo "Pesquisa Livre".
+2. Digitar palavras, expressões ou termos jurídicos.
+3. Editar o conteúdo informado.
+4. Excluir parcial ou totalmente o texto digitado.
+5. Combinar os termos utilizando os operadores de pesquisa disponíveis.
+6. Utilizar a pesquisa livre em conjunto com a seleção da origem e os filtros da pesquisa por campos específicos.
+7. Executar a pesquisa utilizando o botão "Pesquisar".
+
+Comportamento observado:
+
+• O campo aceita entrada de texto livre.
+
+• Os termos informados constituem o principal critério para localização dos julgados.
+
+• A pesquisa pode ser realizada utilizando apenas o campo "Pesquisa Livre" ou combinada com os operadores de pesquisa e os demais filtros disponíveis na tela.
+
+• O conteúdo digitado permanece disponível para edição até que seja alterado pelo usuário ou que o botão "Limpar" seja acionado.
+
+• Após a execução da pesquisa, o termo informado permanece preenchido no campo, permitindo seu reaproveitamento ou alteração para novas consultas.
+
+Observações:
+
+• A utilização de termos específicos e a combinação com os operadores de pesquisa podem tornar os resultados mais precisos.
+
+• Recomenda-se utilizar os filtros da "Pesquisa por campos específicos" quando houver necessidade de restringir os resultados por relator, órgão julgador, classe, assunto ou período.
+
+Print:
+
+6. TJPA-SISTEMA-PESQUISA_print_tela-inicial.png
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Operadores de pesquisa.
+
+Tipo:
+Grupo de botões.
+
+Operadores observados:
+
+• OU.
+• E.
+• NÃO.
+• ...
+
+Objetivo:
+Permitir combinar, ampliar, restringir ou estruturar os termos informados na Pesquisa Livre, possibilitando consultas mais precisas à base de jurisprudência.
+
+Ações possíveis:
+
+1. Posicionar o cursor sobre um operador.
+2. Visualizar a tooltip explicativa correspondente.
+3. Clicar no operador desejado.
+4. Utilizar um ou mais operadores na elaboração da pesquisa.
+5. Combinar os operadores entre si e com os demais filtros da pesquisa.
+
+Comportamento observado:
+
+• Os operadores são exibidos imediatamente abaixo do campo "Pesquisa Livre".
+
+• Cada operador possui uma função específica para construção da consulta.
+
+• Ao posicionar o cursor sobre determinado operador, o sistema apresenta uma tooltip contendo orientações sobre sua utilização.
+
+Descrição das tooltips:
+
+• Operador "OU"
+
+Finalidade:
+Localizar resultados que contenham qualquer um dos termos informados.
+
+Texto apresentado pelo sistema:
+
+"Serve para: buscar resultados que tenham qualquer uma das palavras.
+
+Pense como: 'quero isso OU isso'.
+
+Exemplo: furto OU roubo."
+
+
+• Operador "E"
+
+Finalidade:
+Localizar resultados que contenham todos os termos informados.
+
+Texto apresentado pelo sistema:
+
+"Serve para: buscar resultados que tenham todas as palavras.
+
+Pense como: 'quero isso E aquilo'.
+
+Exemplo: furto E veículo."
+
+
+• Operador "NÃO"
+
+Finalidade:
+Excluir dos resultados documentos que contenham determinado termo.
+
+Texto apresentado pelo sistema:
+
+"Serve para: excluir resultados que contenham a palavra.
+
+Pense como: 'não quero isso'.
+
+Exemplo: furto NÃO qualificado."
+
+
+• Operador "..."
+
+Finalidade:
+Localizar uma expressão exata.
+
+Texto apresentado pelo sistema:
+
+"Serve para: buscar a expressão exata.
+
+Pense como: 'quero exatamente isto'.
+
+Exemplo: 'dano moral'."
+
+• Os operadores podem ser utilizados isoladamente ou combinados entre si.
+
+• A utilização dos operadores interfere diretamente na forma como os termos da pesquisa serão interpretados pelo sistema.
+
+• Os operadores permanecem disponíveis durante toda a elaboração da pesquisa.
+
+Observações:
+
+• As tooltips de cada operador foram documentadas individualmente nos respectivos prints.
+
+• A correta utilização dos operadores possibilita ampliar, restringir ou refinar significativamente os resultados da pesquisa.
+
+Observações:
+
+• Cada operador possui uma tooltip própria, contendo uma explicação objetiva sobre sua utilização e um exemplo prático de pesquisa.
+
+• As orientações disponibilizadas pelo sistema auxiliam o usuário na construção de consultas mais precisas.
+
+• Os operadores podem ser utilizados isoladamente ou combinados entre si, conforme a estratégia de pesquisa desejada.
+
+Prints relacionados:
+
+7. TJPA-RESULTADO-PESQUISA_print_tooltip-operador-ou.png
+
+8. TJPA-RESULTADO-PESQUISA_print_tooltip-operador-e.png
+
+9. TJPA-RESULTADO-PESQUISA_print_tooltip-operador-nao.png
+
+10. TJPA-RESULTADO-PESQUISA_print_tooltip-operador-reticencias.png
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Origem.
+
+Tipo:
+Grupo de caixas de seleção (Checkbox).
+
+Objetivo:
+Definir a base de jurisprudência que será utilizada na pesquisa, permitindo ao usuário restringir ou ampliar a consulta conforme a origem dos julgados.
+
+Opções observadas:
+
+• Tribunal de Justiça do Estado do Pará.
+
+• Turmas Recursais dos Juizados Especiais.
+
+Ações possíveis:
+
+1. Marcar a opção "Tribunal de Justiça do Estado do Pará".
+2. Desmarcar a opção "Tribunal de Justiça do Estado do Pará".
+3. Marcar a opção "Turmas Recursais dos Juizados Especiais".
+4. Desmarcar a opção "Turmas Recursais dos Juizados Especiais".
+5. Selecionar simultaneamente as duas opções.
+6. Executar a pesquisa considerando a(s) origem(ns) selecionada(s).
+
+Comportamento observado:
+
+• A opção "Tribunal de Justiça do Estado do Pará" permanece marcada por padrão quando o sistema é acessado.
+
+• A opção "Turmas Recursais dos Juizados Especiais" permanece desmarcada inicialmente.
+
+• As opções funcionam como caixas de seleção independentes, permitindo que ambas permaneçam marcadas simultaneamente.
+
+• Quando apenas uma das opções está selecionada, a pesquisa é realizada exclusivamente na respectiva base de jurisprudência.
+
+• Quando ambas as opções estão marcadas, a consulta considera os julgados provenientes das duas bases selecionadas.
+
+• As opções permanecem com a seleção realizada pelo usuário até que sejam alteradas manualmente ou que a pesquisa seja redefinida.
+
+Observações:
+
+• A seleção da origem atua como filtro inicial da pesquisa, influenciando diretamente os resultados apresentados.
+
+• A funcionalidade permite ampliar o universo pesquisado por meio da seleção simultânea das duas bases de jurisprudência.
+
+Print:
+
+6. TJPA-SISTEMA-PESQUISA_print_tela-inicial.png
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+Pesquisa por campos específicos.
+
+Tipo:
+Painel expansível.
+
+Objetivo:
+Disponibilizar filtros adicionais para restringir a pesquisa de jurisprudência por critérios específicos relacionados ao julgamento e ao processo.
+
+Ações possíveis:
+
+1. Clicar sobre o título "Pesquisa por campos específicos".
+2. Expandir o painel de filtros.
+3. Informar um ou mais critérios de pesquisa.
+4. Combinar os filtros entre si e com a Pesquisa Livre.
+5. Recolher novamente o painel.
+6. Executar a pesquisa utilizando os filtros informados.
+
+Comportamento observado:
+
+• O painel permanece recolhido quando a tela é carregada.
+
+• Ao ser expandido, o sistema exibe os campos destinados ao refinamento da pesquisa.
+
+• Os filtros apresentados podem ser utilizados individualmente ou em conjunto.
+
+• Os critérios informados complementam a Pesquisa Livre, permitindo consultas mais específicas.
+
+• O painel permanece expandido durante a utilização da pesquisa, preservando os filtros preenchidos até que sejam alterados pelo usuário ou que o botão "Limpar" seja acionado.
+
+Campos disponibilizados:
+
+• Relator(a);
+
+• Órgão Julgador Colegiado;
+
+• Classe;
+
+• Assunto;
+
+• Data de Julgamento;
+
+• Data de Publicação;
+
+• Tipo de Consulta.
+
+Observações:
+
+• A utilização dos campos específicos permite restringir significativamente o universo de resultados retornados pelo sistema.
+
+• Cada campo possui comportamento próprio e encontra-se documentado individualmente nos elementos seguintes deste documento.
+
+Print relacionado:
+
+11. TJPA-RESULTADO-PESQUISA_print_expansao-pesquisa-campos-especificos.png
+
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+Campos específicos.
+
+Tipo:
+Filtros de pesquisa.
+
+Campos observados:
+
+• Relator(a).
+• Órgão Julgador Colegiado.
+• Classe.
+• Assunto.
+• Data de Julgamento.
+• Data de Publicação.
+• Tipo de Consulta (Formato Livre).
+
+Objetivo:
+Permitir o refinamento da pesquisa mediante critérios específicos.
+
+Comportamento observado:
+
+• Os filtros podem ser utilizados isoladamente ou combinados.
+
+• Os campos Relator(a), Órgão Julgador Colegiado, Classe e Assunto são apresentados em listas suspensas.
+
+• As datas podem ser informadas manualmente ou selecionadas por calendário.
+
+• O campo "Tipo de Consulta" permanece configurado como "Formato Livre" por padrão, podendo ser escolhido o "Qualquer Palavra".
+
+Prints relacionados:
+
+12. TJPA-RESULTADO-PESQUISA_print_combo-relator.png
+
+13. TJPA-RESULTADO-PESQUISA_print_combo-orgao-julgador-colegiado.png
+
+14. TJPA-RESULTADO-PESQUISA_print_combo-classe.png
+
+15. TJPA-RESULTADO-PESQUISA_print_combo-assunto.png
+
+16. TJPA-RESULTADO-PESQUISA_print_calendario-data-julgamento.png
+
+17. TJPA-RESULTADO-PESQUISA_print_formato-livre.png
+
+
+============================================================
+ELEMENTO 08
+============================================================
+
+Nome:
+Botão Pesquisar.
+
+Tipo:
+Botão de ação.
+
+Objetivo:
+Executar a pesquisa utilizando todos os critérios informados.
+
+Comportamento observado:
+
+• O sistema processa os critérios preenchidos.
+
+• Os resultados são apresentados na tela de resultados da pesquisa.
+
+
+============================================================
+ELEMENTO 09
+============================================================
+
+Nome:
+Botão Limpar.
+
+Tipo:
+Botão de ação.
+
+Objetivo:
+Remover todos os critérios informados na pesquisa.
+
+Comportamento observado:
+
+• Os campos de pesquisa retornam ao estado inicial.
+
+• A tela permanece disponível para uma nova consulta.
+
+
+============================================================
+RESULTADO ESPERADO
+============================================================
+
+Após informar os critérios desejados e clicar em "Pesquisar", o sistema apresenta a tela de resultados contendo os julgados compatíveis com a pesquisa realizada, possibilitando refinamento adicional, seleção, exportação e visualização dos documentos encontrados.a listagem de julgados encontrados, permitindo a consulta do inteiro teor, da ementa e demais funcionalidades disponíveis para cada resultado.
+
+============================================================
+ELEMENTO 10
+============================================================
+
+Nome:
+Selecionar resultados.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Permitir selecionar, em lote, os julgados que serão exportados.
+
+Opções observadas:
+
+• Selecionar todos os resultados (Unir abas).
+
+• Selecionar todos os acórdãos.
+
+Ações possíveis:
+
+1. Clicar na lista suspensa.
+
+2. Selecionar uma das opções disponíveis.
+
+3. Acionar o botão "Exportar selecionados".
+
+Comportamento observado:
+
+• O sistema permite selecionar automaticamente todos os resultados ou apenas os acórdãos.
+
+• A seleção realizada será utilizada pela funcionalidade "Exportar selecionados".
+
+Print:
+
+18. TJPA-RESULTADO-PESQUISA_print_combo-selecionar-resultados.png
+
+
+============================================================
+ELEMENTO 11
+============================================================
+
+Nome:
+Botão "Exportar selecionados".
+
+Tipo:
+Botão de ação.
+
+Objetivo:
+Realizar o download dos documentos previamente selecionados.
+
+Ações possíveis:
+
+1. Selecionar os documentos desejados.
+
+2. Clicar no botão "Exportar selecionados".
+
+Comportamento observado:
+
+• Após o acionamento do botão, o sistema inicia automaticamente o download dos resultados selecionados.
+
+• O conteúdo do arquivo dependerá da opção escolhida no campo "Selecionar resultados".
+
+Print:
+
+18. TJPA-RESULTADO-PESQUISA_print_combo-selecionar-resultados.png
+
+
+============================================================
+ELEMENTO 12
+============================================================
+
+Nome:
+Ordenar por.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Permitir alterar o critério de ordenação dos julgados apresentados na área de resultados.
+
+Opções observadas:
+
+• Relevância (padrão).
+
+• Julgamento mais recente.
+
+• Julgamento menos recente.
+
+Ações possíveis:
+
+1. Clicar na lista suspensa "Ordenar por".
+2. Visualizar as opções disponíveis.
+3. Selecionar o critério de ordenação desejado.
+4. Visualizar a reorganização automática dos resultados.
+
+Comportamento observado:
+
+• O campo permanece configurado com a opção **"Relevância"** por padrão.
+
+• Ao clicar na lista suspensa, o sistema apresenta os critérios de ordenação disponíveis.
+
+• Após a seleção de um novo critério, os resultados da pesquisa são reorganizados automaticamente conforme a opção escolhida.
+
+• A alteração da ordenação modifica apenas a sequência de apresentação dos resultados, sem alterar os critérios utilizados na pesquisa.
+
+• O critério selecionado permanece visível no campo até que seja alterado pelo usuário ou que uma nova pesquisa seja realizada.
+
+Observações:
+
+• A opção **"Relevância"** prioriza os julgados considerados mais aderentes aos termos informados na pesquisa.
+
+• A opção **"Julgamento mais recente"** apresenta inicialmente os julgados com data de julgamento mais atual.
+
+• A opção **"Julgamento menos recente"** apresenta inicialmente os julgados com data de julgamento mais antiga.
+
+Print:
+
+19. TJPA-RESULTADO-PESQUISA_print_combo-ordenar-por.png
+
+
+============================================================
+ELEMENTO 13
+============================================================
+
+Nome:
+Card do resultado.
+
+Tipo:
+Bloco de informações.
+
+Objetivo:
+Apresentar os dados resumidos de cada julgado encontrado.
+
+Informações observadas:
+
+• Número do processo.
+
+• Órgão julgador.
+
+• Relator(a).
+
+• Data do julgamento.
+
+• Data da publicação.
+
+• Classe processual.
+
+• Ementa.
+
+• Tipo do documento.
+
+Comportamento observado:
+
+• Cada resultado é apresentado em um bloco individual.
+
+• As informações permitem identificar rapidamente o julgado localizado.
+
+Print:
+
+6. TJPA-RESULTADO-PESQUISA_print_tela-resultado.png
+
+
+============================================================
+ELEMENTO 15
+============================================================
+
+Nome:
+Refinamento dos resultados.
+
+Tipo:
+Painel lateral de filtros.
+
+Objetivo:
+Permitir restringir ainda mais os resultados após a realização da pesquisa.
+
+Ações possíveis:
+
+1. Alterar os filtros.
+
+2. Executar nova pesquisa.
+
+Comportamento observado:
+
+• O painel permanece disponível durante toda a navegação pelos resultados.
+
+• Os filtros podem ser alterados sem necessidade de retornar à tela inicial da pesquisa.
+
+Print:
+
+6. TJPA-RESULTADO-PESQUISA_print_tela-resultado.png

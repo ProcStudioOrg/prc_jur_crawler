@@ -1,0 +1,86 @@
+https://juliapesquisa.trf5.jus.br/julia-pesquisa/pesquisa#consulta
+
+H1 -> Julia | Pesquisa Inteligente
+    label: Consulta -> 3 checkbox radio 
+        [ ] Segundo Grau - true/false (Por padrão esse já vem selecionado)
+        [ ] Turma Recursal - true/false
+            true:
+                label: Seleção Judiciároa
+                    Checkox radio
+                       [ ] AL (Por padrão esse já vem selecionado)
+                       [ ] CE
+                       [ ] PB 
+                       [ ] PE 
+                       [ ] RN 
+                       [ ] SE 
+        [ ] TRU - true/false
+    
+    label: Pesquisa Livre
+        input text: com placeholder "Informe o termo desejado"
+            operadores:
+                "e", "ou", "nao", "prox", "adj" e "$"
+    
+    label: Número do Processo
+        input text: 
+            placeholder: "Informe o número do processo"
+
+    label: Número do Processo
+        input text:
+            placeholder: "Informe o número do processo"
+
+    label: Relator(a)
+        input select-one: 
+            placeholder: Selecione o(a) relator(a)
+            (aparece muitos nomes em ordem alfabetica. Vou dizer os 5 primeiros: ABDIAS PATRICIO OLIVEIRA, ALCIDES SALDANHA LIMA, ALEXANDRE COSTA DE LUNA FREIRE, AMANDA TORRES DE LUCENA DINIZ ARAUJO e AMANDA TORRES DE LUCENA DINIZ ARAUJO ... o restante você adiciona)
+
+    label: Órgao Julgador
+        input select-one:
+            placeholder: "Selecione o órgão julgador"
+                (Aparece 11 opções para ser selecionado. Vou dizer os 5 primeiros: PLENO, PRESIDÊNCIA, 1ª SEÇÃO, 2ª SEÇÃO e 3ª SEÇÃO ... o restante você adiciona) 
+            
+            label: Julgamento/publicação
+                input text:
+                    placeholder: de (de (dd/mm/aaaa))
+                        input text: 
+                            placeholder: até (dd/mm/aaaa)
+
+button: Limpar (limpa os dados do formulário inteiro)
+button: Pesquisar (quando preencher todos os dados do formulário clicar aqui)
+
+após fazer a pesquisa, a página muda para essa:
+https://juliapesquisa.trf5.jus.br/julia-pesquisa/pesquisa#resultado
+
+h1 -> Julia | Pesquisa Inteligente
+    Critério
+        expressão: "" (aqui aparece dados que foram adicionados no formulário)
+    Total
+        n documentos localizados (aqui aparece a quantidade de documentos encotrados)
+
+Vai ter 10 documentos com essa formatação:
+    Cabeçalho:
+        Documento #n (número documento)
+            Processo: 
+                Número do processo com link que leva para essa página:
+            https://cp.trf5.jus.br/processo/[número do processo] ou https://www.trf5.jus.br/index.php/consulta-processual-fisico-e-eletronico 
+                Órgão Julgador: 
+            Classe: 
+                Data Julgamento:
+            Relator(a):
+                Data Autuação:
+        Texto:
+            (Um resumo do documento)
+                link: copiar texto (copia o resumo do documento)
+
+Chegando no final da página vai ter:
+    label : 1 - 10 de 10.000 registros
+        paginação:
+            button: Anterior (Voltar para página anterior)
+                button: botão para navegar pelos números da página
+                    button: Próximo (Avançar para próxima página)
+
+
+Ao navegar para uma proxima página vai a mesma formatação da página anterior, e também não vai mudar a URL. A unica coisa que vai mudar vai ser:
+    número de documento
+    número de registros da página
+
+            

@@ -1,0 +1,84 @@
+============================================================
+TELA: RESULTADOS DA CONSULTA À JURISPRUDÊNCIA
+============================================================
+
+URL:
+
+https://www3.tjrj.jus.br/EJURIS/ProcessarConsJurisES.aspx?PageSeq=0&Version=1.2.1.1
+
+Objetivo da tela:
+
+Apresentar os resultados obtidos a partir da pesquisa realizada na Consulta à Jurisprudência (eJURIS), permitindo ao usuário visualizar os julgados localizados e acessar as funcionalidades disponíveis para consulta detalhada.
+
+Descrição geral:
+
+Após a execução da pesquisa, o sistema exibe uma listagem contendo todos os julgados compatíveis com os critérios informados pelo usuário.
+
+Cada resultado apresenta informações resumidas do julgamento e disponibiliza recursos para consulta, visualização e obtenção do conteúdo completo da decisão.
+
+A tela também permite o acesso às funcionalidades específicas de cada julgamento, que serão detalhadas nos documentos seguintes.
+
+============================================================
+FUNCIONALIDADES DISPONÍVEIS
+============================================================
+
+Na tela de resultados é possível:
+
+• Visualizar a relação dos julgados encontrados.
+
+• Consultar os dados resumidos de cada julgamento.
+
+• Acessar a consulta processual vinculada ao processo.
+
+• Visualizar o documento em formato HTML.
+
+• Efetuar o download do documento em formato PDF.
+
+• Acessar a versão preparada para impressão.
+
+• Visualizar a ementa sem formatação.
+
+• Obter o inteiro teor do acórdão em formato PDF.
+
+============================================================
+COMPORTAMENTO OBSERVADO
+============================================================
+
+• Os resultados são apresentados em lista.
+
+• Cada item corresponde a um julgamento localizado.
+
+• Cada resultado possui um conjunto próprio de ações.
+
+• As funcionalidades disponíveis são acessadas individualmente para cada julgamento.
+
+• A seleção de uma funcionalidade não altera os demais resultados exibidos na página.
+
+============================================================
+OBSERVAÇÃO
+============================================================
+
+As funcionalidades específicas disponíveis em cada resultado são documentadas individualmente nos documentos seguintes:
+
+• Consulta Processual.
+
+• Visualização em HTML.
+
+• Download em PDF.
+
+• Versão para Impressão.
+
+• Ementa sem Formatação.
+
+• Inteiro Teor do Acórdão (PDF).
+
+============================================================
+PRINTS
+
+15. TJRJ-EJURIS-RESULTADOS_print_tela-resultados
+16. TJRJ-EJURIS-RESULTADOS_print_consulta-processual
+17. TJRJ-EJURIS-RESULTADOS_print_visualizacao-html
+18. TJRJ-EJURIS-RESULTADOS_print_download-pdf
+19. TJRJ-EJURIS-RESULTADOS_print_versao-para-impressao
+20. TJRJ-EJURIS-RESULTADOS_print_ementa-sem-formatacao
+21. TJRJ-EJURIS-RESULTADOS_print_integra-acordao-pdf

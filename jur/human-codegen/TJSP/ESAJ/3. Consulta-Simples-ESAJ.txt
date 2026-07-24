@@ -1,0 +1,98 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DE SÃO PAULO (TJSP)
+CONSULTA SIMPLES – ESAJ
+============================================================
+
+URL:
+https://esaj.tjsp.jus.br/cjsg/consultaSimples.do?servico=780001
+
+Objetivo:
+Permitir a pesquisa simplificada de jurisprudência por meio do número do recurso ou do número de registro.
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Número do recurso.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+
+Permitir a pesquisa de jurisprudência utilizando o número do recurso.
+
+Ações possíveis:
+
+1. Clicar dentro do campo.
+2. Digitar o número do recurso.
+3. Editar o conteúdo informado.
+4. Remover o conteúdo digitado.
+
+Comportamento observado:
+
+• O campo aceita a digitação do número do recurso para realização da pesquisa.
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Número do registro.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+
+Permitir a pesquisa utilizando o número de registro da decisão.
+
+Ações possíveis:
+
+1. Clicar dentro do campo.
+2. Digitar o número do registro.
+3. Editar o conteúdo informado.
+4. Remover o conteúdo digitado.
+
+Comportamento observado:
+
+• O campo aceita a digitação do número de registro para localização da jurisprudência.
+
+============================================================
+BOTÃO 01
+============================================================
+
+Nome:
+Pesquisar.
+
+Objetivo:
+
+Executar a pesquisa utilizando os dados informados.
+
+Ações possíveis:
+
+1. Clicar no botão.
+
+Comportamento observado:
+
+• O sistema realiza a pesquisa considerando o número do recurso ou o número do registro informado.
+
+============================================================
+BOTÃO 02
+============================================================
+
+Nome:
+Limpar.
+
+Objetivo:
+
+Remover todas as informações preenchidas na tela.
+
+Ações possíveis:
+
+1. Clicar no botão.
+
+Comportamento observado:
+
+• Os campos "Número do recurso" e "Número do registro" retornam ao estado inicial.

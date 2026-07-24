@@ -1,0 +1,383 @@
+# TRF2 Crawler - Documentacao Tecnica para Codegen
+# Gerado via MCP Playwright em 2026-02-04
+
+## URL Base
+https://juris.trf2.jus.br/
+
+## URL de Pesquisa
+https://juris.trf2.jus.br/consulta.php?q={termo_pesquisa}
+
+## Estrutura do Formulario de Pesquisa (Pagina Inicial)
+
+### 1. Campo de Pesquisa Principal
+- ID: (nenhum na pagina inicial)
+- Placeholder: "Digite o texto da pesquisa"
+- Tipo: searchbox
+- Acao: Submit redireciona para consulta.php?q={query}
+
+### 2. Checkbox Ementa (Pagina Inicial)
+- Texto: "Pesquisar somente na Ementa"
+- Tipo: checkbox
+
+## Estrutura do Formulario de Pesquisa (Pagina de Resultados)
+
+### 1. Campo de Pesquisa
+| Campo        | ID/Name        | Tipo    | Descricao                    |
+|--------------|----------------|---------|------------------------------|
+| Pesquisa     | consulta_input | search  | Campo principal de busca     |
+|              | name="q"       |         |                              |
+
+### 2. Campos Hidden (Paginacao)
+| Campo | Name   | Tipo   | Descricao              |
+|-------|--------|--------|------------------------|
+| Start | start  | hidden | Offset da paginacao    |
+| Rows  | rows   | hidden | Itens por pagina (20)  |
+
+### 3. Checkboxes de Pesquisa em:
+| Checkbox                | ID/Name           | Descricao                |
+|-------------------------|-------------------|--------------------------|
+| Restringir na ementa    | check_ementa      | name="soementa"          |
+| TRF da 2a REGIAO        | segundo_grau      | name="segundo_grau"      |
+| TRU e TURMAS RECURSAIS  | primeiro_grau     | name="primeiro_grau"     |
+
+### 4. Tipos de Decisao
+| Checkbox               | ID/Name                    | Descricao         |
+|------------------------|----------------------------|-------------------|
+| Acordaos               | tipo_decisao_acordao       | Acordaos TRF2     |
+| Decisoes Monocraticas  | dec_monocrativa_is2G_true  | Decisoes monocr.  |
+
+### 5. Botoes de Operadores
+- button "e" - operador AND
+- button "ou" - operador OR
+- button "nao" - operador NOT
+- button "?" - wildcard
+- button "$" - truncamento
+- button '""' - busca exata
+
+## Accordion: Opcoes de Filtragem (id="collapseOne")
+
+### Criterio de Ordenacao
+- Element: select[name="tip_criterio_data"]
+- Opcoes:
+  - value: "RELEV" -> "mais relevantes"
+  - value: "DESC" -> "mais recentes"
+  - value: "ASC" -> "mais antigos"
+
+### Periodo de Julgamento
+| Campo         | ID           | Name         | Formato     |
+|---------------|--------------|--------------|-------------|
+| Data inicial  | DataInicial  | dat_jul_ini  | DD/MM/YYYY  |
+| Data final    | DataFinal    | dat_jul_fim  | DD/MM/YYYY  |
+
+### Numero do Processo
+- ID: $numero_processo
+- Name: numero_processo
+- Tipo: search
+- Placeholder: "Digite o numero do processo"
+
+## Accordions de Filtros (Checkboxes Dinamicos)
+
+### Classe (id="collapseOne_classe")
+Pattern de ID: fq_classe[{hash}]
+Pattern de Name: fq_classe[{NomeClasse}]
+Exemplos:
+- Apelacao Civel
+- PROCEDIMENTO DO JUIZADO ESPECIAL CIVEL
+- Agravo de Instrumento
+- Remessa Necessaria Civel
+
+### Assuntos (id="collapseOne_assuntos")
+Pattern de ID: fq_assuntos[{hash}]
+Pattern de Name: fq_assuntos[{NomeAssunto}]
+Exemplos:
+- DIREITO PREVIDENCIARIO
+- Beneficios em Especie
+- Auxilio-Doenca Previdenciario
+
+### Competencia (id="collapseOne_competencia")
+Pattern de ID: fq_competencia[{hash}]
+Pattern de Name: fq_competencia[{NomeCompetencia}]
+Exemplos:
+- Previdenciario e Propriedade Industrial (Turma)
+- JEF Previdenciaria
+- Tributario (Turma)
+- Administrativo e Civel (Turma)
+
+### Orgao Colegiado (id="collapseOne_orgao_colegiado")
+Pattern de ID: fq_orgao_colegiado[{hash}]
+Pattern de Name: fq_orgao_colegiado[{NomeOrgao}]
+Exemplos:
+- 1a. TURMA ESPECIALIZADA
+- 2a. TURMA ESPECIALIZADA
+- 3a. TURMA ESPECIALIZADA
+- Assessoria de Recursos
+
+### Relator Originario (id="collapseOne_magistrado")
+Pattern de ID: fq_magistrado[{hash}]
+Pattern de Name: fq_magistrado[{NomeRelator}]
+Exemplos:
+- MARCELLO FERREIRA DE SOUZA GRANADO
+- ANDREA DAQUER BARSOTTI
+- FLAVIO OLIVEIRA LUCAS
+- ALEXANDRE DA SILVA ARRUDA
+
+### Antecipacao de Tutela (id="collapseOne_antecipacao_tutela")
+Pattern de ID: fq_antecipacao_tutela[{hash}]
+Pattern de Name: fq_antecipacao_tutela[{Status}]
+Valores: Deferida, Indeferida, Nao Requerida, Parcialmente Deferida, Requerida
+
+### Justica Gratuita (id="collapseOne_justica_gratuita")
+Pattern de ID: fq_justica_gratuita[{hash}]
+Pattern de Name: fq_justica_gratuita[{Status}]
+Valores: Deferida, Indeferida, Nao requerida, Parcialmente Deferida, Requerida
+
+### Prioridade de Atendimento (id="collapseOne_prioridade_atendimento")
+Pattern de ID: fq_prioridade_atendimento[{hash}]
+Pattern de Name: fq_prioridade_atendimento[{Valor}]
+Valores: Sim, Nao
+
+## Estrutura dos Resultados
+
+### Container de Documentos
+- Container pai: div.bl_2
+- Cada documento: div.panel.panel-default
+- 20 documentos por pagina
+
+### Estrutura de Cada Documento
+
+```html
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <!-- Botoes de acao -->
+    <div class="btn-group">
+      <button class="btn btn-outline-secondary item_button"
+              data-id="{uuid}"
+              onclick="JusTo.jurisprudencia.carregarEmenta(this)">
+        Ementa
+      </button>
+      <a class="btn btn-outline-secondary item_button"
+         href="documento.php?uuid={uuid}&options=%23page%3D1"
+         target="jurisprudencia_pdf">
+        Inteiro Teor
+      </a>
+      <a class="btn btn-outline-secondary item_button"
+         href="https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=processo_seleciona_publica&acao_origem=processo_consulta_publica&acao_retorno=processo_consulta_publica&num_processo={numeroProcesso}">
+        Processo
+      </a>
+    </div>
+    <!-- Numero do processo -->
+    <span class="btn btn-outline-secondary label-processo item_button"
+          onclick="JusTo.jurisprudencia.setcopiarConteudo('{numeroFormatado}')">
+      {numeroFormatado}
+    </span>
+  </div>
+  <div class="panel-body">
+    <table>
+      <tr><td class="align-top">Classe</td><td>{classe}</td></tr>
+      <tr><td class="align-top">Assunto(s)</td><td>{assuntos}</td></tr>
+      <tr><td class="align-top">Competencia</td><td>{competencia}</td></tr>
+      <tr><td class="align-top">Relator Originario</td><td>{relator}</td></tr>
+      <tr><td class="align-top">Data Autuacao</td><td>{dataAutuacao}</td></tr>
+      <tr><td class="align-top">Data Julgamento</td><td>{dataJulgamento}</td></tr>
+    </table>
+    <!-- Conteudo da ementa -->
+    <div class="content_ementa" id="content_{uuid}">
+      {textoEmenta}
+    </div>
+  </div>
+</div>
+```
+
+### Campos Extraiveis de Cada Documento
+| Campo              | Seletor/Localizacao                                    |
+|--------------------|--------------------------------------------------------|
+| UUID               | button.item_button[data-id]                            |
+| Numero Processo    | span.label-processo (texto)                            |
+| Classe             | table tr td:contains("Classe") + td                    |
+| Assunto(s)         | table tr td:contains("Assunto") + td                   |
+| Competencia        | table tr td:contains("Competencia") + td               |
+| Relator            | table tr td:contains("Relator Originario") + td        |
+| Data Autuacao      | table tr td:contains("Data Autuacao") + td             |
+| Data Julgamento    | table tr td:contains("Data Julgamento") + td           |
+| Ementa             | div.content_ementa (innerHTML)                         |
+| Link Inteiro Teor  | a.item_button[href*="documento.php"]                   |
+| Link Processo      | a.item_button[href*="eproc"]                           |
+
+## URLs Importantes
+
+### Inteiro Teor (PDF)
+https://juris.trf2.jus.br/documento.php?uuid={uuid}&options=%23page%3D1
+
+### Consulta Processo (Eproc)
+https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=processo_seleciona_publica&acao_origem=processo_consulta_publica&acao_retorno=processo_consulta_publica&num_processo={numeroProcesso}
+
+## Paginacao
+
+### Estrutura
+```html
+<ul class="pagination">
+  <li class="page-item active"><a class="page-link" start="0" rows="20">1</a></li>
+  <li><a class="page-link" start="20" rows="20">2</a></li>
+  <li><a class="page-link" start="40" rows="20">3</a></li>
+  ...
+</ul>
+```
+
+### Seletores
+- Pagina ativa: li.page-item.active a.page-link
+- Proxima pagina: li:not(.active) a.page-link (start > current)
+- Atributos: start (offset), rows (items per page - sempre 20)
+
+### Navegacao
+Para navegar: atualizar parametro `start` na URL ou clicar no link
+- Pagina 1: start=0
+- Pagina 2: start=20
+- Pagina 3: start=40
+- Formula: start = (pagina - 1) * 20
+
+### Total de Resultados
+- Exibido em: generic (179602 resultados)
+- Regex para extrair: /\((\d+)\s*resultados?\)/i
+
+## Comportamento Esperado do Crawler
+
+### 1. navigateToSearch()
+```javascript
+await page.goto('https://juris.trf2.jus.br/');
+await page.waitForLoadState('networkidle');
+```
+
+### 2. executeSearch(query)
+```javascript
+// Na pagina inicial
+const searchBox = page.locator('input[placeholder="Digite o texto da pesquisa"]');
+await searchBox.fill(query);
+await searchBox.press('Enter');
+await page.waitForURL(/consulta\.php/);
+await page.waitForLoadState('networkidle');
+```
+
+### 3. configureFilters(filters)
+Filtros disponiveis:
+- dataInicio (DD/MM/YYYY) - id="DataInicial", name="dat_jul_ini"
+- dataFim (DD/MM/YYYY) - id="DataFinal", name="dat_jul_fim"
+- ordenacao ('RELEV', 'DESC', 'ASC') - select[name="tip_criterio_data"]
+- somenteEmenta (boolean) - id="check_ementa"
+- segundoGrau (boolean) - id="segundo_grau" (TRF da 2a REGIAO)
+- primeiroGrau (boolean) - id="primeiro_grau" (TRU e TURMAS RECURSAIS)
+- numeroProcesso (string) - id="$numero_processo"
+- relator (string) - via checkbox dinamico fq_magistrado[{nome}]
+- orgaoColegiado (string) - via checkbox dinamico fq_orgao_colegiado[{nome}]
+- classe (string) - via checkbox dinamico fq_classe[{nome}]
+- competencia (string) - via checkbox dinamico fq_competencia[{nome}]
+
+```javascript
+// Expandir opcoes de filtragem primeiro
+await page.click('button:has-text("Opcoes de filtragem")');
+await page.waitForSelector('#collapseOne.show');
+
+// Configurar datas
+if (filters.dataInicio) {
+  await page.fill('#DataInicial', filters.dataInicio);
+}
+if (filters.dataFim) {
+  await page.fill('#DataFinal', filters.dataFim);
+}
+
+// Configurar ordenacao
+if (filters.ordenacao) {
+  await page.selectOption('select[name="tip_criterio_data"]', filters.ordenacao);
+}
+
+// Para filtros de checkbox dinamicos (Relator, Classe, etc):
+// 1. Expandir o accordion correspondente
+// 2. Clicar em "Ver mais" se necessario
+// 3. Marcar o checkbox pelo name que contem o valor desejado
+```
+
+### 4. extractResults()
+```javascript
+const results = [];
+const panels = await page.locator('.panel.panel-default').all();
+
+for (const panel of panels) {
+  const result = await panel.evaluate(el => {
+    const getValorCampo = (campo) => {
+      const rows = el.querySelectorAll('table tr');
+      for (const row of rows) {
+        const cells = row.querySelectorAll('td');
+        if (cells[0]?.textContent?.trim() === campo) {
+          return cells[1]?.textContent?.trim() || '';
+        }
+      }
+      return '';
+    };
+
+    const ementaBtn = el.querySelector('button.item_button[data-id]');
+    const uuid = ementaBtn?.getAttribute('data-id') || '';
+    const numeroProcessoEl = el.querySelector('.label-processo');
+    const numeroProcesso = numeroProcessoEl?.textContent?.trim() || '';
+    const inteiroTeorLink = el.querySelector('a[href*="documento.php"]')?.href || '';
+    const processoLink = el.querySelector('a[href*="eproc"]')?.href || '';
+    const ementa = el.querySelector('.content_ementa')?.innerHTML || '';
+
+    return {
+      uuid,
+      numeroProcesso,
+      classe: getValorCampo('Classe'),
+      assuntos: getValorCampo('Assunto(s)'),
+      competencia: getValorCampo('Competencia'),
+      relator: getValorCampo('Relator Originario'),
+      dataAutuacao: getValorCampo('Data Autuacao'),
+      dataJulgamento: getValorCampo('Data Julgamento'),
+      ementa: ementa.substring(0, 15000),
+      inteiroTeorLink,
+      processoLink
+    };
+  });
+
+  if (result.numeroProcesso) {
+    results.push(result);
+  }
+}
+
+return results;
+```
+
+### 5. hasNextPage()
+```javascript
+const pagination = page.locator('.pagination');
+const activeItem = pagination.locator('li.page-item.active');
+const allItems = await pagination.locator('li').all();
+const activeIndex = await activeItem.evaluate(el => {
+  const parent = el.parentElement;
+  return Array.from(parent.children).indexOf(el);
+});
+return activeIndex < allItems.length - 1;
+```
+
+### 6. goToNextPage()
+```javascript
+// Obter start atual
+const activeLink = page.locator('li.page-item.active a.page-link');
+const currentStart = parseInt(await activeLink.getAttribute('start') || '0');
+const nextStart = currentStart + 20;
+
+// Clicar no link da proxima pagina
+await page.click(`a.page-link[start="${nextStart}"]`);
+await page.waitForLoadState('networkidle');
+await page.waitForTimeout(1000);
+```
+
+## Notas Importantes
+
+1. O site usa Bootstrap 5 para interface
+2. Os IDs de checkboxes de filtro sao dinamicos (contem hash)
+3. Use o atributo `name` para identificar checkboxes de forma confiavel
+4. Os filtros de Relator, Classe, etc. sao carregados via AJAX
+5. Cada pagina tem 20 resultados fixos
+6. A ementa e exibida inline no card (nao precisa abrir modal)
+7. O botao "Ementa" abre um modal, mas o conteudo ja esta em div.content_ementa
+8. Paginacao usa atributos `start` e `rows` nos links
+9. Para busca direta, use: https://juris.trf2.jus.br/consulta.php?q={termo}
+10. Os numeros de processo tem formato: NNNNNNN-NN.NNNN.N.NN.NNNN

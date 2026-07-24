@@ -1,0 +1,196 @@
+==================================================================
+TELA: PROCESSOS APTOS PARA JULGAMENTO / DEVOLVIDOS PARA A SECRETARIA
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/pg-process-finished-form
+
+Objetivo da tela:
+Permitir a emissão do relatório de processos aptos para julgamento ou devolvidos para a secretaria, mediante seleção da Unidade Judiciária, Vara, Juiz e Tipo.
+
+Descrição:
+A tela disponibiliza filtros para restringir os processos que comporão o relatório. Após selecionar os critérios desejados, o usuário poderá executar a consulta.
+
+==================================================================
+ELEMENTO 01
+==================================================================
+
+Nome:
+Mensagem de orientação.
+
+Tipo:
+Texto informativo.
+
+Objetivo:
+Orientar o usuário sobre os filtros necessários para geração do relatório.
+
+Ações possíveis:
+
+1. Ler a mensagem apresentada.
+
+Comportamento observado:
+
+• A mensagem permanece fixa na parte superior da tela.
+
+• O sistema apresenta o seguinte texto:
+
+"Informe Unidade Judiciária, Vara, Juiz e Tipo para Relatório de Processos aptos para julgamento / devolvidos para a secretaria."
+
+==================================================================
+ELEMENTO 02
+==================================================================
+
+Nome:
+Unidade Judiciária.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Selecionar a Unidade Judiciária utilizada na consulta.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Percorrer as unidades disponíveis.
+3. Selecionar uma unidade.
+
+Comportamento observado:
+
+• A lista apresenta todas as Unidades Judiciárias cadastradas no sistema.
+
+• Entre as opções observadas encontram-se:
+
+- ACAILANDIA
+- ALCANTARA
+- ALTO PARNAIBA
+- AMARANTE DO MARANHÃO
+- ANAJATUBA
+- ARAIOSES
+- ARAME
+- ARARI
+- BACABAL
+- BACURI
+- BALSAS
+- BARAO DE GRAJAU
+- BARRA DO CORDA
+- BARREIRINHAS
+- BEQUIMAO
+- BOM JARDIM
+- BREJO
+- BURITI
+- BURITI BRAVO
+- BURITICUPU
+
+• A seleção da Unidade Judiciária determina as opções disponíveis nos campos Vara e Juiz.
+
+==================================================================
+ELEMENTO 03
+==================================================================
+
+Nome:
+Vara.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Selecionar a Vara pertencente à Unidade Judiciária escolhida.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Selecionar uma Vara.
+
+Comportamento observado:
+
+• O campo permanece vazio até que seja selecionada uma Unidade Judiciária.
+
+• Após a escolha da Unidade Judiciária, o sistema carrega automaticamente as Varas correspondentes.
+
+• As opções variam conforme a Unidade Judiciária selecionada.
+
+==================================================================
+ELEMENTO 04
+==================================================================
+
+Nome:
+Juiz(a).
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Selecionar o magistrado responsável.
+
+Ações possíveis:
+
+1. Abrir a lista.
+2. Selecionar um magistrado.
+
+Comportamento observado:
+
+• O campo permanece vazio até que sejam definidos os filtros anteriores.
+
+• Após a seleção da Unidade Judiciária e da Vara, o sistema disponibiliza os magistrados vinculados àquela unidade.
+
+• A relação apresentada depende dos filtros previamente selecionados.
+
+==================================================================
+ELEMENTO 05
+==================================================================
+
+Nome:
+Tipo.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Definir qual relatório será gerado.
+
+Ações possíveis:
+
+1. Abrir a lista.
+2. Selecionar uma das opções disponíveis.
+
+Opções observadas:
+
+• Processos aptos para julgamento.
+• Processos devolvidos para a secretaria.
+
+Comportamento observado:
+
+• O sistema apresenta apenas duas opções de relatório.
+
+• A opção escolhida determina quais processos serão exibidos após a consulta.
+
+==================================================================
+ELEMENTO 06
+==================================================================
+
+Nome:
+Consultar.
+
+Tipo:
+Botão.
+
+Objetivo:
+Executar a consulta utilizando os filtros informados.
+
+Ações possíveis:
+
+1. Clicar no botão "CONSULTAR".
+
+Comportamento observado:
+
+• O botão permanece disponível na parte inferior da tela.
+
+• Após o acionamento, o sistema processa os filtros selecionados e gera o relatório correspondente, caso existam registros compatíveis.
+
+Prints:
+• 20. TJMA-PROCESSOS-APTOS_print_tela-inicial.png
+• 21. TJMA-PROCESSOS-APTOS_print_combo-unidade-judiciaria.png
+• 22. TJMA-PROCESSOS-APTOS_print_combo-vara.png
+• 23. TJMA-PROCESSOS-APTOS_print_combo-juiz.png
+• 24. TJMA-PROCESSOS-APTOS_print_combo-tipo.png

@@ -1,0 +1,624 @@
+============================================================ TRIBUNAL DE
+JUSTIÇA DO ESTADO DO RIO DE JANEIRO (TJRJ) CONSULTA À JURISPRUDÊNCIA –
+SISTEMA EJURIS
+============================================================
+
+https://www3.tjrj.jus.br/ejuris/ConsultarJurisprudencia.aspx
+
+Objetivo: Permitir a consulta de jurisprudência cadastrada no sistema
+eJURIS por meio de pesquisa livre e da utilização de filtros
+específicos.
+
+============================================================
+ELEMENTO 01
+============================================================
+
+Nome:
+Pesquisa Livre.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Permitir a localização de julgados por meio da inserção de palavras, expressões, termos jurídicos ou combinações utilizando operadores de pesquisa.
+
+Ações possíveis:
+
+1. Clicar no campo Pesquisa Livre.
+2. Digitar palavras, expressões ou termos relacionados ao assunto desejado.
+3. Utilizar operadores de pesquisa para refinar os resultados.
+4. Editar o conteúdo digitado.
+5. Excluir parcial ou totalmente o texto informado.
+6. Combinar a pesquisa livre com os demais filtros disponíveis na página.
+
+Comportamento observado:
+
+• O campo aceita entrada de texto livre.
+
+• Os termos informados são utilizados como critério principal para localização dos julgados.
+
+• A pesquisa pode ser realizada utilizando apenas o campo Pesquisa Livre ou em conjunto com os demais filtros da página.
+
+• É possível combinar palavras e expressões utilizando os operadores de pesquisa disponibilizados pelo sistema.
+
+• Os operadores disponíveis são:
+  - E
+  - OU
+  - ADJ
+  - NÃO
+  - PROX
+  - $
+
+• Ao posicionar o cursor do mouse sobre cada operador, o sistema exibe uma tooltip contendo a descrição de sua finalidade e forma de utilização.
+
+• O conteúdo informado permanece disponível para edição até que seja realizada nova pesquisa ou que o botão "Limpar" seja acionado.
+
+• Não foram identificadas restrições quanto ao uso de letras maiúsculas ou minúsculas durante a pesquisa.
+
+Print:
+
+2. TJRJ-EJURIS-BASE-INICIAL_print_tela-inicial.png
+
+============================================================
+ELEMENTO 02
+============================================================
+
+Nome:
+Operadores de Pesquisa.
+
+Tipo:
+Grupo de botões.
+
+Objetivo:
+Permitir a elaboração de pesquisas mais precisas por meio da combinação de palavras, expressões e critérios de pesquisa utilizando operadores lógicos e de proximidade.
+
+Operadores disponíveis:
+
+• E
+• OU
+• ADJ
+• NÃO
+• PROX
+• $
+
+Ações possíveis:
+
+1. Posicionar o cursor do mouse sobre um operador para visualizar sua descrição.
+2. Clicar no operador desejado.
+3. Utilizar o operador na elaboração da pesquisa livre.
+4. Combinar um ou mais operadores em uma mesma consulta.
+
+Comportamento observado:
+
+• Os operadores estão localizados abaixo do campo "Pesquisa Livre".
+
+• Ao posicionar o cursor do mouse sobre cada operador, o sistema exibe uma tooltip contendo informações sobre sua utilização.
+
+• Os operadores podem ser utilizados isoladamente ou combinados entre si, conforme a necessidade da pesquisa.
+
+• A utilização dos operadores influencia diretamente os resultados retornados pelo sistema, permitindo ampliar, restringir ou relacionar os termos pesquisados.
+
+Descrição dos operadores:
+
+• E
+Conector lógico E, o documento recuperado deve conter ambos os verbetes informados.
+
+• OU
+Conector lógico OU, o documento recuperado deve conter um ou ambos os verbetes informados.
+
+
+• ADJ
+Conector lógico ADJ, o documento recuperado deve conter ambos os verbetes informados, na ordem especificada pelos operadores.
+
+• NÃO
+Conector lógico NÃO, o documento recuperado deve conter o primeiro verbete, mas não o segundo.
+
+• PROX
+Conector lógico PROX, ver AJUDA para mais informações.
+
+• $
+Operador Coringa, ignorar um ou mais caracteres após o operador. Ver ajuda para mais informações.
+
+Observações:
+
+• A correta utilização dos operadores pode tornar a pesquisa significativamente mais precisa.
+
+• Recomenda-se consultar a tooltip de cada operador para compreender sua forma de utilização antes da realização da pesquisa.
+
+Print:
+
+2. TJRJ-EJURIS-BASE-INICIAL_print_tela-inicial.png
+
+============================================================
+ELEMENTO 03
+============================================================
+
+Nome:
+Origem.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Permitir selecionar a origem dos julgados que serão considerados na pesquisa de jurisprudência.
+
+Ações possíveis:
+
+1. Clicar no campo "Origem".
+2. Visualizar as opções disponíveis na lista suspensa.
+3. Selecionar a origem desejada.
+4. Alterar a seleção, caso necessário.
+5. Combinar este filtro com os demais critérios disponíveis na página.
+
+Comportamento observado:
+
+• Ao clicar no campo "Origem", o sistema exibe uma lista suspensa com as opções disponíveis: 
+- Tribunal de Justiça do Rio de Janeiro 2ª Instância;
+- Tribunal e Alçada Cível;
+- Tribunal de Alçada Criminal;
+- Turma Recursal;
+- Conselho da Magistratura.
+
+• A opção selecionada passa a restringir a pesquisa aos julgados vinculados à origem escolhida.
+
+• O filtro pode ser utilizado isoladamente ou em conjunto com os demais campos da tela.
+
+• A seleção permanece ativa até que seja alterada pelo usuário ou até que o botão "Limpar" seja acionado.
+
+Observações:
+
+• Este campo é utilizado para limitar a base de origem dos julgados pesquisados.
+
+• Recomenda-se selecionar a origem adequada antes da execução da pesquisa, especialmente quando houver necessidade de restringir os resultados.
+
+Print:
+
+3. TJRJ-EJURIS-BASE-INICIAL_print_combo-origem.png
+
+============================================================
+ELEMENTO 04
+============================================================
+
+Nome:
+Julgados a partir do ano/até o ano de.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Permitir definir o ano inicial e final do período que será considerado na pesquisa de jurisprudência.
+
+Ações possíveis:
+
+1. Clicar no campo "Julgados a partir do ano" ou até o ano de.
+2. Visualizar a lista de anos disponíveis.
+3. Selecionar o ano desejado.
+4. Alterar a seleção, caso necessário.
+5. Combinar este filtro com os demais critérios de pesquisa disponíveis na página.
+
+Comportamento observado:
+
+• Ao clicar no campo, o sistema exibe uma lista suspensa contendo os anos disponíveis para seleção.
+
+• O ano selecionado passa a ser utilizado como marco inicial ou final para a pesquisa dos julgados.
+
+• Quando utilizado em conjunto com o campo "Julgados até o ano", o sistema restringe a pesquisa ao intervalo compreendido entre os dois anos informados.
+
+• O filtro pode ser utilizado isoladamente ou em conjunto com os demais filtros da tela.
+
+• A seleção permanece disponível até que seja alterada pelo usuário ou que o botão "Limpar" seja acionado.
+
+Observações:
+
+• Caso apenas o campo "Julgados a partir do ano" seja informado, o sistema considerará os julgados a partir do ano selecionado.
+
+• Recomenda-se utilizar este filtro em conjunto com "Julgados até o ano" para delimitar um período específico de pesquisa.
+
+Print:
+
+4. TJRJ-EJURIS-BASE-INICIAL_print_combo-julgados-a-partir-do-ano.png
+
+============================================================
+ELEMENTO 05
+============================================================
+
+Nome:
+Competência.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Permitir restringir a pesquisa de jurisprudência de acordo com a competência jurisdicional.
+
+Ações possíveis:
+
+1. Clicar no campo "Competência".
+2. Visualizar as opções disponíveis na lista suspensa.
+3. Selecionar a competência desejada.
+4. Alterar a seleção, caso necessário.
+5. Combinar este filtro com os demais critérios de pesquisa disponíveis na página.
+
+Comportamento observado:
+
+• Ao clicar no campo "Competência", o sistema exibe uma lista suspensa contendo as competências disponíveis para seleção:
+- Cível; 
+- Criminal.
+
+• A competência selecionada passa a ser utilizada como critério para restringir os resultados da pesquisa.
+
+• O filtro pode ser utilizado isoladamente ou em conjunto com os demais filtros da tela.
+
+• A seleção permanece ativa até que seja alterada pelo usuário ou até que o botão "Limpar" seja acionado.
+
+Observações:
+
+• A utilização deste filtro permite direcionar a pesquisa para julgados relacionados a uma competência específica.
+
+• Recomenda-se combinar este filtro com outros critérios, como ramo do direito, órgão julgador ou período dos julgados, quando houver necessidade de obter resultados mais específicos.
+
+Print:
+
+5. TJRJ-EJURIS-BASE-INICIAL_print_combo-competencia.png
+
+============================================================
+ELEMENTO 06
+============================================================
+
+Nome:
+Ramo do Direito.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Permitir restringir a pesquisa de jurisprudência por um ou mais ramos do direito.
+
+Ações possíveis:
+
+1. Clicar no campo "Ramo do Direito".
+2. Visualizar as opções disponíveis na lista suspensa.
+3. Selecionar o ramo do direito desejado.
+4. Alterar a seleção, caso necessário.
+5. Clicar no botão "+" para adicionar um novo campo de seleção.
+6. Selecionar um ou mais ramos do direito para compor os critérios da pesquisa.
+7. Combinar este filtro com os demais critérios disponíveis na página.
+
+Comportamento observado:
+
+• Ao clicar no campo "Ramo do Direito", o sistema exibe uma lista suspensa contendo os ramos do direito disponíveis.
+
+• O ramo selecionado passa a ser utilizado como critério de pesquisa.
+
+• Ao clicar no botão "+", que só é acionado quando escolhido algum ramo do direito, localizado ao lado do campo, o sistema adiciona um novo campo "Ramo do Direito", permitindo informar múltiplos ramos na mesma consulta.
+
+• Os campos adicionados permanecem disponíveis até que sejam removidos pelo usuário ou até que o botão "Limpar" seja acionado.
+
+• O filtro pode ser utilizado isoladamente ou em conjunto com os demais filtros da tela.
+
+Observações:
+
+• A funcionalidade de conjugar campos permite ampliar ou refinar a pesquisa, possibilitando a seleção de mais de um ramo do direito.
+
+• Recomenda-se utilizar essa funcionalidade quando houver necessidade de localizar julgados relacionados a diferentes ramos do direito em uma única consulta.
+
+Prints:
+
+6. TJRJ-EJURIS-BASE-INICIAL_print_combo-ramo-direito.png
+7. TJRJ-EJURIS-BASE-INICIAL_print_botao-conjugar-ramo-direito
+
+============================================================
+ELEMENTO 07
+============================================================
+
+Nome:
+Magistrado.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Permitir restringir a pesquisa de jurisprudência aos julgados relacionados a um ou mais magistrados.
+
+Ações possíveis:
+
+1. Clicar no campo "Magistrado".
+2. Visualizar a lista de magistrados disponíveis.
+3. Selecionar o magistrado desejado.
+4. Alterar a seleção, caso necessário.
+5. Clicar no botão "+" para adicionar um novo campo de seleção.
+6. Selecionar um ou mais magistrados para compor os critérios da pesquisa.
+7. Combinar este filtro com os demais critérios disponíveis na página.
+
+Comportamento observado:
+
+• Ao clicar no campo "Magistrado", o sistema exibe uma lista suspensa contendo os magistrados disponíveis para seleção.
+
+• O magistrado selecionado passa a ser utilizado como critério para restringir os resultados da pesquisa.
+
+• Ao clicar no botão "+", localizado ao lado do campo, o sistema adiciona um novo campo "Magistrado", permitindo selecionar mais de um magistrado na mesma consulta.
+
+• Os campos adicionados permanecem disponíveis até que sejam removidos pelo usuário ou até que o botão "Limpar" seja acionado.
+
+• O filtro pode ser utilizado isoladamente ou em conjunto com os demais filtros da tela.
+
+Observações:
+
+• A funcionalidade de conjugar campos possibilita pesquisar julgados relacionados a múltiplos magistrados em uma única consulta.
+
+• Recomenda-se utilizar este recurso quando houver necessidade de ampliar a pesquisa ou localizar julgados vinculados a diferentes magistrados.
+
+Prints:
+
+8. TJRJ-EJURIS-BASE-INICIAL_print_combo-magistrado.png
+9. TJRJ-EJURIS-BASE-INICIAL_print_botao-conjugar-magistrado
+
+============================================================
+ELEMENTO 08
+============================================================
+
+Nome:
+Órgão Julgador.
+
+Tipo:
+Lista suspensa.
+
+Objetivo:
+Permitir restringir a pesquisa de jurisprudência aos julgados proferidos por um ou mais órgãos julgadores.
+
+Ações possíveis:
+
+1. Clicar no campo "Órgão Julgador".
+2. Visualizar a lista de órgãos julgadores disponíveis.
+3. Selecionar o órgão julgador desejado.
+4. Alterar a seleção, caso necessário.
+5. Clicar no botão "+" para adicionar um novo campo de seleção.
+6. Selecionar um ou mais órgãos julgadores para compor os critérios da pesquisa.
+7. Combinar este filtro com os demais critérios disponíveis na página.
+
+Comportamento observado:
+
+• Ao clicar no campo "Órgão Julgador", o sistema exibe uma lista suspensa contendo os órgãos julgadores disponíveis para seleção.
+
+• O órgão julgador selecionado passa a ser utilizado como critério para restringir os resultados da pesquisa.
+
+• Ao clicar no botão "+", localizado ao lado do campo, o sistema adiciona um novo campo "Órgão Julgador", permitindo selecionar mais de um órgão julgador na mesma consulta.
+
+• Os campos adicionados permanecem disponíveis até que sejam removidos pelo usuário ou até que o botão "Limpar" seja acionado.
+
+• O filtro pode ser utilizado isoladamente ou em conjunto com os demais filtros da tela.
+
+Observações:
+
+• A funcionalidade de conjugar campos possibilita pesquisar julgados proferidos por diferentes órgãos julgadores em uma única consulta.
+
+• Recomenda-se utilizar este recurso quando houver necessidade de ampliar a pesquisa ou localizar decisões provenientes de mais de um órgão julgador.
+
+Prints:
+
+10. TJRJ-EJURIS-BASE-INICIAL_print_combo-orgao-julgador.png
+11. TJRJ-EJURIS-BASE-INICIAL_print_botao-conjugar-orgao-julgador
+
+============================================================
+ELEMENTO 09
+============================================================
+
+Nome:
+Númeração do Processo.
+
+Tipo:
+Campo de pesquisa.
+
+Objetivo:
+Permitir localizar julgados por meio da informação do número do processo, utilizando o padrão de numeração desejado.
+
+Ações possíveis:
+
+1. Selecionar o tipo de numeração do processo.
+2. Informar o número do processo no campo de pesquisa.
+3. Editar ou excluir o número informado.
+4. Combinar este critério com os demais filtros disponíveis na página.
+5. Clicar no botão "Pesquisar" para executar a consulta.
+
+Comportamento observado:
+
+• O elemento é composto por uma lista suspensa para seleção do tipo de numeração e por um campo de texto destinado à digitação do número do processo.
+
+• Ao clicar na lista suspensa, o sistema exibe as opções de pesquisa disponíveis, permitindo selecionar o formato de numeração que será utilizado.
+- Num. Única;
+- Num. Antiga
+
+• Após a seleção do tipo de numeração, o usuário pode informar o número do processo correspondente.
+
+• O campo permanece disponível para edição até que a pesquisa seja executada ou que o botão "Limpar" seja acionado.
+
+• O filtro pode ser utilizado isoladamente ou em conjunto com os demais critérios de pesquisa disponíveis na página.
+
+Observações:
+
+• A seleção correta do tipo de numeração é essencial para que o sistema realize a pesquisa utilizando o formato adequado.
+
+• Recomenda-se conferir o número informado antes da execução da pesquisa, evitando inconsistências nos resultados retornados.
+
+Print:
+
+12. TJRJ-EJURIS-BASE-INICIAL_print_combo-num.png
+
+============================================================
+ELEMENTO 10
+============================================================
+
+Nome:
+Tipos de Documento.
+
+Tipo:
+Caixas de seleção (Checkbox).
+
+Objetivo:
+Permitir definir quais tipos de documentos deverão ser considerados na pesquisa de jurisprudência.
+
+Opções disponíveis:
+
+• Acórdão (ementa) – marcado por padrão.
+
+• Decisão Monocrática (ementa) – marcado por padrão.
+
+• Inteiro Teor (PDF).
+
+• Ementário.
+
+Ações possíveis:
+
+1. Marcar uma ou mais opções disponíveis.
+2. Desmarcar opções previamente selecionadas.
+3. Combinar as opções selecionadas com os demais filtros da página.
+4. Executar a pesquisa utilizando apenas os tipos de documentos selecionados.
+
+Comportamento observado:
+
+• Ao acessar a página, as opções **Acórdão (ementa)** e **Decisão Monocrática (ementa)** permanecem marcadas por padrão.
+
+• As opções **Inteiro Teor (PDF)** e **Ementário** permanecem desmarcadas até que sejam selecionadas pelo usuário.
+
+• É possível selecionar uma ou mais opções simultaneamente.
+
+• O sistema considera apenas os tipos de documentos marcados no momento da execução da pesquisa.
+
+• As opções permanecem selecionadas até que sejam alteradas pelo usuário ou até que o botão **Limpar** seja acionado.
+
+Observações:
+
+• A seleção dos tipos de documento influencia diretamente os resultados apresentados na pesquisa.
+
+• Recomenda-se selecionar apenas os tipos de documentos necessários para tornar a pesquisa mais precisa e objetiva.
+
+Print:
+
+2. TJRJ-EJURIS-BASE-INICIAL_print_tela-inicial.png
+
+============================================================
+ELEMENTO 11
+============================================================
+
+Nome:
+Botão Ajuda.
+
+Tipo:
+Botão de ação.
+
+Objetivo:
+Abrir a página de ajuda da Consulta à Jurisprudência, contendo instruções de utilização da pesquisa e explicações sobre os operadores de pesquisa.
+
+Ações possíveis:
+
+1. Clicar no botão **Ajuda**.
+
+Comportamento observado:
+
+• Ao clicar no botão **Ajuda**, o sistema abre uma nova página contendo orientações detalhadas sobre o funcionamento da Consulta à Jurisprudência.
+
+• A página apresenta instruções para utilização da Pesquisa Livre.
+
+• São explicados os operadores lógicos disponíveis para composição das pesquisas.
+
+• A página contém exemplos de utilização dos operadores de pesquisa.
+
+• São apresentadas orientações sobre pesquisa por legislação, artigos, frases exatas e demais recursos disponíveis.
+
+• A navegação ocorre em página própria, preservando a tela de pesquisa anteriormente aberta.
+
+Observações:
+
+• O conteúdo possui caráter exclusivamente informativo e não executa pesquisas.
+
+• A página funciona como manual de utilização da Consulta à Jurisprudência.
+
+Print:
+
+13. TJRJ-EJURIS-BASE-INICIAL_print_botao-ajuda.png
+
+============================================================
+ELEMENTO 12
+============================================================
+
+Nome:
+Botão Pesquisar.
+
+Tipo:
+Botão de ação.
+
+Objetivo:
+Executar a pesquisa utilizando os critérios informados pelo usuário.
+
+Ações possíveis:
+
+1. Clicar no botão **Pesquisar**.
+
+Comportamento observado:
+
+• Ao clicar no botão **Pesquisar**, o sistema processa os critérios informados.
+
+• São considerados a Pesquisa Livre, os filtros específicos, os tipos de documento selecionados e os demais parâmetros definidos pelo usuário.
+
+• Caso existam resultados compatíveis com os critérios informados, o sistema abre a tela de resultados da pesquisa.
+
+• Os resultados apresentados correspondem apenas aos critérios selecionados no momento da execução da pesquisa.
+
+Observações:
+
+• A pesquisa pode ser executada utilizando apenas a Pesquisa Livre ou combinando-a com um ou mais filtros disponíveis na tela.
+
+Print:
+
+2. TJRJ-EJURIS-BASE-INICIAL_print_tela-inicial.png
+
+============================================================
+ELEMENTO 13
+============================================================
+
+Nome:
+Botão Limpar.
+
+Tipo:
+Botão de ação.
+
+Objetivo:
+Remover todos os critérios informados na tela de pesquisa.
+
+Ações possíveis:
+
+1. Clicar no botão **Limpar**.
+
+Comportamento observado:
+
+• Ao clicar no botão **Limpar**, o sistema remove os critérios informados pelo usuário.
+
+• Os campos de texto são esvaziados.
+
+• Os filtros selecionados são restaurados para seus valores padrão.
+
+• Os tipos de documento retornam à configuração inicial da página.
+
+• A tela permanece disponível para uma nova pesquisa.
+
+Observações:
+
+• O botão não executa nenhuma pesquisa.
+
+• Sua função é apenas restaurar a tela para o estado inicial.
+
+Print:
+
+2. TJRJ-EJURIS-BASE-INICIAL_print_tela-inicial.png
+
+============================================================
+RESULTADO ESPERADO
+============================================================
+
+Após o acionamento do botão **Pesquisar**, o sistema executa a consulta considerando todos os critérios informados pelo usuário e abre a página de resultados da pesquisa.
+
+Nessa nova página são apresentados os julgados encontrados, permitindo a consulta das decisões localizadas, aplicação de filtros adicionais e utilização das funcionalidades disponíveis para visualização, impressão e obtenção do inteiro teor dos documentos.
+
+Próximo documento:
+
+13. TJRJ-EJURIS-RESULTADOS_print_tela-resultados.png

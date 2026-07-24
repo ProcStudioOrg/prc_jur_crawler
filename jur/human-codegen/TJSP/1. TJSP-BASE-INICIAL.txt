@@ -1,0 +1,298 @@
+============================================================
+TRIBUNAL DE JUSTIÇA DE SÃO PAULO (TJSP)
+SISTEMA DE PESQUISA DE JURISPRUDÊNCIA
+============================================================
+
+URL:
+https://eproc1g.tjsp.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+
+============================================================
+SEÇÃO 01 – Página Inicial da Pesquisa de Jurisprudência
+============================================================
+
+1.0 Navegação
+
+Objetivo:
+Acessar o Portal de Jurisprudência.
+
+Comportamento observado:
+• O sistema exibe a página inicial do Portal de Jurisprudência.
+
+URL:
+https://eproc1g.tjsp.jus.br/eproc/externo_controlador.php?acao=jurisprudencia
+
+=================================================================
+ELEMENTO 01
+=================================================================
+
+Nome:
+Operadores.
+
+Tipo:
+Menu expansível contendo operadores de pesquisa.
+
+Localização:
+Acima do campo de pesquisa.
+
+Objetivo:
+Disponibilizar operadores que permitem construir pesquisas mais específicas.
+
+Ações possíveis:
+
+1. Clicar sobre "Operadores".
+2. Visualizar os operadores disponíveis.
+3. Clicar em um operador para inseri-lo automaticamente no campo de pesquisa.
+4. Passar o cursor do mouse sobre cada operador para visualizar sua descrição e exemplo de utilização.
+
+Comportamento observado:
+
+Ao clicar em qualquer operador, ele é automaticamente inserido no campo de pesquisa.
+
+Ao posicionar o cursor do mouse sobre um operador, o sistema exibe uma caixa de ajuda contendo a descrição do operador e um exemplo oficial de utilização.
+
+------------------------------------------------------------
+
+Operador:
+" "
+
+Função:
+
+Pesquisa documentos que contenham a expressão informada.
+
+Exemplo apresentado pelo sistema:
+
+"faixa de fronteira"
+
+------------------------------------------------------------
+
+Operador:
+e
+
+Função:
+
+Pesquisa documentos que contenham todas as palavras ou expressões informadas.
+
+Exemplo apresentado pelo sistema:
+
+crime e "faixa de fronteira"
+
+------------------------------------------------------------
+
+Operador:
+ou
+
+Função:
+
+Pesquisa documentos que contenham pelo menos uma das palavras ou expressões informadas.
+
+Exemplo apresentado pelo sistema:
+
+drogas ou entorpecentes
+
+------------------------------------------------------------
+
+Operador:
+não
+
+Função:
+
+Pesquisa documentos que contenham a primeira palavra ou expressão informada, excluindo a segunda palavra ou expressão.
+
+Exemplo apresentado pelo sistema:
+
+crime não "sonegação fiscal"
+
+------------------------------------------------------------
+
+Operador:
+prox
+
+Função:
+
+Pesquisa documentos onde as palavras ou expressões informadas encontram-se próximas no texto.
+
+Exemplo apresentado pelo sistema:
+
+aposentadoria prox contribuição
+
+------------------------------------------------------------
+
+Operador:
+*
+
+Função:
+
+Pesquisa documentos que contenham o início da palavra ou expressão informada.
+
+Exemplo apresentado pelo sistema:
+
+embarg*
+
+Observação:
+
+A utilização correta dos operadores permite tornar a pesquisa mais específica e reduzir resultados irrelevantes.
+
+=================================================================
+ELEMENTO 02
+=================================================================
+
+Nome:
+Campo de pesquisa.
+
+Tipo:
+Campo de texto.
+
+Texto de orientação exibido no campo:
+
+"Informe o texto para pesquisa"
+
+Objetivo:
+
+Inserir palavras, expressões ou operadores para localizar decisões judiciais.
+
+Ações possíveis:
+
+1. Clicar dentro do campo.
+2. Digitar palavras ou expressões.
+3. Utilizar operadores de pesquisa.
+4. Editar o conteúdo digitado.
+5. Remover o conteúdo digitado.
+
+Comportamento observado:
+
+• Ao selecionar um operador, ele é automaticamente inserido no campo de pesquisa.
+
+• O campo permite combinar texto e operadores na mesma pesquisa.
+
+• Após a digitação de qualquer caractere, é exibido um botão representado pelo símbolo "X" no lado direito do campo.
+
+• Ao clicar no botão "X", todo o conteúdo do campo é apagado, retornando o campo ao estado inicial.
+
+=================================================================
+BOTÃO 01
+=================================================================
+
+Nome:
+Pesquisar.
+
+Tipo:
+Botão de ação.
+
+Ícone:
+Lupa.
+
+Texto de ajuda exibido ao passar o cursor:
+"Consultar"
+
+Objetivo:
+
+Executar a pesquisa utilizando o conteúdo informado no campo de pesquisa.
+
+Ações possíveis:
+
+1. Informar o texto desejado no campo de pesquisa.
+2. Clicar no botão representado pelo ícone de lupa.
+3. Aguardar o carregamento da página de resultados.
+
+Comportamento observado:
+
+• Ao posicionar o cursor do mouse sobre o botão, o sistema exibe a mensagem "Consultar".
+
+• Ao clicar no botão, o sistema inicia a pesquisa utilizando os critérios informados.
+
+Resultado esperado:
+
+O sistema exibe a tela contendo a lista de decisões encontradas conforme os critérios informados.
+
+Comportamento observado:
+
+• Caso o usuário clique em "Pesquisar" sem selecionar pelo menos uma opção em "Origem", o sistema exibe uma janela de alerta com a mensagem:
+
+"Selecione pelo menos uma Origem nos filtros"
+
+• Para prosseguir, clicar em "OK" na janela de alerta e selecionar ao menos uma opção no filtro "Origem".
+
+=================================================================
+ELEMENTO 03
+=================================================================
+
+Nome:
+Pesquisa avançada.
+
+Tipo:
+Menu expansível.
+
+Localização:
+Abaixo do campo de pesquisa e do botão representado pelo ícone de lupa.
+
+Texto exibido:
+"Pesquisa avançada"
+
+Texto de ajuda exibido ao passar o cursor:
+"Visualizar outros filtros que podem ser usados para melhorar o resultado da pesquisa"
+
+Objetivo:
+
+Exibir filtros adicionais para permitir pesquisas mais específicas e reduzir resultados irrelevantes.
+
+Ações possíveis:
+
+1. Clicar em "Pesquisa avançada".
+2. Aguardar a expansão da área de filtros.
+3. Preencher ou selecionar os filtros desejados.
+4. Executar a pesquisa pelo botão "Pesquisar".
+
+Comportamento observado:
+
+• Ao posicionar o cursor sobre "Pesquisa avançada", o sistema exibe a mensagem:
+
+"Visualizar outros filtros que podem ser usados para melhorar o resultado da pesquisa."
+
+• Ao clicar em "Pesquisa avançada", a área de filtros é expandida.
+
+• Após a expansão são exibidas as seções Base e Campos específicos.
+
+• A seção Base contém os filtros:
+
+Origem;
+Tipo de documento;
+Somente jurisprudência selecionada (Precedentes relevantes);
+Agrupar resultados;
+Pesquisar em (Inteiro teor ou Ementa).
+
+• O filtro Origem é de seleção múltipla, permitindo selecionar uma ou mais opções. Possui campo de pesquisa, as opções "Selecionar Todos" e "Desmarcar Todos" e lista contendo, entre outras, Colégio Recursal, Primeiro Grau e Segundo Grau.
+
+• O filtro Tipo de documento permanece desabilitado enquanto nenhuma Origem for selecionada.
+
+• Após a seleção de pelo menos uma Origem, o filtro Tipo de documento é habilitado, permitindo a seleção de um ou mais tipos de documento. O componente possui campo de pesquisa, opções "Selecionar Todos" e "Desmarcar Todos" e lista de tipos disponíveis, como Acórdão e Decisão monocrática.
+
+• Existem dois checkboxes: Somente jurisprudência selecionada (Precedentes relevantes) e Agrupar Resultados. O filtro agrupar resultados permanece marcado por padrão.
+
+• O filtro Pesquisar em apresenta duas opções mutuamente exclusivas:
+
+Inteiro teor (marcada por padrão);
+Ementa.
+
+
+• A seção Campos específicos disponibiliza filtros adicionais para refinamento da pesquisa, incluindo:
+
+Processo;
+Classe processual;
+Data da decisão/julgamento (Inicial e Final);
+Data da disponibilização/publicação (Inicial e Final);
+Relator/Relatora;
+Órgão julgador;
+Botão "Limpar filtros";
+Botão "Pesquisar".
+
+• Os campos Classe processual, Relator/Relatora e Órgão julgador apresentam comportamento semelhante ao filtro Origem, permitindo pesquisa, seleção em listas extensas e utilização das opções "Selecionar Todos" e "Desmarcar Todos".
+
+• Os campos de data possuem ícone de calendário. Ao clicar no campo ou no ícone, é exibido um calendário para seleção da data.
+
+• O botão "Limpar filtros" remove os critérios preenchidos e restaura os filtros para o estado inicial da pesquisa avançada.
+
+• O botão "Pesquisar" executa a consulta considerando os critérios informados na pesquisa avançada.
+
+Resultado esperado:
+
+O sistema expande a área de pesquisa avançada, disponibilizando filtros adicionais para refinamento da consulta, mantendo habilitados apenas os campos compatíveis com as seleções realizadas pelo usuário. O filtro Tipo de documento somente deve ser habilitado após a seleção de pelo menos uma opção no filtro Origem.

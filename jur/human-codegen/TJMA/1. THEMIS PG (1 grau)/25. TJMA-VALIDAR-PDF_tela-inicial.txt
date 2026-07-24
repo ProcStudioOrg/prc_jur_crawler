@@ -1,0 +1,139 @@
+==================================================================
+TELA: VALIDAR DOCUMENTO PDF
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/validate-pdf-document
+
+Objetivo da tela:
+Permitir a validação de documentos emitidos pelo sistema mediante a informação do tipo de documento, número do documento e código de validação.
+
+Descrição:
+A tela possibilita confirmar a autenticidade de documentos eletrônicos emitidos pelo Poder Judiciário do Estado do Maranhão utilizando os dados constantes no próprio documento.
+
+==================================================================
+ELEMENTO 01
+==================================================================
+
+Nome:
+Mensagem de orientação.
+
+Tipo:
+Texto informativo.
+
+Objetivo:
+Informar os dados necessários para realizar a validação do documento.
+
+Ações possíveis:
+
+1. Ler a mensagem apresentada.
+
+Comportamento observado:
+
+• A mensagem permanece fixa na parte superior da tela.
+
+• O sistema apresenta o seguinte texto:
+
+"Informe Tipo de Documento, Número do Documento e Código de Validação para Validar Documento PDF."
+
+==================================================================
+ELEMENTO 02
+==================================================================
+
+Nome:
+Tipo de Documento.
+
+Tipo:
+Lista suspensa (Combo Box).
+
+Objetivo:
+Selecionar o tipo do documento que será validado.
+
+Ações possíveis:
+
+1. Abrir a lista de opções.
+2. Selecionar um tipo de documento.
+
+Comportamento observado:
+
+• O campo é obrigatório.
+
+• A seleção determina o tipo de documento que será validado.
+
+Opções observadas:
+
+• Mandado
+• Certidão
+
+==================================================================
+ELEMENTO 03
+==================================================================
+
+Nome:
+Número do Documento.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Informar o número do documento emitido pelo sistema.
+
+Ações possíveis:
+
+1. Digitar o número do documento.
+
+Comportamento observado:
+
+• O campo permanece vazio até que o usuário informe um valor.
+
+• Deve ser preenchido com o número constante no documento que se deseja validar.
+
+==================================================================
+ELEMENTO 04
+==================================================================
+
+Nome:
+Código de Validação.
+
+Tipo:
+Campo de texto.
+
+Objetivo:
+Informar o código de validação do documento.
+
+Ações possíveis:
+
+1. Digitar o código de validação.
+
+Comportamento observado:
+
+• O campo permanece vazio até o preenchimento pelo usuário.
+
+• Deve ser informado exatamente como consta no documento.
+
+==================================================================
+ELEMENTO 05
+==================================================================
+
+Nome:
+Consultar.
+
+Tipo:
+Botão.
+
+Objetivo:
+Validar a autenticidade do documento informado.
+
+Ações possíveis:
+
+1. Clicar no botão "CONSULTAR".
+
+Comportamento observado:
+
+• Após o preenchimento dos campos obrigatórios, o sistema realiza a validação do documento.
+
+• Caso os dados informados sejam válidos, o documento correspondente é localizado e disponibilizado para consulta.
+
+Prints:
+• 26. TJMA-VALIDAR-PDF_print_tela-inicial.png
+• 27. TJMA-VALIDAR-PDF_print_combo-tipo-documento.png
