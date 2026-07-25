@@ -46,8 +46,25 @@ function periodo() {
 
 const log = (...a) => { if (!JSON_OUT) console.log(...a); };
 
-/** Padrões que denunciam bloqueio em vez de bug nosso. */
-const BLOQUEIO = /cloudflare|turnstile|captcha|recaptcha|just a moment|verifica(ç|c)(ã|a)o de navegador|access denied|forbidden|403|blocked/i;
+/**
+ * Padrões que denunciam bloqueio em vez de bug nosso.
+ *
+ * ATENÇÃO: WAF devolve **HTTP 200** com a página de desafio. Status e tamanho da resposta
+ * não provam sucesso — só o conteúdo prova. Os padrões do F5/Shape (TJSC) foram acrescentados
+ * depois de eu mesmo interpretar `200 + 76 KB` como "portal aberto" quando era o challenge.
+ */
+const BLOQUEIO = new RegExp([
+  'cloudflare', 'turnstile', 'captcha', 'recaptcha', 'just a moment',
+  'access denied', 'forbidden', '\\b403\\b', 'blocked',
+  // 429 é bloqueio, não bug: a ação é ESPERAR, não depurar seletor.
+  // Aparece quando se roda o aceite/testes em rajada contra o mesmo host (Falcão/TRT).
+  '\\b429\\b', 'too many requests', 'rate limit',
+  // F5 / Shape — o desafio do TJSC e de vários portais .jus.br
+  'bobcmn', 'your support id is', 'enable javascript to view the page',
+  // texto em português dos portais institucionais
+  'verifica(ç|c)(ã|a)o de (navegador|seguran(ç|c)a)',
+  'acesso foi bloqueado', 'digite o c(ó|o)digo exibido',
+].join('|'), 'i');
 
 /** Mensagem de erro em uma linha — stack de Playwright estoura a tabela. */
 const umaLinha = (s) => String(s).split('\n')[0].replace(/\s+/g, ' ').trim().slice(0, 160);

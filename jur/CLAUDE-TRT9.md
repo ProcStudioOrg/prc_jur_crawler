@@ -111,6 +111,26 @@ com `orgaoJulgador`.
 
 ## RESSALVAS (é aqui que mora o que quebra)
 
+### 0. Rate limit: HTTP 429 sob rajada (descoberto martelando o host)
+
+O Falcão devolve **HTTP 429 `Too Many Requests`** quando se dispara várias consultas em
+sequência curta — e **não se recupera em ~45 s**. Não é bug do crawler nem bloqueio
+permanente: é limite do host.
+
+Aconteceu de verdade ao rodar, em poucos minutos, os testes de reuso contra 4 acervos
+(TRT12/TRT4/TST/TRT9) + duas passadas do `tests/aceite.js` + o `tests/smoke.js`.
+
+Consequências práticas:
+
+- **Não rode `aceite`/`smoke`/`Testes` do TRT9 em sequência** com os testes de outros acervos
+  do Falcão — todos batem no mesmo host `jurisprudencia.jt.jus.br`. Espace ou serialize.
+- Ao varrer vários TRTs, **coloque intervalo entre acervos**. Paralelizar 24 TRTs vai render 429,
+  não 24× a velocidade. É o oposto da regra geral do repo (tribunais diferentes em paralelo):
+  aqui *tribunal diferente é o mesmo host*.
+- `429` é classificado como **`bloqueio`** pelo `tests/smoke.js`, não como `erro` — a ação certa
+  é **esperar**, não depurar seletor. Ver `skills/fixer/SKILL.md` §4.
+
+
 ### 1. CloudFront bloqueia User-Agent de robô — inclusive headless
 `curl` sem `-A`, e Playwright headless com UA padrão, recebem **403 "Request blocked"**
 tanto em `jurisprudencia.jt.jus.br` quanto em `www.trt9.jus.br`. Com um UA de Chrome real,
