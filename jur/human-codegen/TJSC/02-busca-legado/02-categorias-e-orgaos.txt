@@ -1,0 +1,38 @@
+TJSC LEGADO — SEÇÃO 2: CATEGORIAS (a desambiguação do portal antigo)
+====================================================================
+Prints: 02.01-checkboxes-categoria.png
+        02.02-combo-orgao-julgador.png
+Dados : 02-categorias.json  ·  02-orgaos-julgadores.json (99 opções)
+
+No portal antigo a separação Justiça Comum × Juizados NÃO é um combo de origem:
+são SEIS checkboxes `name="categoria"` (só "acordaos" vem marcado por padrão).
+
+  value      | label                                          | universo
+  -----------+------------------------------------------------+-----------------
+  acordaos   | Acórdãos do Tribunal de Justiça                | JUSTIÇA COMUM
+  decmonos   | Decisões Monocráticas do Tribunal de Justiça   | JUSTIÇA COMUM
+  despachos  | Despachos das Vice-Presidências                | JUSTIÇA COMUM
+  acma       | Acórdãos do Conselho da Magistratura           | administrativo
+  recurso    | Acórdãos das Turmas Recursais e de Uniformização | JUIZADOS ESPECIAIS
+  dmtrs      | Decisões Monocráticas das Turmas Recursais     | JUIZADOS ESPECIAIS
+
+A categoria vai na QUERYSTRING do POST (`buscaajax.do?&categoria=acordaos`), uma
+requisição por categoria — não é um parâmetro do corpo.
+
+Correspondência com o portal novo (que junta categoria + origem):
+  acordaos + decmonos + despachos  ≈  origem 1 (TJSC), tipos 1/2/3
+  recurso + dmtrs                  ≈  origens 3 e 4 (Turmas Recursais e de
+                                      Uniformização) — no antigo elas vêm
+                                      JUNTAS numa categoria só; no novo são
+                                      duas origens separadas
+  acma                             ≈  origem 5 (Conselho da Magistratura)
+
+ÓRGÃO JULGADOR (#listaOrgaoJulgador, multiple, 99 opções, value = texto)
+Agrupado por <optgroup>, com "Seleção rápida" por grupo:
+  Direito Criminal · Direito Público · Direito Civil · Direito Comercial ·
+  Especiais · Turmas Recursais e de Uniformização
+O último optgroup lista as turmas por comarca-sede — "Primeira Turma de Recursos
+- Capital", "Segunda Turma de Recursos - Blumenau", "Terceira Turma de Recursos
+- Chapecó", "Quarta ... Criciúma", "Quinta ... Joinville", "Sexta ... Lages",
+"Sétima ... Itajaí", "Oitava ... Capital" — nomenclatura que o portal novo
+abandonou (lá são "1ª/2ª/3ª Turma Recursal").

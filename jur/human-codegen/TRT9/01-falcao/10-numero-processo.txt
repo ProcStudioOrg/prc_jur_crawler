@@ -1,0 +1,47 @@
+## 10. Número do processo — a verificação de um julgado
+
+Não há tela nem endpoint de "consultar processo". A consulta por número é feita pelo
+**mesmo campo de busca livre** (`texto`), e o backend casa com `numeroProcesso`.
+
+### Formato
+
+- ✅ **Com máscara**, padrão CNJ: `0000065-19.2024.5.09.0053`
+- ❌ **Sem separadores** (`00000651920245090053`): devolve **0 resultados**, embora a ajuda
+  oficial do site afirme que funciona. Sempre normalize para a máscara (`cnj.normalizar()`).
+- Número do TRT9: `NNNNNNN-DD.AAAA.**5**.**09**.OOOO` → J=5 (Justiça do Trabalho), TR=09.
+
+### ⚠️ A busca por número é TEXTUAL, não é lookup
+
+Ela devolve vizinhos. Exemplo real: buscar `0000065-19.2024.5.09.0053` em `acordaos`
+devolve **2** documentos — o certo e `0000416-67.2024.5.09.4199`. Sem filtro de igualdade
+exata, um checker confirmaria a existência de processo que não está lá. Por isso
+`FalcaoChecker.consultarProcesso()` descarta tudo que não bate exatamente com o número
+normalizado. **Este é o ponto mais fácil de errar em todo o tribunal.**
+
+### Um processo aparece em várias coleções — e isso é útil
+
+`0000065-19.2024.5.09.0053` retorna:
+```
+sentencas  (1º grau) — VARA DO TRABALHO DE LARANJEIRAS DO SUL
+acordaos   (2º grau) — 5ª Turma, rel. ILSE MARCELINA BERNARDI LORA, julgado 26/02/2025
+```
+O checker consulta as 4 coleções e devolve `graus: ["1","2"]` — ou seja, a trajetória do
+processo entre as instâncias, de graça.
+
+### Uso
+
+```bash
+./bin/jur trt9 -n 0000065-19.2024.5.09.0053          # exit 0 se existe, 1 se não
+./bin/jur trt9 -n 0000065-19.2024.5.09.0053 --json
+node src/TRT9Checker.js 0000065-19.2024.5.09.0053
+```
+
+Casos verificados:
+| Entrada | Resultado |
+|---|---|
+| `0000065-19.2024.5.09.0053` | `encontrado: true`, graus `["1","2"]`, exit 0 |
+| `00000651920245090053` (sem máscara) | normalizado e encontrado |
+| `9999999-99.2099.5.09.0099` | `encontrado: false`, exit 1 |
+| `0020044-12.2024.5.04.0471` (TRT4) | `doTribunal: false`, `encontrado: false` |
+
+Prints: `10.01-busca-por-numero-processo.png`

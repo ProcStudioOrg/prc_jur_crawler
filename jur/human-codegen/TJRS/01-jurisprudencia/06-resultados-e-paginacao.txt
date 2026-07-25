@@ -1,0 +1,88 @@
+TJRS — Tela de resultados, paginação e inteiro teor
+=================================================
+
+Prints: 06.01-resultados-justica-comum.png       (contagem 20.023, Justiça Comum)
+        06.02-resultados-turmas-recursais.png    (contagem  3.901, Turmas Recursais)
+        06.03-resultados-rodape-paginacao.png    (rodapé + navegação de páginas)
+JSON:   06-contagens.json  (as contagens medidas NO NAVEGADOR, com termo e período)
+
+Os dois primeiros prints são o par que PROVA a desambiguação: mesma query
+("dano moral"), mesmo período (julgamento 01/01/2026–30/06/2026), só mudando o
+combo Tribunal. 20.023 × 3.901.
+
+18. Tela de resultados
+----------------------
+Mesma página (não há rota nova): o Angular preenche `#resultados`. A contagem sai em
+  <span id="ajx_numFound">{{resultados.response.numFound}}</span>
+dentro de "Resultados 1 a 10 de aproximadamente N para <termo>. A pesquisa demorou
+X segundos." — o "aproximadamente" é do próprio site.
+
+Bloco de UM resultado (campo na tela -> campo do doc no Solr -> campo do repo):
+  Núm. (link)         numero_processo        numeroProcesso / processoUrl
+  Inteiro teor        documento_text (b64)   inteiroTeor / inteiroTeorDisponivel
+                      cod_documento+ano_criacao -> inteiroTeorLink (só acervo legado)
+                      documento_tiff (0 = sem imagem)
+  Órgão Julgador      orgao_julgador         orgaoJulgador
+  Comarca de Origem   origem                 comarcaOrigem
+  Tipo de processo    tipo_processo          classeProcessual
+  Seção               secao                  secao
+  Tribunal            nome_tribunal          tribunal (+ codTribunal)
+  Assunto CNJ         nome_assunto_cnj       assunto
+  Classe CNJ          nome_classe_cnj        classe
+  Decisão             tipo_documento         tipoDocumento
+  Relator             nome_relator           relator
+  Ementa              ementa_completa        ementa (truncada em 10k)
+  Data de Julgamento  data_julgamento        dataJulgamento (DD/MM/YYYY)
+  Publicação          data_publicacao        dataPublicacao (DD/MM/YYYY)
+  (não exibido)       cod_ementa             id  <- é o identificador do DOCUMENTO
+  (não exibido)       ind_segredo_justica    segredoJustica
+
+Link do número: https://consulta.tjrs.jus.br/consulta-processual/processo/resumo?numeroProcesso=<digitos>
+(acompanhamento processual — sistema DIFERENTE da jurisprudência)
+
+"Filtros mais frequentes" (facetas) na coluna esquerda: órgão julgador, comarca,
+relator/redator, ano de julgamento, classe CNJ, assunto CNJ, tribunal, tipo de
+processo, mês/ano de publicação. Vêm em `facet_counts.facet_fields` na MESMA
+resposta — hoje o crawler não usa, ver pendência #2.
+
+20. Paginação
+-------------
+Resultados por página:   10 — FIXO. `rows=10` é hardcoded no ajax.php e NÃO vem do
+                         formulário: mandar `rows=30` no `parametros` é ignorado
+                         (testado). Não há combo de "resultados por página".
+Parâmetro de página:     `pagina_atual` (1-based). O servidor calcula
+                         `start=(pagina_atual-1)*10`. Mandar `start` direto é
+                         IGNORADO — testado: start=10 devolveu a página 1 de novo.
+                         Esta é a pegadinha de paginação do módulo.
+Total exposto?           Sim: `response.numFound`, e na tela em #ajx_numFound.
+Ir para página / última? Sim (links "Próximo", "Último", números). Testado
+                         pagina_atual=5000 (start=49990) e funcionou — não há teto
+                         de deep paging aparente.
+Sem limite técnico de resultados anunciado (diferente do TJPA, que corta em 10.000).
+
+19. Inteiro teor
+----------------
+MELHOR CASO: **o inteiro teor já vem no payload da busca**, no campo
+`documento_text` (HTML inteiro em base64). `--fetch-inteiro-teor` NÃO faz nova
+requisição — grava o que já está na resposta.
+
+⚠️ ENCODING: o blob decodificado é **ISO-8859-1/windows-1252**, mesmo quando o
+próprio HTML declara `<?xml encoding="UTF-8"?>`. Ler como UTF-8 produz
+"Poder Judici�rio". O navigator tenta UTF-8 estrito e cai para windows-1252
+(que é o caso de 100% dos documentos observados).
+
+Custo: por isso cada página de 10 resultados pesa de 200 KB a 11 MB (mediana ~5 MB).
+É o preço de vir tudo junto. Use `-m` baixo.
+
+Formatos que a tela oferece:
+  html  -> POST para https://www.tjrs.jus.br/novo/imprime-html-jurisprudencia com o
+           HTML no corpo (`documento_html`) — ou seja, é o MESMO conteúdo do
+           documento_text, só re-renderizado. Não precisamos dele.
+  doc   -> https://www.tjrs.jus.br/novo/wp-content/themes/tjrs/tjrs-apps/inteiro-teor/index.php
+           ?numero_processo=<n>&ano=<ano_criacao>&codigo=<cod_documento>
+           Só existe para o acervo LEGADO (Themis). Processos do e-Proc não têm
+           `cod_documento` — a própria tela avisa: "Processos do EPROC exibem
+           Inteiro Teor apenas em formato HTML". É o que vai em `inteiroTeorLink`
+           (null nos julgados de e-Proc).
+  tiff  -> POST em exibe_tiff.php quando `documento_tiff != 0` (digitalizações
+           antigas). Não implementado — ver pendência #4.

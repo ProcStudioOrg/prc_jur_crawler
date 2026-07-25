@@ -1,0 +1,35 @@
+TJSC — SEÇÃO 7: OPERADORES DE PESQUISA (testados um por um)
+===========================================================
+Print: 07.01-painel-operadores.png  (o painel "Operadores" da tela lista, sem
+       explicar:  "..."   e   ou   não   prox   * )
+Dados: 07-operadores-prox-testado.json
+
+Nenhum operador foi presumido. Todas as contagens abaixo são do MESMO recorte:
+origem TJSC, sem filtro de data, escopo inteiro teor (o default do site).
+
+  referência    usucapiao                             41.346
+  referência    usucapiao extraordinaria              11.818
+
+  "frase exata"     "usucapiao extraordinaria"        10.621   ✅ restringe
+  E implícito       usucapiao extraordinaria          11.818   ✅ (é o default)
+  e                 usucapiao e extraordinaria        11.818   ✅ idem ao implícito
+  ou                usucapiao ou extraordinaria      131.006   ✅ união
+  não               usucapiao nao extraordinaria      29.528   ✅ 41.346 - 11.818, exato
+  * (curinga)       usucapi*                          42.068   ✅ > 41.346
+  prox              usucapiao prox extraordinaria     10.807   ✅ proximidade (default do site)
+
+  proxN             usucapiao prox5 extraordinaria         0   ❌ vira termo literal
+  prox(N)           usucapiao prox(5) extraordinaria       2   ❌ não é essa a sintaxe
+  ~N                usucapiao ~5 extraordinaria        8.281   ⚠️ responde, mas não
+                                                              documentado — não usar
+
+CONCLUSÕES PRÁTICAS
+  - `prox` funciona SOZINHO, sem número. Qualquer variação com distância
+    explícita (prox5, prox(5)) é lida como palavra e derruba a busca para ~0.
+    Se você precisa de proximidade parametrizada, ela NÃO existe aqui.
+  - `e` / `ou` / `não` são em PORTUGUÊS e em minúsculas — diferente do TJRS,
+    onde o que vale é o `OR` em maiúsculas do Solr e `E`/`OU` viram literal.
+  - O curinga `*` funciona (diferente do TJRS, onde é descartado).
+  - Os campos separados da busca avançada do portal ANTIGO (com todas / com a
+    expressão / com qualquer uma / sem as palavras) NÃO existem no portal novo:
+    aqui é um campo só, com os operadores acima.

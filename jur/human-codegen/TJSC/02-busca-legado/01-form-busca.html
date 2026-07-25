@@ -1,0 +1,416 @@
+<form id="form_busca_avancada" name="busca_avancada" onsubmit="return carregaFormulario( this.form );" novalidate="novalidate">
+			  <input type="hidden" name="busca" id="busca" value="avancada" style="">
+			  <div id="busca_avancada">
+            	<div id="valida_form" style="display: none;"> <div class="aviso"><b>Você precisa selecionar ao menos uma categoria</b></div></div>
+                <h2>Abrangência da busca:</h2><span id="formulario_ancora"></span>
+               	<table width="200" border="0" cellpadding="3" style="float:left">
+           		  <tbody><tr>
+                	<td width="90"><span class="radio" style="background-position: 0px -46px;"></span><input type="Radio" name="radio_campo" value="ementa" checked="checked" class="styled" onchange="limpaCache();return false;" style=""><span title="a pesquisa dos termos será realizada apenas na ementa dos documentos, que é uma síntese do documento.">Ementa</span></td>
+                  	<td width="104"><span class="radio"></span><input type="Radio" name="radio_campo" value="integra" class="styled" onchange="limpaCache();return false;" style=""><span title="a pesquisa dos termos será realizada em todo o documento, incluindo a ementa.">Inteiro Teor</span></td>
+                  </tr>
+		        </tbody></table>
+          
+          		<div class="linha_campo">
+<h2>Pesquisar em:</h2>
+</div>
+                 <table class="opcoes_check" width="700" height="59" border="0">
+                   <tbody><tr>
+                     <td width="307"><span class="checkbox" style="background-position: 0px -46px;"></span><input type="checkbox" name="categoria" value="acordaos" checked="checked" class="styled" onchange="javascript:limpaCache();return false;" style="">
+                       Acórdãos do Tribunal de Justiça</td>
+                      <td width="366"><span class="checkbox"></span><input id="desp" type="checkbox" name="categoria" value="despachos" class="styled" onchange="javascript:limpaCache();return false;" style="">
+                       Despachos das Vice-Presidências</td>
+                     
+                   </tr>
+                   <tr>
+                     <td width="307"><span class="checkbox"></span><input type="checkbox" name="categoria" value="acma" id="acma_check" class="styled" style=""> Acórdãos do Conselho da Magistratura</td>
+                     <td width="366"><span class="checkbox"></span><input type="checkbox" name="categoria" value="decmonos" class="styled" onchange="javascript:limpaCache();return false;" style="">
+                       Decisões Monocráticas do Tribunal de Justiça</td>
+                     
+                   </tr>
+                   <tr>
+	                 <td width="307"><span class="checkbox"></span><input id="recurso_check" type="checkbox" name="categoria" value="recurso" class="styled" onchange="javascript:limpaCache();return false;" style="">
+                       Acórdãos das Turmas Recursais e de Uniformização</td>
+	                <td width="366"><span class="checkbox"></span><input type="checkbox" id="dmtr_check" name="categoria" value="dmtrs" class="styled" style=""> Decisões Monocráticas das Turmas Recursais</td>
+	               
+	              </tr>
+                 </tbody></table>
+
+
+
+				<table border="0" cellpadding="1" cellspacing="1" style="background-color:#F5F5ED">
+					<tbody>
+						<tr>
+							<td rowspan="6">
+								<h2>Procurar Resultados</h2>
+							</td>
+						</tr>
+						<tr>
+							<td>com <b>todas</b> as palavras</td>
+							<td><input id="q" name="q" value="" class="campo_avancada" size="70" type="text" style=""></td>
+						</tr>
+						<tr>
+							<td><span title="para procurar mais de uma frase escreva-as entre aspas. Exemplo: &quot;agravo de instrumento&quot; &quot;recurso desprovido&quot;">com a <b>expressão</b> </span></td>
+							<td><input name="frase" id="frase" class="campo_avancada" size="70" value="" type="text" title="para procurar mais de uma frase escreva-as entre aspas. Exemplo: &quot;agravo de instrumento&quot; &quot;recurso desprovido&quot;" style=""></td>
+						</tr>
+						<tr>
+							<td width="100px;">com <b>qualquer uma</b> das palavras</td>
+							<td><input name="qualquer" id="qualquer" class="campo_avancada" size="70" value="" type="text" style=""></td>
+						</tr>
+						<tr>
+							<td><b>sem</b> as palavras</td>
+							<td><input id="excluir" name="excluir" value="" class="campo_avancada" size="70" type="text" style=""></td>
+						</tr>
+						<tr>
+							<td>em que entre a palavra</td>
+							<td>
+								<input id="prox1" name="prox1" value="" class="campo_avancada" size="10" type="text" style="">
+					            <span style="float:left;padding-top: 10px;"> e a palavra &nbsp;&nbsp;</span>
+					            <input id="prox2" name="prox2" value="" class="campo_avancada" size="10" type="text" style="">
+					            <span style="float:left;padding-top: 10px;"> existam até &nbsp;&nbsp;</span>
+					            <input id="proxc" name="proxc" value="" class="campo_avancada" size="1" type="text" style="">
+					            <span style="float:left;padding-top: 10px;"> termos &nbsp;&nbsp;</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				
+            <div class="linha_campo">
+                  <h2 title="Filtro habilitado apenas quanda a opção 'Inteiro Teor' está selecionada e destinada a pesquisas com termos distintos na ementa e no inteiro teor dos documentos.">Ementa</h2>                
+                  <input title="Filtro habilitado apenas quanda a opção 'Inteiro Teor' está selecionada e destinada a pesquisas com termos distintos na ementa e no inteiro teor dos documentos." id="only_ementa" name="only_ementa" value="" disabled="disabled" class="campo_avancada_disabled" size="60" type="text" style="">
+                  
+              </div>
+                
+                
+                <div id="processo">
+                  <h2>N.º processo</h2>
+                    <input id="nuprocesso_autocomplete" name="nuProcesso" value="" type="text" class="campo_avancada" size="20" onchange="javascript:m_sgrau('nuprocesso_autocomplete');return false;" style="">
+                </div>
+       		
+           	  <div id="data">
+               	<div class="tituloh2">Período entre</div>
+                <input name="datainicial" id="dtini" type="text" class="campo_avancada isDate hasDatepicker" size="8" value="" style="">
+                <a href="#"><img id="dtiniimg" src="imagens/calendario.png" width="33" height="30" alt="Calendário" align="left"></a>
+				<input name="datafinal" id="dtfim" type="text" class="campo_avancada isDate hasDatepicker" size="8" value="" style="">
+                <a href="#"><img id="dtfimimg" src="imagens/calendario.png" width="33" height="30" alt="Calendário" align="left"></a>
+	          </div>
+              
+              
+              
+              
+              <div class="linha_campo">
+                  <h2>Classe</h2>                
+                  <input id="classe_autocomplete" name="classe" value="" type="text" class="campo_avancada ac_input" size="60" style="">
+                  
+              </div>
+              
+              <div class="linha_campo">
+                  <h2>Relator</h2>                
+                  <input id="relator_autocomplete" name="relator" value="" type="text" class="campo_avancada ac_input" size="60" style="">
+                  
+              </div>
+              
+              <div class="linha_campo">
+                  <h2>Juiz Prolator</h2>                
+                  <input id="juizProlator_autocomplete" name="juizProlator" type="text" value="" class="campo_avancada ac_input" size="60" style="">
+                  
+              </div>
+              
+              <div class="linha_campo">
+                  <h2>Comarca</h2>                
+                  <input id="origem_autocomplete" name="origem" type="text" value="" class="campo_avancada ac_input" size="60" style="">
+                  
+              </div>
+              
+              <div id="orgao_julgador">
+       			
+                <h2>Órgão Julgador</h2>
+                          
+       		 	<select id="listaOrgaoJulgador" name="orgaoJulgador" size="7" class="lista_select" multiple="true">
+       		 		<option value="todos"> - Todos - </option>
+       		 		
+       		 			<option value="Presidência">Presidência</option>
+       		 		
+       		 		
+       		 			<option value="Primeira Vice-Presidência">Primeira Vice-Presidência</option>
+       		 		
+       		 		
+       		 			<option value="Segunda Vice-Presidência">Segunda Vice-Presidência</option>
+       		 		
+       		 		
+       		 			<option value="Terceira Vice-Presidência">Terceira Vice-Presidência</option>
+       		 		
+       		 		
+       		 			<option value="Núcleo de Conciliação">Núcleo de Conciliação</option>
+       		 		
+       		 		
+       		 			<option value="Tribunal Pleno">Tribunal Pleno</option>
+       		 		
+       		 		
+       		 			<option value="Câmara de Agravos Internos em Recursos Constitucionais">Câmara de Agravos Internos em Recursos Constitucionais</option>
+       		 		
+       		 		
+       		 			<option value="Câmara de Recursos Delegados">Câmara de Recursos Delegados</option>
+       		 		
+       		 		
+       		 			<option value="Primeira Câmara de Enfrentamento de Acervos">Primeira Câmara de Enfrentamento de Acervos</option>
+       		 		
+       		 		
+       		 			<option value="Segunda Câmara de Enfrentamento de Acervos">Segunda Câmara de Enfrentamento de Acervos</option>
+       		 		
+       		 		
+       		 			<option value="Câmara de Férias">Câmara de Férias</option>
+       		 		
+       		 		
+       		 			<option value="Plantão Judiciário">Plantão Judiciário</option>
+       		 		
+       		 		
+       		 			<option value="Segunda Câmara Público (Janeiro)">Segunda Câmara Público (Janeiro)</option>
+       		 		
+       		 		
+       		 			<option value="Segundo Vice-Presidente">Segundo Vice-Presidente</option>
+       		 		
+       		 		
+       		 			<option value="Grupo de Câmaras de Drto. Comercial">Grupo de Câmaras de Drto. Comercial</option>
+       		 		
+       		 		
+       		 	
+       		 		
+       		 			   <optgroup label="Direito Criminal">
+       		 			   
+	       		 			   
+	       		 			   		<option value="Primeira Câmara Criminal">&nbsp;&nbsp;Primeira Câmara Criminal</option>
+	       		 			   
+	       		 			   		<option value="Primeira Câmara Criminal (Janeiro 2007)">&nbsp;&nbsp;Primeira Câmara Criminal (Janeiro 2007)</option>
+	       		 			   
+	       		 			   		<option value="Primeira Câmara Criminal (Janeiro)">&nbsp;&nbsp;Primeira Câmara Criminal (Janeiro)</option>
+	       		 			   
+	       		 			   		<option value="Segunda Câmara Criminal">&nbsp;&nbsp;Segunda Câmara Criminal</option>
+	       		 			   
+	       		 			   		<option value="Segunda Câmara Criminal (Janeiro)">&nbsp;&nbsp;Segunda Câmara Criminal (Janeiro)</option>
+	       		 			   
+	       		 			   		<option value="Terceira Câmara Criminal">&nbsp;&nbsp;Terceira Câmara Criminal</option>
+	       		 			   
+	       		 			   		<option value="Terceira Câmara Criminal (Janeiro)">&nbsp;&nbsp;Terceira Câmara Criminal (Janeiro)</option>
+	       		 			   
+	       		 			   		<option value="Quarta Câmara Criminal (Janeiro)">&nbsp;&nbsp;Quarta Câmara Criminal (Janeiro)</option>
+	       		 			   
+	       		 			   		<option value="Quarta Câmara Criminal">&nbsp;&nbsp;Quarta Câmara Criminal</option>
+	       		 			   
+	       		 			   		<option value="Quinta Câmara Criminal">&nbsp;&nbsp;Quinta Câmara Criminal</option>
+	       		 			   
+	       		 			   		<option value="Câmara Especial - Proc. Criminais">&nbsp;&nbsp;Câmara Especial - Proc. Criminais</option>
+	       		 			   
+	       		 			   		<option value="Seção Criminal">&nbsp;&nbsp;Seção Criminal</option>
+	       		 			   
+	       		 			   		<option value="Primeiro Grupo de Direito Criminal">&nbsp;&nbsp;Primeiro Grupo de Direito Criminal</option>
+	       		 			   
+	       		 			   		<option value="Segundo Grupo de Direito Criminal">&nbsp;&nbsp;Segundo Grupo de Direito Criminal</option>
+	       		 			   
+	       		 			   		<option value="Câmara de Férias Criminal">&nbsp;&nbsp;Câmara de Férias Criminal</option>
+	       		 			   
+       		 				</optgroup>
+       		 		
+       		 			   <optgroup label="Direito Público">
+       		 			   
+	       		 			   
+	       		 			   		<option value="Grupo de Câmaras de Direito Público">&nbsp;&nbsp;Grupo de Câmaras de Direito Público</option>
+	       		 			   
+	       		 			   		<option value="Primeira Câmara de Direito Público">&nbsp;&nbsp;Primeira Câmara de Direito Público</option>
+	       		 			   
+	       		 			   		<option value="Segunda Câmara de Direito Público">&nbsp;&nbsp;Segunda Câmara de Direito Público</option>
+	       		 			   
+	       		 			   		<option value="Terceira Câmara de Direito Público">&nbsp;&nbsp;Terceira Câmara de Direito Público</option>
+	       		 			   
+	       		 			   		<option value="Terceira Câmara Dto Público (Janeiro)">&nbsp;&nbsp;Terceira Câmara Dto Público (Janeiro)</option>
+	       		 			   
+	       		 			   		<option value="Quarta Câmara de Direito Público">&nbsp;&nbsp;Quarta Câmara de Direito Público</option>
+	       		 			   
+	       		 			   		<option value="Quinta Câmara de Direito Público">&nbsp;&nbsp;Quinta Câmara de Direito Público</option>
+	       		 			   
+       		 				</optgroup>
+       		 		
+       		 			   <optgroup label="Direito Civil">
+       		 			   
+	       		 			   
+	       		 			   		<option value="Grupo de Câmaras de Direito Civil">&nbsp;&nbsp;Grupo de Câmaras de Direito Civil</option>
+	       		 			   
+	       		 			   		<option value="Primeira Câmara de Direito Civil">&nbsp;&nbsp;Primeira Câmara de Direito Civil</option>
+	       		 			   
+	       		 			   		<option value="Primeira Câmara Civil (Janeiro)">&nbsp;&nbsp;Primeira Câmara Civil (Janeiro)</option>
+	       		 			   
+	       		 			   		<option value="Segunda Câmara de Direito Civil">&nbsp;&nbsp;Segunda Câmara de Direito Civil</option>
+	       		 			   
+	       		 			   		<option value="Segunda Câmara Cível Especial">&nbsp;&nbsp;Segunda Câmara Cível Especial</option>
+	       		 			   
+	       		 			   		<option value="Terceira Câmara de Direito Civil">&nbsp;&nbsp;Terceira Câmara de Direito Civil</option>
+	       		 			   
+	       		 			   		<option value="Terceira Câmara Civil (Janeiro)">&nbsp;&nbsp;Terceira Câmara Civil (Janeiro)</option>
+	       		 			   
+	       		 			   		<option value="Quarta Câmara de Direito Civil">&nbsp;&nbsp;Quarta Câmara de Direito Civil</option>
+	       		 			   
+	       		 			   		<option value="Quinta Câmara de Direito Civil">&nbsp;&nbsp;Quinta Câmara de Direito Civil</option>
+	       		 			   
+	       		 			   		<option value="Sexta Câmara de Direito Civil">&nbsp;&nbsp;Sexta Câmara de Direito Civil</option>
+	       		 			   
+	       		 			   		<option value="Sétima Câmara de Direito Civil">&nbsp;&nbsp;Sétima Câmara de Direito Civil</option>
+	       		 			   
+	       		 			   		<option value="Oitava Câmara de Direito Civil">&nbsp;&nbsp;Oitava Câmara de Direito Civil</option>
+	       		 			   
+	       		 			   		<option value="Câmara Especial - Processos Cíveis">&nbsp;&nbsp;Câmara Especial - Processos Cíveis</option>
+	       		 			   
+	       		 			   		<option value="Câmara Civil Especial">&nbsp;&nbsp;Câmara Civil Especial</option>
+	       		 			   
+	       		 			   		<option value="Câmara Especial Temporária de Direito Civil">&nbsp;&nbsp;Câmara Especial Temporária de Direito Civil</option>
+	       		 			   
+	       		 			   		<option value="Seção Civil">&nbsp;&nbsp;Seção Civil</option>
+	       		 			   
+	       		 			   		<option value="Câmara de Férias Civil">&nbsp;&nbsp;Câmara de Férias Civil</option>
+	       		 			   
+       		 				</optgroup>
+       		 		
+       		 			   <optgroup label="Direito Comercial">
+       		 			   
+	       		 			   
+	       		 			   		<option value="Grupo de Câmaras de Direito Comercial">&nbsp;&nbsp;Grupo de Câmaras de Direito Comercial</option>
+	       		 			   
+	       		 			   		<option value="Primeira Câmara de Direito Comercial">&nbsp;&nbsp;Primeira Câmara de Direito Comercial</option>
+	       		 			   
+	       		 			   		<option value="Primeira Câmara Comercial (Janeiro 2007)">&nbsp;&nbsp;Primeira Câmara Comercial (Janeiro 2007)</option>
+	       		 			   
+	       		 			   		<option value="Segunda Câmara de Direito Comercial">&nbsp;&nbsp;Segunda Câmara de Direito Comercial</option>
+	       		 			   
+	       		 			   		<option value="Terceira Câmara de Direito Comercial">&nbsp;&nbsp;Terceira Câmara de Direito Comercial</option>
+	       		 			   
+	       		 			   		<option value="Terceira Câmara Comercial (Janeiro)">&nbsp;&nbsp;Terceira Câmara Comercial (Janeiro)</option>
+	       		 			   
+	       		 			   		<option value="Quarta Câmara de Direito Comercial">&nbsp;&nbsp;Quarta Câmara de Direito Comercial</option>
+	       		 			   
+	       		 			   		<option value="Quinta Câmara de Direito Comercial">&nbsp;&nbsp;Quinta Câmara de Direito Comercial</option>
+	       		 			   
+	       		 			   		<option value="Sexta Câmara de Direito Comercial">&nbsp;&nbsp;Sexta Câmara de Direito Comercial</option>
+	       		 			   
+       		 				</optgroup>
+       		 		
+       		 			   <optgroup label="Especiais">
+       		 			   
+	       		 			   
+	       		 			   		<option value="Câmara Especial - Processos Cíveis">&nbsp;&nbsp;Câmara Especial - Processos Cíveis</option>
+	       		 			   
+	       		 			   		<option value="Câmara Especial Regional de Chapecó">&nbsp;&nbsp;Câmara Especial Regional de Chapecó</option>
+	       		 			   
+	       		 			   		<option value="Câmara Especial Temporária de Direito Comercial">&nbsp;&nbsp;Câmara Especial Temporária de Direito Comercial</option>
+	       		 			   
+	       		 			   		<option value="Câmara Especial - Proc. Criminais">&nbsp;&nbsp;Câmara Especial - Proc. Criminais</option>
+	       		 			   
+	       		 			   		<option value="Câmara Civil Especial">&nbsp;&nbsp;Câmara Civil Especial</option>
+	       		 			   
+	       		 			   		<option value="Câmara Cível Especial">&nbsp;&nbsp;Câmara Cível Especial</option>
+	       		 			   
+	       		 			   		<option value="Primeira Câmara Cível Especial">&nbsp;&nbsp;Primeira Câmara Cível Especial</option>
+	       		 			   
+	       		 			   		<option value="Segunda Câmara Cível Especial">&nbsp;&nbsp;Segunda Câmara Cível Especial</option>
+	       		 			   
+	       		 			   		<option value="Câmara Especial Temporária de Direito Civil">&nbsp;&nbsp;Câmara Especial Temporária de Direito Civil</option>
+	       		 			   
+	       		 			   		<option value="Órgão Especial">&nbsp;&nbsp;Órgão Especial</option>
+	       		 			   
+	       		 			   		<option value="Órgão Especial (antigo)">&nbsp;&nbsp;Órgão Especial (antigo)</option>
+	       		 			   
+	       		 			   		<option value="Primeira Câmara Especial de Enfrentamento de Acervos">&nbsp;&nbsp;Primeira Câmara Especial de Enfrentamento de Acervos</option>
+	       		 			   
+	       		 			   		<option value="Segunda Câmara Especial de Enfrentamento de Acervos">&nbsp;&nbsp;Segunda Câmara Especial de Enfrentamento de Acervos</option>
+	       		 			   
+	       		 			   		<option value="Terceira Câmara Especial de Enfrentamento de Acervos">&nbsp;&nbsp;Terceira Câmara Especial de Enfrentamento de Acervos</option>
+	       		 			   
+       		 				</optgroup>
+       		 		
+       		 			   <optgroup label="Turmas Recursais e de Uniformização">
+       		 			   
+	       		 			   
+	       		 			   		<option value="Turma de Uniformização">&nbsp;&nbsp;Turma de Uniformização</option>
+	       		 			   
+	       		 			   		<option value="Primeira Turma Recursal">&nbsp;&nbsp;Primeira Turma Recursal</option>
+	       		 			   
+	       		 			   		<option value="Segunda Turma Recursal">&nbsp;&nbsp;Segunda Turma Recursal</option>
+	       		 			   
+	       		 			   		<option value="Terceira Turma Recursal">&nbsp;&nbsp;Terceira Turma Recursal</option>
+	       		 			   
+	       		 			   		<option value="Presidência Primeira Turma Recursal">&nbsp;&nbsp;Presidência Primeira Turma Recursal</option>
+	       		 			   
+	       		 			   		<option value="Presidência Segunda Turma Recursal">&nbsp;&nbsp;Presidência Segunda Turma Recursal</option>
+	       		 			   
+	       		 			   		<option value="Presidência Terceira Turma Recursal">&nbsp;&nbsp;Presidência Terceira Turma Recursal</option>
+	       		 			   
+	       		 			   		<option value="Primeira Turma de Recursos - Capital">&nbsp;&nbsp;Primeira Turma de Recursos - Capital</option>
+	       		 			   
+	       		 			   		<option value="Segunda Turma de Recursos - Blumenau">&nbsp;&nbsp;Segunda Turma de Recursos - Blumenau</option>
+	       		 			   
+	       		 			   		<option value="Terceira Turma de Recursos - Chapecó">&nbsp;&nbsp;Terceira Turma de Recursos - Chapecó</option>
+	       		 			   
+	       		 			   		<option value="Quarta Turma de Recursos - Criciúma">&nbsp;&nbsp;Quarta Turma de Recursos - Criciúma</option>
+	       		 			   
+	       		 			   		<option value="Quinta Turma de Recursos - Joinville">&nbsp;&nbsp;Quinta Turma de Recursos - Joinville</option>
+	       		 			   
+	       		 			   		<option value="Sexta Turma de Recursos - Lages">&nbsp;&nbsp;Sexta Turma de Recursos - Lages</option>
+	       		 			   
+	       		 			   		<option value="Sétima Turma de Recursos - Itajaí">&nbsp;&nbsp;Sétima Turma de Recursos - Itajaí</option>
+	       		 			   
+	       		 			   		<option value="Oitava Turma de Recursos - Capital">&nbsp;&nbsp;Oitava Turma de Recursos - Capital</option>
+	       		 			   
+	       		 			   		<option value="Presidência da Primeira Turma de Recursos - Capital">&nbsp;&nbsp;Presidência da Primeira Turma de Recursos - Capital</option>
+	       		 			   
+	       		 			   		<option value="Presidência da Quarta Turma de Recursos - Criciúma">&nbsp;&nbsp;Presidência da Quarta Turma de Recursos - Criciúma</option>
+	       		 			   
+	       		 			   		<option value="Presidência da Quinta Turma de Recursos - Joinville">&nbsp;&nbsp;Presidência da Quinta Turma de Recursos - Joinville</option>
+	       		 			   
+	       		 			   		<option value="Presidência da Sexta Turma de Recursos - Lages">&nbsp;&nbsp;Presidência da Sexta Turma de Recursos - Lages</option>
+	       		 			   
+	       		 			   		<option value="Presidência da Oitava Turma de Recursos - Capital">&nbsp;&nbsp;Presidência da Oitava Turma de Recursos - Capital</option>
+	       		 			   
+	       		 			   		<option value="Presidência da Turma de Uniformização">&nbsp;&nbsp;Presidência da Turma de Uniformização</option>
+	       		 			   
+       		 				</optgroup>
+       		 		
+       		 	
+                </select>
+				
+               <div id="selecao">
+                 <h5 style="margin: 0px 0px 0px 0px;">Seleção rápida:</h5>
+                 <ul>
+                 
+                 	<li style="padding: 2px 0;"><a href="#" onclick="javascript: selectOptGroup('listaOrgaoJulgador', 'Direito Criminal');return false;">  Direito Criminal </a></li>
+                 
+                 	<li style="padding: 2px 0;"><a href="#" onclick="javascript: selectOptGroup('listaOrgaoJulgador', 'Direito Público');return false;">  Direito Público </a></li>
+                 
+                 	<li style="padding: 2px 0;"><a href="#" onclick="javascript: selectOptGroup('listaOrgaoJulgador', 'Direito Civil');return false;">  Direito Civil </a></li>
+                 
+                 	<li style="padding: 2px 0;"><a href="#" onclick="javascript: selectOptGroup('listaOrgaoJulgador', 'Direito Comercial');return false;">  Direito Comercial </a></li>
+                 
+                 	<li style="padding: 2px 0;"><a href="#" onclick="javascript: selectOptGroup('listaOrgaoJulgador', 'Especiais');return false;">  Especiais </a></li>
+                 
+                 	<li style="padding: 2px 0;"><a href="#" onclick="javascript: selectOptGroup('listaOrgaoJulgador', 'Turmas Recursais e de Uniformização');return false;">  Turmas Recursais e de Uniformização </a></li>
+                 
+                 </ul>
+                 
+                 
+               </div>
+                 
+              </div>
+              <div id="combo_resultados" style="float: left; width:280px;">
+                  <h2>Resultados por Página</h2><div><select class="lista_select_paginacao" name="ps" id="ps_select"><option value="10">10</option><option selected="selected" value="20">20</option><option value="50">50</option></select>  </div>              
+                  
+                  
+              </div>
+               <div id="sort" style="float: left; width:300px;">
+                  <h2>Ordenar por</h2><div><select class="lista_select_paginacao" name="sort" id="sort_select"><option selected="selected" value="dtJulgamento desc">Data</option><option value="score desc">Relevância</option></select>  </div>              
+                  
+                  
+              </div>
+              	<input name="name" type="button" value="limpar" class="botao_grande_avancada" onclick="cleanAll(this.form);return false;" style="">
+              	<input name="name" type="submit" value="pesquisar" class="botao_grande_avancada" onclick="stripAll();m_sgrau('nuprocesso_autocomplete');carregaFormulario(this.form);return false;" style="">
+               	
+              </div> <!-- fim do div busca avancada-->
+              
+               
+             </form>

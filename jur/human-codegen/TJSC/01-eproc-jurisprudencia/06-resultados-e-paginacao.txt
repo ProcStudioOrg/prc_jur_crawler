@@ -1,0 +1,54 @@
+TJSC — SEÇÃO 6: RESULTADOS, EXTRAÇÃO E PAGINAÇÃO
+================================================
+Prints: 06.01-resultados-justica-comum.png
+        06.02-resultados-turmas-recursais.png
+        06.03-rodape-paginacao.png
+Dados : 06-contagens.json (todas as contagens medidas)
+
+6.1 ESTRUTURA DE UM RESULTADO  (div.card.resultadoItem, id="resultado<ID>")
+    O id do DOCUMENTO é `input.chkDocumento[value]` (o mesmo número que vai no
+    id do <div>, sem o prefixo "resultado").
+
+      .resValueTipoJurisprudencia   "Acórdãos do Tribunal de Justiça" /
+                                    "Acórdãos das Turmas Recursais"   <- confirma a origem
+      a.numero-processo             "5014543-38.2025.8.24.0054/TJSC"
+                                    href = consulta processual pública no eproc2g
+      span ao lado                  "ApCiv - Apelação"   (classe)
+      .resLabel/.resValue           UF · ÓRGÃO JULGADOR · DATA DO JULGAMENTO ·
+                                    DATA DA PUBLICAÇÃO · RELATOR · DECISÃO · EMENTA
+      a.copiarCitacao[data-citacao] a citação pronta ("EMENTA: ... (, ApCiv nnn,
+                                    Câmara, Relator X, julgado em dd/mm/aaaa)")
+      a.inteiroTeor[data-link]      .../download_inteiro_teor&id_jurisprudencia=<ID>&termosPesquisados=<b64>
+      a.gerarPDFDocumento[data-id]  gera PDF do documento
+
+    O sufixo do nº do processo distingue a origem: "/TJSC" (Justiça Comum) vs
+    "/SC" (Turmas Recursais). O crawler guarda isso em `sufixoOrigem`.
+
+6.2 CONTAGEM TOTAL
+    Duas fontes na tela, ambas usadas (a 2ª como fallback):
+      "8.315 documentos encontrados"
+      "Documento 1 de 8315" no cabeçalho de cada card
+    Acima de 1.000 aparece o aviso "Foram encontrados mais de 1000 documentos
+    para o(s) termo(s) [...] Utilize mais parâmetros para refinar sua pesquisa."
+    — é AVISO de UX, não corte: o contador segue mostrando o total real e a
+    paginação continua andando.
+
+6.3 PAGINAÇÃO
+    Ícones no rodapé: .paginaPrimeira .paginaAnterior .paginaProxima .paginaUltima
+    Desabilitado = classe .iconeDesativado. Igual ao TRF4.
+    Verificado: página 1 -> "Documento 1 de N"; clique em .paginaProxima ->
+    "Documento 11 de N", ids diferentes. O crawler ainda compara o id do 1º card
+    antes/depois do clique e para se não mudou (o eproc às vezes engole o clique).
+
+6.4 RESULTADOS POR PÁGINA
+    #selTamanhoPagina: 10 (default) / 25 / 50 / 100. Trocar recarrega a lista.
+    Verificado: 100 devolve 100 cards em uma página. Vale muito a pena — reduz
+    o nº de round-trips por 10.
+
+6.5 CONTAGENS (todas em 06-contagens.json)
+    "dano moral", julgamento 01/01/2026–31/03/2026, escopo inteiro teor:
+      TJSC 8.315 · Turmas Recursais 893 · T. Uniformização 5 · Conselho 0
+      todas 9.213 (= soma exata)
+      só acórdãos do TJ 4.895 · só monocráticas do TJ 2.861
+      sem filtro de data (TJSC) 442.794
+    Mesma busca com escopo EMENTA: 2.169 (medido pela CLI).

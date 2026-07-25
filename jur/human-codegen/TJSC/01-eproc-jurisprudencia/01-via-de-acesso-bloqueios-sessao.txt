@@ -1,0 +1,50 @@
+TJSC — VIA DE ACESSO, BLOQUEIOS E SESSÃO
+========================================
+
+MODO DE ACESSO ESCOLHIDO: browser (Playwright).
+Ordem de preferência do CLAUDE-CODEGEN.md §4 é `api > http > browser`; aqui as
+duas primeiras foram descartadas por prova, não por conveniência:
+
+  api   -> não existe. A tela é HTML server-side (JSF-like do eproc), não SPA.
+           A aba Network durante uma busca mostra UM POST de formulário para
+           `externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados`
+           que devolve HTML, não JSON.
+  http  -> bloqueado pelo desafio (abaixo). Um GET com curl devolve SEMPRE a
+           página de desafio, nunca o formulário.
+
+BLOQUEIO
+--------
+Host atrás de F5/Shape ("BIG-IP ASM"). Respostas:
+  - `Content-Type: text/html` com "Please enable JavaScript to view the page content.
+     Your support ID is: <n>" e <title> "Tribunal de Justiça de Santa Catarina -
+     Verificação de segurança do portal institucional".
+  - Sub-requisição para /TSPD/<hash>?type=5 que instala os cookies.
+  - Cookies obtidos após a resolução: TS01860eb6, TS014f8ec5, TSd04f674d027,
+    f5avraaaaaaaaaaaaaaaa_session_, f5_cspm.
+
+Respostas das três perguntas obrigatórias (CLAUDE-CODEGEN.md §6):
+  - Existe restrição?          SIM (F5/Shape, JS challenge; não é captcha).
+  - A BUSCA funciona sem resolver?   NÃO.
+  - O DOWNLOAD funciona sem resolver? NÃO — mas funciona por HTTP puro DEPOIS de
+    resolvido, reaproveitando os cookies do mesmo contexto do browser. É assim
+    que o TJSCNavigator.baixarInteiroTeor() trabalha (context.request.get),
+    sem abrir aba nova.
+
+DUAS ARMADILHAS MEDIDAS
+-----------------------
+1. USER-AGENT. Com o UA padrão do Playwright headless
+   ("Mozilla/5.0 ... HeadlessChrome/143.0.0.0 ...") o desafio NUNCA libera:
+   8 GETs seguidos, todos devolvendo a página de bloqueio. Trocando para um UA
+   de Chrome comum ("... Chrome/140.0.0.0 Safari/537.36") libera na 1ª tentativa.
+   O TJSCNavigator fixa o UA por isso — não é cosmético.
+2. PRIMEIRO GET NÃO BASTA (às vezes). O 1º GET pode só instalar o cookie; o
+   formulário aparece no 2º. Daí o laço em TJSCNavigator.abrir(), que repete o
+   goto até `#txtPesquisa` existir (o <title> não serve de sinal: muda entre
+   variantes do desafio).
+
+SESSÃO
+------
+Não há login. Depois do desafio a sessão é só cookie; sobrevive a navegações e
+serve para o download do inteiro teor. Um `search()` inteiro roda em uma sessão
+só; o Checker e o batch de inteiro teor reaproveitam a mesma para não repetir o
+desafio (subir um browser por processo levaria minutos).

@@ -1,0 +1,3259 @@
+{
+  "fontes": {
+    "planilha_digesto": "cobertura/base/{estadual,federal,trabalhista}.csv",
+    "tribunais_brasileiros": "https://github.com/brpl20/tribunais_brasileiros (vendorizado em cobertura/base/tribunais-brasileiros/)",
+    "repo": "src/*Crawler.js, human-codegen/, skills/, tests/"
+  },
+  "aviso": "consulta_processual sao URLs de CONSULTA DE PROCESSO (login/CPF), nao de jurisprudencia. O campo `jurisprudencia` e a base que o crawler `jur` usa e so contem URL verificada.",
+  "tribunais": [
+    {
+      "codigo": "STF",
+      "nome": "Supremo Tribunal Federal",
+      "segmento": "superior",
+      "uf": [],
+      "sistemas_processuais": [],
+      "consulta_processual": [
+        {
+          "code": "STF",
+          "instancia": null,
+          "sistema": "proprio",
+          "url": "https://portal.stf.jus.br/",
+          "ok": true,
+          "nota": "Supreme Federal Court - Constitutional matters",
+          "screenshot": "screenshots/STF.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "STJ",
+      "nome": "Superior Tribunal de Justiça",
+      "segmento": "superior",
+      "uf": [],
+      "sistemas_processuais": [],
+      "consulta_processual": [
+        {
+          "code": "STJ",
+          "instancia": null,
+          "sistema": "proprio",
+          "url": "https://www.stj.jus.br/",
+          "ok": true,
+          "nota": "Superior Court of Justice - Federal law uniformity",
+          "screenshot": "screenshots/STJ.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TST",
+      "nome": "Tribunal Superior do Trabalho",
+      "segmento": "superior",
+      "uf": [],
+      "sistemas_processuais": [],
+      "consulta_processual": [
+        {
+          "code": "TST",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://www.tst.jus.br/",
+          "ok": true,
+          "nota": "Superior Labour Court",
+          "screenshot": "screenshots/TST.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRF1",
+      "nome": "Tribunal Regional Federal da 1ª Região",
+      "segmento": "federal",
+      "uf": [
+        "AC",
+        "AM",
+        "AP",
+        "BA",
+        "DF",
+        "GO",
+        "MA",
+        "MT",
+        "PA",
+        "PI",
+        "RO",
+        "RR",
+        "TO"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a  JFAC, JFAM, JFAP, JFBA, JFDF, JFGO, JFMA, JFMT, JFPA, JFPI, JFRO, JFRR, JFTO"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a  TRF1"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRF1_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje1g.trf1.jus.br/pje/ConsultaPublica/listView.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF1_1G.png"
+        },
+        {
+          "code": "TRF1_1G_BASE",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje1g.trf1.jus.br/pje",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF1_1G_BASE.png"
+        },
+        {
+          "code": "TRF1_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.trf1.jus.br/pje/ConsultaPublica/listView.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF1_2G.png"
+        },
+        {
+          "code": "TRF1_2G_BASE",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.trf1.jus.br/pje",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF1_2G_BASE.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://jurisprudencia.cjf.jus.br/trf1/index.xhtml",
+        "comando": "trf1",
+        "acesso": "browser",
+        "status": "instavel",
+        "nota": "Host do CJF resolve mas não responde (verificado 24/07/2026, também fora via curl) — pode ser queda temporária; reteste com tests/smoke.js"
+      },
+      "repo": {
+        "crawler": "src/TRF1Crawler.js",
+        "extra": null,
+        "codegen": "texto",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRF2",
+      "nome": "Tribunal Regional Federal da 2ª Região",
+      "segmento": "federal",
+      "uf": [
+        "RJ",
+        "ES"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "e-Proc",
+          "instancia": "1a  JFRJ, JFES"
+        },
+        {
+          "sistema": "e-Proc",
+          "instancia": "2a  TRF2"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRF2_1G",
+          "instancia": "1g",
+          "sistema": "eproc",
+          "url": "https://eproc.jfrj.jus.br/eproc/",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF2_1G.png"
+        },
+        {
+          "code": "TRF2_2G",
+          "instancia": "2g",
+          "sistema": "eproc",
+          "url": "https://eproc.trf2.jus.br/eproc/",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF2_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://juris.trf2.jus.br/consulta.php",
+        "comando": "trf2",
+        "acesso": "browser",
+        "status": "quebrado",
+        "nota": "juris.trf2.jus.br → NXDOMAIN. O TRF2 migrou a jurisprudência para o módulo do e-Proc: https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar (mesma família do TRF4). Crawler precisa ser reescrito a partir do TRF4Crawler."
+      },
+      "repo": {
+        "crawler": "src/TRF2Crawler.js",
+        "extra": null,
+        "codegen": "texto",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRF3",
+      "nome": "Tribunal Regional Federal da 3ª Região",
+      "segmento": "federal",
+      "uf": [
+        "SP",
+        "MS"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a  JFSP, JFMS"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a  TRF3"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRF3_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje1g.trf3.jus.br/pje/ConsultaPublica/listView.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF3_1G.png"
+        },
+        {
+          "code": "TRF3_1G_BASE",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje1g.trf3.jus.br/pje",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF3_1G_BASE.png"
+        },
+        {
+          "code": "TRF3_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.trf3.jus.br/pje/ConsultaPublica/listView.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF3_2G.png"
+        },
+        {
+          "code": "TRF3_2G_BASE",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.trf3.jus.br/pje",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF3_2G_BASE.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://web.trf3.jus.br/jurisprudencia/",
+        "comando": "trf3",
+        "acesso": "browser",
+        "status": "instavel",
+        "nota": "Verificação de navegador falha em headless; fallback Python (DrissionPage)"
+      },
+      "repo": {
+        "crawler": "src/TRF3Crawler.js",
+        "extra": "src/trf3_drission.py",
+        "codegen": "texto",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRF4",
+      "nome": "Tribunal Regional Federal da 4ª Região",
+      "segmento": "federal",
+      "uf": [
+        "PR",
+        "SC",
+        "RS"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "e-Proc",
+          "instancia": "1a  JFPR, JFSC, JFRS"
+        },
+        {
+          "sistema": "e-Proc",
+          "instancia": "2a  TRF4"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRF4_PR_1G",
+          "instancia": "1g",
+          "sistema": "eproc",
+          "url": "https://eproc.jfpr.jus.br/eprocV2/",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF4_PR_1G.png"
+        },
+        {
+          "code": "TRF4_SC_1G",
+          "instancia": "1g",
+          "sistema": "eproc",
+          "url": "https://eproc.jfsc.jus.br/eprocV2/",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF4_SC_1G.png"
+        },
+        {
+          "code": "TRF4_RS_1G",
+          "instancia": "1g",
+          "sistema": "eproc",
+          "url": "https://eproc.jfrs.jus.br/eprocV2/",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF4_RS_1G.png"
+        },
+        {
+          "code": "TRF4_2G",
+          "instancia": "2g",
+          "sistema": "eproc",
+          "url": "https://eproc.trf4.jus.br/eproc2trf4/",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF4_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://eproc-jur.trf4.jus.br/eproc2trf4/externo_controlador.php",
+        "comando": "trf4",
+        "acesso": "browser",
+        "status": "ok"
+      },
+      "repo": {
+        "crawler": "src/TRF4Crawler.js",
+        "extra": null,
+        "codegen": "texto",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [
+          "improve-user-prompt"
+        ],
+        "working": true
+      }
+    },
+    {
+      "codigo": "TRF5",
+      "nome": "Tribunal Regional Federal da 5ª Região",
+      "segmento": "federal",
+      "uf": [
+        "AL",
+        "CE",
+        "PB",
+        "PE",
+        "RN",
+        "SE"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a  JFAL, JFCE, JFPB, JFPE, JFRN, JFSE"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a  TRF5"
+        },
+        {
+          "sistema": "PJe JEF",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe JEF",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRF5_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.trf5.jus.br/pje/ConsultaPublica/listView.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF5_1G.png"
+        },
+        {
+          "code": "TRF5_1G_BASE",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.trf5.jus.br/pje",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF5_1G_BASE.png"
+        },
+        {
+          "code": "TRF5_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.trf5.jus.br/pje/ConsultaPublica/listView.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF5_2G.png"
+        },
+        {
+          "code": "TRF5_2G_BASE",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.trf5.jus.br/pje",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF5_2G_BASE.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://juliapesquisa.trf5.jus.br/julia-pesquisa/pesquisa",
+        "comando": "trf5",
+        "acesso": "browser",
+        "status": "ok"
+      },
+      "repo": {
+        "crawler": "src/TRF5Crawler.js",
+        "extra": null,
+        "codegen": "texto",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": true
+      }
+    },
+    {
+      "codigo": "TRF6",
+      "nome": "Tribunal Regional Federal da 6ª Região",
+      "segmento": "federal",
+      "uf": [
+        "MG"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRF6_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://sistemas.trf6.jus.br/consultaProcessual/",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF6_1G.png"
+        },
+        {
+          "code": "TRF6_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://sistemas.trf6.jus.br/consultaProcessual/",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TRF6_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJAC",
+      "nome": "Tribunal de Justiça do Acre",
+      "segmento": "estadual",
+      "uf": [
+        "AC"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "ESAJ",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "ESAJ",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "e-Proc",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "e-Proc",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJAC_1G",
+          "instancia": "1g",
+          "sistema": "esaj",
+          "url": "https://esaj.tjac.jus.br/cpopg/open.do",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJAC_1G.png"
+        },
+        {
+          "code": "TJAC_2G",
+          "instancia": "2g",
+          "sistema": "esaj",
+          "url": "https://esaj.tjac.jus.br/cposg/open.do",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJAC_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      },
+      "portal": "https://portal-eproc.tjac.jus.br/"
+    },
+    {
+      "codigo": "TJAL",
+      "nome": "Tribunal de Justiça de Alagoas",
+      "segmento": "estadual",
+      "uf": [
+        "AL"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "ESAJ",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "ESAJ",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJAL_1G",
+          "instancia": "1g",
+          "sistema": "esaj",
+          "url": "https://www2.tjal.jus.br/cpopg/open.do",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJAL_1G.png"
+        },
+        {
+          "code": "TJAL_2G",
+          "instancia": "2g",
+          "sistema": "esaj",
+          "url": "https://www2.tjal.jus.br/cposg/open.do",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJAL_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      },
+      "portal": "Não encontrado"
+    },
+    {
+      "codigo": "TJAM",
+      "nome": "Tribunal de Justiça do Amazonas",
+      "segmento": "estadual",
+      "uf": [
+        "AM"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "ESAJ",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "ESAJ",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJAM_1G",
+          "instancia": "1g",
+          "sistema": "esaj",
+          "url": "https://consultasaj.tjam.jus.br/cpopg/open.do",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJAM_1G.png"
+        },
+        {
+          "code": "TJAM_2G",
+          "instancia": "2g",
+          "sistema": "esaj",
+          "url": "https://consultasaj.tjam.jus.br/cposg/open.do",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJAM_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      },
+      "portal": "https://projudi.tjam.jus.br/projudi/"
+    },
+    {
+      "codigo": "TJAP",
+      "nome": "Tribunal de Justiça do Amapá",
+      "segmento": "estadual",
+      "uf": [
+        "AP"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "Tucujuris",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Tucujuris",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJAP_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjap.jus.br/1g/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJAP_1G.png"
+        },
+        {
+          "code": "TJAP_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje.tjap.jus.br/2g/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJAP_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      },
+      "portal": "https://pje.tjap.jus.br/2g/login.seam"
+    },
+    {
+      "codigo": "TJBA",
+      "nome": "Tribunal de Justiça da Bahia",
+      "segmento": "estadual",
+      "uf": [
+        "BA"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "ESAJ",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "ESAJ",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJBA_1G",
+          "instancia": "1g",
+          "sistema": "projudi",
+          "url": "https://projudi.tjba.jus.br/projudi/",
+          "ok": true,
+          "nota": "Projudi integrated 1st and 2nd degree - single login page",
+          "screenshot": "screenshots/TJBA_1G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      },
+      "portal": "https://projudi.tjba.jus.br/projudi/"
+    },
+    {
+      "codigo": "TJCE",
+      "nome": "Tribunal de Justiça do Ceará",
+      "segmento": "estadual",
+      "uf": [
+        "CE"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "ESAJ",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "ESAJ",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJCE_1G",
+          "instancia": "1g",
+          "sistema": "esaj",
+          "url": "https://esaj.tjce.jus.br/cpopg/open.do",
+          "ok": true,
+          "nota": "TJCE uses e-SAJ, not PJE",
+          "screenshot": "screenshots/TJCE_1G.png"
+        },
+        {
+          "code": "TJCE_2G",
+          "instancia": "2g",
+          "sistema": "esaj",
+          "url": "https://esaj.tjce.jus.br/cposg/open.do",
+          "ok": true,
+          "nota": "TJCE uses e-SAJ, not PJE",
+          "screenshot": "screenshots/TJCE_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      },
+      "portal": "https://pje.tjce.jus.br/pje2grau/login.seam"
+    },
+    {
+      "codigo": "TJDFT",
+      "nome": "Tribunal de Justiça do Distrito Federal e dos Territórios",
+      "segmento": "estadual",
+      "uf": [
+        "DF"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJDFT_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjdft.jus.br/pje/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJDFT_1G.png"
+        },
+        {
+          "code": "TJDFT_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2i.tjdft.jus.br/pje/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJDFT_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      },
+      "portal": "https://pje2i.tjdft.jus.br/pje/login.seam"
+    },
+    {
+      "codigo": "TJES",
+      "nome": "Tribunal de Justiça do Espírito Santo",
+      "segmento": "estadual",
+      "uf": [
+        "ES"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJES_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjes.jus.br/pje/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJES_1G.png"
+        },
+        {
+          "code": "TJES_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje.tjes.jus.br/pje2g/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJES_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      },
+      "portal": "https://pje.tjes.jus.br/pje2g/"
+    },
+    {
+      "codigo": "TJGO",
+      "nome": "Tribunal de Justiça de Goiás",
+      "segmento": "estadual",
+      "uf": [
+        "GO"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJGO_1G",
+          "instancia": "1g",
+          "sistema": "projudi",
+          "url": "https://projudi.tjgo.jus.br/",
+          "ok": true,
+          "nota": "Projudi integrated 1st and 2nd degree - single login page",
+          "screenshot": "screenshots/TJGO_1G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://projudi.tjgo.jus.br/ConsultaJurisprudencia",
+        "comando": "tjgo",
+        "acesso": "http",
+        "status": "ok",
+        "nota": "POST direto ISO-8859-1; Turnstile só no download do original"
+      },
+      "repo": {
+        "crawler": "src/TJGOCrawler.js",
+        "extra": "TJGONavigator.js + TJGOChecker.js",
+        "codegen": "completo",
+        "screenshots": 41,
+        "tests": "src/TJGOTestes.js",
+        "skills": [
+          "verificador/tjgo"
+        ],
+        "working": true
+      }
+    },
+    {
+      "codigo": "TJMA",
+      "nome": "Tribunal de Justiça do Maranhão",
+      "segmento": "estadual",
+      "uf": [
+        "MA"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJMA_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjma.jus.br/pje/login.seam",
+          "ok": null,
+          "nota": "Not tested yet",
+          "screenshot": "screenshots/TJMA_1G.png"
+        },
+        {
+          "code": "TJMA_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.tjma.jus.br/pje/login.seam",
+          "ok": null,
+          "nota": "Not tested yet",
+          "screenshot": "screenshots/TJMA_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "mapeado",
+        "nota": "human-codegen completo (JurisConsult/Themis/PJe), crawler ainda não escrito"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "completo",
+        "screenshots": 84,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJMG",
+      "nome": "Tribunal de Justiça de Minas Gerais",
+      "segmento": "estadual",
+      "uf": [
+        "MG"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Próprio",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Próprio - JPe Themis",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJMG_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "http://pje.tjmg.jus.br/pje/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJMG_1G.png"
+        },
+        {
+          "code": "TJMG_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pjerecursal.tjmg.jus.br/pje/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJMG_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJMS",
+      "nome": "Tribunal de Justiça de Mato Grosso do Sul",
+      "segmento": "estadual",
+      "uf": [
+        "MS"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "ESAJ",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "ESAJ",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJMS_1G",
+          "instancia": "1g",
+          "sistema": "esaj",
+          "url": "https://esaj.tjms.jus.br/cpopg/open.do",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJMS_1G.png"
+        },
+        {
+          "code": "TJMS_2G",
+          "instancia": "2g",
+          "sistema": "esaj",
+          "url": "https://esaj.tjms.jus.br/cposg/open.do",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJMS_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJMT",
+      "nome": "Tribunal de Justiça de Mato Grosso",
+      "segmento": "estadual",
+      "uf": [
+        "MT"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJMT_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjmt.jus.br/",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJMT_1G.png"
+        },
+        {
+          "code": "TJMT_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2.tjmt.jus.br/pje/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJMT_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJPA",
+      "nome": "Tribunal de Justiça do Pará",
+      "segmento": "estadual",
+      "uf": [
+        "PA"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Libra",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Libra",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJPA_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjpa.jus.br/pje/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJPA_1G.png"
+        },
+        {
+          "code": "TJPA_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje.tjpa.jus.br/pje2g/login.seam",
+          "ok": true,
+          "nota": "URL pattern: pje.tjpa.jus.br/pje2g not pje2g.tjpa.jus.br",
+          "screenshot": "screenshots/TJPA_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://jurisprudencia.tjpa.jus.br/bff/api/decisoes",
+        "comando": "tjpa",
+        "acesso": "api",
+        "status": "ok",
+        "nota": "API JSON aberta; ementa + inteiro teor no mesmo payload"
+      },
+      "repo": {
+        "crawler": "src/TJPACrawler.js",
+        "extra": "TJPANavigator.js + TJPAChecker.js",
+        "codegen": "completo",
+        "screenshots": 17,
+        "tests": "src/TJPATestes.js",
+        "skills": [
+          "verificador/tjpa"
+        ],
+        "working": true
+      },
+      "portal": "https://libra.tjpa.jus.br/libra/autenticacao/inicio.action"
+    },
+    {
+      "codigo": "TJPB",
+      "nome": "Tribunal de Justiça da Paraíba",
+      "segmento": "estadual",
+      "uf": [
+        "PB"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJPB_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjpb.jus.br/pje/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJPB_1G.png"
+        },
+        {
+          "code": "TJPB_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje.tjpb.jus.br/pje2g/login.seam",
+          "ok": true,
+          "nota": "URL pattern: pje.tjpb.jus.br/pje2g not pje2g.tjpb.jus.br",
+          "screenshot": "screenshots/TJPB_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      },
+      "portal": "https://pjesg.tjpb.jus.br/pje2g/"
+    },
+    {
+      "codigo": "TJPE",
+      "nome": "Tribunal de Justiça de Pernambuco",
+      "segmento": "estadual",
+      "uf": [
+        "PE"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJPE_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjpe.jus.br/pje/login.seam",
+          "ok": null,
+          "nota": "Not tested yet",
+          "screenshot": "screenshots/TJPE_1G.png"
+        },
+        {
+          "code": "TJPE_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.tjpe.jus.br/pje/login.seam",
+          "ok": null,
+          "nota": "Not tested yet",
+          "screenshot": "screenshots/TJPE_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJPI",
+      "nome": "Tribunal de Justiça do Piauí",
+      "segmento": "estadual",
+      "uf": [
+        "PI"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJPI_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjpi.jus.br/pje/login.seam",
+          "ok": null,
+          "nota": "Not tested yet",
+          "screenshot": "screenshots/TJPI_1G.png"
+        },
+        {
+          "code": "TJPI_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.tjpi.jus.br/pje/login.seam",
+          "ok": null,
+          "nota": "Not tested yet",
+          "screenshot": "screenshots/TJPI_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJPR",
+      "nome": "Tribunal de Justiça do Paraná",
+      "segmento": "estadual",
+      "uf": [
+        "PR"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJPR_1G",
+          "instancia": "1g",
+          "sistema": "projudi",
+          "url": "https://projudi.tjpr.jus.br/projudi/",
+          "ok": true,
+          "nota": "Projudi integrated 1st and 2nd degree - single login page",
+          "screenshot": "screenshots/TJPR_1G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://portal.tjpr.jus.br/jurisprudencia/publico/pesquisa.do",
+        "comando": "tjpr",
+        "acesso": "http",
+        "status": "ok",
+        "nota": "Struts próprio (POST em pesquisa.do), sem browser e sem bloqueio. CORPO DO POST EM ISO-8859-1 — em UTF-8 devolve 0 resultados em silêncio. Só 2º grau. Justiça Comum × Juizados pela lista de ids em idOrgaoJulgador (flag --foro): o combo do site (ambito) NÃO separa — ambito=6 \"TRIBUNAL DE JUSTIÇA\" contém a 6ª Turma Recursal. Toda busca vem somada com decisões da Corte IDH; use o contador \"da Jurisprudência do Tribunal de Justiça\". Inteiro teor já vem no HTML da ficha (div#texto<id>). PROX não funciona."
+      },
+      "repo": {
+        "crawler": "src/TJPRCrawler.js",
+        "extra": "TJPRNavigator.js + TJPRChecker.js",
+        "codegen": "completo",
+        "screenshots": 27,
+        "tests": "src/TJPRTestes.js",
+        "skills": [
+          "verificador/tjpr"
+        ],
+        "working": true
+      }
+    },
+    {
+      "codigo": "TJRJ",
+      "nome": "Tribunal de Justiça do Rio de Janeiro",
+      "segmento": "estadual",
+      "uf": [
+        "RJ"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "Próprio",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Próprio",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJRJ_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://tjrj.pje.jus.br/1g/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJRJ_1G.png"
+        },
+        {
+          "code": "TJRJ_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://tjrj.pje.jus.br/2g/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJRJ_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "mapeado",
+        "nota": "human-codegen completo (EJURIS/eproc), crawler ainda não escrito"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "completo",
+        "screenshots": 41,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJRN",
+      "nome": "Tribunal de Justiça do Rio Grande do Norte",
+      "segmento": "estadual",
+      "uf": [
+        "RN"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "ESAJ",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJRN_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjrn.jus.br/pje/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJRN_1G.png"
+        },
+        {
+          "code": "TJRN_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.tjrn.jus.br/pje/login.seam",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJRN_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJRO",
+      "nome": "Tribunal de Justiça de Rondônia",
+      "segmento": "estadual",
+      "uf": [
+        "RO"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJRO_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjro.jus.br/pje/login.seam",
+          "ok": true,
+          "nota": "Redirects to info page but 1G works",
+          "screenshot": "screenshots/TJRO_1G.png"
+        },
+        {
+          "code": "TJRO_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.tjro.jus.br/pje/login.seam",
+          "ok": false,
+          "nota": "Redirects to info page - may be integrated with 1G",
+          "screenshot": "screenshots/TJRO_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJRR",
+      "nome": "Tribunal de Justiça de Roraima",
+      "segmento": "estadual",
+      "uf": [
+        "RR"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJRR_1G",
+          "instancia": "1g",
+          "sistema": "pje",
+          "url": "https://pje.tjrr.jus.br/pje/login.seam",
+          "ok": false,
+          "nota": "Connection failed - site unreachable",
+          "screenshot": "screenshots/TJRR_1G.png"
+        },
+        {
+          "code": "TJRR_2G",
+          "instancia": "2g",
+          "sistema": "pje",
+          "url": "https://pje2g.tjrr.jus.br/pje/login.seam",
+          "ok": false,
+          "nota": "Connection failed - site unreachable",
+          "screenshot": "screenshots/TJRR_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJRS",
+      "nome": "Tribunal de Justiça do Rio Grande do Sul",
+      "segmento": "estadual",
+      "uf": [
+        "RS"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Próprio",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Próprio",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "e-Proc",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "e-Proc",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJRS_1G",
+          "instancia": "1g",
+          "sistema": "eproc",
+          "url": "https://eproc1g.tjrs.jus.br/",
+          "ok": true,
+          "nota": "Uses Keycloak SSO",
+          "screenshot": "screenshots/TJRS_1G.png"
+        },
+        {
+          "code": "TJRS_2G",
+          "instancia": "2g",
+          "sistema": "eproc",
+          "url": "https://eproc2g.tjrs.jus.br/",
+          "ok": true,
+          "nota": "Uses Keycloak SSO",
+          "screenshot": "screenshots/TJRS_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://www.tjrs.jus.br/buscas/jurisprudencia/ajax.php",
+        "comando": "tjrs",
+        "acesso": "http",
+        "status": "ok",
+        "nota": "Solr atrás de proxy PHP (POST action=consultas_solr_ajax); sem bloqueio nem sessão; inteiro teor embutido em base64 (ISO-8859-1); só 2º grau; Justiça Comum × Turmas Recursais pelo cod_tribunal"
+      },
+      "repo": {
+        "crawler": "src/TJRSCrawler.js",
+        "extra": "TJRSNavigator.js + TJRSChecker.js",
+        "codegen": "completo",
+        "screenshots": 21,
+        "tests": "src/TJRSTestes.js",
+        "skills": [
+          "verificador/tjrs"
+        ],
+        "working": true
+      }
+    },
+    {
+      "codigo": "TJSC",
+      "nome": "Tribunal de Justiça de Santa Catarina",
+      "segmento": "estadual",
+      "uf": [
+        "SC"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "ESAJ",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "ESAJ",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "e-Proc",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "e-Proc",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJSC_1G",
+          "instancia": "1g",
+          "sistema": "eproc",
+          "url": "https://eproc1g.tjsc.jus.br/",
+          "ok": true,
+          "nota": "Uses TJSC SSO",
+          "screenshot": "screenshots/TJSC_1G.png"
+        },
+        {
+          "code": "TJSC_2G",
+          "instancia": "2g",
+          "sistema": "eproc",
+          "url": "https://eproc2g.tjsc.jus.br/",
+          "ok": true,
+          "nota": "Uses TJSC SSO",
+          "screenshot": "screenshots/TJSC_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://eprocwebcon.tjsc.jus.br/consulta1g/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar",
+        "comando": "tjsc",
+        "acesso": "browser",
+        "status": "ok",
+        "nota": "Módulo eproc-jur, mesma família do TRF4. Browser obrigatório: host atrás de verificação de segurança F5/Shape (JS challenge) — e o UA padrão do Playwright headless é barrado, precisa de UA de Chrome comum. Justiça Comum × Turmas Recursais pelo combo Origem (#selOrigem: 1=TJSC, 3=Turmas Recursais, 4=Turmas de Uniformização, 5=Conselho da Magistratura). ATENÇÃO: o portal antigo https://busca.tjsc.jus.br/jurisprudencia/ (HTTP puro) é base histórica CONGELADA desde 08/10/2025 — 15 resultados contra 8.315 do portal novo no mesmo recorte."
+      },
+      "repo": {
+        "crawler": "src/TJSCCrawler.js",
+        "extra": "TJSCNavigator.js + TJSCChecker.js",
+        "codegen": "completo",
+        "screenshots": 21,
+        "tests": "src/TJSCTestes.js",
+        "skills": [
+          "verificador/tjsc"
+        ],
+        "working": true
+      }
+    },
+    {
+      "codigo": "TJSE",
+      "nome": "Tribunal de Justiça de Sergipe",
+      "segmento": "estadual",
+      "uf": [
+        "SE"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "Próprio",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "Próprio",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJSE_1G",
+          "instancia": "1g",
+          "sistema": "eproc",
+          "url": "https://eproc1g.tjse.jus.br/",
+          "ok": true,
+          "nota": "TJSE uses eproc, not PJE",
+          "screenshot": "screenshots/TJSE_1G.png"
+        },
+        {
+          "code": "TJSE_2G",
+          "instancia": "2g",
+          "sistema": "eproc",
+          "url": "https://eproc2g.tjse.jus.br/",
+          "ok": true,
+          "nota": "TJSE uses eproc, not PJE",
+          "screenshot": "screenshots/TJSE_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJSP",
+      "nome": "Tribunal de Justiça de São Paulo",
+      "segmento": "estadual",
+      "uf": [
+        "SP"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "ESAJ",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "ESAJ",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJSP_1G",
+          "instancia": "1g",
+          "sistema": "esaj",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJSP_1G.png"
+        },
+        {
+          "code": "TJSP_2G",
+          "instancia": "2g",
+          "sistema": "esaj",
+          "url": "https://esaj.tjsp.jus.br/cposg/open.do",
+          "ok": true,
+          "nota": null,
+          "screenshot": "screenshots/TJSP_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://esaj.tjsp.jus.br/cjsg/consultaCompleta.do",
+        "comando": "tjsp",
+        "acesso": "browser",
+        "status": "sem-acesso",
+        "nota": "Bloqueio de acesso — não rodar"
+      },
+      "repo": {
+        "crawler": "src/TJSPCrawler.js",
+        "extra": null,
+        "codegen": "completo",
+        "screenshots": 31,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TJTO",
+      "nome": "Tribunal de Justiça do Tocantins",
+      "segmento": "estadual",
+      "uf": [
+        "TO"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "e-Proc",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "e-Proc",
+          "instancia": "2a"
+        },
+        {
+          "sistema": "Projudi",
+          "instancia": "1a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TJTO_1G",
+          "instancia": "1g",
+          "sistema": "eproc",
+          "url": "https://eproc1g.tjto.jus.br/",
+          "ok": false,
+          "nota": "Connection failed - uses eproc but has connectivity issues",
+          "screenshot": "screenshots/TJTO_1G.png"
+        },
+        {
+          "code": "TJTO_2G",
+          "instancia": "2g",
+          "sistema": "eproc",
+          "url": "https://eproc2g.tjto.jus.br/",
+          "ok": false,
+          "nota": "Connection failed - uses eproc but has connectivity issues",
+          "screenshot": "screenshots/TJTO_2G.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT1",
+      "nome": "TRT da 1ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "RJ"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT1",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt1.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt1.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT1.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT2",
+      "nome": "TRT da 2ª Região (São Paulo Capital)",
+      "segmento": "trabalhista",
+      "uf": [
+        "SP"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT2",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt2.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt2.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT2.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT3",
+      "nome": "TRT da 3ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "MG"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT3",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt3.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt3.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT3.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT4",
+      "nome": "TRT da 4ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "RS"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT4",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt4.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt4.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT4.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT5",
+      "nome": "TRT da 5ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "BA"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT5",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt5.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt5.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT5.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT6",
+      "nome": "TRT da 6ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "PE"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT6",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt6.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt6.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT6.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT7",
+      "nome": "TRT da 7ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "CE"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT7",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt7.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt7.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT7.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT8",
+      "nome": "TRT da 8ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "PA",
+        "AP"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT8",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt8.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt8.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT8.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT9",
+      "nome": "TRT da 9ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "PR"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT9",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt9.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt9.jus.br/trt/",
+          "screenshot": "screenshots/TRT9.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt9",
+        "acesso": "api",
+        "status": "ok",
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT9. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo. O crawler é o mesmo para os outros 23 TRTs: src/Falcao*.js"
+      },
+      "repo": {
+        "crawler": "src/TRT9Crawler.js",
+        "extra": "TRT9Navigator.js + TRT9Checker.js sobre a camada de família src/Falcao{Navigator,Crawler,Checker}.js (reaproveitável por TST + os 24 TRTs)",
+        "codegen": "completo",
+        "screenshots": 14,
+        "tests": "src/TRT9Testes.js",
+        "skills": [
+          "verificador/trt9"
+        ],
+        "working": true
+      }
+    },
+    {
+      "codigo": "TRT10",
+      "nome": "TRT da 10ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "DF",
+        "TO"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT10",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt10.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt10.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT10.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT11",
+      "nome": "TRT da 11ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "AM",
+        "RR"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT11",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt11.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt11.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT11.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT12",
+      "nome": "TRT da 12ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "SC"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT12",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt12.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt12.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT12.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT13",
+      "nome": "TRT da 13ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "PB"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT13",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt13.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt13.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT13.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT14",
+      "nome": "TRT da 14ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "RO",
+        "AC"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT14",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt14.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt14.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT14.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT15",
+      "nome": "TRT da 15ª Região (Campinas)",
+      "segmento": "trabalhista",
+      "uf": [
+        "SP"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT15",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt15.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt15.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT15.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT16",
+      "nome": "TRT da 16ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "MA"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT16",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt16.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt16.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT16.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT17",
+      "nome": "TRT da 17ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "ES"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT17",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt17.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt17.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT17.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT18",
+      "nome": "TRT da 18ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "GO"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT18",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt18.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt18.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT18.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT19",
+      "nome": "TRT da 19ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "AL"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT19",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt19.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt19.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT19.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT20",
+      "nome": "TRT da 20ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "SE"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT20",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt20.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt20.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT20.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT21",
+      "nome": "TRT da 21ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "RN"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT21",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt21.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt21.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT21.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT22",
+      "nome": "TRT da 22ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "PI"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT22",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt22.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt22.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT22.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT23",
+      "nome": "TRT da 23ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "MT"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT23",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt23.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt23.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT23.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TRT24",
+      "nome": "TRT da 24ª Região",
+      "segmento": "trabalhista",
+      "uf": [
+        "MS"
+      ],
+      "sistemas_processuais": [
+        {
+          "sistema": "PJe",
+          "instancia": "1a"
+        },
+        {
+          "sistema": "PJe",
+          "instancia": "2a"
+        }
+      ],
+      "consulta_processual": [
+        {
+          "code": "TRT24",
+          "instancia": null,
+          "sistema": "pje",
+          "url": "https://pje.trt24.jus.br/",
+          "ok": true,
+          "nota": "redirect: https://pje.trt24.jus.br/primeirograu/",
+          "screenshot": "screenshots/TRT24.png"
+        }
+      ],
+      "jurisprudencia": {
+        "url": null,
+        "comando": null,
+        "acesso": null,
+        "status": "nao-mapeado"
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "TCU",
+      "nome": "Tribunal de Contas da União",
+      "segmento": "contas",
+      "uf": [],
+      "sistemas_processuais": [],
+      "consulta_processual": [],
+      "jurisprudencia": {
+        "url": "https://pesquisa.apps.tcu.gov.br/pesquisa/acordao-completo",
+        "comando": "tcu",
+        "acesso": "browser",
+        "status": "ok"
+      },
+      "repo": {
+        "crawler": "src/TCUCrawler.js",
+        "extra": null,
+        "codegen": "texto",
+        "screenshots": 0,
+        "tests": false,
+        "skills": [],
+        "working": true
+      }
+    }
+  ]
+}

@@ -55,4 +55,11 @@ pip-delete-this-directory.txt
 output/
 
 # Claude
-.claude/
+# `.claude/*` (e não `.claude/`) porque git não re-inclui filho de diretório excluído
+.claude/*
+!.claude/skills/
+
+# jur: outputs de busca e relatórios de smoke (mantém o diretório, ignora o conteúdo gerado)
+jur/resultados/*.json
+jur/resultados/*.txt
+jur/resultados/*.log

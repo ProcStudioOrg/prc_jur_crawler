@@ -1,0 +1,65 @@
+TJPR — 01-jurisprudencia · §1 (cont.) Via de acesso, bloqueios e sessão
+Print: 01.01-tela-inicial.png
+
+== 16. Forma de acesso — decisão: `http` ==
+
+Ordem de preferência do repositório: api > http > browser.
+
+  api      NÃO existe. Não é SPA; não há endpoint JSON de busca. Os únicos
+           endpoints AJAX são `ajax.do` (autocompletes e facetas), que
+           devolvem XML/HTML fragmentado, e só complementam a tela.
+  http     SIM — é o que o crawler usa. Um único POST responde a busca inteira:
+
+             POST /jurisprudencia/publico/pesquisa.do?actionType=pesquisar
+             Content-Type: application/x-www-form-urlencoded
+             (corpo em ISO-8859-1 — ver abaixo)
+
+  browser  desnecessário. `src/TJPRCrawler.js` NÃO usa Playwright; `-v/--headed`
+           são ignorados. (A versão anterior do crawler usava browser e visitava
+           cada julgado para pegar o inteiro teor — era ~20× mais lento e não
+           precisava.)
+
+== O erro que custa caro: CHARSET ==
+
+O <form> declara `accept-charset="ISO-8859-1"`. O corpo do POST TEM que ir em
+ISO-8859-1. Mandar UTF-8 não dá erro: o servidor lê o termo torto e responde
+"Nenhum registro encontrado!". Medido em 25/07/2026 (julgamento 01/01–31/03/2026):
+
+    corpo latin1  "usucapião"  -> 467 julgados
+    corpo latin1  "usucapiao"  -> 467 julgados   (o buscador ignora acento)
+    corpo UTF-8   "usucapião"  ->   0 julgados   + eco do campo: "usucapiÃ£o"
+
+Ou seja: o crawler "funciona", devolve `success:true` e zero resultados. É o
+modo de falha mais perigoso deste tribunal. `TJPRNavigator.encodeLatin1()` existe
+por causa disso, e o teste `node src/TJPRTestes.js` cobre esse caso.
+
+Assimetria de charset:
+  - respostas de `pesquisa.do` e das páginas `/jurisprudencia/j/...`: UTF-8
+  - respostas de `ajax.do` (autocomplete, facetas):                   ISO-8859-1
+
+== 15. Bloqueios ==
+
+  Existe restrição (Cloudflare/captcha/verificação de navegador)?   NÃO
+  A BUSCA funciona sem resolver nada?                               SIM
+  O DOWNLOAD (inteiro teor) funciona sem resolver nada?             SIM
+  Headless passa?                                                   SIM (e nem browser é preciso)
+
+Nenhum captcha, nenhum Turnstile, nenhum token por requisição. Cabeçalhos de
+resposta trazem HSTS e `content-security-policy: frame-ancestors`, que não
+afetam cliente HTTP.
+
+Único aviso da própria aplicação: itens em SEGREDO DE JUSTIÇA registram acesso
+para auditoria (`textoAtencaoAlert` em js/jurisprudencia.js). O filtro
+`segredoJustica` permite INCLUIR (default), EXCLUIR ou SOMENTE.
+
+== 17. Sessão e estado ==
+
+  - `JSESSIONID` é criado no primeiro acesso. O crawler abre
+    `?actionType=iniciar` uma vez (`TJPRNavigator.iniciar()`) e reaproveita.
+  - O POST é AUTOSSUFICIENTE: mandando todos os campos, cada requisição vale por
+    si. Não há `__VIEWSTATE`/`viewState`.
+  - A paginação é POST do MESMO formulário com `pageNumber` alterado — dá para
+    pedir a página 80 direto, sem passar pelas anteriores (testado).
+  - As URLs `ajax.do?tjpr.url.crypto=<hex>` (facetas, autocompletes) são
+    CIFRADAS e válidas para a sessão. Não invente esses tokens: leia-os do HTML
+    da resposta corrente (é o que `listarOrgaosAoVivo()` faz).

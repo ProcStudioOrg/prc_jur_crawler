@@ -1,0 +1,19 @@
+{
+  "observacao": "Contagens medidas em 2026-07-25. Query e periodo fixos; servem de linha de base para o jur-fixer detectar quebra silenciosa de filtro.",
+  "query": "adicional de insalubridade",
+  "periodo": "01/01/2025 a 31/03/2025",
+  "porColecao": {
+    "acordaos": 5693,
+    "sentencas": 8794,
+    "decisoesmonocraticas": 34,
+    "recursorevista": 1437,
+    "precedentes": 0
+  },
+  "porOrgao": {
+    "1ª Turma": 180,
+    "Seção Especializada": 141,
+    "Tribunal Pleno": 0,
+    "06ª VARA DO TRABALHO DE CURITIBA (sentencas)": 28
+  },
+  "semFiltroDeData": 10000
+}

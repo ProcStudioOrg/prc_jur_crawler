@@ -1,0 +1,38 @@
+[
+  {
+    "code": "STF",
+    "name": "Supremo Tribunal Federal",
+    "description": "Supreme Federal Court - Constitutional matters",
+    "system": "proprio",
+    "urls": {
+      "portal": "https://portal.stf.jus.br/",
+      "processos": "https://portal.stf.jus.br/processos/",
+      "peticionamento": "https://peticionamento.stf.jus.br/"
+    },
+    "success": true
+  },
+  {
+    "code": "STJ",
+    "name": "Superior Tribunal de Justiça",
+    "description": "Superior Court of Justice - Federal law uniformity",
+    "system": "proprio",
+    "urls": {
+      "portal": "https://www.stj.jus.br/",
+      "processos": "https://processo.stj.jus.br/processo/pesquisa/"
+    },
+    "success": true
+  },
+  {
+    "code": "TST",
+    "name": "Tribunal Superior do Trabalho",
+    "description": "Superior Labour Court",
+    "system": "pje",
+    "urls": {
+      "portal": "https://www.tst.jus.br/",
+      "pje": "https://pje.tst.jus.br/",
+      "consulta": "https://consultaprocessual.tst.jus.br/"
+    },
+    "success": true,
+    "redirect": "https://pje.tst.jus.br/tst/"
+  }
+]

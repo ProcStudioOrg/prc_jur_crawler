@@ -1,0 +1,30 @@
+TJSC — SEÇÃO 5: NÚMERO DO PROCESSO E DEMAIS CHECKBOXES
+======================================================
+Print: 05.01-campo-numero-processo.png
+
+5.1 NÚMERO DO PROCESSO (#txtProcesso, name="txtProcesso")
+    É o campo que alimenta o TJSCChecker — a verificação de existência de um
+    julgado. Aceita o número CNJ com máscara (5014543-38.2025.8.24.0054).
+    Consulta feita com as 4 origens marcadas, de propósito: não se deve presumir
+    se o julgado é de Justiça Comum ou de Turma Recursal antes de consultar.
+
+    Medição: 5014543-38.2025.8.24.0054 -> "1 documentos encontrados",
+    ACÓRDÃOS DO TRIBUNAL DE JUSTIÇA, 3ª Câmara de Direito Civil, rel. ANDRÉ
+    CARVALHO, julgado em 31/03/2026.
+    Número inexistente (9999999-99.2099.8.24.9999) -> 0 documentos.
+
+    Numeração: o TJSC usa .8.24. Um processo pode ter mais de um documento
+    indexado (acórdão + monocrática): confirmar o PROCESSO não confirma A
+    DECISÃO — para isso confira o `id` do documento.
+
+5.2 OUTROS CONTROLES DO FORMULÁRIO (01-form-busca.html)
+    #chkPrecedenteRelevante  só precedentes marcados como relevantes pelo NUGEPNAC
+    #chkAgruparResultados    agrupa documentos do mesmo processo
+    #chkCaput                restringe ao caput
+    #selOrdenacao            "mais recentes" / "mais antigos" (rotulado, não numerado)
+    #selTamanhoPagina        10 (default) / 25 / 50 / 100
+
+    O crawler expõe #chkPrecedenteRelevante (--precedente-relevante),
+    #selOrdenacao (-ord) e #selTamanhoPagina (--por-pagina).
+    #chkAgruparResultados e #chkCaput ficam de fora por ora: mudam a semântica
+    da contagem e não foram medidos.

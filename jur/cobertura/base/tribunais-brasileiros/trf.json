@@ -1,0 +1,165 @@
+[
+  {
+    "code": "TRF1_1G",
+    "tribunal": "TRF1",
+    "instance": "1g",
+    "system": "pje",
+    "url": "https://pje1g.trf1.jus.br/pje/ConsultaPublica/listView.seam",
+    "success": true
+  },
+  {
+    "code": "TRF1_1G_BASE",
+    "tribunal": "TRF1",
+    "instance": "1g",
+    "system": "pje",
+    "url": "https://pje1g.trf1.jus.br/pje",
+    "success": true
+  },
+  {
+    "code": "TRF1_2G",
+    "tribunal": "TRF1",
+    "instance": "2g",
+    "system": "pje",
+    "url": "https://pje2g.trf1.jus.br/pje/ConsultaPublica/listView.seam",
+    "success": true
+  },
+  {
+    "code": "TRF1_2G_BASE",
+    "tribunal": "TRF1",
+    "instance": "2g",
+    "system": "pje",
+    "url": "https://pje2g.trf1.jus.br/pje",
+    "success": true
+  },
+  {
+    "code": "TRF2_1G",
+    "tribunal": "TRF2",
+    "instance": "1g",
+    "system": "eproc",
+    "url": "https://eproc.jfrj.jus.br/eproc/",
+    "success": true
+  },
+  {
+    "code": "TRF2_2G",
+    "tribunal": "TRF2",
+    "instance": "2g",
+    "system": "eproc",
+    "url": "https://eproc.trf2.jus.br/eproc/",
+    "success": true
+  },
+  {
+    "code": "TRF3_1G",
+    "tribunal": "TRF3",
+    "instance": "1g",
+    "system": "pje",
+    "url": "https://pje1g.trf3.jus.br/pje/ConsultaPublica/listView.seam",
+    "success": true
+  },
+  {
+    "code": "TRF3_1G_BASE",
+    "tribunal": "TRF3",
+    "instance": "1g",
+    "system": "pje",
+    "url": "https://pje1g.trf3.jus.br/pje",
+    "success": true
+  },
+  {
+    "code": "TRF3_2G",
+    "tribunal": "TRF3",
+    "instance": "2g",
+    "system": "pje",
+    "url": "https://pje2g.trf3.jus.br/pje/ConsultaPublica/listView.seam",
+    "success": true
+  },
+  {
+    "code": "TRF3_2G_BASE",
+    "tribunal": "TRF3",
+    "instance": "2g",
+    "system": "pje",
+    "url": "https://pje2g.trf3.jus.br/pje",
+    "success": true
+  },
+  {
+    "code": "TRF4_PR_1G",
+    "tribunal": "TRF4",
+    "state": "PR",
+    "instance": "1g",
+    "system": "eproc",
+    "url": "https://eproc.jfpr.jus.br/eprocV2/",
+    "success": true
+  },
+  {
+    "code": "TRF4_SC_1G",
+    "tribunal": "TRF4",
+    "state": "SC",
+    "instance": "1g",
+    "system": "eproc",
+    "url": "https://eproc.jfsc.jus.br/eprocV2/",
+    "success": true
+  },
+  {
+    "code": "TRF4_RS_1G",
+    "tribunal": "TRF4",
+    "state": "RS",
+    "instance": "1g",
+    "system": "eproc",
+    "url": "https://eproc.jfrs.jus.br/eprocV2/",
+    "success": true
+  },
+  {
+    "code": "TRF4_2G",
+    "tribunal": "TRF4",
+    "instance": "2g",
+    "system": "eproc",
+    "url": "https://eproc.trf4.jus.br/eproc2trf4/",
+    "success": true
+  },
+  {
+    "code": "TRF5_1G",
+    "tribunal": "TRF5",
+    "instance": "1g",
+    "system": "pje",
+    "url": "https://pje.trf5.jus.br/pje/ConsultaPublica/listView.seam",
+    "success": true
+  },
+  {
+    "code": "TRF5_1G_BASE",
+    "tribunal": "TRF5",
+    "instance": "1g",
+    "system": "pje",
+    "url": "https://pje.trf5.jus.br/pje",
+    "success": true
+  },
+  {
+    "code": "TRF5_2G",
+    "tribunal": "TRF5",
+    "instance": "2g",
+    "system": "pje",
+    "url": "https://pje2g.trf5.jus.br/pje/ConsultaPublica/listView.seam",
+    "success": true
+  },
+  {
+    "code": "TRF5_2G_BASE",
+    "tribunal": "TRF5",
+    "instance": "2g",
+    "system": "pje",
+    "url": "https://pje2g.trf5.jus.br/pje",
+    "success": true
+  },
+  {
+    "code": "TRF6_1G",
+    "tribunal": "TRF6",
+    "instance": "1g",
+    "system": "pje",
+    "url": "https://sistemas.trf6.jus.br/consultaProcessual/",
+    "success": true
+  },
+  {
+    "code": "TRF6_2G",
+    "tribunal": "TRF6",
+    "instance": "2g",
+    "system": "pje",
+    "url": "https://sistemas.trf6.jus.br/consultaProcessual/",
+    "success": true
+  }
+]

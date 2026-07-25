@@ -1,0 +1,96 @@
+## 9. Resultados, paginação e limites
+
+### Endpoints (GET, sem autenticação)
+
+```
+/jurisprudencia-nacional-backend/api/no-auth/pesquisa          — a busca
+/jurisprudencia-nacional-backend/api/no-auth/pesquisa/filtros  — facetas + contagens
+/jurisprudencia-nacional-backend/api/no-auth/autocompletar     — sugestões
+```
+
+Não há endpoint de documento nem permalink por julgado — varrido o bundle Angular
+inteiro (18 chunks), estes três são os únicos `no-auth`. Por isso `inteiroTeorLink`
+é `null` no JSON de saída: seria invenção. A prova de existência de um julgado é
+a consulta por número (§10).
+
+### Envelope da resposta
+
+`{ documentos: [...], quantidadeTotal: <int>, temasTopFive: [...] }`
+
+### LIMITES DO USUÁRIO ANÔNIMO (impostos pelo servidor)
+
+| Limite | Valor | O que acontece ao violar |
+|---|---|---|
+| `size` (por página) | **só 5 ou 10** | HTTP 200 + `"Seu usuário não tem autorização para realizar pesquisas com páginas de tamanho 20!"` |
+| `page` | **0..19** | HTTP 200 + `"...não tem autorização para ir além da página 20!"` |
+| Total por consulta | **200** | consequência dos dois acima |
+| `quantidadeTotal` | **satura em 10000** | "10000" significa "10 mil ou mais", nunca exatamente 10 mil |
+
+O teto de 200 está no próprio bundle do site, como constante:
+`LIMITE_MAXIMO_DE_REGISTROS_PARA_USUARIO_NAO_AUTENTICADO=200`, e
+`opcoesLinhasPorPagina=[5,10]`. Não é rate limit nem anti-bot: é a política do sistema
+para quem não faz login. **Para varrer mais que 200, fatie a busca** (por mês, por órgão
+julgador, por classe) e concatene. O `FalcaoNavigator` recusa `size`/`page` inválidos
+no cliente, com mensagem explicando o teto, em vez de deixar o servidor recusar.
+
+### `sessionId` — obrigatório e validado por formato
+
+Todo request precisa de `sessionId=_XXXXXXX`: underscore + **exatamente 7** alfanuméricos.
+Formato errado → HTTP 200 + `{"userMessage":"Tentativa inválida de acesso ao sistema"}`.
+Não precisa ser uma sessão real (`_abcdefg` funciona); precisa ter o formato.
+`FalcaoNavigator.novoSessionId()` gera um por instância.
+
+### Ordenação (`ordenacao`)
+
+Combo "Ordenar por" (`p-dropdown`), três opções — print `09.03-combo-ordenacao.png`:
+
+| Rótulo na UI | valor de `ordenacao` | CLI |
+|---|---|---|
+| Mais relevantes (default) | `mais_relevante` | `-ord relevancia` |
+| Mais recentes | `mais_recente` | `-ord recentes` |
+| Mais antigas | `menos_recente` | `-ord antigos` |
+
+Verificado que muda de fato a ordem das datas retornadas.
+⚠️ Para automatizar: o `p-dropdown` do PrimeNG intercepta o clique no `<input>` interno —
+clique no wrapper `p-dropdown` (com `force: true`), não no input, senão o click pendura.
+
+### ⚠️ A contagem NÃO serve para comparar recortes grandes
+
+Como `quantidadeTotal` satura em 10000, dois recortes legitimamente diferentes podem
+devolver **10000 os dois** e parecer "filtro ignorado" quando o filtro está funcionando.
+Foi exatamente o que aconteceu num teste de aceite genérico comparando `-g 1` com `-g 2`.
+
+A prova correta quando as contagens saturam é **disjunção dos ids/processos retornados**:
+rode os dois recortes, colete os `id` e confirme interseção vazia. É o que
+`TRT9Testes.js` faz (e por isso o teste de coleção usa uma query estreita, cuja contagem
+não satura).
+
+### Escopo (`pesquisaSomenteNasEmentas`)
+
+`false` (default) busca no inteiro teor; `true` restringe à ementa.
+Prova: 2459 → 603. Na CLI: `--escopo ementa`.
+
+### Inteiro teor vem JUNTO da busca
+
+Cada documento já traz o texto completo — não há segunda requisição. Campo por coleção:
+
+| coleção | campo com o inteiro teor |
+|---|---|
+| `acordaos` | `textoAcordao` (+ `ementa` separada) |
+| `sentencas` | `textoSentenca` |
+| `decisoesmonocraticas` | `conteudoDocumento` |
+| `recursorevista` | `textoRecursoRevista` |
+
+Preço disso: a resposta é pesada. Um acórdão tem ~100 KB porque o HTML embute o brasão
+da República em **base64**. `--fetch-inteiro-teor` aplica `stripHtml()` e grava .txt limpo
+(~35 KB) sem novo acesso à rede.
+
+### Contagens de referência
+
+`09-contagens.json` — linha de base medida em 25/07/2026, para o `jur-fixer` detectar
+quebra silenciosa de filtro (contagens que passam a ser todas iguais = filtro ignorado).
+
+Prints: `09.01-resultados-precedentes.png` (lista, coleção default `precedentes`),
+`09.02-card-resultado-acordao.png` (card de acórdão do TRT9: sigla da classe, nº do processo,
+relatoria, Turma, data de juntada, ementa e trecho do acórdão),
+`09.03-combo-ordenacao.png` (combo de ordenação aberto)

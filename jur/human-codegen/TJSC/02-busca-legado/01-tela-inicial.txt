@@ -1,0 +1,34 @@
+TJSC — PORTAL LEGADO "Jurisprudência Catarinense" (base histórica)
+==================================================================
+URL   : https://busca.tjsc.jus.br/jurisprudencia/
+Print : 01.01-tela-inicial.png
+HTML  : 01-form-busca.html  (<form name="busca_avancada">)
+
+STATUS: mapeado, NÃO implementado. Está aqui para (a) documentar a
+desambiguação equivalente e (b) servir de plano B se o portal novo cair.
+
+A própria tela avisa, em faixa no topo:
+  "Comunicamos que, a partir da liberação do novo portal de jurisprudência,
+   prevista para o dia 08/10/2025, o portal atual deixará de receber atualizações
+   de novas decisões. [...] o portal antigo funcionará apenas como base histórica"
+
+Medição que confirma: "dano moral", 01/01/2026–31/03/2026 -> 15 resultados aqui,
+contra 8.315 no portal novo. NÃO use para busca corrente.
+
+DIFERENÇA IMPORTANTE DE ACESSO
+  Este host NÃO tem o desafio F5 na busca: o formulário faz um POST simples e
+  devolve HTML. Ou seja, seria um crawler `http` (mais barato que o do portal
+  novo) — mas sobre uma base congelada. Endpoint em 03-endpoint-e-contagens.json:
+
+    POST https://busca.tjsc.jus.br/jurisprudencia/buscaajax.do?&categoria=<categoria>
+      q, frase, qualquer, excluir, prox1, prox2, proxc, only_ementa,
+      classe, juizProlator, origem (=comarca), relator, radio_campo (ementa|integra),
+      faceta=true, busca=avancada, datainicial, datafinal, nuProcesso,
+      ps (10|20|50), sort (dtJulgamento desc|asc)
+
+CAMPOS QUE O PORTAL NOVO PERDEU (e existem só aqui)
+  - Comarca            (#origem_autocomplete)
+  - Juiz Prolator      (#juizProlator_autocomplete), separado do Relator
+  - Busca por campos separados: com todas / com a expressão / com qualquer uma /
+    sem as palavras / proximidade parametrizada (prox1 + prox2 + proxc "existam
+    até N termos") — no portal novo há um campo só.

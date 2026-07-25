@@ -1,0 +1,31 @@
+## 5. Tribunal — o que faz deste crawler um crawler do TRT9
+
+O Falcão é base nacional. O filtro `tribunais` é o que recorta o acervo do TRT9.
+
+- Parâmetro: `tribunais` (plural). Aceita CSV: `tribunais=TRT9,TRT4`.
+- Vazio (`tribunais=`) = todos os 26 acervos.
+- Lista completa com contagens: `05-tribunais.json`.
+- 26 valores: `TST`, `TRT1`..`TRT24`, `CSJT`.
+
+`TRT9Navigator` fixa `tribunal: 'TRT9'` no construtor; `FalcaoNavigator` aceita qualquer um.
+
+### Prova de que isola de fato (e não é decorativo)
+
+Query `insalubridade`, `acordaos`, 2025-01-01..2025-03-31:
+
+```
+tribunais= (todos) ... 10000  (saturado)
+tribunais=TRT9 .......  2459
+tribunais=TRT4 .......  3456
+tribunais=TRT9,TRT4 ..  5915   ← 2459 + 3456 = 5915, soma EXATA
+```
+
+A soma exata é a prova forte: os acervos são disjuntos e o filtro é aplicado antes da
+contagem, não depois.
+
+### Combo na UI
+
+O bloco "Tribunal" (ícone `corporate_fare`) mostra só os 5 primeiros; o resto fica atrás
+do link **"Mais..."**. Quem mapear só pelo que aparece na tela perde 21 dos 26.
+
+Prints: `05.01-filtro-tribunal.png`, `05.02-tribunal-trt9-selecionado.png`

@@ -1,0 +1,1442 @@
+[
+  {
+    "value": "-1",
+    "texto": "Todos"
+  },
+  {
+    "value": "Ação Civil de Improbidade Administrativa",
+    "texto": "Ação Civil de Improbidade Administrativa"
+  },
+  {
+    "value": "Ação Civil Improbidade Administrativa",
+    "texto": "Ação Civil Improbidade Administrativa"
+  },
+  {
+    "value": "Ação Civil Pública",
+    "texto": "Ação Civil Pública"
+  },
+  {
+    "value": "Ação Civil Pública",
+    "texto": "Ação Civil Pública"
+  },
+  {
+    "value": "Ação Direta de Inconstitucionalidade",
+    "texto": "Ação Direta de Inconstitucionalidade"
+  },
+  {
+    "value": "Ação Penal de Competência do Júri",
+    "texto": "Ação Penal de Competência do Júri"
+  },
+  {
+    "value": "Ação Penal de Competencia Juri",
+    "texto": "Ação Penal de Competencia Juri"
+  },
+  {
+    "value": "Ação Penal - Procedimento Ordinário",
+    "texto": "Ação Penal - Procedimento Ordinário"
+  },
+  {
+    "value": "Ação Penal - Procedimento Ordinário",
+    "texto": "Ação Penal - Procedimento Ordinário"
+  },
+  {
+    "value": "Ação Penal - Procedimento Sumário",
+    "texto": "Ação Penal - Procedimento Sumário"
+  },
+  {
+    "value": "Ação Penal - Procedimento Sumário",
+    "texto": "Ação Penal - Procedimento Sumário"
+  },
+  {
+    "value": "Ação Penal - Procedimento Sumaríssimo",
+    "texto": "Ação Penal - Procedimento Sumaríssimo"
+  },
+  {
+    "value": "Ação Penal - Procedimento Sumaríssimo",
+    "texto": "Ação Penal - Procedimento Sumaríssimo"
+  },
+  {
+    "value": "Ação Popular",
+    "texto": "Ação Popular"
+  },
+  {
+    "value": "Ação Rescisória",
+    "texto": "Ação Rescisória"
+  },
+  {
+    "value": "Ação Rescisória",
+    "texto": "Ação Rescisória"
+  },
+  {
+    "value": "Agravo",
+    "texto": "Agravo"
+  },
+  {
+    "value": "Agravo de Execução Penal",
+    "texto": "Agravo de Execução Penal"
+  },
+  {
+    "value": "Agravo de Instrumento",
+    "texto": "Agravo de Instrumento"
+  },
+  {
+    "value": "Agravo de Instrumento",
+    "texto": "Agravo de Instrumento"
+  },
+  {
+    "value": "Agravo de Instrumento em Recurso Especial",
+    "texto": "Agravo de Instrumento em Recurso Especial"
+  },
+  {
+    "value": "Agravo de Instrumento em Recurso Especial",
+    "texto": "Agravo de Instrumento em Recurso Especial"
+  },
+  {
+    "value": "Agravo de Instrumento em Recurso Extraordinário",
+    "texto": "Agravo de Instrumento em Recurso Extraordinário"
+  },
+  {
+    "value": "Agravo de Instrumento em Recurso Extraordinario",
+    "texto": "Agravo de Instrumento em Recurso Extraordinario"
+  },
+  {
+    "value": "Agravo de Instrumento em Recurso Extraordinário",
+    "texto": "Agravo de Instrumento em Recurso Extraordinário"
+  },
+  {
+    "value": "Agravo de Instrumento Originário",
+    "texto": "Agravo de Instrumento Originário"
+  },
+  {
+    "value": "Agravo de Petição",
+    "texto": "Agravo de Petição"
+  },
+  {
+    "value": "Agravo Embargos Infringentes",
+    "texto": "Agravo Embargos Infringentes"
+  },
+  {
+    "value": "Agravo em Execução",
+    "texto": "Agravo em Execução"
+  },
+  {
+    "value": "Agravo em Rec. Esp/Extr",
+    "texto": "Agravo em Rec. Esp/Extr"
+  },
+  {
+    "value": "Agravo Inominado",
+    "texto": "Agravo Inominado"
+  },
+  {
+    "value": "Agravo Interno",
+    "texto": "Agravo Interno"
+  },
+  {
+    "value": "Agravo Interno",
+    "texto": "Agravo Interno"
+  },
+  {
+    "value": "Agravo Lei",
+    "texto": "Agravo Lei"
+  },
+  {
+    "value": "Agravo Regimental",
+    "texto": "Agravo Regimental"
+  },
+  {
+    "value": "Agravo Regimental Cível",
+    "texto": "Agravo Regimental Cível"
+  },
+  {
+    "value": "Agravo Regimental Criminal",
+    "texto": "Agravo Regimental Criminal"
+  },
+  {
+    "value": "Anistia",
+    "texto": "Anistia"
+  },
+  {
+    "value": "Apelação Cível",
+    "texto": "Apelação Cível"
+  },
+  {
+    "value": "Apelação Cível",
+    "texto": "Apelação Cível"
+  },
+  {
+    "value": "Apelação-Crime",
+    "texto": "Apelação-Crime"
+  },
+  {
+    "value": "Apelação Criminal",
+    "texto": "Apelação Criminal"
+  },
+  {
+    "value": "Apelação em Mandado de Segurança",
+    "texto": "Apelação em Mandado de Segurança"
+  },
+  {
+    "value": "Apelação e Reexame Necessário",
+    "texto": "Apelação e Reexame Necessário"
+  },
+  {
+    "value": "Apelação Rec. Sentido Estrito",
+    "texto": "Apelação Rec. Sentido Estrito"
+  },
+  {
+    "value": "Apelação Recurso de Ofício",
+    "texto": "Apelação Recurso de Ofício"
+  },
+  {
+    "value": "Apelação / Remessa Necessária",
+    "texto": "Apelação / Remessa Necessária"
+  },
+  {
+    "value": "Arresto",
+    "texto": "Arresto"
+  },
+  {
+    "value": "Arresto",
+    "texto": "Arresto"
+  },
+  {
+    "value": "Arresto Hipoteca Legal",
+    "texto": "Arresto Hipoteca Legal"
+  },
+  {
+    "value": "Arresto / Hipoteca Legal",
+    "texto": "Arresto / Hipoteca Legal"
+  },
+  {
+    "value": "Arrolamento de Bens",
+    "texto": "Arrolamento de Bens"
+  },
+  {
+    "value": "Assistência Judiciária",
+    "texto": "Assistência Judiciária"
+  },
+  {
+    "value": "Atentado",
+    "texto": "Atentado"
+  },
+  {
+    "value": "Auto de Prisão em Flagrante",
+    "texto": "Auto de Prisão em Flagrante"
+  },
+  {
+    "value": "Avaliação para atestar dependência de drogas",
+    "texto": "Avaliação para atestar dependência de drogas"
+  },
+  {
+    "value": "Avocatória",
+    "texto": "Avocatória"
+  },
+  {
+    "value": "Busca e Apreensão",
+    "texto": "Busca e Apreensão"
+  },
+  {
+    "value": "Carta Arbitral",
+    "texto": "Carta Arbitral"
+  },
+  {
+    "value": "Carta de Ordem Cível",
+    "texto": "Carta de Ordem Cível"
+  },
+  {
+    "value": "Carta de Ordem Criminal",
+    "texto": "Carta de Ordem Criminal"
+  },
+  {
+    "value": "Carta Precatória Cível",
+    "texto": "Carta Precatória Cível"
+  },
+  {
+    "value": "Carta Precatória Criminal",
+    "texto": "Carta Precatória Criminal"
+  },
+  {
+    "value": "Cartas (Cível)",
+    "texto": "Cartas (Cível)"
+  },
+  {
+    "value": "Cartas (Criminal)",
+    "texto": "Cartas (Criminal)"
+  },
+  {
+    "value": "Carta Testemunhável",
+    "texto": "Carta Testemunhável"
+  },
+  {
+    "value": "Carta Testemunhável",
+    "texto": "Carta Testemunhável"
+  },
+  {
+    "value": "Caução",
+    "texto": "Caução"
+  },
+  {
+    "value": "Cautelar Incidental",
+    "texto": "Cautelar Incidental"
+  },
+  {
+    "value": "Cautelar Inominada",
+    "texto": "Cautelar Inominada"
+  },
+  {
+    "value": "Cautelar Inominada",
+    "texto": "Cautelar Inominada"
+  },
+  {
+    "value": "Cautelar Inominada Criminal",
+    "texto": "Cautelar Inominada Criminal"
+  },
+  {
+    "value": "Coisa Julgada",
+    "texto": "Coisa Julgada"
+  },
+  {
+    "value": "Comunicação",
+    "texto": "Comunicação"
+  },
+  {
+    "value": "Comutação de Pena",
+    "texto": "Comutação de Pena"
+  },
+  {
+    "value": "Conflito de atribuição",
+    "texto": "Conflito de atribuição"
+  },
+  {
+    "value": "Conflito de competência",
+    "texto": "Conflito de competência"
+  },
+  {
+    "value": "Conflito de Competência",
+    "texto": "Conflito de Competência"
+  },
+  {
+    "value": "Conflito de Jurisdição",
+    "texto": "Conflito de Jurisdição"
+  },
+  {
+    "value": "Conflito de Jurisdição",
+    "texto": "Conflito de Jurisdição"
+  },
+  {
+    "value": "Conflitos",
+    "texto": "Conflitos"
+  },
+  {
+    "value": "Consignação em Pagamento",
+    "texto": "Consignação em Pagamento"
+  },
+  {
+    "value": "Conversão de Pena",
+    "texto": "Conversão de Pena"
+  },
+  {
+    "value": "Correição Extraordinária",
+    "texto": "Correição Extraordinária"
+  },
+  {
+    "value": "Correição Ordinária",
+    "texto": "Correição Ordinária"
+  },
+  {
+    "value": "Correição Parcial",
+    "texto": "Correição Parcial"
+  },
+  {
+    "value": "Correição Parcial Cível",
+    "texto": "Correição Parcial Cível"
+  },
+  {
+    "value": "Correição Parcial Criminal",
+    "texto": "Correição Parcial Criminal"
+  },
+  {
+    "value": "Correição Parcial ou Reclamação Correicional",
+    "texto": "Correição Parcial ou Reclamação Correicional"
+  },
+  {
+    "value": "Crime Responsabilidade Funcionário Publico",
+    "texto": "Crime Responsabilidade Funcionário Publico"
+  },
+  {
+    "value": "Crimes Ambientais",
+    "texto": "Crimes Ambientais"
+  },
+  {
+    "value": "Crimes Ambientais",
+    "texto": "Crimes Ambientais"
+  },
+  {
+    "value": "Crimes contra a honra",
+    "texto": "Crimes contra a honra"
+  },
+  {
+    "value": "Crimes Contra a Propriedade Imaterial",
+    "texto": "Crimes Contra a Propriedade Imaterial"
+  },
+  {
+    "value": "Crimes Contra a Propriedade Industrial",
+    "texto": "Crimes Contra a Propriedade Industrial"
+  },
+  {
+    "value": "Crimes Contra a Propriedade Intelectual",
+    "texto": "Crimes Contra a Propriedade Intelectual"
+  },
+  {
+    "value": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular",
+    "texto": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular"
+  },
+  {
+    "value": "Crimes de Imprensa",
+    "texto": "Crimes de Imprensa"
+  },
+  {
+    "value": "Crimes de Responsabilidade dos Funcionários Públicos",
+    "texto": "Crimes de Responsabilidade dos Funcionários Públicos"
+  },
+  {
+    "value": "Cumprimento de Sentença",
+    "texto": "Cumprimento de Sentença"
+  },
+  {
+    "value": "Cumprimento de sentença",
+    "texto": "Cumprimento de sentença"
+  },
+  {
+    "value": "Cumprimento de Sentença contra a Fazenda Pública",
+    "texto": "Cumprimento de Sentença contra a Fazenda Pública"
+  },
+  {
+    "value": "Cumprimento provisório de decisão",
+    "texto": "Cumprimento provisório de decisão"
+  },
+  {
+    "value": "Cumprimento Provisório de Sentença",
+    "texto": "Cumprimento Provisório de Sentença"
+  },
+  {
+    "value": "Declaração de Inconstitucionalidade",
+    "texto": "Declaração de Inconstitucionalidade"
+  },
+  {
+    "value": "Declaratória de Constitucionalidade",
+    "texto": "Declaratória de Constitucionalidade"
+  },
+  {
+    "value": "Declaratória de Constitucionalidade",
+    "texto": "Declaratória de Constitucionalidade"
+  },
+  {
+    "value": "Denúncia",
+    "texto": "Denúncia"
+  },
+  {
+    "value": "Desaforamento",
+    "texto": "Desaforamento"
+  },
+  {
+    "value": "Desaforamento de Julgamento",
+    "texto": "Desaforamento de Julgamento"
+  },
+  {
+    "value": "Direta de Inconstitucionalidade",
+    "texto": "Direta de Inconstitucionalidade"
+  },
+  {
+    "value": "Dissídio Coletivo de Greve",
+    "texto": "Dissídio Coletivo de Greve"
+  },
+  {
+    "value": "Dúvida de Competência",
+    "texto": "Dúvida de Competência"
+  },
+  {
+    "value": "Embargos",
+    "texto": "Embargos"
+  },
+  {
+    "value": "Embargos",
+    "texto": "Embargos"
+  },
+  {
+    "value": "Embargos à Adjudicação",
+    "texto": "Embargos à Adjudicação"
+  },
+  {
+    "value": "Embargos à Arrematação",
+    "texto": "Embargos à Arrematação"
+  },
+  {
+    "value": "Embargos à Execução",
+    "texto": "Embargos à Execução"
+  },
+  {
+    "value": "Embargos à Execução",
+    "texto": "Embargos à Execução"
+  },
+  {
+    "value": "Embargos de Declaração",
+    "texto": "Embargos de Declaração"
+  },
+  {
+    "value": "Embargos de Declaração Cível",
+    "texto": "Embargos de Declaração Cível"
+  },
+  {
+    "value": "Embargos de Declaração Criminal",
+    "texto": "Embargos de Declaração Criminal"
+  },
+  {
+    "value": "Embargos de Nulidade",
+    "texto": "Embargos de Nulidade"
+  },
+  {
+    "value": "Embargos de Terceiro",
+    "texto": "Embargos de Terceiro"
+  },
+  {
+    "value": "Embargos de Terceiro Cível",
+    "texto": "Embargos de Terceiro Cível"
+  },
+  {
+    "value": "Embargos de Terceiros",
+    "texto": "Embargos de Terceiros"
+  },
+  {
+    "value": "Embargos Infringentes",
+    "texto": "Embargos Infringentes"
+  },
+  {
+    "value": "Embargos Infringentes",
+    "texto": "Embargos Infringentes"
+  },
+  {
+    "value": "Embargos Infringentes e de Nulidade",
+    "texto": "Embargos Infringentes e de Nulidade"
+  },
+  {
+    "value": "Embargos Infringentes e de Nulidade",
+    "texto": "Embargos Infringentes e de Nulidade"
+  },
+  {
+    "value": "Erro Material na Apelação Cível",
+    "texto": "Erro Material na Apelação Cível"
+  },
+  {
+    "value": "Exceção da Verdade",
+    "texto": "Exceção da Verdade"
+  },
+  {
+    "value": "Exceção da Verdade",
+    "texto": "Exceção da Verdade"
+  },
+  {
+    "value": "Exceção de Impedimento",
+    "texto": "Exceção de Impedimento"
+  },
+  {
+    "value": "Exceção de Impedimento",
+    "texto": "Exceção de Impedimento"
+  },
+  {
+    "value": "Exceção de Impedimento",
+    "texto": "Exceção de Impedimento"
+  },
+  {
+    "value": "Exceção de Incompetência",
+    "texto": "Exceção de Incompetência"
+  },
+  {
+    "value": "Exceção de Incompetência",
+    "texto": "Exceção de Incompetência"
+  },
+  {
+    "value": "Exceção de Incompetência de Juízo",
+    "texto": "Exceção de Incompetência de Juízo"
+  },
+  {
+    "value": "Exceção de Litispendência",
+    "texto": "Exceção de Litispendência"
+  },
+  {
+    "value": "Exceção de Suspeição",
+    "texto": "Exceção de Suspeição"
+  },
+  {
+    "value": "Exceção de Suspeição",
+    "texto": "Exceção de Suspeição"
+  },
+  {
+    "value": "Exceção de Suspeição",
+    "texto": "Exceção de Suspeição"
+  },
+  {
+    "value": "Exceções",
+    "texto": "Exceções"
+  },
+  {
+    "value": "Exceções",
+    "texto": "Exceções"
+  },
+  {
+    "value": "Excesso ou Desvio",
+    "texto": "Excesso ou Desvio"
+  },
+  {
+    "value": "Execução Contra a Fazenda Pública",
+    "texto": "Execução Contra a Fazenda Pública"
+  },
+  {
+    "value": "Execução Criminal",
+    "texto": "Execução Criminal"
+  },
+  {
+    "value": "Execução da Pena",
+    "texto": "Execução da Pena"
+  },
+  {
+    "value": "Execução de Título Judicial",
+    "texto": "Execução de Título Judicial"
+  },
+  {
+    "value": "Execução Provisória",
+    "texto": "Execução Provisória"
+  },
+  {
+    "value": "Exibição",
+    "texto": "Exibição"
+  },
+  {
+    "value": "Exibição de Documento ou Coisa",
+    "texto": "Exibição de Documento ou Coisa"
+  },
+  {
+    "value": "Expropriação da Lei 8.257/91",
+    "texto": "Expropriação da Lei 8.257/91"
+  },
+  {
+    "value": "Habeas Corpus",
+    "texto": "Habeas Corpus"
+  },
+  {
+    "value": "Habeas Corpus Cível",
+    "texto": "Habeas Corpus Cível"
+  },
+  {
+    "value": "Habeas Corpus Criminal",
+    "texto": "Habeas Corpus Criminal"
+  },
+  {
+    "value": "Habeas Data",
+    "texto": "Habeas Data"
+  },
+  {
+    "value": "Habeas Data",
+    "texto": "Habeas Data"
+  },
+  {
+    "value": "Habilitação",
+    "texto": "Habilitação"
+  },
+  {
+    "value": "Habilitação",
+    "texto": "Habilitação"
+  },
+  {
+    "value": "Ilegitimidade de Parte",
+    "texto": "Ilegitimidade de Parte"
+  },
+  {
+    "value": "Impugnação",
+    "texto": "Impugnação"
+  },
+  {
+    "value": "Impugnação à Assistência Judiciária",
+    "texto": "Impugnação à Assistência Judiciária"
+  },
+  {
+    "value": "Impugnação ao Cumprimento de Sentença",
+    "texto": "Impugnação ao Cumprimento de Sentença"
+  },
+  {
+    "value": "Impugnação ao Cumprimento de Sentença",
+    "texto": "Impugnação ao Cumprimento de Sentença"
+  },
+  {
+    "value": "Impugnação ao Pedido de Assistência Litisconsorcial ou Simples",
+    "texto": "Impugnação ao Pedido de Assistência Litisconsorcial ou Simples"
+  },
+  {
+    "value": "Impugnação ao Valor da Causa",
+    "texto": "Impugnação ao Valor da Causa"
+  },
+  {
+    "value": "Impugnação ao Valor da Causa",
+    "texto": "Impugnação ao Valor da Causa"
+  },
+  {
+    "value": "Impugnação de Assistência Judiciária",
+    "texto": "Impugnação de Assistência Judiciária"
+  },
+  {
+    "value": "Incidente de Arguição de Inconstitucionalidade Cível",
+    "texto": "Incidente de Arguição de Inconstitucionalidade Cível"
+  },
+  {
+    "value": "Incidente de Arguição de Inconstitucionalidade Criminal",
+    "texto": "Incidente de Arguição de Inconstitucionalidade Criminal"
+  },
+  {
+    "value": "Incidente de Assunção de Competência",
+    "texto": "Incidente de Assunção de Competência"
+  },
+  {
+    "value": "Incidente de Assunção de Competência",
+    "texto": "Incidente de Assunção de Competência"
+  },
+  {
+    "value": "Incidente de Desconsideração de Personalidade Jurídica",
+    "texto": "Incidente de Desconsideração de Personalidade Jurídica"
+  },
+  {
+    "value": "Incidente de Falsidade",
+    "texto": "Incidente de Falsidade"
+  },
+  {
+    "value": "Incidente de Falsidade",
+    "texto": "Incidente de Falsidade"
+  },
+  {
+    "value": "Incidente de Falsidade",
+    "texto": "Incidente de Falsidade"
+  },
+  {
+    "value": "Incidente de Impedimento",
+    "texto": "Incidente de Impedimento"
+  },
+  {
+    "value": "Incidente de Inconstitucionalidade",
+    "texto": "Incidente de Inconstitucionalidade"
+  },
+  {
+    "value": "Incidente de Prevenção ou Composição de Divergência",
+    "texto": "Incidente de Prevenção ou Composição de Divergência"
+  },
+  {
+    "value": "Incidente de Resolucao de Demandas Repetitiva",
+    "texto": "Incidente de Resolucao de Demandas Repetitiva"
+  },
+  {
+    "value": "Incidente de Resolução de Demandas Repetitivas",
+    "texto": "Incidente de Resolução de Demandas Repetitivas"
+  },
+  {
+    "value": "Incidente de Suspeição",
+    "texto": "Incidente de Suspeição"
+  },
+  {
+    "value": "Incidente de Uniformização da Jurisprudência",
+    "texto": "Incidente de Uniformização da Jurisprudência"
+  },
+  {
+    "value": "Incidente de Uniformização de Jurisprudência",
+    "texto": "Incidente de Uniformização de Jurisprudência"
+  },
+  {
+    "value": "Incidente de Uniformização de Jurisprudência",
+    "texto": "Incidente de Uniformização de Jurisprudência"
+  },
+  {
+    "value": "Incidente de Uniformizacao Jurisprudencia",
+    "texto": "Incidente de Uniformizacao Jurisprudencia"
+  },
+  {
+    "value": "Incidentes",
+    "texto": "Incidentes"
+  },
+  {
+    "value": "Indulto",
+    "texto": "Indulto"
+  },
+  {
+    "value": "Inquérito Policial",
+    "texto": "Inquérito Policial"
+  },
+  {
+    "value": "Inquérito Policial",
+    "texto": "Inquérito Policial"
+  },
+  {
+    "value": "Insanidade Mental do Acusado",
+    "texto": "Insanidade Mental do Acusado"
+  },
+  {
+    "value": "Inspeção",
+    "texto": "Inspeção"
+  },
+  {
+    "value": "Interpelação",
+    "texto": "Interpelação"
+  },
+  {
+    "value": "Interpelação",
+    "texto": "Interpelação"
+  },
+  {
+    "value": "Interpelação Judicial",
+    "texto": "Interpelação Judicial"
+  },
+  {
+    "value": "Interpelações",
+    "texto": "Interpelações"
+  },
+  {
+    "value": "Intervenção em Município",
+    "texto": "Intervenção em Município"
+  },
+  {
+    "value": "Intervenção em Município",
+    "texto": "Intervenção em Município"
+  },
+  {
+    "value": "Intervenção Federal no Estado",
+    "texto": "Intervenção Federal no Estado"
+  },
+  {
+    "value": "Intervenção no Estado",
+    "texto": "Intervenção no Estado"
+  },
+  {
+    "value": "Investigação contra magistrado",
+    "texto": "Investigação contra magistrado"
+  },
+  {
+    "value": "Investigação Contra Magistrado",
+    "texto": "Investigação Contra Magistrado"
+  },
+  {
+    "value": "Justificação",
+    "texto": "Justificação"
+  },
+  {
+    "value": "Liberdade",
+    "texto": "Liberdade"
+  },
+  {
+    "value": "Liberdade Provisória com ou sem fiança",
+    "texto": "Liberdade Provisória com ou sem fiança"
+  },
+  {
+    "value": "Liquidação por Arbitramento",
+    "texto": "Liquidação por Arbitramento"
+  },
+  {
+    "value": "Liquidação por Artigos",
+    "texto": "Liquidação por Artigos"
+  },
+  {
+    "value": "Liquidação Provisória de Sentença pelo Procedimento Comum",
+    "texto": "Liquidação Provisória de Sentença pelo Procedimento Comum"
+  },
+  {
+    "value": "Liquidação Provisória por Arbitramento",
+    "texto": "Liquidação Provisória por Arbitramento"
+  },
+  {
+    "value": "Liquidação Provisória por Artigos",
+    "texto": "Liquidação Provisória por Artigos"
+  },
+  {
+    "value": "Liquidação Provisória por Artigos",
+    "texto": "Liquidação Provisória por Artigos"
+  },
+  {
+    "value": "Litispendência",
+    "texto": "Litispendência"
+  },
+  {
+    "value": "Mandado de Injunção",
+    "texto": "Mandado de Injunção"
+  },
+  {
+    "value": "Mandado de Injunção",
+    "texto": "Mandado de Injunção"
+  },
+  {
+    "value": "Mandado de Segurança",
+    "texto": "Mandado de Segurança"
+  },
+  {
+    "value": "Mandado de Segurança Cível",
+    "texto": "Mandado de Segurança Cível"
+  },
+  {
+    "value": "Mandado de Segurança Coletivo",
+    "texto": "Mandado de Segurança Coletivo"
+  },
+  {
+    "value": "Mandado de Segurança Coletivo",
+    "texto": "Mandado de Segurança Coletivo"
+  },
+  {
+    "value": "Mandado de Segurança Crime",
+    "texto": "Mandado de Segurança Crime"
+  },
+  {
+    "value": "Mandado de Segurança Criminal",
+    "texto": "Mandado de Segurança Criminal"
+  },
+  {
+    "value": "Medida Cautelar",
+    "texto": "Medida Cautelar"
+  },
+  {
+    "value": "Medida Cautelar Inominada",
+    "texto": "Medida Cautelar Inominada"
+  },
+  {
+    "value": "Medidas Assecuratórias",
+    "texto": "Medidas Assecuratórias"
+  },
+  {
+    "value": "Medidas Cautelares",
+    "texto": "Medidas Cautelares"
+  },
+  {
+    "value": "Medidas Investigatórias Sobre Organizações Criminosas",
+    "texto": "Medidas Investigatórias Sobre Organizações Criminosas"
+  },
+  {
+    "value": "Medidas Preparatórias",
+    "texto": "Medidas Preparatórias"
+  },
+  {
+    "value": "Medidas Protetivas de Urgencia",
+    "texto": "Medidas Protetivas de Urgencia"
+  },
+  {
+    "value": "Medidas Protetivas de urgência (Lei Maria da Penha)",
+    "texto": "Medidas Protetivas de urgência (Lei Maria da Penha)"
+  },
+  {
+    "value": "Notícia-Crime",
+    "texto": "Notícia-Crime"
+  },
+  {
+    "value": "Notícia Crime",
+    "texto": "Notícia Crime"
+  },
+  {
+    "value": "Notificação",
+    "texto": "Notificação"
+  },
+  {
+    "value": "Notificação Para Explicações",
+    "texto": "Notificação Para Explicações"
+  },
+  {
+    "value": "Notificação para Explicações",
+    "texto": "Notificação para Explicações"
+  },
+  {
+    "value": "Notificação para Explicações (Lei de Imprensa)",
+    "texto": "Notificação para Explicações (Lei de Imprensa)"
+  },
+  {
+    "value": "Ocorrência Policial",
+    "texto": "Ocorrência Policial"
+  },
+  {
+    "value": "Oposição",
+    "texto": "Oposição"
+  },
+  {
+    "value": "Oposição",
+    "texto": "Oposição"
+  },
+  {
+    "value": "Outras medidas provisionais",
+    "texto": "Outras medidas provisionais"
+  },
+  {
+    "value": "Outros Crimes",
+    "texto": "Outros Crimes"
+  },
+  {
+    "value": "Outros Feitos",
+    "texto": "Outros Feitos"
+  },
+  {
+    "value": "Outros Incidentes",
+    "texto": "Outros Incidentes"
+  },
+  {
+    "value": "Pedido de Arquivamento",
+    "texto": "Pedido de Arquivamento"
+  },
+  {
+    "value": "Pedido de Arquivamento em Representação Criminal",
+    "texto": "Pedido de Arquivamento em Representação Criminal"
+  },
+  {
+    "value": "Pedido de Assistência Judiciária Gratuita",
+    "texto": "Pedido de Assistência Judiciária Gratuita"
+  },
+  {
+    "value": "Pedido de Busca e Apreensão Criminal",
+    "texto": "Pedido de Busca e Apreensão Criminal"
+  },
+  {
+    "value": "Pedido de Desaforamento",
+    "texto": "Pedido de Desaforamento"
+  },
+  {
+    "value": "Pedido de Efeito Suspensivo à Apelação",
+    "texto": "Pedido de Efeito Suspensivo à Apelação"
+  },
+  {
+    "value": "Pedido de Exame para Cessação de Periculosidade",
+    "texto": "Pedido de Exame para Cessação de Periculosidade"
+  },
+  {
+    "value": "Pedido de Intervenção",
+    "texto": "Pedido de Intervenção"
+  },
+  {
+    "value": "Pedido de Prisão",
+    "texto": "Pedido de Prisão"
+  },
+  {
+    "value": "Pedido de Prisão Preventiva",
+    "texto": "Pedido de Prisão Preventiva"
+  },
+  {
+    "value": "Pedido de Prisão Temporária",
+    "texto": "Pedido de Prisão Temporária"
+  },
+  {
+    "value": "Pedido de Providências",
+    "texto": "Pedido de Providências"
+  },
+  {
+    "value": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico",
+    "texto": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico"
+  },
+  {
+    "value": "Pedido de Uniformização de Interpretação de Lei Cível",
+    "texto": "Pedido de Uniformização de Interpretação de Lei Cível"
+  },
+  {
+    "value": "Pedido Quebra Sig Dados E/ou Telef",
+    "texto": "Pedido Quebra Sig Dados E/ou Telef"
+  },
+  {
+    "value": "Pedido Suspensão Liminar/Execução Sentença",
+    "texto": "Pedido Suspensão Liminar/Execução Sentença"
+  },
+  {
+    "value": "Petição",
+    "texto": "Petição"
+  },
+  {
+    "value": "Petição Cível",
+    "texto": "Petição Cível"
+  },
+  {
+    "value": "Petição Criminal",
+    "texto": "Petição Criminal"
+  },
+  {
+    "value": "Precatório",
+    "texto": "Precatório"
+  },
+  {
+    "value": "Prefeito - Improbidade",
+    "texto": "Prefeito - Improbidade"
+  },
+  {
+    "value": "Procedimento Comum",
+    "texto": "Procedimento Comum"
+  },
+  {
+    "value": "Procedimento de Cumprimento de Sentença",
+    "texto": "Procedimento de Cumprimento de Sentença"
+  },
+  {
+    "value": "Procedimento de Liquidação",
+    "texto": "Procedimento de Liquidação"
+  },
+  {
+    "value": "Procedimento do Juizado Especial Cível",
+    "texto": "Procedimento do Juizado Especial Cível"
+  },
+  {
+    "value": "Procedimento do Juizado Especial da Fazenda Pública",
+    "texto": "Procedimento do Juizado Especial da Fazenda Pública"
+  },
+  {
+    "value": "Procedimento Especial da Lei Antitóxicos",
+    "texto": "Procedimento Especial da Lei Antitóxicos"
+  },
+  {
+    "value": "Procedimento Especial dos Crimes de Abuso de Autoridade",
+    "texto": "Procedimento Especial dos Crimes de Abuso de Autoridade"
+  },
+  {
+    "value": "Procedimento Investigatório do MP",
+    "texto": "Procedimento Investigatório do MP"
+  },
+  {
+    "value": "Procedimento Investigatório do MP (Peças de Informação)",
+    "texto": "Procedimento Investigatório do MP (Peças de Informação)"
+  },
+  {
+    "value": "PROCEDIMENTOS ADMINISTRATIVOS",
+    "texto": "PROCEDIMENTOS ADMINISTRATIVOS"
+  },
+  {
+    "value": "Procedimentos Investigatórios",
+    "texto": "Procedimentos Investigatórios"
+  },
+  {
+    "value": "Processo Administrativo",
+    "texto": "Processo Administrativo"
+  },
+  {
+    "value": "Processo Administrativo Disciplinar em face de Magistrado",
+    "texto": "Processo Administrativo Disciplinar em face de Magistrado"
+  },
+  {
+    "value": "Processo Administrativo Disciplinar em face de Servidor",
+    "texto": "Processo Administrativo Disciplinar em face de Servidor"
+  },
+  {
+    "value": "Processo Cautelar",
+    "texto": "Processo Cautelar"
+  },
+  {
+    "value": "Processo Crime",
+    "texto": "Processo Crime"
+  },
+  {
+    "value": "Processo de Execução",
+    "texto": "Processo de Execução"
+  },
+  {
+    "value": "Processo Especial",
+    "texto": "Processo Especial"
+  },
+  {
+    "value": "Processo Especial de Leis Esparsas",
+    "texto": "Processo Especial de Leis Esparsas"
+  },
+  {
+    "value": "Processo Especial do Código de Processo Penal",
+    "texto": "Processo Especial do Código de Processo Penal"
+  },
+  {
+    "value": "Processo Penal com Multiplicidade de Procedimentos",
+    "texto": "Processo Penal com Multiplicidade de Procedimentos"
+  },
+  {
+    "value": "Processo Sumário (Detenção)",
+    "texto": "Processo Sumário (Detenção)"
+  },
+  {
+    "value": "Produção Antecipada de Provas",
+    "texto": "Produção Antecipada de Provas"
+  },
+  {
+    "value": "Protesto",
+    "texto": "Protesto"
+  },
+  {
+    "value": "Queixa-Crime",
+    "texto": "Queixa-Crime"
+  },
+  {
+    "value": "Reabilitação",
+    "texto": "Reabilitação"
+  },
+  {
+    "value": "Reabilitação",
+    "texto": "Reabilitação"
+  },
+  {
+    "value": "Reclamação",
+    "texto": "Reclamação"
+  },
+  {
+    "value": "Reclamação",
+    "texto": "Reclamação"
+  },
+  {
+    "value": "Reclamação",
+    "texto": "Reclamação"
+  },
+  {
+    "value": "Reclamação Criminal",
+    "texto": "Reclamação Criminal"
+  },
+  {
+    "value": "Reclamação Disciplinar",
+    "texto": "Reclamação Disciplinar"
+  },
+  {
+    "value": "Reclamação Regimental",
+    "texto": "Reclamação Regimental"
+  },
+  {
+    "value": "Recurso Administrativo",
+    "texto": "Recurso Administrativo"
+  },
+  {
+    "value": "Recurso Crime",
+    "texto": "Recurso Crime"
+  },
+  {
+    "value": "Recurso de Agravo",
+    "texto": "Recurso de Agravo"
+  },
+  {
+    "value": "Recurso de Decisão de Habeas Corpus",
+    "texto": "Recurso de Decisão de Habeas Corpus"
+  },
+  {
+    "value": "Recurso de Mandado de Segurança",
+    "texto": "Recurso de Mandado de Segurança"
+  },
+  {
+    "value": "Recurso de Ofício",
+    "texto": "Recurso de Ofício"
+  },
+  {
+    "value": "Recurso de Revista",
+    "texto": "Recurso de Revista"
+  },
+  {
+    "value": "Recurso em Processo Administrativo Disciplinar em face de Servidor",
+    "texto": "Recurso em Processo Administrativo Disciplinar em face de Servidor"
+  },
+  {
+    "value": "Recurso em Sentido Estrito",
+    "texto": "Recurso em Sentido Estrito"
+  },
+  {
+    "value": "Recurso em Sentido Estrito",
+    "texto": "Recurso em Sentido Estrito"
+  },
+  {
+    "value": "Recurso Especial",
+    "texto": "Recurso Especial"
+  },
+  {
+    "value": "Recurso Especial",
+    "texto": "Recurso Especial"
+  },
+  {
+    "value": "Recurso Especial",
+    "texto": "Recurso Especial"
+  },
+  {
+    "value": "Recurso Especial e ou Extraordinário",
+    "texto": "Recurso Especial e ou Extraordinário"
+  },
+  {
+    "value": "Recurso Extraordinário",
+    "texto": "Recurso Extraordinário"
+  },
+  {
+    "value": "Recurso Extraordinário",
+    "texto": "Recurso Extraordinário"
+  },
+  {
+    "value": "Recurso Extraordinário e Especial",
+    "texto": "Recurso Extraordinário e Especial"
+  },
+  {
+    "value": "Recurso Extraordinário e Especial",
+    "texto": "Recurso Extraordinário e Especial"
+  },
+  {
+    "value": "Recurso Inominado",
+    "texto": "Recurso Inominado"
+  },
+  {
+    "value": "Recurso Oficioso em Sentido Estrito",
+    "texto": "Recurso Oficioso em Sentido Estrito"
+  },
+  {
+    "value": "Reexame Necessário",
+    "texto": "Reexame Necessário"
+  },
+  {
+    "value": "Relaxamento de Prisão",
+    "texto": "Relaxamento de Prisão"
+  },
+  {
+    "value": "Remessa",
+    "texto": "Remessa"
+  },
+  {
+    "value": "Remessa Necessária Cível",
+    "texto": "Remessa Necessária Cível"
+  },
+  {
+    "value": "Remessa Necessária Criminal",
+    "texto": "Remessa Necessária Criminal"
+  },
+  {
+    "value": "Representação",
+    "texto": "Representação"
+  },
+  {
+    "value": "Representação Criminal",
+    "texto": "Representação Criminal"
+  },
+  {
+    "value": "Representação Criminal",
+    "texto": "Representação Criminal"
+  },
+  {
+    "value": "Representação Criminal / Notícia de Crime",
+    "texto": "Representação Criminal / Notícia de Crime"
+  },
+  {
+    "value": "Representação por Excesso de Prazo",
+    "texto": "Representação por Excesso de Prazo"
+  },
+  {
+    "value": "Requisição de Pequeno Valor",
+    "texto": "Requisição de Pequeno Valor"
+  },
+  {
+    "value": "Restauração de Autos",
+    "texto": "Restauração de Autos"
+  },
+  {
+    "value": "Restauração de Autos",
+    "texto": "Restauração de Autos"
+  },
+  {
+    "value": "Restauração de Autos",
+    "texto": "Restauração de Autos"
+  },
+  {
+    "value": "Restituição de Coisas Apreendidas",
+    "texto": "Restituição de Coisas Apreendidas"
+  },
+  {
+    "value": "Revisão Criminal",
+    "texto": "Revisão Criminal"
+  },
+  {
+    "value": "Revisão Criminal",
+    "texto": "Revisão Criminal"
+  },
+  {
+    "value": "Revisão Criminal",
+    "texto": "Revisão Criminal"
+  },
+  {
+    "value": "Separação de Corpos",
+    "texto": "Separação de Corpos"
+  },
+  {
+    "value": "Seqüestro",
+    "texto": "Seqüestro"
+  },
+  {
+    "value": "Seqüestro",
+    "texto": "Seqüestro"
+  },
+  {
+    "value": "Sindicância",
+    "texto": "Sindicância"
+  },
+  {
+    "value": "Superveniência de doença mental",
+    "texto": "Superveniência de doença mental"
+  },
+  {
+    "value": "Suspensão Condicional da Pena",
+    "texto": "Suspensão Condicional da Pena"
+  },
+  {
+    "value": "Suspensão de Execução de Sentença",
+    "texto": "Suspensão de Execução de Sentença"
+  },
+  {
+    "value": "Suspensão de Execução de Sentença",
+    "texto": "Suspensão de Execução de Sentença"
+  },
+  {
+    "value": "Suspensão de Liminar ou Antecipação de Tutela",
+    "texto": "Suspensão de Liminar ou Antecipação de Tutela"
+  },
+  {
+    "value": "Suspensão de Liminar ou Antecipação de Tutela",
+    "texto": "Suspensão de Liminar ou Antecipação de Tutela"
+  },
+  {
+    "value": "Termo Circunstanciado",
+    "texto": "Termo Circunstanciado"
+  },
+  {
+    "value": "Termo Circunstanciado",
+    "texto": "Termo Circunstanciado"
+  },
+  {
+    "value": "Transferência entre estabelecimentos penais",
+    "texto": "Transferência entre estabelecimentos penais"
+  },
+  {
+    "value": "Tutela Antecipada Antecedente",
+    "texto": "Tutela Antecipada Antecedente"
+  },
+  {
+    "value": "Tutela Antecipada Antecedente",
+    "texto": "Tutela Antecipada Antecedente"
+  },
+  {
+    "value": "Tutela Antecipada Antecedente",
+    "texto": "Tutela Antecipada Antecedente"
+  },
+  {
+    "value": "Tutela Cautelar Antecedente",
+    "texto": "Tutela Cautelar Antecedente"
+  },
+  {
+    "value": "Tutela Cautelar Antecedente",
+    "texto": "Tutela Cautelar Antecedente"
+  },
+  {
+    "value": "Tutela Cautelar Antecedente",
+    "texto": "Tutela Cautelar Antecedente"
+  },
+  {
+    "value": "Tutela Provisoria",
+    "texto": "Tutela Provisoria"
+  },
+  {
+    "value": "Tutela Provisória",
+    "texto": "Tutela Provisória"
+  },
+  {
+    "value": "Unificação de penas",
+    "texto": "Unificação de penas"
+  },
+  {
+    "value": "Uniformização de Jurisprudência",
+    "texto": "Uniformização de Jurisprudência"
+  },
+  {
+    "value": "",
+    "texto": ""
+  }
+]

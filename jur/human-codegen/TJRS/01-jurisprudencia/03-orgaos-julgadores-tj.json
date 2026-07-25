@@ -1,0 +1,434 @@
+[
+  {
+    "value": "-1",
+    "texto": "Todos"
+  },
+  {
+    "value": "105",
+    "texto": "Câmara da Função Delegada dos Tribunais Superiores"
+  },
+  {
+    "value": "46",
+    "texto": "Câmara de Férias Cível"
+  },
+  {
+    "value": "54",
+    "texto": "Câmara de Férias Criminal"
+  },
+  {
+    "value": "32",
+    "texto": "Câmara Especial Cível"
+  },
+  {
+    "value": "88",
+    "texto": "Câmara Especial Criminal"
+  },
+  {
+    "value": "72",
+    "texto": "Câmara Medidas Urgentes Criminal"
+  },
+  {
+    "value": "71",
+    "texto": "Câmara Medidas Urgentes Direito Privado"
+  },
+  {
+    "value": "73",
+    "texto": "Câmara Medidas Urgentes Direito Público"
+  },
+  {
+    "value": "74",
+    "texto": "Câmara Medidas Urgentes Família"
+  },
+  {
+    "value": "45",
+    "texto": "Câmaras Cíveis Reunidas"
+  },
+  {
+    "value": "53",
+    "texto": "Câmaras Criminais Reunidas"
+  },
+  {
+    "value": "10",
+    "texto": "Décima Câmara Cível"
+  },
+  {
+    "value": "100",
+    "texto": "Décima Câmara Cível - Serv. de Apoio à Jurisdição"
+  },
+  {
+    "value": "19",
+    "texto": "Décima Nona Câmara Cível"
+  },
+  {
+    "value": "18",
+    "texto": "Décima Oitava Câmara Cível"
+  },
+  {
+    "value": "11",
+    "texto": "Décima Primeira Câmara Cível"
+  },
+  {
+    "value": "14",
+    "texto": "Décima Quarta Câmara Cível"
+  },
+  {
+    "value": "15",
+    "texto": "Décima Quinta Câmara Cível"
+  },
+  {
+    "value": "12",
+    "texto": "Décima Segunda Câmara Cível"
+  },
+  {
+    "value": "17",
+    "texto": "Décima Sétima Câmara Cível"
+  },
+  {
+    "value": "98",
+    "texto": "Décima Sétima Câmara Cível - Regime de Exceção"
+  },
+  {
+    "value": "16",
+    "texto": "Décima Sexta Câmara Cível"
+  },
+  {
+    "value": "13",
+    "texto": "Décima Terceira Câmara Cível"
+  },
+  {
+    "value": "44",
+    "texto": "Décimo Grupo de Câmaras Cíveis"
+  },
+  {
+    "value": "62",
+    "texto": "Décimo Primeiro Grupo Cível"
+  },
+  {
+    "value": "120",
+    "texto": "Departamento de Recursos aos Tribunais Superiores"
+  },
+  {
+    "value": "557001",
+    "texto": "Gab. Dr. Jose Pedro de Oliveira Eckert"
+  },
+  {
+    "value": "9",
+    "texto": "Nona Câmara Cível"
+  },
+  {
+    "value": "43",
+    "texto": "Nono Grupo de Câmaras Cíveis"
+  },
+  {
+    "value": "8",
+    "texto": "Oitava Câmara Cível"
+  },
+  {
+    "value": "31",
+    "texto": "Oitava Câmara Criminal"
+  },
+  {
+    "value": "42",
+    "texto": "Oitavo Grupo de Câmaras Cíveis"
+  },
+  {
+    "value": "34",
+    "texto": "Órgão Especial"
+  },
+  {
+    "value": "63",
+    "texto": "Plantão - Direito Privado"
+  },
+  {
+    "value": "64",
+    "texto": "Plantão - Direito Público"
+  },
+  {
+    "value": "1",
+    "texto": "Primeira Câmara Cível"
+  },
+  {
+    "value": "24",
+    "texto": "Primeira Câmara Criminal"
+  },
+  {
+    "value": "47",
+    "texto": "Primeira Câmara de Férias Cível"
+  },
+  {
+    "value": "55",
+    "texto": "Primeira Câmara de Férias Criminal"
+  },
+  {
+    "value": "22",
+    "texto": "Primeira Câmara Especial Cível"
+  },
+  {
+    "value": "119",
+    "texto": "Primeira Câmara Especial Cível"
+  },
+  {
+    "value": "121",
+    "texto": "Primeira Câmara Especial Criminal"
+  },
+  {
+    "value": "126",
+    "texto": "Primeira Câmara Especial Virtual Cível"
+  },
+  {
+    "value": "57",
+    "texto": "Primeira Turma Cível"
+  },
+  {
+    "value": "118",
+    "texto": "Primeira Turma Criminal"
+  },
+  {
+    "value": "81",
+    "texto": "Primeira Vice-Presidência"
+  },
+  {
+    "value": "35",
+    "texto": "Primeiro Grupo de Câmaras Cíveis"
+  },
+  {
+    "value": "49",
+    "texto": "Primeiro Grupo de Câmaras Criminais"
+  },
+  {
+    "value": "128",
+    "texto": "Primeiro Núcleo Especial de Julgamento Cível"
+  },
+  {
+    "value": "4",
+    "texto": "Quarta Câmara Cível"
+  },
+  {
+    "value": "99",
+    "texto": "Quarta Câmara Cível - Serviço de Apoio Jurisdição"
+  },
+  {
+    "value": "27",
+    "texto": "Quarta Câmara Criminal"
+  },
+  {
+    "value": "104",
+    "texto": "Quarta Turma Cível - Sexto Grupo"
+  },
+  {
+    "value": "116",
+    "texto": "Quarta Turma Criminal"
+  },
+  {
+    "value": "38",
+    "texto": "Quarto Grupo de Câmaras Cíveis"
+  },
+  {
+    "value": "52",
+    "texto": "Quarto Grupo de Câmaras Criminais"
+  },
+  {
+    "value": "5",
+    "texto": "Quinta Câmara Cível"
+  },
+  {
+    "value": "89",
+    "texto": "Quinta Câmara Cível - Serviço de Apoio Jurisdição"
+  },
+  {
+    "value": "28",
+    "texto": "Quinta Câmara Criminal"
+  },
+  {
+    "value": "96",
+    "texto": "Quinta Câmara Criminal - Regime de Exceção"
+  },
+  {
+    "value": "95",
+    "texto": "Quinta Turma Cível - Nono Grupo Cível"
+  },
+  {
+    "value": "80",
+    "texto": "Quinta Turma Cível - Oitavo Grupo"
+  },
+  {
+    "value": "70",
+    "texto": "Quinta Turma Cível - Quinto Grupo"
+  },
+  {
+    "value": "76",
+    "texto": "Quinta Turma Cível - Sexto Grupo"
+  },
+  {
+    "value": "108",
+    "texto": "Quinta Turma Cível - Terceiro Grupo"
+  },
+  {
+    "value": "39",
+    "texto": "Quinto Grupo de Câmaras Cíveis"
+  },
+  {
+    "value": "2",
+    "texto": "Segunda Câmara Cível"
+  },
+  {
+    "value": "86",
+    "texto": "Segunda Câmara Cível - Serviço de Apoio Jurisdição"
+  },
+  {
+    "value": "25",
+    "texto": "Segunda Câmara Criminal"
+  },
+  {
+    "value": "48",
+    "texto": "Segunda Câmara de Férias Cível"
+  },
+  {
+    "value": "56",
+    "texto": "Segunda Câmara de Férias Criminal"
+  },
+  {
+    "value": "23",
+    "texto": "Segunda Câmara Especial Cível"
+  },
+  {
+    "value": "127",
+    "texto": "Segunda Câmara Especial Virtual Cível"
+  },
+  {
+    "value": "58",
+    "texto": "Segunda Turma Cível"
+  },
+  {
+    "value": "124",
+    "texto": "Segunda Turma Criminal"
+  },
+  {
+    "value": "93",
+    "texto": "Segunda Vice-Presidência"
+  },
+  {
+    "value": "36",
+    "texto": "Segundo Grupo de Câmaras Cíveis"
+  },
+  {
+    "value": "50",
+    "texto": "Segundo Grupo de Câmaras Criminais"
+  },
+  {
+    "value": "129",
+    "texto": "Segundo Núcleo Especial de Julgamento Cível"
+  },
+  {
+    "value": "7",
+    "texto": "Sétima Câmara Cível"
+  },
+  {
+    "value": "30",
+    "texto": "Sétima Câmara Criminal"
+  },
+  {
+    "value": "41",
+    "texto": "Sétimo Grupo de Câmaras Cíveis"
+  },
+  {
+    "value": "6",
+    "texto": "Sexta Câmara Cível"
+  },
+  {
+    "value": "29",
+    "texto": "Sexta Câmara Criminal"
+  },
+  {
+    "value": "40",
+    "texto": "Sexto Grupo de Câmaras Cíveis"
+  },
+  {
+    "value": "3",
+    "texto": "Terceira Câmara Cível"
+  },
+  {
+    "value": "90",
+    "texto": "Terceira Câmara Cível Serviço de Apoio Jurisdição"
+  },
+  {
+    "value": "26",
+    "texto": "Terceira Câmara Criminal"
+  },
+  {
+    "value": "75",
+    "texto": "Terceira Câmara Especial Cível"
+  },
+  {
+    "value": "110",
+    "texto": "Terceira Turma Cível - Nono Grupo Cível"
+  },
+  {
+    "value": "106",
+    "texto": "Terceira Turma Cível - Terceiro Grupo Cível"
+  },
+  {
+    "value": "125",
+    "texto": "Terceira Turma Criminal"
+  },
+  {
+    "value": "94",
+    "texto": "Terceira Vice-Presidência"
+  },
+  {
+    "value": "37",
+    "texto": "Terceiro Grupo de Câmaras Cíveis"
+  },
+  {
+    "value": "51",
+    "texto": "Terceiro Grupo de Câmaras Criminais"
+  },
+  {
+    "value": "33",
+    "texto": "Tribunal Pleno"
+  },
+  {
+    "value": "60",
+    "texto": "Turma de Direito Privado"
+  },
+  {
+    "value": "59",
+    "texto": "Turma de Direito Público"
+  },
+  {
+    "value": "20",
+    "texto": "Vigésima Câmara Cível"
+  },
+  {
+    "value": "21",
+    "texto": "Vigésima Primeira Câmara Cível"
+  },
+  {
+    "value": "91",
+    "texto": "Vigésima Primeira Câmara Cível - Serv. Apoio Juris"
+  },
+  {
+    "value": "84",
+    "texto": "Vigésima Quarta Câmara Cível"
+  },
+  {
+    "value": "103",
+    "texto": "Vigésima Quarta Câmara Cível - Regime de Exceção"
+  },
+  {
+    "value": "85",
+    "texto": "Vigésima Quinta Câmara Cível"
+  },
+  {
+    "value": "61",
+    "texto": "Vigésima Segunda Câmara Cível"
+  },
+  {
+    "value": "83",
+    "texto": "Vigésima Terceira Câmara Cível"
+  },
+  {
+    "value": "",
+    "texto": ""
+  }
+]

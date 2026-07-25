@@ -1,0 +1,46 @@
+## 8. Classe processual e Prioridades
+
+### Classe (`classeProcesso`)
+
+- Parâmetro: `classeProcesso`, pela **sigla** (`ROT`, `AP`, `AIRO`, `ATSum`, `AR`, `MSCiv`...).
+- Campo na UI: `input[placeholder="Filtrar Classe ..."]`.
+- Listas: `08-classes.json` — 36 siglas em `acordaos`, 58 em `sentencas`.
+- Prova: `classeProcesso=ROT` → 1708; `classeProcesso=AP` → 172 (base 2459).
+
+Siglas úteis na JT:
+`ROT` Recurso Ordinário Trabalhista (o recurso típico de 2º grau) ·
+`ROPS` Recurso Ordinário — rito sumaríssimo · `AP` Agravo de Petição (execução) ·
+`AIRO` Agravo de Instrumento em Recurso Ordinário · `ATOrd` Ação Trabalhista rito ordinário ·
+`ATSum` Ação Trabalhista rito **sumaríssimo** · `AR` Ação Rescisória ·
+`MSCiv` Mandado de Segurança · `DC` Dissídio Coletivo.
+
+⚠️ `ATSum` é o mais próximo que a JT tem de "Juizado" — mas é **rito**, não órgão:
+é julgado pela mesma Vara do Trabalho, com recurso para as mesmas Turmas.
+Não use `ATSum` como se fosse separação de instância; para isso use §3 (`colecao`).
+
+### Prioridades (`prioridade`)
+
+Marcadores de tramitação prioritária. 17 valores em `08-prioridades.json`:
+`Idoso`, `Idoso acima de 80 Anos`, `Acidente de Trabalho`, `Assédio Moral ou Sexual`,
+`Discriminação`, `Pessoa com Deficiência`, `Falência ou Recuperação Judicial`,
+`Estatuto da Criança e do Adolescente`, `Pagamento de Salário`, `Aprendizado`,
+`Lei 13.015/2014`, `PRIORIDADE - SEM INFORMAÇÃO` (a esmagadora maioria) etc.
+
+Prova: `prioridade=Idoso` → 270 (base 2459).
+
+### Ementa (`temEmenta`)
+
+`S` (com ementa) / `N` (sem ementa). Prova de partição exata: 2050 + 409 = 2459.
+Útil porque **nem todo documento da JT tem ementa** — sentenças de 1º grau
+praticamente nunca têm, e mesmo entre os acórdãos do TRT9 só ~70% têm.
+Na CLI: `--com-ementa` / `--sem-ementa`.
+
+### Filtros que existem no bundle mas NÃO foram validados
+
+`faseProcessual` (Conhecimento/Execução), `precedente`, `tipoPrecedente`,
+`cidade`/`estado`/`pais` (geolocalização do usuário). `faseProcessual` foi testado com
+`Conhecimento` e `Execução` e devolveu **0 resultados** nas duas — ou os valores aceitos
+são outros, ou o filtro não está ligado para usuário anônimo. Fica exposto no
+`FalcaoNavigator` mas **não** na CLI, para não entregar filtro que zera silenciosamente.
+
+Prints: `08.01-filtro-classe.png`

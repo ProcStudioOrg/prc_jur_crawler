@@ -1,0 +1,76 @@
+TJPR — 01-jurisprudencia · §1 Tela inicial
+Prints: 01.01-tela-inicial.png (colapsada)  ·  01.02-pesquisa-avancada-aberta.png
+
+== Identificação ==
+
+Tribunal:              TJPR — Tribunal de Justiça do Paraná
+Estado(s):             PR
+Módulo:                Jurisprudência (público)
+Link principal:        https://portal.tjpr.jus.br/jurisprudencia/publico/pesquisa.do?actionType=iniciar
+Sistema judicial:      Struts 1.x sobre JSP (`.do`), aplicação PRÓPRIA do TJPR.
+                       O TJPR tramita em Projudi, mas a jurisprudência não é o
+                       módulo do Projudi — confira no navegador, não presuma.
+Sistema irmão mapeado: nenhum idêntico. O mais próximo em ESPÍRITO é o TJGO
+                       (formulário clássico, POST, charset legado) — ver CLAUDE-TJGO.md.
+Abrangência da base:   2º grau (Câmaras, Seções, Grupos, Órgão Especial, 1ª
+                       Vice-Presidência) + Turmas Recursais dos Juizados
+                       Especiais + acervo do extinto Tribunal de Alçada.
+                       6.360.593 documentos em 25/07/2026 (busca vazia, todas as bases).
+                       NÃO há sentenças de 1º grau.
+Data do mapeamento:    25/07/2026
+
+== A tela ==
+
+Ela abre MINIMALISTA: só "PESQUISA LIVRE" (campo + 5 botões de operador + 4
+ícones). Tudo o mais está oculto e é revelado pelos ícones à direita do campo:
+
+  <button class="btn-icone btn-icone-pesquisar-ementa"  onclick="selecionarEmenta();" title="Pequisa somente na ementa">
+  <button class="btn-icone btn-icone-pesquisar"         onclick="selecionarTudo();"   title="Pesquisa completa, incluindo o texto do inteiro teor">
+  <button class="btn-icone btn-icone-pesquisar-avancada" onclick="toggleFiltros();"   title="Habilitar a pesquisa avançada">
+  <button class="btn-icone btn-icone-pesquisar-mundo"    onclick="toggleGlobo();"     title="Exibir mapa com as decisões da Corte IDH">
+
+>>> ARMADILHA DE MAPEAMENTO: quem só olha 01.01-tela-inicial.png conclui que o
+    TJPR "só tem busca livre". TODOS os filtros (data, órgão, âmbito, tipo de
+    decisão, número do processo) só existem depois de `toggleFiltros()`.
+    Foi por isso que o mapeamento antigo (01-descricao-html-legado.txt) ficou
+    pela metade.
+
+Depois de `toggleFiltros()` aparece "PESQUISA POR CAMPOS ESPECÍFICOS", com duas
+abas, e o bloco "FILTROS" (§3 e §5):
+
+  <li id="tabItem0" onclick="setTab('.../pesquisa.do?actionType=carregar&page=0','tabTj',0)">TRIBUNAL DE JUSTIÇA DO PARANÁ</li>
+  <li id="tabItem1" onclick="setTab('.../pesquisa.do?actionType=carregar&page=0','tabCidh',1)">CORTE INTERAMERICANA DE DIREITOS HUMANOS</li>
+
+== O formulário ==
+
+  <form name="pesquisaForm" id="pesquisaForm" method="post"
+        action="/jurisprudencia/publico/pesquisa.do?actionType=pesquisar"
+        accept-charset="ISO-8859-1" onsubmit="return loadSubmit();">
+
+`loadSubmit()` só valida que o TIPO DE DECISÃO está preenchido — não há token,
+nonce ou captcha.
+
+Campos (todos `name=`, é o que vai no POST):
+
+  criterioPesquisa            texto, maxlength=150   — termo de busca (§2)
+  idLocalPesquisa             select                 — EMENTA/INTEIRO TEOR/AMBAS (§5)
+  ambito                      select                 — "BASE DE CONSULTA" (§3)
+  idsTipoDecisaoSelecionados  select                 — tipo de decisão (§5)
+  segredoJustica              select                 — segredo de justiça (§5)
+  dataJulgamentoInicio/Fim    texto DD/MM/YYYY       — data de julgamento (§4)
+  dataPublicacaoInicio/Fim    texto DD/MM/YYYY       — data de publicação (§4)
+  processo                    texto, maxlength=25    — nº do processo (§7)
+  acordao                     texto, maxlength=25    — nº do acórdão (§7)
+  nomeRelator / idRelator     autocomplete + hidden  — §6
+  nomeOrgaoJulgador / idOrgaoJulgadorSelecao         — §6 (mas o filtro que
+                                                       funciona é idOrgaoJulgador, §3)
+  nomeComarca / idComarca                            — §6
+  descricaoClasseProcessual / idClasseProcessual     — §6
+  descricaoAssunto / idAssunto                       — §6
+  mostrarCompleto             checkbox "true"        — "MOSTRAR ITENS COMPLETOS" (§8)
+  pageNumber, sortColumn, sortOrder                  — paginação (§8)
+  iniciar=Pesquisar           submit
+
+Campos exclusivos da aba Corte IDH (ignorados pelo crawler): idPaisCidh,
+nomePaisCidh, idTemaCidh, nomeTemaCidh, idJuizCidh, nomeJuizCidh,
+dataJulgamentoInicioCidh, dataJulgamentoFimCidh, tagsEstadosBrasileiros.

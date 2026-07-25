@@ -1,0 +1,398 @@
+[
+ {
+  "id": "todos",
+  "label": "- Todos -"
+ },
+ {
+  "id": "Presidência",
+  "label": "Presidência"
+ },
+ {
+  "id": "Primeira Vice-Presidência",
+  "label": "Primeira Vice-Presidência"
+ },
+ {
+  "id": "Segunda Vice-Presidência",
+  "label": "Segunda Vice-Presidência"
+ },
+ {
+  "id": "Terceira Vice-Presidência",
+  "label": "Terceira Vice-Presidência"
+ },
+ {
+  "id": "Núcleo de Conciliação",
+  "label": "Núcleo de Conciliação"
+ },
+ {
+  "id": "Tribunal Pleno",
+  "label": "Tribunal Pleno"
+ },
+ {
+  "id": "Câmara de Agravos Internos em Recursos Constitucionais",
+  "label": "Câmara de Agravos Internos em Recursos Constitucionais"
+ },
+ {
+  "id": "Câmara de Recursos Delegados",
+  "label": "Câmara de Recursos Delegados"
+ },
+ {
+  "id": "Primeira Câmara de Enfrentamento de Acervos",
+  "label": "Primeira Câmara de Enfrentamento de Acervos"
+ },
+ {
+  "id": "Segunda Câmara de Enfrentamento de Acervos",
+  "label": "Segunda Câmara de Enfrentamento de Acervos"
+ },
+ {
+  "id": "Câmara de Férias",
+  "label": "Câmara de Férias"
+ },
+ {
+  "id": "Plantão Judiciário",
+  "label": "Plantão Judiciário"
+ },
+ {
+  "id": "Segunda Câmara Público (Janeiro)",
+  "label": "Segunda Câmara Público (Janeiro)"
+ },
+ {
+  "id": "Segundo Vice-Presidente",
+  "label": "Segundo Vice-Presidente"
+ },
+ {
+  "id": "Grupo de Câmaras de Drto. Comercial",
+  "label": "Grupo de Câmaras de Drto. Comercial"
+ },
+ {
+  "id": "Primeira Câmara Criminal",
+  "label": "Primeira Câmara Criminal"
+ },
+ {
+  "id": "Primeira Câmara Criminal (Janeiro 2007)",
+  "label": "Primeira Câmara Criminal (Janeiro 2007)"
+ },
+ {
+  "id": "Primeira Câmara Criminal (Janeiro)",
+  "label": "Primeira Câmara Criminal (Janeiro)"
+ },
+ {
+  "id": "Segunda Câmara Criminal",
+  "label": "Segunda Câmara Criminal"
+ },
+ {
+  "id": "Segunda Câmara Criminal (Janeiro)",
+  "label": "Segunda Câmara Criminal (Janeiro)"
+ },
+ {
+  "id": "Terceira Câmara Criminal",
+  "label": "Terceira Câmara Criminal"
+ },
+ {
+  "id": "Terceira Câmara Criminal (Janeiro)",
+  "label": "Terceira Câmara Criminal (Janeiro)"
+ },
+ {
+  "id": "Quarta Câmara Criminal (Janeiro)",
+  "label": "Quarta Câmara Criminal (Janeiro)"
+ },
+ {
+  "id": "Quarta Câmara Criminal",
+  "label": "Quarta Câmara Criminal"
+ },
+ {
+  "id": "Quinta Câmara Criminal",
+  "label": "Quinta Câmara Criminal"
+ },
+ {
+  "id": "Câmara Especial - Proc. Criminais",
+  "label": "Câmara Especial - Proc. Criminais"
+ },
+ {
+  "id": "Seção Criminal",
+  "label": "Seção Criminal"
+ },
+ {
+  "id": "Primeiro Grupo de Direito Criminal",
+  "label": "Primeiro Grupo de Direito Criminal"
+ },
+ {
+  "id": "Segundo Grupo de Direito Criminal",
+  "label": "Segundo Grupo de Direito Criminal"
+ },
+ {
+  "id": "Câmara de Férias Criminal",
+  "label": "Câmara de Férias Criminal"
+ },
+ {
+  "id": "Grupo de Câmaras de Direito Público",
+  "label": "Grupo de Câmaras de Direito Público"
+ },
+ {
+  "id": "Primeira Câmara de Direito Público",
+  "label": "Primeira Câmara de Direito Público"
+ },
+ {
+  "id": "Segunda Câmara de Direito Público",
+  "label": "Segunda Câmara de Direito Público"
+ },
+ {
+  "id": "Terceira Câmara de Direito Público",
+  "label": "Terceira Câmara de Direito Público"
+ },
+ {
+  "id": "Terceira Câmara Dto Público (Janeiro)",
+  "label": "Terceira Câmara Dto Público (Janeiro)"
+ },
+ {
+  "id": "Quarta Câmara de Direito Público",
+  "label": "Quarta Câmara de Direito Público"
+ },
+ {
+  "id": "Quinta Câmara de Direito Público",
+  "label": "Quinta Câmara de Direito Público"
+ },
+ {
+  "id": "Grupo de Câmaras de Direito Civil",
+  "label": "Grupo de Câmaras de Direito Civil"
+ },
+ {
+  "id": "Primeira Câmara de Direito Civil",
+  "label": "Primeira Câmara de Direito Civil"
+ },
+ {
+  "id": "Primeira Câmara Civil (Janeiro)",
+  "label": "Primeira Câmara Civil (Janeiro)"
+ },
+ {
+  "id": "Segunda Câmara de Direito Civil",
+  "label": "Segunda Câmara de Direito Civil"
+ },
+ {
+  "id": "Segunda Câmara Cível Especial",
+  "label": "Segunda Câmara Cível Especial"
+ },
+ {
+  "id": "Terceira Câmara de Direito Civil",
+  "label": "Terceira Câmara de Direito Civil"
+ },
+ {
+  "id": "Terceira Câmara Civil (Janeiro)",
+  "label": "Terceira Câmara Civil (Janeiro)"
+ },
+ {
+  "id": "Quarta Câmara de Direito Civil",
+  "label": "Quarta Câmara de Direito Civil"
+ },
+ {
+  "id": "Quinta Câmara de Direito Civil",
+  "label": "Quinta Câmara de Direito Civil"
+ },
+ {
+  "id": "Sexta Câmara de Direito Civil",
+  "label": "Sexta Câmara de Direito Civil"
+ },
+ {
+  "id": "Sétima Câmara de Direito Civil",
+  "label": "Sétima Câmara de Direito Civil"
+ },
+ {
+  "id": "Oitava Câmara de Direito Civil",
+  "label": "Oitava Câmara de Direito Civil"
+ },
+ {
+  "id": "Câmara Especial - Processos Cíveis",
+  "label": "Câmara Especial - Processos Cíveis"
+ },
+ {
+  "id": "Câmara Civil Especial",
+  "label": "Câmara Civil Especial"
+ },
+ {
+  "id": "Câmara Especial Temporária de Direito Civil",
+  "label": "Câmara Especial Temporária de Direito Civil"
+ },
+ {
+  "id": "Seção Civil",
+  "label": "Seção Civil"
+ },
+ {
+  "id": "Câmara de Férias Civil",
+  "label": "Câmara de Férias Civil"
+ },
+ {
+  "id": "Grupo de Câmaras de Direito Comercial",
+  "label": "Grupo de Câmaras de Direito Comercial"
+ },
+ {
+  "id": "Primeira Câmara de Direito Comercial",
+  "label": "Primeira Câmara de Direito Comercial"
+ },
+ {
+  "id": "Primeira Câmara Comercial (Janeiro 2007)",
+  "label": "Primeira Câmara Comercial (Janeiro 2007)"
+ },
+ {
+  "id": "Segunda Câmara de Direito Comercial",
+  "label": "Segunda Câmara de Direito Comercial"
+ },
+ {
+  "id": "Terceira Câmara de Direito Comercial",
+  "label": "Terceira Câmara de Direito Comercial"
+ },
+ {
+  "id": "Terceira Câmara Comercial (Janeiro)",
+  "label": "Terceira Câmara Comercial (Janeiro)"
+ },
+ {
+  "id": "Quarta Câmara de Direito Comercial",
+  "label": "Quarta Câmara de Direito Comercial"
+ },
+ {
+  "id": "Quinta Câmara de Direito Comercial",
+  "label": "Quinta Câmara de Direito Comercial"
+ },
+ {
+  "id": "Sexta Câmara de Direito Comercial",
+  "label": "Sexta Câmara de Direito Comercial"
+ },
+ {
+  "id": "Câmara Especial - Processos Cíveis",
+  "label": "Câmara Especial - Processos Cíveis"
+ },
+ {
+  "id": "Câmara Especial Regional de Chapecó",
+  "label": "Câmara Especial Regional de Chapecó"
+ },
+ {
+  "id": "Câmara Especial Temporária de Direito Comercial",
+  "label": "Câmara Especial Temporária de Direito Comercial"
+ },
+ {
+  "id": "Câmara Especial - Proc. Criminais",
+  "label": "Câmara Especial - Proc. Criminais"
+ },
+ {
+  "id": "Câmara Civil Especial",
+  "label": "Câmara Civil Especial"
+ },
+ {
+  "id": "Câmara Cível Especial",
+  "label": "Câmara Cível Especial"
+ },
+ {
+  "id": "Primeira Câmara Cível Especial",
+  "label": "Primeira Câmara Cível Especial"
+ },
+ {
+  "id": "Segunda Câmara Cível Especial",
+  "label": "Segunda Câmara Cível Especial"
+ },
+ {
+  "id": "Câmara Especial Temporária de Direito Civil",
+  "label": "Câmara Especial Temporária de Direito Civil"
+ },
+ {
+  "id": "Órgão Especial",
+  "label": "Órgão Especial"
+ },
+ {
+  "id": "Órgão Especial (antigo)",
+  "label": "Órgão Especial (antigo)"
+ },
+ {
+  "id": "Primeira Câmara Especial de Enfrentamento de Acervos",
+  "label": "Primeira Câmara Especial de Enfrentamento de Acervos"
+ },
+ {
+  "id": "Segunda Câmara Especial de Enfrentamento de Acervos",
+  "label": "Segunda Câmara Especial de Enfrentamento de Acervos"
+ },
+ {
+  "id": "Terceira Câmara Especial de Enfrentamento de Acervos",
+  "label": "Terceira Câmara Especial de Enfrentamento de Acervos"
+ },
+ {
+  "id": "Turma de Uniformização",
+  "label": "Turma de Uniformização"
+ },
+ {
+  "id": "Primeira Turma Recursal",
+  "label": "Primeira Turma Recursal"
+ },
+ {
+  "id": "Segunda Turma Recursal",
+  "label": "Segunda Turma Recursal"
+ },
+ {
+  "id": "Terceira Turma Recursal",
+  "label": "Terceira Turma Recursal"
+ },
+ {
+  "id": "Presidência Primeira Turma Recursal",
+  "label": "Presidência Primeira Turma Recursal"
+ },
+ {
+  "id": "Presidência Segunda Turma Recursal",
+  "label": "Presidência Segunda Turma Recursal"
+ },
+ {
+  "id": "Presidência Terceira Turma Recursal",
+  "label": "Presidência Terceira Turma Recursal"
+ },
+ {
+  "id": "Primeira Turma de Recursos - Capital",
+  "label": "Primeira Turma de Recursos - Capital"
+ },
+ {
+  "id": "Segunda Turma de Recursos - Blumenau",
+  "label": "Segunda Turma de Recursos - Blumenau"
+ },
+ {
+  "id": "Terceira Turma de Recursos - Chapecó",
+  "label": "Terceira Turma de Recursos - Chapecó"
+ },
+ {
+  "id": "Quarta Turma de Recursos - Criciúma",
+  "label": "Quarta Turma de Recursos - Criciúma"
+ },
+ {
+  "id": "Quinta Turma de Recursos - Joinville",
+  "label": "Quinta Turma de Recursos - Joinville"
+ },
+ {
+  "id": "Sexta Turma de Recursos - Lages",
+  "label": "Sexta Turma de Recursos - Lages"
+ },
+ {
+  "id": "Sétima Turma de Recursos - Itajaí",
+  "label": "Sétima Turma de Recursos - Itajaí"
+ },
+ {
+  "id": "Oitava Turma de Recursos - Capital",
+  "label": "Oitava Turma de Recursos - Capital"
+ },
+ {
+  "id": "Presidência da Primeira Turma de Recursos - Capital",
+  "label": "Presidência da Primeira Turma de Recursos - Capital"
+ },
+ {
+  "id": "Presidência da Quarta Turma de Recursos - Criciúma",
+  "label": "Presidência da Quarta Turma de Recursos - Criciúma"
+ },
+ {
+  "id": "Presidência da Quinta Turma de Recursos - Joinville",
+  "label": "Presidência da Quinta Turma de Recursos - Joinville"
+ },
+ {
+  "id": "Presidência da Sexta Turma de Recursos - Lages",
+  "label": "Presidência da Sexta Turma de Recursos - Lages"
+ },
+ {
+  "id": "Presidência da Oitava Turma de Recursos - Capital",
+  "label": "Presidência da Oitava Turma de Recursos - Capital"
+ },
+ {
+  "id": "Presidência da Turma de Uniformização",
+  "label": "Presidência da Turma de Uniformização"
+ }
+]

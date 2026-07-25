@@ -1,0 +1,108 @@
+TJPR — 01-jurisprudencia · §18/§20 Tela de resultados, contadores e paginação
+Prints: 08.01-resultados-justica-comum.png · 08.02-resultados-juizados-turmas-recursais.png
+        08.03-rodape-paginacao-e-contadores.png · 08.04-faceta-orgao-julgador.png
+
+== 18. Onde os resultados aparecem ==
+
+Mesma rota, resposta do POST. A tela mostra "CRITÉRIOS DA PESQUISA" (repetindo
+os filtros aplicados — bom para auditoria: em 08.02 dá para ler a lista de
+Turmas Recursais enviada), o campo de busca, e "RESULTADO DA PESQUISA".
+
+Tabela: `<table class="resultTable jurisprudencia semborda">`, duas colunas
+("Tipo" e "Ementa"). Um julgado por `<tr>`:
+
+  <tr class="even">
+   <td valign="top" class="juris-tabela-dados">
+    <div class="juris-tabela-cont">
+      <input type="checkbox" name="idsSelecionados" value="4100000034230691" id="idsSelecionados">
+    </div>
+    <div class="juris-tabela-propriedades">
+      <font class="acordao negrito">1.</font>
+      <a target="_blank" href="/jurisprudencia/j/4100000034230691/Acórdão-0003249-43.2020.8.16.0193" class="acordao negrito">
+        <div style='display: inline-block;'><div>0003249-43.2020.8.16.0193</div></div></a>
+      <font class="acordao">&nbsp;(Acórdão)</font>
+      <br /><br />
+      Relator:&nbsp; Tito Campos de Paula</br> <i>Desembargador</i><br><br>
+      <div><span style="vertical-align: top;">Processo:</span>
+        <div style='display: inline-block;'><div>0003249-43.2020.8.16.0193</div></div></div>
+      <br/><br>
+      Órgão Julgador: 1ª Câmara Cível
+      <br> Data Julgamento: 31/03/2026
+    </div>
+   </td>
+   <td class="juris-tabela-ementa">
+     <div id="muda1"><div id="ementa4100000034230691">APELAÇÃO CÍVEL...<span class='high'>DANO</span>...</div>
+     <a href="javascript:void(0)" onclick="insereTextoCompleto('muda1','4100000034230691')">Leia mais..</a></div>
+   </td>
+  </tr>
+
+Campo a campo:
+  id                -> value do checkbox `idsSelecionados` (é o id do DOCUMENTO,
+                       não do processo; um processo tem vários)
+  processoUrl       -> href `/jurisprudencia/j/<id>/<slug>` (§9)
+  numeroProcesso    -> texto do link e também "Processo:"
+  tipoDocumento     -> "(Acórdão)" / "(Decisão monocrática)"
+  relator + cargo   -> "Relator: NOME" e às vezes <i>CARGO</i>; em outras linhas
+                       o cargo vem colado no nome, sem <i>. Os dois formatos existem.
+  orgaoJulgador     -> "Órgão Julgador: ..."  (é o que classifica o foro, §3)
+  dataJulgamento    -> "Data Julgamento: DD/MM/YYYY"
+  ementa            -> `div#ementa<id>`, TRUNCADA, com "Leia mais.." (o texto
+                       completo vem por `insereTextoCompleto`, ou na ficha, §9)
+  data de PUBLICAÇÃO e COMARCA não aparecem aqui — só na ficha (§9).
+
+>>> CONTAMINAÇÃO DA CORTE IDH (importante)
+    A MESMA tabela recebe decisões da Corte Interamericana de Direitos Humanos,
+    em linhas marcadas: `<tr class="odd cidh">`, com checkbox
+    `idsSelecionadosCidh`, link `/jurisprudencia/c/<id>/IDH-<id>` e "Caso: ..."
+    em vez de número de processo. Elas NÃO são jurisprudência do Paraná.
+    Aparecem mesmo com `ambito=6` e mesmo em consulta por número de processo.
+    O parser descarta `tr.cidh`. Só desaparecem se o TIPO DE DECISÃO for
+    restrito a ACÓRDÃO/MONOCRÁTICA/DÚVIDA (§5).
+
+== Os três contadores (leia o certo!) ==
+
+Print 08.02:
+    "4169 registro(s) encontrado(s), exibindo de 1 até 50"          <- GERAL (TJ + Corte IDH)
+    "4062 registro(s) da Jurisprudência do Tribunal de Justiça ..."  <- É ESTE
+    "107 registro(s) da Corte IDH encontrado(s), exibindo de 1 até 10"
+
+O contador GERAL é a soma. Usar o geral como "quantos julgados do TJPR existem"
+infla o número em até 122 (o total do acervo da Corte IDH). `TJPRNavigator.totais()`
+devolve `{geral, tj, cidh}` e o crawler reporta `totalTJPR`.
+
+== 20. Paginação ==
+
+  Registros por página:  50 (fixo, não há combo de quantidade)
+                         desses 50, até 10 podem ser da Corte IDH — então uma
+                         página rende 40 julgados do TJPR enquanto houver
+                         Corte IDH na resposta, e 50 depois que ela acaba.
+  Parâmetro de página:   `pageNumber` (1-based), junto com
+                         `sortColumn=processo_sDataJulgamento` e `sortOrder=DESC`
+  Link "próxima":        <a class="arrowNextOn" href="javascript:...pageNumber...='2';...submit();">
+                         (desabilitado = `arrowNextOff`)
+  Última página:         <a class="arrowLastOn" ...pageNumber...='143'...>
+                         -> `ultimaPagina()` lê esse número
+  Total exposto?         sim, nos três contadores acima
+  Ir para página N?      sim: o POST aceita `pageNumber=80` direto, sem passar
+                         pelas anteriores (testado; páginas 1, 2, 66, 67, 68 e 80
+                         devolveram blocos distintos, sem sobreposição de ids)
+
+Medido: "dano moral" 01/01–31/03/2026, todas as bases -> 7.014 TJ + 107 IDH =
+7.121 -> última página 143 (= ceil(7121/50)). Páginas 1 e 2 trouxeram 40
+julgados; da 66 em diante, 50 (a Corte IDH já tinha se esgotado).
+
+== "Filtrar no Resultado" (facetas) ==
+
+Painel à esquerda (print 08.04), carregado por AJAX cifrado
+(`loadDocument(..., '/jurisprudencia/ajax.do?tjpr.url.crypto=...')`).
+Dez categorias, nesta ordem (enum TipoFiltro em js/jurisprudencia.js):
+  1 CLASSE · 2 RELATOR · 3 COMARCA · 4 ORGAO_JULGADOR · 5 ASSUNTO ·
+  6 PAIS · 7 CADERNO · 8 TEMA · 9 ANO · 10 JUIZ (+ CARGO=11)
+Cada item vem como `<input type="checkbox" id="filtro_<categoria>_<id>">` e
+`<td>Nome (contagem)</td>`. Refinar submete `actionType=pesquisarRefinado&filtro=true`
+com os ids em `idClasseProcessual`/`idRelator`/`idComarca`/`idOrgaoJulgador`/`idAssunto`.
+
+É desta faceta (categoria 4) que saiu `06-orgaos.json`, e é ela que
+`TJPRNavigator.listarOrgaosAoVivo()` relê para detectar órgão novo/renomeado.
+Limitação registrada: o rótulo da faceta TRUNCA nomes longos em ~50 caracteres
+(ex.: "Câmara Criminal Suplementar Única em Composição In").

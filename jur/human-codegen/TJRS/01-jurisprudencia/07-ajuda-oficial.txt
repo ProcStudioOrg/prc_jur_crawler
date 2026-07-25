@@ -1,0 +1,252 @@
+Ajuda Jurisprudência TJ-RS
+X
+
+1. Visão Geral
+2. Iniciando a Pesquisa 
+     2.1 Opções de índices: Inteiro Teor ou Ementa
+3. Resultado da Pesquisa
+4. Obtendo melhores resultados
+     4.1 Palavras comuns
+     4.2 Números
+5. Refinando sua busca - Busca Avançada
+     5.1 Datas
+     5.2 Exclusão de palavras
+     5.3 Busca exata
+6.  Expandindo sua busca  
+7. Quadro comparativo: Busca antiga x Nova Busca
+
+ 
+
+1. Visão Geral
+
+A pesquisa à Jurisprudência pode ser realizada em pesquisa simples por texto livre ou com opções de filtro.
+
+Os resultados que se adequarem aos argumentos de pesquisa aparecerão listados com:
+
+- Número,
+- Tipo de decisão,
+- Tipo de processo,
+- Comarca de origem,
+- Relator,
+- Tribunal,
+- Classe CNJ,
+- Assunto CNJ,
+- Órgão julgador,
+- Seção,
+- Trecho da ementa,
+- Data de julgamento e
+- Data de publicação no diário da justiça (caso tenha sido publicado).
+
+(* 1) - Ao clicar sobre o link no número do processo, tem-se acesso ao Acompanhamento Processual.
+
+(* 2) - O Inteiro Teor (quando existente) é disponibilizado em três formatos: DOC (para download do arquivo), HTML (para a versão em HTML do Inteiro Teor) e TIFF (para download da imagem do arquivo, quando disponível).
+
+
+  
+
+2. Iniciando a Pesquisa
+
+É permitida a pesquisa em texto livre ou por campos pré-definidos - filtros:
+
+- Tribunal,
+- Órgão Julgador,
+- Relator/Redator,
+- Tipo de Processo,
+- Classe CNJ,
+- Assunto CNJ,
+- Referência Legislativa,
+- Jurisprudência,
+- Comarca de Origem,
+- Assunto,
+- Número do Processo,
+- Seção,
+- Tipo de Decisão,
+- Data de Julgamento e
+- Data de Publicação.
+
+Na caixa de busca, digite qualquer palavra ou conjunto de palavras que serão utilizados como argumento para pesquisa.
+- Letras maiúsculas e minúsculas não são diferenciadas.
+- A relação entre termos de busca e filtros é E.
+
+
+ 
+
+ 
+
+2.1 Opções de índice: Inteiro Teor ou Ementa
+
+É possível escolher entre dois diferentes índices: Inteiro Teor ou Ementa.
+
+ 
+
+
+
+
+A busca no Inteiro Teor retornará os registros que atendam aos critérios de busca sobre o conteúdo dos documentos de Acórdãos e Decisões Monocráticas. Nem todos os registros da Jurisprudência disponibilizam estes documentos. Geralmente, os mais antigos ainda não disponibilizam a busca no Inteiro Teor.
+
+A busca por Ementa retornará os registros que atendam aos critérios de busca sobre o conteúdo das Ementas e outros dados complementares. Em ambas as opções de busca, o sistema sempre exibirá, nas linhas de resultado, o conteúdo da Ementa e demais informações com atalhos para os documentos de Acórdãos e Decisões Monocráticas, quando houver.
+
+ 
+
+ 
+
+3. Resultado da Pesquisa
+
+Se nenhum processo for encontrado com os argumentos de pesquisa solicitados, uma página informativa será retornada.
+
+Se algum processo for encontrado, retornará uma página com a quantidade de documentos encontrados na parte superior da página. (* 1)
+
+Os processos são retornados em ordem decrescente de data de julgamento, vindo em primeiro lugar os mais recentes.
+Também há a opção de ordenar os resultados por data crescente de julgamento. (*2)
+
+
+
+
+ 
+
+3.1 Filtros mais frequentes
+
+Após realizar uma pesquisa, é possível filtrar os resultados retornados de acordo com opções pré-definidas, apresentadas na lateral esquerda dos resultados:
+ 
+
+ 
+
+São opções de filtros:
+
+- Tribunal,
+- Órgão Julgador,
+- Comarca de origem,
+- Relator/Redator,
+- Classe CNJ,
+- Assunto CNJ,
+- Assunto,
+- Tribunal,
+- Tipo de processo e
+- Data de publicação (mês e ano).
+
+Após selecionar um filtro pré-definido é possível removê-lo através do "X" apresentado ao lado da opção selecionada.
+
+
+ 
+
+ 
+
+4. Obtendo melhores resultados:
+
+Você ainda pode utilizar os seguintes recursos para obter melhores resultados:
+ 
+
+4.1 Palavras comuns
+
+- Preposições, alguns números e letras, etc. tendem a deixar a busca mais lenta sem melhorar o resultado.
+
+Portanto, elas são ignoradas sempre que em conjunto com outros termos de busca.
+
+Por exemplo:
+inciso IV => será considerada apenas a palavra "inciso" na busca
+
+Porém, se o termo é essencial para a busca, é possível incluí-lo através do sinal de adição ("+") antes do termo.
+
+Por exemplo:
+inciso +IV (sem aspas) => serão considerados os dois termos
+
+ 
+
+4.2 Números
+
+- Não pesquise por números negativos.
+- Números separados por vírgula são tratados como números diferentes (a vírgula é considerada um separador).
+
+Por exemplo:
+3,75 => serão considerados os termos "3" e "75"
+
+
+
+
+
+
+5. Refinando sua busca
+
+Utilizando a Pesquisa Livre, por padrão, a busca retornará apenas documentos que contenham TODOS os termos pesquisados.
+Para quem estava acostumado à antiga pesquisa de Jurisprudência, isso equivale ao uso do termo "e".
+ 
+
+Por exemplo:
+juros banco crédito => retornará resultados que contenham as palavras "juros", "banco" e "crédito".
+
+
+ 
+
+ 5.1 Datas
+
+Na data de julgamento pede-se um intervalo de datas. Se nada for preenchido, a pesquisa será feita considerando-se qualquer data.
+ 
+
+Se for preenchido apenas o primeiro campo, serão pesquisados processos com data posterior à informada. Se for preenchido apenas o segundo campo serão pesquisados processo com data anterior à informada.
+
+As mesmas regras são aplicadas para a data de publicação.
+
+
+
+
+ 
+
+5.2 Exclusão de palavras (equivalente ao campo "sem as palavras")
+
+Você pode excluir documentos que contenham determinadas palavras de sua busca. Para fazer isto, adicione um sinal de subtração ("-") antes dos termos que deseja excluir.
+
+Para quem estava acostumado à antiga pesquisa de Jurisprudência, o sinal de subtração equivale ao uso do termo "não".
+
+Por exemplo:
+"habeas corpus -multa" (sem aspas) = retornará resultados que contenham as palavras "habeas" e "corpus", mas que não contém a palavra "multa".
+
+
+
+
+ 
+
+5.3 Busca exata (equivalente ao campo "com a expressão")
+
+Você pode realizar uma busca exata digitando os termos entre aspas duplas.
+
+Por exemplo:
+
+
+"ausência de constrangimento ilegal" (com aspas) = retornará resultados que contenham o trecho "ausência de constrangimento ilegal"
+
+
+  
+
+6. Expandindo sua busca (equivalente ao campo "com qualquer uma das palavras")
+
+Você pode expandir sua busca utilizando o separador "OR" (note que "OR" deve ser escrito em letras maiúsculas) para retornar documentos que possuem um termo ou outro.
+
+Para quem estava acostumado à antiga pesquisa de Jurisprudência, o separador "OR" equivale ao uso do termo "ou".
+
+Por exemplo:
+"financiamento OR crédito" = retornará documentos que possuem a palavra "financiamento" ou a palavra "crédito"
+
+
+
+ 
+
+7.Quadro comparativo: Busca antiga x Nova Busca
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Fechar

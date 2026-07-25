@@ -1,0 +1,32 @@
+{
+  "name": "jur",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CLI de busca de jurisprudência nos tribunais brasileiros",
+  "bin": {
+    "jur": "./bin/jur"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "postinstall": "echo 'Agora rode: npx playwright install chromium'",
+    "cobertura": "node cobertura/build.js",
+    "indice": "node human-codegen/index.js",
+    "docs": "node cobertura/build.js && node human-codegen/index.js",
+    "smoke": "node tests/smoke.js",
+    "test": "node --test \"tests/*.test.js\"",
+    "test:tjgo": "node src/TJGOTestes.js",
+    "test:tjpa": "node src/TJPATestes.js",
+    "test:tjpr": "node src/TJPRTestes.js",
+    "test:tjrs": "node src/TJRSTestes.js",
+    "test:tjsc": "node src/TJSCTestes.js",
+    "test:trt9": "node src/TRT9Testes.js",
+    "aceite": "node tests/aceite.js"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "playwright": "^1.57.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

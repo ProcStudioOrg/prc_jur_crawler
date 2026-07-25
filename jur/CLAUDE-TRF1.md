@@ -1,7 +1,14 @@
 # TRF1 — Tribunal Regional Federal da 1ª Região
 
-**Escopo:** DF, MG, GO, TO, MT, BA, PI, MA, PA, AP, AM, RR, AC, RO · **Status:** OK
+**Escopo:** DF, MG, GO, TO, MT, BA, PI, MA, PA, AP, AM, RR, AC, RO · **Status:** 🟡 instável
 **Crawler:** `src/TRF1Crawler.js`
+
+> ⚠️ **Verificado em 24/07/2026:** `jurisprudencia.cjf.jus.br` resolve o DNS mas não responde
+> (timeout também via `curl`, e `www.cjf.jus.br` igualmente fora) — a indisponibilidade é do
+> CJF, não do crawler. Provavelmente temporária. Reteste com `node tests/smoke.js trf1`
+> antes de investigar código.
+>
+> A jurisprudência do TRF1 é servida pelo **portal do CJF**, não pelo domínio `trf1.jus.br`.
 
 ## Flags
 

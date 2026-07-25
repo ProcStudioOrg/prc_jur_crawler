@@ -1,0 +1,43 @@
+TJPR — 01-jurisprudencia · §7 Número do processo e do acórdão (o que alimenta o Checker)
+Prints: 07.01-campos-processo-e-acordao.png · 07.02-resultado-consulta-por-numero.png
+
+== 14. Número do processo ==
+
+  <input type="text" name="processo" maxlength="25" size="85" value=""
+         onclick="seleciona(this)" onblur="perdefoco(this)" id="processo">
+  <input type="text" name="acordao"  maxlength="25" size="85" value=""
+         onclick="seleciona(this)" onblur="perdefoco(this)" id="acordao">
+
+Rótulos: "NUMERAÇÃO PROCESSUAL" e "NUMERAÇÃO DO ACÓRDÃO".
+
+Não existe uma tela separada de "consulta por número": é o MESMO
+`actionType=pesquisar`, com `processo` preenchido e `criterioPesquisa` vazio.
+Isso é ótimo — dá uma consulta direta sem termo e sem data:
+
+  POST /jurisprudencia/publico/pesquisa.do?actionType=pesquisar
+    criterioPesquisa=            (vazio)
+    processo=0003249-43.2020.8.16.0193
+    ambito=-1  idsTipoDecisaoSelecionados=-1  segredoJustica=pesquisar+com
+
+Medido (25/07/2026):
+  - aceita o número COM máscara (`0003249-43.2020.8.16.0193`) — é o formato que
+    a tela envia. Também aceita só dígitos.
+  - devolve UMA linha por documento: um processo com acórdão + monocrática
+    aparece duas vezes (ex.: 0001992-51.2025.8.16.0146 -> 2 documentos da
+    3ª Turma Recursal).
+  - número inexistente -> "Nenhum registro encontrado!", 0 documentos.
+    Exemplo testado: 1234567-89.2020.8.16.0001 (DV inválido) -> 0.
+  - o contador da Corte IDH IGNORA o filtro de processo e continua aparecendo
+    ("1 registro(s) da Corte IDH") — o parser descarta as linhas `tr.cidh`, §8.
+
+Numeração:
+  - CNJ do TJPR: `.8.16.` (Justiça Estadual = 8, tribunal = 16) ->
+    `cnj.pertenceA(n, 8, 16)`.
+  - o acervo tem numeração antiga (pré-Resolução CNJ 65/2008) e números de
+    acórdão próprios; para esses o dígito verificador não se aplica.
+    DV inválido é AVISO, nunca veto: a prova é a consulta devolver o julgado.
+
+É esta consulta que `src/TJPRChecker.js` usa:
+  ./bin/jur tjpr -n "0003249-43.2020.8.16.0193"      (exit 1 se não existir)
+  ./bin/jur tjpr --acordao <numero>
+  node src/TJPRChecker.js <numero>

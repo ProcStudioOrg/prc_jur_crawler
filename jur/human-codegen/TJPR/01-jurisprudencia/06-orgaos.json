@@ -1,0 +1,902 @@
+[
+ {
+  "id": 257,
+  "nome": "1ª Vice-Presidência",
+  "documentos": 250244,
+  "foro": "comum"
+ },
+ {
+  "id": 135,
+  "nome": "15ª Câmara Cível",
+  "documentos": 194267,
+  "foro": "comum"
+ },
+ {
+  "id": 146,
+  "nome": "18ª Câmara Cível",
+  "documentos": 194259,
+  "foro": "comum"
+ },
+ {
+  "id": 134,
+  "nome": "17ª Câmara Cível",
+  "documentos": 191498,
+  "foro": "comum"
+ },
+ {
+  "id": 133,
+  "nome": "13ª Câmara Cível",
+  "documentos": 188309,
+  "foro": "comum"
+ },
+ {
+  "id": 149,
+  "nome": "16ª Câmara Cível",
+  "documentos": 185721,
+  "foro": "comum"
+ },
+ {
+  "id": 127,
+  "nome": "8ª Câmara Cível",
+  "documentos": 183920,
+  "foro": "comum"
+ },
+ {
+  "id": 125,
+  "nome": "14ª Câmara Cível",
+  "documentos": 182674,
+  "foro": "comum"
+ },
+ {
+  "id": 124,
+  "nome": "9ª Câmara Cível",
+  "documentos": 177516,
+  "foro": "comum"
+ },
+ {
+  "id": 147,
+  "nome": "10ª Câmara Cível",
+  "documentos": 176004,
+  "foro": "comum"
+ },
+ {
+  "id": 153,
+  "nome": "12ª Câmara Cível",
+  "documentos": 175707,
+  "foro": "comum"
+ },
+ {
+  "id": 148,
+  "nome": "11ª Câmara Cível",
+  "documentos": 174089,
+  "foro": "comum"
+ },
+ {
+  "id": 151,
+  "nome": "1ª Câmara Cível",
+  "documentos": 173102,
+  "foro": "comum"
+ },
+ {
+  "id": 121,
+  "nome": "3ª Câmara Cível",
+  "documentos": 169540,
+  "foro": "comum"
+ },
+ {
+  "id": 131,
+  "nome": "6ª Câmara Cível",
+  "documentos": 169326,
+  "foro": "comum"
+ },
+ {
+  "id": 137,
+  "nome": "2ª Câmara Cível",
+  "documentos": 168828,
+  "foro": "comum"
+ },
+ {
+  "id": 122,
+  "nome": "7ª Câmara Cível",
+  "documentos": 163174,
+  "foro": "comum"
+ },
+ {
+  "id": 130,
+  "nome": "1ª Câmara Criminal",
+  "documentos": 163004,
+  "foro": "comum"
+ },
+ {
+  "id": 123,
+  "nome": "4ª Câmara Cível",
+  "documentos": 159523,
+  "foro": "comum"
+ },
+ {
+  "id": 139,
+  "nome": "5ª Câmara Cível",
+  "documentos": 151426,
+  "foro": "comum"
+ },
+ {
+  "id": 132,
+  "nome": "3ª Câmara Criminal",
+  "documentos": 138249,
+  "foro": "comum"
+ },
+ {
+  "id": 277,
+  "nome": "5ª Câmara Criminal",
+  "documentos": 137208,
+  "foro": "comum"
+ },
+ {
+  "id": 129,
+  "nome": "4ª Câmara Criminal",
+  "documentos": 136247,
+  "foro": "comum"
+ },
+ {
+  "id": 144,
+  "nome": "2ª Câmara Criminal",
+  "documentos": 129649,
+  "foro": "comum"
+ },
+ {
+  "id": 128,
+  "nome": "Órgão Especial",
+  "documentos": 49710,
+  "foro": "comum"
+ },
+ {
+  "id": 205,
+  "nome": "19ª Câmara Cível",
+  "documentos": 31749,
+  "foro": "comum"
+ },
+ {
+  "id": 352,
+  "nome": "20ª Câmara Cível",
+  "documentos": 29972,
+  "foro": "comum"
+ },
+ {
+  "id": 226,
+  "nome": "Quarta Câmara Cível (extinto TA)",
+  "documentos": 21695,
+  "foro": "comum"
+ },
+ {
+  "id": 180,
+  "nome": "Setima Câmara Cível (extinto TA)",
+  "documentos": 20443,
+  "foro": "comum"
+ },
+ {
+  "id": 167,
+  "nome": "Oitava Câmara Cível (extinto TA)",
+  "documentos": 20345,
+  "foro": "comum"
+ },
+ {
+  "id": 224,
+  "nome": "Terceira Câmara Cível (extinto TA)",
+  "documentos": 19371,
+  "foro": "comum"
+ },
+ {
+  "id": 185,
+  "nome": "Sexta Câmara Cível (extinto TA)",
+  "documentos": 19046,
+  "foro": "comum"
+ },
+ {
+  "id": 199,
+  "nome": "Segunda Câmara Cível (extinto TA)",
+  "documentos": 19045,
+  "foro": "comum"
+ },
+ {
+  "id": 165,
+  "nome": "Primeira Câmara Cível (extinto TA)",
+  "documentos": 18966,
+  "foro": "comum"
+ },
+ {
+  "id": 184,
+  "nome": "Quinta Câmara Cível (extinto TA)",
+  "documentos": 18745,
+  "foro": "comum"
+ },
+ {
+  "id": 195,
+  "nome": "Primeira Câmara Criminal (extinto TA)",
+  "documentos": 11551,
+  "foro": "comum"
+ },
+ {
+  "id": 198,
+  "nome": "6ª Câmara Criminal",
+  "documentos": 11549,
+  "foro": "comum"
+ },
+ {
+  "id": 210,
+  "nome": "Terceira Câmara Criminal (extinto TA)",
+  "documentos": 11322,
+  "foro": "comum"
+ },
+ {
+  "id": 181,
+  "nome": "Quarta Câmara Criminal (extinto TA)",
+  "documentos": 11009,
+  "foro": "comum"
+ },
+ {
+  "id": 197,
+  "nome": "Segunda Câmara Criminal (extinto TA)",
+  "documentos": 10973,
+  "foro": "comum"
+ },
+ {
+  "id": 194,
+  "nome": "Nona Câmara Cível (extinto TA)",
+  "documentos": 7957,
+  "foro": "comum"
+ },
+ {
+  "id": 152,
+  "nome": "Decima Câmara Cível (extinto TA)",
+  "documentos": 7395,
+  "foro": "comum"
+ },
+ {
+  "id": 357,
+  "nome": "1ª Câmara Criminal - Núcleo de Atuação (Lei Maria da Penha)",
+  "documentos": 5496,
+  "foro": "comum"
+ },
+ {
+  "id": 212,
+  "nome": "II Grupo de Câmaras Cíveis",
+  "documentos": 4316,
+  "foro": "comum"
+ },
+ {
+  "id": 120,
+  "nome": "I Grupo de Câmaras Cíveis",
+  "documentos": 4254,
+  "foro": "comum"
+ },
+ {
+  "id": 145,
+  "nome": "2ª Câmara Criminal em Composição Integral",
+  "documentos": 3686,
+  "foro": "comum"
+ },
+ {
+  "id": 160,
+  "nome": "4ª Câmara Cível em Composição Integral",
+  "documentos": 3648,
+  "foro": "comum"
+ },
+ {
+  "id": 141,
+  "nome": "Seção Cível",
+  "documentos": 3503,
+  "foro": "comum"
+ },
+ {
+  "id": 163,
+  "nome": "5ª Câmara Cível em Composição Integral",
+  "documentos": 3314,
+  "foro": "comum"
+ },
+ {
+  "id": 219,
+  "nome": "Grupo de Câmaras Criminais",
+  "documentos": 2997,
+  "foro": "comum"
+ },
+ {
+  "id": 159,
+  "nome": "3ª Câmara Criminal em Composição Integral",
+  "documentos": 2678,
+  "foro": "comum"
+ },
+ {
+  "id": 136,
+  "nome": "5ª Câmara Criminal em Composição Integral",
+  "documentos": 2645,
+  "foro": "comum"
+ },
+ {
+  "id": 154,
+  "nome": "4ª Câmara Criminal em Composição Integral",
+  "documentos": 2625,
+  "foro": "comum"
+ },
+ {
+  "id": 138,
+  "nome": "2ª Câmara Cível em Composição Integral",
+  "documentos": 2550,
+  "foro": "comum"
+ },
+ {
+  "id": 142,
+  "nome": "3ª Câmara Cível em Composição Integral",
+  "documentos": 2393,
+  "foro": "comum"
+ },
+ {
+  "id": 150,
+  "nome": "1ª Câmara Cível em Composição Integral",
+  "documentos": 2332,
+  "foro": "comum"
+ },
+ {
+  "id": 143,
+  "nome": "7ª Câmara Cível em Composição Integral",
+  "documentos": 2263,
+  "foro": "comum"
+ },
+ {
+  "id": 262,
+  "nome": "Seção Cível Ordinária",
+  "documentos": 2142,
+  "foro": "comum"
+ },
+ {
+  "id": 209,
+  "nome": "Primeiro Grupo de Câmaras Criminais (extinto TA)",
+  "documentos": 2109,
+  "foro": "comum"
+ },
+ {
+  "id": 157,
+  "nome": "1ª Câmara Criminal em Composição Integral",
+  "documentos": 2070,
+  "foro": "comum"
+ },
+ {
+  "id": 161,
+  "nome": "11ª Câmara Cível em Composição Integral",
+  "documentos": 1830,
+  "foro": "comum"
+ },
+ {
+  "id": 208,
+  "nome": "Segundo Grupo de Câmaras Criminais (extinto TA)",
+  "documentos": 1791,
+  "foro": "comum"
+ },
+ {
+  "id": 340,
+  "nome": "4ª Seção Cível",
+  "documentos": 1780,
+  "foro": "comum"
+ },
+ {
+  "id": 164,
+  "nome": "12ª Câmara Cível em Composição Integral",
+  "documentos": 1689,
+  "foro": "comum"
+ },
+ {
+  "id": 171,
+  "nome": "6ª Câmara Cível em Composição Integral",
+  "documentos": 1674,
+  "foro": "comum"
+ },
+ {
+  "id": 215,
+  "nome": "III Grupo de Câmaras Cíveis",
+  "documentos": 1421,
+  "foro": "comum"
+ },
+ {
+  "id": 236,
+  "nome": "Terceiro Grupo de Câmaras Cíveis (extinto TA)",
+  "documentos": 1243,
+  "foro": "comum"
+ },
+ {
+  "id": 361,
+  "nome": "6ª Câmara Criminal - Núcleo de Atuação",
+  "documentos": 1231,
+  "foro": "comum"
+ },
+ {
+  "id": 234,
+  "nome": "Quarto Grupo de Câmaras Cíveis (extinto TA)",
+  "documentos": 1184,
+  "foro": "comum"
+ },
+ {
+  "id": 235,
+  "nome": "Segundo Grupo de Câmaras Cíveis (extinto TA)",
+  "documentos": 1174,
+  "foro": "comum"
+ },
+ {
+  "id": 343,
+  "nome": "2ª Seção Cível",
+  "documentos": 1169,
+  "foro": "comum"
+ },
+ {
+  "id": 158,
+  "nome": "17ª Câmara Cível em Composição Integral",
+  "documentos": 1069,
+  "foro": "comum"
+ },
+ {
+  "id": 233,
+  "nome": "Primeiro Grupo de Câmaras Cíveis (extinto TA)",
+  "documentos": 1007,
+  "foro": "comum"
+ },
+ {
+  "id": 345,
+  "nome": "1ª Seção Cível",
+  "documentos": 966,
+  "foro": "comum"
+ },
+ {
+  "id": 342,
+  "nome": "3ª Seção Cível",
+  "documentos": 958,
+  "foro": "comum"
+ },
+ {
+  "id": 162,
+  "nome": "18ª Câmara Cível em Composição Integral",
+  "documentos": 945,
+  "foro": "comum"
+ },
+ {
+  "id": 344,
+  "nome": "7ª Seção Cível",
+  "documentos": 893,
+  "foro": "comum"
+ },
+ {
+  "id": 346,
+  "nome": "6ª Seção Cível",
+  "documentos": 840,
+  "foro": "comum"
+ },
+ {
+  "id": 170,
+  "nome": "10ª Câmara Cível em Composição Integral",
+  "documentos": 739,
+  "foro": "comum"
+ },
+ {
+  "id": 341,
+  "nome": "5ª Seção Cível",
+  "documentos": 729,
+  "foro": "comum"
+ },
+ {
+  "id": 174,
+  "nome": "15ª Câmara Cível em Composição Integral",
+  "documentos": 715,
+  "foro": "comum"
+ },
+ {
+  "id": 173,
+  "nome": "8ª Câmara Cível em Composição Integral",
+  "documentos": 697,
+  "foro": "comum"
+ },
+ {
+  "id": 140,
+  "nome": "9ª Câmara Cível em Composição Integral",
+  "documentos": 652,
+  "foro": "comum"
+ },
+ {
+  "id": 172,
+  "nome": "14ª Câmara Cível em Composição Integral",
+  "documentos": 632,
+  "foro": "comum"
+ },
+ {
+  "id": 155,
+  "nome": "13ª Câmara Cível em Composição Integral",
+  "documentos": 611,
+  "foro": "comum"
+ },
+ {
+  "id": 156,
+  "nome": "16ª Câmara Cível em Composição Integral",
+  "documentos": 599,
+  "foro": "comum"
+ },
+ {
+  "id": 177,
+  "nome": "Câmara Criminal Suplementar Única (2006)",
+  "documentos": 412,
+  "foro": "comum"
+ },
+ {
+  "id": 193,
+  "nome": "Câmara Criminal Suplementar Única",
+  "documentos": 335,
+  "foro": "comum"
+ },
+ {
+  "id": 206,
+  "nome": "Corte Especial (extinto TA)",
+  "documentos": 288,
+  "foro": "comum"
+ },
+ {
+  "id": 178,
+  "nome": "1ª Câmara Cível Suplementar (2006)",
+  "documentos": 285,
+  "foro": "comum"
+ },
+ {
+  "id": 183,
+  "nome": "2ª Câmara Cível Suplementar (2006)",
+  "documentos": 282,
+  "foro": "comum"
+ },
+ {
+  "id": 218,
+  "nome": "IV Grupo de Câmaras Cíveis",
+  "documentos": 270,
+  "foro": "comum"
+ },
+ {
+  "id": 182,
+  "nome": "3ª Câmara Cível Suplementar (2006)",
+  "documentos": 264,
+  "foro": "comum"
+ },
+ {
+  "id": 353,
+  "nome": "8ª Seção Cível",
+  "documentos": 230,
+  "foro": "comum"
+ },
+ {
+  "id": 188,
+  "nome": "3ª Câmara Cível Suplementar",
+  "documentos": 221,
+  "foro": "comum"
+ },
+ {
+  "id": 176,
+  "nome": "1ª Câmara Cível Suplementar",
+  "documentos": 208,
+  "foro": "comum"
+ },
+ {
+  "id": 203,
+  "nome": "III Grupo de Câmaras Criminais",
+  "documentos": 207,
+  "foro": "comum"
+ },
+ {
+  "id": 201,
+  "nome": "II Grupo de Câmaras Criminais",
+  "documentos": 205,
+  "foro": "comum"
+ },
+ {
+  "id": 187,
+  "nome": "2ª Câmara Cível Suplementar",
+  "documentos": 198,
+  "foro": "comum"
+ },
+ {
+  "id": 196,
+  "nome": "Segunda Câmara Integral (extinto TA)",
+  "documentos": 195,
+  "foro": "comum"
+ },
+ {
+  "id": 166,
+  "nome": "Decima Câmara Integral (extinto TA)",
+  "documentos": 192,
+  "foro": "comum"
+ },
+ {
+  "id": 231,
+  "nome": "Oitava Câmara Integral (extinto TA)",
+  "documentos": 138,
+  "foro": "comum"
+ },
+ {
+  "id": 230,
+  "nome": "Sexta Câmara Integral (extinto TA)",
+  "documentos": 129,
+  "foro": "comum"
+ },
+ {
+  "id": 227,
+  "nome": "Primeira Câmara Integral (extinto TA)",
+  "documentos": 128,
+  "foro": "comum"
+ },
+ {
+  "id": 175,
+  "nome": "Seção Criminal",
+  "documentos": 124,
+  "foro": "comum"
+ },
+ {
+  "id": 211,
+  "nome": "Setima Câmara Integral (extinto TA)",
+  "documentos": 110,
+  "foro": "comum"
+ },
+ {
+  "id": 223,
+  "nome": "Quarta Câmara Integral (extinto TA)",
+  "documentos": 85,
+  "foro": "comum"
+ },
+ {
+  "id": 228,
+  "nome": "Câmaras Cíveis Reunidas (extinto TA)",
+  "documentos": 81,
+  "foro": "comum"
+ },
+ {
+  "id": 225,
+  "nome": "Quinta Câmara Integral (extinto TA)",
+  "documentos": 78,
+  "foro": "comum"
+ },
+ {
+  "id": 232,
+  "nome": "Terceira Câmara Integral (extinto TA)",
+  "documentos": 75,
+  "foro": "comum"
+ },
+ {
+  "id": 293,
+  "nome": "Núcleo de Conciliação - TJPR 2º Grau",
+  "documentos": 57,
+  "foro": "comum"
+ },
+ {
+  "id": 214,
+  "nome": "19ª Câmara Cível em Composição Integral",
+  "documentos": 53,
+  "foro": "comum"
+ },
+ {
+  "id": 202,
+  "nome": "Nona Câmara Integral (extinto TA)",
+  "documentos": 49,
+  "foro": "comum"
+ },
+ {
+  "id": 216,
+  "nome": "1º Grupo de Câmaras Criminais",
+  "documentos": 37,
+  "foro": "comum"
+ },
+ {
+  "id": 207,
+  "nome": "2º Grupo de Câmaras Cíveis Reunidas",
+  "documentos": 33,
+  "foro": "comum"
+ },
+ {
+  "id": 237,
+  "nome": "Grupo de Câmaras Cíveis Reunidas (extinto TA)",
+  "documentos": 30,
+  "foro": "comum"
+ },
+ {
+  "id": 221,
+  "nome": "Tribunal Pleno",
+  "documentos": 27,
+  "foro": "comum"
+ },
+ {
+  "id": 189,
+  "nome": "3ª Câmara Cível Suplementar Integral (2006)",
+  "documentos": 18,
+  "foro": "comum"
+ },
+ {
+  "id": 229,
+  "nome": "Grupo de Câmaras Criminais Reunidas (extinto TA)",
+  "documentos": 16,
+  "foro": "comum"
+ },
+ {
+  "id": 220,
+  "nome": "Grupo de Câmaras Cíveis Reunidas",
+  "documentos": 13,
+  "foro": "comum"
+ },
+ {
+  "id": 190,
+  "nome": "1ª Câmara Cível Suplementar Integral (2006)",
+  "documentos": 11,
+  "foro": "comum"
+ },
+ {
+  "id": 191,
+  "nome": "3ª Câmara Cível Suplementar em Composição Integral",
+  "documentos": 9,
+  "foro": "comum"
+ },
+ {
+  "id": 238,
+  "nome": "Grupo de Câmaras Criminais (extinto TA)",
+  "documentos": 9,
+  "foro": "comum"
+ },
+ {
+  "id": 179,
+  "nome": "Câmara Criminal Suplementar Única Integral (2006)",
+  "documentos": 6,
+  "foro": "comum"
+ },
+ {
+  "id": 192,
+  "nome": "2ª Câmara Cível Suplementar Integral (2006)",
+  "documentos": 6,
+  "foro": "comum"
+ },
+ {
+  "id": 200,
+  "nome": "2ª Câmara Cível Suplementar em Composição Integral",
+  "documentos": 6,
+  "foro": "comum"
+ },
+ {
+  "id": 186,
+  "nome": "1ª Câmara Cível Suplementar em Composição Integral",
+  "documentos": 5,
+  "foro": "comum"
+ },
+ {
+  "id": 204,
+  "nome": "Grupo de Câmaras Criminais Reunidas",
+  "documentos": 4,
+  "foro": "comum"
+ },
+ {
+  "id": 217,
+  "nome": "1º Grupo de Câmaras Cíveis Reunidas",
+  "documentos": 3,
+  "foro": "comum"
+ },
+ {
+  "id": 239,
+  "nome": "Grupo de Câmaras Cíveis (extinto TA)",
+  "documentos": 3,
+  "foro": "comum"
+ },
+ {
+  "id": 213,
+  "nome": "Câmara Criminal Suplementar Única em Composição In",
+  "documentos": 2,
+  "foro": "comum"
+ },
+ {
+  "id": 222,
+  "nome": "Câmara Cível Especial",
+  "documentos": 1,
+  "foro": "comum"
+ },
+ {
+  "id": 248,
+  "nome": "2ª Turma Recursal",
+  "documentos": 416792,
+  "foro": "juizados"
+ },
+ {
+  "id": 249,
+  "nome": "1ª Turma Recursal",
+  "documentos": 299353,
+  "foro": "juizados"
+ },
+ {
+  "id": 284,
+  "nome": "3ª Turma Recursal",
+  "documentos": 279508,
+  "foro": "juizados"
+ },
+ {
+  "id": 283,
+  "nome": "4ª Turma Recursal",
+  "documentos": 230563,
+  "foro": "juizados"
+ },
+ {
+  "id": 339,
+  "nome": "5ª Turma Recursal dos Juizados Especiais",
+  "documentos": 112101,
+  "foro": "juizados"
+ },
+ {
+  "id": 354,
+  "nome": "6ª Turma Recursal dos Juizados Especiais",
+  "documentos": 99268,
+  "foro": "juizados"
+ },
+ {
+  "id": 240,
+  "nome": "Turma Recursal Única",
+  "documentos": 97264,
+  "foro": "juizados"
+ },
+ {
+  "id": 338,
+  "nome": "Turma Recursal Reunida dos Juizados Especiais",
+  "documentos": 9646,
+  "foro": "juizados"
+ },
+ {
+  "id": 359,
+  "nome": "Turma de Uniformização de Jurisprudência",
+  "documentos": 2387,
+  "foro": "juizados"
+ },
+ {
+  "id": 350,
+  "nome": "2ª Turma Recursal Suplementar dos Juizados Especiais",
+  "documentos": 2346,
+  "foro": "juizados"
+ },
+ {
+  "id": 351,
+  "nome": "1ª Turma Recursal Suplementar dos Juizados Especiais",
+  "documentos": 2106,
+  "foro": "juizados"
+ },
+ {
+  "id": 348,
+  "nome": "3ª Turma Recursal Suplementar dos Juizados Especiais",
+  "documentos": 2029,
+  "foro": "juizados"
+ },
+ {
+  "id": 349,
+  "nome": "4ª Turma Recursal Suplementar dos Juizados Especiais",
+  "documentos": 1933,
+  "foro": "juizados"
+ },
+ {
+  "id": 242,
+  "nome": "Turmas Recursais Reunidas",
+  "documentos": 1472,
+  "foro": "juizados"
+ },
+ {
+  "id": 356,
+  "nome": "2ª Turma de Uniformização de Jurisprudência",
+  "documentos": 159,
+  "foro": "juizados"
+ },
+ {
+  "id": 355,
+  "nome": "1ª Turma de Uniformização de Jurisprudência",
+  "documentos": 71,
+  "foro": "juizados"
+ },
+ {
+  "id": 347,
+  "nome": "Núcleo de Conciliação - Turmas Recursais",
+  "documentos": 29,
+  "foro": "juizados"
+ },
+ {
+  "id": 358,
+  "nome": "Turma de Uniformização de Jurisprudência",
+  "documentos": 1,
+  "foro": "juizados"
+ }
+]

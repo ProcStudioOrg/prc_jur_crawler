@@ -1,0 +1,414 @@
+[
+ {
+  "id": "01º Núcleo Civil de Justiça 4.0",
+  "label": "01º NÚCLEO CIVIL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "01º Núcleo Comercial de Justiça 4.0",
+  "label": "01º NÚCLEO COMERCIAL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "01º Núcleo Público de Justiça 4.0",
+  "label": "01º NÚCLEO PÚBLICO DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "02º Núcleo Civil de Justiça 4.0",
+  "label": "02º NÚCLEO CIVIL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "02º Núcleo Comercial de Justiça 4.0",
+  "label": "02º NÚCLEO COMERCIAL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "02º Núcleo Criminal de Justiça 4.0",
+  "label": "02º NÚCLEO CRIMINAL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "03º Núcleo Civil de Justiça 4.0",
+  "label": "03º NÚCLEO CIVIL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "03º Núcleo Comercial de Justiça 4.0",
+  "label": "03º NÚCLEO COMERCIAL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "03º Núcleo Público de Justiça 4.0",
+  "label": "03º NÚCLEO PÚBLICO DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "04º Núcleo Comercial de Justiça 4.0",
+  "label": "04º NÚCLEO COMERCIAL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "04º Núcleo Criminal de Justiça 4.0",
+  "label": "04º NÚCLEO CRIMINAL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "04º Núcleo Público de Justiça 4.0",
+  "label": "04º NÚCLEO PÚBLICO DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "05º Núcleo Civil de Justiça 4.0",
+  "label": "05º NÚCLEO CIVIL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "05º Núcleo Comercial de Justiça 4.0",
+  "label": "05º NÚCLEO COMERCIAL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "05º Núcleo Público de Justiça 4.0",
+  "label": "05º NÚCLEO PÚBLICO DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "06º Núcleo Civil de Justiça 4.0",
+  "label": "06º NÚCLEO CIVIL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "06º Núcleo Comercial de Justiça 4.0",
+  "label": "06º NÚCLEO COMERCIAL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "06º Núcleo Público de Justiça 4.0",
+  "label": "06º NÚCLEO PÚBLICO DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "07º Núcleo Civil de Justiça 4.0",
+  "label": "07º NÚCLEO CIVIL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "07º Núcleo Público de Justiça 4.0",
+  "label": "07º NÚCLEO PÚBLICO DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "08º Núcleo Civil de Justiça 4.0",
+  "label": "08º NÚCLEO CIVIL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "10ª Câmara de Direito Civil",
+  "label": "10ª CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "10º Núcleo Civil de Justiça 4.0",
+  "label": "10º NÚCLEO CIVIL DE JUSTIÇA 4.0"
+ },
+ {
+  "id": "1ª Câmara Comercial (Janeiro 2007)",
+  "label": "1ª CÂMARA COMERCIAL (JANEIRO 2007)"
+ },
+ {
+  "id": "1ª Câmara Criminal",
+  "label": "1ª CÂMARA CRIMINAL"
+ },
+ {
+  "id": "1ª Câmara Criminal (Janeiro 2007)",
+  "label": "1ª CÂMARA CRIMINAL (JANEIRO 2007)"
+ },
+ {
+  "id": "1ª Câmara Cível (Janeiro)",
+  "label": "1ª CÂMARA CÍVEL (JANEIRO)"
+ },
+ {
+  "id": "1ª Câmara Cível Especial",
+  "label": "1ª CÂMARA CÍVEL ESPECIAL"
+ },
+ {
+  "id": "1ª Câmara Especial de Enfrentamento de Acervos",
+  "label": "1ª CÂMARA ESPECIAL DE ENFRENTAMENTO DE ACERVOS"
+ },
+ {
+  "id": "1ª Câmara de Direito Civil",
+  "label": "1ª CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "1ª Câmara de Direito Comercial",
+  "label": "1ª CÂMARA DE DIREITO COMERCIAL"
+ },
+ {
+  "id": "1ª Câmara de Direito Público",
+  "label": "1ª CÂMARA DE DIREITO PÚBLICO"
+ },
+ {
+  "id": "1ª Câmara de Direito Público (Janeiro)",
+  "label": "1ª CÂMARA DE DIREITO PÚBLICO (JANEIRO)"
+ },
+ {
+  "id": "1ª Câmara de Enfrentamento de Acervos",
+  "label": "1ª CÂMARA DE ENFRENTAMENTO DE ACERVOS"
+ },
+ {
+  "id": "1ª Vice-Presidência",
+  "label": "1ª VICE-PRESIDÊNCIA"
+ },
+ {
+  "id": "2ª Câmara Criminal",
+  "label": "2ª CÂMARA CRIMINAL"
+ },
+ {
+  "id": "2ª Câmara Criminal (Janeiro)",
+  "label": "2ª CÂMARA CRIMINAL (JANEIRO)"
+ },
+ {
+  "id": "2ª Câmara Cível Especial",
+  "label": "2ª CÂMARA CÍVEL ESPECIAL"
+ },
+ {
+  "id": "2ª Câmara Especial de Enfrentamento de Acervos",
+  "label": "2ª CÂMARA ESPECIAL DE ENFRENTAMENTO DE ACERVOS"
+ },
+ {
+  "id": "2ª Câmara de Direito Civil",
+  "label": "2ª CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "2ª Câmara de Direito Civil (Janeiro)",
+  "label": "2ª CÂMARA DE DIREITO CIVIL (JANEIRO)"
+ },
+ {
+  "id": "2ª Câmara de Direito Comercial",
+  "label": "2ª CÂMARA DE DIREITO COMERCIAL"
+ },
+ {
+  "id": "2ª Câmara de Direito Público",
+  "label": "2ª CÂMARA DE DIREITO PÚBLICO"
+ },
+ {
+  "id": "2ª Câmara de Direito Público (Janeiro)",
+  "label": "2ª CÂMARA DE DIREITO PÚBLICO (JANEIRO)"
+ },
+ {
+  "id": "2ª Câmara de Enfrentamento de Acervos",
+  "label": "2ª CÂMARA DE ENFRENTAMENTO DE ACERVOS"
+ },
+ {
+  "id": "2ª Vice-Presidência",
+  "label": "2ª VICE-PRESIDÊNCIA"
+ },
+ {
+  "id": "3ª Câmara Criminal",
+  "label": "3ª CÂMARA CRIMINAL"
+ },
+ {
+  "id": "3ª Câmara Criminal (Janeiro)",
+  "label": "3ª CÂMARA CRIMINAL (JANEIRO)"
+ },
+ {
+  "id": "3ª Câmara Especial de Enfrentamento de Acervos",
+  "label": "3ª CÂMARA ESPECIAL DE ENFRENTAMENTO DE ACERVOS"
+ },
+ {
+  "id": "3ª Câmara de Direito Civil",
+  "label": "3ª CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "3ª Câmara de Direito Civil (Janeiro)",
+  "label": "3ª CÂMARA DE DIREITO CIVIL (JANEIRO)"
+ },
+ {
+  "id": "3ª Câmara de Direito Comercial",
+  "label": "3ª CÂMARA DE DIREITO COMERCIAL"
+ },
+ {
+  "id": "3ª Câmara de Direito Público",
+  "label": "3ª CÂMARA DE DIREITO PÚBLICO"
+ },
+ {
+  "id": "3ª Câmara de Direito Público (Janeiro)",
+  "label": "3ª CÂMARA DE DIREITO PÚBLICO (JANEIRO)"
+ },
+ {
+  "id": "3ª Vice-Presidência",
+  "label": "3ª VICE-PRESIDÊNCIA"
+ },
+ {
+  "id": "4ª Câmara Criminal",
+  "label": "4ª CÂMARA CRIMINAL"
+ },
+ {
+  "id": "4ª Câmara Criminal (Janeiro)",
+  "label": "4ª CÂMARA CRIMINAL (JANEIRO)"
+ },
+ {
+  "id": "4ª Câmara de Direito Civil",
+  "label": "4ª CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "4ª Câmara de Direito Comercial",
+  "label": "4ª CÂMARA DE DIREITO COMERCIAL"
+ },
+ {
+  "id": "4ª Câmara de Direito Público",
+  "label": "4ª CÂMARA DE DIREITO PÚBLICO"
+ },
+ {
+  "id": "4ª Câmara de Direito Público (Janeiro)",
+  "label": "4ª CÂMARA DE DIREITO PÚBLICO (JANEIRO)"
+ },
+ {
+  "id": "5ª Câmara Criminal",
+  "label": "5ª CÂMARA CRIMINAL"
+ },
+ {
+  "id": "5ª Câmara de Direito Civil",
+  "label": "5ª CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "5ª Câmara de Direito Comercial",
+  "label": "5ª CÂMARA DE DIREITO COMERCIAL"
+ },
+ {
+  "id": "5ª Câmara de Direito Público",
+  "label": "5ª CÂMARA DE DIREITO PÚBLICO"
+ },
+ {
+  "id": "6ª Câmara Criminal",
+  "label": "6ª CÂMARA CRIMINAL"
+ },
+ {
+  "id": "6ª Câmara de Direito Civil",
+  "label": "6ª CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "6ª Câmara de Direito Comercial",
+  "label": "6ª CÂMARA DE DIREITO COMERCIAL"
+ },
+ {
+  "id": "7ª Câmara de Direito Civil",
+  "label": "7ª CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "8ª Câmara de Direito Civil",
+  "label": "8ª CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "8ª Oitava Câmara de Direito Civil",
+  "label": "8ª OITAVA CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "9ª Câmara de Direito Civil",
+  "label": "9ª CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "Câmara Civil Especial",
+  "label": "CÂMARA CIVIL ESPECIAL"
+ },
+ {
+  "id": "Câmara Especial - Proc. Criminais",
+  "label": "CÂMARA ESPECIAL - PROC. CRIMINAIS"
+ },
+ {
+  "id": "Câmara Especial - Processos Cíveis",
+  "label": "CÂMARA ESPECIAL - PROCESSOS CÍVEIS"
+ },
+ {
+  "id": "Câmara Especial Regional de Chapecó",
+  "label": "CÂMARA ESPECIAL REGIONAL DE CHAPECÓ"
+ },
+ {
+  "id": "Câmara Especial Temporária de Direito Civil",
+  "label": "CÂMARA ESPECIAL TEMPORÁRIA DE DIREITO CIVIL"
+ },
+ {
+  "id": "Câmara Especial Temporária de Direito Comercial",
+  "label": "CÂMARA ESPECIAL TEMPORÁRIA DE DIREITO COMERCIAL"
+ },
+ {
+  "id": "Câmara de Agravos Internos em Recursos Constitucionais",
+  "label": "CÂMARA DE AGRAVOS INTERNOS EM RECURSOS CONSTITUCIONAIS"
+ },
+ {
+  "id": "Câmara de Férias",
+  "label": "CÂMARA DE FÉRIAS"
+ },
+ {
+  "id": "Câmara de Férias Civil",
+  "label": "CÂMARA DE FÉRIAS CIVIL"
+ },
+ {
+  "id": "Câmara de Férias Criminal",
+  "label": "CÂMARA DE FÉRIAS CRIMINAL"
+ },
+ {
+  "id": "Câmara de Recursos Delegados",
+  "label": "CÂMARA DE RECURSOS DELEGADOS"
+ },
+ {
+  "id": "Câmara de Recursos Delegados - 3ª Vice-Presidência",
+  "label": "CÂMARA DE RECURSOS DELEGADOS - 3ª VICE-PRESIDÊNCIA"
+ },
+ {
+  "id": "Gab. 01 - 1ª Câmara de Direito Público",
+  "label": "GAB. 01 - 1ª CÂMARA DE DIREITO PÚBLICO"
+ },
+ {
+  "id": "Gab. 01 - 2ª Câmara Criminal",
+  "label": "GAB. 01 - 2ª CÂMARA CRIMINAL"
+ },
+ {
+  "id": "Gab. 01 - 4ª Câmara de Direito Público",
+  "label": "GAB. 01 - 4ª CÂMARA DE DIREITO PÚBLICO"
+ },
+ {
+  "id": "Gab. 03 - 2ª Câmara de Direito Civil",
+  "label": "GAB. 03 - 2ª CÂMARA DE DIREITO CIVIL"
+ },
+ {
+  "id": "Gab. 04 - 1ª Câmara de Direito Comercial",
+  "label": "GAB. 04 - 1ª CÂMARA DE DIREITO COMERCIAL"
+ },
+ {
+  "id": "Grupo de Câmaras de Direito Civil",
+  "label": "GRUPO DE CÂMARAS DE DIREITO CIVIL"
+ },
+ {
+  "id": "Grupo de Câmaras de Direito Comercial",
+  "label": "GRUPO DE CÂMARAS DE DIREITO COMERCIAL"
+ },
+ {
+  "id": "Grupo de Câmaras de Direito Público",
+  "label": "GRUPO DE CÂMARAS DE DIREITO PÚBLICO"
+ },
+ {
+  "id": "Núcleo de Conciliação",
+  "label": "NÚCLEO DE CONCILIAÇÃO"
+ },
+ {
+  "id": "Plantão Judiciário",
+  "label": "PLANTÃO JUDICIÁRIO"
+ },
+ {
+  "id": "Presidência",
+  "label": "PRESIDÊNCIA"
+ },
+ {
+  "id": "Primeiro Grupo de Direito Criminal",
+  "label": "PRIMEIRO GRUPO DE DIREITO CRIMINAL"
+ },
+ {
+  "id": "Segundo Grupo de Direito Criminal",
+  "label": "SEGUNDO GRUPO DE DIREITO CRIMINAL"
+ },
+ {
+  "id": "Seção Civil",
+  "label": "SEÇÃO CIVIL"
+ },
+ {
+  "id": "Seção Criminal",
+  "label": "SEÇÃO CRIMINAL"
+ },
+ {
+  "id": "Tribunal Pleno",
+  "label": "TRIBUNAL PLENO"
+ },
+ {
+  "id": "Tribunal Pleno (Janeiro)",
+  "label": "TRIBUNAL PLENO (JANEIRO)"
+ },
+ {
+  "id": "Órgão Especial",
+  "label": "ÓRGÃO ESPECIAL"
+ },
+ {
+  "id": "Órgão Especial (antigo)",
+  "label": "ÓRGÃO ESPECIAL (ANTIGO)"
+ }
+]

@@ -1,0 +1,140 @@
+TJPR — 01-jurisprudencia · §3 DESAMBIGUAÇÃO: Justiça Comum × Juizados Especiais
+Prints: 03.01-combo-ambito.png · 03.02-secao-ambito-na-tela.png
+        08.01-resultados-justica-comum.png · 08.02-resultados-juizados-turmas-recursais.png
+Dados:  06-orgaos.json (150 órgãos, com id, volume e foro)
+
+É o filtro mais importante deste tribunal e o que estava faltando no crawler
+antigo — ele não mandava NADA disso e devolvia Câmaras e Turmas Recursais no
+mesmo balaio.
+
+=====================================================================
+ 7. O combo que PARECE resolver: "BASE DE CONSULTA" (`ambito`)
+=====================================================================
+
+  <select name="ambito" onchange="marcaAmbito()">
+    <option value="-1" selected="selected">TODAS</option>
+    <option value="4"  id="amb_4">TURMAS RECURSAIS</option>
+    <option value="6"  id="amb_6">TRIBUNAL DE JUSTIÇA</option>
+    <option value="7"  id="amb_7">1ª VICE-PRESIDÊNCIA</option>
+    <option value="8"  id="amb_8">DECISÕES DA CORTE IDH</option>
+  </select>
+
+Ele existe, ele muda o resultado — e ele NÃO é uma partição confiável.
+Medição (termo "dano moral", EMENTA, julgamento 01/01/2026–31/03/2026,
+contador "da Jurisprudência do Tribunal de Justiça"), 25/07/2026:
+
+    ambito=-1  TODAS               7.014
+    ambito=4   TURMAS RECURSAIS    3.819
+    ambito=6   TRIBUNAL DE JUSTIÇA 3.195
+    ambito=7   1ª VICE-PRESIDÊNCIA     6
+                                   -----
+    4 + 6 + 7 =                    7.020   (6 a mais que o total: há sobreposição)
+
+E, pior, `ambito=6` ("TRIBUNAL DE JUSTIÇA") ESTÁ CHEIO DE JUIZADO. Faceta
+"Orgão Julgador" da própria tela, com `ambito=6`, mesma janela:
+
+    226  6ª Turma Recursal dos Juizados Especiais
+     16  Turma de Uniformização de Jurisprudência
+      1  Núcleo de Conciliação - Turmas Recursais
+      6  1ª Vice-Presidência          <- que é o ambito 7, não o 6
+
+Enquanto `ambito=4` traz só 6 órgãos (1ª a 5ª Turma Recursal + Turma Recursal
+Reunida) — a 6ª Turma Recursal, com 99.268 documentos no acervo, NÃO está lá.
+
+Conclusão: `ambito` é a BASE onde o documento foi publicado, não a competência.
+Quem usar `ambito=6` como "Justiça Comum" entrega julgado de Juizado como se
+fosse de Câmara. Está exposto no CLI como `--base` (fidelidade à tela), mas
+NÃO é a desambiguação.
+
+=====================================================================
+ 9. O filtro que RESOLVE: `idOrgaoJulgador` (lista de ids)
+=====================================================================
+
+Descoberto em `js/jurisprudencia.js`, função `refinarResultado()`: o painel
+"Filtrar no Resultado" manda os órgãos escolhidos em UM campo, separados por
+vírgula:
+
+    if (idsOrgaoJulgadorSelecionados != "")
+        document.pesquisaForm.idOrgaoJulgador.value = idsOrgaoJulgadorSelecionados;
+
+O campo `idOrgaoJulgador` NÃO existe no HTML do formulário inicial (lá só há
+`idOrgaoJulgadorSelecao`, que o servidor ignora na busca), mas o
+`actionType=pesquisar` o aceita normalmente. Verificado:
+
+    ambito=-1, sem órgão                       7.014
+    ambito=-1, idOrgaoJulgadorSelecao=249      7.014   <- ignorado
+    ambito=-1, idOrgaoJulgador=249               815   (1ª Turma Recursal)
+    ambito=-1, idOrgaoJulgador=249,248         1.457   (+ 2ª Turma Recursal, 642)
+
+(os totais brutos vinham 107 acima porque o contador GERAL soma a Corte IDH — §8)
+
+A PARTIÇÃO FECHA — é isso que faz dela a desambiguação boa:
+
+    idOrgaoJulgador = <18 ids de Turmas Recursais/Uniformização>   4.062
+    idOrgaoJulgador = <132 ids de Câmaras/Seções/Grupos/etc.>      2.952
+                                                                   -----
+                                                                   7.014  = total exato
+
+=====================================================================
+ A lista de órgãos e a regra de classificação
+=====================================================================
+
+`06-orgaos.json` tem os 150 órgãos do acervo (id, nome, nº de documentos, foro).
+Foi extraído da FACETA "Orgão Julgador" de uma busca vazia sobre a base inteira
+(6.360.593 documentos) — print 08.04-faceta-orgao-julgador.png. Não é amostra:
+a lista vai até órgãos com 1 documento só.
+
+Regra de classificação (TJPRNavigator.RE_JUIZADOS):
+
+    /turma\s+recursal|turmas\s+recursais|turma\s+de\s+uniformiza|juizado|col[ée]gio\s+recursal/i
+
+JUIZADOS — 18 órgãos, 1.556.028 documentos:
+    248  416.792  2ª Turma Recursal
+    249  299.353  1ª Turma Recursal
+    284  279.508  3ª Turma Recursal
+    283  230.563  4ª Turma Recursal
+    339  112.101  5ª Turma Recursal dos Juizados Especiais
+    354   99.268  6ª Turma Recursal dos Juizados Especiais
+    240   97.264  Turma Recursal Única
+    338    9.646  Turma Recursal Reunida dos Juizados Especiais
+    359    2.387  Turma de Uniformização de Jurisprudência
+    350    2.346  2ª Turma Recursal Suplementar dos Juizados Especiais
+    351    2.106  1ª Turma Recursal Suplementar dos Juizados Especiais
+    348    2.029  3ª Turma Recursal Suplementar dos Juizados Especiais
+    349    1.933  4ª Turma Recursal Suplementar dos Juizados Especiais
+    242    1.472  Turmas Recursais Reunidas
+    356      159  2ª Turma de Uniformização de Jurisprudência
+    355       71  1ª Turma de Uniformização de Jurisprudência
+    347       29  Núcleo de Conciliação - Turmas Recursais
+    358        1  Turma de Uniformização de Jurisprudência (duplicata de nome, id distinto)
+
+COMUM — 132 órgãos, 4.563.724 documentos. Os maiores:
+    257  250.244  1ª Vice-Presidência          (juízo de admissibilidade de REsp/RE)
+    135  194.267  15ª Câmara Cível
+    146  194.259  18ª Câmara Cível
+    128   49.710  Órgão Especial
+    ...  Câmaras Cíveis/Criminais (inclusive "em Composição Integral"),
+         Seções Cíveis, Grupos de Câmaras, e o acervo do extinto Tribunal de
+         Alçada ("(extinto TA)", ~200 mil documentos até 2005).
+
+Decisões de classificação, explícitas para poder ser contestadas:
+  - "Turma de Uniformização de Jurisprudência" -> JUIZADOS. No PR ela uniformiza
+    a jurisprudência das Turmas Recursais (Lei 9.099/95 + Res. do TJPR), não a
+    das Câmaras.
+  - "1ª Vice-Presidência" -> COMUM. É admissibilidade de recurso especial e
+    extraordinário do 2º grau; o site a trata como âmbito próprio (7).
+  - "(extinto TA)" -> COMUM. Tribunal de Alçada era justiça comum.
+  - Um julgado sem órgão julgador na listagem recebe `foro: "indefinido"`.
+
+=====================================================================
+ Como aparece no crawler
+=====================================================================
+
+    ./bin/jur tjpr -q "dano moral" --foro comum      (DEFAULT)
+    ./bin/jur tjpr -q "dano moral" --foro juizados
+    ./bin/jur tjpr -q "dano moral" --foro todos
+    ./bin/jur tjpr -q "dano moral" -oj "3ª Turma Recursal"   (um órgão só)
+
+Cada resultado sai com o campo `foro` já classificado, e o `--json` traz
+`orgaosFiltrados` (quantos ids foram enviados) e `forasDoForo` (quantos
+julgados voltaram fora do foro pedido — tem que ser 0).

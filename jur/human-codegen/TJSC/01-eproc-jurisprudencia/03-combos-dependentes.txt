@@ -1,0 +1,50 @@
+TJSC — SEÇÃO 3: COMBOS DEPENDENTES DA ORIGEM
+============================================
+Prints: 03.01-combo-tipo-documento.png
+        03.02-combo-orgao-julgador-tjsc.png
+        03.03-combo-relator.png
+        03.04-combo-classe.png
+        03.05-combo-orgao-julgador-turmas-recursais.png
+Dados : 03-tipos-documento-por-origem.json
+        03-orgaos-tjsc.json                  (103 opções)
+        03-orgaos-turmas-recursais.json      (35)
+        03-orgaos-turmas-uniformizacao.json  (1)
+        03-orgaos-conselho-magistratura.json (1)
+        03-relatores-tjsc.json               (291)
+        03-classes.json                      (415)
+
+Todos os quatro são recarregados por AJAX a cada troca de #selOrigem. Enumerá-los
+com curl no HTML estático daria a lista de UMA origem só — por isso foram lidos
+no browser, uma origem por vez.
+
+3.1 TIPO DE DOCUMENTO (#selTipoDocumento) — OS CÓDIGOS MUDAM POR ORIGEM
+    Esta é a armadilha silenciosa deste tribunal: os ids NÃO se repetem entre
+    origens, e mandar um id de outra origem não dá erro — o servidor ignora.
+
+      origem 1 (TJSC)                     1 Acórdãos do Tribunal de Justiça
+                                          2 Decisões Monocráticas do TJ
+                                          3 Despachos/Decisões da Vice-Presidência
+      origem 3 (Turmas Recursais)         7 Acórdãos das Turmas Recursais
+                                         10 Decisões Monocráticas das Turmas Recursais
+      origem 4 (Turmas de Uniformização)  9 Acórdãos das Turmas de Uniformização
+                                          5 Decisões Monocráticas das T. de Uniformização
+      origem 5 (Conselho da Magistratura)  6 Acórdãos do Conselho da Magistratura
+
+    Por isso o crawler traduz `-t acordao` SEMPRE relativo à `--origem`, e
+    RECUSA `-t` junto de `--origem todas` em vez de mandar um código que seria
+    ignorado sem aviso.
+
+3.2 ÓRGÃO JULGADOR (#selOrgao)
+    O `value` é o PRÓPRIO TEXTO ("3ª Câmara de Direito Civil"), não um id
+    numérico. O casamento por nome no crawler é textual (exato -> sem acento ->
+    "contém").
+    - origem TJSC: 103 opções — Câmaras de Direito Civil/Comercial/Público,
+      Câmaras Criminais, Grupos, Seções, Órgão Especial, Tribunal Pleno,
+      Vice-Presidências, Núcleos de Justiça 4.0, Câmara Especial Regional de
+      Chapecó, Câmaras "(Janeiro)" (plantão de férias).
+    - origem Turmas Recursais: 35 opções — todas com "Turma" no nome, mais um
+      "NÃO INFORMADO".
+    - origens 4 e 5: 1 opção cada.
+
+3.3 RELATOR (#selRelator) — 291 nomes na origem TJSC. Também texto como value.
+3.4 CLASSE (#selClasse) — 415 classes processuais. Também texto como value.

@@ -1,0 +1,910 @@
+{
+  "acordaos": [
+    {
+      "valor": "1ª Turma",
+      "rotulo": "TRT9 - 1ª Turma",
+      "quantidade": 56203
+    },
+    {
+      "valor": "2ª Turma",
+      "rotulo": "TRT9 - 2ª Turma",
+      "quantidade": 66336
+    },
+    {
+      "valor": "3ª Turma",
+      "rotulo": "TRT9 - 3ª Turma",
+      "quantidade": 30201
+    },
+    {
+      "valor": "4ª Turma",
+      "rotulo": "TRT9 - 4ª Turma",
+      "quantidade": 47124
+    },
+    {
+      "valor": "5ª Turma",
+      "rotulo": "TRT9 - 5ª Turma",
+      "quantidade": 48222
+    },
+    {
+      "valor": "6ª Turma",
+      "rotulo": "TRT9 - 6ª Turma",
+      "quantidade": 86476
+    },
+    {
+      "valor": "7ª Turma",
+      "rotulo": "TRT9 - 7ª Turma",
+      "quantidade": 67068
+    },
+    {
+      "valor": "OE Uniformização de Jurisprudência",
+      "rotulo": "TRT9 - Oe Uniformização De Jurisprudência",
+      "quantidade": 791
+    },
+    {
+      "valor": "Seção Especializada",
+      "rotulo": "TRT9 - Seção Especializada",
+      "quantidade": 167785
+    },
+    {
+      "valor": "Tribunal Pleno",
+      "rotulo": "TRT9 - Tribunal Pleno",
+      "quantidade": 304
+    },
+    {
+      "valor": "Tribunal Pleno Administrativo",
+      "rotulo": "TRT9 - Tribunal Pleno Administrativo",
+      "quantidade": 13
+    },
+    {
+      "valor": "Uniformização de Jurisprudência",
+      "rotulo": "TRT9 - Uniformização De Jurisprudência",
+      "quantidade": 1628
+    },
+    {
+      "valor": "Órgão Especial",
+      "rotulo": "TRT9 - Órgão Especial",
+      "quantidade": 907
+    },
+    {
+      "valor": "Órgão Especial Administrativo",
+      "rotulo": "TRT9 - Órgão Especial Administrativo",
+      "quantidade": 86
+    }
+  ],
+  "sentencas": [
+    {
+      "valor": "01ª VARA DO TRABALHO DE APUCARANA",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Apucarana",
+      "quantidade": 13300
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE ARAUCÁRIA",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Araucária",
+      "quantidade": 18795
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE CASCAVEL",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Cascavel",
+      "quantidade": 17010
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE COLOMBO",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Colombo",
+      "quantidade": 12914
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Curitiba",
+      "quantidade": 21477
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE FOZ DO IGUAÇU",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Foz Do Iguaçu",
+      "quantidade": 18991
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE FRANCISCO BELTRÃO",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Francisco Beltrão",
+      "quantidade": 9824
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE GUARAPUAVA",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Guarapuava",
+      "quantidade": 10950
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE LONDRINA",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Londrina",
+      "quantidade": 19826
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE MARINGÁ",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Maringá",
+      "quantidade": 20698
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE PARANAGUÁ",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Paranaguá",
+      "quantidade": 14717
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE PATO BRANCO",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Pato Branco",
+      "quantidade": 8784
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE PONTA GROSSA",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Ponta Grossa",
+      "quantidade": 16660
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE ROLÂNDIA",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Rolândia",
+      "quantidade": 17475
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE SÃO JOSÉ DOS PINHAIS",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De São José Dos Pinhais",
+      "quantidade": 19995
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE TOLEDO",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Toledo",
+      "quantidade": 12729
+    },
+    {
+      "valor": "01ª VARA DO TRABALHO DE UMUARAMA",
+      "rotulo": "TRT9 - 01ª Vara Do Trabalho De Umuarama",
+      "quantidade": 15564
+    },
+    {
+      "valor": "01º NÚCLEO DE JUSTIÇA 4.0",
+      "rotulo": "TRT9 - 01º Núcleo De Justiça 4.0",
+      "quantidade": 132
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE APUCARANA",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Apucarana",
+      "quantidade": 13702
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE ARAUCÁRIA",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Araucária",
+      "quantidade": 16130
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE CASCAVEL",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Cascavel",
+      "quantidade": 17150
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE COLOMBO",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Colombo",
+      "quantidade": 11549
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE CORNÉLIO PROCÓPIO",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Cornélio Procópio",
+      "quantidade": 4726
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Curitiba",
+      "quantidade": 22235
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE FOZ DO IGUAÇU",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Foz Do Iguaçu",
+      "quantidade": 18151
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE FRANCISCO BELTRÃO",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Francisco Beltrão",
+      "quantidade": 10464
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE GUARAPUAVA",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Guarapuava",
+      "quantidade": 10043
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE LONDRINA",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Londrina",
+      "quantidade": 18885
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE MARINGÁ",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Maringá",
+      "quantidade": 19447
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE PARANAGUÁ",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Paranaguá",
+      "quantidade": 14961
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE PATO BRANCO",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Pato Branco",
+      "quantidade": 8861
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE PONTA GROSSA",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Ponta Grossa",
+      "quantidade": 18494
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE ROLÂNDIA",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Rolândia",
+      "quantidade": 7582
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE SÃO JOSÉ DOS PINHAIS",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De São José Dos Pinhais",
+      "quantidade": 19456
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE TOLEDO",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Toledo",
+      "quantidade": 14353
+    },
+    {
+      "valor": "02ª VARA DO TRABALHO DE UMUARAMA",
+      "rotulo": "TRT9 - 02ª Vara Do Trabalho De Umuarama",
+      "quantidade": 13687
+    },
+    {
+      "valor": "03ª VARA DO TRABALHO DE CASCAVEL",
+      "rotulo": "TRT9 - 03ª Vara Do Trabalho De Cascavel",
+      "quantidade": 16338
+    },
+    {
+      "valor": "03ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 03ª Vara Do Trabalho De Curitiba",
+      "quantidade": 23023
+    },
+    {
+      "valor": "03ª VARA DO TRABALHO DE FOZ DO IGUAÇU",
+      "rotulo": "TRT9 - 03ª Vara Do Trabalho De Foz Do Iguaçu",
+      "quantidade": 15997
+    },
+    {
+      "valor": "03ª VARA DO TRABALHO DE LONDRINA",
+      "rotulo": "TRT9 - 03ª Vara Do Trabalho De Londrina",
+      "quantidade": 16131
+    },
+    {
+      "valor": "03ª VARA DO TRABALHO DE MARINGÁ",
+      "rotulo": "TRT9 - 03ª Vara Do Trabalho De Maringá",
+      "quantidade": 18684
+    },
+    {
+      "valor": "03ª VARA DO TRABALHO DE PARANAGUÁ",
+      "rotulo": "TRT9 - 03ª Vara Do Trabalho De Paranaguá",
+      "quantidade": 16647
+    },
+    {
+      "valor": "03ª VARA DO TRABALHO DE PONTA GROSSA",
+      "rotulo": "TRT9 - 03ª Vara Do Trabalho De Ponta Grossa",
+      "quantidade": 18949
+    },
+    {
+      "valor": "03ª VARA DO TRABALHO DE SÃO JOSÉ DOS PINHAIS",
+      "rotulo": "TRT9 - 03ª Vara Do Trabalho De São José Dos Pinhais",
+      "quantidade": 19970
+    },
+    {
+      "valor": "04ª VARA DO TRABALHO DE CASCAVEL",
+      "rotulo": "TRT9 - 04ª Vara Do Trabalho De Cascavel",
+      "quantidade": 17248
+    },
+    {
+      "valor": "04ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 04ª Vara Do Trabalho De Curitiba",
+      "quantidade": 20272
+    },
+    {
+      "valor": "04ª VARA DO TRABALHO DE LONDRINA",
+      "rotulo": "TRT9 - 04ª Vara Do Trabalho De Londrina",
+      "quantidade": 18746
+    },
+    {
+      "valor": "04ª VARA DO TRABALHO DE MARINGÁ",
+      "rotulo": "TRT9 - 04ª Vara Do Trabalho De Maringá",
+      "quantidade": 18956
+    },
+    {
+      "valor": "04ª VARA DO TRABALHO DE PONTA GROSSA",
+      "rotulo": "TRT9 - 04ª Vara Do Trabalho De Ponta Grossa",
+      "quantidade": 15995
+    },
+    {
+      "valor": "04ª VARA DO TRABALHO DE SÃO JOSÉ DOS PINHAIS",
+      "rotulo": "TRT9 - 04ª Vara Do Trabalho De São José Dos Pinhais",
+      "quantidade": 19855
+    },
+    {
+      "valor": "05ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 05ª Vara Do Trabalho De Curitiba",
+      "quantidade": 20156
+    },
+    {
+      "valor": "05ª VARA DO TRABALHO DE LONDRINA",
+      "rotulo": "TRT9 - 05ª Vara Do Trabalho De Londrina",
+      "quantidade": 18348
+    },
+    {
+      "valor": "05ª VARA DO TRABALHO DE MARINGÁ",
+      "rotulo": "TRT9 - 05ª Vara Do Trabalho De Maringá",
+      "quantidade": 21569
+    },
+    {
+      "valor": "05ª VARA DO TRABALHO DE SÃO JOSÉ DOS PINHAIS",
+      "rotulo": "TRT9 - 05ª Vara Do Trabalho De São José Dos Pinhais",
+      "quantidade": 5862
+    },
+    {
+      "valor": "06ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 06ª Vara Do Trabalho De Curitiba",
+      "quantidade": 21754
+    },
+    {
+      "valor": "06ª VARA DO TRABALHO DE LONDRINA",
+      "rotulo": "TRT9 - 06ª Vara Do Trabalho De Londrina",
+      "quantidade": 17061
+    },
+    {
+      "valor": "07ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 07ª Vara Do Trabalho De Curitiba",
+      "quantidade": 21876
+    },
+    {
+      "valor": "07ª VARA DO TRABALHO DE LONDRINA",
+      "rotulo": "TRT9 - 07ª Vara Do Trabalho De Londrina",
+      "quantidade": 18245
+    },
+    {
+      "valor": "08ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 08ª Vara Do Trabalho De Curitiba",
+      "quantidade": 22306
+    },
+    {
+      "valor": "08ª VARA DO TRABALHO DE LONDRINA",
+      "rotulo": "TRT9 - 08ª Vara Do Trabalho De Londrina",
+      "quantidade": 17288
+    },
+    {
+      "valor": "09ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 09ª Vara Do Trabalho De Curitiba",
+      "quantidade": 21009
+    },
+    {
+      "valor": "10ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 10ª Vara Do Trabalho De Curitiba",
+      "quantidade": 20809
+    },
+    {
+      "valor": "11ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 11ª Vara Do Trabalho De Curitiba",
+      "quantidade": 18652
+    },
+    {
+      "valor": "12ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 12ª Vara Do Trabalho De Curitiba",
+      "quantidade": 21095
+    },
+    {
+      "valor": "13ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 13ª Vara Do Trabalho De Curitiba",
+      "quantidade": 19415
+    },
+    {
+      "valor": "14ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 14ª Vara Do Trabalho De Curitiba",
+      "quantidade": 21596
+    },
+    {
+      "valor": "15ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 15ª Vara Do Trabalho De Curitiba",
+      "quantidade": 19650
+    },
+    {
+      "valor": "16ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 16ª Vara Do Trabalho De Curitiba",
+      "quantidade": 21535
+    },
+    {
+      "valor": "17ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 17ª Vara Do Trabalho De Curitiba",
+      "quantidade": 21664
+    },
+    {
+      "valor": "18ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 18ª Vara Do Trabalho De Curitiba",
+      "quantidade": 23542
+    },
+    {
+      "valor": "19ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 19ª Vara Do Trabalho De Curitiba",
+      "quantidade": 19792
+    },
+    {
+      "valor": "20ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 20ª Vara Do Trabalho De Curitiba",
+      "quantidade": 21482
+    },
+    {
+      "valor": "21ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 21ª Vara Do Trabalho De Curitiba",
+      "quantidade": 19146
+    },
+    {
+      "valor": "22ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 22ª Vara Do Trabalho De Curitiba",
+      "quantidade": 17566
+    },
+    {
+      "valor": "23ª VARA DO TRABALHO DE CURITIBA",
+      "rotulo": "TRT9 - 23ª Vara Do Trabalho De Curitiba",
+      "quantidade": 17439
+    },
+    {
+      "valor": "CEJUSC - JT - CASCAVEL",
+      "rotulo": "TRT9 - Cejusc - Jt - Cascavel",
+      "quantidade": 10
+    },
+    {
+      "valor": "CENTRO DE CONCILIAÇÃO DE 1.º GRAU DE CURITIBA (CEJUSC-CURITIBA)",
+      "rotulo": "TRT9 - Centro De Conciliação De 1.º Grau De Curitiba (cejusc-curitiba)",
+      "quantidade": 248
+    },
+    {
+      "valor": "CENTRO DE CONCILIAÇÃO DE LONDRINA - CEJUSC-JT-LONDRINA",
+      "rotulo": "TRT9 - Centro De Conciliação De Londrina - Cejusc-jt-londrina",
+      "quantidade": 51
+    },
+    {
+      "valor": "CENTRO DE CONCILIAÇÃO DE MARINGÁ - CEJUSC-JT CIDADE CANÇÃO",
+      "rotulo": "TRT9 - Centro De Conciliação De Maringá - Cejusc-jt Cidade Canção",
+      "quantidade": 46
+    },
+    {
+      "valor": "CENTRO DE CONCILIAÇÃO DE PARANAGUÁ CEJUSC LITORAL",
+      "rotulo": "TRT9 - Centro De Conciliação De Paranaguá Cejusc Litoral",
+      "quantidade": 14
+    },
+    {
+      "valor": "CENTRO JUDICIÁRIO DE MÉTODOS CONSENSUAIS DE SOLUÇÃO DE DISPUTAS PONTA GROSSA",
+      "rotulo": "TRT9 - Centro Judiciário De Métodos Consensuais De Solução De Disputas Ponta Grossa",
+      "quantidade": 26
+    },
+    {
+      "valor": "Divisão de Apoio à Execução",
+      "rotulo": "TRT9 - Divisão De Apoio À Execução",
+      "quantidade": 1538
+    },
+    {
+      "valor": "DIVISÃO DE APOIO À EXECUÇÃO",
+      "rotulo": "TRT9 - Divisão De Apoio À Execução",
+      "quantidade": 572
+    },
+    {
+      "valor": "DIVISÃO DE HASTAS PÚBLICAS",
+      "rotulo": "TRT9 - Divisão De Hastas Públicas",
+      "quantidade": 3
+    },
+    {
+      "valor": "NÚCLEO DE EQUALIZAÇÃO",
+      "rotulo": "TRT9 - Núcleo De Equalização",
+      "quantidade": 1
+    },
+    {
+      "valor": "NÚCLEO DE HASTAS PÚBLICAS",
+      "rotulo": "TRT9 - Núcleo De Hastas Públicas",
+      "quantidade": 40
+    },
+    {
+      "valor": "POSTO AVANÇADO DA JUSTIÇA DO TRABALHO DE PALOTINA",
+      "rotulo": "TRT9 - Posto Avançado Da Justiça Do Trabalho De Palotina",
+      "quantidade": 3468
+    },
+    {
+      "valor": "POSTO DE ATENDIMENTO DA JUSTIÇA DO TRABALHO DE CAMPO LARGO",
+      "rotulo": "TRT9 - Posto De Atendimento Da Justiça Do Trabalho De Campo Largo",
+      "quantidade": 1940
+    },
+    {
+      "valor": "POSTO DE ATENDIMENTO DA JUSTIÇA DO TRABALHO DE IBAITI",
+      "rotulo": "TRT9 - Posto De Atendimento Da Justiça Do Trabalho De Ibaiti",
+      "quantidade": 1439
+    },
+    {
+      "valor": "PROJETO HORIZONTES",
+      "rotulo": "TRT9 - Projeto Horizontes",
+      "quantidade": 1676
+    },
+    {
+      "valor": "VARA DO TRABALHO DE ARAPONGAS",
+      "rotulo": "TRT9 - Vara Do Trabalho De Arapongas",
+      "quantidade": 21473
+    },
+    {
+      "valor": "VARA DO TRABALHO DE ASSIS CHATEAUBRIAND",
+      "rotulo": "TRT9 - Vara Do Trabalho De Assis Chateaubriand",
+      "quantidade": 7618
+    },
+    {
+      "valor": "VARA DO TRABALHO DE BANDEIRANTES",
+      "rotulo": "TRT9 - Vara Do Trabalho De Bandeirantes",
+      "quantidade": 7472
+    },
+    {
+      "valor": "VARA DO TRABALHO DE CAMBÉ",
+      "rotulo": "TRT9 - Vara Do Trabalho De Cambé",
+      "quantidade": 15710
+    },
+    {
+      "valor": "VARA DO TRABALHO DE CAMPO LARGO",
+      "rotulo": "TRT9 - Vara Do Trabalho De Campo Largo",
+      "quantidade": 9878
+    },
+    {
+      "valor": "VARA DO TRABALHO DE CAMPO MOURÃO",
+      "rotulo": "TRT9 - Vara Do Trabalho De Campo Mourão",
+      "quantidade": 22163
+    },
+    {
+      "valor": "VARA DO TRABALHO DE CASTRO",
+      "rotulo": "TRT9 - Vara Do Trabalho De Castro",
+      "quantidade": 13298
+    },
+    {
+      "valor": "VARA DO TRABALHO DE CIANORTE",
+      "rotulo": "TRT9 - Vara Do Trabalho De Cianorte",
+      "quantidade": 19280
+    },
+    {
+      "valor": "VARA DO TRABALHO DE CORNÉLIO PROCÓPIO",
+      "rotulo": "TRT9 - Vara Do Trabalho De Cornélio Procópio",
+      "quantidade": 14846
+    },
+    {
+      "valor": "VARA DO TRABALHO DE DOIS VIZINHOS",
+      "rotulo": "TRT9 - Vara Do Trabalho De Dois Vizinhos",
+      "quantidade": 12659
+    },
+    {
+      "valor": "VARA DO TRABALHO DE IRATI",
+      "rotulo": "TRT9 - Vara Do Trabalho De Irati",
+      "quantidade": 9314
+    },
+    {
+      "valor": "VARA DO TRABALHO DE IVAIPORÃ",
+      "rotulo": "TRT9 - Vara Do Trabalho De Ivaiporã",
+      "quantidade": 12330
+    },
+    {
+      "valor": "VARA DO TRABALHO DE JACAREZINHO",
+      "rotulo": "TRT9 - Vara Do Trabalho De Jacarezinho",
+      "quantidade": 13989
+    },
+    {
+      "valor": "VARA DO TRABALHO DE JAGUARIAÍVA",
+      "rotulo": "TRT9 - Vara Do Trabalho De Jaguariaíva",
+      "quantidade": 6959
+    },
+    {
+      "valor": "VARA DO TRABALHO DE LARANJEIRAS DO SUL",
+      "rotulo": "TRT9 - Vara Do Trabalho De Laranjeiras Do Sul",
+      "quantidade": 5159
+    },
+    {
+      "valor": "VARA DO TRABALHO DE MARECHAL CÂNDIDO RONDON",
+      "rotulo": "TRT9 - Vara Do Trabalho De Marechal Cândido Rondon",
+      "quantidade": 9014
+    },
+    {
+      "valor": "VARA DO TRABALHO DE NOVA ESPERANÇA",
+      "rotulo": "TRT9 - Vara Do Trabalho De Nova Esperança",
+      "quantidade": 11325
+    },
+    {
+      "valor": "VARA DO TRABALHO DE PALMAS",
+      "rotulo": "TRT9 - Vara Do Trabalho De Palmas",
+      "quantidade": 9100
+    },
+    {
+      "valor": "VARA DO TRABALHO DE PARANAVAÍ",
+      "rotulo": "TRT9 - Vara Do Trabalho De Paranavaí",
+      "quantidade": 18734
+    },
+    {
+      "valor": "VARA DO TRABALHO DE PINHAIS",
+      "rotulo": "TRT9 - Vara Do Trabalho De Pinhais",
+      "quantidade": 23831
+    },
+    {
+      "valor": "VARA DO TRABALHO DE PORECATU",
+      "rotulo": "TRT9 - Vara Do Trabalho De Porecatu",
+      "quantidade": 20779
+    },
+    {
+      "valor": "VARA DO TRABALHO DE SANTO ANTÔNIO DA PLATINA",
+      "rotulo": "TRT9 - Vara Do Trabalho De Santo Antônio Da Platina",
+      "quantidade": 10721
+    },
+    {
+      "valor": "VARA DO TRABALHO DE TELÊMACO BORBA",
+      "rotulo": "TRT9 - Vara Do Trabalho De Telêmaco Borba",
+      "quantidade": 12998
+    },
+    {
+      "valor": "VARA DO TRABALHO DE UNIÃO DA VITÓRIA",
+      "rotulo": "TRT9 - Vara Do Trabalho De União Da Vitória",
+      "quantidade": 15378
+    },
+    {
+      "valor": "VARA DO TRABALHO DE WENCESLAU BRAZ",
+      "rotulo": "TRT9 - Vara Do Trabalho De Wenceslau Braz",
+      "quantidade": 6602
+    },
+    {
+      "valor": "VARA ITINERANTE DE MEDIANEIRA",
+      "rotulo": "TRT9 - Vara Itinerante De Medianeira",
+      "quantidade": 367
+    }
+  ],
+  "decisoesmonocraticas": [
+    {
+      "valor": "CENTRO JUDICIÁRIO DE MÉTODOS CONSENSUAIS DE SOLUÇÃO DE DISPUTAS",
+      "rotulo": "TRT9 - Centro Judiciário De Métodos Consensuais De Solução De Disputas",
+      "quantidade": 121
+    },
+    {
+      "valor": "Divisão de Apoio à Execução",
+      "rotulo": "TRT9 - Divisão De Apoio À Execução",
+      "quantidade": 4
+    },
+    {
+      "valor": "GAB. DES. ADILSON LUIZ FUNEZ",
+      "rotulo": "TRT9 - Gab. Des. Adilson Luiz Funez",
+      "quantidade": 7812
+    },
+    {
+      "valor": "GAB. DES. ANA CAROLINA ZAINA",
+      "rotulo": "TRT9 - Gab. Des. Ana Carolina Zaina",
+      "quantidade": 3218
+    },
+    {
+      "valor": "GAB. DES. ARAMIS DE SOUZA SILVEIRA",
+      "rotulo": "TRT9 - Gab. Des. Aramis De Souza Silveira",
+      "quantidade": 8554
+    },
+    {
+      "valor": "GAB. DES. ARCHIMEDES CASTRO CAMPOS JÚNIOR",
+      "rotulo": "TRT9 - Gab. Des. Archimedes Castro Campos Júnior",
+      "quantidade": 7444
+    },
+    {
+      "valor": "GAB. DES. ARION MAZURKEVIC",
+      "rotulo": "TRT9 - Gab. Des. Arion Mazurkevic",
+      "quantidade": 5165
+    },
+    {
+      "valor": "GAB. DES. ARNOR LIMA NETO",
+      "rotulo": "TRT9 - Gab. Des. Arnor Lima Neto",
+      "quantidade": 4340
+    },
+    {
+      "valor": "GAB. DES. BENEDITO XAVIER DA SILVA",
+      "rotulo": "TRT9 - Gab. Des. Benedito Xavier Da Silva",
+      "quantidade": 4361
+    },
+    {
+      "valor": "GAB. DES. CARLOS HENRIQUE DE OLIVEIRA MENDONÇA",
+      "rotulo": "TRT9 - Gab. Des. Carlos Henrique De Oliveira Mendonça",
+      "quantidade": 4463
+    },
+    {
+      "valor": "GAB. DES. CLAUDIA CRISTINA PEREIRA",
+      "rotulo": "TRT9 - Gab. Des. Claudia Cristina Pereira",
+      "quantidade": 4298
+    },
+    {
+      "valor": "GAB. DES. CÉLIO HORST WALDRAFF",
+      "rotulo": "TRT9 - Gab. Des. Célio Horst Waldraff",
+      "quantidade": 2854
+    },
+    {
+      "valor": "GAB. DES. EDMILSON ANTONIO DE LIMA",
+      "rotulo": "TRT9 - Gab. Des. Edmilson Antonio De Lima",
+      "quantidade": 4349
+    },
+    {
+      "valor": "GAB. DES. EDUARDO MILLÉO BARACAT",
+      "rotulo": "TRT9 - Gab. Des. Eduardo Milléo Baracat",
+      "quantidade": 6545
+    },
+    {
+      "valor": "GAB. DES. ELIAZER ANTONIO MEDEIROS",
+      "rotulo": "TRT9 - Gab. Des. Eliazer Antonio Medeiros",
+      "quantidade": 7256
+    },
+    {
+      "valor": "GAB. DES. ILSE MARCELINA BERNARDI LORA",
+      "rotulo": "TRT9 - Gab. Des. Ilse Marcelina Bernardi Lora",
+      "quantidade": 5493
+    },
+    {
+      "valor": "GAB. DES. JANETE DO AMARANTE",
+      "rotulo": "TRT9 - Gab. Des. Janete Do Amarante",
+      "quantidade": 4199
+    },
+    {
+      "valor": "GAB. DES. LUIZ ALVES",
+      "rotulo": "TRT9 - Gab. Des. Luiz Alves",
+      "quantidade": 6657
+    },
+    {
+      "valor": "GAB. DES. LUIZ EDUARDO GUNTHER",
+      "rotulo": "TRT9 - Gab. Des. Luiz Eduardo Gunther",
+      "quantidade": 4248
+    },
+    {
+      "valor": "GAB. DES. MARCO ANTONIO VIANNA MANSUR",
+      "rotulo": "TRT9 - Gab. Des. Marco Antonio Vianna Mansur",
+      "quantidade": 3704
+    },
+    {
+      "valor": "GAB. DES. MARCUS AURELIO LOPES",
+      "rotulo": "TRT9 - Gab. Des. Marcus Aurelio Lopes",
+      "quantidade": 7385
+    },
+    {
+      "valor": "GAB. DES. MARLENE TERESINHA FUVERKI SUGUIMATSU",
+      "rotulo": "TRT9 - Gab. Des. Marlene Teresinha Fuverki Suguimatsu",
+      "quantidade": 6681
+    },
+    {
+      "valor": "GAB. DES. NAIR MARIA LUNARDELLI RAMOS",
+      "rotulo": "TRT9 - Gab. Des. Nair Maria Lunardelli Ramos",
+      "quantidade": 3324
+    },
+    {
+      "valor": "GAB. DES. NEIDE ALVES DOS SANTOS",
+      "rotulo": "TRT9 - Gab. Des. Neide Alves Dos Santos",
+      "quantidade": 7380
+    },
+    {
+      "valor": "GAB. DES. ODETE GRASSELLI",
+      "rotulo": "TRT9 - Gab. Des. Odete Grasselli",
+      "quantidade": 4989
+    },
+    {
+      "valor": "GAB. DES. PAULO RICARDO POZZOLO",
+      "rotulo": "TRT9 - Gab. Des. Paulo Ricardo Pozzolo",
+      "quantidade": 3879
+    },
+    {
+      "valor": "GAB. DES. RICARDO BRUEL DA SILVEIRA",
+      "rotulo": "TRT9 - Gab. Des. Ricardo Bruel Da Silveira",
+      "quantidade": 7430
+    },
+    {
+      "valor": "GAB. DES. RICARDO TADEU MARQUES DA FONSECA",
+      "rotulo": "TRT9 - Gab. Des. Ricardo Tadeu Marques Da Fonseca",
+      "quantidade": 6455
+    },
+    {
+      "valor": "GAB. DES. ROSEMARIE DIEDRICHS PIMPÃO",
+      "rotulo": "TRT9 - Gab. Des. Rosemarie Diedrichs Pimpão",
+      "quantidade": 4389
+    },
+    {
+      "valor": "GAB. DES. SERGIO GUIMARÃES SAMPAIO",
+      "rotulo": "TRT9 - Gab. Des. Sergio Guimarães Sampaio",
+      "quantidade": 4583
+    },
+    {
+      "valor": "GAB. DES. SÉRGIO MURILO RODRIGUES LEMOS",
+      "rotulo": "TRT9 - Gab. Des. Sérgio Murilo Rodrigues Lemos",
+      "quantidade": 1739
+    },
+    {
+      "valor": "GAB. DES. THEREZA CRISTINA GOSDAL",
+      "rotulo": "TRT9 - Gab. Des. Thereza Cristina Gosdal",
+      "quantidade": 7385
+    },
+    {
+      "valor": "GAB. DES. VALDECIR EDSON FOSSATTI",
+      "rotulo": "TRT9 - Gab. Des. Valdecir Edson Fossatti",
+      "quantidade": 4191
+    },
+    {
+      "valor": "Gabinete da Corregedoria",
+      "rotulo": "TRT9 - Gabinete Da Corregedoria",
+      "quantidade": 570
+    },
+    {
+      "valor": "Gabinete da Presidência",
+      "rotulo": "TRT9 - Gabinete Da Presidência",
+      "quantidade": 615
+    },
+    {
+      "valor": "Gabinete da Vice-Presidência",
+      "rotulo": "TRT9 - Gabinete Da Vice-presidência",
+      "quantidade": 177
+    },
+    {
+      "valor": "OJ de Análise de Recurso",
+      "rotulo": "TRT9 - Oj De Análise De Recurso",
+      "quantidade": 72788
+    }
+  ],
+  "recursorevista": [
+    {
+      "valor": "1ª Turma",
+      "rotulo": "TRT9 - 1ª Turma",
+      "quantidade": 8667
+    },
+    {
+      "valor": "2ª Turma",
+      "rotulo": "TRT9 - 2ª Turma",
+      "quantidade": 10435
+    },
+    {
+      "valor": "3ª Turma",
+      "rotulo": "TRT9 - 3ª Turma",
+      "quantidade": 4531
+    },
+    {
+      "valor": "4ª Turma",
+      "rotulo": "TRT9 - 4ª Turma",
+      "quantidade": 6645
+    },
+    {
+      "valor": "5ª Turma",
+      "rotulo": "TRT9 - 5ª Turma",
+      "quantidade": 7049
+    },
+    {
+      "valor": "6ª Turma",
+      "rotulo": "TRT9 - 6ª Turma",
+      "quantidade": 13629
+    },
+    {
+      "valor": "7ª Turma",
+      "rotulo": "TRT9 - 7ª Turma",
+      "quantidade": 10759
+    },
+    {
+      "valor": "CEJUSC-JT 2º grau",
+      "rotulo": "TRT9 - Cejusc-jt 2º Grau",
+      "quantidade": 88
+    },
+    {
+      "valor": "OJC de Análise de Recurso",
+      "rotulo": "TRT9 - Ojc De Análise De Recurso",
+      "quantidade": 76360
+    },
+    {
+      "valor": "Seção Especializada",
+      "rotulo": "TRT9 - Seção Especializada",
+      "quantidade": 36795
+    },
+    {
+      "valor": "Tribunal Pleno",
+      "rotulo": "TRT9 - Tribunal Pleno",
+      "quantidade": 63
+    },
+    {
+      "valor": "Uniformização de Jurisprudência",
+      "rotulo": "TRT9 - Uniformização De Jurisprudência",
+      "quantidade": 1
+    },
+    {
+      "valor": "Órgão Especial",
+      "rotulo": "TRT9 - Órgão Especial",
+      "quantidade": 72
+    }
+  ]
+}

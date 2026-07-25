@@ -1,0 +1,27 @@
+TJSC — MÓDULO DE JURISPRUDÊNCIA DO E-PROC (o portal ATUAL)
+==========================================================
+URL divulgada : https://eproc1g.tjsc.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+URL efetiva   : https://eprocwebcon.tjsc.jus.br/consulta1g/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+Prints        : 01.01-tela-inicial.png (busca simples)
+                01.02-pesquisa-avancada-aberta.png (painel "Pesquisa avançada" expandido)
+HTML          : 01-form-busca.html  (form inteiro, do DOM DEPOIS do AJAX)
+Campos        : 01-campos.json      (todos os input/select com id, name e nº de opções)
+
+É o MESMO módulo `eproc-jur` do TRF4 (ver src/TRF4Crawler.js): mesmos ids
+(#txtPesquisa, #selOrigem, #dtDecisaoInicio, .resultadoItem, .paginaProxima,
+.paginaUltima, .resLabel/.resValue), mesmo POST para
+`externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados`.
+O que muda é o combo de origem e o bloqueio na frente.
+
+1. TELA
+   - Busca simples: um único campo (#txtPesquisa) + botão "Pesquisar" (#btnConsultar).
+   - "Pesquisa avançada" (#divPesquisaAvancada) começa COLAPSADO. Sem expandir,
+     os filtros não vão no POST. O crawler força `classList.add('show')`.
+   - Abrangência (radio #rdoCampo):
+       #optInteiroTeor value="I"  <- MARCADO POR PADRÃO pelo site
+       #optEmenta      value="E"
+     ATENÇÃO: o default do site é INTEIRO TEOR, não ementa. É a diferença entre
+     8.315 e 2.169 resultados na mesma busca (ver 06-contagens.json). O crawler
+     adota o mesmo default para que as contagens batam com a tela.
+
+2. VIA DE ACESSO — ver 01-via-de-acesso-bloqueios-sessao.txt

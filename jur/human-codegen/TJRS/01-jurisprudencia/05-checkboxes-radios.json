@@ -1,0 +1,66 @@
+[
+  {
+    "tipo": "radio",
+    "name": "conteudo_busca",
+    "id": "cJuris",
+    "value": "documento_text",
+    "checked": false,
+    "label": "Inteiro teor"
+  },
+  {
+    "tipo": "radio",
+    "name": "conteudo_busca",
+    "id": "cEmentario",
+    "value": "ementa_completa",
+    "checked": true,
+    "label": "Ementa"
+  },
+  {
+    "tipo": "checkbox",
+    "name": "filtroSecaoCivel",
+    "id": "filtroSecaoCivel",
+    "value": "civel",
+    "checked": false,
+    "label": "Cível"
+  },
+  {
+    "tipo": "checkbox",
+    "name": "filtroSecaoCrime",
+    "id": "filtroSecaoCrime",
+    "value": "crime",
+    "checked": false,
+    "label": "Crime"
+  },
+  {
+    "tipo": "checkbox",
+    "name": "filtroacordao",
+    "id": "filtroacordao",
+    "value": "acordao",
+    "checked": false,
+    "label": "Acórdão"
+  },
+  {
+    "tipo": "checkbox",
+    "name": "filtroMonocratica",
+    "id": "filtroMonocratica",
+    "value": "monocratica",
+    "checked": false,
+    "label": "Monocrática"
+  },
+  {
+    "tipo": "checkbox",
+    "name": "filtroAdmissibilidade",
+    "id": "filtroAdmissibilidade",
+    "value": "admissibilidade",
+    "checked": false,
+    "label": "Admissibilidade"
+  },
+  {
+    "tipo": "checkbox",
+    "name": "filtroDuvida",
+    "id": "filtroDuvida",
+    "value": "duvida",
+    "checked": false,
+    "label": "Dúvida de Competência"
+  }
+]

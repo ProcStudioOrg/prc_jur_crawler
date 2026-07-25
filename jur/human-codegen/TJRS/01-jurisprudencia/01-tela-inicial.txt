@@ -1,0 +1,83 @@
+TJRS — Jurisprudência: tela inicial e busca principal
+=====================================================
+
+Identificação
+-------------
+Tribunal:                 TJRS — Tribunal de Justiça do Rio Grande do Sul
+Estado(s):                RS
+Módulo:                   Jurisprudência (busca única do portal, "Pesquisa Livre")
+Link principal:           https://www.tjrs.jus.br/buscas/jurisprudencia/?aba=jurisprudencia
+Sistema judicial:         tramitação em e-Proc (1º e 2º grau); a JURISPRUDÊNCIA é
+                          um sistema PRÓPRIO: front jQuery/AngularJS 1.x sobre um
+                          **Apache Solr** exposto por um proxy PHP (`ajax.php`).
+                          NÃO é o módulo eproc-jur do TRF4/TRF2.
+Sistema irmão mapeado:    nenhum — nenhum tribunal do repo usa Solr direto.
+                          O mais próximo em ESPÍRITO é o TJGO (HTTP direto,
+                          formulário POST, sem browser).
+Abrangência da base:      2º grau (TJ + Tribunal de Alçada + Turmas Recursais dos
+                          Juizados). Sem 1º grau. Julgados de 1902 até hoje.
+Data do mapeamento:       24/07/2026 (Playwright chromium headless, networkidle)
+
+Arquivos desta seção
+--------------------
+01.01-tela-inicial.png   print da tela inteira (fullPage)
+01-form-busca.html       outerHTML do <form id="form_busca"> tirado do DOM VIVO,
+                         depois do AJAX (151 KB). É o que o `fixer` compara.
+01-campos.json           os 32 campos do form (tag/type/name/id/value)
+
+1. Busca principal (query)
+--------------------------
+Campo:  <input type="text" name="q_palavra_chave" id="q_palavra_chave"
+               class="form-control input-buscar-mobile" placeholder="Palavra-chave">
+Botão:  <button id="btn_buscar_ajax_topo" class="... buscar_ajax">BUSCAR</button>
+        (há um segundo botão com o mesmo id + "_open", para o layout mobile)
+
+Sem limite de caracteres declarado. Maiúsculas/minúsculas são indiferentes.
+Palavras soltas = **E implícito** (o servidor monta
+`{!q.op=AND qf="ementa_completa" defType=edismax}`).
+
+O formulário NÃO navega: o submit é interceptado e vira uma chamada AJAX (ver
+seção 08). A URL da página nunca muda; não existe permalink de busca.
+
+Radio "Pesquisar em" (índice do Solr):
+  <input type="radio" name="conteudo_busca" id="cEmentario" value="ementa_completa" checked>  Ementa
+  <input type="radio" name="conteudo_busca" id="cJuris"     value="documento_text">           Inteiro teor
+
+  Ementa (default)  -> busca no texto da ementa + dados complementares
+  Inteiro teor      -> busca no corpo do acórdão/decisão. Cobertura MENOR nos
+                       julgados antigos (que não têm documento anexado), mas
+                       contagem maior no geral: "usucapiao" deu 34.502 na ementa
+                       e 50.509 no inteiro teor (Justiça Comum, jul/2026).
+
+Campos de texto da busca avançada (equivalentes documentados no modal de Ajuda):
+  filtroComAExpressao        -> ementa_completa:"<frase>"        ("com a expressão")
+  filtroComQualquerPalavra   -> (a:"x" OR a:"y")                 ("com qualquer palavra")
+  filtroSemAsPalavras        -> -ementa_completa:"x"             ("sem as palavras")
+
+2. Operadores — TESTADOS um por um
+----------------------------------
+Fonte oficial: modal "Ajuda" (print 07.01, texto integral em 07-ajuda-oficial.txt).
+Todos os números abaixo são numFound reais, Justiça Comum (cod_tribunal:3), jul/2026.
+
+| Operador          | Funciona? | Sintaxe            | Evidência                                        |
+|-------------------|-----------|--------------------|--------------------------------------------------|
+| E                 | NÃO       | —                  | "E" é palavra literal: `usucapiao E extraordinaria` = 4.478 (termo "e" entra na busca). O E é IMPLÍCITO entre palavras. |
+| E implícito       | SIM       | `palavra palavra`  | `financiamento credito` = 165.483                |
+| OU                | NÃO       | —                  | use `OR` em MAIÚSCULAS                           |
+| OR                | SIM       | `a OR b`           | `financiamento OR credito` = 1.391.325 (>> 165.483) |
+| NÃO               | NÃO       | —                  | use o sinal `-`                                  |
+| `-palavra`        | SIM       | `habeas corpus -multa` | 307.383 -> 1.859                             |
+| `"frase exata"`   | SIM       | aspas duplas       | `ausencia de constrangimento ilegal` = 28.694; com aspas = 14.135 |
+| `+palavra`        | SIM       | `inciso +IV`       | força stopword/número que seria ignorado          |
+| ADJ (adjacência)  | NÃO       | —                  | `usucapiao ADJ extraordinaria` = **0** (ADJ vira termo literal e nada casa) |
+| PROX              | NÃO       | —                  | `usucapiao PROX extraordinaria` = **0**          |
+| `$` (radical)     | NÃO       | —                  | `aliment$` = `aliment*` = `alimento` = `alimentos` = 307.996 — o caractere é DESCARTADO |
+| `*` (curinga)     | NÃO       | —                  | idem acima. `usucapi*` = `usucapi` = 1.554, contra 34.502 de `usucapiao` |
+
+ARMADILHA REAL: o índice usa **stemmer português**, então singular/plural e
+flexões já colapsam sozinhos (`alimento` == `alimentos`). Quem tenta "ajudar"
+com `usucapi*` obtém o stem errado e perde 97% dos julgados. Nunca use curinga.
+
+Outra armadilha (documentada na Ajuda oficial, §4.1/4.2): preposições, letras
+avulsas e alguns números são descartados quando acompanhados de outros termos;
+vírgula é separador (`3,75` vira "3" e "75").

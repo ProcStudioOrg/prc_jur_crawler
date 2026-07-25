@@ -1,0 +1,79 @@
+TJRS — Testes exploratórios obrigatórios e pendências de mapeamento
+==================================================================
+
+Prints de apoio: 09.01-busca-simples-sem-filtro.png  (teste 1: só o termo, nada mais)
+
+Todos os números abaixo são `numFound` reais, medidos em 24/07/2026. Onde há dois
+métodos (navegador e endpoint), os dois deram o MESMO valor.
+
+1. Busca simples, sem filtro nem operador
+-----------------------------------------
+"dano moral", NENHUM filtro: 610.629 julgados (medido no navegador, print 09.01).
+  desses: 439.968 na Justiça Comum + 169.558 nas Turmas Recursais + acervo do Alçada.
+Só o termo "usucapiao": 36.272 (todos) / 34.502 (Justiça Comum).
+Funciona; ordenação default = julgamento mais recente primeiro.
+
+2. Juizados Especiais × Justiça Comum  ← O TESTE MAIS IMPORTANTE
+---------------------------------------------------------------
+"dano moral", julgamento 01/01/2026–30/06/2026:
+  Justiça Comum (Tribunal de Justiça do RS) .... 20.023   (prints 06.01, 08.x)
+  Turmas Recursais ............................   3.901   (print 06.02)
+  Todos ....................................... 23.924   ( = soma exata)
+Detalhe em 02-combo-tribunal.txt. Filtro: combo "Tribunal" -> `cod_tribunal`.
+
+3. Cível × Criminal
+-------------------
+EXISTE (checkbox "Seção"): CIVEL 34.356 × CRIME 5.592 para "dano moral" na Justiça
+Comum. Ver 05-numero-processo-e-checkboxes.txt.
+
+4. Órgão/Matéria
+----------------
+Combo "Órgão julgador", dependente do tribunal: 108 opções na Justiça Comum,
+23 nas Turmas Recursais. Listas completas em 03-orgaos-julgadores-*.json.
+Testado: Turma Recursal Criminal (68) = 102; Primeira Câmara Cível (1) = 2.218.
+
+5. Unidade específica (serventia/comarca)
+----------------------------------------
+Não há combo nem lupa de unidade na tela (o campo existe no HTML mas está
+comentado). O backend aceita `filtroComarcaOrigem` como TEXTO EXATO:
+`origem:"PORTO ALEGRE"` = 150.295. Exposto como `--comarca`.
+Não existe lista oficial de comarcas neste módulo — a faceta `facet_origem`
+mostra as comarcas presentes no recorte atual (é a melhor fonte disponível).
+
+6. Magistrada ou magistrado
+---------------------------
+Só via combo Relator/Redator (1.317 nomes na Justiça Comum), não por texto livre.
+Testado: cod 729 = 482 julgados. `(cod_relator:729 OR cod_redator:729)`.
+
+7. Tipo de ato / tipo de decisão
+--------------------------------
+Acordao 373.057 · Monocratica 6.312 · Admissibilidade 4.302 · Duvida 192.
+Diferente do TJGO, aqui "Acórdão" É o tipo predominante — sem a armadilha do
+acórdão publicado como "Ementa".
+
+8. Número do processo (alimenta o Checker)
+------------------------------------------
+`filtroNumeroProcesso` (só dígitos) -> `numero_processo:<n>`.
+CNJ 20 dígitos e numeração legada (Themis) coexistem na base.
+52636071620248210001 -> 1 julgado · 70084452564 -> 3 · 99999999999999999999 -> 0.
+Detalhe em 05-numero-processo-e-checkboxes.txt.
+
+9. Datas + operadores booleanos
+-------------------------------
+Datas: 04-filtros-data.txt (julgamento 1.109 × publicação 1.118 no mesmo trimestre
+— filtros distintos, comprovado).
+Operadores: tabela testada um por um em 01-tela-inicial.txt §2. Resumo: E é
+implícito, `OR` maiúsculo, `-palavra`, `"frase exata"` e `+termo` funcionam;
+E/OU/NÃO por extenso, ADJ, PROX, `$` e `*` NÃO funcionam.
+
+Pendências e defeitos de mapeamento
+-----------------------------------
+| # | O que falta / o que está errado | Por quê |
+|---|---|---|
+| 1 | Filtro "Classe Processual" está QUEBRADO no site oficial | O combo envia o id numérico e o servidor monta `tipo_processo:"397"`, mas o campo Solr guarda texto -> 0 resultados sempre. O crawler contorna enviando o label. Além disso o combo é a lista legada e não cobre o índice ("Recurso Inominado", 30.793 julgados, não está lá). Defeito do TJRS, não do mapeamento. |
+| 2 | Facetas (`facet_counts`) não usadas pelo crawler | Os mesmos recortes já são cobertos pelos filtros do formulário, que entram na consulta. As contagens agregadas ficam disponíveis na resposta para quem quiser. Ver 08-filtros-mais-frequentes.txt. |
+| 3 | Módulo de "Publicações Administrativas" não mapeado | `publicacoes-adm.js` / `publicacoes-adm-ajax.js` são carregados na mesma página, mas não há aba que os exponha em jul/2026. Fora do escopo de jurisprudência. |
+| 4 | Download TIFF (`exibe_tiff.php`) não implementado | Só existe para digitalizações antigas (`documento_tiff != 0`); em toda a amostra observada o campo veio 0 e o texto já vem no payload. |
+| 5 | `filtroAssunto` (texto livre) é inútil | O servidor monta `assunto:"x"&fq=assunto:"x"` (um `&fq=` solto dentro da cláusula) e devolve 0. Não exposto no CLI. Use `-ac/--assunto-cnj`, que funciona. |
+| 6 | Sem lista canônica de comarcas | O módulo não expõe combo de comarca (campo comentado na tela). Só a faceta `facet_origem` do recorte atual. |
+| 7 | Combo "Tribunal" traz uma `<option value="">` vazia | Quirk do loop do JS que popula o combo. Inofensivo; o crawler nunca usa. |

@@ -1,0 +1,18 @@
+## 7. Magistrada / Magistrado (relator)
+
+- Parâmetro: `nomeRelator`. Um valor por consulta, **nome completo em CAIXA ALTA**,
+  exatamente como o combo entrega (`ILSE MARCELINA BERNARDI LORA`).
+- Campo na UI: `input[placeholder="Filtrar Magistrada / Magistrado ..."]`.
+- Lista do TRT9 em `acordaos`: 46 nomes — `07-relatores.json`.
+  Na base inteira (sem filtro de tribunal) são **1357** nomes: por isso a lista é
+  filtrada por digitação e não cabe em print.
+- Rótulo vem prefixado pelo tribunal (`"TRT9 - Ilse Marcelina Bernardi Lora"`), o valor não.
+  Mesma ressalva de §6: só desambigua junto com `tribunais`.
+
+Prova: `nomeRelator=ILSE MARCELINA BERNARDI LORA` em `insalubridade`/`acordaos`/TRT9/
+2025-Q1 → 169 (base 2459).
+
+Em `sentencas` e `decisoesmonocraticas` o campo do documento é `nomeRedator`
+(quem assina), não `relator` — o crawler mapeia os dois (`relator` e `redator`).
+
+Prints: `07.01-filtro-relator.png`

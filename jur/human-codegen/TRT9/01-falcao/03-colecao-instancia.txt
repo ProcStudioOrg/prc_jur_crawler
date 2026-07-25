@@ -1,0 +1,79 @@
+## 3. Coleção — A DESAMBIGUAÇÃO DE INSTÂNCIA (o filtro mais importante do tribunal)
+
+### Qual é a divisão que faz sentido na Justiça do Trabalho
+
+A pergunta do repo é: qual é, aqui, o equivalente ao "Justiça Comum × Juizado Especial"
+de um tribunal estadual? Resposta curta: **não é Juizado — é GRAU + ÓRGÃO PROLATOR.**
+
+Na Justiça do Trabalho **não existem Juizados Especiais**. A Lei 9.099/95 não se aplica;
+o rito equivalente (Lei 9.957/2000, "rito sumaríssimo", causas até 40 salários mínimos) é
+julgado pela **mesma Vara do Trabalho**, pelos mesmos juízes, com recurso para as **mesmas
+Turmas** do Tribunal Regional. Não há Turma Recursal, não há órgão separado. Portanto
+filtrar por "rito sumaríssimo" (classe `ATSum`) separa *procedimento*, não *órgão* — não
+serve como desambiguação de instância. É por isso que a classe processual ficou como filtro
+secundário (§8) e não como o eixo.
+
+O que de fato divide o acervo trabalhista, sem ambiguidade, é:
+
+| Divisão | Órgão que decide | Documento gerado |
+|---|---|---|
+| **1º grau** | Vara do Trabalho (juiz singular), Núcleo de Justiça 4.0, CEJUSC | **sentença** |
+| **2º grau colegiado** | Turma, Seção Especializada, Órgão Especial, Tribunal Pleno | **acórdão** |
+| **2º grau monocrático** | Desembargador(a) no gabinete, Presidência, Vice, Corregedoria | **decisão monocrática** |
+| **Admissibilidade do RR** | Vice-Presidência / OJC de Análise de Recurso | **despacho de admissibilidade** |
+
+### Como o Falcão materializa isso: `colecao`
+
+O sistema não expõe isso como um checkbox solto — expõe como **COLEÇÕES**, que são
+índices separados, com **schemas de documento diferentes**. Uma consulta pertence a UMA
+coleção; não há como misturar acidentalmente. É isso que torna a separação **inequívoca**:
+todo resultado carrega, por construção, o grau de onde veio.
+
+| `colecao` | Rótulo na tela | Grau | Órgãos que aparecem | Nº de órgãos no TRT9 |
+|---|---|---|---|---|
+| `sentencas` | Sentenças | **1º** | Varas do Trabalho, Núcleos de Justiça 4.0, CEJUSC 1º grau | 116 |
+| `acordaos` | Acórdãos | **2º** | 1ª–7ª Turma, Seção Especializada, Tribunal Pleno, Órgão Especial, (OE) Uniformização de Jurisprudência | 14 |
+| `decisoesmonocraticas` | Decisões Monocráticas | **2º** | GAB. DES. ..., Presidência, Vice-Presidência, Corregedoria, OJ de Análise de Recurso | 37 |
+| `recursorevista` | Admissibilidade de Recurso de Revista | **2º** | OJC de Análise de Recurso, Turmas, Seção Especializada, CEJUSC-JT 2º grau | 13 |
+| `precedentes` | Precedentes | nacional | STF, TST, TRTs — base BNP, **não é acervo do TRT9** | — |
+
+Listas completas: `06-orgaos-julgadores.json` (uma chave por coleção).
+Contagens por coleção do TRT9: `03-colecoes.json`.
+
+### Prova de que o filtro é aplicado de verdade (contagens diferentes)
+
+Mesma query (`adicional de insalubridade`), mesmo período (01/01/2025–31/03/2025),
+mesmo tribunal (TRT9). Se o filtro fosse ignorado, os quatro números seriam iguais:
+
+```
+acordaos ............... 5693
+sentencas .............. 8794
+decisoesmonocraticas ...   34
+recursorevista ......... 1437
+```
+
+Linha de base gravada em `09-contagens.json` (é o que o `jur-fixer` compara quando
+suspeitar de quebra silenciosa).
+
+### Na CLI
+
+```
+--grau 2               -> colecao=acordaos              (default)
+--grau 1               -> colecao=sentencas
+--grau monocraticas    -> colecao=decisoesmonocraticas
+--grau admissibilidade -> colecao=recursorevista
+--grau ambos           -> acordaos + sentencas (as duas consultas, concatenadas)
+--grau todos           -> as quatro
+--colecao <a,b>        -> forma crua, sobrepõe --grau (dá acesso a `precedentes`)
+```
+
+Cada item do JSON de saída carrega `colecao`, `grau` ("1"/"2") e `instancia`
+(a frase por extenso), então o consumidor nunca precisa inferir.
+
+⚠️ **Pegadinha:** em `recursorevista` o documento traz TAMBÉM a Vara de origem, no campo
+`orgaoJulgadorGrau1PorExtenso` (mapeado como `orgaoJulgadorOrigem1Grau`). É 1º grau dentro
+de um documento de 2º grau. Não confundir com `orgaoJulgador` — quem confundir vai atribuir
+a decisão de admissibilidade à Vara.
+
+HTML do painel de filtros: `03-painel-filtros.html`
+Prints: `03.01-filtro-colecao-acordaos.png`, `03.02-filtro-colecao-sentencas.png`

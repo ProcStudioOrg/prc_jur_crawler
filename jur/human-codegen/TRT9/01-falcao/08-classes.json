@@ -1,0 +1,476 @@
+{
+  "acordaos": [
+    {
+      "valor": "AACC",
+      "rotulo": "AACC",
+      "quantidade": 38
+    },
+    {
+      "valor": "AIAP",
+      "rotulo": "AIAP",
+      "quantidade": 3753
+    },
+    {
+      "valor": "AIRO",
+      "rotulo": "AIRO",
+      "quantidade": 4034
+    },
+    {
+      "valor": "AP",
+      "rotulo": "AP",
+      "quantidade": 196523
+    },
+    {
+      "valor": "AR",
+      "rotulo": "AR",
+      "quantidade": 2054
+    },
+    {
+      "valor": "AgRT",
+      "rotulo": "AgRT",
+      "quantidade": 175
+    },
+    {
+      "valor": "ArgInc",
+      "rotulo": "ArgInc",
+      "quantidade": 8
+    },
+    {
+      "valor": "ArgIncCiv",
+      "rotulo": "ArgIncCiv",
+      "quantidade": 3
+    },
+    {
+      "valor": "CCCiv",
+      "rotulo": "CCCiv",
+      "quantidade": 376
+    },
+    {
+      "valor": "CauInom",
+      "rotulo": "CauInom",
+      "quantidade": 51
+    },
+    {
+      "valor": "CorPar",
+      "rotulo": "CorPar",
+      "quantidade": 71
+    },
+    {
+      "valor": "DC",
+      "rotulo": "DC",
+      "quantidade": 132
+    },
+    {
+      "valor": "DCG",
+      "rotulo": "DCG",
+      "quantidade": 93
+    },
+    {
+      "valor": "ExcImp",
+      "rotulo": "ExcImp",
+      "quantidade": 6
+    },
+    {
+      "valor": "ExcSusp",
+      "rotulo": "ExcSusp",
+      "quantidade": 252
+    },
+    {
+      "valor": "HCCiv",
+      "rotulo": "HCCiv",
+      "quantidade": 35
+    },
+    {
+      "valor": "HDCiv",
+      "rotulo": "HDCiv",
+      "quantidade": 1
+    },
+    {
+      "valor": "IAC",
+      "rotulo": "IAC",
+      "quantidade": 17
+    },
+    {
+      "valor": "IRDR",
+      "rotulo": "IRDR",
+      "quantidade": 47
+    },
+    {
+      "valor": "IUJ",
+      "rotulo": "IUJ",
+      "quantidade": 2317
+    },
+    {
+      "valor": "IVCCiv",
+      "rotulo": "IVCCiv",
+      "quantidade": 1
+    },
+    {
+      "valor": "MSCiv",
+      "rotulo": "MSCiv",
+      "quantidade": 5449
+    },
+    {
+      "valor": "MSCol",
+      "rotulo": "MSCol",
+      "quantidade": 67
+    },
+    {
+      "valor": "PA",
+      "rotulo": "PA",
+      "quantidade": 99
+    },
+    {
+      "valor": "PEPT",
+      "rotulo": "PEPT",
+      "quantidade": 3
+    },
+    {
+      "valor": "PP",
+      "rotulo": "PP",
+      "quantidade": 1
+    },
+    {
+      "valor": "PetCiv",
+      "rotulo": "PetCiv",
+      "quantidade": 291
+    },
+    {
+      "valor": "RORSum",
+      "rotulo": "RORSum",
+      "quantidade": 75272
+    },
+    {
+      "valor": "ROT",
+      "rotulo": "ROT",
+      "quantidade": 281043
+    },
+    {
+      "valor": "Rcl",
+      "rotulo": "Rcl",
+      "quantidade": 36
+    },
+    {
+      "valor": "RemNecRO",
+      "rotulo": "RemNecRO",
+      "quantidade": 276
+    },
+    {
+      "valor": "RemNecTrab",
+      "rotulo": "RemNecTrab",
+      "quantidade": 225
+    },
+    {
+      "valor": "SLAT",
+      "rotulo": "SLAT",
+      "quantidade": 2
+    },
+    {
+      "valor": "SLS",
+      "rotulo": "SLS",
+      "quantidade": 1
+    },
+    {
+      "valor": "TutAntAnt",
+      "rotulo": "TutAntAnt",
+      "quantidade": 26
+    },
+    {
+      "valor": "TutCautAnt",
+      "rotulo": "TutCautAnt",
+      "quantidade": 366
+    }
+  ],
+  "sentencas": [
+    {
+      "valor": "ACC",
+      "rotulo": "ACC",
+      "quantidade": 5075
+    },
+    {
+      "valor": "ACPCiv",
+      "rotulo": "ACPCiv",
+      "quantidade": 4997
+    },
+    {
+      "valor": "ACum",
+      "rotulo": "ACum",
+      "quantidade": 17543
+    },
+    {
+      "valor": "AEC",
+      "rotulo": "AEC",
+      "quantidade": 135
+    },
+    {
+      "valor": "ATAlc",
+      "rotulo": "ATAlc",
+      "quantidade": 9200
+    },
+    {
+      "valor": "ATOrd",
+      "rotulo": "ATOrd",
+      "quantidade": 965390
+    },
+    {
+      "valor": "ATSum",
+      "rotulo": "ATSum",
+      "quantidade": 408388
+    },
+    {
+      "valor": "AlvJud",
+      "rotulo": "AlvJud",
+      "quantidade": 1111
+    },
+    {
+      "valor": "Alvará",
+      "rotulo": "Alvará",
+      "quantidade": 337
+    },
+    {
+      "valor": "Arrest",
+      "rotulo": "Arrest",
+      "quantidade": 149
+    },
+    {
+      "valor": "Atent",
+      "rotulo": "Atent",
+      "quantidade": 1
+    },
+    {
+      "valor": "BusApr",
+      "rotulo": "BusApr",
+      "quantidade": 10
+    },
+    {
+      "valor": "CProt",
+      "rotulo": "CProt",
+      "quantidade": 11
+    },
+    {
+      "valor": "CartOrdCiv",
+      "rotulo": "CartOrdCiv",
+      "quantidade": 132
+    },
+    {
+      "valor": "CartPrecCiv",
+      "rotulo": "CartPrecCiv",
+      "quantidade": 738
+    },
+    {
+      "valor": "CauInom",
+      "rotulo": "CauInom",
+      "quantidade": 443
+    },
+    {
+      "valor": "Cauçao",
+      "rotulo": "Cauçao",
+      "quantidade": 5
+    },
+    {
+      "valor": "ConPag",
+      "rotulo": "ConPag",
+      "quantidade": 17111
+    },
+    {
+      "valor": "CumPrSe",
+      "rotulo": "CumPrSe",
+      "quantidade": 13194
+    },
+    {
+      "valor": "CumSen",
+      "rotulo": "CumSen",
+      "quantidade": 65035
+    },
+    {
+      "valor": "ETCiv",
+      "rotulo": "ETCiv",
+      "quantidade": 19427
+    },
+    {
+      "valor": "ExCCJ",
+      "rotulo": "ExCCJ",
+      "quantidade": 2261
+    },
+    {
+      "valor": "ExCCP",
+      "rotulo": "ExCCP",
+      "quantidade": 847
+    },
+    {
+      "valor": "ExFis",
+      "rotulo": "ExFis",
+      "quantidade": 7230
+    },
+    {
+      "valor": "ExProvAS",
+      "rotulo": "ExProvAS",
+      "quantidade": 8651
+    },
+    {
+      "valor": "ExTAC",
+      "rotulo": "ExTAC",
+      "quantidade": 989
+    },
+    {
+      "valor": "ExTiEx",
+      "rotulo": "ExTiEx",
+      "quantidade": 677
+    },
+    {
+      "valor": "ExTiJu",
+      "rotulo": "ExTiJu",
+      "quantidade": 196
+    },
+    {
+      "valor": "ExcImp",
+      "rotulo": "ExcImp",
+      "quantidade": 7
+    },
+    {
+      "valor": "ExcInc",
+      "rotulo": "ExcInc",
+      "quantidade": 5
+    },
+    {
+      "valor": "ExcSusp",
+      "rotulo": "ExcSusp",
+      "quantidade": 6
+    },
+    {
+      "valor": "Exibic",
+      "rotulo": "Exibic",
+      "quantidade": 106
+    },
+    {
+      "valor": "HCCiv",
+      "rotulo": "HCCiv",
+      "quantidade": 6
+    },
+    {
+      "valor": "HDCiv",
+      "rotulo": "HDCiv",
+      "quantidade": 2
+    },
+    {
+      "valor": "HTE",
+      "rotulo": "HTE",
+      "quantidade": 43662
+    },
+    {
+      "valor": "HoTrEx",
+      "rotulo": "HoTrEx",
+      "quantidade": 3653
+    },
+    {
+      "valor": "IAFG",
+      "rotulo": "IAFG",
+      "quantidade": 210
+    },
+    {
+      "valor": "IDPJ",
+      "rotulo": "IDPJ",
+      "quantidade": 88
+    },
+    {
+      "valor": "IVCCiv",
+      "rotulo": "IVCCiv",
+      "quantidade": 4
+    },
+    {
+      "valor": "Inter",
+      "rotulo": "Inter",
+      "quantidade": 32
+    },
+    {
+      "valor": "Interdito",
+      "rotulo": "Interdito",
+      "quantidade": 294
+    },
+    {
+      "valor": "Interp",
+      "rotulo": "Interp",
+      "quantidade": 41
+    },
+    {
+      "valor": "Justif",
+      "rotulo": "Justif",
+      "quantidade": 11
+    },
+    {
+      "valor": "MSCiv",
+      "rotulo": "MSCiv",
+      "quantidade": 912
+    },
+    {
+      "valor": "MSCol",
+      "rotulo": "MSCol",
+      "quantidade": 41
+    },
+    {
+      "valor": "Monito",
+      "rotulo": "Monito",
+      "quantidade": 1316
+    },
+    {
+      "valor": "Notif",
+      "rotulo": "Notif",
+      "quantidade": 117
+    },
+    {
+      "valor": "Oposic",
+      "rotulo": "Oposic",
+      "quantidade": 649
+    },
+    {
+      "valor": "PAP",
+      "rotulo": "PAP",
+      "quantidade": 9635
+    },
+    {
+      "valor": "PetCiv",
+      "rotulo": "PetCiv",
+      "quantidade": 2335
+    },
+    {
+      "valor": "Protes",
+      "rotulo": "Protes",
+      "quantidade": 1556
+    },
+    {
+      "valor": "RJParc",
+      "rotulo": "RJParc",
+      "quantidade": 23
+    },
+    {
+      "valor": "RPP",
+      "rotulo": "RPP",
+      "quantidade": 253
+    },
+    {
+      "valor": "ResAutCiv",
+      "rotulo": "ResAutCiv",
+      "quantidade": 173
+    },
+    {
+      "valor": "RogatoCiv",
+      "rotulo": "RogatoCiv",
+      "quantidade": 2
+    },
+    {
+      "valor": "RtMtPosse",
+      "rotulo": "RtMtPosse",
+      "quantidade": 203
+    },
+    {
+      "valor": "TutAntAnt",
+      "rotulo": "TutAntAnt",
+      "quantidade": 984
+    },
+    {
+      "valor": "TutCautAnt",
+      "rotulo": "TutCautAnt",
+      "quantidade": 1845
+    }
+  ]
+}

@@ -1,0 +1,1662 @@
+[
+ {
+  "id": "APELAÇÃO CRIMINAL",
+  "label": "APELAÇÃO CRIMINAL"
+ },
+ {
+  "id": "Agravo",
+  "label": "AGRAVO"
+ },
+ {
+  "id": "Agravo (STJ)",
+  "label": "AGRAVO (STJ)"
+ },
+ {
+  "id": "Agravo (art. 15 da Lei 12.016/09)",
+  "label": "AGRAVO (ART. 15 DA LEI 12.016/09)"
+ },
+ {
+  "id": "Agravo (art. 16º, § único da Lei 12.016/09)",
+  "label": "AGRAVO (ART. 16º, § ÚNICO DA LEI 12.016/09)"
+ },
+ {
+  "id": "Agravo (art. 39 da Lei 8.038/90)",
+  "label": "AGRAVO (ART. 39 DA LEI 8.038/90)"
+ },
+ {
+  "id": "Agravo (art. 4º da Lei 4.348/64)",
+  "label": "AGRAVO (ART. 4º DA LEI 4.348/64)"
+ },
+ {
+  "id": "Agravo (art. 522 do CPC)",
+  "label": "AGRAVO (ART. 522 DO CPC)"
+ },
+ {
+  "id": "Agravo (art. 532 do CPC)",
+  "label": "AGRAVO (ART. 532 DO CPC)"
+ },
+ {
+  "id": "Agravo (art. 545 do CPC)",
+  "label": "AGRAVO (ART. 545 DO CPC)"
+ },
+ {
+  "id": "Agravo (art. 557, § 1º, do CPC)",
+  "label": "AGRAVO (ART. 557, § 1º, DO CPC)"
+ },
+ {
+  "id": "Agravo (art.1021 CPC)",
+  "label": "AGRAVO (ART.1021 CPC)"
+ },
+ {
+  "id": "Agravo (art.12 da Lei 7.347)",
+  "label": "AGRAVO (ART.12 DA LEI 7.347)"
+ },
+ {
+  "id": "Agravo (inciso II art. 527 do CPC)",
+  "label": "AGRAVO (INCISO II ART. 527 DO CPC)"
+ },
+ {
+  "id": "Agravo (parág. único art. 4º Lei 12069/01)",
+  "label": "AGRAVO (PARÁG. ÚNICO ART. 4º LEI 12069/01)"
+ },
+ {
+  "id": "Agravo (§ 1º do Art. 10, da Lei 12.016/09)",
+  "label": "AGRAVO (§ 1º DO ART. 10, DA LEI 12.016/09)"
+ },
+ {
+  "id": "Agravo (§ 3º art.4º da Lei 8.437/92)",
+  "label": "AGRAVO (§ 3º ART.4º DA LEI 8.437/92)"
+ },
+ {
+  "id": "Agravo (§ único art. 120 do CPC)",
+  "label": "AGRAVO (§ ÚNICO ART. 120 DO CPC)"
+ },
+ {
+  "id": "Agravo Interno",
+  "label": "AGRAVO INTERNO"
+ },
+ {
+  "id": "Agravo Interno (art.1021)",
+  "label": "AGRAVO INTERNO (ART.1021)"
+ },
+ {
+  "id": "Agravo Regimental",
+  "label": "AGRAVO REGIMENTAL"
+ },
+ {
+  "id": "Agravo Retido",
+  "label": "AGRAVO RETIDO"
+ },
+ {
+  "id": "Agravo de Decisão Administrativa",
+  "label": "AGRAVO DE DECISÃO ADMINISTRATIVA"
+ },
+ {
+  "id": "Agravo de Decisão de Deserção",
+  "label": "AGRAVO DE DECISÃO DE DESERÇÃO"
+ },
+ {
+  "id": "Agravo de Execução Penal",
+  "label": "AGRAVO DE EXECUÇÃO PENAL"
+ },
+ {
+  "id": "Agravo de Instrumento",
+  "label": "AGRAVO DE INSTRUMENTO"
+ },
+ {
+  "id": "Agravo de Instrumento (ECA)",
+  "label": "AGRAVO DE INSTRUMENTO (ECA)"
+ },
+ {
+  "id": "Agravo de Instrumento (Grupo Civil/Comercial)",
+  "label": "AGRAVO DE INSTRUMENTO (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Agravo de Instrumento (Grupo Público)",
+  "label": "AGRAVO DE INSTRUMENTO (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Agravo de Instrumento (RE)",
+  "label": "AGRAVO DE INSTRUMENTO (RE)"
+ },
+ {
+  "id": "Agravo de Instrumento (REsp)",
+  "label": "AGRAVO DE INSTRUMENTO (RESP)"
+ },
+ {
+  "id": "Agravo de Instrumento (Órgão Especial)",
+  "label": "AGRAVO DE INSTRUMENTO (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Agravo de Instrumento em Recurso Especial",
+  "label": "AGRAVO DE INSTRUMENTO EM RECURSO ESPECIAL"
+ },
+ {
+  "id": "Agravo de Instrumento em Recurso Extraordinário",
+  "label": "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO"
+ },
+ {
+  "id": "Agravo em Recurso Especial",
+  "label": "AGRAVO EM RECURSO ESPECIAL"
+ },
+ {
+  "id": "Agravo em Recurso Extraordinário",
+  "label": "AGRAVO EM RECURSO EXTRAORDINÁRIO"
+ },
+ {
+  "id": "Antecipação da Tutela em Apelação Cível",
+  "label": "ANTECIPAÇÃO DA TUTELA EM APELAÇÃO CÍVEL"
+ },
+ {
+  "id": "Apelação",
+  "label": "APELAÇÃO"
+ },
+ {
+  "id": "Apelação (Grupo Civil/Comercial)",
+  "label": "APELAÇÃO (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Apelação (Grupo Público)",
+  "label": "APELAÇÃO (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Apelação (Órgão Especial)",
+  "label": "APELAÇÃO (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Apelação / Estatuto da Criança e do Adolescente",
+  "label": "APELAÇÃO / ESTATUTO DA CRIANÇA E DO ADOLESCENTE"
+ },
+ {
+  "id": "Apelação / Reexame Necessário",
+  "label": "APELAÇÃO / REEXAME NECESSÁRIO"
+ },
+ {
+  "id": "Apelação / Remessa Necessária",
+  "label": "APELAÇÃO / REMESSA NECESSÁRIA"
+ },
+ {
+  "id": "Apelação / Remessa Necessária (Grupo Público)",
+  "label": "APELAÇÃO / REMESSA NECESSÁRIA (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Apelação / Remessa Necessária (Órgão Especial)",
+  "label": "APELAÇÃO / REMESSA NECESSÁRIA (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Apelação Criminal",
+  "label": "APELAÇÃO CRIMINAL"
+ },
+ {
+  "id": "Apelação Criminal (Recurso ao STF/STJ)",
+  "label": "APELAÇÃO CRIMINAL (RECURSO AO STF/STJ)"
+ },
+ {
+  "id": "Apelação Cível",
+  "label": "APELAÇÃO CÍVEL"
+ },
+ {
+  "id": "Apelação Cível ",
+  "label": "APELAÇÃO CÍVEL"
+ },
+ {
+  "id": "Apelação Cível (Restauração de Autos)",
+  "label": "APELAÇÃO CÍVEL (RESTAURAÇÃO DE AUTOS)"
+ },
+ {
+  "id": "Apelação Cível (STJ)",
+  "label": "APELAÇÃO CÍVEL (STJ)"
+ },
+ {
+  "id": "Arguição de Inconstitucionalidade",
+  "label": "ARGUIÇÃO DE INCONSTITUCIONALIDADE"
+ },
+ {
+  "id": "Argüição de Inelegibilidade",
+  "label": "ARGÜIÇÃO DE INELEGIBILIDADE"
+ },
+ {
+  "id": "Auto de Prisão em Flagrante",
+  "label": "AUTO DE PRISÃO EM FLAGRANTE"
+ },
+ {
+  "id": "Autos Suplementares em Apelação Criminal (Réu Preso)",
+  "label": "AUTOS SUPLEMENTARES EM APELAÇÃO CRIMINAL (RÉU PRESO)"
+ },
+ {
+  "id": "Autos Suplementares em Inquérito",
+  "label": "AUTOS SUPLEMENTARES EM INQUÉRITO"
+ },
+ {
+  "id": "Autos Suplementares em Recurso Criminal",
+  "label": "AUTOS SUPLEMENTARES EM RECURSO CRIMINAL"
+ },
+ {
+  "id": "Autos Suplementares em Recurso Especial em Apelação Cível",
+  "label": "AUTOS SUPLEMENTARES EM RECURSO ESPECIAL EM APELAÇÃO CÍVEL"
+ },
+ {
+  "id": "AÇÃO POPULAR",
+  "label": "AÇÃO POPULAR"
+ },
+ {
+  "id": "Ação Anulatória",
+  "label": "AÇÃO ANULATÓRIA"
+ },
+ {
+  "id": "Ação Civil Pública",
+  "label": "AÇÃO CIVIL PÚBLICA"
+ },
+ {
+  "id": "Ação Civil Pública Cível",
+  "label": "AÇÃO CIVIL PÚBLICA CÍVEL"
+ },
+ {
+  "id": "Ação Civil de Improbidade Administrativa",
+  "label": "AÇÃO CIVIL DE IMPROBIDADE ADMINISTRATIVA"
+ },
+ {
+  "id": "Ação Declaratória Incidental",
+  "label": "AÇÃO DECLARATÓRIA INCIDENTAL"
+ },
+ {
+  "id": "Ação Direta de Inconstitucionalidade",
+  "label": "AÇÃO DIRETA DE INCONSTITUCIONALIDADE"
+ },
+ {
+  "id": "Ação Penal - Procedimento Ordinário",
+  "label": "AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO"
+ },
+ {
+  "id": "Ação Penal - Procedimento Ordinário (Órgão Especial)",
+  "label": "AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Ação Penal - Procedimento Sumaríssimo",
+  "label": "AÇÃO PENAL - PROCEDIMENTO SUMARÍSSIMO"
+ },
+ {
+  "id": "Ação Penal - Procedimento Sumaríssimo (Órgão Especial)",
+  "label": "AÇÃO PENAL - PROCEDIMENTO SUMARÍSSIMO (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Ação Penal - Procedimento Sumário",
+  "label": "AÇÃO PENAL - PROCEDIMENTO SUMÁRIO"
+ },
+ {
+  "id": "Ação Penal Militar - Procedimento Ordinário",
+  "label": "AÇÃO PENAL MILITAR - PROCEDIMENTO ORDINÁRIO"
+ },
+ {
+  "id": "Ação Popular (Órgão Especial)",
+  "label": "AÇÃO POPULAR (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Ação Rescisória",
+  "label": "AÇÃO RESCISÓRIA"
+ },
+ {
+  "id": "Ação Rescisória (Grupo Civil/Comercial)",
+  "label": "AÇÃO RESCISÓRIA (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Ação Rescisória (Grupo Público)",
+  "label": "AÇÃO RESCISÓRIA (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Ação Rescisória (Órgão Especial)",
+  "label": "AÇÃO RESCISÓRIA (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Ação de Improbidade Administrativa (Lei 8.429/92)",
+  "label": "AÇÃO DE IMPROBIDADE ADMINISTRATIVA (LEI 8.429/92)"
+ },
+ {
+  "id": "CARTA TESTEMUNHÁVEL",
+  "label": "CARTA TESTEMUNHÁVEL"
+ },
+ {
+  "id": "CONSIGNAÇÃO EM PAGAMENTO",
+  "label": "CONSIGNAÇÃO EM PAGAMENTO"
+ },
+ {
+  "id": "CRIMES AMBIENTAIS",
+  "label": "CRIMES AMBIENTAIS"
+ },
+ {
+  "id": "CUMPRIMENTO DE SENTENÇA",
+  "label": "CUMPRIMENTO DE SENTENÇA"
+ },
+ {
+  "id": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA",
+  "label": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA"
+ },
+ {
+  "id": "Carta Precatória Cível",
+  "label": "CARTA PRECATÓRIA CÍVEL"
+ },
+ {
+  "id": "Carta Testemunhável",
+  "label": "CARTA TESTEMUNHÁVEL"
+ },
+ {
+  "id": "Carta de Ordem Cível",
+  "label": "CARTA DE ORDEM CÍVEL"
+ },
+ {
+  "id": "Cautelar Inominada",
+  "label": "CAUTELAR INOMINADA"
+ },
+ {
+  "id": "Cautelar Inominada Criminal",
+  "label": "CAUTELAR INOMINADA CRIMINAL"
+ },
+ {
+  "id": "Cautelar Inominada Criminal (Grupo Criminal)",
+  "label": "CAUTELAR INOMINADA CRIMINAL (GRUPO CRIMINAL)"
+ },
+ {
+  "id": "Classe não informada",
+  "label": "CLASSE NÃO INFORMADA"
+ },
+ {
+  "id": "Conflito de Competência",
+  "label": "CONFLITO DE COMPETÊNCIA"
+ },
+ {
+  "id": "Conflito de Competência Cível",
+  "label": "CONFLITO DE COMPETÊNCIA CÍVEL"
+ },
+ {
+  "id": "Conflito de Competência Cível (Grupo Público)",
+  "label": "CONFLITO DE COMPETÊNCIA CÍVEL (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Conflito de Competência Cível (Pleno)",
+  "label": "CONFLITO DE COMPETÊNCIA CÍVEL (PLENO)"
+ },
+ {
+  "id": "Conflito de Competência Cível (Órgão Especial)",
+  "label": "CONFLITO DE COMPETÊNCIA CÍVEL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Conflito de Competência Infância e Juventude",
+  "label": "CONFLITO DE COMPETÊNCIA INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": "Conflito de Jurisdição",
+  "label": "CONFLITO DE JURISDIÇÃO"
+ },
+ {
+  "id": "Conflito de Jurisdição (Recursos Delegados)",
+  "label": "CONFLITO DE JURISDIÇÃO (RECURSOS DELEGADOS)"
+ },
+ {
+  "id": "Conflito de Jurisdição (Seção Criminal)",
+  "label": "CONFLITO DE JURISDIÇÃO (SEÇÃO CRIMINAL)"
+ },
+ {
+  "id": "Conflito de Jurisdição (Órgão Especial)",
+  "label": "CONFLITO DE JURISDIÇÃO (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Conflito de competência",
+  "label": "CONFLITO DE COMPETÊNCIA"
+ },
+ {
+  "id": "Conflito de competência cível (Grupo Civil/Comercial)",
+  "label": "CONFLITO DE COMPETÊNCIA CÍVEL (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Conflito de competência cível (Recursos Delegados)",
+  "label": "CONFLITO DE COMPETÊNCIA CÍVEL (RECURSOS DELEGADOS)"
+ },
+ {
+  "id": "Conselho de Justificação (Grupo Criminal)",
+  "label": "CONSELHO DE JUSTIFICAÇÃO (GRUPO CRIMINAL)"
+ },
+ {
+  "id": "Consulta",
+  "label": "CONSULTA"
+ },
+ {
+  "id": "Correição Parcial",
+  "label": "CORREIÇÃO PARCIAL"
+ },
+ {
+  "id": "Correição Parcial Criminal",
+  "label": "CORREIÇÃO PARCIAL CRIMINAL"
+ },
+ {
+  "id": "Correição Parcial Cível",
+  "label": "CORREIÇÃO PARCIAL CÍVEL"
+ },
+ {
+  "id": "Correição Parcial Cível (Grupo Civil/Comercial)",
+  "label": "CORREIÇÃO PARCIAL CÍVEL (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Correição Parcial Cível (Grupo Público)",
+  "label": "CORREIÇÃO PARCIAL CÍVEL (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Correição Parcial Militar",
+  "label": "CORREIÇÃO PARCIAL MILITAR"
+ },
+ {
+  "id": "Correição Parcial ou Reclamação Correicional",
+  "label": "CORREIÇÃO PARCIAL OU RECLAMAÇÃO CORREICIONAL"
+ },
+ {
+  "id": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular",
+  "label": "CRIMES DE CALÚNIA, INJÚRIA E DIFAMAÇÃO DE COMPETÊNCIA DO JUIZ SINGULAR"
+ },
+ {
+  "id": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular (Órgão Especial)",
+  "label": "CRIMES DE CALÚNIA, INJÚRIA E DIFAMAÇÃO DE COMPETÊNCIA DO JUIZ SINGULAR (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Crimes de Responsabilidade dos Funcionários Públicos",
+  "label": "CRIMES DE RESPONSABILIDADE DOS FUNCIONÁRIOS PÚBLICOS"
+ },
+ {
+  "id": "Cumprimento Provisório de Decisão",
+  "label": "CUMPRIMENTO PROVISÓRIO DE DECISÃO"
+ },
+ {
+  "id": "Cumprimento Provisório de Decisão (Grupo Civil/Comercial)",
+  "label": "CUMPRIMENTO PROVISÓRIO DE DECISÃO (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Cumprimento Provisório de Sentença",
+  "label": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA"
+ },
+ {
+  "id": "Cumprimento Provisório de Sentença (Grupo Civil/Comercial)",
+  "label": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Cumprimento Provisório de Sentença (Grupo Público)",
+  "label": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Cumprimento de Sentença",
+  "label": "CUMPRIMENTO DE SENTENÇA"
+ },
+ {
+  "id": "Cumprimento de Sentença (Órgão Especial)",
+  "label": "CUMPRIMENTO DE SENTENÇA (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Cumprimento de Sentença contra a Fazenda Pública",
+  "label": "CUMPRIMENTO DE SENTENÇA CONTRA A FAZENDA PÚBLICA"
+ },
+ {
+  "id": "Cumprimento de Sentença contra a Fazenda Pública (Grupo Público)",
+  "label": "CUMPRIMENTO DE SENTENÇA CONTRA A FAZENDA PÚBLICA (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Cumprimento de sentença (Grupo Civil/Comercial)",
+  "label": "CUMPRIMENTO DE SENTENÇA (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Cumprimento de sentença (Grupo Público)",
+  "label": "CUMPRIMENTO DE SENTENÇA (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "DESAFORAMENTO DE JULGAMENTO",
+  "label": "DESAFORAMENTO DE JULGAMENTO"
+ },
+ {
+  "id": "Declaratória",
+  "label": "DECLARATÓRIA"
+ },
+ {
+  "id": "Declaratória de Constitucionalidade",
+  "label": "DECLARATÓRIA DE CONSTITUCIONALIDADE"
+ },
+ {
+  "id": "Declaratória de Constitucionalidade (Órgão Especial)",
+  "label": "DECLARATÓRIA DE CONSTITUCIONALIDADE (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Declaratória de Inexistência",
+  "label": "DECLARATÓRIA DE INEXISTÊNCIA"
+ },
+ {
+  "id": "Declaratória de Nulidade em Medida Cautelar Inominada",
+  "label": "DECLARATÓRIA DE NULIDADE EM MEDIDA CAUTELAR INOMINADA"
+ },
+ {
+  "id": "Direta de Inconstitucionalidade",
+  "label": "DIRETA DE INCONSTITUCIONALIDADE"
+ },
+ {
+  "id": "Direta de Inconstitucionalidade (Órgão Especial)",
+  "label": "DIRETA DE INCONSTITUCIONALIDADE (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Dissídio Coletivo",
+  "label": "DISSÍDIO COLETIVO"
+ },
+ {
+  "id": "Dissídio Coletivo de Greve",
+  "label": "DISSÍDIO COLETIVO DE GREVE"
+ },
+ {
+  "id": "EXCEÇÃO DA VERDADE",
+  "label": "EXCEÇÃO DA VERDADE"
+ },
+ {
+  "id": "Embargos Infringentes",
+  "label": "EMBARGOS INFRINGENTES"
+ },
+ {
+  "id": "Embargos Infringentes e de Nulidade",
+  "label": "EMBARGOS INFRINGENTES E DE NULIDADE"
+ },
+ {
+  "id": "Embargos Infringentes e de Nulidade (Seção Criminal)",
+  "label": "EMBARGOS INFRINGENTES E DE NULIDADE (SEÇÃO CRIMINAL)"
+ },
+ {
+  "id": "Embargos de Declaração",
+  "label": "EMBARGOS DE DECLARAÇÃO"
+ },
+ {
+  "id": "Embargos de Divergência",
+  "label": "EMBARGOS DE DIVERGÊNCIA"
+ },
+ {
+  "id": "Embargos de Nulidade",
+  "label": "EMBARGOS DE NULIDADE"
+ },
+ {
+  "id": "Embargos de Terceiro",
+  "label": "EMBARGOS DE TERCEIRO"
+ },
+ {
+  "id": "Embargos de Terceiro Criminal",
+  "label": "EMBARGOS DE TERCEIRO CRIMINAL"
+ },
+ {
+  "id": "Embargos de Terceiro Cível",
+  "label": "EMBARGOS DE TERCEIRO CÍVEL"
+ },
+ {
+  "id": "Embargos de Terceiro Cível (Grupo Civil/Comercial)",
+  "label": "EMBARGOS DE TERCEIRO CÍVEL (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Embargos de Terceiro Cível (Grupo Público)",
+  "label": "EMBARGOS DE TERCEIRO CÍVEL (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Embargos à Execução",
+  "label": "EMBARGOS À EXECUÇÃO"
+ },
+ {
+  "id": "Embargos à Execução (Grupo Civil/Comercial)",
+  "label": "EMBARGOS À EXECUÇÃO (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Embargos à Execução (Grupo Público)",
+  "label": "EMBARGOS À EXECUÇÃO (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Exceção da Verdade",
+  "label": "EXCEÇÃO DA VERDADE"
+ },
+ {
+  "id": "Exceção da Verdade (Órgão Especial)",
+  "label": "EXCEÇÃO DA VERDADE (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Exceção de Impedimento",
+  "label": "EXCEÇÃO DE IMPEDIMENTO"
+ },
+ {
+  "id": "Exceção de Impedimento (Órgão Especial)",
+  "label": "EXCEÇÃO DE IMPEDIMENTO (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Exceção de Incompetência",
+  "label": "EXCEÇÃO DE INCOMPETÊNCIA"
+ },
+ {
+  "id": "Exceção de Incompetência de Juízo",
+  "label": "EXCEÇÃO DE INCOMPETÊNCIA DE JUÍZO"
+ },
+ {
+  "id": "Exceção de Litispendência e Ilegitimidade da Parte",
+  "label": "EXCEÇÃO DE LITISPENDÊNCIA E ILEGITIMIDADE DA PARTE"
+ },
+ {
+  "id": "Exceção de Pré-Executividade em Ação de Execução",
+  "label": "EXCEÇÃO DE PRÉ-EXECUTIVIDADE EM AÇÃO DE EXECUÇÃO"
+ },
+ {
+  "id": "Exceção de Suspeição",
+  "label": "EXCEÇÃO DE SUSPEIÇÃO"
+ },
+ {
+  "id": "Exceções",
+  "label": "EXCEÇÕES"
+ },
+ {
+  "id": "Execução Contra a Fazenda Pública",
+  "label": "EXECUÇÃO CONTRA A FAZENDA PÚBLICA"
+ },
+ {
+  "id": "Execução Provisória em Mandado de Segurança",
+  "label": "EXECUÇÃO PROVISÓRIA EM MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": "Execução de Título Extajudicial contra a Fazenda Pública",
+  "label": "EXECUÇÃO DE TÍTULO EXTAJUDICIAL CONTRA A FAZENDA PÚBLICA"
+ },
+ {
+  "id": "HABILITAÇÃO",
+  "label": "HABILITAÇÃO"
+ },
+ {
+  "id": "Habeas Corpus",
+  "label": "HABEAS CORPUS"
+ },
+ {
+  "id": "Habeas Corpus (Criminal)",
+  "label": "HABEAS CORPUS (CRIMINAL)"
+ },
+ {
+  "id": "Habeas Corpus (Cível)",
+  "label": "HABEAS CORPUS (CÍVEL)"
+ },
+ {
+  "id": "Habeas Corpus Ato Infracional",
+  "label": "HABEAS CORPUS ATO INFRACIONAL"
+ },
+ {
+  "id": "Habeas Corpus Criminal",
+  "label": "HABEAS CORPUS CRIMINAL"
+ },
+ {
+  "id": "Habeas Corpus Criminal (Grupo Criminal)",
+  "label": "HABEAS CORPUS CRIMINAL (GRUPO CRIMINAL)"
+ },
+ {
+  "id": "Habeas Corpus Criminal (Órgão Especial)",
+  "label": "HABEAS CORPUS CRIMINAL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Habeas Corpus Cível",
+  "label": "HABEAS CORPUS CÍVEL"
+ },
+ {
+  "id": "Habeas Corpus Cível (Órgão Especial)",
+  "label": "HABEAS CORPUS CÍVEL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Habeas Data",
+  "label": "HABEAS DATA"
+ },
+ {
+  "id": "Habeas Data Cível",
+  "label": "HABEAS DATA CÍVEL"
+ },
+ {
+  "id": "Habeas Data Cível (Grupo Público)",
+  "label": "HABEAS DATA CÍVEL (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Habeas Data Cível (Órgão Especial)",
+  "label": "HABEAS DATA CÍVEL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Homologação em Acordo de Colaboração Premiada",
+  "label": "HOMOLOGAÇÃO EM ACORDO DE COLABORAÇÃO PREMIADA"
+ },
+ {
+  "id": "INQUÉRITO POLICIAL",
+  "label": "INQUÉRITO POLICIAL"
+ },
+ {
+  "id": "Impugnação ao Cumprimento de Decisão",
+  "label": "IMPUGNAÇÃO AO CUMPRIMENTO DE DECISÃO"
+ },
+ {
+  "id": "Impugnação ao Pedido de Assistência Litisconsorcial",
+  "label": "IMPUGNAÇÃO AO PEDIDO DE ASSISTÊNCIA LITISCONSORCIAL"
+ },
+ {
+  "id": "Impugnação ao Pedido de Assistência Litisconsorcial ou Simples",
+  "label": "IMPUGNAÇÃO AO PEDIDO DE ASSISTÊNCIA LITISCONSORCIAL OU SIMPLES"
+ },
+ {
+  "id": "Impugnação ao Valor da Causa",
+  "label": "IMPUGNAÇÃO AO VALOR DA CAUSA"
+ },
+ {
+  "id": "Impugnação à Assistência Judiciária",
+  "label": "IMPUGNAÇÃO À ASSISTÊNCIA JUDICIÁRIA"
+ },
+ {
+  "id": "Incidente / Suspensão Condicional do Processo em Processo Crime",
+  "label": "INCIDENTE / SUSPENSÃO CONDICIONAL DO PROCESSO EM PROCESSO CRIME"
+ },
+ {
+  "id": "Incidente De Arguição de Inconstitucionalidade",
+  "label": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE"
+ },
+ {
+  "id": "Incidente de Arguição de Inconstitucionalidade",
+  "label": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE"
+ },
+ {
+  "id": "Incidente de Arguição de Inconstitucionalidade (Órgão Especial)",
+  "label": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Incidente de Arguição de Inconstitucionalidade Criminal (Órgão Especial)",
+  "label": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CRIMINAL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Incidente de Assunção de Competência",
+  "label": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA"
+ },
+ {
+  "id": "Incidente de Assunção de Competência (Grupo Civil/Comercial)",
+  "label": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Incidente de Assunção de Competência (Grupo Público)",
+  "label": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Incidente de Assunção de Competência (Seção Criminal)",
+  "label": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA (SEÇÃO CRIMINAL)"
+ },
+ {
+  "id": "Incidente de Assunção de Competência (Órgão Especial)",
+  "label": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Incidente de Desconsideração de Personalidade Jurídica",
+  "label": "INCIDENTE DE DESCONSIDERAÇÃO DE PERSONALIDADE JURÍDICA"
+ },
+ {
+  "id": "Incidente de Falsidade",
+  "label": "INCIDENTE DE FALSIDADE"
+ },
+ {
+  "id": "Incidente de Ilicitude de Prova em Inquérito",
+  "label": "INCIDENTE DE ILICITUDE DE PROVA EM INQUÉRITO"
+ },
+ {
+  "id": "Incidente de Impedimento",
+  "label": "INCIDENTE DE IMPEDIMENTO"
+ },
+ {
+  "id": "Incidente de Impedimento Cível",
+  "label": "INCIDENTE DE IMPEDIMENTO CÍVEL"
+ },
+ {
+  "id": "Incidente de Resolução de Demandas Repetitivas",
+  "label": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS"
+ },
+ {
+  "id": "Incidente de Resolução de Demandas Repetitivas (Grupo Civil/Comercial)",
+  "label": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Incidente de Resolução de Demandas Repetitivas (Grupo Público)",
+  "label": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Incidente de Resolução de Demandas Repetitivas (Seção Criminal)",
+  "label": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (SEÇÃO CRIMINAL)"
+ },
+ {
+  "id": "Incidente de Resolução de Demandas Repetitivas (Órgão Especial)",
+  "label": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Incidente de Revisão/Cancelamento de Súmula",
+  "label": "INCIDENTE DE REVISÃO/CANCELAMENTO DE SÚMULA"
+ },
+ {
+  "id": "Incidente de Suspeição",
+  "label": "INCIDENTE DE SUSPEIÇÃO"
+ },
+ {
+  "id": "Incidente de Suspeição Cível (Órgão Especial)",
+  "label": "INCIDENTE DE SUSPEIÇÃO CÍVEL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Incidente de Uniformização de Jurisprudência",
+  "label": "INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA"
+ },
+ {
+  "id": "Indenização",
+  "label": "INDENIZAÇÃO"
+ },
+ {
+  "id": "Indignidade para o Oficialato",
+  "label": "INDIGNIDADE PARA O OFICIALATO"
+ },
+ {
+  "id": "Inquérito",
+  "label": "INQUÉRITO"
+ },
+ {
+  "id": "Inquérito Judicial",
+  "label": "INQUÉRITO JUDICIAL"
+ },
+ {
+  "id": "Inquérito Policial (Órgão Especial)",
+  "label": "INQUÉRITO POLICIAL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Insanidade Mental do Acusado",
+  "label": "INSANIDADE MENTAL DO ACUSADO"
+ },
+ {
+  "id": "Interpelação",
+  "label": "INTERPELAÇÃO"
+ },
+ {
+  "id": "Interpelação (Grupo Civil/Comercial)",
+  "label": "INTERPELAÇÃO (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Interpelação Judicial",
+  "label": "INTERPELAÇÃO JUDICIAL"
+ },
+ {
+  "id": "Investigação contra magistrado",
+  "label": "INVESTIGAÇÃO CONTRA MAGISTRADO"
+ },
+ {
+  "id": "Justificação Criminal",
+  "label": "JUSTIFICAÇÃO CRIMINAL"
+ },
+ {
+  "id": "Justificação Judicial",
+  "label": "JUSTIFICAÇÃO JUDICIAL"
+ },
+ {
+  "id": "Liberdade Provisória com ou sem fiança",
+  "label": "LIBERDADE PROVISÓRIA COM OU SEM FIANÇA"
+ },
+ {
+  "id": "Liquidação Provisória de Sentença pelo Procedimento Comum",
+  "label": "LIQUIDAÇÃO PROVISÓRIA DE SENTENÇA PELO PROCEDIMENTO COMUM"
+ },
+ {
+  "id": "Liquidação de Sentença pelo Procedimento Comum",
+  "label": "LIQUIDAÇÃO DE SENTENÇA PELO PROCEDIMENTO COMUM"
+ },
+ {
+  "id": "Liquidação por Arbitramento",
+  "label": "LIQUIDAÇÃO POR ARBITRAMENTO"
+ },
+ {
+  "id": "MANDADO DE SEGURANÇA",
+  "label": "MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": "MANDADO DE SEGURANÇA COLETIVO",
+  "label": "MANDADO DE SEGURANÇA COLETIVO"
+ },
+ {
+  "id": "Mandado de Injunção",
+  "label": "MANDADO DE INJUNÇÃO"
+ },
+ {
+  "id": "Mandado de Injunção (Grupo Público)",
+  "label": "MANDADO DE INJUNÇÃO (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Mandado de Injunção (Órgão Especial)",
+  "label": "MANDADO DE INJUNÇÃO (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Mandado de Segurança (TU)",
+  "label": "MANDADO DE SEGURANÇA (TU)"
+ },
+ {
+  "id": "Mandado de Segurança Coletivo (Grupo Público)",
+  "label": "MANDADO DE SEGURANÇA COLETIVO (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Mandado de Segurança Coletivo (Órgão Especial)",
+  "label": "MANDADO DE SEGURANÇA COLETIVO (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Mandado de Segurança Criminal",
+  "label": "MANDADO DE SEGURANÇA CRIMINAL"
+ },
+ {
+  "id": "Mandado de Segurança Criminal (Grupo Criminal)",
+  "label": "MANDADO DE SEGURANÇA CRIMINAL (GRUPO CRIMINAL)"
+ },
+ {
+  "id": "Mandado de Segurança Criminal (Órgão Especial)",
+  "label": "MANDADO DE SEGURANÇA CRIMINAL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Mandado de Segurança Cível",
+  "label": "MANDADO DE SEGURANÇA CÍVEL"
+ },
+ {
+  "id": "Mandado de Segurança Cível (Grupo Civil/Comercial)",
+  "label": "MANDADO DE SEGURANÇA CÍVEL (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Mandado de Segurança Cível (Grupo Público)",
+  "label": "MANDADO DE SEGURANÇA CÍVEL (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Mandado de Segurança Cível (Órgão Especial)",
+  "label": "MANDADO DE SEGURANÇA CÍVEL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Mandado de Segurança Infância e Juventude",
+  "label": "MANDADO DE SEGURANÇA INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": "Medida Cautelar",
+  "label": "MEDIDA CAUTELAR"
+ },
+ {
+  "id": "Medida Cautelar Incidental",
+  "label": "MEDIDA CAUTELAR INCIDENTAL"
+ },
+ {
+  "id": "Medida Cautelar Inominada",
+  "label": "MEDIDA CAUTELAR INOMINADA"
+ },
+ {
+  "id": "Medida Cautelar Nominada",
+  "label": "MEDIDA CAUTELAR NOMINADA"
+ },
+ {
+  "id": "Medida Cautelar de Seqüestro",
+  "label": "MEDIDA CAUTELAR DE SEQÜESTRO"
+ },
+ {
+  "id": "Medida Cautelar de Sustação da Execução na Ação Rescisóra",
+  "label": "MEDIDA CAUTELAR DE SUSTAÇÃO DA EXECUÇÃO NA AÇÃO RESCISÓRA"
+ },
+ {
+  "id": "Medida Cautelar no Recurso Especial",
+  "label": "MEDIDA CAUTELAR NO RECURSO ESPECIAL"
+ },
+ {
+  "id": "Medida Cautelar no Recurso Especial / Extraordinário",
+  "label": "MEDIDA CAUTELAR NO RECURSO ESPECIAL / EXTRAORDINÁRIO"
+ },
+ {
+  "id": "Medida Cautelar no Recurso Extraordinário",
+  "label": "MEDIDA CAUTELAR NO RECURSO EXTRAORDINÁRIO"
+ },
+ {
+  "id": "Medida Cautelar no Recurso Ordinário",
+  "label": "MEDIDA CAUTELAR NO RECURSO ORDINÁRIO"
+ },
+ {
+  "id": "Medida Protetiva de Urgência",
+  "label": "MEDIDA PROTETIVA DE URGÊNCIA"
+ },
+ {
+  "id": "Medidas Investigatórias Sobre Organizações Criminosas",
+  "label": "MEDIDAS INVESTIGATÓRIAS SOBRE ORGANIZAÇÕES CRIMINOSAS"
+ },
+ {
+  "id": "Notificação",
+  "label": "NOTIFICAÇÃO"
+ },
+ {
+  "id": "Notificação (Grupo Público)",
+  "label": "NOTIFICAÇÃO (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Notificação Judicial",
+  "label": "NOTIFICAÇÃO JUDICIAL"
+ },
+ {
+  "id": "Notícia Criminal",
+  "label": "NOTÍCIA CRIMINAL"
+ },
+ {
+  "id": "Notícia-Crime",
+  "label": "NOTÍCIA-CRIME"
+ },
+ {
+  "id": "Oposição (Grupo Público)",
+  "label": "OPOSIÇÃO (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Ordinária",
+  "label": "ORDINÁRIA"
+ },
+ {
+  "id": "PEDIDO DE BUSCA E APREENSÃO CRIMINAL",
+  "label": "PEDIDO DE BUSCA E APREENSÃO CRIMINAL"
+ },
+ {
+  "id": "PEDIDO DE PRISÃO PREVENTIVA",
+  "label": "PEDIDO DE PRISÃO PREVENTIVA"
+ },
+ {
+  "id": "PEDIDO DE PRISÃO TEMPORÁRIA",
+  "label": "PEDIDO DE PRISÃO TEMPORÁRIA"
+ },
+ {
+  "id": "PROCEDIMENTO ESPECIAL DA LEI ANTITÓXICOS",
+  "label": "PROCEDIMENTO ESPECIAL DA LEI ANTITÓXICOS"
+ },
+ {
+  "id": "Pedido de Afastamento em Inquérito",
+  "label": "PEDIDO DE AFASTAMENTO EM INQUÉRITO"
+ },
+ {
+  "id": "Pedido de Assistência Judiciária",
+  "label": "PEDIDO DE ASSISTÊNCIA JUDICIÁRIA"
+ },
+ {
+  "id": "Pedido de Correição",
+  "label": "PEDIDO DE CORREIÇÃO"
+ },
+ {
+  "id": "Pedido de Desaforamento",
+  "label": "PEDIDO DE DESAFORAMENTO"
+ },
+ {
+  "id": "Pedido de Efeito Suspensivo à Apelação",
+  "label": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO"
+ },
+ {
+  "id": "Pedido de Execução",
+  "label": "PEDIDO DE EXECUÇÃO"
+ },
+ {
+  "id": "Pedido de Execução de Honorários Advocatícios",
+  "label": "PEDIDO DE EXECUÇÃO DE HONORÁRIOS ADVOCATÍCIOS"
+ },
+ {
+  "id": "Pedido de Execução de Sentença em Ação Direta de Inconstitucionalidade",
+  "label": "PEDIDO DE EXECUÇÃO DE SENTENÇA EM AÇÃO DIRETA DE INCONSTITUCIONALIDADE"
+ },
+ {
+  "id": "Pedido de Execução do Acórdão",
+  "label": "PEDIDO DE EXECUÇÃO DO ACÓRDÃO"
+ },
+ {
+  "id": "Pedido de Explicações",
+  "label": "PEDIDO DE EXPLICAÇÕES"
+ },
+ {
+  "id": "Pedido de Intervenção Estadual no Município",
+  "label": "PEDIDO DE INTERVENÇÃO ESTADUAL NO MUNICÍPIO"
+ },
+ {
+  "id": "Pedido de Intervenção Federal no Estado",
+  "label": "PEDIDO DE INTERVENÇÃO FEDERAL NO ESTADO"
+ },
+ {
+  "id": "Pedido de Liberdade Provisória",
+  "label": "PEDIDO DE LIBERDADE PROVISÓRIA"
+ },
+ {
+  "id": "Pedido de Prisão Temporária (Órgão Especial)",
+  "label": "PEDIDO DE PRISÃO TEMPORÁRIA (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Pedido de Progressão de Regime",
+  "label": "PEDIDO DE PROGRESSÃO DE REGIME"
+ },
+ {
+  "id": "Pedido de Providências",
+  "label": "PEDIDO DE PROVIDÊNCIAS"
+ },
+ {
+  "id": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico",
+  "label": "PEDIDO DE QUEBRA DE SIGILO DE DADOS E/OU TELEFÔNICO"
+ },
+ {
+  "id": "Pedido de Reabilitação",
+  "label": "PEDIDO DE REABILITAÇÃO"
+ },
+ {
+  "id": "Pedido de Reconsideração",
+  "label": "PEDIDO DE RECONSIDERAÇÃO"
+ },
+ {
+  "id": "Pedido de Seqüestro",
+  "label": "PEDIDO DE SEQÜESTRO"
+ },
+ {
+  "id": "Pedido de Suspensão de Liminar",
+  "label": "PEDIDO DE SUSPENSÃO DE LIMINAR"
+ },
+ {
+  "id": "Pedido de Uniformização de Interpretação de Lei ",
+  "label": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI"
+ },
+ {
+  "id": "Pedido de Uniformização de Interpretação de Lei (TU)",
+  "label": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI (TU)"
+ },
+ {
+  "id": "Pedido de Uniformização de Jurisprudência",
+  "label": "PEDIDO DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA"
+ },
+ {
+  "id": "Perda de Graduação",
+  "label": "PERDA DE GRADUAÇÃO"
+ },
+ {
+  "id": "Petição",
+  "label": "PETIÇÃO"
+ },
+ {
+  "id": "Petição (TU)",
+  "label": "PETIÇÃO (TU)"
+ },
+ {
+  "id": "Petição Criminal",
+  "label": "PETIÇÃO CRIMINAL"
+ },
+ {
+  "id": "Petição Criminal (2ª Vice Presidência)",
+  "label": "PETIÇÃO CRIMINAL (2ª VICE PRESIDÊNCIA)"
+ },
+ {
+  "id": "Petição Criminal (Grupo Criminal)",
+  "label": "PETIÇÃO CRIMINAL (GRUPO CRIMINAL)"
+ },
+ {
+  "id": "Petição Criminal (Seção Criminal)",
+  "label": "PETIÇÃO CRIMINAL (SEÇÃO CRIMINAL)"
+ },
+ {
+  "id": "Petição Criminal (Órgão Especial)",
+  "label": "PETIÇÃO CRIMINAL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Petição Cível",
+  "label": "PETIÇÃO CÍVEL"
+ },
+ {
+  "id": "Petição Cível (1ª Vice Presidência)",
+  "label": "PETIÇÃO CÍVEL (1ª VICE PRESIDÊNCIA)"
+ },
+ {
+  "id": "Petição Cível (2ª Vice Presidência)",
+  "label": "PETIÇÃO CÍVEL (2ª VICE PRESIDÊNCIA)"
+ },
+ {
+  "id": "Petição Cível (3ª Vice Presidência)",
+  "label": "PETIÇÃO CÍVEL (3ª VICE PRESIDÊNCIA)"
+ },
+ {
+  "id": "Petição Cível (Grupo Civil/Comercial)",
+  "label": "PETIÇÃO CÍVEL (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Petição Cível (Grupo Público)",
+  "label": "PETIÇÃO CÍVEL (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Petição Cível (Recursos Delegados)",
+  "label": "PETIÇÃO CÍVEL (RECURSOS DELEGADOS)"
+ },
+ {
+  "id": "Petição Cível (Órgão Especial)",
+  "label": "PETIÇÃO CÍVEL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Petição Infracional",
+  "label": "PETIÇÃO INFRACIONAL"
+ },
+ {
+  "id": "Petição Infância e Juventude Cível",
+  "label": "PETIÇÃO INFÂNCIA E JUVENTUDE CÍVEL"
+ },
+ {
+  "id": "Precatório  ( Agravo Regimental)",
+  "label": "PRECATÓRIO  ( AGRAVO REGIMENTAL)"
+ },
+ {
+  "id": "Precatórios - Comum",
+  "label": "PRECATÓRIOS - COMUM"
+ },
+ {
+  "id": "Procedimento Comum",
+  "label": "PROCEDIMENTO COMUM"
+ },
+ {
+  "id": "Procedimento Comum Cível",
+  "label": "PROCEDIMENTO COMUM CÍVEL"
+ },
+ {
+  "id": "Procedimento Comum Cível (Grupo Civil/Comercial)",
+  "label": "PROCEDIMENTO COMUM CÍVEL (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Procedimento Comum Cível (Grupo Público)",
+  "label": "PROCEDIMENTO COMUM CÍVEL (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Procedimento Comum Cível (Órgão Especial)",
+  "label": "PROCEDIMENTO COMUM CÍVEL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Procedimento Investigatório do MP (Peças de Informação)",
+  "label": "PROCEDIMENTO INVESTIGATÓRIO DO MP (PEÇAS DE INFORMAÇÃO)"
+ },
+ {
+  "id": "Procedimento Ordinário",
+  "label": "PROCEDIMENTO ORDINÁRIO"
+ },
+ {
+  "id": "Procedimento de Cumprimento de Sentença/Decisão",
+  "label": "PROCEDIMENTO DE CUMPRIMENTO DE SENTENÇA/DECISÃO"
+ },
+ {
+  "id": "Procedimentos Investigatórios",
+  "label": "PROCEDIMENTOS INVESTIGATÓRIOS"
+ },
+ {
+  "id": "Processo Administrativo",
+  "label": "PROCESSO ADMINISTRATIVO"
+ },
+ {
+  "id": "Processo Administrativo Disciplinar",
+  "label": "PROCESSO ADMINISTRATIVO DISCIPLINAR"
+ },
+ {
+  "id": "Processo Administrativo Disciplinar em face de Magistrado",
+  "label": "PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE MAGISTRADO"
+ },
+ {
+  "id": "Processo Crime",
+  "label": "PROCESSO CRIME"
+ },
+ {
+  "id": "Processo Previsto na LOMAN/Administrativa",
+  "label": "PROCESSO PREVISTO NA LOMAN/ADMINISTRATIVA"
+ },
+ {
+  "id": "Processo administrativo",
+  "label": "PROCESSO ADMINISTRATIVO"
+ },
+ {
+  "id": "Processo de Vitaliciedade",
+  "label": "PROCESSO DE VITALICIEDADE"
+ },
+ {
+  "id": "Produção Antecipada da Prova",
+  "label": "PRODUÇÃO ANTECIPADA DA PROVA"
+ },
+ {
+  "id": "Queixa-Crime",
+  "label": "QUEIXA-CRIME"
+ },
+ {
+  "id": "Questão de ordem",
+  "label": "QUESTÃO DE ORDEM"
+ },
+ {
+  "id": "Questões e Processos Incidentes",
+  "label": "QUESTÕES E PROCESSOS INCIDENTES"
+ },
+ {
+  "id": "RECURSO EM SENTIDO ESTRITO",
+  "label": "RECURSO EM SENTIDO ESTRITO"
+ },
+ {
+  "id": "Reclamação",
+  "label": "RECLAMAÇÃO"
+ },
+ {
+  "id": "Reclamação (2ª Vice Presidência)",
+  "label": "RECLAMAÇÃO (2ª VICE PRESIDÊNCIA)"
+ },
+ {
+  "id": "Reclamação (3ª Vice Presidência)",
+  "label": "RECLAMAÇÃO (3ª VICE PRESIDÊNCIA)"
+ },
+ {
+  "id": "Reclamação (Grupo Civil/Comercial)",
+  "label": "RECLAMAÇÃO (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Reclamação (Grupo Público)",
+  "label": "RECLAMAÇÃO (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Reclamação (Órgão Especial)",
+  "label": "RECLAMAÇÃO (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Reclamação Criminal",
+  "label": "RECLAMAÇÃO CRIMINAL"
+ },
+ {
+  "id": "Reclamação Criminal (Grupo Criminal)",
+  "label": "RECLAMAÇÃO CRIMINAL (GRUPO CRIMINAL)"
+ },
+ {
+  "id": "Reclamação Criminal (Órgão Especial)",
+  "label": "RECLAMAÇÃO CRIMINAL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Reclamação Disciplinar",
+  "label": "RECLAMAÇÃO DISCIPLINAR"
+ },
+ {
+  "id": "Reclamação Militar",
+  "label": "RECLAMAÇÃO MILITAR"
+ },
+ {
+  "id": "Recurso",
+  "label": "RECURSO"
+ },
+ {
+  "id": "Recurso (STJ)",
+  "label": "RECURSO (STJ)"
+ },
+ {
+  "id": "Recurso Adesivo ao Recurso em Apelação Cível",
+  "label": "RECURSO ADESIVO AO RECURSO EM APELAÇÃO CÍVEL"
+ },
+ {
+  "id": "Recurso Adesivo ao Recurso em Recurso Especial em Apelação Cível",
+  "label": "RECURSO ADESIVO AO RECURSO EM RECURSO ESPECIAL EM APELAÇÃO CÍVEL"
+ },
+ {
+  "id": "Recurso Adesivo ao Recurso em Recurso Extraordinário em Apelação Cível",
+  "label": "RECURSO ADESIVO AO RECURSO EM RECURSO EXTRAORDINÁRIO EM APELAÇÃO CÍVEL"
+ },
+ {
+  "id": "Recurso Administrativo",
+  "label": "RECURSO ADMINISTRATIVO"
+ },
+ {
+  "id": "Recurso Administrativo em Processo Previsto na LOMAN/Administrativa",
+  "label": "RECURSO ADMINISTRATIVO EM PROCESSO PREVISTO NA LOMAN/ADMINISTRATIVA"
+ },
+ {
+  "id": "Recurso Criminal",
+  "label": "RECURSO CRIMINAL"
+ },
+ {
+  "id": "Recurso Especial",
+  "label": "RECURSO ESPECIAL"
+ },
+ {
+  "id": "Recurso Especial (Executivo Fiscal)",
+  "label": "RECURSO ESPECIAL (EXECUTIVO FISCAL)"
+ },
+ {
+  "id": "Recurso Especial (Originário)",
+  "label": "RECURSO ESPECIAL (ORIGINÁRIO)"
+ },
+ {
+  "id": "Recurso Especial Adesivo",
+  "label": "RECURSO ESPECIAL ADESIVO"
+ },
+ {
+  "id": "Recurso Especial com Agravo",
+  "label": "RECURSO ESPECIAL COM AGRAVO"
+ },
+ {
+  "id": "Recurso Extraordinário",
+  "label": "RECURSO EXTRAORDINÁRIO"
+ },
+ {
+  "id": "Recurso Extraordinário (Executivo Fiscal)",
+  "label": "RECURSO EXTRAORDINÁRIO (EXECUTIVO FISCAL)"
+ },
+ {
+  "id": "Recurso Extraordinário (Originário)",
+  "label": "RECURSO EXTRAORDINÁRIO (ORIGINÁRIO)"
+ },
+ {
+  "id": "Recurso Extraordinário (Recurso)",
+  "label": "RECURSO EXTRAORDINÁRIO (RECURSO)"
+ },
+ {
+  "id": "Recurso Extraordinário Adesivo",
+  "label": "RECURSO EXTRAORDINÁRIO ADESIVO"
+ },
+ {
+  "id": "Recurso Extraordinário com Agravo",
+  "label": "RECURSO EXTRAORDINÁRIO COM AGRAVO"
+ },
+ {
+  "id": "Recurso Inominado",
+  "label": "RECURSO INOMINADO"
+ },
+ {
+  "id": "Recurso Ordinário",
+  "label": "RECURSO ORDINÁRIO"
+ },
+ {
+  "id": "Recurso Ordinário ",
+  "label": "RECURSO ORDINÁRIO"
+ },
+ {
+  "id": "Recurso Sentido Estrito",
+  "label": "RECURSO SENTIDO ESTRITO"
+ },
+ {
+  "id": "Recurso de Agravo",
+  "label": "RECURSO DE AGRAVO"
+ },
+ {
+  "id": "Recurso de Concurso",
+  "label": "RECURSO DE CONCURSO"
+ },
+ {
+  "id": "Recurso de Decisão Administrativa",
+  "label": "RECURSO DE DECISÃO ADMINISTRATIVA"
+ },
+ {
+  "id": "Recurso de Habeas Corpus",
+  "label": "RECURSO DE HABEAS CORPUS"
+ },
+ {
+  "id": "Recurso de Revista em Apelação Criminal",
+  "label": "RECURSO DE REVISTA EM APELAÇÃO CRIMINAL"
+ },
+ {
+  "id": "Recurso em Mandado de Segurança",
+  "label": "RECURSO EM MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": "Recurso em Processo Administrativo",
+  "label": "RECURSO EM PROCESSO ADMINISTRATIVO"
+ },
+ {
+  "id": "Recurso em Processo Administrativo Disciplinar contra Servidor",
+  "label": "RECURSO EM PROCESSO ADMINISTRATIVO DISCIPLINAR CONTRA SERVIDOR"
+ },
+ {
+  "id": "Recurso em Processo Administrativo Disciplinar em face de Servidor",
+  "label": "RECURSO EM PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE SERVIDOR"
+ },
+ {
+  "id": "Recurso em Sentido Estrito",
+  "label": "RECURSO EM SENTIDO ESTRITO"
+ },
+ {
+  "id": "Recurso em sentido estrito/Recurso ex officio",
+  "label": "RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO"
+ },
+ {
+  "id": "Reexame Necessário",
+  "label": "REEXAME NECESSÁRIO"
+ },
+ {
+  "id": "Relaxamento de Prisão",
+  "label": "RELAXAMENTO DE PRISÃO"
+ },
+ {
+  "id": "Remessa Necessária Criminal",
+  "label": "REMESSA NECESSÁRIA CRIMINAL"
+ },
+ {
+  "id": "Remessa Necessária Cível",
+  "label": "REMESSA NECESSÁRIA CÍVEL"
+ },
+ {
+  "id": "Remessa Necessária Cível (Grupo Público)",
+  "label": "REMESSA NECESSÁRIA CÍVEL (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Representação",
+  "label": "REPRESENTAÇÃO"
+ },
+ {
+  "id": "Representação Criminal/Notícia de Crime",
+  "label": "REPRESENTAÇÃO CRIMINAL/NOTÍCIA DE CRIME"
+ },
+ {
+  "id": "Representação Criminal/Notícia de Crime (Órgão Especial)",
+  "label": "REPRESENTAÇÃO CRIMINAL/NOTÍCIA DE CRIME (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Representação em Mandado de Segurança",
+  "label": "REPRESENTAÇÃO EM MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": "Representação p/ Declaração de Indignidade/Incompatibilidade",
+  "label": "REPRESENTAÇÃO P/ DECLARAÇÃO DE INDIGNIDADE/INCOMPATIBILIDADE"
+ },
+ {
+  "id": "Representação p/ Perda da Graduação",
+  "label": "REPRESENTAÇÃO P/ PERDA DA GRADUAÇÃO"
+ },
+ {
+  "id": "Representação p/ Perda da Graduação  (Grupo Criminal)",
+  "label": "REPRESENTAÇÃO P/ PERDA DA GRADUAÇÃO  (GRUPO CRIMINAL)"
+ },
+ {
+  "id": "Requerimento Administrativo",
+  "label": "REQUERIMENTO ADMINISTRATIVO"
+ },
+ {
+  "id": "Requerimento de Aposentadoria",
+  "label": "REQUERIMENTO DE APOSENTADORIA"
+ },
+ {
+  "id": "Restauração de Autos",
+  "label": "RESTAURAÇÃO DE AUTOS"
+ },
+ {
+  "id": "Restauração de Autos em Agravo de Instrumento",
+  "label": "RESTAURAÇÃO DE AUTOS EM AGRAVO DE INSTRUMENTO"
+ },
+ {
+  "id": "Restauração de Autos em Apelação Criminal",
+  "label": "RESTAURAÇÃO DE AUTOS EM APELAÇÃO CRIMINAL"
+ },
+ {
+  "id": "Restauração de Autos em Apelação Cível",
+  "label": "RESTAURAÇÃO DE AUTOS EM APELAÇÃO CÍVEL"
+ },
+ {
+  "id": "Restauração de Autos em Habeas Corpus",
+  "label": "RESTAURAÇÃO DE AUTOS EM HABEAS CORPUS"
+ },
+ {
+  "id": "Restauração de Autos em Mandado de Segurança",
+  "label": "RESTAURAÇÃO DE AUTOS EM MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": "Restauração de Autos em Representação",
+  "label": "RESTAURAÇÃO DE AUTOS EM REPRESENTAÇÃO"
+ },
+ {
+  "id": "Restituição de Coisas Apreendidas",
+  "label": "RESTITUIÇÃO DE COISAS APREENDIDAS"
+ },
+ {
+  "id": "Revisão Criminal",
+  "label": "REVISÃO CRIMINAL"
+ },
+ {
+  "id": "Revisão Criminal (Grupo Criminal)",
+  "label": "REVISÃO CRIMINAL (GRUPO CRIMINAL)"
+ },
+ {
+  "id": "Revisão Criminal (Órgão Especial)",
+  "label": "REVISÃO CRIMINAL (ÓRGÃO ESPECIAL)"
+ },
+ {
+  "id": "Revisão Judicial - RDII (Grupo Criminal)",
+  "label": "REVISÃO JUDICIAL - RDII (GRUPO CRIMINAL)"
+ },
+ {
+  "id": "Revogação da Prisão Preventiva",
+  "label": "REVOGAÇÃO DA PRISÃO PREVENTIVA"
+ },
+ {
+  "id": "Sindicância em Processo de Vitaliciedade",
+  "label": "SINDICÂNCIA EM PROCESSO DE VITALICIEDADE"
+ },
+ {
+  "id": "Suspensão Medida Liminar no Mandado de Segurança",
+  "label": "SUSPENSÃO MEDIDA LIMINAR NO MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": "Suspensão de Execução de Sentença",
+  "label": "SUSPENSÃO DE EXECUÇÃO DE SENTENÇA"
+ },
+ {
+  "id": "Suspensão de Liminar e de Sentença",
+  "label": "SUSPENSÃO DE LIMINAR E DE SENTENÇA"
+ },
+ {
+  "id": "Suspensão de Liminar ou Antecipação de Tutela",
+  "label": "SUSPENSÃO DE LIMINAR OU ANTECIPAÇÃO DE TUTELA"
+ },
+ {
+  "id": "Suspensão de Segurança Cível",
+  "label": "SUSPENSÃO DE SEGURANÇA CÍVEL"
+ },
+ {
+  "id": "TERMO CIRCUNSTANCIADO",
+  "label": "TERMO CIRCUNSTANCIADO"
+ },
+ {
+  "id": "Tutela Antecipada Antecedente",
+  "label": "TUTELA ANTECIPADA ANTECEDENTE"
+ },
+ {
+  "id": "Tutela Antecipada Antecedente (Grupo Civil/Comercial)",
+  "label": "TUTELA ANTECIPADA ANTECEDENTE (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Tutela Antecipada Antecedente (Grupo Público)",
+  "label": "TUTELA ANTECIPADA ANTECEDENTE (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Tutela Cautelar Antecedente",
+  "label": "TUTELA CAUTELAR ANTECEDENTE"
+ },
+ {
+  "id": "Tutela Cautelar Antecedente (Grupo Civil/Comercial)",
+  "label": "TUTELA CAUTELAR ANTECEDENTE (GRUPO CIVIL/COMERCIAL)"
+ },
+ {
+  "id": "Tutela Cautelar Antecedente (Grupo Público)",
+  "label": "TUTELA CAUTELAR ANTECEDENTE (GRUPO PÚBLICO)"
+ },
+ {
+  "id": "Tutela Cautelar Antecedente (Órgão Especial)",
+  "label": "TUTELA CAUTELAR ANTECEDENTE (ÓRGÃO ESPECIAL)"
+ }
+]

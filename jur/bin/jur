@@ -10,12 +10,24 @@ const TRF3Crawler = require('../src/TRF3Crawler');
 const TRF5Crawler = require('../src/TRF5Crawler');
 const TCUCrawler = require('../src/TCUCrawler');
 const TJPRCrawler = require('../src/TJPRCrawler');
+const TJPRChecker = require('../src/TJPRChecker');
+const TJPRNavigator = require('../src/TJPRNavigator');
 const TJSPCrawler = require('../src/TJSPCrawler');
 const TJPACrawler = require('../src/TJPACrawler');
 const TJPAChecker = require('../src/TJPAChecker');
 const TJGOCrawler = require('../src/TJGOCrawler');
 const TJGOChecker = require('../src/TJGOChecker');
 const TJGONavigator = require('../src/TJGONavigator');
+const TJRSCrawler = require('../src/TJRSCrawler');
+const TJRSChecker = require('../src/TJRSChecker');
+const TJRSNavigator = require('../src/TJRSNavigator');
+const TJSCCrawler = require('../src/TJSCCrawler');
+const TJSCChecker = require('../src/TJSCChecker');
+const TJSCNavigator = require('../src/TJSCNavigator');
+const TRT9Crawler = require('../src/TRT9Crawler');
+const TRT9Checker = require('../src/TRT9Checker');
+const TRT9Navigator = require('../src/TRT9Navigator');
+const FalcaoNavigator = require('../src/FalcaoNavigator');
 
 const program = new Command();
 
@@ -34,10 +46,10 @@ program
   .option('-dpf, --data-pub-fim <date>', 'Publication end date (DD/MM/YYYY)')
   .option('--origem <tipo>', 'Origin: trf4 (default) or turmas-recursais', 'trf4')
   .option('--fetch-inteiro-teor', 'Download full text of each result')
-  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/trf4')
   .option('--max-results <number>', 'Maximum total results to collect')
   .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
-  .option('-o, --output <file>', 'Output JSON file', 'results.json')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-trf4.json')
   .option('--orgaos <orgaos>', 'Origin filter comma-separated: TRF4,TRU4,"Turmas Recursais","Varas Federais"')
   .option('-v, --visible', 'Show browser window (disable headless mode)')
   .option('--headed', 'Alias for --visible: show browser window for debugging')
@@ -120,6 +132,7 @@ program
         }
       } else {
         const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
         fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
         log(`Results saved to: ${outputPath}`);
 
@@ -160,7 +173,7 @@ program
   .option('-t, --tipos <tipos>', 'Document types comma-separated: ACORDAO,SUMULA,ARGUICAO,DECISAOMONO', 'ACORDAO')
   .option('-f, --fontes <fontes>', 'Sources comma-separated: TRF1,JEF1', 'TRF1')
   .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
-  .option('-o, --output <file>', 'Output JSON file', 'results-trf1.json')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-trf1.json')
   .option('-v, --visible', 'Show browser window (disable headless mode)')
   .option('--headed', 'Alias for --visible: show browser window for debugging')
   .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
@@ -214,6 +227,7 @@ program
       log(`Total results collected: ${results.length}`);
 
       const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
       fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
       log(`Results saved to: ${outputPath}`);
 
@@ -250,7 +264,7 @@ program
   .option('--tru', 'Filter only TRU e Turmas Recursais')
   .option('--ementa', 'Search only in ementa')
   .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
-  .option('-o, --output <file>', 'Output JSON file', 'results-trf2.json')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-trf2.json')
   .option('-v, --visible', 'Show browser window (disable headless mode)')
   .option('--headed', 'Alias for --visible: show browser window for debugging')
   .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
@@ -308,6 +322,7 @@ program
       log(`Total results collected: ${results.length}`);
 
       const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
       fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
       log(`Results saved to: ${outputPath}`);
 
@@ -343,7 +358,7 @@ program
   .option('-b, --base <base>', 'Database: 0=TRF3, 1=Turmas Recursais, 2=Monocraticas', '0')
   .option('-rpp, --results-per-page <number>', 'Results per page: 10, 30 or 50', '10')
   .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
-  .option('-o, --output <file>', 'Output JSON file', 'results-trf3.json')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-trf3.json')
   .option('-v, --visible', 'Show browser window (disable headless mode)')
   .option('--headed', 'Alias for --visible: show browser window for debugging')
   .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
@@ -401,6 +416,7 @@ program
       log(`Total results collected: ${results.length}`);
 
       const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
       fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
       log(`Results saved to: ${outputPath}`);
 
@@ -433,7 +449,7 @@ program
   .option('-t, --tipo <tipo>', 'Consultation type: segundoGrau, turmaRecursal, tru', 'segundoGrau')
   .option('-e, --estados <estados>', 'States for turmaRecursal (comma-separated: AL,CE,PB,PE,RN,SE)')
   .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
-  .option('-o, --output <file>', 'Output JSON file', 'results-trf5.json')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-trf5.json')
   .option('-v, --visible', 'Show browser window (disable headless mode)')
   .option('--headed', 'Alias for --visible: show browser window for debugging')
   .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
@@ -485,6 +501,7 @@ program
       log(`Total results collected: ${results.length}`);
 
       const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
       fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
       log(`Results saved to: ${outputPath}`);
 
@@ -512,7 +529,7 @@ program
   .option('-di, --data-inicio <date>', 'Session start date (DD/MM/YYYY)')
   .option('-df, --data-fim <date>', 'Session end date (DD/MM/YYYY)')
   .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
-  .option('-o, --output <file>', 'Output JSON file', 'results-tcu.json')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tcu.json')
   .option('-v, --visible', 'Show browser window (disable headless mode)')
   .option('--headed', 'Alias for --visible: show browser window for debugging')
   .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
@@ -552,6 +569,7 @@ program
       log(`Total results collected: ${results.length}`);
 
       const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
       fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
       log(`Results saved to: ${outputPath}`);
 
@@ -574,88 +592,140 @@ program
 
 program
   .command('tjpr')
-  .description('Search TJPR (Tribunal de Justica do Parana) jurisprudence')
-  .requiredOption('-q, --query <text>', 'Search query (supports operators: E, OU, !NAO, PROX, $)')
+  .description('Search TJPR (Tribunal de Justica do Parana) jurisprudence — HTTP direto, sem browser')
+  .option('-q, --query <text>', 'Search query (operadores: E, OU, !NAO, PROXn, $)')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de processo (TJPRChecker); dispensa -q')
+  .option('--acordao <numero>', 'Consulta direta por numero do acordao')
+  .option('--foro <foro>', 'DESAMBIGUACAO: comum (default) | juizados | todos', 'comum')
+  .option('--base <base>', 'Combo BASE DE CONSULTA do site: todas (default), turmas, tj, vice, cidh', 'todas')
+  .option('-oj, --orgao <nome>', 'Orgao julgador especifico (nome ou id; use --listar-orgaos)')
   .option('-di, --data-inicio <date>', 'Judgment start date (DD/MM/YYYY)')
   .option('-df, --data-fim <date>', 'Judgment end date (DD/MM/YYYY)')
-  .option('-l, --local <scope>', 'Search scope: 1=EMENTA, 2=INTEIRO TEOR, 99=AMBAS', '2')
-  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
-  .option('-o, --output <file>', 'Output JSON file', 'results-tjpr.json')
-  .option('--fetch-inteiro-teor', 'Download full text of each result (visits each processo page)')
-  .option('--output-dir <dir>', 'Directory for downloaded inteiro teor files', './resultados-tjpr')
-  .option('-v, --visible', 'Show browser window (disable headless mode)')
-  .option('--headed', 'Alias for --visible: show browser window for debugging')
+  .option('-dpi, --data-pub-inicio <date>', 'Publication start date (DD/MM/YYYY)')
+  .option('-dpf, --data-pub-fim <date>', 'Publication end date (DD/MM/YYYY)')
+  .option('--escopo <escopo>', 'Onde buscar o termo: ementa (default), inteiroTeor, ambas', 'ementa')
+  .option('-l, --local <scope>', '[legado] 1=EMENTA, 2=INTEIRO TEOR, 99=AMBAS')
+  .option('-t, --tipo <tipo>', 'Tipo de decisao: todas (default), acordao, monocratica, duvida', 'todas')
+  .option('-p, --processo <numero>', 'Filtro por numero de processo DENTRO da busca (use -n p/ consulta direta)')
+  .option('-ord, --ordem <ordem>', 'recentes (default) | antigos', 'recentes')
+  .option('--listar-orgaos', 'Lista os orgaos julgadores mapeados (com foro) e sai')
+  .option('--listar-orgaos-ao-vivo', 'Reconstroi a lista de orgaos pela faceta do site e sai')
+  .option('--verificar [amostra]', 'Audita N resultados reconsultando por numero (default 5)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (50 registros/pagina)', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjpr.json')
+  .option('--fetch-inteiro-teor', 'Baixa o inteiro teor de cada resultado como .txt')
+  .option('--output-dir <dir>', 'Directory for downloaded inteiro teor files', './resultados/tjpr')
+  .option('-v, --visible', 'Ignored (TJPR usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TJPR usa HTTP direto, sem browser)')
   .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
   .action(async (opts) => {
     const jsonMode = opts.json;
     const log = jsonMode ? () => {} : console.log.bind(console);
 
-    const scopeNames = { '1': 'EMENTA', '2': 'INTEIRO TEOR', '99': 'AMBAS' };
-
-    log('='.repeat(60));
-    log('TJPR Jurisprudencia Crawler');
-    log('='.repeat(60));
-    log(`Query: ${opts.query}`);
-    log(`Data Julgamento Inicio: ${opts.dataInicio || 'not set'}`);
-    log(`Data Julgamento Fim: ${opts.dataFim || 'not set'}`);
-    log(`Local Pesquisa: ${scopeNames[opts.local] || opts.local}`);
-    log(`Max Pages: ${opts.maxPages}`);
-    log(`Fetch Inteiro Teor: ${!!opts.fetchInteiroTeor}`);
-    log(`Output: ${opts.fetchInteiroTeor ? opts.outputDir : opts.output}`);
-    log(`Headless: ${!(opts.visible || opts.headed)}`);
-    log('='.repeat(60));
-
-    const headless = !(opts.visible || opts.headed);
-    const crawler = new TJPRCrawler({
-      headless,
-      slowMo: headless ? 0 : 100,
-      timeout: 60000,
-    });
-
     try {
+      if (opts.listarOrgaos || opts.listarOrgaosAoVivo) {
+        const lista = opts.listarOrgaosAoVivo
+          ? (await new TJPRNavigator().listarOrgaosAoVivo())
+            .map(o => ({ ...o, foro: TJPRNavigator.foro(o.nome) }))
+          : TJPRNavigator.orgaos();
+        const filtrada = opts.foro && opts.foro !== 'todos'
+          ? lista.filter(o => TJPRNavigator.foro(o.nome) === opts.foro) : lista;
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, total: filtrada.length, orgaos: filtrada }) + '\n');
+        else console.table(filtrada);
+        process.exit(0);
+      }
+
+      if (opts.numero || opts.acordao) {
+        const checker = new TJPRChecker();
+        const res = opts.numero
+          ? await checker.consultarProcesso(opts.numero)
+          : await checker.consultarAcordao(opts.acordao);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (!opts.query && !opts.processo && !opts.orgao) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero> para consulta direta)');
+      }
+
+      // -l legado (1/2/99) ainda funciona e vence --escopo quando informado
+      const escopoLegado = { 1: 'ementa', 2: 'inteiroTeor', 99: 'ambas' }[opts.local];
+
+      log('='.repeat(60));
+      log('TJPR Jurisprudencia Crawler (HTTP direto, sem browser)');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '-'}`);
+      log(`FORO: ${opts.orgao ? `orgao especifico (${opts.orgao})` : opts.foro}   | Base de consulta: ${opts.base}`);
+      log(`Data Julgamento: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log(`Data Publicacao: ${opts.dataPubInicio || '-'} a ${opts.dataPubFim || '-'}`);
+      log(`Escopo: ${escopoLegado || opts.escopo} | Tipo: ${opts.tipo} | Ordem: ${opts.ordem}`);
+      log(`Max Pages: ${opts.maxPages}`);
+      log('='.repeat(60));
+
+      const crawler = new TJPRCrawler({ timeout: 90000, log });
       const filters = {
+        foro: opts.foro,
+        base: opts.base,
+        orgao: opts.orgao || null,
+        escopo: escopoLegado || opts.escopo,
+        tipo: opts.tipo,
+        ordem: opts.ordem,
+        processo: opts.processo || null,
         dataJulgamentoInicio: opts.dataInicio || null,
         dataJulgamentoFim: opts.dataFim || null,
-        localPesquisa: opts.local || '2',
+        dataPublicacaoInicio: opts.dataPubInicio || null,
+        dataPublicacaoFim: opts.dataPubFim || null,
       };
 
-      const results = await crawler.search(opts.query, filters, {
+      const results = await crawler.search(opts.query || '', filters, {
         maxPages: parseInt(opts.maxPages, 10),
       });
 
       log('='.repeat(60));
       log(`Total results collected: ${results.length}`);
 
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+        verificacao = await new TJPRChecker().verificarResultados(results, { amostra, log });
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
+      // totalResults = total do TJPR no servidor (sem a Corte IDH), que é o que
+      // tests/aceite.js compara para saber se um filtro restringiu de fato
+      const resumo = {
+        totalResults: crawler.ultimaBusca ? crawler.ultimaBusca.totalTJPR : null,
+        ...crawler.ultimaBusca,
+        ...(verificacao ? { verificacao } : {}),
+      };
+
       if (opts.fetchInteiroTeor) {
         const outputDir = path.resolve(opts.outputDir);
-        log(`\nDownloading inteiro teor for ${results.length} results...`);
+        log(`\nBaixando inteiro teor de ${results.length} julgados...`);
         const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
-
         const successCount = downloaded.filter(r => r.arquivo).length;
         const failCount = downloaded.filter(r => !r.arquivo).length;
         log(`\nDownload complete: ${successCount} success, ${failCount} failed`);
         log(`Files saved to: ${outputDir}`);
 
         if (jsonMode) {
-          process.stdout.write(
-            JSON.stringify({
-              success: true,
-              count: results.length,
-              downloaded: successCount,
-              failed: failCount,
-              outputDir,
-            }) + '\n'
-          );
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, downloaded: successCount,
+            failed: failCount, outputDir, ...resumo,
+          }) + '\n');
         }
       } else {
         const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
         fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
         log(`Results saved to: ${outputPath}`);
 
         if (jsonMode) {
-          process.stdout.write(
-            JSON.stringify({ success: true, count: results.length, output: outputPath }) + '\n'
-          );
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, output: outputPath, ...resumo,
+          }) + '\n');
         }
       }
     } catch (error) {
@@ -690,11 +760,11 @@ program
   .option('-ord, --ordenacao <tipo>', 'Sort: relevancia (default), recentes, antigos', 'relevancia')
   .option('--full-text', 'Include inteiro teor text in the JSON results')
   .option('--fetch-inteiro-teor', 'Download full text of each result as .txt files')
-  .option('--output-dir <dir>', 'Directory for downloaded inteiro teor files', './resultados-tjpa')
+  .option('--output-dir <dir>', 'Directory for downloaded inteiro teor files', './resultados/tjpa')
   .option('--verificar [amostra]', 'Audit results: re-query N sampled processos against the base (default 5)')
   .option('--max-results <number>', 'Maximum total results to collect')
   .option('-m, --max-pages <number>', 'Maximum pages to crawl (20 results/page)', 10)
-  .option('-o, --output <file>', 'Output JSON file', 'results-tjpa.json')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjpa.json')
   .option('-v, --visible', 'Ignored (TJPA uses direct API, no browser)')
   .option('--headed', 'Ignored (TJPA uses direct API, no browser)')
   .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
@@ -804,6 +874,7 @@ program
         }
       } else {
         const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
         fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
         log(`Results saved to: ${outputPath}`);
 
@@ -847,12 +918,12 @@ program
   .option('--magistrados <termo>', 'Consulta a lupa de magistrados por termo e sai')
   .option('--full-text', 'Include full decision text in the JSON results')
   .option('--fetch-inteiro-teor', 'Save full text of each result as .txt files (sem novo acesso a rede)')
-  .option('--output-dir <dir>', 'Directory for saved full-text files', './resultados-tjgo')
+  .option('--output-dir <dir>', 'Directory for saved full-text files', './resultados/tjgo')
   .option('--verificar [amostra]', 'Audit results: re-query N sampled processos against the base (default 5)')
   .option('--max-results <number>', 'Maximum total results to collect')
   .option('-m, --max-pages <number>', 'Maximum pages to crawl (50 results/page)', 10)
   .option('--qtde <n>', 'Results per page: 10, 20 or 50', '50')
-  .option('-o, --output <file>', 'Output JSON file', 'results-tjgo.json')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjgo.json')
   .option('-v, --visible', 'Ignored (TJGO uses direct HTTP, no browser)')
   .option('--headed', 'Ignored (TJGO uses direct HTTP, no browser)')
   .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
@@ -980,6 +1051,7 @@ program
         }
       } else {
         const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
         fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
         log(`Results saved to: ${outputPath}`);
 
@@ -989,6 +1061,193 @@ program
             totalResults: results.totalResults || null,
             count: results.length,
             output: outputPath,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjrs')
+  .description('Search TJRS (Tribunal de Justica do Rio Grande do Sul) jurisprudence')
+  .option('-q, --query <text>', 'Pesquisa livre (AND implicito; OR maiusculo; -palavra exclui; "frase exata")')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de processo (CNJ ou legado) — usa o TJRSChecker')
+  .option('--origem <origem>', 'DESAMBIGUACAO: comum (Justica Comum, default), turmas (Turmas Recursais/Juizados), alcada, exceto-turmas, todas', 'comum')
+  .option('-di, --data-inicio <date>', 'Judgment start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Judgment end date (DD/MM/YYYY)')
+  .option('-dpi, --data-pub-inicio <date>', 'Publication start date (DD/MM/YYYY)')
+  .option('-dpf, --data-pub-fim <date>', 'Publication end date (DD/MM/YYYY)')
+  .option('--escopo <escopo>', 'Search scope: ementa (default) or inteiroTeor', 'ementa')
+  .option('-s, --secao <secao>', 'Secao: civel, crime, ambas, todas (default)', 'todas')
+  .option('-t, --tipo <tipos>', 'Tipo(s) de decisao, virgula: acordao, monocratica, admissibilidade, duvida')
+  .option('-oj, --orgao <nome>', 'Orgao julgador (nome ou codigo; exige --origem comum|turmas|alcada)')
+  .option('-r, --relator <nome>', 'Relator/redator (nome ou codigo)')
+  .option('-cp, --classe-processual <nome>', 'Classe processual, ex.: "Apelacao Civel", "Recurso Inominado"')
+  .option('-cc, --classe-cnj <nome>', 'Classe CNJ (nome ou codigo)')
+  .option('-ac, --assunto-cnj <nome>', 'Assunto CNJ (depende de --classe-cnj)')
+  .option('--comarca <nome>', 'Comarca de origem, ex.: "PORTO ALEGRE"')
+  .option('-p, --processo <numero>', 'Filtro por numero do processo DENTRO da busca (use -n para consulta direta)')
+  .option('--expressao <texto>', 'Campo "com a expressao" (frase exata)')
+  .option('--qualquer <texto>', 'Campo "com qualquer uma das palavras" (OU)')
+  .option('--sem <texto>', 'Campo "sem as palavras" (exclusao)')
+  .option('--ref-legislativa <texto>', 'Referencia legislativa (acervo legado)')
+  .option('-ord, --ordenacao <tipo>', 'Sort by judgment date: recentes (default) or antigos', 'recentes')
+  .option('--listar-tribunais', 'Lista o combo Tribunal (a desambiguacao) e sai')
+  .option('--listar-orgaos', 'Lista os orgaos julgadores da --origem escolhida e sai')
+  .option('--listar-relatores', 'Lista os relatores/redatores da --origem escolhida e sai')
+  .option('--listar-classes-processuais', 'Lista as classes processuais da --origem escolhida e sai')
+  .option('--listar-classes-cnj', 'Lista as classes CNJ e sai')
+  .option('--full-text', 'Inclui o inteiro teor no JSON dos resultados')
+  .option('--fetch-inteiro-teor', 'Grava o inteiro teor de cada resultado em .txt (sem novo acesso a rede)')
+  .option('--output-dir <dir>', 'Directory for saved full-text files', './resultados/tjrs')
+  .option('--verificar [amostra]', 'Audit results: re-query N sampled processos against the base (default 5)')
+  .option('--max-results <number>', 'Maximum total results to collect')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (10 resultados/pagina, fixo no servidor)', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjrs.json')
+  .option('-v, --visible', 'Ignored (TJRS uses direct HTTP, no browser)')
+  .option('--headed', 'Ignored (TJRS uses direct HTTP, no browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    try {
+      // Modos utilitarios de listagem dos combos
+      const listagens = {
+        listarTribunais: ['tribunais', (nav) => nav.listarTribunais()],
+        listarOrgaos: ['orgaosJulgadores', (nav, cod) => nav.listarOrgaosJulgadores(cod)],
+        listarRelatores: ['relatores', (nav, cod) => nav.listarRelatores(cod)],
+        listarClassesProcessuais: ['classesProcessuais', (nav, cod) => nav.listarTiposDeProcessos(cod)],
+        listarClassesCnj: ['classesCnj', (nav) => nav.listarClassesCNJ()],
+      };
+      for (const [flag, [chave, fn]] of Object.entries(listagens)) {
+        if (!opts[flag]) continue;
+        const nav = new TJRSNavigator({ log });
+        const cod = TJRSNavigator.TRIBUNAIS[
+          { comum: 'comum', turmas: 'turmas', alcada: 'alcada', todas: 'todas', 'exceto-turmas': 'exceto-turmas' }[opts.origem] || 'comum'
+        ];
+        const lista = await fn(nav, cod);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, [chave]: lista }) + '\n');
+        else console.table(lista);
+        process.exit(0);
+      }
+
+      // Modo consulta direta por numero (TJRSChecker) — a verificacao de um julgado
+      if (opts.numero) {
+        const checker = new TJRSChecker();
+        const res = await checker.consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (!opts.query && !opts.processo && !opts.expressao && !opts.qualquer && !opts.relator && !opts.orgao) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero> para consulta direta, ou um filtro forte: -p/-r/-oj/--expressao)');
+      }
+
+      log('='.repeat(60));
+      log('TJRS Jurisprudencia Crawler (HTTP direto, Solr via ajax.php)');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '-'}`);
+      log(`Origem (Tribunal): ${opts.origem}`);
+      log(`Data Julgamento: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log(`Data Publicacao: ${opts.dataPubInicio || '-'} a ${opts.dataPubFim || '-'}`);
+      log(`Escopo: ${opts.escopo} | Secao: ${opts.secao} | Tipo: ${opts.tipo || 'todos'}`);
+      log(`Orgao: ${opts.orgao || '-'} | Relator: ${opts.relator || '-'}`);
+      log(`Classe processual: ${opts.classeProcessual || '-'} | Classe CNJ: ${opts.classeCnj || '-'}`);
+      log(`Max Pages: ${opts.maxPages} (10/pagina) | Ordenacao: ${opts.ordenacao}`);
+      log('='.repeat(60));
+
+      const crawler = new TJRSCrawler({
+        timeout: 120000,
+        includeFullText: !!opts.fullText,
+        log,
+      });
+
+      const filters = {
+        origem: opts.origem,
+        dataJulgamentoInicio: opts.dataInicio || null,
+        dataJulgamentoFim: opts.dataFim || null,
+        dataPublicacaoInicio: opts.dataPubInicio || null,
+        dataPublicacaoFim: opts.dataPubFim || null,
+        escopo: opts.escopo,
+        secao: opts.secao,
+        tipos: opts.tipo ? opts.tipo.split(',').map(t => t.trim()).filter(Boolean) : [],
+        orgaoJulgador: opts.orgao || null,
+        relator: opts.relator || null,
+        classeProcessual: opts.classeProcessual || null,
+        classeCnj: opts.classeCnj || null,
+        assuntoCnj: opts.assuntoCnj || null,
+        comarca: opts.comarca || null,
+        processo: opts.processo || null,
+        expressao: opts.expressao || null,
+        qualquerPalavra: opts.qualquer || null,
+        semPalavras: opts.sem || null,
+        referenciaLegislativa: opts.refLegislativa || null,
+        ordenacao: opts.ordenacao,
+      };
+
+      const searchOptions = { maxPages: parseInt(opts.maxPages, 10) };
+      if (opts.maxResults) searchOptions.maxResults = parseInt(opts.maxResults, 10);
+
+      const results = await crawler.search(opts.query || '', filters, searchOptions);
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+      if (results.totalResults) log(`Total results on server: ${results.totalResults}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+        const checker = new TJRSChecker();
+        verificacao = await checker.verificarResultados(results, { amostra, log });
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        log(`\nSaving full text for ${results.length} results...`);
+        const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
+        const successCount = downloaded.filter(r => r.arquivo).length;
+        const failCount = downloaded.filter(r => !r.arquivo).length;
+        log(`\nSave complete: ${successCount} success, ${failCount} failed`);
+        log(`Files saved to: ${outputDir}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults || null,
+            count: results.length,
+            downloaded: successCount,
+            failed: failCount,
+            outputDir,
+            filtroSolr: results.filtroSolr,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        // `raw` (docs crus do Solr, com o inteiro teor em base64) fica fora do JSON
+        fs.writeFileSync(outputPath, JSON.stringify(Array.from(results), null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults || null,
+            count: results.length,
+            output: outputPath,
+            filtroSolr: results.filtroSolr,
             ...(verificacao ? { verificacao } : {}),
           }) + '\n');
         }
@@ -1020,7 +1279,7 @@ program
   .option('--homologacoes', 'Include Homologações de Acordo')
   .option('--decisoes-mono', 'Include Decisões Monocráticas')
   .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
-  .option('-o, --output <file>', 'Output JSON file', 'results-tjsp.json')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjsp.json')
   .option('-v, --visible', 'Show browser window (disable headless mode)')
   .option('--headed', 'Alias for --visible: show browser window for debugging')
   .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
@@ -1071,6 +1330,7 @@ program
       log(`Total results collected: ${results.length}`);
 
       const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
       fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
       log(`Results saved to: ${outputPath}`);
 
@@ -1084,6 +1344,349 @@ program
         process.stdout.write(
           JSON.stringify({ success: false, error: error.message }) + '\n'
         );
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjsc')
+  .description('Search TJSC (Tribunal de Justica de Santa Catarina) jurisprudence')
+  .option('-q, --query <text>', 'Pesquisa livre (E implicito; ou; nao; "frase exata"; * curinga)')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de processo (CNJ) — usa o TJSCChecker')
+  .option('--origem <origem>', 'DESAMBIGUACAO: comum (Justica Comum, default), turmas (Turmas Recursais/Juizados), uniformizacao, conselho, todas', 'comum')
+  .option('-di, --data-inicio <date>', 'Judgment start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Judgment end date (DD/MM/YYYY)')
+  .option('-dpi, --data-pub-inicio <date>', 'Publication start date (DD/MM/YYYY)')
+  .option('-dpf, --data-pub-fim <date>', 'Publication end date (DD/MM/YYYY)')
+  .option('--escopo <escopo>', 'Search scope: inteiroTeor (default, igual ao site) or ementa', 'inteiroTeor')
+  .option('-t, --tipo <tipos>', 'Tipo(s) de documento, virgula: acordao, monocratica, despacho (exige --origem especifica)')
+  .option('-oj, --orgao <nomes>', 'Orgao(s) julgador(es), virgula (nome como no combo da origem escolhida)')
+  .option('-r, --relator <nomes>', 'Relator(es), virgula')
+  .option('-cl, --classe <nomes>', 'Classe(s) processual(is), virgula, ex.: "Apelacao"')
+  .option('-p, --processo <numero>', 'Filtro por numero do processo DENTRO da busca (use -n para consulta direta)')
+  .option('--precedente-relevante', 'So precedentes marcados como relevantes')
+  .option('-ord, --ordenacao <tipo>', 'Sort by date: recentes (default) or antigos', 'recentes')
+  .option('--por-pagina <n>', 'Resultados por pagina: 10 (default), 25, 50, 100', 10)
+  .option('--listar-combos', 'Lista os combos (origens, tipos, orgaos, relatores, classes) da --origem e sai')
+  .option('--fetch-inteiro-teor', 'Baixa o inteiro teor de cada resultado (.txt)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tjsc')
+  .option('--verificar [amostra]', 'Audit results: re-query N sampled processos against the base (default 5)')
+  .option('--max-results <number>', 'Maximum total results to collect')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjsc.json')
+  .option('-v, --visible', 'Show browser window (disable headless mode)')
+  .option('--headed', 'Alias for --visible: show browser window for debugging')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    const headless = !(opts.visible || opts.headed);
+    const lista = (v) => (v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : []);
+
+    try {
+      // Listagem dos combos (dependem da origem: o combo de orgaos do TJSC nao e o das Turmas)
+      if (opts.listarCombos) {
+        const chave = TJSCCrawler.chaveOrigem(opts.origem);
+        const codigos = chave === 'todas'
+          ? Object.values(TJSCNavigator.ORIGENS)
+          : [TJSCNavigator.ORIGENS[chave]];
+        const nav = new TJSCNavigator({ headless, log });
+        try {
+          const combos = await nav.listarCombos(codigos);
+          if (jsonMode) process.stdout.write(JSON.stringify({ success: true, origem: chave, ...combos }) + '\n');
+          else console.log(JSON.stringify(combos, null, 2));
+        } finally {
+          await nav.fechar();
+        }
+        process.exit(0);
+      }
+
+      // Modo consulta direta por numero (TJSCChecker) — a verificacao de um julgado
+      if (opts.numero) {
+        const checker = new TJSCChecker({ headless });
+        const res = await checker.consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (!opts.query && !opts.processo && !opts.orgao && !opts.relator) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero> para consulta direta, ou um filtro forte: -p/-r/-oj)');
+      }
+
+      log('='.repeat(60));
+      log('TJSC Jurisprudencia Crawler (eproc-jur, browser)');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '-'}`);
+      log(`Origem: ${opts.origem}`);
+      log(`Data Julgamento: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log(`Data Publicacao: ${opts.dataPubInicio || '-'} a ${opts.dataPubFim || '-'}`);
+      log(`Escopo: ${opts.escopo} | Tipo: ${opts.tipo || 'todos'}`);
+      log(`Orgao: ${opts.orgao || '-'} | Relator: ${opts.relator || '-'} | Classe: ${opts.classe || '-'}`);
+      log(`Max Pages: ${opts.maxPages} (${opts.porPagina}/pagina) | Headless: ${headless}`);
+      log('='.repeat(60));
+
+      const crawler = new TJSCCrawler({ headless, slowMo: headless ? 0 : 100, timeout: 60000, log });
+
+      const filters = {
+        origem: opts.origem,
+        dataInicio: opts.dataInicio || null,
+        dataFim: opts.dataFim || null,
+        dataPubInicio: opts.dataPubInicio || null,
+        dataPubFim: opts.dataPubFim || null,
+        escopo: opts.escopo,
+        tipos: lista(opts.tipo),
+        orgaos: lista(opts.orgao),
+        relatores: lista(opts.relator),
+        classes: lista(opts.classe),
+        processo: opts.processo || null,
+        precedenteRelevante: !!opts.precedenteRelevante,
+        ordenacao: opts.ordenacao,
+      };
+
+      const searchOptions = {
+        maxPages: parseInt(opts.maxPages, 10),
+        tamanhoPagina: parseInt(opts.porPagina, 10),
+        // o download do inteiro teor reaproveita os cookies do desafio F5:
+        // a sessao precisa sobreviver a busca
+        keepOpen: !!opts.fetchInteiroTeor,
+      };
+      if (opts.maxResults) searchOptions.maxResults = parseInt(opts.maxResults, 10);
+
+      const results = await crawler.search(opts.query || '', filters, searchOptions);
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+      if (results.totalResults) log(`Total results on server: ${results.totalResults}`);
+
+      let downloaded = null;
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        log(`\nDownloading full text for ${results.length} results...`);
+        downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
+        log(`Files saved to: ${outputDir}`);
+      }
+      await crawler.close();
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+        const checker = new TJSCChecker({ headless });
+        verificacao = await checker.verificarResultados(results, { amostra, log });
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
+      const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+      fs.writeFileSync(outputPath, JSON.stringify(Array.from(results), null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({
+          success: true,
+          totalResults: results.totalResults || null,
+          count: results.length,
+          origemAplicada: results.origemAplicada,
+          output: outputPath,
+          ...(downloaded ? {
+            downloaded: downloaded.filter((d) => d.arquivo).length,
+            failed: downloaded.filter((d) => !d.arquivo).length,
+            outputDir: path.resolve(opts.outputDir),
+          } : {}),
+          ...(verificacao ? { verificacao } : {}),
+        }) + '\n');
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('trt9')
+  .description('Search TRT9 (Tribunal Regional do Trabalho da 9a Regiao - PR) jurisprudence via FALCAO')
+  .option('-q, --query <text>', 'Pesquisa livre (OU implicito; "frase exata"; -palavra exclui)')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de processo CNJ - usa o TRT9Checker')
+  .option('-g, --grau <grau>', 'DESAMBIGUACAO PRINCIPAL: 1 (sentencas/Varas), 2 (acordaos/Turmas, default), monocraticas, admissibilidade, ambos, todos', '2')
+  .option('-c, --colecao <colecoes>', 'Colecao(oes) crua(s), virgula: acordaos, sentencas, decisoesmonocraticas, recursorevista, precedentes (sobrepoe --grau)')
+  .option('-di, --data-inicio <date>', 'Data inicial de julgamento/juntada (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Data final de julgamento/juntada (DD/MM/YYYY)')
+  .option('-oj, --orgao <nome>', 'Orgao julgador, ex.: "1a Turma", "Secao Especializada", "06a VARA DO TRABALHO DE CURITIBA"')
+  .option('-r, --relator <nome>', 'Magistrada/magistrado (nome completo, como no combo)')
+  .option('-cp, --classe <sigla>', 'Classe processual pela sigla, ex.: ROT, AP, AIRO, ATSum')
+  .option('--prioridade <nome>', 'Prioridade, ex.: "Idoso", "Acidente de Trabalho"')
+  .option('--com-ementa', 'Apenas documentos que possuem ementa (temEmenta=S)')
+  .option('--sem-ementa', 'Apenas documentos sem ementa (temEmenta=N)')
+  .option('--escopo <escopo>', 'Escopo da busca: inteiroTeor (default) ou ementa', 'inteiroTeor')
+  .option('-ord, --ordenacao <tipo>', 'Ordenacao: relevancia (default), recentes, antigos', 'relevancia')
+  .option('--listar-colecoes', 'Lista as colecoes (a desambiguacao de grau) com as contagens e sai')
+  .option('--listar-orgaos', 'Lista os orgaos julgadores da colecao escolhida e sai')
+  .option('--listar-relatores', 'Lista os relatores da colecao escolhida e sai')
+  .option('--listar-classes', 'Lista as classes processuais da colecao escolhida e sai')
+  .option('--listar-tribunais', 'Lista os 25 acervos do FALCAO (TST + 24 TRTs) e sai')
+  .option('--full-text', 'Inclui o inteiro teor no JSON dos resultados (payload pesado)')
+  .option('--fetch-inteiro-teor', 'Grava o inteiro teor de cada resultado em .txt (sem novo acesso a rede)')
+  .option('--output-dir <dir>', 'Directory for saved full-text files', './resultados/trt9')
+  .option('--verificar [amostra]', 'Audit results: re-query N sampled processos against the base (default 5)')
+  .option('--max-results <number>', 'Maximum total results to collect (teto do servidor: 200 por colecao)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (10 resultados/pagina, max 20 paginas)', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-trt9.json')
+  .option('-v, --visible', 'Ignored (TRT9/FALCAO uses direct HTTP, no browser)')
+  .option('--headed', 'Ignored (TRT9/FALCAO uses direct HTTP, no browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    // --grau e o rotulo humano da desambiguacao; --colecao e a forma crua.
+    const GRAUS = {
+      '1': ['sentencas'],
+      '2': ['acordaos'],
+      primeiro: ['sentencas'],
+      segundo: ['acordaos'],
+      monocraticas: ['decisoesmonocraticas'],
+      admissibilidade: ['recursorevista'],
+      ambos: ['acordaos', 'sentencas'],
+      todos: ['acordaos', 'sentencas', 'decisoesmonocraticas', 'recursorevista'],
+    };
+
+    try {
+      const colecoes = opts.colecao
+        ? opts.colecao.split(',').map((c) => c.trim()).filter(Boolean)
+        : (GRAUS[String(opts.grau)] || null);
+      if (!colecoes) {
+        throw new Error(`--grau "${opts.grau}" invalido (use: ${Object.keys(GRAUS).join(', ')})`);
+      }
+
+      // Modos utilitarios de listagem
+      const listagens = {
+        listarColecoes: ['colecoes', (nav, c) => nav.listarColecoes({ colecao: c })],
+        listarOrgaos: ['orgaosJulgadores', (nav, c) => nav.listarOrgaosJulgadores(c)],
+        listarRelatores: ['relatores', (nav, c) => nav.listarRelatores(c)],
+        listarClasses: ['classes', (nav, c) => nav.listarClasses(c)],
+        listarTribunais: ['tribunais', (nav, c) => nav.listarTribunais({ colecao: c })],
+      };
+      for (const [flag, [chave, fn]] of Object.entries(listagens)) {
+        if (!opts[flag]) continue;
+        const nav = new TRT9Navigator({ log });
+        const lista = await fn(nav, colecoes[0]);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, colecao: colecoes[0], [chave]: lista }) + '\n');
+        else { console.log(`Colecao: ${colecoes[0]}`); console.table(lista); }
+        process.exit(0);
+      }
+
+      // Consulta direta por numero (a verificacao de um julgado)
+      if (opts.numero) {
+        const checker = new TRT9Checker();
+        const res = await checker.consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (!opts.query && !opts.orgao && !opts.relator && !opts.classe) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero> para consulta direta, ou um filtro forte: -oj/-r/-cp)');
+      }
+
+      const rotulos = colecoes.map((c) => `${c} (${FalcaoNavigator.COLECOES[c]?.grau ?? '?'}o grau)`).join(', ');
+      log('='.repeat(60));
+      log('TRT9 Jurisprudencia - FALCAO (HTTP direto, API JSON publica)');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '-'}`);
+      log(`Grau/Colecao: ${rotulos}`);
+      log(`Data: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log(`Orgao: ${opts.orgao || '-'} | Relator: ${opts.relator || '-'} | Classe: ${opts.classe || '-'}`);
+      log(`Escopo: ${opts.escopo} | Ordenacao: ${opts.ordenacao}`);
+      log(`Max Pages: ${opts.maxPages} (10/pagina; teto do servidor: 20 paginas = 200 resultados)`);
+      log('='.repeat(60));
+
+      const crawler = new TRT9Crawler({
+        timeout: 90000,
+        includeFullText: !!opts.fullText,
+        log,
+      });
+
+      const filters = {
+        colecoes,
+        dataInicio: opts.dataInicio || null,
+        dataFim: opts.dataFim || null,
+        orgaoJulgador: opts.orgao || null,
+        relator: opts.relator || null,
+        classe: opts.classe || null,
+        prioridade: opts.prioridade || null,
+        temEmenta: opts.comEmenta ? 'S' : (opts.semEmenta ? 'N' : null),
+        escopo: opts.escopo,
+        ordenacao: opts.ordenacao,
+      };
+
+      const searchOptions = { maxPages: parseInt(opts.maxPages, 10) };
+      if (opts.maxResults) searchOptions.maxResults = parseInt(opts.maxResults, 10);
+
+      const results = await crawler.search(opts.query || '', filters, searchOptions);
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+      if (results.totalResults) log(`Total results on server: ${results.totalResults}`);
+      if (results.totaisPorColecao) log(`Por colecao: ${JSON.stringify(results.totaisPorColecao)}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+        const checker = new TRT9Checker();
+        verificacao = await checker.verificarResultados(results, { amostra, log });
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        log(`\nSaving full text for ${results.length} results...`);
+        const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
+        const successCount = downloaded.filter((r) => r.arquivo).length;
+        const failCount = downloaded.filter((r) => !r.arquivo).length;
+        log(`\nSave complete: ${successCount} success, ${failCount} failed`);
+        log(`Files saved to: ${outputDir}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults || null,
+            totaisPorColecao: results.totaisPorColecao,
+            count: results.length,
+            downloaded: successCount,
+            failed: failCount,
+            outputDir,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, JSON.stringify(Array.from(results), null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults || null,
+            totaisPorColecao: results.totaisPorColecao,
+            count: results.length,
+            output: outputPath,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
         process.exit(1);
       }
       console.error('Error during crawling:', error.message);

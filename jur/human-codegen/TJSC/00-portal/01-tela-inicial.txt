@@ -1,0 +1,32 @@
+TJSC — PORTAL / PONTOS DE ENTRADA
+=================================
+Print: 01.01-tela-inicial.png  (https://www.tjsc.jus.br/jurisprudencia)
+
+O TJSC tem DOIS sistemas de jurisprudência no ar ao mesmo tempo. Confundi-los é
+o erro mais provável neste tribunal.
+
+1. NOVO — módulo de jurisprudência dentro do e-Proc  ← é o que o crawler usa
+   Divulgado como:
+     https://eproc1g.tjsc.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+   Redireciona (302) para o host real da consulta pública:
+     https://eprocwebcon.tjsc.jus.br/consulta1g/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+   Mapeado em 01-eproc-jurisprudencia/.
+   Base viva: 442.794 documentos só de "dano moral" (origem TJSC), cobrindo de
+   2010 (7.310 em 2010) até o dia corrente.
+
+2. ANTIGO — "Jurisprudência Catarinense"
+     https://busca.tjsc.jus.br/jurisprudencia/
+   Mapeado em 02-busca-legado/.
+   A própria tela avisa, em faixa no topo:
+     "a partir da liberação do novo portal de jurisprudência, prevista para o dia
+      08/10/2025, o portal atual deixará de receber atualizações de novas decisões
+      [...] o portal antigo funcionará apenas como base histórica".
+   Medição que confirma o aviso: "dano moral" entre 01/01/2026 e 31/03/2026
+   devolve 15 resultados no portal antigo contra 8.315 no novo. Ou seja: o
+   antigo NÃO serve para busca corrente.
+
+Consulta processual pública (o link que aparece no nº do processo dos
+resultados), usada como permalink citável:
+  https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php?acao=processo_seleciona_publica&acao_origem=processo_consulta_publica&acao_retorno=processo_consulta_publica&num_processo=<20 dígitos>
+
+Numeração CNJ do TJSC: segmento .8.24. (Justiça Estadual = 8, tribunal = 24).

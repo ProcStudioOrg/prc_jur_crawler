@@ -1,0 +1,59 @@
+TJPR — 01-jurisprudencia · §5 Bloco FILTROS: escopo, tipo de decisão, segredo
+Prints: 05.01-combo-local-pesquisa.png · 05.02-combo-tipo-decisao.png · 05.03-combo-segredo-justica.png
+        (o bloco inteiro na tela: 03.02-secao-ambito-na-tela.png)
+
+== "EMENTA/INTEIRO TEOR" — onde o termo é procurado ==
+
+  <select name="idLocalPesquisa" id="idLocalPesquisa">
+    <option value="1" selected="selected" id="amb_1">EMENTA</option>
+    <option value="2" id="amb_2">INTEIRO TEOR</option>
+    <option value="99" id="amb_99">AMBAS</option>
+  </select>
+
+Default DA TELA: EMENTA (value=1). ATENÇÃO: o crawler antigo mandava `2`
+(INTEIRO TEOR) como default, o que muda muito o recall e não era o
+comportamento do site. O crawler novo usa `ementa` por default e expõe
+`--escopo ementa|inteiroTeor|ambas` (a flag legada `-l 1|2|99` continua valendo).
+
+Os dois primeiros ícones da tela inicial são atalhos para este combo:
+  selecionarEmenta() -> EMENTA ;  selecionarTudo() -> AMBAS/INTEIRO TEOR.
+
+== "TIPO DE DECISÃO" ==
+
+  <select name="idsTipoDecisaoSelecionados">
+    <option value="-1" selected="selected">TODAS</option>
+    <option value="1" id="amb_1">ACÓRDÃO</option>
+    <option value="2" id="amb_2">DECISÃO MONOCRÁTICA</option>
+    <option value="3" id="amb_3">DÚVIDA/EXAME DE COMPETÊNCIA</option>
+    <option value="4" id="amb_4">SENTENÇA DA CORTE IDH</option>
+    <option value="5" id="amb_5">OPINIÃO CONSULTIVA DA CORTE IDH</option>
+  </select>
+
+`loadSubmit()` exige que este campo esteja preenchido, senão a tela alerta
+"Selecione o Tipo de Decisão!". O crawler sempre manda algo (default -1).
+Os valores 4 e 5 são da Corte IDH — não são jurisprudência do PR.
+Escolher 1 ou 2 remove a contaminação da Corte IDH do resultado (§8).
+CLI: `-t todas|acordao|monocratica|duvida`.
+
+== "SEGREDO DE JUSTIÇA" ==
+
+  <select name="segredoJustica" id="idSegredoJustica">
+    <option value="pesquisar com">INCLUIR</option>
+    <option value="pesquisar sem">EXCLUIR</option>
+    <option value="somente">SOMENTE</option>
+  </select>
+
+O valor é a STRING com espaço ("pesquisar com"), não um número — encode certo.
+Default INCLUIR. A aplicação avisa que abrir item em segredo de justiça é
+registrado para auditoria. O crawler manda INCLUIR e não expõe flag (a ficha
+do documento traz "Segredo de Justiça: Sim/Não", que o Navigator lê).
+
+== "MOSTRAR ITENS COMPLETOS" ==
+
+  <input type="checkbox" name="mostrarCompleto" value="true" id="mostrarCompleto" />
+
+Troca a listagem compacta pela ficha completa de CADA julgado, com comarca,
+data de publicação, ementa inteira, citação pronta e o INTEIRO TEOR embutido.
+Existe no Navigator (`mostrarCompleto: true`) mas o crawler NÃO usa por padrão:
+uma página assim pesou 5,3 MB para 48 julgados. Para inteiro teor o crawler
+busca a ficha individual (§9), que é mais barata e mais fácil de parsear.

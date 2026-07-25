@@ -1,0 +1,27 @@
+[
+  {
+    "valor": "acordaos",
+    "rotulo": "Acórdãos",
+    "quantidade": 573144
+  },
+  {
+    "valor": "recursorevista",
+    "rotulo": "Admissibilidade de Recurso de Revista",
+    "quantidade": 175094
+  },
+  {
+    "valor": "decisoesmonocraticas",
+    "rotulo": "Decisões Monocráticas",
+    "quantidade": 239045
+  },
+  {
+    "valor": "precedentes",
+    "rotulo": "Precedentes",
+    "quantidade": 222
+  },
+  {
+    "valor": "sentencas",
+    "rotulo": "Sentenças",
+    "quantidade": 1617454
+  }
+]

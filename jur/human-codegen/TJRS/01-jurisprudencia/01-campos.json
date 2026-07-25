@@ -1,0 +1,220 @@
+[
+  {
+    "tag": "input",
+    "type": "hidden",
+    "name": "aba",
+    "id": null,
+    "value": "jurisprudencia"
+  },
+  {
+    "tag": "input",
+    "type": "hidden",
+    "name": "realizando_pesquisa",
+    "id": null,
+    "value": "1"
+  },
+  {
+    "tag": "input",
+    "type": "hidden",
+    "name": "pagina_atual",
+    "id": "pagina_atual",
+    "value": "1"
+  },
+  {
+    "tag": "input",
+    "type": "text",
+    "name": "q_palavra_chave",
+    "id": "q_palavra_chave",
+    "value": ""
+  },
+  {
+    "tag": "input",
+    "type": "radio",
+    "name": "conteudo_busca",
+    "id": "cJuris",
+    "value": "documento_text"
+  },
+  {
+    "tag": "input",
+    "type": "radio",
+    "name": "conteudo_busca",
+    "id": "cEmentario",
+    "value": "ementa_completa"
+  },
+  {
+    "tag": "input",
+    "type": "text",
+    "name": "filtroComAExpressao",
+    "id": "filtroComAExpressao",
+    "value": ""
+  },
+  {
+    "tag": "input",
+    "type": "text",
+    "name": "filtroComQualquerPalavra",
+    "id": "filtroComQualquerPalavra",
+    "value": ""
+  },
+  {
+    "tag": "input",
+    "type": "text",
+    "name": "filtroSemAsPalavras",
+    "id": "filtroSemAsPalavras",
+    "value": ""
+  },
+  {
+    "tag": "select",
+    "type": "select-one",
+    "name": "filtroTribunal",
+    "id": "filtroTribunal"
+  },
+  {
+    "tag": "select",
+    "type": "select-one",
+    "name": "filtroRelator",
+    "id": "filtroRelator"
+  },
+  {
+    "tag": "select",
+    "type": "select-one",
+    "name": "filtroOrgaoJulgador",
+    "id": "filtroOrgaoJulgador"
+  },
+  {
+    "tag": "select",
+    "type": "select-one",
+    "name": "filtroTipoProcesso",
+    "id": "filtroTipoProcesso"
+  },
+  {
+    "tag": "select",
+    "type": "select-one",
+    "name": "filtroClasseCnj",
+    "id": "filtroClasseCnj"
+  },
+  {
+    "tag": "select",
+    "type": "select-one",
+    "name": "assuntoCnj",
+    "id": "assuntoCnj"
+  },
+  {
+    "tag": "input",
+    "type": "text",
+    "name": "data_julgamento_de",
+    "id": "data_julgamento_de",
+    "value": ""
+  },
+  {
+    "tag": "input",
+    "type": "text",
+    "name": "data_julgamento_ate",
+    "id": "data_julgamento_ate",
+    "value": ""
+  },
+  {
+    "tag": "input",
+    "type": "text",
+    "name": "filtroNumeroProcesso",
+    "id": "filtroNumeroProcesso",
+    "value": ""
+  },
+  {
+    "tag": "input",
+    "type": "checkbox",
+    "name": "filtroSecaoCivel",
+    "id": "filtroSecaoCivel",
+    "value": "civel"
+  },
+  {
+    "tag": "input",
+    "type": "checkbox",
+    "name": "filtroSecaoCrime",
+    "id": "filtroSecaoCrime",
+    "value": "crime"
+  },
+  {
+    "tag": "input",
+    "type": "text",
+    "name": "data_publicacao_de",
+    "id": "data_publicacao_de",
+    "value": ""
+  },
+  {
+    "tag": "input",
+    "type": "text",
+    "name": "data_publicacao_ate",
+    "id": "data_publicacao_ate",
+    "value": ""
+  },
+  {
+    "tag": "input",
+    "type": "checkbox",
+    "name": "filtroacordao",
+    "id": "filtroacordao",
+    "value": "acordao"
+  },
+  {
+    "tag": "input",
+    "type": "checkbox",
+    "name": "filtroMonocratica",
+    "id": "filtroMonocratica",
+    "value": "monocratica"
+  },
+  {
+    "tag": "input",
+    "type": "checkbox",
+    "name": "filtroAdmissibilidade",
+    "id": "filtroAdmissibilidade",
+    "value": "admissibilidade"
+  },
+  {
+    "tag": "input",
+    "type": "checkbox",
+    "name": "filtroDuvida",
+    "id": "filtroDuvida",
+    "value": "duvida"
+  },
+  {
+    "tag": "input",
+    "type": "hidden",
+    "name": "facet",
+    "id": null,
+    "value": "on"
+  },
+  {
+    "tag": "input",
+    "type": "hidden",
+    "name": "facet.sort",
+    "id": null,
+    "value": "index"
+  },
+  {
+    "tag": "input",
+    "type": "hidden",
+    "name": "facet.limit",
+    "id": null,
+    "value": "index"
+  },
+  {
+    "tag": "input",
+    "type": "hidden",
+    "name": "wt",
+    "id": null,
+    "value": "json"
+  },
+  {
+    "tag": "input",
+    "type": "hidden",
+    "name": "ordem",
+    "id": "ordem",
+    "value": "desc"
+  },
+  {
+    "tag": "input",
+    "type": "hidden",
+    "name": "start",
+    "id": "start",
+    "value": "0"
+  }
+]

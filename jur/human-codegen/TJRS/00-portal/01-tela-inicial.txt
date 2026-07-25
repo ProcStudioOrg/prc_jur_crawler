@@ -1,0 +1,37 @@
+TJRS — Portal de buscas (hub)
+=============================
+
+Link: https://www.tjrs.jus.br/buscas/jurisprudencia/
+Print: 01.01-tela-inicial.png
+Mapeado em: 24/07/2026, Playwright/chromium headless, waitUntil networkidle.
+
+O que é
+-------
+Página-índice das "Pesquisas" do TJRS. No mapeamento de jul/2026 ela expõe UM
+cartão só:
+
+  "Jurisprudência — Acesso à íntegra das decisões de 2° grau." -> ?aba=jurisprudencia
+
+Ou seja: o TJRS tem **um único módulo** de jurisprudência (diferente do TJGO, que
+tem três). O mesmo diretório de assets (`/buscas/jurisprudencia/assets/`) também
+serve um módulo de "Publicações Administrativas" (`publicacoes-adm.js`,
+`publicacoes-adm-ajax.js` carregados na mesma página), mas ele NÃO está exposto
+como aba nesta tela — ver pendência #3 do módulo 01.
+
+Abrangência (confirmada nos resultados)
+---------------------------------------
+- 2º grau da Justiça Comum: Tribunal de Justiça do RS (câmaras, grupos, órgão
+  especial, vice-presidências).
+- Acervo histórico do Tribunal de Alçada do RS (extinto em 2005).
+- 2º grau dos Juizados Especiais: Turmas Recursais (Cíveis, Criminal, Fazenda
+  Pública, Turmas de Uniformização).
+- NÃO cobre 1º grau (sentenças).
+- Julgados desde 1902 (o mais antigo visto ao ordenar por data crescente:
+  02/06/1902) até o dia corrente.
+
+O que NÃO é
+-----------
+Consulta processual (andamento) é outro sistema:
+https://consulta.tjrs.jus.br/consulta-processual/processo/resumo?numeroProcesso=<20 dígitos>
+Esse é o link que o próprio site coloca no número do processo de cada resultado, e
+é o que o crawler grava em `processoUrl`.

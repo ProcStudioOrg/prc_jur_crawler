@@ -1,0 +1,30 @@
+TJPR — 01-jurisprudencia · §4 Filtros de data (julgamento E publicação)
+Prints: 04.01-campos-data-julgamento-e-publicacao.png · 04.02-calendario-data-julgamento.png
+
+São DOIS filtros distintos, ambos com início e fim, ambos em DD/MM/YYYY:
+
+  <input type="text" name="dataJulgamentoInicio" value="" id="dataJulgamentoInicio" class="text input_mask mask_date_br">
+  <input type="text" name="dataJulgamentoFim"    value="" id="dataJulgamentoFim"    class="text input_mask mask_date_br">
+  <input type="text" name="dataPublicacaoInicio" value="" id="dataPublicacaoInicio" class="text input_mask mask_date_br">
+  <input type="text" name="dataPublicacaoFim"    value="" id="dataPublicacaoFim"    class="text input_mask mask_date_br">
+
+Rótulos na tela: "JULGAMENTO: INICIAL/FINAL" e "PUBLICAÇÃO: INICIAL/FINAL".
+
+Calendário: cada campo tem um ícone que chama
+  <a href="javascript:openCalendar2($('pesquisaForm').dataJulgamentoInicio);">
+Abre um popup próprio (window.js/prototype). Print 04.02 registra o popup, mas
+ele renderiza mal em headless (o conteúdo vem num iframe que recarrega a
+própria página). Isso NÃO afeta o crawler: os campos aceitam texto direto.
+
+Comportamento verificado (25/07/2026):
+  - intervalo aberto funciona: só `dataJulgamentoInicio`, ou só `...Fim`
+  - o filtro restringe de fato:
+      "usucapião extraordinária", sem data              = 3.996 julgados
+      "usucapião extraordinária", 01/01–31/03/2026      =   151 julgados
+  - datas de julgamento e de publicação são independentes; um julgado de
+    31/03/2026 pode ter publicação em abril.
+  - a listagem mostra "Data Julgamento"; a data de PUBLICAÇÃO só aparece na
+    ficha do documento ("Fonte/Data da Publicação") — §9.
+  - máscara `mask_date_br` é só client-side; o POST aceita a string crua.
+  - ordenação default: `sortColumn=processo_sDataJulgamento`, `sortOrder=DESC`
+    (mais recente primeiro). O crawler expõe `-ord recentes|antigos`.

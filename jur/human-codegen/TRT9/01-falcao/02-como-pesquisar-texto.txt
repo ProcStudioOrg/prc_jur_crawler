@@ -1,0 +1,26 @@
+0
+Fazer Login
+Ir para o conteúdo 1
+Ir para o campo de pesquisa 2
+Ir para o rodapé r
+
+Opções de pesquisa avançada:
+
+Termo pode existir: Digite as palavras separadas por espaço. Por exemplo: horas extras. O sistema vai buscar os documentos cujo texto possua a palavra horas ou a palavra extras;
+Termo exato: Digite entre aspas o termo exato que deseja pesquisar. Por exemplo: "horas extras";
+Termo obrigatório: Digite o + antes do termo que deseja que seja obrigatório existir no texto do documento. Por exemplo: +jornada. Caso queira termos exatos, coloque-as entre aspas: +"horas extras";
+Termo não deve existir: Digite o 
+sinal de menos
+- antes do termo que deseja que não exista no texto do documento. Por exemplo: 
+sinal de menos
+-jornada. Caso queira termos exatos, coloque-as entre aspas: 
+sinal de menos
+-"horas extras".
+Número de processo:  
+Digite o número do processo no padrão CNJ: 7 números hífen 2 números ponto 4 números ponto 1 número ponto 2 números ponto e 4 números. Também é possível informar o número do processo sem o uso de separadores
+Digite o número do processo no padrão CNJ: 0000000-00.0000.0.00.0000. Também é possível informar o número do processo sem o uso de separadores 12345678901234567890.
+Esconder
+Privacidade e Termos de UsoNovidadesAjuda
+Desenvolvido por Tribunal Regional do Trabalho da 9ª Região.
+Versão do sistema:
+2.15.2

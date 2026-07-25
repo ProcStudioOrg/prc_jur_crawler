@@ -1,0 +1,17 @@
+{
+  "name": "jur-tribunais",
+  "version": "0.1.0",
+  "description": "Busca de jurisprudência nos tribunais brasileiros (TJs, TRFs, TCU) via a CLI `jur`: refina a consulta, executa, verifica os julgados contra a base oficial, conserta crawler quebrado e mapeia tribunal novo.",
+  "author": {
+    "name": "Bruno Pellizzetti",
+    "email": "pelli.br.sp@gmail.com"
+  },
+  "keywords": [
+    "jurisprudencia",
+    "brasil",
+    "tribunais",
+    "direito",
+    "case-law",
+    "playwright"
+  ]
+}

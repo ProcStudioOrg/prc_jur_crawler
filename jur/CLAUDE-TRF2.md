@@ -1,7 +1,24 @@
 # TRF2 — Tribunal Regional Federal da 2ª Região
 
-**Escopo:** RJ, ES · **Status:** OK
-**Crawler:** `src/TRF2Crawler.js`
+**Escopo:** RJ, ES · **Status:** 🟠 **QUEBRADO — o site mudou**
+**Crawler:** `src/TRF2Crawler.js` (aponta para host que não existe mais)
+
+> ## ⚠️ O sistema mudou (verificado em 24/07/2026)
+>
+> `juris.trf2.jus.br` responde **NXDOMAIN** — o host foi desativado. O TRF2 migrou a
+> jurisprudência para o **módulo do e-Proc**:
+>
+> ```
+> https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+> ```
+>
+> (`https://jurisprudencia.trf2.jus.br/` redireciona para lá.)
+>
+> Isso é a **mesma família do TRF4** (`eproc-jur.trf4.jus.br/eproc2trf4/externo_controlador.php`),
+> então o conserto é portar `src/TRF4Crawler.js`, não escrever do zero.
+> Antes de codificar, remapeie em `human-codegen/TRF2/` seguindo `CLAUDE-CODEGEN.md`.
+>
+> As flags abaixo são as do sistema **antigo** e provavelmente não valem mais.
 
 ## Flags
 

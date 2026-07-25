@@ -1,0 +1,75 @@
+TJPR — 01-jurisprudencia · §10 Testes exploratórios e pendências
+Print: 10.01-busca-simples-sem-filtro.png
+
+Os 9 testes obrigatórios do CLAUDE-CODEGEN §5 (Fase 3), rodados em 25/07/2026.
+Janela padrão dos testes com data: julgamento 01/01/2026 a 31/03/2026, escopo
+EMENTA, contador "da Jurisprudência do Tribunal de Justiça".
+
+1) BUSCA SIMPLES, SEM FILTRO NEM OPERADOR — OK
+   "usucapião extraordinária" pelo ícone "pesquisa somente na ementa" ->
+   3.996 julgados (print 10.01). Busca completamente vazia (sem termo, sem data,
+   todas as bases) -> 6.360.593 registros: é o tamanho do acervo.
+
+2) JUIZADOS ESPECIAIS × JUSTIÇA COMUM — OK, e é o achado principal (§3)
+   "dano moral", 01/01–31/03/2026:
+       --foro comum     2.952
+       --foro juizados  4.062
+       --foro todos     7.014   (= 2.952 + 4.062, a partição fecha)
+   Órgãos devolvidos em cada caso (amostra de 40, via CLI):
+       comum    -> 6ª Câmara Criminal, 19ª/7ª/6ª/10ª/1ª Câmara Cível, ...
+       juizados -> 3ª Turma Recursal, 5ª e 6ª Turma Recursal dos Juizados
+                   Especiais, Turma de Uniformização, 4ª Turma Recursal
+   `forasDoForo` = 0 nas duas.
+   O combo nativo do site (`ambito`) NÃO serve para isso — ver §3.
+
+3) CÍVEL × CRIMINAL — NÃO EXISTE NESTE MÓDULO.
+   Não há combo de área/matéria como no TJGO. A distinção só é possível
+   indiretamente: pelo ÓRGÃO (Câmara Cível × Câmara Criminal, via -oj) ou pelo
+   ASSUNTO CNJ (`descricaoAssunto`, que começa com "DIREITO PENAL /",
+   "DIREITO CIVIL /", ...). Registrado como pendência 2.
+
+4) FILTRO DE ÓRGÃO/MATÉRIA, LISTANDO TODAS AS OPÇÕES — OK
+   150 órgãos enumerados em `06-orgaos.json` (faceta da base inteira, com
+   contagem por órgão). Nenhum é combo `<select>`: é autocomplete AJAX (§6).
+
+5) UNIDADE ESPECÍFICA (COMARCA) — mapeado, não exposto no CLI
+   Autocomplete `nomeComarca`/`idComarca` (print 06.04). "curi" -> Curitiba,
+   Curiúva. A comarca também aparece na ficha do julgado (§9). Pendência 1.
+
+6) MAGISTRADO(A) — mapeado, não exposto no CLI
+   Autocomplete `nomeRelator`/`idRelator` (print 06.03). 29 sugestões para
+   "silva", com grafias inconsistentes (com e sem cargo, maiúsculas e
+   minúsculas). Precisa ser exato. Pendência 1.
+
+7) TIPO DE ATO / TIPO DE DECISÃO — OK
+   Combo real com 6 valores (§5). `-t acordao|monocratica|duvida|todas`.
+   Verificado: `-t monocratica` em 01/03–31/03/2026 com "dano" -> 170 registros
+   e a Corte IDH desaparece do resultado.
+
+8) NÚMERO DO PROCESSO (alimenta o Checker) — OK
+   Campo `processo`, consulta direta sem termo (§7).
+       0003249-43.2020.8.16.0193 -> 1 documento, 1ª Câmara Cível, foro comum
+       0001992-51.2025.8.16.0146 -> 2 documentos, 3ª Turma Recursal, foro juizados
+       1234567-89.2020.8.16.0001 -> 0 documentos (número inventado, DV inválido)
+   Também há consulta por número de ACÓRDÃO (campo `acordao`).
+
+9) DATAS + OPERADORES BOOLEANOS — OK, com dois defeitos do site
+   Datas: dois filtros distintos (julgamento e publicação), §4; restringem de
+   fato (3.996 -> 151).
+   Operadores: E, OU, !NAO, $, "frase exata" funcionam; PROX não funciona e
+   !NAO quebra com dois termos antes. Tabela completa com contagens em §2.
+
+=====================================================================
+ PENDÊNCIAS E DEFEITOS
+=====================================================================
+
+| # | O que falta / o que está errado | Por quê |
+|---|---|---|
+| 1 | `-r/--relator`, `--comarca`, `-cp/--classe`, `-ac/--assunto` não expostos no CLI | Estão mapeados (§6) e o Navigator já monta os campos (`idRelator`, `idComarca`, `idClasseProcessual`, `idAssunto`), mas resolver nome->id exige uma ida ao autocomplete por consulta, e os nomes são inconsistentes. Ficou fora para não entregar filtro que erra silenciosamente. |
+| 2 | Não há separação Cível × Criminal | O módulo não tem esse filtro (item 3 acima). Dá para fazer por órgão ou assunto. |
+| 3 | Listas grandes não salvas como JSON: relatores, comarcas, classes, assuntos | O autocomplete exige 4 caracteres e não tem "listar tudo". Enumerar exigiria varrer n-gramas ou puxar as facetas 1/2/3/5 de uma busca da base inteira — factível, não feito. Só `06-orgaos.json` (a lista que a desambiguação exige) foi extraída. |
+| 4 | Rótulos truncados na faceta | A faceta corta nomes em ~50 caracteres, então 2 dos 150 órgãos estão com nome truncado em `06-orgaos.json` (ids 213 e 179). Os ids estão certos; o nome completo vem do autocomplete. |
+| 5 | Print do calendário renderiza mal em headless | `openCalendar2()` abre popup que recarrega a página num iframe. 04.02 registra a existência do popup, não seu conteúdo. Irrelevante para o crawler (campos aceitam texto). |
+| 6 | Aba/base "DECISÕES DA CORTE IDH" não é suportada como busca | `ambito=8` responde 0 até com termo válido; os filtros próprios da Corte IDH (país, tema, juiz) ficaram fora de escopo — não é jurisprudência do PR. O crawler só se protege da contaminação (§8). |
+| 7 | `mostrarCompleto=true` não usado pelo crawler | Traria ementa completa + inteiro teor + comarca + publicação em UMA requisição por página, mas pesa ~5 MB por página (48 julgados). Alternativa a considerar para lotes grandes. |
+| 8 | Sem permalink de busca | Tudo é POST; a URL não muda. O permalink citável é o da ficha do julgado (`/jurisprudencia/j/<id>/...`), que é estável e é o que vai em `processoUrl`. |

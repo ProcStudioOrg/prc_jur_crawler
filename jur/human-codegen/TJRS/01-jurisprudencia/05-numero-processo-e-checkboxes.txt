@@ -1,0 +1,72 @@
+TJRS — Número do processo, Seção (Cível×Crime) e Tipo de decisão
+===============================================================
+
+Prints: 05.01-checkboxes-secao.png          (Seção: Cível / Crime)
+        05.02-campo-numero-processo.png     (o campo que alimenta o Checker)
+        05.03-checkboxes-tipo-decisao.png   (Acórdão / Monocrática / Admissibilidade / Dúvida)
+JSON:   05-checkboxes-radios.json  (os 8 checkbox/radio do DOM vivo)
+
+14. Número do processo — é o que alimenta o Checker
+---------------------------------------------------
+<input type="text" id="filtroNumeroProcesso" name="filtroNumeroProcesso" data-label="n"
+       class="form-control" value="" placeholder="Somente números"
+       oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+
+- SOMENTE DÍGITOS: o próprio input remove máscara/pontuação. O crawler faz
+  `String(n).replace(/\D/g,'')` antes de enviar.
+- Cláusula gerada: `numero_processo:<digitos>` (match exato do campo).
+- NÃO existe aba separada de "consulta por processo" (como no TJPA): a consulta por
+  número é este mesmo filtro, com o campo de texto livre vazio. Funciona: com
+  `q_palavra_chave` vazio e só o número, o servidor devolve os julgados daquele
+  processo.
+- O Checker consulta SEM filtro de tribunal (`filtroTribunal=-1`) de propósito: um
+  julgado pode estar na Justiça Comum, no Alçada ou nas Turmas Recursais, e a
+  verificação não deve depender de acertar isso antes.
+
+Formatos aceitos na base (dois acervos convivem):
+  CNJ, 20 dígitos ..... 51125641620268217000  (5112564-16.2026.8.21.7000) — e-Proc
+  legado Themis ....... 70084452564, 591059829, 25953, 40441 — pré-CNJ
+Testado: `70084452564` -> 3 julgados (3 decisões no mesmo processo).
+Testado: `99999999999999999999` -> numFound 0 (o inexistente NÃO é "encontrado").
+
+Consequência para o Checker: **DV do CNJ é aviso, nunca veto**, e para número
+legado o DV simplesmente não se aplica (`numeroValido: null`). A prova de
+existência é a consulta retornar julgado.
+
+Um mesmo processo tem VÁRIAS entradas (uma por decisão: monocrática, acórdão,
+admissibilidade). A auditoria confere `cod_ementa`, não só o número.
+
+8. Seção (Cível × Criminal)
+---------------------------
+<input type="checkbox" value="civel" data-label="s" id="filtroSecaoCivel" name="filtroSecaoCivel" class="input-checkbox secao"> Cível
+<input type="checkbox" value="crime" data-label="s" id="filtroSecaoCrime" name="filtroSecaoCrime" class="input-checkbox secao"> Crime
+
+Cláusulas: `secao:"CIVEL"` / `secao:"CRIME"`. Nenhum marcado = ambos.
+Testado ("dano moral", Justiça Comum): CIVEL 34.356 × CRIME 5.592 — contagens
+diferentes, docs conferidos item a item (`secao` de cada doc casa o filtro).
+
+Nota de mapeamento: no HTML entregue pelo servidor os dois checkboxes aparecem
+DUPLICADOS (mesmo `id`, um bloco desktop e um mobile, um deles comentado). No DOM
+vivo sobra um de cada — ver 05-checkboxes-radios.json.
+
+12b. Tipo de decisão
+--------------------
+<input type="checkbox" value="acordao"        id="filtroacordao"         name="filtroacordao">        Acórdão
+<input type="checkbox" value="monocratica"    id="filtroMonocratica"     name="filtroMonocratica">    Monocrática
+<input type="checkbox" value="admissibilidade" id="filtroAdmissibilidade" name="filtroAdmissibilidade"> Admissibilidade
+<input type="checkbox" value="duvida" data-label="td" id="filtroDuvida"  name="filtroDuvida">         Dúvida de competência
+
+Cláusula: `(tipo_documento:"Acordao")`, `(tipo_documento:"Monocratica")`,
+`(tipo_documento:"Admissibilidade")`, `(tipo_documento:"Duvida de Competencia")`.
+Nenhum marcado = todos.
+
+Contagens ("dano moral", Justiça Comum, jul/2026):
+  Acordao ........... 373.057
+  Monocratica .........  6.312
+  Admissibilidade .....  4.302
+  Duvida ..............    192
+
+DIFERENÇA IMPORTANTE EM RELAÇÃO AO TJGO: aqui "Acórdão" é o tipo predominante e
+funciona como se espera. Não existe a armadilha do TJGO (onde o acórdão é publicado
+com tipo "Ementa"). Os valores de `tipo_documento` na base são exatamente:
+Acordao, Monocratica, Admissibilidade, Duvida de Competencia (sem acento).

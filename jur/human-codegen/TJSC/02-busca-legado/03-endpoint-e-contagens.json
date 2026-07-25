@@ -1,0 +1,6 @@
+{
+ "endpoint": [
+  "POST https://busca.tjsc.jus.br/jurisprudencia/buscaajax.do?&categoria=acordaos | q=dano+moral&only_ementa=&qualquer=&excluir=&prox1=&prox2=&proxc=&frase=&classe=&juizProlator=&origem=&relator=&radio_campo=ementa&faceta=true&busca=avancada&datainicial=01%2F01%2F2026&datafinal=31%2F03%2F2026&nuProcesso=&ps=20&sort=dtJulgamento+desc"
+ ],
+ "contagem_dano_moral_2026_1T": "15"
+}

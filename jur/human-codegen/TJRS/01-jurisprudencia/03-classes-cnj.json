@@ -1,0 +1,942 @@
+[
+  {
+    "value": "-1",
+    "texto": "Todos"
+  },
+  {
+    "value": "51",
+    "texto": "Abertura, Registro e Cumprimento de Testamento"
+  },
+  {
+    "value": "63",
+    "texto": "Ação Civil Coletiva"
+  },
+  {
+    "value": "64",
+    "texto": "Ação Civil de Improbidade Administrativa"
+  },
+  {
+    "value": "65",
+    "texto": "Ação Civil Pública"
+  },
+  {
+    "value": "1389",
+    "texto": "Ação de Alimentos"
+  },
+  {
+    "value": "282",
+    "texto": "Ação Penal de Competência do Júri"
+  },
+  {
+    "value": "283",
+    "texto": "Ação Penal - Procedimento Ordinário"
+  },
+  {
+    "value": "10943",
+    "texto": "Ação Penal - Procedimento Sumário"
+  },
+  {
+    "value": "10944",
+    "texto": "Ação Penal - Procedimento Sumaríssimo"
+  },
+  {
+    "value": "66",
+    "texto": "Ação Popular"
+  },
+  {
+    "value": "47",
+    "texto": "Ação Rescisória"
+  },
+  {
+    "value": "1401",
+    "texto": "Adoção"
+  },
+  {
+    "value": "1412",
+    "texto": "Adoção c/c Destituição do Poder Familiar"
+  },
+  {
+    "value": "413",
+    "texto": "Agravo de Execução Penal"
+  },
+  {
+    "value": "202",
+    "texto": "Agravo de Instrumento"
+  },
+  {
+    "value": "1208",
+    "texto": "Agravo Interno"
+  },
+  {
+    "value": "206",
+    "texto": "Agravo Regimental"
+  },
+  {
+    "value": "1729",
+    "texto": "Agravo Regimental"
+  },
+  {
+    "value": "200",
+    "texto": "Agravos"
+  },
+  {
+    "value": "52",
+    "texto": "Alienação Judicial de Bens"
+  },
+  {
+    "value": "69",
+    "texto": "Alimentos - Lei Especial Nº 5.478/68"
+  },
+  {
+    "value": "74",
+    "texto": "Alvará Judicial - Lei 6858/80"
+  },
+  {
+    "value": "198",
+    "texto": "Apelação"
+  },
+  {
+    "value": "417",
+    "texto": "Apelação"
+  },
+  {
+    "value": "1728",
+    "texto": "Apelação / Remessa Necessária"
+  },
+  {
+    "value": "1392",
+    "texto": "Apuração de Infração Administrativa às Normas de Proteção à Criança ou Adolescente"
+  },
+  {
+    "value": "1391",
+    "texto": "Apuração de Irregularidades em Entidades de Atendimento"
+  },
+  {
+    "value": "53",
+    "texto": "Arrecadação das Coisas Vagas"
+  },
+  {
+    "value": "30",
+    "texto": "Arrolamento Comum"
+  },
+  {
+    "value": "31",
+    "texto": "Arrolamento Sumário"
+  },
+  {
+    "value": "1461",
+    "texto": "Auto de Apreensão em Flagrante"
+  },
+  {
+    "value": "280",
+    "texto": "Auto de Prisão em Flagrante"
+  },
+  {
+    "value": "1703",
+    "texto": "Autorização judicial"
+  },
+  {
+    "value": "123",
+    "texto": "Averiguação de Paternidade"
+  },
+  {
+    "value": "1463",
+    "texto": "Boletim de Ocorrência Circunstanciada"
+  },
+  {
+    "value": "1438",
+    "texto": "Busca e Apreensão"
+  },
+  {
+    "value": "81",
+    "texto": "Busca e Apreensão em Alienação Fiduciária"
+  },
+  {
+    "value": "12082",
+    "texto": "Carta Arbitral"
+  },
+  {
+    "value": "258",
+    "texto": "Carta de ordem"
+  },
+  {
+    "value": "335",
+    "texto": "Carta de Ordem"
+  },
+  {
+    "value": "261",
+    "texto": "Carta Precatória"
+  },
+  {
+    "value": "355",
+    "texto": "Carta Precatória"
+  },
+  {
+    "value": "418",
+    "texto": "Carta Testemunhável"
+  },
+  {
+    "value": "83",
+    "texto": "Cautelar Fiscal"
+  },
+  {
+    "value": "1440",
+    "texto": "Cautelar Inominada"
+  },
+  {
+    "value": "11955",
+    "texto": "Cautelar Inominada Criminal"
+  },
+  {
+    "value": "84",
+    "texto": "Cobrança de Cédula de Crédito Industrial"
+  },
+  {
+    "value": "85",
+    "texto": "Compromisso Arbitral"
+  },
+  {
+    "value": "54",
+    "texto": "Confirmação de Testamento"
+  },
+  {
+    "value": "221",
+    "texto": "Conflito de competência"
+  },
+  {
+    "value": "325",
+    "texto": "Conflito de Jurisdição"
+  },
+  {
+    "value": "32",
+    "texto": "Consignação em Pagamento"
+  },
+  {
+    "value": "86",
+    "texto": "Consignatória de Aluguéis"
+  },
+  {
+    "value": "87",
+    "texto": "Conversão de Separação Judicial em Divórcio"
+  },
+  {
+    "value": "419",
+    "texto": "Correição Parcial"
+  },
+  {
+    "value": "293",
+    "texto": "Crimes Ambientais"
+  },
+  {
+    "value": "289",
+    "texto": "Crimes Contra a Propriedade Imaterial"
+  },
+  {
+    "value": "294",
+    "texto": "Crimes Contra a Propriedade Industrial"
+  },
+  {
+    "value": "295",
+    "texto": "Crimes Contra a Propriedade Intelectual"
+  },
+  {
+    "value": "288",
+    "texto": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular"
+  },
+  {
+    "value": "297",
+    "texto": "Crimes de Imprensa"
+  },
+  {
+    "value": "287",
+    "texto": "Crimes de Responsabilidade dos Funcionários Públicos"
+  },
+  {
+    "value": "156",
+    "texto": "Cumprimento de sentença"
+  },
+  {
+    "value": "12078",
+    "texto": "Cumprimento de Sentença contra a Fazenda Pública"
+  },
+  {
+    "value": "10980",
+    "texto": "Cumprimento provisório de decisão"
+  },
+  {
+    "value": "157",
+    "texto": "Cumprimento Provisório de Sentença"
+  },
+  {
+    "value": "12234",
+    "texto": "Curatela"
+  },
+  {
+    "value": "55",
+    "texto": "Declaração de Ausência"
+  },
+  {
+    "value": "1296",
+    "texto": "Declaratória de Constitucionalidade"
+  },
+  {
+    "value": "34",
+    "texto": "Demarcação / Divisão"
+  },
+  {
+    "value": "89",
+    "texto": "Depósito da Lei 8. 866/94"
+  },
+  {
+    "value": "432",
+    "texto": "Desaforamento de Julgamento"
+  },
+  {
+    "value": "90",
+    "texto": "Desapropriação"
+  },
+  {
+    "value": "91",
+    "texto": "Desapropriação Imóvel Rural por Interesse Social"
+  },
+  {
+    "value": "92",
+    "texto": "Despejo"
+  },
+  {
+    "value": "93",
+    "texto": "Despejo por Falta de Pagamento"
+  },
+  {
+    "value": "94",
+    "texto": "Despejo por Falta de Pagamento Cumulado Com Cobrança"
+  },
+  {
+    "value": "95",
+    "texto": "Direta de Inconstitucionalidade"
+  },
+  {
+    "value": "12086",
+    "texto": "Dissolução Parcial de Sociedade"
+  },
+  {
+    "value": "100",
+    "texto": "Dúvida"
+  },
+  {
+    "value": "1415",
+    "texto": "Emancipação"
+  },
+  {
+    "value": "169",
+    "texto": "Embargos"
+  },
+  {
+    "value": "172",
+    "texto": "Embargos à Execução"
+  },
+  {
+    "value": "420",
+    "texto": "Embargos de Declaração"
+  },
+  {
+    "value": "1689",
+    "texto": "Embargos de Declaração"
+  },
+  {
+    "value": "37",
+    "texto": "Embargos de Terceiro"
+  },
+  {
+    "value": "327",
+    "texto": "Embargos de Terceirosss"
+  },
+  {
+    "value": "208",
+    "texto": "Embargos Infringentes"
+  },
+  {
+    "value": "421",
+    "texto": "Embargos Infringentes e de Nulidade"
+  },
+  {
+    "value": "324",
+    "texto": "Exceção da Verdade"
+  },
+  {
+    "value": "1230",
+    "texto": "Exceção de Impedimento"
+  },
+  {
+    "value": "1232",
+    "texto": "Exceção de Incompetência"
+  },
+  {
+    "value": "1231",
+    "texto": "Exceção de Suspeição"
+  },
+  {
+    "value": "318",
+    "texto": "Exceção de Suspeição"
+  },
+  {
+    "value": "224",
+    "texto": "Exceções"
+  },
+  {
+    "value": "317",
+    "texto": "Exceções"
+  },
+  {
+    "value": "385",
+    "texto": "Execução Criminal"
+  },
+  {
+    "value": "386",
+    "texto": "Execução da Pena"
+  },
+  {
+    "value": "1432",
+    "texto": "Execução de Alimentos"
+  },
+  {
+    "value": "1465",
+    "texto": "Execução de Medidas Sócioeducativas"
+  },
+  {
+    "value": "1435",
+    "texto": "Execução de Multa"
+  },
+  {
+    "value": "12154",
+    "texto": "Execução de Título Extrajudicial"
+  },
+  {
+    "value": "159",
+    "texto": "Execução de Título Extrajudicial"
+  },
+  {
+    "value": "12079",
+    "texto": "Execução de Título Extrajudicial contra a Fazenda Pública"
+  },
+  {
+    "value": "1111",
+    "texto": "Execução de Título Judicial"
+  },
+  {
+    "value": "1116",
+    "texto": "Execução Fiscal"
+  },
+  {
+    "value": "1117",
+    "texto": "Execução Hipotecária do Sistema Financeiro Nacional"
+  },
+  {
+    "value": "228",
+    "texto": "Exibição de Documento ou Coisa"
+  },
+  {
+    "value": "107",
+    "texto": "Expropriação da Lei 8.257/91"
+  },
+  {
+    "value": "108",
+    "texto": "Falência de Empresários, Sociedades Empresáriais, Microempresas e Empresas de Pequeno Porte"
+  },
+  {
+    "value": "1420",
+    "texto": "Guarda"
+  },
+  {
+    "value": "307",
+    "texto": "Habeas Corpus"
+  },
+  {
+    "value": "1269",
+    "texto": "Habeas Corpus"
+  },
+  {
+    "value": "110",
+    "texto": "Habeas Data"
+  },
+  {
+    "value": "38",
+    "texto": "Habilitação"
+  },
+  {
+    "value": "111",
+    "texto": "Habilitação de Crédito"
+  },
+  {
+    "value": "10933",
+    "texto": "Habilitação para Adoção"
+  },
+  {
+    "value": "57",
+    "texto": "Herança Jacente"
+  },
+  {
+    "value": "188",
+    "texto": "Homologação do Penhor Legal"
+  },
+  {
+    "value": "12077",
+    "texto": "Homologação em Acordo de Colaboração Premiada"
+  },
+  {
+    "value": "113",
+    "texto": "Imissão na Posse"
+  },
+  {
+    "value": "229",
+    "texto": "Impugnação ao Cumprimento de Sentença"
+  },
+  {
+    "value": "231",
+    "texto": "Impugnação ao Valor da Causa"
+  },
+  {
+    "value": "1702",
+    "texto": "Impugnação de Assistência Judiciária"
+  },
+  {
+    "value": "114",
+    "texto": "Impugnação de Crédito"
+  },
+  {
+    "value": "216",
+    "texto": "Incidente de Arguição de Inconstitucionalidade"
+  },
+  {
+    "value": "12119",
+    "texto": "Incidente de Desconsideração de Personalidade Jurídica"
+  },
+  {
+    "value": "12080",
+    "texto": "Incidente de Impedimento"
+  },
+  {
+    "value": "12081",
+    "texto": "Incidente de Suspeição"
+  },
+  {
+    "value": "233",
+    "texto": "Incidente de Uniformização de Jurisprudência"
+  },
+  {
+    "value": "215",
+    "texto": "Incidentes"
+  },
+  {
+    "value": "10969",
+    "texto": "Incidentes"
+  },
+  {
+    "value": "115",
+    "texto": "Inquérito Extrajudicial"
+  },
+  {
+    "value": "279",
+    "texto": "Inquérito Policial"
+  },
+  {
+    "value": "333",
+    "texto": "Insanidade Mental do Acusado"
+  },
+  {
+    "value": "166",
+    "texto": "Insolvência Requerida pelo Credor"
+  },
+  {
+    "value": "167",
+    "texto": "Insolvência Requerida pelo Devedor ou pelo Espólio"
+  },
+  {
+    "value": "240",
+    "texto": "Instrução de Rescisória"
+  },
+  {
+    "value": "58",
+    "texto": "Interdição"
+  },
+  {
+    "value": "1709",
+    "texto": "Interdito Proibitório"
+  },
+  {
+    "value": "274",
+    "texto": "Interpelações"
+  },
+  {
+    "value": "1297",
+    "texto": "Intervenção em Município"
+  },
+  {
+    "value": "39",
+    "texto": "Inventário"
+  },
+  {
+    "value": "1731",
+    "texto": "Investigação contra magistrado"
+  },
+  {
+    "value": "151",
+    "texto": "Liquidação por Arbitramento"
+  },
+  {
+    "value": "152",
+    "texto": "Liquidação por Artigos"
+  },
+  {
+    "value": "153",
+    "texto": "Liquidação Provisória por Arbitramento"
+  },
+  {
+    "value": "154",
+    "texto": "Liquidação Provisória por Artigos"
+  },
+  {
+    "value": "118",
+    "texto": "Mandado de Injunção"
+  },
+  {
+    "value": "1710",
+    "texto": "Mandado de Segurança"
+  },
+  {
+    "value": "120",
+    "texto": "Mandado de Segurança"
+  },
+  {
+    "value": "119",
+    "texto": "Mandado de Segurança Coletivo"
+  },
+  {
+    "value": "308",
+    "texto": "Medidas Cautelares"
+  },
+  {
+    "value": "1434",
+    "texto": "Medidas de Proteção à Criança e Adolescente"
+  },
+  {
+    "value": "311",
+    "texto": "Medidas Investigatórias Sobre Organizações Criminosas"
+  },
+  {
+    "value": "1268",
+    "texto": "Medidas Protetivas de urgência (Lei Maria da Penha)"
+  },
+  {
+    "value": "10967",
+    "texto": "Medidas Protetivas - Estatuto do Idoso Criminal"
+  },
+  {
+    "value": "40",
+    "texto": "Monitória"
+  },
+  {
+    "value": "200000",
+    "texto": "Não Classificado CNJ"
+  },
+  {
+    "value": "12226",
+    "texto": "Notificação"
+  },
+  {
+    "value": "275",
+    "texto": "Notificação para Explicações"
+  },
+  {
+    "value": "276",
+    "texto": "Notificação para Explicações (Lei de Imprensa)"
+  },
+  {
+    "value": "236",
+    "texto": "Oposição"
+  },
+  {
+    "value": "59",
+    "texto": "Organização e Fiscalização de Fundação"
+  },
+  {
+    "value": "1294",
+    "texto": "Outros procedimentos de jurisdição voluntária"
+  },
+  {
+    "value": "309",
+    "texto": "Pedido de Busca e Apreensão Criminal"
+  },
+  {
+    "value": "313",
+    "texto": "Pedido de Prisão Preventiva"
+  },
+  {
+    "value": "314",
+    "texto": "Pedido de Prisão Temporária"
+  },
+  {
+    "value": "310",
+    "texto": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico"
+  },
+  {
+    "value": "124",
+    "texto": "Pedido de Resposta ou Retificação da Lei de Imprensa"
+  },
+  {
+    "value": "1426",
+    "texto": "Perda ou Suspensão ou Restabelecimento do Poder Familiar"
+  },
+  {
+    "value": "1727",
+    "texto": "Petição"
+  },
+  {
+    "value": "241",
+    "texto": "Petição"
+  },
+  {
+    "value": "45",
+    "texto": "Prestação de Contas - Exigidas"
+  },
+  {
+    "value": "281",
+    "texto": "Procedimento Comum"
+  },
+  {
+    "value": "12075",
+    "texto": "Procedimento Conciliatório"
+  },
+  {
+    "value": "436",
+    "texto": "Procedimento do Juizado Especial Cível"
+  },
+  {
+    "value": "14695",
+    "texto": "Procedimento do Juizado Especial da Fazenda Pública"
+  },
+  {
+    "value": "300",
+    "texto": "Procedimento Especial da Lei Antitóxicos"
+  },
+  {
+    "value": "302",
+    "texto": "Procedimento Especial dos Crimes de Abuso de Autoridade"
+  },
+  {
+    "value": "1733",
+    "texto": "Procedimento Investigatório do MP (Peças de Informação)"
+  },
+  {
+    "value": "7",
+    "texto": "Procedimento Ordinário"
+  },
+  {
+    "value": "1706",
+    "texto": "Procedimento ordinário"
+  },
+  {
+    "value": "26",
+    "texto": "Procedimentos Especiais"
+  },
+  {
+    "value": "27",
+    "texto": "Procedimentos Especiais de Jurisdição Contenciosa"
+  },
+  {
+    "value": "62",
+    "texto": "Procedimentos Regidos por Outros Códigos, Leis Esparsas e Regimentos"
+  },
+  {
+    "value": "1464",
+    "texto": "Processo de Apuração de Ato Infracional"
+  },
+  {
+    "value": "158",
+    "texto": "Processo de Execução"
+  },
+  {
+    "value": "1430",
+    "texto": "Processo de Execução"
+  },
+  {
+    "value": "193",
+    "texto": "Produção Antecipada de Provas"
+  },
+  {
+    "value": "11793",
+    "texto": "Produção Antecipada de Provas Criminal"
+  },
+  {
+    "value": "1424",
+    "texto": "Providência"
+  },
+  {
+    "value": "11875",
+    "texto": "Reclamação Pré-processual"
+  },
+  {
+    "value": "128",
+    "texto": "Recuperação Extrajudicial"
+  },
+  {
+    "value": "129",
+    "texto": "Recuperação Judicial"
+  },
+  {
+    "value": "426",
+    "texto": "Recurso em Sentido Estrito"
+  },
+  {
+    "value": "197",
+    "texto": "Recursos"
+  },
+  {
+    "value": "412",
+    "texto": "Recursos"
+  },
+  {
+    "value": "134",
+    "texto": "Registro Torrens"
+  },
+  {
+    "value": "194",
+    "texto": "Regulamentação de Visitas"
+  },
+  {
+    "value": "1417",
+    "texto": "Regularização de Registro Civil"
+  },
+  {
+    "value": "1707",
+    "texto": "Reintegração / Manutenção de Posse"
+  },
+  {
+    "value": "1462",
+    "texto": "Relatório de Investigações"
+  },
+  {
+    "value": "135",
+    "texto": "Relatório Falimentar"
+  },
+  {
+    "value": "199",
+    "texto": "Remessa Necessária"
+  },
+  {
+    "value": "427",
+    "texto": "Remessa Necessária"
+  },
+  {
+    "value": "136",
+    "texto": "Remição do Imóvel Hipotecado"
+  },
+  {
+    "value": "1705",
+    "texto": "Remoção, modificação e dispensa de tutor ou curador"
+  },
+  {
+    "value": "137",
+    "texto": "Renovatória de Locação"
+  },
+  {
+    "value": "272",
+    "texto": "Representação Criminal"
+  },
+  {
+    "value": "46",
+    "texto": "Restauração de Autos"
+  },
+  {
+    "value": "291",
+    "texto": "Restauração de Autos"
+  },
+  {
+    "value": "138",
+    "texto": "Restituição de Coisa ou Dinheiro na Falência do Devedor Empresário"
+  },
+  {
+    "value": "1683",
+    "texto": "Retificação de Registro de Imóvel"
+  },
+  {
+    "value": "1682",
+    "texto": "Retificação ou Suprimento ou Restauração de Registro Civil"
+  },
+  {
+    "value": "1390",
+    "texto": "Revisão Judicial de Decisão do Conselho Tutelar"
+  },
+  {
+    "value": "140",
+    "texto": "Revisional de Aluguel"
+  },
+  {
+    "value": "60",
+    "texto": "Separação Consensual"
+  },
+  {
+    "value": "195",
+    "texto": "Separação de Corpos"
+  },
+  {
+    "value": "141",
+    "texto": "Separação Litigiosa"
+  },
+  {
+    "value": "48",
+    "texto": "Sobrepartilha"
+  },
+  {
+    "value": "142",
+    "texto": "Sonegados"
+  },
+  {
+    "value": "1414",
+    "texto": "Suprimento de Capacidade ou de Consentimento para Casar"
+  },
+  {
+    "value": "143",
+    "texto": "Suprimento de Idade e/ou Consentimento"
+  },
+  {
+    "value": "278",
+    "texto": "Termo Circunstanciado"
+  },
+  {
+    "value": "12370",
+    "texto": "Tomada de Decisão Apoiada"
+  },
+  {
+    "value": "1396",
+    "texto": "Tutela"
+  },
+  {
+    "value": "12135",
+    "texto": "Tutela Antecipada Antecedente"
+  },
+  {
+    "value": "12134",
+    "texto": "Tutela Cautelar Antecedente"
+  },
+  {
+    "value": "1399",
+    "texto": "Tutela c/c Destituição do Poder Familiar"
+  },
+  {
+    "value": "12233",
+    "texto": "Tutela Cível"
+  },
+  {
+    "value": "12133",
+    "texto": "Tutela Provisória"
+  },
+  {
+    "value": "49",
+    "texto": "Usucapião"
+  },
+  {
+    "value": "",
+    "texto": ""
+  }
+]

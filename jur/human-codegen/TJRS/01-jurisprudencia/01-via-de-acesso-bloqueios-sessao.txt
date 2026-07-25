@@ -1,0 +1,68 @@
+TJRS — Forma de acesso, bloqueios e sessão
+=========================================
+
+(Complemento da seção 01 — mesma tela, mesmo print 01.01-tela-inicial.png.)
+
+16. Forma de acesso escolhida: `http`
+-------------------------------------
+Ordem de preferência do repo é `api` > `http` > `browser`. Aqui o caso é `http`:
+não é uma SPA com API REST própria (não há `/bff/api/...`), mas também não precisa
+de browser. O formulário chama UM endpoint AJAX que devolve o JSON cru do Solr.
+
+  POST https://www.tjrs.jus.br/buscas/jurisprudencia/ajax.php
+  Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+  X-Requested-With: XMLHttpRequest
+  Referer: https://www.tjrs.jus.br/buscas/jurisprudencia/?aba=jurisprudencia
+
+  action=consultas_solr_ajax
+  metodo=buscar_resultados
+  parametros=<a querystring INTEIRA do form#form_busca, urlencoded como UM valor>
+
+`parametros` é literalmente `jQuery("form#form_busca").serialize()` (ver
+assets/js/jurisprudencia-ajax.js). O PHP faz o parse dessa string, traduz cada
+campo em cláusula Solr e repassa para
+  https://services-intra.tjrs.jus.br/rest/search-api/jurisprudencia/?p=search&...
+(host interno, NÃO acessível de fora — só o proxy PHP fala com ele).
+
+Resposta: JSON do Solr + campos extras do proxy:
+  response.numFound / response.docs   os resultados
+  filtro                              as cláusulas montadas pelo servidor (urlencoded)
+  query, hlq, pages                   os pedaços da consulta Solr
+  facet_counts, highlighting          facetas e destaque
+  url                                 a URL Solr completa que foi chamada
+
+O campo `filtro` é ouro para teste: é a prova de qual filtro entrou de fato na
+consulta. Os testes de integração conferem `cod_tribunal:3` / `cod_tribunal:6` /
+`data_julgamento:[...]` ali, em vez de confiar em "veio resultado".
+
+Erros: o proxy responde `{"error": "<json ou texto>"}` com HTTP 200. O navigator
+detecta isso e levanta exceção (senão a busca "funcionaria" retornando nada).
+
+Encoding: pedido e resposta em UTF-8 (a resposta vem com escapes \uXXXX). A ÚNICA
+exceção é o inteiro teor em base64 no campo `documento_text`, que é
+ISO-8859-1/windows-1252 — ver seção 06.
+
+15. Bloqueios (Cloudflare / captcha / verificação de navegador)
+--------------------------------------------------------------
+Existe restrição?               NÃO. Nenhum Cloudflare, Turnstile, captcha ou
+                                verificação de navegador foi encontrado em
+                                jul/2026 — nem na página, nem no ajax.php.
+A BUSCA funciona sem resolver?  SIM — `curl`/`node https` sem cookie nenhum.
+O DOWNLOAD funciona sem resolver? SIM, e nem precisa de download: o inteiro teor
+                                vem embutido no payload da busca.
+Headless passa? --headed passa? Ambos (o mapeamento inteiro foi headless). E o
+                                crawler final não usa browser: `-v/--headed` são
+                                flags ignoradas no subcomando `tjrs`.
+
+Único incômodo real é o TAMANHO: cada página de 10 resultados traz 10 inteiros
+teores em base64 e pesa de 200 KB a 11 MB. Não é bloqueio, é peso — mitigue com `-m`.
+
+17. Sessão e estado
+-------------------
+NENHUM. Não é preciso visitar a home antes de buscar, não há cookie obrigatório,
+não há token CSRF, não há `viewState`/`__VIEWSTATE`, e a paginação NÃO depende de
+estado no servidor (é `pagina_atual` no próprio POST). Cada requisição é
+independente — o que torna o crawler simples e paralelizável.
+
+Verificado: um POST isolado ao ajax.php, sem qualquer GET anterior, responde
+normalmente com os resultados.

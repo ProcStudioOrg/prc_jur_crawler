@@ -1,340 +1,193 @@
+// src/TJPRCrawler.js
 const fs = require('fs');
 const path = require('path');
-const BaseCrawler = require('./BaseCrawler');
-const { sanitizeFilename } = require('./inteiroTeorFetcher');
+const TJPRNavigator = require('./TJPRNavigator');
 
 /**
- * Crawler for TJPR (Tribunal de Justiça do Paraná) jurisprudência
- * https://portal.tjpr.jus.br/jurisprudencia/
+ * Crawler do TJPR (Tribunal de Justiça do Paraná).
  *
- * TJPR is unusual: the íntegra do acórdão is not exposed as a downloadable URL.
- * It is loaded inline on the processo page after clicking a JS trigger
- * ("Íntegra do Acórdão" / "Carregar documento"). Hence the Playwright-based
- * fetchInteiroTeorBatch below — the generic HTTP-based inteiroTeorFetcher
- * cannot serve TJPR.
+ * Módulo: https://portal.tjpr.jus.br/jurisprudencia/ (Struts, formulário clássico).
+ * **Sem browser** — ver `TJPRNavigator`. As flags `-v/--headed` são ignoradas.
+ *
+ * A desambiguação obrigatória do repositório (Justiça Comum × Juizados
+ * Especiais/Turmas Recursais) é o filtro `foro`, e ela **não** é o combo
+ * "BASE DE CONSULTA" do site:
+ *
+ *   - `ambito=6` ("TRIBUNAL DE JUSTIÇA") deixa passar Turmas Recursais
+ *     (a 6ª Turma Recursal publica nessa base), e `ambito=4` não traz todas.
+ *     Medido em 01/01–31/03/2026, "dano moral": 4→3819, 6→3195, 7→6,
+ *     soma 7020 contra 7014 do total. Ou seja: os âmbitos se sobrepõem.
+ *   - `foro` filtra pelos **ids dos órgãos julgadores** (`idOrgaoJulgador`),
+ *     e aí a partição fecha: juizados 4062 + comum 2952 = 7014 = total.
+ *
+ * Por isso `foro` é o default do CLI e `ambito` fica exposto como `--base`
+ * para quem quiser reproduzir exatamente o que a tela faz.
  */
-class TJPRCrawler extends BaseCrawler {
+class TJPRCrawler {
   constructor(options = {}) {
-    super(options);
-    this.baseUrl = 'https://portal.tjpr.jus.br/jurisprudencia/publico/pesquisa.do?actionType=iniciar';
+    this.log = options.log ?? console.log.bind(console);
+    this.navigator = options.navigator ?? new TJPRNavigator({
+      timeout: options.timeout ?? 90000,
+      log: this.log,
+    });
+    this.ultimaBusca = null;
   }
 
   /**
-   * Navigate to the jurisprudência search page
-   */
-  async navigateToSearch() {
-    await this.page.goto(this.baseUrl);
-    await this.waitForLoad();
-    // Wait for the main search form to be ready
-    await this.page.waitForSelector('#criterioPesquisa', { timeout: 15000 });
-  }
-
-  /**
-   * Configure search filters
+   * Traduz as opções do CLI para o formulário do site.
    * @param {Object} filters
-   * @param {string} filters.dataJulgamentoInicio - Start date for judgment (DD/MM/YYYY)
-   * @param {string} filters.dataJulgamentoFim - End date for judgment (DD/MM/YYYY)
-   * @param {string} filters.localPesquisa - Search scope: 1=EMENTA, 2=INTEIRO TEOR, 99=AMBAS (default: 2)
+   * @param {string} filters.foro           `comum` (default) | `juizados` | `todos`
+   * @param {string} filters.base           ambito nativo: `todas`|`turmas`|`tj`|`vice`|`cidh`
+   * @param {string} filters.escopo         `ementa` (default) | `inteiroTeor` | `ambas`
+   * @param {string} filters.tipo           `todas`|`acordao`|`monocratica`|`duvida`
+   * @param {string} filters.orgao          nome ou id de um órgão específico (vence `foro`)
    */
-  async configureFilters(filters = {}) {
-    // Advanced filter panel (date range, scope) is hidden by default since the
-    // 2026 portal redesign — open it via toggleFiltros() before touching fields.
-    await this.page.evaluate(() => {
-      if (typeof toggleFiltros === 'function') toggleFiltros();
-    });
-    await this.page.waitForSelector('#idLocalPesquisa', { state: 'visible', timeout: 10000 });
+  montarFiltros(query, filters = {}) {
+    const N = TJPRNavigator;
+    const foro = filters.foro ?? 'comum';
+    let idOrgaoJulgador = '';
+    let orgaoResolvido = null;
 
-    // Set search scope (default: INTEIRO TEOR = value 2)
-    const localPesquisa = filters.localPesquisa || '2';
-    await this.page.selectOption('#idLocalPesquisa', localPesquisa);
-    console.log(`Set search scope: ${localPesquisa === '1' ? 'EMENTA' : localPesquisa === '2' ? 'INTEIRO TEOR' : 'AMBAS'}`);
-
-    // Configure judgment start date
-    if (filters.dataJulgamentoInicio) {
-      const field = this.page.locator('#dataJulgamentoInicio');
-      await field.click();
-      await field.fill(filters.dataJulgamentoInicio);
-      console.log(`Set judgment start date: ${filters.dataJulgamentoInicio}`);
+    if (filters.orgao) {
+      orgaoResolvido = N.acharOrgao(filters.orgao);
+      if (!orgaoResolvido) throw new Error(`órgão julgador não encontrado: "${filters.orgao}" (use --listar-orgaos)`);
+      idOrgaoJulgador = String(orgaoResolvido.id);
+    } else if (foro !== 'todos') {
+      idOrgaoJulgador = N.idsDoForo(foro);
+      if (!idOrgaoJulgador) throw new Error(`foro inválido: "${foro}" (use comum, juizados ou todos)`);
     }
 
-    // Configure judgment end date
-    if (filters.dataJulgamentoFim) {
-      const field = this.page.locator('#dataJulgamentoFim');
-      await field.click();
-      await field.fill(filters.dataJulgamentoFim);
-      console.log(`Set judgment end date: ${filters.dataJulgamentoFim}`);
-    }
+    return {
+      query: query ?? '',
+      escopo: N.ESCOPOS[filters.escopo ?? 'ementa'] ?? filters.escopo ?? N.ESCOPOS.ementa,
+      ambito: N.AMBITOS[filters.base ?? 'todas'] ?? filters.base ?? N.AMBITOS.todas,
+      tipo: N.TIPOS[filters.tipo ?? 'todas'] ?? filters.tipo ?? N.TIPOS.todas,
+      segredo: N.SEGREDO[filters.segredo ?? 'incluir'] ?? N.SEGREDO.incluir,
+      dataJulgamentoInicio: filters.dataJulgamentoInicio || '',
+      dataJulgamentoFim: filters.dataJulgamentoFim || '',
+      dataPublicacaoInicio: filters.dataPublicacaoInicio || '',
+      dataPublicacaoFim: filters.dataPublicacaoFim || '',
+      processo: filters.processo || '',
+      acordao: filters.acordao || '',
+      idOrgaoJulgador,
+      ordem: filters.ordem || 'recentes',
+      _foro: foro,
+      _orgao: orgaoResolvido,
+    };
   }
 
   /**
-   * Execute the search with the given query
-   * @param {string} query - Search text (supports operators: E, OU, !NAO, PROX, $)
+   * Executa a busca paginada.
+   * @returns {Array<Object>} julgados no formato do repositório
    */
-  async executeSearch(query) {
-    const searchBox = this.page.locator('#criterioPesquisa');
-    await searchBox.click();
-    await searchBox.fill(query);
-    console.log(`Set search query: ${query}`);
+  async search(query, filters = {}, options = {}) {
+    const maxPages = Number(options.maxPages ?? 10) || 10;
+    const base = this.montarFiltros(query, filters);
+    const vistos = new Set();
+    const todos = [];
+    let totais = { tj: 0, cidh: 0, geral: 0 };
+    let paginas = 1;
 
-    // Click the Pesquisar button
-    await this.page.locator('input[name="iniciar"]').click();
-    await this.waitForLoad();
-    await this.page.waitForTimeout(2000);
-  }
-
-  /**
-   * Extract results from the current page
-   * @returns {Array<Object>} Array of result objects
-   */
-  async extractResults() {
-    // Wait for the results table to load
-    await this.page.waitForSelector('table.resultTable.jurisprudencia', { timeout: 10000 }).catch(() => {});
-
-    const pageResults = await this.page.evaluate(() => {
-      const items = [];
-      const table = document.querySelector('table.resultTable.jurisprudencia');
-      if (!table) return items;
-
-      // Skip header row (index 0)
-      const rows = table.querySelectorAll('tr');
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        const dadosCell = row.querySelector('td.juris-tabela-dados');
-        const ementaCell = row.querySelector('td.juris-tabela-ementa');
-        if (!dadosCell) continue;
-
-        // Extract ID from checkbox
-        const checkbox = dadosCell.querySelector('input[name="idsSelecionados"]');
-        const id = checkbox ? checkbox.value : '';
-
-        // Extract process link and number (class is "decisao negrito" or "acordao negrito")
-        const processLink = dadosCell.querySelector('a[href*="/jurisprudencia/j/"]');
-        const numeroProcesso = processLink ? processLink.textContent.trim() : '';
-        const processoUrl = processLink ? processLink.href : '';
-
-        // Extract type from the font element after the link, e.g., "(Acórdão)" or "(Decisão monocrática)"
-        let tipoDocumento = '';
-        const typeFonts = dadosCell.querySelectorAll('font:not(.negrito)');
-        for (const f of typeFonts) {
-          const typeMatch = f.textContent.match(/\(([^)]+)\)/);
-          if (typeMatch) { tipoDocumento = typeMatch[1].trim(); break; }
-        }
-        // Fallback: extract type from the URL pattern /jurisprudencia/j/ID/TYPE-PROCESS
-        if (!tipoDocumento && processoUrl) {
-          const urlTypeMatch = decodeURIComponent(processoUrl).match(/\/jurisprudencia\/j\/\d+\/([^-]+)-/);
-          tipoDocumento = urlTypeMatch ? urlTypeMatch[1].trim() : '';
-        }
-
-        // Extract fields from the properties div
-        const propsDiv = dadosCell.querySelector('.juris-tabela-propriedades');
-        const propsText = propsDiv ? propsDiv.textContent : '';
-
-        // Relator
-        const relatorMatch = propsText.match(/Relator:\s*([\s\S]*?)(?=\n\s*Processo:)/);
-        const relator = relatorMatch ? relatorMatch[1].replace(/\s+/g, ' ').trim() : '';
-
-        // Orgao Julgador
-        const orgaoMatch = propsText.match(/Órgão Julgador:\s*(.+?)(?=\n|Data)/);
-        const orgaoJulgador = orgaoMatch ? orgaoMatch[1].trim() : '';
-
-        // Data Julgamento
-        const dataMatch = propsText.match(/Data Julgamento:\s*(\d{2}\/\d{2}\/\d{4})/);
-        const dataJulgamento = dataMatch ? dataMatch[1] : '';
-
-        // Extract ementa from the ementa cell
-        let ementa = '';
-        if (ementaCell) {
-          const ementaDiv = ementaCell.querySelector('div[id^="ementa"]');
-          if (ementaDiv) {
-            ementa = ementaDiv.textContent.trim();
-          } else {
-            // Fallback: get text from the cell, excluding "Leia mais" link
-            ementa = ementaCell.textContent.replace(/Leia mais\.\./, '').trim();
-          }
-        }
-
-        if (numeroProcesso || id) {
-          items.push({
-            id,
-            tipoDocumento,
-            numeroProcesso,
-            processoUrl,
-            orgaoJulgador,
-            dataJulgamento,
-            relator,
-            ementa: ementa.substring(0, 10000),
-          });
-        }
+    for (let pagina = 1; pagina <= maxPages; pagina++) {
+      const r = await this.navigator.buscar({ ...base, pagina });
+      totais = r.totais;
+      paginas = r.paginas;
+      if (pagina === 1) {
+        this.log(`Total no TJPR: ${totais.tj} julgado(s)` +
+          (totais.cidh ? ` (+${totais.cidh} da Corte IDH, descartados)` : '') +
+          ` — ${paginas} página(s) de 50`);
       }
-
-      return items;
-    });
-
-    console.log(`Found ${pageResults.length} result items on page`);
-    return pageResults;
-  }
-
-  /**
-   * Check if there's a next page of results
-   * @returns {boolean}
-   */
-  async hasNextPage() {
-    try {
-      // Active next page link has class "arrowNextOn"; disabled is "arrowNextOff"
-      const nextLink = this.page.locator('a.arrowNextOn').first();
-      return await nextLink.isVisible();
-    } catch {
-      return false;
+      const novos = r.resultados.filter((x) => {
+        const chave = x.id || `${x.numeroProcesso}|${x.dataJulgamento}`;
+        if (vistos.has(chave)) return false;
+        vistos.add(chave);
+        return true;
+      });
+      todos.push(...novos);
+      this.log(`Página ${pagina}/${Math.min(maxPages, paginas)}: ${novos.length} julgado(s) (acumulado ${todos.length})`);
+      if (!TJPRNavigator.temProximaPagina(r.html) || pagina >= paginas) break;
     }
-  }
 
-  /**
-   * Navigate to the next page of results
-   */
-  async goToNextPage() {
-    // TJPR pagination uses form submission via JavaScript href
-    // Extract the next page number from the "Próxima Página" link and submit the form
-    await this.page.evaluate(() => {
-      const nextLink = document.querySelector('a.arrowNextOn');
-      if (nextLink) {
-        // Extract page number from the href JavaScript
-        const match = nextLink.href.match(/pageNumber.*?value='(\d+)'/);
-        if (match) {
-          const form = document.forms['pesquisaForm'];
-          form['pageNumber'].value = match[1];
-          form['sortColumn'].value = 'processo_sDataJulgamento';
-          form['sortOrder'].value = 'DESC';
-          form.submit();
-        }
-      }
-    });
-    await this.waitForLoad();
-    await this.page.waitForTimeout(1500);
-  }
+    this.ultimaBusca = {
+      foro: base._foro,
+      orgao: base._orgao ? base._orgao.nome : null,
+      orgaosFiltrados: base.idOrgaoJulgador ? base.idOrgaoJulgador.split(',').length : 0,
+      ambito: base.ambito,
+      totalTJPR: totais.tj,
+      totalCorteIDH: totais.cidh,
+      paginasDisponiveis: paginas,
+    };
 
-  /**
-   * Get the total number of results
-   * @returns {number|null}
-   */
-  async getTotalResults() {
-    try {
-      const bodyText = await this.page.locator('body').textContent();
-      const match = bodyText.match(/([\d.]+)\s*registro\(s\)\s*encontrado\(s\)/);
-      if (match) {
-        return parseInt(match[1].replace(/\./g, ''), 10);
+    // auditoria barata: se pediram um foro e algo de outro foro passou, avise
+    if (base._foro !== 'todos' && !base._orgao) {
+      const fora = todos.filter((r) => r.foro !== base._foro);
+      if (fora.length) {
+        this.log(`AVISO: ${fora.length} julgado(s) fora do foro "${base._foro}" — ` +
+          `órgãos: ${[...new Set(fora.map((f) => f.orgaoJulgador))].join(', ')}`);
       }
-      return null;
-    } catch {
-      return null;
+      this.ultimaBusca.forasDoForo = fora.length;
     }
+    return todos;
   }
 
   /**
-   * Download the inteiro teor for each result using a fresh browser session.
-   * Each result must carry a `processoUrl`; the íntegra is captured by clicking
-   * the inline trigger on that page and dumping the rendered text.
-   *
-   * @param {Array<Object>} results - Results from search() with processoUrl set
-   * @param {string} outputDir - Directory to save .txt files into
-   * @param {Object} options
-   * @param {Function} options.log - Logger (defaults to console.log)
-   * @param {number} options.minCachedSize - Skip re-download if existing file > N bytes (default 5000)
-   * @returns {Array<Object>} results enriched with `arquivo` (filename) or `downloadError`
+   * Baixa o inteiro teor de cada resultado. O texto já vem no HTML da página
+   * do julgado (`div#texto<id>`) — uma requisição HTTP por julgado, sem browser.
    */
   async fetchInteiroTeorBatch(results, outputDir, options = {}) {
-    const log = options.log ?? console.log;
-    const minCachedSize = options.minCachedSize ?? 5000;
-
+    const log = options.log ?? this.log;
+    const minCachedSize = options.minCachedSize ?? 2000;
     fs.mkdirSync(outputDir, { recursive: true });
-    await this.init();
 
-    const downloaded = [];
-    try {
-      for (let i = 0; i < results.length; i++) {
-        const r = results[i];
-        if (!r.processoUrl) {
-          log(`  [${i + 1}/${results.length}] skip — no processoUrl`);
-          downloaded.push({ ...r, arquivo: null, downloadError: 'no processoUrl' });
-          continue;
-        }
+    const saida = [];
+    for (let i = 0; i < results.length; i++) {
+      const r = results[i];
+      const nomeBase = String(r.numeroProcesso || r.id || `r${i}`).replace(/[^\w.\-]/g, '_');
+      const arquivo = `${nomeBase}.txt`;
+      const destino = path.join(outputDir, arquivo);
 
-        const baseName = sanitizeFilename(r.numeroProcesso || r.id || `r${i}`);
-        const filename = `${baseName}.txt`;
-        const filepath = path.join(outputDir, filename);
-
-        if (fs.existsSync(filepath) && fs.statSync(filepath).size > minCachedSize) {
-          log(`  [${i + 1}/${results.length}] cached ${baseName}`);
-          downloaded.push({ ...r, arquivo: filename });
-          continue;
-        }
-
-        log(`  [${i + 1}/${results.length}] ${baseName}`);
-        try {
-          const text = await this._fetchInteiroTeorPage(r.processoUrl);
-          fs.writeFileSync(filepath, text, 'utf-8');
-          log(`    saved ${text.length} chars`);
-          downloaded.push({ ...r, arquivo: filename });
-        } catch (err) {
-          log(`    FAILED: ${err.message}`);
-          downloaded.push({ ...r, arquivo: null, downloadError: err.message });
-        }
+      if (fs.existsSync(destino) && fs.statSync(destino).size > minCachedSize) {
+        log(`  [${i + 1}/${results.length}] cache ${nomeBase}`);
+        saida.push({ ...r, arquivo });
+        continue;
       }
-
-      const indexPath = path.join(outputDir, 'index.json');
-      fs.writeFileSync(indexPath, JSON.stringify(downloaded, null, 2), 'utf-8');
-      log(`Index saved to: ${indexPath}`);
-
-      return downloaded;
-    } finally {
-      await this.close();
+      if (!r.id) {
+        saida.push({ ...r, arquivo: null, downloadError: 'julgado sem id' });
+        continue;
+      }
+      try {
+        const doc = await this.navigator.documento(r.id);
+        const texto = [
+          `Processo: ${doc.numeroProcesso || r.numeroProcesso}`,
+          `Tipo: ${doc.tipoDocumento || r.tipoDocumento}`,
+          `Órgão Julgador: ${doc.orgaoJulgador || r.orgaoJulgador}  (foro: ${doc.foro})`,
+          `Relator: ${doc.relator || r.relator}`,
+          `Comarca: ${doc.comarca}`,
+          `Data de Julgamento: ${r.dataJulgamento}`,
+          doc.citacao ? `Citação: ${doc.citacao}` : '',
+          `URL: ${doc.url}`,
+          '', '=== EMENTA ===', doc.ementa || r.ementa || '',
+          '', '=== INTEIRO TEOR ===', doc.inteiroTeor || '(não disponível neste documento)',
+        ].join('\n');
+        fs.writeFileSync(destino, texto, 'utf-8');
+        log(`  [${i + 1}/${results.length}] ${nomeBase} — ${doc.inteiroTeor.length} chars` +
+          (doc.temInteiroTeor ? '' : ' (sem inteiro teor)'));
+        saida.push({ ...r, arquivo, comarca: doc.comarca, citacao: doc.citacao, temInteiroTeor: doc.temInteiroTeor });
+      } catch (err) {
+        log(`  [${i + 1}/${results.length}] ${nomeBase} FALHOU: ${err.message}`);
+        saida.push({ ...r, arquivo: null, downloadError: err.message });
+      }
     }
+
+    const indice = path.join(outputDir, 'index.json');
+    fs.writeFileSync(indice, JSON.stringify(saida, null, 2), 'utf-8');
+    log(`Índice salvo em: ${indice}`);
+    return saida;
   }
 
-  /**
-   * Visit a processo page, click the inline "carregar" trigger, and capture
-   * the rendered body + frame text. Used by fetchInteiroTeorBatch.
-   * @private
-   */
-  async _fetchInteiroTeorPage(url) {
-    await this.page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
-    await this.page.waitForTimeout(2000);
-
-    const triggers = [
-      'a:has-text("Íntegra do Acórdão")',
-      'a:has-text("Integra do Acordao")',
-      'a:has-text("Carregar documento")',
-      'a:has-text("Carregar")',
-      'a:has-text("Inteiro Teor")',
-    ];
-    for (const sel of triggers) {
-      try {
-        const loc = this.page.locator(sel).first();
-        if (await loc.count()) {
-          await loc.click({ timeout: 5000 });
-          await this.page.waitForTimeout(4000);
-          break;
-        }
-      } catch {}
-    }
-
-    // Heuristic: wait until the body looks like an acórdão (has currency,
-    // VOTO/Acordam/etc., and is reasonably long). Best-effort, not strict.
-    try {
-      await this.page.waitForFunction(() => {
-        const t = document.body.innerText || '';
-        return /R\$\s*\d|VOTO|Vistos,|Acordam|Relatório/i.test(t) && t.length > 4000;
-      }, { timeout: 10000 });
-    } catch {}
-
-    let combined = await this.page.evaluate(() => document.body.innerText || '');
-    for (const fr of this.page.frames()) {
-      try {
-        const t = await fr.evaluate(() => (document.body && document.body.innerText) || '');
-        if (t && !combined.includes(t)) combined += '\n\n=== FRAME ===\n' + t;
-      } catch {}
-    }
-    return combined;
-  }
+  /** Compatibilidade com a API antiga baseada em browser (agora no-ops). */
+  async init() { return this; }
+  async close() { return this; }
 }
 
 module.exports = TJPRCrawler;

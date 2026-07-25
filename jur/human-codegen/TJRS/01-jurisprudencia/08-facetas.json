@@ -1,0 +1,1084 @@
+[
+  {
+    "id": "facet_orgao_julgador",
+    "name": "facet_orgao_julgador",
+    "opcoes": [
+      {
+        "value": "",
+        "texto": "Órgão Julgador"
+      },
+      {
+        "value": "Primeira Turma Recursal Cível",
+        "texto": "Primeira Turma Recursal Cível (1006)"
+      },
+      {
+        "value": "Primeira Turma Recursal Provisória Fazenda Pública",
+        "texto": "Primeira Turma Recursal Provisória Fazenda Pública (223)"
+      },
+      {
+        "value": "Primeira Turma Recursal da Fazenda Pública",
+        "texto": "Primeira Turma Recursal da Fazenda Pública (109)"
+      },
+      {
+        "value": "Quarta Turma Recursal Cível",
+        "texto": "Quarta Turma Recursal Cível (418)"
+      },
+      {
+        "value": "Segunda Turma Recursal Cível",
+        "texto": "Segunda Turma Recursal Cível (633)"
+      },
+      {
+        "value": "Segunda Turma Recursal da Fazenda Pública",
+        "texto": "Segunda Turma Recursal da Fazenda Pública (512)"
+      },
+      {
+        "value": "Terceira Turma Recursal Cível",
+        "texto": "Terceira Turma Recursal Cível (515)"
+      },
+      {
+        "value": "Terceira Turma Recursal da Fazenda Pública",
+        "texto": "Terceira Turma Recursal da Fazenda Pública (241)"
+      },
+      {
+        "value": "Turma Recursal Criminal",
+        "texto": "Turma Recursal Criminal (5)"
+      },
+      {
+        "value": "Turma Recursal da Fazenda Pública",
+        "texto": "Turma Recursal da Fazenda Pública (234)"
+      },
+      {
+        "value": "Turma de Uniformização da Fazenda Pública",
+        "texto": "Turma de Uniformização da Fazenda Pública (5)"
+      }
+    ]
+  },
+  {
+    "id": "facet_origem",
+    "name": "facet_origem",
+    "opcoes": [
+      {
+        "value": "",
+        "texto": "Comarca de Origem"
+      },
+      {
+        "value": "BOM JESUS",
+        "texto": "BOM JESUS (2)"
+      },
+      {
+        "value": "BUTIÁ",
+        "texto": "BUTIÁ (11)"
+      },
+      {
+        "value": "CAMAQUÃ",
+        "texto": "CAMAQUÃ (18)"
+      },
+      {
+        "value": "CAMPO NOVO",
+        "texto": "CAMPO NOVO (4)"
+      },
+      {
+        "value": "CAXIAS DO SUL",
+        "texto": "CAXIAS DO SUL (127)"
+      },
+      {
+        "value": "CAÇAPAVA DO SUL",
+        "texto": "CAÇAPAVA DO SUL (12)"
+      },
+      {
+        "value": "CERRO LARGO",
+        "texto": "CERRO LARGO (5)"
+      },
+      {
+        "value": "CHARQUEADAS",
+        "texto": "CHARQUEADAS (28)"
+      },
+      {
+        "value": "CORONEL BICACO",
+        "texto": "CORONEL BICACO (3)"
+      },
+      {
+        "value": "CRISSIUMAL",
+        "texto": "CRISSIUMAL (4)"
+      },
+      {
+        "value": "CRUZ ALTA",
+        "texto": "CRUZ ALTA (11)"
+      },
+      {
+        "value": "DOIS IRMÃOS",
+        "texto": "DOIS IRMÃOS (9)"
+      },
+      {
+        "value": "ENCRUZILHADA DO SUL",
+        "texto": "ENCRUZILHADA DO SUL (20)"
+      },
+      {
+        "value": "ERECHIM",
+        "texto": "ERECHIM (50)"
+      },
+      {
+        "value": "ESPUMOSO",
+        "texto": "ESPUMOSO (7)"
+      },
+      {
+        "value": "ESTÂNCIA VELHA",
+        "texto": "ESTÂNCIA VELHA (11)"
+      },
+      {
+        "value": "FAXINAL DO SOTURNO",
+        "texto": "FAXINAL DO SOTURNO (2)"
+      },
+      {
+        "value": "FLORES DA CUNHA",
+        "texto": "FLORES DA CUNHA (6)"
+      },
+      {
+        "value": "FREDERICO WESTPHALEN",
+        "texto": "FREDERICO WESTPHALEN (20)"
+      },
+      {
+        "value": "NOVO HAMBURGO",
+        "texto": "NOVO HAMBURGO (101)"
+      },
+      {
+        "value": "OUTRA",
+        "texto": "OUTRA (2565)"
+      },
+      {
+        "value": "PORTO ALEGRE",
+        "texto": "PORTO ALEGRE (793)"
+      },
+      {
+        "value": "SANTA MARIA",
+        "texto": "SANTA MARIA (92)"
+      }
+    ]
+  },
+  {
+    "id": "facet_relator_redator",
+    "name": "facet_relator_redator",
+    "opcoes": [
+      {
+        "value": "",
+        "texto": "Redator/Relator"
+      },
+      {
+        "value": "Alan Tadeu Soares Delabary Junior",
+        "texto": "Alan Tadeu Soares Delabary Junior (76)"
+      },
+      {
+        "value": "Ana Cláudia Cachapuz Silva Raabe",
+        "texto": "Ana Cláudia Cachapuz Silva Raabe (303)"
+      },
+      {
+        "value": "Annie Kier Herynkopf",
+        "texto": "Annie Kier Herynkopf (128)"
+      },
+      {
+        "value": "Antonio Carlos De Castro Neves Tavares",
+        "texto": "Antonio Carlos De Castro Neves Tavares (84)"
+      },
+      {
+        "value": "Betina Meinhardt Ronchetti",
+        "texto": "Betina Meinhardt Ronchetti (1)"
+      },
+      {
+        "value": "Cleber Augusto Tonial",
+        "texto": "Cleber Augusto Tonial (140)"
+      },
+      {
+        "value": "Daniel Henrique Dummer",
+        "texto": "Daniel Henrique Dummer (162)"
+      },
+      {
+        "value": "Denise Oliveira Cezar",
+        "texto": "Denise Oliveira Cezar (3)"
+      },
+      {
+        "value": "Eduardo Ernesto Lucas Almada",
+        "texto": "Eduardo Ernesto Lucas Almada (101)"
+      },
+      {
+        "value": "Ema Denize Massing",
+        "texto": "Ema Denize Massing (286)"
+      },
+      {
+        "value": "Gioconda Fianco Pitt",
+        "texto": "Gioconda Fianco Pitt (194)"
+      },
+      {
+        "value": "Giuliano Viero Giuliato",
+        "texto": "Giuliano Viero Giuliato (168)"
+      },
+      {
+        "value": "Gustavo Borsa Antonello",
+        "texto": "Gustavo Borsa Antonello (47)"
+      },
+      {
+        "value": "Hilbert Maximiliano Akihito Obara",
+        "texto": "Hilbert Maximiliano Akihito Obara (58)"
+      },
+      {
+        "value": "José Antônio Coitinho",
+        "texto": "José Antônio Coitinho (44)"
+      },
+      {
+        "value": "José Luiz Leal Vieira",
+        "texto": "José Luiz Leal Vieira (186)"
+      },
+      {
+        "value": "José Ricardo de Bem Sanhudo",
+        "texto": "José Ricardo de Bem Sanhudo (358)"
+      },
+      {
+        "value": "Luis Alberto Rotta",
+        "texto": "Luis Alberto Rotta (125)"
+      },
+      {
+        "value": "Luís Francisco Franco",
+        "texto": "Luís Francisco Franco (82)"
+      },
+      {
+        "value": "Lílian Cristiane Siman",
+        "texto": "Lílian Cristiane Siman (46)"
+      },
+      {
+        "value": "Marcelo Mairon Rodrigues",
+        "texto": "Marcelo Mairon Rodrigues (212)"
+      },
+      {
+        "value": "Marcia Regina Frigeri",
+        "texto": "Marcia Regina Frigeri (57)"
+      },
+      {
+        "value": "Maria Beatriz Londero Madeira",
+        "texto": "Maria Beatriz Londero Madeira (145)"
+      },
+      {
+        "value": "Maria Claudia Cachapuz",
+        "texto": "Maria Claudia Cachapuz (152)"
+      },
+      {
+        "value": "Mario Augusto Figueiredo De Lacerda Guerreiro",
+        "texto": "Mario Augusto Figueiredo De Lacerda Guerreiro (66)"
+      },
+      {
+        "value": "Mauro Evely Vieira de Borba",
+        "texto": "Mauro Evely Vieira de Borba (4)"
+      },
+      {
+        "value": "Maurício Ramires",
+        "texto": "Maurício Ramires (140)"
+      },
+      {
+        "value": "Mirna Benedetti Rodrigues",
+        "texto": "Mirna Benedetti Rodrigues (127)"
+      },
+      {
+        "value": "Patrícia Fraga Martins",
+        "texto": "Patrícia Fraga Martins (67)"
+      },
+      {
+        "value": "Quelen Van Caneghan",
+        "texto": "Quelen Van Caneghan (72)"
+      },
+      {
+        "value": "Ricardo Bernd",
+        "texto": "Ricardo Bernd (29)"
+      },
+      {
+        "value": "Ricardo Torres Hermann",
+        "texto": "Ricardo Torres Hermann (2)"
+      },
+      {
+        "value": "Roberto Behrensdorf Gomes da Silva",
+        "texto": "Roberto Behrensdorf Gomes da Silva (149)"
+      },
+      {
+        "value": "Volnei dos Santos Coelho",
+        "texto": "Volnei dos Santos Coelho (117)"
+      }
+    ]
+  },
+  {
+    "id": "facet_ano_julgamento",
+    "name": "facet_ano_julgamento",
+    "opcoes": [
+      {
+        "value": "",
+        "texto": "Ano de Julgamento"
+      },
+      {
+        "value": "2026",
+        "texto": "2026 (3901)"
+      }
+    ]
+  },
+  {
+    "id": "facet_nome_classe_cnj",
+    "name": "facet_nome_classe_cnj",
+    "opcoes": [
+      {
+        "value": "",
+        "texto": "Classe CNJ"
+      },
+      {
+        "value": "Apelação",
+        "texto": "Apelação (5)"
+      },
+      {
+        "value": "Pedido de Uniformização de Interpretação de Lei Cível",
+        "texto": "Pedido de Uniformização de Interpretação de Lei Cível (5)"
+      },
+      {
+        "value": "Recurso Inominado",
+        "texto": "Recurso Inominado (3888)"
+      }
+    ]
+  },
+  {
+    "id": "facet_nome_assunto_cnj",
+    "name": "facet_nome_assunto_cnj",
+    "opcoes": [
+      {
+        "value": "",
+        "texto": "Assunto CNJ"
+      },
+      {
+        "value": "Abatimento proporcional do preço ",
+        "texto": "Abatimento proporcional do preço  (10)"
+      },
+      {
+        "value": "Abono de Permanência",
+        "texto": "Abono de Permanência (2)"
+      },
+      {
+        "value": "Acidente de Trânsito",
+        "texto": "Acidente de Trânsito (69)"
+      },
+      {
+        "value": "Acumulação de Proventos",
+        "texto": "Acumulação de Proventos (1)"
+      },
+      {
+        "value": "Adicional de Horas Extras",
+        "texto": "Adicional de Horas Extras (2)"
+      },
+      {
+        "value": "Adicional de Insalubridade",
+        "texto": "Adicional de Insalubridade (9)"
+      },
+      {
+        "value": "Adicional por Tempo de Serviço",
+        "texto": "Adicional por Tempo de Serviço (1)"
+      },
+      {
+        "value": "Admissão / Permanência / Despedida",
+        "texto": "Admissão / Permanência / Despedida (5)"
+      },
+      {
+        "value": "Advertência",
+        "texto": "Advertência (1)"
+      },
+      {
+        "value": "Ameaça ",
+        "texto": "Ameaça  (1)"
+      },
+      {
+        "value": "Anulação",
+        "texto": "Anulação (5)"
+      },
+      {
+        "value": "Aposentadoria",
+        "texto": "Aposentadoria (1)"
+      },
+      {
+        "value": "Aposentadoria Especial (Art. 57/8)",
+        "texto": "Aposentadoria Especial (Art. 57/8) (2)"
+      },
+      {
+        "value": "Apreensão",
+        "texto": "Apreensão (2)"
+      },
+      {
+        "value": "Arras ou Sinal",
+        "texto": "Arras ou Sinal (1)"
+      },
+      {
+        "value": "Assinatura Básica Mensal",
+        "texto": "Assinatura Básica Mensal (4)"
+      },
+      {
+        "value": "Assistência à Saúde",
+        "texto": "Assistência à Saúde (3)"
+      },
+      {
+        "value": "Ato Lesivo ao Patrimônio Artístico, Estético, Histórico ou Turístico",
+        "texto": "Ato Lesivo ao Patrimônio Artístico, Estético, Histórico ou Turístico (1)"
+      },
+      {
+        "value": "Atraso de vôo",
+        "texto": "Atraso de vôo (20)"
+      },
+      {
+        "value": "Auxílio-Alimentação",
+        "texto": "Auxílio-Alimentação (2)"
+      },
+      {
+        "value": "Bancários",
+        "texto": "Bancários (106)"
+      },
+      {
+        "value": "Benfeitorias",
+        "texto": "Benfeitorias (1)"
+      },
+      {
+        "value": "CND/Certidão Negativa de Débito",
+        "texto": "CND/Certidão Negativa de Débito (1)"
+      },
+      {
+        "value": "CNH - Carteira Nacional de Habilitação",
+        "texto": "CNH - Carteira Nacional de Habilitação (16)"
+      },
+      {
+        "value": "Cadastro de Inadimplentes - CADIN",
+        "texto": "Cadastro de Inadimplentes - CADIN (3)"
+      },
+      {
+        "value": "Cancelamento de vôo",
+        "texto": "Cancelamento de vôo (25)"
+      },
+      {
+        "value": "Capitalização e Previdência Privada",
+        "texto": "Capitalização e Previdência Privada (2)"
+      },
+      {
+        "value": "Cartão de Crédito",
+        "texto": "Cartão de Crédito (51)"
+      },
+      {
+        "value": "Cheque",
+        "texto": "Cheque (2)"
+      },
+      {
+        "value": "Classificação e/ou Preterição",
+        "texto": "Classificação e/ou Preterição (5)"
+      },
+      {
+        "value": "Cláusula Penal",
+        "texto": "Cláusula Penal (1)"
+      },
+      {
+        "value": "Cobrança de Aluguéis - Sem despejo",
+        "texto": "Cobrança de Aluguéis - Sem despejo (1)"
+      },
+      {
+        "value": "Cobrança indevida de ligações ",
+        "texto": "Cobrança indevida de ligações  (9)"
+      },
+      {
+        "value": "Compra e Venda",
+        "texto": "Compra e Venda (14)"
+      },
+      {
+        "value": "Compromisso",
+        "texto": "Compromisso (21)"
+      },
+      {
+        "value": "Concessão",
+        "texto": "Concessão (1)"
+      },
+      {
+        "value": "Concessão / Permissão / Autorização",
+        "texto": "Concessão / Permissão / Autorização (3)"
+      },
+      {
+        "value": "Consulta",
+        "texto": "Consulta (4)"
+      },
+      {
+        "value": "Consórcio",
+        "texto": "Consórcio (8)"
+      },
+      {
+        "value": "Contrato Temporário de Mão de Obra L 8.745/1993",
+        "texto": "Contrato Temporário de Mão de Obra L 8.745/1993 (1)"
+      },
+      {
+        "value": "Contratos Bancários",
+        "texto": "Contratos Bancários (15)"
+      },
+      {
+        "value": "Contribuições de Melhoria",
+        "texto": "Contribuições de Melhoria (4)"
+      },
+      {
+        "value": "Curativos/Bandagem",
+        "texto": "Curativos/Bandagem (1)"
+      },
+      {
+        "value": "Curso de Formação",
+        "texto": "Curso de Formação (1)"
+      },
+      {
+        "value": "Cédula de Crédito Bancário",
+        "texto": "Cédula de Crédito Bancário (1)"
+      },
+      {
+        "value": "Demissão ou Exoneração",
+        "texto": "Demissão ou Exoneração (1)"
+      },
+      {
+        "value": "Descontos Indevidos",
+        "texto": "Descontos Indevidos (3)"
+      },
+      {
+        "value": "Direito de Imagem",
+        "texto": "Direito de Imagem (30)"
+      },
+      {
+        "value": "Direito de Vizinhança",
+        "texto": "Direito de Vizinhança (3)"
+      },
+      {
+        "value": "Direitos / Deveres do Condômino",
+        "texto": "Direitos / Deveres do Condômino (1)"
+      },
+      {
+        "value": "Diárias e Outras Indenizações",
+        "texto": "Diárias e Outras Indenizações (3)"
+      },
+      {
+        "value": "Doença em Pessoa da Família",
+        "texto": "Doença em Pessoa da Família (1)"
+      },
+      {
+        "value": "Duplicata",
+        "texto": "Duplicata (1)"
+      },
+      {
+        "value": "Dívida Ativa não-tributária",
+        "texto": "Dívida Ativa não-tributária (2)"
+      },
+      {
+        "value": "Edital",
+        "texto": "Edital (1)"
+      },
+      {
+        "value": "Eletiva",
+        "texto": "Eletiva (4)"
+      },
+      {
+        "value": "Empreitada",
+        "texto": "Empreitada (2)"
+      },
+      {
+        "value": "Empréstimo consignado",
+        "texto": "Empréstimo consignado (32)"
+      },
+      {
+        "value": "Enquadramento",
+        "texto": "Enquadramento (1)"
+      },
+      {
+        "value": "Erro Médico",
+        "texto": "Erro Médico (20)"
+      },
+      {
+        "value": "Escolaridade",
+        "texto": "Escolaridade (1)"
+      },
+      {
+        "value": "Espécies de Contratos",
+        "texto": "Espécies de Contratos (1)"
+      },
+      {
+        "value": "Espécies de Títulos de Crédito",
+        "texto": "Espécies de Títulos de Crédito (14)"
+      },
+      {
+        "value": "Estabelecimentos de Ensino",
+        "texto": "Estabelecimentos de Ensino (23)"
+      },
+      {
+        "value": "Exame Psicotécnico / Psiquiátrico",
+        "texto": "Exame Psicotécnico / Psiquiátrico (1)"
+      },
+      {
+        "value": "Exame de Saúde e/ou Aptidão Física",
+        "texto": "Exame de Saúde e/ou Aptidão Física (1)"
+      },
+      {
+        "value": "Execução Contratual",
+        "texto": "Execução Contratual (1)"
+      },
+      {
+        "value": "Exoneração",
+        "texto": "Exoneração (1)"
+      },
+      {
+        "value": "Extravio de bagagem",
+        "texto": "Extravio de bagagem (13)"
+      },
+      {
+        "value": "Financiamento de Produto",
+        "texto": "Financiamento de Produto (8)"
+      },
+      {
+        "value": "Fiscalização",
+        "texto": "Fiscalização (1)"
+      },
+      {
+        "value": "Fornecimento de Energia Elétrica",
+        "texto": "Fornecimento de Energia Elétrica (154)"
+      },
+      {
+        "value": "Fornecimento de medicamentos",
+        "texto": "Fornecimento de medicamentos (2)"
+      },
+      {
+        "value": "Fornecimento de Água",
+        "texto": "Fornecimento de Água (91)"
+      },
+      {
+        "value": "Férias",
+        "texto": "Férias (2)"
+      },
+      {
+        "value": "Gestante / Adotante / Paternidade",
+        "texto": "Gestante / Adotante / Paternidade (1)"
+      },
+      {
+        "value": "IPTU/ Imposto Predial e Territorial Urbano",
+        "texto": "IPTU/ Imposto Predial e Territorial Urbano (16)"
+      },
+      {
+        "value": "IPVA - Imposto Sobre Propriedade de Veículos Automotores",
+        "texto": "IPVA - Imposto Sobre Propriedade de Veículos Automotores (10)"
+      },
+      {
+        "value": "ITBI - Imposto de Transmissão Intervivos de Bens Móveis e Imóveis",
+        "texto": "ITBI - Imposto de Transmissão Intervivos de Bens Móveis e Imóveis (1)"
+      },
+      {
+        "value": "Imissão",
+        "texto": "Imissão (1)"
+      },
+      {
+        "value": "Impostos",
+        "texto": "Impostos (5)"
+      },
+      {
+        "value": "Inadimplemento",
+        "texto": "Inadimplemento (1)"
+      },
+      {
+        "value": "Inclusão Indevida em Cadastro de Inadimplentes",
+        "texto": "Inclusão Indevida em Cadastro de Inadimplentes (177)"
+      },
+      {
+        "value": "Indenização / Terço Constitucional",
+        "texto": "Indenização / Terço Constitucional (2)"
+      },
+      {
+        "value": "Indenização por Dano Ambiental",
+        "texto": "Indenização por Dano Ambiental (3)"
+      },
+      {
+        "value": "Indenização por Dano Material",
+        "texto": "Indenização por Dano Material (497)"
+      },
+      {
+        "value": "Indenização por Dano Moral",
+        "texto": "Indenização por Dano Moral (1626)"
+      },
+      {
+        "value": "Infração Administrativa",
+        "texto": "Infração Administrativa (8)"
+      },
+      {
+        "value": "Inquérito / Processo / Recurso Administrativo",
+        "texto": "Inquérito / Processo / Recurso Administrativo (1)"
+      },
+      {
+        "value": "Inscrição / Documentação",
+        "texto": "Inscrição / Documentação (2)"
+      },
+      {
+        "value": "Interesse Particular",
+        "texto": "Interesse Particular (1)"
+      },
+      {
+        "value": "Intimação / Notificação",
+        "texto": "Intimação / Notificação (1)"
+      },
+      {
+        "value": "Irredutibilidade de Vencimentos",
+        "texto": "Irredutibilidade de Vencimentos (4)"
+      },
+      {
+        "value": "Jornada de Trabalho",
+        "texto": "Jornada de Trabalho (3)"
+      },
+      {
+        "value": "Juros de Mora - Legais / Contratuais",
+        "texto": "Juros de Mora - Legais / Contratuais (2)"
+      },
+      {
+        "value": "Leito de enfermaria / leito oncológico",
+        "texto": "Leito de enfermaria / leito oncológico (1)"
+      },
+      {
+        "value": "Leve",
+        "texto": "Leve (3)"
+      },
+      {
+        "value": "Liberação de Veículo Apreendido",
+        "texto": "Liberação de Veículo Apreendido (1)"
+      },
+      {
+        "value": "Licenciamento de Veículo",
+        "texto": "Licenciamento de Veículo (8)"
+      },
+      {
+        "value": "Licença por Acidente em Serviço",
+        "texto": "Licença por Acidente em Serviço (1)"
+      },
+      {
+        "value": "Licenças / Afastamentos",
+        "texto": "Licenças / Afastamentos (9)"
+      },
+      {
+        "value": "Liminar ",
+        "texto": "Liminar  (1)"
+      },
+      {
+        "value": "Locação de Imóvel",
+        "texto": "Locação de Imóvel (15)"
+      },
+      {
+        "value": "Locação de Móvel",
+        "texto": "Locação de Móvel (4)"
+      },
+      {
+        "value": "Militar",
+        "texto": "Militar (14)"
+      },
+      {
+        "value": "Multa",
+        "texto": "Multa (1)"
+      },
+      {
+        "value": "Multas e demais Sanções",
+        "texto": "Multas e demais Sanções (26)"
+      },
+      {
+        "value": "Municipais",
+        "texto": "Municipais (2)"
+      },
+      {
+        "value": "Mútuo",
+        "texto": "Mútuo (2)"
+      },
+      {
+        "value": "Overbooking",
+        "texto": "Overbooking (6)"
+      },
+      {
+        "value": "Pagamento",
+        "texto": "Pagamento (2)"
+      },
+      {
+        "value": "Pagamento Atrasado / Correção Monetária",
+        "texto": "Pagamento Atrasado / Correção Monetária (2)"
+      },
+      {
+        "value": "Pagamento Indevido",
+        "texto": "Pagamento Indevido (16)"
+      },
+      {
+        "value": "Parcelamento",
+        "texto": "Parcelamento (1)"
+      },
+      {
+        "value": "Pensão",
+        "texto": "Pensão (2)"
+      },
+      {
+        "value": "Perdas e Danos",
+        "texto": "Perdas e Danos (16)"
+      },
+      {
+        "value": "Piso Salarial",
+        "texto": "Piso Salarial (1)"
+      },
+      {
+        "value": "Poluição",
+        "texto": "Poluição (1)"
+      },
+      {
+        "value": "Posse",
+        "texto": "Posse (1)"
+      },
+      {
+        "value": "Prazo",
+        "texto": "Prazo (1)"
+      },
+      {
+        "value": "Prestação de Serviços",
+        "texto": "Prestação de Serviços (19)"
+      },
+      {
+        "value": "Processo Administrativo Disciplinar / Sindicância",
+        "texto": "Processo Administrativo Disciplinar / Sindicância (1)"
+      },
+      {
+        "value": "Processo Administrativo Disciplinar ou Sindicância",
+        "texto": "Processo Administrativo Disciplinar ou Sindicância (2)"
+      },
+      {
+        "value": "Promessa de Compra e Venda",
+        "texto": "Promessa de Compra e Venda (5)"
+      },
+      {
+        "value": "Promessa de Recompensa",
+        "texto": "Promessa de Recompensa (1)"
+      },
+      {
+        "value": "Propriedade",
+        "texto": "Propriedade (10)"
+      },
+      {
+        "value": "Protesto Indevido de Título",
+        "texto": "Protesto Indevido de Título (21)"
+      },
+      {
+        "value": "Readaptação",
+        "texto": "Readaptação (2)"
+      },
+      {
+        "value": "Reajuste de Remuneração, Soldo, Proventos ou Pensão",
+        "texto": "Reajuste de Remuneração, Soldo, Proventos ou Pensão (6)"
+      },
+      {
+        "value": "Reajustes de Remuneração, Proventos ou Pensão",
+        "texto": "Reajustes de Remuneração, Proventos ou Pensão (3)"
+      },
+      {
+        "value": "Recondução",
+        "texto": "Recondução (2)"
+      },
+      {
+        "value": "Regime Estatutário",
+        "texto": "Regime Estatutário (1)"
+      },
+      {
+        "value": "Reivindicação",
+        "texto": "Reivindicação (1)"
+      },
+      {
+        "value": "Remoção",
+        "texto": "Remoção (2)"
+      },
+      {
+        "value": "Rescisão",
+        "texto": "Rescisão (6)"
+      },
+      {
+        "value": "Rescisão / Resolução",
+        "texto": "Rescisão / Resolução (4)"
+      },
+      {
+        "value": "Rescisão do contrato e devolução do dinheiro",
+        "texto": "Rescisão do contrato e devolução do dinheiro (91)"
+      },
+      {
+        "value": "Responsabilidade Civil",
+        "texto": "Responsabilidade Civil (4)"
+      },
+      {
+        "value": "Responsabilidade da Administração",
+        "texto": "Responsabilidade da Administração (13)"
+      },
+      {
+        "value": "Restabelecimento",
+        "texto": "Restabelecimento (1)"
+      },
+      {
+        "value": "Revogação/Anulação de multa ambiental",
+        "texto": "Revogação/Anulação de multa ambiental (1)"
+      },
+      {
+        "value": "Salário-Família",
+        "texto": "Salário-Família (1)"
+      },
+      {
+        "value": "Saneamento",
+        "texto": "Saneamento (1)"
+      },
+      {
+        "value": "Seguro",
+        "texto": "Seguro (12)"
+      },
+      {
+        "value": "Servidor Público Civil",
+        "texto": "Servidor Público Civil (4)"
+      },
+      {
+        "value": "Servidão",
+        "texto": "Servidão (1)"
+      },
+      {
+        "value": "Serviços Hospitalares",
+        "texto": "Serviços Hospitalares (17)"
+      },
+      {
+        "value": "Serviços Profissionais",
+        "texto": "Serviços Profissionais (12)"
+      },
+      {
+        "value": "Sistema Remuneratório e Benefícios",
+        "texto": "Sistema Remuneratório e Benefícios (75)"
+      },
+      {
+        "value": "Substituição do Produto",
+        "texto": "Substituição do Produto (13)"
+      },
+      {
+        "value": "Subsídios",
+        "texto": "Subsídios (1)"
+      },
+      {
+        "value": "Suspensão",
+        "texto": "Suspensão (1)"
+      },
+      {
+        "value": "Tarifas",
+        "texto": "Tarifas (13)"
+      },
+      {
+        "value": "Telefonia",
+        "texto": "Telefonia (61)"
+      },
+      {
+        "value": "Tempo de Serviço",
+        "texto": "Tempo de Serviço (1)"
+      },
+      {
+        "value": "Transação",
+        "texto": "Transação (1)"
+      },
+      {
+        "value": "Transporte Aéreo",
+        "texto": "Transporte Aéreo (45)"
+      },
+      {
+        "value": "Transporte Terrestre",
+        "texto": "Transporte Terrestre (9)"
+      },
+      {
+        "value": "Transporte de Coisas",
+        "texto": "Transporte de Coisas (1)"
+      },
+      {
+        "value": "Transporte de Pessoas",
+        "texto": "Transporte de Pessoas (7)"
+      },
+      {
+        "value": "Tratamento da Própria Saúde",
+        "texto": "Tratamento da Própria Saúde (2)"
+      },
+      {
+        "value": "Turismo",
+        "texto": "Turismo (16)"
+      },
+      {
+        "value": "Unidade de terapia intensiva (UTI) / unidade de cuidados intensivos (UCI)",
+        "texto": "Unidade de terapia intensiva (UTI) / unidade de cuidados intensivos (UCI) (2)"
+      },
+      {
+        "value": "Urgência",
+        "texto": "Urgência (13)"
+      },
+      {
+        "value": "Vias de fato",
+        "texto": "Vias de fato (1)"
+      }
+    ]
+  },
+  {
+    "id": "facet_nome_tribunal",
+    "name": "facet_nome_tribunal",
+    "opcoes": [
+      {
+        "value": "",
+        "texto": "Tribunal"
+      },
+      {
+        "value": "Turmas Recursais",
+        "texto": "Turmas Recursais (3901)"
+      }
+    ]
+  },
+  {
+    "id": "facet_tipo_processo",
+    "name": "facet_tipo_processo",
+    "opcoes": [
+      {
+        "value": "",
+        "texto": "Tipo Processo"
+      },
+      {
+        "value": "Apelação Criminal",
+        "texto": "Apelação Criminal (5)"
+      },
+      {
+        "value": "Pedido de Uniformização de Interpretação de Lei Cível",
+        "texto": "Pedido de Uniformização de Interpretação de Lei Cível (5)"
+      },
+      {
+        "value": "Recurso Inominado",
+        "texto": "Recurso Inominado (3888)"
+      },
+      {
+        "value": "Recurso de Medida Cautelar",
+        "texto": "Recurso de Medida Cautelar (3)"
+      }
+    ]
+  },
+  {
+    "id": "facet_mes_ano_publicacao",
+    "name": "facet_mes_ano_publicacao",
+    "opcoes": [
+      {
+        "value": "",
+        "texto": "Data Publicação"
+      },
+      {
+        "value": "01/2026",
+        "texto": "01/2026 (19)"
+      },
+      {
+        "value": "02/2026",
+        "texto": "02/2026 (442)"
+      },
+      {
+        "value": "03/2026",
+        "texto": "03/2026 (955)"
+      },
+      {
+        "value": "04/2026",
+        "texto": "04/2026 (861)"
+      },
+      {
+        "value": "05/2026",
+        "texto": "05/2026 (645)"
+      },
+      {
+        "value": "06/2026",
+        "texto": "06/2026 (979)"
+      }
+    ]
+  }
+]

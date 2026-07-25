@@ -1,0 +1,46 @@
+## 6. Órgão julgador
+
+Refina a desambiguação de §3 dentro de uma coleção: escolhida a coleção (o grau),
+este filtro escolhe a Turma, a Seção, a Vara ou o gabinete.
+
+- Parâmetro: `orgaoJulgador` (singular, um valor por consulta).
+- Campo na UI: `input[placeholder="Filtrar Órgão Julgador ..."]` — busca incremental
+  dentro da lista, porque a lista é longa demais para caber na tela.
+- Lista completa por coleção: `06-orgaos-julgadores.json` (14 / 116 / 37 / 13).
+
+### ⚠️ O valor NÃO é único entre tribunais
+
+O `valor` enviado é o nome puro (`"1ª Turma"`), e "1ª Turma" existe em todos os 24 TRTs.
+Quem é único é o **rótulo**, que vem prefixado pela API (`"TRT9 - 1ª Turma"`). Ou seja:
+`orgaoJulgador` só desambigua **junto com** `tribunais`. Usar `orgaoJulgador` sem
+`tribunais` mistura as 1ªs Turmas do país inteiro.
+
+### Órgãos de 2º grau do TRT9 (coleção `acordaos`)
+
+```
+1ª Turma .......................... 56.203      Tribunal Pleno .................... 172
+2ª Turma .......................... 66.336      Órgão Especial .................... 190
+3ª Turma .......................... 30.201      Órgão Especial Administrativo ...... 18
+4ª Turma ..........................             Uniformização de Jurisprudência . 1.254
+5ª Turma ..........................             OE Uniformização de Jurisprudência  422
+6ª Turma ..........................             (valores exatos em 06-orgaos-julgadores.json)
+7ª Turma ..........................
+Seção Especializada ...............
+```
+
+### Prova de que restringe
+
+Query `insalubridade`, `acordaos`, TRT9, 2025-01-01..2025-03-31 (base = 2459):
+
+```
+sem órgão ............................ 2459
+orgaoJulgador=1ª Turma ...............  180
+orgaoJulgador=Seção Especializada ....  141
+```
+E em 1º grau (`sentencas`): `orgaoJulgador=06ª VARA DO TRABALHO DE CURITIBA` → 28.
+
+⚠️ A grafia importa: as Varas vêm em CAIXA ALTA com zero à esquerda
+(`06ª VARA DO TRABALHO DE CURITIBA`, não `6ª Vara do Trabalho de Curitiba`).
+Use `./bin/jur trt9 --listar-orgaos -g 1` para copiar o valor exato.
+
+Prints: `06.01-filtro-orgao-julgador.png`

@@ -1,0 +1,26 @@
+[
+  {
+    "value": "-1",
+    "texto": "Todos"
+  },
+  {
+    "value": "0",
+    "texto": "Todos (exceto Turmas Recursais)"
+  },
+  {
+    "value": "4",
+    "texto": "Tribunal de Alçada do RS"
+  },
+  {
+    "value": "3",
+    "texto": "Tribunal de Justiça do RS"
+  },
+  {
+    "value": "6",
+    "texto": "Turmas Recursais"
+  },
+  {
+    "value": "",
+    "texto": ""
+  }
+]

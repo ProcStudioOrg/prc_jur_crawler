@@ -1,0 +1,26 @@
+TJPR — 00-portal · §1 Tela inicial do portal
+Print: 01.01-tela-inicial.png
+
+Portal institucional: https://www.tjpr.jus.br/
+
+O portal principal NÃO é o caminho do crawler. A jurisprudência vive em um
+subdomínio/contexto próprio, que responde sem passar pelo portal:
+
+    https://portal.tjpr.jus.br/jurisprudencia/publico/pesquisa.do?actionType=iniciar
+
+Módulos de jurisprudência encontrados no TJPR:
+
+| # | Módulo | URL | Situação |
+|---|---|---|---|
+| 01 | Jurisprudência (público) | portal.tjpr.jus.br/jurisprudencia/publico/pesquisa.do | MAPEADO — é o único módulo público de jurisprudência |
+| —  | Consulta processual (Projudi/PJe) | processo.tjpr.jus.br | fora de escopo: acompanhamento processual, não jurisprudência |
+| —  | Acesso restrito ("ACESSO RESTRITO" no topo) | mesmo contexto | interno do tribunal (cedoc, indexação, edição de ementas) — exige login |
+
+Dentro do módulo 01 existem DUAS bases dentro da mesma tela, em abas:
+  - TRIBUNAL DE JUSTIÇA DO PARANÁ  (a jurisprudência do PR — o que interessa)
+  - CORTE INTERAMERICANA DE DIREITOS HUMANOS (Corte IDH — acervo internacional
+    hospedado pelo TJPR; contamina TODA busca, ver §8)
+
+Sistema de tramitação do TJPR é o Projudi, mas a jurisprudência NÃO é o módulo
+de jurisprudência do Projudi (como no TJGO): é uma aplicação Struts própria.
+Confirmado no navegador, não presumido pela família do sistema.

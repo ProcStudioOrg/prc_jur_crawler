@@ -1,0 +1,74 @@
+TJRS — Filtro "Tribunal": a desambiguação Justiça Comum × Juizados Especiais
+===========================================================================
+
+Print: 02.01-combo-tribunal.png   (select expandido; ver nota sobre prints no fim)
+JSON:  02-tribunais.json          (lido do DOM depois do AJAX)
+
+Este é o filtro MAIS IMPORTANTE do módulo: é ele — e só ele — que separa
+Justiça Comum de Juizados Especiais/Turmas Recursais no TJRS.
+
+HTML do elemento (DOM vivo, depois do AJAX)
+-------------------------------------------
+<label for="filtroTribunal" class="label-filtros">Tribunal:</label>
+<select id="filtroTribunal" data-label="ct" class="form-control first_select" name="filtroTribunal">
+  <option value="-1" selected>Todos</option>
+  <option value="0">Todos (exceto Turmas Recursais)</option>
+  <option value="4">Tribunal de Alçada do RS</option>
+  <option value="3">Tribunal de Justiça do RS</option>
+  <option value="6">Turmas Recursais</option>
+  <option value=""></option>          <!-- opção vazia, quirk do loop do JS -->
+</select>
+
+ATENÇÃO / ARMADILHA DE MAPEAMENTO
+---------------------------------
+No HTML ESTÁTICO (curl) este select tem UMA opção: `<option value="-1">Todos</option>`.
+As demais entram por AJAX (`metodo=listarTribunais`) depois do load. Quem mapeia com
+curl conclui que "o filtro não tem opções" e perde a desambiguação inteira. Os
+valores acima foram lidos do DOM vivo no Playwright.
+
+O mesmo vale para filtroRelator (1 -> 1.484 opções), filtroTipoProcesso (1 -> 370),
+filtroClasseCnj (0 -> 235) e filtroOrgaoJulgador (1 -> 108, e só depois de escolher
+um tribunal).
+
+Como cada valor vira cláusula Solr (campo `filtro` da resposta)
+---------------------------------------------------------------
+  -1  ->  (nenhuma cláusula)              = TJ + Alçada + Turmas Recursais
+   0  ->  cod_tribunal:[3 TO 4]           = "todos exceto Turmas Recursais"
+   3  ->  cod_tribunal:3                  = Tribunal de Justiça do RS  (JUSTIÇA COMUM)
+   4  ->  cod_tribunal:4                  = Tribunal de Alçada do RS   (extinto 2005)
+   6  ->  cod_tribunal:6                  = Turmas Recursais           (JUIZADOS ESPECIAIS)
+
+PROVA de que o filtro é aplicado (contagens, não impressão)
+-----------------------------------------------------------
+Termo "dano moral", data de julgamento 01/01/2026 a 30/06/2026, medido DUAS vezes:
+no navegador (span #ajx_numFound, prints 06.01/06.02) e pelo endpoint (numFound).
+Os dois deram o mesmo número.
+
+  Justiça Comum (Tribunal de Justiça do RS, cod 3) ....... 20.023
+  Turmas Recursais            (cod 6) ....................  3.901
+  Todos                       (cod -1) ................... 23.924   = 20.023 + 3.901
+  Todos exceto Turmas Recursais (cod 0) .................. 20.023
+  (mesma busca sem filtro de data, Justiça Comum) ....... 439.968
+
+Contagens diferentes E somando exatamente = o filtro entra na consulta. Confirmado
+também item por item: com cod 6 todos os docs vêm com `cod_tribunal: 6`,
+`nome_tribunal: "Turmas Recursais"` e `orgao_julgador` casando /Turma/.
+
+Tribunal de Alçada tem 0 julgados no período de 2026 (por isso cod 0 == cod 3 ali);
+o acervo dele é histórico (até 2005).
+
+Observação sobre os órgãos julgadores
+-------------------------------------
+A distinção não aparece apenas no nome do tribunal: os órgãos são disjuntos.
+Justiça Comum tem Câmaras Cíveis/Criminais, Grupos, Órgão Especial e
+Vice-Presidências (108 opções, print 03.01). Turmas Recursais tem 23 opções, todas
+"Turma ..." (print 03.04). Ver 03-orgaos-julgadores-tj.json e
+03-orgaos-julgadores-turmas-recursais.json.
+
+Nota sobre os prints de combo
+-----------------------------
+O dropdown nativo de um <select> é desenhado pelo sistema operacional e NÃO
+aparece em screenshot de browser. Para produzir os prints 02.01 e 03.0x o
+mapeamento expande o elemento no DOM (`el.size = N` + `height:auto`) e fotografa
+o `.form-group`. É a lista real de opções, vinda do DOM vivo — só o modo de
+exibição é forçado.

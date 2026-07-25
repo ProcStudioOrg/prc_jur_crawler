@@ -1,0 +1,23 @@
+TJSC — SEÇÃO 4: FILTROS DE DATA
+===============================
+Print: 04.01-calendario-data-julgamento.png
+
+São DOIS pares de datas, independentes (as contagens diferem):
+
+  Data do julgamento : #dtDecisaoInicio   / #dtDecisaoFim
+                       (hidden espelho: #hdnDecisaoInicio / #hdnDecisaoFim)
+  Data da publicação : #dtPublicacaoInicio / #dtPublicacaoFim
+                       (hidden espelho: #hdnPublicacaoInicio / #hdnPublicacaoFim)
+
+Formato DD/MM/YYYY. O campo tem datepicker, mas aceita digitação direta —
+`page.fill()` basta; não é preciso clicar no calendário.
+
+PROVA DE QUE RESTRINGE ("dano moral", origem TJSC, escopo inteiro teor):
+  sem filtro de data            442.794
+  01/01/2026 a 31/03/2026         8.315
+  01/01/2015 a 31/12/2015        11.554
+  01/01/2010 a 31/12/2010         7.310
+
+Ou seja, a base do portal novo NÃO é só do e-Proc para cá: o acervo histórico
+foi migrado e é pesquisável (2010 responde). O portal antigo, para o mesmo
+período de 2026, devolve 15 — ver 00-portal/01-tela-inicial.txt.

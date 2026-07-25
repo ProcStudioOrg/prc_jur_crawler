@@ -1,0 +1,44 @@
+TJSC — SEÇÃO 2: COMBO "ORIGEM" — A DESAMBIGUAÇÃO OBRIGATÓRIA
+============================================================
+Print : 02.01-combo-origem.png
+Dados : 02-origens.json  (lido do DOM vivo)
+HTML  : <select id="selOrigem" name="selOrigem[]" multiple> (bootstrap-select)
+
+É AQUI que se separa Justiça Comum de Juizados Especiais no TJSC.
+
+  value | label                    | o que é
+  ------+--------------------------+-------------------------------------------
+    1   | TJSC                     | JUSTIÇA COMUM, 2º grau (Câmaras, Grupos,
+        |                          | Seções, Órgão Especial, Tribunal Pleno)
+    3   | Turmas Recursais         | JUIZADOS ESPECIAIS — 2º grau dos JECs
+    4   | Turmas de Uniformização  | JUIZADOS ESPECIAIS — uniformização
+    5   | Conselho da Magistratura | administrativo (não é jurisdicional)
+
+É `multiple`: dá para marcar mais de uma. O crawler expõe isso como
+`--origem todas`.
+
+O select real fica ESCONDIDO atrás do widget bootstrap-select, então
+`page.selectOption()` do Playwright não funciona. É preciso marcar `option.selected`
+no DOM, chamar `jQuery('#selOrigem').selectpicker('refresh')` e disparar `change`
+à mão — e ESPERAR, porque o `change` recarrega por AJAX os combos dependentes
+(#selTipoDocumento, #selOrgao, #selRelator, #selClasse). Sem a espera, um filtro
+de órgão aplicado logo em seguida se perde em silêncio.
+
+PROVA DE QUE O FILTRO ENTRA (contagens reais, "dano moral", julgamento
+01/01/2026–31/03/2026, escopo inteiro teor — ver 06-contagens.json):
+
+    TJSC (Justiça Comum)     8.315
+    Turmas Recursais           893
+    Turmas de Uniformização      5
+    Conselho da Magistratura     0
+    ------------------------------
+    todas as origens         9.213   = 8.315 + 893 + 5 + 0   ✔ fecha exato
+
+Prints das duas listas de resultados, lado a lado:
+  06.01-resultados-justica-comum.png
+  06.02-resultados-turmas-recursais.png
+
+Sinais na PRÓPRIA linha de resultado que confirmam o recorte (usados nos testes):
+  - "ACÓRDÃOS DO TRIBUNAL DE JUSTIÇA"  vs  "ACÓRDÃOS DAS TURMAS RECURSAIS"
+  - órgão julgador "3ª Câmara de Direito Civil"  vs  "2ª Turma Recursal"
+  - sufixo do nº do processo: ".../TJSC"  vs  ".../SC"

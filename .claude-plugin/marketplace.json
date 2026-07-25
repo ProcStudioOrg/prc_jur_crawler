@@ -1,0 +1,28 @@
+{
+  "name": "jur-tribunais-brasileiros",
+  "owner": {
+    "name": "Bruno Pellizzetti",
+    "email": "pelli.br.sp@gmail.com"
+  },
+  "metadata": {
+    "description": "Busca de jurisprudência nos tribunais brasileiros: skills de busca, verificação anti-alucinação, conserto de crawler e mapeamento de tribunal novo.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "jur-tribunais",
+      "source": "./plugins/jur-tribunais",
+      "description": "Pesquisa, verifica e mapeia jurisprudência de TJs, TRFs e TCU brasileiros via a CLI `jur`.",
+      "category": "research",
+      "keywords": [
+        "jurisprudencia",
+        "brasil",
+        "tribunais",
+        "direito",
+        "case-law",
+        "crawler",
+        "playwright"
+      ]
+    }
+  ]
+}

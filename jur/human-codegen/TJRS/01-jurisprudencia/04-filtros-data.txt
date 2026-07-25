@@ -1,0 +1,52 @@
+TJRS — Filtros de data (julgamento e publicação)
+===============================================
+
+Print: 04.01-calendario-data-julgamento.png  (jQuery UI datepicker, em pt-BR)
+
+São DOIS filtros independentes, ambos presentes no módulo.
+
+4. Data de JULGAMENTO
+---------------------
+<input type="text" id="data_julgamento_de"  name="data_julgamento_de"  class="form-control data-input" placeholder="00/00/0000">
+<input type="text" id="data_julgamento_ate" name="data_julgamento_ate" class="form-control data-input" placeholder="00/00/0000">
+
+5. Data de PUBLICAÇÃO
+---------------------
+<input type="text" id="data_publicacao_de"  name="data_publicacao_de"  class="form-control data-input" placeholder="00/00/0000">
+<input type="text" id="data_publicacao_ate" name="data_publicacao_ate" class="form-control data-input" placeholder="00/00/0000">
+
+Formato e comportamento
+-----------------------
+- Formato: DD/MM/YYYY (o datepicker é configurado com `dateFormat: "dd/mm/yy"`,
+  `locale: pt`). Máscara via jquery.mask.
+- O JS valida com `validateDate()` antes de buscar; data inválida dispara
+  `alert("Data de julgamento inicial invalida.")` e LIMPA o campo — no crawler
+  isso não acontece porque falamos direto com o endpoint, então validar a data é
+  responsabilidade nossa (o TJRSCrawler rejeita formato != DD/MM/YYYY).
+- Intervalo ABERTO é permitido (documentado na Ajuda oficial §5.1): só o primeiro
+  campo = tudo depois daquela data; só o segundo = tudo antes.
+
+Cláusulas Solr geradas
+----------------------
+  data_julgamento:[2026-01-01T00:00:00Z TO 2026-03-31T23:59:59Z]
+  data_publicacao:[2026-01-01T00:00:00Z TO 2026-03-31T23:59:59Z]
+(o fim do intervalo é inclusivo, 23:59:59)
+
+PROVA de que restringe (numFound reais, "usucapiao", Justiça Comum, jul/2026)
+----------------------------------------------------------------------------
+  sem filtro de data ................................. 34.502
+  data_julgamento 01/01/2026 a 31/03/2026 ............  1.109
+  data_publicacao 01/01/2026 a 31/03/2026 ............  1.118
+
+Os dois números são PRÓXIMOS mas DIFERENTES — é a evidência de que julgamento e
+publicação são campos distintos (julgado em março e publicado em abril entra em um
+e não no outro). Não presuma que dá no mesmo.
+
+Ordenação por data
+------------------
+<input type="hidden" name="ordem" id="ordem" value="desc" />
+  desc (default) -> sort=data_julgamento desc  (mais recentes primeiro)
+  asc            -> sort=data_julgamento asc   (mais antigos primeiro)
+Com `asc` o primeiro julgado da base aparece: 02/06/1902, Quarta Câmara Cível.
+Não há ordenação por relevância exposta; a tela oferece só
+"Classificar por data crescente/decrescente".

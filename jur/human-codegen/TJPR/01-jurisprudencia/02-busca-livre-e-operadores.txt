@@ -1,0 +1,73 @@
+TJPR — 01-jurisprudencia · §2 Pesquisa livre e operadores
+Prints: 02.01-campo-busca-e-operadores.png · 02.02-ajuda-operadores.png
+
+== 1. Busca principal ==
+
+  <input type="text" name="criterioPesquisa" maxlength="150" size="48" value="" id="criterioPesquisa">
+
+Limite: 150 caracteres. Default: operador E implícito entre as palavras.
+O buscador ignora acentuação e maiúsculas/minúsculas (confirmado, ver tabela).
+
+Os 5 botões abaixo do campo só inserem texto no campo (`getOperador`):
+
+  <input type="button" id="btE"    value="E"    onClick="getOperador('E');"    title="Ambos os termos: 'indenização E moral'">
+  <input type="button" id="btOu"   value="OU"   onClick="getOperador('OU');"   title="Ao menos um termo: 'indenização OU reparação'">
+  <input type="button" id="btNao"  value="!NAO" onClick="getOperador('!NÃO');" title="Não deve conter o termo: '!NÃO criminal'">
+  <input type="button" id="btProx" value="PROX" onClick="getOperador('PROX');" title="Termos próximos: 'indenização PROX3 moral'">
+  <input type="button" id="bt$"    value="$"    onClick="getOperador('$');"    title="Termos com radicais: 'indeni$'">
+
+Ajuda oficial (o "i" ao lado do campo), print 02.02:
+  /jurisprudencia/publico/callout.do?tjpr.url.crypto=<...>&pagina=ajudaOperadores.html
+  - aspas duplas = frase/expressão exata
+  - "Por padrão, o sistema utiliza o operador 'E'"
+  - OU: "os termos procurados devem ser digitados entre parênteses"
+  - PROX: "a distância máxima ... informada por meio de parâmetros numéricos"
+  - $ substitui qualquer quantidade de caracteres
+
+== 2. Operadores — TESTADOS UM A UM ==
+
+Metodologia: mesma janela para todos — `idLocalPesquisa=1` (EMENTA),
+`ambito=-1` (TODAS), julgamento 01/01/2026 a 31/03/2026, contador
+"registro(s) da Jurisprudência do Tribunal de Justiça". Medido em 25/07/2026.
+
+| Sintaxe | Funciona? | Evidência (nº de julgados) |
+|---|---|---|
+| `a b` (E implícito) | SIM | `prescrição crédito` = 678 (controles: prescrição 4.192, crédito 7.485) |
+| `E` explícito | SIM | `prescrição E crédito` = 678 — idêntico ao implícito |
+| `OU` com parênteses | SIM | `(desapropriação OU expropriação)` = 258 (controles: 107 e 153) |
+| `OU` sem parênteses | SIM | `desapropriação OU expropriação` = 258 — parênteses são opcionais na prática |
+| `!NAO` (sem til) | SIM | `desapropriação !NAO indireta` 107 -> 88 |
+| `!NÃO` (com til) | SIM | mesmo resultado: 88 |
+| `$` radical à direita | SIM | `constituciona$` = 4.231 contra `constitucional` = 3.227 |
+| `$` radical dos dois lados | SIM | `$constituciona$` = 4.853 |
+| `"frase exata"` | SIM | `"dano moral"` = 6.841 contra `dano moral` = 7.014 |
+| maiúsculas/minúsculas | indiferente | `DANO MORAL` = `dano moral` = 7.014 |
+| acentuação | indiferente | `usucapião` = `usucapiao` = 467 (com corpo em latin1!) |
+| **`PROX`n** | **NÃO — não use** | ver abaixo |
+
+>>> DEFEITO 1 — `PROX` NÃO RESTRINGE, EXPANDE.
+    `mandado liminar`        = 510
+    `mandado liminar PROX4`  = 6.916
+    `mandado liminar PROX1`  = 6.916
+    `mandado liminar PROX40` = 6.916
+    `mandado PROX4 liminar`  = 6.916
+    Controles: `mandado` = 2.394, `liminar` = 4.309.
+    O número da distância é IGNORADO (1, 4 e 40 dão exatamente o mesmo) e o
+    resultado é maior que o E e maior até que a união dos dois termos. Qualquer
+    que seja a semântica interna, PROX não entrega proximidade. O crawler não
+    oferece atalho para PROX e o CLAUDE-TJPR.md desaconselha.
+
+>>> DEFEITO 2 — `!NAO` só é confiável depois de UM termo.
+    `desapropriação !NAO indireta`               107 -> 88     OK
+    `moral !NAO consumidor`                    7.488 -> 4.636  OK
+    `dano moral !NAO consumidor`               7.014 -> 7.950  QUEBRA (aumentou!)
+    `dano moral !NAO consumidor !NAO trabalhista`      7.925   QUEBRA
+    Com dois termos antes do `!NAO` a expressão deixa de ser "E" e o total
+    SOBE. Use `!NAO` com um termo só, ou confira o total antes de confiar.
+
+== 3. Número máximo de páginas / resultados ==
+
+Não há teto técnico anunciado (diferente do TJPA, que corta em 10.000).
+Busca vazia (sem termo, sem data, todas as bases) = 6.360.593 registros,
+143.000+ páginas; paginação profunda testada até a página 80 sem erro.
+50 registros por página, fixo — ver §8.

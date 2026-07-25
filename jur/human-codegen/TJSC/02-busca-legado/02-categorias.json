@@ -1,0 +1,26 @@
+[
+ {
+  "id": "acordaos",
+  "label": "Acórdãos do Tribunal de Justiça"
+ },
+ {
+  "id": "despachos",
+  "label": "Despachos das Vice-Presidências"
+ },
+ {
+  "id": "acma",
+  "label": "Acórdãos do Conselho da Magistratura"
+ },
+ {
+  "id": "decmonos",
+  "label": "Decisões Monocráticas do Tribunal de Justiça"
+ },
+ {
+  "id": "recurso",
+  "label": "Acórdãos das Turmas Recursais e de Uniformização"
+ },
+ {
+  "id": "dmtrs",
+  "label": "Decisões Monocráticas das Turmas Recursais"
+ }
+]

@@ -1,0 +1,185 @@
+{
+ "dano-moral_2026-1T_tjsc": {
+  "filtros": {
+   "q": "dano moral",
+   "origem": [
+    "1"
+   ],
+   "di": "01/01/2026",
+   "df": "31/03/2026"
+  },
+  "total": 8315,
+  "itensNaPagina": 10
+ },
+ "dano-moral_2026-1T_turmas": {
+  "filtros": {
+   "q": "dano moral",
+   "origem": [
+    "3"
+   ],
+   "di": "01/01/2026",
+   "df": "31/03/2026"
+  },
+  "total": 893,
+  "itensNaPagina": 10
+ },
+ "dano-moral_2026-1T_uniformizacao": {
+  "filtros": {
+   "q": "dano moral",
+   "origem": [
+    "4"
+   ],
+   "di": "01/01/2026",
+   "df": "31/03/2026"
+  },
+  "total": 5,
+  "itensNaPagina": 5
+ },
+ "dano-moral_2026-1T_conselho": {
+  "filtros": {
+   "q": "dano moral",
+   "origem": [
+    "5"
+   ],
+   "di": "01/01/2026",
+   "df": "31/03/2026"
+  },
+  "total": 0,
+  "itensNaPagina": 0
+ },
+ "dano-moral_2026-1T_todas-origens": {
+  "filtros": {
+   "q": "dano moral",
+   "origem": [
+    "1",
+    "3",
+    "4",
+    "5"
+   ],
+   "di": "01/01/2026",
+   "df": "31/03/2026"
+  },
+  "total": 9213,
+  "itensNaPagina": 10
+ },
+ "dano-moral_sem-data_tjsc": {
+  "filtros": {
+   "q": "dano moral",
+   "origem": [
+    "1"
+   ]
+  },
+  "total": 442794,
+  "itensNaPagina": 10
+ },
+ "dano-moral_2026-1T_tjsc_so-monocraticas": {
+  "filtros": {
+   "q": "dano moral",
+   "origem": [
+    "1"
+   ],
+   "di": "01/01/2026",
+   "df": "31/03/2026",
+   "tipos": [
+    "2"
+   ]
+  },
+  "total": 2861,
+  "itensNaPagina": 10
+ },
+ "dano-moral_2026-1T_tjsc_so-acordaos": {
+  "filtros": {
+   "q": "dano moral",
+   "origem": [
+    "1"
+   ],
+   "di": "01/01/2026",
+   "df": "31/03/2026",
+   "tipos": [
+    "1"
+   ]
+  },
+  "total": 4895,
+  "itensNaPagina": 10
+ },
+ "op_baseline_usucapiao-extraordinaria": {
+  "filtros": {
+   "q": "usucapiao extraordinaria",
+   "origem": [
+    "1"
+   ]
+  },
+  "total": 11818,
+  "itensNaPagina": 10
+ },
+ "op_aspas": {
+  "filtros": {
+   "q": "\"usucapiao extraordinaria\"",
+   "origem": [
+    "1"
+   ]
+  },
+  "total": 10621,
+  "itensNaPagina": 10
+ },
+ "op_ou": {
+  "filtros": {
+   "q": "usucapiao ou extraordinaria",
+   "origem": [
+    "1"
+   ]
+  },
+  "total": 131006,
+  "itensNaPagina": 10
+ },
+ "op_e": {
+  "filtros": {
+   "q": "usucapiao e extraordinaria",
+   "origem": [
+    "1"
+   ]
+  },
+  "total": 11818,
+  "itensNaPagina": 10
+ },
+ "op_nao": {
+  "filtros": {
+   "q": "usucapiao nao extraordinaria",
+   "origem": [
+    "1"
+   ]
+  },
+  "total": 29528,
+  "itensNaPagina": 10
+ },
+ "op_prox": {
+  "filtros": {
+   "q": "usucapiao prox5 extraordinaria",
+   "origem": [
+    "1"
+   ]
+  },
+  "total": 0,
+  "itensNaPagina": 0
+ },
+ "op_curinga": {
+  "filtros": {
+   "q": "usucapi*",
+   "origem": [
+    "1"
+   ]
+  },
+  "total": 42068,
+  "itensNaPagina": 10
+ },
+ "op_uma_palavra": {
+  "filtros": {
+   "q": "usucapiao",
+   "origem": [
+    "1"
+   ]
+  },
+  "total": 41346,
+  "itensNaPagina": 10
+ }
+}

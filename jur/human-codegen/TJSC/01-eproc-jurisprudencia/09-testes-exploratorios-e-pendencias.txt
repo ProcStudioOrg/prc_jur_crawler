@@ -1,0 +1,49 @@
+TJSC — SEÇÃO 9: TESTES EXPLORATÓRIOS E PENDÊNCIAS
+=================================================
+Print: 09.01-busca-simples-sem-filtro.png
+
+Roteiro do CLAUDE-CODEGEN.md §5 (Fase 3), item por item:
+
+ 1. Busca simples, sem filtro nem operador
+    "usucapiao extraordinaria" -> 11.818. Tela responde em ~1s. ✔
+
+ 2. Juizados Especiais × Justiça Comum  ← O REQUISITO PRINCIPAL
+    Filtro #selOrigem. Contagens distintas e soma exata (ver 02-combo-origem.txt).
+    Confirmado também no conteúdo: tipo de documento, órgão julgador e sufixo do
+    nº do processo mudam junto. ✔
+
+ 3. Divisão por área (Cível × Criminal)
+    NÃO existe como filtro próprio, diferente do TJRS (que tem checkbox
+    "Seção"). Aproxima-se pelo Órgão Julgador ("... Câmara de Direito Civil" ×
+    "... Câmara Criminal") ou pela Classe. ⚠️ limitação real do tribunal.
+
+ 4. Filtro de Órgão/Matéria — 103 opções (TJSC), 35 (Turmas Recursais),
+    enumeradas em 03-orgaos-*.json. ✔
+
+ 5. Unidade específica (comarca/serventia)
+    NÃO existe no portal novo. O portal ANTIGO tinha campo "Comarca"
+    (#origem_autocomplete) — ver 02-busca-legado/. ⚠️ perdido na migração.
+
+ 6. Magistrado/a — #selRelator, 291 nomes (origem TJSC). ✔
+    Não há campo separado de "juiz prolator" (o antigo tinha).
+
+ 7. Tipo de ato — #selTipoDocumento, com códigos que MUDAM por origem
+    (ver 03-combos-dependentes.txt). ✔
+
+ 8. Número do processo — #txtProcesso. É o que alimenta o Checker. ✔
+    Ver 05-numero-processo.txt.
+
+ 9. Datas (julgamento E publicação, separadas) e operadores
+    Ver 04-filtros-data.txt e 07-operadores.txt. Todos os operadores foram
+    testados um a um; `prox5`/`prox(5)` NÃO funcionam. ✔
+
+PENDÊNCIAS CONHECIDAS (não implementadas de propósito, por não terem sido medidas)
+  - #chkAgruparResultados (agrupar documentos do mesmo processo) — muda a
+    semântica da contagem; não medido.
+  - #chkCaput — não medido.
+  - Filtro "Assunto" (existe na coluna de facetas do resultado, não no
+    formulário) — as facetas laterais (Assunto/Classe/Data/Órgão/Relator)
+    refinam depois da busca e não foram mapeadas.
+  - Geração de PDF (a.gerarPDFDocumento) — rota não mapeada.
+  - Súmulas, Enunciados, IRDR, IAC, Informativos: links do menu lateral, bases
+    separadas, fora do escopo do crawler de jurisprudência.

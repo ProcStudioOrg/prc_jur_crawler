@@ -1,0 +1,182 @@
+[
+ {
+  "tag": "INPUT",
+  "type": "search",
+  "name": "txtPesquisa",
+  "id": "txtPesquisa",
+  "valor": ""
+ },
+ {
+  "tag": "INPUT",
+  "type": "hidden",
+  "name": "hdnExibirPesquisaAvancada",
+  "id": "hdnExibirPesquisaAvancada",
+  "valor": ""
+ },
+ {
+  "tag": "INPUT",
+  "type": "hidden",
+  "name": "hdnUrlCarregarListasCombobox",
+  "id": "hdnUrlCarregarListasCombobox",
+  "valor": "externo_controlador.php?acao=jurisprudencia@jurisprudencia/a"
+ },
+ {
+  "tag": "SELECT",
+  "type": "select-multiple",
+  "name": "selOrigem[]",
+  "id": "selOrigem",
+  "valor": "1",
+  "opcoes": 4
+ },
+ {
+  "tag": "SELECT",
+  "type": "select-multiple",
+  "name": "selTipoDocumento[]",
+  "id": "selTipoDocumento",
+  "valor": "",
+  "opcoes": 3
+ },
+ {
+  "tag": "INPUT",
+  "type": "checkbox",
+  "name": "chkPrecedenteRelevante",
+  "id": "chkPrecedenteRelevante",
+  "valor": "on"
+ },
+ {
+  "tag": "INPUT",
+  "type": "checkbox",
+  "name": "chkAgruparResultados",
+  "id": "chkAgruparResultados",
+  "valor": "on"
+ },
+ {
+  "tag": "INPUT",
+  "type": "radio",
+  "name": "rdoCampo",
+  "id": "optInteiroTeor",
+  "valor": "I"
+ },
+ {
+  "tag": "INPUT",
+  "type": "radio",
+  "name": "rdoCampo",
+  "id": "optEmenta",
+  "valor": "E"
+ },
+ {
+  "tag": "INPUT",
+  "type": "checkbox",
+  "name": "chkCaput",
+  "id": "chkCaput",
+  "valor": "on"
+ },
+ {
+  "tag": "INPUT",
+  "type": "text",
+  "name": "txtProcesso",
+  "id": "txtProcesso",
+  "valor": ""
+ },
+ {
+  "tag": "SELECT",
+  "type": "select-multiple",
+  "name": "selClasse[]",
+  "id": "selClasse",
+  "valor": "",
+  "opcoes": 415
+ },
+ {
+  "tag": "INPUT",
+  "type": "search",
+  "name": "",
+  "id": "",
+  "valor": ""
+ },
+ {
+  "tag": "INPUT",
+  "type": "text",
+  "name": "dtDecisaoInicio",
+  "id": "dtDecisaoInicio",
+  "valor": ""
+ },
+ {
+  "tag": "INPUT",
+  "type": "text",
+  "name": "dtDecisaoFim",
+  "id": "dtDecisaoFim",
+  "valor": ""
+ },
+ {
+  "tag": "INPUT",
+  "type": "hidden",
+  "name": "hdnDecisaoInicio",
+  "id": "hdnDecisaoInicio",
+  "valor": ""
+ },
+ {
+  "tag": "INPUT",
+  "type": "hidden",
+  "name": "hdnDecisaoFim",
+  "id": "hdnDecisaoFim",
+  "valor": ""
+ },
+ {
+  "tag": "INPUT",
+  "type": "text",
+  "name": "dtPublicacaoInicio",
+  "id": "dtPublicacaoInicio",
+  "valor": ""
+ },
+ {
+  "tag": "INPUT",
+  "type": "text",
+  "name": "dtPublicacaoFim",
+  "id": "dtPublicacaoFim",
+  "valor": ""
+ },
+ {
+  "tag": "INPUT",
+  "type": "hidden",
+  "name": "hdnPublicacaoInicio",
+  "id": "hdnPublicacaoInicio",
+  "valor": ""
+ },
+ {
+  "tag": "INPUT",
+  "type": "hidden",
+  "name": "hdnPublicacaoFim",
+  "id": "hdnPublicacaoFim",
+  "valor": ""
+ },
+ {
+  "tag": "SELECT",
+  "type": "select-multiple",
+  "name": "selRelator[]",
+  "id": "selRelator",
+  "valor": "",
+  "opcoes": 291
+ },
+ {
+  "tag": "INPUT",
+  "type": "search",
+  "name": "",
+  "id": "",
+  "valor": ""
+ },
+ {
+  "tag": "SELECT",
+  "type": "select-multiple",
+  "name": "selOrgao[]",
+  "id": "selOrgao",
+  "valor": "",
+  "opcoes": 103
+ },
+ {
+  "tag": "INPUT",
+  "type": "search",
+  "name": "",
+  "id": "",
+  "valor": ""
+ }
+]

@@ -1,0 +1,31 @@
+TJSC — SEÇÃO 8: INTEIRO TEOR
+============================
+Print: 08.01-inteiro-teor.png
+
+Cada resultado traz `a.inteiroTeor[data-link]`, relativo à base
+https://eprocwebcon.tjsc.jus.br/consulta1g/ :
+
+  externo_controlador.php?acao=jurisprudencia@jurisprudencia/download_inteiro_teor
+    &id_jurisprudencia=<ID do documento>
+    &termosPesquisados=<termos da busca, base64 separados por "|">
+
+Resposta medida: HTTP 200, `Content-Type: text/html; charset= ISO-8859-1`,
+~80 KB, com `<title>Documento:8189967</title>` e o acórdão inteiro em HTML
+(inclui os termos pesquisados destacados).
+
+DUAS RESSALVAS
+1. ENCODING. O documento é ISO-8859-1/windows-1252, mesmo declarando
+   `<?xml version="1.0" encoding="ISO-8859-1"?>`. Decodificar como UTF-8 produz
+   "Poder Judici<?>rio". O navigator tenta UTF-8 estrito e cai para
+   windows-1252 — mesmo tratamento do TJRS.
+2. SESSÃO. O download SÓ funciona com os cookies do desafio F5. Por isso ele vai
+   por `context.request.get()` (reaproveita a sessão do browser) e não por um
+   `fetch`/`https.get` externo, e por isso a CLI mantém o browser aberto quando
+   `--fetch-inteiro-teor` é usado.
+   Esse host derruba conexões esporadicamente (ECONNRESET observado uma vez em
+   ~15 downloads): o navigator retenta 3 vezes com backoff e, se ainda falhar,
+   abre o link numa aba como último recurso.
+
+NÃO há PDF direto no link — o botão "picture_as_pdf" (a.gerarPDFDocumento) gera
+o PDF por outra rota, não mapeada. Para citação, o `.txt` gerado a partir do
+HTML basta.

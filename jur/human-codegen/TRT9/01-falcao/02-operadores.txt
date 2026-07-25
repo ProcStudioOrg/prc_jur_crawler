@@ -1,0 +1,29 @@
+## 2. Operadores
+
+Cada operador foi testado comparando **contagens** (`quantidadeTotal`) na mesma consulta:
+coleção `acordaos`, `tribunais=TRT9`, `dataInicio=2025-01-01`, `dataFim=2025-03-31`.
+Linha de base: `insalubridade` = **2459**.
+
+| Operador | Funciona? | Sintaxe aceita | Contagem medida | Observação |
+|---|---|---|---|---|
+| (espaço) | ✅ OU implícito | `insalubridade periculosidade` | 3033 | AMPLIA. Default é OU, não E. |
+| `"frase exata"` | ✅ | `"adicional de insalubridade"` | 1872 | Restringe. É o único jeito confiável de "colar" termos. |
+| `-termo` (exclusão) | ✅ | `insalubridade -periculosidade` | 1433 | Restringe. Aceita `-"frase exata"`. |
+| `+termo` (obrigatório) | ❌ | `+insalubridade +periculosidade` | 3033 | **A ajuda oficial do site diz que funciona — não funciona.** Devolve exatamente o mesmo que o OU implícito. |
+| `E` | ❌ | `insalubridade E periculosidade` | 3033 | Vira palavra literal (idem OU implícito). |
+| `OU` | ❌ | `insalubridade OU periculosidade` | 3033 | Idem. |
+| `NÃO` / `NAO` | ❌ | `insalubridade NAO periculosidade` | 3033 | Idem. Não exclui nada. |
+| `AND` | ❌ | `insalubridade AND periculosidade` | 3073 | 3073 > 2459: é token de busca, não operador. |
+| `OR` | ❌ | `insalubridade OR periculosidade` | 3051 | Idem. |
+| `NOT` | ❌ | `insalubridade NOT periculosidade` | 5623 | AMPLIA — o oposto do esperado. |
+| `*` (curinga/radical) | ❌ | `insalubrid*` | 1 | Trata `*` como caractere literal. Sem stemming por curinga. |
+| `ADJ` / `PROX` | ❌ | — | — | Não existem no sistema. |
+
+**Consequência prática para quem monta a query:** só há duas ferramentas reais —
+aspas para exigir a expressão e `-` para excluir. Para simular E, use aspas na
+expressão inteira ou aceite o ranking por relevância (`score`), que é o que o site faz.
+
+Modal oficial de ajuda: botão `#botao-pesquisa-avancada` ("Como Pesquisar").
+Texto integral salvo em `02-como-pesquisar-texto.txt`.
+
+Prints: `02.01-modal-como-pesquisar.png`

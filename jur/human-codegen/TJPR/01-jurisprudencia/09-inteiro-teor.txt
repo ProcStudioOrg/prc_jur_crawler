@@ -1,0 +1,60 @@
+TJPR — 01-jurisprudencia · §19 Ficha do julgado e inteiro teor
+Prints: 09.01-documento-ficha.png · 09.02-documento-integra-do-acordao.png
+
+URL da ficha:  https://portal.tjpr.jus.br/jurisprudencia/j/<idDocumento>/<slug>
+
+O slug é decorativo — qualquer texto serve (`/j/<id>/documento` funciona).
+Mas ele é OBRIGATÓRIO: `/j/<id>` sem barra e slug devolve 404.
+
+>>> A DESCOBERTA QUE TIROU O BROWSER DO TJPR
+    O crawler antigo abria cada julgado no Playwright e clicava em "Íntegra do
+    Acórdão" porque o texto "só carregava com JS". Não é verdade: o inteiro
+    teor JÁ VEM no HTML da ficha, dentro de
+
+        <div id="texto<idDocumento>"> ...texto integral... </div>
+
+    escondido por `style="display: none;"` numa <tr id="integra<id>">. O link
+    "Íntegra do Acórdão" só faz
+        $('integra<id>').style.display='' ; $('texto<id>').style.display=''
+    Um GET simples resolve. Print 09.02 mostra o texto revelado.
+
+Estrutura da ficha (`<b>Rótulo:</b> valor</td>`):
+
+  <b>Processo:</b> 0000270-85.2026.8.16.0068 (Decisão monocrática)
+  <b>Segredo de Justiça:</b> Não
+  <b>Relator(a):</b> Fernando Swain Ganem</br> <i>Juiz de Direito da Turma Recursal dos Juizados Especiais</i>
+  <b>Órgão Julgador:</b> 4ª Turma Recursal
+  <b>Comarca:</b> Chopinzinho
+  <b>Data do Julgamento:</b> Tue Mar 31 00:00:00 BRT 2026
+  <b>Fonte/Data da Publicação:</b> Tue Mar 31 00:00:00 BRT 2026
+
+>>> As datas na ficha vêm no `toString()` de java.util.Date
+    ("Tue Mar 31 00:00:00 BRT 2026"), não em DD/MM/YYYY como na listagem.
+    `TJPRNavigator.parseDocumento()` converte.
+
+Também na ficha:
+  - `div#ementa<id>`: ementa COMPLETA (a da listagem é truncada);
+  - "Ementa pré-formatada para citação" (`abrirEmenta`): gera a citação padrão
+        (TJPR - 4ª Turma Recursal - 0000270-85.2026.8.16.0068 - Chopinzinho -
+         Rel.: JUIZ DE DIREITO DA TURMA RECURSAL DOS JUIZADOS ESPECIAIS
+         FERNANDO SWAIN GANEM - J. 24.03.2026)
+    o Navigator extrai como campo `citacao` — é o que se cola numa petição;
+  - "Carregar documento": link para o ARQUIVO ORIGINAL
+        /jurisprudencia/publico/visualizacao.do?tjpr.url.crypto=<hex>
+    (ZIP/PDF/RTF, conforme o processo). Token cifrado, válido na sessão.
+    O crawler NÃO usa: o texto transcrito já basta e não depende de token.
+    A própria tela avisa: "O texto abaixo representa a transcrição de Acórdão.
+    Eventuais imagens serão suprimidas."
+  - "Verifique os documentos vinculados": histórico de juntadas (voto vencido,
+    ementa, acórdão) com data/hora — não é extraído.
+
+Formato do que sai:
+  `--fetch-inteiro-teor` grava um .txt por julgado em `--output-dir`, com
+  cabeçalho (processo, tipo, órgão + foro, relator, comarca, data, citação, URL),
+  seção EMENTA e seção INTEIRO TEOR, mais um `index.json`.
+  Uma requisição HTTP por julgado (~70 KB cada). Medido: 40/40 baixados,
+  0 falhas, 618 KB no total para 40 julgados de Turma Recursal.
+
+Casos em que o texto não vem: alguns documentos antigos (ou só com imagem) têm
+`div#texto<id>` vazio/curto — o campo `temInteiroTeor` fica `false` e o .txt
+registra "(não disponível neste documento)". Não é erro do crawler.

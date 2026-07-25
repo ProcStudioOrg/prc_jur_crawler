@@ -1,0 +1,87 @@
+[
+  {
+    "valor": "Acidente de Trabalho",
+    "rotulo": "Acidente de Trabalho",
+    "quantidade": 13204
+  },
+  {
+    "valor": "Aprendizado",
+    "rotulo": "Aprendizado",
+    "quantidade": 100
+  },
+  {
+    "valor": "Assédio Moral ou Sexual",
+    "rotulo": "Assédio Moral ou Sexual",
+    "quantidade": 1796
+  },
+  {
+    "valor": "Discriminação",
+    "rotulo": "Discriminação",
+    "quantidade": 931
+  },
+  {
+    "valor": "Estatuto da Criança e do Adolescente",
+    "rotulo": "Estatuto da Criança e do Adolescente",
+    "quantidade": 27
+  },
+  {
+    "valor": "Falência ou Recuperação Judicial",
+    "rotulo": "Falência ou Recuperação Judicial",
+    "quantidade": 11953
+  },
+  {
+    "valor": "Idoso",
+    "rotulo": "Idoso",
+    "quantidade": 146974
+  },
+  {
+    "valor": "Idoso acima de 80 Anos",
+    "rotulo": "Idoso acima de 80 Anos",
+    "quantidade": 19215
+  },
+  {
+    "valor": "Lei 13.015/2014",
+    "rotulo": "Lei 13.015/2014",
+    "quantidade": 157
+  },
+  {
+    "valor": "PRIORIDADE - SEM INFORMAÇÃO",
+    "rotulo": "PRIORIDADE - SEM INFORMAÇÃO",
+    "quantidade": 390578
+  },
+  {
+    "valor": "Pagamento de Salário",
+    "rotulo": "Pagamento de Salário",
+    "quantidade": 5987
+  },
+  {
+    "valor": "Pessoa com Deficiência",
+    "rotulo": "Pessoa com Deficiência",
+    "quantidade": 4393
+  },
+  {
+    "valor": "Pessoa com Doença Grave",
+    "rotulo": "Pessoa com Doença Grave",
+    "quantidade": 2579
+  },
+  {
+    "valor": "Pessoa em Situação de Rua",
+    "rotulo": "Pessoa em Situação de Rua",
+    "quantidade": 8
+  },
+  {
+    "valor": "Trabalho Escravo",
+    "rotulo": "Trabalho Escravo",
+    "quantidade": 1328
+  },
+  {
+    "valor": "Trabalho Infantil",
+    "rotulo": "Trabalho Infantil",
+    "quantidade": 107
+  },
+  {
+    "valor": "Violência no Trabalho",
+    "rotulo": "Violência no Trabalho",
+    "quantidade": 112
+  }
+]

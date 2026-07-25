@@ -1,0 +1,52 @@
+## 4. Filtro de data
+
+O Falcão tem UM filtro de data, não dois. Não existe "data de julgamento" separada de
+"data de publicação" como filtro — o filtro é único e o site o chama só de "Data".
+
+Na UI (bloco "Data", ícone `schedule`) há dois modos:
+
+1. **Atalhos** (`filtroRapidoData`): Últimos 7 dias, Últimos 30 dias, Mês passado,
+   Ano atual, Ano anterior — valores `7`, `30`, `60`, `365`, `730`.
+2. **Selecionar Período**: dois campos PrimeNG, `placeholder="Início"` e
+   `placeholder="Final"`.
+   ⚠️ O campo "Final" nasce `disabled` e só habilita depois que o "Início" é aceito pelo
+   componente. Automação que faz `fill()` nos dois em sequência trava — foi o que
+   aconteceu no mapeamento. Por isso o intervalo foi determinado direto na API.
+
+### Parâmetros da API
+
+| Parâmetro | Formato | Observação |
+|---|---|---|
+| `dataInicio` | `YYYY-MM-DD` | ISO. Aceita também `YYYY-MM-DDTHH:MM:SS` (mesmo resultado). |
+| `dataFim` | `YYYY-MM-DD` | |
+| `filtroRapidoData` | `7`\|`30`\|`60`\|`365`\|`730` | atalhos |
+
+Formatos que **NÃO** funcionam (testados):
+- `DD-MM-YYYY` → HTTP 200 com `{"userMessage":"Erro ao tentar processar a sua solicitação!"}`
+- `YYYYMMDD` (sem hífen) → aceita mas devolve **0 resultados** (falha silenciosa, o pior caso)
+- `DD/MM/YYYY` → **ignorado** (a API responde como se não houvesse filtro). Cuidado: essa é
+  a convenção da CLI do repo, então a conversão em `FalcaoCrawler._toApiDate()` é obrigatória.
+
+Nomes de parâmetro que NÃO existem (todos ignorados silenciosamente, devolvendo a
+contagem sem filtro): `dataInicial`/`dataFinal`, `dtInicio`/`dtFim`, `dataDe`/`dataAte`,
+`periodoInicial`/`periodoFinal`, `diasPesquisa`.
+
+### Prova de que restringe
+
+Query `adicional de insalubridade`, coleção `acordaos`, `tribunais=TRT9`:
+
+```
+sem filtro de data .......... 10000  (saturado — ver §9)
+2025-01-01 .. 2025-03-31 .....  5693
+2025-01-01 .. 2025-01-31 .....   801
+2099-01-01 .. 2099-12-31 .....     0
+```
+
+### A qual data ele se refere?
+
+Ao intervalo que cobre `dataJulgamento`/`dataJuntada` do documento. Confirmado por
+inspeção: com `2025-01-01..2025-03-31` todos os `dataJulgamento` retornados caem dentro
+do intervalo. Em `decisoesmonocraticas` só existe `dataJuntada` (não há `dataJulgamento`),
+e é ela que responde ao filtro.
+
+Prints: `04.01-filtro-data.png`

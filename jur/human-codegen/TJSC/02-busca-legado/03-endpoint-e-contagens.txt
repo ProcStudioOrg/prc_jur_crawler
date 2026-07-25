@@ -1,0 +1,33 @@
+TJSC LEGADO — SEÇÃO 3: ENDPOINT E CONTAGEM
+==========================================
+Print: 03.01-resultados.png
+Dados: 03-endpoint-e-contagens.json (capturado da aba Network durante uma busca)
+
+Requisição real observada:
+
+  POST https://busca.tjsc.jus.br/jurisprudencia/buscaajax.do?&categoria=acordaos
+  body (urlencoded):
+    q=dano+moral&only_ementa=&qualquer=&excluir=&prox1=&prox2=&proxc=&frase=
+    &classe=&juizProlator=&origem=&relator=&radio_campo=ementa&faceta=true
+    &busca=avancada&datainicial=01%2F01%2F2026&datafinal=31%2F03%2F2026
+    &nuProcesso=&ps=20&sort=dtJulgamento+desc
+
+A CATEGORIA vai na querystring, não no corpo — uma requisição por categoria.
+Sem cookie obrigatório, sem token, sem desafio de segurança: seria um crawler
+`http` trivial. O que inviabiliza não é o acesso, é o conteúdo.
+
+CONTAGEM MEDIDA — "dano moral", julgamento 01/01/2026 a 31/03/2026
+  portal LEGADO (categoria=acordaos, ementa) :    15 resultados
+  portal NOVO   (origem TJSC, inteiro teor)  : 8.315 documentos
+  portal NOVO   (origem TJSC, ementa)        : 2.169 documentos
+
+Conclusão: o legado só serve como acervo histórico / plano B. O comando
+`jur tjsc` aponta para o portal novo.
+
+OBSERVAÇÕES
+- A resposta HTML do legado traz o rodapé "N resultados encontrados (0.097
+  segundos)" e "Página 1 de N" — é de lá que sai a contagem.
+- O menu do topo tem um item "Acesso restrito": área interna do tribunal, não
+  afeta a busca pública.
+- Se algum dia for preciso implementar: `radio_campo=ementa|integra` é o
+  equivalente do `--escopo`, e `ps` aceita 10/20/50 (o novo aceita 10/25/50/100).

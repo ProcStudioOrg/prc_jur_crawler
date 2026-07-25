@@ -1,0 +1,42 @@
+{
+ "tjsc": [
+  {
+   "id": "1",
+   "label": "Acórdãos do Tribunal de Justiça"
+  },
+  {
+   "id": "2",
+   "label": "Decisões Monocráticas do Tribunal de Justiça"
+  },
+  {
+   "id": "3",
+   "label": "Despachos/Decisões da Vice-Presidência"
+  }
+ ],
+ "turmas-recursais": [
+  {
+   "id": "10",
+   "label": "Decisões Monocráticas das Turmas Recursais"
+  },
+  {
+   "id": "7",
+   "label": "Acórdãos das Turmas Recursais"
+  }
+ ],
+ "turmas-uniformizacao": [
+  {
+   "id": "5",
+   "label": "Decisões Monocráticas das Turmas de Uniformização"
+  },
+  {
+   "id": "9",
+   "label": "Acórdãos das Turmas de Uniformização"
+  }
+ ],
+ "conselho-magistratura": [
+  {
+   "id": "6",
+   "label": "Acórdãos do Conselho da Magistratura"
+  }
+ ]
+}

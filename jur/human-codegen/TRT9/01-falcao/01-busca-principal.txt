@@ -1,0 +1,59 @@
+## Identificação
+
+```
+Tribunal:               TRT9 — Tribunal Regional do Trabalho da 9ª Região
+Estado(s):              PR (Paraná)
+Segmento:               Justiça do Trabalho (J = 5 no número CNJ; TR = 09)
+Módulo:                 FALCÃO — Sistema de busca de jurisprudência (v2.15.2)
+Link principal:         https://jurisprudencia.jt.jus.br/jurisprudencia-nacional/home
+Sistema judicial:       PJe (tramitação) — a jurisprudência é OUTRO sistema: SPA Angular
+                        com API JSON pública (o Falcão)
+Sistema irmão mapeado:  TJPA (mesmo perfil: SPA Angular + API JSON aberta, crawler `http`)
+Abrangência da base:    NACIONAL. O Falcão é o acervo único da Justiça do Trabalho:
+                        TST + os 24 TRTs + CSJT (26 acervos). O TRT9 é UM filtro
+                        (`tribunais=TRT9`) dentro dele.
+                        Acervo do TRT9 (medido em 25/07/2026):
+                          sentenças (1º grau) ......... 1.617.454
+                          acórdãos (2º grau) ...........  573.144
+                          decisões monocráticas ........  239.045
+                          admissibilidade de RR ........  175.094
+                          precedentes ..................      222
+Data do mapeamento:     25/07/2026
+```
+
+### Por que NÃO existe um "portal de jurisprudência do TRT9"
+
+O portal do TRT9 tem `www.trt9.jus.br/bancojurisprudencia/publico/pesquisaAvancada.xhtml`,
+mas ele é só o módulo de **Precedentes Qualificados** (JSF/PrimeFaces). A própria página
+diz, em texto: *"Para pesquisa avançada dos precedentes julgados e decisões do Regional,
+acesse o Sistema Falcão aqui."* Ou seja: o tribunal manda o usuário para o Falcão.
+Mapear o `bancojurisprudencia` seria mapear o subconjunto errado.
+
+Detalhe que decide o desenho do crawler: o rodapé do Falcão diz **"Desenvolvido por
+Tribunal Regional do Trabalho da 9ª Região"**. O sistema nacional da JT é feito pelo
+próprio TRT9 — logo, o "crawler do TRT9" é o crawler da Justiça do Trabalho inteira
+com um filtro de tribunal.
+
+---
+
+## 1. Busca principal (query)
+
+Campo único de busca livre, no topo. Sem busca por campos separados (não há
+"expressão"/"qualquer"/"sem" como no TJRS): tudo vai num campo só, com operadores
+embutidos no texto.
+
+- `id="pesquisaPrincipal"` (a home tem 4 instâncias do mesmo input — desktop, mobile e
+  overlays; no Playwright use `.first()`, senão o strict mode reclama)
+- Sem limite de caracteres observado.
+- **Default = OU implícito.** A própria ajuda do site: *"Digite as palavras separadas por
+  espaço. Por exemplo: horas extras. O sistema vai buscar os documentos cujo texto possua a
+  palavra horas OU a palavra extras"*. Isso é o oposto do default da maioria dos tribunais
+  do repo (E implícito) — quem escrever a query pensando em E vai receber ruído.
+- Autocomplete: `GET /api/no-auth/autocompletar?texto=<termo>` devolve sugestões e
+  "pesquisas relacionadas". Exposto em `FalcaoNavigator.autocompletar()`.
+
+HTML do elemento: `01-campo-busca.html` (extraído do DOM depois do AJAX).
+
+Parâmetro da API: `texto`. Aceita também número de processo CNJ com máscara (§10).
+
+Prints: `01.01-tela-inicial.png`

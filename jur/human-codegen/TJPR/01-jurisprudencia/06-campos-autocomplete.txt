@@ -1,0 +1,63 @@
+TJPR — 01-jurisprudencia · §6 Campos de autocomplete (relator, órgão, comarca, classe, assunto)
+Prints: 06.01-autocomplete-orgao-turmas-recursais.png · 06.02-autocomplete-orgao-camaras.png
+        06.03-autocomplete-relator.png · 06.04-autocomplete-comarca.png
+        06.05-autocomplete-classe-processual.png · 06.06-autocomplete-assunto.png
+Dados:  06-orgaos.json (lista COMPLETA de órgãos julgadores — 150, com id e volume)
+
+Cinco campos usam `AjaxJspTag.Autocomplete` (ajaxtags). Cada um tem um <input>
+visível com o NOME e um <input type="hidden"> com o ID que vai no POST:
+
+| Campo na tela      | input visível              | hidden (id)               | actionType do ajax.do    |
+|--------------------|----------------------------|---------------------------|--------------------------|
+| RELATOR(A)         | nomeRelator                | idRelator                 | ajaxSelectRelator        |
+| ÓRGAO JULGADOR     | nomeOrgaoJulgador          | idOrgaoJulgadorSelecao    | ajaxSelectOrgaoJulgador  |
+| COMARCA            | nomeComarca                | idComarca                 | ajaxSelectComarca        |
+| CLASSE PROCESSUAL  | descricaoClasseProcessual  | idClasseProcessual        | ajaxSelectClasse         |
+| ASSUNTO            | descricaoAssunto           | idAssunto                 | ajaxSelectAssunto        |
+
+Exemplo do wiring (extraído do DOM vivo):
+
+  new AjaxJspTag.Autocomplete(
+    "/jurisprudencia/ajax.do?tjpr.url.crypto=8a6c...ece31a3554ba12fb8a1", {
+      indicator: "indicatorOrgaoJulgador",
+      source: "nomeOrgaoJulgador",
+      target: "idOrgaoJulgadorSelecao",
+      minimumCharacters: "4",
+      className: "autocomplete",
+      parameters: "actionType=ajaxSelectOrgaoJulgador,nomeOrgaoJulgador={nomeOrgaoJulgador}"
+  });
+
+Resposta (ISO-8859-1!):
+  <?xml version="1.0" encoding="ISO-8859-1" ?><ajax-response><response>
+    <item><name>1ª Turma Recursal</name><value>249</value></item> ... </response></ajax-response>
+
+>>> ESTE É O `<select>` QUE NÃO É `<select>`. O CLAUDE-CODEGEN §5 avisa para
+    reabrir no browser todo combo que parece vazio. Aqui é pior: não há combo
+    nenhum — as opções só existem via AJAX. Mapear por curl faria concluir que
+    o TJPR "não tem filtro de órgão julgador", e é justamente ele que separa
+    Juizado de Justiça Comum (§3).
+
+Comportamento medido (25/07/2026):
+  - mínimo de 4 caracteres (`minimumCharacters: 4`);
+  - casa por SUBSTRING, em qualquer posição;
+  - É SENSÍVEL A ACENTO: `camara` devolve VAZIO, `câmara` devolve as 40+ câmaras.
+    (Por isso 06.02 saiu com "Nenhum registro encontrado!" no print — foi
+    digitado sem acento de propósito, para registrar a armadilha.)
+  - a lista de relatores mistura grafias: "belchior soares da silva" (minúsculas,
+    sem cargo) e "Desembargador Belchior Soares da Silva" convivem — 29 itens
+    para "silva". Nome precisa ser EXATO para o filtro pegar.
+  - `nomeComarca:curi` -> Curitiba, Curiúva.
+  - classes vêm com trilha completa: "PROCESSO CRIMINAL - Recursos - Agravo de
+    Execução Penal" (38 itens para "recurso").
+  - assuntos são a tabela CNJ com barras: "DIREITO CIVIL / Responsabilidade
+    Civil / Indenização por Dano Moral" (87 itens para "dano").
+
+>>> ARMADILHA: o hidden `idOrgaoJulgadorSelecao` é IGNORADO pelo
+    `actionType=pesquisar` (medido: manda 249, volta o total sem filtro). O
+    campo que filtra de verdade é `idOrgaoJulgador` — ver §3. O botão "+"
+    ao lado do campo (`adicionarOrgao()`) é o que permite acumular vários.
+
+O crawler expõe `-oj/--orgao <nome|id>`, resolvido localmente contra
+`06-orgaos.json` (sem depender do autocomplete), e `--listar-orgaos` /
+`--listar-orgaos-ao-vivo` para inspeção. Relator/comarca/classe/assunto NÃO
+estão expostos no CLI ainda — ver pendências em §10.

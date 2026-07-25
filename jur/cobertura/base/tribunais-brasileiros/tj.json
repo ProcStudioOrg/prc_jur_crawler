@@ -1,0 +1,79 @@
+[
+  {"code":"TJAC_1G","state":"AC","instance":"1g","system":"esaj","url":"https://esaj.tjac.jus.br/cpopg/open.do","success":true},
+  {"code":"TJAC_2G","state":"AC","instance":"2g","system":"esaj","url":"https://esaj.tjac.jus.br/cposg/open.do","success":true},
+
+  {"code":"TJAL_1G","state":"AL","instance":"1g","system":"esaj","url":"https://www2.tjal.jus.br/cpopg/open.do","success":true},
+  {"code":"TJAL_2G","state":"AL","instance":"2g","system":"esaj","url":"https://www2.tjal.jus.br/cposg/open.do","success":true},
+
+  {"code":"TJAP_1G","state":"AP","instance":"1g","system":"pje","url":"https://pje.tjap.jus.br/1g/login.seam","success":true},
+  {"code":"TJAP_2G","state":"AP","instance":"2g","system":"pje","url":"https://pje.tjap.jus.br/2g/login.seam","success":true,"error_1st_try":"504 Gateway Time-out"},
+
+  {"code":"TJAM_1G","state":"AM","instance":"1g","system":"esaj","url":"https://consultasaj.tjam.jus.br/cpopg/open.do","success":true},
+  {"code":"TJAM_2G","state":"AM","instance":"2g","system":"esaj","url":"https://consultasaj.tjam.jus.br/cposg/open.do","success":true,"error_1st_try":"Service unavailable"},
+
+  {"code":"TJBA_1G","state":"BA","instance":"1g","system":"projudi","url":"https://projudi.tjba.jus.br/projudi/","success":true,"note":"Projudi integrated 1st and 2nd degree - single login page"},
+
+  {"code":"TJCE_1G","state":"CE","instance":"1g","system":"esaj","url":"https://esaj.tjce.jus.br/cpopg/open.do","success":true,"old_system":"pje","old_url":"https://pje.tjce.jus.br/pje1grau/login.seam","note":"TJCE uses e-SAJ, not PJE"},
+  {"code":"TJCE_2G","state":"CE","instance":"2g","system":"esaj","url":"https://esaj.tjce.jus.br/cposg/open.do","success":true,"old_system":"pje","old_url":"https://pje.tjce.jus.br/pje2grau/login.seam","note":"TJCE uses e-SAJ, not PJE"},
+
+  {"code":"TJDFT_1G","state":"DF","instance":"1g","system":"pje","url":"https://pje.tjdft.jus.br/pje/login.seam","success":true},
+  {"code":"TJDFT_2G","state":"DF","instance":"2g","system":"pje","url":"https://pje2i.tjdft.jus.br/pje/login.seam","success":true},
+
+  {"code":"TJES_1G","state":"ES","instance":"1g","system":"pje","url":"https://pje.tjes.jus.br/pje/login.seam","success":true,"error_1st_try":"Cloudflare human verification"},
+  {"code":"TJES_2G","state":"ES","instance":"2g","system":"pje","url":"https://pje.tjes.jus.br/pje2g/login.seam","success":true},
+
+  {"code":"TJGO_1G","state":"GO","instance":"1g","system":"projudi","url":"https://projudi.tjgo.jus.br/","success":true,"note":"Projudi integrated 1st and 2nd degree - single login page"},
+
+  {"code":"TJMA_1G","state":"MA","instance":"1g","system":"pje","url":"https://pje.tjma.jus.br/pje/login.seam","success":null,"note":"Not tested yet"},
+  {"code":"TJMA_2G","state":"MA","instance":"2g","system":"pje","url":"https://pje2g.tjma.jus.br/pje/login.seam","success":null,"note":"Not tested yet"},
+
+  {"code":"TJMG_1G","state":"MG","instance":"1g","system":"pje","url":"http://pje.tjmg.jus.br/pje/login.seam","success":true},
+  {"code":"TJMG_2G","state":"MG","instance":"2g","system":"pje","url":"https://pjerecursal.tjmg.jus.br/pje/login.seam","success":true},
+
+  {"code":"TJMS_1G","state":"MS","instance":"1g","system":"esaj","url":"https://esaj.tjms.jus.br/cpopg/open.do","success":true},
+  {"code":"TJMS_2G","state":"MS","instance":"2g","system":"esaj","url":"https://esaj.tjms.jus.br/cposg/open.do","success":true},
+
+  {"code":"TJMT_1G","state":"MT","instance":"1g","system":"pje","url":"https://pje.tjmt.jus.br/","success":true},
+  {"code":"TJMT_2G","state":"MT","instance":"2g","system":"pje","url":"https://pje2.tjmt.jus.br/pje/login.seam","success":true,"error_1st_try":"Not Found"},
+
+  {"code":"TJPA_1G","state":"PA","instance":"1g","system":"pje","url":"https://pje.tjpa.jus.br/pje/login.seam","success":true},
+  {"code":"TJPA_2G","state":"PA","instance":"2g","system":"pje","url":"https://pje.tjpa.jus.br/pje2g/login.seam","success":true,"old_url":"https://pje2g.tjpa.jus.br/pje/login.seam","note":"URL pattern: pje.tjpa.jus.br/pje2g not pje2g.tjpa.jus.br"},
+
+  {"code":"TJPB_1G","state":"PB","instance":"1g","system":"pje","url":"https://pje.tjpb.jus.br/pje/login.seam","success":true},
+  {"code":"TJPB_2G","state":"PB","instance":"2g","system":"pje","url":"https://pje.tjpb.jus.br/pje2g/login.seam","success":true,"old_url":"https://pje2g.tjpb.jus.br/pje/login.seam","note":"URL pattern: pje.tjpb.jus.br/pje2g not pje2g.tjpb.jus.br"},
+
+  {"code":"TJPE_1G","state":"PE","instance":"1g","system":"pje","url":"https://pje.tjpe.jus.br/pje/login.seam","success":null,"note":"Not tested yet"},
+  {"code":"TJPE_2G","state":"PE","instance":"2g","system":"pje","url":"https://pje2g.tjpe.jus.br/pje/login.seam","success":null,"note":"Not tested yet"},
+
+  {"code":"TJPI_1G","state":"PI","instance":"1g","system":"pje","url":"https://pje.tjpi.jus.br/pje/login.seam","success":null,"note":"Not tested yet"},
+  {"code":"TJPI_2G","state":"PI","instance":"2g","system":"pje","url":"https://pje2g.tjpi.jus.br/pje/login.seam","success":null,"note":"Not tested yet"},
+
+  {"code":"TJPR_1G","state":"PR","instance":"1g","system":"projudi","url":"https://projudi.tjpr.jus.br/projudi/","success":true,"note":"Projudi integrated 1st and 2nd degree - single login page"},
+
+  {"code":"TJRJ_1G","state":"RJ","instance":"1g","system":"pje","url":"https://tjrj.pje.jus.br/1g/login.seam","success":true},
+  {"code":"TJRJ_2G","state":"RJ","instance":"2g","system":"pje","url":"https://tjrj.pje.jus.br/2g/login.seam","success":true},
+
+  {"code":"TJRN_1G","state":"RN","instance":"1g","system":"pje","url":"https://pje.tjrn.jus.br/pje/login.seam","success":true,"error_1st_try":"Not Found"},
+  {"code":"TJRN_2G","state":"RN","instance":"2g","system":"pje","url":"https://pje2g.tjrn.jus.br/pje/login.seam","success":true},
+
+  {"code":"TJRO_1G","state":"RO","instance":"1g","system":"pje","url":"https://pje.tjro.jus.br/pje/login.seam","success":true,"note":"Redirects to info page but 1G works"},
+  {"code":"TJRO_2G","state":"RO","instance":"2g","system":"pje","url":"https://pje2g.tjro.jus.br/pje/login.seam","success":false,"error":"Redirects to info page - may be integrated with 1G"},
+
+  {"code":"TJRR_1G","state":"RR","instance":"1g","system":"pje","url":"https://pje.tjrr.jus.br/pje/login.seam","success":false,"error":"Connection failed - site unreachable"},
+  {"code":"TJRR_2G","state":"RR","instance":"2g","system":"pje","url":"https://pje2g.tjrr.jus.br/pje/login.seam","success":false,"error":"Connection failed - site unreachable"},
+
+  {"code":"TJRS_1G","state":"RS","instance":"1g","system":"eproc","url":"https://eproc1g.tjrs.jus.br/","success":true,"old_url":"https://eproc.tjrs.jus.br/eproc2/","note":"Uses Keycloak SSO"},
+  {"code":"TJRS_2G","state":"RS","instance":"2g","system":"eproc","url":"https://eproc2g.tjrs.jus.br/","success":true,"old_url":"https://eproc.tjrs.jus.br/eproc2/","note":"Uses Keycloak SSO"},
+
+  {"code":"TJSC_1G","state":"SC","instance":"1g","system":"eproc","url":"https://eproc1g.tjsc.jus.br/","success":true,"old_url":"https://eproc.tjsc.jus.br/eproc2/","note":"Uses TJSC SSO"},
+  {"code":"TJSC_2G","state":"SC","instance":"2g","system":"eproc","url":"https://eproc2g.tjsc.jus.br/","success":true,"old_url":"https://eproc.tjsc.jus.br/eproc2/","note":"Uses TJSC SSO"},
+
+  {"code":"TJSE_1G","state":"SE","instance":"1g","system":"eproc","url":"https://eproc1g.tjse.jus.br/","success":true,"old_system":"pje","old_url":"https://pje.tjse.jus.br/pje/login.seam","note":"TJSE uses eproc, not PJE"},
+  {"code":"TJSE_2G","state":"SE","instance":"2g","system":"eproc","url":"https://eproc2g.tjse.jus.br/","success":true,"old_system":"pje","old_url":"https://pje2g.tjse.jus.br/pje/login.seam","note":"TJSE uses eproc, not PJE"},
+
+  {"code":"TJSP_1G","state":"SP","instance":"1g","system":"esaj","url":"https://esaj.tjsp.jus.br/cpopg/open.do","success":true},
+  {"code":"TJSP_2G","state":"SP","instance":"2g","system":"esaj","url":"https://esaj.tjsp.jus.br/cposg/open.do","success":true},
+
+  {"code":"TJTO_1G","state":"TO","instance":"1g","system":"eproc","url":"https://eproc1g.tjto.jus.br/","success":false,"old_system":"pje","old_url":"https://pje.tjto.jus.br/pje/login.seam","error":"Connection failed - uses eproc but has connectivity issues"},
+  {"code":"TJTO_2G","state":"TO","instance":"2g","system":"eproc","url":"https://eproc2g.tjto.jus.br/","success":false,"old_system":"pje","old_url":"https://pje2g.tjto.jus.br/pje/login.seam","error":"Connection failed - uses eproc but has connectivity issues"}
+]

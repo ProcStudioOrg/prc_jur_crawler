@@ -1,0 +1,41 @@
+TJRS — Modais de Ajuda e "Instruções importantes" (documentação oficial)
+======================================================================
+
+Prints: 07.01-modal-ajuda-operadores.png
+        07.02-modal-instrucoes-importantes.png
+Texto integral extraído do DOM:
+        07-ajuda-oficial.txt        (6,5 KB — 7 seções)
+        07-instrucoes-oficiais.txt  (727 bytes)
+
+Como abrir: <button data-toggle="modal" data-target="#ajuda">Ajuda</button> e
+            <button data-toggle="modal" data-target="#instrucoes">Instruções importantes</button>
+(bootstrap modal — é HTML, então aparece em screenshot, ao contrário do dropdown
+nativo dos <select>)
+
+Por que isso é entregável
+-------------------------
+É a única documentação oficial dos operadores. Confirmou (e o mapeamento validou
+por contagem, ver seção 02 do 01-tela-inicial.txt):
+
+  §2   "A relação entre termos de busca e filtros é E."
+  §4.1 preposições/letras/números avulsos são DESCARTADOS quando acompanhados de
+       outros termos; `+termo` força a inclusão.
+  §4.2 vírgula é separador (`3,75` = "3" e "75"); não pesquisar número negativo.
+  §5   Pesquisa Livre = TODOS os termos (equivale ao antigo "e").
+  §5.1 datas: intervalo aberto permitido nas duas pontas; mesma regra para
+       julgamento e publicação.
+  §5.2 `-palavra` exclui (equivale ao antigo "não").
+  §5.3 `"frase exata"` com aspas duplas (equivale ao campo "com a expressão").
+  §6   `OR` em MAIÚSCULAS expande (equivale ao antigo "ou").
+  §7   quadro comparativo "busca antiga × nova" (é uma imagem no modal).
+
+Ou seja: a documentação oficial NÃO menciona ADJ, PROX, `$` nem `*` — e o teste
+confirmou que nenhum funciona (ADJ/PROX dão 0; `$`/`*` são descartados). Quem
+espera a sintaxe do TJGO/Projudi aqui erra.
+
+§2.1 esclarece a diferença dos índices Ementa × Inteiro teor: "Nem todos os
+registros da Jurisprudência disponibilizam estes documentos. Geralmente, os mais
+antigos ainda não disponibilizam a busca no Inteiro Teor."
+
+§3 confirma a ordenação default: "Os processos são retornados em ordem decrescente
+de data de julgamento, vindo em primeiro lugar os mais recentes."

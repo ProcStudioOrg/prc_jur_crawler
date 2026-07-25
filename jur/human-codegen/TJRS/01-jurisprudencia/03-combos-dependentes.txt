@@ -1,0 +1,117 @@
+TJRS — Combos dependentes: órgão julgador, relator, classe processual, classe/assunto CNJ
+========================================================================================
+
+Prints: 03.01-combo-orgao-julgador-tj.png
+        03.02-combo-classe-processual.png
+        03.03-combo-relator.png
+        03.04-combo-orgao-julgador-turmas-recursais.png
+        03.05-combo-classe-cnj.png
+        03.06-combo-assunto-cnj.png
+JSON (listas completas, lidas do DOM vivo — não cabem em print):
+        03-orgaos-julgadores-tj.json                  108 opções
+        03-orgaos-julgadores-turmas-recursais.json     23 opções
+        03-relatores-tj.json                        1.317 opções
+        03-classes-processuais-tj.json                360 opções
+        03-classes-cnj.json                           235 opções
+        03-assuntos-cnj-exemplo.json                  exemplo dependente
+
+Todos são populados por AJAX no mesmo `ajax.php`:
+  metodo=listarOrgaosJulgadores  &id_tribunal=<cod>
+  metodo=listarRelatores         &id_tribunal=<cod>
+  metodo=listarTiposDeProcessos  &id_tribunal=<cod>
+  metodo=listarClassesCNJ
+  metodo=listarAssuntosCnj       &codClasseCNJ=<cod>
+Formato da resposta: {"0":{"id":"3","label":"..."},"1":{...},"url":"<Solr>"}.
+O nome do parâmetro é **id_tribunal** (não `cod_tribunal`: com o nome errado o
+servidor responde {"error":"Informe um código de tribunal válido"}).
+
+9. Órgão julgador  (Solr: cod_org_julg)
+---------------------------------------
+<select name="filtroOrgaoJulgador" class="form-control second_select dependencia filtroOrgaoJulgador"
+        id="filtroOrgaoJulgador" data-label="crr" data-label-2="crr2">
+  <option value="-1">Todos</option>  <!-- o resto entra por AJAX -->
+</select>
+
+DEPENDE de filtroTribunal. Com "Todos" (-1) o JS nem chama o AJAX e o combo fica
+vazio — por isso o CLI exige `--origem comum|turmas|alcada` junto de `-oj`.
+
+Justiça Comum (108): "Primeira Câmara Cível" (1) ... "Vigésima Terceira Câmara Cível",
+  Câmaras Criminais, Grupos de Câmaras, "Órgão Especial" (34), Vice-Presidências,
+  Câmaras de Férias, Regime de Exceção, Plantão.
+Turmas Recursais (23): "Primeira Turma Recursal Cível" (65), "Turma Recursal Criminal" (68),
+  Turmas Recursais da Fazenda Pública, "Turma de Uniformização Cível" (123),
+  Turmas Reunidas, Turma Recursal Provisória.
+
+Testado: cod 6 + cod_org_julg 68 ("Turma Recursal Criminal") -> 102 julgados para
+"dano moral"; cod 3 + cod_org_julg 1 ("Primeira Câmara Cível") -> 2.218. Filtro OK.
+
+13a. Relator / Redator  (Solr: cod_relator OR cod_redator)
+---------------------------------------------------------
+<select id="filtroRelator" name="filtroRelator" class="form-control second_select dependencia filtroRelator"
+        data-label="crr" data-label-2="crr2"><option value="-1">Todos</option></select>
+
+1.317 nomes para a Justiça Comum (histórico completo, inclui desembargadores
+antigos: "Adhemar Maciel", "Adroaldo Furtado Fabrício"). A cláusula gerada é
+`(cod_relator:X OR cod_redator:X)` — pega tanto relator quanto redator do acórdão.
+Testado: cod 729 ("Fernando Carlos Tomasi Diniz") -> 482 julgados para "dano moral".
+
+12. Classe Processual  (Solr: tipo_processo)  ⚠️ DOIS DEFEITOS
+-------------------------------------------------------------
+<select id="filtroTipoProcesso" name="filtroTipoProcesso" data-label="crr" data-label-2="crr2"
+        class="form-control second_select dependencia filtroTipoProcesso">
+  <option value="-1">Todos</option>
+</select>
+
+DEFEITO 1 — o filtro da PÁGINA não funciona. O campo Solr `tipo_processo` guarda
+TEXTO ("Apelação Cível"), mas o combo manda o **id numérico**, e o servidor monta
+`tipo_processo:"397"`. Resultado: **0 julgados**, sempre. Reproduzido: id 397
+(Ação Civil Pública) -> numFound 0. Mandando o label -> `tipo_processo:"Apelação+Cível"`
+-> 397.354. O crawler contorna resolvendo o nome e enviando o LABEL.
+
+DEFEITO 2 — o combo é a lista LEGADA e não cobre o índice. "Recurso Inominado",
+que tem 30.793 julgados nas Turmas Recursais, NÃO está entre as 260 opções do
+combo de cod 6 (que ainda traz os nomes antigos "Recurso Cível"/"Recurso Crime").
+Por isso o crawler aceita texto livre nesse filtro: se o nome não está no combo,
+usa a string como está (e avisa no log).
+
+Há ids duplicados por label (ex.: "Agravo de Instrumento" = 296 e 4) — acervo
+Themis + acervo e-Proc convivendo.
+
+13b. Classe CNJ  (Solr: cod_classe_cnj) — este usa o ID e funciona
+-----------------------------------------------------------------
+<select id="filtroClasseCnj" name="filtroClasseCnj" class="form-control">
+  <!-- 235 opções por AJAX, sem depender do tribunal -->
+</select>
+Testado: cod 65 (Ação Civil Pública) -> `cod_classe_cnj:65`, filtro aplicado.
+
+13c. Assunto CNJ  (Solr: cod_assunto_cnj) — depende da Classe CNJ
+-----------------------------------------------------------------
+<select name="assuntoCnj" id="assuntoCnj"><option value="">Todos</option></select>
+Só é populado depois de escolher a Classe CNJ (`metodo=listarAssuntosCnj&codClasseCNJ=`).
+Com "Todos" na classe, o combo fica com uma opção só. Exemplo em
+03-assuntos-cnj-exemplo.json ("Procedimento Comum" -> 2 assuntos).
+
+10. Comarca de origem (serventia/unidade)  ⚠️ existe no backend, escondido na tela
+---------------------------------------------------------------------------------
+O input existe no HTML entregue pelo servidor:
+  <input type="text" id="filtroComarcaOrigem" name="filtroComarcaOrigem" value="" data-label="o" class="form-control">
+mas está dentro de um bloco COMENTADO — não entra no DOM (não aparece em
+01-campos.json, que tem 32 campos, nenhum deles este). Ou seja: o usuário do site
+não tem esse filtro hoje.
+
+O backend, porém, continua honrando o campo: enviado no `parametros`, gera
+`origem:"PORTO ALEGRE"` (testado: 150.295 julgados para "dano moral" na Justiça
+Comum). O crawler expõe isso como `--comarca`. Não há combo/lupa de comarcas — o
+valor é texto exato, em MAIÚSCULAS, como aparece em `origem` nos resultados
+(inclui o valor literal "OUTRA").
+
+Mesma situação (comentados na tela, funcionando no backend):
+  filtroReferenciaLegislativa -> referencia_legislativa:("CDC")   funciona (acervo antigo)
+  filtroJurisprudencia        -> jurisprudencia:*STJ*             funciona (1.100 hits)
+  filtroAssunto               -> QUEBRADO: monta `assunto:"x"&fq=assunto:"x"`, dá 0
+
+11. Magistrado (lupa/autocomplete)
+----------------------------------
+NÃO EXISTE neste módulo. O único filtro de pessoa é o combo Relator/Redator
+(seção 13a), que é um <select> fechado, não um autocomplete. Nada de lupa de
+serventia/magistrado como no TJGO.
