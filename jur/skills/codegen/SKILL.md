@@ -19,6 +19,8 @@ que não existe: "não procurei" e "não existe" são coisas diferentes.
 SEMPRE cheque a aba Network antes de decidir o acesso do crawler.
 SEMPRE mapeie no Playwright, com prints, mesmo que o crawler final use `http` ou `api`.
 SEMPRE prove que um filtro funciona comparando contagens, não só vendo que a busca responde.
+SEMPRE rode a skill `browser-post-search` assim que a busca retornar resultados. Parar na
+busca entrega contagem, não jurisprudência — é o erro mais caro deste processo.
 </HARD-GATE>
 
 ## Fase 0 — Situar
@@ -119,6 +121,24 @@ node human-codegen/index.js     # gera o INDEX.md e lista o que ficou faltando
 O `INDEX.md` aponta "seções sem print" e "seções sem descrição" — **zere essas pendências**
 antes de escrever código.
 
+## Fase 3b — Pós-busca — **pare aqui e rode a skill [`browser-post-search`](../browser-post-search/SKILL.md)**
+
+Assim que a busca retornar resultados, **antes** dos testes exploratórios e muito antes do
+código. Ela mapeia a metade do trabalho que fica depois da busca:
+
+- onde o resultado aparece (mesma página / outra rota / nova aba) e se os controles somem;
+- anatomia do card, e se o texto exibido é **ementa, trecho ou nada** — medindo tamanhos,
+  em **mais de um tipo de documento**;
+- a escada até o documento (Ementa → Inteiro teor → original), capturando o **XHR de cada
+  clique** — é o contrato que o crawler vai reproduzir, e ele costuma pedir chave composta;
+- formato do documento, e se o texto **já veio no payload da busca**;
+- paginação: máximo, comportamento ao estourar, total exato × saturado, e **estabilidade
+  medida rodando a mesma página duas vezes**;
+- **permalink** por documento, confirmado em aba limpa, e qual campo identifica o documento.
+
+Sai daí a seção `<NN>-resultados.txt` + os prints `<NN>.<MM>-*.png` + o
+`<NN>-card-resultado.html`. O critério de aceite dela está na própria skill.
+
 ## Fase 4 — Testes exploratórios (antes do código)
 
 Rode no navegador e registre o resultado de cada um:
@@ -166,7 +186,12 @@ Reaproveite `src/BaseCrawler.js`, `src/cnj.js` e `src/inteiroTeorFetcher.js`.
 
 - [ ] `./bin/jur <cmd> -q "termo" -m 1 --json` → `success:true` com resultados
 - [ ] Filtro de data restringe de fato (compare contagens com e sem)
-- [ ] Paginação anda além da página 1
+- [ ] Paginação anda além da página 1, **testada duas vezes** e com a estabilidade registrada
+- [ ] `size` máximo medido; total classificado como **exato ou saturado**
+- [ ] **Caminho até o documento mapeado** (skill `browser-post-search`): card dissecado em
+      2+ tipos, contrato do inteiro teor reproduzido fora do browser, formato identificado,
+      permalink confirmado em aba limpa
+- [ ] `--fetch-inteiro-teor` grava arquivo com texto útil
 - [ ] Consulta por nº encontra um processo conhecido
 - [ ] `--verificar N` confirma a amostra
 - [ ] Página aberta **no Playwright**; print de cada tela e de cada combo/modal aberto

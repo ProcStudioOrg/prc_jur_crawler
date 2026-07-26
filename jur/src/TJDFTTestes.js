@@ -224,6 +224,17 @@ const assert = (c, m) => { if (!c) throw new Error(m); };
     assert(v.confirmados === 3, `${v.confirmados}/3 confirmados: ${JSON.stringify(v.detalhes)}`);
   });
 
+  await teste('Permalink usa a rota /acordaos (a /documento é link morto)', async () => {
+    // Validado em contexto limpo de Chromium em 26/07/2026: /acordaos devolve
+    // conteúdo real nas três bases testadas; /documento devolve só o shell da
+    // SPA (34 chars). Aqui só se afirma a rota, porque o conteúdo é renderizado
+    // no cliente e um GET puro devolveria o shell nos dois casos.
+    const r = await crawler.search('usucapião', { acervo: 'acordaos' }, { maxPages: 1, maxResults: 1 });
+    const url = r[0].inteiroTeorLink;
+    assert(/\/acordaos\/[0-9a-f-]{36}$/.test(url), `permalink com rota errada: ${url}`);
+    assert(!url.includes('/documento/'), 'voltou a usar a rota morta /documento');
+  });
+
   await teste('Mapeamento: campos do repo, flag de Juizado e inteiro teor no payload', async () => {
     const r = await crawler.search('usucapião', { acervo: 'turmas', escopo: 'ambos' }, { maxPages: 1 });
     assert(r.length > 0, 'Turma Recursal não devolveu nada');

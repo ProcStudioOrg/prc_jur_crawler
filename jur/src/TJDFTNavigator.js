@@ -253,9 +253,31 @@ class TJDFTNavigator {
     return `entre ${a} e ${z}`;
   }
 
-  /** Permalink do julgado no portal. */
+  /**
+   * Permalink do julgado no portal — é o que torna a citação verificável.
+   *
+   * ⚠️ A rota é `/acordaos/<uuid>` e vale para TODAS as bases, apesar do nome:
+   * validado em contexto limpo de Chromium (sem cookie) em 26/07/2026 para
+   * acórdão (1.413 chars), Turma Recursal (7.367) e monocrática (20.666).
+   * A rota `/documento/<uuid>`, que parece a óbvia, devolve só o shell da SPA
+   * (34 chars) — é link morto, e um link morto numa citação é pior que nenhum.
+   */
   documentoUrl(uuid) {
-    return `${BASE_URL}/documento/${uuid}`;
+    return `${BASE_URL}/acordaos/${uuid}`;
+  }
+
+  /**
+   * URL compartilhável de uma BUSCA (não de um documento). A SPA reflete os
+   * parâmetros na querystring, então dá para mandar a pesquisa pronta a alguém.
+   */
+  buscaUrl({ query, sinonimos = false, espelho = true, inteiroTeor = false } = {}) {
+    const qs = new URLSearchParams({
+      sinonimos: String(!!sinonimos),
+      espelho: String(!!espelho),
+      inteiroTeor: String(!!inteiroTeor),
+      textoPesquisa: query ?? '',
+    });
+    return `${BASE_URL}/resultado?${qs}`;
   }
 
   /**

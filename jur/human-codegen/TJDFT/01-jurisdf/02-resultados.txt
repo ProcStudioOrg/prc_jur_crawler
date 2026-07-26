@@ -90,3 +90,33 @@ que atender. Com o cookie, 8/8 chamadas idênticas. O crawler reusa um navigator
 único durante toda a paginação exatamente por isso.
 
 Prints: 02.03
+
+--------------------------------------------------------------------------------
+5. Permalink e identidade do documento
+--------------------------------------------------------------------------------
+
+⚠️ A rota do permalink é `/acordaos/<uuid>` — e vale para TODAS as bases, apesar
+do nome. Validado em contexto LIMPO de Chromium (sem cookie), 26/07/2026:
+
+  base            /acordaos/<uuid>     /documento/<uuid>
+  acórdão            1.413 chars           34 chars (só o shell)
+  Turma Recursal     7.367 chars           34 chars
+  monocrática       20.666 chars           34 chars
+
+`/documento/<uuid>` é a rota que PARECE a óbvia e é LINK MORTO. Este mapeamento
+chegou a registrá-la errada; o erro só apareceu ao aplicar o critério "confirme
+o permalink numa aba limpa" da skill browser-post-search.
+
+QUAL CAMPO IDENTIFICA O DOCUMENTO: `uuid`.
+NÃO é o número do processo — um processo costuma ter vários julgados (o de
+referência, 0705891-74.2023.8.07.0004, tem 2 acórdãos do mesmo relator em datas
+diferentes). Para provar que AQUELE julgado existe, confira o `uuid`.
+`identificador` (ex.: "87014057") é o número interno do documento e também serve,
+mas é o `uuid` que abre o permalink.
+
+URL COMPARTILHÁVEL DA BUSCA (não do documento): a SPA reflete os parâmetros na
+querystring, então a pesquisa inteira é linkável:
+
+  https://jurisdf.tjdft.jus.br/resultado?sinonimos=true&espelho=true&inteiroTeor=false&textoPesquisa=usucapi%C3%A3o
+
+Exposta no Navigator como buscaUrl({query, sinonimos, espelho, inteiroTeor}).

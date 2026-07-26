@@ -12,7 +12,7 @@ Nunca cite um julgado sem a skill [`verificador`](skills/verificador/SKILL.md).
 | [`CLAUDE-CODEGEN.md`](CLAUDE-CODEGEN.md) | Como mapear um tribunal **novo** (processo completo) |
 | [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md) | Os 61 tribunais catalogados e o status de cada um |
 | `CLAUDE-<TRIBUNAL>.md` | Flags específicas e **ressalvas** de um tribunal |
-| [`skills/README.md`](skills/README.md) | As 5 skills e quando usar cada uma |
+| [`skills/README.md`](skills/README.md) | As 6 skills e quando usar cada uma |
 
 ## Roteamento — qual tribunal / qual doc
 

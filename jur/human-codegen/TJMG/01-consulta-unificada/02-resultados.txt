@@ -119,3 +119,19 @@ totalRecords para decidir quando parar de paginar — use "página vazia".
 
   size=10 -> 10 | size=50 -> 50 | size=100 -> 100 | size=200 -> 200
   size=1000 -> devolveu 380 (todos os que existiam na janela testada)
+
+--------------------------------------------------------------------------------
+5. Permalink e identidade do documento
+--------------------------------------------------------------------------------
+
+PERMALINK: /inteiro-teor?documentoId=<id>&publicacaoData=<YYYY-MM-DD>
+Validado em contexto LIMPO de Chromium (sem cookie), 26/07/2026: HTTP 200 com
+10.543 caracteres de conteúdo real — abre para qualquer pessoa, sem sessão.
+
+⚠️ O permalink carrega a MESMA chave composta do endpoint de inteiro teor: o id
+sozinho não basta, precisa da data de publicação. Ver §2.
+
+QUAL CAMPO IDENTIFICA O DOCUMENTO: `id` (ou o par `documentoId` + data).
+NÃO é o número do processo — um processo pode ter acórdão e monocrática, e a
+consulta por `numerosProcessos` devolve todos. Para provar que AQUELE julgado
+existe, confira o `id` na lista devolvida.

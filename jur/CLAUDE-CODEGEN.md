@@ -155,6 +155,19 @@ Ao começar um tribunal, procure primeiro um irmão já mapeado na mesma famíli
    que decida não usá-la — a próxima pessoa não vai procurar de novo. Se procurar e não existir,
    **escreva que não existe**: "não procurei" e "não existe" são coisas diferentes.
 
+   > **Vale mesmo.** Dois tribunais foram destravados exatamente aqui, ambos com mapeamento
+   > anterior morto: o **TJDFT** publica um PDF de documentação de API no portal de dados
+   > abertos (`api-oficial`, 3,3 mi de documentos), e o **TJMG** tinha um portal novo com API
+   > aberta que a página oficial do tribunal **não linkava** — a página apontava só para o
+   > portal antigo, que responde 401 + captcha. Nos dois casos, dez minutos de busca por API
+   > valeram mais que todo o resto do mapeamento.
+   >
+   > ⚠️ **Documentação oficial não é a verdade — é o começo dela.** A do TJDFT omite cinco
+   > parâmetros que a própria SPA envia, omite a sintaxe de intervalo de data (que é prosa em
+   > português: `"entre 2024-01-01 e 2024-03-31"`) e mostra `hits` como número quando a API
+   > devolve objeto. **Sempre confira a doc contra o que a tela manda de verdade** e escreva a
+   > diferença no `CLAUDE-<TRIBUNAL>.md` — é ela que a próxima pessoa não vai adivinhar.
+
 1. **`api`** — API interna, não documentada. Abra o DevTools na aba Network e faça uma busca.
    Se a página é uma SPA, quase sempre existe um endpoint JSON limpo
    (ex.: TJPA → `GET /bff/api/decisoes`). Use-o.
@@ -235,6 +248,39 @@ Campos com centenas/milhares de opções (magistrado, serventia, tipo de ato) n�
 > Foi o que aconteceria no TJRS: o combo que separa **Justiça Comum de Turmas Recursais**
 > é justamente um desses. Se um `<select>` só tem "Todos", presuma AJAX e vá ao browser.
 
+### Fase 2b — Mapeamento do PÓS-BUSCA — **skill [`browser-post-search`](skills/browser-post-search/SKILL.md)**
+
+> A busca respondeu. **Isso é metade do trabalho.** A outra metade é o caminho que vai de
+> "achei N resultados" até "tenho o texto do acórdão e um link que outra pessoa abre".
+
+Mapeamentos deste repo já pararam na busca, e o custo apareceu depois: crawler que devolve
+lista sem texto citável, ou que chama de "ementa" um trecho com o termo destacado. Rode a
+skill [`browser-post-search`](skills/browser-post-search/SKILL.md) — ela cobre, com print
+de cada degrau:
+
+1. **Onde o resultado aparece** — mesma página, outra rota ou nova aba; os controles de
+   busca somem ou permanecem; a URL de resultado é reutilizável.
+2. **Anatomia do card** — que metadados vêm sem clicar, e se o texto exibido é **ementa,
+   trecho ou nada** (meça os tamanhos; `<b>`/`<mark>` no meio = highlight, não ementa).
+   **Disseque mais de um tipo de documento**: acórdão e Turma Recursal têm cards diferentes.
+3. **A escada até o documento** — clicar Ementa → Inteiro teor → arquivo original, um a um,
+   capturando o XHR de cada clique. Esse XHR **é o contrato** que o crawler vai reproduzir,
+   e ele costuma exigir chave composta (no TJMG, `documentoId` + data de publicação exata;
+   só o id devolve 500).
+4. **O documento** — HTML? PDF? vem completo? exige sessão ou captcha **só ali**?
+   E, antes de tudo: **o texto já veio no payload da busca?** (no TJDFT vem — um request
+   por documento ali é rate limit gasto à toa).
+5. **Paginação** — máximo aceito, o que acontece ao estourar, e se o total é **exato ou
+   saturado** (total sempre num número redondo é teto de contador, não acervo).
+6. **Permalink e identidade** — URL estável por documento, confirmada em aba limpa, e qual
+   campo **identifica o documento** (o nº do processo não serve: um processo costuma ter
+   vários julgados).
+
+⚠️ **Paginação se testa duas vezes.** Ordenação sem campo de desempate faz a mesma página
+devolver documentos diferentes entre requisições — repetindo uns e **pulando** outros
+(visto em TJRJ, TJMG e TJDFT). No TJDFT a causa era balanceador com nós dessincronizados, e
+reenviar o cookie de sessão resolveu; registre a correção, não só o sintoma.
+
 ### Fase 3 — Testes exploratórios no navegador
 
 Antes de escrever código, rode estas buscas e registre o resultado:
@@ -307,11 +353,32 @@ Um tribunal só vira 🟢 `ok` quando **todos** valem:
 - [ ] `node human-codegen/index.js` rodado e o `INDEX.md` **sem pendências**
       ("seções sem print" / "seções sem descrição" zeradas)
 
+**Pós-busca** (skill [`browser-post-search`](skills/browser-post-search/SKILL.md) —
+sem isto o crawler entrega contagem, não jurisprudência)
+
+- [ ] Print da listagem no **topo e no rodapé**, e `outerHTML` de um card gravado
+- [ ] Card dissecado em **pelo menos dois tipos de documento** (acórdão × Turma Recursal…)
+- [ ] Escrito se o texto do card é **ementa, trecho ou nada** — com os tamanhos medidos
+- [ ] Cada botão do card clicado, com print (inclusive os que falharam)
+- [ ] **Contrato do inteiro teor** registrado (método, URL, corpo, chave composta) e
+      reproduzido **fora do browser**
+- [ ] Formato do documento identificado (HTML/PDF/…) e respondido se **já vinha no payload
+      da busca**
+- [ ] Bloqueio registrado **em separado** para a busca e para o download (costuma ser
+      assimétrico)
+- [ ] **Permalink** por documento confirmado em aba limpa — ou declarado inexistente
+- [ ] Registrado qual campo **identifica o documento** (≠ nº do processo)
+
 **Funcionamento**
 
 - [ ] `./bin/jur <cmd> -q "termo" -m 1 --json` retorna `success:true` com resultados
 - [ ] Filtro de data restringe de fato (compare as contagens com e sem)
 - [ ] Paginação anda além da página 1
+- [ ] **Paginação testada DUAS vezes** e a estabilidade registrada — sem desempate na
+      ordenação, a mesma página muda entre requisições, repetindo e **pulando** documentos
+- [ ] `size` máximo medido e o comportamento ao estourar registrado
+- [ ] Total classificado como **exato ou saturado** (número redondo fixo = teto de contador)
+- [ ] `--fetch-inteiro-teor` grava arquivo com texto útil (não só cabeçalho)
 - [ ] **Cada filtro de desambiguação muda o resultado de fato** — em especial
       Justiça Comum × Juizados/Turmas Recursais. Rode as duas buscas e compare as contagens:
       se der o mesmo número, o filtro **não está sendo aplicado**, ainda que a busca "funcione"
@@ -336,6 +403,7 @@ Um tribunal só vira 🟢 `ok` quando **todos** valem:
 | Skill | Faz | Quando |
 |---|---|---|
 | `codegen` | Navega, tira prints, escreve `human-codegen/<T>/` e propõe o crawler | Tribunal novo |
+| `browser-post-search` | Mapeia o **pós-busca**: card, escada até o documento, formato, paginação, permalink | Logo que a busca do tribunal novo retorna resultados |
 | `browser` | Executa a busca: entende a intenção, refina a query, coleta e resume | Uso do dia a dia |
 | `verificador` | Confirma que cada julgado citado existe na base oficial (CNJ + consulta por nº) | Antes de entregar qualquer lista |
 | `fixer` | Diagnostica crawler quebrado comparando a tela atual com os prints do `human-codegen` | Quando o tribunal muda o site |
@@ -356,6 +424,11 @@ mal nomeado tira essa capacidade** — por isso o §3 é obrigatório e não cos
 | "Vai ser `http`, então nem abro o browser" | O modo de acesso é do crawler. O **mapeamento** é sempre no browser. |
 | "Esse `<select>` só tem 'Todos'" | É AJAX. Abra no browser e enumere — foi assim que o filtro de Juizado quase se perdeu no TJRS. |
 | "A busca retorna resultados, o filtro funciona" | Compare as contagens com e sem o filtro. Igual = filtro ignorado. |
+| "A busca funciona, então o tribunal está mapeado" | Busca sem caminho até o documento é contagem, não jurisprudência. Rode `browser-post-search`. |
+| "O card mostra a ementa" | Meça. `<b>` no meio = highlight. 20× menor que o documento = trecho. |
+| "O inteiro teor precisa de outro request" | Confira o payload da busca primeiro — às vezes já vem pronto. |
+| "Paginei uma vez e veio certo" | Rode duas. Sem desempate, a mesma página muda entre requisições. |
+| "Deu 1.000 resultados" | 1.000 redondo é cheiro de teto de contador. Teste com termo raro. |
 | "A ementa basta" | Em Turmas Recursais a ementa é uma frase. Baixe o inteiro teor. |
 | "Vou usar browser, é mais fácil" | Cheque a aba Network antes. API direta é 10× mais rápida e não quebra. |
 | "Tem captcha, então o tribunal é `sem-acesso`" | Captcha protege a tela, não o endpoint publicado. Procure a API oficial antes de desistir. |

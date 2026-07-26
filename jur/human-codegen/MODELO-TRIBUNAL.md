@@ -148,26 +148,86 @@ POST com estado (`viewState`, `__VIEWSTATE`)?
 
 # Acessando os resultados
 
+> Esta parte é a metade do trabalho que costuma ser pulada. Preencha com a skill
+> [`browser-post-search`](../skills/browser-post-search/SKILL.md), que traz o roteiro e o
+> critério de aceite. **Busca sem caminho até o documento é contagem, não jurisprudência.**
+
 ## 18. Tela de resultados
 
-Onde aparecem (mesma página? nova rota?), e o **bloco de um resultado** campo a campo:
-nº do processo, órgão, magistrado, tipo, data de publicação/julgamento, links ("Baixar inteiro
-teor", "Copiar"), e se o texto vem completo ou em trecho.
+```
+Onde aparece?        mesma página | outra rota | nova aba | modal
+URL do resultado é reutilizável? (cole numa aba limpa e teste)
+Os controles de busca somem ou permanecem?
+Total exposto? onde, e com que texto exato?
+```
 
-Print obrigatório do cabeçalho **e** do rodapé da listagem.
+Print obrigatório do cabeçalho **e** do rodapé da listagem (são telas diferentes; a
+paginação vive no rodapé).
 
-## 19. Inteiro teor (download)
+**Anatomia do card**, campo a campo: nº do processo, órgão, magistrado, classe, datas de
+julgamento **e** publicação, comarca, links/botões (liste **todos**, com o texto exato).
+Grave o `outerHTML` de um card em `<NN>-card-resultado.html` — é o que o `fixer` compara.
 
-O que vem: HTML? PDF? RTF? Já vem no payload da busca (melhor caso) ou exige nova request?
-Exige token/captcha?
+⚠️ **O texto do card é ementa, trecho ou nada?** Não presuma: meça o `length` do card
+contra o do documento aberto. Termo destacado com `<b>`/`<mark>` no meio = **highlight**,
+não ementa. Chamar trecho de ementa é citar recorte como se fosse o todo.
 
-## 20. Paginação
+⚠️ **Disseque mais de um tipo de documento.** Acórdão, monocrática, súmula e Turma Recursal
+costumam ter cards diferentes, com campos que existem num e faltam noutro.
+
+## 19. Do card ao documento — a escada
+
+Clique **cada** botão do card, um por um, com print antes e depois (inclusive nos que
+falharem — "exige login" é informação):
+
+| Degrau | Registrar |
+|---|---|
+| Ementa | abre no lugar / modal / nova rota? o texto é maior que o do card? |
+| Inteiro teor | um clique ou dois (botão → item de popover)? nova aba? |
+| Documento original | PDF, HTML, DOCX? exige token, sessão ou captcha **só aqui**? |
+| Processo | leva a outro sistema (tramitação)? registre a URL; é fora do escopo |
+| Copiar citação | existe? o texto copiado é o formato oficial? |
+
+⚠️ **O XHR desse clique é o contrato do inteiro teor.** Copie método, URL e corpo inteiro,
+e **reproduza fora do browser**. É comum exigir **chave composta** não óbvia.
 
 ```
-Resultados por página:
-Parâmetro de página:
-Total de resultados é exposto? Onde?
-Existe "Ir para página"? Última página?
+Formato:            HTML | PDF | DOCX | RTF | imagem
+Tamanho típico:     (bytes brutos e caracteres úteis após stripHtml)
+Vem completo?       ementa + relatório + voto + dispositivo, ou só a ementa?
+JÁ VEIO NA BUSCA?   ← confira ANTES de escrever downloader
+Precisa de sessão?  (teste em contexto limpo)
+```
+
+⚠️ **Bloqueio é assimétrico.** Registre em separado: a BUSCA funciona sem resolver? o
+DOWNLOAD funciona sem resolver?
+
+## 20. Paginação e profundidade
+
+```
+Resultados por página:   default e opções do combo
+Parâmetro:               querystring? POST? cursor? offset?
+Máximo aceito:           (bisecte) e o que acontece ao estourar: 400? trunca?
+Total exposto:           é EXATO ou SATURADO? (número redondo fixo = teto de contador)
+Profundidade:            até que página responde? há teto de offset?
+Última página:           existe? o que devolve?
+ESTABILIDADE:            rodou a mesma página 2× e deu o mesmo conjunto de ids?
+```
+
+⚠️ **Teste a paginação duas vezes.** Ordenação sem campo de desempate faz a mesma página
+devolver documentos diferentes entre requisições — repetindo uns e **pulando** outros.
+Se oscilar, ache a causa (balanceador com nós dessincronizados é comum) e registre a
+correção, não só o sintoma.
+
+## 20b. Permalink e identidade do documento
+
+É o que torna a citação verificável — sem isso o `verificador` não tem o que conferir.
+
+```
+Existe URL estável por documento?   (confirme numa aba LIMPA, sem cookies)
+Qual campo IDENTIFICA o documento?  (uuid? documentoId? nº do acórdão?)
+O nº do processo basta?             quase nunca — um processo tem vários julgados
+O id da lista é o mesmo aceito na consulta por número?
 ```
 
 ---

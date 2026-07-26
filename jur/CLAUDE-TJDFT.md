@@ -166,6 +166,16 @@ ambos=622. O default do portal é só espelho, o mais restrito — para varredur
 **5.8 `sinonimos` parece inerte.** Exposto na tela e no payload, mas não mudou contagem
 em nenhum dos termos testados (usucapião, veículo, dano moral). Não prometa que amplia.
 
+**5.8-b O permalink é `/acordaos/<uuid>`, e vale para TODAS as bases.** A rota que parece
+óbvia, `/documento/<uuid>`, é **link morto** — devolve só o shell da SPA (34 caracteres).
+Validado em contexto limpo de Chromium para acórdão, Turma Recursal e monocrática. Quem
+citar com `/documento/` entrega ao leitor uma página em branco.
+
+**5.8-c A busca também tem URL compartilhável**:
+`/resultado?sinonimos=&espelho=&inteiroTeor=&textoPesquisa=`. Exposta no Navigator como
+`buscaUrl()`. É o link para mandar a pesquisa pronta a alguém — não confundir com o
+permalink do documento.
+
 **5.9 `possuiInteiroTeor` mente.** Apareceu `false` em registro que tinha `inteiroTeor`
 preenchido. Olhe o campo, não o booleano.
 
@@ -197,14 +207,14 @@ TJDFT na numeração CNJ: **J=8 (Justiça Estadual), TR=07**.
 ## 8. Testes
 
 ```bash
-node src/TJDFTTestes.js            # 19 testes de integração (~30s)
+node src/TJDFTTestes.js            # 20 testes de integração (~30s)
 node src/TJDFTTestes.js --rapido   # pula o download em disco
 node tests/smoke.js tjdft
 ```
 
-Seis são testes de **armadilha**: afirmam que a API ainda quebra ou mente onde sabemos
+Sete são testes de **armadilha**: afirmam que a API ainda quebra ou mente onde sabemos
 (`base=acordaos-tr` → 0, número sem máscara → 0, `PROX(5)` → 0, decisões sem data de
-julgamento, `tamanho`>30 → 400, `hits` como objeto). Se um deles começar a **falhar**, é
+julgamento, `tamanho`>30 → 400, `hits` como objeto, permalink na rota `/acordaos`). Se um deles começar a **falhar**, é
 boa notícia: o tribunal consertou, e então este documento é que está errado.
 
 ## 9. Arquitetura
