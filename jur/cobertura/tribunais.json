@@ -94,19 +94,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "tst",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TST. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). ESCOPO: corte SUPERIOR: uniformiza a CLT para todo o pais. Cite antes do TRT local. O numero CNJ do acervo e o da ORIGEM (TR do TRT de onde o processo veio). COLEÇÕES VAZIAS (medido, é a forma da corte): sentencas, recursorevista — o TST é corte superior: 1º grau e admissibilidade de RR estão no TRT de origem (ex.: `jur trt2 -g 1`). A CLI avisa em vez de devolver 0 calado. codigoCNJ=null: o acervo guarda o número CNJ da ORIGEM (TR do TRT de onde o processo veio), então o Checker aceita qualquer processo da JT."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2209,19 +2214,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt1",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT1. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=1 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2253,19 +2263,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt2",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT2. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). ESCOPO: SAO PAULO tem DOIS TRTs: capital e Grande SP aqui; interior e no TRT15. codigoCNJ=2 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2297,19 +2312,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt3",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT3. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=3 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2341,19 +2361,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt4",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT4. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=4 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2385,19 +2410,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt5",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT5. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=5 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2429,19 +2459,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt6",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT6. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=6 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2473,19 +2508,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt7",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT7. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=7 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2518,19 +2558,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt8",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT8. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). ESCOPO: atende PA e AP. codigoCNJ=8 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2566,15 +2611,18 @@
         "comando": "trt9",
         "acesso": "api",
         "status": "ok",
-        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT9. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo. O crawler é o mesmo para os outros 23 TRTs: src/Falcao*.js"
+        "familia": "falcao",
+        "canario": true,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT9. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=9 (TR do número CNJ)."
       },
       "repo": {
         "crawler": "src/TRT9Crawler.js",
-        "extra": "TRT9Navigator.js + TRT9Checker.js sobre a camada de família src/Falcao{Navigator,Crawler,Checker}.js (reaproveitável por TST + os 24 TRTs)",
+        "extra": "TRT9Navigator.js + TRT9Checker.js (atalhos nomeados) sobre src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). Suíte de profundidade com fixtures fixas; a de família é src/FalcaoTestes.js",
         "codegen": "completo",
         "screenshots": 14,
         "tests": "src/TRT9Testes.js",
         "skills": [
+          "verificador/falcao",
           "verificador/trt9"
         ],
         "working": true
@@ -2610,19 +2658,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt10",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT10. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). ESCOPO: atende DF e TO. codigoCNJ=10 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2655,19 +2708,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt11",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT11. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). ESCOPO: atende AM e RR. codigoCNJ=11 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2699,19 +2757,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt12",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT12. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=12 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2743,19 +2806,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt13",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT13. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=13 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2788,19 +2856,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt14",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT14. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). ESCOPO: atende RO e AC. codigoCNJ=14 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2832,19 +2905,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt15",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT15. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). ESCOPO: INTERIOR de Sao Paulo (sede em Campinas). Capital e Grande SP estao no TRT2. codigoCNJ=15 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2876,19 +2954,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt16",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT16. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=16 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2920,19 +3003,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt17",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT17. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=17 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -2964,19 +3052,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt18",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT18. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=18 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -3008,19 +3101,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt19",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT19. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=19 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -3052,19 +3150,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt20",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT20. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=20 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -3096,19 +3199,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt21",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT21. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=21 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -3140,19 +3248,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt22",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT22. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=22 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -3184,19 +3297,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt23",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT23. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=23 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {
@@ -3228,19 +3346,24 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa",
+        "comando": "trt24",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT24. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal). codigoCNJ=24 (TR do número CNJ)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
         "codegen": "nao",
         "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
       }
     },
     {

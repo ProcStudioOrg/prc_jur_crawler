@@ -65,10 +65,18 @@ isso ao usuário; é o sinal de alucinação mais comum.
   Não cite. Diga explicitamente que o processo pode existir no sistema de tramitação
   sem estar indexado na jurisprudência — são bases diferentes.
 
-Tribunais com consulta direta por número implementada: **TJGO**, **TJPA**, **TRT9**,
-**TRF2**, **TRF6**. Especificidades em [`tribunais/tjgo.md`](tribunais/tjgo.md),
-[`tribunais/tjpa.md`](tribunais/tjpa.md), [`tribunais/trt9.md`](tribunais/trt9.md),
-[`tribunais/trf2.md`](tribunais/trf2.md) e [`tribunais/trf6.md`](tribunais/trf6.md).
+Tribunais com consulta direta por número implementada: **TJGO**, **TJPA**, **TRF2**,
+**TRF6** e **a Justiça do Trabalho inteira** (TST + TRT1..TRT24 + CSJT).
+Especificidades em [`tribunais/tjgo.md`](tribunais/tjgo.md),
+[`tribunais/tjpa.md`](tribunais/tjpa.md), [`tribunais/trf2.md`](tribunais/trf2.md),
+[`tribunais/trf6.md`](tribunais/trf6.md) e — para os 26 acervos trabalhistas —
+[`tribunais/falcao.md`](tribunais/falcao.md) (o TRT9 tem detalhe extra em
+[`tribunais/trt9.md`](tribunais/trt9.md)).
+
+> ⚠️ **Justiça do Trabalho: a regra do `TR` não é uniforme.** O `tst` aceita processo
+> de **qualquer** TRT de origem (o número é preservado desde a origem) e o `csjt` usa
+> `.5.90.`. Exigir `.5.00.` no TST rejeitaria todo julgado legítimo — leia
+> [`tribunais/falcao.md`](tribunais/falcao.md) antes de verificar qualquer trabalhista.
 
 > ⚠️ **STJ: pule o passo 1.** A base do STJ **não indexa número CNJ**, e o CNJ que aparece
 > num acórdão dele é o do processo de **origem** — checar o segmento contra "STJ" gera falso

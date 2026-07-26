@@ -1,6 +1,5 @@
 // src/TRT9Checker.js
-const FalcaoChecker = require('./FalcaoChecker');
-const TRT9Navigator = require('./TRT9Navigator');
+const { classes } = require('./FalcaoTribunais');
 
 /**
  * Checker do TRT9: confirma que um julgado existe na base oficial da
@@ -8,22 +7,15 @@ const TRT9Navigator = require('./TRT9Navigator');
  *
  * Número CNJ do TRT9: NNNNNNN-DD.AAAA.5.09.OOOO  (J=5 Justiça do Trabalho, TR=09).
  *
+ * Atalho nomeado sobre `FalcaoTribunais.classes('TRT9')`. Para os outros 25
+ * acervos use `classes('TRT2').Checker` ou `./bin/jur trt2 -n <numero>`.
+ * ⚠️ O Checker do TST aceita processo de QUALQUER TRT de origem — ver a
+ * armadilha do `codigoCNJ` no cabeçalho de `FalcaoTribunais.js`.
+ *
  * CLI: node src/TRT9Checker.js <numero-processo>
  *      ./bin/jur trt9 -n <numero-processo>
  */
-class TRT9Checker extends FalcaoChecker {
-  constructor(options = {}) {
-    super({
-      ...options,
-      tribunal: 'TRT9',
-      codigoCNJ: TRT9Navigator.CODIGO_CNJ,
-      navigator: options.navigator ?? new TRT9Navigator({
-        timeout: options.timeout ?? 60000,
-        log: options.log ?? (() => {}),
-      }),
-    });
-  }
-}
+const TRT9Checker = classes('TRT9').Checker;
 
 module.exports = TRT9Checker;
 

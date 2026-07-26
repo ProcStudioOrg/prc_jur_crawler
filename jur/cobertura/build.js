@@ -59,6 +59,40 @@ const NOME_TRIBUNAL = {
  * ou mapeamento humano em human-codegen/). Tribunal ausente = `nao-mapeado`.
  * Nao inventar URL: `jur codegen` existe justamente para descobrir.
  */
+/**
+ * Os acervos do FALCAO. A Justica do Trabalho tem UMA base nacional
+ * (jurisprudencia.jt.jus.br): TST + TRT1..TRT24 + CSJT sao o mesmo indice,
+ * separados pelo parametro `tribunais`. Gerar as entradas daqui, em vez de
+ * escrever 26 linhas, mantem uma fonte da verdade so — a mesma decisao de
+ * src/FalcaoTribunais.js. Ver CLAUDE-FALCAO.md.
+ */
+function falcaoEntradas() {
+  const { TRIBUNAIS } = require(path.join(ROOT, 'src', 'FalcaoTribunais'));
+  const URL = 'https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa';
+  const COMUM = 'FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=<SIGLA>. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo, e HTTP 429 sob rajada — os 26 comandos batem no MESMO host, então não paralelize. Um só código para todos: src/Falcao*.js + src/FalcaoTribunais.js (sem TRTnCrawler.js por tribunal).';
+  const saida = {};
+  for (const t of Object.values(TRIBUNAIS)) {
+    const extras = [];
+    if (t.ressalva) extras.push(`ESCOPO: ${t.ressalva}.`);
+    if (t.colecoesVazias.length) {
+      extras.push(`COLEÇÕES VAZIAS (medido, é a forma da corte): ${t.colecoesVazias.join(', ')} — ${t.alternativaColecaoVazia}. A CLI avisa em vez de devolver 0 calado.`);
+    }
+    extras.push(t.codigoCNJ === null
+      ? 'codigoCNJ=null: o acervo guarda o número CNJ da ORIGEM (TR do TRT de onde o processo veio), então o Checker aceita qualquer processo da JT.'
+      : `codigoCNJ=${t.codigoCNJ} (TR do número CNJ).`);
+    saida[t.sigla] = {
+      url: URL, comando: t.comando, acesso: 'api', status: 'ok',
+      // `familia` avisa o tests/smoke.js de que estes 26 comandos compartilham UM host:
+      // dispara-los em paralelo rende 429 e reporta a JT inteira como bloqueada.
+      // O smoke roda so o `canario` da familia, salvo --familia-completa.
+      familia: 'falcao',
+      canario: t.sigla === 'TRT9',
+      nota: `${COMUM.replace('<SIGLA>', t.sigla)} ${extras.join(' ')}`,
+    };
+  }
+  return saida;
+}
+
 const JURISPRUDENCIA = {
   TRF1: { url: 'https://jurisprudencia.cjf.jus.br/trf1/index.xhtml', comando: 'trf1', acesso: 'browser', status: 'instavel', nota: 'Host do CJF resolve mas não responde (verificado 24/07/2026, também fora via curl) — pode ser queda temporária; reteste com tests/smoke.js' },
   TRF2: { url: 'https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar', comando: 'trf2', acesso: 'http', status: 'ok', nota: 'Módulo eproc-jur, mesma família do TRF4/TJSC — mas SEM o bloqueio F5 do TJSC: o POST responde 200 sem cookie nenhum, então é HTTP puro (~0,5s/busca). O host antigo juris.trf2.jus.br é NXDOMAIN; jurisprudencia.trf2.jus.br dá 301 para cá. ⚠️ RESSALVA CENTRAL: o ESPAÇO entre termos quebra a busca — o servidor injeta o operador em inglês como termo ("dano moral" = 46 documentos; "dano-moral" = 20.201). O crawler hifeniza a query sozinho; a álgebra fecha exato (OU = A+B−E, NÃO = A−E). Frase exata + outro termo não tem conserto. Justiça Federal comum × Juizados pelo combo Origem (#selOrigem: 1=TRF2, 2=TRU2, 3=Turmas Recursais; somam exato). Só 2º grau, base começa em 2018. #txtProcesso sozinho devolve 0 — o Checker usa o curinga * junto. Não existe API oficial: a Jurisprudência Unificada do CJF lista o TRF2 mas está VAZIA (0 documentos); o DataJud do CNJ funciona mas só tem metadados.' },
@@ -77,7 +111,9 @@ const JURISPRUDENCIA = {
   STF: { url: 'https://jurisprudencia.stf.jus.br/pages/search', comando: 'stf', acesso: 'api', status: 'ok', nota: 'SPA Angular com API de passthrough de Elasticsearch (POST /api/search/search). NÃO existe API oficial: dadosabertos.stf.jus.br é NXDOMAIN, /dadosabertos serve 404, transparencia.stf.jus.br é só painel Qlik de estatística, não há Swagger, e o STF NÃO está no DataJud (api_publica_stf → index_not_found_exception). 4 bases: acordaos 368.511 (desde 1892!), decisoes 741.676 (desde 1968), sumulas 799 = 736 simples + 63 VINCULANTES (desde 1963), informativos 11.571 (desde 1995). Instância única — não há Juizado; a desambiguação é por ÓRGÃO (Pleno 80.674 × 1ª Turma 134.877 × 2ª Turma 121.103) e por CLASSE (73 siglas: ADI/ADPF/ADC × RE/ARE/AI × HC/MS). ⚠️ TRÊS ARMADILHAS: (1) AWS WAF devolve 202+challenge sem o cookie aws-waf-token — resolvido uma vez no Playwright, vale ~4 dias, depois é HTTP puro; (2) cadeia TLS incompleta (só o cert folha) — Node falha, o navigator busca o intermediário pela extensão AIA; (3) corpo do POST ≤ 8 KB é inspecionado pelo WAF e expressão com ") OR (" leva 403 — o bloco highlight (como a SPA manda) mantém o payload acima do limiar. Os operadores em português (e/ou/não/$) são traduzidos NO CLIENTE para AND/OR/NOT/*: sem isso viram termo literal (indeniz$ = 12.423 traduzido contra 1 literal). Inteiro teor JÁ VEM no resultado da busca (campo inteiro_teor_texto). Teto: 250 docs/requisição e 10.000 por consulta. A base de jurisprudência NÃO indexa CNJ — o Checker usa classe+número (ARE 1596565) e, para CNJ, o portal (listarProcessos.asp?numeroUnico=<só dígitos>).' },
   TJMA: { url: 'https://jurisconsult.tjma.jus.br/#/sg-jurisprudence-form', comando: 'tjma', acesso: 'api', status: 'sem-acesso', nota: 'BUSCA BLOQUEADA POR CAPTCHA — insuperável por ora (decisão consciente: este repo não automatiza captcha). O JurisConsult é o ÚNICO módulo de jurisprudência do TJMA (o "08-jurisprudencias" do human-codegen é a mesma tela). A API é limpa e está inteiramente mapeada (apijuris.tjma.jus.br/v1), mas TODA rota de busca exige captcha de imagem próprio + reCAPTCHA v2 invisible, ambos validados no servidor (400 captcha_not_provided / 400 incorrect_captcha / 403 invalid_captcha_g). Headless, --headed e Chrome real com UA comum: todos caem no desafio de imagens. Não há API oficial de jurisprudência (dados abertos do TJMA só publica projetos/indicadores; MNI exige credenciamento). O QUE FUNCIONA: rotas de combos abertas, e o Checker por número de processo via DataJud/CNJ (api_publica_tjma, G1+G2) — metadados, sem ementa. `./bin/jur tjma --diagnostico` diz ao vivo se o bloqueio caiu.' },
   TJRJ: { url: 'https://eproc1g.tjrj.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar', comando: 'tjrj', acesso: 'http', status: 'ok', nota: 'Módulo eproc-jur, mesma família do TRF4/TJSC — mas SEM o bloqueio F5 do TJSC: POST direto funciona. Charset ISO-8859-1 (corpo enviado em latin-1). ESCOPO: só 2º grau da Justiça Comum no e-Proc (~2023+); Turmas Recursais/Juizados e o acervo histórico estão no eJURIS legado (mapeado em human-codegen/TJRJ/01-ejuris/, sem crawler). Total/paginação em hidden fields (hdnTotalResultado); paginação via ajax_paginar_resultado, 10/página fixo. Combos avançados (órgão/relator/classe) usam o LABEL como value. Inteiro teor por GET no data-link do card (HTML ~1 MB). RESSALVA: o desempate da ordenação oscila entre requisições — a fronteira das páginas desliza 1–2 documentos; o crawler deduplica por id.' },
-  TRT9: { url: 'https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa', comando: 'trt9', acesso: 'api', status: 'ok', nota: 'FALCÃO — base NACIONAL da JT (TST + 24 TRTs + CSJT), desenvolvida pelo próprio TRT9; API JSON sem auth, filtro tribunais=TRT9. Instância separada por `colecao` (sentencas=1º grau, acordaos=2º grau, decisoesmonocraticas, recursorevista). Ressalvas: UA de navegador obrigatório (CloudFront 403), sessionId `_`+7 alfanuméricos, teto de 200 resultados/consulta para usuário anônimo. O crawler é o mesmo para os outros 23 TRTs: src/Falcao*.js' },
+  // FALCAO: TST + TRT1..TRT24 (+ CSJT, fora do catalogo dos 61) entram logo abaixo,
+  // GERADOS a partir de src/FalcaoTribunais.js — ver falcaoEntradas().
+  ...falcaoEntradas(),
 };
 
 /** Estado do repositorio, por tribunal. */
@@ -99,8 +135,26 @@ const REPO = {
   TJSP: { crawler: 'src/TJSPCrawler.js', codegen: 'completo', tests: false, skills: [] },
   TJMA: { crawler: 'src/TJMACrawler.js', codegen: 'completo', tests: 'src/TJMATestes.js', skills: [], extra: 'TJMANavigator.js (contrato da API + sonda do bloqueio) + TJMAChecker.js (consulta por nº via DataJud/CNJ — é o único caminho que funciona)' },
   TJRJ: { crawler: 'src/TJRJCrawler.js', codegen: 'completo', tests: 'src/TJRJTestes.js', skills: ['verificador/tjrj'], extra: 'TJRJNavigator.js + TJRJChecker.js' },
-  TRT9: { crawler: 'src/TRT9Crawler.js', codegen: 'completo', tests: 'src/TRT9Testes.js', skills: ['verificador/trt9'], extra: 'TRT9Navigator.js + TRT9Checker.js sobre a camada de família src/Falcao{Navigator,Crawler,Checker}.js (reaproveitável por TST + os 24 TRTs)' },
+  // FALCAO: os 26 acervos compartilham UM codigo. Gerado — ver falcaoRepo().
+  ...falcaoRepo(),
 };
+
+/**
+ * Estado do repo para os acervos do Falcao. Todos apontam para a MESMA camada:
+ * nao existe TRTnCrawler.js por tribunal, e isso e proposital (ver CLAUDE-FALCAO.md).
+ * O TRT9 tem, alem disso, arquivos nomeados e uma suite de profundidade propria.
+ */
+function falcaoRepo() {
+  const { TRIBUNAIS } = require(path.join(ROOT, 'src', 'FalcaoTribunais'));
+  const FAMILIA = 'src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito)';
+  const saida = {};
+  for (const t of Object.values(TRIBUNAIS)) {
+    saida[t.sigla] = t.sigla === 'TRT9'
+      ? { crawler: 'src/TRT9Crawler.js', codegen: 'completo', tests: 'src/TRT9Testes.js', skills: ['verificador/falcao', 'verificador/trt9'], extra: `TRT9Navigator.js + TRT9Checker.js (atalhos nomeados) sobre ${FAMILIA}. Suíte de profundidade com fixtures fixas; a de família é src/FalcaoTestes.js` }
+      : { crawler: 'src/FalcaoCrawler.js', codegen: 'completo', tests: 'src/FalcaoTestes.js', skills: ['verificador/falcao'], extra: `${FAMILIA}. human-codegen/TRT9/ vale por todos — é literalmente a mesma tela` };
+  }
+  return saida;
+}
 
 // ---------------------------------------------------------------- utilitarios
 

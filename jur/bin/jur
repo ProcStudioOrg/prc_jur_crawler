@@ -35,10 +35,8 @@ const TJMANavigator = require('../src/TJMANavigator');
 const TJRJCrawler = require('../src/TJRJCrawler');
 const TJRJChecker = require('../src/TJRJChecker');
 const TJRJNavigator = require('../src/TJRJNavigator');
-const TRT9Crawler = require('../src/TRT9Crawler');
-const TRT9Checker = require('../src/TRT9Checker');
-const TRT9Navigator = require('../src/TRT9Navigator');
 const FalcaoNavigator = require('../src/FalcaoNavigator');
+const FalcaoTribunais = require('../src/FalcaoTribunais');
 const STFCrawler = require('../src/STFCrawler');
 const STFChecker = require('../src/STFChecker');
 const STFNavigator = require('../src/STFNavigator');
@@ -2021,189 +2019,226 @@ program
     }
   });
 
-program
-  .command('trt9')
-  .description('Search TRT9 (Tribunal Regional do Trabalho da 9a Regiao - PR) jurisprudence via FALCAO')
-  .option('-q, --query <text>', 'Pesquisa livre (OU implicito; "frase exata"; -palavra exclui)')
-  .option('-n, --numero <numero>', 'Consulta direta por numero de processo CNJ - usa o TRT9Checker')
-  .option('-g, --grau <grau>', 'DESAMBIGUACAO PRINCIPAL: 1 (sentencas/Varas), 2 (acordaos/Turmas, default), monocraticas, admissibilidade, ambos, todos', '2')
-  .option('-c, --colecao <colecoes>', 'Colecao(oes) crua(s), virgula: acordaos, sentencas, decisoesmonocraticas, recursorevista, precedentes (sobrepoe --grau)')
-  .option('-di, --data-inicio <date>', 'Data inicial de julgamento/juntada (DD/MM/YYYY)')
-  .option('-df, --data-fim <date>', 'Data final de julgamento/juntada (DD/MM/YYYY)')
-  .option('-oj, --orgao <nome>', 'Orgao julgador, ex.: "1a Turma", "Secao Especializada", "06a VARA DO TRABALHO DE CURITIBA"')
-  .option('-r, --relator <nome>', 'Magistrada/magistrado (nome completo, como no combo)')
-  .option('-cp, --classe <sigla>', 'Classe processual pela sigla, ex.: ROT, AP, AIRO, ATSum')
-  .option('--prioridade <nome>', 'Prioridade, ex.: "Idoso", "Acidente de Trabalho"')
-  .option('--com-ementa', 'Apenas documentos que possuem ementa (temEmenta=S)')
-  .option('--sem-ementa', 'Apenas documentos sem ementa (temEmenta=N)')
-  .option('--escopo <escopo>', 'Escopo da busca: inteiroTeor (default) ou ementa', 'inteiroTeor')
-  .option('-ord, --ordenacao <tipo>', 'Ordenacao: relevancia (default), recentes, antigos', 'relevancia')
-  .option('--listar-colecoes', 'Lista as colecoes (a desambiguacao de grau) com as contagens e sai')
-  .option('--listar-orgaos', 'Lista os orgaos julgadores da colecao escolhida e sai')
-  .option('--listar-relatores', 'Lista os relatores da colecao escolhida e sai')
-  .option('--listar-classes', 'Lista as classes processuais da colecao escolhida e sai')
-  .option('--listar-tribunais', 'Lista os 25 acervos do FALCAO (TST + 24 TRTs) e sai')
-  .option('--full-text', 'Inclui o inteiro teor no JSON dos resultados (payload pesado)')
-  .option('--fetch-inteiro-teor', 'Grava o inteiro teor de cada resultado em .txt (sem novo acesso a rede)')
-  .option('--output-dir <dir>', 'Directory for saved full-text files', './resultados/trt9')
-  .option('--verificar [amostra]', 'Audit results: re-query N sampled processos against the base (default 5)')
-  .option('--max-results <number>', 'Maximum total results to collect (teto do servidor: 200 por colecao)')
-  .option('-m, --max-pages <number>', 'Maximum pages to crawl (10 resultados/pagina, max 20 paginas)', 10)
-  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-trt9.json')
-  .option('-v, --visible', 'Ignored (TRT9/FALCAO uses direct HTTP, no browser)')
-  .option('--headed', 'Ignored (TRT9/FALCAO uses direct HTTP, no browser)')
-  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
-  .action(async (opts) => {
-    const jsonMode = opts.json;
-    const log = jsonMode ? () => {} : console.log.bind(console);
+// ---------------------------------------------------------------------------
+// FALCAO — Justica do Trabalho: TST + TRT1..TRT24 + CSJT (26 acervos)
+//
+// O Falcao e UMA base nacional (jurisprudencia.jt.jus.br): os 26 acervos vivem
+// no mesmo indice e o que os separa e o parametro `tribunais`. Por isso os 26
+// comandos sao REGISTRADOS EM LACO a partir de src/FalcaoTribunais.js em vez de
+// copiados 26 vezes — todos tem exatamente a mesma superficie de flags, e uma
+// correcao no laco corrige a Justica do Trabalho inteira.
+//
+// `jur tst -q "..."` == `jur trt2 -q "..."` == `jur trt15 -q "..."`.
+// ---------------------------------------------------------------------------
 
-    // --grau e o rotulo humano da desambiguacao; --colecao e a forma crua.
-    const GRAUS = {
-      '1': ['sentencas'],
-      '2': ['acordaos'],
-      primeiro: ['sentencas'],
-      segundo: ['acordaos'],
-      monocraticas: ['decisoesmonocraticas'],
-      admissibilidade: ['recursorevista'],
-      ambos: ['acordaos', 'sentencas'],
-      todos: ['acordaos', 'sentencas', 'decisoesmonocraticas', 'recursorevista'],
-    };
+// --grau e o rotulo humano da desambiguacao; --colecao e a forma crua.
+const FALCAO_GRAUS = {
+  '1': ['sentencas'],
+  '2': ['acordaos'],
+  primeiro: ['sentencas'],
+  segundo: ['acordaos'],
+  monocraticas: ['decisoesmonocraticas'],
+  admissibilidade: ['recursorevista'],
+  ambos: ['acordaos', 'sentencas'],
+  todos: ['acordaos', 'sentencas', 'decisoesmonocraticas', 'recursorevista'],
+};
 
-    try {
-      const colecoes = opts.colecao
-        ? opts.colecao.split(',').map((c) => c.trim()).filter(Boolean)
-        : (GRAUS[String(opts.grau)] || null);
-      if (!colecoes) {
-        throw new Error(`--grau "${opts.grau}" invalido (use: ${Object.keys(GRAUS).join(', ')})`);
-      }
+for (const meta of Object.values(FalcaoTribunais.TRIBUNAIS)) {
+  const SIGLA = meta.sigla;
+  const cmd = meta.comando;
 
-      // Modos utilitarios de listagem
-      const listagens = {
-        listarColecoes: ['colecoes', (nav, c) => nav.listarColecoes({ colecao: c })],
-        listarOrgaos: ['orgaosJulgadores', (nav, c) => nav.listarOrgaosJulgadores(c)],
-        listarRelatores: ['relatores', (nav, c) => nav.listarRelatores(c)],
-        listarClasses: ['classes', (nav, c) => nav.listarClasses(c)],
-        listarTribunais: ['tribunais', (nav, c) => nav.listarTribunais({ colecao: c })],
-      };
-      for (const [flag, [chave, fn]] of Object.entries(listagens)) {
-        if (!opts[flag]) continue;
-        const nav = new TRT9Navigator({ log });
-        const lista = await fn(nav, colecoes[0]);
-        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, colecao: colecoes[0], [chave]: lista }) + '\n');
-        else { console.log(`Colecao: ${colecoes[0]}`); console.table(lista); }
-        process.exit(0);
-      }
+  program
+    .command(cmd)
+    .description(
+      `Search ${SIGLA} (${meta.nome}) jurisprudence via FALCAO`
+      + (meta.ressalva ? ` -- ATENCAO: ${meta.ressalva}` : '')
+    )
+    .option('-q, --query <text>', 'Pesquisa livre (OU implicito; "frase exata"; -palavra exclui)')
+    .option('-n, --numero <numero>', `Consulta direta por numero de processo CNJ - usa o ${SIGLA}Checker`)
+    .option('-g, --grau <grau>', 'DESAMBIGUACAO PRINCIPAL: 1 (sentencas/Varas), 2 (acordaos/Turmas, default), monocraticas, admissibilidade, ambos, todos', '2')
+    .option('-c, --colecao <colecoes>', 'Colecao(oes) crua(s), virgula: acordaos, sentencas, decisoesmonocraticas, recursorevista, precedentes (sobrepoe --grau)')
+    .option('-di, --data-inicio <date>', 'Data inicial de julgamento/juntada (DD/MM/YYYY)')
+    .option('-df, --data-fim <date>', 'Data final de julgamento/juntada (DD/MM/YYYY)')
+    .option('-oj, --orgao <nome>', 'Orgao julgador, ex.: "1a Turma", "Secao Especializada", "03a VARA DO TRABALHO DE SAO PAULO" (use --listar-orgaos)')
+    .option('-r, --relator <nome>', 'Magistrada/magistrado (nome completo, como no combo)')
+    .option('-cp, --classe <sigla>', 'Classe processual pela sigla, ex.: ROT, AP, AIRO, ATSum')
+    .option('--prioridade <nome>', 'Prioridade, ex.: "Idoso", "Acidente de Trabalho"')
+    .option('--com-ementa', 'Apenas documentos que possuem ementa (temEmenta=S)')
+    .option('--sem-ementa', 'Apenas documentos sem ementa (temEmenta=N)')
+    .option('--escopo <escopo>', 'Escopo da busca: inteiroTeor (default) ou ementa', 'inteiroTeor')
+    .option('-ord, --ordenacao <tipo>', 'Ordenacao: relevancia (default), recentes, antigos', 'relevancia')
+    .option('--listar-colecoes', 'Lista as colecoes (a desambiguacao de grau) com as contagens e sai')
+    .option('--listar-orgaos', 'Lista os orgaos julgadores da colecao escolhida e sai')
+    .option('--listar-relatores', 'Lista os relatores da colecao escolhida e sai')
+    .option('--listar-classes', 'Lista as classes processuais da colecao escolhida e sai')
+    .option('--listar-tribunais', 'Lista os 26 acervos do FALCAO (TST + 24 TRTs + CSJT) com as contagens e sai')
+    .option('--full-text', 'Inclui o inteiro teor no JSON dos resultados (payload pesado)')
+    .option('--fetch-inteiro-teor', 'Grava o inteiro teor de cada resultado em .txt (sem novo acesso a rede)')
+    .option('--output-dir <dir>', 'Directory for saved full-text files', `./resultados/${cmd}`)
+    .option('--verificar [amostra]', 'Audit results: re-query N sampled processos against the base (default 5)')
+    .option('--max-results <number>', 'Maximum total results to collect (teto do servidor: 200 por colecao)')
+    .option('-m, --max-pages <number>', 'Maximum pages to crawl (10 resultados/pagina, max 20 paginas)', 10)
+    .option('-o, --output <file>', 'Output JSON file', `resultados/results-${cmd}.json`)
+    .option('-v, --visible', `Ignored (${SIGLA}/FALCAO uses direct HTTP, no browser)`)
+    .option('--headed', `Ignored (${SIGLA}/FALCAO uses direct HTTP, no browser)`)
+    .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+    .action(async (opts) => {
+      const jsonMode = opts.json;
+      const log = jsonMode ? () => {} : console.log.bind(console);
+      const { Navigator, Crawler, Checker } = FalcaoTribunais.classes(SIGLA);
 
-      // Consulta direta por numero (a verificacao de um julgado)
-      if (opts.numero) {
-        const checker = new TRT9Checker();
-        const res = await checker.consultarProcesso(opts.numero);
-        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
-        else console.log(JSON.stringify(res, null, 2));
-        process.exit(res.encontrado ? 0 : 1);
-      }
-
-      if (!opts.query && !opts.orgao && !opts.relator && !opts.classe) {
-        throw new Error('Informe -q "<termos>" (ou -n <numero> para consulta direta, ou um filtro forte: -oj/-r/-cp)');
-      }
-
-      const rotulos = colecoes.map((c) => `${c} (${FalcaoNavigator.COLECOES[c]?.grau ?? '?'}o grau)`).join(', ');
-      log('='.repeat(60));
-      log('TRT9 Jurisprudencia - FALCAO (HTTP direto, API JSON publica)');
-      log('='.repeat(60));
-      log(`Query: ${opts.query || '-'}`);
-      log(`Grau/Colecao: ${rotulos}`);
-      log(`Data: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
-      log(`Orgao: ${opts.orgao || '-'} | Relator: ${opts.relator || '-'} | Classe: ${opts.classe || '-'}`);
-      log(`Escopo: ${opts.escopo} | Ordenacao: ${opts.ordenacao}`);
-      log(`Max Pages: ${opts.maxPages} (10/pagina; teto do servidor: 20 paginas = 200 resultados)`);
-      log('='.repeat(60));
-
-      const crawler = new TRT9Crawler({
-        timeout: 90000,
-        includeFullText: !!opts.fullText,
-        log,
-      });
-
-      const filters = {
-        colecoes,
-        dataInicio: opts.dataInicio || null,
-        dataFim: opts.dataFim || null,
-        orgaoJulgador: opts.orgao || null,
-        relator: opts.relator || null,
-        classe: opts.classe || null,
-        prioridade: opts.prioridade || null,
-        temEmenta: opts.comEmenta ? 'S' : (opts.semEmenta ? 'N' : null),
-        escopo: opts.escopo,
-        ordenacao: opts.ordenacao,
-      };
-
-      const searchOptions = { maxPages: parseInt(opts.maxPages, 10) };
-      if (opts.maxResults) searchOptions.maxResults = parseInt(opts.maxResults, 10);
-
-      const results = await crawler.search(opts.query || '', filters, searchOptions);
-
-      log('='.repeat(60));
-      log(`Total results collected: ${results.length}`);
-      if (results.totalResults) log(`Total results on server: ${results.totalResults}`);
-      if (results.totaisPorColecao) log(`Por colecao: ${JSON.stringify(results.totaisPorColecao)}`);
-
-      let verificacao = null;
-      if (opts.verificar) {
-        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
-        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
-        const checker = new TRT9Checker();
-        verificacao = await checker.verificarResultados(results, { amostra, log });
-        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
-      }
-
-      if (opts.fetchInteiroTeor) {
-        const outputDir = path.resolve(opts.outputDir);
-        log(`\nSaving full text for ${results.length} results...`);
-        const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
-        const successCount = downloaded.filter((r) => r.arquivo).length;
-        const failCount = downloaded.filter((r) => !r.arquivo).length;
-        log(`\nSave complete: ${successCount} success, ${failCount} failed`);
-        log(`Files saved to: ${outputDir}`);
-
-        if (jsonMode) {
-          process.stdout.write(JSON.stringify({
-            success: true,
-            totalResults: results.totalResults || null,
-            totaisPorColecao: results.totaisPorColecao,
-            count: results.length,
-            downloaded: successCount,
-            failed: failCount,
-            outputDir,
-            ...(verificacao ? { verificacao } : {}),
-          }) + '\n');
+      try {
+        const colecoes = opts.colecao
+          ? opts.colecao.split(',').map((c) => c.trim()).filter(Boolean)
+          : (FALCAO_GRAUS[String(opts.grau)] || null);
+        if (!colecoes) {
+          throw new Error(`--grau "${opts.grau}" invalido (use: ${Object.keys(FALCAO_GRAUS).join(', ')})`);
         }
-      } else {
-        const outputPath = path.resolve(opts.output);
-        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-        fs.writeFileSync(outputPath, JSON.stringify(Array.from(results), null, 2), 'utf-8');
-        log(`Results saved to: ${outputPath}`);
 
-        if (jsonMode) {
-          process.stdout.write(JSON.stringify({
-            success: true,
-            totalResults: results.totalResults || null,
-            totaisPorColecao: results.totaisPorColecao,
-            count: results.length,
-            output: outputPath,
-            ...(verificacao ? { verificacao } : {}),
-          }) + '\n');
+        // Modos utilitarios de listagem
+        const listagens = {
+          listarColecoes: ['colecoes', (nav, c) => nav.listarColecoes({ colecao: c })],
+          listarOrgaos: ['orgaosJulgadores', (nav, c) => nav.listarOrgaosJulgadores(c)],
+          listarRelatores: ['relatores', (nav, c) => nav.listarRelatores(c)],
+          listarClasses: ['classes', (nav, c) => nav.listarClasses(c)],
+          listarTribunais: ['tribunais', (nav, c) => nav.listarTribunais({ colecao: c })],
+        };
+        for (const [flag, [chave, fn]] of Object.entries(listagens)) {
+          if (!opts[flag]) continue;
+          const nav = new Navigator({ log });
+          const lista = await fn(nav, colecoes[0]);
+          if (jsonMode) process.stdout.write(JSON.stringify({ success: true, tribunal: SIGLA, colecao: colecoes[0], [chave]: lista }) + '\n');
+          else { console.log(`Tribunal: ${SIGLA} | Colecao: ${colecoes[0]}`); console.table(lista); }
+          process.exit(0);
         }
-      }
-    } catch (error) {
-      if (jsonMode) {
-        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+
+        // Consulta direta por numero (a verificacao de um julgado)
+        if (opts.numero) {
+          const checker = new Checker();
+          const res = await checker.consultarProcesso(opts.numero);
+          if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+          else console.log(JSON.stringify(res, null, 2));
+          process.exit(res.encontrado ? 0 : 1);
+        }
+
+        if (!opts.query && !opts.orgao && !opts.relator && !opts.classe) {
+          throw new Error('Informe -q "<termos>" (ou -n <numero> para consulta direta, ou um filtro forte: -oj/-r/-cp)');
+        }
+
+        // Coleção que este acervo estruturalmente NAO tem: avisar, nunca devolver
+        // 0 em silencio (0 aqui significa "a corte nao julga isso", nao "nada achado").
+        const vazias = FalcaoTribunais.colecoesVaziasDe(SIGLA, colecoes);
+        if (vazias.length === colecoes.length) {
+          throw new Error(
+            `${SIGLA} nao possui acervo de ${vazias.join(', ')} — ${meta.alternativaColecaoVazia}`
+          );
+        }
+        if (vazias.length) {
+          log(`AVISO: ${SIGLA} nao possui acervo de ${vazias.join(', ')} (ignorado) — ${meta.alternativaColecaoVazia}`);
+        }
+
+        const rotulos = colecoes.map((c) => `${c} (${FalcaoNavigator.COLECOES[c]?.grau ?? '?'}o grau)`).join(', ');
+        log('='.repeat(60));
+        log(`${SIGLA} Jurisprudencia - FALCAO (HTTP direto, API JSON publica)`);
+        log(meta.nome);
+        if (meta.ressalva) log(`ATENCAO: ${meta.ressalva}`);
+        log('='.repeat(60));
+        log(`Query: ${opts.query || '-'}`);
+        log(`Grau/Colecao: ${rotulos}`);
+        log(`Data: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+        log(`Orgao: ${opts.orgao || '-'} | Relator: ${opts.relator || '-'} | Classe: ${opts.classe || '-'}`);
+        log(`Escopo: ${opts.escopo} | Ordenacao: ${opts.ordenacao}`);
+        log(`Max Pages: ${opts.maxPages} (10/pagina; teto do servidor: 20 paginas = 200 resultados)`);
+        log('='.repeat(60));
+
+        const crawler = new Crawler({
+          timeout: 90000,
+          includeFullText: !!opts.fullText,
+          log,
+        });
+
+        const filters = {
+          colecoes,
+          dataInicio: opts.dataInicio || null,
+          dataFim: opts.dataFim || null,
+          orgaoJulgador: opts.orgao || null,
+          relator: opts.relator || null,
+          classe: opts.classe || null,
+          prioridade: opts.prioridade || null,
+          temEmenta: opts.comEmenta ? 'S' : (opts.semEmenta ? 'N' : null),
+          escopo: opts.escopo,
+          ordenacao: opts.ordenacao,
+        };
+
+        const searchOptions = { maxPages: parseInt(opts.maxPages, 10) };
+        if (opts.maxResults) searchOptions.maxResults = parseInt(opts.maxResults, 10);
+
+        const results = await crawler.search(opts.query || '', filters, searchOptions);
+
+        log('='.repeat(60));
+        log(`Total results collected: ${results.length}`);
+        if (results.totalResults) log(`Total results on server: ${results.totalResults}`);
+        if (results.totaisPorColecao) log(`Por colecao: ${JSON.stringify(results.totaisPorColecao)}`);
+
+        let verificacao = null;
+        if (opts.verificar) {
+          const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+          log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+          const checker = new Checker();
+          verificacao = await checker.verificarResultados(results, { amostra, log });
+          log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+        }
+
+        if (opts.fetchInteiroTeor) {
+          const outputDir = path.resolve(opts.outputDir);
+          log(`\nSaving full text for ${results.length} results...`);
+          const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
+          const successCount = downloaded.filter((r) => r.arquivo).length;
+          const failCount = downloaded.filter((r) => !r.arquivo).length;
+          log(`\nSave complete: ${successCount} success, ${failCount} failed`);
+          log(`Files saved to: ${outputDir}`);
+
+          if (jsonMode) {
+            process.stdout.write(JSON.stringify({
+              success: true,
+              tribunal: SIGLA,
+              totalResults: results.totalResults || null,
+              totaisPorColecao: results.totaisPorColecao,
+              count: results.length,
+              downloaded: successCount,
+              failed: failCount,
+              outputDir,
+              ...(verificacao ? { verificacao } : {}),
+            }) + '\n');
+          }
+        } else {
+          const outputPath = path.resolve(opts.output);
+          fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+          fs.writeFileSync(outputPath, JSON.stringify(Array.from(results), null, 2), 'utf-8');
+          log(`Results saved to: ${outputPath}`);
+
+          if (jsonMode) {
+            process.stdout.write(JSON.stringify({
+              success: true,
+              tribunal: SIGLA,
+              totalResults: results.totalResults || null,
+              totaisPorColecao: results.totaisPorColecao,
+              count: results.length,
+              output: outputPath,
+              ...(verificacao ? { verificacao } : {}),
+            }) + '\n');
+          }
+        }
+      } catch (error) {
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({ success: false, tribunal: SIGLA, error: error.message }) + '\n');
+          process.exit(1);
+        }
+        console.error('Error during crawling:', error.message);
         process.exit(1);
       }
-      console.error('Error during crawling:', error.message);
-      process.exit(1);
-    }
-  });
+    });
+}
 
 program
   .command('stf')

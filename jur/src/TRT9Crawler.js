@@ -1,6 +1,5 @@
 // src/TRT9Crawler.js
-const FalcaoCrawler = require('./FalcaoCrawler');
-const TRT9Navigator = require('./TRT9Navigator');
+const { classes } = require('./FalcaoTribunais');
 
 /**
  * Crawler de jurisprudência do TRT da 9ª Região (Paraná).
@@ -11,18 +10,7 @@ const TRT9Navigator = require('./TRT9Navigator');
  *   acordaos             -> 2º grau colegiado (Turmas / Seção Especializada)
  *   decisoesmonocraticas -> 2º grau monocrático (gabinetes)
  *   recursorevista       -> juízo de admissibilidade do RR
+ *
+ * Atalho nomeado sobre `FalcaoTribunais.classes('TRT9')`, que serve os 26 acervos.
  */
-class TRT9Crawler extends FalcaoCrawler {
-  constructor(options = {}) {
-    super({
-      ...options,
-      tribunal: 'TRT9',
-      navigator: options.navigator ?? new TRT9Navigator({
-        timeout: options.timeout ?? 60000,
-        log: options.log ?? console.log,
-      }),
-    });
-  }
-}
-
-module.exports = TRT9Crawler;
+module.exports = classes('TRT9').Crawler;

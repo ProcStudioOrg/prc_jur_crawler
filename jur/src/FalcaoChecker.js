@@ -4,7 +4,7 @@ const cnj = require('./cnj');
 
 /**
  * Checker da base FALCÃO — consulta por número de processo + auditoria
- * anti-alucinação, para TST e os 24 TRTs.
+ * anti-alucinação, para os 26 acervos (TST + 24 TRTs + CSJT).
  *
  * Como o Falcão prova que um julgado existe:
  *   o campo de busca livre aceita o número CNJ COM máscara e o backend casa

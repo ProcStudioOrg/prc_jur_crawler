@@ -71,7 +71,7 @@ function assert(cond, msg) {
 
   await teste('Falcão cobre os 26 acervos da JT (TST + 24 TRTs + CSJT)', async () => {
     const tribs = await navigator.listarTribunais();
-    assert(tribs.length >= 25, `esperava >=25 acervos, veio ${tribs.length}`);
+    assert(tribs.length === 26, `esperava 26 acervos (TST + 24 TRTs + CSJT), veio ${tribs.length}`);
     for (const t of ['TST', 'TRT1', 'TRT9', 'TRT24']) {
       assert(tribs.some((x) => x.valor === t), `acervo ausente: ${t}`);
     }

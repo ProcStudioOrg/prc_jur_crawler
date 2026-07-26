@@ -1,5 +1,5 @@
 // src/TRT9Navigator.js
-const FalcaoNavigator = require('./FalcaoNavigator');
+const { classes } = require('./FalcaoTribunais');
 
 /**
  * Navigator do TRT da 9ª Região (Paraná).
@@ -12,17 +12,8 @@ const FalcaoNavigator = require('./FalcaoNavigator');
  * que é a base nacional da Justiça do Trabalho — e que é desenvolvida
  * pelo próprio TRT9.
  *
- * Toda a lógica está em `FalcaoNavigator`. Trocar `TRT9` por `TRT2`, `TRT4`,
- * `TST`... entrega o crawler daquele tribunal sem mais nenhuma linha.
+ * Toda a lógica está em `FalcaoNavigator`; a tabela dos 26 acervos, em
+ * `FalcaoTribunais`. Este arquivo é só um atalho nomeado por compatibilidade —
+ * os outros 25 tribunais saem de `classes('TRT2').Navigator`, sem arquivo próprio.
  */
-class TRT9Navigator extends FalcaoNavigator {
-  constructor(options = {}) {
-    super({ ...options, tribunal: 'TRT9' });
-  }
-}
-
-TRT9Navigator.TRIBUNAL = 'TRT9';
-TRT9Navigator.CODIGO_CNJ = 9;   // NNNNNNN-DD.AAAA.5.09.OOOO
-TRT9Navigator.UF = 'PR';
-
-module.exports = TRT9Navigator;
+module.exports = classes('TRT9').Navigator;

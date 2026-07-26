@@ -10,7 +10,7 @@ const { sanitizeFilename, stripHtml } = require('./inteiroTeorFetcher');
  *
  * ESTE ARQUIVO É A CAMADA DE FAMÍLIA, NÃO DE UM TRIBUNAL.
  * O Falcão é a base ÚNICA de jurisprudência de TODA a Justiça do Trabalho:
- * TST + os 24 TRTs. Ele é, aliás, desenvolvido pelo próprio TRT9 (o rodapé do
+ * TST + os 24 TRTs + CSJT. Ele é, aliás, desenvolvido pelo próprio TRT9 (o rodapé do
  * site diz "Desenvolvido por Tribunal Regional do Trabalho da 9ª Região").
  * Por isso o crawler de um TRT é literalmente `new FalcaoX({ tribunal: 'TRTn' })`
  * — ver `src/TRT9Navigator.js`, que tem cinco linhas.
@@ -39,6 +39,12 @@ const { sanitizeFilename, stripHtml } = require('./inteiroTeorFetcher');
  * 5. O inteiro teor já VEM na resposta da busca — não há endpoint de documento
  *    nem permalink por documento. Em compensação a resposta é pesada
  *    (acórdãos trazem o brasão em base64; ~100 KB por documento).
+ * 6. ESTRANGULAMENTO: em rajada o Falcão devolve HTTP 429 {"userMessage":"Too Many
+ *    Requests"}. Não é bloqueio permanente nem erro de consulta, mas a janela é LONGA
+ *    — medido: mais de 20 MINUTOS, não os "~45s" que se supunha. Varrer os 26 acervos
+ *    em sequência bate nisso com facilidade,
+ *    então o 429 tem orçamento de retry e backoff exponencial PRÓPRIOS (ver `_get`),
+ *    e respeita `Retry-After` quando o servidor manda.
  */
 
 const BASE_URL = 'https://jurisprudencia.jt.jus.br';
@@ -150,6 +156,9 @@ class FalcaoNavigator {
     this.tribunal = options.tribunal ?? null;
     this.timeout = options.timeout ?? 60000;
     this.retries = options.retries ?? 2;
+    // Estrangulamento (429) é esperado em varredura longa — ver o backoff em _get.
+    this.retriesRateLimit = options.retriesRateLimit ?? 5;
+    this.backoffRateLimit = options.backoffRateLimit ?? 8000; // 8s, 16s, 32s...
     this.userAgent = options.userAgent ?? USER_AGENT;
     this.log = options.log ?? (() => {});
     this.sessionId = options.sessionId ?? FalcaoNavigator.novoSessionId();
@@ -188,6 +197,14 @@ class FalcaoNavigator {
         res.on('data', (c) => chunks.push(c));
         res.on('end', () => {
           const text = Buffer.concat(chunks).toString('utf-8');
+          if (res.statusCode === 429) {
+            // Estrangulamento, não erro: varrer vários acervos em sequência bate
+            // nisso com facilidade. Marcado para o backoff longo lá embaixo.
+            const err = new Error(`HTTP 429 em ${endpoint}: limite de taxa do Falcão`);
+            err.rateLimited = true;
+            err.retryAfter = Number(res.headers['retry-after']) || null;
+            return reject(err);
+          }
           if (res.statusCode !== 200) {
             return reject(new Error(`HTTP ${res.statusCode} em ${endpoint}: ${text.slice(0, 200)}`));
           }
@@ -208,10 +225,18 @@ class FalcaoNavigator {
       req.setTimeout(this.timeout, () => req.destroy(new Error(`Timeout ${this.timeout}ms: ${endpoint}`)));
       req.on('error', reject);
     }).catch((err) => {
-      // Erro de negócio (limite, formato) não adianta repetir
-      if (/Falcão recusou/.test(err.message) || attempt >= this.retries) throw err;
-      const delay = 2000 * (attempt + 1);
-      this.log(`Retry ${attempt + 1}/${this.retries} em ${delay}ms: ${err.message}`);
+      // Erro de negócio (limite do usuário anônimo, formato) não adianta repetir
+      if (/Falcão recusou/.test(err.message)) throw err;
+
+      // 429 tem orçamento de tentativas e espera PRÓPRIOS: o backoff genérico de
+      // 2s/4s não vence uma janela de estrangulamento, e desistir cedo derruba
+      // uma varredura longa (varrer os 26 acervos bate nisso).
+      const teto = err.rateLimited ? Math.max(this.retries, this.retriesRateLimit) : this.retries;
+      if (attempt >= teto) throw err;
+      const delay = err.rateLimited
+        ? (err.retryAfter ? err.retryAfter * 1000 : this.backoffRateLimit * Math.pow(2, attempt))
+        : 2000 * (attempt + 1);
+      this.log(`Retry ${attempt + 1}/${teto} em ${Math.round(delay / 1000)}s: ${err.message}`);
       return new Promise((r) => setTimeout(r, delay)).then(() => this._get(endpoint, params, attempt + 1));
     });
   }
@@ -304,7 +329,7 @@ class FalcaoNavigator {
     return this._faceta('colecao', p);
   }
 
-  /** Contagem por tribunal (os 25 acervos). */
+  /** Contagem por tribunal (os 26 acervos: TST + 24 TRTs + CSJT). */
   listarTribunais(p = {}) {
     return this._faceta('tribunal', { ...p, tribunais: '' });
   }

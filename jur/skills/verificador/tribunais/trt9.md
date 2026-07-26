@@ -2,6 +2,11 @@
 
 > Referência da skill [`jur-verificador`](../SKILL.md). Os passos genéricos estão lá;
 > aqui ficam só as especificidades do TRT9. Rode os comandos da raiz do repo (`jur/`).
+>
+> ⚠️ **Para qualquer OUTRO tribunal trabalhista, leia [`falcao.md`](falcao.md)** — é o
+> doc dos 26 acervos. A regra do `.5.09.` abaixo é **do TRT9**: o `tst` aceita processo
+> de qualquer TRT de origem e o `csjt` usa `.5.90.`. Generalizar a regra daqui para o
+> TST faria o verificador rejeitar julgado legítimo.
 
 Base oficial: **FALCÃO** — https://jurisprudencia.jt.jus.br (acervo nacional da Justiça
 do Trabalho: TST + 24 TRTs + CSJT). Toda verificação usa o `TRT9Checker`.

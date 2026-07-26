@@ -114,8 +114,14 @@ com `orgaoJulgador`.
 ### 0. Rate limit: HTTP 429 sob rajada (descoberto martelando o host)
 
 O Falcão devolve **HTTP 429 `Too Many Requests`** quando se dispara várias consultas em
-sequência curta — e **não se recupera em ~45 s**. Não é bug do crawler nem bloqueio
-permanente: é limite do host.
+sequência curta. Não é bug do crawler nem bloqueio permanente: é limite do host.
+
+⚠️ **A janela é LONGA.** A estimativa original aqui era "~45 s"; medido depois, ao rodar
+a suíte de família contra 5 acervos duas vezes seguidas, o 429 **persistiu por mais de
+20 minutos**. Planeje em dezenas de minutos, não em segundos — e não conclua "o tribunal
+caiu" nem "o julgado não existe" durante a janela. O `FalcaoNavigator` tem retry e
+backoff exponencial **próprios** para 429 (`retriesRateLimit`, `backoffRateLimit`,
+respeitando `Retry-After`), mas backoff não vence uma janela dessas: o certo é espaçar.
 
 Aconteceu de verdade ao rodar, em poucos minutos, os testes de reuso contra 4 acervos
 (TRT12/TRT4/TST/TRT9) + duas passadas do `tests/aceite.js` + o `tests/smoke.js`.
@@ -235,24 +241,28 @@ real / inexistente / de outro tribunal / sem máscara, auditoria e gravação do
 
 ---
 
-## Reaproveitamento — os outros 23 TRTs (+ TST + CSJT)
+## Reaproveitamento — como os 26 acervos passaram a existir
 
 A base é **a mesma para todo mundo**. O código foi escrito em duas camadas:
+
+> **FEITO.** Os 26 acervos já estão no ar — `jur tst`, `jur trt1`…`jur trt24`, `jur csjt`.
+> O doc de família é [`CLAUDE-FALCAO.md`](CLAUDE-FALCAO.md). O que segue é como ficou.
 
 | Camada | Arquivo | Serve |
 |---|---|---|
 | Família | `src/FalcaoNavigator.js`, `src/FalcaoCrawler.js`, `src/FalcaoChecker.js` | TST + 24 TRTs + CSJT |
-| Tribunal | `src/TRT9Navigator.js`, `src/TRT9Crawler.js`, `src/TRT9Checker.js` | só amarram `tribunal: 'TRT9'` |
+| Registro | `src/FalcaoTribunais.js` | metadados dos 26 + fábrica `classes(sigla)` |
+| Atalho | `src/TRT9Navigator.js`, `src/TRT9Crawler.js`, `src/TRT9Checker.js` | re-export nomeado do TRT9 |
 
-Os três arquivos do TRT9 somam ~60 linhas, quase todas comentário. Para acrescentar
-o TRT2 (SP), o TRT4 (RS) ou o TST:
+O plano original desta seção era **copiar** os três arquivos e o bloco da CLI para cada
+tribunal. Foi trocado por uma fábrica, de propósito: copiar renderia 75 arquivos de
+boilerplate e 26 fontes da verdade para o mesmo fato (o `codigoCNJ` do TST, abaixo,
+mostra o custo disso — bastaria errar em um). Hoje:
 
-1. copiar os três arquivos trocando `TRT9` → `TRTn` e `CODIGO_CNJ`/`UF`
-   (o mapa `UF_POR_TRIBUNAL` já tem os 26);
-2. copiar o bloco `trt9` do `bin/jur` trocando o nome do comando;
-3. copiar `CLAUDE-TRT9.md`, ajustando só o escopo e os órgãos julgadores;
-4. `human-codegen/` **não precisa ser refeito** — a tela é a mesma; basta apontar
-   para `human-codegen/TRT9/`.
+- `classes('TRT2')` devolve `{Navigator, Crawler, Checker}` — **não crie `TRT2Crawler.js`**;
+- os 26 comandos da CLI saem de um laço sobre `FalcaoTribunais.TRIBUNAIS`, com superfície
+  de flags idêntica;
+- `human-codegen/` **não foi refeito** — a tela é a mesma; `human-codegen/TRT9/` vale por todos.
 
 ### Verificado, não presumido
 
@@ -275,10 +285,14 @@ E o `FalcaoChecker` genérico confirmou um processo do TRT4
    **TRT15 usa "Câmara"**; TRT4 tem "Seção Especializada em Execução". Qualquer
    heurística sobre o nome do órgão (inclusive o regex de asserção em
    `TRT9Testes.js`) precisa ser ajustada por região. Use `--listar-orgaos`.
-2. **TST não tem 1º grau** — a coleção `sentencas` devolve 0. `--grau 1` não faz
-   sentido lá; `--grau ambos` retorna só os acórdãos.
-3. **`TR` do número CNJ e UFs** — `UF_POR_TRIBUNAL` já traz os 26; o `codigoCNJ` do
-   checker é o número da região.
+2. **TST não tem 1º grau** — e nem admissibilidade de RR: `sentencas` e `recursorevista`
+   devolvem 0 (o CSJT também). Isso agora está declarado em `COLECOES_VAZIAS`
+   (`FalcaoTribunais.js`) e a CLI **avisa em vez de devolver 0 calado**.
+3. **`TR` do número CNJ e UFs** — `UF_POR_TRIBUNAL` já traz os 26. O `codigoCNJ` do
+   checker é o número da região **só para os TRTs**. ⚠️ No **TST é `null`** e no
+   **CSJT é `90`** — o acervo do TST guarda o número da ORIGEM (TR 04, 09, 15… na mesma
+   página), então fixar `0` faria o Checker rejeitar todo julgado legítimo do TST.
+   Ver `CLAUDE-FALCAO.md` §"Três armadilhas".
 
 O que **não muda**: endpoints, nomes dos parâmetros, operadores (e os que não funcionam),
 limites de paginação, formato de data, formato de `sessionId`, schema dos documentos e a

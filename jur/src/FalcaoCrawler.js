@@ -5,7 +5,7 @@ const { stripHtml } = require('./inteiroTeorFetcher');
 /**
  * Crawler da base FALCÃO (jurisprudência de toda a Justiça do Trabalho).
  *
- * Camada de FAMÍLIA, igual ao FalcaoNavigator: serve TST + os 24 TRTs.
+ * Camada de FAMÍLIA, igual ao FalcaoNavigator: serve os 26 acervos (TST + 24 TRTs + CSJT).
  * Um tribunal concreto é `new FalcaoCrawler({ tribunal: 'TRT9' })`.
  *
  * Não estende BaseCrawler: o Falcão é API JSON pura, sem browser (mesma

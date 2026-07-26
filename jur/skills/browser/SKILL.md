@@ -69,13 +69,16 @@ SEMPRE informe o usuário a cada refinamento que você fizer.
 | "TJMA", Maranhão, estadual MA | ⚠️ **busca por termo não existe** — o JurisConsult exige captcha de imagem + reCAPTCHA e este repo não resolve captcha. **Diga isso ao usuário**, não tente. Ofereça `jur trf1` (o MA é da 1ª Região) para matéria federal; ver `CLAUDE-TJMA.md` |
 | Juizado Especial / Turma Recursal **estadual** no MA | Mesmo bloqueio. As flags existem e estão mapeadas (`jur tjma --foro turmas` / `--foro juizados`), mas nenhuma busca completa |
 | "Esse processo do TJMA existe?" / confirmar nº de processo do MA | `jur tjma -n <nº CNJ>` — **funciona** (DataJud/CNJ). ⚠️ confirma o **processo**, não o **julgado**: DataJud não tem ementa |
-| **Matéria trabalhista no PR** — verbas rescisórias, horas extras, vínculo de emprego, insalubridade/periculosidade, justa causa, assédio moral, FGTS, adicional noturno | `jur trt9` (**não** `tjpr`: é outro ramo da Justiça) |
-| **1º grau trabalhista PR** — "o que as Varas do Trabalho decidem", sentença | `jur trt9 -g 1` (coleção `sentencas`) |
-| **2º grau trabalhista PR** — Turmas do TRT9, acórdão, recurso ordinário | `jur trt9 -g 2` (default, coleção `acordaos`) |
-| Comparar as duas instâncias trabalhistas | `jur trt9 -g ambos` |
+| **Matéria TRABALHISTA** — verbas rescisórias, horas extras, vínculo de emprego, insalubridade/periculosidade, justa causa, assédio moral, FGTS, adicional noturno | Justiça do Trabalho, **nunca** o TJ do estado (é outro ramo). Escolha pela UF do vínculo: `jur trt9` (PR), `jur trt2` (SP capital), `jur trt15` (SP interior), `jur trt3` (MG), `jur trt1` (RJ), `jur trt4` (RS)… — os 26 comandos em `CLAUDE-FALCAO.md` |
+| **Tese trabalhista** — "o que decide a Justiça do Trabalho sobre X", uniformização, súmula/OJ | `jur tst` **primeiro** — o TST uniformiza a CLT para o país inteiro (mesma lógica de "STJ antes do TJ"). Use o TRT para o que é regional |
+| ⚠️ Caso trabalhista em **São Paulo** | **SP tem DOIS TRTs**: capital e Grande SP → `jur trt2`; interior (Campinas) → `jur trt15`. Na dúvida rode os dois e diga qual é qual |
+| **1º grau trabalhista** — "o que as Varas do Trabalho decidem", sentença | `jur <trt> -g 1` (coleção `sentencas`). ⚠️ **no `tst` não existe** — o comando avisa e manda ao TRT de origem |
+| **2º grau trabalhista** — Turmas/Câmaras do TRT, acórdão, recurso ordinário | `jur <trt> -g 2` (default, coleção `acordaos`) |
+| Comparar as duas instâncias trabalhistas | `jur <trt> -g ambos` |
 | "Juizado Especial trabalhista" / "Turma Recursal trabalhista" | **NÃO EXISTE.** A JT não tem Juizados: o rito sumaríssimo (`-cp ATSum`) é julgado pela mesma Vara, com recurso para as mesmas Turmas. Diga isso e use `-g 1`/`-g 2` |
-| Decisão monocrática de desembargador do trabalho (PR) | `jur trt9 -g monocraticas` |
-| Admissibilidade de Recurso de Revista (PR) | `jur trt9 -g admissibilidade` |
+| Decisão monocrática de desembargador do trabalho | `jur <trt> -g monocraticas` |
+| Admissibilidade de Recurso de Revista | `jur <trt> -g admissibilidade` — ⚠️ é ato do **TRT** de origem; o `tst` não tem essa coleção (ele recebe o RR já admitido) |
+| Varrer vários TRTs na mesma pergunta | Serialize e espace: os 26 comandos batem no **mesmo host** e rajada rende HTTP 429. Não paralelize — é a exceção à regra geral do repo |
 
 Tribunal não coberto → diga isso explicitamente, mostre o status em
 `cobertura/CLAUDE-COBERTURA.md`, e ofereça (a) o tribunal vizinho coberto ou

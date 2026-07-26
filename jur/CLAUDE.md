@@ -38,11 +38,17 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjrs` | TJ do Rio Grande do Sul | RS | `CLAUDE-TJRS.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjsc` | TJ de Santa Catarina | SC | `CLAUDE-TJSC.md` | 🟢 OK (browser — portal atrás de verificação de segurança) |
 | `tjsp` | TJ de São Paulo | SP | `CLAUDE-TJSP.md` | 🔴 sem acesso — não rodar |
-| `trt9` | TRT 9ª Região (**trabalhista**) | PR | `CLAUDE-TRT9.md` | 🟢 OK (API direta, sem browser) |
+| `tst` | **Tribunal Superior do Trabalho** | Nacional (**trabalhista**) | `CLAUDE-FALCAO.md` | 🟢 OK (API direta, sem browser) |
+| `trt1`…`trt24` | TRTs 1ª a 24ª Região (**trabalhista**) | todo o país — ver tabela no doc | `CLAUDE-FALCAO.md` | 🟢 OK (API direta, sem browser) |
+| `csjt` | Conselho Superior da JT (administrativo) | Nacional | `CLAUDE-FALCAO.md` | 🟢 OK (acervo pequeno) |
+
+**A Justiça do Trabalho inteira está coberta**: os 26 acervos (TST + 24 TRTs + CSJT) vêm
+de uma base nacional única, o FALCÃO — leia [`CLAUDE-FALCAO.md`](CLAUDE-FALCAO.md) para
+escolher o comando. `CLAUDE-TRT9.md` é o mergulho técnico do sistema.
 
 Nenhum tribunal catalogado está mapeado à espera de crawler. Falta ainda o módulo
 **eJURIS** do TJRJ (legado com Turmas Recursais e acervo histórico — o `jur tjrj` cobre
-só o e-Proc). Os outros 43 tribunais (TJs restantes, TRTs, TST) não estão mapeados — veja
+só o e-Proc). Os outros 19 tribunais (TJs restantes) não estão mapeados — veja
 `cobertura/CLAUDE-COBERTURA.md` e use a skill [`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**
@@ -99,10 +105,15 @@ só o e-Proc). Os outros 43 tribunais (TJs restantes, TRTs, TST) não estão map
   **não indexa número CNJ** — peça o número no formato do STJ (`REsp 1809043`) ou o
   registro (`2019/0116080-0`)
 - "Acórdãos do TCU" → `tcu` → leia `CLAUDE-TCU.md`
-- **Matéria trabalhista no PR** (verbas rescisórias, horas extras, vínculo, insalubridade,
-  justa causa, assédio) → `trt9`, **não** `tjpr`. Justiça do Trabalho é outro ramo.
-  A desambiguação é por grau: `-g 2` acórdãos das Turmas (default), `-g 1` sentenças de
-  Vara do Trabalho. **Não existe Juizado Especial na JT** — leia `CLAUDE-TRT9.md`
+- **Matéria TRABALHISTA** (verbas rescisórias, horas extras, vínculo de emprego,
+  insalubridade/periculosidade, justa causa, assédio, FGTS) → Justiça do Trabalho, que é
+  **outro ramo**: nunca o TJ do estado. Escolha pela UF do vínculo — `trt9` (PR),
+  `trt2` (SP capital), `trt15` (SP interior), `trt3` (MG)… — e **cite o `tst` antes do
+  TRT** para tese jurídica, que é a corte que uniformiza a CLT (mesma lógica de
+  "STJ antes do TJ"). Tabela dos 26 comandos em [`CLAUDE-FALCAO.md`](CLAUDE-FALCAO.md).
+  A desambiguação é por grau: `-g 2` acórdãos (default), `-g 1` sentenças de Vara.
+  **Não existe Juizado Especial na JT.** ⚠️ **SP tem dois TRTs** (`trt2` capital ×
+  `trt15` interior) e o **TST não tem 1º grau** (`-g 1` lá avisa e manda ao TRT de origem)
 - Tribunal não coberto → **diga isso**; ofereça o vizinho coberto ou mapear com `codegen`
 
 ## Installation

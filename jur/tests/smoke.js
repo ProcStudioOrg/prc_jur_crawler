@@ -9,6 +9,14 @@
  *   node tests/smoke.js --todos         # inclui instavel/sem-acesso (espera falha neles)
  *   node tests/smoke.js --json          # saída JSON, para CI/cron
  *   node tests/smoke.js --timeout 120   # segundos por tribunal (default 90)
+ *   node tests/smoke.js --familia-completa  # não colapsa famílias (ver abaixo)
+ *
+ * FAMÍLIAS DE HOST ÚNICO: os 26 comandos da Justiça do Trabalho (tst, trt1..trt24,
+ * csjt) são o MESMO código batendo no MESMO host (o Falcão). Rodá-los em paralelo
+ * rende HTTP 429 e reporta a Justiça do Trabalho inteira como bloqueada — falso
+ * positivo. Por isso o smoke roda só o CANÁRIO da família (o TRT9); os outros 25 são
+ * pulados, porque não acrescentam sinal. `--familia-completa` roda todos, mas
+ * SERIALIZADOS e espaçados, e ainda assim pode bater no limite de taxa.
  *
  * Exit code 0 = nenhuma regressão. 1 = algum tribunal que deveria funcionar falhou.
  *
@@ -26,6 +34,7 @@ const COBERTURA = path.join(ROOT, 'cobertura', 'tribunais.json');
 const argv = process.argv.slice(2);
 const JSON_OUT = argv.includes('--json');
 const TODOS = argv.includes('--todos');
+const FAMILIA_COMPLETA = argv.includes('--familia-completa');
 const tIdx = argv.indexOf('--timeout');
 const TIMEOUT = (tIdx >= 0 ? parseInt(argv[tIdx + 1], 10) : 90) * 1000;
 // o `tIdx >= 0` não é decorativo: sem ele, tIdx = -1 faz o índice a descartar virar 0 e o
@@ -122,6 +131,23 @@ async function main() {
   if (!TODOS) alvos = alvos.filter((t) => t.jurisprudencia.status === 'ok');
   if (pedidos.length) alvos = alvos.filter((t) => pedidos.includes(t.jurisprudencia.comando));
 
+  // Família de host único: sem pedido explícito, roda só o canário (ver cabeçalho).
+  let colapsados = [];
+  if (!pedidos.length && !FAMILIA_COMPLETA) {
+    const antes = alvos.length;
+    alvos = alvos.filter((t) => !t.jurisprudencia.familia || t.jurisprudencia.canario);
+    colapsados = [];
+    if (alvos.length !== antes) {
+      const familias = [...new Set(tribunais
+        .filter((t) => t.jurisprudencia.familia && !t.jurisprudencia.canario)
+        .map((t) => t.jurisprudencia.familia))];
+      colapsados = familias;
+      log(`famílias de host único colapsadas no canário: ${familias.join(', ')} `
+        + `(${antes - alvos.length} comandos pulados — mesmo código, mesmo host; `
+        + `use --familia-completa para rodar todos)\n`);
+    }
+  }
+
   if (!alvos.length) {
     console.error(`nenhum tribunal corresponde a: ${pedidos.join(', ') || '(todos)'}`);
     process.exit(2);
@@ -130,24 +156,46 @@ async function main() {
   const [di, df] = periodo();
   log(`smoke: ${alvos.length} tribunais · termo "${CONSULTA.termo}" · ${di} a ${df} · timeout ${TIMEOUT / 1000}s\n`);
 
-  // paralelo: cada crawler sobe o próprio processo
-  const resultados = await Promise.all(
-    alvos.map(async (t) => {
-      const r = await rodar(t.jurisprudencia.comando);
-      const esperado = t.jurisprudencia.status; // ok | instavel | sem-acesso
-      const regressao = esperado === 'ok' && r.status !== 'ok';
-      log(`${ICONE[r.status]} ${t.codigo.padEnd(6)} ${String(r.status).padEnd(9)} ${String(Math.round(r.ms / 1000) + 's').padStart(5)}  ${r.detalhe}${regressao ? '   ← REGRESSÃO' : ''}`);
-      return {
-        tribunal: t.codigo,
-        comando: t.jurisprudencia.comando,
-        esperado,
-        status: r.status,
-        detalhe: r.detalhe,
-        ms: r.ms,
-        regressao,
-      };
-    }),
-  );
+  const executar = async (t) => {
+    const r = await rodar(t.jurisprudencia.comando);
+    const esperado = t.jurisprudencia.status; // ok | instavel | sem-acesso
+    const regressao = esperado === 'ok' && r.status !== 'ok';
+    log(`${ICONE[r.status]} ${t.codigo.padEnd(6)} ${String(r.status).padEnd(9)} ${String(Math.round(r.ms / 1000) + 's').padStart(5)}  ${r.detalhe}${regressao ? '   ← REGRESSÃO' : ''}`);
+    return {
+      tribunal: t.codigo,
+      comando: t.jurisprudencia.comando,
+      esperado,
+      status: r.status,
+      detalhe: r.detalhe,
+      ms: r.ms,
+      regressao,
+    };
+  };
+
+  // Tribunais independentes vão em paralelo (cada crawler sobe o próprio processo).
+  // Os de uma FAMÍLIA compartilham host: dentro da família é serial e espaçado, senão
+  // o próprio smoke provoca o 429 que ele deveria estar detectando.
+  const independentes = alvos.filter((t) => !t.jurisprudencia.familia);
+  const porFamilia = new Map();
+  for (const t of alvos.filter((x) => x.jurisprudencia.familia)) {
+    const f = t.jurisprudencia.familia;
+    if (!porFamilia.has(f)) porFamilia.set(f, []);
+    porFamilia.get(f).push(t);
+  }
+
+  const serial = async (lista) => {
+    const out = [];
+    for (const t of lista) {
+      out.push(await executar(t));
+      if (t !== lista[lista.length - 1]) await new Promise((r) => setTimeout(r, 3000));
+    }
+    return out;
+  };
+
+  const resultados = (await Promise.all([
+    ...independentes.map((t) => executar(t).then((r) => [r])),
+    ...[...porFamilia.values()].map((lista) => serial(lista)),
+  ])).flat();
 
   const regressoes = resultados.filter((r) => r.regressao);
   const relatorio = {
