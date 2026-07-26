@@ -1,0 +1,16 @@
+## 2. As súmulas dentro da SPA — o caminho que o crawler usa
+
+Print: `02.01-sumulas-vinculantes-na-spa.png`
+
+Link oficial divulgado na home do portal do STF (é ele que o crawler reproduz na API):
+
+  https://jurisprudencia.stf.jus.br/pages/search?classeNumeroIncidente=vinculante&base=sumulas
+    &is_vinculante=true&pesquisa_inteiro_teor=false&sinonimo=true&plural=true&radicais=false
+    &buscaExata=true&page=1&pageSize=10&sort=date&sortBy=desc&isAdvanced=true
+
+E o par, para as não vinculantes: mesma URL com `classeNumeroIncidente=não vinculante` e SEM
+`is_vinculante`.
+
+Confirmado na tela: com o filtro ligado, o painel "Base" mostra `Súmulas (63)`; sem ele, 799.
+Na CLI: `./bin/jur stf --vinculantes` e `./bin/jur stf --sumulas-simples`.
+Detalhamento completo em `../01-jurisprudencia/08-sumulas-e-vinculantes.txt`.

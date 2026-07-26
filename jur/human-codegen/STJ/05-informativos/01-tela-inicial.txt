@@ -1,0 +1,18 @@
+STJ — módulo 05: Informativo de Jurisprudência
+==============================================
+
+Link:   https://processo.stj.jus.br/jurisprudencia/externo/informativo/
+        (título: "STJ - Informativo de Jurisprudência")
+Print:  01.01-tela-inicial.png
+Estado: MAPEADO, NÃO IMPLEMENTADO no crawler.
+
+⚠️ A URL óbvia https://scon.stj.jus.br/SCON/informativo/ é **404**. A boa fica em
+outro host — `processo.stj.jus.br` —, o mesmo dos precedentes qualificados, e por
+isso **não está atrás do Cloudflare**. Se algum dia valer implementar, este
+módulo roda sem browser headful.
+
+O que é: o boletim periódico com os julgados mais relevantes de cada período,
+comentados. É a fonte que advogados acompanham semanalmente.
+
+Também acessível pela base `b=INFJ` do pesquisar.jsp (tela própria, sem os
+containers `.documento`).

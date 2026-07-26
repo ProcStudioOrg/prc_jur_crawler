@@ -1,0 +1,33 @@
+STJ / Precedentes Qualificados — §2. Filtros do formulário
+==========================================================
+
+Print: 02.01-filtros.png · HTML: 01-form-busca.html · combos: 02-campos-e-combos.json
+
+Nove `<select>`, 24 inputs e 68 checkboxes. Os combos, com o número de opções
+lidas do DOM vivo em 25/07/2026:
+
+| combo (`name`)          | opções | o que é |
+|-------------------------|--------|---------|
+| `sg_ramo_direito`       | 15 | ramo do direito (DIREITO CIVIL, PENAL, TRIBUTÁRIO, PREVIDENCIÁRIO…) |
+| `sg_classe`             | 10 | AREsp, CC, EREsp, Pet, PUIL, Rcl, REsp, RMS, SIRDR |
+| `num_ministro`          | 73 | ministro relator do tema |
+| `cod_orgao_julgador`    |  5 | Primeira/Segunda/Terceira Seção, Corte Especial |
+| `cod_origem`            | 36 | tribunal de origem (todos os TJs e TRFs) |
+| `cod_tipo_puil`         |  3 | tipo de PUIL |
+| `tipo_data`             |  1 | qual data o intervalo filtra |
+| `ordenacaoCriterio`     |  3 | nº do tema, última atualização, quantidade de sobrestados |
+| `ordenacaoDecrescente`  |  2 | crescente / decrescente |
+
+Campos de texto: `pesquisa_livre`, `cod_tema_inicial`, `cod_tema_final`,
+`num_processo_classe`, `dt_inicial`, `dt_final`, `ref_legislativa`.
+
+Checkboxes de SITUAÇÃO do precedente (`situacao_precedente_*`): Acórdão
+Publicado, Em Julgamento, Trânsito em Julgado, Cancelado, entre outros — é o
+filtro que separa tese já firmada de tema apenas afetado.
+
+Ampliações silenciosas, ligadas por checkbox: `pesquisarSinonimos` (Tesauro) e
+`pesquisarPlurais` — mesmas do SCON.
+
+Exposto no crawler (`--temas`): `tipo`, `pesquisa_livre` (-q), `--tema-inicial`,
+`--tema-final`, `--ramo`, `-cl/--classe`, `-p/--processo`. Os demais ficaram de
+fora — ver pendências em 01-scon-acordaos/09-….

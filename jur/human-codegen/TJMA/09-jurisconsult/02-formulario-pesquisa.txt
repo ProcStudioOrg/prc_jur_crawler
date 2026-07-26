@@ -1,0 +1,543 @@
+==================================================================
+TELA: PESQUISA DE JURISPRUDÊNCIAS — FORMULÁRIO (relatório "Acórdãos")
+==================================================================
+
+Tribunal:                 TJMA — Tribunal de Justiça do Maranhão
+Estado(s):                MA
+Módulo:                   JurisConsult — Pesquisa de Jurisprudências
+Link principal:           https://jurisconsult.tjma.jus.br/#/sg-jurisprudence-form
+Sistema judicial:         Próprio / SPA (Ionic 3 + Angular), API REST própria
+                          (tramitação é PJe 1º/2º grau + Projudi — a
+                          jurisprudência NÃO vive em nenhum dos dois)
+Sistema irmão já mapeado: TJPA (SPA Angular com API JSON por trás) — CLAUDE-TJPA.md
+Abrangência da base:      2º grau (Acórdãos e Decisões Monocráticas),
+                          Turmas Recursais (Acórdãos e Decisões Monocráticas),
+                          1º grau (Sentenças) e Juizados Especiais (Sentenças).
+                          Data inicial default do formulário: 02/01/2020.
+Data do mapeamento:       25/07/2026 (DOM vivo, Playwright, headless + headed)
+
+⚠️ ESTE MÓDULO ESTÁ BARRADO POR CAPTCHA. O mapeamento abaixo é completo e
+   verificado, mas NENHUMA busca pôde ser executada. Ver `04-bloqueio-captcha.txt`.
+
+==================================================================
+# Ferramentas Comuns
+==================================================================
+
+------------------------------------------------------------------
+## 1. Busca principal (query) — "Chave de busca"
+------------------------------------------------------------------
+
+Campo de texto livre. Sem limite de caracteres declarado (`maxlength` ausente).
+O que ele significa depende do combo "Pesquisar pelo(a)" (§13) e o modo de
+combinação dos termos depende do combo "Condição" (§2).
+
+HTML do elemento (DOM depois do AJAX):
+
+  <input class="text-input text-input-md" dir="auto" type="text"
+         aria-labelledby="lbl-27" autocomplete="off" autocorrect="off"
+         placeholder="" formcontrolname="chave">
+
+Parâmetro na API: `chave`
+Obrigatório: sim (o botão "Consultar" fica `disabled` sem ele).
+
+Prints: 02.01-formulario-acordaos.png
+
+------------------------------------------------------------------
+## 2. Operadores — combo "Condição"
+------------------------------------------------------------------
+
+O TJMA **não usa operadores textuais** (`E`/`OU`/`NÃO`/`ADJ`/`PROX`/`$`)
+digitados dentro da caixa de busca. Ele usa um COMBO chamado "Condição", que
+se aplica ao conjunto inteiro dos termos digitados.
+
+HTML do elemento (DOM depois do AJAX):
+
+  <select formcontrolname="condicao" class="ng-untouched ng-pristine ng-valid">
+    <option value="0: Object">E</option>
+    <option value="1: Object">OU</option>
+    <option value="2: Object">Termo único</option>
+  </select>
+
+Valores enviados à API (hardcoded no bundle `build/5.js`, método `getConditions`):
+
+  [{idCondicao:"1", strCondicao:"E"},
+   {idCondicao:"2", strCondicao:"OU"},
+   {idCondicao:"3", strCondicao:"Termo único"}]
+
+Parâmetro na API: `condicao` (1 | 2 | 3). Default do formulário: 3 ("Termo único").
+
+Tabela de operadores do MODELO-TRIBUNAL, preenchida com o que foi possível
+verificar. **Nenhuma linha pôde ser testada por contagem**, porque toda busca
+é barrada pelo captcha (§15) — está registrado como NÃO TESTADO, não como
+"funciona".
+
+| Operador        | Existe? | Como                                   | Testado por contagem? |
+|-----------------|---------|----------------------------------------|-----------------------|
+| E               | sim     | combo Condição = "E" (`condicao=1`)    | NÃO — busca barrada   |
+| OU              | sim     | combo Condição = "OU" (`condicao=2`)   | NÃO — busca barrada   |
+| NÃO             | NÃO EXISTE — não há opção de negação em nenhum relatório       | —          |
+| ADJ (adjacência)| NÃO EXISTE                                                      | —          |
+| PROX            | NÃO EXISTE                                                      | —          |
+| $ (radical)     | NÃO EXISTE                                                      | —          |
+| "frase exata"   | sim, mas NÃO por aspas: é o checkbox "Frase Exata"             | NÃO — busca barrada   |
+|                 | (`fraseExata`), e ele só aparece nos relatórios 2, 4, 5, 6 e 7 |            |
+|                 | — o relatório 1 (Acórdãos) NÃO tem "Frase Exata"; nele o       |            |
+|                 | equivalente é Condição = "Termo único".                        |            |
+
+⚠️ Ressalva de mapeamento: como não há operador digitável, colocar `E`, `OU`
+ou aspas dentro da "Chave de busca" quase certamente vira palavra literal —
+mas isso NÃO foi confirmado empiricamente, pela mesma razão.
+
+Prints: 01.08-combo-condicao.png (combo aberto, mapeamento original)
+        02.01-formulario-acordaos.png
+
+------------------------------------------------------------------
+## 3. Número máximo de páginas / resultados (`max-pages`)
+------------------------------------------------------------------
+
+A paginação é por FAIXA de registros, não por número de página:
+`inicioPagina` e `fimPagina` (1-based, inclusivos).
+
+  - Desktop ("core"): a tela pede `inicioPagina=1&fimPagina=20` → 20 por página.
+  - Mobile: rota `/infinito`, scroll infinito, mesma faixa.
+  - Total de resultados: vem no PRÓPRIO registro, campo `int_count` do
+    primeiro item (`response.processos[0].int_count`) — não há um campo
+    `total` separado.
+
+Teto técnico da base: não observável (busca barrada).
+
+------------------------------------------------------------------
+## 4. Filtro de data — JULGAMENTO
+------------------------------------------------------------------
+
+**NÃO EXISTE.** O JurisConsult só filtra por data de PUBLICAÇÃO (§5).
+Isso vale para os 6 relatórios pesquisáveis. É uma limitação real do módulo
+e precisa entrar em qualquer citação: "período" no TJMA = período de
+publicação, nunca de julgamento.
+
+------------------------------------------------------------------
+## 5. Filtro de data — PUBLICAÇÃO
+------------------------------------------------------------------
+
+Dois campos de data (`flatpickr`), exibidos em DD/MM/YYYY.
+
+HTML dos elementos (DOM depois do AJAX):
+
+  <input class="ng2-flatpickr-input flatpickr-input" data-input=""
+         type="text" placeholder="xx/xx/xxxx">   <!-- Data Início Publicação -->
+  <input class="ng2-flatpickr-input flatpickr-input" data-input=""
+         type="text" placeholder="xx/xx/xxxx">   <!-- Data Final Publicação -->
+
+Conversão feita pelo próprio front (bundle `build/5.js`, `setDateInicio`/`setDateFinal`):
+DD/MM/YYYY digitado → **YYYY-MM-DD** enviado à API.
+
+Parâmetros na API: `dtaInicio`, `dtaFim` (formato `YYYY-MM-DD`).
+
+Default do formulário: início = 02/01/2020, fim = data de hoje.
+Intervalo aberto: sim — há botões de limpar cada data (`clearDateInicio`,
+`clearDateFim`), e `prepareGetParams` omite parâmetro vazio da querystring.
+
+⚠️ Os campos de data só são ENVIADOS quando a busca avançada está ligada
+(`checkForm=1`). Com `checkForm=0` o front manda `dtaInicio`/`dtaFim` como
+`null` e eles somem da querystring — ou seja, **o filtro de data depende do
+checkbox de busca avançada**.
+
+Prints: 01.09-calendario-datas-inicio-final-publicacao.png
+        02.01-formulario-acordaos.png
+
+------------------------------------------------------------------
+## 6. Filtro de instância
+------------------------------------------------------------------
+
+Não existe um combo "instância". A instância é determinada pelo combo
+**"Relatório"** — ver §7 e `03-relatorios-desambiguacao.txt`:
+
+  1º grau  → "Sentenças de 1º Grau" (rel 4) e "Sentenças - Juizado Especial" (rel 7)
+  2º grau  → "Acórdãos" (rel 1) e "Decisões Monocráticas" (rel 2)
+  Turmas Recursais → "Acórdãos - Turma Recursal" (rel 6) e
+                     "Decisões Monocráticas - Turma Recursal" (rel 5)
+
+------------------------------------------------------------------
+## 7. Filtro de competência (Juizado × Justiça Comum)
+------------------------------------------------------------------
+
+**A desambiguação NÃO é um filtro dentro de uma busca — é a escolha do
+RELATÓRIO.** Cada relatório consulta uma rota de API diferente, sobre uma
+base diferente. Ver `03-relatorios-desambiguacao.txt` para a prova por
+conjuntos de opções (os órgãos julgadores de Justiça Comum e de Turma
+Recursal são conjuntos praticamente disjuntos).
+
+------------------------------------------------------------------
+## 8. Filtro de área (Cível × Criminal)
+------------------------------------------------------------------
+
+**Não existe combo de área neste módulo.** A separação Cível/Criminal só se
+alcança indiretamente, por dois caminhos:
+
+  a) Órgão Julgador (§9): as câmaras são nominalmente cíveis ou criminais
+     ("QUARTA CÂMARA CÍVEL", "CÂMARAS CRIMINAIS REUNIDAS"...).
+  b) Classe Judicial (§13): "Apelação Criminal", "Ação Penal - Procedimento
+     Ordinário (283)", etc.
+
+------------------------------------------------------------------
+## 9. Filtro de órgão / matéria — "Órgão Julgador"
+------------------------------------------------------------------
+
+HTML do elemento (DOM depois do AJAX, relatório "Acórdãos"):
+
+  <select formcontrolname="camara" class="ng-untouched ng-pristine ng-valid">
+    <option value="0: Object">Todos</option>
+    <option value="1: Object">CÂMARA ESPECIAL DE FÉRIAS</option>
+    <option value="2: Object">CÂMARAS CÍVEIS REUNIDAS</option>
+    <option value="3: Object">CÂMARAS CRIMINAIS REUNIDAS</option>
+    <option value="4: Object">CORREGEDORIA GERAL DA JUSTIÇA</option>
+    ... (34 opções + "Todos")
+  </select>
+
+Fonte AJAX: `GET /v1/jurisprudencia/lista_todos_camaras?tipoRelatorio=<id>`
+Parâmetro na API: `camara` (chave `pkcamara` nos relatórios 1/2/5;
+                  chave `camara_id` nos relatórios 6/7 — atenção, muda de nome)
+
+Lista COMPLETA de todos os relatórios: `03-orgaos-julgadores.json`
+
+  Acórdãos (rel 1) ................ 34 órgãos (câmaras/seções do TJ)
+  Decisões Monocráticas (rel 2) ... 34 órgãos
+  Acórdãos - Turma Recursal (6) ... 13 órgãos (Turmas Recursais + Turma de Uniformização)
+  Dec. Monocráticas - TR (rel 5) .. 13 órgãos
+  Sentenças 1º Grau (rel 4) ....... não tem (usa Comarca/Vara — §10)
+  Sentenças Juizado (rel 7) ....... não tem (usa Comarca/Vara — §10)
+
+Prints: 01.07-combo-orgao-julgador.png (combo aberto, mapeamento original)
+
+------------------------------------------------------------------
+## 10. Unidade específica (serventia / comarca)
+------------------------------------------------------------------
+
+Só existe nos relatórios de 1º grau (4 e 7). São DOIS combos encadeados:
+
+  Comarca → `GET /v1/jurisprudencia/lista_todos_comarcas?tipoRelatorio=<id>`
+  Vara    → `GET /v1/jurisprudencia/lista_todos_varas?comarca=<comarca_id>&tipoRelatorio=<id>`
+
+Parâmetros na API: `comarca` (`comarca_id`), `vara` (`vara_id`).
+
+Lista completa: `03-comarcas.json`
+
+  Sentenças 1º Grau (rel 4) ....... 111 comarcas ("Fórum da Comarca de ...")
+  Sentenças Juizado (rel 7) ....... 13 comarcas (nomes secos: "BACABAL", "TIMON"...)
+
+O combo Vara depende da Comarca escolhida (AJAX encadeado) — não foi possível
+enumerar todas as varas de todas as comarcas sem disparar 124 requisições;
+a rota está registrada acima e é aberta (não exige captcha).
+
+------------------------------------------------------------------
+## 11. Magistrada ou magistrado — "Relator" e "Revisor"
+------------------------------------------------------------------
+
+Dois combos separados, ambos com a MESMA lista.
+
+HTML do elemento (DOM depois do AJAX):
+
+  <select formcontrolname="relator" class="ng-untouched ng-pristine ng-valid">
+    <option value="0: Object">Todos</option>
+    <option value="1: Object">ADELVAM NASCIMENTO PEREIRA</option>
+    <option value="2: Object">ADINALDO ATAIDES CAVALCANTE</option>
+    ... (312 opções + "Todos")
+  </select>
+
+  <select formcontrolname="revisor" ...>  <!-- idêntico -->
+
+Fonte AJAX: `GET /v1/jurisprudencia/lista_todos_magistrados?tipoRelatorio=<id>`
+Parâmetros na API: `relator`, `revisor`
+  - relatórios 1, 2, 5 → chave `pkmatricula` (ex.: "028431")
+  - relatórios 4, 6, 7 → chave `matricula_id`  ⚠️ nome diferente
+
+Lista completa dos 4 conjuntos: `03-magistrados.json`
+  rel 1/2: 312 · rel 6: 261 · rel 4: 371 · rel 7: 241
+
+O nome NÃO é digitado: é escolha em combo, então não há problema de grafia.
+"Revisor" só existe no relatório 1 (Acórdãos).
+
+Prints: 01.04-combo-relator.png · 01.05-combo-revisor.png
+
+------------------------------------------------------------------
+## 12. Tipo de ato
+------------------------------------------------------------------
+
+Não existe combo "tipo de ato". O tipo de ato É o relatório: Acórdão,
+Decisão Monocrática, Sentença, Súmula/Precedente. Ver §7.
+
+------------------------------------------------------------------
+## 13. "Pesquisar pelo(a)", Classe e Sistema
+------------------------------------------------------------------
+
+### 13.1 "Pesquisar pelo(a)" — o que a chave de busca significa
+
+HTML do elemento (DOM depois do AJAX, relatório "Acórdãos"):
+
+  <select formcontrolname="tipoPesquisa" class="ng-untouched ng-pristine ng-valid">
+    <option value="0: Object">Ementa</option>
+    <option value="1: Object">Inteiro Teor</option>
+    <option value="2: Object">Advogado(s)</option>
+    <option value="3: Object">Classe</option>
+    <option value="4: Object">Número(s) do Acórdão</option>
+    <option value="5: Object">Número(s) do Processo</option>
+  </select>
+
+Fonte AJAX: `GET /v1/jurisprudencia/lista_todos_tipos_pesquisa?tipoRelatorio=<id>`
+Parâmetro na API: `tipoPesquisa` (o `opcao_id`, NÃO o índice do combo)
+
+Opções por relatório (lista completa em `03-tipos-pesquisa.json`):
+
+  rel 1 (Acórdãos) ......... 1=Ementa · 7=Inteiro Teor · 2=Advogado(s)
+                             3=Classe · 4=Nº do Acórdão · 6=Nº do Processo
+  rel 6 (Acórdãos TR) ...... 1=Ementa · 7=Inteiro Teor · 6=Nº do Processo
+  rel 2 / 5 (Monocráticas) . 8=Decisão · 6=Nº do Processo
+  rel 4 / 7 (Sentenças) .... 11=Sentença · 6=Nº do Processo
+
+⚠️ Ressalva importante: **só os relatórios 1 e 6 têm busca por "Ementa"**.
+Nos relatórios de decisão monocrática e de sentença a busca textual é sobre
+o texto integral da decisão/sentença (opções 8 e 11), não sobre ementa.
+
+Prints: 01.02-combo-pesquisar-pelo.png
+
+### 13.2 Classe Judicial
+
+  <select formcontrolname="classe" class="ng-untouched ng-pristine ng-valid">
+    <option value="0: Object">Todas</option>
+    <option value="1: Object">Ação Civil de Improbidade Administrativa (64)</option>
+    <option value="2: Object">Ação Civil Pública (65)</option>
+    ... (135 opções + "Todas")
+  </select>
+
+Fonte AJAX: `GET /v1/jurisprudencia/lista_todos_classes?tipoRelatorio=<id>`
+Parâmetro na API: `classe`
+  - relatórios 1, 2, 5 → chave `id_classe`
+  - relatórios 4, 6, 7 → chave `classe_id`  ⚠️ nome diferente
+Lista completa: `03-classes.json`
+  rel 1/2: 135 · rel 6/5: 26 · rel 4: 293 · rel 7: 90
+
+Prints: 01.06-combo-classe-judicial.png
+
+### 13.3 Sistema (só no relatório 1)
+
+  <select formcontrolname="sistema" class="ng-untouched ng-pristine ng-valid">
+    <option value="0: Object">Todos</option>
+    <option value="1: Object">THEMIS SG</option>
+    <option value="2: Object">PJE 2G</option>
+  </select>
+
+Valores hardcoded no bundle (`getSystems`):
+  [{idSistema:"0", strSistema:"Todos"},
+   {idSistema:"ThemisSG", strSistema:"THEMIS SG"},
+   {idSistema:"Pje2G", strSistema:"PJE 2G"}]
+
+Parâmetro na API: `sistema` (string: `0` | `ThemisSG` | `Pje2G`).
+Significa o sistema de tramitação de ORIGEM do acórdão — o acervo de 2º grau
+do TJMA é misto (processos antigos no Themis SG, novos no PJe 2G).
+
+Prints: 01.03-combo-sistema.png
+
+------------------------------------------------------------------
+## 14. Número do processo — o que alimenta o Checker
+------------------------------------------------------------------
+
+Existe, mas **não como consulta separada**: é a mesma busca, com
+"Pesquisar pelo(a)" = "Número(s) do Processo" (`tipoPesquisa=6`), disponível
+em TODOS os 6 relatórios pesquisáveis. O plural ("Número(s)") indica que
+aceita mais de um número.
+
+Formato aceito: não foi possível confirmar (com ou sem máscara CNJ), porque
+a busca é barrada pelo captcha.
+
+⚠️ CONSEQUÊNCIA DIRETA: **o Checker do TJMA não pode usar o JurisConsult.**
+Ele usa a API Pública do DataJud/CNJ (`api_publica_tjma`), que é oficial,
+aberta e cobre TJMA em G1 e G2 — ver §16.3.
+
+==================================================================
+# Especificidades
+==================================================================
+
+------------------------------------------------------------------
+## 15. Bloqueios
+------------------------------------------------------------------
+
+Ver o arquivo dedicado: `04-bloqueio-captcha.txt`. Resumo:
+
+  Existe restrição?                   SIM — DOIS captchas empilhados.
+  A BUSCA funciona sem resolver?      NÃO.
+  O DOWNLOAD funciona sem resolver?   NÃO (não há download separado: o
+                                      inteiro teor vem no payload da busca).
+  Headless passa?                     NÃO.
+  --headed passa?                     NÃO.
+  Chrome real + UA comum passa?       NÃO.
+
+------------------------------------------------------------------
+## 16. Forma de acesso
+------------------------------------------------------------------
+
+Ordem do CLAUDE-CODEGEN §4: `api-oficial` > `api` > `http` > `browser`.
+
+### 16.1 `api-oficial` — procurado, resultado registrado
+
+  ✗ `dadosabertos.tjma.jus.br` .................... NÃO RESOLVE (DNS)
+  ✗ `www.tjma.jus.br/dados-abertos` ............... página institucional, sem dataset
+  ✗ `www.tjma.jus.br/api/v1/portal/dados-abertos/` . EXISTE, mas só publica
+      `projetos` (200) e `indicadores` (200) — planejamento estratégico.
+      `.../jurisprudencia`, `.../acordaos`, `.../processos` → 404.
+  ✗ `apijuris.tjma.jus.br/{swagger,api-docs,v1/swagger.json}` → 404
+  ✗ MNI (Modelo Nacional de Interoperabilidade) do TJMA — existe, mas exige
+      credenciamento por ofício à Diretoria de Informática + autorização da
+      Presidência. Não é acesso público.
+  ✓ **DataJud (CNJ)** — funciona para o TJMA (§16.3), mas NÃO tem ementa nem
+      inteiro teor. Serve ao Checker, não ao crawler de jurisprudência.
+
+  Conclusão: **não existe API oficial de jurisprudência do TJMA.** Isto foi
+  procurado, não presumido.
+
+### 16.2 `api` (interna, não documentada) — existe e está mapeada, mas barrada
+
+Base: `https://apijuris.tjma.jus.br/v1`
+
+Rotas ABERTAS (sem captcha, confirmadas com `curl` em 25/07/2026):
+
+  GET /jurisprudencia/lista_relatorios
+  GET /jurisprudencia/lista_todos_tipos_pesquisa?tipoRelatorio=<id>
+  GET /jurisprudencia/lista_todos_classes?tipoRelatorio=<id>
+  GET /jurisprudencia/lista_todos_camaras?tipoRelatorio=<id>
+  GET /jurisprudencia/lista_todos_magistrados?tipoRelatorio=<id>
+  GET /jurisprudencia/lista_todos_comarcas?tipoRelatorio=<id>
+  GET /jurisprudencia/lista_todos_varas?comarca=<id>&tipoRelatorio=<id>
+  GET /jurisprudencia/links_pesquisa_sumulas
+  GET /util/gera_captcha
+  GET /util/site_infos?tipo=<hash>
+  GET /util/permission_recaptcha
+  GET /util/current-timestamp
+
+Rotas de BUSCA (todas exigem os dois captchas — 400/403):
+
+  GET /sg/jurisprudencias/processos                       (rel 1, Acórdãos)
+  GET /jurisprudencia/processos/pesquisa_acordaos_tr      (rel 6)
+  GET /jurisprudencia/processos/pesquisa_monocraticas     (rel 2)
+  GET /jurisprudencia/processos/pesquisa_monocraticas_tr  (rel 5)
+  GET /jurisprudencia/processos/sentencas_pg              (rel 4)
+  GET /jurisprudencia/processos/sentencas_je              (rel 7)
+
+Contrato da busca (extraído do bundle `build/5.js` e dos chunks
+`build/{197,198,199,200,201,202}.js` — método `getJurisprudenceList`):
+
+  GET {base}{rota_do_relatorio}
+      ?chave=<termo>
+      &tipoPesquisa=<opcao_id>
+      &sistema=<0|ThemisSG|Pje2G>        (só rel 1)
+      &relator=<matricula>
+      &revisor=<matricula>               (só rel 1)
+      &camara=<id>                       (rel 1,2,5,6)
+      &comarca=<id>&vara=<id>            (rel 4,7)
+      &classe=<id>
+      &condicao=<1|2|3>                  (só rel 1)
+      &fraseExata=<true|false>           (rel 2,4,5,6,7)
+      &checkForm=<0|1>
+      &dtaInicio=YYYY-MM-DD&dtaFim=YYYY-MM-DD
+      &inicioPagina=<n>&fimPagina=<n>
+      &tokenG=<token do reCAPTCHA v2 invisible>
+      &keyId=cf70bdaf271e5e3c8495a92b8e57ace0
+  Headers:
+      Content-Type: application/json
+      Authorization: Bearer <tokenCaptcha JWT> <5 chars digitados do captcha de imagem>
+
+  (`prepareGetParams` OMITE da querystring todo parâmetro null/vazio.)
+
+  Paginação infinita (mobile), mesma rota + `/infinito`:
+      &time=<currentTimestamp>&validation=<md5(timestamp + "8dUrFaY6r!YHgxQfiLu*uG61*")>&loggedUser=0
+
+Resposta esperada: `{"response":{"processos":[ ... ]}}`, com o total de
+resultados no campo `int_count` do primeiro item. Não foi possível observar
+um payload real de resultados — a busca nunca completou.
+
+**Decisão de acesso: nenhuma.** Não há forma de acesso viável para busca de
+jurisprudência no TJMA. O crawler existe (`src/TJMACrawler.js`), implementa
+este contrato fielmente e falha de forma explícita no portão do captcha.
+
+### 16.3 DataJud — o que de fato funciona (Checker)
+
+  POST https://api-publica.datajud.cnj.jus.br/api_publica_tjma/_search
+  Header: Authorization: APIKey <chave pública do CNJ>
+  Body:   {"size":1,"query":{"match":{"numeroProcesso":"<20 dígitos>"}}}
+
+  Confirmado ao vivo em 25/07/2026: índice `api_publica_tjma` responde,
+  cobre G1 e G2, `hits.total.value` ≥ 10.000. Traz número, tribunal, grau,
+  órgão julgador, classe, sistema (PJe) e movimentos. **Não traz ementa nem
+  inteiro teor** — por isso serve ao Checker e não substitui o crawler.
+
+------------------------------------------------------------------
+## 17. Sessão e estado
+------------------------------------------------------------------
+
+Não há sessão nem cookie de estado para a busca pública. Cada busca carrega
+o seu próprio par (captcha de imagem + token do reCAPTCHA). O front guarda os
+filtros em `navParams` ao trocar de página da SPA e REUTILIZA o mesmo
+`tokenG` ao paginar (visto em `getPaginationResult` → `getJurisprudencias`),
+o que sugere que o backend não invalida o token do Google entre páginas.
+
+Existe uma tela de login (`#/login`), com credenciais do sistema SENTINELA —
+uso interno do TJMA, indisponível para consulta pública. Usuário logado pula
+os dois captchas (`loggedUser ? token=authToken : token=captcha+recaptcha`).
+
+==================================================================
+# Acessando os resultados
+==================================================================
+
+------------------------------------------------------------------
+## 18. Tela de resultados
+------------------------------------------------------------------
+
+**NÃO MAPEADA — inalcançável.** A submissão nunca passa do captcha, então a
+rota de listagem (`SgJurisprudenceListPage` e irmãs) nunca renderiza.
+
+O que se sabe pelo código dos chunks `build/{197..202}.js`:
+  - campos de um resultado: `pkProtocolo` (nº do processo), `txEmenta`,
+    `int_count` (total), `NUMCOL` (índice na coluna);
+  - há botão "copiar texto" que limpa as tags de `txEmenta`;
+  - há exportação para Excel (`icon-file-excel`);
+  - clicar no item abre `CaptchaFormPage` → mais um captcha para ver a capa
+    do processo (`SgPublicSearchProcessSheetPage`).
+
+Isto é inferência de código, não observação de tela — está registrado como
+pendência em `04-bloqueio-captcha.txt`.
+
+------------------------------------------------------------------
+## 19. Inteiro teor (download)
+------------------------------------------------------------------
+
+Não há endpoint separado de download. O inteiro teor é aberto num modal
+(`ModalJurisprudenceInteiroTeorPage`) alimentado pelo objeto que já veio no
+payload da busca. Ou seja: **o download não é um bloqueio adicional — ele
+está atrás do mesmo portão da busca.** Se a busca passasse, o inteiro teor
+viria junto.
+
+------------------------------------------------------------------
+## 20. Paginação
+------------------------------------------------------------------
+
+Resultados por página:      20 (desktop)
+Parâmetro de página:        `inicioPagina` / `fimPagina` (faixa 1-based)
+Total exposto?              sim, em `response.processos[0].int_count`
+"Ir para página"?           sim, componente `paginationService.getPager()`
+Rota alternativa:           `<rota>/infinito` (scroll infinito, mobile),
+                            com `time` + `validation` (md5 com salt fixo)
+
+Nada disso pôde ser exercitado: a primeira página nunca foi obtida.
+
+==================================================================
+# Pendências e defeitos de mapeamento
+==================================================================
+
+| # | O que falta | Por quê |
+|---|---|---|
+| 1 | Tela de resultados (§18) — print, HTML, campos reais | Captcha barra a submissão |
+| 2 | Contagens que provam cada filtro | Nenhuma busca pôde ser executada |
+| 3 | Teste empírico de "E"/"OU"/"Termo único"/"Frase Exata" | idem |
+| 4 | Formato aceito no campo nº do processo (com/sem máscara) | idem |
+| 5 | Teto de resultados da base | idem |
+| 6 | Varas por comarca (124 combinações) | Rota aberta e registrada; não enumerada para não martelar o servidor |
+| 7 | Prints de combo aberto tirados hoje | `<select>` nativo: o popup é do SO e não entra em screenshot do Playwright. Os combos abertos já estão nos prints 01.01–01.09 (mapeamento humano original) e as listas completas estão nos `.json` desta pasta |

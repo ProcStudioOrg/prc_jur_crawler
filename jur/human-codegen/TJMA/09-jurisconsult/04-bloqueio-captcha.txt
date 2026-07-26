@@ -1,0 +1,122 @@
+==================================================================
+SEÇÃO: BLOQUEIO — CAPTCHA DO JURISCONSULT
+==================================================================
+
+Link:  https://jurisconsult.tjma.jus.br/#/sg-jurisprudence-form
+API:   https://apijuris.tjma.jus.br/v1
+Data da verificação: 25/07/2026
+
+------------------------------------------------------------------
+AS TRÊS RESPOSTAS DO CLAUDE-CODEGEN §6
+------------------------------------------------------------------
+
+1. Existe restrição?
+   SIM — e são DOIS captchas empilhados, ambos validados no SERVIDOR:
+
+   (a) Captcha de imagem PRÓPRIO do TJMA
+       - JPEG 150x44 gerado com GD, 5 caracteres alfanuméricos minúsculos
+       - servido por `GET /v1/util/gera_captcha`
+       - campo de digitação: <input formcontrolname="recaptcha" maxlength="5"
+                                     placeholder="Digite o valor da imagem">
+       - enviado no header: `Authorization: Bearer <tokenCaptcha> <5 chars>`
+
+   (b) Google reCAPTCHA v2 **INVISIBLE**
+       - site key: 6LdM1m8cAAAAAOLISO2M2zo3-pbbImilMQfYwMmH
+       - descoberta por `GET /v1/util/site_infos?tipo=cf70bdaf271e5e3c8495a92b8e57ace0`
+         → {"str_public_key":"6LdM1m8c…","int_habilitado":1}
+       - disparado no submit; o token vai na querystring como `tokenG`,
+         com `keyId=cf70bdaf271e5e3c8495a92b8e57ace0`
+       - `GET /v1/util/permission_recaptcha` → {"permission":[{"int_habilitado":1}]}
+         (ou seja: ligado, sem chave de desligamento pública)
+
+2. A BUSCA funciona sem resolver?
+   NÃO. Verificado com `curl` direto na API, nas 4 rotas de busca
+   (`/sg/jurisprudencias/processos`, `pesquisa_acordaos_tr`, `sentencas_pg`,
+   `sentencas_je`) — resultado idêntico em todas:
+
+     (a) sem Authorization e sem tokenG
+         → HTTP 400  {"error":"captcha_not_provided"}
+
+     (b) captcha de imagem CORRETO + tokenG inválido
+         → HTTP 403  {"response":{"validacao":{"captcha_error":"invalid_captcha_g"}}}
+
+     (c) captcha de imagem ERRADO
+         → HTTP 400  {"error":"incorrect_captcha"}
+
+   Ou seja: o servidor valida os dois, em cascata (imagem primeiro, Google
+   depois). Não há caminho que devolva resultado sem os dois.
+
+3. O DOWNLOAD do inteiro teor funciona sem resolver?
+   NÃO — e a pergunta não chega a se aplicar. **Não existe endpoint separado
+   de inteiro teor.** O texto vem no próprio payload da busca e é exibido num
+   modal (`ModalJurisprudenceInteiroTeorPage`, chunk `build/197.js`). Logo o
+   bloqueio NÃO é assimétrico: busca e inteiro teor caem no mesmo portão.
+
+   (Há ainda um TERCEIRO captcha depois: clicar num resultado abre
+   `CaptchaFormPage` antes de mostrar a capa do processo.)
+
+------------------------------------------------------------------
+HEADLESS × HEADED × CHROME REAL
+------------------------------------------------------------------
+
+O reCAPTCHA v2 invisible escalou para desafio de imagens ("selecione todas
+as imagens com faixas de pedestre") em TODAS as configurações testadas:
+
+  Playwright Chromium, headless: true .................... DESAFIO
+  Playwright Chromium, headless: false (--headed) ........ DESAFIO
+  Playwright + Google Chrome real (channel: 'chrome'),
+    perfil persistente, locale pt-BR, timezone America/Fortaleza,
+    --disable-blink-features=AutomationControlled,
+    navigator.webdriver forçado a undefined ............... DESAFIO
+
+Ou seja: **o truque que destravou o TJSC (UA/canal de Chrome comum) NÃO
+funciona aqui.** O que o TJSC tinha era verificação de navegador; o que o
+TJMA tem é reCAPTCHA de verdade, e reCAPTCHA reconhece o CDP.
+
+Um humano num navegador normal passa (silenciosamente ou resolvendo o
+desafio). Um agente não passa.
+
+------------------------------------------------------------------
+DECISÃO: BLOQUEIO INSUPERÁVEL POR ORA
+------------------------------------------------------------------
+
+Decisão consciente do dono do repositório, registrada aqui para que ninguém
+reabra o assunto achando que é mapeamento incompleto:
+
+  **Não se automatiza resolução de captcha neste projeto.**
+  O TJMA fica marcado como `sem-acesso` para busca de jurisprudência.
+  O bloqueio é insuperável por ora — não por falta de mapeamento, mas por
+  escolha de não burlar proteção anti-bot.
+
+O mapeamento em si está COMPLETO: o contrato inteiro da API está em
+`02-formulario-pesquisa.txt` §16.2. No dia em que o TJMA desligar o
+reCAPTCHA (`int_habilitado: 0` em `permission_recaptcha`/`site_infos`), o
+crawler `src/TJMACrawler.js` passa a funcionar sem reescrita.
+
+------------------------------------------------------------------
+O QUE FUNCIONA APESAR DO BLOQUEIO
+------------------------------------------------------------------
+
+  ✓ Todas as rotas de LISTAGEM de combos (relatórios, órgãos, comarcas,
+    classes, magistrados, tipos de pesquisa) — abertas, sem captcha.
+    Foi delas que saíram os `.json` desta pasta.
+  ✓ `links_pesquisa_sumulas` — aberta (3 links para o portal).
+  ✓ **API Pública do DataJud/CNJ** (`api_publica_tjma`) — aberta, oficial,
+    cobre TJMA em G1 e G2. É o que alimenta `src/TJMAChecker.js`.
+    NÃO tem ementa nem inteiro teor, então não substitui o crawler.
+
+------------------------------------------------------------------
+PRINTS DESTA SEÇÃO
+------------------------------------------------------------------
+
+  04.01-captcha-imagem-preenchido.png
+      O formulário completo, preenchido, com o captcha de imagem próprio do
+      TJMA visível (a "pílula" com os 5 caracteres + botão de recarregar) e
+      o campo "Digite o valor da imagem" preenchido. O botão CONSULTAR já
+      está habilitado. É esta a tela que o `jur-fixer` deve reconhecer.
+
+  04.02-recaptcha-desafio.png
+      O que acontece ao clicar em CONSULTAR: o reCAPTCHA v2 invisible abre o
+      desafio de seleção de imagens sobre o formulário, e o captcha de imagem
+      é regerado (a chave de busca é limpa). Nenhuma requisição de busca
+      chega a sair.

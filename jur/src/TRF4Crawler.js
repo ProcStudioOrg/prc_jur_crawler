@@ -11,11 +11,70 @@ class TRF4Crawler extends BaseCrawler {
   }
 
   /**
+   * ⚠️ O pool de backends do TRF4 está defeituoso — diagnosticado em 26/07/2026.
+   *
+   * O host `eproc-jur.trf4.jus.br` resolve para UM único IP (170.81.138.194), mas responde de
+   * forma diferente a cada conexão, porque atrás dele há mais de um backend e nem todos estão
+   * sãos. Medido na mesma sessão, minutos de diferença:
+   *
+   *   - conexões boas:      HTTP 200 em 0,4s, certificado válido até 26/12/2026
+   *   - backend degradado:  HTTP 503, chegando a pendurar 76s
+   *   - backend defeituoso: certificado EXPIRADO em 28/06/2026 → net::ERR_CERT_DATE_INVALID
+   *
+   * NÃO é mudança de layout (os 6 seletores do crawler foram verificados e existem) nem
+   * bloqueio anti-bot. É problema de infraestrutura do tribunal, e só eles podem corrigir.
+   *
+   * O retry existe para reconectar e cair num backend são. **Não desligue a verificação de
+   * certificado para contornar isso** — aceitar certificado expirado abriria a porta para
+   * man-in-the-middle numa ferramenta cuja função é confirmar autenticidade de julgado.
+   */
+  async gotoComRetry(tentativas = 3) {
+    let ultimoErro;
+    for (let i = 1; i <= tentativas; i++) {
+      try {
+        // Orçamento apertado de propósito: 3 × 18s + backoff (1,5s + 3s) ≈ 58s, e a espera do
+        // seletor logo abaixo custa até mais 20s. Precisa caber nos 90s do tests/smoke.js —
+        // com 5 tentativas de 45s a falha levava ~900s, o que é pior que falhar: trava a suíte.
+        const resp = await this.page.goto(this.baseUrl, {
+          waitUntil: 'domcontentloaded',
+          timeout: 18000,
+        });
+        if (resp && resp.status() >= 500) {
+          ultimoErro = new Error(`HTTP ${resp.status()} do host do TRF4`);
+        } else {
+          return resp;
+        }
+      } catch (e) {
+        ultimoErro = e;
+      }
+      if (i < tentativas) {
+        console.log(`TRF4 indisponível (tentativa ${i}/${tentativas}): ${ultimoErro.message.split('\n')[0]} — repetindo`);
+        await this.page.waitForTimeout(1500 * i); // backoff: 1,5s, 3s
+      }
+    }
+    const msg = (ultimoErro && ultimoErro.message.split('\n')[0]) || 'motivo desconhecido';
+    const certExpirado = /ERR_CERT_DATE_INVALID/.test(msg);
+    throw new Error(
+      `TRF4 indisponível após ${tentativas} tentativas: ${msg}. ` +
+        (certExpirado
+          ? 'Um dos backends do TRF4 serve certificado EXPIRADO (28/06/2026). É defeito de ' +
+            'infraestrutura do tribunal, não do crawler — e não vamos desligar a verificação ' +
+            'de certificado para contornar. Tente de novo em alguns minutos.'
+          : 'O pool de backends do TRF4 responde 503 de forma intermitente — tente de novo em alguns minutos.')
+    );
+  }
+
+  /**
    * Navigate to the jurisprudência search page
    */
   async navigateToSearch() {
-    await this.page.goto(this.baseUrl);
-    await this.waitForLoad();
+    await this.gotoComRetry();
+    // NÃO usar waitForLoad() aqui: ele espera 'networkidle', e a página do TRF4 deixa
+    // infra-impressao-global.css pendurado indefinidamente — o networkidle nunca chega e a
+    // busca morre por timeout mesmo com a página já utilizável. Espere o campo de busca,
+    // que é o que de fato precisamos (verificado em 26/07/2026: os 6 seletores existem
+    // assim que o DOM carrega).
+    await this.page.waitForSelector('#txtPesquisa', { timeout: 20000 });
 
     // Wait for page scripts to fully initialize
     await this.page.waitForTimeout(2000);

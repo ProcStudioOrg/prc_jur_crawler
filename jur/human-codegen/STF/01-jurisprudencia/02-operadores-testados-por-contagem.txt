@@ -1,0 +1,76 @@
+## 2. Operadores — testados um a um, por CONTAGEM (25/07/2026)
+
+A barra de operadores fica logo abaixo da caixa de busca (print `02.02-barra-operadores.png`),
+com os botões: `e` `ou` `não` `" "` `" "~` `~` `$` `?` `( )`.
+HTML dos botões: `02-barra-operadores.html`. Painel avançado: `02-painel-avancado.html`.
+
+Metodologia: cada expressão foi rodada duas vezes contra `POST /api/search/search`, base
+`acordaos` — uma com a tradução que a SPA faz no navegador ("traduzido") e outra mandando a
+expressão crua ao Elasticsearch ("literal"). Coluna diferente = o operador SÓ funciona porque
+o cliente traduz.
+
+| Operador | Funciona? | Sintaxe aceita | Traduzido | Literal | Observação |
+|---|---|---|---|---|---|
+| `E` (implícito)   | sim | `dano moral`               | 2.945  | 2.945  | é o operador padrão |
+| `E` (explícito)   | sim | `dano e moral` → `dano AND moral` | 2.945 | 2.879 | **sem tradução, "e" vira termo buscado** |
+| `OU`              | sim | `droga ou entorpecente` → `OR`    | 10.127 | 4.194 | idem |
+| `NÃO`             | sim | `prisão não preventiva` → `NOT`   | 6.108 | 6.905 | idem; com/sem acento dá o mesmo |
+| `" "` frase exata | sim | `"presunção de inocência"`  | 1.768 | 1.768 | nativo do ES; sem aspas: 2.003 |
+| `" "~N` proximidade | sim | `"provimento cargo"~5`     | 1.277 | 1.277 | `~1` → 743 (restringe mesmo) |
+| `~` fuzzy         | sim | `indenização~`              | 11.433 | 11.433 | sem til: 11.308 |
+| `$` radical/curinga | sim | `indeniz$` → `indeniz*`   | 12.423 | **1** | **só funciona traduzido**: `$` não é curinga no ES |
+| `?` um caractere  | sim | `Pelu?o`                    | 8.827 | 8.827 | nativo do ES |
+| `( )` parênteses  | sim | `(extradição nao china) ou (exequatur nao STJ)` | 1.982 | 0 | ver ⚠️ WAF abaixo |
+
+Controles usados: `droga` sozinho 6.027 e `entorpecente` sozinho 4.687 (com sinônimos
+DESLIGADOS) contra 8.940 no `ou` — prova que o OU amplia. Com sinônimos ligados os três dão
+10.127, porque o Tesauro do STF já trata "droga" e "entorpecente" como sinônimos.
+
+### Regras finas confirmadas na implementação (bundle `main-es2015.*.js`, módulo `KLra`)
+
+- Os operadores só valem quando **cercados por delimitador** (`"'()[]<>`, espaço, início/fim).
+  Em "sobre" o "e" não vira AND.
+- **Dentro de aspas o operador é literal**: `princípio da "não" culpabilidade` busca a palavra
+  "não". O cliente mascara o trecho entre aspas antes de substituir.
+- Dentro de `" "~N` só valem `ou` e parênteses; o cliente EXPANDE em permutações:
+  `"(indenização ou reparação) danos morais"~5`
+  → `("indenização danos morais"~5 OR "reparação danos morais"~5)`  (1.717 resultados)
+- `/` desbalanceada é escapada (`RE 1234/2020` → `RE 1234\/2020`).
+
+### ⚠️ Armadilha do AWS WAF: corpo pequeno + `) OR (` = HTTP 403
+
+Descoberta ao reimplementar a API. Bisecção controlada (mesma sessão, mesmo cookie):
+
+| Corpo do POST | Tamanho | Resultado |
+|---|---|---|
+| meu, sem `highlight` | 7.630 B | **403 Forbidden** |
+| meu + 200 campos de padding | 9.430 B | 200 OK, 1.982 |
+| meu + 2.000 campos de padding | 25.630 B | 200 OK, 1.982 |
+| corpo idêntico ao da SPA (com `highlight`) | 14.813 B | 200 OK, 1.982 |
+
+Ou seja: o WAF inspeciona corpos de **até 8.192 bytes**; `) OR (` casa com a assinatura de SQL
+injection e leva 403. A SPA nunca esbarra nisso porque **sempre** manda o bloco `highlight`,
+que empurra o payload acima de 8 KB. O crawler faz o mesmo.
+
+## 3. Número máximo de páginas / resultados
+
+Resultados por página na tela: 5, 10, 25 ou 100. Na API o teto é **250** por requisição
+(`{"detail":"Excedido o limite de 250 documentos por consulta."}` acima disso).
+Teto de profundidade: **10.000** registros por consulta
+(`{"detail":"O maior registro que pode ser acessado em uma busca é o ..."}` quando `from` ≥ 10000).
+Acima disso é preciso fatiar por data ou por filtro.
+
+## 4. Filtro de data — julgamento
+## 5. Filtro de data — publicação
+
+São dois filtros **diferentes** e ambos existem. Na tela ficam no painel de facetas
+("Data de julgamento" De/Até — print `07.01-painel-filtros-aberto.png`); na API viram
+`{"range": {"julgamento_data": {"format":"ddMMyyyy","gte":"01012024","lte":"31122024"}}}`
+e o mesmo com `publicacao_data`. **O formato é DDMMYYYY, sem separador.**
+
+Contagens de prova (q = "dano moral", base acordaos):
+  sem data ................. 2.945
+  julgamento em 2024 ......... 174
+  julgamento em 2023 ......... 158
+  publicação em 2024 ......... 171   ← diferente de julgamento: são filtros distintos
+  julgamento 1990–1999 ........ 24

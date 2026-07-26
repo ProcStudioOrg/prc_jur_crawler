@@ -1,0 +1,57 @@
+## 6. Filtro de instância → NÃO EXISTE no STF
+
+O STF é corte de sobreposição, instância única. Não há 1º grau, 2º grau, Juizado Especial nem
+Turma Recursal. O que substitui a "instância" aqui é a escolha de **base** (esta seção) e,
+dentro dela, o **órgão julgador** e a **classe processual** (seção 07).
+
+## 7. Filtro de competência (Juizado × Justiça Comum) → NÃO EXISTE no STF
+
+Não se aplica. A desambiguação equivalente é dupla:
+  (a) por ÓRGÃO — Tribunal Pleno × Primeira/Segunda Turma (seção 07);
+  (b) por CLASSE PROCESSUAL — controle concentrado (ADI, ADPF, ADC, ADO) × recursos
+      (RE, ARE, AI) × originárias (HC, MS, Rcl, Ext) (seção 07).
+
+## 8. Filtro de área (Cível × Criminal) → NÃO EXISTE na base Acórdãos
+
+A base **Súmulas** tem "Ramo do direito" (13 opções, `07-ramos-direito-sumulas.json`) e a base
+**Informativos** tem "Ramo do direito" (24 opções, `07-ramos-noticia-informativos.json`), mas
+Acórdãos e Decisões monocráticas **não** têm classificação por área. O mais próximo é a classe
+processual (HC/RHC ≈ penal; ADI/ADPF ≈ constitucional) e a indexação temática por texto.
+
+## 3.1 Bases (o radio-group "Bases" da pesquisa avançada)
+
+HTML: `03-radios-base.html`. Print da lista: `03.01-bases.png`.
+As 5 opções da tela mapeiam para 4 índices + 1 sub-base:
+
+| Rótulo na tela        | `base` na API   | Docs (25/07/2026) | Print |
+|---|---|---|---|
+| Acórdãos              | `acordaos`      | 368.511 | `03.01-bases.png` |
+| ↳ Repercussão geral   | `acordaos` + `is_repercussao_geral=true` | 2.125 | `03.02-base-repercussao-geral.png` |
+| Súmulas               | `sumulas`       | 799     | `03.03-base-sumulas.png` |
+| Decisões monocráticas | `decisoes`      | 741.676 | `03.01-bases.png` |
+| Informativos          | `novo_informativo` (na URL: `informativos`) | 11.571 | `03.04-base-informativos.png` |
+
+⚠️ **"Repercussão geral" não é uma base**: é a base Acórdãos com um filtro booleano. Trocar o
+radio muda os campos disponíveis no formulário (Tema e Tese ficam em evidência), mas o índice
+consultado continua sendo `acordaos`.
+
+⚠️ O índice de Informativos chama-se `novo_informativo` no Elasticsearch, e não `informativos`.
+Mandar `informativos` no `post_filter` devolve zero.
+
+Sub-bases booleanas de Acórdãos (facetas "true/false", contagens sobre a base inteira):
+
+| Flag                                | true    | false   | O que é |
+|---|---|---|---|
+| `is_repercussao_geral`              | 2.841   | —       | acórdão paradigma de repercussão geral |
+| `is_repercussao_geral_admissibilidade` | 1.481 | 367.030 | fase de admissibilidade da RG |
+| `is_repercussao_geral_merito`       | 818     | 367.693 | mérito da RG |
+| `is_questao_ordem`                  | 1.433   | 367.078 | questões de ordem |
+| `is_colac`                          | 25.425  | 343.086 | **Coletânea de acórdãos** (anteriores a 1950) |
+| `is_iac`                            | 1       | 2.859   | Incidente de Assunção de Competência |
+
+E de Súmulas / Decisões:
+
+| Flag | true | false |
+|---|---|---|
+| `is_vinculante` (súmulas)        | **63**  | 736     |
+| `is_decisao_presidencia` (decisões) | 112.556 | 629.120 |

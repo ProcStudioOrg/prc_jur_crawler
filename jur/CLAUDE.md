@@ -22,12 +22,16 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | Comando | Tribunal | Escopo (estados) | Doc | Status |
 |---------|----------|------------------|-----|--------|
 | `trf1` | TRF 1ª Região | DF, MG, GO, TO, MT, BA, PI, MA, PA, AP, AM, RR, AC, RO | `CLAUDE-TRF1.md` | 🟡 CJF fora do ar (24/07/2026) |
-| `trf2` | TRF 2ª Região | RJ, ES | `CLAUDE-TRF2.md` | 🟠 **quebrado** — site migrou para o e-Proc |
+| `trf2` | TRF 2ª Região | RJ, ES | `CLAUDE-TRF2.md` | 🟢 OK (HTTP direto, sem browser) |
 | `trf3` | TRF 3ª Região | SP, MS | `CLAUDE-TRF3.md` | 🟡 instável (restrição de navegador) |
 | `trf4` | TRF 4ª Região | RS, SC, PR | `CLAUDE-TRF4.md` | 🟢 OK |
 | `trf5` | TRF 5ª Região | AL, CE, PB, PE, RN, SE | `CLAUDE-TRF5.md` | 🟢 OK |
+| `trf6` | TRF 6ª Região | MG | `CLAUDE-TRF6.md` | 🟢 OK (HTTP direto, sem browser) — base **só a partir de 2023** |
+| `stf`  | **Supremo Tribunal Federal** | Nacional (constitucional) | `CLAUDE-STF.md` | 🟢 OK (API direta; browser só p/ o token do WAF) |
+| `stj`  | **Superior Tribunal de Justiça** | Nacional (lei federal infraconstitucional) | `CLAUDE-STJ.md` | 🟢 OK (SCON — **browser headful obrigatório**, Cloudflare) |
 | `tcu`  | Tribunal de Contas da União | Federal (acórdãos) | `CLAUDE-TCU.md` | 🟢 OK |
 | `tjgo` | TJ de Goiás | GO | `CLAUDE-TJGO.md` | 🟢 OK (HTTP direto, sem browser) |
+| `tjma` | TJ do Maranhão | MA | `CLAUDE-TJMA.md` | 🔴 busca **bloqueada por captcha**; só `-n` (nº do processo, via DataJud) |
 | `tjpa` | TJ do Pará | PA | `CLAUDE-TJPA.md` | 🟢 OK (API direta, sem browser) |
 | `tjpr` | TJ do Paraná | PR | `CLAUDE-TJPR.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjrs` | TJ do Rio Grande do Sul | RS | `CLAUDE-TJRS.md` | 🟢 OK (HTTP direto, sem browser) |
@@ -35,8 +39,8 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjsp` | TJ de São Paulo | SP | `CLAUDE-TJSP.md` | 🔴 sem acesso — não rodar |
 | `trt9` | TRT 9ª Região (**trabalhista**) | PR | `CLAUDE-TRT9.md` | 🟢 OK (API direta, sem browser) |
 
-Mapeados mas **sem crawler ainda**: **TJMA** e **TJRJ** (`human-codegen/` completo).
-Os outros 49 tribunais (TJs restantes, TRTs, STF/STJ/TST) não estão mapeados — veja
+Mapeado mas **sem crawler ainda**: **TJRJ** (`human-codegen/` completo).
+Os demais tribunais (TJs restantes, TRTs, TST) não estão mapeados — veja
 `cobertura/CLAUDE-COBERTURA.md` e use a skill [`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**
@@ -49,8 +53,45 @@ Os outros 49 tribunais (TJs restantes, TRTs, STF/STJ/TST) não estão mapeados �
   Juizado Especial / Turma Recursal em SC → `tjsc --origem turmas` (Justiça Comum é o
   default `--origem comum`). ⚠️ o TJSC tem dois portais no ar: use só o comando, nunca
   `busca.tjsc.jus.br` (base congelada desde 08/10/2025)
-- "Busque no TRF2" / "RJ ou ES" → ⚠️ quebrado; leia `CLAUDE-TRF2.md` antes de tentar
+- "TJMA" / "Maranhão estadual" → ⚠️ **a busca por termo não existe**: o JurisConsult exige
+  captcha de imagem + reCAPTCHA, e este repo não resolve captcha. Diga isso ao usuário.
+  Só `./bin/jur tjma -n <nº>` (confirma que um processo existe, via DataJud) e
+  `--diagnostico` funcionam. Para matéria federal com origem no MA ofereça `trf1` —
+  leia `CLAUDE-TJMA.md`
+- "Busque no TRF2" / "RJ ou ES" → `trf2` → leia `CLAUDE-TRF2.md`.
+  Juizado Especial Federal / Turma Recursal no RJ ou ES → `trf2 --origem turmas`
+  (Justiça Federal comum é o default `--origem trf2`). ⚠️ **neste portal o espaço entre
+  termos quebra a busca** — o crawler conserta sozinho (une com hífen), mas nunca chame o
+  site na mão nem use `--literal` sem ler a ressalva 1. A base começa em **2018**:
+  pedido histórico anterior a isso não tem resposta aqui
+- "Matéria federal em Minas Gerais" / "TRF6" → `trf6` → leia `CLAUDE-TRF6.md`.
+  Juizado Especial Federal / Turma Recursal em MG → `trf6 --origem turmas`
+  (Justiça Federal comum é o default `--origem trf6`). ⚠️ **a base só tem de 2023 em
+  diante** — o TRF6 foi instalado em ago/2022, desmembrado do TRF1. Jurisprudência
+  federal de MG **até 2022** está no `trf1`, não aqui (medido: 27% da amostra do TRF1
+  em 2019 é de subseções mineiras). Um pedido histórico exige os dois comandos.
+  ⚠️ Ao contrário do TRF2, aqui o espaço entre termos funciona e os operadores são em
+  português (`e`, `ou`, `não`, `prox`) — **nunca hifenize a query do TRF6**
 - "Matéria previdenciária federal em SP" → `trf3` (instável; ver doc), com TRF4/TRF5 de comparativo
+- **Matéria constitucional / precedente de maior hierarquia** ("o que o Supremo decidiu",
+  "é constitucional?", ADI/ADPF/ADC, recurso extraordinário) → `stf` → leia `CLAUDE-STF.md`.
+  **Súmula vinculante** → `stf --vinculantes` (são 63, e vinculam todo o Judiciário).
+  **Repercussão geral / tema / tese** → `stf --rg`, `stf --tema "<nº ou texto>"`,
+  `stf --tese "<texto>"`. No STF **não há Juizado nem Turma Recursal**: a desambiguação é por
+  órgão (`-oj "Tribunal Pleno"` × Turmas) e por classe (`-c ADI,ADPF,ADC` × `-c RE,ARE`).
+  Peça o número no formato do STF (`ARE 1596565`, `ADI 4277`) — a base **não indexa CNJ**
+- **Interpretação de LEI FEDERAL infraconstitucional** (Código Civil, CPC, CDC, Código Penal,
+  Lei de Execução Fiscal, benefício previdenciário, contrato, prescrição) → `stj`, a corte que
+  uniformiza a lei federal e orienta todos os TJs e TRFs. **Cite o STJ antes do TJ local.**
+  Leia `CLAUDE-STJ.md`. No STJ **não há Juizado, Turma Recursal nem 1º grau**: a desambiguação
+  é (a) por **órgão** — `-s publico` (tributário/administrativo/previdenciário),
+  `-s privado` (civil/consumidor/empresarial), `-s penal`, `-oj CE` (Corte Especial) — e
+  (b) por **tipo de documento**: `--base acordao` (default) × `--base monocratica`.
+  **Tema repetitivo / precedente vinculante** → `stj --temas -q "<assunto>"`; os acórdãos
+  julgados sob o rito → `stj -q "<termo>" --repetitivos`.
+  ⚠️ O comando **abre uma janela de Chromium** (Cloudflare não libera headless) e a base
+  **não indexa número CNJ** — peça o número no formato do STJ (`REsp 1809043`) ou o
+  registro (`2019/0116080-0`)
 - "Acórdãos do TCU" → `tcu` → leia `CLAUDE-TCU.md`
 - **Matéria trabalhista no PR** (verbas rescisórias, horas extras, vínculo, insalubridade,
   justa causa, assédio) → `trt9`, **não** `tjpr`. Justiça do Trabalho é outro ramo.

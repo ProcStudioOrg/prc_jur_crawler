@@ -1,3 +1,204 @@
+## AVISO — este módulo está MORTO
+
+Os dois arquivos deste diretório mapeiam o portal antigo,
+`https://juris.trf2.jus.br/consulta.php`, que **não existe mais**: o host responde
+NXDOMAIN (verificado em 25/07/2026, e já em 24/07/2026).
+
+Ficam aqui só como registro histórico e para o `fixer` saber que a tela mudou de vez —
+não são plano B, porque não há B: o acervo daquele portal não foi republicado em lugar
+nenhum conhecido (a Jurisprudência Unificada do CJF, que teria o papel de arquivo do ramo,
+está VAZIA para o TRF2 — ver `../01-eproc-jurisprudencia/09-...txt` §9.0.1).
+
+O mapeamento vivo é `../01-eproc-jurisprudencia/`.
+
+Diferenças de vocabulário entre os dois portais, para quem for ler o texto antigo:
+
+| Portal antigo (morto)          | e-Proc (vivo)                       |
+|--------------------------------|-------------------------------------|
+| checkbox "TRF da 2ª REGIÃO"    | `#selOrigem` valor `1` (TRF2)       |
+| checkbox "TRU e TURMAS RECURSAIS" | `#selOrigem` valores `2` e `3` — agora SEPARADOS |
+| accordions de faceta (Classe, Assuntos, Competência, Órgão Colegiado, Relator) | combos `select multiple` no formulário + facetas na tela de resultados |
+| `input#consulta_input` / `name=q` | `#txtPesquisa` |
+| paginação por `start` (20/página) | POST em `ajax_paginar_resultado` com `hdnPaginaAtual` (10/25/50/100 por página) |
+| "Restringir apenas na ementa"  | radio `rdoCampo=E` |
+| filtro "Competência"           | **não existe mais** |
+
+
+================================================================
+## Registro histórico A — descrição humana da tela antiga (fev/2026)
+================================================================
+
+https://juris.trf2.jus.br/
+
+h2: Consulta Jurisprudência
+    input text: placeholder: Digite o texto da pesquisa
+    button: icone search (botão de pesquisar)
+
+checkbox: Pesquisar somente na Ementa true/false
+
+ao pesquisar vai abrir essa página:
+https://juris.trf2.jus.br/consulta.php?q=[termo da busca do input]
+
+painel: Filtre os resultados
+    label: pesquisar por:
+        input text: 
+            button: icone search
+    label: Operadores e símbolos
+        button: e
+        button: ou
+        button: não
+        button: ?
+        button: $
+        button: ""
+            toggle switch: Restringir apenas na ementa true/false
+                label: (n resultados)
+    label: Pesquisar em:
+        checkbox:
+            [ ] TRF da 2ª REGIÃO true/false
+            [ ] TRU e TURMAS RECURSAIS true/false
+    
+    button accordion: Opções de filtragem
+        label: Critério de Ordenação
+            select: 
+                mais relevantes
+                mais recentes
+                mais antigos
+        
+        label: Período de Julgamento
+            input date: Data inicial
+                label: até
+            input date: Data final
+        label: Número do Processo
+            input text: Digite o número do Processo
+
+button accordion: Classe
+    checkbox:
+        [ ] Agravo de Execução Penal (n)
+        [ ] Agravo de Instrumento (n)
+        [ ] Agravo em Pedido de Uniformização de Interpretação de Lei (TRU) (n)
+        [ ] Apelação Criminal (n)
+        [ ] Apelação Cível (n)
+        link: Ver mais
+
+button accordion: Assuntos
+    checkbox:
+        [ ] Alteração do teto máximo para o valor do benefício previdenciário do RGPS (EC 20 e 41) (n)
+        [ ] Antecipação de Tutela / Tutela Específica (n)
+        [ ] Aposentadoria Especial (Art. 57/8) (n)
+        [ ] Aposentadoria por Idade (Art. 48/51) (n)
+        link: Ver mais
+
+button accordion: Competência
+    checkbox:
+        [ ] Administrativo e Cível (Seção) (n)
+        [ ] Administrativo e Cível (Turma) (n)
+        [ ] Assistência Social (Turma) (n)
+        [ ] Corte Especial (n)
+        [ ] Cível (n)
+        link: Ver mais
+
+button accordion: Órgão Colegiado
+    checkbox:
+        [ ] 2a. TURMA ESPECIALIZADA (n)
+        [ ] 1a. TURMA ESPECIALIZADA (n)
+        [ ] Assessoria de Recursos (n)
+        [ ] 5a. TURMA ESPECIALIZADA (n)
+        [ ] 6a. TURMA ESPECIALIZADA (n)
+        link: Ver mais
+
+button accordion: Relator Originário
+    checkbox:
+        [ ] ADRIANA MENEZES DE REZENDE (n)
+        [ ] ADRIANO SALDANHA GOMES DE OLIVEIRA (n)
+        [ ] ALBERTO NOGUEIRA JUNIOR (n)
+        [ ] ALCIDES MARTINS (n)
+        [ ] ALCIDES MARTINS RIBEIRO FILHO (n)
+        link: Ver mais
+
+button accordion: Antecipação de tutela
+    checkbox:
+        [ ] Deferida (n)
+        [ ] Indeferida (n)
+        [ ] Não Requerida (n)
+        [ ] Parcialmente Deferida (n)
+        [ ] Requerida (n)
+        link: Ver mais
+
+button accordion: Justiça Gratuita
+    checkbox:
+        [ ] Deferida (n)
+        [ ] Indeferida (n)
+        [ ] Não requerida  (n)
+        [ ] Parcialmente Deferida (n)
+        [ ] Requerida (n)
+        link: Ver mais
+
+button accordion: Prioridade de Atendimento
+    checkbox:
+        [ ] Não (n)
+        [ ] Sim (n)
+
+button: Botão de pesquisar
+
+Painel: Documento
+    div: 
+        button: Ementa (ao clicar, aparece um card com o texto da ementa)
+        button: Inteiro Teor (ao clicar, abre esse link: https://juris.trf2.jus.br/documento.php?uuid=93a0f09f17617d22c1baeb425a8fea79&options=%23page%3D1 esse link muda para cada documento...)
+        button: Processo (ao clicar, abre esse link: https://eproc-consulta.trf2.jus.br/eproc/externo_controlador.php?acao=processo_seleciona_publica&acao_origem=processo_consulta_publica&acao_retorno=processo_consulta_publica&num_processo=[numero do processo])
+            button: número do processo (botão de copiar o n do processo)
+
+    div:
+        Classe
+        Assunto(s)
+        Competência
+        Relator Originário
+        Data Autuação
+        Data Julgamento
+    
+    div: content_ementa
+        texto
+
+    Vai ser exibido 20 documentos, no final da página vai ter a paginação
+
+    páginação:
+        vai ter 9 botão com números em ordem númerica para avançar e voltar nas páginas.
+
+Paineis: Fontes
+
+    header: Justiça Federal - 2⁰ Região 
+        links:
+            Súmulas do TRF2
+            Súmulas da Turma Regional de Uniformização - 2° Região
+            Enunciados das Turmas Recursais da Seção Judiciária do Rio de Janeiro
+            Enunciados das Turmas Recursais da Seção Judiciária do Espírito Santo
+            Enunciados do FOREJEF da 2º Região
+            Convenção de Haia
+            Precedentes Obrigatórios
+            Jurisprudência Legada
+            Infojur - Informativos de Jurisprudência do TRF2
+    
+    header: Outras Fontes
+        links:
+            STF – Consulta à Jurisprudência
+            Súmulas
+            Súmulas Vinculantes
+            Repercussão geral
+            Súmulas da Turma Nacional de Uniformização (TNU)
+            Jurisprudência unificada da Justiça Federal
+            STJ – Consulta à Jurisprudência
+            Súmulas
+            Recursos Repetitivos
+    
+    header: Links interesse
+        links:
+            Processos Históricos
+            Atos Normativos
+            Biblioteca
+            DJE
+================================================================
+## Registro histórico B — mapeamento técnico da tela antiga (fev/2026)
+================================================================
+
 # TRF2 Crawler - Documentacao Tecnica para Codegen
 # Gerado via MCP Playwright em 2026-02-04
 

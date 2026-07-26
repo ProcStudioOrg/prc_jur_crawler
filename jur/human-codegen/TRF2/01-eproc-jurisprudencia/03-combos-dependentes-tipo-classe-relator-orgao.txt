@@ -1,0 +1,87 @@
+## 3. Combos que dependem da Origem — tipo de documento, classe, relator, órgão
+
+Os quatro combos abaixo são recarregados por AJAX toda vez que o `#selOrigem` muda
+(`externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa`
+e `.../ajax_listar_tipo_documento`). No HTML estático da primeira resposta eles já vêm
+populados — mas com a lista da origem TRF2, que é o default. Para as outras origens é
+preciso trocar a origem no browser, que foi o que este mapeamento fez.
+
+### 3.1 Tipo de documento (`selTipoDocumento[]`)
+
+⚠️ Ao contrário do TJSC, aqui **os códigos NÃO mudam com a origem** (Acórdão é sempre `1`).
+O que muda é quais existem:
+
+| chave           | value | TRF2 | TRU2 | Turmas Recursais |
+|-----------------|-------|------|------|------------------|
+| Acórdão         | `1`   | sim  | sim  | sim              |
+| Decisão monocrática | `2` | sim | sim  | sim              |
+| Súmula          | `3`   | sim  | não  | não              |
+| Despacho/Decisão da Vice-Presidência | `4` | sim | não | não |
+
+Prova por contagem — os tipos fatiam a busca sem sobra
+(`dano-moral`, origem TRF2, sem data):
+
+    Acórdão 18.065 + Monocrática 1.359 + Súmula 0 + Desp./Vice 777 = 20.201   (= o total)
+
+Súmula existe no combo mas a base tem **zero** — é um tipo declarado e vazio.
+
+Pedir um tipo que não existe na origem escolhida não dá erro: o servidor **ignora e
+devolve a busca sem o filtro**. Por isso o `TRF2Crawler` recusa a combinação em vez de
+filtrar de mentira.
+
+Lista: `03-tipos-documento-por-origem.json`.
+Prints: `03.01-combo-tipo-documento-trf2.png`, `03.05-combo-tipo-documento-turmas-recursais.png`.
+
+### 3.2 Classe processual (`selClasse[]`)
+
+O `value` de cada option é o **próprio texto** da classe (não um código):
+
+    <option value="Apelação Cível">APELAÇÃO CÍVEL</option>
+
+| Origem            | nº de classes | arquivo |
+|-------------------|---------------|---------|
+| TRF2              | 150           | `03-classes-trf2.json` |
+| TRU2              | 21            | `03-classes-tru2.json` |
+| Turmas Recursais  | 32            | `03-classes-turmas-recursais.json` |
+
+Prova: `dano-moral` + classe "Apelação Cível" na origem TRF2 = **14.637** (de 20.201).
+Print: `03.02-combo-classe.png`.
+
+### 3.3 Relator (`selRelator[]`)
+
+Também com o texto como `value`. TRF2 118 · TRU2 55 · Turmas Recursais 78 nomes.
+Arquivos `03-relatores-<origem>.json`. Print: `03.03-combo-relator.png`.
+
+### 3.4 Órgão julgador (`selOrgao[]`)
+
+| Origem            | nº | o que tem lá dentro |
+|-------------------|----|---------------------|
+| TRF2              | 52 | Turmas e Seções Especializadas (1ª a 10ª), Corte Especial, Vice-Presidência, Assessoria de Recursos |
+| TRU2              | 1  | TURMA REGIONAL DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA |
+| Turmas Recursais  | 28 | Turmas Recursais do RJ (1ª–8ª, e as "4.0"), do ES (1ª–2ª), e algumas Varas Federais |
+
+Prova: `dano-moral` + órgão "1ª TURMA ESPECIALIZADA" = **773** (de 20.201).
+
+⚠️ O combo das Turmas Recursais inclui **Varas Federais** (ex.: "11ª VARA FEDERAL DO RIO DE
+JANEIRO"). Não é 1º grau na base: são decisões de 2º grau proferidas por juízo de vara em
+função recursal / gestor de Turma. A base não tem sentenças.
+
+Arquivos `03-orgaos-<origem>.json`.
+Prints: `03.04-combo-orgao-julgador-trf2.png`, `03.06-combo-orgao-julgador-turmas-recursais.png`.
+
+### 3.5 Filtros que este módulo NÃO tem
+
+- **Cível × Criminal**: não existe combo de área. Aproxime-se pelo órgão julgador
+  (Turmas Especializadas são temáticas) ou pela classe (`Apelação Criminal`).
+- **Comarca / subseção judiciária**: não existe. Só a UF, e só como faceta de resultado.
+- **Assunto**: não existe no formulário de busca; existe apenas como **faceta** na tela
+  de resultados (ver §6), que não é reproduzível como parâmetro de entrada.
+- **Magistrado de 1º grau / juiz prolator**: não existe (não há 1º grau na base).
+
+### 3.6 Ressalva de acesso por HTTP
+
+O endpoint `ajax_carregar_listas_pesquisa` **ignora o parâmetro de origem quando chamado
+sem sessão de browser**: devolve sempre a UNIÃO das três origens (189 classes, 180
+relatores, 81 órgãos). No browser ele responde por origem, porque lê a sessão. Não
+atrapalha o crawler: como os `value` são o próprio texto, mandar um órgão que não pertence
+à origem escolhida simplesmente devolve 0. As listas por origem são estes `.json`.

@@ -1,0 +1,90 @@
+========================================================================
+7. OPERADORES — testados um por um, por CONTAGEM
+========================================================================
+O site declara SEIS operadores num painel que abre no link "Operadores"
+(`#btnOperadores` → `#divOperadores`), cada um num botão que insere o operador
+no campo de busca:
+
+    "..."     e     ou     não     prox     *
+
+Referência de todas as contagens abaixo (origem TRF6 = `selOrigem[]=1`,
+escopo INTEIRO TEOR, agrupar ligado, medido em 25/07/2026):
+
+    dano  = 21.079      moral = 2.488      base inteira (`*`) = 216.706
+
+------------------------------------------------------------------
+7.1 Tabela do que FUNCIONA de verdade
+------------------------------------------------------------------
+| Sintaxe                       | Funciona? | Evidência                                          |
+|-------------------------------|-----------|----------------------------------------------------|
+| termo único                   | ✅        | `aposentadoria` = 36.578                            |
+| ESPAÇO entre termos (E impl.) | ✅        | `dano moral` = 2.201, termos montados `dano\|moral`  |
+| `e`                           | ✅        | `dano e moral` = 2.201 (idêntico ao espaço)         |
+| `ou`                          | ✅        | `dano ou moral` = 21.366 = 21.079 + 2.488 − 2.201 ✓ |
+| `nao` / `não`                 | ✅        | `dano nao moral` = 18.878 = 21.079 − 2.201        ✓ |
+| `"frase exata"`               | ✅        | `"dano moral"` = 1.979                              |
+| frase exata + outro termo     | ✅        | `"dano moral" e dano` = 1.979 (a frase implica a palavra) ✓ |
+|                               |           | `"dano moral" ou aposentadoria` = 38.162 = 1.979 + 36.578 − 395 ✓ |
+| `prox` (com ESPAÇO)           | ✅        | `dano prox moral` = 2.012                           |
+| `*` (curinga de sufixo)       | ✅        | `embarg*` = 47.922 (resolve para "embargos")        |
+| `*` isolado                   | ✅        | casa com a base inteira: 216.706                    |
+| MAIÚSCULAS / acentos          | indiferentes | `tributário` = `tributario` = `TRIBUTARIO` = 17.983 |
+
+------------------------------------------------------------------
+7.2 Tabela do que NÃO funciona (e como falha)
+------------------------------------------------------------------
+| Sintaxe                | Resultado | O que acontece                                        |
+|------------------------|-----------|-------------------------------------------------------|
+| `and` (inglês)         | ❌ 6      | vira TERMO literal: `and\|dano\|moral`. `and` sozinho aparece em 309 documentos |
+| `or` (inglês)          | ❌ 2      | idem: `or\|dano\|moral`                                |
+| `not` (inglês)         | ❌ 0      |                                                       |
+| `dano-ou-moral` (hífen)| ❌ 216.419| o `ou` some e a busca casa quase a base inteira        |
+| `dano-nao-moral`(hífen)| ❌ 2.201  | o `nao` some e vira E                                  |
+| `prox` com hífen       | ❌ 0      |                                                       |
+| `prox5` / `prox3`      | ❌ 0      | viram termo literal                                    |
+| `prox 5` (com espaço)  | ⚠️ 87     | o servidor monta `moral\|dano. 5` — comportamento estranho, não use |
+| `adj` / `adj2`         | ❌ 0      | não existe neste módulo                                |
+| `?` como curinga       | ❌ 0      | `embarg?` = 0                                          |
+| `$` como curinga       | ❌ 0      | `embarg$` = 0                                          |
+| radical sem curinga    | ❌ 0      | `embarg` = 0 (não há stemming implícito)               |
+
+------------------------------------------------------------------
+7.3 ⚠️ O CONTRASTE COM O TRF2 — NÃO COPIE A CORREÇÃO DE LÁ
+------------------------------------------------------------------
+No TRF2 (e-Proc 9.21.0) o ESPAÇO entre termos QUEBRA a busca: o servidor injeta
+o operador em inglês como se fosse mais um termo (`dano moral` = 46 documentos
+contra 20.201 de `dano-moral`), e o `TRF2Navigator` conserta hifenizando.
+
+No TRF6 (e-Proc **9.21.6**) esse bug NÃO existe: `dano moral` e `dano-moral` dão
+os MESMOS 2.201, e o servidor monta `dano|moral` nos dois casos. Aplicar o
+remédio do TRF2 aqui seria VENENO — com hífen, `ou` e `não` deixam de funcionar
+(ver a tabela 7.2). Por isso `TRF6Navigator.normalizarQuery()` é deliberadamente
+uma identidade: ela existe só para documentar a decisão e para avisar quando o
+usuário digita um operador em inglês.
+
+Este é o motivo de a validação ser por CONTAGEM e não por documentação: dois
+tribunais no MESMO módulo, com um patch de diferença, exigem crawlers com
+comportamentos opostos.
+
+------------------------------------------------------------------
+7.4 ⚠️ O EXEMPLO DA PRÓPRIA AJUDA DO SITE DEVOLVE ZERO
+------------------------------------------------------------------
+O painel de operadores traz `crime e "faixa de fronteira"` como exemplo. Medido:
+0 documentos. Não é sintaxe errada (diferente do TRF2, onde a ajuda ensinava
+mesmo o jeito errado): é que `"faixa de fronteira"` só aparece em 10 documentos
+da base do TRF6 e nenhum deles contém "crime". A composição em si funciona —
+`"dano moral" e dano` = 1.979 prova isso. Mas um usuário que copie o exemplo da
+ajuda vai concluir que a busca está quebrada.
+
+O outro exemplo da ajuda funciona e fecha a álgebra:
+    drogas 859 · entorpecentes 281 · `drogas e entorpecentes` 218
+    `drogas ou entorpecentes` 922 = 859 + 281 − 218   ✓ exato
+
+Arquivos:
+  07-operadores-do-site.json    os seis botões do painel, como o site os declara
+  07-operadores-testados.json   as 40 buscas medidas, com o `termosPesquisados`
+                                (base64 decodificado) que o servidor montou
+  07-painel-operadores.html     o HTML do `#divOperadores`
+
+Prints:
+  07.01-painel-operadores.png   painel aberto com os seis operadores

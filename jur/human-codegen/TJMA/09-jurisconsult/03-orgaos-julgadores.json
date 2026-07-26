@@ -1,0 +1,412 @@
+{
+ "acordaos": {
+  "relatorioId": 1,
+  "total": 34,
+  "opcoes": [
+   {
+    "pkcamara": "50",
+    "txdescricao": "CÂMARA ESPECIAL DE FÉRIAS"
+   },
+   {
+    "pkcamara": "23",
+    "txdescricao": "CÂMARAS CÍVEIS REUNIDAS"
+   },
+   {
+    "pkcamara": "10",
+    "txdescricao": "CÂMARAS CRIMINAIS REUNIDAS"
+   },
+   {
+    "pkcamara": "61",
+    "txdescricao": "CORREGEDORIA GERAL DA JUSTIÇA"
+   },
+   {
+    "pkcamara": "26",
+    "txdescricao": "GABINETE DA PRESIDÊNCIA"
+   },
+   {
+    "pkcamara": "60",
+    "txdescricao": "GABINETE DA VICE-PRESIDÊNCIA"
+   },
+   {
+    "pkcamara": "30",
+    "txdescricao": "OITAVA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "36",
+    "txdescricao": "ÓRGÃO ESPECIAL"
+   },
+   {
+    "pkcamara": "70",
+    "txdescricao": "PLANTAO JUDICIAL DE SEGUNDO GRAU"
+   },
+   {
+    "pkcamara": "15",
+    "txdescricao": "PRIMEIRA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "20",
+    "txdescricao": "PRIMEIRA CÂMARA CRIMINAL"
+   },
+   {
+    "pkcamara": "38",
+    "txdescricao": "PRIMEIRA CÂMARA DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "44",
+    "txdescricao": "PRIMEIRA CÂMARA DE DIREITO PÚBLICO"
+   },
+   {
+    "pkcamara": "13",
+    "txdescricao": "PRIMEIRAS CÂMARAS CÍVEIS REUNIDAS"
+   },
+   {
+    "pkcamara": "18",
+    "txdescricao": "QUARTA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "41",
+    "txdescricao": "QUARTA CÂMARA DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "19",
+    "txdescricao": "QUINTA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "42",
+    "txdescricao": "QUINTA CÂMARA DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "12",
+    "txdescricao": "SEÇÃO CÍVEL "
+   },
+   {
+    "pkcamara": "47",
+    "txdescricao": "SEÇÃO DE DIREITO CRIMINAL"
+   },
+   {
+    "pkcamara": "81",
+    "txdescricao": "SEÇÃO DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "43",
+    "txdescricao": "SEÇÃO DE DIREITO PÚBLICO"
+   },
+   {
+    "pkcamara": "16",
+    "txdescricao": "SEGUNDA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "21",
+    "txdescricao": "SEGUNDA CÂMARA CRIMINAL"
+   },
+   {
+    "pkcamara": "39",
+    "txdescricao": "SEGUNDA CÂMARA DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "45",
+    "txdescricao": "SEGUNDA CÂMARA DE DIREITO PÚBLICO"
+   },
+   {
+    "pkcamara": "14",
+    "txdescricao": "SEGUNDAS CÂMARAS CÍVEIS REUNIDAS"
+   },
+   {
+    "pkcamara": "29",
+    "txdescricao": "SÉTIMA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "25",
+    "txdescricao": "SEXTA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "17",
+    "txdescricao": "TERCEIRA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "22",
+    "txdescricao": "TERCEIRA CÂMARA CRIMINAL"
+   },
+   {
+    "pkcamara": "40",
+    "txdescricao": "TERCEIRA CÂMARA DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "46",
+    "txdescricao": "TERCEIRA CÂMARA DE DIREITO PÚBLICO"
+   },
+   {
+    "pkcamara": "11",
+    "txdescricao": "TRIBUNAL PLENO"
+   }
+  ]
+ },
+ "decisoes-monocraticas": {
+  "relatorioId": 2,
+  "total": 34,
+  "opcoes": [
+   {
+    "pkcamara": "50",
+    "txdescricao": "CÂMARA ESPECIAL DE FÉRIAS"
+   },
+   {
+    "pkcamara": "23",
+    "txdescricao": "CÂMARAS CÍVEIS REUNIDAS"
+   },
+   {
+    "pkcamara": "10",
+    "txdescricao": "CÂMARAS CRIMINAIS REUNIDAS"
+   },
+   {
+    "pkcamara": "61",
+    "txdescricao": "CORREGEDORIA GERAL DA JUSTIÇA"
+   },
+   {
+    "pkcamara": "26",
+    "txdescricao": "GABINETE DA PRESIDÊNCIA"
+   },
+   {
+    "pkcamara": "60",
+    "txdescricao": "GABINETE DA VICE-PRESIDÊNCIA"
+   },
+   {
+    "pkcamara": "30",
+    "txdescricao": "OITAVA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "36",
+    "txdescricao": "ÓRGÃO ESPECIAL"
+   },
+   {
+    "pkcamara": "70",
+    "txdescricao": "PLANTAO JUDICIAL DE SEGUNDO GRAU"
+   },
+   {
+    "pkcamara": "15",
+    "txdescricao": "PRIMEIRA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "20",
+    "txdescricao": "PRIMEIRA CÂMARA CRIMINAL"
+   },
+   {
+    "pkcamara": "38",
+    "txdescricao": "PRIMEIRA CÂMARA DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "44",
+    "txdescricao": "PRIMEIRA CÂMARA DE DIREITO PÚBLICO"
+   },
+   {
+    "pkcamara": "13",
+    "txdescricao": "PRIMEIRAS CÂMARAS CÍVEIS REUNIDAS"
+   },
+   {
+    "pkcamara": "18",
+    "txdescricao": "QUARTA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "41",
+    "txdescricao": "QUARTA CÂMARA DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "19",
+    "txdescricao": "QUINTA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "42",
+    "txdescricao": "QUINTA CÂMARA DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "12",
+    "txdescricao": "SEÇÃO CÍVEL "
+   },
+   {
+    "pkcamara": "47",
+    "txdescricao": "SEÇÃO DE DIREITO CRIMINAL"
+   },
+   {
+    "pkcamara": "81",
+    "txdescricao": "SEÇÃO DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "43",
+    "txdescricao": "SEÇÃO DE DIREITO PÚBLICO"
+   },
+   {
+    "pkcamara": "16",
+    "txdescricao": "SEGUNDA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "21",
+    "txdescricao": "SEGUNDA CÂMARA CRIMINAL"
+   },
+   {
+    "pkcamara": "39",
+    "txdescricao": "SEGUNDA CÂMARA DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "45",
+    "txdescricao": "SEGUNDA CÂMARA DE DIREITO PÚBLICO"
+   },
+   {
+    "pkcamara": "14",
+    "txdescricao": "SEGUNDAS CÂMARAS CÍVEIS REUNIDAS"
+   },
+   {
+    "pkcamara": "29",
+    "txdescricao": "SÉTIMA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "25",
+    "txdescricao": "SEXTA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "17",
+    "txdescricao": "TERCEIRA CÂMARA CÍVEL"
+   },
+   {
+    "pkcamara": "22",
+    "txdescricao": "TERCEIRA CÂMARA CRIMINAL"
+   },
+   {
+    "pkcamara": "40",
+    "txdescricao": "TERCEIRA CÂMARA DE DIREITO PRIVADO"
+   },
+   {
+    "pkcamara": "46",
+    "txdescricao": "TERCEIRA CÂMARA DE DIREITO PÚBLICO"
+   },
+   {
+    "pkcamara": "11",
+    "txdescricao": "TRIBUNAL PLENO"
+   }
+  ]
+ },
+ "sentencas-1-grau": {
+  "relatorioId": 4,
+  "total": 0,
+  "opcoes": []
+ },
+ "decisoes-monocraticas-turma-recursal": {
+  "relatorioId": 5,
+  "total": 13,
+  "opcoes": [
+   {
+    "camara_id": "27",
+    "camara": "1ª Turma Recursal Permanente da Comarca da Ilha de São Luís"
+   },
+   {
+    "camara_id": "28",
+    "camara": "2ª Turma Recursal Permanente da Comarca da Ilha de São Luís"
+   },
+   {
+    "camara_id": "36",
+    "camara": "Órgão Especial"
+   },
+   {
+    "camara_id": "26",
+    "camara": "Presidência"
+   },
+   {
+    "camara_id": "34",
+    "camara": "Turma de Uniformização de Interpretação de Lei do Sistema de Juizados Especiais"
+   },
+   {
+    "camara_id": "9",
+    "camara": "Turma Recursal Cível e Criminal de Bacabal"
+   },
+   {
+    "camara_id": "7",
+    "camara": "Turma Recursal Cível e Criminal de Balsas"
+   },
+   {
+    "camara_id": "4",
+    "camara": "Turma Recursal Cível e Criminal de Caxias"
+   },
+   {
+    "camara_id": "8",
+    "camara": "Turma Recursal Cível e Criminal de Chapadinha"
+   },
+   {
+    "camara_id": "5",
+    "camara": "Turma Recursal Cível e Criminal de Imperatriz"
+   },
+   {
+    "camara_id": "6",
+    "camara": "Turma Recursal Cível e Criminal de Pinheiro"
+   },
+   {
+    "camara_id": "3",
+    "camara": "Turma Recursal Cível e Criminal de Presidente Dutra"
+   },
+   {
+    "camara_id": "2",
+    "camara": "Turma Recursal Cível e Criminal de São Luis"
+   }
+  ]
+ },
+ "acordaos-turma-recursal": {
+  "relatorioId": 6,
+  "total": 13,
+  "opcoes": [
+   {
+    "camara_id": "27",
+    "camara": "1ª Turma Recursal Permanente da Comarca da Ilha de São Luís"
+   },
+   {
+    "camara_id": "28",
+    "camara": "2ª Turma Recursal Permanente da Comarca da Ilha de São Luís"
+   },
+   {
+    "camara_id": "36",
+    "camara": "Órgão Especial"
+   },
+   {
+    "camara_id": "26",
+    "camara": "Presidência"
+   },
+   {
+    "camara_id": "34",
+    "camara": "Turma de Uniformização de Interpretação de Lei do Sistema de Juizados Especiais"
+   },
+   {
+    "camara_id": "9",
+    "camara": "Turma Recursal Cível e Criminal de Bacabal"
+   },
+   {
+    "camara_id": "7",
+    "camara": "Turma Recursal Cível e Criminal de Balsas"
+   },
+   {
+    "camara_id": "4",
+    "camara": "Turma Recursal Cível e Criminal de Caxias"
+   },
+   {
+    "camara_id": "8",
+    "camara": "Turma Recursal Cível e Criminal de Chapadinha"
+   },
+   {
+    "camara_id": "5",
+    "camara": "Turma Recursal Cível e Criminal de Imperatriz"
+   },
+   {
+    "camara_id": "6",
+    "camara": "Turma Recursal Cível e Criminal de Pinheiro"
+   },
+   {
+    "camara_id": "3",
+    "camara": "Turma Recursal Cível e Criminal de Presidente Dutra"
+   },
+   {
+    "camara_id": "2",
+    "camara": "Turma Recursal Cível e Criminal de São Luis"
+   }
+  ]
+ },
+ "sentencas-juizado-especial": {
+  "relatorioId": 7,
+  "total": 0,
+  "opcoes": []
+ }
+}

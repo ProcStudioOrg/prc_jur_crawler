@@ -1,0 +1,34 @@
+{
+  "medido_em": "2026-07-25",
+  "metodo": "POST direto em listar_resultados, sem browser e sem cookie",
+  "escopo_default": "inteiroTeor",
+  "tamanho_da_base_curinga_asterisco": { "TRF2": 839228, "TRU2": 2210, "TurmasRecursais": 254308 },
+  "termos_isolados_origem_TRF2": {
+    "dano": 109452, "moral": 22867, "crime": 16130, "drogas": 3520, "entorpecentes": 1073,
+    "aposentadoria": 102988, "especial": 337660, "contribuicao": 124737, "tributario": 157733
+  },
+  "origem_dano_moral": { "TRF2": 20201, "TRU2": 84, "TurmasRecursais": 33365, "as_tres": 53650 },
+  "origem_dano_moral_2026T1": { "TRF2": 1121, "TRU2": 7, "TurmasRecursais": 888, "as_tres": 2016 },
+  "datas_dano_moral_origem_TRF2": {
+    "sem_data": 20201,
+    "julgamento_2026-01-01_a_2026-03-31": 1121,
+    "publicacao_2026-01-01_a_2026-03-31": 1111,
+    "julgamento_2020": 1816, "julgamento_2000": 0, "julgamento_1990_1999": 0
+  },
+  "cobertura_por_ano_dano_moral": {
+    "1998": { "TRF2": 0, "TurmasRecursais": 0 }, "2016": { "TRF2": 0, "TurmasRecursais": 0 },
+    "2018": { "TRF2": 18, "TurmasRecursais": 44 }, "2020": { "TRF2": 1816, "TurmasRecursais": 5599 },
+    "2022": { "TRF2": 2734, "TurmasRecursais": 5250 }, "2024": { "TRF2": 3328, "TurmasRecursais": 4423 },
+    "2026_parcial": { "TRF2": 2790, "TurmasRecursais": 2786 }
+  },
+  "primeiro_julgado_da_base": { "TRF2": "24/07/2018", "TRU2": "26/08/2020", "TurmasRecursais": "18/10/2018" },
+  "tipos_documento_dano_moral_origem_TRF2": {
+    "acordao_1": 18065, "monocratica_2": 1359, "sumula_3": 0, "despacho_vice_4": 777, "soma": 20201, "total": 20201
+  },
+  "escopo_dano_moral_origem_TRF2": { "inteiroTeor": 20201, "ementa": 6911, "ementa_caput": 3242 },
+  "outros_filtros_dano_moral_origem_TRF2": {
+    "classe_Apelacao_Civel": 14637, "orgao_1a_Turma_Especializada": 773,
+    "precedente_relevante": 4262, "sem_agrupar": 21073
+  },
+  "aposentadoria_especial_2026T1": { "TRF2": 2729, "TRU2": 16, "TurmasRecursais": 1880, "as_tres": 4625 }
+}

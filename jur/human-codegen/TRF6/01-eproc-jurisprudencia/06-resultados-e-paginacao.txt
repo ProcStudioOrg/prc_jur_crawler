@@ -1,0 +1,92 @@
+========================================================================
+6. TELA DE RESULTADOS, BLOCO DE UM RESULTADO E PAGINAÇÃO
+========================================================================
+Os resultados aparecem NA MESMA PÁGINA (o formulário some e dá lugar à listagem;
+a URL não muda). No topo: contador "N documentos encontrados", combo de ordenação
+("mais recentes" / "mais antigos"), combo de resultados por página e o botão
+"Filtros" (`tune`), que reabre o formulário com os filtros preservados.
+
+------------------------------------------------------------------
+6.1 O bloco de um resultado (`div.card.mb-3.resultadoItem`)
+------------------------------------------------------------------
+Marcação idêntica à do TRF2/TRF4/TJSC: pares
+  <div class="resLabel">RÓTULO</div><div class="resValue …">valor</div>
+
+⚠️ NO TRF6 O `resValue` VEM COM CLASSES E ATRIBUTOS EXTRAS
+   (`class="resValue limitado" data-campo="EMENTA" data-limite="5000"`,
+   `class="resValue completo"`). Um seletor que case `class="resValue"` EXATO —
+   como o do TRF2 — perde RELATOR, DECISÃO e EMENTA silenciosamente. O parser do
+   `TRF6Navigator.extrair()` usa `class="resValue[^"]*"`.
+
+Campos de um card (rótulos exatamente como aparecem):
+  (sem rótulo)              tipo do documento, em `div.resValueTipoJurisprudencia`
+                            → "Acórdão" | "Decisão monocrática" | "Súmula" |
+                              "Despacho/Decisão da Vice-Presidência" | "Sentença"
+  PROCESSO                  `a.numero-processo` → "1017514-90.2019.4.01.9999/TRF6"
+                            + `<span>` com a classe → "AC - Apelação Cível"
+  UF                        "MG" (é sempre MG — o TRF6 tem um estado só)
+  ÓRGÃO JULGADOR            "1ª Turma - PREV/SERV"
+  DATA DO JULGAMENTO        DD/MM/YYYY
+  DATA DA PUBLICAÇÃO        DD/MM/YYYY
+  RELATOR                   nome em maiúsculas
+  RELATOR PARA ACÓRDÃO      (quando houve divergência)
+  EMENTA                    texto completo (acórdãos)
+  DECISÃO                   texto completo (decisões monocráticas — costumam vir
+                            SEM ementa, só com DECISÃO)
+
+  `id` do card = id do DOCUMENTO (30 dígitos), ex.:
+     id="resultado381784904972821646260906913366"
+     É esse id, e não o número do processo, que identifica a decisão citada.
+
+Ações de cada card (ícones à direita):
+  a.inteiroTeor       data-link=".../download_inteiro_teor&id_jurisprudencia=<id>&termosPesquisados=<base64>"
+  a.consultaProcessual data-link="https://eproc2g.trf6.jus.br/eproc/...&num_processo=<20 dígitos>"
+  a.copiarCitacao     data-citacao="<texto integral da decisão, para citar>"
+  checkbox `chkDocumento` (seleção para exportar em lote)
+
+O termo pesquisado vem GRIFADO no texto:
+  <B><FONT STYLE="background-color:#FFFF00">especial</FONT></B>
+O parser remove as tags; o texto sai limpo.
+
+⚠️ O parâmetro `termosPesquisados` do link de inteiro teor é BASE64 dos termos que
+   o SERVIDOR realmente montou, separados por `|`. É a melhor ferramenta de
+   diagnóstico deste portal: foi assim que se confirmou que `dano moral` vira
+   `dano|moral` (correto) e `dano and moral` vira `and|dano|moral` (armadilha).
+
+HTML de um card completo: 06-card-resultado.html
+
+------------------------------------------------------------------
+6.2 Paginação
+------------------------------------------------------------------
+Resultados por página:  10 (default) | 25 | 50 | 100   (`#selTamanhoPagina`)
+Ordenação:              mais recentes (1, default) | mais antigos (2) (`#selOrdenacao`)
+Controles:              first_page · navigate_before · navigate_next · last_page
+Total exposto?          Sim, em três lugares: o texto "N documentos encontrados",
+                        o hidden `#hdnTotalResultado` e o "Documento X de N" do
+                        cabeçalho de cada card.
+Hidden de estado:       #hdnTotalPaginas · #hdnPaginaAtual · #hdnTotalResultado ·
+                        #hdnDocsSelecionados
+
+Endpoint de paginação (POST):
+  .../jurisprudencia/ajax_paginar_resultado
+É STATELESS: precisa receber o MESMO corpo da busca (todos os filtros) mais
+`hdnPaginaAtual`. Sem isso ele pagina outra consulta.
+
+Não há teto técnico anunciado — `*` na origem TRF6 declara 216.706 documentos e
+21.671 páginas de 10. O crawler limita por `-m/--max-pages` e `--max-results`.
+
+------------------------------------------------------------------
+6.3 Contagens medidas
+------------------------------------------------------------------
+06-contagens-http.json               tudo o que foi medido por HTTP
+06-contagens-medidas-no-browser.json o subconjunto conferido no navegador
+                                     (bate exatamente com o HTTP)
+
+Prints:
+  06.01-resultados-trf6.png                 listagem, origem TRF6 (2º grau comum)
+  06.02-resultados-turmas-recursais.png     listagem, origem Turmas Recursais
+  06.03-rodape-paginacao.png                rodapé com os controles de página
+  06.04-painel-filtros-resultados.png       topo da listagem (contador, ordenação,
+                                            "Filtros", resultados por página)
+  06.05-resultados-varas-federais-vazio.png "0 documentos encontrados" na origem
+                                            Varas Federais — a prova da base vazia

@@ -1,0 +1,110 @@
+STJ — módulo 01: SCON, Pesquisa de Jurisprudência (acórdãos)
+============================================================
+
+## Identificação
+
+Tribunal:                  STJ — Superior Tribunal de Justiça
+Estado(s):                 nenhum — corte de superposição, competência NACIONAL
+Módulo:                    SCON — Pesquisa de Jurisprudência do STJ (base ACOR, acórdãos)
+Link principal:            https://scon.stj.jus.br/SCON/
+URL de busca:              https://scon.stj.jus.br/SCON/pesquisar.jsp?<querystring>
+Sistema judicial:          próprio (SCON, motor BRS/Oracle Text sobre Oracle)
+                           Versão exibida no rodapé: 5.1.18, de 19/06/2026
+Sistema irmão já mapeado:  nenhum — o SCON não se parece com PJe/e-Proc/ESAJ/Projudi.
+                           O parente mais próximo em espírito é o TJGO (GET/POST puro num
+                           motor textual antigo, charset ISO-8859-1).
+Abrangência da base:       APENAS o próprio STJ. Não há 1º grau, não há Juizado Especial,
+                           não há Turma Recursal — é tribunal superior. O acervo cobre os
+                           acórdãos do STJ desde a instalação da Corte (1989) e inclui,
+                           num módulo à parte, o acervo do extinto TFR (/SCON/juritfr/).
+Data do mapeamento:        25/07/2026
+
+
+## 1. Busca principal (query)
+
+Campo:  <input type="text" id="pesquisaLivre">   (id, sem `name`)
+Parâmetro enviado: `livre`
+Não há limite de caracteres declarado.
+
+Comportamento default: palavras soltas são combinadas com **E implícito**
+("dano moral" = "dano e moral" = 28.348 acórdãos, medido em 25/07/2026). O
+operador padrão pode ser trocado para `adj` na engrenagem de configuração.
+
+Duas abas, controladas pelo parâmetro `tp`:
+  tp=T  "Por termo"                 -> pesquisa textual (default)
+  tp=P  "Por número do processo"    -> preenche o campo `processo` (ver §7)
+
+O botão de submit do formulário fica ESCONDIDO (display:none) — a submissão é
+por Enter, e o `onsubmit="return getPesquisa()"` monta a querystring. Para
+automatizar, monte a URL direto (é o que o crawler faz).
+
+HTML (trecho; o formulário inteiro está em 01-form-busca.html):
+
+  <form action="/SCON/pesquisar.jsp" method="get" name="frmConsulta" id="frmConsulta"
+        onsubmit="return getPesquisa();">
+    <input type="hidden" name="acao"        id="acao"        value="pesquisar">
+    <input type="hidden" name="novaConsulta" id="novaConsulta" value="true">
+    <input type="hidden" name="i"           id="i"           value="1">
+    <input type="hidden" name="b"           id="b"           value="ACOR">
+    <input type="hidden" name="livre"       id="livre"       value="">
+    <input type="radio"  name="tp" value="T" id="tpT" checked>
+    <input type="radio"  name="tp" value="P" id="tpP">
+    <input type="text" id="pesquisaLivre" class="form-control form-control-lg clearable"
+           placeholder="Digite o(s) critério(s) de pesquisa" onkeyup="refresh();">
+    ...
+  </form>
+
+Lista completa dos 241 inputs e 7 selects: 01-campos.json
+
+Prints: 01.01-tela-inicial.png
+
+
+## 1.1 BASE DOCUMENTAL (parâmetro `b`) — a primeira desambiguação
+
+O mesmo formulário serve a cinco acervos. A tela de resultados mostra as quatro
+abas com as contagens lado a lado (visível em 06.01-resultados.png):
+
+  b=ACOR  Acórdãos ................... 1.697   <- o default e o único com layout .documento
+  b=DTXT  Decisões Monocráticas ...... 25.532
+  b=SUMU  Súmulas .................... 0       (layout próprio, outra tela)
+  b=INFJ  Informativos e outros ...... 0       (layout próprio)
+  b=TESE  Jurisprudência em Teses .... (módulo próprio, ver 04-jurisprudencia-em-teses/)
+
+(contagens de "dano moral" com julgamento em 2025, medidas em 25/07/2026)
+
+O acervo de monocráticas é ~15× maior que o de acórdãos e é onde as consultas
+amplas estouram o timeout do Oracle — ver §9.
+
+
+## 1.2 VIA DE ACESSO, BLOQUEIO E SESSÃO
+
+Bloqueio: **Cloudflare**, operado pela Coordenadoria de Segurança e Defesa
+Cibernética do STJ (a página de desafio traz RAY ID, telefone e e-mail do
+suporte). Cookie liberado: `cf_clearance`.
+
+  curl / node fetch ............................. 403 (sempre)
+  Playwright headless (headless shell) .......... 403 em 4/4 tentativas
+  Playwright headless channel=chromium .......... 403 em 4/4
+  Playwright headless channel=chrome ............ 403 em 4/4
+  Playwright HEADFUL ............................ passa na 1ª ou 2ª tentativa
+
+  A BUSCA funciona sem resolver?   NÃO.
+  O DOWNLOAD funciona sem resolver? NÃO (mesmo host).
+  Headless passa? NÃO, em nenhuma variante testada. --headed passa.
+
+Trocar o User-Agent não resolve: o desafio é de fingerprint de navegador, não
+de UA (diferente do TJSC, onde só o UA bastava).
+
+Depois de vencido o desafio, o MESMO contexto fala HTTP puro com o host: cada
+busca e cada inteiro teor são um `GET` simples com os cookies do desafio. Um
+browser aberto, N requisições rápidas. Não há sessão de formulário, viewState
+nem POST — a busca inteira cabe na querystring.
+
+ARMADILHA DO REFERER: um `page.goto()` direto em `pesquisar.jsp?...`, SEM
+cabeçalho `Referer`, devolve o **formulário vazio** em vez dos resultados — sem
+erro nenhum. Com `Referer: https://scon.stj.jus.br/SCON/` devolve os resultados.
+Foi assim que os primeiros prints deste mapeamento saíram todos da tela de busca.
+
+ENCODING: a página declara `charset=ISO-8859-1` e interpreta a QUERYSTRING nesse
+charset. `usucapião` percent-encodado em UTF-8 devolve **0 resultados em
+silêncio**; em latin-1 devolve 2.356. Vale também para a leitura da resposta.

@@ -1,0 +1,46 @@
+[
+  {
+    "value": "APELAÇÃO CRIMINAL",
+    "texto": "APELAÇÃO CRIMINAL"
+  },
+  {
+    "value": "CONFLITO DE COMPETÊNCIA",
+    "texto": "CONFLITO DE COMPETÊNCIA"
+  },
+  {
+    "value": "Cumprimento de Sentença (JEF)",
+    "texto": "CUMPRIMENTO DE SENTENÇA (JEF)"
+  },
+  {
+    "value": "Cumprimento de Sentença contra Fazenda Pública (JEF)",
+    "texto": "CUMPRIMENTO DE SENTENÇA CONTRA FAZENDA PÚBLICA (JEF)"
+  },
+  {
+    "value": "HABEAS CORPUS TR",
+    "texto": "HABEAS CORPUS TR"
+  },
+  {
+    "value": "MANDADO DE SEGURANÇA TR",
+    "texto": "MANDADO DE SEGURANÇA TR"
+  },
+  {
+    "value": "Mandado de Segurança (Vara Cível)",
+    "texto": "MANDADO DE SEGURANÇA (VARA CÍVEL)"
+  },
+  {
+    "value": "PETIÇÃO TR",
+    "texto": "PETIÇÃO TR"
+  },
+  {
+    "value": "PROCEDIMENTO DO JUIZADO ESPECIAL CÍVEL",
+    "texto": "PROCEDIMENTO DO JUIZADO ESPECIAL CÍVEL"
+  },
+  {
+    "value": "RECURSO CÍVEL",
+    "texto": "RECURSO CÍVEL"
+  },
+  {
+    "value": "RECURSO DE MEDIDA CAUTELAR",
+    "texto": "RECURSO DE MEDIDA CAUTELAR"
+  }
+]

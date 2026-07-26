@@ -1,0 +1,8 @@
+## 3. Página institucional das teses de repercussão geral
+
+Link:  https://portal.stf.jus.br/repercussaogeral/teses.asp
+Print: `03.01-teses-repercussao-geral.png`
+
+Página de apresentação institucional do acervo de teses. Não tem busca estruturada nem
+identificador estável por tese — serve como referência humana, não como fonte para crawler.
+A fonte utilizável é a base `acordaos` com `is_repercussao_geral=true` (módulo 01, seção 09).

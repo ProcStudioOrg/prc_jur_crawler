@@ -1,0 +1,54 @@
+## 2. Filtro de instância / competência — o combo "Origem" (#selOrigem)
+
+É AQUI que mora a desambiguação **Justiça Federal comum × Juizados Especiais Federais**.
+Não existe um combo "instância" separado nem um filtro Cível × Criminal (ver §3).
+
+HTML (do DOM depois do AJAX — `02-combo-origem.html` tem o elemento inteiro):
+
+    <select class="w-100" data-actions-box="true" data-selected-text-format="values"
+            id="selOrigem" multiple="true" name="selOrigem[]" aria-hidden="true">
+      <option selected="selected" value="1">TRF2</option>
+      <option value="2">TRU2</option>
+      <option value="3">Turmas Recursais</option>
+    </select>
+
+| value | Rótulo na tela    | O que é                                                         |
+|-------|-------------------|-----------------------------------------------------------------|
+| `1`   | TRF2              | **Justiça Federal comum, 2º grau** — Turmas e Seções Especializadas, Corte Especial, Vice-Presidência. É o default do site. |
+| `2`   | TRU2              | **Turma Regional de Uniformização** — Juizados Especiais Federais, uniformização regional |
+| `3`   | Turmas Recursais  | **Juizados Especiais Federais, 2º grau** — Turmas Recursais do RJ e do ES |
+
+É `multiple`: dá para marcar mais de uma. Marcar as três equivale ao `--origem todas` da CLI.
+**Nenhuma marcada = as três** (o servidor não erra, só devolve tudo).
+
+### Prova por contagem (o filtro é real, não decorativo)
+
+`dano-moral`, escopo inteiro teor, sem data, 25/07/2026:
+
+    TRF2               20.201
+    TRU2                   84
+    Turmas Recursais   33.365
+    -------------------------
+    as três            53.650   = 20.201 + 84 + 33.365   (fecha EXATO)
+
+Com recorte de julgamento 01/01/2026–31/03/2026, mesma prova:
+
+    TRF2 1.121 · TRU2 7 · Turmas Recursais 888 · as três 2.016   (1.121+7+888 = 2.016)
+
+Se algum dia essas contagens ficarem iguais entre si, o filtro parou de ser aplicado —
+é o teste que o `TRF2Testes.js` roda ("a DESAMBIGUAÇÃO funciona — origens somam exato").
+
+### Como reconhecer a origem no resultado, sem confiar no filtro
+
+Três sinais na própria saída:
+
+| campo           | TRF2 (Justiça comum)          | Turmas Recursais                     |
+|-----------------|-------------------------------|--------------------------------------|
+| `sufixoOrigem`  | `TRF2` (depois da `/` no nº)  | `RJ` / `ES`                          |
+| `orgaoJulgador` | `1ª TURMA ESPECIALIZADA`      | `2ª TURMA RECURSAL DO RIO DE JANEIRO`|
+| `uf`            | RJ ou ES                      | RJ ou ES (não distingue)             |
+
+⚠️ Diferente do TJSC, aqui o `tipoDocumento` **não** distingue origem: é "Acórdão" nas duas.
+
+Print: `02.01-combo-origem.png` (combo aberto).
+Lista completa em `02-origens.json`.

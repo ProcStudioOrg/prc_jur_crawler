@@ -1,0 +1,65 @@
+STJ / SCON — §2. Operadores booleanos
+=====================================
+
+O SCON tem a sintaxe mais rica de todos os tribunais mapeados até aqui, e ela é
+DOCUMENTADA na própria tela: a barra "Ocultar operadores" traz oito botões, cada
+um com um tooltip explicando a semântica e o equivalente em inglês.
+Texto oficial completo (extraído do DOM): 02-operadores-ajuda-oficial.json
+
+Prints: 02.01-barra-operadores.png (os oito botões) ·
+        02.02-operadores-em-contexto.png (a barra sob o campo de busca)
+
+⚠️ O tooltip de cada operador é um popup puramente CSS (`:hover` sobre
+`.wrapHint > .hint`) que **não sai em print** — nem com `hover()` do Playwright,
+nem forçando `display:block`. Por isso o texto oficial dos oito operadores foi
+extraído do DOM e gravado na íntegra em 02-operadores-ajuda-oficial.json, e está
+reproduzido abaixo. Isso não é uma lacuna do mapeamento: é o mesmo conteúdo, em
+formato melhor para o `fixer` comparar.
+
+
+## Tabela do modelo — TESTADA um por um, não presumida
+
+Termo de controle: `usucapião` × `extraordinária`, base ACOR, sem outros filtros.
+Medido em 25/07/2026.
+
+| Operador          | Funciona? | Sintaxe aceita        | Evidência (nº de acórdãos)      |
+|-------------------|-----------|-----------------------|---------------------------------|
+| (implícito)       | ✅ = E    | `a b`                 | 427                             |
+| `E` / `AND`       | ✅        | `a e b`               | 427 (igual ao implícito)        |
+| `OU` / `OR`       | ✅        | `a ou b`              | 8.264                           |
+| `NÃO` / `NOT`     | ✅        | `a não b`             | 1.929 (de 2.356 só `usucapião`) |
+| `ADJ` (adjacência)| ✅        | `a adj b`, `a adj5 b` | 412 (adj) · 28.147 (adj2 c/ outro par) |
+| `PROX`            | ✅        | `a prox b`, `a prox10 b` | 418                          |
+| `MESMO` (INSAME)  | ✅        | `a mesmo b`           | 427 aqui; 28.320 no par `dano/moral` (≠ 28.348 do E) |
+| `COM` (INPATH)    | ✅        | `a com b`             | 420 aqui; 28.241 no par `dano/moral` |
+| `$` (radical)     | ✅        | `usucapi$`            | 2.385 > 2.356 do termo cru      |
+| `"frase exata"`   | ✅        | `"dano moral"`        | 27.711 < 28.348 do E implícito  |
+| `*` (asterisco)   | ❌        | —                     | derruba a consulta (ORA-01013)  |
+
+**Todos os oito operadores da barra funcionam de verdade.** É a exceção no
+repositório: no TJGO e no TJRS a maioria vira palavra literal.
+
+Cuidados:
+- `MESMO` e `COM` têm a semântica INVERTIDA do que o nome sugere. Segundo a
+  ajuda oficial: `MESMO` = INSAME = "num mesmo CAMPO do documento";
+  `COM` = INPATH = "dentro de um mesmo PARÁGRAFO".
+- `ADJ`/`PROX` aceitam um número colado (`ADJ5`, `PROX6`) = distância máxima em
+  palavras. `ADJ` é ordenado (b depois de a); `PROX` é nos dois sentidos.
+- O índice é **insensível a acento**: `usucapião` e `usucapiao` devolvem os
+  mesmos 2.356. Isso NÃO dispensa o encoding correto — em UTF-8 a busca
+  acentuada devolve 0, não 2.356 (ver §1.2).
+- Existe expansão por **Tesauro** (checkbox `thesaurus=JURIDICO`, ligado por
+  padrão) e por **plurais** (`p=true`). São ampliações silenciosas: o total muda
+  sem que o operador tenha mudado.
+
+## Como conferir se o operador pegou
+
+A tela de resultados imprime a consulta que o servidor de fato montou, ao lado do
+contador. Exemplo real:
+
+  829 acórdãos encontrados com: t3 e @dtde >= "20250101" and @dtde <= "20251231" e dano moral
+  (t3 inpath (org) or t3 inpath (corg)) and (dano and moral) and (@dtde>="20250101" and @dtde<="20251231")
+
+É o equivalente ao `filtroSolr` do TJRS. O crawler expõe isso como
+`expressaoServidor` no `--json`. Sem `inpath (org)` o filtro de órgão não pegou;
+sem `@dtde` a data não pegou.

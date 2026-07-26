@@ -1,0 +1,110 @@
+========================================================================
+3. COMBOS DEPENDENTES DA ORIGEM — tipo de documento, classe, relator, órgão
+========================================================================
+Os quatro combos abaixo são multi-select (bootstrap-select) e são REPOPULADOS por
+AJAX quando a Origem muda. No HTML estático da primeira resposta eles já vêm com
+as opções da origem default (TRF6); ao trocar de origem, o site chama:
+
+  POST .../jurisprudencia/ajax_listar_tipo_documento     (body: origem=<n>)
+  POST .../jurisprudencia/ajax_carregar_listas_pesquisa  (body: origem=<n>)
+
+⚠️ ARMADILHA DE HTTP: chamado FORA do browser, o `ajax_carregar_listas_pesquisa`
+   IGNORA o parâmetro `origem` e devolve a UNIÃO das quatro (98 classes, 70
+   relatores, 24 órgãos) — no browser ele responde por origem porque lê a sessão.
+   Foi por isso que estas listas foram extraídas do DOM VIVO, uma origem por vez,
+   e salvas como JSON. É exatamente o caso que o CLAUDE-CODEGEN §5 descreve.
+
+--------------------------------------------------------------------
+3.1 Tipo de documento (#selTipoDocumento, name="selTipoDocumento[]")
+--------------------------------------------------------------------
+Os CÓDIGOS não mudam com a origem (Acórdão é sempre 1). O que muda é QUAIS existem:
+
+| origem              | tipos disponíveis                                                   |
+|---------------------|---------------------------------------------------------------------|
+| 1 TRF6              | 1 Acórdão · 2 Decisão monocrática · 3 Súmula · 4 Despacho/Decisão da Vice-Presidência |
+| 2 TRU6              | 1 Acórdão · 2 Decisão monocrática                                   |
+| 3 Turmas Recursais  | 1 Acórdão  (SÓ ISSO)                                                |
+| 4 Varas Federais    | 5 Sentença  (tipo exclusivo do 1º grau — e a base está vazia)        |
+
+Prova de que o filtro fatia de verdade (origem TRF6, termo `aposentadoria`):
+    sem filtro          36.578
+    Acórdão             29.527
+    Decisão monocrática  7.046
+    Súmula                   0     <- tipo DECLARADO E VAZIO
+    Despacho da Vice         5
+    soma                36.578     ✓ fecha exato
+
+⚠️ "Súmula" existe no combo e a base tem ZERO súmulas. Não é bug do crawler.
+⚠️ Pedir um tipo que não existe na origem escolhida NÃO dá erro no servidor: ele
+   simplesmente IGNORA o filtro e devolve a busca inteira. O crawler recusa alto
+   (`TRF6Crawler._codigosTipo`) para não produzir um recorte falso.
+
+HTML:
+<select class="w-100" data-actions-box="true" data-selected-text-format="values"
+        id="selTipoDocumento" multiple="true" name="selTipoDocumento[]" aria-hidden="true">
+  <option value="1">Acórdão</option>
+  <option value="2">Decisão monocrática</option>
+  <option value="3">Súmula</option>
+  <option value="4">Despacho/Decisão da Vice-Presidência</option>
+</select>
+(arquivo completo: 03-combo-tipo-documento.html · por origem: 03-tipos-documento-por-origem.json)
+
+--------------------------------------------------------------------
+3.2 Classe processual (#selClasse, name="selClasse[]")
+--------------------------------------------------------------------
+`value` = o próprio texto da classe (não é um código). Quantidades por origem:
+    TRF6 81 · TRU6 6 · Turmas Recursais 11 · Varas Federais 0
+Listas completas: 03-classes-trf6.json · 03-classes-tru6.json ·
+                  03-classes-turmas-recursais.json · 03-classes-varas-federais.json
+
+Exemplos de uso: "Apelação Cível" (28.380 de 36.578 em `aposentadoria`),
+"Habeas Corpus", "Incidente de Resolução de Demandas Repetitivas (Seção)".
+Chamam atenção as classes do "Acordo do Rio Doce" — um bloco de classes próprio
+do TRF6, herdado das ações de Mariana/Brumadinho.
+
+--------------------------------------------------------------------
+3.3 Relator / Relatora (#selRelator, name="selRelator[]")
+--------------------------------------------------------------------
+`value` = o nome em maiúsculas, exatamente como no combo.
+    TRF6 52 nomes · TRU6 9 · Turmas Recursais 23 · Varas Federais 0
+Listas: 03-relatores-trf6.json · 03-relatores-tru6.json · 03-relatores-turmas-recursais.json
+⚠️ O mesmo magistrado pode aparecer em mais de uma grafia
+   ("GLAUCIO FERREIRA MACIEL GONCALVES", "GLAUCIO MACIEL", "GLÁUCIO MACIEL").
+   Filtrar por um só nome pode perder acórdãos do mesmo relator.
+Medido: relator "MÔNICA SIFUENTES" + `aposentadoria` = 116 (de 36.578).
+
+--------------------------------------------------------------------
+3.4 Órgão julgador (#selOrgao, name="selOrgao[]")
+--------------------------------------------------------------------
+`value` = o nome do órgão. É o filtro que mais aproxima uma divisão temática:
+o TRF6 organiza Turmas/Seções por matéria (CRIMINAL, PREV/SERV).
+
+Origem TRF6 (17 opções, 03-orgaos-trf6.json):
+  1ª Seção - CRIMINAL · 1ª Seção - PREV/SERV · 1ª Turma - CRIMINAL ·
+  1ª Turma - PREV/SERV · 1ª Turma Suplementar · 2ª Seção · 2ª Turma - CRIMINAL ·
+  2ª Turma - PREV/SERV · 2ª Turma Suplementar · 3ª Turma · 4ª Turma ·
+  Coordenadoria Regional de Demandas Estruturais e Cooperação Judiciária ·
+  Coordenações · PRESIDÊNCIA · Plenário · SECRETARIA DE RECURSOS · VICE-PRESIDÊNCIA
+
+Origem Turmas Recursais (6 opções, 03-orgaos-turmas-recursais.json):
+  1ª a 6ª Turma Recursal dos Juizados Especiais Federais de Minas Gerais
+
+Origem TRU6 (1 opção): Turma Regional de Uniformização
+Origem Varas Federais: nenhuma
+
+Prova de restrição (`aposentadoria`, origem TRF6):
+  sem órgão 36.578 · "1ª Turma - PREV/SERV" 12.599 · "Plenário" 99
+
+⚠️ NÃO EXISTE neste módulo um filtro de ÁREA Cível × Criminal, nem de comarca /
+   subseção, nem de juiz de 1º grau. A aproximação para Cível × Criminal é pelo
+   ÓRGÃO (as Turmas são temáticas: "1ª Turma - CRIMINAL" × "1ª Turma - PREV/SERV")
+   ou pela CLASSE ("Apelação Criminal" × "Apelação Cível"). Ver seção 09.
+
+Prints:
+  03.01-combo-tipo-documento-trf6.png
+  03.02-combo-classe.png
+  03.03-combo-relator.png
+  03.04-combo-orgao-julgador-trf6.png
+  03.05-combo-tipo-documento-turmas-recursais.png   (só "Acórdão")
+  03.06-combo-orgao-julgador-turmas-recursais.png   (as 6 Turmas Recursais)
+  03.07-combo-tipo-documento-varas-federais.png     (só "Sentença")

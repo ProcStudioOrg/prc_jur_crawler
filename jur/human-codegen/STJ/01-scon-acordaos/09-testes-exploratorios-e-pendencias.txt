@@ -1,0 +1,61 @@
+STJ / SCON — §9. Testes exploratórios obrigatórios e pendências
+==============================================================
+
+Print: 09.01-busca-simples-sem-filtro.png
+Todas as contagens: 06-contagens.json (medidas em 25/07/2026)
+
+
+## Os 9 testes do MODELO-TRIBUNAL
+
+1. **Busca simples, sem filtro nem operador**
+   `livre=dano moral` -> 28.348 acórdãos. OK.
+
+2. **Juizados Especiais × Justiça Comum**
+   **NÃO SE APLICA.** O STJ é corte de superposição: não há 1º grau, Juizado
+   Especial nem Turma Recursal no acervo. A desambiguação equivalente é por
+   ÓRGÃO JULGADOR e por TIPO DE DOCUMENTO — provadas em 05-… e 01-… §1.1.
+
+3. **Cível × Criminal**
+   Não existe um combo "área". A separação é feita pelo ÓRGÃO: Terceira Seção
+   (S3 + T5 + T6) é penal; Segunda Seção (S2 + T3 + T4) é privado; Primeira
+   Seção (S1 + T1 + T2) é público. Contagens em 05-….
+   Exemplo pelo crawler ("dano moral", julgamento 2025):
+     --secao privado ... 1.456   --secao penal ... 77
+
+4. **Filtro de Órgão/Matéria, com todas as opções**
+   12 órgãos, listados e contados em 05-orgao-julgador-e-ministros.txt.
+   A soma dos 12 = 28.348 = total sem filtro.
+
+5. **Unidade específica (serventia/comarca)**
+   Não existe — o STJ não tem unidades judiciárias. O que existe é a **UF de
+   origem** do processo (`uf`): `uf=SP` sobre "dano moral" em 2025 -> 507 de 1.697.
+
+6. **Magistrada/magistrado**
+   181 ministros (ativos + aposentados), por código. `relator=1141` -> 348.
+   Lista em 05-ministros.json.
+
+7. **Tipo de ato**
+   É o parâmetro `b` (base documental): ACOR, DTXT, SUMU, INFJ, TESE.
+   Medido no mesmo recorte (2025): acórdãos 1.697 × monocráticas 25.532.
+   Atenção ao mesmo tipo de armadilha do TJGO: quem busca só em ACOR **não vê**
+   as decisões monocráticas, que são 15× mais numerosas — e é nelas que estão as
+   decisões de Presidência e Vice-Presidência (0 acórdãos).
+
+8. **Número do processo**
+   Ver 07-numero-do-processo.txt. Duas numerações; o SCON só indexa a do STJ.
+
+9. **Datas + operadores**
+   Julgamento × publicação: 1.697 × 1.705 (filtros distintos, ver 04-…).
+   Os 8 operadores testados um a um em 02-operadores.txt — todos funcionam.
+
+
+## Pendências e defeitos de mapeamento
+
+| # | O que falta | Por quê |
+|---|---|---|
+| 1 | Bases SUMU / INFJ / TESE não são extraídas | Cada uma tem tela e layout PRÓPRIOS (não usam `.documento`). Estão mapeadas como módulos irmãos (02-, 04-, 05-) mas sem parser. O crawler aceita `--base sumula` e devolve a página, sem estruturar. |
+| 2 | Parâmetro `ref` (Referência legislativa) não exposto | Conjunto repetível de 6 grupos × 6 níveis de dispositivo; a montagem da expressão é complexa e o ganho é marginal frente a `--ementa`. As 522 siglas estão em 03-siglas-legislacao.json. |
+| 3 | Facetas da tela de resultados não usadas | A coluna esquerda (Juízo, Classe, UF…) refina por AJAX sobre o resultado; os mesmos cortes já existem como parâmetro de busca. |
+| 4 | Paginação além de ~800 documentos | Limitação do servidor (ORA-01013), não do crawler. Contorno: refinar por data/órgão. |
+| 5 | Headless bloqueado | Cloudflare. Nenhuma variante de headless passou; o crawler roda headful. |
+| 6 | Ordenação só por data de publicação | O combo "Ordenar por" oferece Publicação e Precedentes Qualificados; `ordenacao=-@DTPB` / `@DTPB` foi testado e funciona. "Precedentes Qualificados" (`ordenacao=TEMA,-DTPB,@NUM,CLAS`) não foi exposto no crawler. |

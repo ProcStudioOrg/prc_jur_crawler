@@ -1,0 +1,112 @@
+## 16. Forma de acesso — `api` (interna, não documentada)
+
+Prints: `06.01-resultados-topo.png` (cabeçalho + 1º bloco), `06.02-resultados-completo.png`
+HTML de um resultado: `06-bloco-resultado.html`
+Exemplo de requisição: `06-request-exemplo.json` · de resposta: `06-response-exemplo.json`
+
+### Passo 0 — procura por API OFICIAL (CLAUDE-CODEGEN §4). O que foi procurado:
+
+| Onde | Resultado |
+|---|---|
+| `https://dadosabertos.stf.jus.br` | **não existe** (NXDOMAIN) |
+| `https://portal.stf.jus.br/dadosabertos/` | HTTP 200 servindo a página de **erro 404** do portal |
+| `https://transparencia.stf.jus.br/` | existe, mas é o painel **Corte Aberta** (Qlik Sense): estatística de acervo/produtividade, **sem jurisprudência** |
+| Swagger / OpenAPI / `/api-docs` / `/v1/` / `/rest/` em `stf.jus.br` | nada publicado |
+| **DataJud (CNJ)** — `api_publica_stf` e `api_publica_STF` | `index_not_found_exception`: **o STF não está no DataJud** (não é órgão submetido ao CNJ) |
+| Base nacional do ramo | não há — o STF não pertence a nenhum ramo com base unificada (a Falcão cobre só a Justiça do Trabalho) |
+
+**Conclusão: o STF não publica API oficial de jurisprudência.** O que existe, e é excelente, é a
+API interna da própria SPA.
+
+### A API interna
+
+    POST https://jurisprudencia.stf.jus.br/api/search/search
+    Content-Type: application/json
+    Cookie: aws-waf-token=...
+    → {"result": {"took":..., "hits": {"total":{"value":N}, "hits":[{"_id":..., "_source":{...}}]},
+                  "aggregations": {...}}, "search_id": N}
+
+O corpo do POST **é a própria query DSL do Elasticsearch** — a API é um passthrough. Também
+existe `GET /api/admin/loadConfig`, que devolve os ministros em exercício.
+
+Consequência prática: o construtor de query mora no cliente. Ele foi reimplementado fielmente
+em `src/STFNavigator.js` a partir do bundle `main-es2015.<hash>.js` (módulos `KLra`, o serviço
+de query, e `ZgHd`, a configuração de campos e pesos). A contagem foi conferida caso a caso
+contra a tela: `dano moral` → 2.945 nos dois; `droga ou entorpecente` → 10.127 nos dois;
+`(extradição nao china) ou (exequatur nao STJ)` → 1.982 nos dois.
+
+## 15. Bloqueios
+
+Existe restrição?  **Sim: AWS WAF** em `jurisprudencia.stf.jus.br`.
+  Sem o cookie `aws-waf-token`, QUALQUER requisição (inclusive a API) devolve
+  `HTTP 202` + cabeçalho `x-amzn-waf-action: challenge` e corpo vazio.
+  O desafio é JavaScript (`.../inputs` + `.../mp_verify` em `token.awswaf.com`), resolvido
+  automaticamente por um Chromium comum em ~5 s. O cookie vale **~4 dias** (`expires` do cookie
+  observado: emitido 26/07/2026 00:27, validade até 30/07/2026 00:27).
+
+  A BUSCA funciona sem resolver?    Não.
+  O DOWNLOAD funciona sem resolver? O inteiro teor já vem no resultado da busca, então
+                                    depende do mesmo token. O PDF em `portal.stf.jus.br`
+                                    (`obterInteiroTeor.asp`) **não** é protegido pelo WAF.
+  Headless passa?                   Sim, Chromium headless resolve o desafio normalmente.
+  `portal.stf.jus.br` tem WAF?      Não — responde 200 a `curl` com User-Agent de navegador.
+                                    (Sem UA de navegador, devolve 403.)
+
+Segunda restrição, mais sutil: **cadeia TLS incompleta**. O servidor manda só o certificado
+folha (`CN=*.stf.jus.br`, duas vezes), sem o intermediário `GlobalSign GCC R6 AlphaSSL CA 2025`.
+`curl` no macOS passa (usa o keychain); **Node falha** com
+`UNABLE_TO_VERIFY_LEAF_SIGNATURE`. O navigator resolve buscando o intermediário pela extensão
+AIA do próprio certificado e adicionando-o ao bundle de CAs — sem desligar a verificação.
+
+Terceira: o limiar de 8 KB do WAF descrito na seção 02.
+
+## 17. Sessão e estado
+
+Não há sessão de aplicação: sem login, sem viewstate, sem cookie de busca. O único estado é o
+`aws-waf-token`. A paginação é `from`/`size` puros, então qualquer página pode ser pedida
+diretamente, fora de ordem.
+
+## 18. Tela de resultados — o bloco de um resultado
+
+Campos exibidos de forma fixa (print `06.01-resultados-topo.png`):
+  número/classe/incidente ("ARE 945271 RG") · Órgão julgador · Relator(a) e Redator(a) ·
+  Julgamento · Publicação · Ementa (sem corte) · Tema e Tese de repercussão geral ·
+  "Outras ocorrências" (Observação, Indexação) · selo azul "Repercussão Geral – Admissibilidade
+  (Tema 880)" quando for o caso.
+Ícones à direita: copiar, citar, detalhar, **PDF (inteiro teor)** e caixa de seleção.
+
+Campos do `_source` mais úteis (resposta completa em `06-response-exemplo.json`):
+  `titulo` / `processo_codigo_completo`  → "ARE 1596565 AgR"  ← identificador natural do STF
+  `processo_classe_processual_unificada_classe_sigla` → "ARE"
+  `processo_classe_processual_unificada_incidente_sigla` → "AgR"
+  `processo_numero` → 1596565
+  `orgao_julgador`, `relator_processo_nome`, `relator_acordao_nome`
+  `julgamento_data`, `publicacao_data` (YYYY-MM-DD)
+  `ementa_texto`, `acordao_ata` (decisão), `documental_indexacao_texto`
+  `documental_tese_texto`, `documental_tese_tema_texto`
+  `procedencia_geografica_uf_sigla` ("CE"), `procedencia_geografica_completo` ("CE - CEARÁ")
+  `is_repercussao_geral`, `is_vinculante`, `is_questao_ordem`, `is_colac`
+  **`inteiro_teor_texto`** — o texto integral, JÁ NO ÍNDICE
+  `inteiro_teor_url` → `https://portal.stf.jus.br/jurisprudencia/obterInteiroTeor.asp?idDocumento=...`
+  `acompanhamento_processual_url` → `https://portal.stf.jus.br/processos/listarProcessos.asp?numeroProcesso=1596565&classe=ARE`
+  `dje_url`, `externo_seq_objeto_incidente`
+
+⚠️ **Não existe campo de número CNJ** no índice de jurisprudência. Buscar
+`0164903-80.2018.8.06.0001` na caixa devolve **zero**. Ver módulo `04-consulta-processual/`.
+
+## 19. Inteiro teor
+
+**Melhor caso possível**: o texto integral vem no próprio resultado da busca, no campo
+`inteiro_teor_texto` (17 mil a 20 mil caracteres num acórdão típico). Não é preciso segunda
+requisição, nem token extra, nem PDF. Quando o campo está vazio, o PDF fica em
+`inteiro_teor_url` (`portal.stf.jus.br/jurisprudencia/obterInteiroTeor.asp?idDocumento=N`),
+que não é protegido por WAF.
+
+## 20. Paginação
+
+  Resultados por página:  tela 5/10/25/100 · API até **250** (`size`)
+  Parâmetro de página:    `from` = `size × page`, com `page` começando em 0
+  Total exposto?          sim, `hits.total.value`, com `track_total_hits: true`
+  Última página?          a tela mostra "1 de 295" para 2.945 resultados a 10 por página
+  Limite duro:            `from` ≥ 10.000 → HTTP 403 com
+                          `{"detail":"O maior registro que pode ser acessado em uma busca é o ..."}`

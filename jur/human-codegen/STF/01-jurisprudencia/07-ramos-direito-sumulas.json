@@ -1,0 +1,54 @@
+[
+  {
+    "valor": "Tributário",
+    "docs": 182
+  },
+  {
+    "valor": "Processual Civil",
+    "docs": 165
+  },
+  {
+    "valor": "Administrativo",
+    "docs": 86
+  },
+  {
+    "valor": "Civil",
+    "docs": 86
+  },
+  {
+    "valor": "Processual Penal",
+    "docs": 70
+  },
+  {
+    "valor": "Trabalhista",
+    "docs": 51
+  },
+  {
+    "valor": "Constitucional",
+    "docs": 47
+  },
+  {
+    "valor": "Penal",
+    "docs": 27
+  },
+  {
+    "valor": "Processual do Trabalho",
+    "docs": 20
+  },
+  {
+    "valor": "Militar",
+    "docs": 18
+  },
+  {
+    "valor": "Empresarial",
+    "docs": 14
+  },
+  {
+    "valor": "Previdenciário",
+    "docs": 14
+  },
+  {
+    "valor": "Internacional",
+    "docs": 12
+  }
+]

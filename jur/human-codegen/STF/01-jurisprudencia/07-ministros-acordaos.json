@@ -1,0 +1,578 @@
+[
+  {
+    "valor": "MARCO AURÉLIO",
+    "docs": 14733
+  },
+  {
+    "valor": "CÁRMEN LÚCIA",
+    "docs": 14177
+  },
+  {
+    "valor": "GILMAR MENDES",
+    "docs": 14084
+  },
+  {
+    "valor": "DIAS TOFFOLI",
+    "docs": 13158
+  },
+  {
+    "valor": "LUÍS ROBERTO BARROSO",
+    "docs": 13012
+  },
+  {
+    "valor": "LUIZ FUX",
+    "docs": 12459
+  },
+  {
+    "valor": "ROSA WEBER",
+    "docs": 9870
+  },
+  {
+    "valor": "EDSON FACHIN",
+    "docs": 9488
+  },
+  {
+    "valor": "RICARDO LEWANDOWSKI",
+    "docs": 9022
+  },
+  {
+    "valor": "LUIZ GALLOTTI",
+    "docs": 8531
+  },
+  {
+    "valor": "ALEXANDRE DE MORAES",
+    "docs": 8490
+  },
+  {
+    "valor": "CÂNDIDO MOTTA",
+    "docs": 7893
+  },
+  {
+    "valor": "ANTÔNIO MARTINS VILAS BOAS",
+    "docs": 7796
+  },
+  {
+    "valor": "LAFAYETTE DE ANDRADA",
+    "docs": 7459
+  },
+  {
+    "valor": "RIBEIRO DA COSTA",
+    "docs": 7427
+  },
+  {
+    "valor": "HAHNEMANN GUIMARÃES",
+    "docs": 6669
+  },
+  {
+    "valor": "MOREIRA ALVES",
+    "docs": 6645
+  },
+  {
+    "valor": "DJACI FALCÃO",
+    "docs": 6602
+  },
+  {
+    "valor": "VICTOR NUNES",
+    "docs": 6475
+  },
+  {
+    "valor": "CELSO DE MELLO",
+    "docs": 5998
+  },
+  {
+    "valor": "BARROS BARRETO",
+    "docs": 5920
+  },
+  {
+    "valor": "AFRÂNIO COSTA",
+    "docs": 5504
+  },
+  {
+    "valor": "GONÇALVES DE OLIVEIRA",
+    "docs": 5474
+  },
+  {
+    "valor": "ELLEN GRACIE",
+    "docs": 4934
+  },
+  {
+    "valor": "THOMPSON FLORES",
+    "docs": 4818
+  },
+  {
+    "valor": "SEPÚLVEDA PERTENCE",
+    "docs": 4471
+  },
+  {
+    "valor": "OROZIMBO NONATO",
+    "docs": 4448
+  },
+  {
+    "valor": "ARY FRANCO",
+    "docs": 4384
+  },
+  {
+    "valor": "NÉRI DA SILVEIRA",
+    "docs": 3958
+  },
+  {
+    "valor": "CEZAR PELUSO",
+    "docs": 3729
+  },
+  {
+    "valor": "XAVIER DE ALBUQUERQUE",
+    "docs": 3626
+  },
+  {
+    "valor": "NELSON HUNGRIA",
+    "docs": 3552
+  },
+  {
+    "valor": "JOAQUIM BARBOSA",
+    "docs": 3548
+  },
+  {
+    "valor": "ALIOMAR BALEEIRO",
+    "docs": 3542
+  },
+  {
+    "valor": "NUNES MARQUES",
+    "docs": 3519
+  },
+  {
+    "valor": "OSWALDO TRIGUEIRO",
+    "docs": 3511
+  },
+  {
+    "valor": "CARLOS VELLOSO",
+    "docs": 3495
+  },
+  {
+    "valor": "EVANDRO LINS",
+    "docs": 3427
+  },
+  {
+    "valor": "ANDRÉ MENDONÇA",
+    "docs": 3414
+  },
+  {
+    "valor": "AYRES BRITTO",
+    "docs": 3389
+  },
+  {
+    "valor": "HERMES LIMA",
+    "docs": 3322
+  },
+  {
+    "valor": "EROS GRAU",
+    "docs": 3273
+  },
+  {
+    "valor": "BARROS MONTEIRO",
+    "docs": 3195
+  },
+  {
+    "valor": "ELOY DA ROCHA",
+    "docs": 3138
+  },
+  {
+    "valor": "ILMAR GALVÃO",
+    "docs": 3039
+  },
+  {
+    "valor": "BILAC PINTO",
+    "docs": 2963
+  },
+  {
+    "valor": "CORDEIRO GUERRA",
+    "docs": 2894
+  },
+  {
+    "valor": "PEDRO CHAVES",
+    "docs": 2887
+  },
+  {
+    "valor": "LAUDO DE CAMARGO",
+    "docs": 2864
+  },
+  {
+    "valor": "SYDNEY SANCHES",
+    "docs": 2813
+  },
+  {
+    "valor": "HENRIQUE D'ÁVILA",
+    "docs": 2645
+  },
+  {
+    "valor": "RODRIGUES ALCKMIN",
+    "docs": 2577
+  },
+  {
+    "valor": "CRISTIANO ZANIN",
+    "docs": 2477
+  },
+  {
+    "valor": "MAURÍCIO CORRÊA",
+    "docs": 2470
+  },
+  {
+    "valor": "SOARES MUÑOZ",
+    "docs": 2429
+  },
+  {
+    "valor": "ANNIBAL FREIRE",
+    "docs": 2418
+  },
+  {
+    "valor": "ANTONIO NEDER",
+    "docs": 2381
+  },
+  {
+    "valor": "TEORI ZAVASCKI",
+    "docs": 2358
+  },
+  {
+    "valor": "OCTAVIO GALLOTTI",
+    "docs": 2348
+  },
+  {
+    "valor": "FLÁVIO DINO",
+    "docs": 2306
+  },
+  {
+    "valor": "RAFAEL MAYER",
+    "docs": 2174
+  },
+  {
+    "valor": "ADALÍCIO NOGUEIRA",
+    "docs": 2173
+  },
+  {
+    "valor": "CUNHA PEIXOTO",
+    "docs": 2141
+  },
+  {
+    "valor": "LEITÃO DE ABREU",
+    "docs": 2099
+  },
+  {
+    "valor": "AMARAL SANTOS",
+    "docs": 2029
+  },
+  {
+    "valor": "MARIO GUIMARÃES",
+    "docs": 1957
+  },
+  {
+    "valor": "NELSON JOBIM",
+    "docs": 1952
+  },
+  {
+    "valor": "JOSÉ LINHARES",
+    "docs": 1943
+  },
+  {
+    "valor": "ROCHA LAGÔA",
+    "docs": 1911
+  },
+  {
+    "valor": "ALDIR PASSARINHO",
+    "docs": 1865
+  },
+  {
+    "valor": "FRANCISCO REZEK",
+    "docs": 1723
+  },
+  {
+    "valor": "EDGARD COSTA",
+    "docs": 1679
+  },
+  {
+    "valor": "OSCAR CORRÊA",
+    "docs": 1639
+  },
+  {
+    "valor": "DÉCIO MIRANDA",
+    "docs": 1607
+  },
+  {
+    "valor": "ADAUCTO CARDOSO",
+    "docs": 1377
+  },
+  {
+    "valor": "CASTRO NUNES",
+    "docs": 1357
+  },
+  {
+    "valor": "THEMISTOCLES CAVALCANTI",
+    "docs": 1342
+  },
+  {
+    "valor": "PRADO KELLY",
+    "docs": 1324
+  },
+  {
+    "valor": "BENTO DE FARIA",
+    "docs": 1290
+  },
+  {
+    "valor": "OCTAVIO KELLY",
+    "docs": 1139
+  },
+  {
+    "valor": "GOULART DE OLIVEIRA",
+    "docs": 994
+  },
+  {
+    "valor": "PHILADELPHO AZEVEDO",
+    "docs": 943
+  },
+  {
+    "valor": "CARVALHO MOURÃO",
+    "docs": 906
+  },
+  {
+    "valor": "CARLOS MADEIRA",
+    "docs": 904
+  },
+  {
+    "valor": "WALDEMAR FALCÃO",
+    "docs": 862
+  },
+  {
+    "valor": "CÉLIO BORJA",
+    "docs": 831
+  },
+  {
+    "valor": "EDUARDO ESPINOLA",
+    "docs": 812
+  },
+  {
+    "valor": "MACEDO LUDOLF",
+    "docs": 804
+  },
+  {
+    "valor": "SAMPAIO COSTA",
+    "docs": 750
+  },
+  {
+    "valor": "CUNHA MELLO",
+    "docs": 696
+  },
+  {
+    "valor": "ABNER DE VASCONCELOS",
+    "docs": 669
+  },
+  {
+    "valor": "CARLOS MAXIMILIANO",
+    "docs": 640
+  },
+  {
+    "valor": "DJALMA DA CUNHA MELLO",
+    "docs": 629
+  },
+  {
+    "valor": "MENEZES DIREITO",
+    "docs": 622
+  },
+  {
+    "valor": "PAULO BROSSARD",
+    "docs": 580
+  },
+  {
+    "valor": "CARLOS MEDEIROS",
+    "docs": 495
+  },
+  {
+    "valor": "ALFREDO BUZAID",
+    "docs": 421
+  },
+  {
+    "valor": "COSTA MANSO",
+    "docs": 397
+  },
+  {
+    "valor": "PRESIDENTE",
+    "docs": 393
+  },
+  {
+    "valor": "PLÍNIO CASADO",
+    "docs": 378
+  },
+  {
+    "valor": "ARMANDO DE ALENCAR",
+    "docs": 317
+  },
+  {
+    "valor": "WASHINGTON DE OLIVEIRA",
+    "docs": 261
+  },
+  {
+    "valor": "FIRMINO PAZ",
+    "docs": 212
+  },
+  {
+    "valor": "ATAULPHO DE PAIVA",
+    "docs": 189
+  },
+  {
+    "valor": "CÂNDIDO LOBO",
+    "docs": 131
+  },
+  {
+    "valor": "HERMENEGILDO DE BARROS",
+    "docs": 122
+  },
+  {
+    "valor": "FLAMÍNIO DE REZENDE",
+    "docs": 114
+  },
+  {
+    "valor": "CLÓVIS RAMALHETE",
+    "docs": 97
+  },
+  {
+    "valor": "ARMANDO PRADO",
+    "docs": 93
+  },
+  {
+    "valor": "ABNER DE VASCONCELLOS",
+    "docs": 46
+  },
+  {
+    "valor": "MINISTRA PRESIDENTE",
+    "docs": 34
+  },
+  {
+    "valor": "CUNHA VASCONCELOS",
+    "docs": 23
+  },
+  {
+    "valor": "ARTHUR RIBEIRO",
+    "docs": 13
+  },
+  {
+    "valor": "OSCAR SARAIVA",
+    "docs": 13
+  },
+  {
+    "valor": "ANDRÉ CAVALCANTI",
+    "docs": 4
+  },
+  {
+    "valor": "GOULART D'OLIVEIRA",
+    "docs": 4
+  },
+  {
+    "valor": "GODOFREDO DA CUNHA",
+    "docs": 3
+  },
+  {
+    "valor": "MUNIZ BARRETO",
+    "docs": 3
+  },
+  {
+    "valor": "OLIVEIRA RIBEIRO",
+    "docs": 3
+  },
+  {
+    "valor": "AMARO CAVALCANTI",
+    "docs": 2
+  },
+  {
+    "valor": "CANUTO SARAIVA",
+    "docs": 2
+  },
+  {
+    "valor": "GUIMARÃES NATAL",
+    "docs": 2
+  },
+  {
+    "valor": "JOSÉ HYGINO",
+    "docs": 2
+  },
+  {
+    "valor": "LÚCIO DE MENDONÇA",
+    "docs": 2
+  },
+  {
+    "valor": "PEDRO DOS SANTOS",
+    "docs": 2
+  },
+  {
+    "valor": "PEDRO LESSA",
+    "docs": 2
+  },
+  {
+    "valor": "ALBERTO TORRES",
+    "docs": 1
+  },
+  {
+    "valor": "ARTUR RIBEIRO",
+    "docs": 1
+  },
+  {
+    "valor": "BARROS PIMENTEL",
+    "docs": 1
+  },
+  {
+    "valor": "BARÃO DE LUCENA",
+    "docs": 1
+  },
+  {
+    "valor": "COSTA BARRADAS",
+    "docs": 1
+  },
+  {
+    "valor": "EDMUNDO LINS",
+    "docs": 1
+  },
+  {
+    "valor": "ENÉAS GALVÃO",
+    "docs": 1
+  },
+  {
+    "valor": "EPITÁCIO PESSOA",
+    "docs": 1
+  },
+  {
+    "valor": "ESPÍRITO SANTO",
+    "docs": 1
+  },
+  {
+    "valor": "FERREIRA DA SILVA",
+    "docs": 1
+  },
+  {
+    "valor": "FIRMINO WHITAKER",
+    "docs": 1
+  },
+  {
+    "valor": "GEMINIANO DA FRANÇA",
+    "docs": 1
+  },
+  {
+    "valor": "MANUEL MURTINHO",
+    "docs": 1
+  },
+  {
+    "valor": "OLIVEIRA FIGUEIREDO",
+    "docs": 1
+  },
+  {
+    "valor": "PEÇANHA MARTINS",
+    "docs": 1
+  },
+  {
+    "valor": "RIBEIRO DE ALMEIDA",
+    "docs": 1
+  },
+  {
+    "valor": "TRIGO DE LOREIRO",
+    "docs": 1
+  },
+  {
+    "valor": "VIVEIROS DE CASTRO",
+    "docs": 1
+  }
+]

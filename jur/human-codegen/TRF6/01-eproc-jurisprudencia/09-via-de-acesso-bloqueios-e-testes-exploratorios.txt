@@ -1,0 +1,121 @@
+========================================================================
+9. VIA DE ACESSO, BLOQUEIOS, SESSÃO E TESTES EXPLORATÓRIOS
+========================================================================
+------------------------------------------------------------------
+9.1 PASSO 0 — API pública oficial: procurada, e o que existe
+------------------------------------------------------------------
+(CLAUDE-CODEGEN §4, passo 0. "Não procurei" ≠ "não existe" — aqui, procurou-se.)
+
+| Onde                                                        | Resultado |
+|-------------------------------------------------------------|-----------|
+| `dadosabertos.trf6.jus.br`                                  | NXDOMAIN  |
+| `api.trf6.jus.br`                                           | NXDOMAIN  |
+| `jurisprudencia.trf6.jus.br` · `juris.trf6.jus.br`          | NXDOMAIN  |
+| `trf6.jus.br/dados-abertos`                                 | 404       |
+| `trf6.jus.br/transparencia/dados-abertos`                   | 404       |
+| `eproc-jur.trf6.jus.br/.../swagger`, `/api-docs`, `/openapi`| não existem |
+| menu do portal → "Jurisprudência"                           | vai para `eproc-jur.trf6.jus.br` (o módulo mapeado aqui) |
+| **CJF — Jurisprudência Unificada** (`jurisprudencia.cjf.jus.br/unificada`) | **NÃO LISTA O TRF6.** O formulário oferece STF, STJ, TNU, TRF1, TRF2, TRF3, TRF4, TRF5, TR, TRU e "Todos" — e mais nada. Print: `../02-acervo-anterior/02.01-cjf-unificada-sem-trf6.png` |
+| **DataJud (CNJ)** `api-publica.datajud.cnj.jus.br/api_publica_trf6/_search` | o índice EXISTE (responde 429/timeout, não 404). Só metadados processuais: sem ementa, sem inteiro teor. Serve ao `Checker` como fonte secundária, não substitui o crawler. |
+
+**NÃO EXISTE API OFICIAL de jurisprudência do TRF6.** Isso é resultado de busca,
+não omissão. E, ao contrário do que se poderia esperar, a Jurisprudência
+Unificada do CJF — que seria o candidato a "base nacional do ramo" — **nem sequer
+inclui o TRF6**: ela foi construída antes da criação do tribunal (2022) e não foi
+estendida. A única porta é este módulo do e-Proc.
+
+------------------------------------------------------------------
+9.2 Bloqueios (a pergunta tripla do CLAUDE-CODEGEN §6)
+------------------------------------------------------------------
+  Existe restrição?            NÃO. Sem Cloudflare, sem captcha, sem Turnstile,
+                               sem verificação de navegador F5/Shape (a do TJSC).
+  A BUSCA funciona sem resolver? Sim — o POST devolve 200 e a listagem completa
+                               SEM cookie de sessão nenhum. Nem PHPSESSID.
+  O DOWNLOAD funciona sem resolver? Sim — o inteiro teor é um GET direto.
+  Headless passa? --headed passa? Ambos. O crawler nem abre browser.
+
+  O `<meta name="robots" content="noindex">` da página é indexação, não bloqueio.
+
+------------------------------------------------------------------
+9.3 Forma de acesso escolhida: `http`
+------------------------------------------------------------------
+Ordem `api-oficial > api > http > browser`:
+  api-oficial  não existe (9.1)
+  api          não há endpoint JSON de busca — a listagem volta como HTML
+               (os únicos JSON são os de popular combo: `ajax_listar_tipo_documento`
+               e `ajax_carregar_listas_pesquisa`)
+  http    ✅   POST form-urlencoded, ISO-8859-1, ~0,4 s por busca, sem browser
+  browser      desnecessário
+
+Requests observadas na aba Network durante uma busca real:
+  09-requests-observadas.json
+
+Endpoints (todos POST, corpo urlencoded latin-1, resposta ISO-8859-1):
+  .../jurisprudencia/listar_resultados              busca (página 1)
+  .../jurisprudencia/ajax_paginar_resultado         páginas 2..N
+  .../jurisprudencia/ajax_listar_tipo_documento     JSON dos tipos por origem
+  .../jurisprudencia/ajax_carregar_listas_pesquisa  JSON de classe/relator/órgão
+  .../jurisprudencia/download_inteiro_teor          GET, inteiro teor
+
+------------------------------------------------------------------
+9.4 Sessão e estado
+------------------------------------------------------------------
+Não é preciso visitar a home antes de buscar. Não há viewState.
+⚠️ O e-Proc REPÕE campos ausentes do formulário a partir de cookies. Se um POST
+   omitir `txtProcesso`, um número herdado da consulta anterior pode reaparecer e
+   zerar a busca sem aviso. Por isso o `TRF6Navigator._corpo()` escreve TODOS os
+   campos, inclusive vazios.
+⚠️ `ajax_carregar_listas_pesquisa` chamado por HTTP ignora `origem` (ver seção 03).
+
+------------------------------------------------------------------
+9.5 Testes exploratórios obrigatórios (CLAUDE-CODEGEN §5, Fase 3)
+------------------------------------------------------------------
+1. Busca simples, sem filtro nem operador
+   `aposentadoria especial` no estado default do site (origem TRF6 pré-marcada,
+   escopo inteiro teor) → **27.545** documentos. Idêntico por HTTP e no browser.
+   Print: 09.01-busca-simples-sem-filtro.png
+
+2. Juizados Especiais × Justiça Comum  → seção 02. `dano moral`:
+   TRF6 2.201 · Turmas Recursais 1.744 · TRU6 1 · Varas Federais 0 · todas 3.946 ✓
+
+3. Cível × Criminal
+   **NÃO EXISTE filtro de área neste módulo.** A aproximação é por ÓRGÃO
+   ("1ª Turma - CRIMINAL" × "1ª Turma - PREV/SERV") ou por CLASSE
+   ("Apelação Criminal" × "Apelação Cível"). Ver seção 03.4.
+
+4. Órgão / matéria → seção 03.4, todas as opções listadas e em JSON.
+   `aposentadoria`: sem filtro 36.578 · "1ª Turma - PREV/SERV" 12.599 · "Plenário" 99
+
+5. Unidade específica (serventia / comarca / subseção)
+   **NÃO EXISTE neste módulo.** A UF aparece só como campo do resultado (sempre
+   "MG"), não como parâmetro de busca. A subseção só é legível no próprio número
+   CNJ (`...4.06.3800` = Belo Horizonte).
+
+6. Magistrada ou magistrado → seção 03.3. 52 relatores na origem TRF6.
+   "MÔNICA SIFUENTES" + `aposentadoria` = 116.
+   Ressalva: o mesmo nome aparece em grafias diferentes no combo.
+
+7. Tipo de ato → seção 03.1. `aposentadoria`, origem TRF6:
+   Acórdão 29.527 · Monocrática 7.046 · Súmula 0 · Despacho da Vice 5 (soma exata).
+   Diferente do TJGO, aqui o tipo nominalmente óbvio (Acórdão) É o majoritário.
+   O enganoso é "Súmula": declarado e vazio.
+
+8. Número do processo → seção 05. Alimenta o `TRF6Checker`.
+   Funciona sozinho (sem termo), com e sem máscara.
+
+9. Datas + operadores → seções 04 e 07.
+   Julgamento 1T2026 6.809 × Publicação 1T2026 5.659 (filtros distintos).
+   Seis operadores declarados pelo site, seis testados, seis funcionando —
+   desde que em PORTUGUÊS e separados por espaço.
+
+------------------------------------------------------------------
+9.6 Pendências e defeitos de mapeamento
+------------------------------------------------------------------
+| # | O que falta                                   | Por quê |
+|---|-----------------------------------------------|---------|
+| 1 | Filtro de área Cível × Criminal               | não existe no módulo — aproximar por órgão/classe |
+| 2 | Filtro de subseção judiciária / unidade       | não existe no módulo |
+| 3 | Filtro de assunto (CNJ)                       | não existe no módulo |
+| 4 | Jurisprudência anterior a 2023                | não está nesta base — está no TRF1, ver `../02-acervo-anterior/` |
+| 5 | Origem "Varas Federais" (1º grau)             | declarada pelo site e VAZIA (0 documentos). Reavaliar no futuro: se o tribunal passar a publicar sentenças, é aqui que aparecem |
+| 6 | Listas de classe/relator/órgão por origem via HTTP | o endpoint ignora `origem` fora do browser; as listas por origem estão nos `03-*.json` deste diretório |

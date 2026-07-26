@@ -1,0 +1,43 @@
+STF — módulo 01: Pesquisa de Jurisprudência (SPA Angular)
+Preenchido a partir de human-codegen/MODELO-TRIBUNAL.md — CLAUDE-CODEGEN.md §5, Fase 2.
+
+## Identificação
+
+Tribunal:                 STF — Supremo Tribunal Federal
+Estado(s):                Federal / nacional (jurisdição sobre todo o país)
+Módulo:                   Pesquisa de jurisprudência (SPA Angular, "novo portal", no ar desde 2020)
+Link principal:           https://jurisprudencia.stf.jus.br/pages/search
+Sistema judicial:         Próprio (Angular + Elasticsearch). NÃO é PJe, e-Proc, ESAJ nem Projudi.
+Sistema irmão já mapeado: CLAUDE-TJPA.md (SPA Angular com API JSON por trás) — mesma
+                          arquitetura, endpoint diferente.
+Abrangência da base:      Instância ÚNICA (o STF é corte de sobreposição; não há 1º/2º grau
+                          nem Juizado Especial). 4 acervos, contados em 25/07/2026:
+                            acordaos       368.511  decisões colegiadas (Pleno + Turmas)
+                            decisoes       741.676  decisões monocráticas (seleção, não exaustiva)
+                            sumulas            799  736 simples + 63 VINCULANTES
+                            informativos    11.571  resumos da Secretaria (sem valor oficial)
+                          Cobertura temporal medida com sort=date&sortBy=asc:
+                            acórdãos       o mais antigo é HC 300, julgado em 27/04/1892
+                                           (a documentação oficial fala em "após 06/07/1950";
+                                            o que vem antes é a sub-base Coletânea de acórdãos,
+                                            25.425 documentos)
+                            súmulas        Súmula 1, aprovada em 13/12/1963
+                            monocráticas   CR 1408 embargos, 04/11/1968
+                            informativos   volume 1, 08/08/1995
+                          O mais recente na data do mapeamento: 29/06/2026.
+Data do mapeamento:       25/07/2026
+
+## 1. Busca principal (query)
+
+Uma única caixa de texto ("Pesquisar palavras-chave"), sem limite de caracteres observado.
+Comportamento padrão: **E implícito** — `dano moral` exige as duas palavras no documento.
+Por padrão a busca NÃO olha o inteiro teor: o alvo é o "espelho do acórdão" (ementa, decisão,
+indexação, tese, tema, partes, legislação citada...). Ver seção 05 para ligar o inteiro teor.
+
+HTML do elemento: `01-campo-busca.html`
+Print: `01.01-tela-inicial.png`
+
+⚠️ **A tradução dos operadores é feita no CLIENTE.** A SPA converte `e`→`AND`, `ou`→`OR`,
+`não`→`NOT` e `$`→`*` em JavaScript, ANTES de montar a query do Elasticsearch. Quem fala com a
+API tem de repetir essa tradução, senão o operador vai como termo literal e a contagem muda —
+ver seção 02 e `src/STFNavigator.js` (`preprocessarQuery`).

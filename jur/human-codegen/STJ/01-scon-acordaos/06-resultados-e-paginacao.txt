@@ -1,0 +1,86 @@
+STJ / SCON — §6. Tela de resultados, extração e paginação
+========================================================
+
+Prints: 06.01-resultados.png · 06.02-resultados-orgao-terceira-turma.png ·
+        06.03-rodape-paginacao.png
+Contagens: 06-contagens.json
+
+
+## Onde os resultados aparecem
+
+Mesma rota (`/SCON/pesquisar.jsp`), outro layout. A tela traz:
+
+  - **abas por base documental**, com contagem em cada uma:
+    SÚMULAS (0) · ACÓRDÃOS (1.697) · DECISÕES MONOCRÁTICAS (25.532) ·
+    INFORMATIVOS E OUTROS PRODUTOS (0)
+  - a **expressão que o servidor montou** (ver §2, "como conferir")
+  - facetas à esquerda: Juízo, Órgãos Julgadores, Ministros, Data de Publicação,
+    Data de Julgamento, Classe, Unidade Federativa
+  - combo "documentos por página" (10 / 25 / 50)
+  - combo "Ordenar por": Publicação | Precedentes Qualificados
+
+
+## O bloco de UM resultado
+
+Container: `div.documento`. Dentro dele:
+
+  .clsNumDocumento            "Documento 1 de 1697"      <- de onde sai o TOTAL
+  .clsIdentificacaoDocumento  "RESP 2031813"
+  input.clsCheckSelecionaDocumento[value]                <- id interno do documento
+  <!-- REGISTRO: 202203142873 -->                        <- nº de registro, em comentário HTML
+  .barraDocRepetitivo         banner "RECURSO REPETITIVO" + link do Tema + situação
+
+  e os campos, todos no MESMO par de classes:
+    .paragrafoBRS > .docTitulo   (rótulo)
+                  > .docTexto    (valor)
+
+Rótulos observados: Processo · Relator · Relator p/ Acórdão · Órgão Julgador ·
+Data do Julgamento · Data da Publicação/Fonte · Tese · Ementa · Acórdão · Notas ·
+Referência Legislativa · Veja · Jurisprudência Citada · Doutrina · Sucessivo ·
+Informações Complementares · Termos Auxiliares.
+
+⚠️ ARMADILHA DE EXTRAÇÃO: os campos separam linhas com `<br>`, e `textContent`
+as COLA. O campo Processo vira
+  "REsp 2031813 / SCRECURSO ESPECIAL2022/0314287-3"
+e a UF sai como "SCRECURSO ESPECIAL2022". É preciso trocar cada `<br>` por `\n`
+antes de ler o texto. Outra: o rótulo em `.docTitulo` costuma COMEÇAR com uma
+quebra de linha — ler `textContent.split('\n')[0]` devolve string vazia e o campo
+é descartado em silêncio.
+
+Ícones de ação (todos em `javascript:...('URL')`):
+  inteiro teor  -> /SCON/GetInteiroTeorDoAcordao?num_registro=<12 dígitos>&dt_publicacao=DD/MM/YYYY
+  processo      -> https://processo.stj.jus.br/processo/pesquisa/?num_registro=<12 dígitos>
+  copiar ementa -> textarea `.textareaSemformatacao` com a ementa em texto puro
+
+
+## Prova visual da desambiguação por órgão
+
+06.01 e 06.02 são a MESMA busca ("dano moral", julgamento em 2025); a segunda
+tem `orgao=T3`. Contadores na tela: 1.697 → 829.
+
+
+## Paginação
+
+  Resultados por página:  parâmetro `l` — combo oferece 10 / 25 / 50.
+                          O servidor aceita valores fora do combo (l=100 devolveu
+                          100 documentos), mas o crawler fica no combo.
+  Parâmetro de página:    `i` = ÍNDICE DO PRIMEIRO DOCUMENTO (1, 11, 21…),
+                          não o número da página.
+  Total exposto?          Sim, em "Documento N de TOTAL" e no contador do topo.
+  "Ir para página"?       Não; há ícones Primeira / Anterior / Próxima / Última,
+                          todos chamando `navegaForm('<i>')`.
+
+⚠️ TETO PRÁTICO DE PAGINAÇÃO. A partir de ~800 documentos o Oracle aborta a
+consulta e devolve uma página de erro:
+
+  "Erro ao executar pesquisa: DANO AND MORAL - ORA-01013: Usuário solicitou
+   cancelamento da operação atual. A pesquisa foi interrompida por demora
+   excessiva na execução."
+
+Medido (mesma busca, 1.697 resultados):
+  i=101 ok · i=201 ok · i=301 ok · i=501 ok · i=701 ok
+  i=901 ORA-01013 · i=1001 ORA-01013 · i=1301 ORA-01013 · i=1691 ORA-01013
+
+Não é limite declarado, é timeout: consultas mais baratas vão mais fundo. O
+crawler reconhece o estado e para a paginação com aviso em vez de devolver
+"0 resultados".

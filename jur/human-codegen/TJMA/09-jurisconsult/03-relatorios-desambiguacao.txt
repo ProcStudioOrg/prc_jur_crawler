@@ -1,0 +1,182 @@
+==================================================================
+SEÇÃO: RELATÓRIOS — A DESAMBIGUAÇÃO DO TJMA
+==================================================================
+
+Link:              https://jurisconsult.tjma.jus.br/#/sg-jurisprudence-form
+Data da conferência no DOM vivo: 25/07/2026
+
+------------------------------------------------------------------
+A IDEIA CENTRAL
+------------------------------------------------------------------
+
+No TJMA a desambiguação **Justiça Comum × Juizados/Turmas Recursais** e
+**1º grau × 2º grau** NÃO é um filtro dentro de uma busca. É o primeiro
+combo da tela, "Relatório:", e cada opção aponta para uma **rota de API
+diferente**, sobre uma **base diferente**, com um **conjunto de filtros
+diferente**.
+
+Isso é mais forte do que um filtro: não há como "esquecer de aplicar" a
+distinção — buscar Turma Recursal é bater noutro endpoint.
+
+HTML do elemento (DOM depois do AJAX):
+
+  <select formcontrolname="relatorio" class="ng-untouched ng-pristine ng-valid">
+    <option value="0: Object">Acórdãos</option>
+    <option value="1: Object">Acórdãos - Turma Recursal</option>
+    <option value="2: Object">Decisões Monocráticas</option>
+    <option value="3: Object">Decisões Monocráticas - Turma Recursal</option>
+    <option value="4: Object">Súmulas e Precedentes</option>
+    <option value="5: Object">Sentenças de 1º Grau</option>
+    <option value="6: Object">Sentenças - Juizado Especial</option>
+  </select>
+
+Fonte AJAX: `GET https://apijuris.tjma.jus.br/v1/jurisprudencia/lista_relatorios`
+
+------------------------------------------------------------------
+OS 7 RELATÓRIOS
+------------------------------------------------------------------
+
+ id | Título                                 | Rota da API                                        | Foro / Grau
+----|----------------------------------------|----------------------------------------------------|---------------------------
+  1 | Acórdãos                               | /sg/jurisprudencias/processos                      | Justiça Comum, 2º grau
+  6 | Acórdãos - Turma Recursal              | /jurisprudencia/processos/pesquisa_acordaos_tr     | Turmas Recursais
+  2 | Decisões Monocráticas                  | /jurisprudencia/processos/pesquisa_monocraticas    | Justiça Comum, 2º grau
+  5 | Decisões Monocráticas - Turma Recursal | /jurisprudencia/processos/pesquisa_monocraticas_tr | Turmas Recursais
+  3 | Súmulas e Precedentes                  | /jurisprudencia/links_pesquisa_sumulas             | (não é busca — ver abaixo)
+  4 | Sentenças de 1º Grau                   | /jurisprudencia/processos/sentencas_pg             | Justiça Comum, 1º grau
+  7 | Sentenças - Juizado Especial           | /jurisprudencia/processos/sentencas_je             | Juizados Especiais, 1º grau
+
+⚠️ Note que o `id` NÃO é a ordem do combo. A ordem visual é
+1, 6, 2, 5, 3, 4, 7. Usar o índice do `<select>` como id é o erro fácil aqui.
+
+⚠️ O relatório 3 ("Súmulas e Precedentes") **não é uma busca**: a rota
+`links_pesquisa_sumulas` devolve apenas 3 links para páginas do portal
+(IRDR admitidos, IAC admitidos e a página de Súmulas do TJMA). É a única
+rota da família que não exige captcha, e a única cuja resposta pôde ser
+observada de fato:
+
+  {"response":{"pesquisaSumulas":[
+     {"titulo":"...Incidentes de Resolução de Demandas Repetitivas (IRDR)...",
+      "url":"https://www.tjma.jus.br/hotsite/nugepnac/item/1992/0/irdr-admitido"},
+     {"titulo":"...Incidentes de Assunção de Competência (IAC)...",
+      "url":"https://www.tjma.jus.br/hotsite/nugepnac/item/2095/0/iac-admitido"},
+     {"titulo":"...página de Súmulas do Tribunal de Justiça do Maranhão",
+      "url":"https://www.tjma.jus.br/legislacao/tj/geral/0/173/pnao/sumulas"}]}}
+
+------------------------------------------------------------------
+PROVA DE QUE A SEPARAÇÃO É REAL (por conjuntos de opções)
+------------------------------------------------------------------
+
+O critério de aceite do CLAUDE-CODEGEN §7 pede provar o filtro **comparando
+contagens de busca**. Isso é IMPOSSÍVEL aqui: toda busca é barrada pelo
+captcha (`04-bloqueio-captcha.txt`). Registro isso como NÃO CUMPRIDO.
+
+O que É possível provar, e foi provado, é que as bases são distintas — porque
+as rotas que POPULAM os combos são abertas (não exigem captcha) e devolvem
+conjuntos de opções diferentes por relatório. Números conferidos ao vivo em
+25/07/2026:
+
+### Órgão julgador — Acórdãos (rel 1) × Acórdãos-Turma Recursal (rel 6)
+
+  rel 1 .......... 34 órgãos
+  rel 6 .......... 13 órgãos
+  interseção ..... 1 ("ÓRGÃO ESPECIAL")
+
+  rel 1 são câmaras e seções do Tribunal:
+    CÂMARA ESPECIAL DE FÉRIAS · CÂMARAS CÍVEIS REUNIDAS ·
+    CÂMARAS CRIMINAIS REUNIDAS · PRIMEIRA…OITAVA CÂMARA CÍVEL ·
+    PRIMEIRA…TERCEIRA CÂMARA CRIMINAL · SEÇÃO DE DIREITO PÚBLICO/PRIVADO/CRIMINAL ·
+    TRIBUNAL PLENO · ÓRGÃO ESPECIAL · GABINETE DA PRESIDÊNCIA · …
+
+  rel 6 são exclusivamente Turmas Recursais (lista completa):
+    1ª TURMA RECURSAL PERMANENTE DA COMARCA DA ILHA DE SÃO LUÍS
+    2ª TURMA RECURSAL PERMANENTE DA COMARCA DA ILHA DE SÃO LUÍS
+    TURMA RECURSAL CÍVEL E CRIMINAL DE BACABAL
+    TURMA RECURSAL CÍVEL E CRIMINAL DE BALSAS
+    TURMA RECURSAL CÍVEL E CRIMINAL DE CAXIAS
+    TURMA RECURSAL CÍVEL E CRIMINAL DE CHAPADINHA
+    TURMA RECURSAL CÍVEL E CRIMINAL DE IMPERATRIZ
+    TURMA RECURSAL CÍVEL E CRIMINAL DE PINHEIRO
+    TURMA RECURSAL CÍVEL E CRIMINAL DE PRESIDENTE DUTRA
+    TURMA RECURSAL CÍVEL E CRIMINAL DE SÃO LUIS
+    TURMA DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI DO SISTEMA DE JUIZADOS ESPECIAIS
+    ÓRGÃO ESPECIAL
+    PRESIDÊNCIA
+
+  → Conjuntos praticamente disjuntos. Não são a mesma base.
+
+### Comarca — Sentenças 1º Grau (rel 4) × Sentenças Juizado Especial (rel 7)
+
+  rel 4 .......... 111 comarcas · nomenclatura "Fórum da Comarca de X" / "Fórum da Capital"
+  rel 7 .......... 13 comarcas  · nomenclatura seca: AÇAILÂNDIA, BACABAL, BALSAS,
+                                  CAXIAS, CODÓ, IMPERATRIZ, PAÇO DO LUMIAR,
+                                  PEDREIRAS, PINHEIRO, SANTA INÊS,
+                                  SÃO JOSÉ DE RIBAMAR, SÃO LUÍS - ENTRÂNCIA FINAL, TIMON
+  interseção ..... 0 (zero)
+
+  → Conjuntos 100% disjuntos.
+
+### Outros conjuntos, mesma conclusão
+
+  Classes:      rel 1/2 = 135 · rel 5/6 = 26 · rel 4 = 293 · rel 7 = 90
+  Magistrados:  rel 1/2 = 312 · rel 6   = 261 · rel 4 = 371 · rel 7 = 241
+
+------------------------------------------------------------------
+CAMPOS VISÍVEIS POR RELATÓRIO (conferido na tela, print a print)
+------------------------------------------------------------------
+
+ Relatório                              | Campos do formulário
+----------------------------------------|-------------------------------------------------------
+ Acórdãos (1)                           | Pesquisar pelo(a) · Chave · Sistema · Relator · Revisor
+                                        | Classe Judicial · Órgão Julgador · Condição · Datas
+ Acórdãos - Turma Recursal (6)          | Pesquisar pelo(a) · Chave · Frase Exata · Relator
+                                        | Classe Judicial · Órgão Julgador · Datas
+ Decisões Monocráticas (2)              | Pesquisar pelo(a) · Chave · Frase Exata · Relator
+                                        | Classe Judicial · Órgão Julgador · Datas
+ Decisões Monocráticas - T. Recursal (5)| Pesquisar pelo(a) · Chave · Frase Exata · Relator
+                                        | Classe Judicial · Órgão Julgador · Datas
+ Súmulas e Precedentes (3)              | (nenhum — só o combo Relatório; devolve 3 links)
+ Sentenças de 1º Grau (4)               | Pesquisar pelo(a) · Chave · Frase Exata · Relator
+                                        | Classe Judicial · Comarca · Vara · Datas
+ Sentenças - Juizado Especial (7)       | Pesquisar pelo(a) · Chave · Frase Exata · Relator
+                                        | Classe Judicial · Comarca · Vara · Datas
+
+⚠️ "Condição" (E / OU / Termo único) só existe no relatório 1.
+⚠️ "Frase Exata" NÃO existe no relatório 1.
+⚠️ "Sistema" e "Revisor" só existem no relatório 1.
+
+------------------------------------------------------------------
+ARMADILHA: O NOME DA CHAVE MUDA ENTRE RELATÓRIOS
+------------------------------------------------------------------
+
+O mesmo filtro usa nomes de campo diferentes conforme a rota. Extraído dos
+chunks `build/{197,198,199,200,201,202}.js`:
+
+  filtro          | rel 1, 2, 5      | rel 4, 6, 7
+  ----------------|------------------|------------------
+  relator/revisor | `pkmatricula`    | `matricula_id`
+  órgão julgador  | `pkcamara`       | `camara_id`
+  classe          | `id_classe`      | `classe_id`
+  comarca         | —                | `comarca_id`
+  vara            | —                | `vara_id`
+
+  (o relatório 5 é a exceção que confirma o cuidado: usa `camara_id`/`classe_id`
+   no chunk 200 e `pkcamara`/`id_classe` no 201 — os dois chunks existem;
+   quem for implementar precisa conferir a rota, não o "grupo".)
+
+Arquivos com as listas completas, nesta pasta:
+  03-tipos-pesquisa.json    — opções de "Pesquisar pelo(a)" por relatório
+  03-orgaos-julgadores.json — órgãos julgadores por relatório
+  03-comarcas.json          — comarcas por relatório
+  03-classes.json           — classes judiciais por relatório
+  03-magistrados.json       — relatores/revisores por relatório
+
+Prints:
+  03.01-relatorio-acordaos.png
+  03.02-relatorio-acordaos-turma-recursal.png
+  03.03-relatorio-decisoes-monocraticas.png
+  03.04-relatorio-decisoes-monocraticas-turma-recursal.png
+  03.05-relatorio-sumulas-e-precedentes.png
+  03.06-relatorio-sentencas-1-grau.png
+  03.07-relatorio-sentencas-juizado-especial.png
+  01.01-combo-relatorio.png (combo aberto, mapeamento humano original)

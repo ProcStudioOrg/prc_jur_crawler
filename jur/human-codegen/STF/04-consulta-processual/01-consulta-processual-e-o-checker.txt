@@ -1,0 +1,63 @@
+STF — módulo 04: Consulta processual (a base do `STFChecker`)
+
+Link:   https://portal.stf.jus.br/processos/listarProcessos.asp
+Prints: `01.01-detalhe-por-classe-numero.png` (ADI 4277)
+        `02.01-detalhe-por-numero-unico.png` (mesmo processo, pelo número único)
+        `03.01-processo-inexistente.png` (RE 9999999 — o que "não existe" parece)
+HTML do detalhe: `01-detalhe.html` · classes do STF: `01-classes-stf.json` (46 siglas)
+
+## 14. Número do processo — OS DOIS FORMATOS DO STF
+
+Esta é a parte que alimenta o `Checker`, e é onde o STF difere de todos os TJs já mapeados.
+
+### (a) Classe + número (+ incidente) — o identificador NATIVO
+
+    ARE 1596565 AgR    ADI 4277    RE 574706    HC 126292    Súmula Vinculante 11
+
+É esse o número que aparece na ementa, na doutrina e na citação. Na base de jurisprudência ele
+vive em `processo_codigo_completo` / `titulo`, decomposto em
+`processo_classe_processual_unificada_classe_sigla` (ARE),
+`processo_numero` (1596565) e
+`processo_classe_processual_unificada_incidente_sigla` (AgR).
+
+Consulta no portal:
+    listarProcessos.asp?classe=ADI&numeroProcesso=4277
+  → HTTP 302 para `detalhe.asp?incidente=11872` quando EXISTE
+  → permanece em `listarProcessos.asp` (sem redirecionar) quando NÃO existe
+O redirecionamento é, portanto, o teste de existência. As 46 classes válidas estão em
+`01-classes-stf.json` (AC, ACO, ADC, ADI, ADO, ADPF, AI, AImp, AO, AP, AR, ARE, AS, CC, Cm, ...).
+
+### (b) Número Único (CNJ, 20 dígitos)
+
+    listarProcessos.asp?numeroUnico=01649038020188060001
+
+⚠️ **Três armadilhas confirmadas:**
+
+ 1. **A máscara não funciona nesse parâmetro.** `0164903-80.2018.8.06.0001` fica na página de
+    busca; `01649038020188060001` (só dígitos) redireciona para o detalhe. Mande só dígitos.
+ 2. **O "Número Único" do STF é, quase sempre, o CNJ DA ORIGEM.** ARE 1596565 tem número único
+    `0164903-80.2018.8.06.0001` — J=8, TR=06: é o número do TJCE. Faz sentido (o RE sobe do
+    tribunal de origem), mas quebra a intuição de que "processo do STF tem CNJ com J=1".
+ 3. **Processo físico antigo usa codificação própria com J=0.** ADI 4277 →
+    `0006667-55.2009.0.01.0000`. J=0 não existe na tabela do CNJ e o **dígito verificador não
+    fecha**. `cnj.validar()` falso aqui é AVISO, não veto — igual à ressalva do acervo Libra
+    no TJPA.
+
+### (c) O que a base de jurisprudência NÃO tem
+
+**Não existe campo de número CNJ no índice de jurisprudência.** Buscar
+`-q "0164903-80.2018.8.06.0001"` devolve **0 resultados**. Para ir do CNJ ao julgado é preciso
+o caminho de duas etapas que o `STFChecker.consultarNumeroUnico()` implementa:
+  CNJ → portal (`numeroUnico`) → classe+número → base de jurisprudência (`classeNumeroIncidente`).
+
+### (d) DataJud não ajuda aqui
+
+`api_publica_stf` e `api_publica_STF` respondem `index_not_found_exception`: **o STF não está
+no DataJud do CNJ**. Diferente do TJMA, aqui não há porta dos fundos oficial para confirmar
+número — a confirmação é o portal do próprio STF.
+
+## Bloqueios deste módulo
+
+`portal.stf.jus.br` **não** tem AWS WAF (é a SPA de jurisprudência que tem). Responde 200 a
+`curl` com User-Agent de navegador; **403 sem User-Agent**. A codificação da página é
+**ISO-8859-1**, não UTF-8 — ler como UTF-8 corrompe os acentos do nome do relator.

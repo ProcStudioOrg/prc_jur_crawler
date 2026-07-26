@@ -1,0 +1,79 @@
+## 9. Filtro de órgão / classe / ministro / UF — A DESAMBIGUAÇÃO DO STF
+
+Prints: `07.01-painel-filtros-aberto.png`, `07.02-facetas-classe-e-uf.png`, `07.03-facetas-rodape.png`
+HTML do painel: `07-painel-filtros.html`
+
+O STF não tem Juizado × Justiça Comum. A desambiguação que importa aqui é **por órgão** e
+**por classe processual**, e as duas foram provadas por contagem (q = "dano moral",
+base `acordaos`, total sem filtro = **2.945** — conferido contra a tela em
+`06.01-resultados-topo.png`).
+
+### (a) Órgão julgador — `orgao_julgador.keyword` — `07-orgaos-acordaos.json`
+
+| Órgão            | base inteira | q="dano moral" |
+|---|---|---|
+| Primeira Turma   | 134.877 | 1.311 |
+| Segunda Turma    | 121.103 |   902 |
+| Tribunal Pleno   |  80.674 |   726 |
+| Terceira Turma   |   6.432 |     2 |
+| **soma**         | 343.086 | 2.941 |
+| **total da base**| 368.511 | 2.945 |
+
+⚠️ **A conta não fecha de propósito.** Os 25.425 documentos da **Coletânea de acórdãos**
+(anteriores a 1950, `is_colac=true`) têm `orgao_julgador = null` e **somem de qualquer filtro
+de órgão**. 343.086 + 25.425 = 368.511, exato. Na consulta "dano moral" são os 4 que faltam:
+RE 12039 (1948), ACi 7526 (1942), RE 11841 (1947), ACi 8210 (1944), todos com órgão nulo.
+Quem filtra por Pleno/Turmas está, sem perceber, excluindo o acervo histórico.
+
+Na base **Decisões monocráticas** a faceta de órgão vem **vazia** (0 opções): decisão
+monocrática não tem colegiado. Use `is_decisao_presidencia` e `ministro_facet`.
+Na base **Informativos** há 3 órgãos (`07-orgaos-informativos.json`).
+
+### (b) Classe processual — `processo_classe_processual_unificada_classe_sigla.keyword`
+        73 opções em Acórdãos (`07-classes-acordaos.json`), 58 em Decisões, 39 em Informativos
+
+| Classe | q="dano moral" | O que é |
+|---|---|---|
+| ARE  | 1.552 | recurso extraordinário com agravo |
+| RE   |   562 | recurso extraordinário |
+| AI   |   506 | agravo de instrumento |
+| HC   |    21 | habeas corpus |
+| ADI  |    15 | ação direta de inconstitucionalidade (controle concentrado) |
+| ADPF |    13 | arguição de descumprimento de preceito fundamental |
+| MS   |    10 | mandado de segurança |
+| ADC  |     2 | ação declaratória de constitucionalidade |
+
+Cada uma muda o resultado. É este o filtro que separa **controle concentrado** (ADI/ADPF/ADC/ADO
+— efeito *erga omnes*) de **controle difuso** (RE/ARE/AI) e de **originárias** (HC/MS/Rcl/Ext).
+
+### (c) Ministro — `ministro_facet.keyword` — `07-ministros-acordaos.json` (144 nomes)
+
+Prova: GILMAR MENDES 176 · CÁRMEN LÚCIA 222 (q="dano moral"). Os nomes são exatos, em
+CAIXA ALTA e com acento. Os 10 em exercício também saem de `GET /api/admin/loadConfig`.
+Em Decisões monocráticas a lista tem 52 nomes; em Informativos, 34.
+
+### (d) UF de procedência — `procedencia_geografica_uf_sigla` — 27 opções
+        `07-ufs-acordaos.json`. Prova: SP 680 · PR 138 (q="dano moral").
+        É a UF de ORIGEM do processo, não a do STF.
+
+### (e) Ramo do direito (só Súmulas e Informativos)
+        `07-ramos-direito-sumulas.json` (13: Tributário 182, Processual Civil 165,
+        Administrativo 86, Civil 86, Processual Penal 70, Trabalhista 51, Constitucional 47,
+        Penal 27, Processual do Trabalho 20, Militar 18, Empresarial 14, Previdenciário 14,
+        Internacional 12)
+        `07-ramos-noticia-informativos.json` (24 opções)
+
+### (f) Situação da súmula — `07-situacoes-sumulas.json`
+        Aprovada 785 · Cancelada 11 · Alterada 1 · Publicação suspensa 1 · Superada 1
+
+## 10. Unidade específica (serventia / comarca) → NÃO EXISTE
+
+O STF não tem unidades judiciárias. O equivalente mais próximo é a UF de procedência (d).
+
+## 11. Magistrada ou magistrado → é a faceta (c), não um campo de texto livre
+
+## 12. Tipo de ato → é a escolha de BASE, não um combo
+
+Acórdão, decisão monocrática, súmula e informativo são **bases distintas** (seção 03), não
+valores de um filtro "tipo de documento". Não há a armadilha do TJGO (onde acórdão é publicado
+com o tipo "Ementa"): no STF a separação é explícita e estrutural.

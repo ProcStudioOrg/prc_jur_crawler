@@ -1,0 +1,17 @@
+STJ — módulo 06: Repetitivos e IACs Anotados
+============================================
+
+Link:   https://scon.stj.jus.br/SCON/recrep/  -> redireciona para
+        https://scon.stj.jus.br/SCON/repetitivos/listaRR.jsp
+Print:  01.01-tela-inicial.png
+Estado: MAPEADO, NÃO IMPLEMENTADO no crawler.
+
+O que é: os temas de recursos repetitivos e IACs ANOTADOS pela Secretaria de
+Jurisprudência — a tese firmada acompanhada dos julgados que a aplicam depois.
+É o complemento editorial do módulo 03 (Precedentes Qualificados), que traz o
+dado bruto vindo do Sistema de Gestão de Precedentes.
+
+Quando um acórdão da base ACOR é repetitivo, o card do resultado já linka para
+cá: `/SCON/recrep/toc.jsp?LREF=REPETITIVOS&tema='1023'`.
+
+Bloqueio: mesmo Cloudflare do SCON.

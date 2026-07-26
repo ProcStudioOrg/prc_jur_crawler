@@ -1,0 +1,102 @@
+[
+  {
+    "value": "",
+    "texto": "Selecione..."
+  },
+  {
+    "value": "(VEJA ADJ3 (RESCISÓRIA OU AR$))",
+    "texto": "Ações Rescisórias procedentes"
+  },
+  {
+    "value": "JUIZO ADJ2 RETRATACAO",
+    "texto": "Acórdãos com juízo de retratação"
+  },
+  {
+    "value": "PETRECHOS",
+    "texto": "Apreensão de petrechos usualmente utilizados no tráfico de entorpecentes"
+  },
+  {
+    "value": "PROCESSO",
+    "texto": "Casos Notórios"
+  },
+  {
+    "value": "ANS",
+    "texto": "Cobertura/Negativa de medicamento, procedimento, equipamento ou tratamento não previsto no rol ANS"
+  },
+  {
+    "value": "DECISAO ADJ DE ADJ (AFETACAO OU ADMISSAO)",
+    "texto": "Decisões de Afetação/Admissão"
+  },
+  {
+    "value": "AMBIENT$",
+    "texto": "Direito Ambiental"
+  },
+  {
+    "value": "(VEJA ADJ2 (EMBARGO$ ADJ2 DECLAR$ OU EDCL$ OU DERESP$))",
+    "texto": "Embargos de Declaração acolhidos"
+  },
+  {
+    "value": "(VEJA ADJ2 (EMBARGOS ADJ2 DIVERGEN$ OU ERESP$))",
+    "texto": "Embargos de Divergência providos"
+  },
+  {
+    "value": "ESTETICO",
+    "texto": "Indenização por dano estético"
+  },
+  {
+    "value": "MORAL",
+    "texto": "Indenização por dano moral"
+  },
+  {
+    "value": "DANO ADJ MORAL ADJ COLETIVO",
+    "texto": "Indenização por dano moral coletivo"
+  },
+  {
+    "value": "(JULGAMENTO E MERITO E PUIL)",
+    "texto": "Julgamento de mérito de Pedido de uniformização de interpretação de lei"
+  },
+  {
+    "value": "$PENHORABILIDADE",
+    "texto": "Penhorabilidade ou impenhorabilidade de bens"
+  },
+  {
+    "value": "INSIGNIFICÂNCIA",
+    "texto": "Princípio da insignificância"
+  },
+  {
+    "value": "PROPOSTA COM REVISAO COM TEMA COM RECURSO ADJ REPETITIVO",
+    "texto": "Proposta de Revisão de Tema de Recurso Repetitivo"
+  },
+  {
+    "value": "QUANTIDAD$ COM DROGA",
+    "texto": "Quantidade de droga apreendida"
+  },
+  {
+    "value": "REAFIRMACAO COM JURISPRUDENCIA",
+    "texto": "Reafirmação de Jurisprudência"
+  },
+  {
+    "value": "(JULGADO E CONFORME E ((RECURSOS ADJ REPETITIVOS) OU IAC))",
+    "texto": "Recursos Repetitivos e IACs"
+  },
+  {
+    "value": "DISTINGUISHING",
+    "texto": "Técnica de distinção"
+  },
+  {
+    "value": "OVERRULING",
+    "texto": "Técnica de superação"
+  },
+  {
+    "value": "(TEMA AND RACIAL)",
+    "texto": "Tema: perspectiva racial"
+  },
+  {
+    "value": "(TEMA COM VIOLENCIA)",
+    "texto": "Tema: violência doméstica e familiar"
+  },
+  {
+    "value": "(REVISAO ADJ DA ADJ TESE) OU (TESE ADJ REVISADA)",
+    "texto": "Tese revisada"
+  }
+]

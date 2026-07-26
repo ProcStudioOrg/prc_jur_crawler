@@ -1,0 +1,2611 @@
+<form action="/SCON/pesquisar.jsp" method="get" name="frmConsulta" id="frmConsulta" onsubmit="return getPesquisa();">
+	
+		<input type="hidden" name="preConsultaPP" id="preConsultaPP" value="">
+		<!-- <div style="display: none"><textarea id="pesquisaAmigavel" name="pesquisaAmigavel"></textarea></div> -->
+    	<div class="row div_pesqJuris">
+    		<div class="col-md-12 juris-pesquisa pesq_juris">
+            	<h2>
+            	<span class="wrapHint"> 
+            	Pesquisa de Jurisprudência do STJ
+            	<i class="icofont-question hasHint" id="idHintTutorial"></i>
+	            <div class="divMensagemTutorial hint">
+<p>
+Use o campo desta página para pesquisar por termos ou número do processo/registro.<br>
+Para fazer uma busca mais específica, a partir de campos do espelho do acórdão, utilize a <a href="javascript:;" class="clsAtivaPesquisaAvancada">"Pesquisa avançada"</a>.<br>
+É possível utilizar operadores ou configurar o "e" ou "adj" como operador padrão, bem como recorrer a diversos conectivos para restringir a pesquisa.
+</p>
+<p>
+Para facilitar a pesquisa, o STJ elaborou vídeos e dicas sobre como realizar as pesquisas com precisão e eficácia:
+</p>
+<ul>
+<li><a href="javascript:;" class="dicas">Dicas</a>
+<ul>
+<li><a href="/docs_internet/jurisprudencia/ajuda/2025_folder_sos_pesquisa_1.pdf" target="_blank" class="sos"><i class="fa-solid fa-magnifying-glass"></i> SOS - Pesquisa</a></li>
+<li><a href="/docs_internet/jurisprudencia/ajuda/2025_Operadores_logicos_atualizados_1.pdf" target="_blank" class="operadores">Como utilizar conectivos e operadores</a></li>
+<!-- <li><a href="/docs_internet/jurisprudencia/ajuda/Espelho_do_Acordao_atualizado.pdf" target="_blank" class="espelho">Ententendo o Espelho do Acórdão</a></li> -->
+<li><a href="/docs_internet/jurisprudencia/ajuda/2025_Como_pesquisar_legislacao_no_texto_1.pdf" target="_blank" class="legislacao">Como pesquisar legislação na ementa</a></li>
+</ul>
+</li>
+<li><a href="https://www.youtube.com/playlist?list=PL4p452_ygmsdpm2B2ttTK7sy9wt9Vvjag" target="_blank" class="videos">Videos tutoriais</a></li>
+<!-- <li><a href="https://ww2.stj.jus.br/out/in/faq/pesquisa/?aplicacao=faq.jur" target="_blank" class="faq">Perguntas Frequentes</a></li>-->
+</ul>
+</div>
+	            </span>
+	            </h2>
+	        </div>
+	    </div>
+
+		<input type="hidden" id="idCaptchaSelecionado" value="TRUE">
+		<input type="hidden" id="idCaptchaValidado" value="TRUE">
+		<input type="hidden" name="acao" id="acao" value="pesquisar">
+		<input type="hidden" name="novaConsulta" id="novaConsulta" value="true">
+		<input type="hidden" name="i" id="i" value="1">
+		<input type="hidden" name="b" id="b" value="ACOR">
+		<input type="hidden" name="livre" id="livre" value="">
+		<input type="hidden" name="filtroPorOrgao" value="">
+		<input type="hidden" name="filtroPorMinistro" value="">
+		<input type="hidden" name="filtroPorNota" value="">
+		<input type="hidden" name="data" id="data" value="">
+    
+		<div class="clsContainerForm">
+		<div class="row">
+			<div class="col-8 clsTituloPaginaPrincipal">
+			  <h3 class="clsPesquisaAvancada" style="display: block;">Pesquisa em todos os campos</h3>
+			  <h3 class="clsTituloMobile"><i class="icofont-ui-search"></i><span>Pesquisa</span></h3>
+			</div>
+			
+			<div class="col-4 text-end">
+	                      	<button type="button" class="btn-juris clsPesquisaAvancada" id="idMostrarConfiguracoes" style="display: inline-block;">
+	                      		<span data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Configurações da pesquisa (plurais, visualização)">
+	                      		<i class="icofont-gear"></i>
+	                      		<span class="clsLabelMostrar">Mostrar configurações <i class="icofont-rounded-right"></i></span>
+	                      		<span class="clsLabelOcultar">Ocultar configurações <i class="icofont-rounded-left"></i></span>
+	                      		</span>
+	                      	</button>
+	                      	<button type="button" class="btn-juris clsPesquisaReduzida" id="idMostrarConfiguracoes2" style="display: none;">
+	                      		<i class="icofont-gear" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Configurações da pesquisa (plurais, visualização)" aria-label="Configurações da pesquisa (plurais, visualização)"></i>
+	                      	</button>
+				      		<div id="idDivConfiguracoes" class="text-start">
+	
+
+
+<!-- <div class="row">
+	<label for="operador" class="col-8 px-2 col-form-label">Operador padrão</label>
+	<div class="col-4 px-2">
+	<select name="operador" id="operador" class="form-control">
+		<option value="e" selected>e</option>
+		<option value="adj">adj</option>
+	</select>
+	</div>
+	</div> -->
+	
+
+<script>
+jQuery(document).ready(function($) {
+	$("#checkVis").change(function(){
+		if ($(this).prop("checked"))
+			$("#tipo_visualizacao").val("RESUMO");
+		else
+			$("#tipo_visualizacao").val("");
+	});	
+});
+</script>
+
+	<div class="row">
+	<div class="col">
+	<input type="hidden" name="tipo_visualizacao" id="tipo_visualizacao" value="">
+	<label class="customCheckbox">Mostrar lista resumida
+	<input type="checkbox" value="RESUMO" id="checkVis">
+	<span class="checkmark"></span>
+	</label>
+	</div>
+	</div>
+<!-- 
+	<div class="row">
+	<div class="col">
+	<label class="customCheckbox">Pesquisar sinônimos
+	<input type="checkbox" value="JURIDICO" id="thesaurus" name="thesaurus"
+	checked>
+	<span class="checkmark"></span>
+	</label>
+	</div>
+	</div>
+-->
+	<div class="row">
+	<div class="col">
+	<label class="customCheckbox">Pesquisar plurais
+	<input type="checkbox" value="true" id="p" name="p">
+	<span class="checkmark"></span>
+	</label>
+	</div>
+	</div>
+
+	<div class="row">
+	<div class="col">
+	<label class="customCheckbox">Desabilitar explicações
+	<input type="checkbox" value="NAO" id="desabilitaHint" name="desabilitaHint">
+	<span class="checkmark"></span>
+	</label>
+	</div>
+	</div>
+	
+
+				      		</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 col-md-auto" id="idColTipoPesquisa">
+				<div class="d-inline-block d-md-block align-middle">
+					<label class="customRadio">Por termo
+						<input type="radio" name="tp" value="T" id="tpT" checked="">
+						<span class="checkmark"></span>
+					</label>
+				</div>
+				<div class="d-inline-block d-md-block align-middle">
+					<label class="customRadio">Por número <br class="d-none d-md-inline">do processo
+						<input type="radio" name="tp" value="P" id="tpP">
+						<span class="checkmark"></span>
+					</label>
+				</div>
+			</div>
+			<div class="col-12 col-md py-2" style="position: relative">
+                 <div class="input-group input-group-lg has-float-label">
+                    <input type="text" id="pesquisaLivre" class="form-control form-control-lg clearable" value="" placeholder="Digite o(s) critério(s) de pesquisa" onkeyup="refresh();" onfocus="refresh();" autocomplete="off">
+                    
+                    <label for="pesquisaLivre">Critério de pesquisa</label>
+                    <div class="input-group-append">
+                      <button class="input-group-text icofont-ui-search btn btn-lg" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Pesquisar" aria-label="Pesquisar"></button>
+                    </div> 
+                 </div>
+                 <div id="listaPesquisasProntas"></div>
+            </div>
+        </div> <!--  fim row -->
+        </div>
+        <div class="row" id="idDivFormBotoesOperadoresAvancada">    
+        	<div class="col-auto clsFill d-none d-lg-block" style="width: 101px;"></div>
+	        <div class="col juris_conectMostrar d-none d-md-block">
+	                      	<button type="button" id="idMostrarBotoesOperadores" class="clsMostrar btn-juris">
+	                      		<span class="clsLabelMostrar">Mostrar operadores <i class="icofont-rounded-right"></i></span>
+	                      		<span class="clsLabelOcultar">Ocultar operadores <i class="icofont-rounded-left"></i></span>
+	                      	</button>
+				      		<div id="idBotoesOperadores">
+				      			<div class="wrapHint">
+								<button type="button" id="btnE" value="E" class="btn-operador hasHint">e</button>
+								<div class="hint">E (AND)<br>
+								<ul>
+								<li>Furto E estacionamento E supermercado</li>
+								<li>Furto AND estacionamento AND supermercado</li>
+								</ul>
+								Obs.: Localiza as três palavras em qualquer lugar do documento.</div>
+								</div>
+				      			<div class="wrapHint">
+								<button type="button" id="btnOU" value="OU" class="btn-operador hasHint">ou</button>
+								<div class="hint">OU (OR)<br>
+								<ul>
+								<li>Furto E estacionamento E (supermercado OU hipermercado OU mercado)</li>
+								<li>Furto AND estacionamento AND (supermercado OR hipermercado OR mercado)</li>
+								</ul>
+								Obs.: Localiza um e/ou outro termo digitado entre parênteses.</div> 
+								</div>
+				      			<div class="wrapHint">
+								<button type="button" id="btnADJ" value="ADJ" class="btn-operador hasHint">adj</button> 
+								<div class="hint">ADJ (NEAR)<br>
+								<ul>
+								<li>Furto ADJ5 estacionamento ADJ5 supermercado</li>
+								<li>NEAR((Furto, estacionamento, supermercado), 5, TRUE)</li>
+								</ul>
+								Obs.: "Estacionamento" será no máximo a quinta palavra após "furto" e "supermercado" será no máximo a quinta palavra após "furto".</div>
+								</div>
+				      			<div class="wrapHint">
+								<button type="button" id="btnNAO" value="NÃO" class="btn-operador hasHint">não</button> 
+								<div class="hint">NÃO (NOT)<br>
+								<ul>
+								<li>Furto E estacionamento NÃO supermercado</li>
+								<li>(Furto AND estacionamento) NOT supermercado</li>
+								</ul>
+								Obs.: Localiza documentos que contenham as palavras "furto" e "estacionamento", excluindo documentos que contenham a palavra "supermercado".</div>
+								</div>
+				      			<div class="wrapHint">
+								<button type="button" id="btnPROX" value="PROX" class="btn-operador hasHint">prox</button> 
+								<div class="hint">PROX (NEAR)<br>
+								<ul>
+								<li>Furto PROX6 estacionamento PROX6 supermercado</li>
+								<li>NEAR((Furto, estacionamento, supermercado), 6, FALSE)</li>
+								</ul>
+								Obs.: "Estacionamento" será no máximo a sexta palavra antes ou após "furto" e "supermercado" será no máximo a sexta palavra antes ou após "furto".
+								</div>
+				      			<div class="wrapHint">
+								<button type="button" id="btnMESMO" value="MESMO" class="btn-operador hasHint">mesmo</button> 
+								<div class="hint">MESMO (INSAME)<br>
+								<ul>
+								<li>furto MESMO estacionamento MESMO supermercado</li>
+								<li>(furto AND estacionamento AND supermercado) INSAME</li>
+								</ul>
+								Obs: Localiza os termos num mesmo campo do documento.</div>
+								</div>
+				      			<div class="wrapHint">
+								<button type="button" id="btnCOM" value="COM" class="btn-operador hasHint">com</button>
+								<div class="hint">COM (INPATH)<br>
+								<ul>
+								<li>furto COM estacionamento COM supermercado</li>
+								<li>(furto AND estacionamento AND supermercado) INPATH (//Item)</li>
+								</ul>
+								Obs: Localiza os termos dentro de um mesmo parágrafo.</div>
+								</div>
+				      			<div class="wrapHint">
+								<button type="button" id="btnTRUNC" value="$" class="btn-operador hasHint">$</button> 
+								<div class="hint">$ (%)<br>
+								<ul>
+								<li>furto E estacionamento E mercado$</li>
+								<li>furto AND estacionamento AND mercado%</li>
+								</ul>
+								Obs: Localiza as palavras que contenham a parte digitada e suas variações: mercado, mercadoria, mercadorias.</div>
+								</div>				
+							</div>
+			</div>
+			
+
+            <div class="col col-md-auto text-end juris_pesqAvancada">
+            	  <div class="wrapHint">	
+                  <button type="button" id="idLimparPesquisaAvancada" class="hasHint btn-juris"><i class="icofont-trash"></i> <span>Limpar</span>
+                  </button>
+				  <div class="hint">Limpar todos os campos da pesquisa avançada.</div>
+				  </div>
+                  <button type="button" id="idMostrarPesquisaAvancada" class="clsPesquisaReduzida hasHint btn-juris" style="display: none;"><span>Pesquisa avançada</span> <i class="icofont-plus"></i>
+                  </button>
+				  <div class="hint hiddenElement">Busca mais específica, a partir do espelho do acórdão</div>
+                  <button type="button" id="idEsconderPesquisaAvancada" class="clsPesquisaAvancada hasHint btn-juris" style="display: inline-block;">
+                  <span>Pesquisa avançada</span> <i class="icofont-close"></i>
+                  </button>
+				  <div class="hint">Ao fechar a pesquisa avançada os <b>campos preenchidos serão considerados</b>.<br>Utilize o botão <span class="botaoFake"><i class="icofont-trash"></i>Limpar</span> para limpar os campos.</div>
+				  
+            </div>
+         </div> <!--  fim row -->
+        <div>
+		<div class="row clsPesquisaAvancada" style="display: block;">
+			<div class="col">
+                  <h3>Pesquisa por campos específicos</h3>
+              </div>
+         </div>
+         <div class="row clsPesquisaAvancada" style="display: block;">
+             <div class="col clsFormularioPesquisa">
+			
+	<div class="row">
+	<div class="col-12 col-md px-0">	
+	<div class="form-group has-float-label">
+  	<input type="text" class="form-control clearable" id="processo" name="processo" value=""> 
+    <label for="processo">Número do processo ou registro</label>
+    </div>
+	</div>
+	<div class="col-12 col-md px-0 px-md-2">
+	<div class="form-group has-float-label">
+    <input type="text" class="form-control clearable" name="classe" id="classe" value="">
+    <label for="classe">Classe do processo</label>
+	</div>
+	</div>
+	<div class="col-12 col-md px-0">
+	<div class="form-group has-float-label">
+    <input type="text" class="form-control clearable" name="uf" id="uf" value="">
+    <label for="uf">Unidade Federativa</label>
+	</div>
+	</div>
+	</div>
+	<div class="form-group has-fixed-float-label">
+	
+
+<div id="divMinistrosAvancada">
+<span class="clsControlaDiv">
+<span id="spanNomesMinistros">
+<i class="icofont-rounded-down t-azul"></i>
+<i class="icofont-rounded-up t-azul"></i>
+</span>
+</span>
+
+<input type="hidden" name="relator" id="relator" value="">
+<div>
+<div class="divide divideAtivos" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Clique para exibir ou esconder a lista de Ministros"><span>Min. ativos</span> <span class="listaDown" style="display: none"><span class="glyphicon"></span></span><span class="listaUp"><span class="glyphicon"></span></span></div>
+<div class="listaCheck">
+
+  				<label class="customCheckbox"><span class="nome">AFRÂNIO VILELA</span>
+				<input type="checkbox" value="1187" id="acheck1187">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ANTONIO CARLOS FERREIRA</span>
+				<input type="checkbox" value="1146" id="acheck1146">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ANTONIO SALDANHA PALHEIRO</span>
+				<input type="checkbox" value="1182" id="acheck1182">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">BENEDITO GONÇALVES</span>
+				<input type="checkbox" value="1142" id="acheck1142">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CARLOS PIRES BRANDÃO</span>
+				<input type="checkbox" value="1190" id="acheck1190">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">DANIELA TEIXEIRA</span>
+				<input type="checkbox" value="1188" id="acheck1188">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">FRANCISCO FALCÃO</span>
+				<input type="checkbox" value="1116" id="acheck1116">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">GURGEL DE FARIA</span>
+				<input type="checkbox" value="1160" id="acheck1160">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HERMAN BENJAMIN</span>
+				<input type="checkbox" value="1132" id="acheck1132">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HUMBERTO MARTINS</span>
+				<input type="checkbox" value="1130" id="acheck1130">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JOÃO OTÁVIO DE NORONHA</span>
+				<input type="checkbox" value="1123" id="acheck1123">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JOEL ILAN PACIORNIK</span>
+				<input type="checkbox" value="1183" id="acheck1183">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">LUÍS CARLOS GAMBOGI (DESEMBARGADOR CONVOCADO DO TJMG)</span>
+				<input type="checkbox" value="8450" id="acheck8450">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">LUIS FELIPE SALOMÃO</span>
+				<input type="checkbox" value="1140" id="acheck1140">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MARCO AURÉLIO BELLIZZE</span>
+				<input type="checkbox" value="1150" id="acheck1150">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MARCO BUZZI</span>
+				<input type="checkbox" value="1149" id="acheck1149">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MARIA ISABEL GALLOTTI</span>
+				<input type="checkbox" value="1145" id="acheck1145">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MARIA MARLUCE CALDAS</span>
+				<input type="checkbox" value="1189" id="acheck1189">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MARIA THEREZA DE ASSIS MOURA</span>
+				<input type="checkbox" value="1131" id="acheck1131">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MAURO CAMPBELL MARQUES</span>
+				<input type="checkbox" value="1141" id="acheck1141">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MESSOD AZULAY NETO</span>
+				<input type="checkbox" value="1184" id="acheck1184">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MOURA RIBEIRO</span>
+				<input type="checkbox" value="1156" id="acheck1156">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">NANCY ANDRIGHI</span>
+				<input type="checkbox" value="1118" id="acheck1118">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">NILSONI DE FREITAS (DESEMBARGADORA CONVOCADA DO TJDFT)</span>
+				<input type="checkbox" value="8460" id="acheck8460">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">OG FERNANDES</span>
+				<input type="checkbox" value="1139" id="acheck1139">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">PAULO SÉRGIO DOMINGUES</span>
+				<input type="checkbox" value="1185" id="acheck1185">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">RAUL ARAÚJO</span>
+				<input type="checkbox" value="1143" id="acheck1143">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">REGINA HELENA COSTA</span>
+				<input type="checkbox" value="1157" id="acheck1157">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">REYNALDO SOARES DA FONSECA</span>
+				<input type="checkbox" value="1170" id="acheck1170">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">RIBEIRO DANTAS</span>
+				<input type="checkbox" value="1181" id="acheck1181">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">RICARDO VILLAS BÔAS CUEVA</span>
+				<input type="checkbox" value="1147" id="acheck1147">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ROGERIO SCHIETTI CRUZ</span>
+				<input type="checkbox" value="1158" id="acheck1158">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">SEBASTIÃO REIS JÚNIOR</span>
+				<input type="checkbox" value="1148" id="acheck1148">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">SÉRGIO KUKINA</span>
+				<input type="checkbox" value="1155" id="acheck1155">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">TEODORO SILVA SANTOS</span>
+				<input type="checkbox" value="1186" id="acheck1186">
+				<span class="checkmark"></span>
+				</label>
+
+</div>
+<div class="divide divideInativos" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Clique para exibir ou esconder a lista de Ministros"><span>Min. aposentados e ex-Ministros</span> <span class="listaDown"><span class="glyphicon"></span></span><span class="listaUp" style="display: none"><span class="glyphicon"></span></span></div>
+<div class="listaCheck" style="display: none;">
+
+  				<label class="customCheckbox"><span class="nome">ADHEMAR MACIEL</span>
+				<input type="checkbox" value="1099" id="check1099">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ADHEMAR MACIEL (JUIZ DO TRF/1A. REG</span>
+				<input type="checkbox" value="1091" id="check1091">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ADHEMAR RAYMUNDO</span>
+				<input type="checkbox" value="191" id="check0191">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ADILSON VIEIRA MACABU (DESEMBARGADOR CONVOCADO DO TJ/RJ)</span>
+				<input type="checkbox" value="8205" id="check8205">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">AFRANIO COSTA</span>
+				<input type="checkbox" value="101" id="check0101">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">AGUARDANDO REDISTRIBUIÇÃO POR SUCESSÃO</span>
+				<input type="checkbox" value="7000" id="check7000">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">AGUIAR DIAS</span>
+				<input type="checkbox" value="18" id="check0018">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ALDERITA RAMOS DE OLIVEIRA (DESEMBARGADORA CONVOCADA DO TJ/PE)</span>
+				<input type="checkbox" value="8215" id="check8215">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ALDIR PASSARINHO</span>
+				<input type="checkbox" value="78" id="check0078">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ALDIR PASSARINHO JUNIOR</span>
+				<input type="checkbox" value="1110" id="check1110">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ÁLVARO PEÇANHA MARTINS</span>
+				<input type="checkbox" value="260" id="check0260">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">AMARILIO BENJAMIN</span>
+				<input type="checkbox" value="17" id="check0017">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">AMÉRICO LUZ</span>
+				<input type="checkbox" value="272" id="check0272">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ANSELMO SANTIAGO</span>
+				<input type="checkbox" value="1100" id="check1100">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ANSELMO SANTIAGO (JUIZ DO TRF/1A. REGIÃO</span>
+				<input type="checkbox" value="1090" id="check1090">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ANTÔNIO DE PÁDUA RIBEIRO</span>
+				<input type="checkbox" value="280" id="check0280">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ANTONIO NEDER</span>
+				<input type="checkbox" value="20" id="check0020">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ANTONIO TORREÃO BRAZ</span>
+				<input type="checkbox" value="132" id="check0132">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ARI PARGENDLER</span>
+				<input type="checkbox" value="1104" id="check1104">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ARMANDO ROLEMBERG</span>
+				<input type="checkbox" value="19" id="check0019">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ARNALDO ESTEVES LIMA</span>
+				<input type="checkbox" value="1128" id="check1128">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ARTUR MARINHO</span>
+				<input type="checkbox" value="12" id="check0012">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ASSIS TOLEDO</span>
+				<input type="checkbox" value="1066" id="check1066">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ASSUSETE MAGALHÃES</span>
+				<input type="checkbox" value="1151" id="check1151">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ATHOS CARNEIRO</span>
+				<input type="checkbox" value="1083" id="check1083">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">BAPTISTA DE OLIVEIRA</span>
+				<input type="checkbox" value="15" id="check0015">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">BARROS MONTEIRO</span>
+				<input type="checkbox" value="1089" id="check1089">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">BUENO DE SOUZA</span>
+				<input type="checkbox" value="205" id="check0205">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CAMPOS MARQUES (DESEMBARGADOR CONVOCADO DO TJ/PR)</span>
+				<input type="checkbox" value="8250" id="check8250">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CANDIDO LOBO</span>
+				<input type="checkbox" value="11" id="check0011">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CARLOS ALBERTO MENEZES DIREITO</span>
+				<input type="checkbox" value="1108" id="check1108">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CARLOS CINI MARCHIONATTI (DESEMBARGADOR CONVOCADO TJRS)</span>
+				<input type="checkbox" value="8441" id="check8441">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CARLOS FERNANDO MATHIAS (JUIZ FEDERAL CONVOCADO DO TRF 1ª REGIÃO)</span>
+				<input type="checkbox" value="8135" id="check8135">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CARLOS MADEIRA</span>
+				<input type="checkbox" value="108" id="check0108">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CARLOS THIBAU</span>
+				<input type="checkbox" value="345" id="check0345">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CARLOS VELLOSO</span>
+				<input type="checkbox" value="140" id="check0140">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CARNEIRO LEAO</span>
+				<input type="checkbox" value="3" id="check0003">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CASTRO FILHO</span>
+				<input type="checkbox" value="1119" id="check1119">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CASTRO MEIRA</span>
+				<input type="checkbox" value="1125" id="check1125">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CELSO LIMONGI (DESEMBARGADOR CONVOCADO DO TJ/SP)</span>
+				<input type="checkbox" value="8175" id="check8175">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CESAR ASFOR ROCHA</span>
+				<input type="checkbox" value="1098" id="check1098">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CID FLAQUER SCARTEZZINI</span>
+				<input type="checkbox" value="299" id="check0299">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CLAUDIO SANTOS</span>
+				<input type="checkbox" value="1087" id="check1087">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CORREA PINA</span>
+				<input type="checkbox" value="79" id="check0079">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">CUNHA VASCONCELOS</span>
+				<input type="checkbox" value="7" id="check0007">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">DECIO MIRANDA</span>
+				<input type="checkbox" value="44" id="check0044">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">DEMÓCRITO REINALDO</span>
+				<input type="checkbox" value="1095" id="check1095">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">DENISE ARRUDA</span>
+				<input type="checkbox" value="1126" id="check1126">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">DIAS TRINDADE</span>
+				<input type="checkbox" value="1031" id="check1031">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">DIAS TRINDADE (ER 03/93)</span>
+				<input type="checkbox" value="1101" id="check1101">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">DIVA MALERBI (DESEMBARGADORA CONVOCADA TRF 3ª REGIÃO)</span>
+				<input type="checkbox" value="8315" id="check8315">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">EDSON VIDIGAL</span>
+				<input type="checkbox" value="1074" id="check1074">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">EDUARDO RIBEIRO</span>
+				<input type="checkbox" value="1015" id="check1015">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ELIANA CALMON</span>
+				<input type="checkbox" value="1114" id="check1114">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ERICSON MARANHO (DESEMBARGADOR CONVOCADO DO TJ/SP)</span>
+				<input type="checkbox" value="8370" id="check8370">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ESDRAS GUEIROS</span>
+				<input type="checkbox" value="28" id="check0028">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ESTELLITA CAVALCANTI</span>
+				<input type="checkbox" value="13" id="check0013">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">EUCLYDES AGUIAR</span>
+				<input type="checkbox" value="625" id="check0625">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">FELIX FISCHER</span>
+				<input type="checkbox" value="1109" id="check1109">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">FERNANDO GONÇALVES</span>
+				<input type="checkbox" value="1107" id="check1107">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">FLEURY PIRES</span>
+				<input type="checkbox" value="600" id="check0600">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">FONTES DE ALENCAR</span>
+				<input type="checkbox" value="1086" id="check1086">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">FRANCISCO PEÇANHA MARTINS</span>
+				<input type="checkbox" value="1094" id="check1094">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">FRANCIULLI NETTO</span>
+				<input type="checkbox" value="1117" id="check1117">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">GARCIA VIEIRA</span>
+				<input type="checkbox" value="1082" id="check1082">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">GERALDO FONTENELES</span>
+				<input type="checkbox" value="420" id="check0420">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">GERALDO SOBRAL</span>
+				<input type="checkbox" value="329" id="check0329">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">GILSON DIPP</span>
+				<input type="checkbox" value="1111" id="check1111">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">GODOY ILHA</span>
+				<input type="checkbox" value="14" id="check0014">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">GUEIROS LEITE</span>
+				<input type="checkbox" value="116" id="check0116">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HAMILTON CARVALHIDO</span>
+				<input type="checkbox" value="1112" id="check1112">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HAROLDO RODRIGUES (DESEMBARGADOR CONVOCADO DO TJ/CE)</span>
+				<input type="checkbox" value="8195" id="check8195">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HÉLIO MOSIMANN</span>
+				<input type="checkbox" value="1093" id="check1093">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HELIO PINHEIRO</span>
+				<input type="checkbox" value="337" id="check0337">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HÉLIO QUAGLIA BARBOSA</span>
+				<input type="checkbox" value="1127" id="check1127">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HENOCH REIS</span>
+				<input type="checkbox" value="36" id="check0036">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HENRIQUE D'AVILA</span>
+				<input type="checkbox" value="8" id="check0008">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HERMILLO GALANT</span>
+				<input type="checkbox" value="213" id="check0213">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HONILDO AMARAL DE MELLO CASTRO (DESEMBARGADOR CONVOCADO DO TJ/AP)</span>
+				<input type="checkbox" value="8185" id="check8185">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HUGO MACHADO</span>
+				<input type="checkbox" value="680" id="check0680">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">HUMBERTO GOMES DE BARROS</span>
+				<input type="checkbox" value="1096" id="check1096">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ILMAR GALVAO</span>
+				<input type="checkbox" value="1023" id="check1023">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JANE SILVA (DESEMBARGADORA CONVOCADA DO TJ/MG)</span>
+				<input type="checkbox" value="8145" id="check8145">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JARBAS NOBRE</span>
+				<input type="checkbox" value="60" id="check0060">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JESUÍNO RISSATO (DESEMBARGADOR CONVOCADO DO TJDFT)</span>
+				<input type="checkbox" value="8420" id="check8420">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JESUS COSTA LIMA</span>
+				<input type="checkbox" value="302" id="check0302">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JOÃO BATISTA MOREIRA  (DESEMBARGADOR CONVOCADO DO TRF1)</span>
+				<input type="checkbox" value="8430" id="check8430">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JORGE LAFAYETTE</span>
+				<input type="checkbox" value="61" id="check0061">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JORGE MUSSI</span>
+				<input type="checkbox" value="1138" id="check1138">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JORGE SCARTEZZINI</span>
+				<input type="checkbox" value="1113" id="check1113">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JOSÉ ARNALDO DA FONSECA</span>
+				<input type="checkbox" value="1106" id="check1106">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JOSE CANDIDO DE CARVALHO FILHO</span>
+				<input type="checkbox" value="256" id="check0256">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JOSÉ DANTAS</span>
+				<input type="checkbox" value="86" id="check0086">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JOSE DE JESUS FILHO</span>
+				<input type="checkbox" value="1040" id="check1040">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JOSÉ DELGADO</span>
+				<input type="checkbox" value="1105" id="check1105">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JOSE DELGADO (JUIZ DO TRF/5A REGIAO</span>
+				<input type="checkbox" value="1092" id="check1092">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JOSE NERI DA SILVEIRA</span>
+				<input type="checkbox" value="51" id="check0051">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">JUSTINO RIBEIRO</span>
+				<input type="checkbox" value="159" id="check0159">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">LAURITA VAZ</span>
+				<input type="checkbox" value="1120" id="check1120">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">LAURO LEITAO</span>
+				<input type="checkbox" value="94" id="check0094">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">LÁZARO GUIMARÃES  (DESEMBARGADOR CONVOCADO DO TRF 5ª REGIÃO)</span>
+				<input type="checkbox" value="8400" id="check8400">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">LEITAO KRIEGER</span>
+				<input type="checkbox" value="223" id="check0223">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">LEOPOLDO DE ARRUDA RAPOSO (DESEMBARGADOR CONVOCADO DO TJ/PE)</span>
+				<input type="checkbox" value="8390" id="check8390">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">LUIZ FUX</span>
+				<input type="checkbox" value="1122" id="check1122">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">LUIZ VICENTE CERNICCHIARO</span>
+				<input type="checkbox" value="1084" id="check1084">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MACEDO LUDOLF</span>
+				<input type="checkbox" value="4" id="check0004">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MANOEL ERHARDT (DESEMBARGADOR CONVOCADO DO TRF5)</span>
+				<input type="checkbox" value="8410" id="check8410">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MARCIO RIBEIRO</span>
+				<input type="checkbox" value="27" id="check0027">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MARGA TESSLER (JUÍZA FEDERAL CONVOCADA DO TRF 4ª REGIÃO)</span>
+				<input type="checkbox" value="8360" id="check8360">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MARILZA MAYNARD (DESEMBARGADORA CONVOCADA DO TJ/SE)</span>
+				<input type="checkbox" value="8300" id="check8300">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MASSAMI UYEDA</span>
+				<input type="checkbox" value="1129" id="check1129">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MIGUEL FERRANTE</span>
+				<input type="checkbox" value="248" id="check0248">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MILTON LUIZ PEREIRA</span>
+				<input type="checkbox" value="1097" id="check1097">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MOACIR CATUNDA</span>
+				<input type="checkbox" value="35" id="check0035">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">MOREIRA RABELO</span>
+				<input type="checkbox" value="29" id="check0029">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">NAPOLEÃO NUNES MAIA FILHO</span>
+				<input type="checkbox" value="1133" id="check1133">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">NEFI CORDEIRO</span>
+				<input type="checkbox" value="1159" id="check1159">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">NEWTON TRISOTTO (DESEMBARGADOR CONVOCADO DO TJ/SC)</span>
+				<input type="checkbox" value="8350" id="check8350">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">NILSON NAVES</span>
+				<input type="checkbox" value="361" id="check0361">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">OLINDO MENEZES (DESEMBARGADOR CONVOCADO DO TRF 1ª REGIÃO)</span>
+				<input type="checkbox" value="1180" id="check1180">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">OSCAR SARAIVA</span>
+				<input type="checkbox" value="16" id="check0016">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">OTÁVIO DE ALMEIDA TOLEDO (DESEMBARGADOR CONVOCADO DO TJSP)</span>
+				<input type="checkbox" value="8440" id="check8440">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">OTTO ROCHA</span>
+				<input type="checkbox" value="167" id="check0167">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">PAULO COSTA LEITE</span>
+				<input type="checkbox" value="353" id="check0353">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">PAULO DE TARSO SANSEVERINO</span>
+				<input type="checkbox" value="1144" id="check1144">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">PAULO FURTADO (DESEMBARGADOR CONVOCADO DO TJ/BA)</span>
+				<input type="checkbox" value="8165" id="check8165">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">PAULO GALLOTTI</span>
+				<input type="checkbox" value="1115" id="check1115">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">PAULO MEDINA</span>
+				<input type="checkbox" value="1121" id="check1121">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">PAULO TAVORA</span>
+				<input type="checkbox" value="62" id="check0062">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">PEDRO ACIOLI</span>
+				<input type="checkbox" value="264" id="check0264">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">PEREIRA DE PAIVA</span>
+				<input type="checkbox" value="221" id="check0221">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">ROCHA LAGOA</span>
+				<input type="checkbox" value="6" id="check0006">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">RUY ROSADO DE AGUIAR</span>
+				<input type="checkbox" value="1102" id="check1102">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">SÁLVIO DE FIGUEIREDO TEIXEIRA</span>
+				<input type="checkbox" value="1088" id="check1088">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">SAMPAIO COSTA</span>
+				<input type="checkbox" value="5" id="check0005">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">SEBASTIAO REIS</span>
+				<input type="checkbox" value="230" id="check0230">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">SIDNEI BENETI</span>
+				<input type="checkbox" value="1137" id="check1137">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">SILVA PRADO</span>
+				<input type="checkbox" value="9" id="check0009">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">TEORI ALBINO ZAVASCKI</span>
+				<input type="checkbox" value="1124" id="check1124">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">VASCO DELLA GIUSTINA (DESEMBARGADOR CONVOCADO DO TJ/RS)</span>
+				<input type="checkbox" value="8155" id="check8155">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">VICENTE LEAL</span>
+				<input type="checkbox" value="1103" id="check1103">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">WALDEMAR ZVEITER</span>
+				<input type="checkbox" value="1085" id="check1085">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">WALTER DE ALMEIDA GUILHERME (DESEMBARGADOR CONVOCADO DO TJ/SP)</span>
+				<input type="checkbox" value="8380" id="check8380">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">WASHINGTON BOLIVAR</span>
+				<input type="checkbox" value="124" id="check0124">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">WILLIAM PATTERSON</span>
+				<input type="checkbox" value="183" id="check0183">
+				<span class="checkmark"></span>
+				</label>
+
+  				<label class="customCheckbox"><span class="nome">WILSON GONCALVES</span>
+				<input type="checkbox" value="175" id="check0175">
+				<span class="checkmark"></span>
+				</label>
+
+</div>
+</div>
+</div>
+
+<script>
+//document.getElementById("relatorSelecionado").value="";
+
+</script>
+	<label for="relator">Ministro(a)</label>
+	</div>
+	
+	<div class="row">
+	<div class="form-group has-fixed-float-label col-12 col-md-6">
+	<input type="hidden" name="dtpb" id="dtpb" value="">
+	<input type="text" name="dtpb1" id="dtpb1" value="" class="data form-control hasDatepicker" autocomplete="off"> &nbsp;a&nbsp; <input type="text" name="dtpb2" id="dtpb2" value="" class="data form-control hasDatepicker" autocomplete="off">
+	<label for="dtpb">Data de publicação</label>
+	</div>
+	<div class="form-group has-fixed-float-label col-12 col-md-6">
+	<input type="hidden" name="dtde" id="dtde" value="">
+	<input type="text" name="dtde1" id="dtde1" value="" class="data form-control hasDatepicker" autocomplete="off"> &nbsp;a&nbsp; <input type="text" name="dtde2" id="dtde2" value="" class="data form-control hasDatepicker" autocomplete="off">
+	<label for="dtde">Data de julgamento</label>
+	</div>
+	</div>
+
+	<div class="form-group has-fixed-float-label">
+	<div id="divOrgaosJulgadoresAvancada">
+	
+
+
+<span class="clsControlaDiv">
+<span id="spanNomesOrgaos">
+<i class="icofont-rounded-down t-azul"></i>
+<i class="icofont-rounded-up t-azul"></i>
+</span>
+</span>
+<input type="hidden" name="orgao" id="orgao" value="">		
+<div>
+
+		<label class="customCheckbox"><span class="nome">PRIMEIRA TURMA</span>
+		<input type="checkbox" value="T1" id="acheckT1">
+		<span class="checkmark"></span>
+		</label>
+
+		<label class="customCheckbox"><span class="nome">SEGUNDA TURMA</span>
+		<input type="checkbox" value="T2" id="acheckT2">
+		<span class="checkmark"></span>
+		</label>
+
+		<label class="customCheckbox"><span class="nome">TERCEIRA TURMA</span>
+		<input type="checkbox" value="T3" id="acheckT3">
+		<span class="checkmark"></span>
+		</label>
+
+		<label class="customCheckbox"><span class="nome">QUARTA TURMA</span>
+		<input type="checkbox" value="T4" id="acheckT4">
+		<span class="checkmark"></span>
+		</label>
+
+		<label class="customCheckbox"><span class="nome">QUINTA TURMA</span>
+		<input type="checkbox" value="T5" id="acheckT5">
+		<span class="checkmark"></span>
+		</label>
+
+		<label class="customCheckbox"><span class="nome">SEXTA TURMA</span>
+		<input type="checkbox" value="T6" id="acheckT6">
+		<span class="checkmark"></span>
+		</label>
+
+		<label class="customCheckbox"><span class="nome">PRIMEIRA SEÇÃO</span>
+		<input type="checkbox" value="S1" id="acheckS1">
+		<span class="checkmark"></span>
+		</label>
+
+		<label class="customCheckbox"><span class="nome">SEGUNDA SEÇÃO</span>
+		<input type="checkbox" value="S2" id="acheckS2">
+		<span class="checkmark"></span>
+		</label>
+
+		<label class="customCheckbox"><span class="nome">TERCEIRA SEÇÃO</span>
+		<input type="checkbox" value="S3" id="acheckS3">
+		<span class="checkmark"></span>
+		</label>
+
+		<label class="customCheckbox"><span class="nome">CORTE ESPECIAL</span>
+		<input type="checkbox" value="CE" id="acheckCE">
+		<span class="checkmark"></span>
+		</label>
+
+		<label class="customCheckbox"><span class="nome">PRESIDÊNCIA</span>
+		<input type="checkbox" value="PS" id="acheckPS">
+		<span class="checkmark"></span>
+		</label>
+
+		<label class="customCheckbox"><span class="nome">VICE-PRESIDÊNCIA</span>
+		<input type="checkbox" value="VP" id="acheckVP">
+		<span class="checkmark"></span>
+		</label>
+
+</div>
+
+
+
+<script>
+//document.getElementById("orgaoSelecionado").value="";
+
+</script>
+	</div>
+	<label for="orgao">Órgão Julgador</label>
+	</div>
+	<div class="form-group has-float-label">
+	<i class="icofont-question hasHint d-none d-md-block"></i>
+	<div class="hint">
+	<h4>Ementa</h4>    <p>Os termos e/ou palavras digitado(s) serão pesquisados simultaneamente em um ou mais dos seguintes campos: ementa, campo de Informações Complementares e campo de Termos Auxiliares à Pesquisa.</p>  
+	<!-- <h4>Ementa</h4>
+	<p>Os termos e/ou palavras digitado(s) serão pesquisados simultaneamente em um ou mais dos seguintes campos: ementa, campo de Informações Complementares e campo de Termos Auxiliares à Pesquisa.</p>
+	-->
+	</div>
+    <input type="text" class="form-control clearable" name="ementa" id="ementa" value="">
+	<label for="ementa">Ementa/Indexação</label>
+	</div>
+	
+	<div class="form-group has-float-label">
+	<i class="icofont-question hasHint"></i>
+	<div class="hint">
+	<h4>Notas</h4>    <p>Notas são comentários feitos pela área de Jurisprudência do Tribunal.</p>  
+	<!-- 
+	<h4>Notas</h4>
+	<p>Notas são comentários feitos pela área de Jurisprudência do Tribunal.</p>
+	-->
+	</div>
+		
+<select name="nota" id="nota" class="form-control clearable">
+<option value="">Selecione...</option>
+
+
+
+
+	<option value="(VEJA ADJ3 (RESCISÓRIA OU AR$))">Ações Rescisórias procedentes</option>
+
+	<option value="JUIZO ADJ2 RETRATACAO">Acórdãos com juízo de retratação</option>
+
+	<option value="PETRECHOS">Apreensão de petrechos usualmente utilizados no tráfico de entorpecentes</option>
+
+	<option value="PROCESSO">Casos Notórios</option>
+
+	<option value="ANS">Cobertura/Negativa de medicamento, procedimento, equipamento ou tratamento não previsto no rol ANS</option>
+
+	<option value="DECISAO ADJ DE ADJ (AFETACAO OU ADMISSAO)">Decisões de Afetação/Admissão</option>
+
+	<option value="AMBIENT$">Direito Ambiental</option>
+
+	<option value="(VEJA ADJ2 (EMBARGO$ ADJ2 DECLAR$ OU EDCL$ OU DERESP$))">Embargos de Declaração acolhidos</option>
+
+	<option value="(VEJA ADJ2 (EMBARGOS ADJ2 DIVERGEN$ OU ERESP$))">Embargos de Divergência providos</option>
+
+	<option value="ESTETICO">Indenização por dano estético</option>
+
+	<option value="MORAL">Indenização por dano moral</option>
+
+	<option value="DANO ADJ MORAL ADJ COLETIVO">Indenização por dano moral coletivo</option>
+
+	<option value="(JULGAMENTO E MERITO E PUIL)">Julgamento de mérito de Pedido de uniformização de interpretação de lei</option>
+
+	<option value="$PENHORABILIDADE">Penhorabilidade ou impenhorabilidade de bens</option>
+
+	<option value="INSIGNIFICÂNCIA">Princípio da insignificância</option>
+
+	<option value="PROPOSTA COM REVISAO COM TEMA COM RECURSO ADJ REPETITIVO">Proposta de Revisão de Tema de Recurso Repetitivo</option>
+
+	<option value="QUANTIDAD$ COM DROGA">Quantidade de droga apreendida</option>
+
+	<option value="REAFIRMACAO COM JURISPRUDENCIA">Reafirmação de Jurisprudência</option>
+
+	<option value="(JULGADO E CONFORME E ((RECURSOS ADJ REPETITIVOS) OU IAC))">Recursos Repetitivos e IACs</option>
+
+	<option value="DISTINGUISHING">Técnica de distinção</option>
+
+	<option value="OVERRULING">Técnica de superação</option>
+
+	<option value="(TEMA AND RACIAL)">Tema: perspectiva racial</option>
+
+	<option value="(TEMA COM VIOLENCIA)">Tema: violência doméstica e familiar</option>
+
+	<option value="(REVISAO ADJ DA ADJ TESE) OU (TESE ADJ REVISADA)">Tese revisada</option>
+
+
+</select>
+
+	<label for="notas">Notas</label>
+	</div>
+
+	<div id="idConjuntoCamposLegislacao">
+
+	<i class="icofont-question hasHint"></i>
+	<div class="hint">
+	<h4>Norma</h4>    <p>É possível escolher um ou mais campos em normas. Adicione mais norma para pesquisar mais um grupo de critérios de uma norma.</p>  
+	<!-- 
+	<h4>Norma</h4>
+	<p>É possível escolher um ou mais campos em normas. Adicione mais norma para pesquisar mais um grupo de critérios de uma norma.</p>
+	-->
+	</div>
+	<input type="hidden" name="ref" id="ref" value="">
+	
+	<div id="idConjuntoCamposLegislacao0" class="clsConjuntoCamposLegislacao has-fixed-float-label">
+	<!-- <div class="row"><div class="col-12 text-end"><button type="button" class="btn-close"></button></div></div> -->
+	<div class="row">
+	<div class="form-group col-12 col-md-8 has-float-label">
+	
+
+
+  	<input type="text" class="form-control clearable siglajud" id="siglajud_0" list="listasiglajud"> 
+    <label for="siglajud_0">Norma</label>
+
+<datalist id="listasiglajud">
+  
+  <option value="CPC-15">CÓDIGO DE PROCESSO CIVIL DE 2015 (CPC-15)</option>
+
+  <option value="CP-40">CÓDIGO PENAL (CP-40)</option>
+
+  <option value="SUM(STJ)">SÚMULA DO SUPERIOR TRIBUNAL DE JUSTIÇA (SUM(STJ))</option>
+
+  <option value="CC-02">CÓDIGO CIVIL DE 2002 (CC-02)</option>
+
+  <option value="CDC-90">CÓDIGO DE DEFESA DO CONSUMIDOR (CDC-90)</option>
+
+  <option value="CPC-73">CÓDIGO DE PROCESSO CIVIL DE 1973 (CPC-73)</option>
+
+  <option value="CTN-66">CÓDIGO TRIBUTÁRIO NACIONAL (CTN-66)</option>
+
+  <option value="CF-1988">CONSTITUIÇÃO FEDERAL DE 1988 (CF-1988)</option>
+
+  <option value="ECA-90">ESTATUTO DA CRIANÇA E DO ADOLESCENTE (ECA-90)</option>
+
+  <option value="LBPS-91">LEI DE BENEFÍCIOS DA PREVIDÊNCIA SOCIAL (LBPS-91)</option>
+
+  <option value="LDR-06">LEI DE DROGAS (LDR-06)</option>
+
+  <option value="LEP-84">LEI DE EXECUÇÃO PENAL (LEP-84)</option>
+
+  <option value="LEF-80">LEI DE EXECUÇÕES FISCAIS (LEF-80)</option>
+
+  <option value="LIA-92">LEI DE IMPROBIDADE ADMINISTRATIVA (LIA-92)</option>
+
+  <option value="LMS-09">LEI DO MANDADO DE SEGURANÇA (LMS-09)</option>
+
+  <option value="LCH-90">LEI DOS CRIMES HEDIONDOS (LCH-90)</option>
+
+  <option value="RISTJ-89">REGIMENTO INTERNO DO SUPERIOR TRIBUNAL DE JUSTIÇA (RISTJ-89)</option>
+
+  <option value="SUM(STF)">SÚMULA DO SUPREMO TRIBUNAL FEDERAL (SUM(STF))</option>
+
+  <option value="CPP-41">CÓDIGO DE PROCESSO PENAL (CPP-41)</option>
+
+  <option value="DPRES-1932">DECRETO SOBRE PRESCRIÇÃO QUINQUENAL (DPRES-1932)</option>
+
+  <option value="ENPSE1">ENUNCIADO DA I JORNADA DE PREVENÇÃO E SOLUÇÃO EXTRAJUDICIAL DE LITÍGIOS (ENPSE1)</option>
+
+  <option value="ENIBDFAM">ENUNCIADO DO INSTITUTO BRASILEIRO DE DIREITO DE FAMÍLIA (ENIBDFAM)</option>
+
+  <option value="EPI">ESTATUTO DA PRIMEIRA INFÂNCIA (EPI)</option>
+
+  <option value="LIBF-1990">LEI DA IMPENHORABILIDADE DO BEM DE FAMÍLIA (LIBF-1990)</option>
+
+  <option value="LICT">LEI DA INTERCEPTAÇÃO DE COMUNICAÇÕES TELEFÔNICAS (LICT)</option>
+
+  <option value="LTAF- 1997">LEI DA TUTELA ANTECIPADA CONTRA A FAZENDA PÚBLICA (LTAF- 1997)</option>
+
+  <option value="LAUT-2019">LEI DE ABUSO DE AUTORIDADE (LAUT-2019)</option>
+
+  <option value="LAA-68">LEI DE AÇÃO DE ALIMENTOS (LAA-68)</option>
+
+  <option value="LPSS-98">LEI DE PLANOS E SEGUROS PRIVADOS DE ASSISTÊNCIA À SAÚDE (LPSS-98)</option>
+
+  <option value="LSFN">LEI DO SISTEMA FINANCEIRO NACIONAL (LSFN)</option>
+
+  <option value="LCOT">LEI DOS CRIMES CONTRA A ORDEM TRIBUTÁRIA (LCOT)</option>
+
+  <option value="LPELÉ-98">LEI PELÉ (LPELÉ-98)</option>
+
+  <option value="LSECA-08">LEI SECA (LSECA-08)</option>
+
+  <option value="REDUC-2013">RECOMENDAÇÃO SOBRE ATIVIDADES EDUCACIONAIS PARA REMIÇÃO DE PENA (REDUC-2013)</option>
+
+  <option value="RCVID-2020">RECOMENDAÇÃO SOBRE MEDIDAS PREVENTIVAS À PROPAGAÇÃO DA COVID-19 (RCVID-2020)</option>
+
+  <option value="RITNU">REGIMENTO INTERNO TURMA NACIONAL DE UNIFORMIZAÇÃO DOS JUIZADOS ESPECIAIS (RITNU)</option>
+
+  <option value="RIR-2018">REGULAMENTO DO IMPOSTO DE RENDA DE 2018 (RIR-2018)</option>
+
+  <option value="ACBP">ACORDO DE COOPERAÇÃO EDUCACIONAL, CIENTÍFICA E CULTURAL BRASIL-PARAGUAI (ACBP)</option>
+
+  <option value="GATT">ACORDO GERAL SOBRE TARIFAS ADUANEIRAS E COMÉRCIO (GATT)</option>
+
+  <option value="ADCT-46">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS (ADCT-46)</option>
+
+  <option value="ADCT-67">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS (ADCT-67)</option>
+
+  <option value="ADCT-88">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS (ADCT-88)</option>
+
+  <option value="ADCT-BA">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DA BA (ADCT-BA)</option>
+
+  <option value="ADCT-PB">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DA PB (ADCT-PB)</option>
+
+  <option value="ADCT-AL">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DE AL (ADCT-AL)</option>
+
+  <option value="ADCT-GO">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DE GO (ADCT-GO)</option>
+
+  <option value="ADCT-MG">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DE MG (ADCT-MG)</option>
+
+  <option value="ADCT-PE">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DE PE (ADCT-PE)</option>
+
+  <option value="ADCT-RO">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DE RO (ADCT-RO)</option>
+
+  <option value="ADCT-SC">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DE SC (ADCT-SC)</option>
+
+  <option value="ADCT-SE">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DE SE (ADCT-SE)</option>
+
+  <option value="ADCT-SP">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DE SP (ADCT-SP)</option>
+
+  <option value="ADCT-AC">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO AC (ADCT-AC)</option>
+
+  <option value="ADCT-AM">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO AM (ADCT-AM)</option>
+
+  <option value="ADCT-AP">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO AP (ADCT-AP)</option>
+
+  <option value="ADCT-CE">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO CE (ADCT-CE)</option>
+
+  <option value="ADCT-ES">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO ES (ADCT-ES)</option>
+
+  <option value="ADCT-MA">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO MA (ADCT-MA)</option>
+
+  <option value="ADCT-MS">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO MS (ADCT-MS)</option>
+
+  <option value="ADCT-MT">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO MT (ADCT-MT)</option>
+
+  <option value="ADCT-PA">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO PA (ADCT-PA)</option>
+
+  <option value="ADCT-PI">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO PI (ADCT-PI)</option>
+
+  <option value="ADCT-PR">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO PR (ADCT-PR)</option>
+
+  <option value="ADCT-RJ">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO RJ (ADCT-RJ)</option>
+
+  <option value="ADCT-RN">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO RN (ADCT-RN)</option>
+
+  <option value="ADCT-RS">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO RS (ADCT-RS)</option>
+
+  <option value="ADCT-TO">ATO DAS DISPOSIÇÕES CONSTITUCIONAIS TRANSITÓRIAS DO TO (ADCT-TO)</option>
+
+  <option value="CBA-86">CÓDIGO BRASILEIRO DE AERONÁUTICA (CBA-86)</option>
+
+  <option value="CBAP">CÓDIGO BRASILEIRO DE AUTORREGULAMENTAÇÃO PUBLICITÁRIA (CBAP)</option>
+
+  <option value="CBT-62">CÓDIGO BRASILEIRO DE TELECOMUNICAÇÕES (CBT-62)</option>
+
+  <option value="CC-16">CÓDIGO CIVIL DE 1916 (CC-16)</option>
+
+  <option value="CCM-50">CÓDIGO COMERCIAL (CCM-50)</option>
+
+  <option value="CJM-34">CÓDIGO DA JUSTIÇA MILITAR DE 1934 (CJM-34)</option>
+
+  <option value="CJM-38">CÓDIGO DA JUSTIÇA MILITAR DE 1938 (CJM-38)</option>
+
+  <option value="CA-34">CÓDIGO DE ÁGUAS (CA-34)</option>
+
+  <option value="CEMN-2008">CÓDIGO DE ÉTICA DA MAGISTRATURA NACIONAL (CEMN-2008)</option>
+
+  <option value="CEDA-95">CÓDIGO DE ÉTICA E DISCIPLINA DA OAB (CEDA-95)</option>
+
+  <option value="CEM-88">CÓDIGO DE ÉTICA MÉDICA (CEM-88)</option>
+
+  <option value="CNCGJ-SC">CÓDIGO DE NORMAS DA CORREGEDORIA-GERAL DA JUSTIÇA - SC (CNCGJ-SC)</option>
+
+  <option value="CNCGJ-PR">CÓDIGO DE NORMAS DA CORREGEDORIA-GERAL DE JUSTIÇA - PR (CNCGJ-PR)</option>
+
+  <option value="CNCGJ-RJ">CÓDIGO DE NORMAS DA CORREGEDORIA-GERAL DE JUSTIÇA - RJ (CNCGJ-RJ)</option>
+
+  <option value="CPC-39">CÓDIGO DE PROCESSO CIVIL DE 1939 (CPC-39)</option>
+
+  <option value="CPPM-20">CÓDIGO DE PROCESSO PENAL MILITAR DE 1920 (CPPM-20)</option>
+
+  <option value="CPPM-69">CÓDIGO DE PROCESSO PENAL MILITAR DE 1969 (CPPM-69)</option>
+
+  <option value="CPI-45">CÓDIGO DE PROPRIEDADE INDUSTRIAL DE 1945 (CPI-45)</option>
+
+  <option value="CPI-71">CÓDIGO DE PROPRIEDADE INDUSTRIAL DE 1971 (CPI-71)</option>
+
+  <option value="CPI-96">CÓDIGO DE PROPRIEDADE INDUSTRIAL DE 1996 (CPI-96)</option>
+
+  <option value="CTB-97">CÓDIGO DE TRÂNSITO BRASILEIRO (CTB-97)</option>
+
+  <option value="CEL-50">CÓDIGO ELEITORAL DE 1950 (CEL-50)</option>
+
+  <option value="CEL-65">CÓDIGO ELEITORAL DE 1965 (CEL-65)</option>
+
+  <option value="CEMA-MT">CÓDIGO ESTADUAL DO MEIO AMBIENTE DE MATO GROSSO (CEMA-MT)</option>
+
+  <option value="CFLO-65">CÓDIGO FLORESTAL DE 1965 (CFLO-65)</option>
+
+  <option value="CFLO-12">CÓDIGO FLORESTAL DE 2012 (CFLO-12)</option>
+
+  <option value="CJPA-81">CÓDIGO JUDICIÁRIO DO ESTADO DO PARÁ (CJPA-81)</option>
+
+  <option value="CNT-41">CÓDIGO NACIONAL DE TRÂNSITO DE 1941 (CNT-41)</option>
+
+  <option value="CNT-66">CÓDIGO NACIONAL DE TRÂNSITO DE 1966 (CNT-66)</option>
+
+  <option value="CPM-44">CÓDIGO PENAL MILITAR DE 1944 (CPM-44)</option>
+
+  <option value="CPM-69">CÓDIGO PENAL MILITAR DE 1969 (CPM-69)</option>
+
+  <option value="CLPS-84">CONSOLIDAÇÃO DAS LEIS DA PREVIDÊNCIA SOCIAL (CLPS-84)</option>
+
+  <option value="CLPS-76">CONSOLIDAÇÃO DAS LEIS DA PREVIDÊNCIA SOCIAL (CLPS-76)</option>
+
+  <option value="CLT-43">CONSOLIDAÇÃO DAS LEIS DO TRABALHO (CLT-43)</option>
+
+  <option value="CES-BA">CONSTITUIÇÃO DA BAHIA (CES-BA)</option>
+
+  <option value="CES-PB">CONSTITUIÇÃO DA PARAÍBA (CES-PB)</option>
+
+  <option value="CES-AL">CONSTITUIÇÃO DE ALAGOAS (CES-AL)</option>
+
+  <option value="CES-GO">CONSTITUIÇÃO DE GOIÁS (CES-GO)</option>
+
+  <option value="CES-MG">CONSTITUIÇÃO DE MINAS GERAIS (CES-MG)</option>
+
+  <option value="CES-PE">CONSTITUIÇÃO DE PERNAMBUCO (CES-PE)</option>
+
+  <option value="CES-RO">CONSTITUIÇÃO DE RONDÔNIA (CES-RO)</option>
+
+  <option value="CES-RR">CONSTITUIÇÃO DE RORAIMA (CES-RR)</option>
+
+  <option value="CES-SC">CONSTITUIÇÃO DE SANTA CATARINA (CES-SC)</option>
+
+  <option value="CES-SP">CONSTITUIÇÃO DE SÃO PAULO (CES-SP)</option>
+
+  <option value="CES-SE">CONSTITUIÇÃO DE SERGIPE (CES-SE)</option>
+
+  <option value="CES-AC">CONSTITUIÇÃO DO ACRE (CES-AC)</option>
+
+  <option value="CES-AP">CONSTITUIÇÃO DO AMAPÁ (CES-AP)</option>
+
+  <option value="CES-AM">CONSTITUIÇÃO DO AMAZONAS (CES-AM)</option>
+
+  <option value="CES-CE">CONSTITUIÇÃO DO CEARÁ (CES-CE)</option>
+
+  <option value="CES-ES">CONSTITUIÇÃO DO ESPÍRITO SANTO (CES-ES)</option>
+
+  <option value="CI-1824">CONSTITUIÇÃO DO IMPÉRIO DE 1824 (CI-1824)</option>
+
+  <option value="CES-MA">CONSTITUIÇÃO DO MARANHÃO (CES-MA)</option>
+
+  <option value="CES-MT">CONSTITUIÇÃO DO MATO GROSSO (CES-MT)</option>
+
+  <option value="CES-MS">CONSTITUIÇÃO DO MATO GROSSO DO SUL (CES-MS)</option>
+
+  <option value="CES-PR">CONSTITUIÇÃO DO PARANÁ (CES-PR)</option>
+
+  <option value="CES-PA">CONSTITUIÇÃO DO PARÁ (CES-PA)</option>
+
+  <option value="CES-PI">CONSTITUIÇÃO DO PIAUÍ (CES-PI)</option>
+
+  <option value="CES-RJ">CONSTITUIÇÃO DO RIO DE JANEIRO (CES-RJ)</option>
+
+  <option value="CES-RN">CONSTITUIÇÃO DO RIO GRANDE DO NORTE (CES-RN)</option>
+
+  <option value="CES-RS">CONSTITUIÇÃO DO RIO GRANDE DO SUL (CES-RS)</option>
+
+  <option value="CES-TO">CONSTITUIÇÃO DO TOCANTINS (CES-TO)</option>
+
+  <option value="CF-1891">CONSTITUIÇÃO FEDERAL DE 1891 (CF-1891)</option>
+
+  <option value="CF-1934">CONSTITUIÇÃO FEDERAL DE 1934 (CF-1934)</option>
+
+  <option value="CF-1937">CONSTITUIÇÃO FEDERAL DE 1937 (CF-1937)</option>
+
+  <option value="CF-1946">CONSTITUIÇÃO FEDERAL DE 1946 (CF-1946)</option>
+
+  <option value="CF-1967">CONSTITUIÇÃO FEDERAL DE 1967 (CF-1967)</option>
+
+  <option value="CF-1969">CONSTITUIÇÃO FEDERAL DE 1969 (CF-1969)</option>
+
+  <option value="CADH">CONVENÇÃO AMERICANA SOBRE DIREITOS HUMANOS (CADH)</option>
+
+  <option value="CTES">CONVENÇÃO CONTRA TRÁFICO ILÍCITO DE ENTORPECENTES E SUBS. PSICOTRÓPICAS (CTES)</option>
+
+  <option value="CCC">CONVENÇÃO DAS NAÇÕES UNIDAS CONTRA A CORRUPÇÃO (CCC)</option>
+
+  <option value="CCOT">CONVENÇÃO DAS NAÇÕES UNIDAS CONTRA O CRIME ORGANIZADO TRANSNACIONAL (CCOT)</option>
+
+  <option value="CBN">CONVENÇÃO DE BERNA PARA A PROTEÇÃO DAS OBRAS LITERÁRIAS E ARTÍSTICAS (CBN)</option>
+
+  <option value="CDIP">CONVENÇÃO DE DIREITO INTERNACIONAL PRIVADO (CDIP)</option>
+
+  <option value="CHPCC">CONVENÇÃO DE HAIA SOBRE OBTENÇÃO DE PROVAS CIVIL OU COMERCIAL (CHPCC)</option>
+
+  <option value="CSAE">CONVENÇÃO DE NOVA IORQUE SOBRE SENTENÇAS ARBITRAIS ESTRANGEIRAS (CSAE)</option>
+
+  <option value="CVP">CONVENÇÃO DE PARIS, REVISÃO DE ESTOCOLMO (CVP)</option>
+
+  <option value="CVS">CONVENÇÃO DE VARSÓVIA (CVS)</option>
+
+  <option value="CVRC">CONVENÇÃO DE VIENA SOBRE RELAÇÕES CONSULARES (CVRC)</option>
+
+  <option value="CVRD">CONVENÇÃO DE VIENA SOBRE RELAÇÕES DIPLOMÁTICAS (CVRD)</option>
+
+  <option value="CICC">CONVENÇÃO INTERAMERICANA CONTRA A CORRUPÇÃO (CICC)</option>
+
+  <option value="CICR">CONVENÇÃO INTERAMERICANA SOBRE CARTAS ROGATÓRIAS (CICR)</option>
+
+  <option value="RESONU1989">CONVENÇÃO INTERNACIONAL SOBRE OS DIREITOS DA CRIANÇA (RESONU1989)</option>
+
+  <option value="CDPD">CONVENÇÃO INTERNACIONAL SOBRE OS DIREITOS DAS PESSOAS COM DEFICIÊNCIA (CDPD)</option>
+
+  <option value="CVTAI">CONVENÇÃO PARA UNIFICAÇÃO DE REGRAS DE TRANSPORTE AÉREO INTERNACIONAL (CVTAI)</option>
+
+  <option value="CLDPE">CONVENÇÃO SOBRE LEGALIZAÇÃO DE DOCUMENTOS PÚBLICOS ESTRANGEIROS (CLDPE)</option>
+
+  <option value="CSIC">CONVENÇÃO SOBRE OS ASPECTOS CIVIS DO SEQUESTRO INTERNACIONAL DE CRIANÇAS (CSIC)</option>
+
+  <option value="DUDH">DECLARAÇÃO UNIVERSAL DOS DIREITOS HUMANOS (DUDH)</option>
+
+  <option value="ENUASTJ">ENUNCIADO ADMINISTRATIVO DO SUPERIOR TRIBUNAL DE JUSTIÇA (ENUASTJ)</option>
+
+  <option value="ENUENFAM">ENUNCIADO DA ESCOLA NAC. DE FORMAÇÃO E APERFEIÇOAMENTO DE MAGISTRADOS (ENUENFAM)</option>
+
+  <option value="ENCV1(CJF)">ENUNCIADO DA PRIMEIRA JORNADA DE DIREITO CIVIL (ENCV1(CJF))</option>
+
+  <option value="ENCM1(CJF)">ENUNCIADO DA PRIMEIRA JORNADA DE DIREITO COMERCIAL (ENCM1(CJF))</option>
+
+  <option value="ENSA1(CNJ)">ENUNCIADO DA PRIMEIRA JORNADA DE DIREITO DA SAÚDE (ENSA1(CNJ))</option>
+
+  <option value="ENPP1(CJF)">ENUNCIADO DA PRIMEIRA JORNADA DE DIREITO E PROCESSO PENAL (ENPP1(CJF))</option>
+
+  <option value="ENPC1(CJF)">ENUNCIADO DA PRIMEIRA JORNADA DE DIREITO PROCESSUAL CIVIL (ENPC1(CJF))</option>
+
+  <option value="ENCV4(CJF)">ENUNCIADO DA QUARTA JORNADA DE DIREITO CIVIL (ENCV4(CJF))</option>
+
+  <option value="ENCV5(CJF)">ENUNCIADO DA QUINTA JORNADA DE DIREITO CIVIL (ENCV5(CJF))</option>
+
+  <option value="ENCV2(CJF)">ENUNCIADO DA SEGUNDA JORNADA DE DIREITO CIVIL (ENCV2(CJF))</option>
+
+  <option value="ENCM2(CJF)">ENUNCIADO DA SEGUNDA JORNADA DE DIREITO COMERCIAL (ENCM2(CJF))</option>
+
+  <option value="ENSA2(CNJ)">ENUNCIADO DA SEGUNDA JORNADA DE DIREITO DA SAÚDE (ENSA2(CNJ))</option>
+
+  <option value="ENPC2(CJF)">ENUNCIADO DA SEGUNDA JORNADA DE DIREITO PROCESSUAL CIVIL (ENPC2(CJF))</option>
+
+  <option value="ENCV7(CJF)">ENUNCIADO DA SÉTIMA JORNADA DE DIREITO CIVIL (ENCV7(CJF))</option>
+
+  <option value="ENCV6(CJF)">ENUNCIADO DA SEXTA JORNADA DE DIREITO CIVIL (ENCV6(CJF))</option>
+
+  <option value="ENCV3(CJF)">ENUNCIADO DA TERCEIRA JORNADA DE DIREITO CIVIL (ENCV3(CJF))</option>
+
+  <option value="ENCM3(CJF)">ENUNCIADO DA TERCEIRA JORNADA DE DIREITO COMERCIAL (ENCM3(CJF))</option>
+
+  <option value="ENCJF">ENUNCIADO DO CONSELHO DA JUSTIÇA FEDERAL (ENCJF)</option>
+
+  <option value="ENCRPS">ENUNCIADO DO CONSELHO DE RECURSOS DA PREVIDÊNCIA SOCIAL (ENCRPS)</option>
+
+  <option value="ENCNJ">ENUNCIADO DO CONSELHO NACIONAL DE JUSTIÇA (ENCNJ)</option>
+
+  <option value="ENFNJE">ENUNCIADO DO FÓRUM NACIONAL DE JUIZADOS ESPECIAIS -  FONAJE (ENFNJE)</option>
+
+  <option value="ENFPPC">ENUNCIADO DO FÓRUM PERMANENTE DE PROCESSUALISTAS CIVIS (ENFPPC)</option>
+
+  <option value="ENFPSPF">ENUNCIADO DO FÓRUM PERMANENTE DO SISTEMA PENITENCIÁRIO FEDERAL (ENFPSPF)</option>
+
+  <option value="ENCRIM">ENUNCIADO DO GRUPO NACIONAL DE COORD. DE CENTRO DE APOIO CRIMINAL (ENCRIM)</option>
+
+  <option value="EMPE-99">ESTATUTO DA MICROEMPRESA E DA EMPRESA DE PEQUENO PORTE DE 1999 (EMPE-99)</option>
+
+  <option value="EMPE-06">ESTATUTO DA MICROEMPRESA E DA EMPRESA DE PEQUENO PORTE DE 2006 (EMPE-06)</option>
+
+  <option value="EOAB-63">ESTATUTO DA ORDEM DOS ADVOGADOS DO BRASIL DE 1963 (EOAB-63)</option>
+
+  <option value="EOAB-94">ESTATUTO DA ORDEM DOS ADVOGADOS DO BRASIL DE 1994 (EOAB-94)</option>
+
+  <option value="EPD-2015">ESTATUTO DA PESSOA COM DEFICIÊNCIA (EPD-2015)</option>
+
+  <option value="ET-64">ESTATUTO DA TERRA (ET-64)</option>
+
+  <option value="TPI">ESTATUTO DE ROMA DO TRIBUNAL PENAL INTERNACIONAL (TPI)</option>
+
+  <option value="ED-2003">ESTATUTO DO DESARMAMENTO (ED-2003)</option>
+
+  <option value="EEST-80">ESTATUTO DO ESTRANGEIRO DE 1980 (EEST-80)</option>
+
+  <option value="EIDO-2003">ESTATUTO DO IDOSO (EIDO-2003)</option>
+
+  <option value="EIN-73">ESTATUTO DO ÍNDIO (EIN-73)</option>
+
+  <option value="EMPU-93">ESTATUTO DO MINISTÉRIO PÚBLICO DA UNIÃO (EMPU-93)</option>
+
+  <option value="EMIL-80">ESTATUTO DOS MILITARES (EMIL-80)</option>
+
+  <option value="LCP-41">LEI DAS CONTRAVENÇÕES PENAIS (LCP-41)</option>
+
+  <option value="LSA-76">LEI DAS SOCIEDADES POR AÇÕES (LSA-76)</option>
+
+  <option value="LACP-85">LEI DE AÇÃO CIVIL PÚBLICA (LACP-85)</option>
+
+  <option value="LAP-65">LEI DE AÇÃO POPULAR (LAP-65)</option>
+
+  <option value="LAI-11">LEI DE ACESSO À INFORMAÇÃO (LAI-11)</option>
+
+  <option value="LA-96">LEI DE ARBITRAGEM (LA-96)</option>
+
+  <option value="LAJ-50">LEI DE ASSISTÊNCIA JUDICIÁRIA (LAJ-50)</option>
+
+  <option value="LDC-11">LEI DE DEFESA DA CONCORRÊNCIA (LDC-11)</option>
+
+  <option value="LD-41">LEI DE DESAPROPRIAÇÃO (LD-41)</option>
+
+  <option value="LDBE-61">LEI DE DIRETRIZES E BASES DA EDUCAÇÃO NACIONAL DE 1961 (LDBE-61)</option>
+
+  <option value="LDBE-71">LEI DE DIRETRIZES E BASES DA EDUCAÇÃO NACIONAL DE 1971 (LDBE-71)</option>
+
+  <option value="LDBE-96">LEI DE DIRETRIZES E BASES DA EDUCAÇÃO NACIONAL DE 1996 (LDBE-96)</option>
+
+  <option value="LF-45">LEI DE FALÊNCIA (LF-45)</option>
+
+  <option value="LIDPU-95">LEI DE IMPLANTAÇÃO DA DEFENSORIA PÚBLICA DA UNIÃO (LIDPU-95)</option>
+
+  <option value="LI-67">LEI DE IMPRENSA (LI-67)</option>
+
+  <option value="LICP-41">LEI DE INT. AO CÓD. PENAL E À LEI DE CONTS. PENAIS (LICP-41)</option>
+
+  <option value="LICPP-41">LEI DE INTRODUÇÃO AO CÓDIGO DE PROCESSO PENAL (LICPP-41)</option>
+
+  <option value="LINDB-42">LEI DE INTRODUÇÃO ÀS NORMAS DO DIREITO BRASILEIRO (LINDB-42)</option>
+
+  <option value="LC-93">LEI DE LICITAÇÕES (LC-93)</option>
+
+  <option value="LLV-34">LEI DE LUVAS (LLV-34)</option>
+
+  <option value="LOJPB">LEI DE ORGANIZAÇÃO JUDICIÁRIA DA PARAÍBA (LOJPB)</option>
+
+  <option value="LOJMG-01">LEI DE ORGANIZAÇÃO JUDICIÁRIA DE MINAS GERAIS (LOJMG-01)</option>
+
+  <option value="LOJMG-95">LEI DE ORGANIZAÇÃO JUDICIÁRIA DE MINAS GERAIS (LOJMG-95)</option>
+
+  <option value="LOJDF-91">LEI DE ORGANIZAÇÃO JUDICIÁRIA DO DF DE 1991 (LOJDF-91)</option>
+
+  <option value="LOJDF-79">LEI DE ORGANIZAÇÃO JUDICIÁRIA DO DF E TERRITÓRIOS DE 1979 (LOJDF-79)</option>
+
+  <option value="LOJDF-08">LEI DE ORGANIZAÇÃO JUDICIÁRIA DO DF E TERRITÓRIOS DE 2008 (LOJDF-08)</option>
+
+  <option value="LOJM-69">LEI DE ORGANIZAÇÃO JUDICIÁRIA MILITAR (LOJM-69)</option>
+
+  <option value="LPA-99">LEI DE PROCESSO ADMINISTRATIVO (LPA-99)</option>
+
+  <option value="LPT">LEI DE PROTEÇÃO A TESTEMUNHA (LPT)</option>
+
+  <option value="LF-05">LEI DE RECUPERAÇÃO JUDICIAL E EXTRAJUDICIAL E DE FALÊNCIA (LF-05)</option>
+
+  <option value="LRP-73">LEI DE REGISTROS PÚBLICOS (LRP-73)</option>
+
+  <option value="LRF-00">LEI DE RESPONSABILIDADE FISCAL (LRF-00)</option>
+
+  <option value="LSN-83">LEI DE SEGURANÇA NACIONAL (LSN-83)</option>
+
+  <option value="LT-97">LEI DE TORTURA (LT-97)</option>
+
+  <option value="LT-76">LEI DE TÓXICOS (LT-76)</option>
+
+  <option value="LU-33">LEI DE USURA (LU-33)</option>
+
+  <option value="LCQ-1985">LEI DO CHEQUE (LCQ-1985)</option>
+
+  <option value="LDS-77">LEI DO DIVÓRCIO E DA SEPARAÇÃO JUDICIAL (LDS-77)</option>
+
+  <option value="LINQ-79">LEI DO INQUILINATO DE 1979 (LINQ-79)</option>
+
+  <option value="LINQ-91">LEI DO INQUILINATO DE 1991 (LINQ-91)</option>
+
+  <option value="LMINJ-2016">LEI DO MANDADO DE INJUNÇÃO (LMINJ-2016)</option>
+
+  <option value="LMS-51">LEI DO MANDADO DE SEGURANÇA (LMS-51)</option>
+
+  <option value="LPAC-2019">LEI DO PACOTE ANTICRIME (LPAC-2019)</option>
+
+  <option value="LPE-06">LEI DO PROCESSO ELETRÔNICO (LPE-06)</option>
+
+  <option value="LCON-08">LEI DOS CONSÓRCIOS (LCON-08)</option>
+
+  <option value="LCCSF-86">LEI DOS CRIMES CONTRA O SISTEMA FINANCEIRO NACIONAL (LCCSF-86)</option>
+
+  <option value="LDA-98">LEI DOS DIREITOS AUTORAIS (LDA-98)</option>
+
+  <option value="LJE-95">LEI DOS JUIZADOS ESPECIAIS CÍVEIS E CRIMINAIS (LJE-95)</option>
+
+  <option value="LJEF-01">LEI DOS JUIZADOS ESPECIAIS FEDERAIS (LJEF-01)</option>
+
+  <option value="LFER-1979">LEI FERRARI (LFER-1979)</option>
+
+  <option value="LGT-97">LEI GERAL DE TELECOMUNICAÇÕES (LGT-97)</option>
+
+  <option value="LKANDIR-96">LEI KANDIR (LKANDIR-96)</option>
+
+  <option value="LMP-06">LEI MARIA DA PENHA (LMP-06)</option>
+
+  <option value="LOAGU-93">LEI ORGÂNICA DA ADVOCACIA-GERAL DA UNIÃO (LOAGU-93)</option>
+
+  <option value="LOAS-93">LEI ORGÂNICA DA ASSISTÊNCIA SOCIAL (LOAS-93)</option>
+
+  <option value="LOMAN-79">LEI ORGÂNICA DA MAGISTRATURA NACIONAL (LOMAN-79)</option>
+
+  <option value="LOPS-60">LEI ORGÂNICA DA PREVIDÊNCIA SOCIAL (LOPS-60)</option>
+
+  <option value="LOSS-91">LEI ORGÂNICA DA SEGURIDADE SOCIAL (LOSS-91)</option>
+
+  <option value="LODF-93">LEI ORGÂNICA DO DISTRITO FEDERAL (LODF-93)</option>
+
+  <option value="LOTCU-92">LEI ORGÂNICA DO TRIBUNAL DE CONTAS DA UNIÃO (LOTCU-92)</option>
+
+  <option value="LONMP-93">LEI ORGÂNICA NACIONAL DO MINISTÉRIO PÚBLICO (LONMP-93)</option>
+
+  <option value="LPNM-1981">LEI SOBRE A POLÍTICA NACIONAL DO MEIO AMBIENTE (LPNM-1981)</option>
+
+  <option value="LUG">LEI UNIFORME DE GENEBRA (LUG)</option>
+
+  <option value="DLCOM-34">LOCAÇÕES COMERCIAIS E INDUSTRIAIS (DLCOM-34)</option>
+
+  <option value="INTER-14">MARCO CIVIL DA INTERNET (INTER-14)</option>
+
+  <option value="OJ(TST)">ORIENTAÇÃO JURISPRUDENCIAL DO TRIBUNAL SUPERIOR DO TRABALHO (OJ(TST))</option>
+
+  <option value="PDCP">PACTO INTERNACIONAL DOS DIREITOS CIVIS E POLÍTICOS (PDCP)</option>
+
+  <option value="PCLA">PROTOCOLO RELATIVO A CLÁUSULAS DE ARBITRAGEM (PCLA)</option>
+
+  <option value="RJU-90">REGIME JURÍDICO DOS SERVIDORES PÚBLICOS CIVIS DA UNIÃO (RJU-90)</option>
+
+  <option value="RICJF3">REGIMENTO INTERNO DO CONSELHO DA JUSTIÇA FEDERAL DA 3ª REGIÃO (RICJF3)</option>
+
+  <option value="RICNJ-05">REGIMENTO INTERNO DO CONSELHO NACIONAL DE JUSTIÇA DE 2005 (RICNJ-05)</option>
+
+  <option value="RICNJ-09">REGIMENTO INTERNO DO CONSELHO NACIONAL DE JUSTIÇA DE 2009 (RICNJ-09)</option>
+
+  <option value="RISTM-96">REGIMENTO INTERNO DO SUPERIOR TRIBUNAL MILITAR (RISTM-96)</option>
+
+  <option value="RISTF-80">REGIMENTO INTERNO DO SUPREMO TRIBUNAL FEDERAL (RISTF-80)</option>
+
+  <option value="RITA-MG">REGIMENTO INTERNO DO TRIBUNAL DE ALÇADA DE MINAS GERAIS (RITA-MG)</option>
+
+  <option value="RITJ-BA">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DA BAHIA (RITJ-BA)</option>
+
+  <option value="RITJ-PB">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DA PARAÍBA (RITJ-PB)</option>
+
+  <option value="RITJ-AL">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DE ALAGOAS (RITJ-AL)</option>
+
+  <option value="RITJ-GO">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DE GOIÁS (RITJ-GO)</option>
+
+  <option value="RITJ-MT">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DE MATO GROSSO (RITJ-MT)</option>
+
+  <option value="RITJ-MG">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DE MINAS GERAIS (RITJ-MG)</option>
+
+  <option value="RITJ-PE">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DE PERNAMBUCO (RITJ-PE)</option>
+
+  <option value="RITJ-RO">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DE RONDÔNIA (RITJ-RO)</option>
+
+  <option value="RITJ-RR">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DE RORAIMA (RITJ-RR)</option>
+
+  <option value="RITJ-SC">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DE SANTA CATARINA (RITJ-SC)</option>
+
+  <option value="RITJ-SP">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DE SÃO PAULO (RITJ-SP)</option>
+
+  <option value="RITJ-SE">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DE SERGIPE (RITJ-SE)</option>
+
+  <option value="RITJ-TO">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DE TOCANTINS (RITJ-TO)</option>
+
+  <option value="RITJ-AC">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO ACRE (RITJ-AC)</option>
+
+  <option value="RITJ-AP">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO AMAPÁ (RITJ-AP)</option>
+
+  <option value="RITJ-AM">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO AMAZONAS (RITJ-AM)</option>
+
+  <option value="RITJ-CE">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO CEARÁ (RITJ-CE)</option>
+
+  <option value="RITJ-DF">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO DISTRITO FEDERAL (RITJ-DF)</option>
+
+  <option value="RITJ-ES">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO ESPÍRITO SANTO (RITJ-ES)</option>
+
+  <option value="RITJ-MA">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO MARANHÃO (RITJ-MA)</option>
+
+  <option value="RITJ-PR">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO PARANÁ (RITJ-PR)</option>
+
+  <option value="RITJ-PA">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO PARÁ (RITJ-PA)</option>
+
+  <option value="RITJ-PI">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO PIAUÍ (RITJ-PI)</option>
+
+  <option value="RITJ-RJ">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO RIO DE JANEIRO (RITJ-RJ)</option>
+
+  <option value="RITJ-RN">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO RIO GRANDE DO NORTE (RITJ-RN)</option>
+
+  <option value="RITJ-RS">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA DO RIO GRANDE DO SUL (RITJ-RS)</option>
+
+  <option value="RITJ-MS">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA MATO GROSSO DO SUL (RITJ-MS)</option>
+
+  <option value="RITJM-SP">REGIMENTO INTERNO DO TRIBUNAL DE JUSTIÇA MILITAR - SÃO PAULO (RITJM-SP)</option>
+
+  <option value="RITFR-80">REGIMENTO INTERNO DO TRIBUNAL FEDERAL DE RECURSOS (RITFR-80)</option>
+
+  <option value="RITRF-1">REGIMENTO INTERNO DO TRIBUNAL REGIONAL FEDERAL-1 (RITRF-1)</option>
+
+  <option value="RITRF-2">REGIMENTO INTERNO DO TRIBUNAL REGIONAL FEDERAL-2 (RITRF-2)</option>
+
+  <option value="RITRF-3">REGIMENTO INTERNO DO TRIBUNAL REGIONAL FEDERAL-3 (RITRF-3)</option>
+
+  <option value="RITRF-4">REGIMENTO INTERNO DO TRIBUNAL REGIONAL FEDERAL-4 (RITRF-4)</option>
+
+  <option value="RITRF-5">REGIMENTO INTERNO DO TRIBUNAL REGIONAL FEDERAL-5 (RITRF-5)</option>
+
+  <option value="RITST-08">REGIMENTO INTERNO DO TRIBUNAL SUPERIOR DO TRABALHO (RITST-08)</option>
+
+  <option value="RITSE-06">REGIMENTO INTERNO DO TRIBUNAL SUPERIOR ELEITORAL (RITSE-06)</option>
+
+  <option value="RESONU2010">REGRAS DE BANGKOK (RESONU2010)</option>
+
+  <option value="RESONU1985">REGRAS DE BEIJING (RESONU1985)</option>
+
+  <option value="ROCSS-97">REGULAMENTO DA ORGANIZAÇÃO E DO CUSTEIO DA SEGURIDADE SOCIAL (ROCSS-97)</option>
+
+  <option value="RPS-99">REGULAMENTO DA PREVIDÊNCIA SOCIAL (RPS-99)</option>
+
+  <option value="RCNT-68">REGULAMENTO DO CÓDIGO NACIONAL DE TRÂNSITO (RCNT-68)</option>
+
+  <option value="RET-66">REGULAMENTO DO ESTATUTO DA TERRA (RET-66)</option>
+
+  <option value="RIR-66">REGULAMENTO DO IMPOSTO DE RENDA DE 1966 (RIR-66)</option>
+
+  <option value="RIR-75">REGULAMENTO DO IMPOSTO DE RENDA DE 1975 (RIR-75)</option>
+
+  <option value="RIR-80">REGULAMENTO DO IMPOSTO DE RENDA DE 1980 (RIR-80)</option>
+
+  <option value="RIR-94">REGULAMENTO DO IMPOSTO DE RENDA DE 1994 (RIR-94)</option>
+
+  <option value="RIR-99">REGULAMENTO DO IMPOSTO DE RENDA DE 1999 (RIR-99)</option>
+
+  <option value="RIPI-72">REGULAMENTO DO IMPOSTO S/ PRODS. INDUSTRIALIZADOS DE 1972 (RIPI-72)</option>
+
+  <option value="RIPI-79">REGULAMENTO DO IMPOSTO S/ PRODS. INDUSTRIALIZADOS DE 1979 (RIPI-79)</option>
+
+  <option value="RIPI-10">REGULAMENTO DO IMPOSTO S/ PRODS. INDUSTRIALIZADOS DE 2010 (RIPI-10)</option>
+
+  <option value="RBPS-79">REGULAMENTO DOS BENEFÍCIOS DA PREVIDENCIA SOCIAL (RBPS-79)</option>
+
+  <option value="RGPS-73">REGULAMENTO GERAL DA PREVIDÊNCIA SOCIAL (RGPS-73)</option>
+
+  <option value="RGOAB-94">REGULAMENTO GERAL DO ESTATUTO DA ADVOCACIA E DA OAB (RGOAB-94)</option>
+
+  <option value="RESUC-2021">RESOLUÇÃO SOBRE ATIVIDADES EDUCACIONAIS PARA REMIÇÃO DE PENA (RESUC-2021)</option>
+
+  <option value="SINASE-12">SISTEMA  NACIONAL DE ATENDIMENTO SOCIOEDUCATIVO (SINASE-12)</option>
+
+  <option value="SUM(ADM)">SÚMULA ADMINISTRATIVA (SUM(ADM))</option>
+
+  <option value="SUM(AGU)">SÚMULA DA ADVOCACIA-GERAL DA UNIÃO (SUM(AGU))</option>
+
+  <option value="SUM(ANS)">SÚMULA DA AGÊNCIA NACIONAL DE SAÚDE SUPLEMENTAR (SUM(ANS))</option>
+
+  <option value="SUM(STM)">SÚMULA DO SUPERIOR TRIBUNAL MILITAR (SUM(STM))</option>
+
+  <option value="SUM(TCU)">SÚMULA DO TRIBUNAL DE CONTAS DA UNIÃO (SUM(TCU))</option>
+
+  <option value="SUM(TJPB)">SÚMULA DO TRIBUNAL DE JUSTIÇA DO ESTADO DA PARAÍBA (SUM(TJPB))</option>
+
+  <option value="SUM(TJPR)">SÚMULA DO TRIBUNAL DE JUSTIÇA DO ESTADO DO PARANÁ (SUM(TJPR))</option>
+
+  <option value="SUM(TJRJ)">SÚMULA DO TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO DE JANEIRO (SUM(TJRJ))</option>
+
+  <option value="SUM(TJRS)">SÚMULA DO TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO GRANDE DO SUL (SUM(TJRS))</option>
+
+  <option value="SUM(TFR)">SÚMULA DO TRIBUNAL FEDERAL DE RECURSOS (SUM(TFR))</option>
+
+  <option value="SUM(TRF4)">SÚMULA DO TRIBUNAL REGIONAL FEDERAL DA 4ª REGIÃO - TRF4 (SUM(TRF4))</option>
+
+  <option value="SUM(TST)">SÚMULA DO TRIBUNAL SUPERIOR DO TRABALHO (SUM(TST))</option>
+
+  <option value="SUM(TNU)">SÚMULA TURMA NACIONAL DE UNIFORMIZAÇÃO DOS JUIZADOS ESPECIAIS FEDERAIS (SUM(TNU))</option>
+
+  <option value="SUV(STF)">SÚMULA VINCULANTE DO SUPREMO TRIBUNAL FEDERAL (SUV(STF))</option>
+
+  <option value="TAS">TRATADO DE ASSUNÇÃO (TAS)</option>
+
+  <option value="TMEL">TRATADO DE MELBOURNE (TMEL)</option>
+
+  <option value="ACO">ACORDO (ACO)</option>
+
+  <option value="ACC">ACORDO COMERCIAL (ACC)</option>
+
+  <option value="ACE">ACORDO DE COMPLEMENTAÇÃO ECONÔMICA (ACE)</option>
+
+  <option value="ACJ">ACORDO DE COOPERAÇÃO JUDICIÁRIA (ACJ)</option>
+
+  <option value="ACT">ACORDO DE COOPERAÇÃO TÉCNICA (ACT)</option>
+
+  <option value="ASR">ASSENTO REGIMENTAL (ASR)</option>
+
+  <option value="ATO">ATO (ATO)</option>
+
+  <option value="ACP">ATO COMPLEMENTAR (ACP)</option>
+
+  <option value="ADC">ATO DECLARATÓRIO (ADC)</option>
+
+  <option value="ADI">ATO DECLARATÓRIO INTERPRETATIVO (ADI)</option>
+
+  <option value="ADN">ATO DECLARATÓRIO NORMATIVO (ADN)</option>
+
+  <option value="ATH">ATO HOMOLOGATÓRIO (ATH)</option>
+
+  <option value="AIT">ATO INSTITUCIONAL (AIT)</option>
+
+  <option value="ANT">ATO NORMATIVO (ANT)</option>
+
+  <option value="ATR">ATO REGIMENTAL (ATR)</option>
+
+  <option value="ARG">ATO REGULAMENTAR (ARG)</option>
+
+  <option value="AVS">AVISO (AVS)</option>
+
+  <option value="CIR">CIRCULAR (CIR)</option>
+
+  <option value="CAM-45">CÓDIGO DE ÁGUAS MINERAIS (CAM-45)</option>
+
+  <option value="CET">CÓDIGO DE ÉTICA (CET)</option>
+
+  <option value="COJ">CÓDIGO DE ORGANIZAÇÃO JUDICIARIA (COJ)</option>
+
+  <option value="COM">COMUNICADO (COM)</option>
+
+  <option value="CES">CONSTITUIÇÃO ESTADUAL (CES)</option>
+
+  <option value="CFB">CONSTITUIÇÃO FEDERAL (CFB)</option>
+
+  <option value="CVC">CONVENÇÃO (CVC)</option>
+
+  <option value="CNUDM">CONVENÇÃO DAS NAÇÕES UNIDAS SOBRE O DIREITO DO MAR (CNUDM)</option>
+
+  <option value="CICRDR">CONVENÇÃO INTERAMERICANA CONTRA O RACISMO (CICRDR)</option>
+
+  <option value="CIVCM">CONVENÇÃO INTERAMERICANA SOBRE VIOLÊNCIA CONTRA A MULHER (CIVCM)</option>
+
+  <option value="CCACF">CONVENÇÃO SOBRE A COBRANÇA INTERNACIONAL DE ALIMENTOS PARA CRIANÇAS E OU (CCACF)</option>
+
+  <option value="CEDAW">CONVENÇÃO SOBRE A ELIMINAÇÃO DAS FORMAS DE DISCRIMINAÇÃO CONTRA A MULHER (CEDAW)</option>
+
+  <option value="CEDCM">CONVENÇÃO SOBRE A ELIMINAÇÃO DE DISCRIMINAÇÃO CONTRA A MULHER (CEDCM)</option>
+
+  <option value="CCRCI">CONVENÇÃO SOBRE O CRIME CIBERNÉTICO (CCRCI)</option>
+
+  <option value="CNV">CONVÊNIO (CNV)</option>
+
+  <option value="DNT">DECISÃO NORMATIVA (DNT)</option>
+
+  <option value="DCL">DECLARAÇÃO (DCL)</option>
+
+  <option value="DEC">DECRETO EXECUTIVO (DEC)</option>
+
+  <option value="DLG">DECRETO LEGISLATIVO (DLG)</option>
+
+  <option value="DERCSONU">DECRETO SOBRE A EXECUÇÃO DA RESOL. 2396 DO CONSELHO DE SEGURANÇA DA ONU (DERCSONU)</option>
+
+  <option value="DEL">DECRETO-LEI (DEL)</option>
+
+  <option value="DELAFBM-69">DECRETO-LEI DA ALIENAÇÃO FIDUCIÁRIA DE BENS MÓVEIS (DELAFBM-69)</option>
+
+  <option value="DELZF-1967">DECRETO-LEI DA ZONA FRANCA DE MANAUS (DELZF-1967)</option>
+
+  <option value="DELBU-1946">DECRETO-LEI DOS BENS IMÓVEIS DA UNIÃO (DELBU-1946)</option>
+
+  <option value="DELLF-1967">DECRETO-LEI QUE TRATA DA REGULAMENTAÇÃO DO SORTEIO E DA LOTERIA FEDERAL (DELLF-1967)</option>
+
+  <option value="DELRPV-67">DECRETO-LEI SOBRE A RESPONSABILIDADE DOS PREFEITOS E VEREADORES (DELRPV-67)</option>
+
+  <option value="DELDFAZ-79">DECRETO-LEI SOBRE DÉBITOS COM A FAZENDA (DELDFAZ-79)</option>
+
+  <option value="DELII">DECRETO-LEI SOBRE O IMPOSTO DE IMPORTAÇÃO (DELII)</option>
+
+  <option value="DELSB-41">DECRETO-LEI SOBRE O SEQUESTRO DE BENS (DELSB-41)</option>
+
+  <option value="DLB">DELIBERAÇÃO (DLB)</option>
+
+  <option value="DSP">DESPACHO (DSP)</option>
+
+  <option value="EDT">EDITAL (EDT)</option>
+
+  <option value="EMC">EMENDA CONSTITUCIONAL (EMC)</option>
+
+  <option value="EMR">EMENDA REGIMENTAL (EMR)</option>
+
+  <option value="ENU">ENUNCIADO (ENU)</option>
+
+  <option value="ENCV8(CJF)">ENUNCIADO DA OITAVA JORNADA DE DIREITO CIVIL (ENCV8(CJF))</option>
+
+  <option value="ENSA4(CNJ)">ENUNCIADO DA QUARTA JORNADA DE DIREITO DA SAÚDE (ENSA4(CNJ))</option>
+
+  <option value="ENSA5(CNJ)">ENUNCIADO DA QUINTA JORNADA DE DIREITO DA SAÚDE (ENSA5(CNJ))</option>
+
+  <option value="ENSA6(CNJ)">ENUNCIADO DA SEXTA JORNADA DE DIREITO DA SAÚDE (ENSA6(CNJ))</option>
+
+  <option value="ENSA3(CNJ)">ENUNCIADO DA TERCEIRA JORNADA DE DIREITO DA SAÚDE (ENSA3(CNJ))</option>
+
+  <option value="ECID-2001">ESTATUTO DA CIDADE (ECID-2001)</option>
+
+  <option value="EIR-2010">ESTATUTO DA IGUALDADE RACIAL (EIR-2010)</option>
+
+  <option value="EJUV-2013">ESTATUTO DA JUVENTUDE (EJUV-2013)</option>
+
+  <option value="EM-2015">ESTATUTO DA METRÓPOLE (EM-2015)</option>
+
+  <option value="EPCA-2021">ESTATUTO DA PESSOA COM CÂNCER (EPCA-2021)</option>
+
+  <option value="EE-2016">ESTATUTO DAS ESTATAIS (EE-2016)</option>
+
+  <option value="EDT-2003">ESTATUTO DE DEFESA DO TORCEDOR (EDT-2003)</option>
+
+  <option value="EGM-2014">ESTATUTO GERAL DAS GUARDAS MUNICIPAIS (EGM-2014)</option>
+
+  <option value="INF">INFORMAÇÃO (INF)</option>
+
+  <option value="INT">INSTRUÇÃO NORMATIVA (INT)</option>
+
+  <option value="LACR-2013">LEI ANTICORRUPÇÃO (LACR-2013)</option>
+
+  <option value="LCADIN">LEI CADIN (LCADIN)</option>
+
+  <option value="LCD-2012">LEI CAROLINA DIECKMANN (LCD-2012)</option>
+
+  <option value="LCP">LEI COMPLEMENTAR (LCP)</option>
+
+  <option value="LCISSQN">LEI COMPLEMENTAR DO IMPOSTO SOBRE SERVIÇOS DE QUALQUER NATUREZA (LCISSQN)</option>
+
+  <option value="LANIS-79">LEI DA ANISTIA (LANIS-79)</option>
+
+  <option value="LAA">LEI DA ANISTIA ADMINISTRATIVA (LAA)</option>
+
+  <option value="LCPR">LEI DA CÉDULA DE PRODUTO RURAL (LCPR)</option>
+
+  <option value="LCVM-1976">LEI DA COMISSÃO DE VALORES MOBILIÁRIOS (LCVM-1976)</option>
+
+  <option value="LEPROT">LEI DA ESCUTA PROTEGIDA (LEPROT)</option>
+
+  <option value="LIUJ">LEI DA INTERVENÇÃO DA UNIÃO EM JUÍZO (LIUJ)</option>
+
+  <option value="LIJU">LEI DA INTERVENÇÃO JUDICIAL DA UNIÃO (LIJU)</option>
+
+  <option value="LMCF-92">LEI DA MEDIDA CAUTELAR FISCAL (LMCF-92)</option>
+
+  <option value="LME">LEI DA MEIA-ENTRADA (LME)</option>
+
+  <option value="LPLR">LEI DA PARTICIPAÇÃO NOS LUCROS E RESULTADOS (LPLR)</option>
+
+  <option value="LPTEMP">LEI DA PRISÃO TEMPORÁRIA (LPTEMP)</option>
+
+  <option value="LPA">LEI DA PRODUÇÃO AÇUCAREIRA (LPA)</option>
+
+  <option value="LSAF">LEI DA SOCIEDADE ANÔNIMA DO FUTEBOL (LSAF)</option>
+
+  <option value="LUE">LEI DA UNIÃO ESTÁVEL (LUE)</option>
+
+  <option value="LURV">LEI DA URV (LURV)</option>
+
+  <option value="LIS">LEI DAS INFRAÇÕES SANITÁRIAS (LIS)</option>
+
+  <option value="LMCAPP">LEI DAS MED CAUTELARES CONTRA ATOS DO PODER PÚBLICO (LMCAPP)</option>
+
+  <option value="LAPPD-89">LEI DE APOIO ÀS PESSOAS PORTADORAS DE DEFICIÊNCIA (LAPPD-89)</option>
+
+  <option value="LCOSP-1995">LEI DE CONCESSÕES (LCOSP-1995)</option>
+
+  <option value="LCT-2012">LEI DE COTAS (LCT-2012)</option>
+
+  <option value="LCAMB-98">LEI DE CRIMES AMBIENTAIS (LCAMB-98)</option>
+
+  <option value="LDIS">LEI DE DESAPROPRIAÇÃO POR INTERESSE SOCIAL (LDIS)</option>
+
+  <option value="LGFP-2006">LEI DE GESTÃO DE FLORESTAS PÚBLICAS (LGFP-2006)</option>
+
+  <option value="LILEIF-74">LEI DE INTERVENÇÃO LIQUIDAÇÃO EXTRAJUDICIAL DE INSTITUIÇÕES FINANCEIRAS (LILEIF-74)</option>
+
+  <option value="LC-2021">LEI DE LICITAÇÕES DE 2021 (LC-2021)</option>
+
+  <option value="LMED-2015">LEI DE MEDIAÇÃO (LMED-2015)</option>
+
+  <option value="LMIGR-2017">LEI DE MIGRAÇÃO (LMIGR-2017)</option>
+
+  <option value="LNGDF">LEI DE NORMAS GERAIS DE DIREITO FINANCEIRO (LNGDF)</option>
+
+  <option value="LOAF-1967">LEI DE ORGANIZAÇÃO DA ADMINISTRAÇÃO FEDERAL (LOAF-1967)</option>
+
+  <option value="LOJF">LEI DE ORGANIZAÇÃO DA JUSTIÇA FEDERAL (LOJF)</option>
+
+  <option value="LPS-1937">LEI DE PARCELAMENTO DO SOLO (LPS-1937)</option>
+
+  <option value="LPSU-1979">LEI DE PARCELAMENTO DO SOLO URBANO (LPSU-1979)</option>
+
+  <option value="LPPP-2004">LEI DE PARCERIA PÚBLICO-PRIVADA (LPPP-2004)</option>
+
+  <option value="LPAPAPF-99">LEI DE PRESCRIÇÃO DA AÇÃO PUNITIVA PELA ADMINISTRAÇÃO PÚBLICA FEDERAL (LPAPAPF-99)</option>
+
+  <option value="LRAS">LEI DE REGULAMENTAÇÃO DO ASSISTENTE SOCIAL (LRAS)</option>
+
+  <option value="LTB-1937">LEI DE TOMBAMENTO (LTB-1937)</option>
+
+  <option value="LVSMC">LEI DE VIGILÂNCIA SANITÁRIA DE MEDICAMENTOS E COMÉSTICOS (LVSMC)</option>
+
+  <option value="LDL">LEI DELEGADA (LDL)</option>
+
+  <option value="LDT">LEI DISTRITAL (LDT)</option>
+
+  <option value="LASAL">LEI DO ABONO SALARIAL (LASAL)</option>
+
+  <option value="LBEM-2005">LEI DO BEM (LBEM-2005)</option>
+
+  <option value="LCSM">LEI DO CONTROLE SANITÁRIO DE MEDICAMENTOS (LCSM)</option>
+
+  <option value="LCC">LEI DO CRÉDITO CONSIGNADO (LCC)</option>
+
+  <option value="LDR">LEI DO DIREITO DE RESPOSTA (LDR)</option>
+
+  <option value="LESTA-2008">LEI DO ESTÁGIO (LESTA-2008)</option>
+
+  <option value="LFGTS-1990">LEI DO FUNDO DE GARANTIA DO TEMPO DE SERVIÇO (LFGTS-1990)</option>
+
+  <option value="LIC">LEI DO IMPOSTO DE CONSUMO (LIC)</option>
+
+  <option value="LPAFP">LEI DO PLANO DE ASSISTÊNCIA AO FUNCIONÁRIO PÚBLICO (LPAFP)</option>
+
+  <option value="LPR-2002">LEI DO PREGÃO (LPR-2002)</option>
+
+  <option value="LPAT">LEI DO PROGRAMA DE ALIMENTAÇÃO DO TRABALHADOR (LPAT)</option>
+
+  <option value="LPSV-2021">LEI DO PROGRAMA SINAL VERMELHO CONTRA A VIOLÊNCIA DOMÉSTICA (LPSV-2021)</option>
+
+  <option value="LRDC-2011">LEI DO REGIME DIFERENCIADO DE CONTRATAÇÕES PÚBLICAS (LRDC-2011)</option>
+
+  <option value="LRC">LEI DO REPRESENTANTE COMERCIAL (LRC)</option>
+
+  <option value="LSB-2007">LEI DO SANEAMENTO BÁSICO (LSB-2007)</option>
+
+  <option value="LSAT-76">LEI DO SEGURO DE ACIDENTES DE TRABALHO (LSAT-76)</option>
+
+  <option value="LSB">LEI DO SIGILO BANCÁRIO (LSB)</option>
+
+  <option value="LSFIAF">LEI DO SISTEMA DE FINANCIAMENTO IMOBILIÁRIO E ALIENAÇÃO FIDUCIÁRIA (LSFIAF)</option>
+
+  <option value="LSNCC">LEI DO SISTEMA NACIONAL DE CRÉDITO COOPERATIVO (LSNCC)</option>
+
+  <option value="LUCN-2000">LEI DO SISTEMA NACIONAL DE UNIDADES DE CONSERVAÇÃO DA NATUREZA (LUCN-2000)</option>
+
+  <option value="LVP">LEI DO VALE-PEDÁGIO (LVP)</option>
+
+  <option value="LCART">LEI DOS CARTÓRIOS (LCART)</option>
+
+  <option value="LCPU-2005">LEI DOS CONSÓRCIOS PÚBLICOS (LCPU-2005)</option>
+
+  <option value="LPRC-89">LEI DOS CRIMES DE PRECONCEITO DE RAÇA OU DE COR (LPRC-89)</option>
+
+  <option value="LJEFP-2009">LEI DOS JUIZADOS ESPECIAIS DA FAZENDA PÚBLICA (LJEFP-2009)</option>
+
+  <option value="LPFSM">LEI DOS PRESÍDIOS FEDERAIS DE SEGURANÇA MÁXIMA (LPFSM)</option>
+
+  <option value="LPTS">LEI DOS PROCESSOS NOS TRIBUNAIS SUPERIORES (LPTS)</option>
+
+  <option value="LGAR-2019">LEI GERAL DAS AGÊNCIAS REGULADORAS (LGAR-2019)</option>
+
+  <option value="LGPD-2018">LEI GERAL DE PROTEÇÃO DE DADOS PESSOAIS (LGPD-2018)</option>
+
+  <option value="LEI">LEI ORDINÁRIA (LEI)</option>
+
+  <option value="LOG">LEI ORGÂNICA (LOG)</option>
+
+  <option value="LONPMCB">LEI ORGÂNICA NACIONAL DOS POLICIAIS MILITARES E DOS CORPOS DE BOMBEIROS (LONPMCB)</option>
+
+  <option value="LCLOBDV-98">LEI SOBRE CRIMES DE LAVAGEM OU OCULTAÇÃO DE BENS, DIREITOS E VALORES (LCLOBDV-98)</option>
+
+  <option value="LAFP-2008">LEI SOBRE O EXERCÍCIO DA ATIVIDADE DE FRANQUIA POSTAL (LAFP-2008)</option>
+
+  <option value="LPS">LEI SOBRE PREÇOS E SALÁRIOS (LPS)</option>
+
+  <option value="MPR">MEDIDA PROVISÓRIA (MPR)</option>
+
+  <option value="MSG">MENSAGEM (MSG)</option>
+
+  <option value="NPF">NORMA DE PROCEDIMENTO FISCAL (NPF)</option>
+
+  <option value="NSV">NORMA DE SERVIÇO (NSV)</option>
+
+  <option value="NTC">NORMA TÉCNICA (NTC)</option>
+
+  <option value="NEX">NOTA EXPLICATIVA (NEX)</option>
+
+  <option value="OPICON2017">OPINIÃO CONSULTIVA 24/17 (OPICON2017)</option>
+
+  <option value="OSV">ORDEM DE SERVIÇO (OSV)</option>
+
+  <option value="OJU">ORIENTAÇÃO JURISPRUDENCIAL (OJU)</option>
+
+  <option value="ONR">ORIENTAÇÃO NORMATIVA (ONR)</option>
+
+  <option value="PCT">PACTO (PCT)</option>
+
+  <option value="PAR">PARECER (PAR)</option>
+
+  <option value="PNT">PARECER NORMATIVO (PNT)</option>
+
+  <option value="PRT">PORTARIA (PRT)</option>
+
+  <option value="PRC">PORTARIA CONJUNTA (PRC)</option>
+
+  <option value="PRI">PORTARIA INTERMINISTERIAL (PRI)</option>
+
+  <option value="PRS">PORTARIA SUPER (PRS)</option>
+
+  <option value="RESONU1991">PRINCÍPIOS DA ONU SOBRE SAÚDE MENTAL (RESONU1991)</option>
+
+  <option value="PRINCYOG">PRINCÍPIOS DE YOGYAKARTA (PRINCYOG)</option>
+
+  <option value="PLT">PROTOCOLO (PLT)</option>
+
+  <option value="PTA">PROTOCOLO ADICIONAL (PTA)</option>
+
+  <option value="RJPG -2023">PROTOCOLO PARA JULGAMENTO COM PERSPECTIVA DE GÊNERO (RJPG -2023)</option>
+
+  <option value="PLOPA">PROTOCOLO SOBRE A LEI APLICÁVEL ÀS OBRIGAÇÕES DE PRESTAR ALIMENTOS (PLOPA)</option>
+
+  <option value="PRV">PROVIMENTO (PRV)</option>
+
+  <option value="REC">RECOMENDAÇÃO (REC)</option>
+
+  <option value="RGT">REGIMENTO (RGT)</option>
+
+  <option value="RGI">REGIMENTO INTERNO (RGI)</option>
+
+  <option value="RESONU2015">REGRAS DE MANDELA (RESONU2015)</option>
+
+  <option value="RESONU1990">REGRAS DE TÓKIO (RESONU1990)</option>
+
+  <option value="REG">REGULAMENTO (REG)</option>
+
+  <option value="RES">RESOLUÇÃO (RES)</option>
+
+  <option value="RAD">RESOLUÇÃO ADMINISTRATIVA (RAD)</option>
+
+  <option value="RCIDH">RESOLUÇÃO DA CORTE INTERAMERICANA DE DIREITOS HUMANOS (RCIDH)</option>
+
+  <option value="RDCANVISA">RESOLUÇÃO DA DIRETORIA COLEGIADA DA ANVISA (RDCANVISA)</option>
+
+  <option value="RSF">RESOLUÇÃO DO SENADO FEDERAL (RSF)</option>
+
+  <option value="RSN">RESOLUÇÃO NORMATIVA (RSN)</option>
+
+  <option value="SUM">SÚMULA (SUM)</option>
+
+  <option value="TRT">TRATADO INTERNACIONAL (TRT)</option>
+
+</datalist>
+
+
+	</div>
+	<div class="form-group col-12 col-md-4 has-float-label">
+	<input type="text" class="form-control clearable numero_leg" id="numero_leg0">
+	<label for="numero_leg0">Número</label>
+	</div>
+	</div>
+	<div class="row">
+		
+		<div class="form-group col-5 col-md-2 col-xl">
+					<select id="tipo1_1" class="form-control clearable tipo1" data-bs-placement="top" data-bs-toggle="tooltip" title="" data-bs-original-title="Selecione o item">
+						<option value=""></option>
+						<option value="ART" selected="">ART</option>
+ 						<option value="PAR">PAR</option>
+						<option value="INC">INC</option>
+						<option value="LET">LET</option>
+						<option value="ITEM">ITEM</option>
+						<option value="NUM">NUM</option>
+					</select>
+		</div>
+		<div class="form-group col-7 col-md-4 col-xl">
+					<input type="text" id="numero_art1_1" class="form-control clearable numero_art1" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Informe número ou letra do item" aria-label="Informe número ou letra do item">
+		</div>
+		
+		<div class="form-group col-5 col-md-2 col-xl">
+					<select id="tipo2_1" class="form-control clearable tipo2" data-bs-placement="top" data-bs-toggle="tooltip" title="" data-bs-original-title="Selecione o item">
+						<option value=""></option>
+						<option value="ART">ART</option>
+ 						<option value="PAR" selected="">PAR</option>
+						<option value="INC">INC</option>
+						<option value="LET">LET</option>
+						<option value="ITEM">ITEM</option>
+						<option value="NUM">NUM</option>
+					</select>
+		</div>
+		<div class="form-group col-7 col-md-4 col-xl">
+					<input type="text" id="numero_art2_1" class="form-control clearable numero_art2" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Informe número ou letra do item" aria-label="Informe número ou letra do item">
+		</div>
+		
+		<div class="form-group col-5 col-md-2 col-xl">
+					<select id="tipo3_1" class="form-control clearable tipo3" data-bs-placement="top" data-bs-toggle="tooltip" title="" data-bs-original-title="Selecione o item">
+						<option value=""></option>
+						<option value="ART">ART</option>
+ 						<option value="PAR">PAR</option>
+						<option value="INC" selected="">INC</option>
+						<option value="LET">LET</option>
+						<option value="ITEM">ITEM</option>
+						<option value="NUM">NUM</option>
+					</select>
+		</div>
+		<div class="form-group col-7 col-md-4 col-xl">
+					<input type="text" id="numero_art3_1" class="form-control clearable numero_art3" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Informe número ou letra do item" aria-label="Informe número ou letra do item">
+		</div>
+		
+		<div class="form-group col-5 col-md-2 col-xl">
+					<select id="tipo4_1" class="form-control clearable tipo4" data-bs-placement="top" data-bs-toggle="tooltip" title="" data-bs-original-title="Selecione o item">
+						<option value=""></option>
+						<option value="ART">ART</option>
+ 						<option value="PAR">PAR</option>
+						<option value="INC">INC</option>
+						<option value="LET">LET</option>
+						<option value="ITEM">ITEM</option>
+						<option value="NUM">NUM</option>
+					</select>
+		</div>
+		<div class="form-group col-7 col-md-4 col-xl">
+					<input type="text" id="numero_art4_1" class="form-control clearable numero_art4" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Informe número ou letra do item" aria-label="Informe número ou letra do item">
+		</div>
+		
+		<div class="form-group col-5 col-md-2 col-xl">
+					<select id="tipo5_1" class="form-control clearable tipo5" data-bs-placement="top" data-bs-toggle="tooltip" title="" data-bs-original-title="Selecione o item">
+						<option value=""></option>
+						<option value="ART">ART</option>
+ 						<option value="PAR">PAR</option>
+						<option value="INC">INC</option>
+						<option value="LET">LET</option>
+						<option value="ITEM">ITEM</option>
+						<option value="NUM">NUM</option>
+					</select>
+		</div>
+		<div class="form-group col-7 col-md-4 col-xl">
+					<input type="text" id="numero_art5_1" class="form-control clearable numero_art5" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Informe número ou letra do item" aria-label="Informe número ou letra do item">
+		</div>
+		
+		<div class="form-group col-5 col-md-2 col-xl">
+					<select id="tipo6_1" class="form-control clearable tipo6" data-bs-placement="top" data-bs-toggle="tooltip" title="" data-bs-original-title="Selecione o item">
+						<option value=""></option>
+						<option value="ART">ART</option>
+ 						<option value="PAR">PAR</option>
+						<option value="INC">INC</option>
+						<option value="LET">LET</option>
+						<option value="ITEM">ITEM</option>
+						<option value="NUM">NUM</option>
+					</select>
+		</div>
+		<div class="form-group col-7 col-md-4 col-xl">
+					<input type="text" id="numero_art6_1" class="form-control clearable numero_art6" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Informe número ou letra do item" aria-label="Informe número ou letra do item">
+		</div>
+		
+		</div>	
+		<label for="numero_leg1">Legislação</label>
+	</div>
+	</div>
+		<div class="row">
+		<div class="col text-end">
+ 			<!-- <a href="javascript:;" id="maisRef">Adicionar outra norma <i class="icofont-plus"></i></a> -->
+ 			<button type="button" class="btn-juris" id="maisRef">Adicionar outra norma <i class="icofont-plus"></i></button> 
+		</div>
+		</div>
+	<div class="row">
+	<div class="form-group col-12 text-center">
+	<button type="button" class="btn-juris" id="idBtnLimparTodos" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Limpar todos os campos"><i class="icofont-trash"></i> <span>Limpar</span></button>
+	<button type="submit" class="btn-juris-azul"><i class="icofont-ui-search"></i> <span>Buscar</span></button>
+	</div>				         
+	</div>      
+	</div>
+	</div> <!--  fim row -->
+	</div>
+	
+	
+	<form action="/SCON/pesquisar.jsp" id="formPesquisaPronta" method="get">
+    <input type="hidden" name="b" value="ACOR">
+    <input type="hidden" name="p" value="true">
+    <input type="hidden" name="l" id="l" value="10">
+    <input type="hidden" name="i" value="1">
+	<input type="hidden" name="ordenacao" value="-@DOCN">
+    <input type="hidden" name="thesaurus" value="JURIDICO">
+    <input type="hidden" name="preConsultaPP" id="preConsultaPPSelect">
+	
+    <input type="hidden" name="O" value="PP">
+    
+    </form>
+    </div></form>

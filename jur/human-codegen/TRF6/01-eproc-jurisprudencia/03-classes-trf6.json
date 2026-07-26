@@ -1,0 +1,326 @@
+[
+  {
+    "value": "Agravo de Execução Penal",
+    "texto": "AGRAVO DE EXECUÇÃO PENAL"
+  },
+  {
+    "value": "Agravo de Instrumento",
+    "texto": "AGRAVO DE INSTRUMENTO"
+  },
+  {
+    "value": "Alienação Judicial Criminal (Seção)",
+    "texto": "ALIENAÇÃO JUDICIAL CRIMINAL (SEÇÃO)"
+  },
+  {
+    "value": "Apelação Criminal",
+    "texto": "APELAÇÃO CRIMINAL"
+  },
+  {
+    "value": "Apelação Cível",
+    "texto": "APELAÇÃO CÍVEL"
+  },
+  {
+    "value": "Apelação Cível (Seção)",
+    "texto": "APELAÇÃO CÍVEL (SEÇÃO)"
+  },
+  {
+    "value": "Apelação/Remessa Necessária",
+    "texto": "APELAÇÃO/REMESSA NECESSÁRIA"
+  },
+  {
+    "value": "AÇÃO PENAL",
+    "texto": "AÇÃO PENAL"
+  },
+  {
+    "value": "Ação Civil Coletiva",
+    "texto": "AÇÃO CIVIL COLETIVA"
+  },
+  {
+    "value": "Ação Civil de Improbidade Administrativa",
+    "texto": "AÇÃO CIVIL DE IMPROBIDADE ADMINISTRATIVA"
+  },
+  {
+    "value": "Ação Rescisória (Plenário)",
+    "texto": "AÇÃO RESCISÓRIA (PLENÁRIO)"
+  },
+  {
+    "value": "Ação Rescisória (Seção)",
+    "texto": "AÇÃO RESCISÓRIA (SEÇÃO)"
+  },
+  {
+    "value": "Ação de Depósito (Acordo do Rio Doce)",
+    "texto": "AÇÃO DE DEPÓSITO (ACORDO DO RIO DOCE)"
+  },
+  {
+    "value": "Carta Precatória (Seção)",
+    "texto": "CARTA PRECATÓRIA (SEÇÃO)"
+  },
+  {
+    "value": "Carta Testemunhável",
+    "texto": "CARTA TESTEMUNHÁVEL"
+  },
+  {
+    "value": "Cautelar Inominada Criminal (Plenário)",
+    "texto": "CAUTELAR INOMINADA CRIMINAL (PLENÁRIO)"
+  },
+  {
+    "value": "Cautelar Inominada Criminal (Turma)",
+    "texto": "CAUTELAR INOMINADA CRIMINAL (TURMA)"
+  },
+  {
+    "value": "Cautelar de Interpelação (Plenário)",
+    "texto": "CAUTELAR DE INTERPELAÇÃO (PLENÁRIO)"
+  },
+  {
+    "value": "Conflito de Competência (Plenário)",
+    "texto": "CONFLITO DE COMPETÊNCIA (PLENÁRIO)"
+  },
+  {
+    "value": "Conflito de Competência (Seção)",
+    "texto": "CONFLITO DE COMPETÊNCIA (SEÇÃO)"
+  },
+  {
+    "value": "Conflito de Jurisdição (Plenário)",
+    "texto": "CONFLITO DE JURISDIÇÃO (PLENÁRIO)"
+  },
+  {
+    "value": "Conflito de Jurisdição (Seção)",
+    "texto": "CONFLITO DE JURISDIÇÃO (SEÇÃO)"
+  },
+  {
+    "value": "Consignação em Pagameneto (Acordo do Rio Doce)",
+    "texto": "CONSIGNAÇÃO EM PAGAMENETO (ACORDO DO RIO DOCE)"
+  },
+  {
+    "value": "Correição Parcial (Turma)",
+    "texto": "CORREIÇÃO PARCIAL (TURMA)"
+  },
+  {
+    "value": "Cumprimento de Sentença (Seção)",
+    "texto": "CUMPRIMENTO DE SENTENÇA (SEÇÃO)"
+  },
+  {
+    "value": "Cumprimento de Sentença (Turma)",
+    "texto": "CUMPRIMENTO DE SENTENÇA (TURMA)"
+  },
+  {
+    "value": "Cumprimento de Sentença contra Fazenda Pública (Seção)",
+    "texto": "CUMPRIMENTO DE SENTENÇA CONTRA FAZENDA PÚBLICA (SEÇÃO)"
+  },
+  {
+    "value": "Cumprimento de Sentença de Ações Coletivas (Acordo do Rio Doce)",
+    "texto": "CUMPRIMENTO DE SENTENÇA DE AÇÕES COLETIVAS (ACORDO DO RIO DOCE)"
+  },
+  {
+    "value": "Embargos Infringentes e de Nulidade",
+    "texto": "EMBARGOS INFRINGENTES E DE NULIDADE"
+  },
+  {
+    "value": "Embargos de Terceiro Criminal (Seção)",
+    "texto": "EMBARGOS DE TERCEIRO CRIMINAL (SEÇÃO)"
+  },
+  {
+    "value": "Embargos à Execução (Seção)",
+    "texto": "EMBARGOS À EXECUÇÃO (SEÇÃO)"
+  },
+  {
+    "value": "Exceção de Impedimento Criminal (Turma)",
+    "texto": "EXCEÇÃO DE IMPEDIMENTO CRIMINAL (TURMA)"
+  },
+  {
+    "value": "Exceção de Incompetência de Juízo (Seção)",
+    "texto": "EXCEÇÃO DE INCOMPETÊNCIA DE JUÍZO (SEÇÃO)"
+  },
+  {
+    "value": "Exceção de Suspeição Criminal (Turma)",
+    "texto": "EXCEÇÃO DE SUSPEIÇÃO CRIMINAL (TURMA)"
+  },
+  {
+    "value": "HABEAS DATA",
+    "texto": "HABEAS DATA"
+  },
+  {
+    "value": "Habeas Corpus",
+    "texto": "HABEAS CORPUS"
+  },
+  {
+    "value": "Habeas Data (Seção)",
+    "texto": "HABEAS DATA (SEÇÃO)"
+  },
+  {
+    "value": "INQUÉRITO POLICIAL",
+    "texto": "INQUÉRITO POLICIAL"
+  },
+  {
+    "value": "Incidente de Arguição de Inconstitucionalidade",
+    "texto": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE"
+  },
+  {
+    "value": "Incidente de Assunção de Competência (Seção)",
+    "texto": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA (SEÇÃO)"
+  },
+  {
+    "value": "Incidente de Impedimento (Plenário)",
+    "texto": "INCIDENTE DE IMPEDIMENTO (PLENÁRIO)"
+  },
+  {
+    "value": "Incidente de Impedimento (Seção)",
+    "texto": "INCIDENTE DE IMPEDIMENTO (SEÇÃO)"
+  },
+  {
+    "value": "Incidente de Impedimento (Turma)",
+    "texto": "INCIDENTE DE IMPEDIMENTO (TURMA)"
+  },
+  {
+    "value": "Incidente de Resolução de Demandas Repetitivas (Plenário)",
+    "texto": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (PLENÁRIO)"
+  },
+  {
+    "value": "Incidente de Resolução de Demandas Repetitivas (Presidência)",
+    "texto": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (PRESIDÊNCIA)"
+  },
+  {
+    "value": "Incidente de Resolução de Demandas Repetitivas (Seção)",
+    "texto": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (SEÇÃO)"
+  },
+  {
+    "value": "Incidente de Suspeição (Plenário)",
+    "texto": "INCIDENTE DE SUSPEIÇÃO (PLENÁRIO)"
+  },
+  {
+    "value": "Incidente de Suspeição (Turma)",
+    "texto": "INCIDENTE DE SUSPEIÇÃO (TURMA)"
+  },
+  {
+    "value": "Indenizatóra (Acordo do Rio Doce)",
+    "texto": "INDENIZATÓRA (ACORDO DO RIO DOCE)"
+  },
+  {
+    "value": "Mandado de Segurança (Plenário)",
+    "texto": "MANDADO DE SEGURANÇA (PLENÁRIO)"
+  },
+  {
+    "value": "Mandado de Segurança (Seção)",
+    "texto": "MANDADO DE SEGURANÇA (SEÇÃO)"
+  },
+  {
+    "value": "Mandado de Segurança (Turma)",
+    "texto": "MANDADO DE SEGURANÇA (TURMA)"
+  },
+  {
+    "value": "Notificação para Explicações (Seção)",
+    "texto": "NOTIFICAÇÃO PARA EXPLICAÇÕES (SEÇÃO)"
+  },
+  {
+    "value": "PEDIDO DE BUSCA E APREENSÃO CRIMINAL",
+    "texto": "PEDIDO DE BUSCA E APREENSÃO CRIMINAL"
+  },
+  {
+    "value": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO (TURMA)",
+    "texto": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO (TURMA)"
+  },
+  {
+    "value": "PEDIDO DE LIBERDADE PROVISÓRIA COM OU SEM FIANÇA",
+    "texto": "PEDIDO DE LIBERDADE PROVISÓRIA COM OU SEM FIANÇA"
+  },
+  {
+    "value": "PROCED.INVESTIGATÓRIO DO MP (PEÇAS DE INFORMAÇÃO)",
+    "texto": "PROCED.INVESTIGATÓRIO DO MP (PEÇAS DE INFORMAÇÃO)"
+  },
+  {
+    "value": "Petição (Acordo do Rio Doce)",
+    "texto": "PETIÇÃO (ACORDO DO RIO DOCE)"
+  },
+  {
+    "value": "Petição (Plenário)",
+    "texto": "PETIÇÃO (PLENÁRIO)"
+  },
+  {
+    "value": "Petição (Presidência)",
+    "texto": "PETIÇÃO (PRESIDÊNCIA)"
+  },
+  {
+    "value": "Petição (Seção)",
+    "texto": "PETIÇÃO (SEÇÃO)"
+  },
+  {
+    "value": "Petição (Turma)",
+    "texto": "PETIÇÃO (TURMA)"
+  },
+  {
+    "value": "Petição Cível (Acordo do Rio Doce)",
+    "texto": "PETIÇÃO CÍVEL (ACORDO DO RIO DOCE)"
+  },
+  {
+    "value": "Reclamação (Plenário)",
+    "texto": "RECLAMAÇÃO (PLENÁRIO)"
+  },
+  {
+    "value": "Reclamação (Seção)",
+    "texto": "RECLAMAÇÃO (SEÇÃO)"
+  },
+  {
+    "value": "Reclamação (Turma)",
+    "texto": "RECLAMAÇÃO (TURMA)"
+  },
+  {
+    "value": "Recurso Criminal em Sentido Estrito",
+    "texto": "RECURSO CRIMINAL EM SENTIDO ESTRITO"
+  },
+  {
+    "value": "Remessa Necessária Criminal",
+    "texto": "REMESSA NECESSÁRIA CRIMINAL"
+  },
+  {
+    "value": "Remessa Necessária Cível",
+    "texto": "REMESSA NECESSÁRIA CÍVEL"
+  },
+  {
+    "value": "Restituição de Coisas Apreendidas (Seção)",
+    "texto": "RESTITUIÇÃO DE COISAS APREENDIDAS (SEÇÃO)"
+  },
+  {
+    "value": "Restituição de Coisas Apreendidas (Turma)",
+    "texto": "RESTITUIÇÃO DE COISAS APREENDIDAS (TURMA)"
+  },
+  {
+    "value": "Revisão Criminal (Seção)",
+    "texto": "REVISÃO CRIMINAL (SEÇÃO)"
+  },
+  {
+    "value": "SEQÜESTRO - MEDIDAS ASSECURATÓRIAS",
+    "texto": "SEQÜESTRO - MEDIDAS ASSECURATÓRIAS"
+  },
+  {
+    "value": "Suspensão de Liminar e de Sentença",
+    "texto": "SUSPENSÃO DE LIMINAR E DE SENTENÇA"
+  },
+  {
+    "value": "Suspensão de Liminar e de Sentença (Plenário)",
+    "texto": "SUSPENSÃO DE LIMINAR E DE SENTENÇA (PLENÁRIO)"
+  },
+  {
+    "value": "Suspensão de Liminar e de Sentença (Presidência)",
+    "texto": "SUSPENSÃO DE LIMINAR E DE SENTENÇA (PRESIDÊNCIA)"
+  },
+  {
+    "value": "Tutela Antecipada Antecedente (Seção)",
+    "texto": "TUTELA ANTECIPADA ANTECEDENTE (SEÇÃO)"
+  },
+  {
+    "value": "Tutela Antecipada Antecedente (Turma)",
+    "texto": "TUTELA ANTECIPADA ANTECEDENTE (TURMA)"
+  },
+  {
+    "value": "Tutela Cautelar Antecedente (Plenário)",
+    "texto": "TUTELA CAUTELAR ANTECEDENTE (PLENÁRIO)"
+  },
+  {
+    "value": "Tutela Cautelar Antecedente (Seção)",
+    "texto": "TUTELA CAUTELAR ANTECEDENTE (SEÇÃO)"
+  },
+  {
+    "value": "Tutela Cautelar Antecedente (Turma)",
+    "texto": "TUTELA CAUTELAR ANTECEDENTE (TURMA)"
+  }
+]

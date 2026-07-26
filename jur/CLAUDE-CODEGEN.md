@@ -132,14 +132,42 @@ Ao começar um tribunal, procure primeiro um irmão já mapeado na mesma famíli
 > crawler final vai usar `api` ou `http` puro. Sem abrir a página você não tem os prints (de que
 > o `fixer` depende) nem os combos populados por AJAX — que **não aparecem no HTML estático**.
 
-**`api` > `http` > `browser`.** Nesta ordem, sempre.
+**`api-oficial` > `api` > `http` > `browser`.** Nesta ordem, sempre.
 
-1. **`api`** — Abra o DevTools na aba Network e faça uma busca. Se a página é uma SPA, quase
-   sempre existe um endpoint JSON limpo (ex.: TJPA → `GET /bff/api/decisoes`). Use-o.
+0. **`api-oficial`** — **Antes de estudar a tela, procure uma API pública documentada.** É o
+   passo mais barato do processo inteiro e o mais esquecido: quem começa pelo DevTools já
+   presumiu que a única porta é a do navegador. Procure, nesta ordem:
+   - **Portal de dados abertos do próprio tribunal** — `dadosabertos.<tribunal>.jus.br`,
+     `/dados-abertos`, `/transparencia/dados-abertos`. Muitos publicam jurisprudência em
+     JSON/CSV, e alguns publicam a base inteira para download.
+   - **Documentação de API** — procure `swagger`, `openapi`, `/api-docs`, `/v1/`, `/rest/`
+     no portal e no Google (`site:<tribunal>.jus.br api`).
+   - **DataJud (CNJ)** — API pública nacional de metadados processuais, que cobre os tribunais
+     brasileiros de forma padronizada. **Não é base de jurisprudência** (não traz ementa nem
+     inteiro teor), então não substitui o crawler — mas pode servir muito bem ao `Checker`,
+     que só precisa confirmar que um processo **existe**. Confirme ao vivo o endpoint, a chave
+     pública e a cobertura do tribunal antes de depender dela; não presuma.
+   - **Base nacional do ramo**, se houver. Já aconteceu duas vezes aqui: a Justiça do Trabalho
+     inteira (TST + 24 TRTs) cabe numa API só, a Falcão (`src/Falcao*.js`). Antes de mapear
+     um tribunal, pergunte se o **ramo** dele já tem base unificada.
+
+   Se achar uma API oficial, **registre a URL e a documentação no `CLAUDE-<TRIBUNAL>.md`** mesmo
+   que decida não usá-la — a próxima pessoa não vai procurar de novo. Se procurar e não existir,
+   **escreva que não existe**: "não procurei" e "não existe" são coisas diferentes.
+
+1. **`api`** — API interna, não documentada. Abra o DevTools na aba Network e faça uma busca.
+   Se a página é uma SPA, quase sempre existe um endpoint JSON limpo
+   (ex.: TJPA → `GET /bff/api/decisoes`). Use-o.
 2. **`http`** — Se é formulário clássico, veja se um `POST` direto responde sem browser
    (ex.: TJGO). Cheque **charset** e cookies obrigatórios. Exporte um HAR e reproduza.
-3. **`browser`** — Playwright só quando as duas opções acima falharem. É o mais lento e o
+3. **`browser`** — Playwright só quando as três opções acima falharem. É o mais lento e o
    que mais quebra.
+
+> **Por que o passo 0 vem antes de tudo.** Uma API oficial atravessa bloqueio: captcha,
+> Cloudflare e verificação de navegador protegem a *tela*, não costumam proteger o endpoint
+> publicado para consumo. Tribunal que parece `sem-acesso` pela porta da frente às vezes tem a
+> porta dos fundos aberta e documentada. Descobrir isso depois de mapear a tela inteira é
+> trabalho jogado fora.
 
 ---
 
@@ -330,5 +358,7 @@ mal nomeado tira essa capacidade** — por isso o §3 é obrigatório e não cos
 | "A busca retorna resultados, o filtro funciona" | Compare as contagens com e sem o filtro. Igual = filtro ignorado. |
 | "A ementa basta" | Em Turmas Recursais a ementa é uma frase. Baixe o inteiro teor. |
 | "Vou usar browser, é mais fácil" | Cheque a aba Network antes. API direta é 10× mais rápida e não quebra. |
+| "Tem captcha, então o tribunal é `sem-acesso`" | Captcha protege a tela, não o endpoint publicado. Procure a API oficial antes de desistir. |
+| "Não vi nenhuma API oficial" | Procurou nos dados abertos, no Swagger e no DataJud? "Não procurei" ≠ "não existe" — e a diferença vai para o doc. |
 | "Achei a URL, tá mapeado" | Só é 🟢 com o checklist do §7 inteiro. |
 | "Esse filtro tem 4 mil opções, deixa" | Liste via navegador e salve o JSON. É rápido e é o que falta depois. |

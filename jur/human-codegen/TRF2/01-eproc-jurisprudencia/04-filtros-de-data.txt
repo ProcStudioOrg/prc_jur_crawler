@@ -1,0 +1,62 @@
+## 4. Filtros de data — julgamento E publicação (são DOIS filtros diferentes)
+
+Quatro campos visíveis + quatro hidden que espelham os visíveis. O calendário é um
+datepicker do próprio e-Proc; o campo aceita digitação direta no formato DD/MM/YYYY
+(máscara `__/__/____`).
+
+HTML (arquivo `04-campos-data.html` traz os oito elementos):
+
+    <input id="dtDecisaoInicio"    name="dtDecisaoInicio"    type="text" placeholder="__/__/____">
+    <input id="dtDecisaoFim"       name="dtDecisaoFim"       type="text" placeholder="__/__/____">
+    <input id="hdnDecisaoInicio"   name="hdnDecisaoInicio"   type="hidden">
+    <input id="hdnDecisaoFim"      name="hdnDecisaoFim"      type="hidden">
+    <input id="dtPublicacaoInicio" name="dtPublicacaoInicio" type="text" placeholder="__/__/____">
+    <input id="dtPublicacaoFim"    name="dtPublicacaoFim"    type="text" placeholder="__/__/____">
+    <input id="hdnPublicacaoInicio" name="hdnPublicacaoInicio" type="hidden">
+    <input id="hdnPublicacaoFim"    name="hdnPublicacaoFim"    type="hidden">
+
+### 4.1 Data de julgamento (`dtDecisaoInicio` / `dtDecisaoFim`)
+
+Corresponde ao campo "DATA DO JULGAMENTO" do card de resultado.
+
+    dano-moral, origem TRF2, sem data                20.201
+    dano-moral, origem TRF2, 01/01/2026–31/03/2026    1.121
+    dano-moral, origem TRF2, 01/01/2020–31/12/2020    1.816
+
+Restringe de fato, e as datas dos resultados caem dentro do intervalo (conferido item a
+item no `TRF2Testes.js`).
+
+### 4.2 Data de publicação (`dtPublicacaoInicio` / `dtPublicacaoFim`)
+
+Corresponde ao campo "DATA DA PUBLICAÇÃO". **É um filtro distinto** — a prova é a
+contagem diferente no mesmo intervalo:
+
+    dano-moral, origem TRF2, JULGAMENTO  01/01/2026–31/03/2026   1.121
+    dano-moral, origem TRF2, PUBLICAÇÃO  01/01/2026–31/03/2026   1.111
+
+Os dois podem ser combinados na mesma busca.
+
+### 4.3 Intervalo aberto e limites da base
+
+Só uma das pontas é aceito (só início, ou só fim). E a base começa em **2018**:
+
+    ano  TRF2   Turmas Recursais
+    2016     0        0
+    2018    18       44
+    2020 1.816    5.599
+    2022 2.734    5.250
+    2024 3.328    4.423
+    2026 2.790    2.786      (parcial: até 25/07/2026)
+
+Qualquer intervalo anterior a 2018 devolve 0 — **não é bug do crawler, é o começo do
+acervo**. A migração do TRF2 para o e-Proc é de 2018/2019 e o portal antigo
+(`juris.trf2.jus.br`), que tinha o acervo anterior, foi desativado sem substituto.
+
+### 4.4 Armadilha dos hidden
+
+Os quatro `hdn*` espelham os visíveis. Quem preenche só o visível pelo DOM sem disparar o
+evento do datepicker manda data vazia; quem preenche só o hidden manda a data mas a tela
+mostra o campo em branco. O crawler HTTP escreve os OITO campos sempre, inclusive vazios —
+o e-Proc repõe o formulário a partir de cookies quando um campo falta.
+
+Print: `04.01-calendario-data-julgamento.png` (datepicker aberto).

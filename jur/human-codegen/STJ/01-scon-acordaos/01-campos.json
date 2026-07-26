@@ -1,0 +1,2245 @@
+{
+  "inputs": [
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "preConsultaPP",
+      "id": "preConsultaPP",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": null,
+      "id": "idCaptchaSelecionado",
+      "value": "TRUE",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": null,
+      "id": "idCaptchaValidado",
+      "value": "TRUE",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "acao",
+      "id": "acao",
+      "value": "pesquisar",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "novaConsulta",
+      "id": "novaConsulta",
+      "value": "true",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "i",
+      "id": "i",
+      "value": "1",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "b",
+      "id": "b",
+      "value": "ACOR",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "livre",
+      "id": "livre",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "filtroPorOrgao",
+      "id": null,
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "filtroPorMinistro",
+      "id": null,
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "filtroPorNota",
+      "id": null,
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "data",
+      "id": "data",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "tipo_visualizacao",
+      "id": "tipo_visualizacao",
+      "value": "",
+      "checked": true
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "checkVis",
+      "value": "RESUMO",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": "p",
+      "id": "p",
+      "value": "true",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": "desabilitaHint",
+      "id": "desabilitaHint",
+      "value": "NAO",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "radio",
+      "name": "tp",
+      "id": "tpT",
+      "value": "T",
+      "checked": true
+    },
+    {
+      "tag": "input",
+      "type": "radio",
+      "name": "tp",
+      "id": "tpP",
+      "value": "P",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": null,
+      "id": "pesquisaLivre",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": "processo",
+      "id": "processo",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": "classe",
+      "id": "classe",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": "uf",
+      "id": "uf",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "relator",
+      "id": "relator",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1187",
+      "value": "1187",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1146",
+      "value": "1146",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1182",
+      "value": "1182",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1142",
+      "value": "1142",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1190",
+      "value": "1190",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1188",
+      "value": "1188",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1116",
+      "value": "1116",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1160",
+      "value": "1160",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1132",
+      "value": "1132",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1130",
+      "value": "1130",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1123",
+      "value": "1123",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1183",
+      "value": "1183",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck8450",
+      "value": "8450",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1140",
+      "value": "1140",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1150",
+      "value": "1150",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1149",
+      "value": "1149",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1145",
+      "value": "1145",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1189",
+      "value": "1189",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1131",
+      "value": "1131",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1141",
+      "value": "1141",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1184",
+      "value": "1184",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1156",
+      "value": "1156",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1118",
+      "value": "1118",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck8460",
+      "value": "8460",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1139",
+      "value": "1139",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1185",
+      "value": "1185",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1143",
+      "value": "1143",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1157",
+      "value": "1157",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1170",
+      "value": "1170",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1181",
+      "value": "1181",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1147",
+      "value": "1147",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1158",
+      "value": "1158",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1148",
+      "value": "1148",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1155",
+      "value": "1155",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheck1186",
+      "value": "1186",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1099",
+      "value": "1099",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1091",
+      "value": "1091",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0191",
+      "value": "191",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8205",
+      "value": "8205",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0101",
+      "value": "101",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check7000",
+      "value": "7000",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0018",
+      "value": "18",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8215",
+      "value": "8215",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0078",
+      "value": "78",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1110",
+      "value": "1110",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0260",
+      "value": "260",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0017",
+      "value": "17",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0272",
+      "value": "272",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1100",
+      "value": "1100",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1090",
+      "value": "1090",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0280",
+      "value": "280",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0020",
+      "value": "20",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0132",
+      "value": "132",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1104",
+      "value": "1104",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0019",
+      "value": "19",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1128",
+      "value": "1128",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0012",
+      "value": "12",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1066",
+      "value": "1066",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1151",
+      "value": "1151",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1083",
+      "value": "1083",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0015",
+      "value": "15",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1089",
+      "value": "1089",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0205",
+      "value": "205",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8250",
+      "value": "8250",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0011",
+      "value": "11",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1108",
+      "value": "1108",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8441",
+      "value": "8441",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8135",
+      "value": "8135",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0108",
+      "value": "108",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0345",
+      "value": "345",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0140",
+      "value": "140",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0003",
+      "value": "3",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1119",
+      "value": "1119",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1125",
+      "value": "1125",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8175",
+      "value": "8175",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1098",
+      "value": "1098",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0299",
+      "value": "299",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1087",
+      "value": "1087",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0079",
+      "value": "79",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0007",
+      "value": "7",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0044",
+      "value": "44",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1095",
+      "value": "1095",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1126",
+      "value": "1126",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1031",
+      "value": "1031",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1101",
+      "value": "1101",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8315",
+      "value": "8315",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1074",
+      "value": "1074",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1015",
+      "value": "1015",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1114",
+      "value": "1114",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8370",
+      "value": "8370",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0028",
+      "value": "28",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0013",
+      "value": "13",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0625",
+      "value": "625",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1109",
+      "value": "1109",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1107",
+      "value": "1107",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0600",
+      "value": "600",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1086",
+      "value": "1086",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1094",
+      "value": "1094",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1117",
+      "value": "1117",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1082",
+      "value": "1082",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0420",
+      "value": "420",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0329",
+      "value": "329",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1111",
+      "value": "1111",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0014",
+      "value": "14",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0116",
+      "value": "116",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1112",
+      "value": "1112",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8195",
+      "value": "8195",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1093",
+      "value": "1093",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0337",
+      "value": "337",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1127",
+      "value": "1127",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0036",
+      "value": "36",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0008",
+      "value": "8",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0213",
+      "value": "213",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8185",
+      "value": "8185",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0680",
+      "value": "680",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1096",
+      "value": "1096",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1023",
+      "value": "1023",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8145",
+      "value": "8145",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0060",
+      "value": "60",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8420",
+      "value": "8420",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0302",
+      "value": "302",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8430",
+      "value": "8430",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0061",
+      "value": "61",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1138",
+      "value": "1138",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1113",
+      "value": "1113",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1106",
+      "value": "1106",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0256",
+      "value": "256",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0086",
+      "value": "86",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1040",
+      "value": "1040",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1105",
+      "value": "1105",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1092",
+      "value": "1092",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0051",
+      "value": "51",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0159",
+      "value": "159",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1120",
+      "value": "1120",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0094",
+      "value": "94",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8400",
+      "value": "8400",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0223",
+      "value": "223",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8390",
+      "value": "8390",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1122",
+      "value": "1122",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1084",
+      "value": "1084",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0004",
+      "value": "4",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8410",
+      "value": "8410",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0027",
+      "value": "27",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8360",
+      "value": "8360",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8300",
+      "value": "8300",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1129",
+      "value": "1129",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0248",
+      "value": "248",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1097",
+      "value": "1097",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0035",
+      "value": "35",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0029",
+      "value": "29",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1133",
+      "value": "1133",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1159",
+      "value": "1159",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8350",
+      "value": "8350",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0361",
+      "value": "361",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1180",
+      "value": "1180",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0016",
+      "value": "16",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8440",
+      "value": "8440",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0167",
+      "value": "167",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0353",
+      "value": "353",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1144",
+      "value": "1144",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8165",
+      "value": "8165",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1115",
+      "value": "1115",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1121",
+      "value": "1121",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0062",
+      "value": "62",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0264",
+      "value": "264",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0221",
+      "value": "221",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0006",
+      "value": "6",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1102",
+      "value": "1102",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1088",
+      "value": "1088",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0005",
+      "value": "5",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0230",
+      "value": "230",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1137",
+      "value": "1137",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0009",
+      "value": "9",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1124",
+      "value": "1124",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8155",
+      "value": "8155",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1103",
+      "value": "1103",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check1085",
+      "value": "1085",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check8380",
+      "value": "8380",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0124",
+      "value": "124",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0183",
+      "value": "183",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "check0175",
+      "value": "175",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "dtpb",
+      "id": "dtpb",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": "dtpb1",
+      "id": "dtpb1",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": "dtpb2",
+      "id": "dtpb2",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "dtde",
+      "id": "dtde",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": "dtde1",
+      "id": "dtde1",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": "dtde2",
+      "id": "dtde2",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "orgao",
+      "id": "orgao",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckT1",
+      "value": "T1",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckT2",
+      "value": "T2",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckT3",
+      "value": "T3",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckT4",
+      "value": "T4",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckT5",
+      "value": "T5",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckT6",
+      "value": "T6",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckS1",
+      "value": "S1",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckS2",
+      "value": "S2",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckS3",
+      "value": "S3",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckCE",
+      "value": "CE",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckPS",
+      "value": "PS",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "name": null,
+      "id": "acheckVP",
+      "value": "VP",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": "ementa",
+      "id": "ementa",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "ref",
+      "id": "ref",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": null,
+      "id": "siglajud_0",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": null,
+      "id": "numero_leg0",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": null,
+      "id": "numero_art1_1",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": null,
+      "id": "numero_art2_1",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": null,
+      "id": "numero_art3_1",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": null,
+      "id": "numero_art4_1",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": null,
+      "id": "numero_art5_1",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "name": null,
+      "id": "numero_art6_1",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "b",
+      "id": null,
+      "value": "ACOR",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "p",
+      "id": null,
+      "value": "true",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "l",
+      "id": "l",
+      "value": "10",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "i",
+      "id": null,
+      "value": "1",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "ordenacao",
+      "id": null,
+      "value": "-@DOCN",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "thesaurus",
+      "id": null,
+      "value": "JURIDICO",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "preConsultaPP",
+      "id": "preConsultaPPSelect",
+      "value": "",
+      "checked": false
+    },
+    {
+      "tag": "input",
+      "type": "hidden",
+      "name": "O",
+      "id": null,
+      "value": "PP",
+      "checked": false
+    }
+  ],
+  "selects": [
+    {
+      "name": "nota",
+      "id": "nota",
+      "options": [
+        {
+          "value": "",
+          "texto": "Selecione..."
+        },
+        {
+          "value": "(VEJA ADJ3 (RESCISÓRIA OU AR$))",
+          "texto": "Ações Rescisórias procedentes"
+        },
+        {
+          "value": "JUIZO ADJ2 RETRATACAO",
+          "texto": "Acórdãos com juízo de retratação"
+        },
+        {
+          "value": "PETRECHOS",
+          "texto": "Apreensão de petrechos usualmente utilizados no tráfico de entorpecentes"
+        },
+        {
+          "value": "PROCESSO",
+          "texto": "Casos Notórios"
+        },
+        {
+          "value": "ANS",
+          "texto": "Cobertura/Negativa de medicamento, procedimento, equipamento ou tratamento não previsto no rol ANS"
+        },
+        {
+          "value": "DECISAO ADJ DE ADJ (AFETACAO OU ADMISSAO)",
+          "texto": "Decisões de Afetação/Admissão"
+        },
+        {
+          "value": "AMBIENT$",
+          "texto": "Direito Ambiental"
+        },
+        {
+          "value": "(VEJA ADJ2 (EMBARGO$ ADJ2 DECLAR$ OU EDCL$ OU DERESP$))",
+          "texto": "Embargos de Declaração acolhidos"
+        },
+        {
+          "value": "(VEJA ADJ2 (EMBARGOS ADJ2 DIVERGEN$ OU ERESP$))",
+          "texto": "Embargos de Divergência providos"
+        },
+        {
+          "value": "ESTETICO",
+          "texto": "Indenização por dano estético"
+        },
+        {
+          "value": "MORAL",
+          "texto": "Indenização por dano moral"
+        },
+        {
+          "value": "DANO ADJ MORAL ADJ COLETIVO",
+          "texto": "Indenização por dano moral coletivo"
+        },
+        {
+          "value": "(JULGAMENTO E MERITO E PUIL)",
+          "texto": "Julgamento de mérito de Pedido de uniformização de interpretação de lei"
+        },
+        {
+          "value": "$PENHORABILIDADE",
+          "texto": "Penhorabilidade ou impenhorabilidade de bens"
+        },
+        {
+          "value": "INSIGNIFICÂNCIA",
+          "texto": "Princípio da insignificância"
+        },
+        {
+          "value": "PROPOSTA COM REVISAO COM TEMA COM RECURSO ADJ REPETITIVO",
+          "texto": "Proposta de Revisão de Tema de Recurso Repetitivo"
+        },
+        {
+          "value": "QUANTIDAD$ COM DROGA",
+          "texto": "Quantidade de droga apreendida"
+        },
+        {
+          "value": "REAFIRMACAO COM JURISPRUDENCIA",
+          "texto": "Reafirmação de Jurisprudência"
+        },
+        {
+          "value": "(JULGADO E CONFORME E ((RECURSOS ADJ REPETITIVOS) OU IAC))",
+          "texto": "Recursos Repetitivos e IACs"
+        },
+        {
+          "value": "DISTINGUISHING",
+          "texto": "Técnica de distinção"
+        },
+        {
+          "value": "OVERRULING",
+          "texto": "Técnica de superação"
+        },
+        {
+          "value": "(TEMA AND RACIAL)",
+          "texto": "Tema: perspectiva racial"
+        },
+        {
+          "value": "(TEMA COM VIOLENCIA)",
+          "texto": "Tema: violência doméstica e familiar"
+        },
+        {
+          "value": "(REVISAO ADJ DA ADJ TESE) OU (TESE ADJ REVISADA)",
+          "texto": "Tese revisada"
+        }
+      ]
+    },
+    {
+      "name": null,
+      "id": "tipo1_1",
+      "options": [
+        {
+          "value": "",
+          "texto": ""
+        },
+        {
+          "value": "ART",
+          "texto": "ART"
+        },
+        {
+          "value": "PAR",
+          "texto": "PAR"
+        },
+        {
+          "value": "INC",
+          "texto": "INC"
+        },
+        {
+          "value": "LET",
+          "texto": "LET"
+        },
+        {
+          "value": "ITEM",
+          "texto": "ITEM"
+        },
+        {
+          "value": "NUM",
+          "texto": "NUM"
+        }
+      ]
+    },
+    {
+      "name": null,
+      "id": "tipo2_1",
+      "options": [
+        {
+          "value": "",
+          "texto": ""
+        },
+        {
+          "value": "ART",
+          "texto": "ART"
+        },
+        {
+          "value": "PAR",
+          "texto": "PAR"
+        },
+        {
+          "value": "INC",
+          "texto": "INC"
+        },
+        {
+          "value": "LET",
+          "texto": "LET"
+        },
+        {
+          "value": "ITEM",
+          "texto": "ITEM"
+        },
+        {
+          "value": "NUM",
+          "texto": "NUM"
+        }
+      ]
+    },
+    {
+      "name": null,
+      "id": "tipo3_1",
+      "options": [
+        {
+          "value": "",
+          "texto": ""
+        },
+        {
+          "value": "ART",
+          "texto": "ART"
+        },
+        {
+          "value": "PAR",
+          "texto": "PAR"
+        },
+        {
+          "value": "INC",
+          "texto": "INC"
+        },
+        {
+          "value": "LET",
+          "texto": "LET"
+        },
+        {
+          "value": "ITEM",
+          "texto": "ITEM"
+        },
+        {
+          "value": "NUM",
+          "texto": "NUM"
+        }
+      ]
+    },
+    {
+      "name": null,
+      "id": "tipo4_1",
+      "options": [
+        {
+          "value": "",
+          "texto": ""
+        },
+        {
+          "value": "ART",
+          "texto": "ART"
+        },
+        {
+          "value": "PAR",
+          "texto": "PAR"
+        },
+        {
+          "value": "INC",
+          "texto": "INC"
+        },
+        {
+          "value": "LET",
+          "texto": "LET"
+        },
+        {
+          "value": "ITEM",
+          "texto": "ITEM"
+        },
+        {
+          "value": "NUM",
+          "texto": "NUM"
+        }
+      ]
+    },
+    {
+      "name": null,
+      "id": "tipo5_1",
+      "options": [
+        {
+          "value": "",
+          "texto": ""
+        },
+        {
+          "value": "ART",
+          "texto": "ART"
+        },
+        {
+          "value": "PAR",
+          "texto": "PAR"
+        },
+        {
+          "value": "INC",
+          "texto": "INC"
+        },
+        {
+          "value": "LET",
+          "texto": "LET"
+        },
+        {
+          "value": "ITEM",
+          "texto": "ITEM"
+        },
+        {
+          "value": "NUM",
+          "texto": "NUM"
+        }
+      ]
+    },
+    {
+      "name": null,
+      "id": "tipo6_1",
+      "options": [
+        {
+          "value": "",
+          "texto": ""
+        },
+        {
+          "value": "ART",
+          "texto": "ART"
+        },
+        {
+          "value": "PAR",
+          "texto": "PAR"
+        },
+        {
+          "value": "INC",
+          "texto": "INC"
+        },
+        {
+          "value": "LET",
+          "texto": "LET"
+        },
+        {
+          "value": "ITEM",
+          "texto": "ITEM"
+        },
+        {
+          "value": "NUM",
+          "texto": "NUM"
+        }
+      ]
+    }
+  ],
+  "textareas": []
+}

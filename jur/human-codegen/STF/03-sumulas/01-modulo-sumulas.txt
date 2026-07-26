@@ -1,0 +1,27 @@
+STF — módulo 03: Súmulas (aplicação) — portal ASP, fora da SPA
+
+Link:   https://portal.stf.jus.br/jurisprudencia/aplicacaosumula.asp
+Prints: `01.01-aplicacao-de-sumulas.png` · HTML: `01-pagina.html`
+
+"Aplicação das Súmulas no STF": não é a base de enunciados, e sim uma **seleção de acórdãos e
+decisões monocráticas sobre o sentido, o alcance e a aplicabilidade de cada enunciado**. Serve
+para responder "como o STF vem interpretando a Súmula X", que a base de súmulas não responde.
+
+Campos: **Número** (do enunciado), **Ramo do Direito** (combo) e **Pesquisa Livre**.
+⚠️ Os operadores aqui são os do portal ASP — `e` `ou` `adj` `não` `prox` `mesmo` `$` — e
+**não** os da SPA de jurisprudência. Mesma ressalva do módulo 02.
+
+Status neste repo: **mapeado, não implementado.** A base de enunciados propriamente dita
+(799 súmulas, 63 vinculantes) está no módulo 01 e é coberta por
+`./bin/jur stf -b sumulas` / `--vinculantes` — ver `01-jurisprudencia/08-sumulas-e-vinculantes.txt`.
+
+## 2. As súmulas dentro da SPA (o caminho que o crawler usa)
+
+Print: `02.01-sumulas-vinculantes-na-spa.png`
+URL oficial divulgada na home do STF (a que o crawler reproduz):
+  https://jurisprudencia.stf.jus.br/pages/search?classeNumeroIncidente=vinculante&base=sumulas
+    &is_vinculante=true&pesquisa_inteiro_teor=false&sinonimo=true&plural=true&radicais=false
+    &buscaExata=true&page=1&pageSize=10&sort=date&sortBy=desc&isAdvanced=true
+Confirmado na tela: painel "Base" mostra `Súmulas (63)` com o filtro ligado.
+
+Fonte impressa das súmulas (não crawleada): https://livrariasupremo.stf.jus.br/#Sumulas

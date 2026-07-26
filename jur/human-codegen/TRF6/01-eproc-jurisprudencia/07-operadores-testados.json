@@ -1,0 +1,254 @@
+{
+  "medidoEm": "25/07/2026",
+  "origem": "TRF6 (selOrigem=1)",
+  "escopo": "inteiro teor",
+  "agrupar": true,
+  "testes": [
+    {
+      "rotulo": "termo unico",
+      "query": "aposentadoria",
+      "total": 36578,
+      "termosQueOServidorMontou": "aposentadoria"
+    },
+    {
+      "rotulo": "termo unico",
+      "query": "dano",
+      "total": 21079,
+      "termosQueOServidorMontou": "dano"
+    },
+    {
+      "rotulo": "termo unico",
+      "query": "moral",
+      "total": 2488,
+      "termosQueOServidorMontou": "moral"
+    },
+    {
+      "rotulo": "espaco (E implicito)",
+      "query": "dano moral",
+      "total": 2201,
+      "termosQueOServidorMontou": "dano|moral"
+    },
+    {
+      "rotulo": "hifen",
+      "query": "dano-moral",
+      "total": 2201,
+      "termosQueOServidorMontou": "dano|moral"
+    },
+    {
+      "rotulo": "e",
+      "query": "dano e moral",
+      "total": 2201,
+      "termosQueOServidorMontou": "dano|moral"
+    },
+    {
+      "rotulo": "E maiusculo",
+      "query": "dano E moral",
+      "total": 2201,
+      "termosQueOServidorMontou": "dano|moral"
+    },
+    {
+      "rotulo": "ou",
+      "query": "dano ou moral",
+      "total": 21366,
+      "termosQueOServidorMontou": "dano"
+    },
+    {
+      "rotulo": "ou (hifen) QUEBRA",
+      "query": "dano-ou-moral",
+      "total": 216419,
+      "termosQueOServidorMontou": ""
+    },
+    {
+      "rotulo": "nao",
+      "query": "dano nao moral",
+      "total": 18878,
+      "termosQueOServidorMontou": "dano"
+    },
+    {
+      "rotulo": "não (com til)",
+      "query": "dano não moral",
+      "total": 18878,
+      "termosQueOServidorMontou": "dano"
+    },
+    {
+      "rotulo": "nao (hifen) QUEBRA",
+      "query": "dano-nao-moral",
+      "total": 2201,
+      "termosQueOServidorMontou": "dano|moral"
+    },
+    {
+      "rotulo": "and (ingles) QUEBRA",
+      "query": "dano and moral",
+      "total": 6,
+      "termosQueOServidorMontou": "and|dano|moral|dano|moral"
+    },
+    {
+      "rotulo": "or (ingles) QUEBRA",
+      "query": "dano or moral",
+      "total": 2,
+      "termosQueOServidorMontou": "or|dano|moral"
+    },
+    {
+      "rotulo": "not (ingles) QUEBRA",
+      "query": "dano not moral",
+      "total": 0,
+      "termosQueOServidorMontou": ""
+    },
+    {
+      "rotulo": "and como termo",
+      "query": "and",
+      "total": 309,
+      "termosQueOServidorMontou": "and"
+    },
+    {
+      "rotulo": "frase exata",
+      "query": "\"dano moral\"",
+      "total": 1979,
+      "termosQueOServidorMontou": "dano moral"
+    },
+    {
+      "rotulo": "frase + termo",
+      "query": "\"dano moral\" e aposentadoria",
+      "total": 395,
+      "termosQueOServidorMontou": "aposentadoria|dano moral"
+    },
+    {
+      "rotulo": "frase + o proprio termo",
+      "query": "\"dano moral\" e dano",
+      "total": 1979,
+      "termosQueOServidorMontou": "dano moral|dano"
+    },
+    {
+      "rotulo": "frase + termo (ou)",
+      "query": "\"dano moral\" ou aposentadoria",
+      "total": 38162,
+      "termosQueOServidorMontou": "aposentadoria"
+    },
+    {
+      "rotulo": "prox (com espaco)",
+      "query": "dano prox moral",
+      "total": 2012,
+      "termosQueOServidorMontou": "dano moral"
+    },
+    {
+      "rotulo": "prox com hifen",
+      "query": "dano-prox-moral",
+      "total": 0,
+      "termosQueOServidorMontou": ""
+    },
+    {
+      "rotulo": "prox5",
+      "query": "dano prox5 moral",
+      "total": 0,
+      "termosQueOServidorMontou": ""
+    },
+    {
+      "rotulo": "prox 5",
+      "query": "dano prox 5 moral",
+      "total": 87,
+      "termosQueOServidorMontou": "moral|dano. 5"
+    },
+    {
+      "rotulo": "adj",
+      "query": "dano adj moral",
+      "total": 0,
+      "termosQueOServidorMontou": ""
+    },
+    {
+      "rotulo": "adj2",
+      "query": "dano adj2 moral",
+      "total": 0,
+      "termosQueOServidorMontou": ""
+    },
+    {
+      "rotulo": "curinga *",
+      "query": "embarg*",
+      "total": 47922,
+      "termosQueOServidorMontou": "embargos"
+    },
+    {
+      "rotulo": "curinga ? NAO",
+      "query": "embarg?",
+      "total": 0,
+      "termosQueOServidorMontou": ""
+    },
+    {
+      "rotulo": "curinga $ NAO",
+      "query": "embarg$",
+      "total": 0,
+      "termosQueOServidorMontou": ""
+    },
+    {
+      "rotulo": "radical sem curinga",
+      "query": "embarg",
+      "total": 0,
+      "termosQueOServidorMontou": ""
+    },
+    {
+      "rotulo": "acento indiferente",
+      "query": "tributário",
+      "total": 17983,
+      "termosQueOServidorMontou": "tributario"
+    },
+    {
+      "rotulo": "sem acento",
+      "query": "tributario",
+      "total": 17983,
+      "termosQueOServidorMontou": "tributario"
+    },
+    {
+      "rotulo": "maiusculas",
+      "query": "TRIBUTARIO",
+      "total": 17983,
+      "termosQueOServidorMontou": "tributario"
+    },
+    {
+      "rotulo": "exemplo da ajuda do site",
+      "query": "crime e \"faixa de fronteira\"",
+      "total": 0,
+      "termosQueOServidorMontou": ""
+    },
+    {
+      "rotulo": "so a frase da ajuda",
+      "query": "\"faixa de fronteira\"",
+      "total": 10,
+      "termosQueOServidorMontou": "faixa de fronteira"
+    },
+    {
+      "rotulo": "so crime",
+      "query": "crime",
+      "total": 4620,
+      "termosQueOServidorMontou": "crime"
+    },
+    {
+      "rotulo": "exemplo da ajuda: ou",
+      "query": "drogas ou entorpecentes",
+      "total": 922,
+      "termosQueOServidorMontou": "drogas"
+    },
+    {
+      "rotulo": "drogas",
+      "query": "drogas",
+      "total": 859,
+      "termosQueOServidorMontou": "drogas"
+    },
+    {
+      "rotulo": "entorpecentes",
+      "query": "entorpecentes",
+      "total": 281,
+      "termosQueOServidorMontou": "entorpecentes"
+    },
+    {
+      "rotulo": "drogas e entorpecentes",
+      "query": "drogas e entorpecentes",
+      "total": 218,
+      "termosQueOServidorMontou": "drogas|entorpecentes"
+    },
+    {
+      "rotulo": "curinga isolado = base inteira",
+      "query": "*",
+      "total": 216706,
+      "termosQueOServidorMontou": ""
+    }
+  ]
+}

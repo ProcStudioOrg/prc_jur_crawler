@@ -1,0 +1,2858 @@
+{
+ "acordaos": {
+  "relatorioId": 1,
+  "total": 135,
+  "opcoes": [
+   {
+    "id_classe": "64",
+    "str_classe": "Ação Civil de Improbidade Administrativa (64)"
+   },
+   {
+    "id_classe": "65",
+    "str_classe": "Ação Civil Pública (65)"
+   },
+   {
+    "id_classe": "282",
+    "str_classe": "Ação Penal de Competência do Júri (282)"
+   },
+   {
+    "id_classe": "283",
+    "str_classe": "Ação Penal - Procedimento Ordinário (283)"
+   },
+   {
+    "id_classe": "10943",
+    "str_classe": "Ação Penal - Procedimento Sumário (10943)"
+   },
+   {
+    "id_classe": "10944",
+    "str_classe": "Ação Penal - Procedimento Sumaríssimo (10944)"
+   },
+   {
+    "id_classe": "66",
+    "str_classe": "Ação Popular (66)"
+   },
+   {
+    "id_classe": "47",
+    "str_classe": "Ação Rescisória (47)"
+   },
+   {
+    "id_classe": "413",
+    "str_classe": "Agravo de Execução Penal (413)"
+   },
+   {
+    "id_classe": "202",
+    "str_classe": "Agravo de Instrumento (202)"
+   },
+   {
+    "id_classe": "203",
+    "str_classe": "Agravo de Instrumento em Recurso Especial (203)"
+   },
+   {
+    "id_classe": "204",
+    "str_classe": "Agravo de Instrumento em Recurso Extraordinário (204)"
+   },
+   {
+    "id_classe": "1208",
+    "str_classe": "Agravo Interno Cível (1208)"
+   },
+   {
+    "id_classe": "206",
+    "str_classe": "Agravo Regimental Cível (206)"
+   },
+   {
+    "id_classe": "1729",
+    "str_classe": "Agravo Regimental Criminal (1729)"
+   },
+   {
+    "id_classe": "198",
+    "str_classe": "Apelação Cível (198)"
+   },
+   {
+    "id_classe": "417",
+    "str_classe": "Apelação Criminal (417)"
+   },
+   {
+    "id_classe": "1728",
+    "str_classe": "Apelação / Remessa Necessária (1728)"
+   },
+   {
+    "id_classe": "218",
+    "str_classe": "Assistência Judiciária (218)"
+   },
+   {
+    "id_classe": "12121",
+    "str_classe": "Auto de Prisão (12121)"
+   },
+   {
+    "id_classe": "280",
+    "str_classe": "Auto de Prisão em Flagrante (280)"
+   },
+   {
+    "id_classe": "238",
+    "str_classe": "Avocatória (238)"
+   },
+   {
+    "id_classe": "181",
+    "str_classe": "Busca e Apreensão (181)"
+   },
+   {
+    "id_classe": "418",
+    "str_classe": "Carta Testemunhável (418)"
+   },
+   {
+    "id_classe": "183",
+    "str_classe": "Cautelar Inominada (183)"
+   },
+   {
+    "id_classe": "11955",
+    "str_classe": "Cautelar Inominada Criminal (11955)"
+   },
+   {
+    "id_classe": "1285",
+    "str_classe": "Conflito de atribuição (1285)"
+   },
+   {
+    "id_classe": "221",
+    "str_classe": "Conflito de competência cível (221)"
+   },
+   {
+    "id_classe": "10970",
+    "str_classe": "Conflito de Competência Infância e Juventude (10970)"
+   },
+   {
+    "id_classe": "325",
+    "str_classe": "Conflito de Jurisdição (325)"
+   },
+   {
+    "id_classe": "10942",
+    "str_classe": "Correição Parcial Cível (10942)"
+   },
+   {
+    "id_classe": "419",
+    "str_classe": "Correição Parcial Criminal (419)"
+   },
+   {
+    "id_classe": "293",
+    "str_classe": "Crimes Ambientais (293)"
+   },
+   {
+    "id_classe": "288",
+    "str_classe": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular (288)"
+   },
+   {
+    "id_classe": "297",
+    "str_classe": "Crimes de Imprensa (297)"
+   },
+   {
+    "id_classe": "287",
+    "str_classe": "Crimes de Responsabilidade dos Funcionários Públicos (287)"
+   },
+   {
+    "id_classe": "156",
+    "str_classe": "Cumprimento de sentença (156)"
+   },
+   {
+    "id_classe": "12078",
+    "str_classe": "Cumprimento de Sentença contra a Fazenda Pública (12078)"
+   },
+   {
+    "id_classe": "12246",
+    "str_classe": "Cumprimento de Sentença de Obrigação de Prestar Alimentos (12246)"
+   },
+   {
+    "id_classe": "157",
+    "str_classe": "Cumprimento Provisório de Sentença (157)"
+   },
+   {
+    "id_classe": "1296",
+    "str_classe": "Declaratória de Constitucionalidade (1296)"
+   },
+   {
+    "id_classe": "432",
+    "str_classe": "Desaforamento de Julgamento (432)"
+   },
+   {
+    "id_classe": "95",
+    "str_classe": "Direta de Inconstitucionalidade (95)"
+   },
+   {
+    "id_classe": "172",
+    "str_classe": "Embargos à Execução (172)"
+   },
+   {
+    "id_classe": "1689",
+    "str_classe": "Embargos de Declaração Cível (1689)"
+   },
+   {
+    "id_classe": "420",
+    "str_classe": "Embargos de Declaração Criminal (420)"
+   },
+   {
+    "id_classe": "327",
+    "str_classe": "Embargos de Terceiro Criminal (327)"
+   },
+   {
+    "id_classe": "208",
+    "str_classe": "Embargos Infringentes (208)"
+   },
+   {
+    "id_classe": "421",
+    "str_classe": "Embargos Infringentes e de Nulidade (421)"
+   },
+   {
+    "id_classe": "324",
+    "str_classe": "Exceção da Verdade (324)"
+   },
+   {
+    "id_classe": "1230",
+    "str_classe": "Exceção de Impedimento (1230)"
+   },
+   {
+    "id_classe": "323",
+    "str_classe": "Exceção de Impedimento (323)"
+   },
+   {
+    "id_classe": "1232",
+    "str_classe": "Exceção de Incompetência (1232)"
+   },
+   {
+    "id_classe": "319",
+    "str_classe": "Exceção de Incompetência de Juízo (319)"
+   },
+   {
+    "id_classe": "1231",
+    "str_classe": "Exceção de Suspeição (1231)"
+   },
+   {
+    "id_classe": "318",
+    "str_classe": "Exceção de Suspeição (318)"
+   },
+   {
+    "id_classe": "1114",
+    "str_classe": "Execução Contra a Fazenda Pública (1114)"
+   },
+   {
+    "id_classe": "386",
+    "str_classe": "Execução da Pena (386)"
+   },
+   {
+    "id_classe": "11788",
+    "str_classe": "Exibição de Documento ou Coisa Criminal (11788)"
+   },
+   {
+    "id_classe": "1269",
+    "str_classe": "Habeas Corpus Cível (1269)"
+   },
+   {
+    "id_classe": "307",
+    "str_classe": "Habeas Corpus Criminal (307)"
+   },
+   {
+    "id_classe": "110",
+    "str_classe": "Habeas Data (110)"
+   },
+   {
+    "id_classe": "38",
+    "str_classe": "Habilitação (38)"
+   },
+   {
+    "id_classe": "229",
+    "str_classe": "Impugnação ao Cumprimento de Sentença (229)"
+   },
+   {
+    "id_classe": "230",
+    "str_classe": "Impugnação ao Pedido de Assistência Litisconsorcial ou Simples (230)"
+   },
+   {
+    "id_classe": "231",
+    "str_classe": "Impugnação ao Valor da Causa Cível (231)"
+   },
+   {
+    "id_classe": "1702",
+    "str_classe": "Impugnação de Assistência Judiciária (1702)"
+   },
+   {
+    "id_classe": "216",
+    "str_classe": "Incidente De Arguição de Inconstitucionalidade Cível (216)"
+   },
+   {
+    "id_classe": "1178",
+    "str_classe": "Incidente de Arguição de Inconstitucionalidade Criminal (1178)"
+   },
+   {
+    "id_classe": "12087",
+    "str_classe": "Incidente de Assunção de Competência (12087)"
+   },
+   {
+    "id_classe": "232",
+    "str_classe": "Incidente de Falsidade (232)"
+   },
+   {
+    "id_classe": "332",
+    "str_classe": "Incidente de Falsidade (332)"
+   },
+   {
+    "id_classe": "12080",
+    "str_classe": "Incidente de Impedimento Cível (12080)"
+   },
+   {
+    "id_classe": "12085",
+    "str_classe": "Incidente de Resolução de Demandas Repetitivas (12085)"
+   },
+   {
+    "id_classe": "12081",
+    "str_classe": "Incidente de Suspeição Cível (12081)"
+   },
+   {
+    "id_classe": "233",
+    "str_classe": "Incidente de Uniformização de Jurisprudência (233)"
+   },
+   {
+    "id_classe": "433",
+    "str_classe": "Incidente de Uniformização de Jurisprudência (433)"
+   },
+   {
+    "id_classe": "279",
+    "str_classe": "Inquérito Policial (279)"
+   },
+   {
+    "id_classe": "333",
+    "str_classe": "Insanidade Mental do Acusado (333)"
+   },
+   {
+    "id_classe": "1297",
+    "str_classe": "Intervenção em Município (1297)"
+   },
+   {
+    "id_classe": "1731",
+    "str_classe": "Investigação contra magistrado (1731)"
+   },
+   {
+    "id_classe": "305",
+    "str_classe": "Liberdade Provisória com ou sem fiança (305)"
+   },
+   {
+    "id_classe": "118",
+    "str_classe": "Mandado de Injunção (118)"
+   },
+   {
+    "id_classe": "120",
+    "str_classe": "Mandado de Segurança Cível (120)"
+   },
+   {
+    "id_classe": "119",
+    "str_classe": "Mandado de Segurança Coletivo (119)"
+   },
+   {
+    "id_classe": "1710",
+    "str_classe": "Mandado de Segurança Criminal (1710)"
+   },
+   {
+    "id_classe": "311",
+    "str_classe": "Medidas Investigatórias Sobre Organizações Criminosas (311)"
+   },
+   {
+    "id_classe": "1268",
+    "str_classe": "Medidas Protetivas de urgência (Lei Maria da Penha) Criminal (1268)"
+   },
+   {
+    "id_classe": "270",
+    "str_classe": "Notícia-Crime (270)"
+   },
+   {
+    "id_classe": "275",
+    "str_classe": "Notificação para Explicações (275)"
+   },
+   {
+    "id_classe": "276",
+    "str_classe": "Notificação para Explicações (Lei de Imprensa) (276)"
+   },
+   {
+    "id_classe": "236",
+    "str_classe": "Oposição (236)"
+   },
+   {
+    "id_classe": "1289",
+    "str_classe": "Outras medidas provisionais (1289)"
+   },
+   {
+    "id_classe": "273",
+    "str_classe": "Pedido de Arquivamento em Representação Criminal (273)"
+   },
+   {
+    "id_classe": "12357",
+    "str_classe": "Pedido de Efeito Suspensivo à Apelação (12357)"
+   },
+   {
+    "id_classe": "313",
+    "str_classe": "Pedido de Prisão Preventiva (313)"
+   },
+   {
+    "id_classe": "314",
+    "str_classe": "Pedido de Prisão Temporária (314)"
+   },
+   {
+    "id_classe": "310",
+    "str_classe": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico (310)"
+   },
+   {
+    "id_classe": "457",
+    "str_classe": "Pedido de Uniformização de Interpretação de Lei Cível (457)"
+   },
+   {
+    "id_classe": "241",
+    "str_classe": "Petição Cível (241)"
+   },
+   {
+    "id_classe": "1727",
+    "str_classe": "Petição Criminal (1727)"
+   },
+   {
+    "id_classe": "7",
+    "str_classe": "Procedimento Comum Cível (7)"
+   },
+   {
+    "id_classe": "300",
+    "str_classe": "Procedimento Especial da Lei Antitóxicos (300)"
+   },
+   {
+    "id_classe": "1733",
+    "str_classe": "Procedimento Investigatório Criminal (PIC-MP)  (1733)"
+   },
+   {
+    "id_classe": "1298",
+    "str_classe": "Processo Administrativo (1298)"
+   },
+   {
+    "id_classe": "12375",
+    "str_classe": "Reclamação (12375)"
+   },
+   {
+    "id_classe": "244",
+    "str_classe": "Reclamação (244)"
+   },
+   {
+    "id_classe": "12122",
+    "str_classe": "Reclamação Criminal (12122)"
+   },
+   {
+    "id_classe": "1301",
+    "str_classe": "Reclamação Disciplinar (1301)"
+   },
+   {
+    "id_classe": "426",
+    "str_classe": "Recurso em Sentido Estrito (426)"
+   },
+   {
+    "id_classe": "11398",
+    "str_classe": "Recurso em sentido estrito/Recurso ex officio (11398)"
+   },
+   {
+    "id_classe": "460",
+    "str_classe": "Recurso Inominado Cível (460)"
+   },
+   {
+    "id_classe": "11040",
+    "str_classe": "Recurso Inominado Militar (11040)"
+   },
+   {
+    "id_classe": "306",
+    "str_classe": "Relaxamento de Prisão (306)"
+   },
+   {
+    "id_classe": "199",
+    "str_classe": "Remessa Necessária Cível (199)"
+   },
+   {
+    "id_classe": "427",
+    "str_classe": "Remessa Necessária Criminal (427)"
+   },
+   {
+    "id_classe": "272",
+    "str_classe": "Representação Criminal/Notícia de Crime (272)"
+   },
+   {
+    "id_classe": "256",
+    "str_classe": "Representação por Excesso de Prazo (256)"
+   },
+   {
+    "id_classe": "11036",
+    "str_classe": "Representação p/ Perda da Graduação  (11036)"
+   },
+   {
+    "id_classe": "46",
+    "str_classe": "Restauração de Autos Cível (46)"
+   },
+   {
+    "id_classe": "291",
+    "str_classe": "Restauração de Autos Criminal (291)"
+   },
+   {
+    "id_classe": "326",
+    "str_classe": "Restituição de Coisas Apreendidas (326)"
+   },
+   {
+    "id_classe": "12394",
+    "str_classe": "Revisão Criminal (12394)"
+   },
+   {
+    "id_classe": "428",
+    "str_classe": "Revisão Criminal (428)"
+   },
+   {
+    "id_classe": "196",
+    "str_classe": "Seqüestro (196)"
+   },
+   {
+    "id_classe": "329",
+    "str_classe": "Seqüestro (329)"
+   },
+   {
+    "id_classe": "145",
+    "str_classe": "Suspensão de Execução de Sentença (145)"
+   },
+   {
+    "id_classe": "11555",
+    "str_classe": "Suspensão de Liminar e de Sentença (11555)"
+   },
+   {
+    "id_classe": "144",
+    "str_classe": "Suspensão de Liminar ou Antecipação de Tutela (144)"
+   },
+   {
+    "id_classe": "11556",
+    "str_classe": "Suspensão de Segurança Cível (11556)"
+   },
+   {
+    "id_classe": "278",
+    "str_classe": "Termo Circunstanciado (278)"
+   },
+   {
+    "id_classe": "12083",
+    "str_classe": "Tutela Antecipada Antecedente (12083)"
+   },
+   {
+    "id_classe": "12135",
+    "str_classe": "Tutela Antecipada Antecedente (12135)"
+   },
+   {
+    "id_classe": "12084",
+    "str_classe": "Tutela Cautelar Antecedente (12084)"
+   },
+   {
+    "id_classe": "12134",
+    "str_classe": "Tutela Cautelar Antecedente (12134)"
+   }
+  ]
+ },
+ "decisoes-monocraticas": {
+  "relatorioId": 2,
+  "total": 135,
+  "opcoes": [
+   {
+    "id_classe": "64",
+    "str_classe": "Ação Civil de Improbidade Administrativa (64)"
+   },
+   {
+    "id_classe": "65",
+    "str_classe": "Ação Civil Pública (65)"
+   },
+   {
+    "id_classe": "282",
+    "str_classe": "Ação Penal de Competência do Júri (282)"
+   },
+   {
+    "id_classe": "283",
+    "str_classe": "Ação Penal - Procedimento Ordinário (283)"
+   },
+   {
+    "id_classe": "10943",
+    "str_classe": "Ação Penal - Procedimento Sumário (10943)"
+   },
+   {
+    "id_classe": "10944",
+    "str_classe": "Ação Penal - Procedimento Sumaríssimo (10944)"
+   },
+   {
+    "id_classe": "66",
+    "str_classe": "Ação Popular (66)"
+   },
+   {
+    "id_classe": "47",
+    "str_classe": "Ação Rescisória (47)"
+   },
+   {
+    "id_classe": "413",
+    "str_classe": "Agravo de Execução Penal (413)"
+   },
+   {
+    "id_classe": "202",
+    "str_classe": "Agravo de Instrumento (202)"
+   },
+   {
+    "id_classe": "203",
+    "str_classe": "Agravo de Instrumento em Recurso Especial (203)"
+   },
+   {
+    "id_classe": "204",
+    "str_classe": "Agravo de Instrumento em Recurso Extraordinário (204)"
+   },
+   {
+    "id_classe": "1208",
+    "str_classe": "Agravo Interno Cível (1208)"
+   },
+   {
+    "id_classe": "206",
+    "str_classe": "Agravo Regimental Cível (206)"
+   },
+   {
+    "id_classe": "1729",
+    "str_classe": "Agravo Regimental Criminal (1729)"
+   },
+   {
+    "id_classe": "198",
+    "str_classe": "Apelação Cível (198)"
+   },
+   {
+    "id_classe": "417",
+    "str_classe": "Apelação Criminal (417)"
+   },
+   {
+    "id_classe": "1728",
+    "str_classe": "Apelação / Remessa Necessária (1728)"
+   },
+   {
+    "id_classe": "218",
+    "str_classe": "Assistência Judiciária (218)"
+   },
+   {
+    "id_classe": "12121",
+    "str_classe": "Auto de Prisão (12121)"
+   },
+   {
+    "id_classe": "280",
+    "str_classe": "Auto de Prisão em Flagrante (280)"
+   },
+   {
+    "id_classe": "238",
+    "str_classe": "Avocatória (238)"
+   },
+   {
+    "id_classe": "181",
+    "str_classe": "Busca e Apreensão (181)"
+   },
+   {
+    "id_classe": "418",
+    "str_classe": "Carta Testemunhável (418)"
+   },
+   {
+    "id_classe": "183",
+    "str_classe": "Cautelar Inominada (183)"
+   },
+   {
+    "id_classe": "11955",
+    "str_classe": "Cautelar Inominada Criminal (11955)"
+   },
+   {
+    "id_classe": "1285",
+    "str_classe": "Conflito de atribuição (1285)"
+   },
+   {
+    "id_classe": "221",
+    "str_classe": "Conflito de competência cível (221)"
+   },
+   {
+    "id_classe": "10970",
+    "str_classe": "Conflito de Competência Infância e Juventude (10970)"
+   },
+   {
+    "id_classe": "325",
+    "str_classe": "Conflito de Jurisdição (325)"
+   },
+   {
+    "id_classe": "10942",
+    "str_classe": "Correição Parcial Cível (10942)"
+   },
+   {
+    "id_classe": "419",
+    "str_classe": "Correição Parcial Criminal (419)"
+   },
+   {
+    "id_classe": "293",
+    "str_classe": "Crimes Ambientais (293)"
+   },
+   {
+    "id_classe": "288",
+    "str_classe": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular (288)"
+   },
+   {
+    "id_classe": "297",
+    "str_classe": "Crimes de Imprensa (297)"
+   },
+   {
+    "id_classe": "287",
+    "str_classe": "Crimes de Responsabilidade dos Funcionários Públicos (287)"
+   },
+   {
+    "id_classe": "156",
+    "str_classe": "Cumprimento de sentença (156)"
+   },
+   {
+    "id_classe": "12078",
+    "str_classe": "Cumprimento de Sentença contra a Fazenda Pública (12078)"
+   },
+   {
+    "id_classe": "12246",
+    "str_classe": "Cumprimento de Sentença de Obrigação de Prestar Alimentos (12246)"
+   },
+   {
+    "id_classe": "157",
+    "str_classe": "Cumprimento Provisório de Sentença (157)"
+   },
+   {
+    "id_classe": "1296",
+    "str_classe": "Declaratória de Constitucionalidade (1296)"
+   },
+   {
+    "id_classe": "432",
+    "str_classe": "Desaforamento de Julgamento (432)"
+   },
+   {
+    "id_classe": "95",
+    "str_classe": "Direta de Inconstitucionalidade (95)"
+   },
+   {
+    "id_classe": "172",
+    "str_classe": "Embargos à Execução (172)"
+   },
+   {
+    "id_classe": "1689",
+    "str_classe": "Embargos de Declaração Cível (1689)"
+   },
+   {
+    "id_classe": "420",
+    "str_classe": "Embargos de Declaração Criminal (420)"
+   },
+   {
+    "id_classe": "327",
+    "str_classe": "Embargos de Terceiro Criminal (327)"
+   },
+   {
+    "id_classe": "208",
+    "str_classe": "Embargos Infringentes (208)"
+   },
+   {
+    "id_classe": "421",
+    "str_classe": "Embargos Infringentes e de Nulidade (421)"
+   },
+   {
+    "id_classe": "324",
+    "str_classe": "Exceção da Verdade (324)"
+   },
+   {
+    "id_classe": "1230",
+    "str_classe": "Exceção de Impedimento (1230)"
+   },
+   {
+    "id_classe": "323",
+    "str_classe": "Exceção de Impedimento (323)"
+   },
+   {
+    "id_classe": "1232",
+    "str_classe": "Exceção de Incompetência (1232)"
+   },
+   {
+    "id_classe": "319",
+    "str_classe": "Exceção de Incompetência de Juízo (319)"
+   },
+   {
+    "id_classe": "1231",
+    "str_classe": "Exceção de Suspeição (1231)"
+   },
+   {
+    "id_classe": "318",
+    "str_classe": "Exceção de Suspeição (318)"
+   },
+   {
+    "id_classe": "1114",
+    "str_classe": "Execução Contra a Fazenda Pública (1114)"
+   },
+   {
+    "id_classe": "386",
+    "str_classe": "Execução da Pena (386)"
+   },
+   {
+    "id_classe": "11788",
+    "str_classe": "Exibição de Documento ou Coisa Criminal (11788)"
+   },
+   {
+    "id_classe": "1269",
+    "str_classe": "Habeas Corpus Cível (1269)"
+   },
+   {
+    "id_classe": "307",
+    "str_classe": "Habeas Corpus Criminal (307)"
+   },
+   {
+    "id_classe": "110",
+    "str_classe": "Habeas Data (110)"
+   },
+   {
+    "id_classe": "38",
+    "str_classe": "Habilitação (38)"
+   },
+   {
+    "id_classe": "229",
+    "str_classe": "Impugnação ao Cumprimento de Sentença (229)"
+   },
+   {
+    "id_classe": "230",
+    "str_classe": "Impugnação ao Pedido de Assistência Litisconsorcial ou Simples (230)"
+   },
+   {
+    "id_classe": "231",
+    "str_classe": "Impugnação ao Valor da Causa Cível (231)"
+   },
+   {
+    "id_classe": "1702",
+    "str_classe": "Impugnação de Assistência Judiciária (1702)"
+   },
+   {
+    "id_classe": "216",
+    "str_classe": "Incidente De Arguição de Inconstitucionalidade Cível (216)"
+   },
+   {
+    "id_classe": "1178",
+    "str_classe": "Incidente de Arguição de Inconstitucionalidade Criminal (1178)"
+   },
+   {
+    "id_classe": "12087",
+    "str_classe": "Incidente de Assunção de Competência (12087)"
+   },
+   {
+    "id_classe": "232",
+    "str_classe": "Incidente de Falsidade (232)"
+   },
+   {
+    "id_classe": "332",
+    "str_classe": "Incidente de Falsidade (332)"
+   },
+   {
+    "id_classe": "12080",
+    "str_classe": "Incidente de Impedimento Cível (12080)"
+   },
+   {
+    "id_classe": "12085",
+    "str_classe": "Incidente de Resolução de Demandas Repetitivas (12085)"
+   },
+   {
+    "id_classe": "12081",
+    "str_classe": "Incidente de Suspeição Cível (12081)"
+   },
+   {
+    "id_classe": "233",
+    "str_classe": "Incidente de Uniformização de Jurisprudência (233)"
+   },
+   {
+    "id_classe": "433",
+    "str_classe": "Incidente de Uniformização de Jurisprudência (433)"
+   },
+   {
+    "id_classe": "279",
+    "str_classe": "Inquérito Policial (279)"
+   },
+   {
+    "id_classe": "333",
+    "str_classe": "Insanidade Mental do Acusado (333)"
+   },
+   {
+    "id_classe": "1297",
+    "str_classe": "Intervenção em Município (1297)"
+   },
+   {
+    "id_classe": "1731",
+    "str_classe": "Investigação contra magistrado (1731)"
+   },
+   {
+    "id_classe": "305",
+    "str_classe": "Liberdade Provisória com ou sem fiança (305)"
+   },
+   {
+    "id_classe": "118",
+    "str_classe": "Mandado de Injunção (118)"
+   },
+   {
+    "id_classe": "120",
+    "str_classe": "Mandado de Segurança Cível (120)"
+   },
+   {
+    "id_classe": "119",
+    "str_classe": "Mandado de Segurança Coletivo (119)"
+   },
+   {
+    "id_classe": "1710",
+    "str_classe": "Mandado de Segurança Criminal (1710)"
+   },
+   {
+    "id_classe": "311",
+    "str_classe": "Medidas Investigatórias Sobre Organizações Criminosas (311)"
+   },
+   {
+    "id_classe": "1268",
+    "str_classe": "Medidas Protetivas de urgência (Lei Maria da Penha) Criminal (1268)"
+   },
+   {
+    "id_classe": "270",
+    "str_classe": "Notícia-Crime (270)"
+   },
+   {
+    "id_classe": "275",
+    "str_classe": "Notificação para Explicações (275)"
+   },
+   {
+    "id_classe": "276",
+    "str_classe": "Notificação para Explicações (Lei de Imprensa) (276)"
+   },
+   {
+    "id_classe": "236",
+    "str_classe": "Oposição (236)"
+   },
+   {
+    "id_classe": "1289",
+    "str_classe": "Outras medidas provisionais (1289)"
+   },
+   {
+    "id_classe": "273",
+    "str_classe": "Pedido de Arquivamento em Representação Criminal (273)"
+   },
+   {
+    "id_classe": "12357",
+    "str_classe": "Pedido de Efeito Suspensivo à Apelação (12357)"
+   },
+   {
+    "id_classe": "313",
+    "str_classe": "Pedido de Prisão Preventiva (313)"
+   },
+   {
+    "id_classe": "314",
+    "str_classe": "Pedido de Prisão Temporária (314)"
+   },
+   {
+    "id_classe": "310",
+    "str_classe": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico (310)"
+   },
+   {
+    "id_classe": "457",
+    "str_classe": "Pedido de Uniformização de Interpretação de Lei Cível (457)"
+   },
+   {
+    "id_classe": "241",
+    "str_classe": "Petição Cível (241)"
+   },
+   {
+    "id_classe": "1727",
+    "str_classe": "Petição Criminal (1727)"
+   },
+   {
+    "id_classe": "7",
+    "str_classe": "Procedimento Comum Cível (7)"
+   },
+   {
+    "id_classe": "300",
+    "str_classe": "Procedimento Especial da Lei Antitóxicos (300)"
+   },
+   {
+    "id_classe": "1733",
+    "str_classe": "Procedimento Investigatório Criminal (PIC-MP)  (1733)"
+   },
+   {
+    "id_classe": "1298",
+    "str_classe": "Processo Administrativo (1298)"
+   },
+   {
+    "id_classe": "12375",
+    "str_classe": "Reclamação (12375)"
+   },
+   {
+    "id_classe": "244",
+    "str_classe": "Reclamação (244)"
+   },
+   {
+    "id_classe": "12122",
+    "str_classe": "Reclamação Criminal (12122)"
+   },
+   {
+    "id_classe": "1301",
+    "str_classe": "Reclamação Disciplinar (1301)"
+   },
+   {
+    "id_classe": "426",
+    "str_classe": "Recurso em Sentido Estrito (426)"
+   },
+   {
+    "id_classe": "11398",
+    "str_classe": "Recurso em sentido estrito/Recurso ex officio (11398)"
+   },
+   {
+    "id_classe": "460",
+    "str_classe": "Recurso Inominado Cível (460)"
+   },
+   {
+    "id_classe": "11040",
+    "str_classe": "Recurso Inominado Militar (11040)"
+   },
+   {
+    "id_classe": "306",
+    "str_classe": "Relaxamento de Prisão (306)"
+   },
+   {
+    "id_classe": "199",
+    "str_classe": "Remessa Necessária Cível (199)"
+   },
+   {
+    "id_classe": "427",
+    "str_classe": "Remessa Necessária Criminal (427)"
+   },
+   {
+    "id_classe": "272",
+    "str_classe": "Representação Criminal/Notícia de Crime (272)"
+   },
+   {
+    "id_classe": "256",
+    "str_classe": "Representação por Excesso de Prazo (256)"
+   },
+   {
+    "id_classe": "11036",
+    "str_classe": "Representação p/ Perda da Graduação  (11036)"
+   },
+   {
+    "id_classe": "46",
+    "str_classe": "Restauração de Autos Cível (46)"
+   },
+   {
+    "id_classe": "291",
+    "str_classe": "Restauração de Autos Criminal (291)"
+   },
+   {
+    "id_classe": "326",
+    "str_classe": "Restituição de Coisas Apreendidas (326)"
+   },
+   {
+    "id_classe": "12394",
+    "str_classe": "Revisão Criminal (12394)"
+   },
+   {
+    "id_classe": "428",
+    "str_classe": "Revisão Criminal (428)"
+   },
+   {
+    "id_classe": "196",
+    "str_classe": "Seqüestro (196)"
+   },
+   {
+    "id_classe": "329",
+    "str_classe": "Seqüestro (329)"
+   },
+   {
+    "id_classe": "145",
+    "str_classe": "Suspensão de Execução de Sentença (145)"
+   },
+   {
+    "id_classe": "11555",
+    "str_classe": "Suspensão de Liminar e de Sentença (11555)"
+   },
+   {
+    "id_classe": "144",
+    "str_classe": "Suspensão de Liminar ou Antecipação de Tutela (144)"
+   },
+   {
+    "id_classe": "11556",
+    "str_classe": "Suspensão de Segurança Cível (11556)"
+   },
+   {
+    "id_classe": "278",
+    "str_classe": "Termo Circunstanciado (278)"
+   },
+   {
+    "id_classe": "12083",
+    "str_classe": "Tutela Antecipada Antecedente (12083)"
+   },
+   {
+    "id_classe": "12135",
+    "str_classe": "Tutela Antecipada Antecedente (12135)"
+   },
+   {
+    "id_classe": "12084",
+    "str_classe": "Tutela Cautelar Antecedente (12084)"
+   },
+   {
+    "id_classe": "12134",
+    "str_classe": "Tutela Cautelar Antecedente (12134)"
+   }
+  ]
+ },
+ "sentencas-1-grau": {
+  "relatorioId": 4,
+  "total": 293,
+  "opcoes": [
+   {
+    "classe_id": "51",
+    "classe": "Abertura, Registro e Cumprimento de Testamento (51)"
+   },
+   {
+    "classe_id": "63",
+    "classe": "Ação Civil Coletiva (63)"
+   },
+   {
+    "classe_id": "64",
+    "classe": "Ação Civil de Improbidade Administrativa (64)"
+   },
+   {
+    "classe_id": "65",
+    "classe": "Ação Civil Pública (65)"
+   },
+   {
+    "classe_id": "1690",
+    "classe": "Ação Civil Pública Infância e Juventude (1690)"
+   },
+   {
+    "classe_id": "1389",
+    "classe": "Ação de Alimentos (1389)"
+   },
+   {
+    "classe_id": "45",
+    "classe": "Ação de Exigir Contas (45)"
+   },
+   {
+    "classe_id": "12232",
+    "classe": "Ação de Partilha (12232)"
+   },
+   {
+    "classe_id": "12389",
+    "classe": "Ação de Partilha (12389)"
+   },
+   {
+    "classe_id": "282",
+    "classe": "Ação Penal de Competência do Júri (282)"
+   },
+   {
+    "classe_id": "11037",
+    "classe": "Ação Penal Militar - Procedimento Ordinário (11037)"
+   },
+   {
+    "classe_id": "283",
+    "classe": "Ação Penal - Procedimento Ordinário (283)"
+   },
+   {
+    "classe_id": "10943",
+    "classe": "Ação Penal - Procedimento Sumário (10943)"
+   },
+   {
+    "classe_id": "10944",
+    "classe": "Ação Penal - Procedimento Sumaríssimo (10944)"
+   },
+   {
+    "classe_id": "66",
+    "classe": "Ação Popular (66)"
+   },
+   {
+    "classe_id": "15167",
+    "classe": "Acordo de Não Persecução Cível (15167)"
+   },
+   {
+    "classe_id": "14678",
+    "classe": "Acordo de Não Persecução Penal (14678)"
+   },
+   {
+    "classe_id": "1401",
+    "classe": "Adoção (1401)"
+   },
+   {
+    "classe_id": "1412",
+    "classe": "Adoção c/c Destituição do Poder Familiar (1412)"
+   },
+   {
+    "classe_id": "15192",
+    "classe": "ADOÇÃO FORA DO CADASTRO (15192)"
+   },
+   {
+    "classe_id": "15193",
+    "classe": "ADOÇÃO FORA DO CADASTRO C/C DESTITUIÇÃO DO PODER FAMILIAR (15193)"
+   },
+   {
+    "classe_id": "15191",
+    "classe": "ADOÇÃO PELO CADASTRO (15191)"
+   },
+   {
+    "classe_id": "1717",
+    "classe": "Alienação de Bens do Acusado (1717)"
+   },
+   {
+    "classe_id": "52",
+    "classe": "Alienação Judicial de Bens (52)"
+   },
+   {
+    "classe_id": "69",
+    "classe": "Alimentos - Lei Especial Nº 5.478/68 (69)"
+   },
+   {
+    "classe_id": "176",
+    "classe": "Alimentos - Provisionais (176)"
+   },
+   {
+    "classe_id": "12371",
+    "classe": "Alteração de Regime de Bens (12371)"
+   },
+   {
+    "classe_id": "72",
+    "classe": "Alteração do Regime de Bens (72)"
+   },
+   {
+    "classe_id": "1295",
+    "classe": "Alvará Judicial (1295)"
+   },
+   {
+    "classe_id": "74",
+    "classe": "Alvará Judicial - Lei 6858/80 (74)"
+   },
+   {
+    "classe_id": "28",
+    "classe": "Anulação e Substituição de Títulos ao Portador (28)"
+   },
+   {
+    "classe_id": "76",
+    "classe": "Apreensão de Embarcações (76)"
+   },
+   {
+    "classe_id": "29",
+    "classe": "Apreensão e Depósito de Coisa Vendida com Reserva de Domínio (29)"
+   },
+   {
+    "classe_id": "1392",
+    "classe": "Apuração de Infração Administrativa às Normas de Proteção à Criança ou Adolescente (1392)"
+   },
+   {
+    "classe_id": "1391",
+    "classe": "Apuração de Irregularidades em Entidades de Atendimento (1391)"
+   },
+   {
+    "classe_id": "53",
+    "classe": "Arrecadação das Coisas Vagas (53)"
+   },
+   {
+    "classe_id": "178",
+    "classe": "Arresto  (178)"
+   },
+   {
+    "classe_id": "330",
+    "classe": "Arresto / Hipoteca Legal (330)"
+   },
+   {
+    "classe_id": "77",
+    "classe": "Arribadas Forçadas (77)"
+   },
+   {
+    "classe_id": "30",
+    "classe": "Arrolamento Comum (30)"
+   },
+   {
+    "classe_id": "179",
+    "classe": "Arrolamento de Bens (179)"
+   },
+   {
+    "classe_id": "31",
+    "classe": "Arrolamento Sumário (31)"
+   },
+   {
+    "classe_id": "218",
+    "classe": "Assistência Judiciária (218)"
+   },
+   {
+    "classe_id": "1461",
+    "classe": "Auto de Apreensão em Flagrante (1461)"
+   },
+   {
+    "classe_id": "12121",
+    "classe": "Auto de Prisão (12121)"
+   },
+   {
+    "classe_id": "280",
+    "classe": "Auto de Prisão em Flagrante (280)"
+   },
+   {
+    "classe_id": "1703",
+    "classe": "Autorização judicial (1703)"
+   },
+   {
+    "classe_id": "80",
+    "classe": "Avarias (80)"
+   },
+   {
+    "classe_id": "123",
+    "classe": "Averiguação de Paternidade (123)"
+   },
+   {
+    "classe_id": "1463",
+    "classe": "Boletim de Ocorrência Circunstanciada (1463)"
+   },
+   {
+    "classe_id": "181",
+    "classe": "Busca e Apreensão (181)"
+   },
+   {
+    "classe_id": "81",
+    "classe": "Busca e Apreensão em Alienação Fiduciária (81)"
+   },
+   {
+    "classe_id": "1438",
+    "classe": "Busca e Apreensão Infância e Juventude (1438)"
+   },
+   {
+    "classe_id": "12072",
+    "classe": "Busca e Apreensão Infracional (12072)"
+   },
+   {
+    "classe_id": "258",
+    "classe": "Carta de Ordem Cível (258)"
+   },
+   {
+    "classe_id": "261",
+    "classe": "Carta Precatória Cível (261)"
+   },
+   {
+    "classe_id": "355",
+    "classe": "Carta Precatória Criminal (355)"
+   },
+   {
+    "classe_id": "182",
+    "classe": "Caução (182)"
+   },
+   {
+    "classe_id": "83",
+    "classe": "Cautelar Fiscal (83)"
+   },
+   {
+    "classe_id": "183",
+    "classe": "Cautelar Inominada (183)"
+   },
+   {
+    "classe_id": "11955",
+    "classe": "Cautelar Inominada Criminal (11955)"
+   },
+   {
+    "classe_id": "1440",
+    "classe": "Cautelar Inominada Infância e Juventude (1440)"
+   },
+   {
+    "classe_id": "84",
+    "classe": "Cobrança de Cédula de Crédito Industrial (84)"
+   },
+   {
+    "classe_id": "85",
+    "classe": "Compromisso Arbitral (85)"
+   },
+   {
+    "classe_id": "54",
+    "classe": "Confirmação de Testamento (54)"
+   },
+   {
+    "classe_id": "32",
+    "classe": "Consignação em Pagamento (32)"
+   },
+   {
+    "classe_id": "86",
+    "classe": "Consignatória de Aluguéis (86)"
+   },
+   {
+    "classe_id": "1723",
+    "classe": "Contraprotesto Judicial (1723)"
+   },
+   {
+    "classe_id": "87",
+    "classe": "Conversão de Separação Judicial em Divórcio (87)"
+   },
+   {
+    "classe_id": "293",
+    "classe": "Crimes Ambientais (293)"
+   },
+   {
+    "classe_id": "295",
+    "classe": "Crimes Contra a Propriedade Intelectual (295)"
+   },
+   {
+    "classe_id": "288",
+    "classe": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular (288)"
+   },
+   {
+    "classe_id": "297",
+    "classe": "Crimes de Imprensa (297)"
+   },
+   {
+    "classe_id": "287",
+    "classe": "Crimes de Responsabilidade dos Funcionários Públicos (287)"
+   },
+   {
+    "classe_id": "156",
+    "classe": "Cumprimento de sentença (156)"
+   },
+   {
+    "classe_id": "12078",
+    "classe": "Cumprimento de Sentença contra a Fazenda Pública (12078)"
+   },
+   {
+    "classe_id": "15160",
+    "classe": "Cumprimento de Sentença de Ações Coletivas (15160)"
+   },
+   {
+    "classe_id": "12246",
+    "classe": "Cumprimento de Sentença de Obrigação de Prestar Alimentos (12246)"
+   },
+   {
+    "classe_id": "12231",
+    "classe": "Cumprimento de sentença - Lei Arbitral (Lei 9.307/1996) (12231)"
+   },
+   {
+    "classe_id": "10980",
+    "classe": "Cumprimento Provisório de Decisão (10980)"
+   },
+   {
+    "classe_id": "157",
+    "classe": "Cumprimento Provisório de Sentença (157)"
+   },
+   {
+    "classe_id": "15161",
+    "classe": "Cumprimento Provisório de Sentença de Ações Coletivas (15161)"
+   },
+   {
+    "classe_id": "12234",
+    "classe": "Curatela (12234)"
+   },
+   {
+    "classe_id": "55",
+    "classe": "Declaração de Ausência (55)"
+   },
+   {
+    "classe_id": "34",
+    "classe": "Demarcação / Divisão (34)"
+   },
+   {
+    "classe_id": "35",
+    "classe": "Depósito (35)"
+   },
+   {
+    "classe_id": "90",
+    "classe": "Desapropriação (90)"
+   },
+   {
+    "classe_id": "11046",
+    "classe": "Deserção de Praça (11046)"
+   },
+   {
+    "classe_id": "92",
+    "classe": "Despejo (92)"
+   },
+   {
+    "classe_id": "93",
+    "classe": "Despejo por Falta de Pagamento (93)"
+   },
+   {
+    "classe_id": "94",
+    "classe": "Despejo por Falta de Pagamento Cumulado Com Cobrança (94)"
+   },
+   {
+    "classe_id": "14123",
+    "classe": "Destinação de Bens Apreendidos (14123)"
+   },
+   {
+    "classe_id": "15190",
+    "classe": "DESTITUIÇÃO DO PODER FAMILIAR (15190)"
+   },
+   {
+    "classe_id": "96",
+    "classe": "Discriminatória (96)"
+   },
+   {
+    "classe_id": "97",
+    "classe": "Dissolução e Liquidação de Sociedade (97)"
+   },
+   {
+    "classe_id": "12086",
+    "classe": "Dissolução Parcial de Sociedade (12086)"
+   },
+   {
+    "classe_id": "12372",
+    "classe": "Divórcio Consensual (12372)"
+   },
+   {
+    "classe_id": "98",
+    "classe": "Divórcio Consensual (98)"
+   },
+   {
+    "classe_id": "12373",
+    "classe": "Divórcio Litigioso (12373)"
+   },
+   {
+    "classe_id": "12541",
+    "classe": "Divórcio Litigioso (12541)"
+   },
+   {
+    "classe_id": "99",
+    "classe": "Divórcio Litigioso (99)"
+   },
+   {
+    "classe_id": "100",
+    "classe": "Dúvida (100)"
+   },
+   {
+    "classe_id": "1415",
+    "classe": "Emancipação (1415)"
+   },
+   {
+    "classe_id": "172",
+    "classe": "Embargos à Execução (172)"
+   },
+   {
+    "classe_id": "1118",
+    "classe": "Embargos à Execução Fiscal (1118)"
+   },
+   {
+    "classe_id": "1689",
+    "classe": "Embargos de Declaração Cível (1689)"
+   },
+   {
+    "classe_id": "37",
+    "classe": "Embargos de Terceiro Cível (37)"
+   },
+   {
+    "classe_id": "327",
+    "classe": "Embargos de Terceiro Criminal (327)"
+   },
+   {
+    "classe_id": "1704",
+    "classe": "Embargos de Terceiro Infância e Juventude (1704)"
+   },
+   {
+    "classe_id": "210",
+    "classe": "Embargos Infringentes na Execução Fiscal (210)"
+   },
+   {
+    "classe_id": "12153",
+    "classe": "Embargos Parciais à Ação Monitória (12153)"
+   },
+   {
+    "classe_id": "1230",
+    "classe": "Exceção de Impedimento (1230)"
+   },
+   {
+    "classe_id": "323",
+    "classe": "Exceção de Impedimento (323)"
+   },
+   {
+    "classe_id": "1232",
+    "classe": "Exceção de Incompetência (1232)"
+   },
+   {
+    "classe_id": "319",
+    "classe": "Exceção de Incompetência de Juízo (319)"
+   },
+   {
+    "classe_id": "1231",
+    "classe": "Exceção de Suspeição (1231)"
+   },
+   {
+    "classe_id": "318",
+    "classe": "Exceção de Suspeição (318)"
+   },
+   {
+    "classe_id": "1114",
+    "classe": "Execução Contra a Fazenda Pública (1114)"
+   },
+   {
+    "classe_id": "1112",
+    "classe": "Execução de Alimentos (1112)"
+   },
+   {
+    "classe_id": "1432",
+    "classe": "Execução de Alimentos Infância e Juventude (1432)"
+   },
+   {
+    "classe_id": "1434",
+    "classe": "Execução de Medida de Proteção à Criança e Adolescente (1434)"
+   },
+   {
+    "classe_id": "12729",
+    "classe": "Execução de Medidas Alternativas (12729)"
+   },
+   {
+    "classe_id": "1465",
+    "classe": "Execução de Medidas Sócio-Educativas (1465)"
+   },
+   {
+    "classe_id": "1435",
+    "classe": "Execução de Multa (1435)"
+   },
+   {
+    "classe_id": "12154",
+    "classe": "Execução de Título Extrajudicial (12154)"
+   },
+   {
+    "classe_id": "159",
+    "classe": "Execução de Título Extrajudicial (159)"
+   },
+   {
+    "classe_id": "12079",
+    "classe": "Execução de Título Extrajudicial contra a Fazenda Pública (12079)"
+   },
+   {
+    "classe_id": "12251",
+    "classe": "Execução de Título Judicial - CEJUSC (12251)"
+   },
+   {
+    "classe_id": "12247",
+    "classe": "Execução Extrajudicial de Alimentos (12247)"
+   },
+   {
+    "classe_id": "1116",
+    "classe": "Execução Fiscal (1116)"
+   },
+   {
+    "classe_id": "1117",
+    "classe": "Execução Hipotecária do Sistema Financeiro da Habitação (1117)"
+   },
+   {
+    "classe_id": "186",
+    "classe": "Exibição (186)"
+   },
+   {
+    "classe_id": "228",
+    "classe": "Exibição de Documento ou Coisa Cível (228)"
+   },
+   {
+    "classe_id": "10972",
+    "classe": "Exibição de Documento ou Coisa Infância e Juventude (10972)"
+   },
+   {
+    "classe_id": "12762",
+    "classe": "Extinção Consensual de União Estável (12762)"
+   },
+   {
+    "classe_id": "11397",
+    "classe": "Extinção das obrigações do falido (11397)"
+   },
+   {
+    "classe_id": "108",
+    "classe": "Falência de Empresários, Sociedades Empresáriais, Microempresas e Empresas de Pequeno Porte (108)"
+   },
+   {
+    "classe_id": "1420",
+    "classe": "Guarda (1420)"
+   },
+   {
+    "classe_id": "12230",
+    "classe": "Guarda c/c destituição do poder familiar (12230)"
+   },
+   {
+    "classe_id": "14671",
+    "classe": "Guarda de Família (14671)"
+   },
+   {
+    "classe_id": "1269",
+    "classe": "Habeas Corpus Cível (1269)"
+   },
+   {
+    "classe_id": "307",
+    "classe": "Habeas Corpus Criminal (307)"
+   },
+   {
+    "classe_id": "110",
+    "classe": "Habeas Data (110)"
+   },
+   {
+    "classe_id": "38",
+    "classe": "Habilitação (38)"
+   },
+   {
+    "classe_id": "111",
+    "classe": "Habilitação de Crédito (111)"
+   },
+   {
+    "classe_id": "239",
+    "classe": "Habilitação para Casamento (239)"
+   },
+   {
+    "classe_id": "57",
+    "classe": "Herança Jacente (57)"
+   },
+   {
+    "classe_id": "12374",
+    "classe": "Homologação da Transação Extrajudicial (12374)"
+   },
+   {
+    "classe_id": "112",
+    "classe": "Homologação de Transação Extrajudicial (112)"
+   },
+   {
+    "classe_id": "12761",
+    "classe": "Homologação do Penhor Legal (12761)"
+   },
+   {
+    "classe_id": "188",
+    "classe": "Homologação do Penhor Legal (188)"
+   },
+   {
+    "classe_id": "113",
+    "classe": "Imissão na Posse (113)"
+   },
+   {
+    "classe_id": "10981",
+    "classe": "Impugnação ao Cumprimento  de Decisão (10981)"
+   },
+   {
+    "classe_id": "229",
+    "classe": "Impugnação ao Cumprimento de Sentença (229)"
+   },
+   {
+    "classe_id": "230",
+    "classe": "Impugnação ao Pedido de Assistência Litisconsorcial ou Simples (230)"
+   },
+   {
+    "classe_id": "231",
+    "classe": "Impugnação ao Valor da Causa Cível (231)"
+   },
+   {
+    "classe_id": "114",
+    "classe": "Impugnação de Crédito (114)"
+   },
+   {
+    "classe_id": "12119",
+    "classe": "Incidente de Desconsideração de Personalidade Jurídica (12119)"
+   },
+   {
+    "classe_id": "232",
+    "classe": "Incidente de Falsidade (232)"
+   },
+   {
+    "classe_id": "332",
+    "classe": "Incidente de Falsidade (332)"
+   },
+   {
+    "classe_id": "12080",
+    "classe": "Incidente de Impedimento Cível (12080)"
+   },
+   {
+    "classe_id": "10960",
+    "classe": "Incidente de Sanidade Mental (10960)"
+   },
+   {
+    "classe_id": "12081",
+    "classe": "Incidente de Suspeição Cível (12081)"
+   },
+   {
+    "classe_id": "115",
+    "classe": "Inquérito Extrajudicial (115)"
+   },
+   {
+    "classe_id": "279",
+    "classe": "Inquérito Policial (279)"
+   },
+   {
+    "classe_id": "11041",
+    "classe": "Inquérito Policial Militar (11041)"
+   },
+   {
+    "classe_id": "333",
+    "classe": "Insanidade Mental do Acusado (333)"
+   },
+   {
+    "classe_id": "166",
+    "classe": "Insolvência Requerida pelo Credor (166)"
+   },
+   {
+    "classe_id": "167",
+    "classe": "Insolvência Requerida pelo Devedor ou pelo Espólio (167)"
+   },
+   {
+    "classe_id": "240",
+    "classe": "Instrução de Rescisória (240)"
+   },
+   {
+    "classe_id": "58",
+    "classe": "Interdição (58)"
+   },
+   {
+    "classe_id": "1709",
+    "classe": "Interdito Proibitório (1709)"
+   },
+   {
+    "classe_id": "12073",
+    "classe": "Internação Provisória (12073)"
+   },
+   {
+    "classe_id": "12227",
+    "classe": "Interpelação (12227)"
+   },
+   {
+    "classe_id": "1726",
+    "classe": "Interpelação (1726)"
+   },
+   {
+    "classe_id": "39",
+    "classe": "Inventário (39)"
+   },
+   {
+    "classe_id": "190",
+    "classe": "Justificação (190)"
+   },
+   {
+    "classe_id": "1124",
+    "classe": "Justificação de Dinheiro a Risco (1124)"
+   },
+   {
+    "classe_id": "305",
+    "classe": "Liberdade Provisória com ou sem fiança (305)"
+   },
+   {
+    "classe_id": "152",
+    "classe": "Liquidação de Sentença pelo Procedimento Comum (152)"
+   },
+   {
+    "classe_id": "151",
+    "classe": "Liquidação por Arbitramento (151)"
+   },
+   {
+    "classe_id": "12088",
+    "classe": "Liquidação Provisória de Sentença pelo Procedimento Comum (12088)"
+   },
+   {
+    "classe_id": "154",
+    "classe": "Liquidação Provisória de Sentença pelo Procedimento Comum (154)"
+   },
+   {
+    "classe_id": "153",
+    "classe": "Liquidação Provisória por Arbitramento (153)"
+   },
+   {
+    "classe_id": "118",
+    "classe": "Mandado de Injunção (118)"
+   },
+   {
+    "classe_id": "120",
+    "classe": "Mandado de Segurança Cível (120)"
+   },
+   {
+    "classe_id": "119",
+    "classe": "Mandado de Segurança Coletivo (119)"
+   },
+   {
+    "classe_id": "1710",
+    "classe": "Mandado de Segurança Criminal (1710)"
+   },
+   {
+    "classe_id": "1691",
+    "classe": "Mandado de Segurança Infância e Juventude (1691)"
+   },
+   {
+    "classe_id": "14734",
+    "classe": "Medidas de Proteção - Criança e Adolescente (Lei 13.431) Criminais (14734)"
+   },
+   {
+    "classe_id": "311",
+    "classe": "Medidas Investigatórias Sobre Organizações Criminosas (311)"
+   },
+   {
+    "classe_id": "15170",
+    "classe": "Medidas Protetivas de Urgência - Crianças e Adolescentes (Lei Henry Borel - Lei 14.344/2022) Criminais (15170)"
+   },
+   {
+    "classe_id": "15309",
+    "classe": "MEDIDAS PROTETIVAS DE URGÊNCIA (LEI MARIA DA PENHA) - CÍVEL (15309)"
+   },
+   {
+    "classe_id": "1268",
+    "classe": "Medidas Protetivas de urgência (Lei Maria da Penha) Criminal (1268)"
+   },
+   {
+    "classe_id": "12423",
+    "classe": "Medidas Protetivas de Urgência (Lei Maria da Penha) Infracional (12423)"
+   },
+   {
+    "classe_id": "10967",
+    "classe": "Medidas Protetivas - Estatuto do Idoso Criminal  (10967)"
+   },
+   {
+    "classe_id": "12424",
+    "classe": "Medidas Protetivas - Estatuto do Idoso Infracional (12424)"
+   },
+   {
+    "classe_id": "40",
+    "classe": "Monitória (40)"
+   },
+   {
+    "classe_id": "121",
+    "classe": "Naturalização (121)"
+   },
+   {
+    "classe_id": "1701",
+    "classe": "Nomeação de Advogado (1701)"
+   },
+   {
+    "classe_id": "12226",
+    "classe": "Notificação (12226)"
+   },
+   {
+    "classe_id": "1725",
+    "classe": "Notificação (1725)"
+   },
+   {
+    "classe_id": "275",
+    "classe": "Notificação para Explicações (275)"
+   },
+   {
+    "classe_id": "276",
+    "classe": "Notificação para Explicações (Lei de Imprensa) (276)"
+   },
+   {
+    "classe_id": "41",
+    "classe": "Nunciação de Obra Nova (41)"
+   },
+   {
+    "classe_id": "236",
+    "classe": "Oposição (236)"
+   },
+   {
+    "classe_id": "59",
+    "classe": "Organização e Fiscalização de Fundação (59)"
+   },
+   {
+    "classe_id": "1289",
+    "classe": "Outras medidas provisionais (1289)"
+   },
+   {
+    "classe_id": "1294",
+    "classe": "Outros procedimentos de jurisdição voluntária (1294)"
+   },
+   {
+    "classe_id": "309",
+    "classe": "Pedido de Busca e Apreensão Criminal (309)"
+   },
+   {
+    "classe_id": "12074",
+    "classe": "Pedido De Desinternação/Reavaliação/Substituição/Suspensão da Medida (12074)"
+   },
+   {
+    "classe_id": "12070",
+    "classe": "Pedido de Medida de Proteção (12070)"
+   },
+   {
+    "classe_id": "313",
+    "classe": "Pedido de Prisão Preventiva (313)"
+   },
+   {
+    "classe_id": "314",
+    "classe": "Pedido de Prisão Temporária (314)"
+   },
+   {
+    "classe_id": "1199",
+    "classe": "Pedido de Providências (1199)"
+   },
+   {
+    "classe_id": "310",
+    "classe": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico (310)"
+   },
+   {
+    "classe_id": "124",
+    "classe": "Pedido de Resposta ou Retificação da Lei de Imprensa (124)"
+   },
+   {
+    "classe_id": "241",
+    "classe": "Petição Cível (241)"
+   },
+   {
+    "classe_id": "1727",
+    "classe": "Petição Criminal (1727)"
+   },
+   {
+    "classe_id": "11026",
+    "classe": "Petição Infância e Juventude Cível (11026)"
+   },
+   {
+    "classe_id": "10979",
+    "classe": "Petição Infracional (10979)"
+   },
+   {
+    "classe_id": "192",
+    "classe": "Posse em Nome do Nascituro (192)"
+   },
+   {
+    "classe_id": "1425",
+    "classe": "Prestação de Contas Infância e Juventude (1425)"
+   },
+   {
+    "classe_id": "44",
+    "classe": "Prestação de Contas - Oferecidas (44)"
+   },
+   {
+    "classe_id": "7",
+    "classe": "Procedimento Comum Cível (7)"
+   },
+   {
+    "classe_id": "1706",
+    "classe": "Procedimento Comum Infância e Juventude (1706)"
+   },
+   {
+    "classe_id": "12075",
+    "classe": "Procedimento Conciliatório (12075)"
+   },
+   {
+    "classe_id": "15217",
+    "classe": "PROCEDIMENTO DE REPACTUAÇÃO DE DÍVIDAS (SUPERENDIVIDAMENTO) (15217)"
+   },
+   {
+    "classe_id": "436",
+    "classe": "Procedimento do Juizado Especial Cível (436)"
+   },
+   {
+    "classe_id": "14695",
+    "classe": "Procedimento do Juizado Especial da Fazenda Pública (14695)"
+   },
+   {
+    "classe_id": "300",
+    "classe": "Procedimento Especial da Lei Antitóxicos (300)"
+   },
+   {
+    "classe_id": "302",
+    "classe": "Procedimento Especial dos Crimes de Abuso de Autoridade (302)"
+   },
+   {
+    "classe_id": "1733",
+    "classe": "Procedimento Investigatório Criminal (PIC-MP)  (1733)"
+   },
+   {
+    "classe_id": "22",
+    "classe": "Procedimento Sumário (22)"
+   },
+   {
+    "classe_id": "11798",
+    "classe": "Processo de Aplicação de Medida de Segurança Por Fato Não Criminoso (11798)"
+   },
+   {
+    "classe_id": "1464",
+    "classe": "Processo de Apuração de Ato Infracional (1464)"
+   },
+   {
+    "classe_id": "193",
+    "classe": "Produção Antecipada da Prova (193)"
+   },
+   {
+    "classe_id": "11793",
+    "classe": "Produção Antecipada de Provas Criminal (11793)"
+   },
+   {
+    "classe_id": "12228",
+    "classe": "Protesto (12228)"
+   },
+   {
+    "classe_id": "191",
+    "classe": "Protesto (191)"
+   },
+   {
+    "classe_id": "127",
+    "classe": "Protesto Formado a Bordo (127)"
+   },
+   {
+    "classe_id": "1424",
+    "classe": "Providência  (1424)"
+   },
+   {
+    "classe_id": "11875",
+    "classe": "Reclamação Pré-processual (11875)"
+   },
+   {
+    "classe_id": "12763",
+    "classe": "Reconhecimento e Extinção de União Estável (12763)"
+   },
+   {
+    "classe_id": "128",
+    "classe": "Recuperação Extrajudicial (128)"
+   },
+   {
+    "classe_id": "129",
+    "classe": "Recuperação Judicial (129)"
+   },
+   {
+    "classe_id": "426",
+    "classe": "Recurso em Sentido Estrito (426)"
+   },
+   {
+    "classe_id": "1031",
+    "classe": "Recurso Ordinário (1031)"
+   },
+   {
+    "classe_id": "251",
+    "classe": "Registro de Casamento Nuncupativo (251)"
+   },
+   {
+    "classe_id": "134",
+    "classe": "Registro Torrens (134)"
+   },
+   {
+    "classe_id": "12376",
+    "classe": "Regulação de Avaria Grossa (12376)"
+   },
+   {
+    "classe_id": "79",
+    "classe": "Regulação de Avaria Grossa (79)"
+   },
+   {
+    "classe_id": "14677",
+    "classe": "Regulamentação de Visitas (14677)"
+   },
+   {
+    "classe_id": "194",
+    "classe": "Regulamentação de Visitas (194)"
+   },
+   {
+    "classe_id": "1417",
+    "classe": "Regularização de Registro Civil (1417)"
+   },
+   {
+    "classe_id": "1707",
+    "classe": "Reintegração / Manutenção de Posse (1707)"
+   },
+   {
+    "classe_id": "1462",
+    "classe": "Relatório de Investigações (1462)"
+   },
+   {
+    "classe_id": "135",
+    "classe": "Relatório Falimentar (135)"
+   },
+   {
+    "classe_id": "306",
+    "classe": "Relaxamento de Prisão (306)"
+   },
+   {
+    "classe_id": "136",
+    "classe": "Remição do Imóvel Hipotecado (136)"
+   },
+   {
+    "classe_id": "234",
+    "classe": "Remoção de Inventariante (234)"
+   },
+   {
+    "classe_id": "1705",
+    "classe": "Remoção, modificação  e dispensa de tutor ou curador (1705)"
+   },
+   {
+    "classe_id": "137",
+    "classe": "Renovatória de Locação (137)"
+   },
+   {
+    "classe_id": "272",
+    "classe": "Representação Criminal/Notícia de Crime (272)"
+   },
+   {
+    "classe_id": "12137",
+    "classe": "Requerimento de Apreensão de Veículo (12137)"
+   },
+   {
+    "classe_id": "12138",
+    "classe": "Requerimento de Reintegração de Posse (12138)"
+   },
+   {
+    "classe_id": "46",
+    "classe": "Restauração de Autos Cível (46)"
+   },
+   {
+    "classe_id": "291",
+    "classe": "Restauração de Autos Criminal (291)"
+   },
+   {
+    "classe_id": "138",
+    "classe": "Restituição de Coisa ou Dinheiro na Falência do Devedor Empresário (138)"
+   },
+   {
+    "classe_id": "326",
+    "classe": "Restituição de Coisas Apreendidas (326)"
+   },
+   {
+    "classe_id": "11794",
+    "classe": "Restituição de Coisas Apreendidas Infracional (11794)"
+   },
+   {
+    "classe_id": "1683",
+    "classe": "Retificação de Registro de Imóvel (1683)"
+   },
+   {
+    "classe_id": "1682",
+    "classe": "Retificação ou Suprimento ou Restauração de Registro Civil (1682)"
+   },
+   {
+    "classe_id": "140",
+    "classe": "Revisional de Aluguel (140)"
+   },
+   {
+    "classe_id": "60",
+    "classe": "Separação Consensual (60)"
+   },
+   {
+    "classe_id": "12764",
+    "classe": "Separação Contenciosa (12764)"
+   },
+   {
+    "classe_id": "195",
+    "classe": "Separação de Corpos (195)"
+   },
+   {
+    "classe_id": "141",
+    "classe": "Separação Litigiosa (141)"
+   },
+   {
+    "classe_id": "196",
+    "classe": "Seqüestro (196)"
+   },
+   {
+    "classe_id": "329",
+    "classe": "Seqüestro (329)"
+   },
+   {
+    "classe_id": "48",
+    "classe": "Sobrepartilha (48)"
+   },
+   {
+    "classe_id": "142",
+    "classe": "Sonegados (142)"
+   },
+   {
+    "classe_id": "1414",
+    "classe": "Suprimento de Capacidade ou de Consentimento para Casar (1414)"
+   },
+   {
+    "classe_id": "143",
+    "classe": "Suprimento de Idade e/ou Consentimento (143)"
+   },
+   {
+    "classe_id": "15194",
+    "classe": "SUSPENSÃO DO PODER FAMILIAR (15194)"
+   },
+   {
+    "classe_id": "278",
+    "classe": "Termo Circunstanciado (278)"
+   },
+   {
+    "classe_id": "12370",
+    "classe": "Tomada de Decisão Apoiada (12370)"
+   },
+   {
+    "classe_id": "12135",
+    "classe": "Tutela Antecipada Antecedente (12135)"
+   },
+   {
+    "classe_id": "12134",
+    "classe": "Tutela Cautelar Antecedente (12134)"
+   },
+   {
+    "classe_id": "12233",
+    "classe": "Tutela Cível (12233)"
+   },
+   {
+    "classe_id": "61",
+    "classe": "Tutela e Curatela -  Nomeação (61)"
+   },
+   {
+    "classe_id": "1122",
+    "classe": "Tutela e Curatela - Remoção e Dispensa (1122)"
+   },
+   {
+    "classe_id": "49",
+    "classe": "Usucapião (49)"
+   }
+  ]
+ },
+ "decisoes-monocraticas-turma-recursal": {
+  "relatorioId": 5,
+  "total": 26,
+  "opcoes": [
+   {
+    "classe_id": "47",
+    "classe": "Ação Rescisória (47)"
+   },
+   {
+    "classe_id": "202",
+    "classe": "Agravo de Instrumento (202)"
+   },
+   {
+    "classe_id": "198",
+    "classe": "Apelação Cível (198)"
+   },
+   {
+    "classe_id": "417",
+    "classe": "Apelação Criminal (417)"
+   },
+   {
+    "classe_id": "1728",
+    "classe": "Apelação / Remessa Necessária (1728)"
+   },
+   {
+    "classe_id": "221",
+    "classe": "Conflito de competência cível (221)"
+   },
+   {
+    "classe_id": "10942",
+    "classe": "Correição Parcial Cível (10942)"
+   },
+   {
+    "classe_id": "419",
+    "classe": "Correição Parcial Criminal (419)"
+   },
+   {
+    "classe_id": "12078",
+    "classe": "Cumprimento de Sentença contra a Fazenda Pública (12078)"
+   },
+   {
+    "classe_id": "1689",
+    "classe": "Embargos de Declaração Cível (1689)"
+   },
+   {
+    "classe_id": "1269",
+    "classe": "Habeas Corpus Cível (1269)"
+   },
+   {
+    "classe_id": "307",
+    "classe": "Habeas Corpus Criminal (307)"
+   },
+   {
+    "classe_id": "12119",
+    "classe": "Incidente de Desconsideração de Personalidade Jurídica (12119)"
+   },
+   {
+    "classe_id": "12080",
+    "classe": "Incidente de Impedimento Cível (12080)"
+   },
+   {
+    "classe_id": "12081",
+    "classe": "Incidente de Suspeição Cível (12081)"
+   },
+   {
+    "classe_id": "120",
+    "classe": "Mandado de Segurança Cível (120)"
+   },
+   {
+    "classe_id": "457",
+    "classe": "Pedido de Uniformização de Interpretação de Lei Cível (457)"
+   },
+   {
+    "classe_id": "241",
+    "classe": "Petição Cível (241)"
+   },
+   {
+    "classe_id": "7",
+    "classe": "Procedimento Comum Cível (7)"
+   },
+   {
+    "classe_id": "12375",
+    "classe": "Reclamação (12375)"
+   },
+   {
+    "classe_id": "426",
+    "classe": "Recurso em Sentido Estrito (426)"
+   },
+   {
+    "classe_id": "11398",
+    "classe": "Recurso em sentido estrito/Recurso ex officio (11398)"
+   },
+   {
+    "classe_id": "460",
+    "classe": "Recurso Inominado Cível (460)"
+   },
+   {
+    "classe_id": "199",
+    "classe": "Remessa Necessária Cível (199)"
+   },
+   {
+    "classe_id": "427",
+    "classe": "Remessa Necessária Criminal (427)"
+   },
+   {
+    "classe_id": "12134",
+    "classe": "Tutela Cautelar Antecedente (12134)"
+   }
+  ]
+ },
+ "acordaos-turma-recursal": {
+  "relatorioId": 6,
+  "total": 26,
+  "opcoes": [
+   {
+    "classe_id": "47",
+    "classe": "Ação Rescisória (47)"
+   },
+   {
+    "classe_id": "202",
+    "classe": "Agravo de Instrumento (202)"
+   },
+   {
+    "classe_id": "198",
+    "classe": "Apelação Cível (198)"
+   },
+   {
+    "classe_id": "417",
+    "classe": "Apelação Criminal (417)"
+   },
+   {
+    "classe_id": "1728",
+    "classe": "Apelação / Remessa Necessária (1728)"
+   },
+   {
+    "classe_id": "221",
+    "classe": "Conflito de competência cível (221)"
+   },
+   {
+    "classe_id": "10942",
+    "classe": "Correição Parcial Cível (10942)"
+   },
+   {
+    "classe_id": "419",
+    "classe": "Correição Parcial Criminal (419)"
+   },
+   {
+    "classe_id": "12078",
+    "classe": "Cumprimento de Sentença contra a Fazenda Pública (12078)"
+   },
+   {
+    "classe_id": "1689",
+    "classe": "Embargos de Declaração Cível (1689)"
+   },
+   {
+    "classe_id": "1269",
+    "classe": "Habeas Corpus Cível (1269)"
+   },
+   {
+    "classe_id": "307",
+    "classe": "Habeas Corpus Criminal (307)"
+   },
+   {
+    "classe_id": "12119",
+    "classe": "Incidente de Desconsideração de Personalidade Jurídica (12119)"
+   },
+   {
+    "classe_id": "12080",
+    "classe": "Incidente de Impedimento Cível (12080)"
+   },
+   {
+    "classe_id": "12081",
+    "classe": "Incidente de Suspeição Cível (12081)"
+   },
+   {
+    "classe_id": "120",
+    "classe": "Mandado de Segurança Cível (120)"
+   },
+   {
+    "classe_id": "457",
+    "classe": "Pedido de Uniformização de Interpretação de Lei Cível (457)"
+   },
+   {
+    "classe_id": "241",
+    "classe": "Petição Cível (241)"
+   },
+   {
+    "classe_id": "7",
+    "classe": "Procedimento Comum Cível (7)"
+   },
+   {
+    "classe_id": "12375",
+    "classe": "Reclamação (12375)"
+   },
+   {
+    "classe_id": "426",
+    "classe": "Recurso em Sentido Estrito (426)"
+   },
+   {
+    "classe_id": "11398",
+    "classe": "Recurso em sentido estrito/Recurso ex officio (11398)"
+   },
+   {
+    "classe_id": "460",
+    "classe": "Recurso Inominado Cível (460)"
+   },
+   {
+    "classe_id": "199",
+    "classe": "Remessa Necessária Cível (199)"
+   },
+   {
+    "classe_id": "427",
+    "classe": "Remessa Necessária Criminal (427)"
+   },
+   {
+    "classe_id": "12134",
+    "classe": "Tutela Cautelar Antecedente (12134)"
+   }
+  ]
+ },
+ "sentencas-juizado-especial": {
+  "relatorioId": 7,
+  "total": 90,
+  "opcoes": [
+   {
+    "classe_id": "63",
+    "classe": "Ação Civil Coletiva (63)"
+   },
+   {
+    "classe_id": "65",
+    "classe": "Ação Civil Pública (65)"
+   },
+   {
+    "classe_id": "282",
+    "classe": "Ação Penal de Competência do Júri (282)"
+   },
+   {
+    "classe_id": "283",
+    "classe": "Ação Penal - Procedimento Ordinário (283)"
+   },
+   {
+    "classe_id": "10943",
+    "classe": "Ação Penal - Procedimento Sumário (10943)"
+   },
+   {
+    "classe_id": "10944",
+    "classe": "Ação Penal - Procedimento Sumaríssimo (10944)"
+   },
+   {
+    "classe_id": "69",
+    "classe": "Alimentos - Lei Especial Nº 5.478/68 (69)"
+   },
+   {
+    "classe_id": "74",
+    "classe": "Alvará Judicial - Lei 6858/80 (74)"
+   },
+   {
+    "classe_id": "28",
+    "classe": "Anulação e Substituição de Títulos ao Portador (28)"
+   },
+   {
+    "classe_id": "218",
+    "classe": "Assistência Judiciária (218)"
+   },
+   {
+    "classe_id": "280",
+    "classe": "Auto de Prisão em Flagrante (280)"
+   },
+   {
+    "classe_id": "181",
+    "classe": "Busca e Apreensão (181)"
+   },
+   {
+    "classe_id": "258",
+    "classe": "Carta de Ordem Cível (258)"
+   },
+   {
+    "classe_id": "261",
+    "classe": "Carta Precatória Cível (261)"
+   },
+   {
+    "classe_id": "355",
+    "classe": "Carta Precatória Criminal (355)"
+   },
+   {
+    "classe_id": "83",
+    "classe": "Cautelar Fiscal (83)"
+   },
+   {
+    "classe_id": "183",
+    "classe": "Cautelar Inominada (183)"
+   },
+   {
+    "classe_id": "11955",
+    "classe": "Cautelar Inominada Criminal (11955)"
+   },
+   {
+    "classe_id": "84",
+    "classe": "Cobrança de Cédula de Crédito Industrial (84)"
+   },
+   {
+    "classe_id": "32",
+    "classe": "Consignação em Pagamento (32)"
+   },
+   {
+    "classe_id": "288",
+    "classe": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular (288)"
+   },
+   {
+    "classe_id": "156",
+    "classe": "Cumprimento de sentença (156)"
+   },
+   {
+    "classe_id": "12078",
+    "classe": "Cumprimento de Sentença contra a Fazenda Pública (12078)"
+   },
+   {
+    "classe_id": "15160",
+    "classe": "Cumprimento de Sentença de Ações Coletivas (15160)"
+   },
+   {
+    "classe_id": "12231",
+    "classe": "Cumprimento de sentença - Lei Arbitral (Lei 9.307/1996) (12231)"
+   },
+   {
+    "classe_id": "10980",
+    "classe": "Cumprimento Provisório de Decisão (10980)"
+   },
+   {
+    "classe_id": "157",
+    "classe": "Cumprimento Provisório de Sentença (157)"
+   },
+   {
+    "classe_id": "12234",
+    "classe": "Curatela (12234)"
+   },
+   {
+    "classe_id": "92",
+    "classe": "Despejo (92)"
+   },
+   {
+    "classe_id": "172",
+    "classe": "Embargos à Execução (172)"
+   },
+   {
+    "classe_id": "1689",
+    "classe": "Embargos de Declaração Cível (1689)"
+   },
+   {
+    "classe_id": "37",
+    "classe": "Embargos de Terceiro Cível (37)"
+   },
+   {
+    "classe_id": "322",
+    "classe": "Exceção de Coisa Julgada (322)"
+   },
+   {
+    "classe_id": "1230",
+    "classe": "Exceção de Impedimento (1230)"
+   },
+   {
+    "classe_id": "319",
+    "classe": "Exceção de Incompetência de Juízo (319)"
+   },
+   {
+    "classe_id": "1231",
+    "classe": "Exceção de Suspeição (1231)"
+   },
+   {
+    "classe_id": "1114",
+    "classe": "Execução Contra a Fazenda Pública (1114)"
+   },
+   {
+    "classe_id": "1435",
+    "classe": "Execução de Multa (1435)"
+   },
+   {
+    "classe_id": "12154",
+    "classe": "Execução de Título Extrajudicial (12154)"
+   },
+   {
+    "classe_id": "159",
+    "classe": "Execução de Título Extrajudicial (159)"
+   },
+   {
+    "classe_id": "12079",
+    "classe": "Execução de Título Extrajudicial contra a Fazenda Pública (12079)"
+   },
+   {
+    "classe_id": "12251",
+    "classe": "Execução de Título Judicial - CEJUSC (12251)"
+   },
+   {
+    "classe_id": "186",
+    "classe": "Exibição (186)"
+   },
+   {
+    "classe_id": "228",
+    "classe": "Exibição de Documento ou Coisa Cível (228)"
+   },
+   {
+    "classe_id": "307",
+    "classe": "Habeas Corpus Criminal (307)"
+   },
+   {
+    "classe_id": "12374",
+    "classe": "Homologação da Transação Extrajudicial (12374)"
+   },
+   {
+    "classe_id": "112",
+    "classe": "Homologação de Transação Extrajudicial (112)"
+   },
+   {
+    "classe_id": "12119",
+    "classe": "Incidente de Desconsideração de Personalidade Jurídica (12119)"
+   },
+   {
+    "classe_id": "232",
+    "classe": "Incidente de Falsidade (232)"
+   },
+   {
+    "classe_id": "332",
+    "classe": "Incidente de Falsidade (332)"
+   },
+   {
+    "classe_id": "279",
+    "classe": "Inquérito Policial (279)"
+   },
+   {
+    "classe_id": "11041",
+    "classe": "Inquérito Policial Militar (11041)"
+   },
+   {
+    "classe_id": "333",
+    "classe": "Insanidade Mental do Acusado (333)"
+   },
+   {
+    "classe_id": "12227",
+    "classe": "Interpelação (12227)"
+   },
+   {
+    "classe_id": "120",
+    "classe": "Mandado de Segurança Cível (120)"
+   },
+   {
+    "classe_id": "1268",
+    "classe": "Medidas Protetivas de urgência (Lei Maria da Penha) Criminal (1268)"
+   },
+   {
+    "classe_id": "10967",
+    "classe": "Medidas Protetivas - Estatuto do Idoso Criminal  (10967)"
+   },
+   {
+    "classe_id": "40",
+    "classe": "Monitória (40)"
+   },
+   {
+    "classe_id": "1701",
+    "classe": "Nomeação de Advogado (1701)"
+   },
+   {
+    "classe_id": "12226",
+    "classe": "Notificação (12226)"
+   },
+   {
+    "classe_id": "275",
+    "classe": "Notificação para Explicações (275)"
+   },
+   {
+    "classe_id": "1289",
+    "classe": "Outras medidas provisionais (1289)"
+   },
+   {
+    "classe_id": "1294",
+    "classe": "Outros procedimentos de jurisdição voluntária (1294)"
+   },
+   {
+    "classe_id": "313",
+    "classe": "Pedido de Prisão Preventiva (313)"
+   },
+   {
+    "classe_id": "1199",
+    "classe": "Pedido de Providências (1199)"
+   },
+   {
+    "classe_id": "124",
+    "classe": "Pedido de Resposta ou Retificação da Lei de Imprensa (124)"
+   },
+   {
+    "classe_id": "241",
+    "classe": "Petição Cível (241)"
+   },
+   {
+    "classe_id": "1727",
+    "classe": "Petição Criminal (1727)"
+   },
+   {
+    "classe_id": "7",
+    "classe": "Procedimento Comum Cível (7)"
+   },
+   {
+    "classe_id": "1706",
+    "classe": "Procedimento Comum Infância e Juventude (1706)"
+   },
+   {
+    "classe_id": "15217",
+    "classe": "PROCEDIMENTO DE REPACTUAÇÃO DE DÍVIDAS (SUPERENDIVIDAMENTO) (15217)"
+   },
+   {
+    "classe_id": "436",
+    "classe": "Procedimento do Juizado Especial Cível (436)"
+   },
+   {
+    "classe_id": "14695",
+    "classe": "Procedimento do Juizado Especial da Fazenda Pública (14695)"
+   },
+   {
+    "classe_id": "300",
+    "classe": "Procedimento Especial da Lei Antitóxicos (300)"
+   },
+   {
+    "classe_id": "1733",
+    "classe": "Procedimento Investigatório Criminal (PIC-MP)  (1733)"
+   },
+   {
+    "classe_id": "22",
+    "classe": "Procedimento Sumário (22)"
+   },
+   {
+    "classe_id": "193",
+    "classe": "Produção Antecipada da Prova (193)"
+   },
+   {
+    "classe_id": "11875",
+    "classe": "Reclamação Pré-processual (11875)"
+   },
+   {
+    "classe_id": "251",
+    "classe": "Registro de Casamento Nuncupativo (251)"
+   },
+   {
+    "classe_id": "1707",
+    "classe": "Reintegração / Manutenção de Posse (1707)"
+   },
+   {
+    "classe_id": "272",
+    "classe": "Representação Criminal/Notícia de Crime (272)"
+   },
+   {
+    "classe_id": "46",
+    "classe": "Restauração de Autos Cível (46)"
+   },
+   {
+    "classe_id": "291",
+    "classe": "Restauração de Autos Criminal (291)"
+   },
+   {
+    "classe_id": "326",
+    "classe": "Restituição de Coisas Apreendidas (326)"
+   },
+   {
+    "classe_id": "278",
+    "classe": "Termo Circunstanciado (278)"
+   },
+   {
+    "classe_id": "12135",
+    "classe": "Tutela Antecipada Antecedente (12135)"
+   },
+   {
+    "classe_id": "12134",
+    "classe": "Tutela Cautelar Antecedente (12134)"
+   },
+   {
+    "classe_id": "12233",
+    "classe": "Tutela Cível (12233)"
+   },
+   {
+    "classe_id": "61",
+    "classe": "Tutela e Curatela -  Nomeação (61)"
+   },
+   {
+    "classe_id": "49",
+    "classe": "Usucapião (49)"
+   }
+  ]
+ }
+}

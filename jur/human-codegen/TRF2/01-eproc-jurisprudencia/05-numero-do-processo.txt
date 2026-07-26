@@ -1,0 +1,46 @@
+## 5. Número do processo — o campo que alimenta o Checker
+
+    <input class="w-100 campoPesquisa form-control form-control-sm" id="txtProcesso"
+           name="txtProcesso" placeholder="Número do processo" type="text">
+
+(arquivo `05-campo-numero-processo.html`)
+
+Aceita o número CNJ **com máscara** — `5081315-58.2021.4.02.5101`. Sem máscara
+(`50813155820214025101`) devolve 0. O sufixo de origem que aparece no resultado
+(`/TRF2`) **não** deve ser digitado.
+
+Não existe uma tela separada de "consulta por número": o campo faz parte do mesmo
+formulário de busca.
+
+### ⚠️ A ARMADILHA: `txtProcesso` sozinho devolve ZERO
+
+O e-Proc do TRF2 exige um texto em `#txtPesquisa` para rodar a consulta. Com o campo de
+texto vazio, **qualquer** número de processo — mesmo existente — devolve
+"0 documentos encontrados", sem mensagem de erro. Medido no processo
+`5081315-58.2021.4.02.5101`, que existe e tem 5 documentos:
+
+    txtPesquisa=''            + txtProcesso=<nº>   ->   0 documentos
+    txtPesquisa='recurso'     + txtProcesso=<nº>   ->   3 documentos
+    txtPesquisa='processo'    + txtProcesso=<nº>   ->   5 documentos
+    txtPesquisa='*'           + txtProcesso=<nº>   ->   5 documentos      <-- correto
+
+A solução é o curinga `*`, que casa com a base inteira (839.228 documentos na origem
+TRF2) e portanto **não restringe nada**. Um termo comum como "recurso" parece funcionar
+mas restringe de verdade (3 em vez de 5) — é exatamente o tipo de erro que faz uma
+verificação reprovar um julgado que existe. O `TRF2Checker` usa `*`.
+
+### O que a consulta devolve
+
+Um processo pode ter VÁRIOS documentos (acórdão, monocrática, despacho da
+Vice-Presidência). Confirmar o número do processo **não** confirma a decisão citada — o
+identificador do documento é o `id` (o `value` do `input.chkDocumento`, também usado no
+`id="resultado<id>"` do card). A auditoria do Checker confere o `id`.
+
+Exemplo real (`5081315-58.2021.4.02.5101`, 5 documentos):
+
+    21784976838169144338387406962  Decisão monocrática              25/07/2026  REIS FRIEDE
+    21775828733527793239256362948  Decisão monocrática              09/04/2026  FIRLY NASCIMENTO FILHO
+    21774564723770804736598223498  Despacho/Decisão da Vice-Pres.   26/03/2026  MARCUS ABRAHAM
+    ...
+
+Print: `05.01-campo-numero-processo.png`.

@@ -1,0 +1,739 @@
+<form action="/repetitivos/temas_repetitivos/pesquisa.jsp" method="post" name="frmConsulta" onsubmit="return onClickPesquisar()">
+		<input name="p" type="hidden" value="true" style="">
+		<input name="novaConsulta" type="hidden" value="true" style="">
+		<input name="quantidadeResultadosPorPagina" type="hidden" value="10" style="">
+		<input name="i" type="hidden" value="1" style="">
+
+			<div class="input-group mb-3">
+                <input type="text" name="pesquisa_livre" id="pesquisa_livre" class="form-control clearable" placeholder="Digite o termo ou número do tema/controvérsia que desejar pesquisar" style="">
+                <div class="input-group-append">
+                    <button class="input-group-text icofont-ui-search btn"></button>
+                </div> 
+            </div> 			
+
+            <div class="row">
+            	<div class="col-md-8 text-left juris_conectMostrar pl-3">
+                    <span id="idMostrarBotoesOperadores">Mostrar os operadores <i class="icofont-rounded-right t-cinza-claro"></i></span>   
+		      		<div id="idBotoesOperadores">
+						<input type="button" id="btnE" value="e" onclick="javascript:seleciona_operador('e');" style=""> 
+						<div class="hintOperador">furto e estacionamento e supermercado<br>Obs.: Localiza as três palavras em qualquer lugar do documento.</div>
+						<input type="button" id="btnOU" value="ou" onclick="javascript:seleciona_operador('ou');" style="">
+						<div class="hintOperador">furto e estacionamento e (supermercado ou hipermercado ou mercado)<br>Obs.: Localiza um e/ou outro termo digitado entre parênteses.</div> 
+						<input type="button" id="btnADJ" value="adj" onclick="javascript:seleciona_operador('adj');" style=""> 
+						<div class="hintOperador">furto adj5 estacionamento adj4 supermercado<br>Obs.: "Estacionamento" será no máximo a quinta palavra após "furto" e "supermercado" será no máximo a quarta palavra após "estacionamento".</div>
+						<input type="button" id="btnNAO" value="não" onclick="javascript:seleciona_operador('nao');" style=""> 
+						<div class="hintOperador">furto e estacionamento não supermercado<br>Obs.: Localiza documentos que contenham as palavras "furto" e "estacionamento", excluindo documentos que contenham a palavra "supermercado".</div>
+						<input type="button" id="btnPROX" value="prox" onclick="javascript:seleciona_operador('prox');" style=""> 
+						<div class="hintOperador">furto prox6 estacionamento prox4 supermercado<br>Obs.: "Estacionamento" será no máximo a sexta palavra antes ou após "furto"; "supermercado" será no máximo a quarta palavra antes ou após "estacionamento".</div>
+						<input type="button" id="btnMESMO" value="mesmo" onclick="javascript:seleciona_operador('mesmo');" style=""> 
+						<div class="hintOperador">furto mesmo estacionamento mesmo supermercado<br>Obs: Localiza os termos num mesmo campo do documento.</div>
+						<input type="button" id="btnCOM" value="com" onclick="javascript:seleciona_operador('com');" style="">
+						<div class="hintOperador">furto com estacionamento com supermercado<br>Obs: Localiza os termos dentro de um mesmo parágrafo.</div>
+						<input type="button" id="btnTRUNC" value="$" onclick="javascript:seleciona_operador('$');" style=""> 
+						<div class="hintOperador">furto e estacionamento e $mercado<br>Obs: Localiza as palavras que contenham a parte digitada e suas variações: supermercado, hipermercado ou mercado.</div>					
+					</div>
+      			</div>
+
+                <div class="col-md-4 text-right juris_pesqAvancada">
+                    <span id="idMostrarPesquisaAvancada">Pesquisa avançada <i class="icofont-rounded-down t-azul"></i></span>
+                </div>
+
+                <div id="idPesquisaAvancada" class="clsFormularioPesquisa" style="display: block;">
+                    
+				    <div class="clsColunaEsquerda">
+						<span class="clsTituloAvancada">Operador padrão:</span>
+						<div class="divTabela" id="operadorPadrao">
+							<div class="divLinha">
+								<div class="divCell">
+									<label class="customRadio">e
+										<input type="radio" name="operadorPadrao" id="operadorPadrao" value="e" checked="" style="">
+										<span class="checkmark"></span>
+									</label>
+								</div>
+								<div class="divCell">
+									<label class="customRadio">adj
+										<input type="radio" name="operadorPadrao" id="operadorPadrao" value="adj" style="">
+										<span class="checkmark"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+                    
+                   	<div class="clsColunaDireita">
+						<span class="clsTituloAvancada">Configurações:</span>
+						<div class="divTabela" id="configuracoesPesquisa">
+							<div class="divLinha">
+								<div class="divCell showHint pr-4">
+				  				<label class="customCheckbox">Pesquisar sinônimos
+								<input type="checkbox" name="pesquisarSinonimos" id="pesquisarSinonimos" style="">
+								<span class="checkmark"></span>
+								</label>
+								<div class="clsHint">
+						<h4>Pesquisar Sinônimos:</h4>
+						<p>Amplia a pesquisa para incluir palavras ou expressões sinônimas 
+						do termo digitado, assim considerados no Vocabulário Jurídico (Tesauro)</p>
+						<p>Ao pesquisar um termo composto, use-o entre aspas para que a 
+						busca de sinônimos no Tesauro seja feita corretamente.</p>
+								</div>
+								</div>
+								<div class="divCell showHint">
+				  				<label class="customCheckbox">Pesquisar plurais
+								<input type="checkbox" name="pesquisarPlurais" id="pesquisarPlurais" style="">
+								<span class="checkmark"></span>
+								</label>
+								<div class="clsHint">
+						<h4>Pesquisar plurais:</h4>
+						<p>Amplia a pesquisa para incluir o plural dos termos digitados.</p>
+								</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+		<br>
+		<table>
+			<tbody><tr>
+				<td width="130pt">
+					<label title="Representa o processo ou o conjunto de processos afetados ao rito dos repetitivos (art. 1.036 do CPC). O tema é identificado por meio de numeração sequencial em cada um dos tribunais superiores.">
+						<input type="checkbox" name="tipo_pesquisa" value="T" onclick="javascript: OnClickPesquisarTema()" style="">
+						<b>Repetitivos</b></label>
+				</td>
+				<td width="140pt">
+					<label title="Representa o conjunto de processos recebidos pelo STJ na condição de representativos da controvérsia – RRC (§ 1º do art. 1.036 do CPC), a fim de possibilitar a afetação do(s) processo(s), pelo Ministro do STJ, ao rito dos recursos repetitivos.">
+						<input type="checkbox" name="tipo_pesquisa" value="C" onclick="javascript: OnClickPesquisarControversia()" style="">
+						<b>Controvérsias</b></label>
+				</td>
+ 				<td width="90pt">
+					<label title="Incidente de Assunção de Competência (art. 947 do CPC e art. 271-B do RISTJ).">
+						<input type="checkbox" name="tipo_pesquisa" value="I" onclick="javascript: OnClickPesquisarIac()" style="">
+						<b>IACs</b></label>
+ 				</td>
+ 				<td width="100pt">
+					<label title="Suspensão em Incidente de Resolução de Demanda Repetitiva (§§ 3º e 4º do art. 982 do CPC e art. 271-A do RISTJ).">
+						<input type="checkbox" name="tipo_pesquisa" value="S" onclick="javascript: OnClickPesquisarSirdr()" style="">
+						<b>SIRDRs</b></label>
+ 				</td>
+<!-- ativar trecho comentado se quiser desabilitar 
+ 				<td width="100pt">
+					<label title="Incidente de Resolução de Demandas Repetitivas (art. 976 do CPC e Pet 11.838/MS - Corte Especial - DJe de 10/9/2019).">
+						<input type="checkbox" name="tipo_pesquisa" value=R
+							onClick="javascript: OnClickPesquisarIrdr()" />
+						<b>IRDRs</b></label>
+ 				</td>
+ -->
+<!-- ativar trecho comentado se quiser desabilitar --> 
+ 				<td width="100pt">
+					<label title="Pedido de Uniformização de Interpretação de Lei (Lei n. 10.259/2001 e Lei n. 12.153/2009).">
+						<input type="checkbox" name="tipo_pesquisa" value="P" onclick="javascript: OnClickPesquisarPuil()" style="">
+						<b>PUILs</b></label>
+ 				</td>
+<!-- -->
+ 				<td width="100pt">
+					<label title="Pesquisar todos os tipos de precedentes">
+						<input type="checkbox" id="todos_precedentes" onclick="javascript: OnClickPesquisarTodosPrecedentes()" style="">
+						<b>Todos</b></label>
+ 				</td>
+  			</tr>
+		</tbody></table>
+		<br>
+ 
+
+		<div class="linhaform">
+			<div class="elementoComHelpbox">
+				<label for="cod_tema_inicial" class="labelCampo">Número do tema:</label>
+			</div>
+			<input type="text" name="cod_tema_inicial" id="cod_tema_inicial" style="width: 80pt;" maxlength="4">
+			a
+			<input type="text" name="cod_tema_final" id="cod_tema_final" style="width: 80pt;" maxlength="4">									
+		</div>
+
+		<div class="linhaform" id="campo_tipo_data">
+			<div class="elementoComHelpbox">
+				<label for="dt_inicial" class="labelCampo">Data:</label>
+			</div>
+			<input type="text" name="dt_inicial" id="dt_inicial" style="width: 80pt; background-color: rgb(252, 252, 252);" maxlength="10" onblur="javascript: ValidaData(document.frmConsulta.data_inicial)" onkeypress="javascript: FormataData(document.frmConsulta.dt_inicial)" disabled="">
+				a
+			<input type="text" name="dt_final" id="dt_final" style="width: 80pt; background-color: rgb(252, 252, 252);" maxlength="10" onblur="javascript: ValidaData(document.frmConsulta.data_final)" onkeypress="javascript: FormataData(document.frmConsulta.dt_final)" disabled="">
+			
+			
+<select name="tipo_data" id="tipo_data" style="width: 140pt; float: none; display: none;" disabled="">
+
+
+
+ 
+<option value="">Selecione...</option></select>
+
+			
+<!-- 								<div class="clsHint">
+						<h4>Campo de data:</h4>
+						<p>Somente se um tipo de precedente estiver selecionado.</p>
+								</div>
+ -->
+ 		</div>
+		<div style="font-style: italic; color: rgb(160, 160, 160);" id="obs_data">
+			Obs: Pesquisa por data é somente permitida se apenas um tipo de precedente estiver selecionado.
+		</div>
+		
+		<div class="linhaform">
+			<div class="elementoComHelpbox">
+				<label for="num_processo_classe" class="labelCampo">Processo:</label>
+			</div>
+			
+
+
+
+<select name="sg_classe" id="sg_classe" style="WIDTH: 101pt">
+<option value="">Selecione...</option>
+
+	<option value="AREsp">AREsp - AGRAVO EM RECURSO ESPECIAL</option>
+
+	<option value="CC">CC - CONFLITO DE COMPETÊNCIA</option>
+
+	<option value="EREsp">EREsp - EMBARGOS DE DIVERGÊNCIA EM RESP</option>
+
+	<option value="Pet">Pet - PETIÇÃO</option>
+
+	<option value="PUIL">PUIL - PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI</option>
+
+	<option value="Rcl">Rcl - RECLAMAÇÃO</option>
+
+	<option value="REsp">REsp - RECURSO ESPECIAL</option>
+
+	<option value="RMS">RMS - RECURSO EM MANDADO DE SEGURANÇA</option>
+
+	<option value="SIRDR">SIRDR - SUSPENSÃO EM INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS</option>
+
+</select>
+ 
+			<input type="text" name="num_processo_classe" id="num_processo_classe" style="width: 135pt;" maxlength="8">
+		</div>
+
+		<div class="linhaform" id="campo_ministro" style="display: none;">
+				<div class="elementoComHelpbox">
+					<label for="num_ministro" class="labelCampo">Ministro(a):</label>
+				</div>
+				
+
+<select name="num_ministro" id="num_ministro"> 
+<option value="">Selecione...</option>
+
+	<option value="8205">ADILSON VIEIRA MACABU (DESEMBARGADOR CONVOCADO DO TJ/RJ)</option>
+
+	<option value="1187">AFRÂNIO VILELA</option>
+
+	<option value="8215">ALDERITA RAMOS DE OLIVEIRA (DESEMBARGADORA CONVOCADA DO TJ/PE)</option>
+
+	<option value="1110">ALDIR PASSARINHO JUNIOR</option>
+
+	<option value="1146">ANTONIO CARLOS FERREIRA</option>
+
+	<option value="1182">ANTONIO SALDANHA PALHEIRO</option>
+
+	<option value="1104">ARI PARGENDLER</option>
+
+	<option value="1128">ARNALDO ESTEVES LIMA</option>
+
+	<option value="1151">ASSUSETE MAGALHÃES</option>
+
+	<option value="1142">BENEDITO GONÇALVES</option>
+
+	<option value="8250">CAMPOS MARQUES (DESEMBARGADOR CONVOCADO DO TJ/PR)</option>
+
+	<option value="8441">CARLOS CINI MARCHIONATTI (DESEMBARGADOR CONVOCADO TJRS)</option>
+
+	<option value="8135">CARLOS FERNANDO MATHIAS (JUIZ FEDERAL CONVOCADO DO TRF 1ª REGIÃO)</option>
+
+	<option value="1190">CARLOS PIRES BRANDÃO</option>
+
+	<option value="1125">CASTRO MEIRA</option>
+
+	<option value="8175">CELSO LIMONGI (DESEMBARGADOR CONVOCADO DO TJ/SP)</option>
+
+	<option value="1098">CESAR ASFOR ROCHA</option>
+
+	<option value="1188">DANIELA TEIXEIRA</option>
+
+	<option value="1126">DENISE ARRUDA</option>
+
+	<option value="8315">DIVA MALERBI (DESEMBARGADORA CONVOCADA TRF 3ª REGIÃO)</option>
+
+	<option value="1114">ELIANA CALMON</option>
+
+	<option value="1109">FELIX FISCHER</option>
+
+	<option value="1116">FRANCISCO FALCÃO</option>
+
+	<option value="1111">GILSON DIPP</option>
+
+	<option value="1160">GURGEL DE FARIA</option>
+
+	<option value="1112">HAMILTON CARVALHIDO</option>
+
+	<option value="1132">HERMAN BENJAMIN</option>
+
+	<option value="1130">HUMBERTO MARTINS</option>
+
+	<option value="8420">JESUÍNO RISSATO (DESEMBARGADOR CONVOCADO DO TJDFT)</option>
+
+	<option value="8430">JOÃO BATISTA MOREIRA  (DESEMBARGADOR CONVOCADO DO TRF1)</option>
+
+	<option value="1123">JOÃO OTÁVIO DE NORONHA</option>
+
+	<option value="1183">JOEL ILAN PACIORNIK</option>
+
+	<option value="1138">JORGE MUSSI</option>
+
+	<option value="1120">LAURITA VAZ</option>
+
+	<option value="8400">LÁZARO GUIMARÃES  (DESEMBARGADOR CONVOCADO DO TRF 5ª REGIÃO)</option>
+
+	<option value="8450">LUÍS CARLOS GAMBOGI (DESEMBARGADOR CONVOCADO DO TJMG)</option>
+
+	<option value="1140">LUIS FELIPE SALOMÃO</option>
+
+	<option value="1122">LUIZ FUX</option>
+
+	<option value="8410">MANOEL ERHARDT (DESEMBARGADOR CONVOCADO DO TRF5)</option>
+
+	<option value="1150">MARCO AURÉLIO BELLIZZE</option>
+
+	<option value="1149">MARCO BUZZI</option>
+
+	<option value="8360">MARGA TESSLER (JUÍZA FEDERAL CONVOCADA DO TRF 4ª REGIÃO)</option>
+
+	<option value="1145">MARIA ISABEL GALLOTTI</option>
+
+	<option value="1189">MARIA MARLUCE CALDAS</option>
+
+	<option value="1131">MARIA THEREZA DE ASSIS MOURA</option>
+
+	<option value="1129">MASSAMI UYEDA</option>
+
+	<option value="1141">MAURO CAMPBELL MARQUES</option>
+
+	<option value="1184">MESSOD AZULAY NETO</option>
+
+	<option value="1156">MOURA RIBEIRO</option>
+
+	<option value="1118">NANCY ANDRIGHI</option>
+
+	<option value="1133">NAPOLEÃO NUNES MAIA FILHO</option>
+
+	<option value="1159">NEFI CORDEIRO</option>
+
+	<option value="361">NILSON NAVES</option>
+
+	<option value="8460">NILSONI DE FREITAS (DESEMBARGADORA CONVOCADA DO TJDFT)</option>
+
+	<option value="1139">OG FERNANDES</option>
+
+	<option value="8440">OTÁVIO DE ALMEIDA TOLEDO (DESEMBARGADOR CONVOCADO DO TJSP)</option>
+
+	<option value="1144">PAULO DE TARSO SANSEVERINO</option>
+
+	<option value="8165">PAULO FURTADO (DESEMBARGADOR CONVOCADO DO TJ/BA)</option>
+
+	<option value="1185">PAULO SÉRGIO DOMINGUES</option>
+
+	<option value="9010">PRESIDENTE DA COMISSÃO GESTORA DE PRECEDENTES</option>
+
+	<option value="1143">RAUL ARAÚJO</option>
+
+	<option value="1157">REGINA HELENA COSTA</option>
+
+	<option value="1170">REYNALDO SOARES DA FONSECA</option>
+
+	<option value="1181">RIBEIRO DANTAS</option>
+
+	<option value="1147">RICARDO VILLAS BÔAS CUEVA</option>
+
+	<option value="1158">ROGERIO SCHIETTI CRUZ</option>
+
+	<option value="1148">SEBASTIÃO REIS JÚNIOR</option>
+
+	<option value="1155">SÉRGIO KUKINA</option>
+
+	<option value="1137">SIDNEI BENETI</option>
+
+	<option value="1186">TEODORO SILVA SANTOS</option>
+
+	<option value="1124">TEORI ALBINO ZAVASCKI</option>
+
+	<option value="8155">VASCO DELLA GIUSTINA (DESEMBARGADOR CONVOCADO DO TJ/RS)</option>
+
+</select>
+
+		</div>
+
+		<div class="linhaform" id="campo_orgao_julgador_opcional" style="display: none;">
+				<div class="elementoComHelpbox">
+					<label for="cod_orgao_julgador_texto_concatenado" class="labelCampo">Órgão Julgador:</label>
+				</div>
+				<input type="text" name="cod_orgao_julgador_texto_concatenado" id="cod_orgao_julgador_texto_concatenado" style="width: 242pt;" readonly="" disabled="">
+			  	<input type="hidden" name="cod_orgao_julgador_valores" id="cod_orgao_julgador_valores" disabled="" style="">
+			  	<input type="button" value="X" title="Limpar Órgãos Julgadores" onclick="javascript:limparCampoOrgaoJulgador()" style="">
+		</div>
+
+		<div class="linhaform" id="campo_orgao_julgador" style="display: none;">
+				<div class="elementoComHelpbox">
+					<label for="cod_orgao_julgador" id="label_orgao_julgador_repetido" class="labelCampo">Órgão Julgador:</label>
+				</div>
+				
+
+<select name="cod_orgao_julgador" id="cod_orgao_julgador" disabled=""> 
+<option value="">Selecione...</option>
+
+	<option value="S1">PRIMEIRA SEÇÃO</option>
+
+	<option value="S2">SEGUNDA SEÇÃO</option>
+
+	<option value="S3">TERCEIRA SEÇÃO</option>
+
+	<option value="CE">CORTE ESPECIAL</option>
+
+</select>
+ 
+			  	<input type="button" id="cod_orgao_julgador_botao_adicionar" value="+" onclick="javascript:exibirCampoOrgaoJulgadorOpcional(true);adicionarOrgaoJulgadorSelecionado()" disabled="" style="">
+		</div>
+
+		<div class="linhaform" id="campo_cod_origem" style="display: none;">
+				<div class="elementoComHelpbox">
+					<label for="cod_origem" class="labelCampo">Tribunal de Origem:</label>
+				</div>
+				
+
+<select name="cod_origem" id="cod_origem">
+<option value="">Selecione...</option>
+
+	<option value="0200">TJAC - TRIBUNAL DE JUSTIÇA DO ESTADO DO ACRE</option>
+
+	<option value="0220">TJAL - TRIBUNAL DE JUSTIÇA DO ESTADO DE ALAGOAS</option>
+
+	<option value="0260">TJAM - TRIBUNAL DE JUSTIÇA DO ESTADO DO AMAZONAS</option>
+
+	<option value="0240">TJAP - TRIBUNAL DE JUSTIÇA DO ESTADO DO AMAPÁ</option>
+
+	<option value="0280">TJBA - TRIBUNAL DE JUSTIÇA DO ESTADO DA BAHIA</option>
+
+	<option value="0300">TJCE - TRIBUNAL DE JUSTIÇA DO ESTADO DO CEARÁ</option>
+
+	<option value="0320">TJDFT - TRIBUNAL DE JUSTIÇA DO DISTRITO FEDERAL E DOS TERRITÓRIOS</option>
+
+	<option value="0340">TJES - TRIBUNAL DE JUSTIÇA DO ESTADO DO ESPÍRITO SANTO</option>
+
+	<option value="0360">TJGO - TRIBUNAL DE JUSTIÇA DO ESTADO DE GOIÁS</option>
+
+	<option value="0380">TJMA - TRIBUNAL DE JUSTIÇA DO ESTADO DO MARANHÃO</option>
+
+	<option value="0440">TJMG - TRIBUNAL DE JUSTIÇA DO ESTADO DE MINAS GERAIS</option>
+
+	<option value="0420">TJMS - TRIBUNAL DE JUSTIÇA DO ESTADO DE MATO GROSSO DO SUL</option>
+
+	<option value="0400">TJMT - TRIBUNAL DE JUSTIÇA DO ESTADO DE MATO GROSSO</option>
+
+	<option value="0460">TJPA - TRIBUNAL DE JUSTIÇA DO ESTADO DO PARÁ</option>
+
+	<option value="0480">TJPB - TRIBUNAL DE JUSTIÇA DO ESTADO DA PARAÍBA</option>
+
+	<option value="0520">TJPE - TRIBUNAL DE JUSTIÇA DO ESTADO DE PERNAMBUCO</option>
+
+	<option value="0540">TJPI - TRIBUNAL DE JUSTIÇA DO ESTADO DO PIAUÍ</option>
+
+	<option value="0500">TJPR - TRIBUNAL DE JUSTIÇA DO ESTADO DO PARANÁ</option>
+
+	<option value="0600">TJRJ - TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO DE JANEIRO</option>
+
+	<option value="0560">TJRN - TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO GRANDE DO NORTE</option>
+
+	<option value="0620">TJRO - TRIBUNAL DE JUSTIÇA DO ESTADO DE RONDÔNIA</option>
+
+	<option value="0640">TJRR - TRIBUNAL DE JUSTIÇA DO ESTADO DE RORAIMA</option>
+
+	<option value="0580">TJRS - TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO GRANDE DO SUL</option>
+
+	<option value="0660">TJSC - TRIBUNAL DE JUSTIÇA DO ESTADO DE SANTA CATARINA</option>
+
+	<option value="0700">TJSE - TRIBUNAL DE JUSTIÇA DO ESTADO DE SERGIPE</option>
+
+	<option value="0680">TJSP - TRIBUNAL DE JUSTIÇA DO ESTADO DE SÃO PAULO - AV. BRIGADEIRO</option>
+
+	<option value="1038">TJSPCF - TRIBUNAL DE JUSTIÇA DO ESTADO DE SÃO PAULO - CONSELHEIRO FURTADO - PÁTIO DO COLÉGIO</option>
+
+	<option value="1039">TJSPRGL - TRIBUNAL DE JUSTIÇA DO ESTADO DE SÃO PAULO - RUA DA GLÓRIA</option>
+
+	<option value="0720">TJTO - TRIBUNAL DE JUSTIÇA DO ESTADO DO TOCANTINS</option>
+
+	<option value="0806">TRF1 - TRIBUNAL REGIONAL FEDERAL DA 1ª REGIÃO</option>
+
+	<option value="0808">TRF2 - TRIBUNAL REGIONAL FEDERAL DA 2ª REGIÃO</option>
+
+	<option value="0810">TRF3 - TRIBUNAL REGIONAL FEDERAL DA 3ª REGIÃO</option>
+
+	<option value="0812">TRF4 - TRIBUNAL REGIONAL FEDERAL DA 4ª REGIÃO</option>
+
+	<option value="0814">TRF5 - TRIBUNAL REGIONAL FEDERAL DA 5ª REGIÃO</option>
+
+	<option value="1066">TRF6 - TRIBUNAL REGIONAL FEDERAL DA 6ª REGIÃO</option>
+
+</select>
+ 
+		</div>
+
+		<div class="linhaform" id="campo_tipo_puil" style="display: none;">
+				<div class="elementoComHelpbox">
+					<label for="cod_tipo_puil" class="labelCampo">Origem:</label>
+				</div>
+				<select name="cod_tipo_puil" id="cod_tipo_puil">
+					<option value="">Selecione...</option>
+					<option value="1">Juizado Federal (TNU)</option>
+					<option value="2">Juizado Fazenda Pública</option>
+				</select>
+		</div>
+
+		<div class="linhaform">
+			<div class="elementoComHelpbox">
+				<label for="sg_ramo_direito" class="labelCampo">Ramo do Direito:</label>
+			</div>
+			
+
+
+
+
+
+<select name="sg_ramo_direito" id="sg_ramo_direito">
+<option value="">Selecione...</option>
+
+	<option value="AD">AD - DIREITO ADMINISTRATIVO</option>
+
+	<option value="AM">AM - DIREITO AMBIENTAL</option>
+
+	<option value="CV">CV - DIREITO CIVIL</option>
+
+	<option value="CM">CM - DIREITO COMERCIAL</option>
+
+	<option value="CT">CT - DIREITO CONSTITUCIONAL</option>
+
+	<option value="CN">CN - DIREITO DO CONSUMIDOR</option>
+
+	<option value="TB">TB - DIREITO DO TRABALHO E PROCESSUAL TRABALHISTA</option>
+
+	<option value="IN">IN - DIREITO INTERNACIONAL</option>
+
+	<option value="PN">PN - DIREITO PENAL</option>
+
+	<option value="PV">PV - DIREITO PREVIDENCIÁRIO</option>
+
+	<option value="PC">PC - DIREITO PROCESSUAL CIVIL E DO TRABALHO</option>
+
+	<option value="PP">PP - DIREITO PROCESSUAL PENAL</option>
+
+	<option value="MP">MP - DIREITO PROCESSUAL PENAL MILITAR</option>
+
+	<option value="TR">TR - DIREITO TRIBUTÁRIO</option>
+
+</select>
+ 
+		</div>
+
+<!-- 
+		<div class="linhaform">
+			<div class="elementoComHelpbox">
+				<label for="siglajud" class="labelCampo">Legislação:</label>
+			</div>
+			<input type="text" name="ref_legislativa" id="ref_legislativa" style="width: 242pt">
+		</div>
+ -->
+ 
+		<div class="linhaform">
+			<div class="elementoComHelpbox">
+				<label for="ordenacaoCriterio" class="labelCampo">Ordenação:</label>
+			</div>
+			<select name="ordenacaoCriterio" id="ordenacaoCriterio" style="width: 157pt">
+				<option value="1">N° do tema/controvérsia</option>
+				<option value="2">Última atualização</option>
+				<option value="3">Quantitativo de suspensos</option>
+			</select>
+			<select name="ordenacaoDecrescente" id="ordenacaoDecrescente" style="width: 84pt">
+				<option value="0">Crescente</option>
+				<option value="1">Decrescente</option>
+			</select>
+		</div>
+
+		<div class="linhaform" id="situacoes_precedente_todos" style="display: none;">
+			<div class="elementoComHelpbox" onmouseover="javascript: mostraTexto()" onmouseout="javascript: escondeTexto()">
+				<label class="labelCampo">Situação:</label>
+				<!-- <label for="pesquisar_sit_tema_atual" class="labelCampo">Situação:</label> --> 
+				<div id="textoAjuda" style="display: none">
+				A marcação destas caixas retorna apenas os temas/controvérsias que estejam na(s) situação(ões) selecionada(s). 
+				Se nenhuma caixa estiver marcada, serão retornados no resultado temas/controvérsias em todas as situações.
+				</div>
+			</div>
+			<table style="width: 600px">	
+				
+
+
+
+
+
+
+<tbody><tr>
+
+	<td style="vertical-align: top; display: none;" id="situacoes_precedente_P">
+		<div onmouseover="javascript: mostraTexto()" onmouseout="javascript: escondeTexto()">
+			
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="30" style="">Aguardando análise de admissão (Representativo TNU)</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="15" style="">Admitido</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="28" style="">Admitido - possível revisão de tese</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="16" style="">Recusado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="3" style="">Em Julgamento</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="2" style="">Mérito Julgado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="10" style="">Acórdão Publicado - RE Pendente</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="7" style="">Sem Processo Vinculado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="4" style="">Acórdão Publicado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="5" style="">Sobrestado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="8" style="">Cancelado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="19" style="">Sobrestado por tema STF</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="9" style="">Trânsito em Julgado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_P" id="situacao_precedente_P" value="6" style="">Revisado</label><br>
+				
+			<label><input type="checkbox" id="situacao_precedente_P_todas" onclick="onClickTodasSituacoesPrecedente('situacao_precedente_P_todas', 'P')" value="" style="">Marcar/Desmarcar Todas</label>
+		</div>
+	</td>
+	
+	<td style="vertical-align: top; display: none;" id="situacoes_precedente_C">
+		<div onmouseover="javascript: mostraTexto()" onmouseout="javascript: escondeTexto()">
+			
+				<label><input type="checkbox" name="situacao_precedente_C" id="situacao_precedente_C" value="12" style="">Pendente</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_C" id="situacao_precedente_C" value="13" style="">Vinculada a Tema</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_C" id="situacao_precedente_C" value="11" style="">Cancelada</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_C" id="situacao_precedente_C" value="32" style="">Sobrestada</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_C" id="situacao_precedente_C" value="33" style="">Em Afetação</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_C" id="situacao_precedente_C" value="38" style="">Sem processo vinculado</label><br>
+				
+			<label><input type="checkbox" id="situacao_precedente_C_todas" onclick="onClickTodasSituacoesPrecedente('situacao_precedente_C_todas', 'C')" value="" style="">Marcar/Desmarcar Todas</label>
+		</div>
+	</td>
+	
+	<td style="vertical-align: top; display: none;" id="situacoes_precedente_S">
+		<div onmouseover="javascript: mostraTexto()" onmouseout="javascript: escondeTexto()">
+			
+				<label><input type="checkbox" name="situacao_precedente_S" id="situacao_precedente_S" value="23" style="">Em tramitação</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_S" id="situacao_precedente_S" value="24" style="">Suspensão deferida </label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_S" id="situacao_precedente_S" value="25" style="">Suspensão indeferida </label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_S" id="situacao_precedente_S" value="26" style="">Vinculada a tema repetitivo</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_S" id="situacao_precedente_S" value="29" style="">Finalizada determinação de suspensão</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_S" id="situacao_precedente_S" value="31" style="">Prejudicada</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_S" id="situacao_precedente_S" value="8" style="">Cancelado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_S" id="situacao_precedente_S" value="5" style="">Sobrestado</label><br>
+				
+			<label><input type="checkbox" id="situacao_precedente_S_todas" onclick="onClickTodasSituacoesPrecedente('situacao_precedente_S_todas', 'S')" value="" style="">Marcar/Desmarcar Todas</label>
+		</div>
+	</td>
+	
+	<td style="vertical-align: top; display: none;" id="situacoes_precedente_T">
+		<div onmouseover="javascript: mostraTexto()" onmouseout="javascript: escondeTexto()">
+			
+				<label><input type="checkbox" name="situacao_precedente_T" id="situacao_precedente_T" value="1" style="">Afetado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_T" id="situacao_precedente_T" value="14" style="">Afetado - Possível Revisão de Tese</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_T" id="situacao_precedente_T" value="3" style="">Em Julgamento</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_T" id="situacao_precedente_T" value="2" style="">Mérito Julgado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_T" id="situacao_precedente_T" value="4" style="">Acórdão Publicado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_T" id="situacao_precedente_T" value="5" style="">Sobrestado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_T" id="situacao_precedente_T" value="10" style="">Acórdão Publicado - RE Pendente</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_T" id="situacao_precedente_T" value="7" style="">Sem Processo Vinculado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_T" id="situacao_precedente_T" value="8" style="">Cancelado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_T" id="situacao_precedente_T" value="6" style="">Revisado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_T" id="situacao_precedente_T" value="9" style="">Trânsito em Julgado</label><br>
+				
+			<label><input type="checkbox" id="situacao_precedente_T_todas" onclick="onClickTodasSituacoesPrecedente('situacao_precedente_T_todas', 'T')" value="" style="">Marcar/Desmarcar Todas</label>
+		</div>
+	</td>
+	
+	<td style="vertical-align: top; display: none;" id="situacoes_precedente_I">
+		<div onmouseover="javascript: mostraTexto()" onmouseout="javascript: escondeTexto()">
+			
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="15" style="">Admitido</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="28" style="">Admitido - possível revisão de tese</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="36" style="">Não admitido</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="2" style="">Mérito Julgado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="10" style="">Acórdão Publicado - RE Pendente</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="37" style="">Acórdão Publicado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="19" style="">Sobrestado por tema STF</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="18" style="">Sobrestado por tema STJ</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="6" style="">Revisado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="9" style="">Trânsito em Julgado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="35" style="">Suscitado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="8" style="">Cancelado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="5" style="">Sobrestado</label><br>
+				
+				<label><input type="checkbox" name="situacao_precedente_I" id="situacao_precedente_I" value="3" style="">Em Julgamento</label><br>
+				
+			<label><input type="checkbox" id="situacao_precedente_I_todas" onclick="onClickTodasSituacoesPrecedente('situacao_precedente_I_todas', 'I')" value="" style="">Marcar/Desmarcar Todas</label>
+		</div>
+	</td>
+	
+</tr>
+
+			</tbody></table>
+		</div>
+		
+		<div class="linhaform" style="text-align: center">
+				<div class="filler">&nbsp;</div>
+				<div class="botoesForm">
+					<input type="submit" value="Pesquisar" style="">
+					<input type="button" value="Limpar" onclick="javascript:limpar();" style="">
+				</div>
+			</div>
+ 		
+            </div>
+		</div>
+	
+	</form>

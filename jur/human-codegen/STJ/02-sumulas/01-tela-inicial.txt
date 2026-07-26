@@ -1,0 +1,26 @@
+STJ — módulo 02: Súmulas / Súmulas Anotadas
+===========================================
+
+Link:   https://scon.stj.jus.br/SCON/sumstj/       (título: "STJ - Súmulas do STJ")
+Também: https://scon.stj.jus.br/SCON/pesquisar.jsp?b=SUMU&livre=<termo>
+Print:  01.01-tela-inicial.png
+Estado: MAPEADO, NÃO IMPLEMENTADO no crawler.
+
+O que é: os enunciados de súmula do STJ, com as "Súmulas Anotadas" — cada
+enunciado acompanhado dos precedentes que o originaram e de julgados posteriores
+que o aplicam. É o produto de mais alto valor por linha de texto do Tribunal.
+
+Por que não foi implementado: a base SUMU responde pelo mesmo `pesquisar.jsp`,
+mas renderiza uma TELA PRÓPRIA — não usa os containers `.documento` /
+`.paragrafoBRS` / `.docTitulo` da base de acórdãos, então o extrator do
+STJNavigator não a lê. `--base sumula` no crawler chega até a resposta e devolve
+`total: null` em vez de inventar resultado.
+
+Atalhos úteis observados na home do SCON:
+  Enunciados em PDF e Inteiro Teor em PDF (links diretos no rodapé da home)
+  Súmulas canceladas:
+  https://scon.stj.jus.br/SCON/pesquisar.jsp?b=SUMU&inde=(sumula+adj+cancelada).emen,inde.
+  (repare: a própria URL do site usa o operador ADJ — mais uma confirmação da
+   sintaxe descrita em 01-scon-acordaos/02-operadores.txt)
+
+Bloqueio: mesmo Cloudflare do SCON (mesmo host).

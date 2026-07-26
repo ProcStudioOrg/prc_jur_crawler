@@ -1,0 +1,199 @@
+<form id="form-pesquisa-repercussao-geral" name="form" action="listarProcesso.asp" method="post">
+								<div class="container-formulario">
+									<div class="row equal">
+										<div class="col-md-2 col-xs-12 secao-formulario">
+											<div>Pesquisa por:</div>
+										</div>
+										<div class="col-md-10 col-xs-12">
+											<div class="row equal">
+												<div class="col-md-8 col-xs-12">
+													<label for="situacaoRG">Situação do Tema de Repercussão Geral:</label>
+													<select name="situacaoRG" id="situacaoRG" class="form-control input-sm form-select">
+														<option value="TODAS">Todas</option>
+														<option value="ACORDAO_MERITO_PUBLICADO">Acórdão de Mérito Publicado</option>
+														<option value="ACORDAO_REPERCUSSAO_GERAL_PUBLICADO">Acórdão de Repercussão Geral Publicado</option>
+														<option value="AGUARDA_SUBSTITUICAO_PARADIGMA">Aguarda Substituição de Paradigma</option>
+														<option value="ANALISADA_PRELIMINAR">Analisada Preliminar de Repercussão Geral</option>
+														<option value="CANCELADO">Cancelado</option>
+														<option value="DESTACADO">Destacado</option>
+														<option value="EM_JULGAMENTO">Em Julgamento</option>
+														<option value="MERITO_JULGADO">Mérito Julgado</option>
+														<option value="REVISADO">Revisado</option>
+														<option value="TRANSITO_JULGADO">Trânsito em Julgado</option>
+													</select>
+												</div>
+												<div class="col-md-2 col-xs-12" style="display: flex">
+													<div style="align-self: flex-end" data-toggle="tooltip" title="A marcação desta caixa retorna apenas os tetmas que estejam na situação selecionada. Se a caixa estiver desmarcada, todos os temas que tenham passado pela situação escolhida serão retornados no resultado.">
+														<input type="checkbox" name="situacaoAtual" id="situacaoAtual" value="S" checked="">
+														<label for="situacaoAtual" style="margin-bottom: 0px">Situação Atual</label>
+													</div>
+												</div>
+											</div>
+											<div class="row m-t-8">
+												<div class="col-md-8 col-xs-12">
+													<label for="txtTituloTema">Palavra Chave:</label>
+													<input name="txtTituloTema" id="txtTituloTema" class="form-control input-sm" value="">
+													<div class="btn-group btn-group-sm operadores m-t-8" role="group" aria-label="">
+														<button type="button" class="btn" data-operador="e" title="Operador &lt;strong&gt;E&lt;/strong&gt;" data-content="Procura todas as palavras desejadas em qualquer lugar do documento. &lt;br&gt;&lt;br&gt;&lt;strong&gt;Ex:&lt;/strong&gt; &quot;ICMS E SUBSTITUIÇÃO&quot;">e</button>
+														<button type="button" class="btn" data-operador="ou" title="Operador &lt;strong&gt;OU&lt;/strong&gt;" data-content="Procura por qualquer uma das palavras. Pode utilizar o parênteses para combinar a pesquisa com outros operadores. &lt;br&gt;&lt;br&gt;&lt;strong&gt;Ex.:&lt;/strong&gt; aposentadoria e (deputado ou parlamentar ou congressista)">ou</button>
+														<button type="button" class="btn" data-operador="adj" title="Operador &lt;strong&gt;ADJ&lt;/strong&gt;" data-content="Busca palavras aproximadas, na mesma ordem colocada na expressão de busca. &lt;br&gt;&lt;br&gt;&lt;strong&gt;Ex:&lt;/strong&gt; MINISTÉRIO adj2 PÚBLICO e TEMPO adj2 SERVIÇO (O número após o &quot;ADJ&quot; indica delimitação de distância entre palavras, podendo ser escolhido livremente).">adj</button>
+														<button type="button" class="btn" data-operador="nao" title="Operador &lt;strong&gt;NÃO&lt;/strong&gt;" data-content="Recupera documentos que contenham a primeira, mas não a segunda palavra. &lt;br&gt;&lt;br&gt;&lt;strong&gt;Ex:&lt;/strong&gt; Parlamentar não penal">não</button>
+														<button type="button" class="btn" data-operador="prox" title="Operador &lt;strong&gt;PROX&lt;/strong&gt;" data-content="Procura palavras aproximadas em qualquer ordem. &lt;br&gt;&lt;br&gt;&lt;strong&gt;Ex.:&lt;/strong&gt; extraordinário prox5 admissibilidade. (O número após o &quot;PROX&quot; indica delimitação de distância entre palavras, podendo ser escolhido livremente).">prox</button>
+														<button type="button" class="btn" data-operador="mesmo" title="Operador &lt;strong&gt;MESMO&lt;/strong&gt;" data-content="Operador utilizado para pesquisar no mesmo parágrafo; sua utilização principal é para pesquisa no campo legislação. &lt;br&gt;&lt;br&gt;&lt;strong&gt;Ex:&lt;/strong&gt; aposentadoria mesmo parlamentar (Obs.: Consulte o Ajuda para pesquisa por legislação na base de Súmulas).">mesmo</button>
+														<button type="button" class="btn" data-operador="$" title="Operador &lt;strong&gt;$&lt;/strong&gt;" data-content="Este operador substitui qualquer parte da palavra desejada, ou seja, prefixo, radical ou sufixo. &lt;br&gt;&lt;br&gt;&lt;strong&gt;Ex.:&lt;/strong&gt; $constitucional$ / militar$ / octavio ga$otti">$</button>
+													</div>
+												</div>
+												<div class="col-md-4 col-xs-12 moz-arrow-button">
+													<label for="numeroTemaInicial">Número do Tema:</label>
+													<input type="number" name="numeroTemaInicial" id="numeroTemaInicial" class="form-control input-sm">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row equal m-t-24">
+										<div class="col-md-2 col-xs-12 secao-formulario">
+											<span>Análise de Repercussão Geral:</span>
+										</div>
+										<div class="col-md-10 col-xs-12">
+											<div class="row">
+												<div class="col-xs-12">
+													<input type="checkbox" name="tipoComRG" id="tipoComRG" value="ComRG">
+													<label for="tipoComRG">Com Repercussão Geral</label><br>
+													<input type="checkbox" name="tipoSemRG" id="tipoSemRG" value="SemRG">
+													<label for="tipoSemRG">Sem Repercussão Geral</label><br>
+													<input type="checkbox" name="tipoSemRGQC" id="tipoSemRGQC" value="SemRGQC">
+													<label for="tipoSemRGQC">Sem Repercussão Geral / Matéria Infraconstitucional</label><br>
+													<input type="checkbox" name="tipoJulgamentoPP" id="tipoJulgamentoPP" value="S">
+													<label for="tipoJulgamentoPP">Julgamento de Mérito no Plenário Presencial</label>
+												</div>
+											</div>
+											<div class="row m-t-16">
+												<div class="col-md-3 col-xs-6">
+													<label for="dataInicialJulgPV">Início:</label>
+													<input class="form-control input-sm" type="date" name="dataInicialJulgPV" id="dataInicialJulgPV">
+												</div>
+												<div class="col-md-3 col-xs-6">
+													<label for="dataFinalJulgPV">Fim:</label>
+													<input class="form-control input-sm" type="date" name="dataFinalJulgPV" id="dataFinalJulgPV">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row equal m-t-24">
+										<div class="col-md-2 col-xs-12 secao-formulario">
+											<span>Processo:</span>
+										</div>
+										<div class="col-md-10 col-xs-12">
+											<div class="row">
+												<div class="col-md-3 col-xs-12">
+													<label for="classeProcesso">Classe:</label>
+													<select name="classeProcesso" id="classeProcesso" class="form-control input-sm form-select">
+														<option value="">Selecione</option>
+														<option value="AI">AI</option>
+														<option value="ARE">ARE</option>
+														<option value="RE">RE</option>
+													</select>
+												</div>
+												<div class="col-md-3 col-xs-12">
+													<label for="numeroProcesso">Número:</label>
+													<input type="number" name="numeroProcesso" id="numeroProcesso" class="form-control input-sm">
+												</div>
+											</div>
+											<div class="row m-t-8">
+												<div class="col-md-6 col-xs-12">
+													<label for="ministro">Relator:</label>
+													<select name="ministro" id="ministro" class="form-control input-sm form-select">
+														<option value="">Selecione</option>
+														
+															<option value="50">ALEXANDRE DE MORAES</option>
+														
+															<option value="52">ANDRÉ MENDONÇA</option>
+														
+															<option value="42">CÁRMEN LÚCIA</option>
+														
+															<option value="53">CRISTIANO ZANIN</option>
+														
+															<option value="44">DIAS TOFFOLI</option>
+														
+															<option value="49">EDSON FACHIN</option>
+														
+															<option value="54">FLÁVIO DINO</option>
+														
+															<option value="36">GILMAR MENDES</option>
+														
+															<option value="45">LUIZ FUX</option>
+														
+															<option value="51">NUNES MARQUES</option>
+														
+													</select>
+												</div>
+												<div class="col-md-6 col-xs-12">
+													<label for="txtRamoDireito">Ramo do Direito:</label>
+													<select name="txtRamoDireito" id="txtRamoDireito" class="form-control input-sm form-select">
+														<option value="">Escolha...</option>
+														
+															<option value="DIREITO À EDUCAÇÃO">DIREITO À EDUCAÇÃO</option>
+															
+															<option value="DIREITO ADMINISTRATIVO E OUTRAS MATÉRIAS DE DIREITO PÚBLICO">DIREITO ADMINISTRATIVO E OUTRAS MATÉRIAS DE DIREITO PÚBLICO</option>
+															
+															<option value="DIREITO AMBIENTAL">DIREITO AMBIENTAL</option>
+															
+															<option value="DIREITO CIVIL">DIREITO CIVIL</option>
+															
+															<option value="DIREITO DO CONSUMIDOR">DIREITO DO CONSUMIDOR</option>
+															
+															<option value="DIREITO DO TRABALHO">DIREITO DO TRABALHO</option>
+															
+															<option value="DIREITO ELEITORAL">DIREITO ELEITORAL</option>
+															
+															<option value="DIREITO ELEITORAL E PROCESSO ELEITORAL DO STF">DIREITO ELEITORAL E PROCESSO ELEITORAL DO STF</option>
+															
+															<option value="DIREITO INTERNACIONAL">DIREITO INTERNACIONAL</option>
+															
+															<option value="DIREITO PENAL">DIREITO PENAL</option>
+															
+															<option value="DIREITO PENAL MILITAR">DIREITO PENAL MILITAR</option>
+															
+															<option value="DIREITO PREVIDENCIÁRIO">DIREITO PREVIDENCIÁRIO</option>
+															
+															<option value="DIREITO PROCESSUAL CIVIL E DO TRABALHO">DIREITO PROCESSUAL CIVIL E DO TRABALHO</option>
+															
+															<option value="DIREITO PROCESSUAL PENAL">DIREITO PROCESSUAL PENAL</option>
+															
+															<option value="DIREITO TRIBUTÁRIO">DIREITO TRIBUTÁRIO</option>
+															
+															<option value="REGISTROS PÚBLICOS">REGISTROS PÚBLICOS</option>
+															
+													</select>
+												</div>
+											</div>
+											<div class="row m-t-8">
+												<div class="col-md-6 col-xs-12">
+													<input type="checkbox" name="mais-relatores" id="mais-relatores" value="sim">
+													<label for="mais-relatores">Exibir mais relatores</label>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row equal m-t-24 p-t-16" style="border-top: 2px solid black">
+										<div class="col-md-2 col-md-offset-2 col-xs-12">
+											<label for="ordenacao">Ordenação pelo Número:</label>
+										</div>
+										<div class="col-md-3 col-xs-12">
+											<select name="ordenacao" id="ordenacao" class="form-control input-sm form-select">
+												<option value="asc">Crescente</option>
+												<option value="desc" selected="selected">Decrescente</option>
+											</select>
+										</div>
+										<div class="col-xs-12 m-t-24">
+											<div class="form-group text-center">												
+												<div class="help-block with-errors"></div>
+												<div class="col-xs-12 text-center m-t-24">
+													<input class="btn btn-primary btn-md botao-enviar" id="botao-pesquisar" type="submit" value="Pesquisar">
+													<input class="btn btn-primary btn-md botao-enviar" id="botao-resetar" type="reset" value="Limpar">
+												</div>
+											</div>
+										</div>										
+									</div>
+								</div>
+							</form>

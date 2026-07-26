@@ -1,0 +1,19 @@
+========================================================================
+3. O ACERVO MINEIRO ATÉ 2022 ESTÁ NO TRF1
+========================================================================
+Descrição completa em `01-onde-mora-a-jurisprudencia-de-mg-ate-2022.txt` §3.
+Resumo da medição de 25/07/2026:
+
+  ./bin/jur trf1 -q "aposentadoria" -di "01/01/2019" -df "31/12/2019" -m 5
+
+  total declarado pela base do TRF1 (CJF) para "aposentadoria": 242.537
+  amostra coletada: 150 documentos
+  documentos com subseção de Minas Gerais (`.4.01.38xx`): 41  (27,3%)
+      3800 (BH) 18 · 3802 5 · 3807 4 · 3814 4 · 3810 3 · 3804 2 ·
+      3803 1 · 3809 1 · 3819 1 · 3823 1 · 3825 1
+
+  => A jurisprudência federal de MG anterior ao desmembramento continua na base
+     do TRF1 e NÃO foi migrada para o TRF6.
+
+Dados brutos: 03-trf1-acervo-mg-medicao.json
+Print:        03.01-trf1-cjf-portal.png

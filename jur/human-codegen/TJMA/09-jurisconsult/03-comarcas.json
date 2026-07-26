@@ -1,0 +1,530 @@
+{
+ "acordaos": {
+  "relatorioId": 1,
+  "total": 0,
+  "opcoes": []
+ },
+ "decisoes-monocraticas": {
+  "relatorioId": 2,
+  "total": 0,
+  "opcoes": []
+ },
+ "sentencas-1-grau": {
+  "relatorioId": 4,
+  "total": 111,
+  "opcoes": [
+   {
+    "comarca_id": "32",
+    "comarca": "Fórum da Capital"
+   },
+   {
+    "comarca_id": "43",
+    "comarca": "Fórum da Comarca de Açailândia"
+   },
+   {
+    "comarca_id": "136",
+    "comarca": "Fórum da Comarca de Alcântara"
+   },
+   {
+    "comarca_id": "145",
+    "comarca": "Fórum da Comarca de Alto Parnaíba"
+   },
+   {
+    "comarca_id": "83",
+    "comarca": "Fórum da Comarca de Amarante do Maranhão"
+   },
+   {
+    "comarca_id": "86",
+    "comarca": "Fórum da Comarca de Anajatuba"
+   },
+   {
+    "comarca_id": "53",
+    "comarca": "Fórum da Comarca de Araioses"
+   },
+   {
+    "comarca_id": "105",
+    "comarca": "Fórum da Comarca de Arame"
+   },
+   {
+    "comarca_id": "111",
+    "comarca": "Fórum da Comarca de Arari"
+   },
+   {
+    "comarca_id": "66",
+    "comarca": "Fórum da Comarca de Bacabal"
+   },
+   {
+    "comarca_id": "106",
+    "comarca": "Fórum da Comarca de Bacuri"
+   },
+   {
+    "comarca_id": "38",
+    "comarca": "Fórum da Comarca de Balsas"
+   },
+   {
+    "comarca_id": "140",
+    "comarca": "Fórum da Comarca de Barão de Grajaú"
+   },
+   {
+    "comarca_id": "68",
+    "comarca": "Fórum da Comarca de Barra do Corda"
+   },
+   {
+    "comarca_id": "54",
+    "comarca": "Fórum da Comarca de Barreirinhas"
+   },
+   {
+    "comarca_id": "137",
+    "comarca": "Fórum da Comarca de Bequimão"
+   },
+   {
+    "comarca_id": "88",
+    "comarca": "Fórum da Comarca de Bom Jardim"
+   },
+   {
+    "comarca_id": "56",
+    "comarca": "Fórum da Comarca de Brejo"
+   },
+   {
+    "comarca_id": "128",
+    "comarca": "Fórum da Comarca de Buriti"
+   },
+   {
+    "comarca_id": "123",
+    "comarca": "Fórum da Comarca de Buriti Bravo"
+   },
+   {
+    "comarca_id": "61",
+    "comarca": "Fórum da Comarca de Buriticupu"
+   },
+   {
+    "comarca_id": "94",
+    "comarca": "Fórum da Comarca de Cândido Mendes"
+   },
+   {
+    "comarca_id": "110",
+    "comarca": "Fórum da Comarca de Cantanhede"
+   },
+   {
+    "comarca_id": "78",
+    "comarca": "Fórum da Comarca de Carolina"
+   },
+   {
+    "comarca_id": "93",
+    "comarca": "Fórum da Comarca de Carutapera"
+   },
+   {
+    "comarca_id": "46",
+    "comarca": "Fórum da Comarca de Caxias"
+   },
+   {
+    "comarca_id": "138",
+    "comarca": "Fórum da Comarca de Cedral"
+   },
+   {
+    "comarca_id": "57",
+    "comarca": "Fórum da Comarca de Chapadinha"
+   },
+   {
+    "comarca_id": "41",
+    "comarca": "Fórum da Comarca de Codó"
+   },
+   {
+    "comarca_id": "47",
+    "comarca": "Fórum da Comarca de Coelho Neto"
+   },
+   {
+    "comarca_id": "50",
+    "comarca": "Fórum da Comarca de Colinas"
+   },
+   {
+    "comarca_id": "42",
+    "comarca": "Fórum da Comarca de Coroatá"
+   },
+   {
+    "comarca_id": "101",
+    "comarca": "Fórum da Comarca de Cururupu"
+   },
+   {
+    "comarca_id": "133",
+    "comarca": "Fórum da Comarca de Dom Pedro"
+   },
+   {
+    "comarca_id": "99",
+    "comarca": "Fórum da Comarca de Esperantinópolis"
+   },
+   {
+    "comarca_id": "71",
+    "comarca": "Fórum da Comarca de Estreito"
+   },
+   {
+    "comarca_id": "132",
+    "comarca": "Fórum da Comarca de Governador Eugênio Barros"
+   },
+   {
+    "comarca_id": "109",
+    "comarca": "Fórum da Comarca de Governador Nunes Freire"
+   },
+   {
+    "comarca_id": "40",
+    "comarca": "Fórum da Comarca de Grajaú"
+   },
+   {
+    "comarca_id": "139",
+    "comarca": "Fórum da Comarca de Guimarães"
+   },
+   {
+    "comarca_id": "124",
+    "comarca": "Fórum da Comarca de Humberto de Campos"
+   },
+   {
+    "comarca_id": "121",
+    "comarca": "Fórum da Comarca de Icatu"
+   },
+   {
+    "comarca_id": "100",
+    "comarca": "Fórum da Comarca de Igarapé Grande"
+   },
+   {
+    "comarca_id": "45",
+    "comarca": "Fórum da Comarca de Imperatriz"
+   },
+   {
+    "comarca_id": "36",
+    "comarca": "Fórum da Comarca de Itapecuru-Mirim"
+   },
+   {
+    "comarca_id": "76",
+    "comarca": "Fórum da Comarca de Itinga do Maranhão"
+   },
+   {
+    "comarca_id": "44",
+    "comarca": "Fórum da Comarca de João Lisboa"
+   },
+   {
+    "comarca_id": "92",
+    "comarca": "Fórum da Comarca de Joselândia"
+   },
+   {
+    "comarca_id": "67",
+    "comarca": "Fórum da Comarca de Lago da Pedra"
+   },
+   {
+    "comarca_id": "130",
+    "comarca": "Fórum da Comarca de Loreto"
+   },
+   {
+    "comarca_id": "134",
+    "comarca": "Fórum da Comarca de Magalhães de Almeida"
+   },
+   {
+    "comarca_id": "63",
+    "comarca": "Fórum da Comarca de Maracaçumé"
+   },
+   {
+    "comarca_id": "74",
+    "comarca": "Fórum da Comarca de Matinha"
+   },
+   {
+    "comarca_id": "79",
+    "comarca": "Fórum da Comarca de Matões"
+   },
+   {
+    "comarca_id": "122",
+    "comarca": "Fórum da Comarca de Mirador"
+   },
+   {
+    "comarca_id": "102",
+    "comarca": "Fórum da Comarca de Mirinzal"
+   },
+   {
+    "comarca_id": "113",
+    "comarca": "Fórum da Comarca de Monção"
+   },
+   {
+    "comarca_id": "75",
+    "comarca": "Fórum da Comarca de Montes Altos"
+   },
+   {
+    "comarca_id": "125",
+    "comarca": "Fórum da Comarca de Morros"
+   },
+   {
+    "comarca_id": "98",
+    "comarca": "Fórum da Comarca de Olho DAgua das Cunhãs"
+   },
+   {
+    "comarca_id": "142",
+    "comarca": "Fórum da Comarca de Olinda Nova do Maranhão"
+   },
+   {
+    "comarca_id": "119",
+    "comarca": "Fórum da Comarca de Paraibano"
+   },
+   {
+    "comarca_id": "80",
+    "comarca": "Fórum da Comarca de Parnarama"
+   },
+   {
+    "comarca_id": "143",
+    "comarca": "Fórum da Comarca de Passagem Franca"
+   },
+   {
+    "comarca_id": "114",
+    "comarca": "Fórum da Comarca de Pastos Bons"
+   },
+   {
+    "comarca_id": "126",
+    "comarca": "Fórum da Comarca de Paulo Ramos"
+   },
+   {
+    "comarca_id": "69",
+    "comarca": "Fórum da Comarca de Pedreiras"
+   },
+   {
+    "comarca_id": "95",
+    "comarca": "Fórum da Comarca de Penalva"
+   },
+   {
+    "comarca_id": "112",
+    "comarca": "Fórum da Comarca de Pindaré-Mirim"
+   },
+   {
+    "comarca_id": "64",
+    "comarca": "Fórum da Comarca de Pinheiro"
+   },
+   {
+    "comarca_id": "97",
+    "comarca": "Fórum da Comarca de Pio XII"
+   },
+   {
+    "comarca_id": "127",
+    "comarca": "Fórum da Comarca de Poção de Pedras"
+   },
+   {
+    "comarca_id": "70",
+    "comarca": "Fórum da Comarca de Porto Franco"
+   },
+   {
+    "comarca_id": "49",
+    "comarca": "Fórum da Comarca de Presidente Dutra"
+   },
+   {
+    "comarca_id": "34",
+    "comarca": "Fórum da Comarca de Raposa"
+   },
+   {
+    "comarca_id": "77",
+    "comarca": "Fórum da Comarca de Riachão"
+   },
+   {
+    "comarca_id": "55",
+    "comarca": "Fórum da Comarca de Rosário"
+   },
+   {
+    "comarca_id": "62",
+    "comarca": "Fórum da Comarca de Santa Helena"
+   },
+   {
+    "comarca_id": "59",
+    "comarca": "Fórum da Comarca de Santa Inês"
+   },
+   {
+    "comarca_id": "60",
+    "comarca": "Fórum da Comarca de Santa Luzia"
+   },
+   {
+    "comarca_id": "87",
+    "comarca": "Fórum da Comarca de Santa Luzia do Paruá"
+   },
+   {
+    "comarca_id": "104",
+    "comarca": "Fórum da Comarca de Santa Quitéria"
+   },
+   {
+    "comarca_id": "120",
+    "comarca": "Fórum da Comarca de Santa Rita"
+   },
+   {
+    "comarca_id": "91",
+    "comarca": "Fórum da Comarca de Santo Antônio dos Lopes"
+   },
+   {
+    "comarca_id": "89",
+    "comarca": "Fórum da Comarca de São Bento"
+   },
+   {
+    "comarca_id": "135",
+    "comarca": "Fórum da Comarca de São Bernardo"
+   },
+   {
+    "comarca_id": "115",
+    "comarca": "Fórum da Comarca de São Domingos do Azeitão"
+   },
+   {
+    "comarca_id": "51",
+    "comarca": "Fórum da Comarca de São Domingos do Maranhão"
+   },
+   {
+    "comarca_id": "141",
+    "comarca": "Fórum da Comarca de São Francisco do Maranhão"
+   },
+   {
+    "comarca_id": "73",
+    "comarca": "Fórum da Comarca de São João Batista"
+   },
+   {
+    "comarca_id": "118",
+    "comarca": "Fórum da Comarca de São João dos Patos"
+   },
+   {
+    "comarca_id": "116",
+    "comarca": "Fórum da Comarca de São Luís Gonzaga do Maranhão"
+   },
+   {
+    "comarca_id": "85",
+    "comarca": "Fórum da Comarca de São Mateus"
+   },
+   {
+    "comarca_id": "144",
+    "comarca": "Fórum da Comarca de São Pedro da Água Branca"
+   },
+   {
+    "comarca_id": "131",
+    "comarca": "Fórum da Comarca de São Raimundo das Mangabeiras"
+   },
+   {
+    "comarca_id": "90",
+    "comarca": "Fórum da Comarca de São Vicente Férrer"
+   },
+   {
+    "comarca_id": "84",
+    "comarca": "Fórum da Comarca de Senador La Roque"
+   },
+   {
+    "comarca_id": "117",
+    "comarca": "Fórum da Comarca de Timbiras"
+   },
+   {
+    "comarca_id": "37",
+    "comarca": "Fórum da Comarca de Timon"
+   },
+   {
+    "comarca_id": "48",
+    "comarca": "Fórum da Comarca de Tuntum"
+   },
+   {
+    "comarca_id": "108",
+    "comarca": "Fórum da Comarca de Turiaçu"
+   },
+   {
+    "comarca_id": "103",
+    "comarca": "Fórum da Comarca de Tutóia"
+   },
+   {
+    "comarca_id": "129",
+    "comarca": "Fórum da Comarca de Urbano Santos"
+   },
+   {
+    "comarca_id": "52",
+    "comarca": "Fórum da Comarca de Vargem Grande"
+   },
+   {
+    "comarca_id": "65",
+    "comarca": "Fórum da Comarca de Viana"
+   },
+   {
+    "comarca_id": "96",
+    "comarca": "Fórum da Comarca de Vitória do Mearim"
+   },
+   {
+    "comarca_id": "39",
+    "comarca": "Fórum da Comarca de Vitorino Freire"
+   },
+   {
+    "comarca_id": "58",
+    "comarca": "Fórum da Comarca de Zé Doca"
+   },
+   {
+    "comarca_id": "35",
+    "comarca": "Fórum de Paço do Lumiar"
+   },
+   {
+    "comarca_id": "33",
+    "comarca": "Fórum de São José de Ribamar"
+   },
+   {
+    "comarca_id": "32",
+    "comarca": "Fórum do Termo Judiciário de São Luís"
+   }
+  ]
+ },
+ "decisoes-monocraticas-turma-recursal": {
+  "relatorioId": 5,
+  "total": 0,
+  "opcoes": []
+ },
+ "acordaos-turma-recursal": {
+  "relatorioId": 6,
+  "total": 0,
+  "opcoes": []
+ },
+ "sentencas-juizado-especial": {
+  "relatorioId": 7,
+  "total": 13,
+  "opcoes": [
+   {
+    "comarca_id": "1",
+    "comarca": "AÇAILÂNDIA"
+   },
+   {
+    "comarca_id": "14",
+    "comarca": "BACABAL"
+   },
+   {
+    "comarca_id": "16",
+    "comarca": "BALSAS"
+   },
+   {
+    "comarca_id": "32",
+    "comarca": "CAXIAS"
+   },
+   {
+    "comarca_id": "35",
+    "comarca": "CODÓ"
+   },
+   {
+    "comarca_id": "56",
+    "comarca": "IMPERATRIZ"
+   },
+   {
+    "comarca_id": "79",
+    "comarca": "PAÇO DO LUMIAR"
+   },
+   {
+    "comarca_id": "86",
+    "comarca": "PEDREIRAS"
+   },
+   {
+    "comarca_id": "90",
+    "comarca": "PINHEIRO"
+   },
+   {
+    "comarca_id": "103",
+    "comarca": "SANTA INÊS"
+   },
+   {
+    "comarca_id": "117",
+    "comarca": "SÃO JOSÉ DE RIBAMAR"
+   },
+   {
+    "comarca_id": "118",
+    "comarca": "SÃO LUÍS - ENTRÂNCIA FINAL"
+   },
+   {
+    "comarca_id": "127",
+    "comarca": "TIMON"
+   }
+  ]
+ }
+}

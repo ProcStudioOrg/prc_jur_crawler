@@ -1,0 +1,85 @@
+## 6. Tela de resultados, card e paginação
+
+O submit é um POST de documento para uma rota nova:
+
+    POST .../externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados
+
+A resposta é a página inteira de resultados (o formulário continua no topo, repovoado).
+Charset **ISO-8859-1** (`content-type: text/html; charset=iso-8859-1`).
+
+### 6.1 O bloco de um resultado
+
+Marcação idêntica à do TRF4/TJSC (`06-card-resultado.html` traz um card inteiro):
+
+    <div class="card mb-3 resultadoItem" id="resultado21762548301697366036609706767">
+      <input class="chkDocumento" value="21762548301697366036609706767">   <- o id do DOCUMENTO
+      Documento 11 de 46
+      <a class="text-dark inteiroTeor" data-link="...download_inteiro_teor&doc=...&crc=...">
+      <a class="text-dark consultaProcessual" data-link="...processo_consulta_publica...">
+      <a class="text-dark copiarCitacao" data-citacao="EMENTA: ... (TRF2, AC 0085909-79.2016.4.02.5101, 2ª TURMA ESPECIALIZADA, Relator ..., D.E. 05/12/2024)">
+      <div class="resValueTipoJurisprudencia">Acórdão</div>
+      <div class="resLabel">PROCESSO</div><div class="resValue">
+         <a class="numero-processo" href="...">0085909-79.2016.4.02.5101/TRF2</a>
+         <span>AC -   Apelação Cível  </span>
+      <div class="resLabel">UF</div>                 <div class="resValue">RJ</div>
+      <div class="resLabel">ÓRGÃO JULGADOR</div>     <div class="resValue">1ª TURMA ESPECIALIZADA</div>
+      <div class="resLabel">DATA DO JULGAMENTO</div> <div class="resValue">26/11/2024</div>
+      <div class="resLabel">DATA DA PUBLICAÇÃO</div> <div class="resValue">05/12/2024</div>
+      <div class="resLabel">RELATOR</div>            <div class="resValue">ANDRÉ FONTES</div>
+      <div class="resLabel">RELATOR PARA ACÓRDÃO</div><div class="resValue">MARCELLO ...</div>
+      <div class="resLabel">DECISÃO</div>            <div class="resValue">Vistos e relatados ...</div>
+      <div class="resLabel">EMENTA</div>             <div class="resValue">DIREITO DA PROPRIEDADE ...</div>
+    </div>
+
+⚠️ **Nem todo rótulo aparece em todo card.** Decisões monocráticas costumam vir com
+DECISÃO e sem EMENTA; "ÓRGÃO JULGADOR" e "RELATOR PARA ACÓRDÃO" faltam em parte dos
+cards. Extração por rótulo (e não por posição) é obrigatória, com string vazia no que
+faltar. Quando não há EMENTA, o `data-citacao` do "copiar" traz o texto integral e serve
+de fallback — é o que o crawler faz.
+
+O texto vem **completo** no card (ementa inteira e decisão inteira), não em trecho. O
+inteiro teor (§8) só é necessário quando se quer o documento formatado.
+
+Os termos buscados vêm **destacados** dentro do HTML
+(`<B><FONT STYLE="background-color:#FFFF00">DANO</FONT></B>`); a extração precisa remover
+essas tags, senão o texto sai poluído.
+
+### 6.2 Paginação
+
+Não há links `href` de página: tudo é POST para um endpoint AJAX declarado em hidden.
+
+    <input id="hdnUrlPaginar"      value="externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_paginar_resultado">
+    <input id="hdnTotalPaginas"    value="5">
+    <input id="hdnPaginaAtual"     value="1">
+    <input id="hdnTotalResultado"  value="46">
+    <input id="hdnDocsSelecionados" value="">
+
+Ir para a página N = **reenviar o MESMO corpo do formulário** para `ajax_paginar_resultado`
+com `hdnPaginaAtual=N`. O endpoint é stateless: sem os filtros no corpo ele pagina outra
+consulta. A resposta traz os cards da página N com a mesma marcação.
+
+    Resultados por página: `selTamanhoPagina` = 10 (default) | 25 | 50 | 100
+    Critério de ordenação: `selOrdenacao` = 1 "mais recentes" (default) | 2 "mais antigos"
+    Total de resultados:   `#hdnTotalResultado` e o texto "N documentos encontrados"
+    Última página:         `#hdnTotalPaginas`
+
+Ícones de navegação: `.paginaPrimeira .paginaAnterior .paginaProxima .paginaUltima`
+(recebem `.iconeDesativado` quando não há para onde ir).
+
+Sem teto observado: `dano-moral` na origem TRF2 declara 2.021 páginas de 10 e a página 5
+responde normalmente. Para coleta grande, `selTamanhoPagina=100` corta o número de
+round-trips por 10.
+
+### 6.3 O painel de filtros da tela de resultados (facetas)
+
+A tela de resultados tem uma barra lateral "Filtros" com acordeões: Assunto, Classe,
+Data de julgamento, Data de publicação, Órgão julgador, Precedente Relevante, Relator,
+Unidade Federativa. São **facetas de refinamento a posteriori**, calculadas sobre o
+resultado; "Assunto" e "Unidade Federativa" só existem aqui — não há campo equivalente no
+formulário de entrada. O crawler não as usa (não são parâmetros de busca).
+
+Prints: `06.01-resultados-trf2.png`, `06.02-resultados-turmas-recursais.png`
+(a mesma busca nas duas origens, lado a lado), `06.03-rodape-paginacao.png`,
+`06.04-painel-filtros-resultados.png`.
+Contagens medidas no browser: `06-contagens-medidas-no-browser.json`.
+Contagens medidas por HTTP: `06-contagens-http.json`.

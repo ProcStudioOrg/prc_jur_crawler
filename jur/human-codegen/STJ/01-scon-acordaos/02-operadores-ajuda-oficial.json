@@ -1,0 +1,42 @@
+[
+  {
+    "botao": "e",
+    "valor": "E",
+    "ajuda": "E (AND)\n\t\t\t\t\t\t\t\tFurto E estacionamento E supermercado\n\t\t\t\t\t\t\t\tFurto AND estacionamento AND supermercado\n\t\t\t\t\t\t\t\tObs.: Localiza as três palavras em qualquer lugar do documento."
+  },
+  {
+    "botao": "ou",
+    "valor": "OU",
+    "ajuda": "OU (OR)\n\t\t\t\t\t\t\t\tFurto E estacionamento E (supermercado OU hipermercado OU mercado)\n\t\t\t\t\t\t\t\tFurto AND estacionamento AND (supermercado OR hipermercado OR mercado)\n\t\t\t\t\t\t\t\tObs.: Localiza um e/ou outro termo digitado entre parênteses."
+  },
+  {
+    "botao": "adj",
+    "valor": "ADJ",
+    "ajuda": "ADJ (NEAR)\n\t\t\t\t\t\t\t\tFurto ADJ5 estacionamento ADJ5 supermercado\n\t\t\t\t\t\t\t\tNEAR((Furto, estacionamento, supermercado), 5, TRUE)\n\t\t\t\t\t\t\t\tObs.: \"Estacionamento\" será no máximo a quinta palavra após \"furto\" e \"supermercado\" será no máximo a quinta palavra após \"furto\"."
+  },
+  {
+    "botao": "não",
+    "valor": "NÃO",
+    "ajuda": "NÃO (NOT)\n\t\t\t\t\t\t\t\tFurto E estacionamento NÃO supermercado\n\t\t\t\t\t\t\t\t(Furto AND estacionamento) NOT supermercado\n\t\t\t\t\t\t\t\tObs.: Localiza documentos que contenham as palavras \"furto\" e \"estacionamento\", excluindo documentos que contenham a palavra \"supermercado\"."
+  },
+  {
+    "botao": "prox",
+    "valor": "PROX",
+    "ajuda": "PROX (NEAR)\n\t\t\t\t\t\t\t\tFurto PROX6 estacionamento PROX6 supermercado\n\t\t\t\t\t\t\t\tNEAR((Furto, estacionamento, supermercado), 6, FALSE)\n\t\t\t\t\t\t\t\tObs.: \"Estacionamento\" será no máximo a sexta palavra antes ou após \"furto\" e \"supermercado\" será no máximo a sexta palavra antes ou após \"furto\"."
+  },
+  {
+    "botao": "mesmo",
+    "valor": "MESMO",
+    "ajuda": "MESMO (INSAME)\n\t\t\t\t\t\t\t\tfurto MESMO estacionamento MESMO supermercado\n\t\t\t\t\t\t\t\t(furto AND estacionamento AND supermercado) INSAME\n\t\t\t\t\t\t\t\tObs: Localiza os termos num mesmo campo do documento."
+  },
+  {
+    "botao": "com",
+    "valor": "COM",
+    "ajuda": "COM (INPATH)\n\t\t\t\t\t\t\t\tfurto COM estacionamento COM supermercado\n\t\t\t\t\t\t\t\t(furto AND estacionamento AND supermercado) INPATH (//Item)\n\t\t\t\t\t\t\t\tObs: Localiza os termos dentro de um mesmo parágrafo."
+  },
+  {
+    "botao": "$",
+    "valor": "$",
+    "ajuda": "$ (%)\n\t\t\t\t\t\t\t\tfurto E estacionamento E mercado$\n\t\t\t\t\t\t\t\tfurto AND estacionamento AND mercado%\n\t\t\t\t\t\t\t\tObs: Localiza as palavras que contenham a parte digitada e suas variações: mercado, mercadoria, mercadorias."
+  }
+]

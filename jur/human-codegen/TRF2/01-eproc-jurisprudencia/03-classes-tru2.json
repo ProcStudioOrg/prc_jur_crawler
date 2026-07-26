@@ -1,0 +1,86 @@
+[
+  {
+    "id": "Agravo em Pedido de Uniformização de Interpretação de Lei (TRU)",
+    "label": "AGRAVO EM PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI (TRU)"
+  },
+  {
+    "id": "Ação Rescisória (Seção)",
+    "label": "AÇÃO RESCISÓRIA (SEÇÃO)"
+  },
+  {
+    "id": "Ação Rescisória (Turma)",
+    "label": "AÇÃO RESCISÓRIA (TURMA)"
+  },
+  {
+    "id": "Conflito de Competência (TRU)",
+    "label": "CONFLITO DE COMPETÊNCIA (TRU)"
+  },
+  {
+    "id": "Conflito de Competência (Turma)",
+    "label": "CONFLITO DE COMPETÊNCIA (TURMA)"
+  },
+  {
+    "id": "Habeas Corpus Criminal (TRU)",
+    "label": "HABEAS CORPUS CRIMINAL (TRU)"
+  },
+  {
+    "id": "Habeas Corpus Criminal (Turma)",
+    "label": "HABEAS CORPUS CRIMINAL (TURMA)"
+  },
+  {
+    "id": "Incidente de Resolução de Demandas Repetitivas (Presidência TRU)",
+    "label": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (PRESIDÊNCIA TRU)"
+  },
+  {
+    "id": "Incidente de Suspeição Cível (TRU)",
+    "label": "INCIDENTE DE SUSPEIÇÃO CÍVEL (TRU)"
+  },
+  {
+    "id": "Mandado de Segurança Criminal (TRU)",
+    "label": "MANDADO DE SEGURANÇA CRIMINAL (TRU)"
+  },
+  {
+    "id": "Mandado de Segurança Cível (TRU)",
+    "label": "MANDADO DE SEGURANÇA CÍVEL (TRU)"
+  },
+  {
+    "id": "Mandado de Segurança Cível (Turma)",
+    "label": "MANDADO DE SEGURANÇA CÍVEL (TURMA)"
+  },
+  {
+    "id": "Pedido de Uniformização de Interpretação de Lei Cível (TRU - Presidência)",
+    "label": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CÍVEL (TRU - PRESIDÊNCIA)"
+  },
+  {
+    "id": "Pedido de Uniformização de Interpretação de Lei Cível (TRU)",
+    "label": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CÍVEL (TRU)"
+  },
+  {
+    "id": "Petição Cível (Presidência)",
+    "label": "PETIÇÃO CÍVEL (PRESIDÊNCIA)"
+  },
+  {
+    "id": "Petição Cível (Seção)",
+    "label": "PETIÇÃO CÍVEL (SEÇÃO)"
+  },
+  {
+    "id": "Petição Cível (TRU)",
+    "label": "PETIÇÃO CÍVEL (TRU)"
+  },
+  {
+    "id": "Reclamação (TRU - Presidência)",
+    "label": "RECLAMAÇÃO (TRU - PRESIDÊNCIA)"
+  },
+  {
+    "id": "Reclamação (TRU)",
+    "label": "RECLAMAÇÃO (TRU)"
+  },
+  {
+    "id": "Reclamação (Turma)",
+    "label": "RECLAMAÇÃO (TURMA)"
+  },
+  {
+    "id": "Reclamação (Vice-Presidência)",
+    "label": "RECLAMAÇÃO (VICE-PRESIDÊNCIA)"
+  }
+]

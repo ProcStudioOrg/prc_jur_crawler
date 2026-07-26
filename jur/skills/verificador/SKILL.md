@@ -47,6 +47,12 @@ isso ao usuário; é o sinal de alucinação mais comum.
 > (Libra no TJPA ± 2007-2011, sistemas antigos no TJGO) têm numeração cujo DV não fecha
 > mas que existe na base. A prova definitiva é sempre o passo 2.
 
+> ⚠️ **TRF6: o segmento é MISTO (`.4.06.` OU `.4.01.`).** O TRF6 nasceu em ago/2022 do
+> desmembramento do TRF1 e herdou os processos mineiros com a numeração antiga — 9% dos
+> documentos do 2º grau, 24% das Turmas Recursais e 44% da TRU6 vêm com `.4.01.`.
+> Rejeitar `.4.01.` como "não é do TRF6" é falso alerta de alucinação num julgado real.
+> Leia [`tribunais/trf6.md`](tribunais/trf6.md) antes de citar o TRF6.
+
 ## Passo 2 — Confirmar na base oficial
 
 ```bash
@@ -58,11 +64,17 @@ isso ao usuário; é o sinal de alucinação mais comum.
   Não cite. Diga explicitamente que o processo pode existir no sistema de tramitação
   sem estar indexado na jurisprudência — são bases diferentes.
 
-Tribunais com consulta direta por número implementada: **TJGO**, **TJPA**, **TRT9**.
-Especificidades em [`tribunais/tjgo.md`](tribunais/tjgo.md), [`tribunais/tjpa.md`](tribunais/tjpa.md)
-e [`tribunais/trt9.md`](tribunais/trt9.md).
+Tribunais com consulta direta por número implementada: **TJGO**, **TJPA**, **TRT9**,
+**TRF2**, **TRF6**. Especificidades em [`tribunais/tjgo.md`](tribunais/tjgo.md),
+[`tribunais/tjpa.md`](tribunais/tjpa.md), [`tribunais/trt9.md`](tribunais/trt9.md),
+[`tribunais/trf2.md`](tribunais/trf2.md) e [`tribunais/trf6.md`](tribunais/trf6.md).
 
-Nos demais (`trf1`, `trf2`, `trf3`, `trf4`, `trf5`, `tjpr`, `tcu`) use a flag `-n`/`--numero`
+> ⚠️ **STJ: pule o passo 1.** A base do STJ **não indexa número CNJ**, e o CNJ que aparece
+> num acórdão dele é o do processo de **origem** — checar o segmento contra "STJ" gera falso
+> alerta de alucinação num julgado real. Verifique por `REsp 1809043` ou pelo registro
+> `2019/0116080-0`. Leia [`tribunais/stj.md`](tribunais/stj.md) antes de citar o STJ.
+
+Nos demais (`trf1`, `trf3`, `trf4`, `trf5`, `tjpr`, `tcu`) use a flag `-n`/`--numero`
 como filtro dentro da busca — ver o `CLAUDE-<TRIBUNAL>.md`. Se o tribunal não tem consulta por
 número, **diga que a verificação é parcial** em vez de afirmar que confirmou.
 

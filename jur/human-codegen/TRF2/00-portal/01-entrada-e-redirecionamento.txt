@@ -1,0 +1,41 @@
+TRF2 — como se chega hoje na jurisprudência
+Mapeado em 25/07/2026 (Playwright + curl)
+
+## 1. As três URLs, e qual delas vale
+
+| URL                                                   | O que acontece hoje |
+|-------------------------------------------------------|---------------------|
+| https://juris.trf2.jus.br/consulta.php                 | **NXDOMAIN** — o host foi desativado. Era o portal antigo, mapeado em `../02-juris-legado/`. |
+| https://jurisprudencia.trf2.jus.br/                    | **301 Moved Permanently** para a URL de baixo. É a entrada divulgada pelo tribunal. |
+| https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar | **200** — é ESTA. Módulo de jurisprudência dentro do e-Proc. |
+
+Confirmação do redirecionamento (`curl -sSI https://jurisprudencia.trf2.jus.br/`):
+
+    HTTP/1.1 301 Moved Permanently
+    location: https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+    strict-transport-security: max-age=31536000
+
+Print: `01.01-redirect-para-eproc.png` (a tela que aparece depois do 301 — já é o e-Proc).
+
+## 2. Família do sistema
+
+É o MESMO módulo `eproc-jur` do TRF4 (`eproc-jur.trf4.jus.br`) e do TJSC
+(`eprocwebcon.tjsc.jus.br/consulta1g`): mesmos ids (`#txtPesquisa`, `#selOrigem`,
+`#dtDecisaoInicio`), mesma marcação de resultado (`.resultadoItem`, `.resLabel`/`.resValue`),
+mesma paginação. Quem já leu `CLAUDE-TJSC.md` reconhece a tela.
+
+Diferença de operação relevante: **o host do TRF2 NÃO tem a verificação de segurança
+F5/Shape que existe no TJSC**. O POST de busca responde 200 sem cookie nenhum, então o
+crawler do TRF2 é HTTP puro (o do TJSC precisa de browser). Ver §9 do módulo 01.
+
+## 3. Outros módulos de jurisprudência do TRF2
+
+Procurados e não encontrados: não há um segundo portal de jurisprudência vivo. O acervo
+antigo (`juris.trf2.jus.br`) não foi mantido em paralelo — o host simplesmente sumiu.
+O que existe além deste módulo:
+
+- **Consulta processual pública** do e-Proc (`acao=processo_consulta_publica`) — é o link
+  que cada resultado traz no número do processo; **não é** base de jurisprudência.
+- **CJF — Jurisprudência Unificada** (`https://jurisprudencia.cjf.jus.br/unificada/`):
+  tem checkbox "TRF2", mas a base está **VAZIA** para o TRF2 (0 documentos em
+  "dano moral" e em "aposentadoria", medido em 25/07/2026). Não serve. Ver `CLAUDE-TRF2.md`.

@@ -1,0 +1,94 @@
+==================================================================
+TELA: JURISPRUDÊNCIAS — ENTRADA PELO MENU DO JURISCONSULT
+==================================================================
+
+Link:
+https://jurisconsult.tjma.jus.br/#/sg-jurisprudence-form
+(alcançado pelo item "Jurisprudências" do menu lateral do JurisConsult)
+
+Data de conferência no DOM vivo: 25/07/2026
+
+------------------------------------------------------------------
+AVISO IMPORTANTE DE MAPEAMENTO — 08 E 09 SÃO O MESMO SISTEMA
+------------------------------------------------------------------
+
+Este módulo (`08-jurisprudencias/`) NÃO é um segundo módulo de jurisprudência
+do TJMA. Ele é a **navegação de entrada** para a mesma tela mapeada em
+`09-jurisconsult/`: o item "Jurisprudências" do menu lateral do JurisConsult.
+
+Prova (conferida no navegador em 25/07/2026):
+
+  - `08-jurisprudencias/01.01-tela-inicial.png` e `01.02-tela-consulta.png`
+    mostram o cabeçalho "JurisConsult" e o mesmo menu lateral de
+    `09-jurisconsult/01.0x-*.png`.
+  - `08-jurisprudencias/01.03-combo-relatorio.png` é o combo "Relatório:"
+    ainda vazio (antes do AJAX `GET /v1/jurisprudencia/lista_relatorios`
+    responder); `09-jurisconsult/01.01-combo-relatorio.png` é o MESMO combo
+    já populado.
+  - A URL de destino dos dois é idêntica: `#/sg-jurisprudence-form`.
+
+Consequência prática: **não existe um módulo de jurisprudência do TJMA livre
+do captcha**. O único caminho é o JurisConsult, e o JurisConsult é barrado —
+ver `09-jurisconsult/04-bloqueio-captcha.txt`.
+
+------------------------------------------------------------------
+ELEMENTO 01 — Menu lateral "Jurisprudências"
+------------------------------------------------------------------
+
+Nome:      Jurisprudências
+Tipo:      Item de menu de navegação (SPA Ionic/Angular)
+Objetivo:  Abrir a tela "Pesquisa de Jurisprudências".
+
+HTML do elemento (DOM depois do AJAX):
+
+  <button ion-item="" menuclose="" class="item item-block item-md">
+    <ion-icon name="hammer" role="img" item-start></ion-icon>
+    <div class="item-inner"><ion-label>Jurisprudências</ion-label></div>
+  </button>
+
+Comportamento observado:
+  Ao clicar, a SPA navega para a rota `#/sg-jurisprudence-form` e dispara,
+  em sequência, os AJAX que populam os combos:
+    GET /v1/jurisprudencia/lista_relatorios
+    GET /v1/util/gera_captcha
+    GET /v1/util/site_infos?tipo=cf70bdaf271e5e3c8495a92b8e57ace0
+    GET /v1/jurisprudencia/lista_todos_tipos_pesquisa?tipoRelatorio=1
+    GET /v1/jurisprudencia/lista_todos_classes?tipoRelatorio=1
+    GET /v1/jurisprudencia/lista_todos_camaras?tipoRelatorio=1
+    GET /v1/jurisprudencia/lista_todos_magistrados?tipoRelatorio=1
+
+  Todos em `https://apijuris.tjma.jus.br`.
+
+------------------------------------------------------------------
+ELEMENTO 02 — Cabeçalho "Pesquisa de Jurisprudências"
+------------------------------------------------------------------
+
+Nome:      Pesquisa de Jurisprudências
+Tipo:      Título de tela + botão de lupa
+Objetivo:  Identificar a tela e abrir o formulário de busca.
+
+Comportamento observado:
+  O print `01.01-tela-inicial.png` mostra o estado intermediário: título já
+  renderizado, formulário ainda não. `01.02-tela-consulta.png` mostra o
+  formulário já montado, com o combo "Relatório:" presente.
+
+------------------------------------------------------------------
+ELEMENTO 03 — Combo "Relatório:" (ainda não populado)
+------------------------------------------------------------------
+
+Nome:      Relatório
+Tipo:      Lista suspensa (`<select formcontrolname="relatorio">`)
+Objetivo:  Escolher o tipo de relatório de jurisprudência.
+
+Comportamento observado:
+  O print `01.03-combo-relatorio.png` foi tirado ANTES da resposta do AJAX
+  `lista_relatorios` — por isso o combo aparece vazio. Este é exatamente o
+  caso descrito no §5/Fase 2 do CLAUDE-CODEGEN: combo populado por AJAX que
+  chega vazio em HTML estático. A lista completa (7 opções) está enumerada,
+  já populada, em `09-jurisconsult/03-tipos-pesquisa.json` e descrita em
+  `09-jurisconsult/03-relatorios-desambiguacao.txt`.
+
+Prints:
+  01.01-tela-inicial.png      — menu lateral + título da tela
+  01.02-tela-consulta.png     — formulário montado, combo "Relatório:" visível
+  01.03-combo-relatorio.png   — combo antes do AJAX (vazio)

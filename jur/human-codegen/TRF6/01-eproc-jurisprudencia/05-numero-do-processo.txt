@@ -1,0 +1,48 @@
+========================================================================
+5. NÚMERO DO PROCESSO — o campo que alimenta o Checker
+========================================================================
+Campo de texto simples dentro de "Campos específicos". Não é uma consulta
+separada: é um FILTRO da mesma busca.
+
+HTML:
+<input class="w-100 campoPesquisa form-control form-control-sm"
+       id="txtProcesso" name="txtProcesso"
+       placeholder="Número do processo" type="text" />
+
+Formatos aceitos (todos medidos, todos devolvem o mesmo resultado):
+  com máscara CNJ    1017514-90.2019.4.01.9999
+  só dígitos         10175149020194019999
+
+✅ DIFERENÇA IMPORTANTE EM RELAÇÃO AO TRF2: aqui `#txtProcesso` SOZINHO funciona.
+   No TRF2 o portal exige texto em `#txtPesquisa` e devolve "0 documentos" para
+   qualquer processo se o campo de texto estiver vazio. No TRF6 a consulta com
+   `#txtPesquisa` vazio devolve os documentos normalmente (medido: processo
+   6009741-45.2026.4.06.0000 → 2 documentos com e sem query).
+   O `TRF6Checker` manda o curinga `*` junto assim mesmo — é inócuo (casa com a
+   base inteira; contagem idêntica com e sem) e mantém o Checker imune caso o
+   servidor passe a exigir texto como o do TRF2.
+
+⚠️ A NUMERAÇÃO DO TRF6 É MISTA — `.4.06.` E `.4.01.`
+   O TRF6 foi instalado em ago/2022 desmembrando-se do TRF1 e HERDOU os processos
+   mineiros com a numeração antiga. Medido em amostras de 100 documentos:
+
+       origem TRF6              91 com `.4.06.`  ·  9 com `.4.01.`
+       origem Turmas Recursais  76 com `.4.06.`  · 24 com `.4.01.`
+       origem TRU6              56 com `.4.06.`  · 44 com `.4.01.`
+
+   Um verificador que exigisse `.4.06.` rejeitaria como "não é do TRF6" quase um
+   quarto do acervo dos Juizados. Por isso `TRF6Checker.ehProcessoTRF6()` aceita
+   `4.06` E `4.01`, e marca `herancaTRF1: true` quando é o segundo caso.
+
+   Há também números no formato antigo já com máscara CNJ
+   (`0019935-92.2009.4.01.3800` — subseção 3800 = Belo Horizonte).
+
+Sufixo depois da barra, no card de resultado — é o segundo sinal de origem:
+  `1017514-90.2019.4.01.9999/TRF6`  → 2º grau comum ou TRU6
+  `6022329-04.2024.4.06.3800/MG`    → Turma Recursal (Juizado)
+
+Link "Abrir a consulta processual" de cada card aponta para o e-Proc de 2º grau:
+  https://eproc2g.trf6.jus.br/eproc/externo_controlador.php?acao=processo_seleciona_publica&...&num_processo=<20 dígitos>
+
+Prints:
+  05.01-campo-numero-processo.png   campo preenchido com um número real

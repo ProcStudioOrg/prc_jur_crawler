@@ -41,13 +41,33 @@ SEMPRE informe o usuário a cada refinamento que você fizer.
 | Juizado Especial / Turma Recursal **estadual** no RS | `jur tjrs --origem turmas` (Justiça Comum é `--origem comum`, o default) |
 | "TJSC", Santa Catarina, estadual SC | `jur tjsc` (⚠️ dois portais no ar — só o comando; ver `CLAUDE-TJSC.md`) |
 | Juizado Especial / Turma Recursal **estadual** em SC | `jur tjsc --origem turmas` (Justiça Comum é `--origem comum`, o default) |
-| RJ ou ES federal | ⚠️ `jur trf2` **quebrado** — site migrou; ver `CLAUDE-TRF2.md` |
+| RJ ou ES federal | `jur trf2` (só 2º grau; base **começa em 2018**). ⚠️ neste portal o **espaço entre termos quebra a busca** — o crawler conserta sozinho, não use `--literal`; ver `CLAUDE-TRF2.md` |
+| Juizado Especial **Federal** / Turma Recursal no RJ ou ES | `jur trf2 --origem turmas` (Justiça Federal comum é `--origem trf2`, o default) |
 | RS/SC/PR federal, Turmas Recursais previdenciárias | `jur trf4` |
 | SP/MS federal | `jur trf3` (⚠️ instável — ver doc) |
 | AL/CE/PB/PE/RN/SE federal | `jur trf5` |
-| DF/MG/GO/TO/MT/BA/PI/MA/PA/AP/AM/RR/AC/RO federal | `jur trf1` |
+| **MG federal, de 2023 em diante** | `jur trf6` (só 2º grau). ⚠️ operadores em **português** e o espaço funciona — **nunca hifenize** a query do TRF6 (é o oposto do TRF2); ver `CLAUDE-TRF6.md` |
+| Juizado Especial **Federal** / Turma Recursal em MG | `jur trf6 --origem turmas` (Justiça Federal comum é `--origem trf6`, o default; a origem `varas` existe no site e está **VAZIA**) |
+| **MG federal ATÉ 2022** — "jurisprudência antiga de Minas" | `jur trf1`, **não** `trf6`. O TRF6 foi instalado em ago/2022 e sua base começa em **2023**; o acervo mineiro anterior ficou no TRF1 (medido: 27% da amostra do TRF1 em 2019 é de subseções `.4.01.38xx`). Pedido histórico = rodar os dois e dizer que são bases distintas |
+| DF/GO/TO/MT/BA/PI/MA/PA/AP/AM/RR/AC/RO federal (e MG até 2022) | `jur trf1` |
+| **Matéria constitucional / "o que o Supremo decidiu"** — direitos fundamentais, competência federativa, constitucionalidade de lei, ADI/ADPF/ADC, recurso extraordinário | `jur stf` (base `acordaos`, desde **1892**; instância única) |
+| **Súmula vinculante** — "existe súmula sobre isso?", "isso vincula os outros tribunais?" | `jur stf --vinculantes` (são **63**; as 736 simples são `--sumulas-simples`, e `-b sumulas` traz as 799) |
+| **Repercussão geral / tema / tese** — precedente que vincula o resto do Judiciário | `jur stf --rg`, `jur stf --tema "<nº ou texto>"`, `jur stf --tese "<texto>"` |
+| Desambiguação no STF — **não existe Juizado nem Turma Recursal** | Por **órgão**: `-oj "Tribunal Pleno"` (maior peso) × `-oj "Primeira Turma,Segunda Turma"`. Por **classe**: `-c ADI,ADPF,ADC` (controle concentrado, *erga omnes*) × `-c RE,ARE` (controle difuso) × `-c HC,MS` (originárias) |
+| Decisão monocrática de ministro do STF | `jur stf -b decisoes -r "<MINISTRO EM CAIXA ALTA>"` (741 mil docs; é uma **seleção**, não exaustiva) |
+| Informativo do STF | `jur stf -b informativos` (⚠️ resumo **sem valor oficial** — nunca cite como se fosse ementa) |
+| "Esse processo do STF existe?" / confirmar julgado do Supremo | `jur stf -n "ARE 1596565"` (classe+número, o formato nativo) ou `jur stf -n <CNJ>`. ⚠️ a base **não indexa CNJ**: buscar o número por `-q` devolve zero |
+| **Interpretação de LEI FEDERAL infraconstitucional** — Código Civil, CPC, CDC, Código Penal, execução fiscal, benefício previdenciário, contrato, prescrição, "o que o STJ decidiu" | `jur stj` (base `acordao`, todo o acervo do STJ; ⚠️ **abre uma janela de Chromium** — o Cloudflare do SCON não libera headless). **Cite o STJ antes do TJ local**: ele uniformiza a lei federal para todos os TJs e TRFs |
+| Desambiguação no STJ — **não existe Juizado, Turma Recursal nem 1º grau** | Por **órgão**, e ele define a matéria: `-s publico` (1ª Seção: tributário, administrativo, previdenciário) × `-s privado` (2ª Seção: civil, consumidor, empresarial) × `-s penal` (3ª Seção) × `-oj CE` (Corte Especial). Por **tipo de documento**: `--base acordao` (default) × `--base monocratica` (15× maior, mas não forma jurisprudência colegiada) |
+| **Tema repetitivo / precedente qualificado / IAC** — o que vincula os outros tribunais | `jur stj --temas -q "<assunto>"` (tese firmada + questão submetida + situação; roda headless). Os **acórdãos** julgados sob o rito: `jur stj -q "<termo>" --repetitivos` |
+| Recorte temático pronto do STJ (superação, distinção, afetação, rol da ANS, insignificância…) | `jur stj -q "<termo>" --nota <chave>` — são 25, escritas pela Secretaria de Jurisprudência do STJ. Liste com `jur stj --listar-notas` |
+| Súmula do STJ, Jurisprudência em Teses, Informativo | ⚠️ **não extraídos pelo crawler** (cada um tem tela própria). Diga isso e ofereça as URLs em `CLAUDE-STJ.md` |
+| "Esse processo do STJ existe?" / confirmar julgado do STJ | `jur stj -n "REsp 1809043"` (classe+número) ou `jur stj -n "2019/0116080-0"` (registro). ⚠️ a base **não indexa CNJ**: com número CNJ o checker cai no DataJud e confirma só que o **processo** existe, não o julgado |
 | Acórdãos de contas, TCU | `jur tcu` |
 | SP estadual | ⚠️ `jur tjsp` sem acesso — ofereça TRF3 (ou TRF4/TRF5 como comparativo) |
+| "TJMA", Maranhão, estadual MA | ⚠️ **busca por termo não existe** — o JurisConsult exige captcha de imagem + reCAPTCHA e este repo não resolve captcha. **Diga isso ao usuário**, não tente. Ofereça `jur trf1` (o MA é da 1ª Região) para matéria federal; ver `CLAUDE-TJMA.md` |
+| Juizado Especial / Turma Recursal **estadual** no MA | Mesmo bloqueio. As flags existem e estão mapeadas (`jur tjma --foro turmas` / `--foro juizados`), mas nenhuma busca completa |
+| "Esse processo do TJMA existe?" / confirmar nº de processo do MA | `jur tjma -n <nº CNJ>` — **funciona** (DataJud/CNJ). ⚠️ confirma o **processo**, não o **julgado**: DataJud não tem ementa |
 | **Matéria trabalhista no PR** — verbas rescisórias, horas extras, vínculo de emprego, insalubridade/periculosidade, justa causa, assédio moral, FGTS, adicional noturno | `jur trt9` (**não** `tjpr`: é outro ramo da Justiça) |
 | **1º grau trabalhista PR** — "o que as Varas do Trabalho decidem", sentença | `jur trt9 -g 1` (coleção `sentencas`) |
 | **2º grau trabalhista PR** — Turmas do TRT9, acórdão, recurso ordinário | `jur trt9 -g 2` (default, coleção `acordaos`) |
@@ -121,6 +141,16 @@ Os operadores válidos **variam por tribunal e por módulo** — estão no `CLAU
 Não presuma: no TJGO, por exemplo, `E`/`OU`/`NÃO` viram palavra literal no módulo de
 jurisprudência (só `"frase exata"` funciona). Sempre cite termos compostos entre aspas:
 `-q "aposentadoria especial"`.
+
+No **STF** funcionam todos, em português e minúsculas: `e`, `ou`, `não`, `"frase exata"`,
+`"a b"~5` (proximidade), `~` (fuzzy), `$` (curinga), `?` (um caractere) e parênteses.
+`ADJ`, `PROX` e `MESMO` **não existem** na pesquisa de jurisprudência do STF (existem no módulo
+de Repercussão Geral do portal antigo, que é outra tela). Ver `CLAUDE-STF.md`.
+
+No **STJ** funcionam **todos os oito** da barra do SCON, testados um a um: `e`, `ou`, `não`,
+`adj` (e `adj5`), `prox` (e `prox10`), `mesmo` (mesmo campo), `com` (mesmo parágrafo),
+`$` (radical) e `"frase exata"`. É a sintaxe mais rica do repositório — use `adj`/`prox` para
+precisão. Só `*` não funciona (derruba a consulta). Ver `CLAUDE-STJ.md`.
 
 ## Saída
 

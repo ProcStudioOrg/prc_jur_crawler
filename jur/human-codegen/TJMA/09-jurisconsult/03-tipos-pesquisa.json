@@ -1,0 +1,100 @@
+{
+ "acordaos": {
+  "relatorioId": 1,
+  "opcoes": [
+   {
+    "opcao_id": "1",
+    "opcao": "Ementa"
+   },
+   {
+    "opcao_id": "7",
+    "opcao": "Inteiro Teor"
+   },
+   {
+    "opcao_id": "2",
+    "opcao": "Advogado(s)"
+   },
+   {
+    "opcao_id": "3",
+    "opcao": "Classe"
+   },
+   {
+    "opcao_id": "4",
+    "opcao": "Número(s) do Acórdão"
+   },
+   {
+    "opcao_id": "6",
+    "opcao": "Número(s) do Processo"
+   }
+  ]
+ },
+ "decisoes-monocraticas": {
+  "relatorioId": 2,
+  "opcoes": [
+   {
+    "opcao_id": "8",
+    "opcao": "Decisão"
+   },
+   {
+    "opcao_id": "6",
+    "opcao": "Número(s) do Processo"
+   }
+  ]
+ },
+ "sentencas-1-grau": {
+  "relatorioId": 4,
+  "opcoes": [
+   {
+    "opcao_id": "11",
+    "opcao": "Sentença"
+   },
+   {
+    "opcao_id": "6",
+    "opcao": "Número(s) do Processo"
+   }
+  ]
+ },
+ "decisoes-monocraticas-turma-recursal": {
+  "relatorioId": 5,
+  "opcoes": [
+   {
+    "opcao_id": "8",
+    "opcao": "Decisão"
+   },
+   {
+    "opcao_id": "6",
+    "opcao": "Número(s) do Processo"
+   }
+  ]
+ },
+ "acordaos-turma-recursal": {
+  "relatorioId": 6,
+  "opcoes": [
+   {
+    "opcao_id": "1",
+    "opcao": "Ementa"
+   },
+   {
+    "opcao_id": "7",
+    "opcao": "Inteiro Teor"
+   },
+   {
+    "opcao_id": "6",
+    "opcao": "Número(s) do Processo"
+   }
+  ]
+ },
+ "sentencas-juizado-especial": {
+  "relatorioId": 7,
+  "opcoes": [
+   {
+    "opcao_id": "11",
+    "opcao": "Sentença"
+   },
+   {
+    "opcao_id": "6",
+    "opcao": "Número(s) do Processo"
+   }
+  ]
+ }
+}

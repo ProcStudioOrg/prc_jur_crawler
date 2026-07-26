@@ -1,0 +1,18 @@
+## 3. Como o STF responde a um processo que NÃO existe
+
+Print: `03.01-processo-inexistente.png`
+URL:   https://portal.stf.jus.br/processos/listarProcessos.asp?classe=RE&numeroProcesso=9999999
+
+O portal **não** devolve 404 nem mensagem de erro: ele simplesmente **permanece** em
+`listarProcessos.asp`, com a tela de busca vazia. É por isso que o teste de existência
+implementado no `STFChecker` é o REDIRECIONAMENTO, e não o status HTTP nem o texto da página:
+
+    encontrado ⇔ a URL final casa com /detalhe\.asp\?incidente=\d+/
+
+Casos de controle usados no `STFTestes.js`:
+  `RE 9999999`                     → não redireciona, `encontrado: false`
+  `0002234-32.2010.1.00.0000`      → número único inventado (DV válido!), não redireciona
+  `ARE 1596565` / `ADI 4277`       → redirecionam, `encontrado: true`
+
+Note o segundo caso: **um número CNJ pode ter dígito verificador correto e mesmo assim ser
+inventado.** Validar o DV nunca prova existência — só a consulta prova.

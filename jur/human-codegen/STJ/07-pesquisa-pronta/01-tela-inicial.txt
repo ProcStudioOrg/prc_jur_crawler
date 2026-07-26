@@ -1,0 +1,18 @@
+STJ — módulo 07: Pesquisa Pronta
+================================
+
+Link:   https://scon.stj.jus.br/SCON/pesquisa_pronta/ -> redireciona para
+        .../pesquisa_pronta/listaPP.jsp
+Print:  01.01-tela-inicial.png
+Estado: MAPEADO, NÃO IMPLEMENTADO no crawler.
+
+O que é: consultas por assunto já montadas pela Secretaria de Jurisprudência,
+organizadas por ramo do direito. Cada item dispara uma busca no SCON com o
+parâmetro `O=PP` e `preConsultaPP=<id>`.
+
+Parente próximo do combo "Notas" da pesquisa avançada (ver
+01-scon-acordaos/03-pesquisa-avancada.txt), esse sim implementado como
+`--nota <chave>`: as Notas são recortes prontos que cabem numa expressão, e a
+Pesquisa Pronta é a versão navegável e mais extensa da mesma ideia.
+
+Bloqueio: mesmo Cloudflare do SCON.

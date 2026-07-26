@@ -1,0 +1,67 @@
+{
+  "medidoEm": "25/07/2026",
+  "via": "POST HTTP direto (sem browser), conferido contra o browser nas linhas marcadas",
+  "escopo": "inteiro teor (default do site), agrupar resultados LIGADO (default do site)",
+  "tamanhoDaBase_curinga_asterisco": {
+    "TRF6": 216706,
+    "TRU6": 139,
+    "TurmasRecursais": 59484,
+    "VarasFederais": 0,
+    "todas": 276329,
+    "soma_fecha_exato": true
+  },
+  "porAno_origemTRF6_curinga": {
+    "2023": 283,
+    "2024": 17719,
+    "2025": 126105,
+    "≤2022": 0,
+    "2026 (até 25/07)": 95017,
+    "nota": "a soma dos anos (239.124) e igual ao total SEM agrupar; com data o servidor deixa de agrupar"
+  },
+  "desambiguacao_dano_moral": {
+    "TRF6": 2201,
+    "TRU6": 1,
+    "TurmasRecursais": 1744,
+    "VarasFederais": 0,
+    "todas": 3946,
+    "soma_fecha_exato": true
+  },
+  "desambiguacao_aposentadoria_especial_1T2026": {
+    "TRF6": 5104,
+    "TRU6": 4,
+    "TurmasRecursais": 2160,
+    "todas": 7268,
+    "soma_fecha_exato": true
+  },
+  "tipoDocumento_origemTRF6_aposentadoria": {
+    "total": 36578,
+    "acordao": 29527,
+    "monocratica": 7046,
+    "sumula": 0,
+    "despachoVice": 5,
+    "soma_fecha_exato": true
+  },
+  "escopo_aposentadoria_origemTRF6": {
+    "inteiroTeor": 36578,
+    "ementa": 23379,
+    "ementaCaput": 18568
+  },
+  "datas_aposentadoria_origemTRF6": {
+    "semData": 36578,
+    "julgamento_1T2026": 6809,
+    "publicacao_1T2026": 5659
+  },
+  "filtros_aposentadoria_origemTRF6": {
+    "orgao_1aTurmaPrevServ": 12599,
+    "orgao_Plenario": 99,
+    "relator_MONICA_SIFUENTES": 116,
+    "classe_ApelacaoCivel": 28380,
+    "precedenteRelevante": 5
+  },
+  "conferido_no_browser": {
+    "dano moral / TRF6": 2201,
+    "dano moral / Turmas Recursais": 1744,
+    "dano moral / Varas Federais": 0,
+    "aposentadoria especial / busca simples": 27545
+  }
+}

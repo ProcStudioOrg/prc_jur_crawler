@@ -1,0 +1,88 @@
+<form id="pesquisa-principal" action="javascript:void(0);">
+                            <div class="seletores-campo d-none d-md-block">
+                                <input type="hidden" name="tipo-pesquisa" id="tipo-pesquisa" style="">
+                                <ul class="seletores d-none d-md-block" id="menuPesquisa">
+                                    <li>
+                                        <span class="" id="abaProcesso">Processos</span>
+                                    </li>
+                                    <li>
+                                        <span id="abaJurisprudencia" class="ativo">Jurisprudência</span>
+                                    </li>
+                                    <!-- <li>
+                                        <span id="abaNoticias">Notícias</span>
+                                    </li> -->
+                                    <li>
+                                        <span id="abaRepercussao" onclick="navegaParaRepercussaoGeral(event)">Repercussão Geral</span>
+                                    </li>
+                                    <!-- <li>
+                                        <span id="abaServicos">Pesquisa</span>
+                                    </li> -->
+                                    <li>
+                                        <span id="abaConteudo">Conteúdo e Notícias</span>
+                                    </li>
+                                </ul>
+                                <input type="hidden" value="4" id="abaSelecionada" style="">
+                            </div>
+                            <div class="col-12 pesquisa-processo aba-pesquisa" style="display: none;">
+                                <label for="tipo-pesquisa-processo" class="sr-only">Escolher tipo de pesquisa de processo</label>
+                                <select id="tipo-pesquisa-processo" class="campo-texto tipo-pesquisa-processo">
+                                    <option value="CLASSE_E_NUMERO">Por Classe e Número</option>
+                                    <option value="NUMERO_ORIGEM">Por Número na Origem</option>
+                                    <option value="NUMERO_UNICO">Por Número Único</option>
+                                    <option value="PARTE">Por Parte</option>
+                                    <option value="ADVOGADO">Por Advogado</option>
+                                </select>
+                                <div class="campo-pesquisa-processo pesquisa-processo-classe">
+                                    <label for="Siglas" class="sr-only">Pesquisa por classe do processo</label>
+                                    <select class="campo-texto processo-classe" id="Siglas"><option value="">Classe</option><option value="AC">AC</option>"&gt;<option value="ACO">ACO</option>"&gt;<option value="ADC">ADC</option>"&gt;<option value="ADI">ADI</option>"&gt;<option value="ADO">ADO</option>"&gt;<option value="ADPF">ADPF</option>"&gt;<option value="AI">AI</option>"&gt;<option value="AImp">AImp</option>"&gt;<option value="AO">AO</option>"&gt;<option value="AOE">AOE</option>"&gt;<option value="AP">AP</option>"&gt;<option value="AR">AR</option>"&gt;<option value="ARE">ARE</option>"&gt;<option value="AS">AS</option>"&gt;<option value="CC">CC</option>"&gt;<option value="Cm">Cm</option>"&gt;<option value="EI">EI</option>"&gt;<option value="EL">EL</option>"&gt;<option value="EP">EP</option>"&gt;<option value="Ext">Ext</option>"&gt;<option value="HC">HC</option>"&gt;<option value="HD">HD</option>"&gt;<option value="IF">IF</option>"&gt;<option value="Inq">Inq</option>"&gt;<option value="MI">MI</option>"&gt;<option value="MS">MS</option>"&gt;<option value="PADM">PADM</option>"&gt;<option value="Pet">Pet</option>"&gt;<option value="PPE">PPE</option>"&gt;<option value="PSV">PSV</option>"&gt;<option value="RC">RC</option>"&gt;<option value="Rcl">Rcl</option>"&gt;<option value="RE">RE</option>"&gt;<option value="RHC">RHC</option>"&gt;<option value="RHD">RHD</option>"&gt;<option value="RMI">RMI</option>"&gt;<option value="RMS">RMS</option>"&gt;<option value="RvC">RvC</option>"&gt;<option value="SE">SE</option>"&gt;<option value="SIRDR">SIRDR</option>"&gt;<option value="SL">SL</option>"&gt;<option value="SS">SS</option>"&gt;<option value="STA">STA</option>"&gt;<option value="STP">STP</option>"&gt;<option value="TPA">TPA</option>"&gt;</select>
+                                    <div class="campo-pesquisa-numero">
+                                        <label for="pesquisaPrincipalClasseNumero" class="sr-only">Pesquisa por número do processo</label>
+                                        <input type="text" name="pesquisaPrincipalClasseNumero" id="pesquisaPrincipalClasseNumero" maxlength="40" class="campo-texto" placeholder=" Digite o número do processo (ex: 100)" style="">
+                                    </div>
+                                </div>
+                                <div class="campo-pesquisa-processo pesquisa-numero-unico" style=" display: none;">
+                                    <label for="pesquisaPrincipalNumeroUnico" class="sr-only">Pesquisa por número único</label>
+                                     <input type="text" name="pesquisaPrincipalNumeroUnico" id="pesquisaPrincipalNumeroUnico" class=" campo-texto" placeholder=" Digite o número único" style="">
+                                </div>
+                                <div class="campo-pesquisa-processo pesquisa-parte" style=" display:none;">
+                                    <label for="pesquisaPrincipalParte" class="sr-only">Pesquisa por nome da parte</label>
+                                    <input type=" text" name="pesquisaPrincipalParte" id="pesquisaPrincipalParte" maxlength="100" minlength="3" class="campo-texto" placeholder="Digite o nome da parte" style="">
+                                </div>
+                                <div class="campo-pesquisa-processo pesquisa-advogado" style=" display:none;">
+                                    <label for="pesquisaPrincipalAdvogado" class="sr-only">Pesquisa por nome do(a) advogado(a)</label>
+                                    <input type=" text" name="pesquisaPrincipalAdvogado" id="pesquisaPrincipalAdvogado" maxlength="100" minlength="3" class="campo-texto" placeholder="Digite o nome do(a) advogado(a)" style="">
+                                </div>
+                                <div class="campo-pesquisa-processo pesquisa-numero-origem" style=" display:none;">
+                                    <label for="pesquisaPrincipalNumeroOrigem" class="sr-only">Pesquisa por número na origem</label>
+                                    <input type="text" name="pesquisaPrincipalNumeroOrigem" id="pesquisaPrincipalNumeroOrigem" maxlength=" 40" class=" campo-texto" placeholder="Digite o número na origem" style="">
+                                </div>
+                            </div>
+                            <div class="col-12 pesquisa-jurisprudencia aba-pesquisa" style="">
+                                <div class="col-12 no-padding">
+                                    <label for="pesquisaJurisprudencia" class="sr-only">Pesquisa por jurisprudência</label>
+                                    <input type="text" name="pesquisaJurisprudencia" id="pesquisaJurisprudencia" maxlength=" 100" class="campo-texto" placeholder="Digite um termo para a pesquisa de jurisprudência..." style="">
+                                </div>
+                            </div>
+                            <!-- <div class="col-12 pesquisa-noticias-e-textos aba-pesquisa"
+                                style=" display: none;">
+                                <label for="pesquisaNoticiasTextos" class="sr-only">Pesquisa de notícias</label>
+                                <input type="text" name="pesquisaNoticiasTextos" id="pesquisaNoticiasTextos" maxlength="80" class="campo-texto" 
+									placeholder="Informe um assunto sobre uma notícia...">
+                            </div> -->
+                            <div class="col-12 pesquisa-repercussao aba-pesquisa" style="display: none;">
+                                <label for="pesquisaRepercussao" class="sr-only">Pesquisa de repercussão geral</label>
+                                <input type="text" name="pesquisaRepercussao" id="pesquisaRepercussao" class="campo-texto" maxlength="40" placeholder="Informe uma palavra-chave para pesquisa..." style="">
+                            </div>
+                            <!-- <div class="col-12 pesquisa-servicos aba-pesquisa" style="display: none;">
+                                <label for="pesquisaServicos" class="sr-only">Pesquisa de serviços</label>
+                              <input type="text" name="pesquisaServicos" id="pesquisaServicos" class="campo-texto" maxlength="100" placeholder="Informe uma palavra-chave para pesquisa...">
+                            </div> -->
+                            <div class="col-12 pesquisa-conteudo aba-pesquisa" style="display: none;">
+                                <label for="pesquisaConteudo" class="sr-only">Pesquisa de serviços</label>
+                              <input type="text" name="pesquisaConteudo" id="pesquisaConteudo" class="campo-texto" maxlength="100" placeholder="Pesquisar conteúdo e notícias..." style="">
+                            </div>
+                            <button form="pesquisa-principal" id="btnPesquisar" class="btn float-end btnBarraPesquisa">
+                                <i class="fas fa-search" id="botaoBarraPesquisa"></i>
+                                <span class="d-none d-md-inline">Pesquisar</span>
+                            </button>
+                        </form>

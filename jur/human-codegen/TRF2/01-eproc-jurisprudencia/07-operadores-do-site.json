@@ -1,0 +1,32 @@
+[
+  {
+    "rotulo": "\"...\"",
+    "insere": " \" \"",
+    "ajuda": "Pesquisa documentos que contenham a expressão informada. | Ex.: \"faixa de fronteira\""
+  },
+  {
+    "rotulo": "e",
+    "insere": " e ",
+    "ajuda": "Pesquisa documentos que contenham todas as palavras ou expressões informadas. | Ex.: crime e \"faixa de fronteira\""
+  },
+  {
+    "rotulo": "ou",
+    "insere": " ou ",
+    "ajuda": "Pesquisa documentos que contenham pelo menos uma das palavras ou expressões informadas. | Ex.: drogas ou entorpecentes"
+  },
+  {
+    "rotulo": "não",
+    "insere": " não ",
+    "ajuda": "Pesquisa documentos que contenham a primeira palavra ou expressão informada mas que não contenham a segunda palavra ou expressão informada. | Ex.: crime não \"sonegação fiscal\""
+  },
+  {
+    "rotulo": "prox",
+    "insere": " prox ",
+    "ajuda": "Pesquisa documentos onde as palavras ou expressões informadas encontram-se próximas no texto. | Ex.: aposentadoria prox contribuição"
+  },
+  {
+    "rotulo": "*",
+    "insere": " \" *\"",
+    "ajuda": "Pesquisa documentos que contenham o início da palavra ou expressão informada. | Ex.: \"embarg*\" (retornará registros com as palavras embargo, embargou, embargante)"
+  }
+]

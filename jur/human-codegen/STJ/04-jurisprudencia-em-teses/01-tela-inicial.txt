@@ -1,0 +1,16 @@
+STJ — módulo 04: Jurisprudência em Teses
+========================================
+
+Link:   https://scon.stj.jus.br/SCON/jt/  -> redireciona para /SCON/jt/jt.jsp
+Print:  01.01-tela-inicial.png
+Estado: MAPEADO, NÃO IMPLEMENTADO no crawler.
+
+O que é: edições temáticas em que a Secretaria de Jurisprudência destila o
+entendimento consolidado do Tribunal em TESES numeradas, cada uma com os
+julgados que a sustentam. Não é jurisprudência bruta: é jurisprudência já
+sumarizada pelo próprio STJ — exatamente o insumo que uma petição cita.
+
+Também acessível pela base `b=TESE` do pesquisar.jsp, com tela própria (mesmo
+motivo do módulo 02 para não estar implementado).
+
+Bloqueio: mesmo Cloudflare do SCON.

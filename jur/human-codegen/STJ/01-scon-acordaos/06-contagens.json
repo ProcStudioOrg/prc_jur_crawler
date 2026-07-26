@@ -1,0 +1,59 @@
+{
+  "medido_em": "25/07/2026",
+  "termo": "dano moral",
+  "base": "ACOR (acórdãos)",
+  "sem_filtro": 28348,
+  "por_orgao_julgador": {
+    "T1 PRIMEIRA TURMA": 2097,
+    "T2 SEGUNDA TURMA": 3247,
+    "T3 TERCEIRA TURMA": 10476,
+    "T4 QUARTA TURMA": 11408,
+    "T5 QUINTA TURMA": 442,
+    "T6 SEXTA TURMA": 161,
+    "S1 PRIMEIRA SECAO": 110,
+    "S2 SEGUNDA SECAO": 298,
+    "S3 TERCEIRA SECAO": 24,
+    "CE CORTE ESPECIAL": 85,
+    "PS PRESIDENCIA": 0,
+    "VP VICE-PRESIDENCIA": 0
+  },
+  "soma_dos_12_orgaos": 28348,
+  "orgaos_combinados_T3_T4": 21884,
+  "data_julgamento_2025": 1697,
+  "data_julgamento_1o_sem_2025": 520,
+  "data_publicacao_2025": 1705,
+  "base_monocraticas_DTXT_2025": 25532,
+  "nota_repetitivos_2025": 2,
+  "nota_repetitivos_2025_sem_termo": 208,
+  "operadores": {
+    "usucapiao extraordinaria (E implicito)": 427,
+    "usucapiao e extraordinaria": 427,
+    "usucapiao ou extraordinaria": 8264,
+    "usucapiao nao extraordinaria": 1929,
+    "usucapiao adj extraordinaria": 412,
+    "usucapiao adj2 extraordinaria": 28147,
+    "usucapiao prox10 extraordinaria": 418,
+    "usucapiao mesmo extraordinaria": 427,
+    "usucapiao com extraordinaria": 420,
+    "usucapiao (sozinho)": 2356,
+    "usucapi$ (radical)": 2385,
+    "usucapiao (acento) == usucapiao (sem acento)": 2356
+  },
+  "outros_campos": {
+    "uf=SP + 2025": 507,
+    "classe=RESP + 2025": 654,
+    "ementa=usucapiao + 2025": 307,
+    "relator=1141 (Mauro Campbell)": 348
+  },
+  "paginacao": {
+    "i=101": "ok",
+    "i=201": "ok",
+    "i=301": "ok",
+    "i=501": "ok",
+    "i=701": "ok",
+    "i=901": "ORA-01013",
+    "i=1001": "ORA-01013",
+    "i=1301": "ORA-01013",
+    "i=1691": "ORA-01013"
+  }
+}

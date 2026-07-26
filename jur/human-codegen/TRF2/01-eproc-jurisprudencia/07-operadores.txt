@@ -1,0 +1,79 @@
+## 7. Operadores de pesquisa — testados um por um (e o defeito do espaço)
+
+O site expõe um painel "Operadores" (`#btnOperadores` → `#divOperadores`) com seis botões.
+Cada botão insere um texto no campo de busca (`adicionarOperador(...)`) e traz a ajuda do
+próprio tribunal — copiada literalmente em `07-operadores-do-site.json`:
+
+| botão   | insere    | ajuda oficial do TRF2 |
+|---------|-----------|------------------------|
+| `"..."` | ` " "`    | expressão exata. Ex.: `"faixa de fronteira"` |
+| `e`     | ` e `     | todas as palavras. Ex.: `crime e "faixa de fronteira"` |
+| `ou`    | ` ou `    | pelo menos uma. Ex.: `drogas ou entorpecentes` |
+| `não`   | ` não `   | a primeira sem a segunda. Ex.: `crime não "sonegação fiscal"` |
+| `prox`  | ` prox `  | palavras próximas. Ex.: `aposentadoria prox contribuição` |
+| `*`     | ` " *"`   | início da palavra. Ex.: `"embarg*"` |
+
+Print: `07.01-painel-operadores.png`.
+
+## ⚠️ O DEFEITO: o ESPAÇO entre termos quebra a busca
+
+**A sintaxe documentada pelo próprio site não funciona.** Qualquer query com espaço entre
+dois termos soltos faz o servidor injetar o operador em inglês **como se fosse mais um
+termo buscado**. Dá para ver no parâmetro `termosPesquisados` (base64) que vai no link de
+inteiro teor de cada resultado:
+
+    query digitada     termos que o servidor montou          total (origem TRF2)
+    "dano moral"       dano|moral|and|dano|moral                    46
+    "dano-moral"       dano|moral                               20.201
+    "dano ou moral"    dano|moral|or|dano|moral                     44
+    "dano-ou-moral"    dano                                    112.118
+    "dano nao moral"   dano|moral|and|not|dano|moral                 2
+    "dano-nao-moral"   dano                                     89.251
+
+Ou seja: `dano moral` exige que o documento contenha **também a palavra "and"**.
+Prova direta: `dano-moral-and` devolve os mesmos **46**, e `and` sozinho devolve 1.125.
+
+A forma com **hífen** é a correta, e a álgebra de conjuntos fecha exato — o que não
+deixa dúvida sobre qual das duas é a certa:
+
+    dano = 109.452   ·   moral = 22.867
+    dano-moral       =  20.201   (interseção)
+    dano-ou-moral    = 112.118   = 109.452 + 22.867 − 20.201   ✓ exato
+    dano-nao-moral   =  89.251   = 109.452 − 20.201            ✓ exato
+
+Separadores equivalentes ao hífen: a vírgula (`dano,moral` = 20.201, idêntico). Qualquer
+pontuação parece servir de separador de token; o **espaço** é o único que quebra.
+
+### Tabela final — o que funciona neste módulo
+
+| Sintaxe | Funciona? | Evidência (origem TRF2, escopo inteiro teor) |
+|---|---|---|
+| `termo` (um só) | ✅ | `aposentadoria` = 102.988 |
+| `"frase exata"` isolada | ✅ | `"dano moral"` = 18.457 · `"aposentadoria especial"` = 18.565 |
+| `termo1 termo2` (espaço) | ❌ **QUEBRA** | 46 em vez de 20.201 |
+| `termo1-termo2` (hífen) = E | ✅ | 20.201 |
+| `t1-e-t2` (o `e` é ignorado, o default já é E) | ✅ | `dano-e-moral` = 20.201 |
+| `t1-ou-t2` | ✅ | 112.118 (fecha exato) |
+| `t1-nao-t2` / `t1-não-t2` | ✅ | 89.251 (fecha exato); acentuado dá o mesmo |
+| `t1 prox t2` (**com espaço**) | ✅ | `dano prox moral` = 18.888 · `aposentadoria prox especial` = 20.363 |
+| `t1-prox-t2` (com hífen) | ❌ | **página de erro** do e-Proc |
+| `prox5` / `prox(5)` | ❌ | 0 resultados — vira termo literal |
+| `adj` | ❌ | `dano adj moral` = 0 |
+| `*` (curinga de sufixo) | ✅ | `dan*` = 206.550 · `embarg*` = 284.535 |
+| `?` | ❌ | `dan?` = 98, igual a `dan` — vira literal |
+| `$` | ❌ | `dan$` = 98 — vira literal |
+| `"frase" + outro termo` | ❌ **QUEBRA** | `"dano moral" e aposentadoria` = 5; `crime e "faixa de fronteira"` = 3 |
+| MAIÚSCULAS / acentos | irrelevantes | `DANO MORAL` = `dano moral`; `tributário` = `tributario` = 157.733 |
+
+⚠️ **Frase exata combinada com outro termo não tem conserto**: mesmo com hífen o servidor
+injeta o "and". Ou se usa só a frase entre aspas, ou só termos soltos.
+
+### O que o crawler faz com isso
+
+`TRF2Navigator.normalizarQuery()` reescreve a query antes de enviar: junta os termos com
+hífen, preserva frase exata isolada, preserva ` prox `, e **avisa** (sem corrigir) quando
+há frase + termo. `--literal` desliga a correção e reproduz o comportamento cru da tela.
+
+Print do defeito: `07.02-espaco-quebra-a-busca.png` — a mesma busca "dano moral" na tela,
+com o contador em 46.
+Dados brutos: `07-operadores-do-site.json`, `07-operadores-testados.json`.

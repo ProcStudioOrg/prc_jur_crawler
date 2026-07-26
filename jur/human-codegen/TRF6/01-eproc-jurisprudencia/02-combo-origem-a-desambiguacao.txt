@@ -1,0 +1,70 @@
+========================================================================
+2. COMBO "ORIGEM" — A DESAMBIGUAÇÃO (Justiça Federal comum × Juizados)
+========================================================================
+É AQUI que se separa a Justiça Federal comum dos Juizados Especiais Federais.
+Um multi-select (bootstrap-select) com QUATRO opções — uma a mais do que no
+TRF2, que só tem três.
+
+| value | rótulo na tela   | o que é                                              | documentos (curinga `*`, 25/07/2026) |
+|-------|------------------|------------------------------------------------------|--------------------------------------|
+| 1     | TRF6             | 2º grau da JUSTIÇA FEDERAL COMUM — Turmas, Seções,    | 216.706                              |
+|       |                  | Plenário, Presidência, Vice-Presidência               |                                      |
+| 2     | TRU6             | Turma Regional de Uniformização — dos JUIZADOS        | 139                                  |
+| 3     | Turmas Recursais | 2º grau dos JUIZADOS ESPECIAIS FEDERAIS de MG         | 59.484                               |
+| 4     | Varas Federais   | 1º grau (sentenças) — DECLARADA E **VAZIA**           | 0                                    |
+|       |                  |                                                       | total "todas": 276.329 (fecha exato) |
+
+O default do site é `1` (TRF6) já marcado. Se NENHUMA origem é marcada, o
+servidor busca em todas (medido por HTTP: 276.329 com `*`).
+
+PROVA DE QUE O FILTRO É APLICADO (não basta a busca responder — CLAUDE-CODEGEN §7).
+Termo `dano moral`, escopo inteiro teor, sem data:
+
+    TRF6              2.201
+    TRU6                  1
+    Turmas Recursais  1.744
+    Varas Federais        0
+    todas             3.946   = 2.201 + 1 + 1.744 + 0   ✓ fecha exato
+
+Com recorte de julgamento 01/01/2026–31/03/2026, `aposentadoria especial`:
+    5.104 + 4 + 2.160 = 7.268 = "todas"  ✓ fecha exato
+
+Se algum dia essas contagens ficarem iguais entre si, o filtro parou de ser
+aplicado. É o que o `src/TRF6Testes.js` vigia.
+
+DOIS SINAIS NA PRÓPRIA SAÍDA confirmam o recorte, sem precisar confiar no filtro:
+
+| campo do resultado | Justiça Federal comum (origem 1) | Turmas Recursais (origem 3) |
+|--------------------|----------------------------------|-----------------------------|
+| sufixo do processo | `.../TRF6`                       | `.../MG`                    |
+| ÓRGÃO JULGADOR     | "1ª Turma - PREV/SERV"           | "3ª Turma Recursal dos Juizados Especiais Federais de Minas Gerais" |
+
+⚠️ Como no TRF2, o `tipoDocumento` NÃO distingue origem — é "Acórdão" nas duas.
+   A TRU6 usa o sufixo `TRF6`, igual ao 2º grau comum; nela quem distingue é o
+   ÓRGÃO JULGADOR ("TURMA REGIONAL DE UNIFORMIZAÇÃO").
+
+⚠️ "Varas Federais" é uma armadilha: o combo a oferece, o tipo de documento dela
+   existe ("Sentença", id 5), e a base tem ZERO documentos. Quem escolher essa
+   origem sem ler isto conclui que "não há jurisprudência sobre o tema em MG".
+   O crawler emite aviso explícito (`avisos` no `--json`).
+
+HTML do elemento (DOM depois do AJAX):
+
+<select class="w-100" data-actions-box="true" data-selected-text-format="values"
+        id="selOrigem" multiple="true" name="selOrigem[]" aria-hidden="true">
+  <option selected="selected" value="1">TRF6</option>
+  <option value="2">TRU6</option>
+  <option value="3">Turmas Recursais</option>
+  <option value="4">Varas Federais</option>
+</select>
+
+Arquivo com o HTML completo do widget: 02-combo-origem.html
+Opções em JSON: 02-origens.json
+
+Prints:
+  02.01-combo-origem.png   dropdown aberto, com as quatro opções e os botões
+                           "Selecionar Todos" / "Desmarcar Todos"
+
+Prints das listagens lado a lado (na seção 06):
+  06.01-resultados-trf6.png · 06.02-resultados-turmas-recursais.png ·
+  06.05-resultados-varas-federais-vazio.png

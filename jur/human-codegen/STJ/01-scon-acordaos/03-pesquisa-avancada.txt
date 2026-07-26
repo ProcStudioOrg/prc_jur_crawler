@@ -1,0 +1,74 @@
+STJ / SCON — §3. Pesquisa avançada (campos do espelho do acórdão)
+================================================================
+
+O painel abre pelo botão `#idMostrarPesquisaAvancada` ("Pesquisa avançada +") e
+fecha por `#idEsconderPesquisaAvancada`. **Ao fechar, os campos preenchidos
+continuam valendo** — a própria tela avisa isso; para zerar é preciso o botão
+`#idLimparPesquisaAvancada`.
+
+HTML completo do formulário expandido: 03-form-avancado.html
+Prints: 03.01-pesquisa-avancada.png · 03.02-combo-notas.png
+
+
+## Campos, um a um (parâmetro -> id do input)
+
+| Campo na tela                | id            | parâmetro   | tipo        |
+|------------------------------|---------------|-------------|-------------|
+| Número do processo/registro  | `#processo`   | `processo`  | texto       |
+| Classe do processo           | `#classe`     | `classe`    | texto (sigla: RESP, ARESP, HC…) |
+| Unidade Federativa           | `#uf`         | `uf`        | texto (sigla) |
+| Ministro(a)                  | `#relator`    | `relator`   | hidden, alimentado por checkboxes (§5) |
+| Data de publicação           | `#dtpb1/#dtpb2` | (ver §4)  | texto DD/MM/YYYY |
+| Data de julgamento           | `#dtde1/#dtde2` | (ver §4)  | texto DD/MM/YYYY |
+| Órgão Julgador               | `#orgao`      | `orgao`     | hidden, alimentado por checkboxes (§5) |
+| Ementa                       | `#ementa`     | `ementa`    | texto       |
+| Notas                        | `#nota`       | `nota`      | select (25 opções) |
+| Norma (legislação)           | `#siglajud_0` + `#numero_leg0` + `#tipoN_1` | `ref` | conjunto repetível |
+
+Contagens que provam cada um (termo "dano moral", julgamento em 2025):
+  sem filtro ....................... 1.697
+  uf=SP ..............................  507
+  classe=RESP ........................  654
+  relator=1141 (Mauro Campbell) ......  348 (sem recorte de data: 348 de 28.348)
+  ementa=usucapião ...................  307  (idêntico a livre=usucapião no mesmo recorte)
+
+
+## Campo "Ementa" × campo livre
+
+A ajuda da tela diz: os termos do campo Ementa são procurados "em um ou mais dos
+seguintes campos: ementa, Informações Complementares e Termos Auxiliares à
+Pesquisa". Já o campo livre varre o espelho inteiro. No recorte testado os dois
+deram o mesmo número (307), o que não prova equivalência — apenas que naquele
+recorte todos os acertos estavam na ementa.
+
+
+## Combo "Notas" (`#nota`) — 25 recortes temáticos PRONTOS
+
+É o achado mais valioso da pesquisa avançada. Cada opção é uma expressão escrita
+pela Secretaria de Jurisprudência do STJ na sintaxe do próprio SCON, e o `value`
+do `<option>` é a expressão crua. Exemplos:
+
+  "Recursos Repetitivos e IACs"  -> (JULGADO E CONFORME E ((RECURSOS ADJ REPETITIVOS) OU IAC))
+  "Decisões de Afetação/Admissão"-> DECISAO ADJ DE ADJ (AFETACAO OU ADMISSAO)
+  "Técnica de superação"         -> OVERRULING
+  "Técnica de distinção"         -> DISTINGUISHING
+  "Tese revisada"                -> (REVISAO ADJ DA ADJ TESE) OU (TESE ADJ REVISADA)
+
+Lista completa com os 25 pares texto/expressão: 03-notas.json
+No crawler viram chaves amigáveis (`--nota repetitivos`, `--nota overruling`);
+`./bin/jur stj --listar-notas` imprime o mapa.
+
+Prova de que filtra (termo "dano moral", julgamento em 2025):
+  sem nota ................................ 1.697
+  nota "Recursos Repetitivos e IACs" ......     2
+  nota "Casos Notórios" ...................     2  (documentos DIFERENTES dos acima)
+  nota "Indenização por dano moral" .......   344
+  nota Repetitivos, SEM termo, só 2025 ....   208 (de 81.265 acórdãos do ano)
+
+
+## Norma / Referência legislativa
+
+Conjunto repetível de até 6 grupos: sigla do diploma (datalist `#listasiglajud`
+com **522 siglas**, salvas em 03-siglas-legislacao.json), número, ano e até seis
+níveis de dispositivo (artigo, parágrafo, inciso…), cada um com um `<select>` de
+7 tipos. Vira o parâmetro `ref`. **Não exposto no crawler** (ver pendências).

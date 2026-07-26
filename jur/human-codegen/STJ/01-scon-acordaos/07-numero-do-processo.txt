@@ -1,0 +1,48 @@
+STJ / SCON — §7. Número do processo (o que alimenta o Checker)
+=============================================================
+
+Prints: 07.01-aba-por-numero-processo.png · 07.02-resultado-por-numero.png
+
+
+## DUAS NUMERAÇÕES, e o SCON só conhece uma
+
+1. **Numeração própria do STJ** — é a que aparece na citação e a que o SCON
+   indexa:
+     · por classe + número .... `REsp 1809043`, `AREsp 520189`, `HC 870249`
+     · número de REGISTRO ..... `2019/0116080-0`  (ou 201901160800, 12 dígitos)
+   O registro é o identificador estável do processo dentro do STJ, e é ele que
+   vai nas URLs (`GetInteiroTeorDoAcordao?num_registro=201901160800`).
+
+2. **Numeração CNJ** (20 dígitos, `NNNNNNN-DD.AAAA.J.TR.OOOO`) — a do processo
+   de origem. **O SCON NÃO a indexa.** Medido em 25/07/2026:
+     livre="0000538-97.2015.4.05.8500" .... 0 resultados
+     processo=0000538-97.2015.4.05.8500 ... 0 resultados
+
+   Consequência prática: para confirmar um julgado do STJ é preciso o número do
+   recurso ou o registro. Com número CNJ o único caminho é o **DataJud do CNJ**
+   (índice `api_publica_stj`, confirmado ao vivo), que prova que o PROCESSO
+   existe no STJ mas não traz ementa nem tese.
+
+
+## Como consultar
+
+Aba "Por número do processo" (`tp=P`) + campo `processo`. Formas testadas:
+
+| entrada                          | resultado                                   |
+|----------------------------------|---------------------------------------------|
+| `processo=1809043`               | 6 documentos (REsp, PAFRESP, EAINTARESP…)   |
+| `processo=2019/0116080-0`        | 4 documentos, todos do mesmo processo       |
+| `processo=201901160800`          | 4 documentos (idem, sem máscara)            |
+| `processo=REsp 1809043`          | 1 documento — mas o ERRADO (AINTARESP 1872694) |
+| `processo=9999999999`            | 0 documentos                                |
+| `livre=('RESP' INPATH(CLAS) AND '1809043' INPATH(NUM))` | 1 documento, exato |
+
+⚠️ Mandar a sigla junto no campo (`REsp 1809043`) NÃO restringe pela classe —
+casa mal e devolve outro processo. O jeito certo é mandar só os dígitos e
+filtrar a classe depois (é o que o `STJChecker` faz), ou usar a expressão
+`INPATH(CLAS)`/`INPATH(NUM)` no campo livre.
+
+⚠️ Um mesmo número devolve VÁRIOS documentos: o recurso principal e todos os
+incidentes que herdam o número (EDcl, AgInt, PAFRESP…). O identificador do
+DOCUMENTO é o registro (`<!-- REGISTRO: -->`), não o número do processo. A
+auditoria do crawler compara o REGISTRO, por isso.

@@ -1,0 +1,82 @@
+STJ / SCON — §5. Órgão julgador e ministros — A DESAMBIGUAÇÃO
+=============================================================
+
+Prints: 05.01-orgaos-julgadores.png · 05.02-ministros.png
+JSON:   05-orgaos-julgadores.json (12) · 05-ministros.json (181)
+
+
+## Por que aqui a desambiguação NÃO é Juizado × Justiça Comum
+
+O STJ é **corte de superposição**: não tem primeiro grau, não tem Juizado
+Especial, não tem Turma Recursal. O filtro do modelo ("§7 — competência
+Juizado × Vara Comum") **não existe neste tribunal**, e dizer isso é parte do
+mapeamento.
+
+A desambiguação que importa no STJ é dupla:
+
+  1. por **ÓRGÃO JULGADOR** — e é substantiva, porque a competência de cada
+     Seção define a MATÉRIA:
+       Primeira Seção  (T1 + T2) -> direito público: tributário, administrativo, previdenciário
+       Segunda Seção   (T3 + T4) -> direito privado: civil, empresarial, consumidor
+       Terceira Seção  (T5 + T6) -> direito penal e processual penal
+       Corte Especial            -> competência plenária, uniformização entre Seções
+  2. por **TIPO DE DOCUMENTO** — acórdão × decisão monocrática × súmula
+     (parâmetro `b`, ver 01-tela-inicial.txt §1.1)
+
+
+## Órgão Julgador (`#divOrgaosJulgadoresAvancada` -> hidden `#orgao`)
+
+Checkboxes; o hidden recebe os códigos separados por vírgula.
+
+  <div id="divOrgaosJulgadoresAvancada">
+    <input type="hidden" name="orgao" id="orgao" value="">
+    <label class="customCheckbox"><span class="nome">PRIMEIRA TURMA</span>
+      <input type="checkbox" value="T1" id="acheckT1"></label>
+    ... (12 rótulos)
+  </div>
+
+| código | órgão            | "dano moral" (base ACOR, 25/07/2026) |
+|--------|------------------|--------------------------------------|
+| T1     | PRIMEIRA TURMA   |  2.097 |
+| T2     | SEGUNDA TURMA    |  3.247 |
+| T3     | TERCEIRA TURMA   | 10.476 |
+| T4     | QUARTA TURMA     | 11.408 |
+| T5     | QUINTA TURMA     |    442 |
+| T6     | SEXTA TURMA      |    161 |
+| S1     | PRIMEIRA SEÇÃO   |    110 |
+| S2     | SEGUNDA SEÇÃO    |    298 |
+| S3     | TERCEIRA SEÇÃO   |     24 |
+| CE     | CORTE ESPECIAL   |     85 |
+| PS     | PRESIDÊNCIA      |      0 |
+| VP     | VICE-PRESIDÊNCIA |      0 |
+|        | **SOMA**         | **28.348** |
+|        | sem filtro       | **28.348** |
+
+**A soma dos 12 órgãos fecha exatamente com o total sem filtro.** É a prova mais
+forte possível de que o filtro é aplicado e a partição é completa — não há
+acórdão fora dos 12 órgãos, e nenhum é contado duas vezes.
+
+Combinação também confere: `orgao=T3,T4` = 21.884 = 10.476 + 11.408.
+
+Repare que as Seções (S1/S2/S3) são órgãos PRÓPRIOS, com acervo próprio (110,
+298, 24) — não são o agregado das suas Turmas. Por isso o atalho `--secao 2` do
+crawler manda `S2,T3,T4`: quem pede "direito privado" quer os três.
+
+PRESIDÊNCIA e VICE-PRESIDÊNCIA aparecem no combo mas têm 0 acórdãos: elas
+decidem por monocrática (juízo de admissibilidade), não por acórdão. Quem quiser
+esse acervo precisa de `b=DTXT`.
+
+
+## Ministro(a) (`#divMinistrosAvancada` -> hidden `#relator`)
+
+181 checkboxes, em dois grupos rotulados na própria tela:
+  "Min. ativos"                      -> ids `acheck<código>`
+  "Min. aposentados e ex-Ministros"  -> ids `check<código>`
+
+O `value` é o código interno (ex.: 1141 = MAURO CAMPBELL MARQUES, 1187 =
+AFRÂNIO VILELA). O código também aparece na saída da busca, entre parênteses,
+no campo Relator: "Ministro MAURO CAMPBELL MARQUES (1141)".
+
+Não cabe em print — lista completa em 05-ministros.json.
+
+Prova: `relator=1141` sobre "dano moral" -> 348 de 28.348.

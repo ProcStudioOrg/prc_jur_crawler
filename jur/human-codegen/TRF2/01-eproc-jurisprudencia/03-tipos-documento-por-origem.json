@@ -1,0 +1,40 @@
+{
+  "trf2": [
+    {
+      "id": "1",
+      "label": "Acórdão"
+    },
+    {
+      "id": "2",
+      "label": "Decisão monocrática"
+    },
+    {
+      "id": "3",
+      "label": "Súmula"
+    },
+    {
+      "id": "4",
+      "label": "Despacho/Decisão da Vice-Presidência"
+    }
+  ],
+  "tru2": [
+    {
+      "id": "1",
+      "label": "Acórdão"
+    },
+    {
+      "id": "2",
+      "label": "Decisão monocrática"
+    }
+  ],
+  "turmas-recursais": [
+    {
+      "id": "2",
+      "label": "Decisão monocrática"
+    },
+    {
+      "id": "1",
+      "label": "Acórdão"
+    }
+  ]
+}

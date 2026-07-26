@@ -1,0 +1,39 @@
+## 9.1 Repercussão geral (o ouro do STF, parte 2)
+
+Print: `09.01-repercussao-geral.png` · `03.02-base-repercussao-geral.png`
+Módulo dedicado do portal (fora da SPA): `../02-repercussao-geral/`
+
+Repercussão geral (art. 102, §3º da CF) é o filtro de admissibilidade do recurso
+extraordinário. O **tema** identifica a questão constitucional; a **tese** é o enunciado
+firmado — e vincula os demais tribunais no julgamento dos recursos sobrestados.
+
+Na SPA, "Repercussão geral" aparece como se fosse uma base, mas é a base `acordaos` com
+booleanos. Os três, com q = "dano moral" (total 2.945), conferidos contra a tela:
+
+| Filtro | API | Contagem |
+|---|---|---|
+| Repercussão geral            | `is_repercussao_geral: true` | **53** |
+| ↳ Mérito                     | `is_repercussao_geral_merito: true` | 20 |
+| ↳ Admissibilidade            | `is_repercussao_geral_admissibilidade: true` | 35 |
+| Sem repercussão geral        | `is_repercussao_geral: false` | 2.892 |
+
+53 + 2.892 = 2.945. Na tela (print `09.01-repercussao-geral.png`) o painel "Base" mostra
+exatamente `Repercussão geral(53) · Mérito(20) · Admissibilidade(35)`.
+
+Sobre a base inteira: 2.841 acórdãos marcados como paradigma de repercussão geral
+(1.481 em admissibilidade, 818 em mérito).
+
+Os documentos de RG têm `_id` com prefixo próprio: `repercussao-geral<N>` (contra `sjur<N>`
+dos demais acórdãos). É um bom indicador rápido.
+
+Campos que só fazem sentido aqui:
+  `documental_tese_tema_texto`  → "880 - Indenização por dano moral decorrente de
+                                  responsabilidade civil extracontratual."
+  `documental_tese_texto`       → o enunciado da tese firmada
+Ambos pesquisáveis pelas barras **Tema** e **Tese** da pesquisa avançada (seção 04).
+
+⚠️ A relevância do STF já privilegia estes documentos: a função de score dá peso 1,1 a
+`is_repercussao_geral=true` e 1,15 a `orgao_julgador="Tribunal Pleno"`, além do decaimento
+exponencial por data de julgamento. Por isso a ordenação "mais relevantes" traz paradigmas de
+RG no topo mesmo sem filtro — o que é ótimo para o usuário e enganoso para quem estima
+cobertura olhando só a primeira página.

@@ -1,0 +1,93 @@
+STJ — módulo 03: PRECEDENTES QUALIFICADOS (temas repetitivos, IACs)
+==================================================================
+
+Link:    https://processo.stj.jus.br/repetitivos/temas_repetitivos/
+Busca:   POST https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp
+Título:  "STJ - Precedentes Qualificados"
+Estado:  MAPEADO **E IMPLEMENTADO** — flag `--temas` do crawler.
+Prints:  01.01-tela-inicial.png · 02.01-filtros.png · 03.01-resultados-tema.png
+JSON:    02-campos-e-combos.json · HTML: 01-form-busca.html
+
+
+## Por que este módulo importa mais que qualquer outro do STJ
+
+Aqui está a jurisprudência com força VINCULANTE: temas de recursos repetitivos
+(art. 1.036 do CPC), IACs, SIRDRs, PUILs. Cada tema traz a **questão submetida**,
+a **tese firmada**, a **situação** (afetado, julgado, trânsito em julgado,
+cancelado), o órgão julgador, o ramo do direito, os processos paradigma e as
+anotações do NUGEPNAC. É o que um advogado precisa citar antes de qualquer
+ementa avulsa.
+
+
+## ⚠️ Está FORA do Cloudflare
+
+Outro host: `processo.stj.jus.br`, não `scon.stj.jus.br`. Confirmado com `curl`
+puro em 25/07/2026: HTTP 200, 115 KB, sem desafio. Por isso o `--temas` roda
+**headless** enquanto a busca de acórdãos precisa de browser headful.
+
+Charset: ISO-8859-1, como o SCON. O corpo do POST precisa ser latin-1.
+
+
+## Contrato da busca
+
+  POST /repetitivos/temas_repetitivos/pesquisa.jsp
+  Content-Type: application/x-www-form-urlencoded  (latin-1)
+
+  novaConsulta=true
+  tipo_pesquisa=T            T=Repetitivo · C=Controvérsia · I=IAC · S=SIRDR · P=PUIL
+  pesquisa_livre=<termo>     mesma sintaxe do SCON (e, ou, não, adj, prox, com, mesmo, $)
+  cod_tema_inicial / cod_tema_final     faixa de nº do tema
+  sg_ramo_direito            15 opções (DIREITO CIVIL, PENAL, TRIBUTÁRIO…)
+  sg_classe                  10 opções (AREsp, CC, EREsp, Pet, PUIL, Rcl, REsp, RMS, SIRDR)
+  num_ministro               73 opções
+  cod_orgao_julgador          5 opções (as 3 Seções, Corte Especial…)
+  cod_origem                 36 opções (tribunal de origem)
+  dt_inicial / dt_final + tipo_data
+  situacao_precedente_C/I/P/S/T         checkboxes de situação
+  ordenacaoCriterio + ordenacaoDecrescente
+  i=1                        índice do 1º documento
+  quantidadeResultadosPorPagina         10 | 20 | 50 | -1 (Todos)
+
+Campos e combos completos (9 selects, 24 inputs, 68 checkboxes): 02-campos-e-combos.json
+
+
+## Tela de resultados
+
+Contadores por tipo, no topo: `Temas (4) · Controvérsias (7) · IAC (0) ·
+SIRDR (0) · PUIL (0)` — a mesma busca, contada em cada aba.
+Depois: "N documentos encontrados".
+
+Um tema = um `div.container.containerDocumento`. Dentro:
+  .titulo_campo_processo / .dados_campo_processo   -> Tema Repetitivo, Situação,
+                                                      Órgão julgador, Ramo do direito
+  .titulo_campo / .dados_campo                     -> Questão submetida a julgamento,
+                                                      Tese Firmada, Anotações NUGEPNAC,
+                                                      Informações Complementares
+  input[name=seqTemaImpressao][value]              -> sequencial interno do tema
+  e, ao final, um bloco por processo paradigma (nº, tribunal de origem, relator,
+  afetação, julgado em, acórdão publicado em, trânsito em julgado)
+
+⚠️ ARMADILHA: os rótulos `.titulo_campo` começam com uma quebra de linha, então
+`textContent.split('\n')[0]` devolve string vazia e os campos mais valiosos
+(Tese Firmada, Questão submetida) somem em silêncio. É preciso `trim()` ANTES de
+partir em linhas. Foi o bug que fez a primeira versão do extrator devolver só os
+campos dos processos paradigma.
+
+
+## Prova (25/07/2026)
+
+  pesquisa_livre="usucapião", tipo=Repetitivo ..... 4 temas
+      (Tema 985 — usucapião extraordinária × módulo municipal, Segunda Seção,
+       trânsito em julgado — com tese firmada completa)
+  pesquisa_livre="bem de família", tipo=Repetitivo . 5 temas (708, 1091, …)
+  a mesma busca em Controvérsias .................. 7
+
+
+## Cruzamento com a base de acórdãos
+
+Quando um acórdão da base ACOR é repetitivo, o card traz o banner
+`.barraDocRepetitivo` com link direto para cá:
+  https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=1023&cod_tema_final=1023
+
+E o caminho inverso, dentro do próprio SCON, é o combo Notas
+(`--nota repetitivos`), que isola os acórdãos julgados sob o rito.

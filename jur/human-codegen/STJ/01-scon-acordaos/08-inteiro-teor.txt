@@ -1,0 +1,31 @@
+STJ / SCON — §8. Inteiro teor
+=============================
+
+Print: 08.01-inteiro-teor.png
+
+Link no card do resultado:
+
+  <a href="javascript:inteiro_teor('/SCON/GetInteiroTeorDoAcordao?num_registro=201901160800&dt_publicacao=17/03/2021')">
+
+Ou seja: `GET https://scon.stj.jus.br/SCON/GetInteiroTeorDoAcordao?num_registro=<12 dígitos>&dt_publicacao=DD/MM/YYYY`
+
+O que vem:
+  - **HTML**, não PDF. Um documento único com relatório, votos, ementa e certidão
+    de julgamento — a íntegra do acórdão.
+  - Tamanho típico: **~1 MB por acórdão** (medido: 991.605 bytes num REsp da
+    Primeira Seção). Não baixe lotes grandes sem necessidade.
+  - Charset ISO-8859-1, como o resto do site.
+  - **Não exige token nem captcha além do desafio já vencido** — o mesmo contexto
+    do browser baixa por HTTP direto.
+
+O que NÃO vem no payload da busca: a ementa vem, o inteiro teor não. É uma
+requisição a mais por documento (diferente do TJRS/TJPA, que embutem o texto).
+
+A ementa do SCON, porém, é longa e estruturada (o "espelho do acórdão" traz
+ementa, tese jurídica, referência legislativa, jurisprudência citada e notas) —
+para a maioria das análises ela basta, e o inteiro teor só é necessário quando
+se quer o voto.
+
+Documentação oficial da estrutura do espelho:
+https://scon.stj.jus.br/docs_internet/jurisprudencia/ajuda/Espelho_do_Acordao_atualizado.pdf
+(acessível por HTTP puro, sem passar pelo Cloudflare)

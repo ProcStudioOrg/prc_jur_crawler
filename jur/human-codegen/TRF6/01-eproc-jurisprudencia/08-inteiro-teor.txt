@@ -1,0 +1,54 @@
+========================================================================
+8. INTEIRO TEOR E CITAÇÃO
+========================================================================
+------------------------------------------------------------------
+8.1 Inteiro teor
+------------------------------------------------------------------
+Ícone `article` ("Exibir inteiro teor do documento") em cada card. O link vem
+pronto no atributo `data-link` do próprio HTML de resultado — NÃO exige uma
+segunda navegação nem token de sessão:
+
+  GET https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php
+      ?acao=jurisprudencia@jurisprudencia/download_inteiro_teor
+      &id_jurisprudencia=<id de 30 dígitos>
+      &termosPesquisados=<base64 dos termos, separados por |>
+
+Resposta:  HTTP 200 · `Content-Type: text/html; charset= ISO-8859-1`
+           HTML de ~45 KB (documento formatado, com os termos grifados)
+           NÃO é PDF nem RTF.
+
+⚠️ ENCODING: é ISO-8859-1 de verdade, não só na declaração. Decodificar como
+   UTF-8 produz mojibake. O `TRF6Navigator` tenta UTF-8 estrito e cai para
+   windows-1252 quando falha — o mesmo tratamento do TRF2.
+
+⚠️ Sem captcha, sem token, sem cookie. Baixa direto por GET.
+
+A EMENTA JÁ VEM INTEIRA NO RESULTADO da busca, inclusive nas Turmas Recursais —
+diferente do TJSC/TRF4, onde a ementa da Turma Recursal é uma frase e obriga a
+baixar o inteiro teor. Aqui `--fetch-inteiro-teor` é OPCIONAL; serve para ter o
+documento formatado. Ressalva: decisões monocráticas costumam vir SEM o campo
+EMENTA, só com DECISÃO — o crawler cai para `data-citacao` quando os dois faltam.
+
+------------------------------------------------------------------
+8.2 Modal "Visualizar/copiar citação"
+------------------------------------------------------------------
+Ícone que abre um modal (`#modalCitacao`) com o texto pronto para citação. O
+conteúdo já está no HTML da listagem, no atributo `data-citacao` do link
+`a.copiarCitacao` — o crawler o lê sem abrir o modal.
+
+------------------------------------------------------------------
+8.3 A requisição exata, medida em 25/07/2026
+------------------------------------------------------------------
+  GET https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php
+      ?acao=jurisprudencia@jurisprudencia/download_inteiro_teor
+      &id_jurisprudencia=381784904972821646260906913366
+      &termosPesquisados=ZXNwZWNpYWx8YXBvc2VudGFkb3JpYQ==
+
+  status        200
+  content-type  text/html; charset= ISO-8859-1
+  bytes (DOM)   45.646
+  termosPesquisados decodificado: "especial|aposentadoria"
+
+Prints:
+  08.01-inteiro-teor.png    o documento aberto, com os termos grifados em amarelo
+  08.02-modal-citacao.png   o modal de citação

@@ -1,0 +1,39 @@
+========================================================================
+0. PORTAL — como se chega à jurisprudência do TRF6
+========================================================================
+Como o TRF6 é um tribunal novo (instalado em ago/2022), as URLs "óbvias" por
+analogia com os outros TRFs NÃO existem. Foi tudo confirmado navegando, nunca
+inventado (CLAUDE-CODEGEN, HARD-GATE).
+
+URLs testadas em 25/07/2026:
+
+| URL                                          | Resultado |
+|----------------------------------------------|-----------|
+| `https://jurisprudencia.trf6.jus.br`         | NXDOMAIN  |
+| `https://juris.trf6.jus.br`                  | NXDOMAIN  |
+| `https://dadosabertos.trf6.jus.br`           | NXDOMAIN  |
+| `https://api.trf6.jus.br`                    | NXDOMAIN  |
+| `https://www.trf6.jus.br/jurisprudencia`     | 200 — mas é uma IMAGEM (`Jurisprudencia.png`), não uma página |
+| `https://www.trf6.jus.br/dados-abertos`      | 404       |
+| `https://sistemas.trf6.jus.br`               | 404 na raiz (o path de consulta processual existe) |
+| `https://portal.trf6.jus.br/`                | 200 — o portal institucional (WordPress) |
+| `https://portal.trf6.jus.br/decisoes/`       | 200 — é a página de NOTÍCIAS sobre decisões, não a base |
+| **`https://eproc-jur.trf6.jus.br/`**         | **200 → redireciona para o módulo de jurisprudência** |
+
+CAMINHO CORRETO (é o do menu do portal):
+  https://portal.trf6.jus.br/  →  menu superior, item "Jurisprudência"
+  →  https://eproc-jur.trf6.jus.br/
+  →  https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+
+Observações:
+- O host segue o padrão do TRF4 (`eproc-jur.trf4.jus.br`), mas o path base é
+  `/eproc/` (como no TRF2), não `/eproc2trf4/`.
+- O favicon servido pelo módulo ainda é `favicon_trf4.ico` — o e-Proc é produto
+  do TRF4, cedido aos demais.
+- A CONSULTA PROCESSUAL do TRF6 é outro sistema (PJe / `sistemas.trf6.jus.br`),
+  e o link "Abrir a consulta processual" dos resultados aponta para um terceiro
+  (`eproc2g.trf6.jus.br`). Nenhum deles é jurisprudência.
+
+Prints:
+  01.01-portal-trf6.png              o portal institucional, com o menu
+  01.02-redirect-para-eproc-jur.png  onde `eproc-jur.trf6.jus.br` para

@@ -1,0 +1,27 @@
+## 13. Campos específicos da pesquisa avançada (relator, classe, assunto, tese, tema)
+
+Print: `04.01-campos-especificos.png` · HTML: `04-campos-especificos.html`
+Combo da pesquisa por legislação aberto: `04.02-combo-legislacao-art.png` (`04-combo-legislacao.html`)
+
+Cada barra vira um `query_string` extra no `bool.filter`, restrito aos campos indicados
+(mapa retirado de `service.fields.advancedFilters` no bundle da SPA):
+
+| Barra na tela                | chave na API           | campos do índice | Contagem de prova |
+|---|---|---|---|
+| Número / Classe              | `classeNumeroIncidente` | `titulo`, `processo_codigo_completo`, `processo_classe_processual_unificada_extenso`, `documental_acordao_mesmo_sentido_lista_texto`, `documental_decisao_mesmo_sentido_lista_texto` | `ARE 1596565` → 1; `ADI 4277` → 1; `RE 1234567` → 0 |
+| Ementa / Decisão / Indexação | `ementaAtaIndexacao`   | `acordao_ata^3`, `documental_indexacao_texto`, `ementa_texto^3` | "dano moral" → 2.774 |
+| Tese                         | `tese`                 | `documental_tese_texto^3` | "dano moral" → 10 |
+| Tema                         | `tema`                 | `documental_tese_tema_texto^3` | "dano moral" → 23 |
+| Partes                       | `partes`               | `partes_lista_texto` | "INSTITUTO NACIONAL DO SEGURO SOCIAL" → 6.985 |
+| Observação                   | `observacao`           | `documental_observacao_texto` | — |
+| Norma (pesquisa por legislação) | `legislacao`        | `documental_legislacao_citada_texto` | "CF-1988 ART-00005" → 30.694 |
+| Número (bases Súmulas/Informativos) | `numero`       | `volume_informativo` | — |
+
+A "Pesquisa por legislação" tem, além da caixa **Norma** (`#normaInput`), quatro `mat-select`
+auxiliares — **Art.**, **Inc.**, **Let.**, **Par.** — que só montam a string canônica no
+formato do STF (`CF-1988 ART-00005 INC-00010`). Não é um filtro estruturado: o resultado final
+cai no mesmo `documental_legislacao_citada_texto`.
+
+⚠️ **Relator não é um campo de texto.** No STF o ministro é uma FACETA de valor exato
+(`ministro_facet.keyword`) — ver seção 07 e `07-ministros-acordaos.json` (144 nomes). Digitar o
+nome na caixa geral funciona, mas por relevância, não como filtro.

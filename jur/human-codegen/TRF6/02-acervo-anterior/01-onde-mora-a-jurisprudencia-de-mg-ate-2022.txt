@@ -1,0 +1,94 @@
+========================================================================
+ACERVO ANTERIOR — onde mora a jurisprudência federal de MG até 2022
+========================================================================
+Esta é a pergunta prática que um advogado de Minas Gerais faz e que a base do
+TRF6 sozinha não responde. Ela está documentada aqui porque é uma característica
+PERMANENTE do tribunal, não um bug temporário.
+
+------------------------------------------------------------------
+1. O TRF6 não tem nada antes de 2023
+------------------------------------------------------------------
+O TRF6 foi criado pela EC 122/2022 e instalado em agosto de 2022, desmembrando-se
+do TRF1 (que até então respondia por MG junto com outros 12 estados e o DF).
+
+A base de jurisprudência começa em 2023. Medido em 25/07/2026, curinga `*`,
+origem TRF6, por ano de julgamento:
+
+    1995..2022        0
+    2023            283
+    2024         17.719
+    2025        126.105
+    2026 (até 25/07) 95.017
+
+Vale para TODAS as origens e para o filtro de PUBLICAÇÃO também
+(`*` com publicação até 31/12/2022 = 0).
+
+Print: 01.01-trf6-zero-antes-de-2023.png
+       (busca `aposentadoria`, julgamento 01/01/2010–31/12/2022 →
+        "0 documentos encontrados")
+
+⚠️ Isso não significa que os PROCESSOS antigos sumiram: a base tem documentos de
+   processos com numeração `.4.01.` herdada do TRF1, alguns bem antigos
+   (`0019935-92.2009.4.01.3800`). O que é recente é o JULGAMENTO, não o processo.
+   Ver `../01-eproc-jurisprudencia/05-numero-do-processo.txt`.
+
+------------------------------------------------------------------
+2. A Jurisprudência Unificada do CJF NÃO cobre o TRF6
+------------------------------------------------------------------
+Candidato natural a "base nacional do ramo" (o equivalente da Falcão na Justiça
+do Trabalho). Verificado no navegador em 25/07/2026: o formulário de
+`jurisprudencia.cjf.jus.br/unificada/` oferece exatamente estes tribunais —
+
+    STF · STJ · TNU · TRF1 · TRF2 · TRF3 · TRF4 · TRF5 · TR · TRU · Todos
+
+**Não há TRF6.** Não é que a base do TRF6 esteja vazia lá (como acontece com o
+TRF2): o tribunal simplesmente não existe no seletor. A Unificada foi construída
+antes de 2022 e não foi estendida.
+
+Print: 02.01-cjf-unificada-sem-trf6.png
+JSON:  02-cjf-unificada-medicao.json
+
+Registro complementar (medido nesta campanha, termo `aposentadoria`, na
+Unificada): TRF1 252.794 · TRF2 0 (vazio) · TRF3 542.469 · TRF4 16.573 ·
+TRF5 40.911. Cobertura desigual — a Unificada não é fonte confiável para nenhum
+TRF, e para o TRF6 não é fonte nenhuma.
+
+------------------------------------------------------------------
+3. O acervo mineiro até 2022 está no TRF1 — medido, não presumido
+------------------------------------------------------------------
+Comando:
+    ./bin/jur trf1 -q "aposentadoria" -di "01/01/2019" -df "31/12/2019" -m 5
+
+Resultado (25/07/2026): a base do TRF1 no CJF respondeu 242.537 documentos para
+`aposentadoria` e devolveu 150 na amostra. Distribuição dos sufixos de origem no
+número CNJ:
+
+    3800  18   <- Seção Judiciária de MG (Belo Horizonte)
+    3802   5      3803  1      3804  2      3807  4
+    3809   1      3810  3      3814  4      3819  1
+    3823   1      3825  1
+    ----------------------------------------------------------
+    subseções 38xx (Minas Gerais):  41 de 150  =  27,3% da amostra
+
+    (os demais: 3400 DF 15 · 9199 38 · 9999 31 · 3300 BA 3 · 3500 GO 4 · etc.)
+
+CONCLUSÃO: a base do TRF1 continua contendo a jurisprudência federal de Minas
+Gerais anterior ao desmembramento, e é lá que se busca qualquer coisa julgada
+até 2022. O acervo NÃO foi migrado para o TRF6 nem replicado em lugar nenhum.
+
+Print: 03.01-trf1-cjf-portal.png
+JSON:  03-trf1-acervo-mg-medicao.json
+
+------------------------------------------------------------------
+4. Como isso vira roteamento
+------------------------------------------------------------------
+| Pedido do usuário                                   | Comando                          |
+|-----------------------------------------------------|----------------------------------|
+| jurisprudência federal de MG, 2023 em diante        | `./bin/jur trf6`                 |
+| Juizado Especial Federal / Turma Recursal de MG     | `./bin/jur trf6 --origem turmas` |
+| jurisprudência federal de MG **até 2022**           | `./bin/jur trf1`  (⚠️ status do TRF1 varia — ver CLAUDE-TRF1.md) |
+| "o que o TRF6 já decidiu sobre X" (histórico longo) | os dois, e dizer ao usuário que são duas bases distintas |
+
+⚠️ Uma busca no TRF6 com recorte anterior a 2023 devolve lista vazia. O crawler
+   emite um aviso explícito apontando o TRF1 em vez de deixar o usuário concluir
+   que "não há jurisprudência sobre o tema".

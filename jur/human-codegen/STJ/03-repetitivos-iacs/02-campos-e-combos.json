@@ -1,0 +1,1170 @@
+{
+  "selects": {
+    "tipo_data": [
+      {
+        "value": "",
+        "texto": "Selecione..."
+      }
+    ],
+    "sg_classe": [
+      {
+        "value": "",
+        "texto": "Selecione..."
+      },
+      {
+        "value": "AREsp",
+        "texto": "AREsp - AGRAVO EM RECURSO ESPECIAL"
+      },
+      {
+        "value": "CC",
+        "texto": "CC - CONFLITO DE COMPETÊNCIA"
+      },
+      {
+        "value": "EREsp",
+        "texto": "EREsp - EMBARGOS DE DIVERGÊNCIA EM RESP"
+      },
+      {
+        "value": "Pet",
+        "texto": "Pet - PETIÇÃO"
+      },
+      {
+        "value": "PUIL",
+        "texto": "PUIL - PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI"
+      },
+      {
+        "value": "Rcl",
+        "texto": "Rcl - RECLAMAÇÃO"
+      },
+      {
+        "value": "REsp",
+        "texto": "REsp - RECURSO ESPECIAL"
+      },
+      {
+        "value": "RMS",
+        "texto": "RMS - RECURSO EM MANDADO DE SEGURANÇA"
+      },
+      {
+        "value": "SIRDR",
+        "texto": "SIRDR - SUSPENSÃO EM INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS"
+      }
+    ],
+    "num_ministro": [
+      {
+        "value": "",
+        "texto": "Selecione..."
+      },
+      {
+        "value": "8205",
+        "texto": "ADILSON VIEIRA MACABU (DESEMBARGADOR CONVOCADO DO TJ/RJ)"
+      },
+      {
+        "value": "1187",
+        "texto": "AFRÂNIO VILELA"
+      },
+      {
+        "value": "8215",
+        "texto": "ALDERITA RAMOS DE OLIVEIRA (DESEMBARGADORA CONVOCADA DO TJ/PE)"
+      },
+      {
+        "value": "1110",
+        "texto": "ALDIR PASSARINHO JUNIOR"
+      },
+      {
+        "value": "1146",
+        "texto": "ANTONIO CARLOS FERREIRA"
+      },
+      {
+        "value": "1182",
+        "texto": "ANTONIO SALDANHA PALHEIRO"
+      },
+      {
+        "value": "1104",
+        "texto": "ARI PARGENDLER"
+      },
+      {
+        "value": "1128",
+        "texto": "ARNALDO ESTEVES LIMA"
+      },
+      {
+        "value": "1151",
+        "texto": "ASSUSETE MAGALHÃES"
+      },
+      {
+        "value": "1142",
+        "texto": "BENEDITO GONÇALVES"
+      },
+      {
+        "value": "8250",
+        "texto": "CAMPOS MARQUES (DESEMBARGADOR CONVOCADO DO TJ/PR)"
+      },
+      {
+        "value": "8441",
+        "texto": "CARLOS CINI MARCHIONATTI (DESEMBARGADOR CONVOCADO TJRS)"
+      },
+      {
+        "value": "8135",
+        "texto": "CARLOS FERNANDO MATHIAS (JUIZ FEDERAL CONVOCADO DO TRF 1ª REGIÃO)"
+      },
+      {
+        "value": "1190",
+        "texto": "CARLOS PIRES BRANDÃO"
+      },
+      {
+        "value": "1125",
+        "texto": "CASTRO MEIRA"
+      },
+      {
+        "value": "8175",
+        "texto": "CELSO LIMONGI (DESEMBARGADOR CONVOCADO DO TJ/SP)"
+      },
+      {
+        "value": "1098",
+        "texto": "CESAR ASFOR ROCHA"
+      },
+      {
+        "value": "1188",
+        "texto": "DANIELA TEIXEIRA"
+      },
+      {
+        "value": "1126",
+        "texto": "DENISE ARRUDA"
+      },
+      {
+        "value": "8315",
+        "texto": "DIVA MALERBI (DESEMBARGADORA CONVOCADA TRF 3ª REGIÃO)"
+      },
+      {
+        "value": "1114",
+        "texto": "ELIANA CALMON"
+      },
+      {
+        "value": "1109",
+        "texto": "FELIX FISCHER"
+      },
+      {
+        "value": "1116",
+        "texto": "FRANCISCO FALCÃO"
+      },
+      {
+        "value": "1111",
+        "texto": "GILSON DIPP"
+      },
+      {
+        "value": "1160",
+        "texto": "GURGEL DE FARIA"
+      },
+      {
+        "value": "1112",
+        "texto": "HAMILTON CARVALHIDO"
+      },
+      {
+        "value": "1132",
+        "texto": "HERMAN BENJAMIN"
+      },
+      {
+        "value": "1130",
+        "texto": "HUMBERTO MARTINS"
+      },
+      {
+        "value": "8420",
+        "texto": "JESUÍNO RISSATO (DESEMBARGADOR CONVOCADO DO TJDFT)"
+      },
+      {
+        "value": "8430",
+        "texto": "JOÃO BATISTA MOREIRA  (DESEMBARGADOR CONVOCADO DO TRF1)"
+      },
+      {
+        "value": "1123",
+        "texto": "JOÃO OTÁVIO DE NORONHA"
+      },
+      {
+        "value": "1183",
+        "texto": "JOEL ILAN PACIORNIK"
+      },
+      {
+        "value": "1138",
+        "texto": "JORGE MUSSI"
+      },
+      {
+        "value": "1120",
+        "texto": "LAURITA VAZ"
+      },
+      {
+        "value": "8400",
+        "texto": "LÁZARO GUIMARÃES  (DESEMBARGADOR CONVOCADO DO TRF 5ª REGIÃO)"
+      },
+      {
+        "value": "8450",
+        "texto": "LUÍS CARLOS GAMBOGI (DESEMBARGADOR CONVOCADO DO TJMG)"
+      },
+      {
+        "value": "1140",
+        "texto": "LUIS FELIPE SALOMÃO"
+      },
+      {
+        "value": "1122",
+        "texto": "LUIZ FUX"
+      },
+      {
+        "value": "8410",
+        "texto": "MANOEL ERHARDT (DESEMBARGADOR CONVOCADO DO TRF5)"
+      },
+      {
+        "value": "1150",
+        "texto": "MARCO AURÉLIO BELLIZZE"
+      },
+      {
+        "value": "1149",
+        "texto": "MARCO BUZZI"
+      },
+      {
+        "value": "8360",
+        "texto": "MARGA TESSLER (JUÍZA FEDERAL CONVOCADA DO TRF 4ª REGIÃO)"
+      },
+      {
+        "value": "1145",
+        "texto": "MARIA ISABEL GALLOTTI"
+      },
+      {
+        "value": "1189",
+        "texto": "MARIA MARLUCE CALDAS"
+      },
+      {
+        "value": "1131",
+        "texto": "MARIA THEREZA DE ASSIS MOURA"
+      },
+      {
+        "value": "1129",
+        "texto": "MASSAMI UYEDA"
+      },
+      {
+        "value": "1141",
+        "texto": "MAURO CAMPBELL MARQUES"
+      },
+      {
+        "value": "1184",
+        "texto": "MESSOD AZULAY NETO"
+      },
+      {
+        "value": "1156",
+        "texto": "MOURA RIBEIRO"
+      },
+      {
+        "value": "1118",
+        "texto": "NANCY ANDRIGHI"
+      },
+      {
+        "value": "1133",
+        "texto": "NAPOLEÃO NUNES MAIA FILHO"
+      },
+      {
+        "value": "1159",
+        "texto": "NEFI CORDEIRO"
+      },
+      {
+        "value": "361",
+        "texto": "NILSON NAVES"
+      },
+      {
+        "value": "8460",
+        "texto": "NILSONI DE FREITAS (DESEMBARGADORA CONVOCADA DO TJDFT)"
+      },
+      {
+        "value": "1139",
+        "texto": "OG FERNANDES"
+      },
+      {
+        "value": "8440",
+        "texto": "OTÁVIO DE ALMEIDA TOLEDO (DESEMBARGADOR CONVOCADO DO TJSP)"
+      },
+      {
+        "value": "1144",
+        "texto": "PAULO DE TARSO SANSEVERINO"
+      },
+      {
+        "value": "8165",
+        "texto": "PAULO FURTADO (DESEMBARGADOR CONVOCADO DO TJ/BA)"
+      },
+      {
+        "value": "1185",
+        "texto": "PAULO SÉRGIO DOMINGUES"
+      },
+      {
+        "value": "9010",
+        "texto": "PRESIDENTE DA COMISSÃO GESTORA DE PRECEDENTES"
+      },
+      {
+        "value": "1143",
+        "texto": "RAUL ARAÚJO"
+      },
+      {
+        "value": "1157",
+        "texto": "REGINA HELENA COSTA"
+      },
+      {
+        "value": "1170",
+        "texto": "REYNALDO SOARES DA FONSECA"
+      },
+      {
+        "value": "1181",
+        "texto": "RIBEIRO DANTAS"
+      },
+      {
+        "value": "1147",
+        "texto": "RICARDO VILLAS BÔAS CUEVA"
+      },
+      {
+        "value": "1158",
+        "texto": "ROGERIO SCHIETTI CRUZ"
+      },
+      {
+        "value": "1148",
+        "texto": "SEBASTIÃO REIS JÚNIOR"
+      },
+      {
+        "value": "1155",
+        "texto": "SÉRGIO KUKINA"
+      },
+      {
+        "value": "1137",
+        "texto": "SIDNEI BENETI"
+      },
+      {
+        "value": "1186",
+        "texto": "TEODORO SILVA SANTOS"
+      },
+      {
+        "value": "1124",
+        "texto": "TEORI ALBINO ZAVASCKI"
+      },
+      {
+        "value": "8155",
+        "texto": "VASCO DELLA GIUSTINA (DESEMBARGADOR CONVOCADO DO TJ/RS)"
+      }
+    ],
+    "cod_orgao_julgador": [
+      {
+        "value": "",
+        "texto": "Selecione..."
+      },
+      {
+        "value": "S1",
+        "texto": "PRIMEIRA SEÇÃO"
+      },
+      {
+        "value": "S2",
+        "texto": "SEGUNDA SEÇÃO"
+      },
+      {
+        "value": "S3",
+        "texto": "TERCEIRA SEÇÃO"
+      },
+      {
+        "value": "CE",
+        "texto": "CORTE ESPECIAL"
+      }
+    ],
+    "cod_origem": [
+      {
+        "value": "",
+        "texto": "Selecione..."
+      },
+      {
+        "value": "0200",
+        "texto": "TJAC - TRIBUNAL DE JUSTIÇA DO ESTADO DO ACRE"
+      },
+      {
+        "value": "0220",
+        "texto": "TJAL - TRIBUNAL DE JUSTIÇA DO ESTADO DE ALAGOAS"
+      },
+      {
+        "value": "0260",
+        "texto": "TJAM - TRIBUNAL DE JUSTIÇA DO ESTADO DO AMAZONAS"
+      },
+      {
+        "value": "0240",
+        "texto": "TJAP - TRIBUNAL DE JUSTIÇA DO ESTADO DO AMAPÁ"
+      },
+      {
+        "value": "0280",
+        "texto": "TJBA - TRIBUNAL DE JUSTIÇA DO ESTADO DA BAHIA"
+      },
+      {
+        "value": "0300",
+        "texto": "TJCE - TRIBUNAL DE JUSTIÇA DO ESTADO DO CEARÁ"
+      },
+      {
+        "value": "0320",
+        "texto": "TJDFT - TRIBUNAL DE JUSTIÇA DO DISTRITO FEDERAL E DOS TERRITÓRIOS"
+      },
+      {
+        "value": "0340",
+        "texto": "TJES - TRIBUNAL DE JUSTIÇA DO ESTADO DO ESPÍRITO SANTO"
+      },
+      {
+        "value": "0360",
+        "texto": "TJGO - TRIBUNAL DE JUSTIÇA DO ESTADO DE GOIÁS"
+      },
+      {
+        "value": "0380",
+        "texto": "TJMA - TRIBUNAL DE JUSTIÇA DO ESTADO DO MARANHÃO"
+      },
+      {
+        "value": "0440",
+        "texto": "TJMG - TRIBUNAL DE JUSTIÇA DO ESTADO DE MINAS GERAIS"
+      },
+      {
+        "value": "0420",
+        "texto": "TJMS - TRIBUNAL DE JUSTIÇA DO ESTADO DE MATO GROSSO DO SUL"
+      },
+      {
+        "value": "0400",
+        "texto": "TJMT - TRIBUNAL DE JUSTIÇA DO ESTADO DE MATO GROSSO"
+      },
+      {
+        "value": "0460",
+        "texto": "TJPA - TRIBUNAL DE JUSTIÇA DO ESTADO DO PARÁ"
+      },
+      {
+        "value": "0480",
+        "texto": "TJPB - TRIBUNAL DE JUSTIÇA DO ESTADO DA PARAÍBA"
+      },
+      {
+        "value": "0520",
+        "texto": "TJPE - TRIBUNAL DE JUSTIÇA DO ESTADO DE PERNAMBUCO"
+      },
+      {
+        "value": "0540",
+        "texto": "TJPI - TRIBUNAL DE JUSTIÇA DO ESTADO DO PIAUÍ"
+      },
+      {
+        "value": "0500",
+        "texto": "TJPR - TRIBUNAL DE JUSTIÇA DO ESTADO DO PARANÁ"
+      },
+      {
+        "value": "0600",
+        "texto": "TJRJ - TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO DE JANEIRO"
+      },
+      {
+        "value": "0560",
+        "texto": "TJRN - TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO GRANDE DO NORTE"
+      },
+      {
+        "value": "0620",
+        "texto": "TJRO - TRIBUNAL DE JUSTIÇA DO ESTADO DE RONDÔNIA"
+      },
+      {
+        "value": "0640",
+        "texto": "TJRR - TRIBUNAL DE JUSTIÇA DO ESTADO DE RORAIMA"
+      },
+      {
+        "value": "0580",
+        "texto": "TJRS - TRIBUNAL DE JUSTIÇA DO ESTADO DO RIO GRANDE DO SUL"
+      },
+      {
+        "value": "0660",
+        "texto": "TJSC - TRIBUNAL DE JUSTIÇA DO ESTADO DE SANTA CATARINA"
+      },
+      {
+        "value": "0700",
+        "texto": "TJSE - TRIBUNAL DE JUSTIÇA DO ESTADO DE SERGIPE"
+      },
+      {
+        "value": "0680",
+        "texto": "TJSP - TRIBUNAL DE JUSTIÇA DO ESTADO DE SÃO PAULO - AV. BRIGADEIRO"
+      },
+      {
+        "value": "1038",
+        "texto": "TJSPCF - TRIBUNAL DE JUSTIÇA DO ESTADO DE SÃO PAULO - CONSELHEIRO FURTADO - PÁTIO DO COLÉGIO"
+      },
+      {
+        "value": "1039",
+        "texto": "TJSPRGL - TRIBUNAL DE JUSTIÇA DO ESTADO DE SÃO PAULO - RUA DA GLÓRIA"
+      },
+      {
+        "value": "0720",
+        "texto": "TJTO - TRIBUNAL DE JUSTIÇA DO ESTADO DO TOCANTINS"
+      },
+      {
+        "value": "0806",
+        "texto": "TRF1 - TRIBUNAL REGIONAL FEDERAL DA 1ª REGIÃO"
+      },
+      {
+        "value": "0808",
+        "texto": "TRF2 - TRIBUNAL REGIONAL FEDERAL DA 2ª REGIÃO"
+      },
+      {
+        "value": "0810",
+        "texto": "TRF3 - TRIBUNAL REGIONAL FEDERAL DA 3ª REGIÃO"
+      },
+      {
+        "value": "0812",
+        "texto": "TRF4 - TRIBUNAL REGIONAL FEDERAL DA 4ª REGIÃO"
+      },
+      {
+        "value": "0814",
+        "texto": "TRF5 - TRIBUNAL REGIONAL FEDERAL DA 5ª REGIÃO"
+      },
+      {
+        "value": "1066",
+        "texto": "TRF6 - TRIBUNAL REGIONAL FEDERAL DA 6ª REGIÃO"
+      }
+    ],
+    "cod_tipo_puil": [
+      {
+        "value": "",
+        "texto": "Selecione..."
+      },
+      {
+        "value": "1",
+        "texto": "Juizado Federal (TNU)"
+      },
+      {
+        "value": "2",
+        "texto": "Juizado Fazenda Pública"
+      }
+    ],
+    "sg_ramo_direito": [
+      {
+        "value": "",
+        "texto": "Selecione..."
+      },
+      {
+        "value": "AD",
+        "texto": "AD - DIREITO ADMINISTRATIVO"
+      },
+      {
+        "value": "AM",
+        "texto": "AM - DIREITO AMBIENTAL"
+      },
+      {
+        "value": "CV",
+        "texto": "CV - DIREITO CIVIL"
+      },
+      {
+        "value": "CM",
+        "texto": "CM - DIREITO COMERCIAL"
+      },
+      {
+        "value": "CT",
+        "texto": "CT - DIREITO CONSTITUCIONAL"
+      },
+      {
+        "value": "CN",
+        "texto": "CN - DIREITO DO CONSUMIDOR"
+      },
+      {
+        "value": "TB",
+        "texto": "TB - DIREITO DO TRABALHO E PROCESSUAL TRABALHISTA"
+      },
+      {
+        "value": "IN",
+        "texto": "IN - DIREITO INTERNACIONAL"
+      },
+      {
+        "value": "PN",
+        "texto": "PN - DIREITO PENAL"
+      },
+      {
+        "value": "PV",
+        "texto": "PV - DIREITO PREVIDENCIÁRIO"
+      },
+      {
+        "value": "PC",
+        "texto": "PC - DIREITO PROCESSUAL CIVIL E DO TRABALHO"
+      },
+      {
+        "value": "PP",
+        "texto": "PP - DIREITO PROCESSUAL PENAL"
+      },
+      {
+        "value": "MP",
+        "texto": "MP - DIREITO PROCESSUAL PENAL MILITAR"
+      },
+      {
+        "value": "TR",
+        "texto": "TR - DIREITO TRIBUTÁRIO"
+      }
+    ],
+    "ordenacaoCriterio": [
+      {
+        "value": "1",
+        "texto": "N° do tema/controvérsia"
+      },
+      {
+        "value": "2",
+        "texto": "Última atualização"
+      },
+      {
+        "value": "3",
+        "texto": "Quantitativo de suspensos"
+      }
+    ],
+    "ordenacaoDecrescente": [
+      {
+        "value": "0",
+        "texto": "Crescente"
+      },
+      {
+        "value": "1",
+        "texto": "Decrescente"
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "type": "hidden",
+      "name": "p",
+      "id": "",
+      "value": "true"
+    },
+    {
+      "type": "hidden",
+      "name": "novaConsulta",
+      "id": "",
+      "value": "true"
+    },
+    {
+      "type": "hidden",
+      "name": "quantidadeResultadosPorPagina",
+      "id": "",
+      "value": "10"
+    },
+    {
+      "type": "hidden",
+      "name": "i",
+      "id": "",
+      "value": "1"
+    },
+    {
+      "type": "text",
+      "name": "pesquisa_livre",
+      "id": "pesquisa_livre",
+      "value": ""
+    },
+    {
+      "type": "button",
+      "name": "",
+      "id": "btnE",
+      "value": "e"
+    },
+    {
+      "type": "button",
+      "name": "",
+      "id": "btnOU",
+      "value": "ou"
+    },
+    {
+      "type": "button",
+      "name": "",
+      "id": "btnADJ",
+      "value": "adj"
+    },
+    {
+      "type": "button",
+      "name": "",
+      "id": "btnNAO",
+      "value": "não"
+    },
+    {
+      "type": "button",
+      "name": "",
+      "id": "btnPROX",
+      "value": "prox"
+    },
+    {
+      "type": "button",
+      "name": "",
+      "id": "btnMESMO",
+      "value": "mesmo"
+    },
+    {
+      "type": "button",
+      "name": "",
+      "id": "btnCOM",
+      "value": "com"
+    },
+    {
+      "type": "button",
+      "name": "",
+      "id": "btnTRUNC",
+      "value": "$"
+    },
+    {
+      "type": "text",
+      "name": "cod_tema_inicial",
+      "id": "cod_tema_inicial",
+      "value": ""
+    },
+    {
+      "type": "text",
+      "name": "cod_tema_final",
+      "id": "cod_tema_final",
+      "value": ""
+    },
+    {
+      "type": "text",
+      "name": "dt_inicial",
+      "id": "dt_inicial",
+      "value": ""
+    },
+    {
+      "type": "text",
+      "name": "dt_final",
+      "id": "dt_final",
+      "value": ""
+    },
+    {
+      "type": "text",
+      "name": "num_processo_classe",
+      "id": "num_processo_classe",
+      "value": ""
+    },
+    {
+      "type": "text",
+      "name": "cod_orgao_julgador_texto_concatenado",
+      "id": "cod_orgao_julgador_texto_concatenado",
+      "value": ""
+    },
+    {
+      "type": "hidden",
+      "name": "cod_orgao_julgador_valores",
+      "id": "cod_orgao_julgador_valores",
+      "value": ""
+    },
+    {
+      "type": "button",
+      "name": "",
+      "id": "",
+      "value": "X"
+    },
+    {
+      "type": "button",
+      "name": "",
+      "id": "cod_orgao_julgador_botao_adicionar",
+      "value": "+"
+    },
+    {
+      "type": "submit",
+      "name": "",
+      "id": "",
+      "value": "Pesquisar"
+    },
+    {
+      "type": "button",
+      "name": "",
+      "id": "",
+      "value": "Limpar"
+    }
+  ],
+  "checkboxes": [
+    {
+      "type": "radio",
+      "name": "operadorPadrao",
+      "value": "e",
+      "id": "operadorPadrao"
+    },
+    {
+      "type": "radio",
+      "name": "operadorPadrao",
+      "value": "adj",
+      "id": "operadorPadrao"
+    },
+    {
+      "type": "checkbox",
+      "name": "pesquisarSinonimos",
+      "value": "on",
+      "id": "pesquisarSinonimos"
+    },
+    {
+      "type": "checkbox",
+      "name": "pesquisarPlurais",
+      "value": "on",
+      "id": "pesquisarPlurais"
+    },
+    {
+      "type": "checkbox",
+      "name": "tipo_pesquisa",
+      "value": "T",
+      "id": ""
+    },
+    {
+      "type": "checkbox",
+      "name": "tipo_pesquisa",
+      "value": "C",
+      "id": ""
+    },
+    {
+      "type": "checkbox",
+      "name": "tipo_pesquisa",
+      "value": "I",
+      "id": ""
+    },
+    {
+      "type": "checkbox",
+      "name": "tipo_pesquisa",
+      "value": "S",
+      "id": ""
+    },
+    {
+      "type": "checkbox",
+      "name": "tipo_pesquisa",
+      "value": "P",
+      "id": ""
+    },
+    {
+      "type": "checkbox",
+      "name": "",
+      "value": "on",
+      "id": "todos_precedentes"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "30",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "15",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "28",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "16",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "3",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "2",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "10",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "7",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "4",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "5",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "8",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "19",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "9",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_P",
+      "value": "6",
+      "id": "situacao_precedente_P"
+    },
+    {
+      "type": "checkbox",
+      "name": "",
+      "value": "",
+      "id": "situacao_precedente_P_todas"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_C",
+      "value": "12",
+      "id": "situacao_precedente_C"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_C",
+      "value": "13",
+      "id": "situacao_precedente_C"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_C",
+      "value": "11",
+      "id": "situacao_precedente_C"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_C",
+      "value": "32",
+      "id": "situacao_precedente_C"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_C",
+      "value": "33",
+      "id": "situacao_precedente_C"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_C",
+      "value": "38",
+      "id": "situacao_precedente_C"
+    },
+    {
+      "type": "checkbox",
+      "name": "",
+      "value": "",
+      "id": "situacao_precedente_C_todas"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_S",
+      "value": "23",
+      "id": "situacao_precedente_S"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_S",
+      "value": "24",
+      "id": "situacao_precedente_S"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_S",
+      "value": "25",
+      "id": "situacao_precedente_S"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_S",
+      "value": "26",
+      "id": "situacao_precedente_S"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_S",
+      "value": "29",
+      "id": "situacao_precedente_S"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_S",
+      "value": "31",
+      "id": "situacao_precedente_S"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_S",
+      "value": "8",
+      "id": "situacao_precedente_S"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_S",
+      "value": "5",
+      "id": "situacao_precedente_S"
+    },
+    {
+      "type": "checkbox",
+      "name": "",
+      "value": "",
+      "id": "situacao_precedente_S_todas"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_T",
+      "value": "1",
+      "id": "situacao_precedente_T"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_T",
+      "value": "14",
+      "id": "situacao_precedente_T"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_T",
+      "value": "3",
+      "id": "situacao_precedente_T"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_T",
+      "value": "2",
+      "id": "situacao_precedente_T"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_T",
+      "value": "4",
+      "id": "situacao_precedente_T"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_T",
+      "value": "5",
+      "id": "situacao_precedente_T"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_T",
+      "value": "10",
+      "id": "situacao_precedente_T"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_T",
+      "value": "7",
+      "id": "situacao_precedente_T"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_T",
+      "value": "8",
+      "id": "situacao_precedente_T"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_T",
+      "value": "6",
+      "id": "situacao_precedente_T"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_T",
+      "value": "9",
+      "id": "situacao_precedente_T"
+    },
+    {
+      "type": "checkbox",
+      "name": "",
+      "value": "",
+      "id": "situacao_precedente_T_todas"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "15",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "28",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "36",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "2",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "10",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "37",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "19",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "18",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "6",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "9",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "35",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "8",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "5",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "situacao_precedente_I",
+      "value": "3",
+      "id": "situacao_precedente_I"
+    },
+    {
+      "type": "checkbox",
+      "name": "",
+      "value": "",
+      "id": "situacao_precedente_I_todas"
+    }
+  ]
+}

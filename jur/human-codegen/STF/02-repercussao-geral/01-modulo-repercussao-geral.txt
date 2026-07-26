@@ -1,0 +1,46 @@
+STF — módulo 02: Repercussão Geral (portal ASP, FORA da SPA de jurisprudência)
+
+Link:   https://portal.stf.jus.br/jurisprudenciaRepercussao/pesquisarProcesso.asp
+Prints: `01.01-pesquisar-processo.png`
+HTML:   `01-form-avancado.html` · combos completos em `01-combos.json`
+
+Status neste repo: **mapeado, não implementado no crawler.** O `./bin/jur stf --rg` cobre a
+repercussão geral pelo lado da jurisprudência (acórdãos paradigma, temas e teses), que é o que
+serve para citar. Este módulo é o acompanhamento ADMINISTRATIVO do instituto: em que fase está
+cada tema, quantos processos estão sobrestados, qual paradigma foi substituído.
+
+## ⚠️ Os operadores AQUI SÃO OUTROS
+
+A barra de operadores deste formulário é:  `e` `ou` `adj` `não` `prox` `mesmo` `$`
+
+Compare com a SPA de jurisprudência (módulo 01): `e ou não " " " "~ ~ $ ? ( )`.
+**`adj`, `prox` e `mesmo` só existem aqui; aspas, til e interrogação só existem lá.**
+É o caso clássico do CLAUDE-CODEGEN §9 ("um mesmo tribunal pode ter operadores diferentes por
+módulo") — não presuma que a sintaxe testada no módulo 01 vale neste.
+
+## Campos do formulário (combos enumerados no navegador, 25/07/2026)
+
+| Campo | `name` | Opções |
+|---|---|---|
+| Situação do Tema de Repercussão Geral | `situacaoRG` | **11** — Todas, Acórdão de Mérito Publicado, Acórdão de Repercussão Geral Publicado, Aguarda Substituição de Paradigma, Analisada Preliminar de Repercussão Geral, ... (lista completa em `01-combos.json`) |
+| Palavra Chave | (texto) | operadores acima |
+| Número do Tema | (texto) | número do tema de RG |
+| Situação Atual | (caixa, marcada) | considera só a situação vigente |
+| Análise de Repercussão Geral | (4 caixas) | Com Repercussão Geral · Sem Repercussão Geral · Sem Repercussão Geral / Matéria Infraconstitucional · Julgamento de Mérito no Plenário Presencial |
+| Início / Fim | (data) | ⚠️ o `<input type="date">` renderiza como **mm/dd/yyyy** |
+| Classe | `classeProcesso` | **3** — AI, ARE, RE (só as classes recursais têm RG) |
+| Número | (texto) | número do processo |
+| Relator | `ministro` | **10** ministros em exercício, por id numérico (ALEXANDRE DE MORAES=50, ANDRÉ MENDONÇA=52, CÁRMEN LÚCIA=42, CRISTIANO ZANIN=53, ...) |
+| Ramo do Direito | `txtRamoDireito` | **16** — DIREITO À EDUCAÇÃO, DIREITO ADMINISTRATIVO E OUTRAS MATÉRIAS DE DIREITO PÚBLICO, DIREITO AMBIENTAL, DIREITO CIVIL, ... |
+| Ordenação | `ordenacao` | asc (Crescente) / desc (Decrescente) |
+
+⚠️ O vocabulário de "Ramo do Direito" daqui (`DIREITO CIVIL`, caixa alta, taxonomia do CNJ)
+**não é o mesmo** de `ramo_direito` da base Súmulas na SPA (`Civil`, `Tributário`). Não dá para
+cruzar os dois sem tradução.
+
+## Páginas irmãs do mesmo módulo
+
+  `https://portal.stf.jus.br/jurisprudenciaRepercussao/tesesJulgamento.asp` — print `02.01-teses-julgadas.png`
+      lista as teses já firmadas em julgamento de mérito (HTML em `02-teses-julgadas.html`)
+  `https://portal.stf.jus.br/repercussaogeral/teses.asp` — print `03.01-teses-repercussao-geral.png`
+      página institucional das teses de repercussão geral

@@ -1,0 +1,66 @@
+TRF2 — e-Proc / Jurisprudência
+Mapeado em 25/07/2026 no Playwright (headless), UA de Chrome comum.
+
+## Identificação
+
+Tribunal:                TRF2 — Tribunal Regional Federal da 2ª Região
+Estado(s):               RJ, ES
+Módulo:                  Jurisprudência do e-Proc (`eproc-jur`)
+Link principal:          https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+Entrada divulgada:       https://jurisprudencia.trf2.jus.br/ (301 para a de cima)
+Sistema judicial:        e-Proc
+Sistema irmão mapeado:   TJSC (`CLAUDE-TJSC.md`) e TRF4 (`CLAUDE-TRF4.md`) — mesmíssimo módulo
+Abrangência da base:     2º grau. Três origens (ver §2). Julgados **de 2018 até o dia
+                         corrente** — 2017 e antes devolvem 0. Medido por ordenação
+                         "mais antigos": TRF2 24/07/2018 · Turmas Recursais 18/10/2018 ·
+                         TRU2 26/08/2020. NÃO há 1º grau (sentenças) nesta base.
+Tamanho da base:         curinga `*` por origem, em 25/07/2026 —
+                         TRF2 839.228 · Turmas Recursais 254.308 · TRU2 2.210
+Data do mapeamento:      25/07/2026
+
+## 1. Busca principal (query)
+
+Campo único de texto livre. Não há limite de caracteres declarado.
+
+    id/name: txtPesquisa      type=search      placeholder="Informe o texto para pesquisa"
+
+HTML (do DOM depois do AJAX):
+
+    <input type="search" id="txtPesquisa" name="txtPesquisa" class="form-control campoPesquisa"
+           value="" placeholder="Informe o texto para pesquisa" aria-label="Texto para pesquisa"
+           aria-describedby="btnConsultar" style="padding-right: 2rem">
+
+O botão de submit tem id duplicado na página: `#btnConsultar_form_inicial` (visível, o da
+tela inicial) e `#btnConsultar` (dentro do painel avançado, invisível até abrir). Um
+`click()` cego em `#btnConsultar` fica pendurado — use o primeiro visível.
+
+⚠️ **O comportamento default NÃO é "E implícito"** — é o defeito descrito em §7. Leia lá
+antes de montar qualquer query.
+
+Campos irmãos, todos na mesma tela (o painel "Pesquisa avançada" começa colapsado,
+`#divPesquisaAvancada.collapse`; sem abrir, os filtros não são enviados pelo formulário):
+
+| Campo                      | id / name                | Default    | O que faz |
+|----------------------------|--------------------------|------------|-----------|
+| Origem                     | `selOrigem[]`            | TRF2 (1)   | §2 — a desambiguação |
+| Tipo de documento          | `selTipoDocumento[]`     | (nenhum)   | §3 |
+| Classe                     | `selClasse[]`            | (nenhum)   | §3 |
+| Relator                    | `selRelator[]`           | (nenhum)   | §3 |
+| Órgão julgador             | `selOrgao[]`             | (nenhum)   | §3 |
+| Precedentes relevantes     | `chkPrecedenteRelevante` | desmarcado | só jurisprudência selecionada |
+| Agrupar Resultados         | `chkAgruparResultados`   | **marcado**| agrupa documentos do mesmo processo |
+| Pesquisar em: Inteiro teor | `rdoCampo=I`             | **marcado**| escopo default |
+| Pesquisar em: Ementa       | `rdoCampo=E`             |            | escopo alternativo |
+| Somente Caput da Ementa    | `chkCaput`               | desmarcado | só aparece com Ementa (`.d-none`) |
+| Processo                   | `txtProcesso`            | vazio      | §5 |
+| Datas                      | `dt*`/`hdn*`             | vazio      | §4 |
+
+Contagens que medem o efeito de cada default (`dano-moral`, origem TRF2, 25/07/2026):
+
+    inteiro teor (default) 20.201   ·   ementa 6.911   ·   ementa+caput 3.242
+    agrupado (default)     20.201   ·   sem agrupar 21.073
+    precedente relevante    4.262
+
+Arquivos desta seção: `01-form-busca.html` (formulário inteiro), `01-campos.json`
+(todos os inputs/selects lidos do DOM vivo).
+Prints: `01.01-tela-inicial.png`, `01.02-pesquisa-avancada-aberta.png`.

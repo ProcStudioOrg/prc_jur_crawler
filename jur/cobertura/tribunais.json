@@ -24,19 +24,20 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisprudencia.stf.jus.br/pages/search",
+        "comando": "stf",
+        "acesso": "api",
+        "status": "ok",
+        "nota": "SPA Angular com API de passthrough de Elasticsearch (POST /api/search/search). NÃO existe API oficial: dadosabertos.stf.jus.br é NXDOMAIN, /dadosabertos serve 404, transparencia.stf.jus.br é só painel Qlik de estatística, não há Swagger, e o STF NÃO está no DataJud (api_publica_stf → index_not_found_exception). 4 bases: acordaos 368.511 (desde 1892!), decisoes 741.676 (desde 1968), sumulas 799 = 736 simples + 63 VINCULANTES (desde 1963), informativos 11.571 (desde 1995). Instância única — não há Juizado; a desambiguação é por ÓRGÃO (Pleno 80.674 × 1ª Turma 134.877 × 2ª Turma 121.103) e por CLASSE (73 siglas: ADI/ADPF/ADC × RE/ARE/AI × HC/MS). ⚠️ TRÊS ARMADILHAS: (1) AWS WAF devolve 202+challenge sem o cookie aws-waf-token — resolvido uma vez no Playwright, vale ~4 dias, depois é HTTP puro; (2) cadeia TLS incompleta (só o cert folha) — Node falha, o navigator busca o intermediário pela extensão AIA; (3) corpo do POST ≤ 8 KB é inspecionado pelo WAF e expressão com \") OR (\" leva 403 — o bloco highlight (como a SPA manda) mantém o payload acima do limiar. Os operadores em português (e/ou/não/$) são traduzidos NO CLIENTE para AND/OR/NOT/*: sem isso viram termo literal (indeniz$ = 12.423 traduzido contra 1 literal). Inteiro teor JÁ VEM no resultado da busca (campo inteiro_teor_texto). Teto: 250 docs/requisição e 10.000 por consulta. A base de jurisprudência NÃO indexa CNJ — o Checker usa classe+número (ARE 1596565) e, para CNJ, o portal (listarProcessos.asp?numeroUnico=<só dígitos>)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
-        "codegen": "nao",
-        "screenshots": 0,
-        "tests": false,
+        "crawler": "src/STFCrawler.js",
+        "extra": "STFNavigator.js (token do AWS WAF + CA intermediária via AIA + porte fiel do construtor de query da SPA) + STFChecker.js (classe+número na jurisprudência e número único CNJ no portal)",
+        "codegen": "completo",
+        "screenshots": 27,
+        "tests": "src/STFTestes.js",
         "skills": [],
-        "working": false
+        "working": true
       }
     },
     {
@@ -57,19 +58,22 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://scon.stj.jus.br/SCON/pesquisar.jsp",
+        "comando": "stj",
+        "acesso": "browser",
+        "status": "ok",
+        "nota": "SCON — motor BRS/Oracle Text; TODA a busca cabe na querystring de um GET, sem POST/viewState/sessão. BROWSER HEADFUL OBRIGATÓRIO: Cloudflare da CSID/STJ; curl 403, e Playwright headless foi bloqueado em 4/4 tentativas nas três variantes (headless shell, channel=chromium, channel=chrome) — trocar UA não resolve. Headful passa na 1ª/2ª e depois o mesmo contexto faz HTTP puro. API OFICIAL: existe portal de dados abertos (dadosabertos.web.stj.jus.br, CKAN API) com os espelhos dos acórdãos em JSON por órgão julgador e os precedentes qualificados em CSV — mas é dado em LOTE, sem endpoint de busca por termo; NÃO existe API REST de busca (sem Swagger/OpenAPI). O STJ ESTÁ no DataJud (api_publica_stj), usado pelo Checker quando o número vem em formato CNJ. TRÊS ARMADILHAS: (1) querystring em ISO-8859-1 — em UTF-8 termo acentuado devolve 0 em silêncio; (2) sem cabeçalho Referer o pesquisar.jsp devolve o FORMULÁRIO em vez dos resultados; (3) os campos de data visíveis (dtde1/dtpb1) são decorativos — quem filtra é o parâmetro `data` (@DTDE >= \"20250101\" AND ...), e sem ele a busca volta inteira. Paginação profunda quebra em ~800 documentos (ORA-01013, timeout do Oracle) — o crawler detecta e para com aviso. Sem 1º grau, sem Juizado, sem Turma Recursal: a desambiguação é por ÓRGÃO (T1..T6, S1..S3, CE, PS, VP — a soma dos 12 fecha exatamente com o total sem filtro: 28.348) e por BASE documental (acórdãos 1.697 × monocráticas 25.532 no mesmo recorte). Os 8 operadores do SCON funcionam TODOS (e/ou/não/adj/prox/mesmo/com/$) — exceção no repo. Módulo de PRECEDENTES QUALIFICADOS (temas repetitivos, controvérsias, IACs) fica em processo.stj.jus.br, FORA do Cloudflare, e roda headless (flag --temas). A base não indexa número CNJ: só recurso (REsp 1809043) ou registro (2019/0116080-0)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
-        "codegen": "nao",
-        "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "crawler": "src/STJCrawler.js",
+        "extra": "STJNavigator.js (desafio Cloudflare em modo headful + querystring latin-1 + extrator do espelho do acórdão + classe STJRepetitivos para o módulo de precedentes qualificados) + STJChecker.js (consulta por recurso/registro no SCON e fallback para o DataJud quando o número é CNJ)",
+        "codegen": "completo",
+        "screenshots": 23,
+        "tests": "src/STJTestes.js",
+        "skills": [
+          "verificador/stj"
+        ],
+        "working": true
       }
     },
     {
@@ -228,20 +232,22 @@
         }
       ],
       "jurisprudencia": {
-        "url": "https://juris.trf2.jus.br/consulta.php",
+        "url": "https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar",
         "comando": "trf2",
-        "acesso": "browser",
-        "status": "quebrado",
-        "nota": "juris.trf2.jus.br → NXDOMAIN. O TRF2 migrou a jurisprudência para o módulo do e-Proc: https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar (mesma família do TRF4). Crawler precisa ser reescrito a partir do TRF4Crawler."
+        "acesso": "http",
+        "status": "ok",
+        "nota": "Módulo eproc-jur, mesma família do TRF4/TJSC — mas SEM o bloqueio F5 do TJSC: o POST responde 200 sem cookie nenhum, então é HTTP puro (~0,5s/busca). O host antigo juris.trf2.jus.br é NXDOMAIN; jurisprudencia.trf2.jus.br dá 301 para cá. ⚠️ RESSALVA CENTRAL: o ESPAÇO entre termos quebra a busca — o servidor injeta o operador em inglês como termo (\"dano moral\" = 46 documentos; \"dano-moral\" = 20.201). O crawler hifeniza a query sozinho; a álgebra fecha exato (OU = A+B−E, NÃO = A−E). Frase exata + outro termo não tem conserto. Justiça Federal comum × Juizados pelo combo Origem (#selOrigem: 1=TRF2, 2=TRU2, 3=Turmas Recursais; somam exato). Só 2º grau, base começa em 2018. #txtProcesso sozinho devolve 0 — o Checker usa o curinga * junto. Não existe API oficial: a Jurisprudência Unificada do CJF lista o TRF2 mas está VAZIA (0 documentos); o DataJud do CNJ funciona mas só tem metadados."
       },
       "repo": {
         "crawler": "src/TRF2Crawler.js",
-        "extra": null,
-        "codegen": "texto",
-        "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "extra": "TRF2Navigator.js + TRF2Checker.js",
+        "codegen": "completo",
+        "screenshots": 21,
+        "tests": "src/TRF2Testes.js",
+        "skills": [
+          "verificador/trf2"
+        ],
+        "working": true
       }
     },
     {
@@ -514,19 +520,22 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar",
+        "comando": "trf6",
+        "acesso": "http",
+        "status": "ok",
+        "nota": "Módulo eproc-jur (e-Proc 9.21.6), mesma família do TRF2/TRF4/TJSC, sem bloqueio nenhum: o POST responde 200 sem cookie, HTTP puro ~0,4s/busca. A tramitação é PJe, a jurisprudência é e-Proc — sistemas diferentes. Hosts jurisprudencia./juris./dadosabertos.trf6.jus.br são NXDOMAIN; a entrada é eproc-jur.trf6.jus.br (link \"Jurisprudência\" do portal). ⚠️ RESSALVA CENTRAL: a base começa em 2023 (TRF6 instalado em ago/2022, desmembrado do TRF1) — 0 documentos antes disso, e o acervo mineiro até 2022 continua no TRF1 (medido: 41 de 150 documentos da amostra do TRF1 em 2019 são de subseções .4.01.38xx de MG). A Jurisprudência Unificada do CJF NEM LISTA o TRF6 (só STF/STJ/TNU/TRF1-5/TR/TRU; /trf6/index.xhtml = 404). ⚠️ NÃO copiar a correção de query do TRF2: aqui o espaço FUNCIONA como E (\"dano moral\" = \"dano-moral\" = 2.201) e hifenizar quebraria ou/não (dano-ou-moral = 216.419 em vez de 21.366). Operadores em português (e/ou/não/prox/\"...\"/*) — os seis declarados pelo site funcionam; os ingleses (and/or/not) viram termo literal. Desambiguação pelo combo Origem (#selOrigem: 1=TRF6, 2=TRU6, 3=Turmas Recursais, 4=Varas Federais; somam exato: 2.201+1+1.744+0=3.946). A origem 4 (1º grau) é DECLARADA E VAZIA. Numeração MISTA .4.06. e .4.01. (processos herdados do TRF1: 9% no 2º grau, 24% nas Turmas Recursais, 44% na TRU6) — o Checker aceita as duas. Não existe API oficial; o DataJud do CNJ tem índice api_publica_trf6 (só metadados)."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
-        "codegen": "nao",
-        "screenshots": 0,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "crawler": "src/TRF6Crawler.js",
+        "extra": "TRF6Navigator.js (HTTP puro latin-1; normalizarQuery é identidade DE PROPÓSITO — hifenizar como no TRF2 quebraria ou/não) + TRF6Checker.js (aceita numeração .4.06. e .4.01. herdada do TRF1)",
+        "codegen": "completo",
+        "screenshots": 27,
+        "tests": "src/TRF6Testes.js",
+        "skills": [
+          "verificador/trf6"
+        ],
+        "working": true
       }
     },
     {
@@ -955,7 +964,7 @@
         "crawler": null,
         "extra": null,
         "codegen": "nao",
-        "screenshots": 0,
+        "screenshots": 11,
         "tests": false,
         "skills": [],
         "working": false
@@ -1117,18 +1126,18 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "mapeado",
-        "nota": "human-codegen completo (JurisConsult/Themis/PJe), crawler ainda não escrito"
+        "url": "https://jurisconsult.tjma.jus.br/#/sg-jurisprudence-form",
+        "comando": "tjma",
+        "acesso": "api",
+        "status": "sem-acesso",
+        "nota": "BUSCA BLOQUEADA POR CAPTCHA — insuperável por ora (decisão consciente: este repo não automatiza captcha). O JurisConsult é o ÚNICO módulo de jurisprudência do TJMA (o \"08-jurisprudencias\" do human-codegen é a mesma tela). A API é limpa e está inteiramente mapeada (apijuris.tjma.jus.br/v1), mas TODA rota de busca exige captcha de imagem próprio + reCAPTCHA v2 invisible, ambos validados no servidor (400 captcha_not_provided / 400 incorrect_captcha / 403 invalid_captcha_g). Headless, --headed e Chrome real com UA comum: todos caem no desafio de imagens. Não há API oficial de jurisprudência (dados abertos do TJMA só publica projetos/indicadores; MNI exige credenciamento). O QUE FUNCIONA: rotas de combos abertas, e o Checker por número de processo via DataJud/CNJ (api_publica_tjma, G1+G2) — metadados, sem ementa. `./bin/jur tjma --diagnostico` diz ao vivo se o bloqueio caiu."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/TJMACrawler.js",
+        "extra": "TJMANavigator.js (contrato da API + sonda do bloqueio) + TJMAChecker.js (consulta por nº via DataJud/CNJ — é o único caminho que funciona)",
         "codegen": "completo",
-        "screenshots": 84,
-        "tests": false,
+        "screenshots": 94,
+        "tests": "src/TJMATestes.js",
         "skills": [],
         "working": false
       }
@@ -1196,7 +1205,7 @@
         "crawler": null,
         "extra": null,
         "codegen": "nao",
-        "screenshots": 0,
+        "screenshots": 1,
         "tests": false,
         "skills": [],
         "working": false

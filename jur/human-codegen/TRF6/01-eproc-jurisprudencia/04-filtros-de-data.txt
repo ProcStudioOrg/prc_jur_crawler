@@ -1,0 +1,52 @@
+========================================================================
+4. FILTROS DE DATA — julgamento e publicação são DOIS filtros diferentes
+========================================================================
+Dois pares de campos, cada um com um datetimepicker (calendário) e um campo
+hidden espelho que o formulário envia junto:
+
+  Data da decisão / julgamento:        #dtDecisaoInicio     #dtDecisaoFim
+                              hidden:  #hdnDecisaoInicio    #hdnDecisaoFim
+  Data da disponibilização / publicação: #dtPublicacaoInicio  #dtPublicacaoFim
+                              hidden:  #hdnPublicacaoInicio #hdnPublicacaoFim
+
+Formato aceito: DD/MM/YYYY (máscara `__/__/____`).
+Intervalo aberto funciona: só "início" ou só "fim" é aceito.
+
+O crawler envia SEMPRE os oito campos (visíveis e hidden), inclusive vazios —
+o e-Proc repõe o formulário a partir de cookies quando um campo falta.
+
+PROVA DE QUE RESTRINGEM E DE QUE SÃO DIFERENTES ENTRE SI
+(`aposentadoria`, origem TRF6, escopo inteiro teor):
+
+    sem data                              36.578
+    julgamento  01/01/2026–31/03/2026      6.809
+    publicação  01/01/2026–31/03/2026      5.659
+
+Contagens diferentes = são dois filtros, não um só com dois nomes.
+(`dano moral`: sem data 2.201 · julgamento 1T2026 371 · publicação 1T2026 354.)
+
+⚠️ EFEITO COLATERAL DO FILTRO DE DATA: ele desliga o agrupamento.
+   Com "Agrupar Resultados" ligado (default) e SEM data, `*` na origem TRF6
+   devolve 216.706. Sem agrupar, 239.124. A soma ano a ano com filtro de data
+   (283 + 17.719 + 126.105 + 95.017) dá exatamente 239.124 — ou seja, ao aplicar
+   data o servidor conta os documentos SEM agrupar. Não compare uma contagem com
+   data contra uma sem data esperando que a diferença seja só o recorte.
+
+⚠️ ABRANGÊNCIA TEMPORAL (é a característica mais importante deste tribunal).
+   Curinga `*`, origem TRF6, por ano de julgamento:
+
+       até 2022        0      <- o TRF6 foi instalado em ago/2022
+       2023          283
+       2024       17.719
+       2025      126.105
+       2026 (até 25/07)  95.017
+
+   Qualquer recorte anterior a 2023 devolve 0 em qualquer termo e em qualquer
+   origem. NÃO É BUG: é o começo do acervo. A jurisprudência federal de Minas
+   Gerais até 2022 está na base do TRF1 — ver `../02-acervo-anterior/`.
+
+HTML dos oito campos: 04-campos-data.html
+
+Prints:
+  04.01-calendario-data-julgamento.png   o datetimepicker aberto em
+                                         "Data da decisão / julgamento"

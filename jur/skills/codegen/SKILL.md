@@ -13,6 +13,9 @@ NUNCA invente URL de jurisprudência. Descubra navegando e confirme que carrega.
 NUNCA marque um tribunal como funcionando sem o checklist de aceite (§7 do CLAUDE-CODEGEN).
 SEMPRE grave os três: descrição humana + HTML do elemento + print.
 SEMPRE teste cada operador booleano em vez de presumir que funciona.
+SEMPRE procure uma API pública documentada ANTES de estudar a tela — dados abertos do
+tribunal, Swagger/OpenAPI, DataJud do CNJ, base nacional do ramo. Se não existir, escreva
+que não existe: "não procurei" e "não existe" são coisas diferentes.
 SEMPRE cheque a aba Network antes de decidir o acesso do crawler.
 SEMPRE mapeie no Playwright, com prints, mesmo que o crawler final use `http` ou `api`.
 SEMPRE prove que um filtro funciona comparando contagens, não só vendo que a busca responde.
@@ -42,18 +45,34 @@ Um tribunal pode ter **vários módulos** (TJGO tem 3; TJRJ tem EJURIS + e-Proc;
 ESAJ + e-Proc). Liste todos, e comece pelo módulo **principal de jurisprudência** — os
 administrativos ficam para depois.
 
-## Fase 2 — Escolher a forma de acesso do CRAWLER: `api` > `http` > `browser`
+## Fase 2 — Escolher a forma de acesso do CRAWLER: `api-oficial` > `api` > `http` > `browser`
 
 > ⚠️ Isto decide como o **crawler final** fala com o site. **Não dispensa o browser na Fase 3.**
 > O mapeamento é sempre no Playwright, mesmo quando o crawler vai ser `http` puro.
 
-Nesta ordem, sempre. Abra o DevTools na aba Network e **faça uma busca real**:
+Nesta ordem, sempre.
 
-1. **`api`** — SPA (Angular/React)? Procure um endpoint JSON (`/bff/api/...`, `/rest/...`).
-   Se existir, use-o: é ~10× mais rápido e não quebra com CSS.
+**Passo 0 — procure API pública ANTES de abrir a tela.** É o passo mais barato do processo e o
+mais esquecido. Uma API oficial atravessa bloqueio: captcha e Cloudflare protegem a *tela*, não
+o endpoint publicado para consumo. Procure:
+
+- `dadosabertos.<tribunal>.jus.br`, `/dados-abertos`, `/transparencia/dados-abertos`
+- `swagger`, `openapi`, `/api-docs`, `/v1/`, `/rest/` — e `site:<tribunal>.jus.br api` no buscador
+- **DataJud (CNJ)** — API pública de metadados processuais. **Não tem ementa nem inteiro teor**,
+  logo não substitui o crawler, mas serve ao `Checker` (que só precisa confirmar que o processo
+  existe). Confirme endpoint, chave e cobertura ao vivo; não presuma.
+- **Base nacional do ramo** — a Justiça do Trabalho inteira cabe numa API só (Falcão,
+  `src/Falcao*.js`). Pergunte se o ramo do seu tribunal já tem base unificada antes de mapear.
+
+Registre no `CLAUDE-<TRIBUNAL>.md` o que achou **e o que não achou**.
+
+Depois abra o DevTools na aba Network e **faça uma busca real**:
+
+1. **`api`** — API interna. SPA (Angular/React)? Procure um endpoint JSON (`/bff/api/...`,
+   `/rest/...`). Se existir, use-o: é ~10× mais rápido e não quebra com CSS.
 2. **`http`** — Formulário clássico? Teste `POST`/`GET` direto sem browser. Confirme
    **charset** (ISO-8859-1 é comum em Projudi) e cookies obrigatórios. Exporte um HAR.
-3. **`browser`** — Playwright só se as duas acima falharem.
+3. **`browser`** — Playwright só se as anteriores falharem.
 
 ## Fase 3 — Mapear no Playwright (o entregável principal)
 
@@ -168,6 +187,8 @@ Reaproveite `src/BaseCrawler.js`, `src/cnj.js` e `src/inteiroTeorFetcher.js`.
 | "Os operadores devem funcionar" | Teste cada um. Muitos viram palavra literal. |
 | "O print eu tiro depois" | Sem print o `jur-fixer` não conserta nada. Print é entregável. |
 | "Vou usar browser, é mais rápido de escrever" | Cheque o Network. API direta não quebra com CSS. |
+| "Tem captcha, então não dá" | Captcha protege a tela, não o endpoint. Procure a API pública antes de desistir. |
+| "Não vi nenhuma API" | Você procurou nos dados abertos, no Swagger e no DataJud? "Não procurei" ≠ "não existe". |
 | "Vai ser `http`, então nem abro o browser" | O modo de acesso é do crawler. O mapeamento é sempre no browser. |
 | "Esse `<select>` só tem 'Todos'" | É AJAX. Abra no browser e enumere. |
 | "Retornou resultados, o filtro funciona" | Compare as contagens com e sem. Igual = ignorado. |

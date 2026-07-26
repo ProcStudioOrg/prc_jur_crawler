@@ -91,13 +91,13 @@ Pendências deste módulo:
 
 | # | Seção | Descrição | Prints |
 |---|---|---|---|
-| 01 | Tela inicial | ⚠️ faltando | [`01.01-tela-inicial.png`](08-jurisprudencias/01.01-tela-inicial.png)<br>[`01.02-tela-consulta.png`](08-jurisprudencias/01.02-tela-consulta.png)<br>[`01.03-combo-relatorio.png`](08-jurisprudencias/01.03-combo-relatorio.png) |
-
-Pendências deste módulo:
-- seções sem descrição em texto: 01
+| 01 | Tela consulta | [`01-tela-consulta.txt`](08-jurisprudencias/01-tela-consulta.txt) | [`01.01-tela-inicial.png`](08-jurisprudencias/01.01-tela-inicial.png)<br>[`01.02-tela-consulta.png`](08-jurisprudencias/01.02-tela-consulta.png)<br>[`01.03-combo-relatorio.png`](08-jurisprudencias/01.03-combo-relatorio.png) |
 
 ## `09-jurisconsult/` — Jurisconsult
 
 | # | Seção | Descrição | Prints |
 |---|---|---|---|
 | 01 | Login | [`01-login.txt`](09-jurisconsult/01-login.txt) | [`01.01-combo-relatorio.png`](09-jurisconsult/01.01-combo-relatorio.png)<br>[`01.02-combo-pesquisar-pelo.png`](09-jurisconsult/01.02-combo-pesquisar-pelo.png)<br>[`01.03-combo-sistema.png`](09-jurisconsult/01.03-combo-sistema.png)<br>[`01.04-combo-relator.png`](09-jurisconsult/01.04-combo-relator.png)<br>[`01.05-combo-revisor.png`](09-jurisconsult/01.05-combo-revisor.png)<br>[`01.06-combo-classe-judicial.png`](09-jurisconsult/01.06-combo-classe-judicial.png)<br>[`01.07-combo-orgao-julgador.png`](09-jurisconsult/01.07-combo-orgao-julgador.png)<br>[`01.08-combo-condicao.png`](09-jurisconsult/01.08-combo-condicao.png)<br>[`01.09-calendario-datas-inicio-final-publicacao.png`](09-jurisconsult/01.09-calendario-datas-inicio-final-publicacao.png)<br>[`01.10-login.png`](09-jurisconsult/01.10-login.png)<br>[`01.11-falha-login.png`](09-jurisconsult/01.11-falha-login.png) |
+| 02 | Formulario pesquisa | [`02-formulario-pesquisa.txt`](09-jurisconsult/02-formulario-pesquisa.txt) | [`02.01-formulario-acordaos.png`](09-jurisconsult/02.01-formulario-acordaos.png) |
+| 03 | Relatorios desambiguacao | [`03-relatorios-desambiguacao.txt`](09-jurisconsult/03-relatorios-desambiguacao.txt) | [`03.01-relatorio-acordaos.png`](09-jurisconsult/03.01-relatorio-acordaos.png)<br>[`03.02-relatorio-acordaos-turma-recursal.png`](09-jurisconsult/03.02-relatorio-acordaos-turma-recursal.png)<br>[`03.03-relatorio-decisoes-monocraticas.png`](09-jurisconsult/03.03-relatorio-decisoes-monocraticas.png)<br>[`03.04-relatorio-decisoes-monocraticas-turma-recursal.png`](09-jurisconsult/03.04-relatorio-decisoes-monocraticas-turma-recursal.png)<br>[`03.05-relatorio-sumulas-e-precedentes.png`](09-jurisconsult/03.05-relatorio-sumulas-e-precedentes.png)<br>[`03.06-relatorio-sentencas-1-grau.png`](09-jurisconsult/03.06-relatorio-sentencas-1-grau.png)<br>[`03.07-relatorio-sentencas-juizado-especial.png`](09-jurisconsult/03.07-relatorio-sentencas-juizado-especial.png) |
+| 04 | Bloqueio captcha | [`04-bloqueio-captcha.txt`](09-jurisconsult/04-bloqueio-captcha.txt) | [`04.01-captcha-imagem-preenchido.png`](09-jurisconsult/04.01-captcha-imagem-preenchido.png)<br>[`04.02-recaptcha-desafio.png`](09-jurisconsult/04.02-recaptcha-desafio.png) |

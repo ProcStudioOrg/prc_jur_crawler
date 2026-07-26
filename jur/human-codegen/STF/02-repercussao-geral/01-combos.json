@@ -1,0 +1,422 @@
+{
+  "menu-pesquisa-mobile": [
+    {
+      "value": "",
+      "texto": "Selecione o tipo de pesquisa"
+    },
+    {
+      "value": "abaProcesso",
+      "texto": "Processos"
+    },
+    {
+      "value": "abaJurisprudencia",
+      "texto": "Jurisprudência"
+    },
+    {
+      "value": "abaRepercussao",
+      "texto": "Repercussão Geral"
+    },
+    {
+      "value": "abaConteudo",
+      "texto": "Conteúdo e Notícias"
+    }
+  ],
+  "tipo-pesquisa-processo": [
+    {
+      "value": "CLASSE_E_NUMERO",
+      "texto": "Por Classe e Número"
+    },
+    {
+      "value": "NUMERO_ORIGEM",
+      "texto": "Por Número na Origem"
+    },
+    {
+      "value": "NUMERO_UNICO",
+      "texto": "Por Número Único"
+    },
+    {
+      "value": "PARTE",
+      "texto": "Por Parte"
+    },
+    {
+      "value": "ADVOGADO",
+      "texto": "Por Advogado"
+    }
+  ],
+  "Siglas": [
+    {
+      "value": "",
+      "texto": "Classe"
+    },
+    {
+      "value": "AC",
+      "texto": "AC"
+    },
+    {
+      "value": "ACO",
+      "texto": "ACO"
+    },
+    {
+      "value": "ADC",
+      "texto": "ADC"
+    },
+    {
+      "value": "ADI",
+      "texto": "ADI"
+    },
+    {
+      "value": "ADO",
+      "texto": "ADO"
+    },
+    {
+      "value": "ADPF",
+      "texto": "ADPF"
+    },
+    {
+      "value": "AI",
+      "texto": "AI"
+    },
+    {
+      "value": "AImp",
+      "texto": "AImp"
+    },
+    {
+      "value": "AO",
+      "texto": "AO"
+    },
+    {
+      "value": "AOE",
+      "texto": "AOE"
+    },
+    {
+      "value": "AP",
+      "texto": "AP"
+    },
+    {
+      "value": "AR",
+      "texto": "AR"
+    },
+    {
+      "value": "ARE",
+      "texto": "ARE"
+    },
+    {
+      "value": "AS",
+      "texto": "AS"
+    },
+    {
+      "value": "CC",
+      "texto": "CC"
+    },
+    {
+      "value": "Cm",
+      "texto": "Cm"
+    },
+    {
+      "value": "EI",
+      "texto": "EI"
+    },
+    {
+      "value": "EL",
+      "texto": "EL"
+    },
+    {
+      "value": "EP",
+      "texto": "EP"
+    },
+    {
+      "value": "Ext",
+      "texto": "Ext"
+    },
+    {
+      "value": "HC",
+      "texto": "HC"
+    },
+    {
+      "value": "HD",
+      "texto": "HD"
+    },
+    {
+      "value": "IF",
+      "texto": "IF"
+    },
+    {
+      "value": "Inq",
+      "texto": "Inq"
+    },
+    {
+      "value": "MI",
+      "texto": "MI"
+    },
+    {
+      "value": "MS",
+      "texto": "MS"
+    },
+    {
+      "value": "PADM",
+      "texto": "PADM"
+    },
+    {
+      "value": "Pet",
+      "texto": "Pet"
+    },
+    {
+      "value": "PPE",
+      "texto": "PPE"
+    },
+    {
+      "value": "PSV",
+      "texto": "PSV"
+    },
+    {
+      "value": "RC",
+      "texto": "RC"
+    },
+    {
+      "value": "Rcl",
+      "texto": "Rcl"
+    },
+    {
+      "value": "RE",
+      "texto": "RE"
+    },
+    {
+      "value": "RHC",
+      "texto": "RHC"
+    },
+    {
+      "value": "RHD",
+      "texto": "RHD"
+    },
+    {
+      "value": "RMI",
+      "texto": "RMI"
+    },
+    {
+      "value": "RMS",
+      "texto": "RMS"
+    },
+    {
+      "value": "RvC",
+      "texto": "RvC"
+    },
+    {
+      "value": "SE",
+      "texto": "SE"
+    },
+    {
+      "value": "SIRDR",
+      "texto": "SIRDR"
+    },
+    {
+      "value": "SL",
+      "texto": "SL"
+    },
+    {
+      "value": "SS",
+      "texto": "SS"
+    },
+    {
+      "value": "STA",
+      "texto": "STA"
+    },
+    {
+      "value": "STP",
+      "texto": "STP"
+    },
+    {
+      "value": "TPA",
+      "texto": "TPA"
+    }
+  ],
+  "situacaoRG": [
+    {
+      "value": "TODAS",
+      "texto": "Todas"
+    },
+    {
+      "value": "ACORDAO_MERITO_PUBLICADO",
+      "texto": "Acórdão de Mérito Publicado"
+    },
+    {
+      "value": "ACORDAO_REPERCUSSAO_GERAL_PUBLICADO",
+      "texto": "Acórdão de Repercussão Geral Publicado"
+    },
+    {
+      "value": "AGUARDA_SUBSTITUICAO_PARADIGMA",
+      "texto": "Aguarda Substituição de Paradigma"
+    },
+    {
+      "value": "ANALISADA_PRELIMINAR",
+      "texto": "Analisada Preliminar de Repercussão Geral"
+    },
+    {
+      "value": "CANCELADO",
+      "texto": "Cancelado"
+    },
+    {
+      "value": "DESTACADO",
+      "texto": "Destacado"
+    },
+    {
+      "value": "EM_JULGAMENTO",
+      "texto": "Em Julgamento"
+    },
+    {
+      "value": "MERITO_JULGADO",
+      "texto": "Mérito Julgado"
+    },
+    {
+      "value": "REVISADO",
+      "texto": "Revisado"
+    },
+    {
+      "value": "TRANSITO_JULGADO",
+      "texto": "Trânsito em Julgado"
+    }
+  ],
+  "classeProcesso": [
+    {
+      "value": "",
+      "texto": "Selecione"
+    },
+    {
+      "value": "AI",
+      "texto": "AI"
+    },
+    {
+      "value": "ARE",
+      "texto": "ARE"
+    },
+    {
+      "value": "RE",
+      "texto": "RE"
+    }
+  ],
+  "ministro": [
+    {
+      "value": "",
+      "texto": "Selecione"
+    },
+    {
+      "value": "50",
+      "texto": "ALEXANDRE DE MORAES"
+    },
+    {
+      "value": "52",
+      "texto": "ANDRÉ MENDONÇA"
+    },
+    {
+      "value": "42",
+      "texto": "CÁRMEN LÚCIA"
+    },
+    {
+      "value": "53",
+      "texto": "CRISTIANO ZANIN"
+    },
+    {
+      "value": "44",
+      "texto": "DIAS TOFFOLI"
+    },
+    {
+      "value": "49",
+      "texto": "EDSON FACHIN"
+    },
+    {
+      "value": "54",
+      "texto": "FLÁVIO DINO"
+    },
+    {
+      "value": "36",
+      "texto": "GILMAR MENDES"
+    },
+    {
+      "value": "45",
+      "texto": "LUIZ FUX"
+    },
+    {
+      "value": "51",
+      "texto": "NUNES MARQUES"
+    }
+  ],
+  "txtRamoDireito": [
+    {
+      "value": "",
+      "texto": "Escolha..."
+    },
+    {
+      "value": "DIREITO À EDUCAÇÃO",
+      "texto": "DIREITO À EDUCAÇÃO"
+    },
+    {
+      "value": "DIREITO ADMINISTRATIVO E OUTRAS MATÉRIAS DE DIREITO PÚBLICO",
+      "texto": "DIREITO ADMINISTRATIVO E OUTRAS MATÉRIAS DE DIREITO PÚBLICO"
+    },
+    {
+      "value": "DIREITO AMBIENTAL",
+      "texto": "DIREITO AMBIENTAL"
+    },
+    {
+      "value": "DIREITO CIVIL",
+      "texto": "DIREITO CIVIL"
+    },
+    {
+      "value": "DIREITO DO CONSUMIDOR",
+      "texto": "DIREITO DO CONSUMIDOR"
+    },
+    {
+      "value": "DIREITO DO TRABALHO",
+      "texto": "DIREITO DO TRABALHO"
+    },
+    {
+      "value": "DIREITO ELEITORAL",
+      "texto": "DIREITO ELEITORAL"
+    },
+    {
+      "value": "DIREITO ELEITORAL E PROCESSO ELEITORAL DO STF",
+      "texto": "DIREITO ELEITORAL E PROCESSO ELEITORAL DO STF"
+    },
+    {
+      "value": "DIREITO INTERNACIONAL",
+      "texto": "DIREITO INTERNACIONAL"
+    },
+    {
+      "value": "DIREITO PENAL",
+      "texto": "DIREITO PENAL"
+    },
+    {
+      "value": "DIREITO PENAL MILITAR",
+      "texto": "DIREITO PENAL MILITAR"
+    },
+    {
+      "value": "DIREITO PREVIDENCIÁRIO",
+      "texto": "DIREITO PREVIDENCIÁRIO"
+    },
+    {
+      "value": "DIREITO PROCESSUAL CIVIL E DO TRABALHO",
+      "texto": "DIREITO PROCESSUAL CIVIL E DO TRABALHO"
+    },
+    {
+      "value": "DIREITO PROCESSUAL PENAL",
+      "texto": "DIREITO PROCESSUAL PENAL"
+    },
+    {
+      "value": "DIREITO TRIBUTÁRIO",
+      "texto": "DIREITO TRIBUTÁRIO"
+    },
+    {
+      "value": "REGISTROS PÚBLICOS",
+      "texto": "REGISTROS PÚBLICOS"
+    }
+  ],
+  "ordenacao": [
+    {
+      "value": "asc",
+      "texto": "Crescente"
+    },
+    {
+      "value": "desc",
+      "texto": "Decrescente"
+    }
+  ]
+}

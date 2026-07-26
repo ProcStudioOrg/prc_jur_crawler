@@ -1,0 +1,286 @@
+[
+  {
+    "metodo": "GET",
+    "url": "https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/css/swiper.min.css"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/js/swiper.min.js"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_js/InfraAjax.js?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_css/infra-ajax.css?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_js/InfraAjax.js?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_css/infra-ajax.css?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_js/InfraAjax.js?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_css/infra-ajax.css?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_js/InfraAjax.js?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_css/infra-ajax.css?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_js/InfraAjax.js?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_css/infra-ajax.css?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_js/InfraAjax.js?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_css/infra-ajax.css?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_js/InfraAjax.js?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_css/infra-ajax.css?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_js/InfraAjax.js?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_css/infra-ajax.css?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_js/InfraAjax.js?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_css/infra-ajax.css?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_js/InfraAjax.js?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "GET",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/infra_css/infra-ajax.css?9.21.6-3.0.2"
+  },
+  {
+    "metodo": "POST",
+    "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_listar_tipo_documento"
+  }
+]

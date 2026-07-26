@@ -1,0 +1,37 @@
+## 5.1 Opções de pesquisa (as 5 caixas de seleção que mudam o ANALISADOR)
+
+Print: `05.01-opcoes-de-pesquisa.png` · HTML: `05-opcoes-pesquisa.html`
+
+| Caixa | Padrão | Parâmetro na URL / API | O que faz |
+|---|---|---|---|
+| Inteiro teor            | **desligada** | `pesquisa_inteiro_teor` | acrescenta `inteiro_teor_texto` aos campos buscados |
+| Sinônimos               | **ligada**    | `sinonimo`  | expande pelos sinônimos do Tesauro do STF |
+| Plural                  | **ligada**    | `plural`    | equipara singular e plural |
+| Radicais                | desligada     | `radicais`  | busca por radical ("indenização" → "indenizar", "indenizada") |
+| Busca exata entre aspas | **ligada**    | `buscaExata`| dentro das aspas, desliga sinônimos e radicais |
+
+Essas caixas **não** viram filtro: elas escolhem o *sufixo dos campos* e o *analisador* do
+Elasticsearch. É por isso que ligar/desligar uma delas muda a contagem sem mudar a expressão:
+
+| plural | radicais | sufixo dos campos | analyzer | quote_analyzer |
+|---|---|---|---|---|
+| sim | não | `.plural`   | `legal_search_analyzer` (com sinônimos) / `legal_index_analyzer` | `legal_index_analyzer` |
+| não | sim | (nenhum)    | `radical_search_analyzer` / `radical_index_analyzer` | `standard_analyzer` |
+| não | não | `.standard` | `tesauro_search_analyzer` / `standard_analyzer` | `standard_analyzer` |
+
+`radicais` e `plural` são mutuamente exclusivos: se os dois vierem ligados, a SPA desliga
+`radicais` silenciosamente.
+
+Contagem de prova do escopo de inteiro teor (base acordaos, q = "audiência de custódia"):
+  só o espelho do acórdão ....... 130
+  com inteiro teor .............. 715
+
+⚠️ **A busca no inteiro teor só alcança acórdãos publicados a partir de 2012** — antes disso o
+STF não gerava o texto integral em formato digital (documentação oficial, "Dicas de pesquisa"
+§2). Buscar termo raro no inteiro teor em acórdão dos anos 1990 devolve zero por limite da
+base, não por erro de sintaxe.
+
+Contagem de prova dos sinônimos (base acordaos):
+  `droga` com sinônimos .......... 10.127
+  `droga` sem sinônimos ..........  6.027
+  `entorpecente` sem sinônimos ...  4.687

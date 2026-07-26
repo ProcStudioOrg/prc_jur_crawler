@@ -1,0 +1,65 @@
+========================================================================
+IDENTIFICAÇÃO
+========================================================================
+Tribunal:                 TRF6 — Tribunal Regional Federal da 6ª Região
+Estado(s):                MG (Minas Gerais)
+Módulo:                   e-Proc — Módulo de Jurisprudência (eproc-jur)
+Link principal:           https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+Entrada divulgada:        https://eproc-jur.trf6.jus.br/  (redireciona para a URL acima)
+                          Link "Jurisprudência" no menu do https://portal.trf6.jus.br/
+Sistema judicial:         PJe na TRAMITAÇÃO (pje1g/pje2g) — mas a JURISPRUDÊNCIA
+                          vive num e-Proc separado. Confirmado no navegador; é
+                          exatamente a ressalva do CLAUDE-CODEGEN §1.
+Sistema irmão já mapeado: TRF2 (CLAUDE-TRF2.md) — mesmo módulo eproc-jur.
+                          Também TRF4 e TJSC.
+Versão do e-Proc:         9.21.6-3.0.2  (TRF2 roda 9.21.0-3.0.2 — a diferença
+                          IMPORTA, ver seção 07)
+Abrangência da base:      2º grau apenas, em três origens com documento
+                          (TRF6, TRU6, Turmas Recursais) + uma origem declarada
+                          e VAZIA (Varas Federais / 1º grau).
+                          Período: 2023 até o dia corrente. NADA antes de 2023.
+Data do mapeamento:       25/07/2026
+
+========================================================================
+1. BUSCA PRINCIPAL (query)
+========================================================================
+Um único campo de texto livre, no topo da tela, com o botão "Pesquisar" ao lado.
+Acima dele fica o botão "Operadores" (seção 07). Abaixo, o link "Pesquisa
+avançada", que abre/fecha o bloco de filtros (`#divPesquisaAvancada`).
+
+Comportamento default: palavras separadas por ESPAÇO viram E implícito
+(interseção). Medido: dano = 21.079, moral = 2.488, "dano moral" = 2.201.
+Sem limite de caracteres observado.
+
+⚠️ O ESCOPO DEFAULT É "INTEIRO TEOR", não ementa — o rádio `#optInteiroTeor`
+vem `checked`. Isso muda muito a contagem: `aposentadoria` devolve 36.578 no
+inteiro teor e 23.379 só na ementa.
+
+HTML do elemento (extraído do DOM depois do AJAX):
+
+<input type="search" id="txtPesquisa" name="txtPesquisa"
+       class="form-control campoPesquisa" value=""
+       placeholder="Informe o texto para pesquisa"
+       aria-label="Texto para pesquisa" aria-describedby="btnConsultar">
+
+<button class="btn btn-primary" id="btnConsultar_form_inicial" type="button">
+  <i class="material-icons">search</i> Pesquisar
+</button>
+
+Radios de escopo:
+<input checked="checked" class="custom-control-input" id="optInteiroTeor" name="rdoCampo" type="radio" value="I" />
+<input class="custom-control-input" id="optEmenta" name="rdoCampo" type="radio" value="E" />
+<input class="custom-control-input" id="chkCaput" name="chkCaput" type="checkbox" />   <!-- só aparece com Ementa -->
+
+Checkboxes da seção "Base":
+<input class="custom-control-input" id="chkPrecedenteRelevante" name="chkPrecedenteRelevante" type="checkbox" />
+<input checked="checked" class="custom-control-input" id="chkAgruparResultados" name="chkAgruparResultados" type="checkbox" />
+
+Formulário inteiro: 01-form-busca.html
+Inventário de todos os campos (id/name/tipo/valor): 01-campos.json
+
+Prints:
+  01.01-tela-inicial.png             tela como o site abre
+  01.02-pesquisa-avancada-aberta.png com "Pesquisa avançada" expandida
+  01.03-escopo-ementa-e-caput.png    o checkbox "Somente Caput da Ementa" só
+                                     existe quando o rádio Ementa está marcado

@@ -1,0 +1,15 @@
+## 2. Consulta pelo Número Único (CNJ)
+
+Print: `02.01-detalhe-por-numero-unico.png`
+URL:   https://portal.stf.jus.br/processos/listarProcessos.asp?numeroUnico=01649038020188060001
+
+Mesma tela de detalhe da seção 01, alcançada pelo outro formato de número. O print mostra o
+ARE 1596565 chegando pelo número único `0164903-80.2018.8.06.0001` — que é o CNJ do **TJCE**
+(J=8, TR=06), tribunal de origem do recurso.
+
+⚠️ **Mande só dígitos.** Com a máscara (`0164903-80.2018.8.06.0001`) a página NÃO redireciona
+e o processo parece não existir. Sem a máscara (`01649038020188060001`) redireciona para
+`detalhe.asp?incidente=7542415`. Foi testado nos dois formatos.
+
+É esta a ponte que o `STFChecker.consultarNumeroUnico()` atravessa:
+CNJ → portal → classe+número ("ARE 1596565") → base de jurisprudência.

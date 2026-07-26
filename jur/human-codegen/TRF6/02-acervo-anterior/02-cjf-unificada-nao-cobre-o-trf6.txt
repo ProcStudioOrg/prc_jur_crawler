@@ -1,0 +1,17 @@
+========================================================================
+2. A JURISPRUDÊNCIA UNIFICADA DO CJF NÃO COBRE O TRF6
+========================================================================
+Descrição completa em `01-onde-mora-a-jurisprudencia-de-mg-ate-2022.txt` §2.
+Resumo do que foi medido no navegador em 25/07/2026:
+
+  https://jurisprudencia.cjf.jus.br/unificada/index.xhtml   -> 200
+
+  Tribunais no seletor do formulário:
+      STF · STJ · TNU · TRF1 · TRF2 · TRF3 · TRF4 · TRF5 · TR · TRU · Todos
+
+  TRF6: AUSENTE. Não é "base vazia" — é opção inexistente.
+  (`https://jurisprudencia.cjf.jus.br/trf6/index.xhtml` devolve 404, enquanto
+   `/trf1/index.xhtml` devolve 200.)
+
+Dados brutos: 02-cjf-unificada-medicao.json
+Print:        02.01-cjf-unificada-sem-trf6.png

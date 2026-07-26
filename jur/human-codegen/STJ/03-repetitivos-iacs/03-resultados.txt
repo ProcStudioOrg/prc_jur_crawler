@@ -1,0 +1,33 @@
+STJ / Precedentes Qualificados — §3. Tela de resultados
+=======================================================
+
+Print: 03.01-resultados-tema.png  (busca `pesquisa_livre=usucapião`, tipo Repetitivo)
+
+Cabeçalho: contadores por tipo de precedente, TODOS para a mesma busca —
+  Temas (4) · Controvérsias (7) · IAC (0) · SIRDR (0) · PUIL (0)
+seguidos de "4 documentos encontrados" e "Nesta página: 1 ~ 4".
+
+Um tema = um `div.container.containerDocumento`:
+
+  input[name=seqTemaImpressao][value=1807]     sequencial interno
+  .titulo_campo_processo + .dados_campo_processo:
+      "Tema Repetitivo" -> 985
+      "Situação"        -> Trânsito em Julgado
+      "Órgão julgador"  -> SEGUNDA SEÇÃO
+      "Ramo do direito" -> DIREITO CIVIL
+  .titulo_campo + .dados_campo:
+      "Questão submetida a julgamento"
+      "Tese Firmada"
+      "Anotações NUGEPNAC"
+      "Informações Complementares"
+  depois, um bloco por processo paradigma:
+      REsp 1667842/SC · Tribunal de Origem TJSC · RRC Sim · Relator LUIS FELIPE
+      SALOMÃO · Afetação 12/12/2017 · Julgado em 03/12/2020 · Acórdão publicado
+      em 05/04/2021 · Trânsito em Julgado 01/06/2021
+
+Também há um link "Copiar link para o precedente"
+(`copiarLinkTema('T','985', …)`) — o permalink citável de um tema.
+
+Paginação: `i` (índice do 1º documento) + `quantidadeResultadosPorPagina`
+(10 | 20 | 50 | -1 para "Todos"). Diferente do SCON, **não** foi observado
+timeout de Oracle aqui — o acervo de temas é pequeno (milhares, não milhões).

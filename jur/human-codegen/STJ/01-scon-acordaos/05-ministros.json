@@ -1,0 +1,733 @@
+{
+  "grupos": [
+    "Min. ativos ",
+    "Min. aposentados e ex-Ministros "
+  ],
+  "porGrupo": {},
+  "todos": [
+    {
+      "codigo": "1187",
+      "nome": "AFRÂNIO VILELA"
+    },
+    {
+      "codigo": "1146",
+      "nome": "ANTONIO CARLOS FERREIRA"
+    },
+    {
+      "codigo": "1182",
+      "nome": "ANTONIO SALDANHA PALHEIRO"
+    },
+    {
+      "codigo": "1142",
+      "nome": "BENEDITO GONÇALVES"
+    },
+    {
+      "codigo": "1190",
+      "nome": "CARLOS PIRES BRANDÃO"
+    },
+    {
+      "codigo": "1188",
+      "nome": "DANIELA TEIXEIRA"
+    },
+    {
+      "codigo": "1116",
+      "nome": "FRANCISCO FALCÃO"
+    },
+    {
+      "codigo": "1160",
+      "nome": "GURGEL DE FARIA"
+    },
+    {
+      "codigo": "1132",
+      "nome": "HERMAN BENJAMIN"
+    },
+    {
+      "codigo": "1130",
+      "nome": "HUMBERTO MARTINS"
+    },
+    {
+      "codigo": "1123",
+      "nome": "JOÃO OTÁVIO DE NORONHA"
+    },
+    {
+      "codigo": "1183",
+      "nome": "JOEL ILAN PACIORNIK"
+    },
+    {
+      "codigo": "8450",
+      "nome": "LUÍS CARLOS GAMBOGI (DESEMBARGADOR CONVOCADO DO TJMG)"
+    },
+    {
+      "codigo": "1140",
+      "nome": "LUIS FELIPE SALOMÃO"
+    },
+    {
+      "codigo": "1150",
+      "nome": "MARCO AURÉLIO BELLIZZE"
+    },
+    {
+      "codigo": "1149",
+      "nome": "MARCO BUZZI"
+    },
+    {
+      "codigo": "1145",
+      "nome": "MARIA ISABEL GALLOTTI"
+    },
+    {
+      "codigo": "1189",
+      "nome": "MARIA MARLUCE CALDAS"
+    },
+    {
+      "codigo": "1131",
+      "nome": "MARIA THEREZA DE ASSIS MOURA"
+    },
+    {
+      "codigo": "1141",
+      "nome": "MAURO CAMPBELL MARQUES"
+    },
+    {
+      "codigo": "1184",
+      "nome": "MESSOD AZULAY NETO"
+    },
+    {
+      "codigo": "1156",
+      "nome": "MOURA RIBEIRO"
+    },
+    {
+      "codigo": "1118",
+      "nome": "NANCY ANDRIGHI"
+    },
+    {
+      "codigo": "8460",
+      "nome": "NILSONI DE FREITAS (DESEMBARGADORA CONVOCADA DO TJDFT)"
+    },
+    {
+      "codigo": "1139",
+      "nome": "OG FERNANDES"
+    },
+    {
+      "codigo": "1185",
+      "nome": "PAULO SÉRGIO DOMINGUES"
+    },
+    {
+      "codigo": "1143",
+      "nome": "RAUL ARAÚJO"
+    },
+    {
+      "codigo": "1157",
+      "nome": "REGINA HELENA COSTA"
+    },
+    {
+      "codigo": "1170",
+      "nome": "REYNALDO SOARES DA FONSECA"
+    },
+    {
+      "codigo": "1181",
+      "nome": "RIBEIRO DANTAS"
+    },
+    {
+      "codigo": "1147",
+      "nome": "RICARDO VILLAS BÔAS CUEVA"
+    },
+    {
+      "codigo": "1158",
+      "nome": "ROGERIO SCHIETTI CRUZ"
+    },
+    {
+      "codigo": "1148",
+      "nome": "SEBASTIÃO REIS JÚNIOR"
+    },
+    {
+      "codigo": "1155",
+      "nome": "SÉRGIO KUKINA"
+    },
+    {
+      "codigo": "1186",
+      "nome": "TEODORO SILVA SANTOS"
+    },
+    {
+      "codigo": "1099",
+      "nome": "ADHEMAR MACIEL"
+    },
+    {
+      "codigo": "1091",
+      "nome": "ADHEMAR MACIEL (JUIZ DO TRF/1A. REG"
+    },
+    {
+      "codigo": "191",
+      "nome": "ADHEMAR RAYMUNDO"
+    },
+    {
+      "codigo": "8205",
+      "nome": "ADILSON VIEIRA MACABU (DESEMBARGADOR CONVOCADO DO TJ/RJ)"
+    },
+    {
+      "codigo": "101",
+      "nome": "AFRANIO COSTA"
+    },
+    {
+      "codigo": "7000",
+      "nome": "AGUARDANDO REDISTRIBUIÇÃO POR SUCESSÃO"
+    },
+    {
+      "codigo": "18",
+      "nome": "AGUIAR DIAS"
+    },
+    {
+      "codigo": "8215",
+      "nome": "ALDERITA RAMOS DE OLIVEIRA (DESEMBARGADORA CONVOCADA DO TJ/PE)"
+    },
+    {
+      "codigo": "78",
+      "nome": "ALDIR PASSARINHO"
+    },
+    {
+      "codigo": "1110",
+      "nome": "ALDIR PASSARINHO JUNIOR"
+    },
+    {
+      "codigo": "260",
+      "nome": "ÁLVARO PEÇANHA MARTINS"
+    },
+    {
+      "codigo": "17",
+      "nome": "AMARILIO BENJAMIN"
+    },
+    {
+      "codigo": "272",
+      "nome": "AMÉRICO LUZ"
+    },
+    {
+      "codigo": "1100",
+      "nome": "ANSELMO SANTIAGO"
+    },
+    {
+      "codigo": "1090",
+      "nome": "ANSELMO SANTIAGO (JUIZ DO TRF/1A. REGIÃO"
+    },
+    {
+      "codigo": "280",
+      "nome": "ANTÔNIO DE PÁDUA RIBEIRO"
+    },
+    {
+      "codigo": "20",
+      "nome": "ANTONIO NEDER"
+    },
+    {
+      "codigo": "132",
+      "nome": "ANTONIO TORREÃO BRAZ"
+    },
+    {
+      "codigo": "1104",
+      "nome": "ARI PARGENDLER"
+    },
+    {
+      "codigo": "19",
+      "nome": "ARMANDO ROLEMBERG"
+    },
+    {
+      "codigo": "1128",
+      "nome": "ARNALDO ESTEVES LIMA"
+    },
+    {
+      "codigo": "12",
+      "nome": "ARTUR MARINHO"
+    },
+    {
+      "codigo": "1066",
+      "nome": "ASSIS TOLEDO"
+    },
+    {
+      "codigo": "1151",
+      "nome": "ASSUSETE MAGALHÃES"
+    },
+    {
+      "codigo": "1083",
+      "nome": "ATHOS CARNEIRO"
+    },
+    {
+      "codigo": "15",
+      "nome": "BAPTISTA DE OLIVEIRA"
+    },
+    {
+      "codigo": "1089",
+      "nome": "BARROS MONTEIRO"
+    },
+    {
+      "codigo": "205",
+      "nome": "BUENO DE SOUZA"
+    },
+    {
+      "codigo": "8250",
+      "nome": "CAMPOS MARQUES (DESEMBARGADOR CONVOCADO DO TJ/PR)"
+    },
+    {
+      "codigo": "11",
+      "nome": "CANDIDO LOBO"
+    },
+    {
+      "codigo": "1108",
+      "nome": "CARLOS ALBERTO MENEZES DIREITO"
+    },
+    {
+      "codigo": "8441",
+      "nome": "CARLOS CINI MARCHIONATTI (DESEMBARGADOR CONVOCADO TJRS)"
+    },
+    {
+      "codigo": "8135",
+      "nome": "CARLOS FERNANDO MATHIAS (JUIZ FEDERAL CONVOCADO DO TRF 1ª REGIÃO)"
+    },
+    {
+      "codigo": "108",
+      "nome": "CARLOS MADEIRA"
+    },
+    {
+      "codigo": "345",
+      "nome": "CARLOS THIBAU"
+    },
+    {
+      "codigo": "140",
+      "nome": "CARLOS VELLOSO"
+    },
+    {
+      "codigo": "3",
+      "nome": "CARNEIRO LEAO"
+    },
+    {
+      "codigo": "1119",
+      "nome": "CASTRO FILHO"
+    },
+    {
+      "codigo": "1125",
+      "nome": "CASTRO MEIRA"
+    },
+    {
+      "codigo": "8175",
+      "nome": "CELSO LIMONGI (DESEMBARGADOR CONVOCADO DO TJ/SP)"
+    },
+    {
+      "codigo": "1098",
+      "nome": "CESAR ASFOR ROCHA"
+    },
+    {
+      "codigo": "299",
+      "nome": "CID FLAQUER SCARTEZZINI"
+    },
+    {
+      "codigo": "1087",
+      "nome": "CLAUDIO SANTOS"
+    },
+    {
+      "codigo": "79",
+      "nome": "CORREA PINA"
+    },
+    {
+      "codigo": "7",
+      "nome": "CUNHA VASCONCELOS"
+    },
+    {
+      "codigo": "44",
+      "nome": "DECIO MIRANDA"
+    },
+    {
+      "codigo": "1095",
+      "nome": "DEMÓCRITO REINALDO"
+    },
+    {
+      "codigo": "1126",
+      "nome": "DENISE ARRUDA"
+    },
+    {
+      "codigo": "1031",
+      "nome": "DIAS TRINDADE"
+    },
+    {
+      "codigo": "1101",
+      "nome": "DIAS TRINDADE (ER 03/93)"
+    },
+    {
+      "codigo": "8315",
+      "nome": "DIVA MALERBI (DESEMBARGADORA CONVOCADA TRF 3ª REGIÃO)"
+    },
+    {
+      "codigo": "1074",
+      "nome": "EDSON VIDIGAL"
+    },
+    {
+      "codigo": "1015",
+      "nome": "EDUARDO RIBEIRO"
+    },
+    {
+      "codigo": "1114",
+      "nome": "ELIANA CALMON"
+    },
+    {
+      "codigo": "8370",
+      "nome": "ERICSON MARANHO (DESEMBARGADOR CONVOCADO DO TJ/SP)"
+    },
+    {
+      "codigo": "28",
+      "nome": "ESDRAS GUEIROS"
+    },
+    {
+      "codigo": "13",
+      "nome": "ESTELLITA CAVALCANTI"
+    },
+    {
+      "codigo": "625",
+      "nome": "EUCLYDES AGUIAR"
+    },
+    {
+      "codigo": "1109",
+      "nome": "FELIX FISCHER"
+    },
+    {
+      "codigo": "1107",
+      "nome": "FERNANDO GONÇALVES"
+    },
+    {
+      "codigo": "600",
+      "nome": "FLEURY PIRES"
+    },
+    {
+      "codigo": "1086",
+      "nome": "FONTES DE ALENCAR"
+    },
+    {
+      "codigo": "1094",
+      "nome": "FRANCISCO PEÇANHA MARTINS"
+    },
+    {
+      "codigo": "1117",
+      "nome": "FRANCIULLI NETTO"
+    },
+    {
+      "codigo": "1082",
+      "nome": "GARCIA VIEIRA"
+    },
+    {
+      "codigo": "420",
+      "nome": "GERALDO FONTENELES"
+    },
+    {
+      "codigo": "329",
+      "nome": "GERALDO SOBRAL"
+    },
+    {
+      "codigo": "1111",
+      "nome": "GILSON DIPP"
+    },
+    {
+      "codigo": "14",
+      "nome": "GODOY ILHA"
+    },
+    {
+      "codigo": "116",
+      "nome": "GUEIROS LEITE"
+    },
+    {
+      "codigo": "1112",
+      "nome": "HAMILTON CARVALHIDO"
+    },
+    {
+      "codigo": "8195",
+      "nome": "HAROLDO RODRIGUES (DESEMBARGADOR CONVOCADO DO TJ/CE)"
+    },
+    {
+      "codigo": "1093",
+      "nome": "HÉLIO MOSIMANN"
+    },
+    {
+      "codigo": "337",
+      "nome": "HELIO PINHEIRO"
+    },
+    {
+      "codigo": "1127",
+      "nome": "HÉLIO QUAGLIA BARBOSA"
+    },
+    {
+      "codigo": "36",
+      "nome": "HENOCH REIS"
+    },
+    {
+      "codigo": "8",
+      "nome": "HENRIQUE D'AVILA"
+    },
+    {
+      "codigo": "213",
+      "nome": "HERMILLO GALANT"
+    },
+    {
+      "codigo": "8185",
+      "nome": "HONILDO AMARAL DE MELLO CASTRO (DESEMBARGADOR CONVOCADO DO TJ/AP)"
+    },
+    {
+      "codigo": "680",
+      "nome": "HUGO MACHADO"
+    },
+    {
+      "codigo": "1096",
+      "nome": "HUMBERTO GOMES DE BARROS"
+    },
+    {
+      "codigo": "1023",
+      "nome": "ILMAR GALVAO"
+    },
+    {
+      "codigo": "8145",
+      "nome": "JANE SILVA (DESEMBARGADORA CONVOCADA DO TJ/MG)"
+    },
+    {
+      "codigo": "60",
+      "nome": "JARBAS NOBRE"
+    },
+    {
+      "codigo": "8420",
+      "nome": "JESUÍNO RISSATO (DESEMBARGADOR CONVOCADO DO TJDFT)"
+    },
+    {
+      "codigo": "302",
+      "nome": "JESUS COSTA LIMA"
+    },
+    {
+      "codigo": "8430",
+      "nome": "JOÃO BATISTA MOREIRA  (DESEMBARGADOR CONVOCADO DO TRF1)"
+    },
+    {
+      "codigo": "61",
+      "nome": "JORGE LAFAYETTE"
+    },
+    {
+      "codigo": "1138",
+      "nome": "JORGE MUSSI"
+    },
+    {
+      "codigo": "1113",
+      "nome": "JORGE SCARTEZZINI"
+    },
+    {
+      "codigo": "1106",
+      "nome": "JOSÉ ARNALDO DA FONSECA"
+    },
+    {
+      "codigo": "256",
+      "nome": "JOSE CANDIDO DE CARVALHO FILHO"
+    },
+    {
+      "codigo": "86",
+      "nome": "JOSÉ DANTAS"
+    },
+    {
+      "codigo": "1040",
+      "nome": "JOSE DE JESUS FILHO"
+    },
+    {
+      "codigo": "1105",
+      "nome": "JOSÉ DELGADO"
+    },
+    {
+      "codigo": "1092",
+      "nome": "JOSE DELGADO (JUIZ DO TRF/5A REGIAO"
+    },
+    {
+      "codigo": "51",
+      "nome": "JOSE NERI DA SILVEIRA"
+    },
+    {
+      "codigo": "159",
+      "nome": "JUSTINO RIBEIRO"
+    },
+    {
+      "codigo": "1120",
+      "nome": "LAURITA VAZ"
+    },
+    {
+      "codigo": "94",
+      "nome": "LAURO LEITAO"
+    },
+    {
+      "codigo": "8400",
+      "nome": "LÁZARO GUIMARÃES  (DESEMBARGADOR CONVOCADO DO TRF 5ª REGIÃO)"
+    },
+    {
+      "codigo": "223",
+      "nome": "LEITAO KRIEGER"
+    },
+    {
+      "codigo": "8390",
+      "nome": "LEOPOLDO DE ARRUDA RAPOSO (DESEMBARGADOR CONVOCADO DO TJ/PE)"
+    },
+    {
+      "codigo": "1122",
+      "nome": "LUIZ FUX"
+    },
+    {
+      "codigo": "1084",
+      "nome": "LUIZ VICENTE CERNICCHIARO"
+    },
+    {
+      "codigo": "4",
+      "nome": "MACEDO LUDOLF"
+    },
+    {
+      "codigo": "8410",
+      "nome": "MANOEL ERHARDT (DESEMBARGADOR CONVOCADO DO TRF5)"
+    },
+    {
+      "codigo": "27",
+      "nome": "MARCIO RIBEIRO"
+    },
+    {
+      "codigo": "8360",
+      "nome": "MARGA TESSLER (JUÍZA FEDERAL CONVOCADA DO TRF 4ª REGIÃO)"
+    },
+    {
+      "codigo": "8300",
+      "nome": "MARILZA MAYNARD (DESEMBARGADORA CONVOCADA DO TJ/SE)"
+    },
+    {
+      "codigo": "1129",
+      "nome": "MASSAMI UYEDA"
+    },
+    {
+      "codigo": "248",
+      "nome": "MIGUEL FERRANTE"
+    },
+    {
+      "codigo": "1097",
+      "nome": "MILTON LUIZ PEREIRA"
+    },
+    {
+      "codigo": "35",
+      "nome": "MOACIR CATUNDA"
+    },
+    {
+      "codigo": "29",
+      "nome": "MOREIRA RABELO"
+    },
+    {
+      "codigo": "1133",
+      "nome": "NAPOLEÃO NUNES MAIA FILHO"
+    },
+    {
+      "codigo": "1159",
+      "nome": "NEFI CORDEIRO"
+    },
+    {
+      "codigo": "8350",
+      "nome": "NEWTON TRISOTTO (DESEMBARGADOR CONVOCADO DO TJ/SC)"
+    },
+    {
+      "codigo": "361",
+      "nome": "NILSON NAVES"
+    },
+    {
+      "codigo": "1180",
+      "nome": "OLINDO MENEZES (DESEMBARGADOR CONVOCADO DO TRF 1ª REGIÃO)"
+    },
+    {
+      "codigo": "16",
+      "nome": "OSCAR SARAIVA"
+    },
+    {
+      "codigo": "8440",
+      "nome": "OTÁVIO DE ALMEIDA TOLEDO (DESEMBARGADOR CONVOCADO DO TJSP)"
+    },
+    {
+      "codigo": "167",
+      "nome": "OTTO ROCHA"
+    },
+    {
+      "codigo": "353",
+      "nome": "PAULO COSTA LEITE"
+    },
+    {
+      "codigo": "1144",
+      "nome": "PAULO DE TARSO SANSEVERINO"
+    },
+    {
+      "codigo": "8165",
+      "nome": "PAULO FURTADO (DESEMBARGADOR CONVOCADO DO TJ/BA)"
+    },
+    {
+      "codigo": "1115",
+      "nome": "PAULO GALLOTTI"
+    },
+    {
+      "codigo": "1121",
+      "nome": "PAULO MEDINA"
+    },
+    {
+      "codigo": "62",
+      "nome": "PAULO TAVORA"
+    },
+    {
+      "codigo": "264",
+      "nome": "PEDRO ACIOLI"
+    },
+    {
+      "codigo": "221",
+      "nome": "PEREIRA DE PAIVA"
+    },
+    {
+      "codigo": "6",
+      "nome": "ROCHA LAGOA"
+    },
+    {
+      "codigo": "1102",
+      "nome": "RUY ROSADO DE AGUIAR"
+    },
+    {
+      "codigo": "1088",
+      "nome": "SÁLVIO DE FIGUEIREDO TEIXEIRA"
+    },
+    {
+      "codigo": "5",
+      "nome": "SAMPAIO COSTA"
+    },
+    {
+      "codigo": "230",
+      "nome": "SEBASTIAO REIS"
+    },
+    {
+      "codigo": "1137",
+      "nome": "SIDNEI BENETI"
+    },
+    {
+      "codigo": "9",
+      "nome": "SILVA PRADO"
+    },
+    {
+      "codigo": "1124",
+      "nome": "TEORI ALBINO ZAVASCKI"
+    },
+    {
+      "codigo": "8155",
+      "nome": "VASCO DELLA GIUSTINA (DESEMBARGADOR CONVOCADO DO TJ/RS)"
+    },
+    {
+      "codigo": "1103",
+      "nome": "VICENTE LEAL"
+    },
+    {
+      "codigo": "1085",
+      "nome": "WALDEMAR ZVEITER"
+    },
+    {
+      "codigo": "8380",
+      "nome": "WALTER DE ALMEIDA GUILHERME (DESEMBARGADOR CONVOCADO DO TJ/SP)"
+    },
+    {
+      "codigo": "124",
+      "nome": "WASHINGTON BOLIVAR"
+    },
+    {
+      "codigo": "183",
+      "nome": "WILLIAM PATTERSON"
+    },
+    {
+      "codigo": "175",
+      "nome": "WILSON GONCALVES"
+    }
+  ]
+}

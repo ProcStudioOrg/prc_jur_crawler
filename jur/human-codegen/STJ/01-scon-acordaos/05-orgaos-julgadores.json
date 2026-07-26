@@ -1,0 +1,50 @@
+[
+  {
+    "codigo": "T1",
+    "nome": "PRIMEIRA TURMA"
+  },
+  {
+    "codigo": "T2",
+    "nome": "SEGUNDA TURMA"
+  },
+  {
+    "codigo": "T3",
+    "nome": "TERCEIRA TURMA"
+  },
+  {
+    "codigo": "T4",
+    "nome": "QUARTA TURMA"
+  },
+  {
+    "codigo": "T5",
+    "nome": "QUINTA TURMA"
+  },
+  {
+    "codigo": "T6",
+    "nome": "SEXTA TURMA"
+  },
+  {
+    "codigo": "S1",
+    "nome": "PRIMEIRA SEÇÃO"
+  },
+  {
+    "codigo": "S2",
+    "nome": "SEGUNDA SEÇÃO"
+  },
+  {
+    "codigo": "S3",
+    "nome": "TERCEIRA SEÇÃO"
+  },
+  {
+    "codigo": "CE",
+    "nome": "CORTE ESPECIAL"
+  },
+  {
+    "codigo": "PS",
+    "nome": "PRESIDÊNCIA"
+  },
+  {
+    "codigo": "VP",
+    "nome": "VICE-PRESIDÊNCIA"
+  }
+]

@@ -1,0 +1,130 @@
+[
+  {
+    "id": "APELAÇÃO CRIMINAL",
+    "label": "APELAÇÃO CRIMINAL"
+  },
+  {
+    "id": "AÇÃO PENAL",
+    "label": "AÇÃO PENAL"
+  },
+  {
+    "id": "CONFLITO DE COMPETÊNCIA",
+    "label": "CONFLITO DE COMPETÊNCIA"
+  },
+  {
+    "id": "CONSIGNAÇÃO EM PAGAMENTO",
+    "label": "CONSIGNAÇÃO EM PAGAMENTO"
+  },
+  {
+    "id": "CRIMES AMBIENTAIS JEF",
+    "label": "CRIMES AMBIENTAIS JEF"
+  },
+  {
+    "id": "CUMPRIMENTO DE SENTENÇA",
+    "label": "CUMPRIMENTO DE SENTENÇA"
+  },
+  {
+    "id": "Cumprimento de Sentença (JEF)",
+    "label": "CUMPRIMENTO DE SENTENÇA (JEF)"
+  },
+  {
+    "id": "Cumprimento de Sentença contra Fazenda Pública (JEF)",
+    "label": "CUMPRIMENTO DE SENTENÇA CONTRA FAZENDA PÚBLICA (JEF)"
+  },
+  {
+    "id": "Cumprimento de Sentença contra a Fazenda Pública",
+    "label": "CUMPRIMENTO DE SENTENÇA CONTRA A FAZENDA PÚBLICA"
+  },
+  {
+    "id": "Cumprimento de Sentença de Ações Coletivas",
+    "label": "CUMPRIMENTO DE SENTENÇA DE AÇÕES COLETIVAS"
+  },
+  {
+    "id": "EMBARGOS À EXECUÇÃO",
+    "label": "EMBARGOS À EXECUÇÃO"
+  },
+  {
+    "id": "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL",
+    "label": "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL"
+  },
+  {
+    "id": "Execução de Título Extrajudicial (JEF)",
+    "label": "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL (JEF)"
+  },
+  {
+    "id": "HABEAS CORPUS CRIMINAL TR",
+    "label": "HABEAS CORPUS CRIMINAL TR"
+  },
+  {
+    "id": "INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+    "label": "INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA"
+  },
+  {
+    "id": "Incidente de Desconsideração de Personalidade Jurídica",
+    "label": "INCIDENTE DE DESCONSIDERAÇÃO DE PERSONALIDADE JURÍDICA"
+  },
+  {
+    "id": "Incidente de Suspeição Cível",
+    "label": "INCIDENTE DE SUSPEIÇÃO CÍVEL"
+  },
+  {
+    "id": "LIQUIDAÇÃO PELO PROCEDIMENTO COMUM",
+    "label": "LIQUIDAÇÃO PELO PROCEDIMENTO COMUM"
+  },
+  {
+    "id": "LIQUIDAÇÃO POR ARBITRAMENTO",
+    "label": "LIQUIDAÇÃO POR ARBITRAMENTO"
+  },
+  {
+    "id": "MANDADO DE SEGURANÇA CRIMINAL",
+    "label": "MANDADO DE SEGURANÇA CRIMINAL"
+  },
+  {
+    "id": "MANDADO DE SEGURANÇA CÍVEL",
+    "label": "MANDADO DE SEGURANÇA CÍVEL"
+  },
+  {
+    "id": "MANDADO DE SEGURANÇA TR CÍVEL",
+    "label": "MANDADO DE SEGURANÇA TR CÍVEL"
+  },
+  {
+    "id": "MEDIDA CAUTELAR INOMINADA",
+    "label": "MEDIDA CAUTELAR INOMINADA"
+  },
+  {
+    "id": "PETIÇÃO CÍVEL",
+    "label": "PETIÇÃO CÍVEL"
+  },
+  {
+    "id": "PETIÇÃO TR CRIMINAL",
+    "label": "PETIÇÃO TR CRIMINAL"
+  },
+  {
+    "id": "PETIÇÃO TR CÍVEL",
+    "label": "PETIÇÃO TR CÍVEL"
+  },
+  {
+    "id": "PROCEDIMENTO COMUM",
+    "label": "PROCEDIMENTO COMUM"
+  },
+  {
+    "id": "PROCEDIMENTO DO JUIZADO ESPECIAL CÍVEL",
+    "label": "PROCEDIMENTO DO JUIZADO ESPECIAL CÍVEL"
+  },
+  {
+    "id": "PROCEDIMENTO ESP.DO JUIZADO ESPECIAL CRIMINAL",
+    "label": "PROCEDIMENTO ESP.DO JUIZADO ESPECIAL CRIMINAL"
+  },
+  {
+    "id": "RECURSO CÍVEL",
+    "label": "RECURSO CÍVEL"
+  },
+  {
+    "id": "RECURSO DE MEDIDA CAUTELAR CÍVEL",
+    "label": "RECURSO DE MEDIDA CAUTELAR CÍVEL"
+  },
+  {
+    "id": "TERMO CIRCUNSTANCIADO",
+    "label": "TERMO CIRCUNSTANCIADO"
+  }
+]

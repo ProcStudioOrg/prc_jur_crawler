@@ -1,0 +1,750 @@
+<form id="frmJurisprudenciaPesquisa" method="post" action="externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados" style="height: 100vh">
+    <div class="d-flex flex-column h-100" style="position: relative">
+                <div class="row mt-auto justify-content-center" style="">
+            <div class="wrapper-pesquisa-inicial mt-3 mb-5 col-12 col-sm-10 col-md-8 col-lg-6">
+                
+<style>
+    h1.tituloPesquisaInicial {
+        font-size: 4rem !important;
+    }
+
+    @media (max-width: 767.98px) {
+        h1.tituloPesquisaInicial {
+            font-size: 3rem !important;
+        }
+    }
+    @media (max-width: 575.98px) {
+        h1.tituloPesquisaInicial {
+            font-size: 2.5rem !important;
+        }
+    }
+</style>
+
+
+            <div class="text-center img-localidade m-auto">
+            <img src="modulos/jurisprudencia/imagens/trf2-logo.png" alt="" class="img-fluid">
+        </div>
+        <div class="text-center img-logo-jurisprudencia m-auto">
+        <img src="modulos/jurisprudencia/imagens/jurisprudencia.png" alt="" class="img-fluid">
+    </div>
+
+    
+
+
+
+
+    <div id="divFiltros" class="">
+        <div class="pl-2">
+            <div class="">
+                <div class="d-flex align-items-start " style="min-height: 43px;">
+                    <button class="btn btn-link mt-2 p-0" id="btnOperadores" type="button" style="margin-top: 16px!important;" title="" data-toggle="tooltip" data-placement="top" data-original-title="Visualizar operadores que podem ser usados no texto informado para melhorar o resultado da pesquisa">
+                        <small class="font-italic">Operadores
+                            <i id="iconOperadoresMaximizado" class="material-icons justify-content-between iconeComTexto" style="display:none;">arrow_left</i>
+                            <i id="iconOperadoresMinimizado" class="material-icons justify-content-between iconeComTexto">arrow_right</i>
+                        </small>
+                    </button>
+                    <div id="divOperadores" class="ml-2 mt-2" style="display: none;">
+                        <button class="px-2 btn btn-sm btn-secondary" data-html="true" data-placement="top" data-toggle="tooltip" data-trigger="hover" onclick="adicionarOperador(' &quot; &quot;');" title="" type="button" data-original-title="Pesquisa documentos que contenham a expressão informada.&lt;br&gt;Ex.: &quot;faixa de fronteira&quot;">"..."</button>
+
+                        <button class="px-2 btn btn-sm btn-secondary" data-html="true" data-placement="top" data-toggle="tooltip" data-trigger="hover" onclick="adicionarOperador(' e ');" title="" type="button" data-original-title="Pesquisa documentos que contenham todas as palavras ou expressões informadas.&lt;br&gt;Ex.: crime e &quot;faixa de fronteira&quot;">e</button>
+
+                        <button class="px-2 btn btn-sm btn-secondary" data-html="true" data-placement="top" data-toggle="tooltip" data-trigger="hover" onclick="adicionarOperador(' ou ');" title="" type="button" data-original-title="Pesquisa documentos que contenham pelo menos uma das palavras ou expressões informadas.&lt;br&gt;Ex.: drogas ou entorpecentes">ou</button>
+
+                        <button class="px-2 btn btn-sm btn-secondary" data-html="true" data-placement="top" data-toggle="tooltip" data-trigger="hover" onclick="adicionarOperador(' não ');" title="" type="button" data-original-title="Pesquisa documentos que contenham a primeira palavra ou expressão informada mas que não contenham a segunda palavra ou expressão informada.&lt;br&gt;Ex.: crime não &quot;sonegação fiscal&quot;">não</button>
+
+                        <button class="px-2 btn btn-sm btn-secondary" data-html="true" data-placement="top" data-toggle="tooltip" data-trigger="hover" onclick="adicionarOperador(' prox ');" title="" type="button" data-original-title="Pesquisa documentos onde as palavras ou expressões informadas encontram-se próximas no texto.&lt;br&gt;Ex.: aposentadoria prox contribuição">prox</button>
+
+                        <button class="px-2 btn btn-sm btn-secondary" data-html="true" data-placement="top" data-toggle="tooltip" data-trigger="hover" onclick="adicionarOperador(' &quot; *&quot;');" title="" type="button" data-original-title="Pesquisa documentos que contenham o início da palavra ou expressão informada.&lt;br&gt;Ex.: &quot;embarg*&quot; (retornará registros com as palavras embargo, embargou, embargante)">*</button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center" style="position: relative">
+                <input type="search" id="txtPesquisa" name="txtPesquisa" class="form-control campoPesquisa" value="" placeholder="Informe o texto para pesquisa" aria-label="Texto para pesquisa" aria-describedby="btnConsultar" style="padding-right: 2rem;">
+                                    <div>
+                        <button class="btn btn-sm btn-primary d-flex align-items-center ml-2 px-2 btnConsultar" type="submit" title="Consultar" id="btnConsultar_form_inicial" style="height: 37px">
+                            <i class="material-icons icon-aligned">search</i>
+                            <span class="d-none d-lg-block">Pesquisar</span>
+                        </button>
+                    </div>
+                            </div>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+            <a href="#/" id="btnPesquisaAvancada" class="collapsed pop-underline px-4 btnPesquisaAvancadaInicio" data-toggle="collapse" data-target="#divPesquisaAvancada" title="Visualizar outros filtros que podem ser usados para melhorar o resultado da pesquisa" style="font-size: 1.2rem;font-weight: 300;">
+                Pesquisa avançada
+                <i id="iconPesquisaAvancadaMinimizado" class="material-icons justify-content-between iconeComTexto">arrow_drop_down</i>
+            </a>
+            <input id="hdnExibirPesquisaAvancada" name="hdnExibirPesquisaAvancada" type="hidden" style="">
+
+            <input id="hdnUrlCarregarListasCombobox" name="hdnUrlCarregarListasCombobox" type="hidden" value="externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa" style="">
+
+        </div>
+        <div id="divPesquisaAvancada" class="collapse">
+            <div class="">
+                <h3 class="text-primary">Base</h3>
+                <div id="filtroBase" class="pl-2">
+                    <div class="row mt-2">
+                        <div class="col-12 col-sm-6">
+                                                        <div class="form-group"><label class="d-flex" for="selOrigem">Origem</label>
+<span class="uic-input-wrapper"><div class="dropdown bootstrap-select show-tick w-100"><select class="w-100" data-actions-box="true" data-selected-text-format="values" id="selOrigem" multiple="true" name="selOrigem[]" aria-hidden="true"><option selected="selected" value="1">TRF2</option>
+<option value="2">TRU2</option>
+<option value="3">Turmas Recursais</option>
+</select><button type="button" tabindex="-1" class="dropdown-toggle form-control form-control-sm" data-toggle="dropdown" role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox" aria-expanded="false" data-id="selOrigem" title="TRF2" aria-label="1 item selecionado : TRF2"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">TRF2</div></div> </div></button><div class="dropdown-menu "><div class="bs-actionsbox"><div class="btn-group btn-group-sm btn-block"><button type="button" class="actions-btn bs-select-all btn btn-light">Selecionar Todos</button><button type="button" class="actions-btn bs-deselect-all btn btn-light">Desmarcar Todos</button></div></div><div class="inner show" role="listbox" id="bs-select-1" tabindex="-1" aria-multiselectable="true"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div><div id="selOrigem-sr-announcer" class="sr-only" role="status" aria-live="polite"></div></div>
+</span>
+</div>
+<script>UI.PHPHelper.select.init('selOrigem', "");</script>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group"><label class="d-flex" for="selTipoDocumento">                <span class="d-flex">Tipo Documento</span>
+                <span id="selTipoDocumento-spinner" style="display:none;">
+                    <div class="d-flex text-primary ml-2 badge badge-light align-content-center badge-pill">
+                        <span class="mr-2">Carregando...</span>
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </span></label>
+<span class="uic-input-wrapper"><div class="dropdown bootstrap-select show-tick w-100"><select class="w-100" data-actions-box="true" data-selected-text-format="values" id="selTipoDocumento" multiple="true" name="selTipoDocumento[]" aria-hidden="true"><option value="1">Acórdão</option>
+<option value="2">Decisão monocrática</option>
+<option value="3">Súmula</option>
+<option value="4">Despacho/Decisão da Vice-Presidência</option>
+</select><button type="button" tabindex="-1" class="dropdown-toggle form-control form-control-sm bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="false" data-id="selTipoDocumento" title="Nada selecionado" aria-label="Nada selecionado"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">Nada selecionado</div></div> </div></button><div class="dropdown-menu "><div class="bs-actionsbox"><div class="btn-group btn-group-sm btn-block"><button type="button" class="actions-btn bs-select-all btn btn-light">Selecionar Todos</button><button type="button" class="actions-btn bs-deselect-all btn btn-light">Desmarcar Todos</button></div></div><div class="inner show" role="listbox" id="bs-select-2" tabindex="-1" aria-multiselectable="true"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div><div id="selTipoDocumento-sr-announcer" class="sr-only" role="status" aria-live="polite"></div></div>
+</span>
+<div class="dependency-feedback-message danger" id="selTipoDocumento-feedbackMessage"></div>
+</div>
+            <script>
+
+            (function(){
+                var origem = document.getElementById("selOrigem");
+
+                UI.PHPHelper.select.addDependency(
+                    'origem',
+                    "selOrigem",
+                    "selTipoDocumento-spinner",
+                    "selTipoDocumento",
+                    {
+    "method": "post",
+    "url": "externo_controlador.php?acao=jurisprudencia@jurisprudencia\/ajax_listar_tipo_documento",
+    "paramsFn": function() {
+        return {
+            "origem": getOrigemSelecionada()
+        };
+    },
+    "labelFormatFn": function(k, v) {
+        return v.descricao;
+    },
+    "valueFormatFn": function(k, v) {
+        return v.id;
+    },
+    "dataAttributesMap": {}
+},
+                    null,
+                    "Selecione uma Origem",
+                    false
+                );
+            })();
+            </script><script>UI.PHPHelper.select.init('selTipoDocumento', "");</script>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="custom-control custom-checkbox mb-0 form-group"><input class="custom-control-input" id="chkPrecedenteRelevante" name="chkPrecedenteRelevante" type="checkbox" style="">
+<label class="custom-control-label" for="chkPrecedenteRelevante">Somente jurisprudência selecionada (Precedentes relevantes)</label>
+</div>
+
+                        </div>
+                        <div class="col-12">
+                            <div class="custom-control custom-checkbox mb-0 form-group"><input checked="checked" class="custom-control-input" id="chkAgruparResultados" name="chkAgruparResultados" type="checkbox" style="">
+<label class="custom-control-label" for="chkAgruparResultados">Agrupar Resultados</label>
+</div>
+
+                        </div>
+                    </div>
+                    <div class="row mt-2 col-12">
+                        <div class="d-flex align-items-center">
+                            <div class="form-group"><span class="d-flex">Pesquisar em</span>
+<span class="uic-input-wrapper"><div class="d-xl-inline custom-control custom-radio"><input checked="checked" class="custom-control-input" id="optInteiroTeor" name="rdoCampo" type="radio" value="I" style="">
+<label class="custom-control-label" for="optInteiroTeor">Inteiro teor</label>
+</div>
+<div class="d-xl-inline custom-control custom-radio"><input class="custom-control-input" id="optEmenta" name="rdoCampo" type="radio" value="E" style="">
+<label class="custom-control-label" for="optEmenta">Ementa</label>
+</div>
+</span>
+</div>
+
+                            <div class="custom-control custom-checkbox d-none chkCaput mt-4 form-group"><input class="custom-control-input" id="chkCaput" name="chkCaput" type="checkbox" style="">
+<label class="custom-control-label" for="chkCaput">Somente Caput da Ementa</label>
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2">
+                <h3 class="text-primary">Campos específicos</h3>
+                <div id="filtroEspecifica" class="mt-2 pl-2">
+                    <div class="row mt-2">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group mb-2"><label class="d-flex" for="txtProcesso">Processo</label>
+<span class="uic-input-wrapper"><input class="w-100 campoPesquisa form-control form-control-sm" id="txtProcesso" name="txtProcesso" placeholder="Número do processo" type="text" style="">
+</span>
+</div>
+
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group"><label class="d-flex" for="selClasse">Classe processual</label>
+<span class="uic-input-wrapper"><div class="dropdown bootstrap-select show-tick menu-adjust w-100"><select class="menu-adjust w-100" data-actions-box="true" data-live-search="true" data-live-search-normalize="true" data-selected-text-format="count &gt; 3" data-size="5" id="selClasse" multiple="true" name="selClasse[]" aria-hidden="true"><option value="Acordo de Não Persecução Penal (Seção)">ACORDO DE NÃO PERSECUÇÃO PENAL (SEÇÃO)</option>
+<option value="Agravo (TRU)">AGRAVO (TRU)</option>
+<option value="Agravo de Execução Penal">AGRAVO DE EXECUÇÃO PENAL</option>
+<option value="Agravo de Instrumento">AGRAVO DE INSTRUMENTO</option>
+<option value="Agravo de Instrumento em Recurso Especial (Vice-Presidência)">AGRAVO DE INSTRUMENTO EM RECURSO ESPECIAL (VICE-PRESIDÊNCIA)</option>
+<option value="Agravo de Instrumento em Recurso Extraordinário (Vice-Presidência)">AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO (VICE-PRESIDÊNCIA)</option>
+<option value="Agravo de Petição">AGRAVO DE PETIÇÃO</option>
+<option value="Agravo em Pedido de Uniformização de Interpretação de Lei (TRU)">AGRAVO EM PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI (TRU)</option>
+<option value="Alienação Judicial Criminal (Seção)">ALIENAÇÃO JUDICIAL CRIMINAL (SEÇÃO)</option>
+<option value="Apelação Criminal">APELAÇÃO CRIMINAL</option>
+<option value="Apelação Cível">APELAÇÃO CÍVEL</option>
+<option value="Apelação/Remessa Necessária">APELAÇÃO/REMESSA NECESSÁRIA</option>
+<option value="Avocatória">AVOCATÓRIA</option>
+<option value="Avocatória (Presidência)">AVOCATÓRIA (PRESIDÊNCIA)</option>
+<option value="Ação Civil Coletiva (Seção)">AÇÃO CIVIL COLETIVA (SEÇÃO)</option>
+<option value="Ação Civil de Improbidade Administrativa (Seção)">AÇÃO CIVIL DE IMPROBIDADE ADMINISTRATIVA (SEÇÃO)</option>
+<option value="Ação Penal (Pleno)">AÇÃO PENAL (PLENO)</option>
+<option value="Ação Penal (Seção)">AÇÃO PENAL (SEÇÃO)</option>
+<option value="Ação Penal (Órgão Especial)">AÇÃO PENAL (ÓRGÃO ESPECIAL)</option>
+<option value="Ação Rescisória (Plenário)">AÇÃO RESCISÓRIA (PLENÁRIO)</option>
+<option value="Ação Rescisória (Seção)">AÇÃO RESCISÓRIA (SEÇÃO)</option>
+<option value="Ação Rescisória (Turma)">AÇÃO RESCISÓRIA (TURMA)</option>
+<option value="Ação Rescisória (Órgão Especial)">AÇÃO RESCISÓRIA (ÓRGÃO ESPECIAL)</option>
+<option value="Carta Precatoria Criminal (Órgão Especial)">CARTA PRECATORIA CRIMINAL (ÓRGÃO ESPECIAL)</option>
+<option value="Carta Precatória Cível (Órgão Especial)">CARTA PRECATÓRIA CÍVEL (ÓRGÃO ESPECIAL)</option>
+<option value="Carta Testemunhável (Turma)">CARTA TESTEMUNHÁVEL (TURMA)</option>
+<option value="Carta de Ordem Criminal (Órgão Especial)">CARTA DE ORDEM CRIMINAL (ÓRGÃO ESPECIAL)</option>
+<option value="Carta de Ordem Cível">CARTA DE ORDEM CÍVEL</option>
+<option value="Cautelar Inominada (Seção)">CAUTELAR INOMINADA (SEÇÃO)</option>
+<option value="Cautelar Inominada (Turma)">CAUTELAR INOMINADA (TURMA)</option>
+<option value="Cautelar Inominada Criminal (Seção)">CAUTELAR INOMINADA CRIMINAL (SEÇÃO)</option>
+<option value="Cautelar Inominada Criminal (Turma)">CAUTELAR INOMINADA CRIMINAL (TURMA)</option>
+<option value="Cautelar de Interpelação (Turma)">CAUTELAR DE INTERPELAÇÃO (TURMA)</option>
+<option value="Cautelar de Notificação (Turma)">CAUTELAR DE NOTIFICAÇÃO (TURMA)</option>
+<option value="Conflito de Competência (Seção)">CONFLITO DE COMPETÊNCIA (SEÇÃO)</option>
+<option value="Conflito de Competência (TRU)">CONFLITO DE COMPETÊNCIA (TRU)</option>
+<option value="Conflito de Competência (Turma)">CONFLITO DE COMPETÊNCIA (TURMA)</option>
+<option value="Conflito de Competência (Órgão Especial)">CONFLITO DE COMPETÊNCIA (ÓRGÃO ESPECIAL)</option>
+<option value="Conflito de Jurisdição (Seção)">CONFLITO DE JURISDIÇÃO (SEÇÃO)</option>
+<option value="Conflito de Jurisdição (Turma)">CONFLITO DE JURISDIÇÃO (TURMA)</option>
+<option value="Correição Ordinária (Corregedoria)">CORREIÇÃO ORDINÁRIA (CORREGEDORIA)</option>
+<option value="Correição Parcial Civel (Turma)">CORREIÇÃO PARCIAL CIVEL (TURMA)</option>
+<option value="Correição Parcial Criminal (Turma)">CORREIÇÃO PARCIAL CRIMINAL (TURMA)</option>
+<option value="Correição Parcial ou Reclamação Correicional (Corregedoria)">CORREIÇÃO PARCIAL OU RECLAMAÇÃO CORREICIONAL (CORREGEDORIA)</option>
+<option value="Cumprimento Provisório de Sentença de Ações Coletivas (Seção)">CUMPRIMENTO PROVISÓRIO DE SENTENÇA DE AÇÕES COLETIVAS (SEÇÃO)</option>
+<option value="Cumprimento de Sentença (Seção)">CUMPRIMENTO DE SENTENÇA (SEÇÃO)</option>
+<option value="Cumprimento de Sentença (Turma)">CUMPRIMENTO DE SENTENÇA (TURMA)</option>
+<option value="Cumprimento de Sentença contra Fazenda Pública (Seção)">CUMPRIMENTO DE SENTENÇA CONTRA FAZENDA PÚBLICA (SEÇÃO)</option>
+<option value="Cumprimento de Sentença contra Fazenda Pública (Turma)">CUMPRIMENTO DE SENTENÇA CONTRA FAZENDA PÚBLICA (TURMA)</option>
+<option value="Cumprimento de Sentença de Ações Coletivas (Seção)">CUMPRIMENTO DE SENTENÇA DE AÇÕES COLETIVAS (SEÇÃO)</option>
+<option value="Desaforamento de Julgamento (Turma)">DESAFORAMENTO DE JULGAMENTO (TURMA)</option>
+<option value="Embargos Infringentes (Pleno)">EMBARGOS INFRINGENTES (PLENO)</option>
+<option value="Embargos Infringentes (Seção)">EMBARGOS INFRINGENTES (SEÇÃO)</option>
+<option value="Embargos Infringentes (Órgão Especial)">EMBARGOS INFRINGENTES (ÓRGÃO ESPECIAL)</option>
+<option value="Embargos Infringentes e de Nulidade (Seção)">EMBARGOS INFRINGENTES E DE NULIDADE (SEÇÃO)</option>
+<option value="Embargos Infringentes e de Nulidade (Órgão Especial)">EMBARGOS INFRINGENTES E DE NULIDADE (ÓRGÃO ESPECIAL)</option>
+<option value="Embargos de Terceiro - Criminal (Seção)">EMBARGOS DE TERCEIRO - CRIMINAL (SEÇÃO)</option>
+<option value="Embargos à Execução (Seção)">EMBARGOS À EXECUÇÃO (SEÇÃO)</option>
+<option value="Exceção da Verdade (Órgão Especial)">EXCEÇÃO DA VERDADE (ÓRGÃO ESPECIAL)</option>
+<option value="Exceção de Impedimento (Seção)">EXCEÇÃO DE IMPEDIMENTO (SEÇÃO)</option>
+<option value="Exceção de Impedimento Criminal (Seção)">EXCEÇÃO DE IMPEDIMENTO CRIMINAL (SEÇÃO)</option>
+<option value="Exceção de Suspeição (Turma)">EXCEÇÃO DE SUSPEIÇÃO (TURMA)</option>
+<option value="Exceção de Suspeição Criminal (Seção)">EXCEÇÃO DE SUSPEIÇÃO CRIMINAL (SEÇÃO)</option>
+<option value="Exceção de Suspeição Criminal (Turma)">EXCEÇÃO DE SUSPEIÇÃO CRIMINAL (TURMA)</option>
+<option value="Habeas Corpus Criminal (Seção)">HABEAS CORPUS CRIMINAL (SEÇÃO)</option>
+<option value="Habeas Corpus Criminal (Turma)">HABEAS CORPUS CRIMINAL (TURMA)</option>
+<option value="Habeas Corpus Criminal(Órgão Especial)">HABEAS CORPUS CRIMINAL(ÓRGÃO ESPECIAL)</option>
+<option value="Habeas Corpus Cível (Turma)">HABEAS CORPUS CÍVEL (TURMA)</option>
+<option value="Habeas Corpus Cível (Órgão Especial)">HABEAS CORPUS CÍVEL (ÓRGÃO ESPECIAL)</option>
+<option value="Impugnação ao Valor da Causa Cível (Seção)">IMPUGNAÇÃO AO VALOR DA CAUSA CÍVEL (SEÇÃO)</option>
+<option value="Incidente de Arguição de Inconstitucionalidade Cível (Órgão Especial)">INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL (ÓRGÃO ESPECIAL)</option>
+<option value="Incidente de Assunção de Competência (Seção)">INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA (SEÇÃO)</option>
+<option value="Incidente de Impedimento (Seção)">INCIDENTE DE IMPEDIMENTO (SEÇÃO)</option>
+<option value="Incidente de Impedimento (Turma)">INCIDENTE DE IMPEDIMENTO (TURMA)</option>
+<option value="Incidente de Resolução de Demandas Repetitivas (Presidência TRF2)">INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (PRESIDÊNCIA TRF2)</option>
+<option value="Incidente de Resolução de Demandas Repetitivas (Seção)">INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (SEÇÃO)</option>
+<option value="Incidente de Resolução de Demandas Repetitivas (Órgão Especial)">INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (ÓRGÃO ESPECIAL)</option>
+<option value="Incidente de Soluções Fundiárias">INCIDENTE DE SOLUÇÕES FUNDIÁRIAS</option>
+<option value="Incidente de Suspeição Civel (Turma)">INCIDENTE DE SUSPEIÇÃO CIVEL (TURMA)</option>
+<option value="Incidente de Suspeição Cível (Seção)">INCIDENTE DE SUSPEIÇÃO CÍVEL (SEÇÃO)</option>
+<option value="Inquérito Policial (Pleno)">INQUÉRITO POLICIAL (PLENO)</option>
+<option value="Inquérito Policial (Seção)">INQUÉRITO POLICIAL (SEÇÃO)</option>
+<option value="Insanidade Mental do Acusado (Turma)">INSANIDADE MENTAL DO ACUSADO (TURMA)</option>
+<option value="Liquidação Provisória de Sentença pelo Procedimento Comum (Seção)">LIQUIDAÇÃO PROVISÓRIA DE SENTENÇA PELO PROCEDIMENTO COMUM (SEÇÃO)</option>
+<option value="Liquidação de Sentença pelo Procedimento Comum">LIQUIDAÇÃO DE SENTENÇA PELO PROCEDIMENTO COMUM</option>
+<option value="Mandado de Segurança Coletivo (Seção)">MANDADO DE SEGURANÇA COLETIVO (SEÇÃO)</option>
+<option value="Mandado de Segurança Coletivo (Turma)">MANDADO DE SEGURANÇA COLETIVO (TURMA)</option>
+<option value="Mandado de Segurança Criminal (Seção)">MANDADO DE SEGURANÇA CRIMINAL (SEÇÃO)</option>
+<option value="Mandado de Segurança Criminal (Turma)">MANDADO DE SEGURANÇA CRIMINAL (TURMA)</option>
+<option value="Mandado de Segurança Criminal (Órgão Especial)">MANDADO DE SEGURANÇA CRIMINAL (ÓRGÃO ESPECIAL)</option>
+<option value="Mandado de Segurança Cível (Pleno)">MANDADO DE SEGURANÇA CÍVEL (PLENO)</option>
+<option value="Mandado de Segurança Cível (Seção)">MANDADO DE SEGURANÇA CÍVEL (SEÇÃO)</option>
+<option value="Mandado de Segurança Cível (TRU)">MANDADO DE SEGURANÇA CÍVEL (TRU)</option>
+<option value="Mandado de Segurança Cível (Turma)">MANDADO DE SEGURANÇA CÍVEL (TURMA)</option>
+<option value="Mandado de Segurança Cível (Órgão Especial)">MANDADO DE SEGURANÇA CÍVEL (ÓRGÃO ESPECIAL)</option>
+<option value="Pedido de Busca e Apreensão Criminal (Seção)">PEDIDO DE BUSCA E APREENSÃO CRIMINAL (SEÇÃO)</option>
+<option value="Pedido de Efeito Suspensivo à Apelação (Turma)">PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO (TURMA)</option>
+<option value="Pedido de Prisão Preventiva (Seção)">PEDIDO DE PRISÃO PREVENTIVA (SEÇÃO)</option>
+<option value="Pedido de Prisão Temporária (Seção)">PEDIDO DE PRISÃO TEMPORÁRIA (SEÇÃO)</option>
+<option value="Pedido de Quebra de Sigilo de Dados e/ou Telefônico (Seção)">PEDIDO DE QUEBRA DE SIGILO DE DADOS E/OU TELEFÔNICO (SEÇÃO)</option>
+<option value="Petição Criminal (Seção)">PETIÇÃO CRIMINAL (SEÇÃO)</option>
+<option value="Petição Criminal (Turma)">PETIÇÃO CRIMINAL (TURMA)</option>
+<option value="Petição Criminal (Vice Presidência)">PETIÇÃO CRIMINAL (VICE PRESIDÊNCIA)</option>
+<option value="Petição Criminal (Órgão Especial)">PETIÇÃO CRIMINAL (ÓRGÃO ESPECIAL)</option>
+<option value="Petição Cível (Corregedoria)">PETIÇÃO CÍVEL (CORREGEDORIA)</option>
+<option value="Petição Cível (Pleno)">PETIÇÃO CÍVEL (PLENO)</option>
+<option value="Petição Cível (Presidência)">PETIÇÃO CÍVEL (PRESIDÊNCIA)</option>
+<option value="Petição Cível (Seção)">PETIÇÃO CÍVEL (SEÇÃO)</option>
+<option value="Petição Cível (TRU)">PETIÇÃO CÍVEL (TRU)</option>
+<option value="Petição Cível (Turma)">PETIÇÃO CÍVEL (TURMA)</option>
+<option value="Petição Cível (Vice-Presidência)">PETIÇÃO CÍVEL (VICE-PRESIDÊNCIA)</option>
+<option value="Petição Cível (Órgão Especial)">PETIÇÃO CÍVEL (ÓRGÃO ESPECIAL)</option>
+<option value="Proced. Investigatório do MP (Peças de Informação) - (Seção)">PROCED. INVESTIGATÓRIO DO MP (PEÇAS DE INFORMAÇÃO) - (SEÇÃO)</option>
+<option value="Proced. Investigatório do MP (Peças de Informação) - (Órgão Especial)">PROCED. INVESTIGATÓRIO DO MP (PEÇAS DE INFORMAÇÃO) - (ÓRGÃO ESPECIAL)</option>
+<option value="Procedimento Restaurativo Penal">PROCEDIMENTO RESTAURATIVO PENAL</option>
+<option value="Processo Administrativo (Cumprimento de Acordo Fundiário)">PROCESSO ADMINISTRATIVO (CUMPRIMENTO DE ACORDO FUNDIÁRIO)</option>
+<option value="Processo Administrativo (Pleno - Adm)">PROCESSO ADMINISTRATIVO (PLENO - ADM)</option>
+<option value="Processo Administrativo (Presidência)">PROCESSO ADMINISTRATIVO (PRESIDÊNCIA)</option>
+<option value="Processo Administrativo (Órgão Especial - Adm)">PROCESSO ADMINISTRATIVO (ÓRGÃO ESPECIAL - ADM)</option>
+<option value="Processo Administrativo - Conselho de Administração">PROCESSO ADMINISTRATIVO - CONSELHO DE ADMINISTRAÇÃO</option>
+<option value="Processo Administrativo Disciplinar em face de Magistrado (Pleno - Adm)">PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE MAGISTRADO (PLENO - ADM)</option>
+<option value="Reclamação (Presidência)">RECLAMAÇÃO (PRESIDÊNCIA)</option>
+<option value="Reclamação (Seção)">RECLAMAÇÃO (SEÇÃO)</option>
+<option value="Reclamação (TRU)">RECLAMAÇÃO (TRU)</option>
+<option value="Reclamação (Turma)">RECLAMAÇÃO (TURMA)</option>
+<option value="Reclamação (Vice-Presidência)">RECLAMAÇÃO (VICE-PRESIDÊNCIA)</option>
+<option value="Reclamação (Órgão Especial)">RECLAMAÇÃO (ÓRGÃO ESPECIAL)</option>
+<option value="Reclamação Pré-Processual (Turma)">RECLAMAÇÃO PRÉ-PROCESSUAL (TURMA)</option>
+<option value="Recurso em Sentido Estrito (Turma)">RECURSO EM SENTIDO ESTRITO (TURMA)</option>
+<option value="Remessa Necessária Criminal">REMESSA NECESSÁRIA CRIMINAL</option>
+<option value="Remessa Necessária Cível">REMESSA NECESSÁRIA CÍVEL</option>
+<option value="Restauração de Autos Cível (Turma)">RESTAURAÇÃO DE AUTOS CÍVEL (TURMA)</option>
+<option value="Restituição de Coisas Apreendidas (Seção)">RESTITUIÇÃO DE COISAS APREENDIDAS (SEÇÃO)</option>
+<option value="Restituição de Coisas Apreendidas (Turma)">RESTITUIÇÃO DE COISAS APREENDIDAS (TURMA)</option>
+<option value="Revisão Criminal (Pleno)">REVISÃO CRIMINAL (PLENO)</option>
+<option value="Revisão Criminal (Seção)">REVISÃO CRIMINAL (SEÇÃO)</option>
+<option value="Revisão Criminal (Turma)">REVISÃO CRIMINAL (TURMA)</option>
+<option value="Revisão Criminal (Órgão Especial)">REVISÃO CRIMINAL (ÓRGÃO ESPECIAL)</option>
+<option value="Sequestro - Medidas Assecuratórias (Seção)">SEQUESTRO - MEDIDAS ASSECURATÓRIAS (SEÇÃO)</option>
+<option value="Suspensão de Execução de Sentença">SUSPENSÃO DE EXECUÇÃO DE SENTENÇA</option>
+<option value="Suspensão de Liminar e de Sentença (Presidência)">SUSPENSÃO DE LIMINAR E DE SENTENÇA (PRESIDÊNCIA)</option>
+<option value="Suspensão de Liminar ou Antecipação de Tutela">SUSPENSÃO DE LIMINAR OU ANTECIPAÇÃO DE TUTELA</option>
+<option value="Suspensão de Segurança Civel (Presidência)">SUSPENSÃO DE SEGURANÇA CIVEL (PRESIDÊNCIA)</option>
+<option value="Transferência entre Estabelecimentos Penais (Seção)">TRANSFERÊNCIA ENTRE ESTABELECIMENTOS PENAIS (SEÇÃO)</option>
+<option value="Tutela Antecipada Antecedente (Seção)">TUTELA ANTECIPADA ANTECEDENTE (SEÇÃO)</option>
+<option value="Tutela Antecipada Antecedente (Turma)">TUTELA ANTECIPADA ANTECEDENTE (TURMA)</option>
+<option value="Tutela Antecipada Antecedente (Órgão Especial)">TUTELA ANTECIPADA ANTECEDENTE (ÓRGÃO ESPECIAL)</option>
+<option value="Tutela Cautelar Antecedente (Seção)">TUTELA CAUTELAR ANTECEDENTE (SEÇÃO)</option>
+<option value="Tutela Cautelar Antecedente (Turma)">TUTELA CAUTELAR ANTECEDENTE (TURMA)</option>
+<option value="Tutela Cautelar Antecedente (Órgão Especial)">TUTELA CAUTELAR ANTECEDENTE (ÓRGÃO ESPECIAL)</option>
+</select><button type="button" tabindex="-1" class="dropdown-toggle form-control form-control-sm bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-3" aria-haspopup="listbox" aria-expanded="false" data-id="selClasse" title="Nada selecionado" aria-label="Nada selecionado"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">Nada selecionado</div></div> </div></button><div class="dropdown-menu "><div class="bs-searchbox"><input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-3" aria-autocomplete="list" style=""></div><div class="bs-actionsbox"><div class="btn-group btn-group-sm btn-block"><button type="button" class="actions-btn bs-select-all btn btn-light">Selecionar Todos</button><button type="button" class="actions-btn bs-deselect-all btn btn-light">Desmarcar Todos</button></div></div><div class="inner show" role="listbox" id="bs-select-3" tabindex="-1" aria-multiselectable="true"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
+</span>
+</div>
+<script>UI.PHPHelper.select.init('selClasse', "");</script>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group w-100 uic-date"><label class="d-flex" for="dtDecisaoInicio">Data da decisão / julgamento</label>
+<span class="uic-input-wrapper"><div aria-label="Data da decisão / julgamento" class="d-flex" role="group">            <div class="input-group input-group-sm datepicker">
+                <input aria-label="Data Inicial" class="form-control datetimepicker-input" data-target="#dtDecisaoInicio" id="dtDecisaoInicio" name="dtDecisaoInicio" placeholder="__/__/____" type="text" style="">
+
+                <div class="input-group-append" data-target="#dtDecisaoInicio" data-toggle="datetimepicker">
+                
+                    <span class="input-group-text" id="inputGroup-sizing-sm">
+                        <i aria-hidden="true" class="material-icons m-0">date_range</i>
+                    </span>
+                </div>
+                
+            </div>            <div class="input-group input-group-sm datepicker">
+                <input aria-label="Data Final" class="form-control datetimepicker-input" data-target="#dtDecisaoFim" id="dtDecisaoFim" name="dtDecisaoFim" placeholder="__/__/____" type="text" style="">
+
+                <div class="input-group-append" data-target="#dtDecisaoFim" data-toggle="datetimepicker">
+                
+                    <span class="input-group-text" id="inputGroup-sizing-sm">
+                        <i aria-hidden="true" class="material-icons m-0">date_range</i>
+                    </span>
+                </div>
+                
+            </div></div>
+</span>
+</div>
+
+<script>
+    UI.PHPHelper.dateInterval.init('dtDecisaoInicio', 'dtDecisaoFim', false, []);
+</script>
+                            <input id="hdnDecisaoInicio" name="hdnDecisaoInicio" type="hidden" style="">
+
+                            <input id="hdnDecisaoFim" name="hdnDecisaoFim" type="hidden" style="">
+
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group w-100 uic-date"><label class="d-flex" for="dtPublicacaoInicio">Data da disponibilização / publicação</label>
+<span class="uic-input-wrapper"><div aria-label="Data da disponibilização / publicação" class="d-flex" role="group">            <div class="input-group input-group-sm datepicker">
+                <input aria-label="Data Inicial" class="form-control datetimepicker-input" data-target="#dtPublicacaoInicio" id="dtPublicacaoInicio" name="dtPublicacaoInicio" placeholder="__/__/____" type="text" style="">
+
+                <div class="input-group-append" data-target="#dtPublicacaoInicio" data-toggle="datetimepicker">
+                
+                    <span class="input-group-text" id="inputGroup-sizing-sm">
+                        <i aria-hidden="true" class="material-icons m-0">date_range</i>
+                    </span>
+                </div>
+                
+            </div>            <div class="input-group input-group-sm datepicker">
+                <input aria-label="Data Final" class="form-control datetimepicker-input" data-target="#dtPublicacaoFim" id="dtPublicacaoFim" name="dtPublicacaoFim" placeholder="__/__/____" type="text" style="">
+
+                <div class="input-group-append" data-target="#dtPublicacaoFim" data-toggle="datetimepicker">
+                
+                    <span class="input-group-text" id="inputGroup-sizing-sm">
+                        <i aria-hidden="true" class="material-icons m-0">date_range</i>
+                    </span>
+                </div>
+                
+            </div></div>
+</span>
+</div>
+
+<script>
+    UI.PHPHelper.dateInterval.init('dtPublicacaoInicio', 'dtPublicacaoFim', false, []);
+</script>
+                            <input id="hdnPublicacaoInicio" name="hdnPublicacaoInicio" type="hidden" style="">
+
+                            <input id="hdnPublicacaoFim" name="hdnPublicacaoFim" type="hidden" style="">
+
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group"><label class="d-flex" for="selRelator">Relator / Relatora</label>
+<span class="uic-input-wrapper"><div class="dropdown bootstrap-select show-tick menu-adjust w-100"><select class="menu-adjust w-100" data-actions-box="true" data-live-search="true" data-live-search-normalize="true" data-selected-text-format="count &gt; 3" data-size="5" id="selRelator" multiple="true" name="selRelator[]" aria-hidden="true"><option value="ABEL FERNANDES GOMES">ABEL FERNANDES GOMES</option>
+<option value="ADRIANA  ALVES DOS SANTOS CRUZ">ADRIANA  ALVES DOS SANTOS CRUZ</option>
+<option value="ADRIANO SALDANHA GOMES DE OLIVEIRA">ADRIANO SALDANHA GOMES DE OLIVEIRA</option>
+<option value="ALBERTO NOGUEIRA JUNIOR">ALBERTO NOGUEIRA JUNIOR</option>
+<option value="ALCIDES MARTINS">ALCIDES MARTINS</option>
+<option value="ALESSANDRA BELFORT BUENO">ALESSANDRA BELFORT BUENO</option>
+<option value="ALEXANDRE DA SILVA ARRUDA">ALEXANDRE DA SILVA ARRUDA</option>
+<option value="ALEXANDRE MIGUEL">ALEXANDRE MIGUEL</option>
+<option value="ALFREDO HILARIO DE SOUZA">ALFREDO HILARIO DE SOUZA</option>
+<option value="ALFREDO JARA MOURA">ALFREDO JARA MOURA</option>
+<option value="ALINE ALVES DE MELO MIRANDA  ARAÚJO">ALINE ALVES DE MELO MIRANDA  ARAÚJO</option>
+<option value="ALINE ALVES DE MELO MIRANDA ARAÚJO">ALINE ALVES DE MELO MIRANDA ARAÚJO</option>
+<option value="ALUISIO GONÇALVES DE CASTRO MENDES">ALUISIO GONÇALVES DE CASTRO MENDES</option>
+<option value="ANA CAROLINA VIEIRA DE CARVALHO">ANA CAROLINA VIEIRA DE CARVALHO</option>
+<option value="ANA CRISTINA FERREIRA DE MIRANDA">ANA CRISTINA FERREIRA DE MIRANDA</option>
+<option value="ANDREA CUNHA ESMERALDO">ANDREA CUNHA ESMERALDO</option>
+<option value="ANDREA DAQUER BARSOTTI">ANDREA DAQUER BARSOTTI</option>
+<option value="ANDREA DE ARAUJO PEIXOTO">ANDREA DE ARAUJO PEIXOTO</option>
+<option value="ANDRÉ FONTES">ANDRÉ FONTES</option>
+<option value="ANDRÉ LUIZ MARTINS DA SILVA">ANDRÉ LUIZ MARTINS DA SILVA</option>
+<option value="ANGELINA DE SIQUEIRA COSTA">ANGELINA DE SIQUEIRA COSTA</option>
+<option value="ANTONIO HENRIQUE CORREA DA SILVA">ANTONIO HENRIQUE CORREA DA SILVA</option>
+<option value="ANTONIO IVAN ATHIE">ANTONIO IVAN ATHIE</option>
+<option value="BIANCA STAMATO FERNANDES">BIANCA STAMATO FERNANDES</option>
+<option value="CAIO SOUTO ARAÚJO">CAIO SOUTO ARAÚJO</option>
+<option value="CARLOS GUILHERME FRANCOVICH LUGONES">CARLOS GUILHERME FRANCOVICH LUGONES</option>
+<option value="CARMEN SILVIA LIMA DE ARRUDA">CARMEN SILVIA LIMA DE ARRUDA</option>
+<option value="CAROLINE MEDEIROS E SILVA">CAROLINE MEDEIROS E SILVA</option>
+<option value="CESAR MANUEL GRANDA PEREIRA">CESAR MANUEL GRANDA PEREIRA</option>
+<option value="CLAUDIA FRANCO CORREA">CLAUDIA FRANCO CORREA</option>
+<option value="CLAUDIA NEIVA">CLAUDIA NEIVA</option>
+<option value="CRISTIANE CONDE CHMATALIK">CRISTIANE CONDE CHMATALIK</option>
+<option value="CÉSAR MANUEL GRANDA PEREIRA">CÉSAR MANUEL GRANDA PEREIRA</option>
+<option value="DARIO RIBEIRO MACHADO JUNIOR">DARIO RIBEIRO MACHADO JUNIOR</option>
+<option value="DÉBORA VALLE DE BRITO">DÉBORA VALLE DE BRITO</option>
+<option value="EDUARDO ANDRÉ BRANDÃO DE BRITO FERNANDES">EDUARDO ANDRÉ BRANDÃO DE BRITO FERNANDES</option>
+<option value="ERICO TEIXEIRA VINHOSA PINTO">ERICO TEIXEIRA VINHOSA PINTO</option>
+<option value="EUGENIO ROSA DE ARAUJO">EUGENIO ROSA DE ARAUJO</option>
+<option value="FABIO DE SOUZA SILVA">FABIO DE SOUZA SILVA</option>
+<option value="FABIO TENENBLAT">FABIO TENENBLAT</option>
+<option value="FABRICIO ANTONIO SOARES">FABRICIO ANTONIO SOARES</option>
+<option value="FABRICIO FERNANDES DE CASTRO">FABRICIO FERNANDES DE CASTRO</option>
+<option value="FERNANDA DUARTE LOPES LUCAS DA SILVA">FERNANDA DUARTE LOPES LUCAS DA SILVA</option>
+<option value="FERNANDA RIBEIRO PINTO">FERNANDA RIBEIRO PINTO</option>
+<option value="FERREIRA NEVES">FERREIRA NEVES</option>
+<option value="FIRLY NASCIMENTO FILHO">FIRLY NASCIMENTO FILHO</option>
+<option value="FLAVIO OLIVEIRA LUCAS">FLAVIO OLIVEIRA LUCAS</option>
+<option value="GERALDINE PINTO VITAL DE CASTRO">GERALDINE PINTO VITAL DE CASTRO</option>
+<option value="GUILHERME BOLLORINI PEREIRA">GUILHERME BOLLORINI PEREIRA</option>
+<option value="GUILHERME CALMON NOGUEIRA DA GAMA">GUILHERME CALMON NOGUEIRA DA GAMA</option>
+<option value="GUILHERME COUTO DE CASTRO">GUILHERME COUTO DE CASTRO</option>
+<option value="GUILHERME DIEFENTHAELER">GUILHERME DIEFENTHAELER</option>
+<option value="GUSTAVO ARRUDA MACEDO">GUSTAVO ARRUDA MACEDO</option>
+<option value="HELENA ELIAS PINTO">HELENA ELIAS PINTO</option>
+<option value="JANE REIS GONÇALVES PEREIRA">JANE REIS GONÇALVES PEREIRA</option>
+<option value="JOSE CARLOS DA SILVA GARCIA">JOSE CARLOS DA SILVA GARCIA</option>
+<option value="JOSE EDUARDO NOBRE MATTA">JOSE EDUARDO NOBRE MATTA</option>
+<option value="JOSÉ ANTONIO LISBÔA NEIVA">JOSÉ ANTONIO LISBÔA NEIVA</option>
+<option value="JULIO DE CASTILHOS">JULIO DE CASTILHOS</option>
+<option value="JULIO EMILIO ABRANCHES MANSUR">JULIO EMILIO ABRANCHES MANSUR</option>
+<option value="KARLA NANCI GRANDO">KARLA NANCI GRANDO</option>
+<option value="KATHERINE RAMOS CORDEIRO">KATHERINE RAMOS CORDEIRO</option>
+<option value="LETICIA DE SANTIS MELLO">LETICIA DE SANTIS MELLO</option>
+<option value="LUIZ ANTONIO SOARES">LUIZ ANTONIO SOARES</option>
+<option value="LUIZ CLEMENTE PEREIRA FILHO">LUIZ CLEMENTE PEREIRA FILHO</option>
+<option value="LUIZ NORTON BAPTISTA DE MATTOS">LUIZ NORTON BAPTISTA DE MATTOS</option>
+<option value="LUIZ PAULO DA SILVA  ARAÚJO FILHO">LUIZ PAULO DA SILVA  ARAÚJO FILHO</option>
+<option value="LUIZ PAULO DA SILVA ARAÚJO FILHO">LUIZ PAULO DA SILVA ARAÚJO FILHO</option>
+<option value="MACARIO RAMOS JUDICE NETO">MACARIO RAMOS JUDICE NETO</option>
+<option value="MARCELLA ARAUJO DA NOVA BRANDAO">MARCELLA ARAUJO DA NOVA BRANDAO</option>
+<option value="MARCELLO FERREIRA DE SOUZA GRANADO">MARCELLO FERREIRA DE SOUZA GRANADO</option>
+<option value="MARCELO DA FONSECA GUERREIRO">MARCELO DA FONSECA GUERREIRO</option>
+<option value="MARCELO DA ROCHA ROSADO">MARCELO DA ROCHA ROSADO</option>
+<option value="MARCELO LEONARDO TAVARES">MARCELO LEONARDO TAVARES</option>
+<option value="MARCELO LUZIO MARQUES ARAUJO">MARCELO LUZIO MARQUES ARAUJO</option>
+<option value="MARCELO PEREIRA DA SILVA">MARCELO PEREIRA DA SILVA</option>
+<option value="MARCIA MARIA NUNES DE BARROS">MARCIA MARIA NUNES DE BARROS</option>
+<option value="MARCOS PAULO SECIOSO DE GÓES">MARCOS PAULO SECIOSO DE GÓES</option>
+<option value="MARCUS ABRAHAM">MARCUS ABRAHAM</option>
+<option value="MARGARETH DE CÁSSIA THOMAZ ROSTEY">MARGARETH DE CÁSSIA THOMAZ ROSTEY</option>
+<option value="MARIA AMELIA ALMEIDA SENOS DE CARVALHO">MARIA AMELIA ALMEIDA SENOS DE CARVALHO</option>
+<option value="MARIA CRISTINA RIBEIRO BOTELHO KANTO">MARIA CRISTINA RIBEIRO BOTELHO KANTO</option>
+<option value="MARIANA PRETURLAN">MARIANA PRETURLAN</option>
+<option value="MAURO LUIS ROCHA LOPES">MAURO LUIS ROCHA LOPES</option>
+<option value="MAURO SOUZA MARQUES DA COSTA BRAGA">MAURO SOUZA MARQUES DA COSTA BRAGA</option>
+<option value="MESSOD AZULAY NETO">MESSOD AZULAY NETO</option>
+<option value="MICHELE MENEZES DA CUNHA">MICHELE MENEZES DA CUNHA</option>
+<option value="MÔNICA LÚCIA DO NASCIMENTO ALCANTARA BOTELHO">MÔNICA LÚCIA DO NASCIMENTO ALCANTARA BOTELHO</option>
+<option value="NIZETE LOBATO CARMO">NIZETE LOBATO CARMO</option>
+<option value="ODILON ROMANO NETO">ODILON ROMANO NETO</option>
+<option value="PAULO ANDRE ESPIRITO SANTO MANFREDINI">PAULO ANDRE ESPIRITO SANTO MANFREDINI</option>
+<option value="PAULO ANDRÉ ESPIRITO SANTO MANFREDINI">PAULO ANDRÉ ESPIRITO SANTO MANFREDINI</option>
+<option value="PAULO CESAR MORAIS ESPIRITO SANTO">PAULO CESAR MORAIS ESPIRITO SANTO</option>
+<option value="PAULO LEITE">PAULO LEITE</option>
+<option value="POUL ERIK DYRLUND">POUL ERIK DYRLUND</option>
+<option value="RAFFAELE FELICE PIRRO">RAFFAELE FELICE PIRRO</option>
+<option value="REIS FRIEDE">REIS FRIEDE</option>
+<option value="RICARDO PERLINGEIRO">RICARDO PERLINGEIRO</option>
+<option value="ROBERTO DANTES SCHUMAN DE PAULA">ROBERTO DANTES SCHUMAN DE PAULA</option>
+<option value="RODOLFO KRONEMBERG HARTMANN">RODOLFO KRONEMBERG HARTMANN</option>
+<option value="RODRIGO GASPAR DE MELLO">RODRIGO GASPAR DE MELLO</option>
+<option value="ROGERIO MOREIRA ALVES">ROGERIO MOREIRA ALVES</option>
+<option value="ROGÉRIO TOBIAS DE CARVALHO">ROGÉRIO TOBIAS DE CARVALHO</option>
+<option value="RONALD KRUGER RODOR">RONALD KRUGER RODOR</option>
+<option value="SANDRA MEIRIM CHALU BARBOSA DE CAMPOS">SANDRA MEIRIM CHALU BARBOSA DE CAMPOS</option>
+<option value="SERGIO SCHWAITZER">SERGIO SCHWAITZER</option>
+<option value="SILVIO WANDERLEY DO NASCIMENTO LIMA">SILVIO WANDERLEY DO NASCIMENTO LIMA</option>
+<option value="SIMONE SCHREIBER">SIMONE SCHREIBER</option>
+<option value="THEOPHILO ANTONIO MIGUEL FILHO">THEOPHILO ANTONIO MIGUEL FILHO</option>
+<option value="VERA LUCIA LIMA DA SILVA">VERA LUCIA LIMA DA SILVA</option>
+<option value="VIGDOR TEITEL">VIGDOR TEITEL</option>
+<option value="VLAMIR COSTA MAGALHÃES">VLAMIR COSTA MAGALHÃES</option>
+<option value="WALNER DE ALMEIDA PINTO">WALNER DE ALMEIDA PINTO</option>
+<option value="WANDERLEY SANAN DANTAS">WANDERLEY SANAN DANTAS</option>
+<option value="WASHINGTON JUAREZ DE BRITO FILHO">WASHINGTON JUAREZ DE BRITO FILHO</option>
+<option value="WILLIAM DOUGLAS">WILLIAM DOUGLAS</option>
+<option value="WILLIAM DOUGLAS RESINENTE DOS SANTOS">WILLIAM DOUGLAS RESINENTE DOS SANTOS</option>
+<option value="WILNEY MAGNO DE AZEVEDO SILVA">WILNEY MAGNO DE AZEVEDO SILVA</option>
+</select><button type="button" tabindex="-1" class="dropdown-toggle form-control form-control-sm bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-4" aria-haspopup="listbox" aria-expanded="false" data-id="selRelator" title="Nada selecionado" aria-label="Nada selecionado"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">Nada selecionado</div></div> </div></button><div class="dropdown-menu "><div class="bs-searchbox"><input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-4" aria-autocomplete="list" style=""></div><div class="bs-actionsbox"><div class="btn-group btn-group-sm btn-block"><button type="button" class="actions-btn bs-select-all btn btn-light">Selecionar Todos</button><button type="button" class="actions-btn bs-deselect-all btn btn-light">Desmarcar Todos</button></div></div><div class="inner show" role="listbox" id="bs-select-4" tabindex="-1" aria-multiselectable="true"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
+</span>
+</div>
+<script>UI.PHPHelper.select.init('selRelator', "");</script>
+                        </div>
+                                                    <div class="col-12 col-sm-6">
+                                <div class="form-group"><label class="d-flex" for="selOrgao">Órgão julgador</label>
+<span class="uic-input-wrapper"><div class="dropdown bootstrap-select show-tick menu-adjust w-100"><select class="menu-adjust w-100" data-actions-box="true" data-live-search="true" data-live-search-normalize="true" data-selected-text-format="count &gt; 3" data-size="5" id="selOrgao" multiple="true" name="selOrgao[]" aria-hidden="true"><option value="10ª TURMA ESPECIALIZADA">10ª TURMA ESPECIALIZADA</option>
+<option value="1a. SEÇÃO ESPECIALIZADA">1A. SEÇÃO ESPECIALIZADA</option>
+<option value="1ª TURMA ESPECIALIZADA">1ª TURMA ESPECIALIZADA</option>
+<option value="2a. SEÇÃO ESPECIALIZADA">2A. SEÇÃO ESPECIALIZADA</option>
+<option value="2ª TURMA ESPECIALIZADA">2ª TURMA ESPECIALIZADA</option>
+<option value="3a. SEÇÃO ESPECIALIZADA">3A. SEÇÃO ESPECIALIZADA</option>
+<option value="3ª TURMA ESPECIALIZADA">3ª TURMA ESPECIALIZADA</option>
+<option value="4a. SEÇÃO ESPECIALIZADA">4A. SEÇÃO ESPECIALIZADA</option>
+<option value="4ª TURMA ESPECIALIZADA">4ª TURMA ESPECIALIZADA</option>
+<option value="5ª TURMA ESPECIALIZADA">5ª TURMA ESPECIALIZADA</option>
+<option value="6ª TURMA ESPECIALIZADA">6ª TURMA ESPECIALIZADA</option>
+<option value="7ª TURMA ESPECIALIZADA">7ª TURMA ESPECIALIZADA</option>
+<option value="8ª TURMA ESPECIALIZADA">8ª TURMA ESPECIALIZADA</option>
+<option value="9ª TURMA ESPECIALIZADA">9ª TURMA ESPECIALIZADA</option>
+<option value="Assessoria de Recursos">ASSESSORIA DE RECURSOS</option>
+<option value="Comissão de Soluções Fundiárias">COMISSÃO DE SOLUÇÕES FUNDIÁRIAS</option>
+<option value="Conselho de Administração">CONSELHO DE ADMINISTRAÇÃO</option>
+<option value="Corregedoria">CORREGEDORIA</option>
+<option value="GABINETE 01">GABINETE 01</option>
+<option value="GABINETE 02">GABINETE 02</option>
+<option value="GABINETE 03">GABINETE 03</option>
+<option value="GABINETE 04">GABINETE 04</option>
+<option value="GABINETE 05">GABINETE 05</option>
+<option value="GABINETE 06">GABINETE 06</option>
+<option value="GABINETE 07">GABINETE 07</option>
+<option value="GABINETE 08">GABINETE 08</option>
+<option value="GABINETE 09">GABINETE 09</option>
+<option value="GABINETE 10">GABINETE 10</option>
+<option value="GABINETE 11">GABINETE 11</option>
+<option value="GABINETE 12">GABINETE 12</option>
+<option value="GABINETE 13">GABINETE 13</option>
+<option value="GABINETE 14">GABINETE 14</option>
+<option value="GABINETE 15">GABINETE 15</option>
+<option value="GABINETE 16">GABINETE 16</option>
+<option value="GABINETE 17">GABINETE 17</option>
+<option value="GABINETE 18">GABINETE 18</option>
+<option value="GABINETE 19">GABINETE 19</option>
+<option value="GABINETE 20">GABINETE 20</option>
+<option value="GABINETE 21">GABINETE 21</option>
+<option value="GABINETE 22">GABINETE 22</option>
+<option value="GABINETE 23">GABINETE 23</option>
+<option value="GABINETE 24">GABINETE 24</option>
+<option value="GABINETE 26">GABINETE 26</option>
+<option value="GABINETE 28 - RJ PREV - TRU">GABINETE 28 - RJ PREV - TRU</option>
+<option value="GABINETE 29">GABINETE 29</option>
+<option value="GABINETE 30">GABINETE 30</option>
+<option value="GABINETE PRESIDÊNCIA - TRU">GABINETE PRESIDÊNCIA - TRU</option>
+<option value="Núcleo de Justiça Restaurativa">NÚCLEO DE JUSTIÇA RESTAURATIVA</option>
+<option value="Presidência">PRESIDÊNCIA</option>
+<option value="TRIBUNAL PLENO">TRIBUNAL PLENO</option>
+<option value="Vice-Presidência">VICE-PRESIDÊNCIA</option>
+<option value="Órgão Especial">ÓRGÃO ESPECIAL</option>
+</select><button type="button" tabindex="-1" class="dropdown-toggle form-control form-control-sm bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-5" aria-haspopup="listbox" aria-expanded="false" data-id="selOrgao" title="Nada selecionado" aria-label="Nada selecionado"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">Nada selecionado</div></div> </div></button><div class="dropdown-menu "><div class="bs-searchbox"><input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-5" aria-autocomplete="list" style=""></div><div class="bs-actionsbox"><div class="btn-group btn-group-sm btn-block"><button type="button" class="actions-btn bs-select-all btn btn-light">Selecionar Todos</button><button type="button" class="actions-btn bs-deselect-all btn btn-light">Desmarcar Todos</button></div></div><div class="inner show" role="listbox" id="bs-select-5" tabindex="-1" aria-multiselectable="true"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
+</span>
+</div>
+<script>UI.PHPHelper.select.init('selOrgao', "");</script>
+                            </div>
+                                            </div>
+                </div>
+            </div>
+
+                                
+    <div class="d-flex justify-content-between ">
+                    
+    <button class="btn btn-link" type="button" id="btnLimparFiltros" title="Limpa os filtros de pesquisa">
+        <small class="">
+            <i class="material-icons icon-aligned-sm" style="font-size:1.3rem">refresh</i>
+            Limpar filtros
+        </small>
+    </button>
+
+        <button style="" class="btn btn-sm btn-primary pr-3 pl-2 btnConsultar " type="submit" title="Consultar" id="btnConsultar">
+            <i class="material-icons icon-aligned">search</i>
+            <span class="">Pesquisar</span>
+        </button>
+    </div>
+
+                    </div>
+
+            </div>
+
+            </div>
+        </div>
+        <div class="mt-auto">
+                            <hr>
+                <div class="wrapper-links-acesso-rapido col-12 col-xl-10 col-xxl-8 offset-xl-1 offset-xxl-2">
+                        <div class="linkContainer">
+        <div>
+            <div class="listaSemEstilo row pb-3" style="justify-content: center;">
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://www.trf2.jus.br/trf2/consultas-e-servicos/sumulas-do-trf2" target="_blank">
+                                <span>Súmulas do TRF2</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://www.trf2.jus.br/trf2/artigo/pres/sumulas" target="_blank">
+                                <span>Súmulas da Turma Regional de Uniformização - 2° Região</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://www.trf2.jus.br/trf2/consultas-e-servicos/infojur-informativos-de-jurisprudencia-do-trf2" target="_blank">
+                                <span>Infojur - Informativos de Jurisprudência do TRF2</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://portal.stf.jus.br/jurisprudencia/" target="_blank">
+                                <span>STF - Consulta à Jurisprudência</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://www.trf2.jus.br/jfrj/institucional/enunciados" target="_blank">
+                                <span>Enunciados das Turmas Recursais - SJRJ</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://www.trf2.jus.br/trf2/consultas-e-servicos/precedentes-obrigatorios" target="_blank">
+                                <span>Precedentes Obrigatórios</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://www2.cjf.jus.br/jurisprudencia/unificada/" target="_blank">
+                                <span>Jurisprudência unificada da Justiça Federal</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://scon.stj.jus.br/SCON/" target="_blank">
+                                <span>STJ -  Consulta à Jurisprudência</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://www.trf2.jus.br/jfes/institucional/enunciados" target="_blank">
+                                <span>Enunciados das Turmas Recursais - SJES</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://www10.trf2.jus.br/memoria/" target="_blank">
+                                <span>Memória TRF2</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://extcdn.trf2.jus.br/integracao/prod/internet/convencao-haia" target="_blank">
+                                <span>Convenção de Haia</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/jurisprudencia-1" target="_blank">
+                                <span>Jurisprudência da Turma Nacional de Uniformização - (TNU)</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://www.trf2.jus.br/trf2/artigo/pres/enunciados-recomendacoes-sugestoes-mocoes-e-conclusoes-dos-forejefs-da-2a-regiao" target="_blank">
+                                <span>Enunciados do FOREJEF da 2º Região</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://biblioteca.trf2.jus.br/sophia_web/" target="_blank">
+                                <span>Biblioteca e Atos normativos</span>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="col-10 col-lg-3 mt-3 d-flex justify-content-center">
+                        <div class="textoAvisos shadow px-3 py-0 mx-1" style="">
+                            <a href="https://static.trf2.jus.br/nas-internet/documento/consultas/jurisprudencia/jurisprudencia-da-corte-interamericana-de-direitos-humanos-migracao-refugio-e-apatridas.pdf" target="_blank">
+                                <span>Jurisprudência da Corte Interamericana de Direitos Humanos</span>
+                            </a>
+                        </div>
+                    </div>
+                            </div>
+        </div>
+    </div>
+                </div>
+                    </div>
+    </div>
+</form>

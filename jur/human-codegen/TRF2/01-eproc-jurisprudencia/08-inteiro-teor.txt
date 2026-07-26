@@ -1,0 +1,37 @@
+## 8. Inteiro teor (download)
+
+Cada card traz `<a class="text-dark inteiroTeor" data-link="...">` — o link é **relativo**
+e precisa do prefixo `https://eproc.trf2.jus.br/eproc/`. Exemplo real capturado no
+mapeamento (origem Turmas Recursais/ES):
+
+    externo_controlador.php?acao=jurisprudencia@jurisprudencia/download_inteiro_teor
+      &doc=500004802513
+      &crc=f00843f4
+      &versao=2
+      &origem=ES
+      &termosPesquisados=ZGFub3xtb3JhbA==
+
+Parâmetros:
+- `doc`  — id interno do documento no e-Proc (≠ do `id` do card)
+- `crc`  — checksum que autoriza o download; **não é adivinhável**, tem de vir do resultado
+- `versao` — versão do documento
+- `origem` — `TRF2`, `RJ` ou `ES`
+- `termosPesquisados` — base64 dos termos, só para destacar no texto (opcional)
+
+### O que vem
+
+**HTML**, não PDF. `content-type: text/html; charset= ISO-8859-1`, ~6 KB a ~45 KB.
+Traz o documento formatado (cabeçalho "Documento:<doc>", CSS de impressão, corpo do voto).
+Não exige token adicional, captcha nem sessão: um **GET simples responde 200**.
+
+⚠️ **Encoding**: é ISO-8859-1 de verdade. Ler como UTF-8 produz mojibake (U+FFFD). O
+navigator tenta UTF-8 estrito e cai para windows-1252 — não decodifique por fora.
+
+### Quando é necessário
+
+Quase nunca. Diferente das Turmas Recursais do TJSC, aqui a **ementa e a decisão já vêm
+INTEIRAS no card de resultado** (não em trecho), inclusive nas Turmas Recursais. O inteiro
+teor serve para (a) ter o documento formatado, (b) casos em que o card só tem DECISÃO e o
+usuário quer o voto completo.
+
+Print: `08.01-inteiro-teor.png`.

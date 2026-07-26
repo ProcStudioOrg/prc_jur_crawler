@@ -1,0 +1,41 @@
+## 8.1 Súmulas — simples e VINCULANTES (o ouro do STF, parte 1)
+
+Prints: `08.01-sumulas-vinculantes.png` · `08.02-sumulas-nao-vinculantes.png`
+        `03.03-base-sumulas.png` (formulário com a base Súmulas selecionada)
+
+A base `sumulas` tem **799 enunciados**, divididos por um booleano:
+
+| | Quantidade | Efeito jurídico |
+|---|---|---|
+| **Súmulas vinculantes** (`is_vinculante=true`) | **63** | art. 103-A da CF: vinculam TODO o Judiciário e a administração pública direta e indireta. Descumprimento gera Reclamação direta ao STF |
+| Súmulas simples (`is_vinculante=false`)        | 736 | art. 102 do RISTF: são jurisprudência consolidada, sem efeito vinculante |
+| **total**                                      | 799 | conferido na tela: base_agg.sumulas = 799 |
+
+Conferência cruzada na tela (print `08.01-sumulas-vinculantes.png`, painel "Base"):
+`Súmulas (63)` com o filtro "Súmulas vinculantes" ligado.
+
+Os links oficiais do portal do STF para essas duas listas — e é assim que a SPA recebe o
+filtro pela URL — são:
+
+  vinculantes:      https://jurisprudencia.stf.jus.br/pages/search
+                      ?classeNumeroIncidente=vinculante&base=sumulas&is_vinculante=true
+                      &pesquisa_inteiro_teor=false&sinonimo=true&plural=true&radicais=false
+                      &buscaExata=true&page=1&pageSize=10&sort=date&sortBy=desc&isAdvanced=true
+  não vinculantes:  a mesma URL com `classeNumeroIncidente=não vinculante` e SEM `is_vinculante`
+
+Na API, o filtro é um `baseFilter` (`post_filter.bool.should` + `minimum_should_match: 1`):
+`{"match": {"is_vinculante": true}}`.
+
+Campos próprios da base Súmulas:
+  `sumula_texto`      enunciado (sem corte)
+  `situacao_sumula`   Aprovada / Cancelada / Alterada / Publicação suspensa / Superada
+  `ramo_direito`      13 opções
+  `julgamento_data`   aqui significa **data de aprovação** (a mais antiga: 13/12/1963)
+  `processo_precedente_texto`, `documental_legislacao_citada_texto`
+
+⚠️ A súmula **não tem número de processo**. O `titulo` é "Súmula 1" / "Súmula Vinculante 11".
+Por isso o `Checker` não valida súmula por CNJ — valida pelo enunciado/número.
+
+⚠️ Ordenar súmulas por data exige o desempate `tiebreaker_sort` (a SPA acrescenta
+`{"tiebreaker_sort": {"order":"desc","missing":"_last"}}` só nessa base). Sem ele, súmulas sem
+data caem em posições aleatórias.

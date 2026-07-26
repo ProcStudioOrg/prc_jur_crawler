@@ -1,0 +1,196 @@
+{
+  "inputs": [
+    {
+      "id": "txtPesquisa",
+      "name": "txtPesquisa",
+      "type": "search",
+      "placeholder": "Informe o texto para pesquisa",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "hdnExibirPesquisaAvancada",
+      "name": "hdnExibirPesquisaAvancada",
+      "type": "hidden",
+      "placeholder": "",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "hdnUrlCarregarListasCombobox",
+      "name": "hdnUrlCarregarListasCombobox",
+      "type": "hidden",
+      "placeholder": "",
+      "checked": false,
+      "value": "externo_controlador.php?acao=jurisprudencia@jurisprudencia/ajax_carregar_listas_pesquisa"
+    },
+    {
+      "id": "chkPrecedenteRelevante",
+      "name": "chkPrecedenteRelevante",
+      "type": "checkbox",
+      "placeholder": "",
+      "checked": false,
+      "value": "on"
+    },
+    {
+      "id": "chkAgruparResultados",
+      "name": "chkAgruparResultados",
+      "type": "checkbox",
+      "placeholder": "",
+      "checked": true,
+      "value": "on"
+    },
+    {
+      "id": "optInteiroTeor",
+      "name": "rdoCampo",
+      "type": "radio",
+      "placeholder": "",
+      "checked": true,
+      "value": "I"
+    },
+    {
+      "id": "optEmenta",
+      "name": "rdoCampo",
+      "type": "radio",
+      "placeholder": "",
+      "checked": false,
+      "value": "E"
+    },
+    {
+      "id": "chkCaput",
+      "name": "chkCaput",
+      "type": "checkbox",
+      "placeholder": "",
+      "checked": false,
+      "value": "on"
+    },
+    {
+      "id": "txtProcesso",
+      "name": "txtProcesso",
+      "type": "text",
+      "placeholder": "Número do processo",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "",
+      "name": "",
+      "type": "search",
+      "placeholder": "",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "dtDecisaoInicio",
+      "name": "dtDecisaoInicio",
+      "type": "text",
+      "placeholder": "__/__/____",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "dtDecisaoFim",
+      "name": "dtDecisaoFim",
+      "type": "text",
+      "placeholder": "__/__/____",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "hdnDecisaoInicio",
+      "name": "hdnDecisaoInicio",
+      "type": "hidden",
+      "placeholder": "",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "hdnDecisaoFim",
+      "name": "hdnDecisaoFim",
+      "type": "hidden",
+      "placeholder": "",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "dtPublicacaoInicio",
+      "name": "dtPublicacaoInicio",
+      "type": "text",
+      "placeholder": "__/__/____",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "dtPublicacaoFim",
+      "name": "dtPublicacaoFim",
+      "type": "text",
+      "placeholder": "__/__/____",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "hdnPublicacaoInicio",
+      "name": "hdnPublicacaoInicio",
+      "type": "hidden",
+      "placeholder": "",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "hdnPublicacaoFim",
+      "name": "hdnPublicacaoFim",
+      "type": "hidden",
+      "placeholder": "",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "",
+      "name": "",
+      "type": "search",
+      "placeholder": "",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "id": "",
+      "name": "",
+      "type": "search",
+      "placeholder": "",
+      "checked": false,
+      "value": ""
+    }
+  ],
+  "selects": [
+    {
+      "id": "selOrigem",
+      "name": "selOrigem[]",
+      "multiple": true,
+      "nOpcoes": 3
+    },
+    {
+      "id": "selTipoDocumento",
+      "name": "selTipoDocumento[]",
+      "multiple": true,
+      "nOpcoes": 4
+    },
+    {
+      "id": "selClasse",
+      "name": "selClasse[]",
+      "multiple": true,
+      "nOpcoes": 150
+    },
+    {
+      "id": "selRelator",
+      "name": "selRelator[]",
+      "multiple": true,
+      "nOpcoes": 118
+    },
+    {
+      "id": "selOrgao",
+      "name": "selOrgao[]",
+      "multiple": true,
+      "nOpcoes": 52
+    }
+  ]
+}

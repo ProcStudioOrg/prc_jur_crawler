@@ -1,0 +1,19 @@
+## 10.1 Documento individual e permalink
+
+Print: `10.01-documento.png`
+
+Clicar no número do processo na lista abre a rota:
+
+    https://jurisprudencia.stf.jus.br/pages/search/<_id>/false
+
+onde `<_id>` é o `_id` do Elasticsearch. Dois prefixos observados:
+  `sjur<N>`              acórdãos e decisões monocráticas comuns (ex.: `sjur567845`)
+  `repercussao-geral<N>` acórdãos paradigma de repercussão geral (ex.: `repercussao-geral8442`)
+
+É esse permalink que o crawler grava em `processoUrl`, e é ele que deve ser citado — não a URL
+de busca, que não é estável.
+
+Links auxiliares que vêm no próprio documento:
+  `acompanhamento_processual_url` → andamento no portal (`listarProcessos.asp?numeroProcesso=N&classe=X`)
+  `inteiro_teor_url`             → PDF (`obterInteiroTeor.asp?idDocumento=N`)
+  `dje_url`                      → edição do Diário da Justiça eletrônico

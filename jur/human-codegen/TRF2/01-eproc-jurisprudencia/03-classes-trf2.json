@@ -1,0 +1,602 @@
+[
+  {
+    "id": "Acordo de Não Persecução Penal (Seção)",
+    "label": "ACORDO DE NÃO PERSECUÇÃO PENAL (SEÇÃO)"
+  },
+  {
+    "id": "Agravo (TRU)",
+    "label": "AGRAVO (TRU)"
+  },
+  {
+    "id": "Agravo de Execução Penal",
+    "label": "AGRAVO DE EXECUÇÃO PENAL"
+  },
+  {
+    "id": "Agravo de Instrumento",
+    "label": "AGRAVO DE INSTRUMENTO"
+  },
+  {
+    "id": "Agravo de Instrumento em Recurso Especial (Vice-Presidência)",
+    "label": "AGRAVO DE INSTRUMENTO EM RECURSO ESPECIAL (VICE-PRESIDÊNCIA)"
+  },
+  {
+    "id": "Agravo de Instrumento em Recurso Extraordinário (Vice-Presidência)",
+    "label": "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO (VICE-PRESIDÊNCIA)"
+  },
+  {
+    "id": "Agravo de Petição",
+    "label": "AGRAVO DE PETIÇÃO"
+  },
+  {
+    "id": "Agravo em Pedido de Uniformização de Interpretação de Lei (TRU)",
+    "label": "AGRAVO EM PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI (TRU)"
+  },
+  {
+    "id": "Alienação Judicial Criminal (Seção)",
+    "label": "ALIENAÇÃO JUDICIAL CRIMINAL (SEÇÃO)"
+  },
+  {
+    "id": "Apelação Criminal",
+    "label": "APELAÇÃO CRIMINAL"
+  },
+  {
+    "id": "Apelação Cível",
+    "label": "APELAÇÃO CÍVEL"
+  },
+  {
+    "id": "Apelação/Remessa Necessária",
+    "label": "APELAÇÃO/REMESSA NECESSÁRIA"
+  },
+  {
+    "id": "Avocatória",
+    "label": "AVOCATÓRIA"
+  },
+  {
+    "id": "Avocatória (Presidência)",
+    "label": "AVOCATÓRIA (PRESIDÊNCIA)"
+  },
+  {
+    "id": "Ação Civil Coletiva (Seção)",
+    "label": "AÇÃO CIVIL COLETIVA (SEÇÃO)"
+  },
+  {
+    "id": "Ação Civil de Improbidade Administrativa (Seção)",
+    "label": "AÇÃO CIVIL DE IMPROBIDADE ADMINISTRATIVA (SEÇÃO)"
+  },
+  {
+    "id": "Ação Penal (Pleno)",
+    "label": "AÇÃO PENAL (PLENO)"
+  },
+  {
+    "id": "Ação Penal (Seção)",
+    "label": "AÇÃO PENAL (SEÇÃO)"
+  },
+  {
+    "id": "Ação Penal (Órgão Especial)",
+    "label": "AÇÃO PENAL (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Ação Rescisória (Plenário)",
+    "label": "AÇÃO RESCISÓRIA (PLENÁRIO)"
+  },
+  {
+    "id": "Ação Rescisória (Seção)",
+    "label": "AÇÃO RESCISÓRIA (SEÇÃO)"
+  },
+  {
+    "id": "Ação Rescisória (Turma)",
+    "label": "AÇÃO RESCISÓRIA (TURMA)"
+  },
+  {
+    "id": "Ação Rescisória (Órgão Especial)",
+    "label": "AÇÃO RESCISÓRIA (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Carta Precatoria Criminal (Órgão Especial)",
+    "label": "CARTA PRECATORIA CRIMINAL (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Carta Precatória Cível (Órgão Especial)",
+    "label": "CARTA PRECATÓRIA CÍVEL (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Carta Testemunhável (Turma)",
+    "label": "CARTA TESTEMUNHÁVEL (TURMA)"
+  },
+  {
+    "id": "Carta de Ordem Criminal (Órgão Especial)",
+    "label": "CARTA DE ORDEM CRIMINAL (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Carta de Ordem Cível",
+    "label": "CARTA DE ORDEM CÍVEL"
+  },
+  {
+    "id": "Cautelar Inominada (Seção)",
+    "label": "CAUTELAR INOMINADA (SEÇÃO)"
+  },
+  {
+    "id": "Cautelar Inominada (Turma)",
+    "label": "CAUTELAR INOMINADA (TURMA)"
+  },
+  {
+    "id": "Cautelar Inominada Criminal (Seção)",
+    "label": "CAUTELAR INOMINADA CRIMINAL (SEÇÃO)"
+  },
+  {
+    "id": "Cautelar Inominada Criminal (Turma)",
+    "label": "CAUTELAR INOMINADA CRIMINAL (TURMA)"
+  },
+  {
+    "id": "Cautelar de Interpelação (Turma)",
+    "label": "CAUTELAR DE INTERPELAÇÃO (TURMA)"
+  },
+  {
+    "id": "Cautelar de Notificação (Turma)",
+    "label": "CAUTELAR DE NOTIFICAÇÃO (TURMA)"
+  },
+  {
+    "id": "Conflito de Competência (Seção)",
+    "label": "CONFLITO DE COMPETÊNCIA (SEÇÃO)"
+  },
+  {
+    "id": "Conflito de Competência (TRU)",
+    "label": "CONFLITO DE COMPETÊNCIA (TRU)"
+  },
+  {
+    "id": "Conflito de Competência (Turma)",
+    "label": "CONFLITO DE COMPETÊNCIA (TURMA)"
+  },
+  {
+    "id": "Conflito de Competência (Órgão Especial)",
+    "label": "CONFLITO DE COMPETÊNCIA (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Conflito de Jurisdição (Seção)",
+    "label": "CONFLITO DE JURISDIÇÃO (SEÇÃO)"
+  },
+  {
+    "id": "Conflito de Jurisdição (Turma)",
+    "label": "CONFLITO DE JURISDIÇÃO (TURMA)"
+  },
+  {
+    "id": "Correição Ordinária (Corregedoria)",
+    "label": "CORREIÇÃO ORDINÁRIA (CORREGEDORIA)"
+  },
+  {
+    "id": "Correição Parcial Civel (Turma)",
+    "label": "CORREIÇÃO PARCIAL CIVEL (TURMA)"
+  },
+  {
+    "id": "Correição Parcial Criminal (Turma)",
+    "label": "CORREIÇÃO PARCIAL CRIMINAL (TURMA)"
+  },
+  {
+    "id": "Correição Parcial ou Reclamação Correicional (Corregedoria)",
+    "label": "CORREIÇÃO PARCIAL OU RECLAMAÇÃO CORREICIONAL (CORREGEDORIA)"
+  },
+  {
+    "id": "Cumprimento Provisório de Sentença de Ações Coletivas (Seção)",
+    "label": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA DE AÇÕES COLETIVAS (SEÇÃO)"
+  },
+  {
+    "id": "Cumprimento de Sentença (Seção)",
+    "label": "CUMPRIMENTO DE SENTENÇA (SEÇÃO)"
+  },
+  {
+    "id": "Cumprimento de Sentença (Turma)",
+    "label": "CUMPRIMENTO DE SENTENÇA (TURMA)"
+  },
+  {
+    "id": "Cumprimento de Sentença contra Fazenda Pública (Seção)",
+    "label": "CUMPRIMENTO DE SENTENÇA CONTRA FAZENDA PÚBLICA (SEÇÃO)"
+  },
+  {
+    "id": "Cumprimento de Sentença contra Fazenda Pública (Turma)",
+    "label": "CUMPRIMENTO DE SENTENÇA CONTRA FAZENDA PÚBLICA (TURMA)"
+  },
+  {
+    "id": "Cumprimento de Sentença de Ações Coletivas (Seção)",
+    "label": "CUMPRIMENTO DE SENTENÇA DE AÇÕES COLETIVAS (SEÇÃO)"
+  },
+  {
+    "id": "Desaforamento de Julgamento (Turma)",
+    "label": "DESAFORAMENTO DE JULGAMENTO (TURMA)"
+  },
+  {
+    "id": "Embargos Infringentes (Pleno)",
+    "label": "EMBARGOS INFRINGENTES (PLENO)"
+  },
+  {
+    "id": "Embargos Infringentes (Seção)",
+    "label": "EMBARGOS INFRINGENTES (SEÇÃO)"
+  },
+  {
+    "id": "Embargos Infringentes (Órgão Especial)",
+    "label": "EMBARGOS INFRINGENTES (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Embargos Infringentes e de Nulidade (Seção)",
+    "label": "EMBARGOS INFRINGENTES E DE NULIDADE (SEÇÃO)"
+  },
+  {
+    "id": "Embargos Infringentes e de Nulidade (Órgão Especial)",
+    "label": "EMBARGOS INFRINGENTES E DE NULIDADE (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Embargos de Terceiro - Criminal (Seção)",
+    "label": "EMBARGOS DE TERCEIRO - CRIMINAL (SEÇÃO)"
+  },
+  {
+    "id": "Embargos à Execução (Seção)",
+    "label": "EMBARGOS À EXECUÇÃO (SEÇÃO)"
+  },
+  {
+    "id": "Exceção da Verdade (Órgão Especial)",
+    "label": "EXCEÇÃO DA VERDADE (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Exceção de Impedimento (Seção)",
+    "label": "EXCEÇÃO DE IMPEDIMENTO (SEÇÃO)"
+  },
+  {
+    "id": "Exceção de Impedimento Criminal (Seção)",
+    "label": "EXCEÇÃO DE IMPEDIMENTO CRIMINAL (SEÇÃO)"
+  },
+  {
+    "id": "Exceção de Suspeição (Turma)",
+    "label": "EXCEÇÃO DE SUSPEIÇÃO (TURMA)"
+  },
+  {
+    "id": "Exceção de Suspeição Criminal (Seção)",
+    "label": "EXCEÇÃO DE SUSPEIÇÃO CRIMINAL (SEÇÃO)"
+  },
+  {
+    "id": "Exceção de Suspeição Criminal (Turma)",
+    "label": "EXCEÇÃO DE SUSPEIÇÃO CRIMINAL (TURMA)"
+  },
+  {
+    "id": "Habeas Corpus Criminal (Seção)",
+    "label": "HABEAS CORPUS CRIMINAL (SEÇÃO)"
+  },
+  {
+    "id": "Habeas Corpus Criminal (Turma)",
+    "label": "HABEAS CORPUS CRIMINAL (TURMA)"
+  },
+  {
+    "id": "Habeas Corpus Criminal(Órgão Especial)",
+    "label": "HABEAS CORPUS CRIMINAL(ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Habeas Corpus Cível (Turma)",
+    "label": "HABEAS CORPUS CÍVEL (TURMA)"
+  },
+  {
+    "id": "Habeas Corpus Cível (Órgão Especial)",
+    "label": "HABEAS CORPUS CÍVEL (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Impugnação ao Valor da Causa Cível (Seção)",
+    "label": "IMPUGNAÇÃO AO VALOR DA CAUSA CÍVEL (SEÇÃO)"
+  },
+  {
+    "id": "Incidente de Arguição de Inconstitucionalidade Cível (Órgão Especial)",
+    "label": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Incidente de Assunção de Competência (Seção)",
+    "label": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA (SEÇÃO)"
+  },
+  {
+    "id": "Incidente de Impedimento (Seção)",
+    "label": "INCIDENTE DE IMPEDIMENTO (SEÇÃO)"
+  },
+  {
+    "id": "Incidente de Impedimento (Turma)",
+    "label": "INCIDENTE DE IMPEDIMENTO (TURMA)"
+  },
+  {
+    "id": "Incidente de Resolução de Demandas Repetitivas (Presidência TRF2)",
+    "label": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (PRESIDÊNCIA TRF2)"
+  },
+  {
+    "id": "Incidente de Resolução de Demandas Repetitivas (Seção)",
+    "label": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (SEÇÃO)"
+  },
+  {
+    "id": "Incidente de Resolução de Demandas Repetitivas (Órgão Especial)",
+    "label": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Incidente de Soluções Fundiárias",
+    "label": "INCIDENTE DE SOLUÇÕES FUNDIÁRIAS"
+  },
+  {
+    "id": "Incidente de Suspeição Civel (Turma)",
+    "label": "INCIDENTE DE SUSPEIÇÃO CIVEL (TURMA)"
+  },
+  {
+    "id": "Incidente de Suspeição Cível (Seção)",
+    "label": "INCIDENTE DE SUSPEIÇÃO CÍVEL (SEÇÃO)"
+  },
+  {
+    "id": "Inquérito Policial (Pleno)",
+    "label": "INQUÉRITO POLICIAL (PLENO)"
+  },
+  {
+    "id": "Inquérito Policial (Seção)",
+    "label": "INQUÉRITO POLICIAL (SEÇÃO)"
+  },
+  {
+    "id": "Insanidade Mental do Acusado (Turma)",
+    "label": "INSANIDADE MENTAL DO ACUSADO (TURMA)"
+  },
+  {
+    "id": "Liquidação Provisória de Sentença pelo Procedimento Comum (Seção)",
+    "label": "LIQUIDAÇÃO PROVISÓRIA DE SENTENÇA PELO PROCEDIMENTO COMUM (SEÇÃO)"
+  },
+  {
+    "id": "Liquidação de Sentença pelo Procedimento Comum",
+    "label": "LIQUIDAÇÃO DE SENTENÇA PELO PROCEDIMENTO COMUM"
+  },
+  {
+    "id": "Mandado de Segurança Coletivo (Seção)",
+    "label": "MANDADO DE SEGURANÇA COLETIVO (SEÇÃO)"
+  },
+  {
+    "id": "Mandado de Segurança Coletivo (Turma)",
+    "label": "MANDADO DE SEGURANÇA COLETIVO (TURMA)"
+  },
+  {
+    "id": "Mandado de Segurança Criminal (Seção)",
+    "label": "MANDADO DE SEGURANÇA CRIMINAL (SEÇÃO)"
+  },
+  {
+    "id": "Mandado de Segurança Criminal (Turma)",
+    "label": "MANDADO DE SEGURANÇA CRIMINAL (TURMA)"
+  },
+  {
+    "id": "Mandado de Segurança Criminal (Órgão Especial)",
+    "label": "MANDADO DE SEGURANÇA CRIMINAL (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Mandado de Segurança Cível (Pleno)",
+    "label": "MANDADO DE SEGURANÇA CÍVEL (PLENO)"
+  },
+  {
+    "id": "Mandado de Segurança Cível (Seção)",
+    "label": "MANDADO DE SEGURANÇA CÍVEL (SEÇÃO)"
+  },
+  {
+    "id": "Mandado de Segurança Cível (TRU)",
+    "label": "MANDADO DE SEGURANÇA CÍVEL (TRU)"
+  },
+  {
+    "id": "Mandado de Segurança Cível (Turma)",
+    "label": "MANDADO DE SEGURANÇA CÍVEL (TURMA)"
+  },
+  {
+    "id": "Mandado de Segurança Cível (Órgão Especial)",
+    "label": "MANDADO DE SEGURANÇA CÍVEL (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Pedido de Busca e Apreensão Criminal (Seção)",
+    "label": "PEDIDO DE BUSCA E APREENSÃO CRIMINAL (SEÇÃO)"
+  },
+  {
+    "id": "Pedido de Efeito Suspensivo à Apelação (Turma)",
+    "label": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO (TURMA)"
+  },
+  {
+    "id": "Pedido de Prisão Preventiva (Seção)",
+    "label": "PEDIDO DE PRISÃO PREVENTIVA (SEÇÃO)"
+  },
+  {
+    "id": "Pedido de Prisão Temporária (Seção)",
+    "label": "PEDIDO DE PRISÃO TEMPORÁRIA (SEÇÃO)"
+  },
+  {
+    "id": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico (Seção)",
+    "label": "PEDIDO DE QUEBRA DE SIGILO DE DADOS E/OU TELEFÔNICO (SEÇÃO)"
+  },
+  {
+    "id": "Petição Criminal (Seção)",
+    "label": "PETIÇÃO CRIMINAL (SEÇÃO)"
+  },
+  {
+    "id": "Petição Criminal (Turma)",
+    "label": "PETIÇÃO CRIMINAL (TURMA)"
+  },
+  {
+    "id": "Petição Criminal (Vice Presidência)",
+    "label": "PETIÇÃO CRIMINAL (VICE PRESIDÊNCIA)"
+  },
+  {
+    "id": "Petição Criminal (Órgão Especial)",
+    "label": "PETIÇÃO CRIMINAL (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Petição Cível (Corregedoria)",
+    "label": "PETIÇÃO CÍVEL (CORREGEDORIA)"
+  },
+  {
+    "id": "Petição Cível (Pleno)",
+    "label": "PETIÇÃO CÍVEL (PLENO)"
+  },
+  {
+    "id": "Petição Cível (Presidência)",
+    "label": "PETIÇÃO CÍVEL (PRESIDÊNCIA)"
+  },
+  {
+    "id": "Petição Cível (Seção)",
+    "label": "PETIÇÃO CÍVEL (SEÇÃO)"
+  },
+  {
+    "id": "Petição Cível (TRU)",
+    "label": "PETIÇÃO CÍVEL (TRU)"
+  },
+  {
+    "id": "Petição Cível (Turma)",
+    "label": "PETIÇÃO CÍVEL (TURMA)"
+  },
+  {
+    "id": "Petição Cível (Vice-Presidência)",
+    "label": "PETIÇÃO CÍVEL (VICE-PRESIDÊNCIA)"
+  },
+  {
+    "id": "Petição Cível (Órgão Especial)",
+    "label": "PETIÇÃO CÍVEL (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Proced. Investigatório do MP (Peças de Informação) - (Seção)",
+    "label": "PROCED. INVESTIGATÓRIO DO MP (PEÇAS DE INFORMAÇÃO) - (SEÇÃO)"
+  },
+  {
+    "id": "Proced. Investigatório do MP (Peças de Informação) - (Órgão Especial)",
+    "label": "PROCED. INVESTIGATÓRIO DO MP (PEÇAS DE INFORMAÇÃO) - (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Procedimento Restaurativo Penal",
+    "label": "PROCEDIMENTO RESTAURATIVO PENAL"
+  },
+  {
+    "id": "Processo Administrativo (Cumprimento de Acordo Fundiário)",
+    "label": "PROCESSO ADMINISTRATIVO (CUMPRIMENTO DE ACORDO FUNDIÁRIO)"
+  },
+  {
+    "id": "Processo Administrativo (Pleno - Adm)",
+    "label": "PROCESSO ADMINISTRATIVO (PLENO - ADM)"
+  },
+  {
+    "id": "Processo Administrativo (Presidência)",
+    "label": "PROCESSO ADMINISTRATIVO (PRESIDÊNCIA)"
+  },
+  {
+    "id": "Processo Administrativo (Órgão Especial - Adm)",
+    "label": "PROCESSO ADMINISTRATIVO (ÓRGÃO ESPECIAL - ADM)"
+  },
+  {
+    "id": "Processo Administrativo - Conselho de Administração",
+    "label": "PROCESSO ADMINISTRATIVO - CONSELHO DE ADMINISTRAÇÃO"
+  },
+  {
+    "id": "Processo Administrativo Disciplinar em face de Magistrado (Pleno - Adm)",
+    "label": "PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE MAGISTRADO (PLENO - ADM)"
+  },
+  {
+    "id": "Reclamação (Presidência)",
+    "label": "RECLAMAÇÃO (PRESIDÊNCIA)"
+  },
+  {
+    "id": "Reclamação (Seção)",
+    "label": "RECLAMAÇÃO (SEÇÃO)"
+  },
+  {
+    "id": "Reclamação (TRU)",
+    "label": "RECLAMAÇÃO (TRU)"
+  },
+  {
+    "id": "Reclamação (Turma)",
+    "label": "RECLAMAÇÃO (TURMA)"
+  },
+  {
+    "id": "Reclamação (Vice-Presidência)",
+    "label": "RECLAMAÇÃO (VICE-PRESIDÊNCIA)"
+  },
+  {
+    "id": "Reclamação (Órgão Especial)",
+    "label": "RECLAMAÇÃO (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Reclamação Pré-Processual (Turma)",
+    "label": "RECLAMAÇÃO PRÉ-PROCESSUAL (TURMA)"
+  },
+  {
+    "id": "Recurso em Sentido Estrito (Turma)",
+    "label": "RECURSO EM SENTIDO ESTRITO (TURMA)"
+  },
+  {
+    "id": "Remessa Necessária Criminal",
+    "label": "REMESSA NECESSÁRIA CRIMINAL"
+  },
+  {
+    "id": "Remessa Necessária Cível",
+    "label": "REMESSA NECESSÁRIA CÍVEL"
+  },
+  {
+    "id": "Restauração de Autos Cível (Turma)",
+    "label": "RESTAURAÇÃO DE AUTOS CÍVEL (TURMA)"
+  },
+  {
+    "id": "Restituição de Coisas Apreendidas (Seção)",
+    "label": "RESTITUIÇÃO DE COISAS APREENDIDAS (SEÇÃO)"
+  },
+  {
+    "id": "Restituição de Coisas Apreendidas (Turma)",
+    "label": "RESTITUIÇÃO DE COISAS APREENDIDAS (TURMA)"
+  },
+  {
+    "id": "Revisão Criminal (Pleno)",
+    "label": "REVISÃO CRIMINAL (PLENO)"
+  },
+  {
+    "id": "Revisão Criminal (Seção)",
+    "label": "REVISÃO CRIMINAL (SEÇÃO)"
+  },
+  {
+    "id": "Revisão Criminal (Turma)",
+    "label": "REVISÃO CRIMINAL (TURMA)"
+  },
+  {
+    "id": "Revisão Criminal (Órgão Especial)",
+    "label": "REVISÃO CRIMINAL (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Sequestro - Medidas Assecuratórias (Seção)",
+    "label": "SEQUESTRO - MEDIDAS ASSECURATÓRIAS (SEÇÃO)"
+  },
+  {
+    "id": "Suspensão de Execução de Sentença",
+    "label": "SUSPENSÃO DE EXECUÇÃO DE SENTENÇA"
+  },
+  {
+    "id": "Suspensão de Liminar e de Sentença (Presidência)",
+    "label": "SUSPENSÃO DE LIMINAR E DE SENTENÇA (PRESIDÊNCIA)"
+  },
+  {
+    "id": "Suspensão de Liminar ou Antecipação de Tutela",
+    "label": "SUSPENSÃO DE LIMINAR OU ANTECIPAÇÃO DE TUTELA"
+  },
+  {
+    "id": "Suspensão de Segurança Civel (Presidência)",
+    "label": "SUSPENSÃO DE SEGURANÇA CIVEL (PRESIDÊNCIA)"
+  },
+  {
+    "id": "Transferência entre Estabelecimentos Penais (Seção)",
+    "label": "TRANSFERÊNCIA ENTRE ESTABELECIMENTOS PENAIS (SEÇÃO)"
+  },
+  {
+    "id": "Tutela Antecipada Antecedente (Seção)",
+    "label": "TUTELA ANTECIPADA ANTECEDENTE (SEÇÃO)"
+  },
+  {
+    "id": "Tutela Antecipada Antecedente (Turma)",
+    "label": "TUTELA ANTECIPADA ANTECEDENTE (TURMA)"
+  },
+  {
+    "id": "Tutela Antecipada Antecedente (Órgão Especial)",
+    "label": "TUTELA ANTECIPADA ANTECEDENTE (ÓRGÃO ESPECIAL)"
+  },
+  {
+    "id": "Tutela Cautelar Antecedente (Seção)",
+    "label": "TUTELA CAUTELAR ANTECEDENTE (SEÇÃO)"
+  },
+  {
+    "id": "Tutela Cautelar Antecedente (Turma)",
+    "label": "TUTELA CAUTELAR ANTECEDENTE (TURMA)"
+  },
+  {
+    "id": "Tutela Cautelar Antecedente (Órgão Especial)",
+    "label": "TUTELA CAUTELAR ANTECEDENTE (ÓRGÃO ESPECIAL)"
+  }
+]

@@ -1,0 +1,116 @@
+## 9. Via de acesso, bloqueios, sessão — e os testes exploratórios da Fase 4
+
+### 9.0 Passo 0 — API oficial: procurada, e o que existe
+
+| Onde procurei | Resultado |
+|---|---|
+| `dadosabertos.trf2.jus.br` | **NXDOMAIN** |
+| `www.trf2.jus.br/dados-abertos`, `/transparencia/dados-abertos`, `trf2.jus.br/dados-abertos` | **404** |
+| `api.trf2.jus.br` | **NXDOMAIN** |
+| `eproc.trf2.jus.br/eproc/swagger`, `www.trf2.jus.br/api-docs` | **404** |
+| busca web `site:trf2.jus.br api` | nada de API de jurisprudência |
+| **CJF — Jurisprudência Unificada** `https://jurisprudencia.cjf.jus.br/unificada/` | existe, tem checkbox "TRF2", mas a base do TRF2 está **VAZIA** (ver 9.0.1) |
+| **DataJud (CNJ)** `api-publica.datajud.cnj.jus.br/api_publica_trf2/_search` | **FUNCIONA** — 4.526.292 processos do TRF2. Só metadados (ver 9.0.2) |
+
+Conclusão: **não existe API oficial de jurisprudência do TRF2**. Não é "não procurei".
+
+#### 9.0.1 CJF — Jurisprudência Unificada: existe para o ramo, mas não serve ao TRF2
+
+`https://jurisprudencia.cjf.jus.br/unificada/index.xhtml` é um JSF/PrimeFaces com
+checkboxes STF · STJ · TNU · TRF1 · TRF2 · TRF3 · TRF4 · TRF5 · TR · TRU. Medido em
+25/07/2026, uma busca por tribunal (termo `aposentadoria`):
+
+    TNU  11.506   (1º resultado de 30/06/2026)
+    TRF1 252.794  (1º resultado de 16/07/2025)
+    TRF2      0   <-- VAZIO
+    TRF3 542.469  (1º resultado de 09/10/2024)
+    TRF4  16.573  (1º resultado de 16/07/2026)
+    TRF5  40.911  (1º resultado de 22/11/2018)
+
+`dano moral` restrito a TRF2 também devolveu **0 documentos**. O tribunal aparece na
+lista e a base não tem nada. Portanto a Unificada **não é** um "Falcão da Justiça
+Federal": a cobertura é desigual e, para o TRF2, inexistente.
+(As datas são do 1º resultado na ordenação default, então são indício de atualidade,
+não prova; as contagens, essas, são firmes.)
+
+#### 9.0.2 DataJud (CNJ) — serve ao Checker, não substitui o crawler
+
+    POST https://api-publica.datajud.cnj.jus.br/api_publica_trf2/_search
+    Authorization: APIKey <chave pública do CNJ, em datajud-wiki.cnj.jus.br/api-publica/acesso>
+
+Índice `api_publica_trf2`: **4.526.292** processos. Devolve classe, órgão julgador, grau,
+data de ajuizamento e a lista de movimentos. **Não tem ementa nem inteiro teor** — não
+substitui a base de jurisprudência.
+
+Duas ressalvas medidas: (a) a chave pública que circulava até 2024 já **não vale**
+(401 `invalid credentials`); a atual está na wiki do CNJ; (b) a API é **instável** — em 5
+chamadas seguidas, 2 responderam e 3 devolveram `search_phase_execution_exception` ou
+timeout. Por isso o `TRF2Checker` só a consulta com `--datajud` e nunca deixa a falha dela
+derrubar a verificação principal.
+
+### 9.1 Forma de acesso escolhida: `http`
+
+Ordem do repo: `api-oficial > api > http > browser`. Sem API oficial (9.0) e sem SPA/JSON
+interno (o módulo é um formulário clássico que devolve HTML), sobra `http` — e ele
+funciona inteiro:
+
+| Operação | Endpoint | Funciona por HTTP? |
+|---|---|---|
+| Busca | `POST .../listar_resultados` | **sim** |
+| Paginação | `POST .../ajax_paginar_resultado` | **sim** |
+| Tipos por origem | `POST .../ajax_listar_tipo_documento` (JSON) | **sim** |
+| Classes/relatores/órgãos | `POST .../ajax_carregar_listas_pesquisa` (JSON) | sim, mas ignora a origem (§3.6) |
+| Inteiro teor | `GET .../download_inteiro_teor` | **sim** |
+
+### 9.2 Bloqueios
+
+```
+Existe restrição (Cloudflare / Turnstile / captcha / verificação de navegador)?
+  NÃO. Nenhuma. Este é o ponto em que o TRF2 difere do irmão TJSC.
+  A BUSCA funciona sem resolver nada?      sim — inclusive SEM cookie de sessão
+  O DOWNLOAD funciona sem resolver nada?   sim — GET simples, 200
+  Headless passa?                          sim
+  --headed é necessário?                   não (a CLI aceita a flag e a ignora)
+```
+
+Medida que fecha a questão: o mesmo `POST /listar_resultados` devolve o **mesmo contador**
+(46 documentos) com e sem `PHPSESSID`. O `GET /pesquisar` cria um `PHPSESSID`, mas ele não
+é exigido. Nenhum cookie `TS...`/`f5avraaa...` (a assinatura do F5/Shape do TJSC) aparece.
+
+⚠️ Não confundir com o TJSC: lá o UA de `HeadlessChrome` é barrado pelo F5 e o navigator
+precisa fingir um Chrome comum. Aqui o UA é irrelevante — `curl` com o UA padrão responde
+200. O `TRF2Navigator` manda um UA de Chrome mesmo assim, por higiene.
+
+### 9.3 Sessão e estado
+
+O e-Proc repõe o formulário a partir de cookies quando um campo não é enviado — a mesma
+armadilha documentada no TJSC (um `txtProcesso` herdado zera a busca seguinte em
+silêncio). Como o crawler é HTTP e monta o corpo do zero a cada requisição, o problema não
+aparece; ainda assim **todos** os campos são escritos sempre, inclusive vazios, para que
+isso continue verdadeiro se alguém reaproveitar cookies um dia.
+
+Não há `viewState`/`__VIEWSTATE`. A paginação é stateless (§6.2).
+
+### 9.4 Testes exploratórios (Fase 4) — o que foi rodado e o que deu
+
+| # | Teste | Resultado |
+|---|-------|-----------|
+| 1 | Busca simples, sem filtro nem operador | `aposentadoria` = 102.988 na origem TRF2. Print `09.01-busca-simples-sem-filtro.png` |
+| 2 | Juizados × Justiça Comum | §2 — origens somam exato (20.201 + 84 + 33.365 = 53.650) |
+| 3 | Cível × Criminal | **não existe** filtro de área neste módulo (§3.5). Aproximação por órgão/classe |
+| 4 | Órgão / matéria | §3.4, 52 · 1 · 28 opções por origem, todas listadas em `.json` |
+| 5 | Unidade específica (comarca/serventia) | **não existe** (§3.5). Só UF, e só como faceta de resultado |
+| 6 | Magistrado | §3.3 — só relator de 2º grau (118 · 55 · 78 nomes). Não há juiz de 1º grau porque não há 1º grau na base |
+| 7 | Tipo de ato | §3.1 — Acórdão 18.065 + Monocrática 1.359 + Súmula 0 + Vice 777 = 20.201, fecha. **Súmula é um tipo declarado e vazio** |
+| 8 | Número do processo | §5 — funciona, **desde que haja texto em `#txtPesquisa`**; usar `*` |
+| 9 | Datas (julgamento **e** publicação) | §4 — filtros distintos: 1.121 × 1.111 no mesmo intervalo |
+| 9b | Operadores, um a um | §7 — **o espaço quebra a busca**; a sintaxe da própria ajuda do site não funciona |
+
+### 9.5 Pendências e defeitos de mapeamento
+
+| # | O que falta | Por quê |
+|---|-------------|---------|
+| 1 | Facetas da tela de resultados (Assunto, Unidade Federativa) como parâmetro de busca | São calculadas sobre o resultado; não há campo de entrada equivalente. Ficaram só documentadas (§6.3) |
+| 2 | Lista de Assuntos | Só existe como faceta, e varia a cada busca — não há combo estável para salvar em `.json` |
+| 3 | Acervo anterior a 2018 | Estava no `juris.trf2.jus.br`, que foi desativado. Não há substituto conhecido (a Unificada do CJF está vazia para o TRF2) |
+| 4 | `ajax_carregar_listas_pesquisa` por origem via HTTP | O endpoint ignora o parâmetro sem sessão de browser (§3.6). Contornado com os `.json` do mapeamento |

@@ -1,0 +1,55 @@
+STJ / SCON — §4. Filtros de data (julgamento E publicação)
+=========================================================
+
+Print: 04.01-calendario-data-julgamento.png
+
+
+## Os campos visíveis
+
+  Data de publicação:  #dtpb1  a  #dtpb2   (+ hidden #dtpb)
+  Data de julgamento:  #dtde1  a  #dtde2   (+ hidden #dtde)
+  (existe ainda um par #dtdj1/#dtdj2 no código JS — data de "decisão de
+   julgamento" — mas ele não aparece nesta tela; só no formulário de Referência.)
+
+Formato aceito: DD/MM/YYYY, com datepicker do jQuery UI. Aceita intervalo aberto
+(só início ou só fim).
+
+
+## ⚠️ A ARMADILHA: os campos visíveis NÃO filtram nada
+
+`dtde1`, `dtde2`, `dtpb1`, `dtpb2` são decorativos. Quem filtra é o parâmetro
+**`data`**, montado pelo JavaScript da página (`setData()` em
+/recursos/jurisprudencia/comum/script/principal.js) a partir deles:
+
+  dtde1=01/01/2025 & dtde2=31/12/2025
+     ->  data=@DTDE >= "20250101" AND @DTDE <= "20251231"
+
+  dtpb1=01/01/2025 & dtpb2=31/12/2025
+     ->  data=@DTPB >= "20250101" AND @DTPB <= "20251231"
+
+  os dois juntos
+     ->  data=(@DTPB >= "…" AND @DTPB <= "…") AND (@DTDE >= "…" AND @DTDE <= "…")
+
+Note a inversão de formato: DD/MM/YYYY na tela, **YYYYMMDD** dentro da expressão.
+
+Mandar só `dtde1`/`dtde2` na querystring devolve a busca INTEIRA, sem aviso
+nenhum. Foi medido: "dano moral" com `dtde1=01/01/2025&dtde2=31/12/2025` e sem
+`data` devolveu os mesmos **28.348** de uma busca sem data. É exatamente o modo
+de falha que o §7 do CLAUDE-CODEGEN manda caçar por contagem.
+
+
+## Prova de que o filtro correto restringe (termo "dano moral", base ACOR)
+
+  sem data ................................. 28.348
+  julgamento 01/01/2025 – 31/12/2025 ........  1.697
+  julgamento 01/01/2025 – 30/06/2025 ........    520
+  julgamento 01/01/2024 – 31/12/2024 ........    997
+
+## Prova de que JULGAMENTO e PUBLICAÇÃO são filtros DIFERENTES
+
+  julgamento em 2025 ........................  1.697
+  publicação em 2025 ........................  1.705
+
+Números próximos mas distintos — é o esperado: um acórdão de dezembro costuma
+ser publicado no ano seguinte (o primeiro resultado da amostra é julgado em
+10/12/2025 e publicado em 02/03/2026).

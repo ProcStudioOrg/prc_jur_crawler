@@ -9,9 +9,9 @@
 | | Tribunais |
 |---|---|
 | Catalogados | **61** |
-| 🟢 Busca funcionando (`jur <cmd>`) | **9** |
-| 🟡🟠🔴🔵 Instáveis / quebrados / bloqueados / mapeados | **6** |
-| ⚪ Não mapeados | **46** |
+| 🟢 Busca funcionando (`jur <cmd>`) | **13** |
+| 🟡🟠🔴🔵 Instáveis / quebrados / bloqueados / mapeados | **5** |
+| ⚪ Não mapeados | **43** |
 
 Legenda de status: 🟢 `ok` funcionando · 🟡 `instavel` funciona com ressalva ·
 🟠 `quebrado` crawler existe mas o site mudou/saiu do ar · 🔴 `sem-acesso` bloqueado ·
@@ -31,8 +31,8 @@ Colunas da matriz:
 
 | Tribunal | UF | Sistema processual | Jurisprudência | Cmd | CodeGen | Shots | Tests | Skills | Working |
 |---|---|---|---|---|---|---|---|---|---|
-| **STF** | — | proprio | ⚪ nao-mapeado | — | nao | — | — | — | — |
-| **STJ** | — | proprio | ⚪ nao-mapeado | — | nao | — | — | — | — |
+| **STF** | — | proprio | 🟢 ok | `jur stf` | completo | 27 | ✅ | — | ✅ |
+| **STJ** | — | proprio | 🟢 ok | `jur stj` | completo | 23 | ✅ | verificador/stj | ✅ |
 | **TST** | — | pje | ⚪ nao-mapeado | — | nao | — | — | — | — |
 
 ## Justiça Federal (TRFs)
@@ -40,11 +40,11 @@ Colunas da matriz:
 | Tribunal | UF | Sistema processual | Jurisprudência | Cmd | CodeGen | Shots | Tests | Skills | Working |
 |---|---|---|---|---|---|---|---|---|---|
 | **TRF1** | AC, AM, AP, BA, DF, GO, MA, MT, PA, PI, RO, RR, TO | PJe | 🟡 instavel | `jur trf1` | texto | — | — | — | — |
-| **TRF2** | RJ, ES | e-Proc | 🟠 quebrado | `jur trf2` | texto | — | — | — | — |
+| **TRF2** | RJ, ES | e-Proc | 🟢 ok | `jur trf2` | completo | 21 | ✅ | verificador/trf2 | ✅ |
 | **TRF3** | SP, MS | PJe | 🟡 instavel | `jur trf3` | texto | — | — | — | — |
 | **TRF4** | PR, SC, RS | e-Proc | 🟢 ok | `jur trf4` | texto | — | — | improve-user-prompt | ✅ |
 | **TRF5** | AL, CE, PB, PE, RN, SE | PJe, PJe JEF | 🟢 ok | `jur trf5` | texto | — | — | — | ✅ |
-| **TRF6** | MG | PJe | ⚪ nao-mapeado | — | nao | — | — | — | — |
+| **TRF6** | MG | PJe | 🟢 ok | `jur trf6` | completo | 27 | ✅ | verificador/trf6 | ✅ |
 
 ## Justiça Estadual (TJs)
 
@@ -56,11 +56,11 @@ Colunas da matriz:
 | **TJAP** | AP | Tucujuris, PJe | ⚪ nao-mapeado | — | nao | — | — | — | — |
 | **TJBA** | BA | ESAJ, PJe, Projudi | ⚪ nao-mapeado | — | nao | — | — | — | — |
 | **TJCE** | CE | ESAJ, PJe, Projudi | ⚪ nao-mapeado | — | nao | — | — | — | — |
-| **TJDFT** | DF | PJe, Projudi | ⚪ nao-mapeado | — | nao | — | — | — | — |
+| **TJDFT** | DF | PJe, Projudi | ⚪ nao-mapeado | — | nao | 11 | — | — | — |
 | **TJES** | ES | PJe, Projudi | ⚪ nao-mapeado | — | nao | — | — | — | — |
 | **TJGO** | GO | Projudi | 🟢 ok | `jur tjgo` | completo | 41 | ✅ | verificador/tjgo | ✅ |
-| **TJMA** | MA | PJe, Projudi | 🔵 mapeado | — | completo | 84 | — | — | — |
-| **TJMG** | MG | PJe, Projudi, Próprio, Próprio - JPe Themis | ⚪ nao-mapeado | — | nao | — | — | — | — |
+| **TJMA** | MA | PJe, Projudi | 🔴 sem-acesso | `jur tjma` | completo | 94 | ✅ | — | — |
+| **TJMG** | MG | PJe, Projudi, Próprio, Próprio - JPe Themis | ⚪ nao-mapeado | — | nao | 1 | — | — | — |
 | **TJMS** | MS | ESAJ | ⚪ nao-mapeado | — | nao | — | — | — | — |
 | **TJMT** | MT | PJe, Projudi | ⚪ nao-mapeado | — | nao | — | — | — | — |
 | **TJPA** | PA | PJe, Projudi, Libra | 🟢 ok | `jur tjpa` | completo | 17 | ✅ | verificador/tjpa | ✅ |
@@ -117,12 +117,16 @@ Colunas da matriz:
 
 | Tribunal | URL de jurisprudência | Acesso | Doc | Observação |
 |---|---|---|---|---|
+| **STF** | `https://jurisprudencia.stf.jus.br/pages/search` | api | [`CLAUDE-STF.md`](../CLAUDE-STF.md) | SPA Angular com API de passthrough de Elasticsearch (POST /api/search/search). NÃO existe API oficial: dadosabertos.stf.jus.br é NXDOMAIN, /dadosabertos serve 404, transparencia.stf.jus.br é só painel Qlik de estatística, não há Swagger, e o STF NÃO está no DataJud (api_publica_stf → index_not_found_exception). 4 bases: acordaos 368.511 (desde 1892!), decisoes 741.676 (desde 1968), sumulas 799 = 736 simples + 63 VINCULANTES (desde 1963), informativos 11.571 (desde 1995). Instância única — não há Juizado; a desambiguação é por ÓRGÃO (Pleno 80.674 × 1ª Turma 134.877 × 2ª Turma 121.103) e por CLASSE (73 siglas: ADI/ADPF/ADC × RE/ARE/AI × HC/MS). ⚠️ TRÊS ARMADILHAS: (1) AWS WAF devolve 202+challenge sem o cookie aws-waf-token — resolvido uma vez no Playwright, vale ~4 dias, depois é HTTP puro; (2) cadeia TLS incompleta (só o cert folha) — Node falha, o navigator busca o intermediário pela extensão AIA; (3) corpo do POST ≤ 8 KB é inspecionado pelo WAF e expressão com ") OR (" leva 403 — o bloco highlight (como a SPA manda) mantém o payload acima do limiar. Os operadores em português (e/ou/não/$) são traduzidos NO CLIENTE para AND/OR/NOT/*: sem isso viram termo literal (indeniz$ = 12.423 traduzido contra 1 literal). Inteiro teor JÁ VEM no resultado da busca (campo inteiro_teor_texto). Teto: 250 docs/requisição e 10.000 por consulta. A base de jurisprudência NÃO indexa CNJ — o Checker usa classe+número (ARE 1596565) e, para CNJ, o portal (listarProcessos.asp?numeroUnico=<só dígitos>). |
+| **STJ** | `https://scon.stj.jus.br/SCON/pesquisar.jsp` | browser | [`CLAUDE-STJ.md`](../CLAUDE-STJ.md) | SCON — motor BRS/Oracle Text; TODA a busca cabe na querystring de um GET, sem POST/viewState/sessão. BROWSER HEADFUL OBRIGATÓRIO: Cloudflare da CSID/STJ; curl 403, e Playwright headless foi bloqueado em 4/4 tentativas nas três variantes (headless shell, channel=chromium, channel=chrome) — trocar UA não resolve. Headful passa na 1ª/2ª e depois o mesmo contexto faz HTTP puro. API OFICIAL: existe portal de dados abertos (dadosabertos.web.stj.jus.br, CKAN API) com os espelhos dos acórdãos em JSON por órgão julgador e os precedentes qualificados em CSV — mas é dado em LOTE, sem endpoint de busca por termo; NÃO existe API REST de busca (sem Swagger/OpenAPI). O STJ ESTÁ no DataJud (api_publica_stj), usado pelo Checker quando o número vem em formato CNJ. TRÊS ARMADILHAS: (1) querystring em ISO-8859-1 — em UTF-8 termo acentuado devolve 0 em silêncio; (2) sem cabeçalho Referer o pesquisar.jsp devolve o FORMULÁRIO em vez dos resultados; (3) os campos de data visíveis (dtde1/dtpb1) são decorativos — quem filtra é o parâmetro `data` (@DTDE >= "20250101" AND ...), e sem ele a busca volta inteira. Paginação profunda quebra em ~800 documentos (ORA-01013, timeout do Oracle) — o crawler detecta e para com aviso. Sem 1º grau, sem Juizado, sem Turma Recursal: a desambiguação é por ÓRGÃO (T1..T6, S1..S3, CE, PS, VP — a soma dos 12 fecha exatamente com o total sem filtro: 28.348) e por BASE documental (acórdãos 1.697 × monocráticas 25.532 no mesmo recorte). Os 8 operadores do SCON funcionam TODOS (e/ou/não/adj/prox/mesmo/com/$) — exceção no repo. Módulo de PRECEDENTES QUALIFICADOS (temas repetitivos, controvérsias, IACs) fica em processo.stj.jus.br, FORA do Cloudflare, e roda headless (flag --temas). A base não indexa número CNJ: só recurso (REsp 1809043) ou registro (2019/0116080-0). |
 | **TRF1** | `https://jurisprudencia.cjf.jus.br/trf1/index.xhtml` | browser | [`CLAUDE-TRF1.md`](../CLAUDE-TRF1.md) | Host do CJF resolve mas não responde (verificado 24/07/2026, também fora via curl) — pode ser queda temporária; reteste com tests/smoke.js |
-| **TRF2** | `https://juris.trf2.jus.br/consulta.php` | browser | [`CLAUDE-TRF2.md`](../CLAUDE-TRF2.md) | juris.trf2.jus.br → NXDOMAIN. O TRF2 migrou a jurisprudência para o módulo do e-Proc: https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar (mesma família do TRF4). Crawler precisa ser reescrito a partir do TRF4Crawler. |
+| **TRF2** | `https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar` | http | [`CLAUDE-TRF2.md`](../CLAUDE-TRF2.md) | Módulo eproc-jur, mesma família do TRF4/TJSC — mas SEM o bloqueio F5 do TJSC: o POST responde 200 sem cookie nenhum, então é HTTP puro (~0,5s/busca). O host antigo juris.trf2.jus.br é NXDOMAIN; jurisprudencia.trf2.jus.br dá 301 para cá. ⚠️ RESSALVA CENTRAL: o ESPAÇO entre termos quebra a busca — o servidor injeta o operador em inglês como termo ("dano moral" = 46 documentos; "dano-moral" = 20.201). O crawler hifeniza a query sozinho; a álgebra fecha exato (OU = A+B−E, NÃO = A−E). Frase exata + outro termo não tem conserto. Justiça Federal comum × Juizados pelo combo Origem (#selOrigem: 1=TRF2, 2=TRU2, 3=Turmas Recursais; somam exato). Só 2º grau, base começa em 2018. #txtProcesso sozinho devolve 0 — o Checker usa o curinga * junto. Não existe API oficial: a Jurisprudência Unificada do CJF lista o TRF2 mas está VAZIA (0 documentos); o DataJud do CNJ funciona mas só tem metadados. |
 | **TRF3** | `https://web.trf3.jus.br/jurisprudencia/` | browser | [`CLAUDE-TRF3.md`](../CLAUDE-TRF3.md) | Verificação de navegador falha em headless; fallback Python (DrissionPage) |
 | **TRF4** | `https://eproc-jur.trf4.jus.br/eproc2trf4/externo_controlador.php` | browser | [`CLAUDE-TRF4.md`](../CLAUDE-TRF4.md) | — |
 | **TRF5** | `https://juliapesquisa.trf5.jus.br/julia-pesquisa/pesquisa` | browser | [`CLAUDE-TRF5.md`](../CLAUDE-TRF5.md) | — |
+| **TRF6** | `https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar` | http | [`CLAUDE-TRF6.md`](../CLAUDE-TRF6.md) | Módulo eproc-jur (e-Proc 9.21.6), mesma família do TRF2/TRF4/TJSC, sem bloqueio nenhum: o POST responde 200 sem cookie, HTTP puro ~0,4s/busca. A tramitação é PJe, a jurisprudência é e-Proc — sistemas diferentes. Hosts jurisprudencia./juris./dadosabertos.trf6.jus.br são NXDOMAIN; a entrada é eproc-jur.trf6.jus.br (link "Jurisprudência" do portal). ⚠️ RESSALVA CENTRAL: a base começa em 2023 (TRF6 instalado em ago/2022, desmembrado do TRF1) — 0 documentos antes disso, e o acervo mineiro até 2022 continua no TRF1 (medido: 41 de 150 documentos da amostra do TRF1 em 2019 são de subseções .4.01.38xx de MG). A Jurisprudência Unificada do CJF NEM LISTA o TRF6 (só STF/STJ/TNU/TRF1-5/TR/TRU; /trf6/index.xhtml = 404). ⚠️ NÃO copiar a correção de query do TRF2: aqui o espaço FUNCIONA como E ("dano moral" = "dano-moral" = 2.201) e hifenizar quebraria ou/não (dano-ou-moral = 216.419 em vez de 21.366). Operadores em português (e/ou/não/prox/"..."/*) — os seis declarados pelo site funcionam; os ingleses (and/or/not) viram termo literal. Desambiguação pelo combo Origem (#selOrigem: 1=TRF6, 2=TRU6, 3=Turmas Recursais, 4=Varas Federais; somam exato: 2.201+1+1.744+0=3.946). A origem 4 (1º grau) é DECLARADA E VAZIA. Numeração MISTA .4.06. e .4.01. (processos herdados do TRF1: 9% no 2º grau, 24% nas Turmas Recursais, 44% na TRU6) — o Checker aceita as duas. Não existe API oficial; o DataJud do CNJ tem índice api_publica_trf6 (só metadados). |
 | **TJGO** | `https://projudi.tjgo.jus.br/ConsultaJurisprudencia` | http | [`CLAUDE-TJGO.md`](../CLAUDE-TJGO.md) | POST direto ISO-8859-1; Turnstile só no download do original |
+| **TJMA** | `https://jurisconsult.tjma.jus.br/#/sg-jurisprudence-form` | api | [`CLAUDE-TJMA.md`](../CLAUDE-TJMA.md) | BUSCA BLOQUEADA POR CAPTCHA — insuperável por ora (decisão consciente: este repo não automatiza captcha). O JurisConsult é o ÚNICO módulo de jurisprudência do TJMA (o "08-jurisprudencias" do human-codegen é a mesma tela). A API é limpa e está inteiramente mapeada (apijuris.tjma.jus.br/v1), mas TODA rota de busca exige captcha de imagem próprio + reCAPTCHA v2 invisible, ambos validados no servidor (400 captcha_not_provided / 400 incorrect_captcha / 403 invalid_captcha_g). Headless, --headed e Chrome real com UA comum: todos caem no desafio de imagens. Não há API oficial de jurisprudência (dados abertos do TJMA só publica projetos/indicadores; MNI exige credenciamento). O QUE FUNCIONA: rotas de combos abertas, e o Checker por número de processo via DataJud/CNJ (api_publica_tjma, G1+G2) — metadados, sem ementa. `./bin/jur tjma --diagnostico` diz ao vivo se o bloqueio caiu. |
 | **TJPA** | `https://jurisprudencia.tjpa.jus.br/bff/api/decisoes` | api | [`CLAUDE-TJPA.md`](../CLAUDE-TJPA.md) | API JSON aberta; ementa + inteiro teor no mesmo payload |
 | **TJPR** | `https://portal.tjpr.jus.br/jurisprudencia/publico/pesquisa.do` | http | [`CLAUDE-TJPR.md`](../CLAUDE-TJPR.md) | Struts próprio (POST em pesquisa.do), sem browser e sem bloqueio. CORPO DO POST EM ISO-8859-1 — em UTF-8 devolve 0 resultados em silêncio. Só 2º grau. Justiça Comum × Juizados pela lista de ids em idOrgaoJulgador (flag --foro): o combo do site (ambito) NÃO separa — ambito=6 "TRIBUNAL DE JUSTIÇA" contém a 6ª Turma Recursal. Toda busca vem somada com decisões da Corte IDH; use o contador "da Jurisprudência do Tribunal de Justiça". Inteiro teor já vem no HTML da ficha (div#texto<id>). PROX não funciona. |
 | **TJRS** | `https://www.tjrs.jus.br/buscas/jurisprudencia/ajax.php` | http | [`CLAUDE-TJRS.md`](../CLAUDE-TJRS.md) | Solr atrás de proxy PHP (POST action=consultas_solr_ajax); sem bloqueio nem sessão; inteiro teor embutido em base64 (ISO-8859-1); só 2º grau; Justiça Comum × Turmas Recursais pelo cod_tribunal |

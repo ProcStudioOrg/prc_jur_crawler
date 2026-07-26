@@ -1,0 +1,13 @@
+## 2. Teses de julgamento já firmadas
+
+Link:  https://portal.stf.jus.br/jurisprudenciaRepercussao/tesesJulgamento.asp
+Print: `02.01-teses-julgadas.png` · HTML: `02-teses-julgadas.html`
+
+Lista as **teses firmadas no julgamento de mérito** dos temas de repercussão geral — o
+enunciado que passa a vincular os demais tribunais no julgamento dos recursos sobrestados.
+É uma página estática de listagem, sem formulário de busca próprio: a filtragem se faz pela
+tela do módulo `01.01-pesquisar-processo.png`.
+
+Equivalente na SPA (o que o crawler usa): o campo `documental_tese_texto`, pesquisável pela
+barra **Tese** da pesquisa avançada e exposto na CLI como `./bin/jur stf --tese "<texto>"`.
+Ver `../01-jurisprudencia/09-repercussao-geral.txt`.

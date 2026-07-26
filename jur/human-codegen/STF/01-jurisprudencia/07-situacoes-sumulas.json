@@ -1,0 +1,22 @@
+[
+  {
+    "valor": "Aprovada",
+    "docs": 785
+  },
+  {
+    "valor": "Cancelada",
+    "docs": 11
+  },
+  {
+    "valor": "Alterada",
+    "docs": 1
+  },
+  {
+    "valor": "Publicação suspensa",
+    "docs": 1
+  },
+  {
+    "valor": "Superada",
+    "docs": 1
+  }
+]
