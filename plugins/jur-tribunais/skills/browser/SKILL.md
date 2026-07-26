@@ -39,6 +39,8 @@ SEMPRE informe o usuário a cada refinamento que você fizer.
 | "TJPA", Pará | `jur tjpa` |
 | "TJRS", Rio Grande do Sul, estadual RS | `jur tjrs` (só 2º grau) |
 | Juizado Especial / Turma Recursal **estadual** no RS | `jur tjrs --origem turmas` (Justiça Comum é `--origem comum`, o default) |
+| "TJRJ", Rio de Janeiro, estadual RJ | `jur tjrj` (só e-Proc: Justiça Comum 2º grau, ~2023+; ver `CLAUDE-TJRJ.md`) |
+| Juizado Especial / Turma Recursal **estadual** no RJ, ou acervo carioca antigo | **SEM CRAWLER** — vive no eJURIS legado; diga isso e aponte https://www3.tjrj.jus.br/ejuris/ConsultarJurisprudencia.aspx (nunca rotule resultado do `jur tjrj` como Juizado) |
 | "TJSC", Santa Catarina, estadual SC | `jur tjsc` (⚠️ dois portais no ar — só o comando; ver `CLAUDE-TJSC.md`) |
 | Juizado Especial / Turma Recursal **estadual** em SC | `jur tjsc --origem turmas` (Justiça Comum é `--origem comum`, o default) |
 | RJ ou ES federal | `jur trf2` (só 2º grau; base **começa em 2018**). ⚠️ neste portal o **espaço entre termos quebra a busca** — o crawler conserta sozinho, não use `--literal`; ver `CLAUDE-TRF2.md` |

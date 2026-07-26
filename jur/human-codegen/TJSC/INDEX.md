@@ -3,6 +3,10 @@
 > Gerado por `node human-codegen/index.js`. Não editar à mão.
 > Padrão de nomes: [`../../CLAUDE-CODEGEN.md`](../../CLAUDE-CODEGEN.md) §3.
 
+## Arquivos na raiz
+
+- [`.DS_Store`](.DS_Store)
+
 ## `00-portal/` — Portal
 
 | # | Seção | Descrição | Prints |

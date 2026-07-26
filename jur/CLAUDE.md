@@ -34,13 +34,15 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjma` | TJ do Maranhão | MA | `CLAUDE-TJMA.md` | 🔴 busca **bloqueada por captcha**; só `-n` (nº do processo, via DataJud) |
 | `tjpa` | TJ do Pará | PA | `CLAUDE-TJPA.md` | 🟢 OK (API direta, sem browser) |
 | `tjpr` | TJ do Paraná | PR | `CLAUDE-TJPR.md` | 🟢 OK (HTTP direto, sem browser) |
+| `tjrj` | TJ do Rio de Janeiro | RJ | `CLAUDE-TJRJ.md` | 🟢 OK (HTTP direto, sem browser — só e-Proc/Justiça Comum 2º grau) |
 | `tjrs` | TJ do Rio Grande do Sul | RS | `CLAUDE-TJRS.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjsc` | TJ de Santa Catarina | SC | `CLAUDE-TJSC.md` | 🟢 OK (browser — portal atrás de verificação de segurança) |
 | `tjsp` | TJ de São Paulo | SP | `CLAUDE-TJSP.md` | 🔴 sem acesso — não rodar |
 | `trt9` | TRT 9ª Região (**trabalhista**) | PR | `CLAUDE-TRT9.md` | 🟢 OK (API direta, sem browser) |
 
-Mapeado mas **sem crawler ainda**: **TJRJ** (`human-codegen/` completo).
-Os demais tribunais (TJs restantes, TRTs, TST) não estão mapeados — veja
+Nenhum tribunal catalogado está mapeado à espera de crawler. Falta ainda o módulo
+**eJURIS** do TJRJ (legado com Turmas Recursais e acervo histórico — o `jur tjrj` cobre
+só o e-Proc). Os outros 43 tribunais (TJs restantes, TRTs, TST) não estão mapeados — veja
 `cobertura/CLAUDE-COBERTURA.md` e use a skill [`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**
@@ -72,6 +74,10 @@ Os demais tribunais (TJs restantes, TRTs, TST) não estão mapeados — veja
   em 2019 é de subseções mineiras). Um pedido histórico exige os dois comandos.
   ⚠️ Ao contrário do TRF2, aqui o espaço entre termos funciona e os operadores são em
   português (`e`, `ou`, `não`, `prox`) — **nunca hifenize a query do TRF6**
+- "TJRJ" / "Rio de Janeiro estadual" → `tjrj` → leia `CLAUDE-TJRJ.md`.
+  ⚠️ só Justiça Comum 2º grau no e-Proc (~2023+); **Juizado Especial / Turma Recursal
+  carioca e acervo antigo estão no eJURIS, sem crawler** — diga isso ao usuário em vez
+  de rotular resultado do e-Proc como Juizado
 - "Matéria previdenciária federal em SP" → `trf3` (instável; ver doc), com TRF4/TRF5 de comparativo
 - **Matéria constitucional / precedente de maior hierarquia** ("o que o Supremo decidiu",
   "é constitucional?", ADI/ADPF/ADC, recurso extraordinário) → `stf` → leia `CLAUDE-STF.md`.

@@ -9,8 +9,8 @@
 | | Tribunais |
 |---|---|
 | Catalogados | **61** |
-| 🟢 Busca funcionando (`jur <cmd>`) | **13** |
-| 🟡🟠🔴🔵 Instáveis / quebrados / bloqueados / mapeados | **5** |
+| 🟢 Busca funcionando (`jur <cmd>`) | **14** |
+| 🟡🟠🔴🔵 Instáveis / quebrados / bloqueados / mapeados | **4** |
 | ⚪ Não mapeados | **43** |
 
 Legenda de status: 🟢 `ok` funcionando · 🟡 `instavel` funciona com ressalva ·
@@ -68,7 +68,7 @@ Colunas da matriz:
 | **TJPE** | PE | PJe, Projudi | ⚪ nao-mapeado | — | nao | — | — | — | — |
 | **TJPI** | PI | PJe, Projudi | ⚪ nao-mapeado | — | nao | — | — | — | — |
 | **TJPR** | PR | Projudi | 🟢 ok | `jur tjpr` | completo | 27 | ✅ | verificador/tjpr | ✅ |
-| **TJRJ** | RJ | Próprio, Projudi, PJe | 🔵 mapeado | — | completo | 41 | — | — | — |
+| **TJRJ** | RJ | Próprio, Projudi, PJe | 🟢 ok | `jur tjrj` | completo | 41 | ✅ | verificador/tjrj | ✅ |
 | **TJRN** | RN | ESAJ, PJe, Projudi | ⚪ nao-mapeado | — | nao | — | — | — | — |
 | **TJRO** | RO | PJe, Projudi | ⚪ nao-mapeado | — | nao | — | — | — | — |
 | **TJRR** | RR | PJe, Projudi | ⚪ nao-mapeado | — | nao | — | — | — | — |
@@ -129,6 +129,7 @@ Colunas da matriz:
 | **TJMA** | `https://jurisconsult.tjma.jus.br/#/sg-jurisprudence-form` | api | [`CLAUDE-TJMA.md`](../CLAUDE-TJMA.md) | BUSCA BLOQUEADA POR CAPTCHA — insuperável por ora (decisão consciente: este repo não automatiza captcha). O JurisConsult é o ÚNICO módulo de jurisprudência do TJMA (o "08-jurisprudencias" do human-codegen é a mesma tela). A API é limpa e está inteiramente mapeada (apijuris.tjma.jus.br/v1), mas TODA rota de busca exige captcha de imagem próprio + reCAPTCHA v2 invisible, ambos validados no servidor (400 captcha_not_provided / 400 incorrect_captcha / 403 invalid_captcha_g). Headless, --headed e Chrome real com UA comum: todos caem no desafio de imagens. Não há API oficial de jurisprudência (dados abertos do TJMA só publica projetos/indicadores; MNI exige credenciamento). O QUE FUNCIONA: rotas de combos abertas, e o Checker por número de processo via DataJud/CNJ (api_publica_tjma, G1+G2) — metadados, sem ementa. `./bin/jur tjma --diagnostico` diz ao vivo se o bloqueio caiu. |
 | **TJPA** | `https://jurisprudencia.tjpa.jus.br/bff/api/decisoes` | api | [`CLAUDE-TJPA.md`](../CLAUDE-TJPA.md) | API JSON aberta; ementa + inteiro teor no mesmo payload |
 | **TJPR** | `https://portal.tjpr.jus.br/jurisprudencia/publico/pesquisa.do` | http | [`CLAUDE-TJPR.md`](../CLAUDE-TJPR.md) | Struts próprio (POST em pesquisa.do), sem browser e sem bloqueio. CORPO DO POST EM ISO-8859-1 — em UTF-8 devolve 0 resultados em silêncio. Só 2º grau. Justiça Comum × Juizados pela lista de ids em idOrgaoJulgador (flag --foro): o combo do site (ambito) NÃO separa — ambito=6 "TRIBUNAL DE JUSTIÇA" contém a 6ª Turma Recursal. Toda busca vem somada com decisões da Corte IDH; use o contador "da Jurisprudência do Tribunal de Justiça". Inteiro teor já vem no HTML da ficha (div#texto<id>). PROX não funciona. |
+| **TJRJ** | `https://eproc1g.tjrj.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar` | http | [`CLAUDE-TJRJ.md`](../CLAUDE-TJRJ.md) | Módulo eproc-jur, mesma família do TRF4/TJSC — mas SEM o bloqueio F5 do TJSC: POST direto funciona. Charset ISO-8859-1 (corpo enviado em latin-1). ESCOPO: só 2º grau da Justiça Comum no e-Proc (~2023+); Turmas Recursais/Juizados e o acervo histórico estão no eJURIS legado (mapeado em human-codegen/TJRJ/01-ejuris/, sem crawler). Total/paginação em hidden fields (hdnTotalResultado); paginação via ajax_paginar_resultado, 10/página fixo. Combos avançados (órgão/relator/classe) usam o LABEL como value. Inteiro teor por GET no data-link do card (HTML ~1 MB). RESSALVA: o desempate da ordenação oscila entre requisições — a fronteira das páginas desliza 1–2 documentos; o crawler deduplica por id. |
 | **TJRS** | `https://www.tjrs.jus.br/buscas/jurisprudencia/ajax.php` | http | [`CLAUDE-TJRS.md`](../CLAUDE-TJRS.md) | Solr atrás de proxy PHP (POST action=consultas_solr_ajax); sem bloqueio nem sessão; inteiro teor embutido em base64 (ISO-8859-1); só 2º grau; Justiça Comum × Turmas Recursais pelo cod_tribunal |
 | **TJSC** | `https://eprocwebcon.tjsc.jus.br/consulta1g/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar` | browser | [`CLAUDE-TJSC.md`](../CLAUDE-TJSC.md) | Módulo eproc-jur, mesma família do TRF4. Browser obrigatório: host atrás de verificação de segurança F5/Shape (JS challenge) — e o UA padrão do Playwright headless é barrado, precisa de UA de Chrome comum. Justiça Comum × Turmas Recursais pelo combo Origem (#selOrigem: 1=TJSC, 3=Turmas Recursais, 4=Turmas de Uniformização, 5=Conselho da Magistratura). ATENÇÃO: o portal antigo https://busca.tjsc.jus.br/jurisprudencia/ (HTTP puro) é base histórica CONGELADA desde 08/10/2025 — 15 resultados contra 8.315 do portal novo no mesmo recorte. |
 | **TJSP** | `https://esaj.tjsp.jus.br/cjsg/consultaCompleta.do` | browser | [`CLAUDE-TJSP.md`](../CLAUDE-TJSP.md) | Bloqueio de acesso — não rodar |

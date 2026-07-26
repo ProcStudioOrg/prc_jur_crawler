@@ -1683,20 +1683,22 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "mapeado",
-        "nota": "human-codegen completo (EJURIS/eproc), crawler ainda não escrito"
+        "url": "https://eproc1g.tjrj.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar",
+        "comando": "tjrj",
+        "acesso": "http",
+        "status": "ok",
+        "nota": "Módulo eproc-jur, mesma família do TRF4/TJSC — mas SEM o bloqueio F5 do TJSC: POST direto funciona. Charset ISO-8859-1 (corpo enviado em latin-1). ESCOPO: só 2º grau da Justiça Comum no e-Proc (~2023+); Turmas Recursais/Juizados e o acervo histórico estão no eJURIS legado (mapeado em human-codegen/TJRJ/01-ejuris/, sem crawler). Total/paginação em hidden fields (hdnTotalResultado); paginação via ajax_paginar_resultado, 10/página fixo. Combos avançados (órgão/relator/classe) usam o LABEL como value. Inteiro teor por GET no data-link do card (HTML ~1 MB). RESSALVA: o desempate da ordenação oscila entre requisições — a fronteira das páginas desliza 1–2 documentos; o crawler deduplica por id."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
+        "crawler": "src/TJRJCrawler.js",
+        "extra": "TJRJNavigator.js + TJRJChecker.js",
         "codegen": "completo",
         "screenshots": 41,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "tests": "src/TJRJTestes.js",
+        "skills": [
+          "verificador/tjrj"
+        ],
+        "working": true
       }
     },
     {
