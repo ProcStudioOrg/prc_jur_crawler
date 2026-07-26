@@ -1,0 +1,2302 @@
+[
+  {
+    "dominio": "10ª Caciv - Assento 1",
+    "quantidade": "112"
+  },
+  {
+    "dominio": "10ª Caciv - Assento 2",
+    "quantidade": "92"
+  },
+  {
+    "dominio": "10ª Caciv - Assento 3",
+    "quantidade": "184"
+  },
+  {
+    "dominio": "10ª Caciv - Assento 4",
+    "quantidade": "145"
+  },
+  {
+    "dominio": "10ª Caciv - Assento 5",
+    "quantidade": "133"
+  },
+  {
+    "dominio": "10ª Câmara Cível",
+    "quantidade": "208553"
+  },
+  {
+    "dominio": "11ª Caciv - Assento 1",
+    "quantidade": "155"
+  },
+  {
+    "dominio": "11ª Caciv - Assento 2",
+    "quantidade": "197"
+  },
+  {
+    "dominio": "11ª Caciv - Assento 3",
+    "quantidade": "59"
+  },
+  {
+    "dominio": "11ª Caciv - Assento 4",
+    "quantidade": "143"
+  },
+  {
+    "dominio": "11ª Caciv - Assento 5",
+    "quantidade": "78"
+  },
+  {
+    "dominio": "11ª Câmara Cível",
+    "quantidade": "199617"
+  },
+  {
+    "dominio": "12ª Caciv - Assento 1",
+    "quantidade": "33"
+  },
+  {
+    "dominio": "12ª Caciv - Assento 2",
+    "quantidade": "38"
+  },
+  {
+    "dominio": "12ª Caciv - Assento 3",
+    "quantidade": "34"
+  },
+  {
+    "dominio": "12ª Caciv - Assento 4",
+    "quantidade": "60"
+  },
+  {
+    "dominio": "12ª Caciv - Assento 5",
+    "quantidade": "28"
+  },
+  {
+    "dominio": "12ª Câmara Cível",
+    "quantidade": "208375"
+  },
+  {
+    "dominio": "13ª Caciv - Assento 1",
+    "quantidade": "77"
+  },
+  {
+    "dominio": "13ª Caciv - Assento 2",
+    "quantidade": "140"
+  },
+  {
+    "dominio": "13ª Caciv - Assento 3",
+    "quantidade": "151"
+  },
+  {
+    "dominio": "13ª Caciv - Assento 4",
+    "quantidade": "77"
+  },
+  {
+    "dominio": "13ª Caciv - Assento 5",
+    "quantidade": "144"
+  },
+  {
+    "dominio": "13ª Câmara Cível",
+    "quantidade": "216757"
+  },
+  {
+    "dominio": "14ª Caciv - Assento 1",
+    "quantidade": "144"
+  },
+  {
+    "dominio": "14ª Caciv - Assento 2",
+    "quantidade": "148"
+  },
+  {
+    "dominio": "14ª Caciv - Assento 3",
+    "quantidade": "47"
+  },
+  {
+    "dominio": "14ª Caciv - Assento 4",
+    "quantidade": "142"
+  },
+  {
+    "dominio": "14ª Caciv - Assento 5",
+    "quantidade": "144"
+  },
+  {
+    "dominio": "14ª Câmara Cível",
+    "quantidade": "218843"
+  },
+  {
+    "dominio": "15ª Caciv - Assento 1",
+    "quantidade": "53"
+  },
+  {
+    "dominio": "15ª Caciv - Assento 2",
+    "quantidade": "56"
+  },
+  {
+    "dominio": "15ª Caciv - Assento 3",
+    "quantidade": "103"
+  },
+  {
+    "dominio": "15ª Caciv - Assento 4",
+    "quantidade": "29"
+  },
+  {
+    "dominio": "15ª Caciv - Assento 5",
+    "quantidade": "165"
+  },
+  {
+    "dominio": "15ª Câmara Cível",
+    "quantidade": "198439"
+  },
+  {
+    "dominio": "16ª Caciv - Assento 1",
+    "quantidade": "31"
+  },
+  {
+    "dominio": "16ª Caciv - Assento 2",
+    "quantidade": "78"
+  },
+  {
+    "dominio": "16ª Caciv - Assento 3",
+    "quantidade": "26"
+  },
+  {
+    "dominio": "16ª Caciv - Assento 4",
+    "quantidade": "81"
+  },
+  {
+    "dominio": "16ª Caciv - Assento 5",
+    "quantidade": "171"
+  },
+  {
+    "dominio": "16ª Câmara Cível",
+    "quantidade": "164072"
+  },
+  {
+    "dominio": "16ª Câmara Cível Especializada",
+    "quantidade": "47591"
+  },
+  {
+    "dominio": "17ª Caciv - Assento 1",
+    "quantidade": "25"
+  },
+  {
+    "dominio": "17ª Caciv - Assento 2",
+    "quantidade": "148"
+  },
+  {
+    "dominio": "17ª Caciv - Assento 3",
+    "quantidade": "51"
+  },
+  {
+    "dominio": "17ª Caciv - Assento 4",
+    "quantidade": "139"
+  },
+  {
+    "dominio": "17ª Caciv - Assento 5",
+    "quantidade": "73"
+  },
+  {
+    "dominio": "17ª Câmara Cível",
+    "quantidade": "203111"
+  },
+  {
+    "dominio": "18ª Caciv - Assento 1",
+    "quantidade": "82"
+  },
+  {
+    "dominio": "18ª Caciv - Assento 2",
+    "quantidade": "217"
+  },
+  {
+    "dominio": "18ª Caciv - Assento 3",
+    "quantidade": "31"
+  },
+  {
+    "dominio": "18ª Caciv - Assento 4",
+    "quantidade": "103"
+  },
+  {
+    "dominio": "18ª Caciv - Assento 5",
+    "quantidade": "147"
+  },
+  {
+    "dominio": "18ª Câmara Cível",
+    "quantidade": "195832"
+  },
+  {
+    "dominio": "19ª Caciv - Assento 1",
+    "quantidade": "96"
+  },
+  {
+    "dominio": "19ª Caciv - Assento 2",
+    "quantidade": "109"
+  },
+  {
+    "dominio": "19ª Caciv - Assento 3",
+    "quantidade": "132"
+  },
+  {
+    "dominio": "19ª Caciv - Assento 4",
+    "quantidade": "56"
+  },
+  {
+    "dominio": "19ª Caciv - Assento 5",
+    "quantidade": "128"
+  },
+  {
+    "dominio": "19ª Câmara Cível",
+    "quantidade": "59811"
+  },
+  {
+    "dominio": "1ª Caciv - Assento 1",
+    "quantidade": "130"
+  },
+  {
+    "dominio": "1ª Caciv - Assento 2",
+    "quantidade": "188"
+  },
+  {
+    "dominio": "1ª Caciv - Assento 3",
+    "quantidade": "202"
+  },
+  {
+    "dominio": "1ª Caciv - Assento 4",
+    "quantidade": "118"
+  },
+  {
+    "dominio": "1ª Caciv - Assento 5",
+    "quantidade": "200"
+  },
+  {
+    "dominio": "1ª Câmara Cível",
+    "quantidade": "187890"
+  },
+  {
+    "dominio": "1ª Câmara Criminal",
+    "quantidade": "3952"
+  },
+  {
+    "dominio": "1ª Câmara Unif. Jurisp. Cível",
+    "quantidade": "295"
+  },
+  {
+    "dominio": "1ª Seção Cível",
+    "quantidade": "7293"
+  },
+  {
+    "dominio": "1ª Seção Cível - 1ª Vice-Presidência",
+    "quantidade": "6"
+  },
+  {
+    "dominio": "1ª Seção Cível - Assento 8",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "1º Grupo De Câmaras Cíveis",
+    "quantidade": "1931"
+  },
+  {
+    "dominio": "1º Grupo De Câmaras Criminais",
+    "quantidade": "274"
+  },
+  {
+    "dominio": "1º Núcleo De Justiça 4.0 - Cível Família",
+    "quantidade": "469"
+  },
+  {
+    "dominio": "1º Núcleo De Justiça 4.0 - Cível Privado",
+    "quantidade": "5876"
+  },
+  {
+    "dominio": "1º Núcleo De Justiça 4.0 - Criminal",
+    "quantidade": "378"
+  },
+  {
+    "dominio": "1º Núcleo De Justiça 4.0 - Criminal Especializado",
+    "quantidade": "102"
+  },
+  {
+    "dominio": "1º Núcleo - Família - Assento 1",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "1º Núcleo - Privado - Assento 1",
+    "quantidade": "210"
+  },
+  {
+    "dominio": "1º Suplente 1ª Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "925"
+  },
+  {
+    "dominio": "1º Suplente 1ª Tr - Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2497"
+  },
+  {
+    "dominio": "1º Suplente 1ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "989"
+  },
+  {
+    "dominio": "1º Suplente 1ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "857"
+  },
+  {
+    "dominio": "1º Suplente 1ª Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "2619"
+  },
+  {
+    "dominio": "1º Suplente 1ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "875"
+  },
+  {
+    "dominio": "1º Suplente 1ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "2060"
+  },
+  {
+    "dominio": "1º Suplente 1ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "2205"
+  },
+  {
+    "dominio": "1º Suplente 1ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "984"
+  },
+  {
+    "dominio": "1º Suplente 1ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "877"
+  },
+  {
+    "dominio": "1º Suplente 1ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1350"
+  },
+  {
+    "dominio": "1º Suplente 2ª Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "999"
+  },
+  {
+    "dominio": "1º Suplente 2ª Tr - Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2371"
+  },
+  {
+    "dominio": "1º Suplente 2ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "1058"
+  },
+  {
+    "dominio": "1º Suplente 2ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "738"
+  },
+  {
+    "dominio": "1º Suplente 2ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "956"
+  },
+  {
+    "dominio": "1º Suplente 2ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "2109"
+  },
+  {
+    "dominio": "1º Suplente 2ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "1846"
+  },
+  {
+    "dominio": "1º Suplente 2ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "1101"
+  },
+  {
+    "dominio": "1º Suplente 2ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "817"
+  },
+  {
+    "dominio": "1º Suplente 2ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1267"
+  },
+  {
+    "dominio": "1º Suplente 2º Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "2499"
+  },
+  {
+    "dominio": "1º Suplente 3ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "855"
+  },
+  {
+    "dominio": "1º Suplente 3ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "769"
+  },
+  {
+    "dominio": "1º Suplente 4ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "883"
+  },
+  {
+    "dominio": "1º Suplente 4ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "702"
+  },
+  {
+    "dominio": "1º Suplente 5ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "784"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional Da Comarca De Araguari",
+    "quantidade": "595"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional Da Comarca De Barbacena",
+    "quantidade": "990"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional Da Comarca De Curvelo",
+    "quantidade": "2135"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional Da Comarca De Lavras",
+    "quantidade": "1145"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional Da Comarca De Paracatu",
+    "quantidade": "1161"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional Da Comarca De Ubá",
+    "quantidade": "1453"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional De Araxá",
+    "quantidade": "612"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional De Cataguases",
+    "quantidade": "1168"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional De Conselheiro Lafaiete",
+    "quantidade": "1534"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional De Itabira",
+    "quantidade": "1337"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional De Itajubá",
+    "quantidade": "900"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional De Ituiutaba",
+    "quantidade": "1036"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional De Muriaé",
+    "quantidade": "2518"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional De Passos",
+    "quantidade": "2792"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional De Patos De Minas",
+    "quantidade": "1806"
+  },
+  {
+    "dominio": "1º Suplente Tr Grupo Jurisdicional De Pouso Alegre",
+    "quantidade": "1923"
+  },
+  {
+    "dominio": "1º Suplente Tr - Grupo Jurisdicional De Viçosa",
+    "quantidade": "2600"
+  },
+  {
+    "dominio": "1º Titular 1ª Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "940"
+  },
+  {
+    "dominio": "1º Titular 1ª Tr Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2543"
+  },
+  {
+    "dominio": "1º Titular 1ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "1195"
+  },
+  {
+    "dominio": "1º Titular 1ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "847"
+  },
+  {
+    "dominio": "1º Titular 1ª Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "2654"
+  },
+  {
+    "dominio": "1º Titular 1ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "1001"
+  },
+  {
+    "dominio": "1º Titular 1ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "1801"
+  },
+  {
+    "dominio": "1º Titular 1ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "1560"
+  },
+  {
+    "dominio": "1º Titular 1ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "1095"
+  },
+  {
+    "dominio": "1º Titular 1ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "830"
+  },
+  {
+    "dominio": "1º Titular 1ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1273"
+  },
+  {
+    "dominio": "1º Titular 2ª Tr Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2519"
+  },
+  {
+    "dominio": "1º Titular 2ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "1019"
+  },
+  {
+    "dominio": "1º Titular 2ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "864"
+  },
+  {
+    "dominio": "1º Titular 2ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "993"
+  },
+  {
+    "dominio": "1º Titular 2ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "1971"
+  },
+  {
+    "dominio": "1º Titular 2ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "2046"
+  },
+  {
+    "dominio": "1º Titular 2ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "1051"
+  },
+  {
+    "dominio": "1º Titular 2ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "861"
+  },
+  {
+    "dominio": "1º Titular 2ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1308"
+  },
+  {
+    "dominio": "1º Titular 2º Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "895"
+  },
+  {
+    "dominio": "1º Titular 2º Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "2674"
+  },
+  {
+    "dominio": "1º Titular 3ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "813"
+  },
+  {
+    "dominio": "1º Titular 3ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "764"
+  },
+  {
+    "dominio": "1º Titular 4ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "792"
+  },
+  {
+    "dominio": "1º Titular 4ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "768"
+  },
+  {
+    "dominio": "1º Titular 5ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "783"
+  },
+  {
+    "dominio": "1º Titular Da Turma Recursal Do Grupo Jurisdicional De Viçosa",
+    "quantidade": "2927"
+  },
+  {
+    "dominio": "1º Titular Tr - Belo Horizonte, Betim E Contagem [cível]",
+    "quantidade": "27203"
+  },
+  {
+    "dominio": "1º Titular Tr - Belo Horizonte, Betim E Contagem [criminal]",
+    "quantidade": "119"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional Da Comarca De Araguari",
+    "quantidade": "773"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional Da Comarca De Barbacena",
+    "quantidade": "1168"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional Da Comarca De Curvelo",
+    "quantidade": "2057"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional Da Comarca De Formiga",
+    "quantidade": "4660"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional Da Comarca De Lavras",
+    "quantidade": "1230"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional Da Comarca De Paracatu",
+    "quantidade": "1502"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional Da Comarca De Ubá",
+    "quantidade": "1384"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional Da Comarca São João Del Rei",
+    "quantidade": "703"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional De Araxá",
+    "quantidade": "696"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional De Cataguases",
+    "quantidade": "1307"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional De Conselheiro Lafaiete",
+    "quantidade": "1471"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional De Itabira",
+    "quantidade": "1245"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional De Itajubá",
+    "quantidade": "1002"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional De Ituiutaba",
+    "quantidade": "958"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional De Muriaé",
+    "quantidade": "2696"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional De Passos",
+    "quantidade": "2907"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional De Patos De Minas",
+    "quantidade": "1499"
+  },
+  {
+    "dominio": "1º Titular Tr Grupo Jurisdicional De Pouso Alegre",
+    "quantidade": "2063"
+  },
+  {
+    "dominio": "1º Titular Tr Temporária De Belo Horizonte, Betim E Contagem_cível",
+    "quantidade": "3469"
+  },
+  {
+    "dominio": "20ª Caciv - Assento 1",
+    "quantidade": "33"
+  },
+  {
+    "dominio": "20ª Caciv - Assento 2",
+    "quantidade": "44"
+  },
+  {
+    "dominio": "20ª Caciv - Assento 3",
+    "quantidade": "114"
+  },
+  {
+    "dominio": "20ª Caciv - Assento 4",
+    "quantidade": "60"
+  },
+  {
+    "dominio": "20ª Caciv - Assento 5",
+    "quantidade": "19"
+  },
+  {
+    "dominio": "20ª Câmara Cível",
+    "quantidade": "74523"
+  },
+  {
+    "dominio": "21ª Caciv - Assento 1",
+    "quantidade": "96"
+  },
+  {
+    "dominio": "21ª Caciv - Assento 2",
+    "quantidade": "24"
+  },
+  {
+    "dominio": "21ª Caciv - Assento 3",
+    "quantidade": "171"
+  },
+  {
+    "dominio": "21ª Caciv - Assento 4",
+    "quantidade": "52"
+  },
+  {
+    "dominio": "21ª Caciv - Assento 5",
+    "quantidade": "146"
+  },
+  {
+    "dominio": "21ª Câmara Cível",
+    "quantidade": "8390"
+  },
+  {
+    "dominio": "21ª Câmara Cível Especializada",
+    "quantidade": "44008"
+  },
+  {
+    "dominio": "2ª Caciv - Assento 1",
+    "quantidade": "63"
+  },
+  {
+    "dominio": "2ª Caciv - Assento 2",
+    "quantidade": "74"
+  },
+  {
+    "dominio": "2ª Caciv - Assento 3",
+    "quantidade": "72"
+  },
+  {
+    "dominio": "2ª Caciv - Assento 4",
+    "quantidade": "89"
+  },
+  {
+    "dominio": "2ª Caciv - Assento 5",
+    "quantidade": "84"
+  },
+  {
+    "dominio": "2ª Câmara Cível",
+    "quantidade": "190364"
+  },
+  {
+    "dominio": "2ª Câmara Criminal",
+    "quantidade": "2996"
+  },
+  {
+    "dominio": "2ª Câmara Unif. Jurisp. Cível",
+    "quantidade": "795"
+  },
+  {
+    "dominio": "2ª Seção Cível",
+    "quantidade": "5537"
+  },
+  {
+    "dominio": "2ª Seção Cível - 1ª Vice-Presidência",
+    "quantidade": "8"
+  },
+  {
+    "dominio": "2ª Seção Cível - Assento 13",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "2ª Seção Cível - Assento 14",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "2ª Seção Cível - Assento 15",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "2º Grupo De Câmaras Cíveis",
+    "quantidade": "2130"
+  },
+  {
+    "dominio": "2º Grupo De Câmaras Criminais",
+    "quantidade": "222"
+  },
+  {
+    "dominio": "2º Núcleo De Justiça 4.0 - Cível Família",
+    "quantidade": "350"
+  },
+  {
+    "dominio": "2º Núcleo De Justiça 4.0 - Cível Privado",
+    "quantidade": "5095"
+  },
+  {
+    "dominio": "2º Núcleo De Justiça 4.0 - Criminal",
+    "quantidade": "151"
+  },
+  {
+    "dominio": "2º Núcleo De Justiça 4.0 - Criminal Especializado",
+    "quantidade": "135"
+  },
+  {
+    "dominio": "2º Núcleo - Família - Assento 1",
+    "quantidade": "21"
+  },
+  {
+    "dominio": "2º Núcleo - Privado - Assento 1",
+    "quantidade": "38"
+  },
+  {
+    "dominio": "2º Suplente 1ª Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "874"
+  },
+  {
+    "dominio": "2º Suplente 1ª Tr - Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2561"
+  },
+  {
+    "dominio": "2º Suplente 1ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "1012"
+  },
+  {
+    "dominio": "2º Suplente 1ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "824"
+  },
+  {
+    "dominio": "2º Suplente 1ª Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "2435"
+  },
+  {
+    "dominio": "2º Suplente 1ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "923"
+  },
+  {
+    "dominio": "2º Suplente 1ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "1903"
+  },
+  {
+    "dominio": "2º Suplente 1ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "1839"
+  },
+  {
+    "dominio": "2º Suplente 1ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "1138"
+  },
+  {
+    "dominio": "2º Suplente 1ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "799"
+  },
+  {
+    "dominio": "2º Suplente 1ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1209"
+  },
+  {
+    "dominio": "2º Suplente 2ª Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "972"
+  },
+  {
+    "dominio": "2º Suplente 2ª Tr - Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2556"
+  },
+  {
+    "dominio": "2º Suplente 2ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "1006"
+  },
+  {
+    "dominio": "2º Suplente 2ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "848"
+  },
+  {
+    "dominio": "2º Suplente 2ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "1003"
+  },
+  {
+    "dominio": "2º Suplente 2ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "1965"
+  },
+  {
+    "dominio": "2º Suplente 2ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "2093"
+  },
+  {
+    "dominio": "2º Suplente 2ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "1073"
+  },
+  {
+    "dominio": "2º Suplente 2ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "773"
+  },
+  {
+    "dominio": "2º Suplente 2ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1292"
+  },
+  {
+    "dominio": "2º Suplente 2º Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "2384"
+  },
+  {
+    "dominio": "2º Suplente 3ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "769"
+  },
+  {
+    "dominio": "2º Suplente 3ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "804"
+  },
+  {
+    "dominio": "2º Suplente 4ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "779"
+  },
+  {
+    "dominio": "2º Suplente 4ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "776"
+  },
+  {
+    "dominio": "2º Suplente 5ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "788"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional Da Comarca De Araguari",
+    "quantidade": "711"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional Da Comarca De Barbacena",
+    "quantidade": "972"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional Da Comarca De Curvelo",
+    "quantidade": "2085"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional Da Comarca De Lavras",
+    "quantidade": "1085"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional Da Comarca De Paracatu",
+    "quantidade": "997"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional Da Comarca De Ubá",
+    "quantidade": "1374"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional De Araxá",
+    "quantidade": "753"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional De Cataguases",
+    "quantidade": "1293"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional De Conselheiro Lafaiete",
+    "quantidade": "1609"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional De Itabira",
+    "quantidade": "1346"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional De Itajubá",
+    "quantidade": "1010"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional De Ituiutaba",
+    "quantidade": "953"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional De Muriaé",
+    "quantidade": "2718"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional De Passos",
+    "quantidade": "2719"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional De Patos De Minas",
+    "quantidade": "1543"
+  },
+  {
+    "dominio": "2º Suplente Tr Grupo Jurisdicional De Pouso Alegre",
+    "quantidade": "1759"
+  },
+  {
+    "dominio": "2º Suplente Tr - Grupo Jurisdicional De Viçosa",
+    "quantidade": "2958"
+  },
+  {
+    "dominio": "2º Titular 1ª Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "1001"
+  },
+  {
+    "dominio": "2º Titular 1ª Tr Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2450"
+  },
+  {
+    "dominio": "2º Titular 1ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "999"
+  },
+  {
+    "dominio": "2º Titular 1ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "704"
+  },
+  {
+    "dominio": "2º Titular 1ª Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "2619"
+  },
+  {
+    "dominio": "2º Titular 1ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "978"
+  },
+  {
+    "dominio": "2º Titular 1ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "1803"
+  },
+  {
+    "dominio": "2º Titular 1ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "1572"
+  },
+  {
+    "dominio": "2º Titular 1ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "1024"
+  },
+  {
+    "dominio": "2º Titular 1ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "842"
+  },
+  {
+    "dominio": "2º Titular 1ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1236"
+  },
+  {
+    "dominio": "2º Titular 2ª Tr Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2461"
+  },
+  {
+    "dominio": "2º Titular 2ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "1027"
+  },
+  {
+    "dominio": "2º Titular 2ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "819"
+  },
+  {
+    "dominio": "2º Titular 2ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "758"
+  },
+  {
+    "dominio": "2º Titular 2ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "2140"
+  },
+  {
+    "dominio": "2º Titular 2ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "2215"
+  },
+  {
+    "dominio": "2º Titular 2ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "1023"
+  },
+  {
+    "dominio": "2º Titular 2ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "683"
+  },
+  {
+    "dominio": "2º Titular 2ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1244"
+  },
+  {
+    "dominio": "2º Titular 2º Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "1003"
+  },
+  {
+    "dominio": "2º Titular 2º Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "2008"
+  },
+  {
+    "dominio": "2º Titular 3ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "793"
+  },
+  {
+    "dominio": "2º Titular 3ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "841"
+  },
+  {
+    "dominio": "2º Titular 4ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "818"
+  },
+  {
+    "dominio": "2º Titular 4ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "823"
+  },
+  {
+    "dominio": "2º Titular 5ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "797"
+  },
+  {
+    "dominio": "2º Titular Da Turma Recursal Do Grupo Jurisdicional De Viçosa",
+    "quantidade": "2996"
+  },
+  {
+    "dominio": "2º Titular Tr - Belo Horizonte, Betim E Contagem [cível]",
+    "quantidade": "27651"
+  },
+  {
+    "dominio": "2º Titular Tr - Belo Horizonte, Betim E Contagem [criminal]",
+    "quantidade": "223"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional Da Comarca De Araguari",
+    "quantidade": "647"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional Da Comarca De Barbacena",
+    "quantidade": "824"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional Da Comarca De Curvelo",
+    "quantidade": "2243"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional Da Comarca De Formiga",
+    "quantidade": "3742"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional Da Comarca De Lavras",
+    "quantidade": "1231"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional Da Comarca De Paracatu",
+    "quantidade": "1178"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional Da Comarca De Ubá",
+    "quantidade": "1399"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional Da Comarca São João Del Rei",
+    "quantidade": "730"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional De Araxá",
+    "quantidade": "786"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional De Cataguases",
+    "quantidade": "1268"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional De Conselheiro Lafaiete",
+    "quantidade": "1538"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional De Itabira",
+    "quantidade": "1341"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional De Itajubá",
+    "quantidade": "925"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional De Ituiutaba",
+    "quantidade": "1000"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional De Muriaé",
+    "quantidade": "2384"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional De Passos",
+    "quantidade": "2522"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional De Patos De Minas",
+    "quantidade": "1719"
+  },
+  {
+    "dominio": "2º Titular Tr Grupo Jurisdicional De Pouso Alegre",
+    "quantidade": "2040"
+  },
+  {
+    "dominio": "2º Titular Tr Temporária De Belo Horizonte, Betim E Contagem_cível",
+    "quantidade": "3299"
+  },
+  {
+    "dominio": "3ª Caciv - Assento 1",
+    "quantidade": "49"
+  },
+  {
+    "dominio": "3ª Caciv - Assento 2",
+    "quantidade": "70"
+  },
+  {
+    "dominio": "3ª Caciv - Assento 3",
+    "quantidade": "88"
+  },
+  {
+    "dominio": "3ª Caciv - Assento 4",
+    "quantidade": "90"
+  },
+  {
+    "dominio": "3ª Caciv - Assento 5",
+    "quantidade": "40"
+  },
+  {
+    "dominio": "3ª Câmara Cível",
+    "quantidade": "187423"
+  },
+  {
+    "dominio": "3ª Câmara Criminal",
+    "quantidade": "2613"
+  },
+  {
+    "dominio": "3º Grupo De Câmaras Cíveis",
+    "quantidade": "1545"
+  },
+  {
+    "dominio": "3º Grupo De Câmaras Criminais",
+    "quantidade": "276"
+  },
+  {
+    "dominio": "3º Núcleo De Justiça 4.0 - Cível Família",
+    "quantidade": "459"
+  },
+  {
+    "dominio": "3º Núcleo De Justiça 4.0 - Cível Privado",
+    "quantidade": "5960"
+  },
+  {
+    "dominio": "3º Núcleo De Justiça 4.0 - Criminal Especializado",
+    "quantidade": "306"
+  },
+  {
+    "dominio": "3º Núcleo - Família - Assento 1",
+    "quantidade": "89"
+  },
+  {
+    "dominio": "3º Núcleo - Privado - Assento 1",
+    "quantidade": "193"
+  },
+  {
+    "dominio": "3º Suplente 1ª Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "933"
+  },
+  {
+    "dominio": "3º Suplente 1ª Tr - Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2499"
+  },
+  {
+    "dominio": "3º Suplente 1ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "963"
+  },
+  {
+    "dominio": "3º Suplente 1ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "790"
+  },
+  {
+    "dominio": "3º Suplente 1ª Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "2466"
+  },
+  {
+    "dominio": "3º Suplente 1ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "914"
+  },
+  {
+    "dominio": "3º Suplente 1ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "1913"
+  },
+  {
+    "dominio": "3º Suplente 1ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "1986"
+  },
+  {
+    "dominio": "3º Suplente 1ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "1091"
+  },
+  {
+    "dominio": "3º Suplente 1ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "846"
+  },
+  {
+    "dominio": "3º Suplente 1ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1286"
+  },
+  {
+    "dominio": "3º Suplente 2ª Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "929"
+  },
+  {
+    "dominio": "3º Suplente 2ª Tr - Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2439"
+  },
+  {
+    "dominio": "3º Suplente 2ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "967"
+  },
+  {
+    "dominio": "3º Suplente 2ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "623"
+  },
+  {
+    "dominio": "3º Suplente 2ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "979"
+  },
+  {
+    "dominio": "3º Suplente 2ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "2037"
+  },
+  {
+    "dominio": "3º Suplente 2ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "1904"
+  },
+  {
+    "dominio": "3º Suplente 2ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "1066"
+  },
+  {
+    "dominio": "3º Suplente 2ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "809"
+  },
+  {
+    "dominio": "3º Suplente 2ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1315"
+  },
+  {
+    "dominio": "3º Suplente 2º Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "2151"
+  },
+  {
+    "dominio": "3º Suplente 3ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "801"
+  },
+  {
+    "dominio": "3º Suplente 3ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "856"
+  },
+  {
+    "dominio": "3º Suplente 4ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "812"
+  },
+  {
+    "dominio": "3º Suplente 4ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "731"
+  },
+  {
+    "dominio": "3º Suplente 5ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "850"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional Da Comarca De Araguari",
+    "quantidade": "801"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional Da Comarca De Barbacena",
+    "quantidade": "931"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional Da Comarca De Curvelo",
+    "quantidade": "1948"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional Da Comarca De Lavras",
+    "quantidade": "1085"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional Da Comarca De Paracatu",
+    "quantidade": "1079"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional Da Comarca De Ubá",
+    "quantidade": "1377"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional De Araxá",
+    "quantidade": "706"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional De Cataguases",
+    "quantidade": "1226"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional De Conselheiro Lafaiete",
+    "quantidade": "1548"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional De Itabira",
+    "quantidade": "1353"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional De Itajubá",
+    "quantidade": "922"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional De Ituiutaba",
+    "quantidade": "897"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional De Muriaé",
+    "quantidade": "2421"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional De Passos",
+    "quantidade": "2758"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional De Patos De Minas",
+    "quantidade": "1749"
+  },
+  {
+    "dominio": "3º Suplente Tr Grupo Jurisdicional De Pouso Alegre",
+    "quantidade": "1899"
+  },
+  {
+    "dominio": "3º Suplente Tr - Grupo Jurisdicional De Viçosa",
+    "quantidade": "2832"
+  },
+  {
+    "dominio": "3º Titular 1ª Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "818"
+  },
+  {
+    "dominio": "3º Titular 1ª Tr Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2476"
+  },
+  {
+    "dominio": "3º Titular 1ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "948"
+  },
+  {
+    "dominio": "3º Titular 1ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "821"
+  },
+  {
+    "dominio": "3º Titular 1ª Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "2653"
+  },
+  {
+    "dominio": "3º Titular 1ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "1035"
+  },
+  {
+    "dominio": "3º Titular 1ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "1930"
+  },
+  {
+    "dominio": "3º Titular 1ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "1752"
+  },
+  {
+    "dominio": "3º Titular 1ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "1087"
+  },
+  {
+    "dominio": "3º Titular 1ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "821"
+  },
+  {
+    "dominio": "3º Titular 1ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1297"
+  },
+  {
+    "dominio": "3º Titular 2ª Tr Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "2295"
+  },
+  {
+    "dominio": "3º Titular 2ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "993"
+  },
+  {
+    "dominio": "3º Titular 2ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "780"
+  },
+  {
+    "dominio": "3º Titular 2ª Tr - Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "1005"
+  },
+  {
+    "dominio": "3º Titular 2ª Tr - Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "1956"
+  },
+  {
+    "dominio": "3º Titular 2ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "2093"
+  },
+  {
+    "dominio": "3º Titular 2ª Tr - Grupo Jurisdicional De Uberaba",
+    "quantidade": "966"
+  },
+  {
+    "dominio": "3º Titular 2ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "809"
+  },
+  {
+    "dominio": "3º Titular 2ª Tr - Grupo Jurisdicional De Varginha",
+    "quantidade": "1265"
+  },
+  {
+    "dominio": "3º Titular 2º Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "815"
+  },
+  {
+    "dominio": "3º Titular 2º Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "1990"
+  },
+  {
+    "dominio": "3º Titular 3ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "768"
+  },
+  {
+    "dominio": "3º Titular 3ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "741"
+  },
+  {
+    "dominio": "3º Titular 4ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "800"
+  },
+  {
+    "dominio": "3º Titular 4ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "767"
+  },
+  {
+    "dominio": "3º Titular 5ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "755"
+  },
+  {
+    "dominio": "3º Titular Da Turma Recursal Do Grupo Jurisdicional De Viçosa",
+    "quantidade": "2571"
+  },
+  {
+    "dominio": "3º Titular Tr - Belo Horizonte, Betim E Contagem [cível]",
+    "quantidade": "26333"
+  },
+  {
+    "dominio": "3º Titular Tr - Belo Horizonte, Betim E Contagem [criminal]",
+    "quantidade": "91"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional Da Comarca De Araguari",
+    "quantidade": "660"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional Da Comarca De Barbacena",
+    "quantidade": "1108"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional Da Comarca De Curvelo",
+    "quantidade": "2171"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional Da Comarca De Formiga",
+    "quantidade": "3793"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional Da Comarca De Lavras",
+    "quantidade": "1081"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional Da Comarca De Paracatu",
+    "quantidade": "1208"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional Da Comarca De Ubá",
+    "quantidade": "1510"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional Da Comarca São João Del Rei",
+    "quantidade": "648"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional De Araxá",
+    "quantidade": "749"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional De Cataguases",
+    "quantidade": "1314"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional De Conselheiro Lafaiete",
+    "quantidade": "1419"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional De Itabira",
+    "quantidade": "1446"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional De Itajubá",
+    "quantidade": "989"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional De Ituiutaba",
+    "quantidade": "1001"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional De Muriaé",
+    "quantidade": "2319"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional De Passos",
+    "quantidade": "2752"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional De Patos De Minas",
+    "quantidade": "1664"
+  },
+  {
+    "dominio": "3º Titular Tr Grupo Jurisdicional De Pouso Alegre",
+    "quantidade": "1944"
+  },
+  {
+    "dominio": "3º Titular Tr Temporária De Belo Horizonte, Betim E Contagem_cível",
+    "quantidade": "3134"
+  },
+  {
+    "dominio": "4ª Cacivesp - Assento 1",
+    "quantidade": "109"
+  },
+  {
+    "dominio": "4ª Cacivesp - Assento 2",
+    "quantidade": "16"
+  },
+  {
+    "dominio": "4ª Cacivesp - Assento 3",
+    "quantidade": "12"
+  },
+  {
+    "dominio": "4ª Cacivesp - Assento 4",
+    "quantidade": "97"
+  },
+  {
+    "dominio": "4ª Cacivesp - Assento 5",
+    "quantidade": "98"
+  },
+  {
+    "dominio": "4ª Câmara Cível",
+    "quantidade": "154973"
+  },
+  {
+    "dominio": "4ª Câmara Cível Especializada",
+    "quantidade": "5482"
+  },
+  {
+    "dominio": "4ª Câmara Criminal",
+    "quantidade": "3003"
+  },
+  {
+    "dominio": "4º Grupo De Câmaras Cíveis",
+    "quantidade": "1544"
+  },
+  {
+    "dominio": "4º Núcleo De Justiça 4.0 - Cível Família",
+    "quantidade": "180"
+  },
+  {
+    "dominio": "4º Núcleo De Justiça 4.0 - Cível Privado",
+    "quantidade": "4856"
+  },
+  {
+    "dominio": "4º Núcleo - Família - Assento 1",
+    "quantidade": "107"
+  },
+  {
+    "dominio": "4º Núcleo - Privado - Assento 1",
+    "quantidade": "75"
+  },
+  {
+    "dominio": "4º Titular Tr - Belo Horizonte, Betim E Contagem [cível]",
+    "quantidade": "25770"
+  },
+  {
+    "dominio": "4º Titular Tr - Belo Horizonte, Betim E Contagem [criminal]",
+    "quantidade": "123"
+  },
+  {
+    "dominio": "4º Titular Tr Temporária De Belo Horizonte, Betim E Contagem_cível",
+    "quantidade": "2450"
+  },
+  {
+    "dominio": "5ª Caciv - Assento 1",
+    "quantidade": "117"
+  },
+  {
+    "dominio": "5ª Caciv - Assento 2",
+    "quantidade": "101"
+  },
+  {
+    "dominio": "5ª Caciv - Assento 3",
+    "quantidade": "16"
+  },
+  {
+    "dominio": "5ª Caciv - Assento 4",
+    "quantidade": "101"
+  },
+  {
+    "dominio": "5ª Caciv - Assento 5",
+    "quantidade": "69"
+  },
+  {
+    "dominio": "5ª Câmara Cível",
+    "quantidade": "185886"
+  },
+  {
+    "dominio": "5ª Câmara Criminal",
+    "quantidade": "3004"
+  },
+  {
+    "dominio": "5º Grupo De Câmaras Cíveis",
+    "quantidade": "363"
+  },
+  {
+    "dominio": "5º Núcleo De Justiça 4.0 - Cível Privado",
+    "quantidade": "1336"
+  },
+  {
+    "dominio": "5º Núcleo - Privado - Assento 1",
+    "quantidade": "50"
+  },
+  {
+    "dominio": "5º Titular Tr - Belo Horizonte, Betim E Contagem [cível]",
+    "quantidade": "27053"
+  },
+  {
+    "dominio": "5º Titular Tr - Belo Horizonte, Betim E Contagem [criminal]",
+    "quantidade": "261"
+  },
+  {
+    "dominio": "5º Titular Tr Temporária De Belo Horizonte, Betim E Contagem_cível",
+    "quantidade": "2218"
+  },
+  {
+    "dominio": "6ª Caciv - Assento 1",
+    "quantidade": "150"
+  },
+  {
+    "dominio": "6ª Caciv - Assento 2",
+    "quantidade": "85"
+  },
+  {
+    "dominio": "6ª Caciv - Assento 3",
+    "quantidade": "116"
+  },
+  {
+    "dominio": "6ª Caciv - Assento 4",
+    "quantidade": "92"
+  },
+  {
+    "dominio": "6ª Caciv - Assento 5",
+    "quantidade": "148"
+  },
+  {
+    "dominio": "6ª Câmara Cível",
+    "quantidade": "187491"
+  },
+  {
+    "dominio": "6ª Câmara Criminal",
+    "quantidade": "2585"
+  },
+  {
+    "dominio": "6º Grupo De Câmaras Cíveis",
+    "quantidade": "451"
+  },
+  {
+    "dominio": "6º Núcleo De Justiça 4.0 - Cível Privado",
+    "quantidade": "1432"
+  },
+  {
+    "dominio": "6º Núcleo - Privado - Assento 1",
+    "quantidade": "82"
+  },
+  {
+    "dominio": "7ª Caciv - Assento 1",
+    "quantidade": "31"
+  },
+  {
+    "dominio": "7ª Caciv - Assento 2",
+    "quantidade": "112"
+  },
+  {
+    "dominio": "7ª Caciv - Assento 3",
+    "quantidade": "118"
+  },
+  {
+    "dominio": "7ª Caciv - Assento 4",
+    "quantidade": "97"
+  },
+  {
+    "dominio": "7ª Caciv - Assento 5",
+    "quantidade": "60"
+  },
+  {
+    "dominio": "7ª Câmara Cível",
+    "quantidade": "181070"
+  },
+  {
+    "dominio": "7ª Câmara Criminal",
+    "quantidade": "2138"
+  },
+  {
+    "dominio": "7º Grupo De Câmaras Cíveis",
+    "quantidade": "422"
+  },
+  {
+    "dominio": "7º Núcleo De Justiça 4.0 - Cível Privado",
+    "quantidade": "351"
+  },
+  {
+    "dominio": "7º Núcleo - Privado - Assento 1",
+    "quantidade": "218"
+  },
+  {
+    "dominio": "8ª Cacivesp - Assento 1",
+    "quantidade": "91"
+  },
+  {
+    "dominio": "8ª Cacivesp - Assento 2",
+    "quantidade": "152"
+  },
+  {
+    "dominio": "8ª Cacivesp - Assento 3",
+    "quantidade": "23"
+  },
+  {
+    "dominio": "8ª Cacivesp - Assento 4",
+    "quantidade": "89"
+  },
+  {
+    "dominio": "8ª Cacivesp - Assento 5",
+    "quantidade": "14"
+  },
+  {
+    "dominio": "8ª Câmara Cível",
+    "quantidade": "138243"
+  },
+  {
+    "dominio": "8ª Câmara Cível Especializada",
+    "quantidade": "7036"
+  },
+  {
+    "dominio": "8ª Câmara Criminal",
+    "quantidade": "2841"
+  },
+  {
+    "dominio": "8º Grupo De Câmaras Cíveis",
+    "quantidade": "298"
+  },
+  {
+    "dominio": "8º Núcleo De Justiça 4.0 - Cível Privado",
+    "quantidade": "642"
+  },
+  {
+    "dominio": "8º Núcleo - Privado - Assento 1",
+    "quantidade": "198"
+  },
+  {
+    "dominio": "9ª Caciv - Assento 1",
+    "quantidade": "38"
+  },
+  {
+    "dominio": "9ª Caciv - Assento 2",
+    "quantidade": "63"
+  },
+  {
+    "dominio": "9ª Caciv - Assento 3",
+    "quantidade": "179"
+  },
+  {
+    "dominio": "9ª Caciv - Assento 4",
+    "quantidade": "70"
+  },
+  {
+    "dominio": "9ª Caciv - Assento 5",
+    "quantidade": "149"
+  },
+  {
+    "dominio": "9ª Câmara Cível",
+    "quantidade": "196335"
+  },
+  {
+    "dominio": "9ª Câmara Criminal",
+    "quantidade": "1396"
+  },
+  {
+    "dominio": "9ª Câmara Criminal Especializada",
+    "quantidade": "462"
+  },
+  {
+    "dominio": "9º Grupo De Câmaras Cíveis",
+    "quantidade": "137"
+  },
+  {
+    "dominio": "Câmara Especial De Férias",
+    "quantidade": "21"
+  },
+  {
+    "dominio": "Câmara Justiça 4.0 - Especializada Cível-8",
+    "quantidade": "1113"
+  },
+  {
+    "dominio": "Câmara Unif. Jurisp. Criminal",
+    "quantidade": "6"
+  },
+  {
+    "dominio": "Conselho Da Magistratura",
+    "quantidade": "10601"
+  },
+  {
+    "dominio": "Gabinete 1° Vice Presidência",
+    "quantidade": "194"
+  },
+  {
+    "dominio": "Gabinete 3° Vice Presidência",
+    "quantidade": "316"
+  },
+  {
+    "dominio": "Gabinete Da Presidência Da Turma De Uniformização De Jurisprudência",
+    "quantidade": "133"
+  },
+  {
+    "dominio": "Gabinete De Precatórios - Presidência",
+    "quantidade": "4"
+  },
+  {
+    "dominio": "Gabinete Presidência",
+    "quantidade": "8"
+  },
+  {
+    "dominio": "Grupo De Câmaras Cíveis",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Juiz De Direito Titular: 1ª Região",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Juiz De Direito Titular: 3ª Região",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Juiz De Direito Titular: 4ª Região",
+    "quantidade": "5"
+  },
+  {
+    "dominio": "Juiz De Direito Titular: 5ª Região",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Juiz De Direito Titular: 6ª Região",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Núcleo - 18ª Caciv - Assento 1",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Núcleo De Justiça 4.0 - Cível Brumadinho",
+    "quantidade": "10736"
+  },
+  {
+    "dominio": "Núcleo De Justiça 4.0 - Cível Especializado",
+    "quantidade": "1868"
+  },
+  {
+    "dominio": "Núcleo De Justiça 4.0 - Cooperação 2ª Instância",
+    "quantidade": "615"
+  },
+  {
+    "dominio": "Núcleo De Justiça 4.0 - Criminal Especializado",
+    "quantidade": "1064"
+  },
+  {
+    "dominio": "Órgão Especial",
+    "quantidade": "38022"
+  },
+  {
+    "dominio": "Órgão Especial - 1ª Vice-Presidência",
+    "quantidade": "19"
+  },
+  {
+    "dominio": "Órgão Especial - Assento 1",
+    "quantidade": "4"
+  },
+  {
+    "dominio": "Órgão Especial - Assento 10",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Órgão Especial - Assento 11",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Órgão Especial - Assento 16",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Órgão Especial - Assento 17",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Órgão Especial - Assento 19",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Órgão Especial - Assento 5",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Órgão Especial - Assento 6",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Órgão Especial - Assento 9",
+    "quantidade": "6"
+  },
+  {
+    "dominio": "Órgão Especial - Presidência",
+    "quantidade": "9"
+  },
+  {
+    "dominio": "Plantao Fim Semana/Feriado-109-Uap",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriado-113-Uap",
+    "quantidade": "6"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriado-114-Ug",
+    "quantidade": "13"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriado-115-Ug",
+    "quantidade": "8"
+  },
+  {
+    "dominio": "Plantao Fim Semana/Feriado-116-Ug",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriado-117-Ug",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriado-118-Ug",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriado-120-Ug",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriados-101-Uap",
+    "quantidade": "8"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriados-102-Uap",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriados-103-Uap",
+    "quantidade": "5"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriados-104-Uap",
+    "quantidade": "8"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriados-105-Uap",
+    "quantidade": "12"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriados-106-Uap",
+    "quantidade": "11"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriados-107-Uap",
+    "quantidade": "19"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriados-108-Uap",
+    "quantidade": "7"
+  },
+  {
+    "dominio": "Plantão Fim Semana/Feriados-Ug",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Plantão Fim Semana E Feriados",
+    "quantidade": "5"
+  },
+  {
+    "dominio": "Presidência",
+    "quantidade": "598"
+  },
+  {
+    "dominio": "Presidência 1ª Tr Do Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "11"
+  },
+  {
+    "dominio": "Presidência 1ª Tr Do Grupo Jurisdicional De Uberaba",
+    "quantidade": "18"
+  },
+  {
+    "dominio": "Presidência 1ª Tr Do Grupo Jurisdicional De Varginha",
+    "quantidade": "12"
+  },
+  {
+    "dominio": "Presidência 1ª Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "5"
+  },
+  {
+    "dominio": "Presidência 1ª Tr Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "19"
+  },
+  {
+    "dominio": "Presidência 1ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "7"
+  },
+  {
+    "dominio": "Presidência 1ª Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "18"
+  },
+  {
+    "dominio": "Presidência 1ª Tr Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "48"
+  },
+  {
+    "dominio": "Presidência 1ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "7"
+  },
+  {
+    "dominio": "Presidência 2ª Tr Do Grupo Jurisdicional De Poços De Caldas",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Presidência 2ª Tr Do Grupo Jurisdicional De Uberaba",
+    "quantidade": "9"
+  },
+  {
+    "dominio": "Presidência 2ª Tr Do Grupo Jurisdicional De Varginha",
+    "quantidade": "30"
+  },
+  {
+    "dominio": "Presidência 2ª Tr Grupo Jurisdicional De Divinópolis",
+    "quantidade": "13"
+  },
+  {
+    "dominio": "Presidência 2ª Tr Grupo Jurisdicional De Governador Valadares",
+    "quantidade": "40"
+  },
+  {
+    "dominio": "Presidência 2ª Tr Grupo Jurisdicional De Ipatinga",
+    "quantidade": "10"
+  },
+  {
+    "dominio": "Presidência 2ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Presidência 2ª Tr Grupo Jurisdicional De Montes Claros",
+    "quantidade": "51"
+  },
+  {
+    "dominio": "Presidência 2ª Tr Grupo Jurisdicional De Sete Lagoas",
+    "quantidade": "20"
+  },
+  {
+    "dominio": "Presidência 2ª Tr Grupo Jurisdicional De Teófilo Otoni",
+    "quantidade": "36"
+  },
+  {
+    "dominio": "Presidência 2ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Presidência 3ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "4"
+  },
+  {
+    "dominio": "Presidência 4ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "5"
+  },
+  {
+    "dominio": "Presidência 4ª Tr Grupo Jurisdicional De Uberlândia",
+    "quantidade": "13"
+  },
+  {
+    "dominio": "Presidência 5ª Tr Grupo Jurisdicional De Juiz De Fora",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional Da Comarca De Araguari",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional Da Comarca De Barbacena",
+    "quantidade": "6"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional Da Comarca De Formiga",
+    "quantidade": "5"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional Da Comarca De Lavras",
+    "quantidade": "10"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional Da Comarca De Paracatu",
+    "quantidade": "79"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional Da Comarca De São João Del Rei",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional De Cataguases",
+    "quantidade": "4"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional De Conselheiro Lafaiete",
+    "quantidade": "16"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional De Itabira",
+    "quantidade": "44"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional De Itajubá",
+    "quantidade": "7"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional De Ituiutaba",
+    "quantidade": "20"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional De Muriaé",
+    "quantidade": "5"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional De Passos",
+    "quantidade": "5"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional De Patos De Minas",
+    "quantidade": "9"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional De Pouso Alegre",
+    "quantidade": "20"
+  },
+  {
+    "dominio": "Presidência Tr Grupo Jurisdicional De Ubá",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Presidência Turma Recursal Belo Horizonte, Betim E Contagem [cível]",
+    "quantidade": "545"
+  },
+  {
+    "dominio": "Presidência Turma Recursal Belo Horizonte, Betim E Contagem [criminal]",
+    "quantidade": "5"
+  },
+  {
+    "dominio": "Presidência Turma Recursal Temporária De Belo Horizonte, Betim E Contagem",
+    "quantidade": "18"
+  },
+  {
+    "dominio": "Primeira Vice-Presidência",
+    "quantidade": "133530"
+  },
+  {
+    "dominio": "Segunda Vice-Presidência",
+    "quantidade": "5"
+  },
+  {
+    "dominio": "Terceira Vice-Presidência",
+    "quantidade": "93488"
+  },
+  {
+    "dominio": "Turma De Uniformização De Jurisprudência",
+    "quantidade": "1243"
+  },
+  {
+    "dominio": "Turma Especializada Da 1ª Câmara Unif. Jurisp. Cível",
+    "quantidade": "43"
+  }
+]

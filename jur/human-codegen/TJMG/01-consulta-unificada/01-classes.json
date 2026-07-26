@@ -1,0 +1,458 @@
+[
+  {
+    "dominio": "Ação Civil De Improbidade Administrativa",
+    "quantidade": "32"
+  },
+  {
+    "dominio": "Ação Civil Pública",
+    "quantidade": "134"
+  },
+  {
+    "dominio": "Ação Penal",
+    "quantidade": "80"
+  },
+  {
+    "dominio": "Ação Popular",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Ação Rescisória",
+    "quantidade": "7232"
+  },
+  {
+    "dominio": "Agravo",
+    "quantidade": "124030"
+  },
+  {
+    "dominio": "Agravo De Execução Penal",
+    "quantidade": "2730"
+  },
+  {
+    "dominio": "Agravo De Instrumento",
+    "quantidade": "892111"
+  },
+  {
+    "dominio": "Agravo De Instrumento Em Recurso Especial",
+    "quantidade": "14"
+  },
+  {
+    "dominio": "Agravo De Instrumento Em Recurso Extraordinário",
+    "quantidade": "1616"
+  },
+  {
+    "dominio": "Agravo Em Recurso Especial",
+    "quantidade": "1619"
+  },
+  {
+    "dominio": "Agravo Interno Cível",
+    "quantidade": "33"
+  },
+  {
+    "dominio": "Agravo Regimental",
+    "quantidade": "6482"
+  },
+  {
+    "dominio": "Apelação",
+    "quantidade": "1811373"
+  },
+  {
+    "dominio": "Apelação / Reexame Necessário",
+    "quantidade": "208939"
+  },
+  {
+    "dominio": "Apelação Criminal",
+    "quantidade": "1217"
+  },
+  {
+    "dominio": "Arguição De Inconstitucionalidade",
+    "quantidade": "32"
+  },
+  {
+    "dominio": "Argüição De Inconstitucionalidade",
+    "quantidade": "802"
+  },
+  {
+    "dominio": "Assistência Judiciária",
+    "quantidade": "12"
+  },
+  {
+    "dominio": "Atentado",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Avocatória",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Busca E Apreensão",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Carta De Ordem",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Carta Testemunhável",
+    "quantidade": "10"
+  },
+  {
+    "dominio": "Caução",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Cautelar Inominada",
+    "quantidade": "722"
+  },
+  {
+    "dominio": "Coisa Julgada",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Comunicação",
+    "quantidade": "2939"
+  },
+  {
+    "dominio": "Conflito De Competência",
+    "quantidade": "32875"
+  },
+  {
+    "dominio": "Conflito De Competência Cível",
+    "quantidade": "724"
+  },
+  {
+    "dominio": "Conflito De Jurisdição",
+    "quantidade": "69"
+  },
+  {
+    "dominio": "Consignação Em Pagamento",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Correição Parcial",
+    "quantidade": "63"
+  },
+  {
+    "dominio": "Correição Parcial Ou Reclamação Correicional",
+    "quantidade": "3828"
+  },
+  {
+    "dominio": "Cumprimento De Sentença",
+    "quantidade": "553"
+  },
+  {
+    "dominio": "Cumprimento Provisório De Sentença",
+    "quantidade": "48"
+  },
+  {
+    "dominio": "Declaratória De Constitucionalidade",
+    "quantidade": "18"
+  },
+  {
+    "dominio": "Desaforamento De Julgamento",
+    "quantidade": "13"
+  },
+  {
+    "dominio": "Direta De Inconstitucionalidade",
+    "quantidade": "7536"
+  },
+  {
+    "dominio": "Dissídio Coletivo De Greve",
+    "quantidade": "37"
+  },
+  {
+    "dominio": "Embargos À Execução",
+    "quantidade": "172"
+  },
+  {
+    "dominio": "Embargos De Declaração",
+    "quantidade": "612286"
+  },
+  {
+    "dominio": "Embargos De Terceiro",
+    "quantidade": "36"
+  },
+  {
+    "dominio": "Embargos Infringentes",
+    "quantidade": "19529"
+  },
+  {
+    "dominio": "Embargos Infringentes E De Nulidade",
+    "quantidade": "1034"
+  },
+  {
+    "dominio": "Exceção De Impedimento",
+    "quantidade": "44"
+  },
+  {
+    "dominio": "Exceção De Incompetência",
+    "quantidade": "176"
+  },
+  {
+    "dominio": "Exceção De Incompetência De Juízo",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Exceção De Suspeição",
+    "quantidade": "1191"
+  },
+  {
+    "dominio": "Exibição De Documento Ou Coisa",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Habeas Corpus",
+    "quantidade": "4055"
+  },
+  {
+    "dominio": "Habeas Corpus Cível",
+    "quantidade": "16"
+  },
+  {
+    "dominio": "Habeas Corpus Criminal",
+    "quantidade": "4"
+  },
+  {
+    "dominio": "Habeas Data",
+    "quantidade": "145"
+  },
+  {
+    "dominio": "Habilitação",
+    "quantidade": "68"
+  },
+  {
+    "dominio": "Ilegitimidade De Parte",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Impugnação Ao Cumprimento De Sentença",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Impugnação Ao Pedido De Assistência Litisconsorcial Ou Simples",
+    "quantidade": "15"
+  },
+  {
+    "dominio": "Impugnação Ao Valor Da Causa",
+    "quantidade": "169"
+  },
+  {
+    "dominio": "Impugnação De Assistência Judiciária",
+    "quantidade": "137"
+  },
+  {
+    "dominio": "Incidente De Assunção De Competência",
+    "quantidade": "40"
+  },
+  {
+    "dominio": "Incidente De Desconsideração De Personalidade Jurídica",
+    "quantidade": "8"
+  },
+  {
+    "dominio": "Incidente De Falsidade",
+    "quantidade": "10"
+  },
+  {
+    "dominio": "Incidente De Impedimento",
+    "quantidade": "59"
+  },
+  {
+    "dominio": "Incidente De Impedimento Cível",
+    "quantidade": "14"
+  },
+  {
+    "dominio": "Incidente De Resolução De Demandas Repetitivas",
+    "quantidade": "468"
+  },
+  {
+    "dominio": "Incidente De Suspeição",
+    "quantidade": "692"
+  },
+  {
+    "dominio": "Incidente De Suspeição Cível",
+    "quantidade": "21"
+  },
+  {
+    "dominio": "Incidente De Uniformização De Jurisprudência",
+    "quantidade": "1171"
+  },
+  {
+    "dominio": "Intervenção Em Município",
+    "quantidade": "351"
+  },
+  {
+    "dominio": "Liquidação Por Arbitramento",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Liquidação Provisória Por Artigos",
+    "quantidade": "2"
+  },
+  {
+    "dominio": "Mandado De Injunção",
+    "quantidade": "96"
+  },
+  {
+    "dominio": "Mandado De Segurança",
+    "quantidade": "31630"
+  },
+  {
+    "dominio": "Mandado De Segurança Cível",
+    "quantidade": "2676"
+  },
+  {
+    "dominio": "Mandado De Segurança Coletivo",
+    "quantidade": "275"
+  },
+  {
+    "dominio": "Mandado De Segurança Criminal",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Medidas Assecuratórias",
+    "quantidade": "7"
+  },
+  {
+    "dominio": "Medidas Cautelares",
+    "quantidade": "31"
+  },
+  {
+    "dominio": "Oposição",
+    "quantidade": "46"
+  },
+  {
+    "dominio": "Outras Medidas Provisionais",
+    "quantidade": "3"
+  },
+  {
+    "dominio": "Pedido De Efeito Suspensivo À Apelação",
+    "quantidade": "1163"
+  },
+  {
+    "dominio": "Pedido De Providências",
+    "quantidade": "18"
+  },
+  {
+    "dominio": "Petição",
+    "quantidade": "980"
+  },
+  {
+    "dominio": "Procedimento De Liquidação",
+    "quantidade": "12"
+  },
+  {
+    "dominio": "Procedimento Especial Dos Crimes De Abuso De Autoridade",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Procedimento Ordinário",
+    "quantidade": "108"
+  },
+  {
+    "dominio": "Processo Administrativo",
+    "quantidade": "29"
+  },
+  {
+    "dominio": "Processo Administrativo Disciplinar Em Face De Magistrado",
+    "quantidade": "11"
+  },
+  {
+    "dominio": "Processo Administrativo Disciplinar Em Face De Servidor",
+    "quantidade": "97"
+  },
+  {
+    "dominio": "Processo De Execução",
+    "quantidade": "43"
+  },
+  {
+    "dominio": "Produção Antecipada De Provas",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Protesto",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Reclamação",
+    "quantidade": "5786"
+  },
+  {
+    "dominio": "Recurso Administrativo",
+    "quantidade": "1743"
+  },
+  {
+    "dominio": "Recurso Em Processo Administrativo Disciplinar Em Face De Servidor",
+    "quantidade": "254"
+  },
+  {
+    "dominio": "Recurso Em Sentido Estrito",
+    "quantidade": "1041"
+  },
+  {
+    "dominio": "Recurso Especial",
+    "quantidade": "176850"
+  },
+  {
+    "dominio": "Recurso Extraordinário",
+    "quantidade": "37876"
+  },
+  {
+    "dominio": "Recurso Extraordinário Com Agravo",
+    "quantidade": "1477"
+  },
+  {
+    "dominio": "Recurso Inominado Cível",
+    "quantidade": "506996"
+  },
+  {
+    "dominio": "Recurso Ordinário",
+    "quantidade": "141"
+  },
+  {
+    "dominio": "Reexame Necessário",
+    "quantidade": "51328"
+  },
+  {
+    "dominio": "Relaxamento De Prisão",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Representação Por Excesso De Prazo",
+    "quantidade": "297"
+  },
+  {
+    "dominio": "Requisição De Pequeno Valor",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Restauração De Autos",
+    "quantidade": "89"
+  },
+  {
+    "dominio": "Restauração De Autos Cível",
+    "quantidade": "14"
+  },
+  {
+    "dominio": "Restituição De Coisas Apreendidas",
+    "quantidade": "1"
+  },
+  {
+    "dominio": "Revisão Criminal",
+    "quantidade": "457"
+  },
+  {
+    "dominio": "Suspensão De Execução De Sentença",
+    "quantidade": "79"
+  },
+  {
+    "dominio": "Suspensão De Liminar E De Sentença",
+    "quantidade": "390"
+  },
+  {
+    "dominio": "Tutela Antecipada Antecedente",
+    "quantidade": "117"
+  },
+  {
+    "dominio": "Tutela Cautelar Antecedente",
+    "quantidade": "82"
+  }
+]

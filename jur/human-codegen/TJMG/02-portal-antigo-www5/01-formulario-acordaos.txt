@@ -1,0 +1,96 @@
+================================================================================
+TJMG — MÓDULO 02: PORTAL ANTIGO www5 (BECO SEM SAÍDA — captcha)
+================================================================================
+
+Link:                 https://www5.tjmg.jus.br/jurisprudencia/formEspelhoAcordao.do
+Sistema:              Struts/JSP clássico (formulário GET, jsessionid na action)
+Status:               🔴 BLOQUEADO — HTTP 401 + captcha numérico na primeira busca
+Data do mapeamento:   26/07/2026
+Substituído por:      ../01-consulta-unificada/  (use aquele)
+
+Este módulo está documentado para que ninguém repita o caminho. NÃO escreva
+crawler para ele.
+
+--------------------------------------------------------------------------------
+1. Por que está aqui
+--------------------------------------------------------------------------------
+
+Até 22/06/2026 este era o único portal de jurisprudência do TJMG, e é o único que
+a página oficial "Consulta de Jurisprudência" do portal do tribunal linkava ainda
+em 26/07/2026. Quem chegar pelo site oficial cai aqui e conclui que o TJMG é
+inacessível. É o que aconteceu nas duas tentativas anteriores de mapeamento.
+
+--------------------------------------------------------------------------------
+2. O bloqueio, medido
+--------------------------------------------------------------------------------
+
+GET  /jurisprudencia/formEspelhoAcordao.do          -> HTTP 200, 828 KB (o form)
+GET  /jurisprudencia/pesquisaPalavrasEspelhoAcordao.do?... -> HTTP 401 + captcha
+
+O 401 acontece em SESSÃO LIMPA DE CHROMIUM REAL, com JSESSIONID válido obtido do
+próprio form, na PRIMEIRA busca. Não é rate limit nem heurística anti-bot: é a
+porta.
+
+A página de erro é <title>Captcha</title> e traz:
+  <img id="captcha_image" src="captcha.svl?..."> — 5 dígitos numéricos
+  <input id="captcha_text" name="captcha_text" maxlength="5">
+  captchaAudio.svl / captchaAudio2.svl — alternativa em áudio
+  dwr/interface/ValidacaoCaptchaAction.js — validação via DWR
+
+Cookies observados: JSESSIONID, TS01bee780 (F5 BIG-IP ASM), f5avraaaa..._session_
+em vários paths.
+
+Este repo não resolve captcha. Ver CLAUDE-TJMA.md para o precedente.
+
+--------------------------------------------------------------------------------
+3. O que o formulário oferece (para referência histórica)
+--------------------------------------------------------------------------------
+
+8 abas, cada uma um .do próprio:
+  formEspelhoAcordao.do        Acórdãos            (esta)
+  decisao.do                   Decisões Monocráticas
+  decisaoVice.do               Decisões da 1ª e 3ª Vice-Presidência
+  sumulas.do                   Súmulas
+  decisaoTurmaRecursal.do      Decisões de Turma Recursal
+  decisaoTurmaRecursalPJe.do   Decisões de Turma Recursal - PJe
+  sentenca.do                  Sentenças            <- 1º grau, que o portal NOVO não tem
+  ajuda.do                     Ajuda
+
+Dois formulários GET na aba Acórdãos:
+  NumeroCNJAcordaoForm    -> pesquisaNumeroCNJEspelhoAcordao.do   (campo numeroUnico)
+  PalavrasEspelhoAcordaoForm -> pesquisaPalavrasEspelhoAcordao.do
+
+Campos do PalavrasEspelhoAcordaoForm (do DOM, depois do AJAX):
+  palavras                       termo de busca
+  operadorE / operadorOU /
+  operadorNAO / operador$        botões que inserem "e", "ou", "não", "$" no campo
+  pesquisarPor                   radio: ementa | acordao (= inteiro teor)
+  pesquisaTesauro                checkbox "Pesquisar termos relacionados"
+  orderByData                    radio: 2=julgamento, 1=publicação, 0=precisão
+  codigoOrgaoJulgador            select, 73 opções (value "1-1" = 1ª CÂMARA CÍVEL)
+  codigoCompostoRelator          select, 585 opções (value "2-1232313")
+  classe                         select, 168 opções
+  assunto                        select, 4.169 opções
+  dataPublicacaoInicial/Final    DD/MM/AAAA
+  dataJulgamentoInicial/Final    DD/MM/AAAA
+  referenciaLegislativa, norma, texto_legal_2..5, complemento_1..5
+  linhasPorPagina                select: 10 | 20 | 50
+
+Todos os selects vêm POPULADOS no HTML estático (não é AJAX) — dump completo em
+selects.json.
+
+⚠️ Os operadores aqui são em PORTUGUÊS (e / ou / não / $). No portal novo eles
+NÃO funcionam e são silenciosamente ignorados. É a diferença mais perigosa entre
+os dois módulos — ver ../01-consulta-unificada/01-busca-e-filtros.txt §2.
+
+--------------------------------------------------------------------------------
+4. O que fazer em vez disso
+--------------------------------------------------------------------------------
+
+Use https://consulta-jurisprudencia.tjmg.jus.br/pesquisa e a API em
+https://jurisprudencia-api.tjmg.jus.br — sem captcha, sem sessão, sem auth.
+
+A única coisa que este módulo tem e o novo não tem é a aba SENTENÇAS (1º grau) e
+SÚMULAS. Ambas atrás do mesmo captcha, portanto igualmente inacessíveis.
+
+Prints: 01.01 (formulário), 01.02 (o captcha que a busca devolve)

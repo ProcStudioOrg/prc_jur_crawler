@@ -1,0 +1,121 @@
+================================================================================
+TJMG — MÓDULO 01, SEÇÃO 02: RESULTADOS, INTEIRO TEOR E PAGINAÇÃO
+================================================================================
+
+Complementa 01-busca-e-filtros.txt §18–§20 com o detalhamento campo a campo do
+que a API devolve e como o crawler mapeia. Prints: 02.01 a 02.05.
+
+--------------------------------------------------------------------------------
+1. O objeto de um resultado (JurisprudenciaDto)
+--------------------------------------------------------------------------------
+
+Campos observados em resposta real (todos strings, salvo assuntos/highlights):
+
+| Campo API           | Exemplo                                  | Vira, no repo        |
+|---------------------|------------------------------------------|----------------------|
+| id                  | "28939918111"                            | id                   |
+| documentoId         | "289399181"                              | documentoId          |
+| documentoHash       | "88dc2361fe7f40654c7393b65ad0a17f"       | documentoHash        |
+| documentoSistemaId  | (nem sempre presente)                    | documentoSistemaId   |
+| tipoDocumento       | "Decisão Turma Recursal"                 | tipoDocumento        |
+| classe              | "Recurso Inominado Cível"                | classe               |
+| assuntos            | ["Itbi - ...","Pagamento"]               | assuntos (join "; ") |
+| orgaoJulgador       | "2º Titular Tr - Belo Horizonte..."      | orgaoJulgador        |
+| magistrado          | "Aloysio Pereira Nogueira" (vazio em TR) | relator              |
+| comarca             | "Belo Horizonte"                         | comarca              |
+| numeroProcessoCnj   | "50039981020208130079" (SEM máscara)     | processo (mascarado) |
+| numeroProcessoTj    | (numeração interna, quando existe)       | numeroProcessoTj     |
+| julgamentoData      | "14/09/2021" (JÁ em DD/MM/AAAA)          | dataJulgamento       |
+| publicacaoData      | "14/09/2021" (JÁ em DD/MM/AAAA)          | dataPublicacao       |
+| highlights          | {"inteiro_teor":["... <b>X</b> ..."]}    | trechos              |
+| ementa              | ementa integral — SÓ em Acórdão          | ementa               |
+| inteiroTeor         | sempre vazio no /filter                  | —                    |
+
+⚠️ DUAS ASSIMETRIAS DE DATA QUE JÁ CUSTARAM ERRO AQUI:
+  (a) o filtro de ENTRADA usa YYYY-MM-DD; a SAÍDA vem em DD/MM/AAAA. São
+      formatos diferentes na mesma API.
+  (b) `julgamentoData` pode simplesmente não vir. A tela escreve
+      "<DATA NÃO IDENTIFICADA>". Visto em 5016167-17.2022.8.13.0707, que tem
+      publicacaoData 09/08/2023 e nenhuma data de julgamento. O crawler devolve
+      string vazia; NÃO substituir pela data de publicação.
+
+⚠️ `ementa` VEM PREENCHIDA — mas SÓ em "Acórdão". Medido em 26/07/2026 com o
+termo "dano moral", 20 resultados por tipo, nos dois escopos:
+
+  tipoDocumento              ementa   magistrado   inteiroTeor
+  Acórdão                    20/20      20/20         0/20
+  Decisão Monocrática         0/20      20/20         0/20
+  Decisão Turma Recursal      0/20       0/20         0/20
+  Decisão Vice-Presidência    0/20      20/20         0/20
+
+Ou seja, são DUAS assimetrias por tipo, não uma:
+  (a) ementa só existe em Acórdão — é o mesmo fato do índice de ementa vazio
+      (ver 01-busca-e-filtros.txt §7 e a constante SEM_EMENTA_INDEXADA);
+  (b) magistrado falta SÓ em Turma Recursal.
+
+`inteiroTeor` está no schema mas nunca vem preenchido na busca — texto completo
+só via POST /jurisprudencias/document.
+
+⚠️ ERRO JÁ COMETIDO NESTE MAPEAMENTO: a primeira versão concluiu "a API não
+devolve ementa" a partir da PRIMEIRA amostra, que por acaso era Turma Recursal.
+Amostra de um tipo só não descreve uma base com comportamento por tipo.
+
+No repo: o campo `ementa` traz a ementa real quando existe e cai para os trechos
+quando não existe; `ementaEhTrecho` diz qual dos dois é; `trechos` guarda os
+destaques nos dois casos.
+
+--------------------------------------------------------------------------------
+2. Inteiro teor
+--------------------------------------------------------------------------------
+
+POST https://jurisprudencia-api.tjmg.jus.br/jurisprudencias/document
+
+Corpo mínimo que FUNCIONA (medido):
+  documentoId      = "289399181"
+  datasPublicacao  = [{"inicio":"2021-09-14","fim":"2021-09-14"}]
+  + os arrays vazios de praxe, texto:null, tipoTexto:null, total:false
+
+Corpos que FALHAM com HTTP 500 "Dados de documento inválidos ou incompletos"
+(todos testados em 26/07/2026):
+  - documentoId + documentoHash, SEM datasPublicacao
+  - documentoId + documentoHash + documentoSistemaId + dataJulgamento
+  - ids:[<id>] sozinho
+
+Ou seja: a chave é (documentoId, data de publicação exata). A data de publicação
+vem do próprio resultado da busca (`publicacaoData`, em DD/MM/AAAA) e precisa ser
+convertida para YYYY-MM-DD antes de montar o corpo.
+
+Resposta: HTML completo (não JSON), ~14 KB no exemplo, com cabeçalho do tribunal,
+"Data do Julgamento", "Data da Publicação", ementa, acórdão, relatório e votos.
+Passa por stripHtml() → ~10,5 KB de texto útil.
+
+Prints: 02.03 (popover), 02.04 (documento aberto)
+
+--------------------------------------------------------------------------------
+3. Botão PROCESSO
+--------------------------------------------------------------------------------
+
+Abre https://consulta.tjmg.jus.br/home?numeroProcesso=<COM máscara> — a Consulta
+Processual Unificada, outro sistema (Next.js + consulta-processual-api.tjmg.jus.br,
+com seu próprio Keycloak). É tramitação, não jurisprudência: fora do escopo.
+
+O crawler expõe essa URL como `processoUrl` para conveniência, sem consultá-la.
+
+Prints: 02.05
+
+--------------------------------------------------------------------------------
+4. Paginação — o que foi medido
+--------------------------------------------------------------------------------
+
+  page=0   size=5  -> ids 28939918111,45535416411,45995062611,1175157698...,1070197012...
+  page=3   size=5  -> ids 1000000185439...,1000000275341...,43899375111,...   (distintos)
+  page=50  size=10 -> 10 itens
+  page=99  size=10 -> 10 itens
+  page=100 size=10 -> 10 itens
+  page=150 size=10 -> 10 itens   (= offset 1500, muito além do totalRecords=1000)
+
+Conclusão: `totalRecords` satura em 1000 mas a paginação NÃO para ali. Não use
+totalRecords para decidir quando parar de paginar — use "página vazia".
+
+  size=10 -> 10 | size=50 -> 50 | size=100 -> 100 | size=200 -> 200
+  size=1000 -> devolveu 380 (todos os que existiam na janela testada)

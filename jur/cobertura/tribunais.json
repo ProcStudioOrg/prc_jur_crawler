@@ -1201,19 +1201,22 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://consulta-jurisprudencia.tjmg.jus.br/pesquisa",
+        "comando": "tjmg",
+        "acesso": "api",
+        "status": "ok",
+        "nota": "Consulta Unificada, no ar desde 22/06/2026 — SPA React sobre API JSON aberta (jurisprudencia-api.tjmg.jus.br) com OpenAPI PÚBLICO em /v3/api-docs e Swagger UI em /swagger-ui/index.html. Sem auth, sem sessão, sem cookie, sem captcha (o Keycloak em auth.tjmg.jus.br é login OPCIONAL, chamado com prompt=none). ⚠️ NÃO use www5.tjmg.jus.br/jurisprudencia: é o portal ANTIGO e devolve 401 + captcha numérico já na 1ª busca em sessão limpa de Chromium real — e é o único que a página oficial do portal ainda linkava em 26/07/2026, o que derrubou duas tentativas anteriores de mapeamento. ACERVO: 4.584.245 documentos em 4 tipos — Acórdão 3.370.461, Decisão Turma Recursal 532.132, Decisão Monocrática 454.481, Decisão Vice-Presidência 227.171. NÃO tem sentenças (1º grau) nem súmulas, apesar de a notícia de lançamento citar 1,6 mi de sentenças — reconferir depois de ago/2026. Juizado × Justiça Comum pelo tiposDocumento (medido: Turma Recursal 259 × Vice 776 × todos 1000+). ⚠️ TRÊS ARMADILHAS DE 500: (1) /dominio/{field} quebra se o corpo levar texto/tipoTexto; (2) busca por numerosProcessos idem; (3) /jurisprudencias/document exige documentoId E datasPublicacao com inicio=fim=data de publicação — só o hash não basta. ⚠️ E DUAS SILENCIOSAS: (a) SÓ \"Acórdão\" tem ementa indexada — no escopo ementa (o default do portal) os outros três tipos devolvem 0 SEMPRE, então a busca padrão de Juizado mineiro mente por omissão; o crawler AVISA. (b) os operadores em português do portal antigo (e/ou/não/$) são IGNORADOS sem erro — a sintaxe real é Elasticsearch (+ | - \"frase\" ( ) * ~), documentada no próprio portal. totalRecords satura em 1000 (total:true não levanta), mas a paginação continua muito além. Ordenação sem desempate repete documentos entre páginas — o crawler deduplica por id e avisa. A busca DEVOLVE a ementa, mas só de Acórdão (`ementaEhTrecho:false`); nos outros três tipos o campo cai para os trechos destacados, e `magistrado` vem vazio em Turma Recursal. Os campos multivalorados da CLI usam ponto-e-vírgula, não vírgula: 18 dos 575 órgãos julgadores têm vírgula no nome e os 18 são de Turma Recursal — e o crawler valida os nomes contra /dominio antes de buscar, porque valor errado a API aceita e devolve 0 calado."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
-        "codegen": "nao",
-        "screenshots": 1,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "crawler": "src/TJMGCrawler.js",
+        "extra": "TJMGNavigator.js (API da Consulta Unificada + as 3 armadilhas de 500 + SEM_EMENTA_INDEXADA) + TJMGChecker.js (jurisprudência por numerosProcessos, com desempate no DataJud api_publica_tjmg para nao confundir \"sem julgado de 2o grau\" com \"processo inexistente\")",
+        "codegen": "completo",
+        "screenshots": 22,
+        "tests": "src/TJMGTestes.js",
+        "skills": [
+          "verificador/tjmg"
+        ],
+        "working": true
       }
     },
     {

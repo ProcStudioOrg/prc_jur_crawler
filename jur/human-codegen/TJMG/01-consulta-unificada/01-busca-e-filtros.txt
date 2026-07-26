@@ -1,0 +1,377 @@
+================================================================================
+TJMG — MÓDULO 01: CONSULTA DE JURISPRUDÊNCIA UNIFICADA (portal novo)
+================================================================================
+
+Tribunal:                 Tribunal de Justiça de Minas Gerais (TJMG)
+Estado:                   MG
+Módulo:                   Consulta de Jurisprudência Unificada
+Link principal:           https://consulta-jurisprudencia.tjmg.jus.br/pesquisa
+API:                      https://jurisprudencia-api.tjmg.jus.br
+OpenAPI:                  https://jurisprudencia-api.tjmg.jus.br/v3/api-docs  (público, salvo em openapi.json)
+Swagger UI:               https://jurisprudencia-api.tjmg.jus.br/swagger-ui/index.html  (público)
+Sistema judicial:         Próprio — SPA React + backend Spring Boot sobre Elasticsearch
+Sistema irmão mapeado:    TJPA (CLAUDE-TJPA.md) — mesma forma: SPA com API JSON aberta
+Abrangência da base:      4.584.245 documentos de 2º grau e Turmas Recursais.
+                          NÃO tem 1º grau (sentenças) nem súmulas — ver §16.
+Data do mapeamento:       26/07/2026
+
+--------------------------------------------------------------------------------
+CONTEXTO — POR QUE ESTE MÓDULO E NÃO O www5
+--------------------------------------------------------------------------------
+Em 22/06/2026 o TJMG publicou esta consulta unificada, que substitui o portal
+www5.tjmg.jus.br/jurisprudencia. O anúncio diz que os dois conviveriam "até
+meados de agosto", quando o novo vira a forma principal de acesso.
+
+O portal antigo está mapeado em ../02-portal-antigo-www5/ e é um BECO SEM SAÍDA:
+responde HTTP 401 + captcha numérico já na primeira busca, em sessão limpa de
+browser real. O novo não tem captcha, não tem sessão e não tem auth.
+
+Fonte do anúncio:
+https://www.tjmg.jus.br/portal-tjmg/noticias/tjmg-passa-a-ter-unificacao-na-pesquisa-processual-e-na-consulta-a-jurisprudencia.htm
+
+ATENÇÃO: em 26/07/2026 a página oficial "Consulta de Jurisprudência" do portal
+(www.tjmg.jus.br/portal-tjmg/jurisprudencia/consulta-de-jurisprudencia/) ainda
+linka SÓ o www5. Quem seguir o portal cai no captcha. O endereço novo só aparece
+na notícia.
+
+================================================================================
+FERRAMENTAS COMUNS
+================================================================================
+
+## 1. Busca principal (query)
+
+Campo de texto único no topo, sem id nem name (React). O crawler NÃO usa o DOM —
+fala com a API. O seletor abaixo serve ao `fixer` para conferir se a tela mudou.
+
+<input inputmode="text" class="text-input" placeholder="Pesquisa por termos" type="text" value="">
+
+Na API o campo é `texto` (string) do corpo de POST /jurisprudencias/filter.
+
+Comportamento default: palavras soltas = E implícito (AND).
+  Medido em 01/01/2024–31/03/2024, tipoTexto=EMENTA:
+    "usucapião"                 -> 380
+    "extraordinária"            -> 914
+    "usucapião extraordinária"  -> 114   <- menor que ambos = AND
+
+Sem acento é equivalente: usucapião = usucapiao = USUCAPIÃO = 380.
+
+Prints: 01.01
+
+## 2. Operadores
+
+⚠️ ACHADO CRÍTICO: os operadores em PORTUGUÊS do portal antigo (`e`, `ou`, `não`,
+`$`) NÃO existem aqui — e o pior, `E`/`OU`/`NÃO` são SILENCIOSAMENTE IGNORADOS,
+não dão erro. Quem escrever "usucapião OU extraordinária" recebe o resultado do
+E, não do OU, e não é avisado. A sintaxe real é a do Elasticsearch
+simple_query_string, documentada no próprio portal em "Como usar os operadores"
+(print 01.15).
+
+Todos os números abaixo são medidos na mesma janela (julgamento
+01/01/2024–31/03/2024, tipoTexto=EMENTA). Referências: usucapião=380,
+extraordinária=914, ambos com E=114.
+
+| Operador               | Funciona? | Contagem | Observação                              |
+|------------------------|-----------|----------|-----------------------------------------|
+| (espaço) = E implícito | SIM       | 114      | é o default                             |
+| `+` (E / AND)          | SIM       | 114      | idêntico ao default                     |
+| `|` (OU / OR)          | SIM       | 1000*    | *bate no cap; > 914, logo é união       |
+| `-` (NÃO / NOT)        | SIM       | 266      | 380-114=266 — confere exatamente        |
+| `"frase exata"`        | SIM       | 113      | menor que o E, como esperado            |
+| `( )` grupos           | SIM       | 586      | ( "usucapião extraordinária" | inss )   |
+| `*` curinga            | SIM       | 384      | usucapi* > usucapião                    |
+| `~` fuzzy              | SIM       | 383      |                                         |
+| `"frase"~5` proximidade| SIM       | 114      |                                         |
+| `E` / `e` (português)  | NÃO       | 114      | IGNORADO — igual ao default, sem aviso  |
+| `OU` (português)       | NÃO       | 114      | IGNORADO — devolve o E, não a união     |
+| `NÃO` (português)      | NÃO       | 114      | IGNORADO — não exclui nada              |
+| `AND`/`OR`/`NOT` (ing.)| NÃO       | 0        | vira termo literal inexistente          |
+| `$` (curinga do www5)  | NÃO       | 0        | vira termo literal                      |
+| `ADJ` / `PROX`         | NÃO       | 0        | vira termo literal                      |
+
+Prints: 01.15
+
+## 3. Número máximo de páginas / resultados
+
+Paginação por querystring: ?size=<n>&page=<0-based>&sort=<campo>,DESC
+
+Resultados por página: o portal usa size=10. Medido: size=50, 100 e 200 são
+aceitos e devolvem exatamente esse tanto. size=1000 devolve o que houver.
+
+⚠️ TETO DO CONTADOR: `totalRecords` satura em 1000. Não é o teto de resultados,
+é o teto do CONTADOR — a paginação continua andando além disso (page=150 com
+size=10 ainda devolve 10 itens). Contagem abaixo de 1000 é exata; igual a 1000
+significa "1000 ou mais". O campo `total: true` do corpo NÃO levanta o teto
+(medido: 1000 com e sem).
+
+sort aceito: `relevancia`, `publicacao_data`, `julgamento_data` (todos com ,DESC
+ou ,ASC). Valor inválido → HTTP 500.
+
+## 4. Filtro de data — julgamento
+
+Painel "PERÍODO" → "Data de Julgamento" (dois campos dd/mm/aaaa, com ATÉ).
+Na API: `datasJulgamento: [{inicio: "YYYY-MM-DD", fim: "YYYY-MM-DD"}]`
+`fim: null` = intervalo aberto.
+
+Restringe de fato (termo "usucapião extraordinária tabelionato"):
+    sem filtro     -> 109
+    2024 inteiro   ->  18
+    2015 inteiro   ->   5
+
+Prints: 01.14
+
+## 5. Filtro de data — publicação
+
+Mesmo painel, campo "Data de Publicação". Na API: `datasPublicacao`, mesmo
+formato. São filtros DIFERENTES e ambos existem.
+
+⚠️ O padrão da tela é "Últimos 5 anos", que a SPA envia como
+`datasPublicacao: [{inicio: <hoje-5anos>, fim: null}]`. Quem copiar o payload do
+DevTools sem perceber herda esse recorte e conclui que a base começa em 2020.
+O rádio "Todo o Período" limpa o filtro. O crawler deste repo NÃO aplica recorte
+default — busca o acervo inteiro salvo se `-di/-df` forem passados.
+
+Prints: 01.02, 01.14
+
+## 6. Filtro de instância
+
+Não existe combo de instância. A base é toda de 2º grau + Turmas Recursais; o 1º
+grau não está aqui (ver §16). A separação se faz pelo Tipo de Documento (§7).
+
+## 7. Filtro de competência (Juizado × Justiça Comum)  ← A DESAMBIGUAÇÃO
+
+É o campo "Tipo de Documento", painel DOCUMENTO. Na API: `tiposDocumento: []`.
+São exatamente 4 valores, com o acervo inteiro (sem recorte de data):
+
+| Valor exato da API      | Documentos | O que é                                  |
+|-------------------------|------------|------------------------------------------|
+| Acórdão                 | 3.370.461  | Justiça Comum 2º grau (Câmaras)          |
+| Decisão Monocrática     |   454.481  | relator sozinho, 2º grau                 |
+| Decisão Turma Recursal  |   532.132  | JUIZADO ESPECIAL — Turmas Recursais      |
+| Decisão Vice-Presidência|   227.171  | juízo de admissibilidade de RE/REsp      |
+                          = 4.584.245
+
+Prova de que o filtro é aplicado (query "usucapião", sem recorte de data):
+    []                          -> 1000 (cap), 1º resultado = Decisão Turma Recursal
+    ["Acórdão"]                 -> 1000 (cap), 1º resultado = Acórdão
+    ["Decisão Turma Recursal"]  ->  259        1º resultado = Decisão Turma Recursal
+    ["Decisão Vice-Presidência"]->  776        1º resultado = Decisão Vice-Presidência
+As contagens mudam e o tipo do 1º resultado acompanha — o filtro morde.
+
+⚠️ Sem filtro, o 1º resultado veio de Turma Recursal. Ou seja: quem não filtrar
+recebe Juizado misturado com Justiça Comum e, se citar sem olhar, atribui a uma
+Câmara Cível o que uma Turma Recursal decidiu.
+
+Lista completa em tipos-documento.json. Prints: 01.03, 01.04
+
+## 8. Filtro de área (Cível × Criminal)
+
+NÃO EXISTE combo próprio. A distinção sai indiretamente de:
+  - Classe (§13): "Apelação Criminal" x "Apelação Cível"
+  - Órgão Julgador (§9): "1ª Câmara Criminal" x "1ª Câmara Cível"
+  - Assunto (§13)
+
+## 9. Filtro de órgão julgador
+
+Painel JURISDIÇÃO → "Órgão Julgador". Na API: `orgaosJulgadores: []` (nomes
+exatos, string). 575 valores, listados com contagem em orgaos-julgadores.json.
+
+Cobre Câmaras Cíveis e Criminais, Seções, Grupos de Câmaras, Órgão Especial,
+Vice-Presidências e as Turmas Recursais dos grupos jurisdicionais.
+
+Prints: 01.10, 01.12
+
+## 10. Unidade específica (comarca)
+
+Painel JURISDIÇÃO → "Comarca". Na API: `comarcas: []`. 298 comarcas com
+contagem, em comarcas.json.
+
+Prints: 01.10, 01.11
+
+## 11. Magistrada ou magistrado
+
+Painel JURISDIÇÃO → "Magistrado". Na API: `magistrados: []`. 368 nomes com
+contagem, em magistrados.json. O nome precisa ser EXATO como está na lista
+(inclusive a capitalização "Title Case" que a base usa).
+
+Soma das contagens = 4.051.642, contra 4.584.245 documentos: ~532 mil documentos
+não têm magistrado atribuído no índice. Não conclua que a diferença "sumiu".
+
+Prints: 01.10, 01.13
+
+## 12. Tipo de ato
+
+É o mesmo campo do §7 (Tipo de Documento). Não há um "tipo de ato" separado.
+
+## 13. Classe e assunto
+
+Painel CLASSIFICAÇÃO.
+  - "Classe"  → API `classes: []`  — 114 valores, classes.json
+  - "Assunto" → API `assuntos: []` — 2.257 valores, assuntos.json
+
+⚠️ A soma das contagens de assunto (6.772.264) é MAIOR que o total de documentos
+(4.584.245) porque um documento tem vários assuntos. Não some para estimar acervo.
+
+Prints: 01.07, 01.08, 01.09
+
+## 14. Número do processo  ← ALIMENTA O CHECKER
+
+Painel PROCESSO → "Número do Processo". A tela aceita com máscara
+(5003998-10.2020.8.13.0079) e envia à API só os dígitos.
+
+Na API: `numerosProcessos: ["50039981020208130079"]` — 20 dígitos, SEM máscara.
+
+⚠️ ARMADILHA: a busca por número quebra (HTTP 500) se o corpo mandar `texto` e
+`tipoTexto` junto. A SPA OMITE os dois nessa chamada. Confirmado:
+   com texto:"" e tipoTexto:"INTEIRO_TEOR"  -> HTTP 500
+   sem os dois campos                        -> HTTP 200, totalRecords=1
+Foi o que fez a primeira tentativa deste mapeamento concluir errado que o campo
+não funcionava.
+
+Prints: 01.05, 01.06, 02.02
+
+================================================================================
+ESPECIFICIDADES
+================================================================================
+
+## 15. Bloqueios (Cloudflare / captcha / verificação de navegador)
+
+Existe restrição?              NÃO, neste módulo.
+  A BUSCA funciona sem resolver?    Sim — curl puro, sem cookie, sem referer.
+  O DOWNLOAD funciona sem resolver? Sim — mesmo endpoint, mesma ausência de auth.
+  Headless passa?                    Sim (não é preciso browser nenhum).
+
+Há um Keycloak em https://auth.tjmg.jus.br/auth/realms/tjmg e um botão LOGIN na
+tela, mas a SPA chama o OIDC com `prompt=none`: é login OPCIONAL, para recursos
+de usuário logado. A busca e o inteiro teor respondem 200 sem token.
+
+CONTRASTE: o portal ANTIGO (../02-portal-antigo-www5/) devolve 401 + captcha
+numérico já na primeira busca. É o mesmo padrão que deixou o TJMA 🔴. A diferença
+é que aqui existe outra porta, aberta e documentada.
+
+## 16. Forma de acesso: `api`
+
+POST https://jurisprudencia-api.tjmg.jus.br/jurisprudencias/filter?size=10&page=0&sort=relevancia,DESC
+Content-Type: application/json
+
+Corpo (JurisprudenciaFilter, do OpenAPI):
+{
+  "ids": [], "numerosProcessos": [], "tiposDocumento": [], "orgaosJulgadores": [],
+  "magistrados": [], "classes": [], "assuntos": [], "comarcas": [],
+  "datasPublicacao": [{"inicio":"2020-01-01","fim":null}],
+  "datasJulgamento": [],
+  "texto": "usucapião extraordinária",
+  "tipoTexto": "INTEIRO_TEOR"
+}
+
+Resposta (JurisprudenciaResponse):
+{"retrieveTime":17,"totalRecords":1000,"jurisprudencias":[{
+  "id":"28939918111","tipoDocumento":"Decisão Turma Recursal",
+  "assuntos":[...],"orgaoJulgador":"...","julgamentoData":"14/09/2021",
+  "numeroProcessoCnj":"50039981020208130079","publicacaoData":"14/09/2021",
+  "classe":"Recurso Inominado Cível","documentoId":"289399181",
+  "documentoHash":"88dc2361...","comarca":"Belo Horizonte",
+  "highlights":{"inteiro_teor":["... <b>USUCAPIÃO</b> ..."]}}]}
+
+Outros endpoints (OpenAPI completo em openapi.json):
+  POST /dominio/{field}          enumera um combo com contagem. field ∈
+                                 {tiposDocumento, classes, comarcas,
+                                  orgaosJulgadores, magistrados, assuntos}
+                                 ⚠️ o corpo NÃO leva texto/tipoTexto → 500 se levar
+  POST /jurisprudencias/document inteiro teor em HTML — ver §19
+  POST /exportar/{email}         envia o resultado por e-mail (não usado)
+  GET  /aplicacao/info|status    saúde do serviço
+
+`tipoTexto` ∈ {"EMENTA", "INTEIRO_TEOR"} e muda o escopo de fato:
+   "usucapião extraordinária", jan–mar/2024:  EMENTA=114  INTEIRO_TEOR=389
+
+⚠️ ABRANGÊNCIA — o que a API NÃO tem. Os 4 tipos do §7 são tudo. Não há
+SENTENÇAS (1º grau) nem SÚMULAS, embora a notícia de lançamento cite 1,6 milhão
+de sentenças e o portal antigo tenha aba "Sentenças". Medido em 26/07/2026 sem
+nenhum filtro: /dominio/tiposDocumento devolve 4 valores, e nenhum é sentença ou
+súmula. Provavelmente ainda em migração — reconfira antes de dizer ao usuário
+que não existe 1º grau no TJMG.
+
+## 17. Sessão e estado
+
+Nenhum. Sem cookie, sem viewState, sem visita prévia à home. Cada POST é
+independente. É o oposto do www5, que embute jsessionid na action do form.
+
+================================================================================
+ACESSANDO OS RESULTADOS
+================================================================================
+
+## 18. Tela de resultados
+
+Mesma rota, abaixo do campo de busca. Cabeçalho: "Encontrados N resultados em
+X segundos" + combo ORDENAR POR (Relevância / Data de publicação / Data de
+julgamento). Cada card traz:
+
+  nº do processo (com máscara) · badge do tipo de documento · badge da classe ·
+  comarca · órgão julgador · trechos com o termo em <b> (campo `highlights`) ·
+  PUBLICAÇÃO: dd/mm/aaaa · JULGAMENTO: dd/mm/aaaa · e três botões:
+  EMENTA, INTEIRO TEOR, PROCESSO.
+
+⚠️ `julgamentoData` pode vir ausente; a tela mostra "<DATA NÃO IDENTIFICADA>".
+Visto em documento real (5016167-17.2022.8.13.0707). O crawler devolve "" —
+não invente a data de publicação no lugar.
+
+Prints: 02.01 (cabeçalho e corpo da listagem), 02.02 (busca por número)
+
+## 19. Inteiro teor (download)
+
+Botão INTEIRO TEOR abre um popover com "Visualizar inteiro teor", que abre a
+rota /inteiro-teor?documentoId=<id>&publicacaoData=<YYYY-MM-DD>. Essa rota chama:
+
+POST /jurisprudencias/document
+{
+  "documentoId": "289399181",
+  "ids": [], "numerosProcessos": [], "tiposDocumento": [], "orgaosJulgadores": [],
+  "magistrados": [], "classes": [], "assuntos": [], "comarcas": [],
+  "datasPublicacao": [{"inicio":"2021-09-14","fim":"2021-09-14"}],
+  "datasJulgamento": [], "texto": null, "tipoTexto": null, "total": false
+}
+
+Devolve HTML completo do acórdão (~14 KB brutos, ~10 KB de texto útil no exemplo).
+
+⚠️ ARMADILHA: exige `documentoId` **E** `datasPublicacao` com início = fim = a
+data de publicação daquele documento. Faltando a data, responde HTTP 500
+"Dados de documento inválidos ou incompletos para consulta de inteiro teor".
+`documentoHash` sozinho não basta; `ids` sozinho não basta. Testados os três.
+
+O botão PROCESSO leva à consulta processual unificada
+(https://consulta.tjmg.jus.br/home?numeroProcesso=<com máscara>) — outro sistema,
+fora do escopo deste módulo.
+
+Prints: 02.03, 02.04, 02.05
+
+## 20. Paginação
+
+Resultados por página:   ?size=N (10 default do portal; 200 aceito e medido)
+Parâmetro de página:     ?page=N (base 0)
+Total exposto?           sim, `totalRecords` — mas satura em 1000 (ver §3)
+Última página?           não há; a API aceita page alto e continua devolvendo.
+
+================================================================================
+TESTES EXPLORATÓRIOS — RESULTADOS
+================================================================================
+
+1. Busca simples sem filtro ............ OK  "usucapião extraordinária" -> 1000 (cap)
+2. Juizado × Justiça Comum ............. OK  tiposDocumento muda contagem: 259 x 1000 (§7)
+3. Cível × Criminal .................... NÃO EXISTE como filtro próprio (§8)
+4. Órgão julgador ...................... OK  575 opções enumeradas (orgaos-julgadores.json)
+5. Comarca ............................. OK  298 opções (comarcas.json)
+6. Magistrado .......................... OK  368 opções (magistrados.json)
+7. Tipo de ato ......................... = Tipo de Documento, 4 opções (§7/§12)
+8. Número do processo .................. OK  1 resultado exato — mas ver a armadilha do §14
+9. Datas + operadores .................. OK  datas restringem (§4); operadores medidos um a um (§2)
+
+================================================================================
+PENDÊNCIAS E DEFEITOS DE MAPEAMENTO
+================================================================================
+
+| # | O que falta | Por quê |
+|---|---|---|
+| 1 | Sentenças (1º grau) e Súmulas | A notícia de lançamento promete 1,6 mi de sentenças, mas /dominio/tiposDocumento devolve só 4 tipos, nenhum deles sentença ou súmula. Provável migração em curso. Reconferir depois de agosto/2026. |
+| 2 | Teto real do acervo por busca | `totalRecords` satura em 1000 e `total:true` não levanta. Não sei se existe janela de paginação máxima — testei até page=150 e continuou devolvendo. |
+| 3 | Recursos do LOGIN | Há Keycloak e botão LOGIN. Não mapeei o que muda com usuário autenticado (provavelmente favoritos/alertas). A busca pública não precisa. |
+| 4 | POST /exportar/{email} | Não testado — envia resultado por e-mail a um endereço arbitrário. Não exercitado de propósito: dispararia e-mail para terceiro. |

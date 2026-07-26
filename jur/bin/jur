@@ -35,6 +35,9 @@ const TJMANavigator = require('../src/TJMANavigator');
 const TJRJCrawler = require('../src/TJRJCrawler');
 const TJRJChecker = require('../src/TJRJChecker');
 const TJRJNavigator = require('../src/TJRJNavigator');
+const TJMGCrawler = require('../src/TJMGCrawler');
+const TJMGChecker = require('../src/TJMGChecker');
+const TJMGNavigator = require('../src/TJMGNavigator');
 const FalcaoNavigator = require('../src/FalcaoNavigator');
 const FalcaoTribunais = require('../src/FalcaoTribunais');
 const STFCrawler = require('../src/STFCrawler');
@@ -1259,6 +1262,172 @@ program
             totalResults: results.totalResults || null,
             count: results.length,
             output: outputPath,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjmg')
+  .description('Search TJMG (Tribunal de Justica de Minas Gerais) jurisprudence — Consulta Unificada (API direta)')
+  .option('-q, --query <text>', 'Search query (operadores Elasticsearch: + | - "frase" ( ) * ~ ; E/OU/NAO em portugues sao IGNORADOS)')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de processo CNJ (TJMGChecker)')
+  .option('-di, --data-inicio <date>', 'Judgment start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Judgment end date (DD/MM/YYYY)')
+  .option('-dpi, --data-pub-inicio <date>', 'Publication start date (DD/MM/YYYY)')
+  .option('-dpf, --data-pub-fim <date>', 'Publication end date (DD/MM/YYYY)')
+  .option('-t, --tipo <tipo>', 'Tipo de documento: todos (default), acordao, monocratica, turmas, vice, comum', 'todos')
+  .option('--escopo <escopo>', 'Search scope: ementa (default) or inteiroTeor', 'ementa')
+  // SEPARADOR E PONTO-E-VIRGULA, nao virgula: 18 dos 575 orgaos julgadores tem
+  // virgula no nome (todos de Turma Recursal). Ver CLAUDE-TJMG.md §2.
+  .option('-com, --comarca <nomes>', 'Comarca(s), separadas por PONTO-E-VIRGULA (use --listar comarcas)')
+  .option('-oj, --orgao <nomes>', 'Orgao(s) julgador(es), separados por PONTO-E-VIRGULA (use --listar orgaosJulgadores)')
+  .option('-mag, --magistrado <nomes>', 'Magistrado(s), separados por PONTO-E-VIRGULA (use --listar magistrados)')
+  .option('-c, --classe <nomes>', 'Classe(s) processual(is), separadas por PONTO-E-VIRGULA (use --listar classes)')
+  .option('-a, --assunto <nomes>', 'Assunto(s), separados por PONTO-E-VIRGULA (use --listar assuntos)')
+  .option('--sem-validar-filtros', 'Nao confere os nomes de comarca/orgao/magistrado/classe/assunto contra a API antes de buscar')
+  .option('-ord, --ordenacao <tipo>', 'Sort: relevancia (default), recentes (publicacao), julgamento', 'relevancia')
+  .option('--listar <dominio>', 'Lista um combo com contagens: tiposDocumento, classes, comarcas, orgaosJulgadores, magistrados, assuntos')
+  .option('--fetch-inteiro-teor', 'Download full text of each result as .txt files')
+  .option('--output-dir <dir>', 'Directory for downloaded inteiro teor files', './resultados/tjmg')
+  .option('--verificar [amostra]', 'Audit results: re-query N sampled processos against the base (default 5)')
+  .option('--max-results <number>', 'Maximum total results to collect')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (20 results/page)', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjmg.json')
+  .option('-v, --visible', 'Ignored (TJMG uses direct API, no browser)')
+  .option('--headed', 'Ignored (TJMG uses direct API, no browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    // ponto-e-virgula: os nomes dos orgaos julgadores contem virgula
+    const lista = (s) => (s ? s.split(';').map((x) => x.trim()).filter(Boolean) : []);
+
+    try {
+      // Enumera um combo (tiposDocumento, comarcas, ...) com contagens
+      if (opts.listar) {
+        const nav = new TJMGNavigator({ log });
+        const dominios = await nav.dominio(opts.listar);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({ success: true, dominio: opts.listar, count: dominios.length, valores: dominios }) + '\n');
+        } else {
+          console.log(`${opts.listar}: ${dominios.length} valores\n`);
+          for (const d of dominios) console.log(`  ${String(d.quantidade).padStart(9)}  ${d.dominio}`);
+        }
+        process.exit(0);
+      }
+
+      // Consulta direta por numero (TJMGChecker)
+      if (opts.numero) {
+        const checker = new TJMGChecker();
+        const res = await checker.consultarProcesso(opts.numero);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        } else {
+          console.log(JSON.stringify(res, null, 2));
+        }
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (!opts.query) {
+        throw new Error('Informe -q "<termos>" para pesquisa, -n <numero> para consulta direta, ou --listar <dominio>');
+      }
+
+      log('='.repeat(60));
+      log('TJMG Jurisprudencia Crawler (Consulta Unificada, API direta)');
+      log('='.repeat(60));
+      log(`Query: ${opts.query}`);
+      log(`Data Julgamento: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log(`Data Publicacao: ${opts.dataPubInicio || '-'} a ${opts.dataPubFim || '-'}`);
+      log(`Tipo: ${opts.tipo} | Escopo: ${opts.escopo} | Ordenacao: ${opts.ordenacao}`);
+      log(`Comarca: ${opts.comarca || '-'} | Orgao: ${opts.orgao || '-'} | Magistrado: ${opts.magistrado || '-'}`);
+      log(`Max Pages: ${opts.maxPages}`);
+      log('='.repeat(60));
+
+      const crawler = new TJMGCrawler({ timeout: 60000, log });
+
+      const filters = {
+        dataJulgamentoInicio: opts.dataInicio || null,
+        dataJulgamentoFim: opts.dataFim || null,
+        dataPublicacaoInicio: opts.dataPubInicio || null,
+        dataPublicacaoFim: opts.dataPubFim || null,
+        tipo: opts.tipo,
+        escopo: opts.escopo,
+        ordenacao: opts.ordenacao,
+        comarcas: lista(opts.comarca),
+        orgaos: lista(opts.orgao),
+        magistrados: lista(opts.magistrado),
+        classes: lista(opts.classe),
+        assuntos: lista(opts.assunto),
+      };
+
+      const searchOptions = { maxPages: parseInt(opts.maxPages, 10) };
+      if (opts.maxResults) searchOptions.maxResults = parseInt(opts.maxResults, 10);
+
+      // um nome errado não daria erro na API — devolveria 0. Falhar aqui.
+      if (!opts.semValidarFiltros) await crawler.validarFiltros(filters);
+
+      const results = await crawler.search(opts.query, filters, searchOptions);
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+      if (results.totalResults !== null) {
+        log(`Total results on server: ${results.totalResults}${results.totalResultsExato ? '' : '+ (contador saturado)'}`);
+      }
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+        verificacao = await new TJMGChecker().verificarResultados(results, { amostra, log });
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        log(`\nDownloading inteiro teor for ${results.length} results...`);
+        const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
+        const successCount = downloaded.filter((r) => r.arquivo).length;
+        const failCount = downloaded.filter((r) => !r.arquivo).length;
+        log(`\nDownload complete: ${successCount} success, ${failCount} failed`);
+        log(`Files saved to: ${outputDir}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults,
+            totalResultsExato: results.totalResultsExato,
+            count: results.length,
+            downloaded: successCount,
+            failed: failCount,
+            outputDir,
+            ...(results.avisos && results.avisos.length ? { avisos: results.avisos } : {}),
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults,
+            totalResultsExato: results.totalResultsExato,
+            count: results.length,
+            output: outputPath,
+            ...(results.avisos && results.avisos.length ? { avisos: results.avisos } : {}),
             ...(verificacao ? { verificacao } : {}),
           }) + '\n');
         }

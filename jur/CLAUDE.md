@@ -32,6 +32,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tcu`  | Tribunal de Contas da União | Federal (acórdãos) | `CLAUDE-TCU.md` | 🟢 OK |
 | `tjgo` | TJ de Goiás | GO | `CLAUDE-TJGO.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjma` | TJ do Maranhão | MA | `CLAUDE-TJMA.md` | 🔴 busca **bloqueada por captcha**; só `-n` (nº do processo, via DataJud) |
+| `tjmg` | TJ de Minas Gerais | MG | `CLAUDE-TJMG.md` | 🟢 OK (API direta, sem browser — Consulta Unificada; **não** use o `www5`) |
 | `tjpa` | TJ do Pará | PA | `CLAUDE-TJPA.md` | 🟢 OK (API direta, sem browser) |
 | `tjpr` | TJ do Paraná | PR | `CLAUDE-TJPR.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjrj` | TJ do Rio de Janeiro | RJ | `CLAUDE-TJRJ.md` | 🟢 OK (HTTP direto, sem browser — só e-Proc/Justiça Comum 2º grau) |
@@ -48,7 +49,7 @@ escolher o comando. `CLAUDE-TRT9.md` é o mergulho técnico do sistema.
 
 Nenhum tribunal catalogado está mapeado à espera de crawler. Falta ainda o módulo
 **eJURIS** do TJRJ (legado com Turmas Recursais e acervo histórico — o `jur tjrj` cobre
-só o e-Proc). Os outros 19 tribunais (TJs restantes) não estão mapeados — veja
+só o e-Proc). Os outros 18 tribunais (TJs restantes) não estão mapeados — veja
 `cobertura/CLAUDE-COBERTURA.md` e use a skill [`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**
@@ -84,6 +85,18 @@ só o e-Proc). Os outros 19 tribunais (TJs restantes) não estão mapeados — v
   ⚠️ só Justiça Comum 2º grau no e-Proc (~2023+); **Juizado Especial / Turma Recursal
   carioca e acervo antigo estão no eJURIS, sem crawler** — diga isso ao usuário em vez
   de rotular resultado do e-Proc como Juizado
+- "TJMG" / "Minas Gerais estadual" → `tjmg` → leia `CLAUDE-TJMG.md`.
+  Juizado Especial / Turma Recursal mineira → `tjmg --tipo turmas --escopo inteiroTeor`;
+  Justiça Comum 2º grau é `--tipo acordao` (o default `--tipo todos` **mistura os dois**).
+  ⚠️ **O `--escopo inteiroTeor` não é preferência, é obrigatório para Juizado**: só o tipo
+  `Acórdão` tem ementa indexada, então no escopo padrão Turma Recursal, Monocrática e
+  Vice-Presidência devolvem **0 sempre** — um zero que se lê como "não há jurisprudência
+  sobre o tema" e não é. O crawler avisa; repasse o aviso ao usuário.
+  ⚠️ Os operadores em português (`e`, `ou`, `não`, `$`) do portal antigo são **ignorados
+  sem erro** aqui: a sintaxe é a do Elasticsearch (`+`, `|`, `-`, `"frase"`, `( )`, `*`, `~`).
+  ⚠️ **Nunca use `www5.tjmg.jus.br/jurisprudencia`** — é o portal antigo, devolve 401 +
+  captcha, e é o único que a página oficial do TJMG ainda linka. A base **não tem 1º grau
+  (sentenças) nem súmulas**; para matéria federal mineira use `trf6` (2023+) ou `trf1` (até 2022)
 - "Matéria previdenciária federal em SP" → `trf3` (instável; ver doc), com TRF4/TRF5 de comparativo
 - **Matéria constitucional / precedente de maior hierarquia** ("o que o Supremo decidiu",
   "é constitucional?", ADI/ADPF/ADC, recurso extraordinário) → `stf` → leia `CLAUDE-STF.md`.

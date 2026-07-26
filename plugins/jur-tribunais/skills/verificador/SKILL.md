@@ -65,13 +65,23 @@ isso ao usuário; é o sinal de alucinação mais comum.
   Não cite. Diga explicitamente que o processo pode existir no sistema de tramitação
   sem estar indexado na jurisprudência — são bases diferentes.
 
-Tribunais com consulta direta por número implementada: **TJGO**, **TJPA**, **TRF2**,
-**TRF6** e **a Justiça do Trabalho inteira** (TST + TRT1..TRT24 + CSJT).
-Especificidades em [`tribunais/tjgo.md`](tribunais/tjgo.md),
-[`tribunais/tjpa.md`](tribunais/tjpa.md), [`tribunais/trf2.md`](tribunais/trf2.md),
-[`tribunais/trf6.md`](tribunais/trf6.md) e — para os 26 acervos trabalhistas —
+Tribunais com consulta direta por número implementada: **TJGO**, **TJMG**, **TJPA**,
+**TJRJ**, **TJRS**, **TJSC**, **TRF2**, **TRF6**, **STJ** e **a Justiça do Trabalho
+inteira** (TST + TRT1..TRT24 + CSJT). Especificidades em
+[`tribunais/tjgo.md`](tribunais/tjgo.md), [`tribunais/tjmg.md`](tribunais/tjmg.md),
+[`tribunais/tjpa.md`](tribunais/tjpa.md), [`tribunais/tjrj.md`](tribunais/tjrj.md),
+[`tribunais/tjrs.md`](tribunais/tjrs.md), [`tribunais/tjsc.md`](tribunais/tjsc.md),
+[`tribunais/trf2.md`](tribunais/trf2.md), [`tribunais/trf6.md`](tribunais/trf6.md),
+[`tribunais/stj.md`](tribunais/stj.md) e — para os 26 acervos trabalhistas —
 [`tribunais/falcao.md`](tribunais/falcao.md) (o TRT9 tem detalhe extra em
 [`tribunais/trt9.md`](tribunais/trt9.md)).
+
+> ⚠️ **TJMG: `encontrado: false` não é veredito.** A base de jurisprudência mineira cobre
+> 2º grau e Turmas Recursais, e **não** tem 1º grau. O `TJMGChecker` consulta o DataJud
+> por conta própria quando não acha e devolve `motivo` distinguindo "processo existe mas
+> não tem julgado publicado" de "não existe em lugar nenhum". **Leia o `motivo` antes de
+> acusar alucinação** — e note que o campo `ementa` da busca é TRECHO, não ementa. Ver
+> [`tribunais/tjmg.md`](tribunais/tjmg.md).
 
 > ⚠️ **Justiça do Trabalho: a regra do `TR` não é uniforme.** O `tst` aceita processo
 > de **qualquer** TRT de origem (o número é preservado desde a origem) e o `csjt` usa
