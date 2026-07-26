@@ -1,0 +1,45 @@
+[
+  {
+    "nome": "acordaos",
+    "total": 1670251,
+    "filhos": [
+      {
+        "nome": "acordaos",
+        "total": 1422494
+      },
+      {
+        "nome": "acordaos-tr",
+        "total": 247757
+      }
+    ]
+  },
+  {
+    "nome": "decisoes",
+    "total": 1651378,
+    "filhos": [
+      {
+        "nome": "decisoes-monocraticas",
+        "total": 1322796
+      },
+      {
+        "nome": "decisoes-presidencia",
+        "total": 328582
+      }
+    ]
+  },
+  {
+    "nome": "informativo-jurisprudencia",
+    "total": 7243,
+    "filhos": []
+  },
+  {
+    "nome": "jurisprudencia-foco",
+    "total": 1619,
+    "filhos": []
+  },
+  {
+    "nome": "sumulas",
+    "total": 22,
+    "filhos": []
+  }
+]

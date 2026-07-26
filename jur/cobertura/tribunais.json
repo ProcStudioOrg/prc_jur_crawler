@@ -960,19 +960,22 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://jurisdf.tjdft.jus.br/",
+        "comando": "tjdft",
+        "acesso": "api-oficial",
+        "status": "ok",
+        "nota": "Consulta JurisDF. PRIMEIRO tribunal do repo com API PUBLICA OFICIAL E DOCUMENTADA (`api-oficial`): POST https://jurisdf.tjdft.jus.br/api/v1/pesquisa, com PDF de documentacao no portal de dados abertos do tribunal. Sem auth, sem captcha, sem sessao obrigatoria. ACERVO: 3.330.513 documentos — acordaos 1.670.251 (Justica Comum 1.422.494 + TURMA RECURSAL 247.757), decisoes 1.651.378 (monocraticas 1.322.796 + presidencia 328.582), informativos 7.243, jurisprudencia em foco 1.619, sumulas 22. So 2o grau + Turma Recursal; nao ha 1o grau. Juizado x Justica Comum pela SUBBASE (`acordaos-tr`): comum 3497 + turmas 31 = acordaos 3528, as partes somam o todo. INTEIRO TEOR VEM NO PROPRIO PAYLOAD DA BUSCA (campo inteiroTeor) — melhor caso do repo, zero request por documento. ⚠️ A DOC OFICIAL E INCOMPLETA E NUM PONTO ERRADA: faltam nela os 5 parametros de topo que a SPA envia (sinonimos, espelho, inteiroTeor, retornaInteiroTeor, retornaTotalizacao) e A SINTAXE DE INTERVALO DE DATA, que e prosa em portugues — {campo:'dataJulgamento', valor:'entre 2024-01-01 e 2024-03-31'}; so existe intervalo FECHADO ('a partir de'/'ate' dao 500) e o PDF mostra hits como numero quando a API devolve {value:N}. ⚠️ SEIS ARMADILHAS MEDIDAS: (1) DOIS NOS DESSINCRONIZADOS — requisicoes identicas sem cookie alternam entre resultados diferentes (hits 2825 x 3528, ids distintos); o cookie do balanceador fixa o no (8/8 identicas com, 2 versoes sem) e o Navigator o reenvia — sem isso a paginacao mistura dois indices; (2) DECISOES NAO TEM dataJulgamento (0/20 contra 20/20 nos acordaos): filtrar por data de julgamento apaga monocraticas e presidencia em silencio (2.743 -> 0), o certo e data de publicacao — o crawler avisa; (3) PROX/ADJ so funcionam SEM parenteses (PROX5=57, PROX(5)=0) embora o botao da tela escreva PROX(N) — o crawler avisa; (4) filho so filtra em `subbase`: base='acordaos-tr' devolve 0 sem erro; (5) numero do processo EXIGE mascara (com mascara 2 julgados, so digitos 0) — oposto do TJMG; (6) RATE LIMIT de 60 req/janela (x-ratelimit-*), 429 e bloqueio e nao erro; o Navigator espaca sozinho. Operadores em portugues FUNCIONAM (E/OU/NAO/$/\"frase\"), ao contrario do TJMG: OU fecha 285+4698-177=4806 e NAO fecha 285-177=108. tamanho maximo 30. hits sem teto artificial (1.190.275 em 'recurso')."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
-        "codegen": "nao",
-        "screenshots": 11,
-        "tests": false,
-        "skills": [],
-        "working": false
+        "crawler": "src/TJDFTCrawler.js",
+        "extra": "TJDFTNavigator.js (API oficial + fixacao de no por cookie do balanceador + respeito ao rate limit de 60/janela + SEM_DATA_JULGAMENTO) + TJDFTChecker.js (consulta por numero COM mascara, com desempate no DataJud api_publica_tjdft)",
+        "codegen": "completo",
+        "screenshots": 12,
+        "tests": "src/TJDFTTestes.js",
+        "skills": [
+          "verificador/tjdft"
+        ],
+        "working": true
       },
       "portal": "https://pje2i.tjdft.jus.br/pje/login.seam"
     },

@@ -1,0 +1,285 @@
+================================================================================
+TJDFT — MÓDULO 01: JurisDF (Consulta de Jurisprudência)
+================================================================================
+
+Tribunal:               Tribunal de Justiça do DF e dos Territórios (TJDFT)
+Estado:                 DF
+Módulo:                 JurisDF
+Link principal:         https://jurisdf.tjdft.jus.br/
+API:                    POST https://jurisdf.tjdft.jus.br/api/v1/pesquisa
+Documentação OFICIAL:   https://www.tjdft.jus.br/transparencia/tecnologia-da-informacao-e-comunicacao/dados-abertos/webservice-ou-api
+                        (PDF "Documentação da API Pública de Consulta à
+                        Jurisprudência do TJDFT", 3 páginas)
+Sistema judicial:       Próprio — SPA Angular sobre backend Node/Express + Elasticsearch
+Sistema irmão mapeado:  TJPA e TJMG (mesma forma: SPA com API JSON)
+Abrangência:            3.330.513 documentos de 2º grau + Turma Recursal.
+                        Sem 1º grau. COM súmulas e informativos.
+Data do mapeamento:     26/07/2026
+
+--------------------------------------------------------------------------------
+PASSO 0 — API OFICIAL: EXISTE, E É O CAMINHO
+--------------------------------------------------------------------------------
+
+Este é o PRIMEIRO tribunal do repo com API **oficial e documentada** — o nível
+`api-oficial` da ordem de preferência do CLAUDE-CODEGEN §4, que até aqui nenhum
+tribunal tinha ocupado (TJPA e TJMG são `api`, internas e não documentadas).
+
+O TJDFT publica no seu portal de dados abertos a "Documentação da API Pública de
+Consulta à Jurisprudência", com finalidade declarada de servir "outros tribunais,
+pesquisadores, advogados e desenvolvedores". Sem auth, sem captcha, sem sessão.
+
+Também procurado e NÃO encontrado:
+  - dadosabertos.tjdft.jus.br — não resolve
+  - Swagger/OpenAPI em jurisdf.tjdft.jus.br — não existe
+DataJud: `api_publica_tjdft` responde e serve ao Checker (metadados, sem ementa).
+
+⚠️ A DOCUMENTAÇÃO OFICIAL ESTÁ INCOMPLETA E EM UM PONTO ERRADA. Ela cobre só
+query/pagina/tamanho/termosAcessorios. Descoberto capturando a própria SPA:
+
+  (a) cinco parâmetros de topo que a tela envia e o PDF não cita:
+      sinonimos, espelho, inteiroTeor, retornaInteiroTeor, retornaTotalizacao
+  (b) a SINTAXE DE INTERVALO DE DATA (§4) — sem ela só existe data exata
+  (c) o PDF mostra "hits": 1234 (número); a API devolve {"value": 1234} (objeto)
+
+================================================================================
+FERRAMENTAS COMUNS
+================================================================================
+
+## 1. Busca principal (query)
+
+Campo único no topo: <input placeholder="Digite o(s) critérios de pesquisas">
+Na API: `query` (string, obrigatório segundo a doc; aceita "" na prática).
+
+Três caixas logo abaixo, que são parâmetros de topo da API:
+  [x] Sinônimos    -> sinonimos: true
+  [x] Espelho      -> espelho: true      (= buscar na ementa/espelho)
+  [ ] Inteiro teor -> inteiroTeor: false (= buscar no texto integral)
+
+⚠️ Espelho e Inteiro teor NÃO são excludentes — são somáveis. Medido (janela
+2024, acórdãos): espelho=285, inteiroTeor=618, os dois=622. O default do portal
+é só espelho, que é o mais restrito.
+
+⚠️ `sinonimos` NÃO mudou contagem em nenhum teste (usucapião, veículo, dano
+moral: idêntico com e sem). Está exposto na tela e no payload, mas não se
+observou efeito. Não prometa ao usuário que amplia a busca.
+
+Prints: 01.01
+
+## 2. Operadores (conectivos)
+
+A tela expõe os conectivos em botões e ainda linka "Conheça os conectivos" —
+raro e útil. Todos testados por contagem, na janela julgamento 2024, acórdãos,
+sinônimos desligado. Referências: usucapião=285, posse=4698.
+
+| Operador        | Funciona | Contagem | Observação                              |
+|-----------------|----------|----------|-----------------------------------------|
+| (espaço)        | SIM      | 177      | E implícito                             |
+| E / e           | SIM      | 177      | idêntico ao default                     |
+| OU / ou         | SIM      | 4806     | 285+4698-177 = 4806, fecha exatamente   |
+| NÃO / NAO       | SIM      | 108      | 285-177 = 108, fecha exatamente         |
+| -termo          | SIM      | 108      | sinônimo de NÃO                         |
+| "frase exata"   | SIM      | 80       |                                         |
+| $ (radical)     | SIM      | 285      | usucapi$ e usucap$ = usucapião          |
+| PROX5           | SIM      | 57       | SEM parênteses                          |
+| ADJ3            | SIM      | 20       | SEM parênteses                          |
+| PROX(5)         | NÃO      | 0        | ⚠️ o botão da tela mostra "PROX(N)"     |
+| ADJ(3)          | NÃO      | 0        | ⚠️ idem "ADJ(N)"                        |
+| AND / OR (ing.) | NÃO      | 0        | viram termo literal                     |
+| \| (pipe)       | NÃO      | 0        |                                         |
+
+⚠️ ARMADILHA Nº 1 DESTE TRIBUNAL: os botões `PROX(N)` e `ADJ(N)` da própria tela
+sugerem parênteses, e com parênteses o resultado é **0, sem erro**. A forma que
+funciona é `PROX5` / `ADJ3`, colada. O crawler avisa quando detecta parênteses.
+
+Prints: 01.02
+
+## 3. Paginação e tamanho
+
+  pagina  — inteiro, base 0
+  tamanho — inteiro, **máximo 30**. 50 ou mais devolve HTTP 400.
+
+Paginação profunda funciona (medido até pagina=1000, com registros distintos).
+`hits.value` traz o total real, sem teto artificial (query "recurso" → 1.190.275).
+
+Prints: 02.03
+
+## 4. Filtro de data — julgamento E publicação
+
+Na tela: dois intervalos, cada um com Início e Fim
+(formcontrolname dataJulgamentoInicio/Fim e dataPublicacaoInicio/Fim).
+
+⚠️ ARMADILHA Nº 2 — A SINTAXE NÃO ESTÁ NA DOCUMENTAÇÃO. O intervalo vai como
+PROSA EM PORTUGUÊS dentro de termosAcessorios:
+
+  {"campo": "dataJulgamento", "valor": "entre 2024-01-01 e 2024-03-31"}
+
+Medido: 2024 inteiro=285, 1º trimestre de 2024=64, 2015=115. Restringe de fato.
+Vale igual para dataPublicacao. "e"/"E"/"ENTRE" são indiferentes ao caso.
+
+O que NÃO funciona (todos HTTP 500):
+  "a partir de 2024-01-01", "até 2024-12-31", "maior que 2024-01-01"
+E o que NÃO existe como campo (HTTP 400):
+  dataJulgamentoInicio / dataJulgamentoFim como campo ou como parâmetro de topo
+
+Ou seja: **só existe intervalo FECHADO**. O crawler recusa -di sem -df com
+mensagem explicando, em vez de mandar uma requisição que daria 500.
+
+Valor exato também funciona ({"campo":"dataPublicacao","valor":"2024-03-15"} → 6).
+
+⚠️ ARMADILHA Nº 3, A PIOR — DECISÕES NÃO TÊM DATA DE JULGAMENTO.
+Registros de `decisoes-monocraticas` e `decisoes-presidencia` só trazem
+`dataPublicacao`; o campo `dataJulgamento` não existe neles (medido 0/20 em cada,
+contra 20/20 nos acórdãos). Logo, filtrar por data de julgamento apaga esses dois
+acervos inteiros, em silêncio:
+
+    acervo=monocraticas, sem data ........... 2.743
+    acervo=monocraticas, julgamento 2024 ......... 0   <- some tudo
+    acervo=monocraticas, publicação 2024 ....... 272   <- o filtro certo
+
+Um 0 ali se lê como "não há decisão monocrática sobre o tema". O crawler avisa.
+
+Prints: 01.08 (campos vazios), 01.09 (intervalo preenchido)
+
+## 5. Filtro de competência (Juizado × Justiça Comum)  ← A DESAMBIGUAÇÃO
+
+É a hierarquia base/subbase. A agregação `base` devolve os pais com `filhos`:
+
+| base                       | subbase                | documentos | o que é                      |
+|----------------------------|------------------------|------------|------------------------------|
+| acordaos                   | acordaos               |  1.422.494 | Justiça Comum 2º grau        |
+| acordaos                   | **acordaos-tr**        |    247.757 | **TURMA RECURSAL (Juizado)** |
+| decisoes                   | decisoes-monocraticas  |  1.322.796 | relator sozinho              |
+| decisoes                   | decisoes-presidencia   |    328.582 | Presidência/Vice             |
+| informativo-jurisprudencia | —                      |      7.243 | Informativo                  |
+| jurisprudencia-foco        | —                      |      1.619 | Jurisprudência em Foco       |
+| sumulas                    | —                      |         22 | Súmulas                      |
+|                            |                        =  3.330.513 |                              |
+
+⚠️ ARMADILHA Nº 4: **filho só filtra em `subbase`**. Passar
+{"campo":"base","valor":"acordaos-tr"} devolve **0 sem erro**, embora a agregação
+mostre `acordaos-tr` aninhado dentro de `base`. O correto é
+{"campo":"subbase","valor":"acordaos-tr"}.
+
+Prova de que morde (query usucapião, sem data): comum=3497, turmas=31,
+acordaos(pai)=3528 — e 3497+31=3528, as partes somam o todo.
+
+Lista completa em 01-bases.json.
+
+## 6. Filtro de instância
+
+Não existe. A base é toda de 2º grau + Turma Recursal; não há 1º grau.
+
+## 7. Área (Cível × Criminal)
+
+Não existe combo próprio. Sai indiretamente do órgão julgador
+("1ª TURMA CRIMINAL" × "1ª CÂMARA CÍVEL") e da classe.
+
+## 8. Órgão julgador, relator, revisor, relator designado, classe
+
+Todos vêm nas AGREGAÇÕES da própria resposta de busca — o que é uma cortesia
+rara: não é preciso endpoint separado para enumerar combos.
+
+  orgaoJulgador ....... 39 valores   -> 01-orgaos-julgadores.json
+  classe .............. 113 valores  -> 01-classes.json
+  relator ............. 219 valores  -> 01-relatores.json
+  revisor .............. 63 valores  -> 01-revisores.json
+  relatorDesignado ..... (idem relator)
+  base .................. 5 valores  -> 01-bases.json
+  segredoJustica ........ 2 valores  (0 = público, 1 = segredo)
+
+⚠️ As agregações são relativas à BUSCA — refletem o recorte da query, não o
+acervo inteiro. Para o domínio completo, agregue sobre uma query ampla.
+
+Na API os campos são nomeApenas exatos: nomeRelator, nomeRevisor,
+nomeRelatorDesignado, descricaoOrgaoJulgador, descricaoClasseCnj.
+
+Prints: 01.04 (relator), 01.05 (órgão), 01.06 (classe), 01.07 (precedente qualificado)
+
+## 9. Precedente qualificado
+
+Combo existe na tela (print 01.07) mas a lista veio VAZIA no mapeamento
+(01-precedente.json). Não há campo correspondente na lista de termosAcessorios
+aceitos. Ficou como pendência.
+
+## 10. Número do processo  ← ALIMENTA O CHECKER
+
+Campo "Número do processo" na Pesquisa Avançada.
+Na API: {"campo":"processo","valor":"0705891-74.2023.8.07.0004"}
+
+⚠️ ARMADILHA Nº 5: **EXIGE A MÁSCARA**. Medido:
+    "0705891-74.2023.8.07.0004"  -> 2 julgados
+    "07058917420238070004"       -> 0, sem erro
+É o OPOSTO do TJMG, que só aceita dígitos. O Navigator mascara sozinho.
+
+## 11. Campos aceitos em termosAcessorios (da doc oficial, conferidos)
+
+base, subbase, origem, uuid, identificador, identificadorOrdenacao, processo,
+nomeRelator, nomeRevisor, nomeRelatorDesignado, descricaoOrgaoJulgador,
+dataJulgamento, dataPublicacao, descricaoClasseCnj
+
+Qualquer outro campo → HTTP 400 (testado com "inventado", "ementa",
+"dataJulgamentoInicial"). Falha ALTA, o que é bom.
+
+================================================================================
+ESPECIFICIDADES
+================================================================================
+
+## 12. Bloqueios
+
+Existe restrição?             Não há captcha, Cloudflare nem login.
+  A BUSCA funciona sem?           Sim — curl puro.
+  O INTEIRO TEOR funciona sem?    Sim — vem no próprio payload da busca.
+
+MAS há **RATE LIMIT**: headers x-ratelimit-limit: 60, x-ratelimit-remaining,
+x-ratelimit-reset. Excedido, é HTTP 429. O Navigator lê os headers e espaça
+sozinho antes de estourar. 429 é BLOQUEIO, não erro — não conclua "o tribunal
+caiu" nem "o julgado não existe".
+
+## 13. ⚠️ ARMADILHA Nº 6, A MAIS SÉRIA — DOIS NÓS DESSINCRONIZADOS
+
+Requisições IDÊNTICAS sem cookie alternam entre dois resultados diferentes:
+
+    chamada 1..2 -> hits 2825, um conjunto de ids
+    chamada 3..5 -> hits 3528, OUTRO conjunto de ids
+    chamada 6    -> hits 2825 de novo
+
+Não é cache nem aproximação do Elasticsearch: são dois nós com índices em
+estados diferentes por trás de um balanceador.
+
+A CORREÇÃO: a primeira resposta traz um cookie de sessão
+(`854846c82441d68e...`). REENVIÁ-LO fixa o nó. Medido: 8/8 respostas idênticas
+com cookie, contra 2 versões distintas sem.
+
+Sem isso a paginação mistura dois índices — o resultado tem furo e repetição, e
+nenhuma contagem é reprodutível. O Navigator guarda o cookie na primeira
+resposta e reenvia em todas; o Crawler reusa UM navigator na paginação inteira.
+
+## 14. Sessão e estado
+
+Fora o cookie do balanceador (§13), nenhum. Sem viewState, sem visita prévia.
+
+================================================================================
+TESTES EXPLORATÓRIOS — RESULTADOS
+================================================================================
+
+1. Busca simples ....................... OK   "usucapião" -> 3528 (acórdãos)
+2. Juizado × Justiça Comum ............. OK   subbase: 3497 x 31, e somam (§5)
+3. Cível × Criminal .................... NÃO EXISTE como filtro (§7)
+4. Órgão julgador ...................... OK   39 valores enumerados
+5. Comarca ............................. NÃO EXISTE (DF é comarca única)
+6. Magistrado .......................... OK   219 relatores, 63 revisores
+7. Tipo de ato ......................... = base/subbase (§5)
+8. Número do processo .................. OK   mas EXIGE máscara (§10)
+9. Datas + operadores .................. OK   sintaxe "entre X e Y" (§4);
+                                              13 operadores medidos um a um (§2)
+
+================================================================================
+PENDÊNCIAS E DEFEITOS DE MAPEAMENTO
+================================================================================
+
+| # | O que falta | Por quê |
+|---|---|---|
+| 1 | Combo "Precedente qualificado" | A lista veio vazia (01-precedente.json) e não há campo correspondente em termosAcessorios. Não sei se está inativo ou se depende de outra rota. |
+| 2 | Efeito real de `sinonimos` | O parâmetro existe na tela e no payload, mas não mudou contagem em nenhum dos 3 termos testados. Não descobri o que dispara. |
+| 3 | Campo `origem` | Está na lista oficial de filtros mas não aparece nas agregações; não sei que valores aceita. |
+| 4 | Janela exata do rate limit | Sei que o limite é 60 e que há x-ratelimit-reset em segundos, mas não medi a janela de ponta a ponta. |

@@ -1,0 +1,454 @@
+[
+  {
+    "nome": "AGRAVO DE EXECUÇÃO PENAL",
+    "total": 26607
+  },
+  {
+    "nome": "AGRAVO DE INSTRUMENTO",
+    "total": 209429
+  },
+  {
+    "nome": "AGRAVO DE INSTRUMENTO EM RECURSO ESPECIAL",
+    "total": 41
+  },
+  {
+    "nome": "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO",
+    "total": 154
+  },
+  {
+    "nome": "AGRAVO EM RECURSO EXTRAORDINÁRIO",
+    "total": 8
+  },
+  {
+    "nome": "AGRAVO INTERNO",
+    "total": 375
+  },
+  {
+    "nome": "AGRAVO INTERNO CRIMINAL",
+    "total": 484
+  },
+  {
+    "nome": "AGRAVO INTERNO CÍVEL",
+    "total": 14075
+  },
+  {
+    "nome": "AGRAVO REGIMENTAL",
+    "total": 569
+  },
+  {
+    "nome": "AGRAVO REGIMENTAL CRIMINAL",
+    "total": 465
+  },
+  {
+    "nome": "AGRAVO REGIMENTAL CÍVEL",
+    "total": 2523
+  },
+  {
+    "nome": "AGRAVO REGIMENTAL/INTERNO",
+    "total": 1188
+  },
+  {
+    "nome": "APELAÇÃO",
+    "total": 13523
+  },
+  {
+    "nome": "APELAÇÃO / REEXAME NECESSÁRIO",
+    "total": 466
+  },
+  {
+    "nome": "APELAÇÃO / REMESSA NECESSÁRIA",
+    "total": 9918
+  },
+  {
+    "nome": "APELAÇÃO CRIMINAL",
+    "total": 123531
+  },
+  {
+    "nome": "APELAÇÃO CÍVEL",
+    "total": 316848
+  },
+  {
+    "nome": "ASSISTÊNCIA JUDICIÁRIA",
+    "total": 1
+  },
+  {
+    "nome": "AÇÃO DIRETA DE INCONSTITUCIONALIDADE",
+    "total": 318
+  },
+  {
+    "nome": "AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO",
+    "total": 20
+  },
+  {
+    "nome": "AÇÃO RESCISÓRIA",
+    "total": 1270
+  },
+  {
+    "nome": "CARTA TESTEMUNHÁVEL",
+    "total": 72
+  },
+  {
+    "nome": "CAUTELAR INOMINADA",
+    "total": 184
+  },
+  {
+    "nome": "CAUTELAR INOMINADA CRIMINAL",
+    "total": 33
+  },
+  {
+    "nome": "CONFLITO DE COMPETÊNCIA",
+    "total": 2111
+  },
+  {
+    "nome": "CONFLITO DE COMPETÊNCIA CÍVEL",
+    "total": 8134
+  },
+  {
+    "nome": "CONFLITO DE JURISDIÇÃO",
+    "total": 3306
+  },
+  {
+    "nome": "CORREIÇÃO PARCIAL CÍVEL",
+    "total": 1
+  },
+  {
+    "nome": "CUMPRIMENTO DE SENTENÇA",
+    "total": 34
+  },
+  {
+    "nome": "CUMPRIMENTO PROVISÓRIO DE DECISÃO",
+    "total": 2
+  },
+  {
+    "nome": "DESAFORAMENTO DE JULGAMENTO",
+    "total": 24
+  },
+  {
+    "nome": "DIRETA DE INCONSTITUCIONALIDADE",
+    "total": 187
+  },
+  {
+    "nome": "DISSÍDIO COLETIVO DE GREVE",
+    "total": 22
+  },
+  {
+    "nome": "EMBARGOS",
+    "total": 1
+  },
+  {
+    "nome": "EMBARGOS DE DECLARAÇÃO",
+    "total": 10583
+  },
+  {
+    "nome": "EMBARGOS DE DECLARAÇÃO CRIMINAL",
+    "total": 7329
+  },
+  {
+    "nome": "EMBARGOS DE DECLARAÇÃO CÍVEL",
+    "total": 97555
+  },
+  {
+    "nome": "EMBARGOS DE TERCEIRO",
+    "total": 1
+  },
+  {
+    "nome": "EMBARGOS DE TERCEIRO CÍVEL",
+    "total": 2
+  },
+  {
+    "nome": "EMBARGOS INFRINGENTES",
+    "total": 725
+  },
+  {
+    "nome": "EMBARGOS INFRINGENTES E DE NULIDADE",
+    "total": 2191
+  },
+  {
+    "nome": "EMBARGOS À EXECUÇÃO",
+    "total": 446
+  },
+  {
+    "nome": "EXCEÇÃO DE IMPEDIMENTO",
+    "total": 15
+  },
+  {
+    "nome": "EXCEÇÃO DE INCOMPETÊNCIA",
+    "total": 1
+  },
+  {
+    "nome": "EXCEÇÃO DE SUSPEIÇÃO",
+    "total": 103
+  },
+  {
+    "nome": "EXECUÇÃO CONTRA A FAZENDA PÚBLICA",
+    "total": 1054
+  },
+  {
+    "nome": "EXECUÇÃO DE TÍTULO JUDICIAL",
+    "total": 1
+  },
+  {
+    "nome": "EXECUÇÃO PROVISÓRIA",
+    "total": 15
+  },
+  {
+    "nome": "HABEAS CORPUS",
+    "total": 33
+  },
+  {
+    "nome": "HABEAS CORPUS CRIMINAL",
+    "total": 25540
+  },
+  {
+    "nome": "HABEAS CORPUS CÍVEL",
+    "total": 500
+  },
+  {
+    "nome": "HABEAS CORPUS-CIVEL",
+    "total": 70
+  },
+  {
+    "nome": "HABEAS CORPUS-CRIMINAL",
+    "total": 3043
+  },
+  {
+    "nome": "HABEAS DATA",
+    "total": 6
+  },
+  {
+    "nome": "HABEAS DATA CÍVEL",
+    "total": 4
+  },
+  {
+    "nome": "IMPUGNAÇÃO AO PEDIDO DE ASSISTÊNCIA LITISCONSORCIA",
+    "total": 2
+  },
+  {
+    "nome": "IMPUGNAÇÃO AO VALOR DA CAUSA CÍVEL",
+    "total": 10
+  },
+  {
+    "nome": "IMPUGNAÇÃO DE ASSISTÊNCIA JUDICIÁRIA",
+    "total": 9
+  },
+  {
+    "nome": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CRI",
+    "total": 3
+  },
+  {
+    "nome": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL",
+    "total": 19
+  },
+  {
+    "nome": "INCIDENTE DE ARGÜIÇÃO DE INCONSTITUCIONALIDADE CÍV",
+    "total": 29
+  },
+  {
+    "nome": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA",
+    "total": 7
+  },
+  {
+    "nome": "INCIDENTE DE FALSIDADE",
+    "total": 2
+  },
+  {
+    "nome": "INCIDENTE DE IMPEDIMENTO CÍVEL",
+    "total": 3
+  },
+  {
+    "nome": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS",
+    "total": 149
+  },
+  {
+    "nome": "INCIDENTE DE SUSPEIÇÃO CÍVEL",
+    "total": 31
+  },
+  {
+    "nome": "INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+    "total": 20
+  },
+  {
+    "nome": "INQUÉRITO POLICIAL",
+    "total": 17
+  },
+  {
+    "nome": "MANDADO DE INJUNÇÃO",
+    "total": 101
+  },
+  {
+    "nome": "MANDADO DE SEGURANÇA",
+    "total": 276
+  },
+  {
+    "nome": "MANDADO DE SEGURANÇA COLETIVO",
+    "total": 10
+  },
+  {
+    "nome": "MANDADO DE SEGURANÇA CRIMINAL",
+    "total": 266
+  },
+  {
+    "nome": "MANDADO DE SEGURANÇA CÍVEL",
+    "total": 3610
+  },
+  {
+    "nome": "MEDIDAS PROTETIVAS DE URGÊNCIA (LEI MARIA DA PENHA) INFRACIONAL",
+    "total": 1
+  },
+  {
+    "nome": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO",
+    "total": 21
+  },
+  {
+    "nome": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CÍ",
+    "total": 1
+  },
+  {
+    "nome": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CÍVEL",
+    "total": 29
+  },
+  {
+    "nome": "PETIÇÃO",
+    "total": 64
+  },
+  {
+    "nome": "PETIÇÃO CRIMINAL",
+    "total": 317
+  },
+  {
+    "nome": "PETIÇÃO CÍVEL",
+    "total": 504
+  },
+  {
+    "nome": "PROCEDIMENTO COMUM CÍVEL",
+    "total": 1
+  },
+  {
+    "nome": "PROCEDIMENTO ORDINÁRIO",
+    "total": 4
+  },
+  {
+    "nome": "PROCESSO ADMINISTRATIVO",
+    "total": 266
+  },
+  {
+    "nome": "PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE MAGISTRADO",
+    "total": 3
+  },
+  {
+    "nome": "PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE SERVIDOR",
+    "total": 8
+  },
+  {
+    "nome": "PROCESSO DE EXECUÇÃO",
+    "total": 7
+  },
+  {
+    "nome": "RECLAMAÇÃO",
+    "total": 678
+  },
+  {
+    "nome": "RECLAMAÇÃO CRIMINAL",
+    "total": 1427
+  },
+  {
+    "nome": "RECURSO ADMINISTRATIVO",
+    "total": 92
+  },
+  {
+    "nome": "RECURSO DE MEDIDA CAUTELAR",
+    "total": 424
+  },
+  {
+    "nome": "RECURSO DE MEDIDA CAUTELAR CÍVEL",
+    "total": 1
+  },
+  {
+    "nome": "RECURSO EM HABEAS CORPUS",
+    "total": 5
+  },
+  {
+    "nome": "RECURSO EM SENTIDO ESTRITO",
+    "total": 7948
+  },
+  {
+    "nome": "RECURSO ESPECIAL",
+    "total": 377
+  },
+  {
+    "nome": "RECURSO EXTRAORDINÁRIO",
+    "total": 458
+  },
+  {
+    "nome": "RECURSO INOMINADO",
+    "total": 29593
+  },
+  {
+    "nome": "RECURSO INOMINADO CÍVEL",
+    "total": 85810
+  },
+  {
+    "nome": "RECURSO ORDINÁRIO CRIMINAL",
+    "total": 2
+  },
+  {
+    "nome": "REEXAME NECESSÁRIO",
+    "total": 294
+  },
+  {
+    "nome": "REMESSA NECESSÁRIA CRIMINAL",
+    "total": 591
+  },
+  {
+    "nome": "REMESSA NECESSÁRIA CÍVEL",
+    "total": 3894
+  },
+  {
+    "nome": "REPRESENTAÇÃO CRIMINAL/NOTÍCIA DE CRIME",
+    "total": 1
+  },
+  {
+    "nome": "REPRESENTAÇÃO P/ DECLARAÇÃO DE INDIGNIDADE/INCOMPATIBILIDADE",
+    "total": 15
+  },
+  {
+    "nome": "REPRESENTAÇÃO P/ PERDA DA GRADUAÇÃO",
+    "total": 2
+  },
+  {
+    "nome": "REPRESENTAÇÃO PARA DECLARAÇÃO DE INDIGNIDADE/ INCO",
+    "total": 5
+  },
+  {
+    "nome": "RESTAURAÇÃO DE AUTOS",
+    "total": 25
+  },
+  {
+    "nome": "RESTITUIÇÃO DE COISAS APREENDIDAS",
+    "total": 8
+  },
+  {
+    "nome": "REVISÃO CRIMINAL",
+    "total": 2647
+  },
+  {
+    "nome": "SEPARAÇÃO CONSENSUAL",
+    "total": 1
+  },
+  {
+    "nome": "SUSPENSÃO DE LIMINAR OU ANTECIPAÇÃO DE TUTELA",
+    "total": 7
+  },
+  {
+    "nome": "TERMO CIRCUNSTANCIADO",
+    "total": 1
+  },
+  {
+    "nome": "TUTELA ANTECIPADA ANTECEDENTE",
+    "total": 6
+  },
+  {
+    "nome": "TUTELA CAUTELAR ANTECEDENTE",
+    "total": 2
+  }
+]

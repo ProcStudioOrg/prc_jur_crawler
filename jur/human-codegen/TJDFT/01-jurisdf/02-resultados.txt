@@ -1,0 +1,92 @@
+================================================================================
+TJDFT — MÓDULO 01, SEÇÃO 02: RESULTADOS E INTEIRO TEOR
+================================================================================
+
+Prints: 02.01 (listagem), 02.02 (card), 02.03 (paginação do rodapé).
+HTML do card: 02-card-resultado.html.
+
+--------------------------------------------------------------------------------
+1. Envelope da resposta
+--------------------------------------------------------------------------------
+
+{
+  "hits":       {"value": 3528},        <- ⚠️ objeto; o PDF oficial diz número
+  "agregacoes": {relator, relatorDesignado, revisor, orgaoJulgador,
+                 base, segredoJustica, classe},
+  "paginacao":  {"pagina": 0, "tamanho": 20},
+  "registros":  [ ... ]
+}
+
+`hits.value` é o total real, sem teto artificial — "recurso" devolveu 1.190.275.
+É melhor que TJMG (satura em 1000) e que o Elasticsearch cru (10.000).
+
+--------------------------------------------------------------------------------
+2. Um registro, campo a campo
+--------------------------------------------------------------------------------
+
+| Campo API                | Exemplo                          | Vira, no repo       |
+|--------------------------|----------------------------------|---------------------|
+| uuid                     | "62d05026-6803-49ad-af56-..."    | id                  |
+| identificador            | "87014057"                       | identificador       |
+| sequencial               | 1                                | —                   |
+| base                     | "acordaos"                       | base                |
+| subbase                  | "acordaos-tr" = Turma Recursal   | subbase + `juizado` |
+| processo                 | "0705891-74.2023.8.07.0004"      | processo (JÁ com máscara) |
+| nomeRelator              | "JAIR SOARES"                    | relator             |
+| nomeRevisor              | (quando há)                      | revisor             |
+| nomeRelatorDesignado     | (quando há)                      | relatorDesignado    |
+| descricaoOrgaoJulgador   | "Presidência do Tribunal"        | orgaoJulgador       |
+| descricaoClasseCnj       | (nome da classe)                 | classe              |
+| codigoClasseCnj          | 213                              | codigoClasseCnj     |
+| dataJulgamento           | "2026-04-29T03:00:00.000Z"       | dataJulgamento (DD/MM/AAAA) |
+| dataPublicacao           | "2026-07-24T03:00:00.000Z"       | dataPublicacao (DD/MM/AAAA) |
+| ementa                   | texto                            | ementa              |
+| inteiroTeor              | texto INTEGRAL                   | inteiroTeor         |
+| possuiInteiroTeor        | false                            | possuiInteiroTeor   |
+| marcadores               | {ementa[], termosAuxiliares[], decisao[]} | —          |
+| jurisprudenciaEmFoco     | []                               | —                   |
+| versao                   | "1"                              | —                   |
+| codigoSistjOrgaoJulgador | 68                               | —                   |
+
+⚠️ `dataJulgamento` NÃO EXISTE em decisões monocráticas e da Presidência
+(0/20 medido, contra 20/20 em acórdãos). Ver 01-busca-e-filtros.txt §4 — é o
+zero calado deste tribunal.
+
+⚠️ Datas saem em ISO com timezone; o crawler converte para DD/MM/AAAA.
+As datas de ENTRADA (filtro) são YYYY-MM-DD dentro da prosa "entre X e Y".
+
+⚠️ `possuiInteiroTeor: false` apareceu em registro que TINHA inteiroTeor
+preenchido. Não confie nesse booleano; olhe o campo `inteiroTeor`.
+
+--------------------------------------------------------------------------------
+3. Inteiro teor — melhor caso do repo
+--------------------------------------------------------------------------------
+
+O texto integral VEM NO PRÓPRIO PAYLOAD DA BUSCA, no campo `inteiroTeor`, quando
+`retornaInteiroTeor: true` (o Navigator manda true por padrão).
+
+NÃO há request adicional por documento — ao contrário do TJMG, que exige um POST
+por julgado com documentoId + data de publicação. Aqui `--fetch-inteiro-teor` só
+grava em disco o que já veio (medido: 3 arquivos de 8 KB a 34 KB, zero requests).
+
+Isso também explica por que o rate limit de 60/janela não incomoda tanto: uma
+página de 30 resultados já traz 30 inteiros teores.
+
+`retornaInteiroTeor: false` (o que a SPA manda) alivia o payload quando só se
+quer a listagem.
+
+--------------------------------------------------------------------------------
+4. Paginação
+--------------------------------------------------------------------------------
+
+  Resultados por página:  `tamanho`, MÁXIMO 30 (50+ = HTTP 400)
+  Parâmetro de página:    `pagina`, base 0
+  Total exposto?          sim, hits.value, real e sem teto
+  Profundidade:           medido até pagina=1000 com registros distintos
+
+⚠️ Sem o cookie de fixação de nó (01-busca-e-filtros.txt §13) a paginação
+mistura DOIS índices: a mesma página devolve conjuntos diferentes conforme o nó
+que atender. Com o cookie, 8/8 chamadas idênticas. O crawler reusa um navigator
+único durante toda a paginação exatamente por isso.
+
+Prints: 02.03

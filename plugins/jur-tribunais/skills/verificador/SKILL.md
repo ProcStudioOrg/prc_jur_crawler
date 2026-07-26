@@ -65,16 +65,23 @@ isso ao usuário; é o sinal de alucinação mais comum.
   Não cite. Diga explicitamente que o processo pode existir no sistema de tramitação
   sem estar indexado na jurisprudência — são bases diferentes.
 
-Tribunais com consulta direta por número implementada: **TJGO**, **TJMG**, **TJPA**,
+Tribunais com consulta direta por número implementada: **TJDFT**, **TJGO**, **TJMG**, **TJPA**,
 **TJRJ**, **TJRS**, **TJSC**, **TRF2**, **TRF6**, **STJ** e **a Justiça do Trabalho
 inteira** (TST + TRT1..TRT24 + CSJT). Especificidades em
-[`tribunais/tjgo.md`](tribunais/tjgo.md), [`tribunais/tjmg.md`](tribunais/tjmg.md),
+[`tribunais/tjdft.md`](tribunais/tjdft.md), [`tribunais/tjgo.md`](tribunais/tjgo.md),
+[`tribunais/tjmg.md`](tribunais/tjmg.md),
 [`tribunais/tjpa.md`](tribunais/tjpa.md), [`tribunais/tjrj.md`](tribunais/tjrj.md),
 [`tribunais/tjrs.md`](tribunais/tjrs.md), [`tribunais/tjsc.md`](tribunais/tjsc.md),
 [`tribunais/trf2.md`](tribunais/trf2.md), [`tribunais/trf6.md`](tribunais/trf6.md),
 [`tribunais/stj.md`](tribunais/stj.md) e — para os 26 acervos trabalhistas —
 [`tribunais/falcao.md`](tribunais/falcao.md) (o TRT9 tem detalhe extra em
 [`tribunais/trt9.md`](tribunais/trt9.md)).
+
+> ⚠️ **TJDFT: o número precisa ir COM MÁSCARA.** `0705891-74.2023.8.07.0004` acha 2
+> julgados; `07058917420238070004` devolve 0 sem erro — é o **oposto do TJMG**. O
+> `TJDFTChecker` mascara sozinho, mas quem consultar a API na mão e receber 0 deve conferir
+> isso antes de acusar alucinação. Como no TJMG, `encontrado: false` é desempatado no
+> DataJud. Ver [`tribunais/tjdft.md`](tribunais/tjdft.md).
 
 > ⚠️ **TJMG: `encontrado: false` não é veredito.** A base de jurisprudência mineira cobre
 > 2º grau e Turmas Recursais, e **não** tem 1º grau. O `TJMGChecker` consulta o DataJud

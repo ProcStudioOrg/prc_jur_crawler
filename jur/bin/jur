@@ -38,6 +38,9 @@ const TJRJNavigator = require('../src/TJRJNavigator');
 const TJMGCrawler = require('../src/TJMGCrawler');
 const TJMGChecker = require('../src/TJMGChecker');
 const TJMGNavigator = require('../src/TJMGNavigator');
+const TJDFTCrawler = require('../src/TJDFTCrawler');
+const TJDFTChecker = require('../src/TJDFTChecker');
+const TJDFTNavigator = require('../src/TJDFTNavigator');
 const FalcaoNavigator = require('../src/FalcaoNavigator');
 const FalcaoTribunais = require('../src/FalcaoTribunais');
 const STFCrawler = require('../src/STFCrawler');
@@ -1265,6 +1268,141 @@ program
             ...(verificacao ? { verificacao } : {}),
           }) + '\n');
         }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjdft')
+  .description('Search TJDFT (DF e Territorios) jurisprudence — JurisDF (API PUBLICA OFICIAL)')
+  .option('-q, --query <text>', 'Search query (operadores: E OU NAO "frase" $ PROX<n> ADJ<n>; PROX/ADJ SEM parenteses)')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de processo CNJ (TJDFTChecker)')
+  .option('-di, --data-inicio <date>', 'Judgment start date (DD/MM/YYYY) — exige -df junto')
+  .option('-df, --data-fim <date>', 'Judgment end date (DD/MM/YYYY) — exige -di junto')
+  .option('-dpi, --data-pub-inicio <date>', 'Publication start date (DD/MM/YYYY) — exige -dpf junto')
+  .option('-dpf, --data-pub-fim <date>', 'Publication end date (DD/MM/YYYY) — exige -dpi junto')
+  .option('-b, --acervo <acervo>', 'Acervo: todos (default), acordaos, turmas, comum, decisoes, monocraticas, presidencia, sumulas, informativos, foco', 'todos')
+  .option('--escopo <escopo>', 'Onde buscar: espelho (default, = ementa), inteiroTeor, ambos', 'espelho')
+  .option('--sinonimos', 'Liga a expansao por sinonimos do portal')
+  .option('-r, --relator <nome>', 'Relator(a) — nome exato (use --listar)')
+  .option('-rev, --revisor <nome>', 'Revisor(a) — nome exato')
+  .option('-oj, --orgao <nome>', 'Orgao julgador — nome exato (use --listar)')
+  .option('-c, --classe <nome>', 'Classe processual CNJ — nome exato')
+  .option('--listar', 'Lista o dominio dos filtros (relator, revisor, orgao, base, classe) com contagens')
+  .option('--fetch-inteiro-teor', 'Grava o inteiro teor de cada resultado como .txt')
+  .option('--output-dir <dir>', 'Directory for downloaded inteiro teor files', './resultados/tjdft')
+  .option('--verificar [amostra]', 'Audit results: re-query N sampled processos (default 5)')
+  .option('--max-results <number>', 'Maximum total results to collect')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (max 30 results/page)', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjdft.json')
+  .option('-v, --visible', 'Ignored (TJDFT uses direct API, no browser)')
+  .option('--headed', 'Ignored (TJDFT uses direct API, no browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    try {
+      if (opts.listar) {
+        const nav = new TJDFTNavigator({ log });
+        const ag = await nav.agregacoes(opts.query || 'a');
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({ success: true, agregacoes: ag }) + '\n');
+        } else {
+          for (const [campo, vals] of Object.entries(ag)) {
+            console.log(`\n[${campo}] ${vals.length} valores`);
+            for (const v of vals.slice(0, 400)) {
+              console.log(`  ${String(v.total).padStart(8)}  ${v.nome}${v.filhos && v.filhos.length ? ` (filhos: ${v.filhos.map((f) => f.nome).join(', ')})` : ''}`);
+            }
+          }
+        }
+        process.exit(0);
+      }
+
+      if (opts.numero) {
+        const res = await new TJDFTChecker().consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (!opts.query) {
+        throw new Error('Informe -q "<termos>", -n <numero> para consulta direta, ou --listar');
+      }
+
+      log('='.repeat(60));
+      log('TJDFT Jurisprudencia Crawler (JurisDF — API publica oficial)');
+      log('='.repeat(60));
+      log(`Query: ${opts.query}`);
+      log(`Acervo: ${opts.acervo} | Escopo: ${opts.escopo} | Sinonimos: ${!!opts.sinonimos}`);
+      log(`Data Julgamento: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log(`Data Publicacao: ${opts.dataPubInicio || '-'} a ${opts.dataPubFim || '-'}`);
+      log('='.repeat(60));
+
+      const crawler = new TJDFTCrawler({ timeout: 60000, log });
+      const filters = {
+        acervo: opts.acervo,
+        escopo: opts.escopo,
+        sinonimos: !!opts.sinonimos,
+        dataJulgamentoInicio: opts.dataInicio || null,
+        dataJulgamentoFim: opts.dataFim || null,
+        dataPublicacaoInicio: opts.dataPubInicio || null,
+        dataPublicacaoFim: opts.dataPubFim || null,
+        relator: opts.relator || null,
+        revisor: opts.revisor || null,
+        orgao: opts.orgao || null,
+        classe: opts.classe || null,
+      };
+      const searchOptions = { maxPages: parseInt(opts.maxPages, 10) };
+      if (opts.maxResults) searchOptions.maxResults = parseInt(opts.maxResults, 10);
+
+      const results = await crawler.search(opts.query, filters, searchOptions);
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+      if (results.totalResults !== null) log(`Total results on server: ${results.totalResults}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+        verificacao = await new TJDFTChecker({ navigator: crawler.navigator })
+          .verificarResultados(results, { amostra, log });
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
+      const resumo = (extra) => ({
+        success: true,
+        totalResults: results.totalResults,
+        count: results.length,
+        juizado: results.filter((r) => r.juizado).length,
+        ...(results.avisos && results.avisos.length ? { avisos: results.avisos } : {}),
+        ...(verificacao ? { verificacao } : {}),
+        ...extra,
+      });
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        log(`\nGravando inteiro teor de ${results.length} resultados...`);
+        const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
+        const ok = downloaded.filter((r) => r.arquivo).length;
+        log(`\nDownload complete: ${ok} success, ${downloaded.length - ok} failed`);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify(resumo({ downloaded: ok, failed: downloaded.length - ok, outputDir })) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+        if (jsonMode) process.stdout.write(JSON.stringify(resumo({ output: outputPath })) + '\n');
       }
     } catch (error) {
       if (jsonMode) {

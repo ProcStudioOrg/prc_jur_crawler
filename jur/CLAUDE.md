@@ -30,6 +30,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `stf`  | **Supremo Tribunal Federal** | Nacional (constitucional) | `CLAUDE-STF.md` | 🟢 OK (API direta; browser só p/ o token do WAF) |
 | `stj`  | **Superior Tribunal de Justiça** | Nacional (lei federal infraconstitucional) | `CLAUDE-STJ.md` | 🟢 OK (SCON — **browser headful obrigatório**, Cloudflare) |
 | `tcu`  | Tribunal de Contas da União | Federal (acórdãos) | `CLAUDE-TCU.md` | 🟢 OK |
+| `tjdft` | TJ do DF e Territórios | DF | `CLAUDE-TJDFT.md` | 🟢 OK (**API pública oficial**, sem browser) |
 | `tjgo` | TJ de Goiás | GO | `CLAUDE-TJGO.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjma` | TJ do Maranhão | MA | `CLAUDE-TJMA.md` | 🔴 busca **bloqueada por captcha**; só `-n` (nº do processo, via DataJud) |
 | `tjmg` | TJ de Minas Gerais | MG | `CLAUDE-TJMG.md` | 🟢 OK (API direta, sem browser — Consulta Unificada; **não** use o `www5`) |
@@ -49,7 +50,7 @@ escolher o comando. `CLAUDE-TRT9.md` é o mergulho técnico do sistema.
 
 Nenhum tribunal catalogado está mapeado à espera de crawler. Falta ainda o módulo
 **eJURIS** do TJRJ (legado com Turmas Recursais e acervo histórico — o `jur tjrj` cobre
-só o e-Proc). Os outros 18 tribunais (TJs restantes) não estão mapeados — veja
+só o e-Proc). Os outros 17 tribunais (TJs restantes) não estão mapeados — veja
 `cobertura/CLAUDE-COBERTURA.md` e use a skill [`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**
@@ -85,6 +86,18 @@ só o e-Proc). Os outros 18 tribunais (TJs restantes) não estão mapeados — v
   ⚠️ só Justiça Comum 2º grau no e-Proc (~2023+); **Juizado Especial / Turma Recursal
   carioca e acervo antigo estão no eJURIS, sem crawler** — diga isso ao usuário em vez
   de rotular resultado do e-Proc como Juizado
+- "TJDFT" / "Distrito Federal estadual" / "Brasília" → `tjdft` → leia `CLAUDE-TJDFT.md`.
+  Juizado Especial / Turma Recursal do DF → `tjdft --acervo turmas`; Justiça Comum 2º grau
+  é `--acervo comum` (o default `--acervo todos` **mistura os dois**). Único tribunal do
+  repo com **API pública oficial documentada**, e o inteiro teor **já vem no resultado da
+  busca** — `--fetch-inteiro-teor` só grava em disco, sem request extra.
+  ⚠️ **Decisões monocráticas e da Presidência não têm data de julgamento**: filtrar com
+  `-di/-df` apaga esses dois acervos em silêncio (2.743 → 0). Para elas use `-dpi/-dpf`
+  (publicação). O crawler avisa — repasse o aviso.
+  ⚠️ Os operadores em português **funcionam** aqui (`E`, `OU`, `NÃO`, `$`, `"frase"`) — ao
+  contrário do TJMG. Mas `PROX`/`ADJ` só funcionam **sem parênteses** (`PROX5`, não
+  `PROX(5)`), apesar de o botão da tela escrever `PROX(N)`.
+  ⚠️ Rate limit de 60 requisições por janela; 429 é bloqueio, não erro
 - "TJMG" / "Minas Gerais estadual" → `tjmg` → leia `CLAUDE-TJMG.md`.
   Juizado Especial / Turma Recursal mineira → `tjmg --tipo turmas --escopo inteiroTeor`;
   Justiça Comum 2º grau é `--tipo acordao` (o default `--tipo todos` **mistura os dois**).
