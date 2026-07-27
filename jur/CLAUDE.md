@@ -1,5 +1,32 @@
 # jur — Brazilian Courts Jurisprudence Crawler
 
+> # 🚨 ALERTA ATIVO — LEIA ANTES DE QUALQUER BUSCA
+>
+> ## O `stj` ESTÁ BLOQUEADO. NÃO RODE `jur stj`. (desde 27/07/2026)
+>
+> O SCON entrou atrás de um **desafio interativo do Cloudflare**. Medido em
+> 27/07/2026: `scon.stj.jus.br` e `processo.stj.jus.br` devolvem **HTTP 403** com
+> o header `cf-mitigated: challenge`, e no Playwright a página trava em
+> "Just a moment… / **responda ao desafio abaixo**" — não é mais a verificação
+> automática que passava sozinha. **Este repo não automatiza captcha.**
+>
+> **O que fazer quando o usuário pedir jurisprudência do STJ:**
+> 1. **Diga que o STJ está inacessível hoje** e por quê. Não rode o comando para
+>    "tentar mesmo assim" — ele gasta 10 tentativas e devolve
+>    `Target page, context or browser has been closed`.
+> 2. **NÃO EXISTE SUBSTITUTO PARA O STJ.** Ele é a corte que uniformiza a lei
+>    federal infraconstitucional; nenhum TJ ou TRF ocupa esse lugar. Ofereça o
+>    tribunal local (`trf*`/`tj*`) **dizendo explicitamente que é jurisprudência
+>    de instância inferior** e que a orientação do STJ não pôde ser conferida.
+>    Para matéria **constitucional**, o `stf` continua 🟢 e é o caminho certo.
+> 3. **NÃO CITE JULGADO DO STJ DE MEMÓRIA.** O `verificador` também não consegue
+>    confirmar nada no STJ enquanto o bloqueio durar — logo, qualquer REsp que
+>    você "lembre" é não verificável e não entra na resposta. Esta é a invariante
+>    nº 1 do repo e o bloqueio não a suspende, a torna mais séria.
+>
+> Diagnóstico e reteste: [`CLAUDE-STJ.md`](CLAUDE-STJ.md). Se o desafio cair,
+> reverta o status aqui, em `skills/browser/SKILL.md` e em `cobertura/build.js`.
+
 CLI para buscar jurisprudência nos tribunais brasileiros, construída com Playwright.
 
 **Antes de qualquer busca, use a skill [`browser`](skills/browser/SKILL.md).**
@@ -28,7 +55,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `trf5` | TRF 5ª Região | AL, CE, PB, PE, RN, SE | `CLAUDE-TRF5.md` | 🟢 OK |
 | `trf6` | TRF 6ª Região | MG | `CLAUDE-TRF6.md` | 🟢 OK (HTTP direto, sem browser) — base **só a partir de 2023** |
 | `stf`  | **Supremo Tribunal Federal** | Nacional (constitucional) | `CLAUDE-STF.md` | 🟢 OK (API direta; browser só p/ o token do WAF) |
-| `stj`  | **Superior Tribunal de Justiça** | Nacional (lei federal infraconstitucional) | `CLAUDE-STJ.md` | 🟢 OK (SCON — **browser headful obrigatório**, Cloudflare) |
+| `stj`  | **Superior Tribunal de Justiça** | Nacional (lei federal infraconstitucional) | `CLAUDE-STJ.md` | 🔴 **BLOQUEADO — não rodar** (desafio interativo do Cloudflare desde 27/07/2026; ver alerta no topo) |
 | `tcu`  | Tribunal de Contas da União | Federal (acórdãos) | `CLAUDE-TCU.md` | 🟢 OK |
 | `tjce` | TJ do Ceará | CE | `CLAUDE-TJCE.md` | 🟢 OK (API direta, sem browser — SJURIS, **SAJ + PJe juntos**; **não** use o e-SAJ) |
 | `tjdft` | TJ do DF e Territórios | DF | `CLAUDE-TJDFT.md` | 🟢 OK (**API pública oficial**, sem browser) |
@@ -133,8 +160,13 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   órgão (`-oj "Tribunal Pleno"` × Turmas) e por classe (`-c ADI,ADPF,ADC` × `-c RE,ARE`).
   Peça o número no formato do STF (`ARE 1596565`, `ADI 4277`) — a base **não indexa CNJ**
 - **Interpretação de LEI FEDERAL infraconstitucional** (Código Civil, CPC, CDC, Código Penal,
-  Lei de Execução Fiscal, benefício previdenciário, contrato, prescrição) → `stj`, a corte que
-  uniformiza a lei federal e orienta todos os TJs e TRFs. **Cite o STJ antes do TJ local.**
+  Lei de Execução Fiscal, benefício previdenciário, contrato, prescrição) → seria o `stj`, a
+  corte que uniformiza a lei federal e orienta todos os TJs e TRFs.
+  🔴 **MAS O `stj` ESTÁ BLOQUEADO DESDE 27/07/2026 — NÃO RODE O COMANDO.** Desafio
+  interativo do Cloudflare (403 + `cf-mitigated: challenge`). Diga ao usuário que o STJ
+  está inacessível, ofereça o tribunal local **rotulando-o como instância inferior**, e
+  **não cite REsp de memória** — o `verificador` também não confirma nada no STJ agora.
+  O resto desta entrada vale para quando o bloqueio cair.
   Leia `CLAUDE-STJ.md`. No STJ **não há Juizado, Turma Recursal nem 1º grau**: a desambiguação
   é (a) por **órgão** — `-s publico` (tributário/administrativo/previdenciário),
   `-s privado` (civil/consumidor/empresarial), `-s penal`, `-oj CE` (Corte Especial) — e

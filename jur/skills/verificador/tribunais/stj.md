@@ -1,5 +1,25 @@
 # Verificação no STJ — o passo 1 do checklist NÃO se aplica
 
+> # 🚨 27/07/2026 — VERIFICAÇÃO NO STJ ESTÁ INDISPONÍVEL
+>
+> O SCON entrou atrás de um **desafio interativo do Cloudflare**: `scon.stj.jus.br`
+> devolve **HTTP 403** com `cf-mitigated: challenge`, e o Playwright trava em
+> "Just a moment… responda ao desafio abaixo". Este repo não automatiza captcha.
+>
+> **Consequência direta, e é a que importa:** enquanto durar o bloqueio **nenhum
+> julgado do STJ pode ser confirmado** — nem por classe+número (`REsp 1809043`),
+> nem por registro (`2019/0116080-0`). Pela invariante nº 1 do repo, julgado não
+> confirmado **não entra na resposta**. Portanto: **não cite acórdão do STJ**,
+> inclusive (e principalmente) os que você "lembra" — a memória do modelo é
+> exatamente a fonte que esta skill existe para bloquear.
+>
+> O que ainda dá para fazer: `jur stj -n <número CNJ>` cai no **DataJud**, que
+> confirma que o **processo** existe — nunca que a **decisão** existe. Isso não
+> autoriza citar a ementa. Diga ao usuário o que foi e o que não foi confirmado.
+>
+> Reteste: `curl -sI https://scon.stj.jus.br/SCON/ | grep cf-mitigated` — sumiu o
+> header, o bloqueio caiu. Ver [`../../../CLAUDE-STJ.md`](../../../CLAUDE-STJ.md).
+
 O STJ é o caso em que a checagem de número CNJ **atrapalha** em vez de ajudar.
 
 ## Por quê

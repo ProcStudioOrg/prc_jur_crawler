@@ -9,6 +9,14 @@ description: Use when the user asks for jurisprudência, case law, precedents or
 A skill principal: transforma um pedido do usuário em busca executada, verificada e analisada.
 
 <HARD-GATE>
+🚨 NUNCA RODE `jur stj` — O STJ ESTÁ BLOQUEADO DESDE 27/07/2026 (desafio interativo do
+Cloudflare: 403 + cf-mitigated: challenge). Diga ao usuário que o STJ está inacessível.
+NUNCA cite um REsp de memória para compensar: o `jur-verificador` também não confirma
+nada no STJ enquanto durar o bloqueio, então o julgado é NÃO VERIFICÁVEL e não entra.
+NÃO EXISTE SUBSTITUTO PARA O STJ em lei federal infraconstitucional — ao oferecer o
+TJ/TRF local, rotule explicitamente como instância inferior. Matéria constitucional
+segue no `stf`, que está 🟢. Ver o alerta no topo de `CLAUDE.md`.
+
 NUNCA execute a busca sem antes entender a intenção do usuário.
 NUNCA cite um julgado sem passar pela skill `jur-verificador`.
 NUNCA baixe mais de 50 inteiros teores sem confirmação do usuário.
@@ -69,7 +77,7 @@ SEMPRE informe o usuário a cada refinamento que você fizer.
 | Decisão monocrática de ministro do STF | `jur stf -b decisoes -r "<MINISTRO EM CAIXA ALTA>"` (741 mil docs; é uma **seleção**, não exaustiva) |
 | Informativo do STF | `jur stf -b informativos` (⚠️ resumo **sem valor oficial** — nunca cite como se fosse ementa) |
 | "Esse processo do STF existe?" / confirmar julgado do Supremo | `jur stf -n "ARE 1596565"` (classe+número, o formato nativo) ou `jur stf -n <CNJ>`. ⚠️ a base **não indexa CNJ**: buscar o número por `-q` devolve zero |
-| **Interpretação de LEI FEDERAL infraconstitucional** — Código Civil, CPC, CDC, Código Penal, execução fiscal, benefício previdenciário, contrato, prescrição, "o que o STJ decidiu" | `jur stj` (base `acordao`, todo o acervo do STJ; ⚠️ **abre uma janela de Chromium** — o Cloudflare do SCON não libera headless). **Cite o STJ antes do TJ local**: ele uniformiza a lei federal para todos os TJs e TRFs |
+| **Interpretação de LEI FEDERAL infraconstitucional** — Código Civil, CPC, CDC, Código Penal, execução fiscal, benefício previdenciário, contrato, prescrição, "o que o STJ decidiu" | 🔴 **`jur stj` BLOQUEADO desde 27/07/2026 — NÃO RODE.** Desafio interativo do Cloudflare (403 + `cf-mitigated: challenge`); rodar só queima 10 tentativas e devolve `Target page… has been closed`. Diga que o STJ está inacessível; ofereça `trf*`/`tj*` **rotulado como instância inferior**, e diga que a orientação do STJ não pôde ser conferida. Matéria constitucional → `stf` (🟢). **Não cite REsp de memória.** As linhas abaixo valem para quando o bloqueio cair |
 | Desambiguação no STJ — **não existe Juizado, Turma Recursal nem 1º grau** | Por **órgão**, e ele define a matéria: `-s publico` (1ª Seção: tributário, administrativo, previdenciário) × `-s privado` (2ª Seção: civil, consumidor, empresarial) × `-s penal` (3ª Seção) × `-oj CE` (Corte Especial). Por **tipo de documento**: `--base acordao` (default) × `--base monocratica` (15× maior, mas não forma jurisprudência colegiada) |
 | **Tema repetitivo / precedente qualificado / IAC** — o que vincula os outros tribunais | `jur stj --temas -q "<assunto>"` (tese firmada + questão submetida + situação; roda headless). Os **acórdãos** julgados sob o rito: `jur stj -q "<termo>" --repetitivos` |
 | Recorte temático pronto do STJ (superação, distinção, afetação, rol da ANS, insignificância…) | `jur stj -q "<termo>" --nota <chave>` — são 25, escritas pela Secretaria de Jurisprudência do STJ. Liste com `jur stj --listar-notas` |

@@ -38,10 +38,11 @@ npx playwright install chromium
 ./bin/jur <comando> --help
 ```
 
-Operacionais: os superiores `stf` `stj` · a Justiça do Trabalho inteira (`tst`, `trt1`…`trt24`,
-`csjt`) · os federais `trf2` `trf4` `trf5` `trf6` · os estaduais `tjce` `tjdft` `tjgo` `tjmg`
-`tjpa` `tjpr` `tjrj` `tjrs` `tjsc` · e o `tcu`.
-Instáveis: `trf1` `trf3` · bloqueados por captcha: `tjma` (só consulta por nº) `tjsp`.
+Operacionais: o `stf` · a Justiça do Trabalho inteira (`tst`, `trt1`…`trt24`, `csjt`) · os
+federais `trf2` `trf4` `trf5` `trf6` · os estaduais `tjce` `tjdft` `tjgo` `tjmg` `tjpa`
+`tjpr` `tjrj` `tjrs` `tjsc` · e o `tcu`.
+Instáveis: `trf1` `trf3` · bloqueados por captcha: **`stj`** (desde 27/07/2026 — desafio
+interativo do Cloudflare; ver `jur/CLAUDE-STJ.md`) `tjma` (só consulta por nº) `tjsp`.
 
 ## Estrutura
 

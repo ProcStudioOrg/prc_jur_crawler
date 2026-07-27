@@ -1,5 +1,54 @@
 # STJ — Superior Tribunal de Justiça
 
+> # 🔴 BLOQUEADO DESDE 27/07/2026 — NÃO RODAR `jur stj`
+>
+> ## O que foi medido (27/07/2026)
+>
+> | Teste | Resultado |
+> |---|---|
+> | `curl https://scon.stj.jus.br/SCON/` | **HTTP 403**, header **`cf-mitigated: challenge`**, `server: cloudflare` |
+> | `curl https://processo.stj.jus.br/processo/pesquisa/` | **HTTP 403**, mesmo desafio |
+> | Playwright headless, 30s na página | trava em `Just a moment...`; texto: "Verificação automática em andamento… **caso não seja redirecionado, responda ao desafio abaixo**"; campo de busca nunca aparece |
+> | `./bin/jur stj -q "dano moral" -m 1` | `Verificação automática do STJ ainda ativa (tentativa 1/10)` → `Target page, context or browser has been closed` |
+>
+> ## O que mudou
+>
+> O SCON sempre esteve atrás do Cloudflare, mas até então era a verificação
+> **automática**, que limpava sozinha num navegador headful — daí o
+> `--headed` ser o modo padrão documentado deste tribunal. Agora a página
+> oferece **desafio interativo** ("responda ao desafio abaixo"), que é outra
+> coisa: exige um humano. **Este repo não automatiza captcha** (mesma decisão
+> consciente tomada no TJMA).
+>
+> Ressalva honesta: o modo headful **não pôde ser reconfirmado** no ambiente do
+> diagnóstico, onde o Chromium com janela morre por motivo próprio. O que está
+> provado é o 403 com `cf-mitigated: challenge` e o headless travado — e o
+> relato de campo de vários agentes bloqueados. Se alguém conseguir passar com
+> Chrome real e perfil logado, registre aqui.
+>
+> ## Consequências que o agente precisa aceitar
+>
+> 1. **Não rode o comando** "para tentar" — ele queima 10 tentativas e falha.
+> 2. **Não existe substituto para o STJ** em lei federal infraconstitucional.
+>    Ofereça `trf*`/`tj*` **dizendo que é instância inferior** e que a
+>    orientação do STJ não pôde ser conferida. Constitucional → `stf` (🟢).
+> 3. **Não cite acórdão do STJ de memória.** O `verificador` não confirma nada
+>    no STJ agora, então todo REsp lembrado é não verificável — e julgado não
+>    verificado não entra na resposta.
+> 4. `jur stj -n <número CNJ>` ainda cai no **DataJud** e confirma que o
+>    **processo** existe — nunca que a **decisão** existe.
+>
+> ## Como retestar (leva 5 segundos)
+>
+> ```bash
+> curl -sI https://scon.stj.jus.br/SCON/ | grep -i "cf-mitigated\|HTTP/"
+> ```
+>
+> Sumiu o `cf-mitigated: challenge` e voltou 200 → o bloqueio caiu. Aí:
+> `node src/STJTestes.js`, e reverta o status em `CLAUDE.md` (alerta do topo +
+> tabela), `skills/browser/SKILL.md` (HARD-GATE + tabela),
+> `skills/verificador/tribunais/stj.md` e `cobertura/build.js` (+ rodar o build).
+
 Comando: `./bin/jur stj` · Stack: `src/STJCrawler.js` + `src/STJNavigator.js` +
 `src/STJChecker.js` · Testes: `node src/STJTestes.js` ·
 Mapeamento: `human-codegen/STJ/`
