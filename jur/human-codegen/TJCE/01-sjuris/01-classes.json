@@ -1,0 +1,832 @@
+[
+  {
+    "chave": "Ação Civil de Improbidade Administrativa",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Ação Civil Pública",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Ação Direta de Inconstitucionalidade",
+    "quantidade": 101,
+    "dados": null
+  },
+  {
+    "chave": "AÇÃO DIRETA DE INCONSTITUCIONALIDADE",
+    "quantidade": 24,
+    "dados": null
+  },
+  {
+    "chave": "Ação Penal de Competência do Júri",
+    "quantidade": 3,
+    "dados": null
+  },
+  {
+    "chave": "Ação Penal - Procedimento Ordinário",
+    "quantidade": 92,
+    "dados": null
+  },
+  {
+    "chave": "Ação Penal - Procedimento Sumário",
+    "quantidade": 13,
+    "dados": null
+  },
+  {
+    "chave": "Ação Rescisória",
+    "quantidade": 1405,
+    "dados": null
+  },
+  {
+    "chave": "AÇÃO RESCISÓRIA",
+    "quantidade": 344,
+    "dados": null
+  },
+  {
+    "chave": "Agravo de Execução Penal",
+    "quantidade": 6974,
+    "dados": null
+  },
+  {
+    "chave": "AGRAVO DE EXECUÇÃO PENAL",
+    "quantidade": 12,
+    "dados": null
+  },
+  {
+    "chave": "AGRAVO DE INSTRUMENTO",
+    "quantidade": 30576,
+    "dados": null
+  },
+  {
+    "chave": "Agravo de Instrumento",
+    "quantidade": 13,
+    "dados": null
+  },
+  {
+    "chave": "Agravo Interno Cível",
+    "quantidade": 6531,
+    "dados": null
+  },
+  {
+    "chave": "AGRAVO INTERNO CÍVEL",
+    "quantidade": 6,
+    "dados": null
+  },
+  {
+    "chave": "Agravo Interno Criminal",
+    "quantidade": 454,
+    "dados": null
+  },
+  {
+    "chave": "Agravo Regimental Cível",
+    "quantidade": 791,
+    "dados": null
+  },
+  {
+    "chave": "Apelação Cível",
+    "quantidade": 228217,
+    "dados": null
+  },
+  {
+    "chave": "APELAÇÃO CÍVEL",
+    "quantidade": 119760,
+    "dados": null
+  },
+  {
+    "chave": "Apelação Criminal",
+    "quantidade": 72932,
+    "dados": null
+  },
+  {
+    "chave": "APELAÇÃO CRIMINAL",
+    "quantidade": 1251,
+    "dados": null
+  },
+  {
+    "chave": "Apelação / Remessa Necessária",
+    "quantidade": 35516,
+    "dados": null
+  },
+  {
+    "chave": "APELAÇÃO / REMESSA NECESSÁRIA",
+    "quantidade": 6224,
+    "dados": null
+  },
+  {
+    "chave": "Arresto / Hipoteca Legal",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Avocatória",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "CARTA PRECATÓRIA CÍVEL",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Carta Testemunhável",
+    "quantidade": 25,
+    "dados": null
+  },
+  {
+    "chave": "Cautelar Inominada",
+    "quantidade": 87,
+    "dados": null
+  },
+  {
+    "chave": "Cautelar Inominada Criminal",
+    "quantidade": 46,
+    "dados": null
+  },
+  {
+    "chave": "Comunicado de Mandado de Prisão",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Conflito de competência cível",
+    "quantidade": 5680,
+    "dados": null
+  },
+  {
+    "chave": "CONFLITO DE COMPETÊNCIA CÍVEL",
+    "quantidade": 1026,
+    "dados": null
+  },
+  {
+    "chave": "Conflito de Competência Infância e Juventude",
+    "quantidade": 4,
+    "dados": null
+  },
+  {
+    "chave": "Conflito de Jurisdição",
+    "quantidade": 1109,
+    "dados": null
+  },
+  {
+    "chave": "CONFLITO DE JURISDIÇÃO",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Correição Parcial Cível",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Correição Parcial Criminal",
+    "quantidade": 36,
+    "dados": null
+  },
+  {
+    "chave": "Correição Parcial ou Reclamação Correicional",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Cumprimento de sentença",
+    "quantidade": 31,
+    "dados": null
+  },
+  {
+    "chave": "CUMPRIMENTO DE SENTENÇA",
+    "quantidade": 5,
+    "dados": null
+  },
+  {
+    "chave": "Cumprimento de Sentença contra a Fazenda Pública",
+    "quantidade": 124,
+    "dados": null
+  },
+  {
+    "chave": "CUMPRIMENTO DE SENTENÇA CONTRA A FAZENDA PÚBLICA",
+    "quantidade": 7,
+    "dados": null
+  },
+  {
+    "chave": "Cumprimento Provisório de Decisão",
+    "quantidade": 5,
+    "dados": null
+  },
+  {
+    "chave": "CUMPRIMENTO PROVISÓRIO DE DECISÃO",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Cumprimento Provisório de Sentença",
+    "quantidade": 23,
+    "dados": null
+  },
+  {
+    "chave": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Declaratória de Constitucionalidade",
+    "quantidade": 4,
+    "dados": null
+  },
+  {
+    "chave": "DECLARATÓRIA DE CONSTITUCIONALIDADE",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Desaforamento de Julgamento",
+    "quantidade": 609,
+    "dados": null
+  },
+  {
+    "chave": "DESAFORAMENTO DE JULGAMENTO",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Direta de Inconstitucionalidade",
+    "quantidade": 103,
+    "dados": null
+  },
+  {
+    "chave": "DIRETA DE INCONSTITUCIONALIDADE",
+    "quantidade": 3,
+    "dados": null
+  },
+  {
+    "chave": "Dissídio Coletivo de Greve",
+    "quantidade": 19,
+    "dados": null
+  },
+  {
+    "chave": "DISSÍDIO COLETIVO DE GREVE",
+    "quantidade": 11,
+    "dados": null
+  },
+  {
+    "chave": "Embargos à Execução",
+    "quantidade": 40,
+    "dados": null
+  },
+  {
+    "chave": "EMBARGOS À EXECUÇÃO",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Embargos de Declaração Cível",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Embargos de Terceiro Cível",
+    "quantidade": 5,
+    "dados": null
+  },
+  {
+    "chave": "EMBARGOS DE TERCEIRO CÍVEL",
+    "quantidade": 4,
+    "dados": null
+  },
+  {
+    "chave": "Embargos de Terceiro Criminal",
+    "quantidade": 6,
+    "dados": null
+  },
+  {
+    "chave": "Embargos Infringentes",
+    "quantidade": 14,
+    "dados": null
+  },
+  {
+    "chave": "Embargos Infringentes e de Nulidade",
+    "quantidade": 49,
+    "dados": null
+  },
+  {
+    "chave": "Exceção da Verdade",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Exceção de Ilegitimidade de Parte",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Exceção de Impedimento",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Exceção de Incompetência",
+    "quantidade": 4,
+    "dados": null
+  },
+  {
+    "chave": "Exceção de Incompetência de Juízo",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Exceção de Litispendência",
+    "quantidade": 5,
+    "dados": null
+  },
+  {
+    "chave": "Exceção de Suspeição",
+    "quantidade": 86,
+    "dados": null
+  },
+  {
+    "chave": "EXCEÇÃO DE SUSPEIÇÃO",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Execução Contra a Fazenda Pública",
+    "quantidade": 6,
+    "dados": null
+  },
+  {
+    "chave": "Exibição de Documento ou Coisa Cível",
+    "quantidade": 9,
+    "dados": null
+  },
+  {
+    "chave": "EXIBIÇÃO DE DOCUMENTO OU COISA CÍVEL",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Habeas Corpus Cível",
+    "quantidade": 172,
+    "dados": null
+  },
+  {
+    "chave": "HABEAS CORPUS CÍVEL",
+    "quantidade": 49,
+    "dados": null
+  },
+  {
+    "chave": "Habeas Corpus Criminal",
+    "quantidade": 63817,
+    "dados": null
+  },
+  {
+    "chave": "HABEAS CORPUS CRIMINAL",
+    "quantidade": 348,
+    "dados": null
+  },
+  {
+    "chave": "Habeas Data Cível",
+    "quantidade": 50,
+    "dados": null
+  },
+  {
+    "chave": "HABEAS DATA CÍVEL",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Habeas Data Criminal",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "HABILITAÇÃO",
+    "quantidade": 8,
+    "dados": null
+  },
+  {
+    "chave": "Habilitação",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Impugnação ao Valor da Causa Cível",
+    "quantidade": 12,
+    "dados": null
+  },
+  {
+    "chave": "Impugnação ao Valor da Causa Infância e Juventude",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Impugnação de Assistência Judiciária",
+    "quantidade": 3,
+    "dados": null
+  },
+  {
+    "chave": "Incidente De Arguição de Inconstitucionalidade Cível",
+    "quantidade": 62,
+    "dados": null
+  },
+  {
+    "chave": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL",
+    "quantidade": 15,
+    "dados": null
+  },
+  {
+    "chave": "Incidente de Arguição de Inconstitucionalidade Criminal",
+    "quantidade": 3,
+    "dados": null
+  },
+  {
+    "chave": "Incidente de Assunção de Competência",
+    "quantidade": 5,
+    "dados": null
+  },
+  {
+    "chave": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA",
+    "quantidade": 3,
+    "dados": null
+  },
+  {
+    "chave": "INCIDENTE DE IMPEDIMENTO CÍVEL",
+    "quantidade": 4,
+    "dados": null
+  },
+  {
+    "chave": "Incidente de Impedimento Cível",
+    "quantidade": 4,
+    "dados": null
+  },
+  {
+    "chave": "Incidente de Resolução de Demandas Repetitivas",
+    "quantidade": 47,
+    "dados": null
+  },
+  {
+    "chave": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS",
+    "quantidade": 5,
+    "dados": null
+  },
+  {
+    "chave": "Incidente de Suspeição Cível",
+    "quantidade": 188,
+    "dados": null
+  },
+  {
+    "chave": "INCIDENTE DE SUSPEIÇÃO CÍVEL",
+    "quantidade": 29,
+    "dados": null
+  },
+  {
+    "chave": "Incidente de Uniformização de Jurisprudência",
+    "quantidade": 12,
+    "dados": null
+  },
+  {
+    "chave": "Inquérito Policial",
+    "quantidade": 63,
+    "dados": null
+  },
+  {
+    "chave": "Insanidade Mental do Acusado",
+    "quantidade": 3,
+    "dados": null
+  },
+  {
+    "chave": "Inspeção",
+    "quantidade": 30,
+    "dados": null
+  },
+  {
+    "chave": "Interpelação",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Intervenção em Município",
+    "quantidade": 9,
+    "dados": null
+  },
+  {
+    "chave": "Liberdade Provisória com ou sem fiança",
+    "quantidade": 18,
+    "dados": null
+  },
+  {
+    "chave": "Mandado de Injunção",
+    "quantidade": 26,
+    "dados": null
+  },
+  {
+    "chave": "MANDADO DE INJUNÇÃO",
+    "quantidade": 6,
+    "dados": null
+  },
+  {
+    "chave": "Mandado de Segurança Cível",
+    "quantidade": 7755,
+    "dados": null
+  },
+  {
+    "chave": "MANDADO DE SEGURANÇA CÍVEL",
+    "quantidade": 3399,
+    "dados": null
+  },
+  {
+    "chave": "Mandado de Segurança Coletivo",
+    "quantidade": 68,
+    "dados": null
+  },
+  {
+    "chave": "Mandado de Segurança Criminal",
+    "quantidade": 529,
+    "dados": null
+  },
+  {
+    "chave": "MANDADO DE SEGURANÇA CRIMINAL",
+    "quantidade": 20,
+    "dados": null
+  },
+  {
+    "chave": "Medidas Protetivas de Urgência (Lei Maria da Penha)  - Criminal",
+    "quantidade": 4,
+    "dados": null
+  },
+  {
+    "chave": "Notificação para Explicações",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "PEDIDO DE COOPERAÇÃO JUDICIÁRIA",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Pedido de Efeito Suspensivo à Apelação",
+    "quantidade": 323,
+    "dados": null
+  },
+  {
+    "chave": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO",
+    "quantidade": 180,
+    "dados": null
+  },
+  {
+    "chave": "Pedido de Providências",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "PEDIDO DE PROVIDÊNCIAS",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CÍVEL",
+    "quantidade": 220,
+    "dados": null
+  },
+  {
+    "chave": "Pedido de Uniformização de Interpretação de Lei Cível",
+    "quantidade": 17,
+    "dados": null
+  },
+  {
+    "chave": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CRIMINAL",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "PETIÇÃO CÍVEL",
+    "quantidade": 874,
+    "dados": null
+  },
+  {
+    "chave": "Petição Cível",
+    "quantidade": 118,
+    "dados": null
+  },
+  {
+    "chave": "Petição Criminal",
+    "quantidade": 196,
+    "dados": null
+  },
+  {
+    "chave": "PETIÇÃO CRIMINAL",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Procedimento Comum Cível",
+    "quantidade": 218,
+    "dados": null
+  },
+  {
+    "chave": "PROCEDIMENTO COMUM CÍVEL",
+    "quantidade": 57,
+    "dados": null
+  },
+  {
+    "chave": "Procedimento Especial da Lei Antitóxicos",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Procedimento Investigatório Criminal (PIC-MP)",
+    "quantidade": 66,
+    "dados": null
+  },
+  {
+    "chave": "Processo Administrativo",
+    "quantidade": 111,
+    "dados": null
+  },
+  {
+    "chave": "PROCESSO ADMINISTRATIVO",
+    "quantidade": 46,
+    "dados": null
+  },
+  {
+    "chave": "Reclamação",
+    "quantidade": 471,
+    "dados": null
+  },
+  {
+    "chave": "RECLAMAÇÃO",
+    "quantidade": 103,
+    "dados": null
+  },
+  {
+    "chave": "Reclamação Criminal",
+    "quantidade": 76,
+    "dados": null
+  },
+  {
+    "chave": "Reclamação Militar",
+    "quantidade": 14,
+    "dados": null
+  },
+  {
+    "chave": "Recurso Administrativo",
+    "quantidade": 550,
+    "dados": null
+  },
+  {
+    "chave": "RECURSO ADMINISTRATIVO",
+    "quantidade": 40,
+    "dados": null
+  },
+  {
+    "chave": "Recurso de Medida Cautelar Criminal",
+    "quantidade": 3,
+    "dados": null
+  },
+  {
+    "chave": "Recurso de Sentença Criminal",
+    "quantidade": 4,
+    "dados": null
+  },
+  {
+    "chave": "Recurso em Sentido Estrito",
+    "quantidade": 11897,
+    "dados": null
+  },
+  {
+    "chave": "RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO",
+    "quantidade": 5,
+    "dados": null
+  },
+  {
+    "chave": "RECURSO INOMINADO CÍVEL",
+    "quantidade": 137437,
+    "dados": null
+  },
+  {
+    "chave": "Recurso Inominado Cível",
+    "quantidade": 43970,
+    "dados": null
+  },
+  {
+    "chave": "Recurso Inominado Militar",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Relaxamento de Prisão",
+    "quantidade": 8,
+    "dados": null
+  },
+  {
+    "chave": "Remessa Necessária Cível",
+    "quantidade": 11598,
+    "dados": null
+  },
+  {
+    "chave": "REMESSA NECESSÁRIA CÍVEL",
+    "quantidade": 3994,
+    "dados": null
+  },
+  {
+    "chave": "Remessa Necessária Criminal",
+    "quantidade": 88,
+    "dados": null
+  },
+  {
+    "chave": "Representação Criminal/Notícia de Crime",
+    "quantidade": 29,
+    "dados": null
+  },
+  {
+    "chave": "Representação p/ Declaração de Indignidade/Incompatibilidade",
+    "quantidade": 4,
+    "dados": null
+  },
+  {
+    "chave": "Representação p/ Perda da Graduação",
+    "quantidade": 19,
+    "dados": null
+  },
+  {
+    "chave": "Representação p/ Perda da Graduação ",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Restauração de Autos Cível",
+    "quantidade": 10,
+    "dados": null
+  },
+  {
+    "chave": "RESTAURAÇÃO DE AUTOS CÍVEL",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Restauração de Autos Criminal",
+    "quantidade": 1,
+    "dados": null
+  },
+  {
+    "chave": "Restituição de Coisas Apreendidas",
+    "quantidade": 43,
+    "dados": null
+  },
+  {
+    "chave": "Revisão Criminal",
+    "quantidade": 3039,
+    "dados": null
+  },
+  {
+    "chave": "REVISÃO CRIMINAL",
+    "quantidade": 9,
+    "dados": null
+  },
+  {
+    "chave": "Suspensão de Execução de Sentença",
+    "quantidade": 6,
+    "dados": null
+  },
+  {
+    "chave": "SUSPENSÃO DE LIMINAR E DE SENTENÇA",
+    "quantidade": 111,
+    "dados": null
+  },
+  {
+    "chave": "Suspensão de Liminar e de Sentença",
+    "quantidade": 45,
+    "dados": null
+  },
+  {
+    "chave": "Suspensão de Liminar ou Antecipação de Tutela",
+    "quantidade": 12,
+    "dados": null
+  },
+  {
+    "chave": "Termo Circunstanciado",
+    "quantidade": 7,
+    "dados": null
+  },
+  {
+    "chave": "Tutela Antecipada Antecedente",
+    "quantidade": 393,
+    "dados": null
+  },
+  {
+    "chave": "TUTELA ANTECIPADA ANTECEDENTE",
+    "quantidade": 77,
+    "dados": null
+  },
+  {
+    "chave": "Tutela Cautelar Antecedente",
+    "quantidade": 66,
+    "dados": null
+  },
+  {
+    "chave": "TUTELA CAUTELAR ANTECEDENTE",
+    "quantidade": 30,
+    "dados": null
+  }
+]

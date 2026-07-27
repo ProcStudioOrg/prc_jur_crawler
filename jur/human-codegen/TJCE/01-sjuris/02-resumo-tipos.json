@@ -1,0 +1,35 @@
+[
+  {
+    "arquivo": "02-doc-acordao.json",
+    "base": "2º GRAU",
+    "tipo": "ACÓRDÃO",
+    "total": 4869,
+    "ementaChars": 3339,
+    "conteudoChars": 28825,
+    "pdfChars": 121049,
+    "listaEmentaItens": 1,
+    "temHighlightEm": true
+  },
+  {
+    "arquivo": "03-doc-monocratica.json",
+    "base": "2º GRAU",
+    "tipo": "DECISÃO MONOCRÁTICA",
+    "total": 1230,
+    "ementaChars": 0,
+    "conteudoChars": 16142,
+    "pdfChars": 115713,
+    "listaEmentaItens": 0,
+    "temHighlightEm": true
+  },
+  {
+    "arquivo": "04-doc-turma-recursal.json",
+    "base": "TURMA RECURSAL",
+    "tipo": "ACÓRDÃO",
+    "total": 1003,
+    "ementaChars": 732,
+    "conteudoChars": 13845,
+    "pdfChars": 389945,
+    "listaEmentaItens": 1,
+    "temHighlightEm": true
+  }
+]

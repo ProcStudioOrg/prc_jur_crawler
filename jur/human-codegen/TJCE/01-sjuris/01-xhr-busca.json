@@ -1,0 +1,32 @@
+[
+  {
+    "m": "GET",
+    "url": "https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/buscaListaCampos/0",
+    "body": null
+  },
+  {
+    "m": "GET",
+    "url": "https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/buscaListaCampos/1",
+    "body": null
+  },
+  {
+    "m": "GET",
+    "url": "https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/buscaListaCampos/2",
+    "body": null
+  },
+  {
+    "m": "GET",
+    "url": "https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/buscaListaCampos/3",
+    "body": null
+  },
+  {
+    "m": "GET",
+    "url": "https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/buscaListaCampos/4",
+    "body": null
+  },
+  {
+    "m": "POST",
+    "url": "https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/?page=0&size=5",
+    "body": "{\"dataJulgamento\":[],\"busca\":\"aposentadoria por invalidez\",\"ordenacao\":\"order1\",\"nomeDocumento\":[\"ACÓRDÃO\"],\"baseDocumento\":[\"2º GRAU\"],\"origem\":[\"PJE\"]}"
+  }
+]

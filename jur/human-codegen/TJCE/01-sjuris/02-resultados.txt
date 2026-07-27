@@ -1,0 +1,162 @@
+================================================================================
+TJCE / SJURIS — MÓDULO 01, PÓS-BUSCA (skill browser-post-search)
+================================================================================
+
+Mapeado em 27/07/2026 com Playwright headless + reprodução da API fora do
+browser. Query de referência: "aposentadoria por invalidez".
+
+--------------------------------------------------------------------------------
+## 18. Tela de resultados
+--------------------------------------------------------------------------------
+
+Onde aparece:       MESMA rota. Antes e depois da busca a URL é
+                    https://sjuris.tjce.jus.br/tela-consulta
+                    Não abre modal, não abre aba nova, não muda de rota.
+URL reutilizável:   NÃO. A rota não carrega estado de busca — colar
+                    /tela-consulta numa aba limpa devolve a tela vazia.
+Controles somem?    NÃO. O painel de filtros continua à esquerda; o refinamento
+                    é incremental sobre a mesma tela.
+Total exposto:      texto "N resultado(s) para: <termo>" logo acima da lista,
+                    e "1 - 5 de N" no paginador.
+                    ⚠️ OS DOIS NÚMEROS SÃO DIFERENTES E AMBOS ESTÃO CERTOS:
+                    "1968 resultado(s)" = soma de TODOS os tipos
+                    "1 - 5 de 1691"     = só o tipo da aba ativa (ACÓRDÃO)
+                    O crawler lê `pagina.totalElements` da API, que corresponde
+                    ao segundo (o do tipo pedido).
+Abas por tipo:      "ACÓRDÃO (1691)  DECISÃO MONOCRÁTICA (277)  SÚMULA (0)"
+
+Prints:  02.01-listagem-topo.png · 02.02-listagem-rodape.png
+         02.03-resultado-com-periodo.png
+
+Seletor do card:   `.resultados .card`  (5 por página no default)
+                   ⚠️ `.card` sozinho pega 7 elementos, e o de índice 0 é o
+                   container da PÁGINA inteira (16.080 chars). Quem usar `.card`
+                   direto disseca a tela toda achando que é um julgado.
+
+--------------------------------------------------------------------------------
+## 19. Anatomia do card e a escada até o documento
+--------------------------------------------------------------------------------
+
+O card renderizado tem 3.527 chars de texto / 6.541 de HTML e mostra, sem
+clicar em nada:
+
+    Processo:                     01691605120188060001
+    Classe/Assunto:               APELAÇÃO CÍVEL / Auxílio-Doença Acidentário
+    Órgão julgador:               1ª Câmara de Direito Público
+    Relator(a)/Magistrado(a):     FERNANDO LUIZ XIMENES ROCHA
+    Origem:                       PJE
+    Julgamento:                   11/02/2026
+    Ementa:                       <a ementa inteira>
+
+`outerHTML` gravado em `02-card-resultado.html`.
+
+⚠️ A ESCADA NÃO EXISTE — E ISSO É UMA BOA NOTÍCIA.
+O card NÃO tem nenhum <button> nem <a>: a varredura devolveu lista vazia. Não
+há "Inteiro teor", não há "PDF", não há "Copiar citação". O único href da
+página inteira é "/tela-consulta".
+
+Não há escada porque não é preciso: **tudo já veio no payload da busca.**
+Nenhum request por documento. Campos da resposta:
+
+    ementa                 a ementa completa e ESTRUTURADA (I. CASO EM EXAME /
+                           II. QUESTÃO EM DISCUSSÃO / III. RAZÕES DE DECIDIR /
+                           IV. DISPOSITIVO), sem tags de highlight  → 3.339 chars
+    conteudo               O INTEIRO TEOR em texto puro              → 28.825 chars
+    pdfAutenticadoBase64   O PDF AUTENTICADO do documento, em base64 → 121.049 chars
+    listaEmenta[]          trechos da ementa com o termo em <em>  ← HIGHLIGHT
+    listaConteudo[]        trechos do inteiro teor com <em>       ← HIGHLIGHT
+
+⚠️ `listaEmenta` / `listaConteudo` são HIGHLIGHT, não texto citável. Contêm
+`<em>` no meio das palavras buscadas. Citar a partir deles é citar recorte.
+O texto citável é `ementa`; na falta dela, `conteudo`.
+
+### O card em TRÊS tipos de documento (medido, ver `02-resumo-tipos.json`)
+
+    tipo                         total   ementa   conteudo       pdf
+    ACÓRDÃO (2º grau)            4.869    3.339     28.825   121.049
+    DECISÃO MONOCRÁTICA          1.230        0     16.142   115.713
+    ACÓRDÃO (Turma Recursal)     1.003      732     13.845   389.945
+
+⚠️⚠️ **DECISÃO MONOCRÁTICA VEM COM `ementa` VAZIA** (`listaEmenta: []`),
+sempre. É a mesma armadilha do TJMG. Um crawler que só lê `ementa` devolve
+1.230 documentos em branco e o leitor conclui "sem conteúdo" — quando os
+16.142 chars do inteiro teor estão ali, no mesmo objeto.
+O TJCECrawler marca `temEmenta: false` e emite aviso explícito na saída.
+
+⚠️ A ementa da Turma Recursal é 4,5× menor que a do acórdão (732 × 3.339
+chars): é a ementa curta clássica de Juizado. Para tese jurídica, use o
+inteiro teor.
+
+Amostras cruas gravadas: `02-doc-acordao.json`, `02-doc-monocratica.json`,
+`02-doc-turma-recursal.json` (com o base64 do PDF elidido).
+
+--------------------------------------------------------------------------------
+## 20. Paginação e profundidade
+--------------------------------------------------------------------------------
+
+Parâmetro:            querystring `?page=N&size=M`, `page` 0-based
+Resultados/página:    default 5 na tela; o combo oferece 5, 10, 20
+Máximo aceito:        **20**. Bisectado: 20 OK; 50, 100, 200, 500 e 1000 todos
+                      504 Gateway Timeout em ~1,1s. O crawler capa em 20 e avisa.
+Profundidade:         page=500 (offset 10.000) devolve erro do Elasticsearch
+                      "all shards failed" — janela padrão de 10k documentos.
+                      Páginas intermediárias profundas dão 504 intermitente.
+Total é exato?        **EXATO, não saturado.** Medido com termos de frequências
+                      diferentes: "xilofone" 0 · "usucapião extraordinária de
+                      bem imóvel rural" 493 · "aposentadoria" 41.754. Nenhum
+                      número redondo, nenhum teto.
+
+⚠️ ESTABILIDADE — TESTADA DUAS VEZES, COMO MANDA A SKILL:
+    mesma página (page=1, size=20), duas requisições: 20/20 ids idênticos,
+      na mesma posição
+    3 páginas completas (60 documentos), duas execuções separadas:
+      60 únicos, 60/60 idênticos posição a posição
+A paginação é ESTÁVEL. Faz sentido: não há sessão nem balanceador com estado —
+cada requisição é independente e a ordenação por relevância é determinística.
+(Contraste com TJRJ/TJMG/TJDFT, onde a mesma página variava entre requisições.)
+
+--------------------------------------------------------------------------------
+## 20b. Permalink e identidade do documento
+--------------------------------------------------------------------------------
+
+Permalink:        **NÃO EXISTE.** Confirmado: o card não tem link, a rota é
+                  sempre /tela-consulta, e não há rota /documento/:id.
+                  Consequência prática: uma citação do TJCE não pode vir com
+                  URL do julgado. A verificação é por RECONSULTA (Checker),
+                  não por link. Diga isso ao usuário em vez de inventar URL.
+
+Identidade:       campo **`id`**, no formato `<numeroProcesso>_<idDocumento>`
+                  ex.: `01691605120188060001_33658447`
+                  Também há `idDocumento` isolado (33658447).
+
+⚠️ O NÚMERO DO PROCESSO NÃO IDENTIFICA O JULGADO. Comprovado no próprio
+processo de teste: 0169160-51.2018.8.06.0001 tem DOIS julgados na base —
+    01691605120188060001_33658447  ACÓRDÃO              11/02/2026
+    01691605120188060001_37545550  DECISÃO MONOCRÁTICA  08/06/2026
+Citar "o julgado do processo X" sem o `id` é ambíguo.
+
+--------------------------------------------------------------------------------
+## Tabela campo-a-campo: API → repo
+--------------------------------------------------------------------------------
+
+    API                                repo (TJCECrawler.mapDocumento)
+    ---------------------------------  ---------------------------------------
+    id                                 id                (identidade do julgado)
+    idDocumento                        idDocumento
+    nomeDocumento                      tipoDocumento
+    numeroProcesso                     processo
+    classe / classeJudicial            classe
+    assuntoCompleto / assunto          assunto
+    orgaoJulgador                      orgaoJulgador
+    orgaoJulgadorScpu.descricao…       orgaoJulgadorOrigem  (comarca/vara de origem)
+    magistrado                         relator
+    dataJulgamento  [2026,2,11]        dataJulgamento  "11/02/2026"
+    dataPublicacao  "n/d"              dataPublicacao  ""     (quase sempre vazio)
+    origem          "PJE"|"SAJ"        origem
+    siglaSistema    "PJE2G"|"PJE1G"    sistemaOrigem
+    situacaoScpu                       situacao
+    ementa                             ementa + temEmenta
+    conteudo                           inteiroTeor (com --full-text) + temInteiroTeor
+    pdfAutenticadoBase64               temPdf  (gravável com formats:['pdf'])
+    partes[]                           partes[] {tipo, nome, advogados[]}
+    (não existe)                       processoUrl = null, inteiroTeorLink = null

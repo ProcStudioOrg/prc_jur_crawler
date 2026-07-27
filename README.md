@@ -4,7 +4,7 @@ CLI + skills de Claude para buscar, verificar e mapear jurisprudência (case law
 brasileiros. Feito para ser usado por agentes de IA: cada busca é verificável contra a base
 oficial do tribunal, e cada tribunal tem o mapeamento humano da sua navegação versionado.
 
-**61 tribunais catalogados · 6 com busca funcionando hoje.**
+**61 tribunais catalogados · 41 com busca funcionando hoje.**
 Placar atualizado: [`jur/cobertura/CLAUDE-COBERTURA.md`](jur/cobertura/CLAUDE-COBERTURA.md).
 
 ## Instalar como plugin do Claude Code
@@ -38,8 +38,10 @@ npx playwright install chromium
 ./bin/jur <comando> --help
 ```
 
-Tribunais operacionais: `trf4` `trf5` `tjgo` `tjpa` `tjpr` `tcu` ·
-instáveis: `trf1` `trf3` · quebrado: `trf2` · sem acesso: `tjsp`.
+Operacionais: os superiores `stf` `stj` · a Justiça do Trabalho inteira (`tst`, `trt1`…`trt24`,
+`csjt`) · os federais `trf2` `trf4` `trf5` `trf6` · os estaduais `tjce` `tjdft` `tjgo` `tjmg`
+`tjpa` `tjpr` `tjrj` `tjrs` `tjsc` · e o `tcu`.
+Instáveis: `trf1` `trf3` · bloqueados por captcha: `tjma` (só consulta por nº) `tjsp`.
 
 ## Estrutura
 

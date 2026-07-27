@@ -1,0 +1,294 @@
+================================================================================
+TJCE — MÓDULO 01: SJURIS (Busca de Jurisprudência)
+================================================================================
+
+Tribunal:               Tribunal de Justiça do Estado do Ceará (TJCE)
+Estado:                 CE
+Módulo:                 SJURIS — "Sistema de Buscas de Jurisprudências", v2.4.15
+Link principal:         https://sjuris.tjce.jus.br/
+API:                    POST https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/?page=N&size=M
+Sistema judicial:       Próprio — SPA Angular sobre gateway REST + Elasticsearch
+Sistema irmão mapeado:  TJPA e TJMG (mesma forma: SPA com API JSON interna)
+Abrangência:            813.941 documentos (medido em /buscaListaCampos/1):
+                          ACÓRDÃO             565.878
+                          DECISÃO MONOCRÁTICA 247.991
+                          SÚMULA                   72
+                        Por base (/buscaListaCampos/3):
+                          2º GRAU             622.257
+                          TURMA RECURSAL      191.688
+                        Cobre SAJ **e** PJe. Sem 1º grau autônomo.
+Data do mapeamento:     27/07/2026
+
+--------------------------------------------------------------------------------
+PASSO 0 — API OFICIAL: PROCURADA, NÃO EXISTE PARA JURISPRUDÊNCIA
+--------------------------------------------------------------------------------
+
+Procurado e ENCONTRADO, mas para outra coisa:
+  - https://www.tjce.jus.br/transparencia/dados-abertos/ — portal de dados
+    abertos do TJCE, com API REST por área/anexo/período mediante token público.
+    É de TRANSPARÊNCIA (orçamento, pessoal, estatística), **não** de
+    jurisprudência. Não serve a este crawler.
+  - https://www.tjce.jus.br/estatistica/api-publica/ — a página "API Pública"
+    do TJCE aponta para o DataJud do CNJ, não para base própria.
+  - DataJud: `api_publica_tjce` responde e cobre G1 e G2. Serve ao Checker como
+    fallback (metadado: prova o PROCESSO, nunca a DECISÃO).
+
+Procurado e NÃO encontrado:
+  - dadosabertos.tjce.jus.br — não resolve
+  - Swagger/OpenAPI em gateway.tjce.jus.br ou sjuris.tjce.jus.br — não existe
+  - qualquer documentação pública do endpoint /sjuris/api/v1 — não existe
+
+Conclusão: a API do SJURIS é `api` (interna, não documentada), não
+`api-oficial`. Foi descoberta na aba Network da própria SPA.
+
+--------------------------------------------------------------------------------
+A DECISÃO QUE MAIS IMPORTA: SJURIS, NÃO e-SAJ
+--------------------------------------------------------------------------------
+
+A página oficial "Jurisprudências" do TJCE
+(https://www.tjce.jus.br/institucional/jurisprudencias/) linka OS DOIS:
+
+  1. "Pesquisa de Acórdão - eSAJ"  https://esaj.tjce.jus.br/cjsg/consultaCompleta.do
+  2. "Pesquisa de Acórdão - PJe - SJURIS"  https://sjuris.tjce.jus.br/
+
+O rótulo do link 2 diz "PJe", e isso é ENGANOSO: o SJURIS **também** indexa o
+acervo do SAJ. Foi medido, não presumido — mesma query, mesmo recorte:
+
+    origem=["PJE"]   1.691
+    origem=["SAJ"]   3.178
+    sem filtro       4.869   ← 1.691 + 3.178, exatamente
+
+Ou seja, o SJURIS é SUPERSET do e-SAJ. Usar o e-SAJ perderia todo o acervo PJe,
+e ainda por cima pelo caminho mais caro.
+
+O e-SAJ (cjsg) foi mapeado e funciona, mas é o pior caminho por dois motivos:
+
+  (a) EXIGE BROWSER. O POST de /cjsg/resultadoCompleta.do carrega um token de
+      reCAPTCHA v3 gerado no cliente. Reproduzindo o corpo capturado, byte a
+      byte, apenas sem o token, o servidor responde HTTP 200 com o FORMULÁRIO
+      VAZIO de volta — sem mensagem de erro, sem status de falha. Quem não
+      comparar o tamanho da resposta conclui "a busca não achou nada".
+      (Medido: 70.196 bytes de resposta = a mesma página do formulário.)
+      Antes da busca a tela chama POST /cjsg/captchaControleAcesso.do, que
+      devolve {"uuidCaptcha": "sajcaptcha_..."} — necessário, mas não suficiente.
+  (b) Cobre só o SAJ.
+
+O Playwright headless PASSA no reCAPTCHA v3 do cjsg (medido: 4.716 acórdãos
+para "aposentadoria por invalidez" no inteiro teor). Então o e-SAJ é viável
+como plano B se o SJURIS cair — só não é o plano A.
+
+================================================================================
+FERRAMENTAS COMUNS
+================================================================================
+
+## 1. Busca principal (query)
+
+Campo único: <input id="filtro"> rotulado "Pesquisar palavras-chave".
+Na API: `busca` (string).
+
+  <input _ngcontent-... type="text" id="filtro" class="form-control">
+
+Botões "Limpar" (type=reset) e "Buscar" logo abaixo. ⚠️ O botão "Buscar" é
+type="reset" no DOM (defeito do portal, não do mapeamento) — quem procurar
+type="submit" não acha.
+
+## 2. Operadores
+
+A tela expõe uma barra de operadores como BOTÕES que inserem texto no campo:
+
+  id=cond_e          "e"
+  id=cond_ou         "ou"
+  id=cond_nao        "não"       (name="cod_nao" — typo do portal)
+  id=cond_regexp_1   " "         (frase exata)
+  id=cond_regexp_2   " "~        (frase com proximidade)
+  id=cond_regexp_3   ~           (fuzzy)
+  id=cond_regexp_4   $           (truncamento)
+  id=cond_regexp_5   ?           (curinga de 1 caractere)
+  id=cond_regexp_6   (
+  id=cond_regexp_7   )
+
+É sintaxe de Elasticsearch query_string com rótulos em português. O que foi
+TESTADO contra a API (não presumido):
+
+  "0169160-51.2018.8.06.0001"  frase exata  ->      1  ✅ funciona
+  0169160-51.2018.8.06.0001    sem aspas    ->    294  (quebra em tokens)
+  aposentadoria por invalidez  livre        ->  4.869
+  xilofone                     termo raro   ->      0  (contagem exata)
+
+⚠️ NÃO confie nos operadores em português sem testar caso a caso: a barra é
+cosmética sobre o parser do Elasticsearch. A frase exata entre aspas é a única
+verificada em produção por este mapeamento, e é a que o Checker usa.
+
+## 3. Número máximo de páginas / resultados (max-pages)
+
+`size` na querystring. **Teto medido: 20.** Acima disso a API devolve 504
+Gateway Timeout SEMPRE (testado 50, 100, 200, 500, 1000 — todos 504 em ~1,1s).
+O combo "Itens por página" da tela confirma: as únicas opções são 5, 10 e 20.
+
+`page` é 0-based. Páginas profundas também custam 504; page=500 (offset 10.000)
+devolve erro explícito do Elasticsearch: "all shards failed" — é a janela padrão
+de 10.000 documentos.
+
+504 esporádico acontece mesmo dentro dos limites: o Navigator trata com backoff
+(3 tentativas, 3s/6s/9s).
+
+## 4. Filtro de data — julgamento
+
+Dois <input placeholder="dd/mm/aaaa"> dentro de "Filtros avançados".
+
+⚠️ ARMADILHA CENTRAL DESTE PORTAL. O corpo da API tem um campo `dataJulgamento`
+que parece ser o filtro e NÃO É — ele fica sempre `[]`. O período viaja em dois
+campos separados, em ISO com o offset de Brasília:
+
+    "dataJulgamentoInicial": "2025-01-01T03:00:00.000Z",
+    "dataJulgamentoFinal":   "2025-12-31T03:00:00.000Z",
+    "dataJulgamento": []
+
+Pôr as datas dentro de `dataJulgamento` devolve **0 em silêncio** — que se lê
+como "não há jurisprudência no período" e não é. Corpo real capturado da tela
+em `01-busca-com-data.json`.
+
+Medido: 4.869 sem data -> 1.027 em 2025 (restringe de fato).
+
+## 5. Filtro de data — publicação
+
+**NÃO EXISTE.** E o campo `dataPublicacao` da resposta vem `"n/d"` na
+esmagadora maioria dos documentos. Só há filtro por data de JULGAMENTO.
+
+## 6. Filtro de instância
+
+Não há combo de instância. O SJURIS é acervo de 2º grau + Turma Recursal; não
+indexa sentença de 1º grau. (Documentos com siglaSistema=PJE1G aparecem, mas
+são decisões de 2º grau sobre processo originário de 1º grau.)
+
+## 7. Filtro de competência (Juizado × Justiça Comum)  ← OBRIGATÓRIO
+
+É o combo "Base", primeiro <mat-select> do painel. Na API: `baseDocumento`.
+Domínio completo (2 opções, de /buscaListaCampos/3):
+
+    "2º GRAU"          622.257   Justiça Comum de 2º grau   (default do portal)
+    "TURMA RECURSAL"   191.688   Juizados Especiais
+
+⚠️ O rótulo usa ORDINAL MASCULINO "º" (U+00BA), não o símbolo de grau "°"
+(U+00B0). Trocar um pelo outro devolve 0 sem erro.
+
+Medido, mesma query: comum 4.869 × turmas 1.003 × os dois 5.872. O filtro
+muda a contagem de fato.
+
+## 8. Filtro de área (Cível × Criminal)
+
+Não existe como filtro próprio. A separação aparece indiretamente no órgão
+julgador ("2ª Câmara Criminal" × "2ª Câmara de Direito Privado") e na classe.
+
+## 9. Filtro de órgão / matéria
+
+Refinamento lateral "Órgão Julgador" na tela de resultados. Na API:
+`orgaoJulgador` (array). Domínio em /buscaListaCampos/0, com contagens —
+gravado em `dominios-filtros.json`. Amostra:
+
+    2ª Câmara Criminal            53.216
+    1ª Câmara Criminal            50.372
+    3ª Câmara Criminal            49.018
+    2ª Câmara de Direito Privado  64.991
+    1ª Câmara de Direito Privado  59.868
+    3ª Câmara de Direito Privado  58.378
+    4ª Câmara Criminal             4.579
+
+## 10. Unidade específica (serventia / comarca)
+
+Não há filtro. A comarca de origem vem no documento, em
+`orgaoJulgadorScpu.descricaoSistemaOrigem` (ex.: "2ª Vara da Comarca de Viçosa
+do Ceará") — dá para filtrar depois, não antes.
+
+## 11. Magistrada ou magistrado
+
+Refinamento lateral "Relator/Magistrado". Na API: `magistrado` (array).
+Campo do documento: `magistrado` (ex.: "FERNANDO LUIZ XIMENES ROCHA").
+
+## 12. Tipo de ato
+
+Na API: `nomeDocumento` (array). Domínio de /buscaListaCampos/1:
+
+    "ACÓRDÃO"              565.878
+    "DECISÃO MONOCRÁTICA"  247.991
+    "SÚMULA"                    72
+
+⚠️ NA TELA NÃO HÁ SELETOR DE TIPO. As três abas acima da lista
+("ACÓRDÃO (1691)  DECISÃO MONOCRÁTICA (277)  SÚMULA (0)") são <button>, mas
+clicar nelas em Playwright headless NÃO trocou a lista — a lista permaneceu
+idêntica byte a byte após 45s de espera. Ver "Pendências" no fim deste arquivo.
+O filtro funciona pela API, que é o caminho do crawler.
+
+## 13. Relator / revisor, classe, assunto
+
+    classe    -> /buscaListaCampos/2. ⚠️ o domínio tem duplicatas por caixa
+                 ("Ação Direta de Inconstitucionalidade" 101 e
+                  "AÇÃO DIRETA DE INCONSTITUCIONALIDADE" 24) — são entradas
+                 distintas do índice, não o mesmo valor.
+    assunto   -> /buscaListaCampos/4, ÁRVORE de assuntos CNJ com
+                 {assunto, codigo_assunto, codigo_assunto_pai, filhos[], nivel}
+    revisor   -> não existe
+
+## 14. Número do processo
+
+⚠️ **NÃO HÁ FILTRO POR NÚMERO DE PROCESSO.** Nem na tela, nem na API (testados
+e ignorados: `numeroProcesso`, `processo`, `numeroUnico`).
+
+O jeito que funciona é buscar o número no texto livre, e a forma importa —
+medido no processo 0169160-51.2018.8.06.0001:
+
+    "0169160-51.2018.8.06.0001"   formatado + aspas ->   1 documento  ✅ exato
+    "01691605120188060001"        dígitos  + aspas ->   3 documentos ❌ errados
+    0169160-51.2018.8.06.0001     formatado s/aspas -> 294 documentos ❌ ruído
+
+Funciona porque o número formatado aparece dentro do `conteudo` do documento.
+O TJCEChecker sempre normaliza para o formato CNJ e envolve em aspas, e depois
+ainda descarta o que voltou com outro `numeroProcesso`.
+
+================================================================================
+ESPECIFICIDADES
+================================================================================
+
+## 15. Bloqueios (Cloudflare / captcha / verificação de navegador)
+
+SJURIS:
+    Busca sem resolver nada?      SIM — HTTP puro, sem cookie, sem sessão.
+    Download sem resolver nada?   SIM — não há download: o texto e o PDF já
+                                  vêm no corpo da busca.
+    Há Akamai (mPulse/boomerang) no HTML da SPA, mas é telemetria (RUM); não
+    interfere na API do gateway.
+
+e-SAJ (cjsg), para registro:
+    Busca sem resolver?           NÃO — reCAPTCHA v3 obrigatório, e a recusa é
+                                  SILENCIOSA (200 + formulário vazio).
+    Com Playwright headless?      SIM — o v3 aceita o headless.
+
+## 16. Forma de acesso
+
+`api` — POST JSON direto, sem browser, sem autenticação, sem cookie.
+Headers que o crawler manda (espelhando a SPA):
+    Content-Type: application/json
+    Origin:  https://sjuris.tjce.jus.br
+    Referer: https://sjuris.tjce.jus.br/
+    User-Agent: Chrome comum
+
+## 17. Sessão e estado
+
+Nenhum. Não há cookie de sessão, jsessionid nem token. Cada requisição é
+independente — o que também explica a paginação ser estável (ver §20).
+
+================================================================================
+PENDÊNCIAS E DEFEITOS DE MAPEAMENTO
+================================================================================
+
+1. As abas de tipo de documento (ACÓRDÃO / DECISÃO MONOCRÁTICA / SÚMULA) não
+   trocaram a lista em Playwright headless, apesar de serem <button>. Os três
+   tipos foram dissecados pela API (ver `02-doc-acordao.json`,
+   `02-doc-monocratica.json`, `02-doc-turma-recursal.json` e `02-resumo-tipos.json`),
+   que é o caminho que o crawler usa. Falta o print de cada aba trocada no DOM.
+   Não afeta o crawler; afeta o `fixer` se um dia o filtro migrar para o DOM.
+
+2. Dois <mat-select> do painel avançado (mat-select-4 e mat-select-6) abriram
+   com ZERO opções — provavelmente carregam por AJAX só quando há contexto de
+   busca. Suspeita: são Órgão Julgador e Relator, cujos domínios já temos pelos
+   endpoints /buscaListaCampos. Confirmar antes de expor como flag da CLI.

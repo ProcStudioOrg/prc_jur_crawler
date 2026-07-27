@@ -1,0 +1,167 @@
+[
+  {
+    "chave": "2ª Câmara Criminal",
+    "quantidade": 53216,
+    "dados": null
+  },
+  {
+    "chave": "1ª Câmara Criminal",
+    "quantidade": 50372,
+    "dados": null
+  },
+  {
+    "chave": "3ª Câmara Criminal",
+    "quantidade": 49018,
+    "dados": null
+  },
+  {
+    "chave": "4ª Câmara Criminal",
+    "quantidade": 4579,
+    "dados": null
+  },
+  {
+    "chave": "2ª Câmara de Direito Privado",
+    "quantidade": 64991,
+    "dados": null
+  },
+  {
+    "chave": "1ª Câmara de Direito Privado",
+    "quantidade": 59868,
+    "dados": null
+  },
+  {
+    "chave": "3ª Câmara de Direito Privado",
+    "quantidade": 58378,
+    "dados": null
+  },
+  {
+    "chave": "4ª Câmara de Direito Privado",
+    "quantidade": 58341,
+    "dados": null
+  },
+  {
+    "chave": "5ª Câmara de Direito Privado",
+    "quantidade": 8365,
+    "dados": null
+  },
+  {
+    "chave": "6ª Câmara de Direito Privado",
+    "quantidade": 6811,
+    "dados": null
+  },
+  {
+    "chave": "3ª Câmara de Direito Público",
+    "quantidade": 64267,
+    "dados": null
+  },
+  {
+    "chave": "2ª Câmara de Direito Público",
+    "quantidade": 60679,
+    "dados": null
+  },
+  {
+    "chave": "1ª Câmara de Direito Público",
+    "quantidade": 58822,
+    "dados": null
+  },
+  {
+    "chave": "Conselho da Magistratura",
+    "quantidade": 37,
+    "dados": null
+  },
+  {
+    "chave": "Órgão Especial",
+    "quantidade": 11569,
+    "dados": null
+  },
+  {
+    "chave": "Plantão Judiciário - Final de Semana e Recesso Natalino",
+    "quantidade": 638,
+    "dados": null
+  },
+  {
+    "chave": "Plantão Judiciário (Vara Fictícia)",
+    "quantidade": 2,
+    "dados": null
+  },
+  {
+    "chave": "Presidência",
+    "quantidade": 61,
+    "dados": null
+  },
+  {
+    "chave": "Seção Criminal",
+    "quantidade": 4111,
+    "dados": null
+  },
+  {
+    "chave": "Seção de Direito Privado",
+    "quantidade": 1296,
+    "dados": null
+  },
+  {
+    "chave": "Seção de Direito Público",
+    "quantidade": 1183,
+    "dados": null
+  },
+  {
+    "chave": "Tribunal Pleno",
+    "quantidade": 99,
+    "dados": null
+  },
+  {
+    "chave": "Turma de Uniformização de Jurisprudência",
+    "quantidade": 202,
+    "dados": null
+  },
+  {
+    "chave": "2ª Turma do Núcleo de Justiça 4.0 - Direito Privado",
+    "quantidade": 2785,
+    "dados": null
+  },
+  {
+    "chave": "1ª Turma do Núcleo de Justiça 4.0 - Direito Privado",
+    "quantidade": 2655,
+    "dados": null
+  },
+  {
+    "chave": "3ª Turma Recursal",
+    "quantidade": 68335,
+    "dados": null
+  },
+  {
+    "chave": "2ª Turma Recursal",
+    "quantidade": 32144,
+    "dados": null
+  },
+  {
+    "chave": "1ª Turma Recursal",
+    "quantidade": 27118,
+    "dados": null
+  },
+  {
+    "chave": "4ª Turma Recursal",
+    "quantidade": 13789,
+    "dados": null
+  },
+  {
+    "chave": "1ª Turma Recursal dos Juizados Especiais da Fazenda Pública",
+    "quantidade": 2754,
+    "dados": null
+  },
+  {
+    "chave": "6ª Turma Recursal Provisória",
+    "quantidade": 25876,
+    "dados": null
+  },
+  {
+    "chave": "5ª Turma Recursal Provisória",
+    "quantidade": 21470,
+    "dados": null
+  },
+  {
+    "chave": "Vice-Presidência",
+    "quantidade": 42,
+    "dados": null
+  }
+]

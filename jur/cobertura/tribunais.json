@@ -898,19 +898,20 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://sjuris.tjce.jus.br/",
+        "comando": "tjce",
+        "acesso": "api",
+        "status": "ok",
+        "nota": "SJURIS v2.4.15 — SPA Angular sobre gateway REST + Elasticsearch (POST https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/?page=N&size=M). Sem auth, sem cookie, sem sessão, sem captcha. ⚠️ NÃO use esaj.tjce.jus.br/cjsg: a página oficial de jurisprudência do TJCE linka os DOIS portais e rotula o SJURIS como \"PJe\", o que é enganoso — o SJURIS cobre SAJ **e** PJe (medido, mesma query: PJE 1.691 + SAJ 3.178 = 4.869 sem filtro), sendo SUPERSET do e-SAJ; e o cjsg ainda exige browser, porque a busca carrega token de reCAPTCHA v3 e, sem ele, responde HTTP 200 com o FORMULÁRIO VAZIO de volta, sem erro nenhum (Playwright headless passa no v3 — serve de plano B). ACERVO: 813.941 documentos — ACÓRDÃO 565.878, DECISÃO MONOCRÁTICA 247.991, SÚMULA 72; por base 2º GRAU 622.257 × TURMA RECURSAL 191.688. Só 2º grau + Turma Recursal, sem 1º grau. INTEIRO TEOR **E** PDF AUTENTICADO JÁ VÊM NO PAYLOAD DA BUSCA (campos `conteudo` ~29 KB e `pdfAutenticadoBase64` ~120 KB) — zero request por documento. ⚠️ CINCO ARMADILHAS MEDIDAS: (1) DECISÃO MONOCRÁTICA vem com `ementa` VAZIA sempre (listaEmenta:[]) — só ACÓRDÃO e TURMA RECURSAL têm ementa indexada, mesma armadilha do TJMG, mas aqui o `conteudo` está no mesmo objeto e nada se perde; o crawler marca temEmenta:false e AVISA; (2) o período NÃO vai em `dataJulgamento` (esse campo fica sempre []) e sim em `dataJulgamentoInicial`/`dataJulgamentoFinal`, ISO com offset de Brasília (…T03:00:00.000Z) — datas dentro de `dataJulgamento` devolvem 0 EM SILÊNCIO; (3) os rótulos de base usam ORDINAL MASCULINO \"º\" (U+00BA), e trocar por \"°\" (U+00B0) devolve 0 sem erro; (4) `size` acima de 20 devolve 504 SEMPRE (testado 50/100/200/500/1000) e offset além de 10.000 quebra em all shards failed; (5) NÃO EXISTE FILTRO POR NÚMERO DE PROCESSO nem na tela nem na API — o Checker acha o processo buscando o CNJ FORMATADO ENTRE ASPAS no texto livre (medido: formatado+aspas 1 exato × só dígitos+aspas 3 errados × formatado sem aspas 294 de ruído). NÃO HÁ PERMALINK: a SPA vive toda em /tela-consulta e o card não tem link nem botão — a identidade do julgado é o campo `id` = \"<numeroProcesso>_<idDocumento>\", e o nº do processo NÃO identifica o julgado (o processo de teste tem 2). Paginação ESTÁVEL (60/60 idênticos em duas execuções) e total EXATO, não saturado (xilofone 0 × aposentadoria 41.754). API oficial de jurisprudência procurada e INEXISTENTE: os dados abertos do TJCE são de transparência, a página \"API Pública\" do tribunal aponta para o DataJud, e não há Swagger — DataJud api_publica_tjce responde (G1+G2) e serve de fallback do Checker com --datajud."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
-        "codegen": "nao",
-        "screenshots": 0,
-        "tests": false,
+        "crawler": "src/TJCECrawler.js",
+        "extra": "TJCENavigator.js (API do SJURIS: cap de size em 20, backoff para o 504 esporadico, datas em dataJulgamentoInicial/Final, PDF base64 do proprio payload) + TJCEChecker.js (consulta pelo CNJ FORMATADO ENTRE ASPAS no texto livre, com descarte do ruido por numeroProcesso, e fallback DataJud api_publica_tjce)",
+        "codegen": "completo",
+        "screenshots": 9,
+        "tests": "src/TJCETestes.js",
         "skills": [],
-        "working": false
+        "working": true
       },
       "portal": "https://pje.tjce.jus.br/pje2grau/login.seam"
     },

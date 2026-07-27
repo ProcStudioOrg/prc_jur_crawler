@@ -30,6 +30,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `stf`  | **Supremo Tribunal Federal** | Nacional (constitucional) | `CLAUDE-STF.md` | 🟢 OK (API direta; browser só p/ o token do WAF) |
 | `stj`  | **Superior Tribunal de Justiça** | Nacional (lei federal infraconstitucional) | `CLAUDE-STJ.md` | 🟢 OK (SCON — **browser headful obrigatório**, Cloudflare) |
 | `tcu`  | Tribunal de Contas da União | Federal (acórdãos) | `CLAUDE-TCU.md` | 🟢 OK |
+| `tjce` | TJ do Ceará | CE | `CLAUDE-TJCE.md` | 🟢 OK (API direta, sem browser — SJURIS, **SAJ + PJe juntos**; **não** use o e-SAJ) |
 | `tjdft` | TJ do DF e Territórios | DF | `CLAUDE-TJDFT.md` | 🟢 OK (**API pública oficial**, sem browser) |
 | `tjgo` | TJ de Goiás | GO | `CLAUDE-TJGO.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjma` | TJ do Maranhão | MA | `CLAUDE-TJMA.md` | 🔴 busca **bloqueada por captcha**; só `-n` (nº do processo, via DataJud) |
@@ -50,7 +51,7 @@ escolher o comando. `CLAUDE-TRT9.md` é o mergulho técnico do sistema.
 
 Nenhum tribunal catalogado está mapeado à espera de crawler. Falta ainda o módulo
 **eJURIS** do TJRJ (legado com Turmas Recursais e acervo histórico — o `jur tjrj` cobre
-só o e-Proc). Os outros 17 tribunais (TJs restantes) não estão mapeados — veja
+só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — veja
 `cobertura/CLAUDE-COBERTURA.md` e use a skill [`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**
@@ -86,6 +87,19 @@ só o e-Proc). Os outros 17 tribunais (TJs restantes) não estão mapeados — v
   ⚠️ só Justiça Comum 2º grau no e-Proc (~2023+); **Juizado Especial / Turma Recursal
   carioca e acervo antigo estão no eJURIS, sem crawler** — diga isso ao usuário em vez
   de rotular resultado do e-Proc como Juizado
+- "TJCE" / "Ceará estadual" / "Fortaleza" → `tjce` → leia `CLAUDE-TJCE.md`.
+  Juizado Especial / Turma Recursal cearense → `tjce --base turmas`; Justiça Comum
+  2º grau é `--base comum` (default). `--base todos` mistura os dois.
+  ⚠️ **Decisão monocrática vem SEM ementa** (as 247.991 delas): só ACÓRDÃO e TURMA
+  RECURSAL têm ementa indexada. Diferente do TJMG, aqui o inteiro teor está no
+  mesmo objeto — use `--full-text`. O crawler avisa; repasse o aviso.
+  ⚠️ **Não existe permalink**: o SJURIS vive todo em `/tela-consulta` e não há URL
+  por julgado. Nunca invente link de acórdão do TJCE — a verificação é por
+  reconsulta (`-n <número>`).
+  ⚠️ **Nunca use `esaj.tjce.jus.br/cjsg`** — é o portal antigo: cobre só o SAJ
+  (o SJURIS cobre SAJ **e** PJe) e exige browser por causa do reCAPTCHA v3, que
+  quando falha devolve o formulário vazio com HTTP 200, sem erro.
+  A base **não tem 1º grau (sentenças)**; para matéria federal cearense use `trf5`
 - "TJDFT" / "Distrito Federal estadual" / "Brasília" → `tjdft` → leia `CLAUDE-TJDFT.md`.
   Juizado Especial / Turma Recursal do DF → `tjdft --acervo turmas`; Justiça Comum 2º grau
   é `--acervo comum` (o default `--acervo todos` **mistura os dois**). Único tribunal do
