@@ -1,0 +1,54 @@
+{
+ "campo": "camara_s",
+ "total_valores": 12,
+ "valores": [
+  {
+   "valor": "1ª SEÇÃO",
+   "docs": 6836
+  },
+  {
+   "valor": "2ª SEÇÃO",
+   "docs": 11281
+  },
+  {
+   "valor": "3ª SEÇÃO",
+   "docs": 16206
+  },
+  {
+   "valor": "Oitava Câmara",
+   "docs": 123
+  },
+  {
+   "valor": "Pleno",
+   "docs": 788
+  },
+  {
+   "valor": "Primeira Câmara",
+   "docs": 20360
+  },
+  {
+   "valor": "Quarta Câmara",
+   "docs": 85002
+  },
+  {
+   "valor": "Quinta Câmara",
+   "docs": 133
+  },
+  {
+   "valor": "Segunda Câmara",
+   "docs": 56071
+  },
+  {
+   "valor": "Sexta Câmara",
+   "docs": 302
+  },
+  {
+   "valor": "Sétima Câmara",
+   "docs": 172
+  },
+  {
+   "valor": "Terceira Câmara",
+   "docs": 67587
+  }
+ ]
+}

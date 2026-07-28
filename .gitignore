@@ -59,7 +59,5 @@ output/
 .claude/*
 !.claude/skills/
 
-# jur: outputs de busca e relatórios de smoke (mantém o diretório, ignora o conteúdo gerado)
-jur/resultados/*.json
-jur/resultados/*.txt
-jur/resultados/*.log
+# jur: outputs de busca e relatórios (nada disso entra no git)
+jur/resultados/

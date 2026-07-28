@@ -186,7 +186,7 @@
         "comando": "trf1",
         "acesso": "browser",
         "status": "instavel",
-        "nota": "Host do CJF resolve mas não responde (verificado 24/07/2026, também fora via curl) — pode ser queda temporária; reteste com tests/smoke.js"
+        "nota": "A jurisprudência do TRF1 é servida pelo portal do CJF, não pelo domínio trf1.jus.br. O host VOLTOU ao ar (a nota anterior, de 24/07/2026, dizia que não respondia — em 27/07/2026 responde em 0,18s). ⚠️ RESSALVA CENTRAL: A BASE CONGELOU EM 31/07/2025. Medido em 27/07/2026 com -q \"aposentadoria\": 2025 inteiro 13.554, abr-jun/2025 10.572, jul/2025 1.676, ago/2025 0, set/2025 0, out/2025 0, nov/2025 0, dez/2025 0, todo 2026 0. Vale para os DOIS tipos de data (-td DTDP e -td DTPP dão 0 igual), então não é escolha de filtro: a alimentação parou. O crawler funciona e o portal responde — quem pedir jurisprudência recente da 1ª Região precisa ser avisado de que o acervo para em julho/2025, senão lê o zero como \"não há jurisprudência\". NÃO HÁ SUBSTITUTO: a Jurisprudência Unificada do CJF (/unificada/) lista o TRF1 mas tem o mesmo congelamento e ainda por cima está com o FILTRO DE DATA QUEBRADO — ver CLAUDE-CJF.md. Para MG a partir de 2023 existe o trf6; para as outras 13 UFs da 1ª Região não há alternativa mapeada."
       },
       "repo": {
         "crawler": "src/TRF1Crawler.js",
@@ -316,7 +316,7 @@
         "comando": "trf3",
         "acesso": "browser",
         "status": "instavel",
-        "nota": "Verificação de navegador falha em headless; fallback Python (DrissionPage)"
+        "nota": "Verificação de navegador falha em headless; fallback Python (DrissionPage). ⚠️ 27/07/2026: o HOST ESTÁ INACESSÍVEL e não é mais a verificação de navegador — web.trf3.jus.br resolve pela Akamai (a1855.dscb.akamai.net -> 189.86.122.19) mas nada responde: Playwright dá net::ERR_HTTP2_PROTOCOL_ERROR no goto (inclusive --headed) e curl falha em HTTP/2 e em --http1.1; www.trf3.jus.br idem. A falha é anterior a qualquer interação, então o fallback Python não ajuda. Reteste o host antes de investigar seletor."
       },
       "repo": {
         "crawler": "src/TRF3Crawler.js",
@@ -389,7 +389,8 @@
         "url": "https://eproc-jur.trf4.jus.br/eproc2trf4/externo_controlador.php",
         "comando": "trf4",
         "acesso": "browser",
-        "status": "ok"
+        "status": "ok",
+        "nota": "Módulo eproc-jur, mesma família do TRF2/TRF6/TJSC. O ESPAÇO ENTRE TERMOS FUNCIONA COMO \"E\" — medido em 27/07/2026 no recorte 27/06–27/07/2026: \"tempo\" 11.091, \"especial\" 16.456, \"tempo especial\" 9.085 (< min dos dois, logo é conjunção e não disjunção). Isto é o OPOSTO do TRF2 (onde o espaço quebra a busca e o crawler hifeniza) e igual ao TRF6 — NÃO copiar a correção de query do TRF2 para cá. O crawler NÃO tem flag -n: para conferir um julgado, busque o número CNJ como texto livre em -q (medido: devolve exatamente 1 documento). Volume previdenciário alto: 9.198 documentos em 30 dias com -q \"previdenciário\", ~70% decisões monocráticas."
       },
       "repo": {
         "crawler": "src/TRF4Crawler.js",
@@ -475,7 +476,8 @@
         "url": "https://juliapesquisa.trf5.jus.br/julia-pesquisa/pesquisa",
         "comando": "trf5",
         "acesso": "browser",
-        "status": "ok"
+        "status": "ok",
+        "nota": "⚠️ RESSALVA CENTRAL: PREPOSIÇÃO NA QUERY ZERA A BUSCA EM SILÊNCIO. O espaço funciona como E e as palavras vazias (de/da/do/por/em) NÃO estão indexadas, então basta uma para o E não fechar nunca. Medido em 27/07/2026 (recorte 27/06–27/07/2026): \"pensão\" 70, \"morte\" 110, \"pensão morte\" 50, \"pensão por morte\" 0; \"regra transição\" 95 contra \"regra de transição\" 0; \"devolução valores\" 59 contra \"devolução de valores\" 0; \"certidão tempo contribuição\" 18 contra \"certidão de tempo de contribuição\" 0. O zero vem com HTTP 200 e sem aviso, e se lê como \"não há jurisprudência sobre o tema\" — que é justamente o erro que este repo existe para evitar. REGRA: monte a query do TRF5 só com as palavras cheias. Termo hifenizado (\"auxílio-doença\" 55, \"auxílio-acidente\" 21) funciona normalmente, porque o hífen não é palavra vazia. Acervo pequeno perto dos vizinhos: 405 documentos em 30 dias com -q \"previdenciário\", contra 9.198 do TRF4."
       },
       "repo": {
         "crawler": "src/TRF5Crawler.js",
@@ -3392,6 +3394,30 @@
         "codegen": "texto",
         "screenshots": 0,
         "tests": false,
+        "skills": [],
+        "working": true
+      }
+    },
+    {
+      "codigo": "CARF",
+      "nome": "Conselho Administrativo de Recursos Fiscais",
+      "segmento": "administrativo",
+      "uf": [],
+      "sistemas_processuais": [],
+      "consulta_processual": [],
+      "jurisprudencia": {
+        "url": "https://acordaos.economia.gov.br/solr/acordaos2/browse",
+        "comando": "carf",
+        "acesso": "api",
+        "status": "ok",
+        "nota": "PRIMEIRA instância administrativa do repo depois do TCU: contencioso tributário federal (2ª instância do PAF), 580.565 docs em 27/07/2026, base VIVA (sessões de 07/07/2026 já indexadas). A \"Nova Pesquisa de Acórdãos\" oficial é um 302 direto para a UI Velocity do PRÓPRIO SOLR — o crawler usa o MESMO handler /browse com wt=json (mesma relevância edismax da tela), sem auth, sem cookie, sem captcha, na busca E no download. EMENTA COMPLETA + dispositivo + INTEIRO TEOR (conteudo_txt) JÁ VÊM NO PAYLOAD DA BUSCA — zero request por documento; PDF original com permalink público. ⚠️ CINCO ARMADILHAS MEDIDAS: (1) OR É ACEITO E IGNORADO (mm=100% do edismax): \"vale OR transporte\" = \"vale AND transporte\" = 28.655 — não existe disjunção, o crawler avisa; NOT/-, \"frase\", \"frase\"~N e * funcionam; os operadores do guia oficial em PDF (e/ou/não/$) são da interface ANTIGA (JSF do sincon) e não valem aqui. (2) o \"PDF\" é servido embrulhado num dump COPY BINARY do PostgreSQL (assinatura PGCOPY, 25 bytes antes do %PDF + 4 depois do %%EOF) — leitores toleram, parser estrito não; o Navigator fatia %PDF..%%EOF. (3) conteudo_txt vem com ~600 chars de metadados Tika até o marcador \"Conteúdo =>\", cheio de NBSP e soft hyphen — o Navigator corta e normaliza. (4) números SÓ COM MÁSCARA: processo 13890.000160/2006-17 e decisão 2802-000.639; sem pontuação = 0 EM SILÊNCIO (o guia antigo diz que aceita sem — aqui NÃO); NÃO é numeração CNJ, o Checker não usa src/cnj.js e o DataJud não cobre o CARF. (5) lixo na base: doc com dt_sessao_tdt ano 19944 vem PRIMEIRO no sort desc (o crawler cerca o range), facets com anos-fantasma (0001, 1200), materia_s com números de processo como valor, nome_relator_s com grafias duplicadas e \"Não Informado\" 56.614. NÃO usar /select para busca textual (sem df = HTTP 400) nem o nome de shard que a action do form vaza (acordaos2_shardN — muda a cada nó; sempre o alias /solr/acordaos2/). Sem campo de tipo: RESOLUÇÃO (30.619) × ACÓRDÃO só pelo prefixo do dispositivo (RESOLVEM × ACORDAM). 1.551 docs (0,3%) sem inteiro teor indexado (arquivo_indexado_s:N) — o crawler avisa. rows até 10.000 OK, start 500.000 OK, paginação ESTÁVEL (3× idêntica), total EXATO (numFoundExact:true). Súmulas CARF NÃO estão nesta base (página estática do portal). Interface antiga (sincon JSF) ainda no ar, não mapeada."
+      },
+      "repo": {
+        "crawler": "src/CARFCrawler.js",
+        "extra": "CARFNavigator.js (Solr /browse com wt=json; desembrulha o PGCOPY do PDF e o Tika do conteudo_txt) + CARFChecker.js (números com máscara obrigatória; sem CNJ e sem DataJud — a fonte é o próprio Solr)",
+        "codegen": "completo",
+        "screenshots": 7,
+        "tests": "src/CARFTestes.js",
         "skills": [],
         "working": true
       }

@@ -1,0 +1,223 @@
+# CARF — Consulta de Acórdãos (Solr browse) — busca e filtros
+
+## Identificação
+
+```
+Tribunal:               CARF — Conselho Administrativo de Recursos Fiscais (Ministério da Fazenda)
+Estado(s):              — (federal; contencioso administrativo tributário, 2ª instância do PAF)
+Módulo:                 "Nova Pesquisa de Acórdãos" — UI Velocity do próprio Solr (busca facetada)
+Link principal:         https://acordaos.economia.gov.br/solr/acordaos2/browse
+Sistema judicial:       Próprio (não é PJe/e-Proc/ESAJ/Projudi — é um Apache Solr público, SolrCloud)
+Sistema irmão já mapeado:  nenhum da mesma família; o padrão de crawler mais próximo é o TJPA (api JSON aberta)
+Abrangência da base:    580.565 docs em 27/07/2026 — acórdãos e resoluções do CARF e dos antigos
+                        Conselhos de Contribuintes (1º/2º/3º CC) + Câmara Superior de Recursos
+                        Fiscais; anos de sessão de ~1993 a 2026 (com lixo: "0001", "1200").
+                        Base VIVA: sessões de 07/07/2026 já indexadas. Instância única — não há
+                        "1º grau" aqui (as DRJs não entram nesta base).
+Data do mapeamento:     27/07/2026
+```
+
+Como se chega oficialmente: carf.economia.gov.br → Jurisprudência → "Nova Pesquisa de
+Acórdãos - VER" → **302 direto para o Solr browse** (`/solr/acordaos2/browse/`). Ou seja,
+o Solr É a porta da frente oficial, não backdoor. A página "Pesquisa de Acórdãos (VER)"
+em /servicos redireciona para o mesmo lugar.
+
+⚠️ A action do form vaza o nome interno do shard (`/solr/acordaos2_shard9_replica_n50/browse`,
+que muda a cada nó do balanceador — visto shard9 e shard15 em requisições seguidas).
+**Use sempre o alias `/solr/acordaos2/`**, nunca o nome de shard.
+
+# Ferramentas Comuns
+
+## 1. Busca principal (query)
+
+Um único campo de texto `q` (input #q), submit GET pelo form #query-form. Sem limite de
+caracteres aparente. Comportamento default entre palavras soltas: **E implícito**
+(medido: "vale" 111.744, "transporte" 73.908, "vale transporte" 28.655 = "vale AND
+transporte"). A busca cai numa config edismax do handler /browse — campos de texto
+cobertos incluem ementa, decisão e conteúdo do PDF (termo só presente no inteiro teor
+acha o doc).
+
+```html
+<form id="query-form" action="/solr/acordaos2_shard9_replica_n50/browse" method="GET">
+  <input type="text" id="q" name="q" value=""/>
+  <input type="submit" id="querySubmit" value="Buscar"/>
+</form>
+```
+
+Prints: `01.01-tela-inicial.png`
+
+## 2. Operadores
+
+Medidos em 27/07/2026 sobre /browse (vale=111.744, transporte=73.908):
+
+| Operador | Funciona? | Sintaxe aceita | Observação |
+|---|---|---|---|
+| `E` | ✅ | espaço ou `AND` | default implícito: "vale transporte" = "vale AND transporte" = 28.655 |
+| `OU` | ❌ | `OR` é ACEITO E IGNORADO | "vale OR transporte" = 28.655 (idêntico ao AND!) — mm=100% do edismax engole o OR. NÃO há como fazer disjunção na query simples |
+| `NÃO` | ✅ | `NOT termo` ou `-termo` | "vale NOT transporte" = 83.088 ≈ 111.744−28.655 (álgebra fecha) |
+| `ADJ` (adjacência) | ✅ via frase | `"a b"` | frase exata é a adjacência |
+| `PROX` (proximidade) | ✅ | sintaxe Solr `"a b"~N` | "vale transporte"~5 = 5.159 (entre a frase 4.837 e o AND 28.655 — coerente) |
+| `$` (radical/curinga) | ❌ | vira lixo | "aposentad$" = 6.455 (≠ do wildcard); o `$` era do JSF ANTIGO (sincon), não vale aqui. Use `*` |
+| `*` (curinga Solr) | ✅ | `aposentad*` | 20.305 > "aposentadoria" 18.609 |
+| `"frase exata"` | ✅ | aspas duplas | "vale transporte" entre aspas = 4.837 |
+
+⚠️ Operadores em português (`e`, `ou`, `não`) NÃO são operadores: "vale e transporte" =
+28.655 só porque "e" é stopword removida pelo analisador — dá o mesmo que o default.
+O guia oficial de pesquisa (PDF `guia-de-pesquisa-de-acordaos.pdf`) documenta `e via não
+ou $ ADI` — MAS PARA A INTERFACE ANTIGA (JSF do sincon), não para esta.
+
+## 3. Número máximo de páginas / resultados (max-pages)
+
+UI: 10 por página fixo ("Página 1 de 1.861" para 18.609 hits), navegação `próxima`/`anterior`
+via parâmetro `start`. Pela API: `rows` e `start` livres (rows=100 OK; teto e comportamento
+ao estourar medidos na fase de resultados). Total (`numFound`) com `numFoundExact:true` —
+total EXATO, não saturado.
+
+## 4. Filtro de data — julgamento (sessão)
+
+Não existe campo de data na UI (só facets de ano). Pela API: campo `dt_sessao_tdt`
+(data da SESSÃO de julgamento), filtrável por range:
+`fq=dt_sessao_tdt:[2024-01-01T00:00:00Z TO 2024-12-31T23:59:59Z]`
+(medido: aposentadoria 18.609 → 1.022 em 2024 — restringe de fato).
+Facets de apoio: `ano_sessao_s`, `anomes_sessao_s` (AAAAMM).
+
+⚠️ LIXO DE DATA NA BASE: existe doc com `dt_sessao_tdt = +19944-11-10` (ano 19944!) que
+vem PRIMEIRO num sort desc. Ordenação por data precisa cercar o range (ex.:
+`fq=dt_sessao_tdt:[1990-01-01T00:00:00Z TO NOW+1YEAR]`) ou o primeiro resultado é lixo.
+Idem anos-fantasma nos facets: ano_sessao_s tem "0001", ano_publicacao_s tem "1200".
+
+## 5. Filtro de data — publicação
+
+Campo `dt_publicacao_tdt` + facets `ano_publicacao_s` / `anomes_publicacao_s`. Mesmo
+mecanismo de range. São datas DIFERENTES da sessão (no card aparecem as duas).
+
+## 6. Filtro de instância
+
+Não há instâncias no sentido judicial. A hierarquia interna é Seção/Câmara/Turma
+(facets abaixo). A CSRF (Câmara Superior de Recursos Fiscais) faz o papel de "instância
+especial" — filtro `fq=secao_s:"Câmara Superior de Recursos Fiscais"` (37.919 docs).
+
+## 7. Filtro de competência (Juizado × Justiça Comum)
+
+Não existe — órgão administrativo, sem Juizado. A desambiguação análoga é
+**turmas ordinárias × CSRF** (uniformização) e **CARF atual × Conselhos de Contribuintes
+antigos** (pré-2009): `secao_s` = "Primeiro/Segundo/Terceiro Conselho de Contribuintes"
+são o acervo histórico (49.052 + 48.964 + 25.978 docs).
+
+## 8. Filtro de área (Cível × Criminal)
+
+Não existe. O recorte temático é por `materia_s` (tributo/tipo de auto) e pela Seção
+(1ª: IRPJ/CSLL; 2ª: IRPF/previdenciário; 3ª: PIS/COFINS/IPI/aduana — regra geral do RICARF).
+
+## 9. Filtro de órgão / matéria
+
+Facets na coluna esquerda "BUSCA FACETADA", cada valor é um link que adiciona
+`fq=<campo>:"<valor>"` — compõe com a query e com outros facets. Campos e cardinalidade
+(listas completas nos JSON ao lado):
+
+| Facet | Campo | Valores | JSON |
+|---|---|---|---|
+| Turma | `turma_s` | 77 | `01-turmas.json` |
+| Câmara | `camara_s` | 12 | `01-camaras.json` |
+| Seção | `secao_s` | 7 | `01-secoes.json` |
+| Matéria | `materia_s` | 126 | `01-materias.json` |
+| Nome Relator | `nome_relator_s` | 4.325 | `01-relatores.json` |
+| Ano Sessão | `ano_sessao_s` | 149 (!) | `01-anos-sessao.json` |
+| Ano Publicação | `ano_publicacao_s` | 46 | `01-anos-publicacao.json` |
+
+⚠️ O oitavo facet da tela, "Decisão", é INÚTIL: ele faceta os TOKENS do campo
+`decisao_txt` — os "valores" são stopwords ("de" 500.335, "por" 498.012, "votos"
+474.343...). Não usar como filtro.
+
+⚠️ DADO SUJO nos facets: `materia_s` tem valores-lixo que são números de processo
+("109200012741230/DRF-JOI"); `nome_relator_s` tem o mesmo relator com grafias/espaços
+diferentes ("     Nilton Luiz Bartoli" com espaços à esquerda, "Não Informado" 56.614,
+"Não se aplica" 2.929). Filtro por relator precisa casar a string EXATA do facet.
+
+Prints: `01.02-busca-facetada.png` (coluna completa com os 8 facets e contagens)
+
+## 10. Unidade específica (serventia / comarca)
+
+Não existe (órgão nacional único, julga em Brasília).
+
+## 11. Magistrada ou magistrado
+
+Relator via facet `nome_relator_s` (§9) — 4.325 valores em `01-relatores.json`.
+Não há campo de pesquisa por nome parcial na UI nova; pela API dá para
+`fq=nome_relator_s:"NOME EXATO"` ou buscar o nome no `q` (texto livre).
+
+## 12. Tipo de ato
+
+Não há campo próprio. A base mistura ACÓRDÃOS e RESOLUÇÕES; distinguem-se pelo padrão
+do `numero_decisao_s` (acórdão "2802-000.639"; resolução costuma ter sufixo próprio) —
+detalhar na fase de testes. Súmulas CARF NÃO estão nesta base (página estática própria:
+carf.economia.gov.br/jurisprudencia/sumulas-carf).
+
+## 13. Relator / revisor, classe, assunto
+
+Relator: §11. Classe/assunto: `materia_s` (§9). Não há revisor.
+
+## 14. Número do processo
+
+Dois campos, os dois testados com 1 hit exato:
+- `numero_processo_s:"13890.000160/2006-17"` → 1 doc (formato COM máscara)
+- `numero_decisao_s:"2802-000.639"` → 1 doc (nº do ACÓRDÃO, formato NNNN-NNN.NNN)
+
+O número identifica o PROCESSO; a decisão é identificada por `numero_decisao_s` e o
+documento pelo campo `id` (ver 02-resultados.txt §20b).
+
+⚠️ SÓ COM MÁSCARA (medido): sem pontuação devolve 0 SEMPRE, em silêncio —
+`numero_processo_s:13890000160200617` = 0, texto livre `13890000160200617` = 0,
+`numero_decisao_s:2802000639` = 0. Com máscara: processo fielded = 1, processo em
+texto livre entre aspas = 1, decisão fielded = 1, decisão em texto livre entre
+aspas = 1. O guia oficial (da interface ANTIGA) diz que aceita sem máscara — aqui NÃO
+vale. O Checker deve formatar NNNNN.NNNNNN/AAAA-DD e NNNN-NNN.NNN antes de consultar.
+NÃO é número CNJ (processo administrativo fiscal) — o Checker não pode validar com
+src/cnj.js.
+
+# Especificidades
+
+## 15. Bloqueios
+
+```
+Existe restrição?       NÃO. Sem Cloudflare, sem captcha, sem login, sem cookie, sem sessão.
+  A BUSCA funciona sem resolver?    Sim — curl puro, HTTP 200.
+  O DOWNLOAD funciona sem resolver? Sim (PDF direto — ver 02-resultados.txt).
+  Headless passa? --headed passa?   Ambos (mapeado headless).
+```
+
+## 16. Forma de acesso
+
+**`api`** — o handler `/browse` do Solr com `wt=json` devolve JSON puro com a MESMA
+config de relevância da tela oficial (edismax). É o que o crawler usa:
+
+```
+GET https://acordaos.economia.gov.br/solr/acordaos2/browse
+    ?q=<termos>&wt=json&rows=<N>&start=<offset>
+    [&fq=<campo>:"<valor>"]... [&sort=dt_sessao_tdt desc] [&fl=<campos>]
+```
+
+- `fq`, `sort`, `fl`, `facet.*`, `start/rows` funcionam (todos medidos).
+- ⚠️ NÃO usar o handler `/select` para busca textual: sem `df` configurado, `q=termo`
+  devolve HTTP 400 (SolrException). O /select só serve com query fielded
+  (`campo:valor`) ou `*:*`.
+- Sem User-Agent especial, sem Referer, sem charset exótico (UTF-8 normal).
+- API oficial documentada: NÃO EXISTE (procurado: dados abertos do CARF só publica
+  PDFs gerenciais; sem Swagger/OpenAPI; DataJud NÃO se aplica — CARF não é Judiciário
+  e não está no DataJud). O que existe de oficial é o guia em PDF da interface antiga.
+- Interface ANTIGA (JSF): carf.fazenda.gov.br/sincon/public/pages/ConsultarJurisprudencia/
+  consultarJurisprudenciaCarf.jsf — ainda responde 200, não mapeada (módulo secundário;
+  mesma base, menos recursos).
+
+## 17. Sessão e estado
+
+Nenhum. GET puro e stateless; a URL de busca é recortável e recolável (permalink de
+BUSCA). Paginação por `start` na querystring, sem viewState.
+
+# Pendências e defeitos de mapeamento
+
+| # | O que falta | Por quê |
+|---|---|---|
+| 1 | PROX (`"a b"~N`) e nº de processo sem máscara | ficam para a fase de testes exploratórios |
+| 2 | Distinção acórdão × resolução no numero_decisao_s | precisa amostrar resoluções |
+| 3 | Interface antiga (sincon JSF) não mapeada | módulo secundário, mesma base |

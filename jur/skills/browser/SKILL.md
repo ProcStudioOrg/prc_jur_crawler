@@ -83,6 +83,10 @@ SEMPRE informe o usuário a cada refinamento que você fizer.
 | Súmula do STJ, Jurisprudência em Teses, Informativo | ⚠️ **não extraídos pelo crawler** (cada um tem tela própria). Diga isso e ofereça as URLs em `CLAUDE-STJ.md` |
 | "Esse processo do STJ existe?" / confirmar julgado do STJ | `jur stj -n "REsp 1809043"` (classe+número) ou `jur stj -n "2019/0116080-0"` (registro). ⚠️ a base **não indexa CNJ**: com número CNJ o checker cai no DataJud e confirma só que o **processo** existe, não o julgado |
 | Acórdãos de contas, TCU | `jur tcu` |
+| **Contencioso administrativo TRIBUTÁRIO federal** — "o que o CARF decidiu", auto de infração da Receita, IRPF/IRPJ/PIS/COFINS/IPI/aduana em recurso administrativo | `jur carf` (API direta; **ementa + inteiro teor já vêm na busca**). É instância ADMINISTRATIVA: a mesma matéria judicializada é `trf*`/`stj`. ⚠️ `OU`/`OR` é **ignorado** (vira E) — para disjunção rode uma busca por termo e some; ver `CLAUDE-CARF.md` |
+| Uniformização no CARF / "Câmara Superior" | `jur carf -s "Câmara Superior de Recursos Fiscais"` (a CSRF faz o papel de instância especial; turmas ordinárias = as demais seções) |
+| Acervo histórico dos Conselhos de Contribuintes (pré-2009) | `jur carf -s "Primeiro Conselho de Contribuintes"` (idem Segundo/Terceiro — mesma base, 124 mil docs) |
+| "Esse acórdão do CARF existe?" / confirmar julgado do CARF | `jur carf --decisao 2802-000.639` (nº do acórdão) ou `jur carf -n 13890.000160/2006-17` (nº do processo). ⚠️ **só com máscara** (sem pontuação = 0 em silêncio; o Checker formata sozinho). NÃO é CNJ e o DataJud não cobre o CARF |
 | SP estadual | ⚠️ `jur tjsp` sem acesso — ofereça TRF3 (ou TRF4/TRF5 como comparativo) |
 | "TJMA", Maranhão, estadual MA | ⚠️ **busca por termo não existe** — o JurisConsult exige captcha de imagem + reCAPTCHA e este repo não resolve captcha. **Diga isso ao usuário**, não tente. Ofereça `jur trf1` (o MA é da 1ª Região) para matéria federal; ver `CLAUDE-TJMA.md` |
 | Juizado Especial / Turma Recursal **estadual** no MA | Mesmo bloqueio. As flags existem e estão mapeadas (`jur tjma --foro turmas` / `--foro juizados`), mas nenhuma busca completa |

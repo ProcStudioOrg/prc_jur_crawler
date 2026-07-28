@@ -1,0 +1,34 @@
+{
+ "campo": "secao_s",
+ "total_valores": 7,
+ "valores": [
+  {
+   "valor": "Câmara Superior de Recursos Fiscais",
+   "docs": 37919
+  },
+  {
+   "valor": "Primeira Seção de Julgamento",
+   "docs": 76728
+  },
+  {
+   "valor": "Primeiro Conselho de Contribuintes",
+   "docs": 49052
+  },
+  {
+   "valor": "Segunda Seção de Julgamento",
+   "docs": 114657
+  },
+  {
+   "valor": "Segundo Conselho de Contribuintes",
+   "docs": 48964
+  },
+  {
+   "valor": "Terceira Seção De Julgamento",
+   "docs": 125675
+  },
+  {
+   "valor": "Terceiro Conselho de Contribuintes",
+   "docs": 25978
+  }
+ ]
+}

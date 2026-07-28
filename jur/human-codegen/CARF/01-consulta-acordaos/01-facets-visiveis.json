@@ -1,0 +1,210 @@
+[
+  {
+    "titulo": "Turma",
+    "qtdLinksVisiveis": 109,
+    "amostra": [
+      {
+        "texto": "Terceira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Terceira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Primeira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Turma Ordinária d",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+Turma+Ordin%C3%A1ria+da+Terceira+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      },
+      {
+        "texto": "Primeira Turma Ordinária",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+Turma+Ordin%C3%A1ria+da+Segunda+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      }
+    ]
+  },
+  {
+    "titulo": "Camara",
+    "qtdLinksVisiveis": 109,
+    "amostra": [
+      {
+        "texto": "Terceira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Terceira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Primeira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Turma Ordinária d",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+Turma+Ordin%C3%A1ria+da+Terceira+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      },
+      {
+        "texto": "Primeira Turma Ordinária",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+Turma+Ordin%C3%A1ria+da+Segunda+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      }
+    ]
+  },
+  {
+    "titulo": "Seção",
+    "qtdLinksVisiveis": 109,
+    "amostra": [
+      {
+        "texto": "Terceira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Terceira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Primeira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Turma Ordinária d",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+Turma+Ordin%C3%A1ria+da+Terceira+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      },
+      {
+        "texto": "Primeira Turma Ordinária",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+Turma+Ordin%C3%A1ria+da+Segunda+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      }
+    ]
+  },
+  {
+    "titulo": "Matéria",
+    "qtdLinksVisiveis": 109,
+    "amostra": [
+      {
+        "texto": "Terceira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Terceira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Primeira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Turma Ordinária d",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+Turma+Ordin%C3%A1ria+da+Terceira+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      },
+      {
+        "texto": "Primeira Turma Ordinária",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+Turma+Ordin%C3%A1ria+da+Segunda+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      }
+    ]
+  },
+  {
+    "titulo": "Nome Relator",
+    "qtdLinksVisiveis": 109,
+    "amostra": [
+      {
+        "texto": "Terceira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Terceira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Primeira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Turma Ordinária d",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+Turma+Ordin%C3%A1ria+da+Terceira+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      },
+      {
+        "texto": "Primeira Turma Ordinária",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+Turma+Ordin%C3%A1ria+da+Segunda+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      }
+    ]
+  },
+  {
+    "titulo": "Ano Sessão",
+    "qtdLinksVisiveis": 109,
+    "amostra": [
+      {
+        "texto": "Terceira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Terceira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Primeira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Turma Ordinária d",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+Turma+Ordin%C3%A1ria+da+Terceira+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      },
+      {
+        "texto": "Primeira Turma Ordinária",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+Turma+Ordin%C3%A1ria+da+Segunda+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      }
+    ]
+  },
+  {
+    "titulo": "Ano Publicação",
+    "qtdLinksVisiveis": 109,
+    "amostra": [
+      {
+        "texto": "Terceira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Terceira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Primeira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Turma Ordinária d",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+Turma+Ordin%C3%A1ria+da+Terceira+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      },
+      {
+        "texto": "Primeira Turma Ordinária",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+Turma+Ordin%C3%A1ria+da+Segunda+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      }
+    ]
+  },
+  {
+    "titulo": "Decisão",
+    "qtdLinksVisiveis": 109,
+    "amostra": [
+      {
+        "texto": "Terceira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Terceira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Primeira Câmara",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+C%C3%A2mara%22"
+      },
+      {
+        "texto": "Segunda Turma Ordinária d",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Segunda+Turma+Ordin%C3%A1ria+da+Terceira+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      },
+      {
+        "texto": "Primeira Turma Ordinária",
+        "href": "/solr/acordaos2_shard15_replica_n125/browse?&q=&fq=turma_s:%22Primeira+Turma+Ordin%C3%A1ria+da+Segunda+C%C3%A2mara+da+Terceira+Se%C3%A7%C3%A3o%22"
+      }
+    ]
+  }
+]

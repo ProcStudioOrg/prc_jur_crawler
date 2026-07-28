@@ -1,0 +1,151 @@
+# CARF — Consulta de Acórdãos (Solr browse) — resultados e caminho até o documento
+
+Medições de 27/07/2026, skill browser-post-search. Query de referência: aposentadoria
+(18.609 hits, "18,609 resultados encontrados em 26 ms.").
+
+## 18. Tela de resultados
+
+```
+Onde aparece?        MESMA página (GET; a URL ganha ?q=...) — server-rendered (Velocity do Solr)
+URL do resultado é reutilizável?  SIM — GET stateless; colada em contexto limpo carrega igual
+Os controles de busca somem ou permanecem?  PERMANECEM (input q no topo, facets à esquerda)
+Total exposto?       "N resultados encontrados em X ms." no topo + "Página 1 de M" à direita
+                     Pela API: response.numFound com numFoundExact:true → total EXATO
+```
+
+⚠️ A URL pós-busca que o BROWSER mostra usa o nome interno do shard
+(`/solr/acordaos2_shard15_replica_n125/browse?q=...`) porque a action do form vaza o
+core físico. A URL canônica equivalente é `/solr/acordaos2/browse?q=...` — usar sempre
+o alias.
+
+Prints: `02.01-listagem-topo.png` (cabeçalho), `02.03-listagem-rodape.png` (rodapé),
+`02.02-listagem-pagina.png` (página inteira), `02.04-facet-secao-aplicado.png`
+(facet composto com a busca).
+
+## Anatomia do card (`02-card-resultado.html`)
+
+Card = `div.result-document`. Metadados SEM clicar nada (nomes exatos dos rótulos):
+Numero do processo, Turma, [Câmara], Seção, Data da sessão, Data da publicação,
+Ementa, Numero da decisão, Decisão, Matéria, Nome do relator. Título do card =
+`id` do documento + ícone de PDF (link).
+
+**O texto do card é EMENTA COMPLETA, não trecho**: o template imprime os campos
+`ementa_s` e `decisao_txt` inteiros, sem highlight (nenhum `<b>`/`<mark>` no termo).
+Medido no doc id=4738988: ementa_s = 551 chars (idêntica no card e na API),
+decisao_txt = 383 chars, documento completo (conteudo_txt) = 15.851 chars. O card é
+menor que o documento porque o doc inclui relatório + voto — a ementa em si vem inteira.
+
+**Dois tipos dissecados:**
+- ACÓRDÃO (`02-doc-acordao.json`, id 4738988): dispositivo começa "ACORDAM os membros…";
+  numero_decisao_s = 2802-000.639.
+- RESOLUÇÃO (`02-doc-resolucao.json`, id 10923883): dispositivo começa "RESOLVEM os
+  membros…" (30.619 docs assim); numero_decisao_s = 1001-000.819 — MESMO padrão de
+  número, MESMO nome de arquivo ("Decisao_*.pdf"). ⚠️ NÃO HÁ CAMPO DE TIPO: acórdão e
+  resolução só se distinguem pelo prefixo do texto de decisao_txt (ACORDAM × RESOLVEM).
+- Variante sem inteiro teor (arquivo_indexado_s:N, 1.551 docs = 0,3%): tem ementa_s,
+  decisao_txt e nome do PDF, mas conteudo_txt ausente/vazio (Tika não extraiu).
+
+Campos do card vs API (campo → significado → campo do repo):
+
+| Solr | Significado | Repo |
+|---|---|---|
+| `id` | id do documento no índice (IDENTIDADE do julgado) | `id` |
+| `numero_processo_s` | processo administrativo fiscal, formato NNNNN.NNNNNN/AAAA-DD (NÃO é CNJ) | `processo` |
+| `numero_decisao_s` | nº do acórdão/resolução (ex.: 2802-000.639) — o número CITÁVEL | `numeroDecisao` |
+| `ementa_s` | ementa completa | `ementa` |
+| `decisao_txt` | dispositivo (ACORDAM/RESOLVEM…) | `decisao` |
+| `conteudo_txt` | texto integral extraído do PDF (ver ressalva Tika abaixo) | `inteiroTeor` |
+| `turma_s` / `camara_s` / `secao_s` | órgão julgador (3 níveis) | `orgaoJulgador` |
+| `dt_sessao_tdt` | data da sessão de julgamento (ISO) | `dataJulgamento` |
+| `dt_publicacao_tdt` | data de publicação | `dataPublicacao` |
+| `nome_relator_s` | relator (sujo: "Não Informado" 56.614, grafias duplicadas) | `relator` |
+| `materia_s` | matéria/tributo | `materia` |
+| `nome_arquivo_pdf_s` | arquivo do PDF: `<processo só dígitos>_<conteudo_id_s>.pdf` | monta `inteiroTeorLink` |
+| `conteudo_id_s` | id do conteúdo/PDF (≠ id do documento) | — |
+| `arquivo_indexado_s` | S/N — se N, conteudo_txt não existe | aviso `temInteiroTeor` |
+
+## 19. Do card ao documento — a escada
+
+O card tem UM único link: o ícone de PDF no título (`<a target="_blank">`).
+
+| Degrau | Resultado |
+|---|---|
+| Ementa | JÁ VEM no card/payload (ementa_s completa) — não há clique |
+| Inteiro teor (texto) | JÁ VEM no payload da busca (conteudo_txt) — não há clique. MELHOR CASO do repo, como TJDFT/TJCE |
+| Documento original (PDF) | clique no ícone → nova aba `_blank` → DOWNLOAD imediato do PDF (sem viewer). Print `02.05-clique-pdf.png` |
+| Processo | não há link de tramitação no card (consulta processual é outro sistema: carf.fazenda.gov.br/sincon, fora do escopo) |
+| Copiar citação | não existe |
+
+**Contrato do PDF (reproduzido fora do browser, curl sem cookie):**
+
+```
+GET https://acordaos.economia.gov.br/acordaos2/pdfs/processados/<nome_arquivo_pdf_s>
+→ HTTP 200, Content-Type: application/pdf   (o card linka http://, que dá 302 para https://)
+```
+
+⚠️ RESSALVA CENTRAL DO DOWNLOAD — O "PDF" VEM EMBRULHADO NUM DUMP DE POSTGRES.
+O corpo NÃO começa em `%PDF`: começa com a assinatura binária `PGCOPY\n\xff\r\n…`
+(formato COPY BINARY do PostgreSQL — o arquivo é servido cru da coluna bytea):
+25 bytes de header antes do `%PDF` e 4 bytes de trailer depois do último `%%EOF`
+(medido no doc 4738988: 185.422 bytes totais, %PDF no offset 25). Leitores de PDF
+abrem mesmo assim (a spec tolera lixo antes do %PDF nos primeiros 1024 bytes), mas
+parser estrito rejeita e `file` classifica como "data". O crawler deve FATIAR de
+`%PDF` até o último `%%EOF` — validado: sobra um PDF 1.4 íntegro de 6 páginas.
+
+⚠️ RESSALVA DO conteudo_txt — PREFIXO DE METADADOS TIKA. O texto integral começa com
+~600 chars de metadados do Apache Tika ("Metadados => pdf:unmappedUnicodeCharsPerPage…")
+até o marcador `Conteúdo =>`. O texto útil vem depois dele, carregado de NBSP (\xa0)
+e soft hyphen (\xad) no lugar de espaço/hífen. Normalização obrigatória:
+cortar até 'Conteúdo =>' + trocar \xa0→espaço, \xad→''.
+
+## Fase 4 — o documento
+
+```
+Formato:            PDF (dentro do wrapper PGCOPY) + texto integral já extraído no payload
+Tamanho típico:     PDF ~185 KB; conteudo_txt ~15-40 mil chars úteis
+Vem completo?       SIM — ementa + relatório + voto + dispositivo (conferido no doc 4738988)
+Precisa de sessão?  NÃO (curl limpo → 200)
+Precisa de captcha? NÃO
+JÁ VEIO NA BUSCA?   SIM — conteudo_txt no próprio resultado. Zero request por documento.
+Bloqueio:           busca SEM bloqueio; download SEM bloqueio (assimetria: não há)
+```
+
+## 20. Paginação e profundidade
+
+```
+Resultados por página:   UI 10 fixo; API rows livre
+Parâmetro:               querystring start/rows (GET, sem estado)
+Máximo aceito:           rows=10.000 respondeu OK (não bisectei além; 10k ≫ uso real)
+Total exposto:           numFound com numFoundExact:true → EXATO (18.609 não redondo)
+Profundidade:            start=500.000 responde (rows=1)
+Última página:           existe link "próxima"/número de páginas na UI
+ESTABILIDADE:            página 1 rodada 3× = ids idênticos; pág1 ∩ pág2 = ∅ (sem repetição
+                         nem pulo). Ordenação default = score. MEDIDO ESTÁVEL.
+```
+
+⚠️ Sort por data: `sort=dt_sessao_tdt desc` funciona, MAS há lixo de data na base
+(doc id 4792197 com dt_sessao_tdt=+19944-11-10 vem primeiro). Ao ordenar por data,
+cercar com `fq=dt_sessao_tdt:[1990-01-01T00:00:00Z TO NOW+1YEAR]`.
+
+## 20b. Permalink e identidade do documento
+
+```
+Existe URL estável por documento?   O PDF: https://acordaos.economia.gov.br/acordaos2/
+                                    pdfs/processados/<nome_arquivo_pdf_s> — confirmado
+                                    em contexto limpo (curl sem cookie → 200).
+                                    NÃO existe página HTML por documento; a "ficha" é
+                                    reconsultável por query: /solr/acordaos2/browse?q=id:<id>
+Qual campo IDENTIFICA o documento?  `id` (do índice). O PDF é identificado por
+                                    `conteudo_id_s` (sufixo do nome do arquivo).
+O nº do processo basta?             NÃO — um processo tem vários julgados. O número
+                                    citável é numero_decisao_s (2802-000.639), que também
+                                    identifica: q=numero_decisao_s:"2802-000.639" → 1 hit.
+O id da lista serve na consulta?    SIM — q=id:4738988 devolve exatamente o doc.
+```
+
+## Pendências
+
+| # | O que falta | Por quê |
+|---|---|---|
+| 1 | rows > 10.000 não bisectado | 10k já cobre qualquer uso do crawler |
+| 2 | Print do PDF aberto | headless baixa em vez de renderizar; o arquivo foi validado fora do browser (6 páginas) |

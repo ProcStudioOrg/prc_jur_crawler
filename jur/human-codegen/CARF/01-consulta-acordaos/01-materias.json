@@ -1,0 +1,510 @@
+{
+ "campo": "materia_s",
+ "total_valores": 126,
+ "valores": [
+  {
+   "valor": "109200012741230/DRF-JOI",
+   "docs": 2
+  },
+  {
+   "valor": "161510002681208-DAT/SPO",
+   "docs": 1
+  },
+  {
+   "valor": "161510004621285-DAT/SPO",
+   "docs": 1
+  },
+  {
+   "valor": "161510009661203-DAT/SPO",
+   "docs": 1
+  },
+  {
+   "valor": "18",
+   "docs": 1
+  },
+  {
+   "valor": "21",
+   "docs": 1
+  },
+  {
+   "valor": "AIOA DEBCAD 37.251.979-2 CFL 23",
+   "docs": 1
+  },
+  {
+   "valor": "AIOA DEBCAD 37.251.980-6 CFL 38",
+   "docs": 1
+  },
+  {
+   "valor": "COFINS_NT--",
+   "docs": 22
+  },
+  {
+   "valor": "CONTRIBUIÇÃO PREVIDENCIÁRIA",
+   "docs": 8
+  },
+  {
+   "valor": "CP - P. FÍSICA",
+   "docs": 1
+  },
+  {
+   "valor": "CPMF - ação fiscal- (insuf. na puração e recolhimento)",
+   "docs": 393
+  },
+  {
+   "valor": "CPMF - proc. que não versem s/exigências cred.tributario",
+   "docs": 17
+  },
+  {
+   "valor": "CPSS - Contribuições para a Previdencia e Seguridade Social",
+   "docs": 644
+  },
+  {
+   "valor": "CSL - AF (ação fiscal) - Instituição Financeiras (Todas)",
+   "docs": 276
+  },
+  {
+   "valor": "CSL - ação fiscal  (exceto glosa compens. bases negativas)",
+   "docs": 1821
+  },
+  {
+   "valor": "CSL-  que não versem sobre exigência de cred. trib. (ex.:restituição.)",
+   "docs": 479
+  },
+  {
+   "valor": "CSL- auto eletrônico (exceto glosa compens. bases negativas)",
+   "docs": 228
+  },
+  {
+   "valor": "CSL- glosa compens. bases negativas de períodos anteriores",
+   "docs": 538
+  },
+  {
+   "valor": "Cofins - Ação Fiscal - Importação",
+   "docs": 69
+  },
+  {
+   "valor": "Cofins - ação fiscal (todas)",
+   "docs": 3868
+  },
+  {
+   "valor": "Cofins- proc. que não versem s/exigências de cred.tributario",
+   "docs": 2102
+  },
+  {
+   "valor": "Contribuição de Intervenção no Domínio Econômico ( Exigência de crédito tributário )",
+   "docs": 24
+  },
+  {
+   "valor": "Contribuição de Intervenção no Domínio Econômico ( Não tributário )",
+   "docs": 5
+  },
+  {
+   "valor": "DCTF - Auto  eletronico (AE) lancamento de tributos e multa isolada(TODOS)",
+   "docs": 615
+  },
+  {
+   "valor": "DCTF - Multa por atraso na entrega da DCTF",
+   "docs": 1945
+  },
+  {
+   "valor": "DCTF_COFINS",
+   "docs": 6
+  },
+  {
+   "valor": "DCTF_COFINS - Auto  eletronico (AE) lancamento de tributos e multa isolada (COFINS)",
+   "docs": 421
+  },
+  {
+   "valor": "DCTF_CSL - Auto  eletronico (AE) lancamento de tributos e multa isolada (CSL)",
+   "docs": 217
+  },
+  {
+   "valor": "DCTF_IPI - Auto  eletronico (AE) lancamento de tributos e multa isolada (IPI)",
+   "docs": 72
+  },
+  {
+   "valor": "DCTF_IRF - Auto  eletronico (AE) lancamento de tributos e multa isolada (IRF)",
+   "docs": 353
+  },
+  {
+   "valor": "DCTF_IRPJ - Auto  eletronico (AE) lancamento de tributos e multa isolada (IRPJ)",
+   "docs": 242
+  },
+  {
+   "valor": "DCTF_PIS - Auto  eletronico (AE) lancamento de tributos e multa isolada (PIS)",
+   "docs": 483
+  },
+  {
+   "valor": "DCTF_PIS---",
+   "docs": 7
+  },
+  {
+   "valor": "Dedução Indevida de Despesas Médicas",
+   "docs": 1
+  },
+  {
+   "valor": "Diligência CARF/DRJ",
+   "docs": 10
+  },
+  {
+   "valor": "Diligência DRJ/CARF",
+   "docs": 4
+  },
+  {
+   "valor": "FINSOCIAL",
+   "docs": 2
+  },
+  {
+   "valor": "FINSOC_NT--",
+   "docs": 2
+  },
+  {
+   "valor": "Finsocial -proc. que não versem s/exigências cred.tributario",
+   "docs": 1996
+  },
+  {
+   "valor": "Finsocial- ação fiscal (todas)",
+   "docs": 495
+  },
+  {
+   "valor": "GLOSA CRÉDITO - CNPJ",
+   "docs": 2
+  },
+  {
+   "valor": "GLOSA CRÉDITO - SIMPLES",
+   "docs": 2
+  },
+  {
+   "valor": "GLOSA CRÉDITO - SIMPLES E CUSTOS",
+   "docs": 2
+  },
+  {
+   "valor": "GLOSA CRÉDITO CNPJ",
+   "docs": 1
+  },
+  {
+   "valor": "II",
+   "docs": 1
+  },
+  {
+   "valor": "II/IE/IPI- proc. que não versem s/exigências cred.tributario",
+   "docs": 298
+  },
+  {
+   "valor": "II/IE/IPIV - ação fiscal - classificação de mercadorias",
+   "docs": 616
+  },
+  {
+   "valor": "II/IE/IPIV - ação fiscal - insufiência apuração/recolhimento",
+   "docs": 1200
+  },
+  {
+   "valor": "II/IE/IPIV - ação fiscal - penalidades (isoladas)",
+   "docs": 702
+  },
+  {
+   "valor": "IOF - ação fiscal- (insuf. na puração e recolhimento)",
+   "docs": 108
+  },
+  {
+   "valor": "IOF- proc. que não versem s/exigências cred.tributario",
+   "docs": 51
+  },
+  {
+   "valor": "IPI",
+   "docs": 3
+  },
+  {
+   "valor": "IPI- ação fiscal - omissão receitas (apurada no IRPJ)",
+   "docs": 79
+  },
+  {
+   "valor": "IPI- ação fiscal - penalidades (multas isoladas)",
+   "docs": 492
+  },
+  {
+   "valor": "IPI- ação fiscal- insuf. na  apuração/recolhimento (outros)",
+   "docs": 977
+  },
+  {
+   "valor": "IPI- ação fsical - auditoria de produção",
+   "docs": 113
+  },
+  {
+   "valor": "IPI- processos NT - ressarc/restituição/bnf_fiscal(ex.:taxi)",
+   "docs": 5020
+  },
+  {
+   "valor": "IPI- processos NT- créd.presumido ressarc PIS e COFINS",
+   "docs": 2251
+  },
+  {
+   "valor": "IPI_AF_MT--",
+   "docs": 2
+  },
+  {
+   "valor": "IPI_AF_OUTR",
+   "docs": 4
+  },
+  {
+   "valor": "IPI_NT_CTRB",
+   "docs": 3
+  },
+  {
+   "valor": "IPI_NT_OUT-",
+   "docs": 7
+  },
+  {
+   "valor": "IRF- ação fiscal - outros",
+   "docs": 464
+  },
+  {
+   "valor": "IRF- ação fiscal - ñ retenção ou recolhimento(antecipação)",
+   "docs": 442
+  },
+  {
+   "valor": "IRF- ação fiscal- ñ retenção/recolhim. (rend.trib.exclusiva)",
+   "docs": 295
+  },
+  {
+   "valor": "IRF- penalidades (isoladas), inclusive multa por atraso DIRF",
+   "docs": 249
+  },
+  {
+   "valor": "IRF- que ñ versem s/ exigência de cred. trib. (ex.:restit.)",
+   "docs": 1337
+  },
+  {
+   "valor": "IRPF",
+   "docs": 4
+  },
+  {
+   "valor": "IRPF- auto de infração eletronico (exceto multa DIRPF)",
+   "docs": 3972
+  },
+  {
+   "valor": "IRPF- auto infração - multa por atraso na entrega da DIRPF",
+   "docs": 1140
+  },
+  {
+   "valor": "IRPF- ação fiscal (AF) - atividade rural",
+   "docs": 298
+  },
+  {
+   "valor": "IRPF- ação fiscal (AF) - ganho de capital ou renda variavel",
+   "docs": 366
+  },
+  {
+   "valor": "IRPF- ação fiscal - Ac.Patrim.Descoberto/Sinais Ext.Riqueza",
+   "docs": 799
+  },
+  {
+   "valor": "IRPF- ação fiscal - Dep.Bancario de origem não justificada",
+   "docs": 3045
+  },
+  {
+   "valor": "IRPF- ação fiscal - omis. de rendimentos - PF/PJ e Exterior",
+   "docs": 2215
+  },
+  {
+   "valor": "IRPF- ação fiscal - outros assuntos (ex.: glosas diversas)",
+   "docs": 1927
+  },
+  {
+   "valor": "IRPF- processos que não versem s/exigência cred.tribut.(NT)",
+   "docs": 502
+  },
+  {
+   "valor": "IRPF- restituição - rendim.isentos/não tributaveis(ex.:PDV)",
+   "docs": 1991
+  },
+  {
+   "valor": "IRPJ - AF (ação fiscal) - Instituição Financeiras (Todas)",
+   "docs": 642
+  },
+  {
+   "valor": "IRPJ - AF - lucro arbitrado",
+   "docs": 1259
+  },
+  {
+   "valor": "IRPJ - AF - lucro real (exceto.omissão receitas pres.legal)",
+   "docs": 3943
+  },
+  {
+   "valor": "IRPJ - AF- lucro presumido(exceto omis.receitas pres.legal)",
+   "docs": 792
+  },
+  {
+   "valor": "IRPJ - AF- omissão receitas - demais presunções legais",
+   "docs": 1806
+  },
+  {
+   "valor": "IRPJ - AF- omissão receitas- presunção legal Dep. Bancarios",
+   "docs": 942
+  },
+  {
+   "valor": "IRPJ - auto eletrônico (exceto glosa de comp.prej./LI)",
+   "docs": 308
+  },
+  {
+   "valor": "IRPJ - glosa de compensação de prejuízos fiscais",
+   "docs": 648
+  },
+  {
+   "valor": "IRPJ - multa por atraso na entrega da DIPJ",
+   "docs": 687
+  },
+  {
+   "valor": "IRPJ - outros assuntos (ex.: suspenção de isenção/imunidade)",
+   "docs": 398
+  },
+  {
+   "valor": "IRPJ - restituição e compensação",
+   "docs": 2088
+  },
+  {
+   "valor": "IRPJ - tributação de lucro inflacionário diferido(LI)",
+   "docs": 656
+  },
+  {
+   "valor": "ITR",
+   "docs": 4
+  },
+  {
+   "valor": "ITR - Multa por atraso na entrega da Declaração",
+   "docs": 202
+  },
+  {
+   "valor": "ITR - ação fiscal (AF) - valoração da terra nua",
+   "docs": 777
+  },
+  {
+   "valor": "ITR - ação fiscal - outros (inclusive penalidades)",
+   "docs": 1807
+  },
+  {
+   "valor": "ITR - notific./auto de infração eletrônico - outros assuntos",
+   "docs": 1313
+  },
+  {
+   "valor": "ITR - notific./auto de infração eletrônico - valor terra nua",
+   "docs": 723
+  },
+  {
+   "valor": "ITR - processos que ñ versem s/ exigência de cred.tribut(NT)",
+   "docs": 38
+  },
+  {
+   "valor": "ITR_AF_OTRS",
+   "docs": 1
+  },
+  {
+   "valor": "ITR_AF_OUTR",
+   "docs": 3
+  },
+  {
+   "valor": "M",
+   "docs": 1
+  },
+  {
+   "valor": "MOLÉSTIA",
+   "docs": 1
+  },
+  {
+   "valor": "OMISSÃO DE RENDIMENTOS AÇÃO JUDICIAL, DEDUÇÃO DE HONORÁRIOS ADVOCATÍCIOS",
+   "docs": 1
+  },
+  {
+   "valor": "OUTROS_MT--",
+   "docs": 2
+  },
+  {
+   "valor": "Outras penalidades (ex.MULTAS DOI, etc)",
+   "docs": 1341
+  },
+  {
+   "valor": "Outros imposto e contrib federais adm p/ SRF - ação fiscal",
+   "docs": 4458
+  },
+  {
+   "valor": "Outros proc. que não versem s/ exigências cred. tributario",
+   "docs": 710
+  },
+  {
+   "valor": "PIS -  proc. que não versem s/exigências de cred. Tributario",
+   "docs": 3961
+  },
+  {
+   "valor": "PIS - Ação Fiscal - Importação",
+   "docs": 7
+  },
+  {
+   "valor": "PIS - ação fiscal (todas)",
+   "docs": 4061
+  },
+  {
+   "valor": "PIS_AF-----",
+   "docs": 8
+  },
+  {
+   "valor": "PIS_AF------",
+   "docs": 2
+  },
+  {
+   "valor": "PIS_IMPORT-",
+   "docs": 1
+  },
+  {
+   "valor": "PIS_NT-----",
+   "docs": 11
+  },
+  {
+   "valor": "Pasep- ação fiscal (todas)",
+   "docs": 94
+  },
+  {
+   "valor": "Pasep- proc. que não versem s/exigências cred.tributario",
+   "docs": 1003
+  },
+  {
+   "valor": "RF06 - A03 - Fazendária - Restituição PJ Demais",
+   "docs": 4
+  },
+  {
+   "valor": "RF06 - A04 - Fazendária - Ressarcimento",
+   "docs": 1
+  },
+  {
+   "valor": "RF06 - C01 - Fazendária - Compensação",
+   "docs": 10
+  },
+  {
+   "valor": "SIMPLES_NT-",
+   "docs": 9
+  },
+  {
+   "valor": "SIMPLES_NT--",
+   "docs": 2
+  },
+  {
+   "valor": "Simples - ação fiscal - insuf. na apuração e recolhimento",
+   "docs": 914
+  },
+  {
+   "valor": "Simples- proc. que não versem s/exigências cred.tributario",
+   "docs": 3681
+  },
+  {
+   "valor": "contrabando/descaminho",
+   "docs": 2
+  },
+  {
+   "valor": "glosas diversas, não atendeu à intimação",
+   "docs": 1
+  },
+  {
+   "valor": "omissão pj",
+   "docs": 1
+  }
+ ]
+}

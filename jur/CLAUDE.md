@@ -36,8 +36,10 @@ Nunca cite um julgado sem a skill [`verificador`](skills/verificador/SKILL.md).
 | Documento | Para que |
 |---|---|
 | **este arquivo** | Roteamento: qual tribunal, qual doc, quais flags comuns |
+| [`CLAUDE-CJF.md`](CLAUDE-CJF.md) | Os portais do CJF (TRF1, TNU, Unificada) e **por que a Unificada não salva o STJ bloqueado** |
 | [`CLAUDE-CODEGEN.md`](CLAUDE-CODEGEN.md) | Como mapear um tribunal **novo** (processo completo) |
 | [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md) | Os 61 tribunais catalogados e o status de cada um |
+| [`TODO.md`](TODO.md) | Próximos alvos: TJs restantes + **instâncias administrativas** (CARF, CRPS, TCEs) |
 | `CLAUDE-<TRIBUNAL>.md` | Flags específicas e **ressalvas** de um tribunal |
 | [`skills/README.md`](skills/README.md) | As 6 skills e quando usar cada uma |
 
@@ -48,7 +50,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 
 | Comando | Tribunal | Escopo (estados) | Doc | Status |
 |---------|----------|------------------|-----|--------|
-| `trf1` | TRF 1ª Região | DF, MG, GO, TO, MT, BA, PI, MA, PA, AP, AM, RR, AC, RO | `CLAUDE-TRF1.md` | 🟡 CJF fora do ar (24/07/2026) |
+| `trf1` | TRF 1ª Região | DF, MG, GO, TO, MT, BA, PI, MA, PA, AP, AM, RR, AC, RO | `CLAUDE-TRF1.md` | 🟡 no ar, mas a **base congelou em 31/07/2025** |
 | `trf2` | TRF 2ª Região | RJ, ES | `CLAUDE-TRF2.md` | 🟢 OK (HTTP direto, sem browser) |
 | `trf3` | TRF 3ª Região | SP, MS | `CLAUDE-TRF3.md` | 🟡 instável (restrição de navegador) |
 | `trf4` | TRF 4ª Região | RS, SC, PR | `CLAUDE-TRF4.md` | 🟢 OK |
@@ -57,6 +59,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `stf`  | **Supremo Tribunal Federal** | Nacional (constitucional) | `CLAUDE-STF.md` | 🟢 OK (API direta; browser só p/ o token do WAF) |
 | `stj`  | **Superior Tribunal de Justiça** | Nacional (lei federal infraconstitucional) | `CLAUDE-STJ.md` | 🔴 **BLOQUEADO — não rodar** (desafio interativo do Cloudflare desde 27/07/2026; ver alerta no topo) |
 | `tcu`  | Tribunal de Contas da União | Federal (acórdãos) | `CLAUDE-TCU.md` | 🟢 OK |
+| `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `tjce` | TJ do Ceará | CE | `CLAUDE-TJCE.md` | 🟢 OK (API direta, sem browser — SJURIS, **SAJ + PJe juntos**; **não** use o e-SAJ) |
 | `tjdft` | TJ do DF e Territórios | DF | `CLAUDE-TJDFT.md` | 🟢 OK (**API pública oficial**, sem browser) |
 | `tjgo` | TJ de Goiás | GO | `CLAUDE-TJGO.md` | 🟢 OK (HTTP direto, sem browser) |
@@ -177,6 +180,12 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   **não indexa número CNJ** — peça o número no formato do STJ (`REsp 1809043`) ou o
   registro (`2019/0116080-0`)
 - "Acórdãos do TCU" → `tcu` → leia `CLAUDE-TCU.md`
+- **Contencioso administrativo TRIBUTÁRIO federal** ("o que o CARF decidiu", auto de
+  infração da Receita, IRPF/IRPJ/PIS/COFINS/IPI em recurso administrativo, CSRF) →
+  `carf` → leia `CLAUDE-CARF.md`. É instância ADMINISTRATIVA, não Judiciário: para a
+  mesma matéria já judicializada, o caminho é `trf*`/`stj`. ⚠️ Na query do CARF o
+  `OU` não existe (é ignorado — rode duas buscas e some); números só com máscara
+  (`13890.000160/2006-17`, `2802-000.639`)
 - **Matéria TRABALHISTA** (verbas rescisórias, horas extras, vínculo de emprego,
   insalubridade/periculosidade, justa causa, assédio, FGTS) → Justiça do Trabalho, que é
   **outro ramo**: nunca o TJ do estado. Escolha pela UF do vínculo — `trt9` (PR),

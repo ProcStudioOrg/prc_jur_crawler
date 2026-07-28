@@ -3,6 +3,14 @@
 **Escopo:** SP, MS · **Status:** ⚠️ Restrição de navegador — instável
 **Crawler:** `src/TRF3Crawler.js` · **Fallback:** `src/trf3_drission.py` (Python/DrissionPage)
 
+> ⚠️ **Verificado em 27/07/2026: o host está INACESSÍVEL, e não é mais a verificação de
+> navegador.** `web.trf3.jus.br` resolve pela Akamai (`a1855.dscb.akamai.net` → 189.86.122.19),
+> mas nada responde: Playwright dá `net::ERR_HTTP2_PROTOCOL_ERROR` já no `goto` (inclusive com
+> `--headed`), e `curl` falha em HTTP/2 **e** em `--http1.1`; `www.trf3.jus.br` também. Como a
+> falha é anterior a qualquer interação, o fallback Python não ajuda. Reteste o host antes de
+> mexer em seletor. Para matéria previdenciária de SP/MS nesse período, ofereça TRF4/TRF5 como
+> comparativo **dizendo que é outra região**.
+>
 > O site aplica verificação de navegador que falha intermitentemente em modo headless.
 > Prefira `-v` / `--headed`; em caso de falhas recorrentes, use o fallback Python.
 > Para matéria previdenciária federal com origem em SP, considere também **TRF4/TRF5**

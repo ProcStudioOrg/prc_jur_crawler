@@ -32,6 +32,18 @@ Além das flags comuns (ver `CLAUDE.md`):
 - **Turmas Recursais:** sempre baixar o inteiro teor (`--fetch-inteiro-teor`) — as ementas
   costumam ser curtas e o conteúdo relevante está no documento completo.
 
+- **O espaço entre termos é `E`** — medido em 27/07/2026 (recorte 27/06–27/07/2026):
+  `tempo` 11.091, `especial` 16.456, `tempo especial` **9.085**. Menor que o menor dos dois,
+  logo conjunção, não disjunção. É o **oposto do TRF2** (onde o espaço quebra a busca e o
+  crawler hifeniza sozinho) e igual ao TRF6: **nunca hifenize a query do TRF4**.
+
+- **Não existe flag `-n`.** Para conferir um julgado, passe o número CNJ como texto livre em
+  `-q` — devolve exatamente o documento (medido em 2 processos, 1 resultado cada). Ao citar
+  julgado do TRF4, diga que a verificação é **parcial**: não há Checker dedicado.
+
+- **Volume:** 9.198 documentos em 30 dias com `-q "previdenciário"` — o maior do repo em
+  matéria federal. Cerca de **70% são decisões monocráticas**; para tese colegiada, filtre.
+
 ## ⚠️ Ressalva — o pool de backends do TRF4 é instável (diagnosticado em 26/07/2026)
 
 O host `eproc-jur.trf4.jus.br` resolve para **um único IP** (170.81.138.194), mas responde de

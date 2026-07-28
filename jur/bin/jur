@@ -14,6 +14,8 @@ const TRF6Crawler = require('../src/TRF6Crawler');
 const TRF6Checker = require('../src/TRF6Checker');
 const TRF6Navigator = require('../src/TRF6Navigator');
 const TCUCrawler = require('../src/TCUCrawler');
+const CARFCrawler = require('../src/CARFCrawler');
+const CARFChecker = require('../src/CARFChecker');
 const TJPRCrawler = require('../src/TJPRCrawler');
 const TJPRChecker = require('../src/TJPRChecker');
 const TJPRNavigator = require('../src/TJPRNavigator');
@@ -825,6 +827,163 @@ program
         process.stdout.write(
           JSON.stringify({ success: false, error: error.message }) + '\n'
         );
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('carf')
+  .description('Search CARF (contencioso administrativo tributario federal) — Solr publico, API direta')
+  .option('-q, --query <text>', 'Search query (Solr: espaco = E implicito, NOT, -, "frase", "frase"~N, *; OR e IGNORADO)')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de PROCESSO administrativo fiscal (CARFChecker)')
+  .option('--decisao <numero>', 'Consulta direta por numero de DECISAO (acordao/resolucao, ex. 2802-000.639)')
+  .option('-di, --data-inicio <date>', 'Data da SESSAO de julgamento — inicio (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Data da SESSAO de julgamento — fim (DD/MM/YYYY)')
+  .option('-dpi, --data-pub-inicio <date>', 'Data de PUBLICACAO — inicio (DD/MM/YYYY)')
+  .option('-dpf, --data-pub-fim <date>', 'Data de PUBLICACAO — fim (DD/MM/YYYY)')
+  .option('-s, --secao <nome>', 'Secao de julgamento — string exata do facet (use --listar)')
+  .option('--camara <nome>', 'Camara — string exata do facet')
+  .option('--turma <nome>', 'Turma — string exata do facet')
+  .option('--materia <nome>', 'Materia/tributo — string exata do facet')
+  .option('-r, --relator <nome>', 'Relator(a) — string EXATA do facet (dados sujos; use --listar)')
+  .option('-ord, --ordenacao <tipo>', 'Sort: relevancia (default), recentes', 'relevancia')
+  .option('--listar', 'Lista o dominio dos filtros (secao, camara, turma, materia, relator, anos) com contagens')
+  .option('--full-text', 'Inclui o inteiro teor no JSON de resultados (ja vem na busca, sem custo extra)')
+  .option('--fetch-inteiro-teor', 'Grava o inteiro teor de cada resultado como .txt')
+  .option('--pdf', 'Com --fetch-inteiro-teor: grava tambem o PDF original (1 GET por documento)')
+  .option('--output-dir <dir>', 'Directory for downloaded inteiro teor files', './resultados/carf')
+  .option('--verificar [amostra]', 'Audit results: re-query N sampled decisoes (default 5)')
+  .option('--max-results <number>', 'Maximum total results to collect')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (20 resultados/pagina)', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-carf.json')
+  .option('-v, --visible', 'Ignored (CARF uses direct API, no browser)')
+  .option('--headed', 'Ignored (CARF uses direct API, no browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    try {
+      if (opts.listar) {
+        const crawler = new CARFCrawler({ log });
+        const filtros = await crawler.listarFiltros();
+        process.stdout.write(JSON.stringify(filtros, null, jsonMode ? 0 : 2) + '\n');
+        process.exit(0);
+      }
+
+      // Modo consulta direta por numero (CARFChecker)
+      if (opts.numero || opts.decisao) {
+        const checker = new CARFChecker({ log });
+        const res = opts.decisao
+          ? await checker.consultarDecisao(opts.decisao)
+          : await checker.consultarProcesso(opts.numero);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        } else {
+          console.log(JSON.stringify(res, null, 2));
+        }
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (!opts.query) {
+        throw new Error('Informe -q "<termos>" para pesquisa livre, -n <processo> ou --decisao <numero>');
+      }
+
+      log('='.repeat(60));
+      log('CARF Jurisprudencia Crawler — Solr publico (API direta)');
+      log('='.repeat(60));
+      log(`Query: ${opts.query}`);
+      log(`Data Sessao: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log(`Data Publicacao: ${opts.dataPubInicio || '-'} a ${opts.dataPubFim || '-'}`);
+      log(`Secao: ${opts.secao || '-'} | Camara: ${opts.camara || '-'} | Turma: ${opts.turma || '-'}`);
+      log(`Materia: ${opts.materia || '-'} | Relator: ${opts.relator || '-'}`);
+      log(`Max Pages: ${opts.maxPages} | Ordenacao: ${opts.ordenacao}`);
+      log('='.repeat(60));
+
+      const crawler = new CARFCrawler({
+        timeout: 60000,
+        // o inteiro teor ja vem na busca: gravar em disco nao custa request extra
+        includeFullText: !!opts.fullText || !!opts.fetchInteiroTeor,
+        log,
+      });
+
+      const filters = {
+        dataSessaoInicio: opts.dataInicio || null,
+        dataSessaoFim: opts.dataFim || null,
+        dataPubInicio: opts.dataPubInicio || null,
+        dataPubFim: opts.dataPubFim || null,
+        secao: opts.secao || null,
+        camara: opts.camara || null,
+        turma: opts.turma || null,
+        materia: opts.materia || null,
+        relator: opts.relator || null,
+        ordenacao: opts.ordenacao,
+      };
+
+      const searchOptions = { maxPages: parseInt(opts.maxPages, 10) };
+      if (opts.maxResults) searchOptions.maxResults = parseInt(opts.maxResults, 10);
+
+      const results = await crawler.search(opts.query, filters, searchOptions);
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+      if (results.totalResults) log(`Total results on server: ${results.totalResults} (exato)`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+        const checker = new CARFChecker({ log });
+        verificacao = await checker.verificarResultados(results, { amostra, log });
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        log(`\nGravando inteiro teor de ${results.length} resultados...`);
+        const formats = opts.pdf ? ['txt', 'pdf'] : ['txt'];
+        const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log, formats });
+        const successCount = downloaded.filter(r => r.arquivo).length;
+        const failCount = downloaded.filter(r => !r.arquivo).length;
+        log(`\nGravacao completa: ${successCount} ok, ${failCount} falhas`);
+        log(`Arquivos em: ${outputDir}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults || null,
+            count: results.length,
+            downloaded: successCount,
+            failed: failCount,
+            outputDir,
+            ...(results.avisos?.length ? { avisos: results.avisos } : {}),
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true,
+            totalResults: results.totalResults || null,
+            count: results.length,
+            output: outputPath,
+            ...(results.avisos?.length ? { avisos: results.avisos } : {}),
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
         process.exit(1);
       }
       console.error('Error during crawling:', error.message);

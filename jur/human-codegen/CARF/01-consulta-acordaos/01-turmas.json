@@ -1,0 +1,314 @@
+{
+ "campo": "turma_s",
+ "total_valores": 77,
+ "valores": [
+  {
+   "valor": "1ª TURMA/CÂMARA SUPERIOR REC. FISCAIS",
+   "docs": 6836
+  },
+  {
+   "valor": "2ª TURMA/CÂMARA SUPERIOR REC. FISCAIS",
+   "docs": 11281
+  },
+  {
+   "valor": "3ª TURMA/CÂMARA SUPERIOR REC. FISCAIS",
+   "docs": 16206
+  },
+  {
+   "valor": "Oitava Câmara",
+   "docs": 5323
+  },
+  {
+   "valor": "Oitava Turma Especial",
+   "docs": 123
+  },
+  {
+   "valor": "PLENO DA CÂMARA SUPERIOR REC. FISCAIS",
+   "docs": 788
+  },
+  {
+   "valor": "Pleno",
+   "docs": 1
+  },
+  {
+   "valor": "Primeira Câmara",
+   "docs": 25086
+  },
+  {
+   "valor": "Primeira Turma Especial",
+   "docs": 396
+  },
+  {
+   "valor": "Primeira Turma Especial da Primeira Seção",
+   "docs": 2120
+  },
+  {
+   "valor": "Primeira Turma Especial da Segunda Seção",
+   "docs": 3515
+  },
+  {
+   "valor": "Primeira Turma Especial da Terceira Seção",
+   "docs": 5347
+  },
+  {
+   "valor": "Primeira Turma Extraordinária da Primeira Seção",
+   "docs": 5256
+  },
+  {
+   "valor": "Primeira Turma Extraordinária da Segunda Seção",
+   "docs": 8647
+  },
+  {
+   "valor": "Primeira Turma Extraordinária da Terceira Seção",
+   "docs": 4773
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Primeira Câmara da Primeira Seção",
+   "docs": 2446
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Primeira Câmara da Segunda Seção",
+   "docs": 3189
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Primeira Câmara da Terceira Seção",
+   "docs": 4836
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Quarta Câmara da Primeira Seção",
+   "docs": 10088
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Quarta Câmara da Segunda Seção",
+   "docs": 13059
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Quarta Câmara da Terceira Seção",
+   "docs": 16119
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Segunda Câmara da Primeira Seção",
+   "docs": 8414
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Segunda Câmara da Segunda Seção",
+   "docs": 12440
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Segunda Câmara da Terceira Seção",
+   "docs": 16299
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Terceira Câmara da Primeira Seção",
+   "docs": 9048
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Terceira Câmara da Segunda Seção",
+   "docs": 11434
+  },
+  {
+   "valor": "Primeira Turma Ordinária da Terceira Câmara da Terceira Seção",
+   "docs": 16161
+  },
+  {
+   "valor": "Primeira Turma Superior",
+   "docs": 814
+  },
+  {
+   "valor": "Quarta Câmara",
+   "docs": 11514
+  },
+  {
+   "valor": "Quarta Turma Especial",
+   "docs": 538
+  },
+  {
+   "valor": "Quarta Turma Especial da Terceira Seção",
+   "docs": 1
+  },
+  {
+   "valor": "Quarta Turma Extraordinária da Primeira Seção",
+   "docs": 452
+  },
+  {
+   "valor": "Quarta Turma Extraordinária da Segunda Seção",
+   "docs": 462
+  },
+  {
+   "valor": "Quarta Turma Extraordinária da Terceira Seção",
+   "docs": 242
+  },
+  {
+   "valor": "Quinta Câmara",
+   "docs": 9116
+  },
+  {
+   "valor": "Quinta Turma Especial",
+   "docs": 199
+  },
+  {
+   "valor": "Quinta Turma Especial da Terceira Seção",
+   "docs": 2
+  },
+  {
+   "valor": "Quinta Turma Extraordinária da Segunda Seção",
+   "docs": 189
+  },
+  {
+   "valor": "Segunda  Turma Superior",
+   "docs": 733
+  },
+  {
+   "valor": "Segunda Câmara",
+   "docs": 27805
+  },
+  {
+   "valor": "Segunda Turma Especial",
+   "docs": 370
+  },
+  {
+   "valor": "Segunda Turma Especial da Primeira Seção",
+   "docs": 2378
+  },
+  {
+   "valor": "Segunda Turma Especial da Segunda Seção",
+   "docs": 2895
+  },
+  {
+   "valor": "Segunda Turma Especial da Terceira Seção",
+   "docs": 3936
+  },
+  {
+   "valor": "Segunda Turma Extraordinária da Primeira Seção",
+   "docs": 4947
+  },
+  {
+   "valor": "Segunda Turma Extraordinária da Segunda Seção",
+   "docs": 10633
+  },
+  {
+   "valor": "Segunda Turma Extraordinária da Terceira Seção",
+   "docs": 4918
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Primeira Câmara da Primeira Seção",
+   "docs": 2022
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Primeira Câmara da Segunda Seção",
+   "docs": 3502
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Primeira Câmara da Terceira Seção",
+   "docs": 3120
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Quarta Câmara da Primeira Seção",
+   "docs": 9206
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Quarta Câmara da Segunda Seção",
+   "docs": 14477
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Quarta Câmara da Terceira Seção",
+   "docs": 15869
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Segunda Câmara da Primeira Seção",
+   "docs": 2166
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Segunda Câmara da Segunda Seção",
+   "docs": 12383
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Segunda Câmara da Terceira Seção",
+   "docs": 3999
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Terceira Câmara da Primeira Seção",
+   "docs": 8760
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Terceira Câmara da Segunda Seção",
+   "docs": 3892
+  },
+  {
+   "valor": "Segunda Turma Ordinária da Terceira Câmara da Terceira Seção",
+   "docs": 17801
+  },
+  {
+   "valor": "Sexta Câmara",
+   "docs": 6473
+  },
+  {
+   "valor": "Sexta Turma Especial",
+   "docs": 236
+  },
+  {
+   "valor": "Sexta Turma Especial da Segunda Seção",
+   "docs": 222
+  },
+  {
+   "valor": "Sexta Turma Especial da Terceira Seção",
+   "docs": 9
+  },
+  {
+   "valor": "Sétima Câmara",
+   "docs": 8580
+  },
+  {
+   "valor": "Sétima Turma Especial",
+   "docs": 172
+  },
+  {
+   "valor": "Terceira Câmara",
+   "docs": 29282
+  },
+  {
+   "valor": "Terceira Turma Especial",
+   "docs": 491
+  },
+  {
+   "valor": "Terceira Turma Especial da Primeira Seção",
+   "docs": 1987
+  },
+  {
+   "valor": "Terceira Turma Especial da Segunda Seção",
+   "docs": 3734
+  },
+  {
+   "valor": "Terceira Turma Especial da Terceira Seção",
+   "docs": 6077
+  },
+  {
+   "valor": "Terceira Turma Extraordinária da Primeira Seção",
+   "docs": 5049
+  },
+  {
+   "valor": "Terceira Turma Extraordinária da Segunda Seção",
+   "docs": 7052
+  },
+  {
+   "valor": "Terceira Turma Extraordinária da Terceira Seção",
+   "docs": 3282
+  },
+  {
+   "valor": "Terceira Turma Ordinária da Primeira Câmara da Primeira Seção",
+   "docs": 849
+  },
+  {
+   "valor": "Terceira Turma Ordinária da Quarta Câmara da Segunda Seção",
+   "docs": 2929
+  },
+  {
+   "valor": "Terceira Turma Ordinária da Quarta Câmara da Terceira Seção",
+   "docs": 2884
+  },
+  {
+   "valor": "Terceira Turma Superior",
+   "docs": 1093
+  }
+ ]
+}

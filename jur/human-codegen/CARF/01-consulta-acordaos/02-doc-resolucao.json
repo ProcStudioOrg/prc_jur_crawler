@@ -1,0 +1,87 @@
+{
+  "responseHeader":{
+    "zkConnected":true,
+    "status":0,
+    "QTime":5,
+    "params":{
+      "q":"id:10923883",
+      "rows":"1",
+      "wt":"json"}},
+  "response":{"numFound":1,"start":0,"maxScore":4.7192955,"numFoundExact":true,"docs":[
+      {
+        "dt_index_tdt":"2025-05-31T09:00:02Z",
+        "anomes_sessao_s":"202505",
+        "turma_s":"Primeira Turma Extraordinária da Primeira Seção",
+        "dt_publicacao_tdt":"2025-05-21T00:00:00Z",
+        "numero_processo_s":"10875.903513/2012-81",
+        "anomes_publicacao_s":"202505",
+        "conteudo_id_s":"7263291",
+        "dt_registro_atualizacao_tdt":"2025-05-21T00:00:00Z",
+        "numero_decisao_s":"1001-000.819",
+        "nome_arquivo_s":"Decisao_10875903513201281.PDF",
+        "ano_publicacao_s":"2025",
+        "nome_relator_s":"CARMEN FERREIRA SARAIVA",
+        "nome_arquivo_pdf_s":"10875903513201281_7263291.pdf",
+        "secao_s":"Primeira Seção de Julgamento",
+        "arquivo_indexado_s":"S",
+        "decisao_txt":["Vistos, relatados e discutidos os presentes autos.\nResolvem os membros do colegiado, por unanimidade de votos, em conhecer e acolher, com efeitos infringentes, os embargos inominados para correção da parte dispositiva da Resolução da 1ª TEx/1ª Seção nº 1001-0770, de 03.10.2024, cujo conteúdo passa a integrá-la.\nAssinado Digitalmente\nCarmen Ferreira Saraiva – Relatora e Presidente\nParticiparam do presente julgamento os Conselheiros: José Anchieta de Sousa, Ana Cecília Lustosa da Cruz, Gustavo de Oliveira Machado, Ana Cláudia Borges de Oliveira e Carmen Ferreira Saraiva.\n"],
+        "dt_sessao_tdt":"2025-05-05T00:00:00Z",
+        "id":"10923883",
+        "ano_sessao_s":"2025",
+        "atualizado_anexos_dt":"2025-05-31T09:37:07.778Z",
+        "sem_conteudo_s":"N",
+        "_version_":1833628325551013888,
+        "conteudo_txt":"Metadados => date: 2025-05-21T19:08:13Z; pdf:unmappedUnicodeCharsPerPage: 0; pdf:PDFVersion: 1.5; xmp:CreatorTool: Microsoft® Word 2010; access_permission:modify_annotations: true; access_permission:can_print_degraded: true; language: pt-BR; dcterms:created: 2025-05-21T19:08:13Z; Last-Modified: 2025-05-21T19:08:13Z; dcterms:modified: 2025-05-21T19:08:13Z; dc:format: application/pdf; version=1.5; Last-Save-Date: 2025-05-21T19:08:13Z; pdf:docinfo:creator_tool: Microsoft® Word 2010; access_permission:fill_in_form: true; pdf:docinfo:modified: 2025-05-21T19:08:13Z; meta:save-date: 2025-05-21T19:08:13Z; pdf:encrypted: false; modified: 2025-05-21T19:08:13Z; Content-Type: application/pdf; X-Parsed-By: org.apache.tika.parser.DefaultParser; dc:language: pt-BR; meta:creation-date: 2025-05-21T19:08:13Z; created: 2025-05-21T19:08:13Z; access_permission:extract_for_accessibility: true; access_permission:assemble_document: true; xmpTPg:NPages: 4; Creation-Date: 2025-05-21T19:08:13Z; pdf:charsPerPage: 1507; access_permission:extract_content: true; access_permission:can_print: true; producer: SERVIÇO FEDERAL DE PROCESSAMENTO DE DADOS (SERPRO) using ABCpdf; access_permission:can_modify: true; pdf:docinfo:producer: SERVIÇO FEDERAL DE PROCESSAMENTO DE DADOS (SERPRO) using ABCpdf; pdf:docinfo:created: 2025-05-21T19:08:13Z | Conteúdo => \nD\nO\n\nC\nU\n\nM\nE\n\nN\nT\n\nO\n V\n\nA\nL\n\nID\nA\n\nD\nO\n\n \n\nMINISTÉRIO DA FAZENDA \nConselho Administrativo de Recursos Fiscais \n\nPROCESSO  10875.903513/2012-81  \n\nRESOLUÇÃO 1001-000.819 – 1ª SEÇÃO/1ª TURMA EXTRAORDINÁRIA    \n\nSESSÃO DE 7 de maio de 2025 \n\nRECURSO EMBARGOS \n\nEMBARGANTE CONSELHEIRO \n\nINTERESSADO PANDURATA ALIMENTOS LTDA. E FAZENDA NACIONAL  \n\nAssunto: Conversão do Julgamento em Diligência \n\nRESOLUÇÃO \n\nVistos, relatados e discutidos os presentes autos. \n\nResolvem os membros do colegiado, por unanimidade de votos, em conhecer e \n\nacolher, com efeitos infringentes, os embargos inominados para correção da parte dispositiva da \n\nResolução da 1ª TEx/1ª Seção nº 1001-0770, de 03.10.2024, cujo conteúdo passa a integrá-la. \n\n \n\nAssinado Digitalmente \n\nCarmen Ferreira Saraiva – Relatora e Presidente \n\nParticiparam do presente julgamento os Conselheiros: José Anchieta de Sousa, Ana \n\nCecília Lustosa da Cruz, Gustavo de Oliveira Machado, Ana Cláudia Borges de Oliveira e Carmen \n\nFerreira Saraiva. \n\n \n \n\nRELATÓRIO \n\nPer/DComp e Despacho Decisório  \n\nA Recorrente formalizou o Pedido de Ressarcimento ou Restituição/Declaração de \n\nCompensação (Per/DComp) utilizando-se do crédito relativo ao saldo negativo de Imposto sobre a \n\nRenda da Pessoa Jurídica (IRPJ) no valor de R$1.708.949,11 do ano-calendário de 2009 apurado \n\npelo lucro real anual para compensação dos débitos ali confessados. \n\nConsta no Despacho Decisório que houve homologação em parte da compensação \n\ndeclarada no Per/Dcomp. \n\nManifestação de Inconformidade e Decisão de Primeira Instância  \n\nFl. 206DF  CARF  MF\n\nOriginal\n\n\n\n\nD\nO\n\nC\nU\n\nM\nE\n\nN\nT\n\nO\n V\n\nA\nL\n\nID\nA\n\nD\nO\n\n \n\nRESOLUÇÃO  1001-000.819 – 1ª SEÇÃO/1ª TURMA EXTRAORDINÁRIA  PROCESSO  10875.903513/2012-81 \n\n 2 \n\nCientificada, a Recorrente apresentou a manifestação de inconformidade. Está \n\nregistrado no Acórdão da 5ª Turma DRJ/RPO/SP nº 14-54.954, de 21.11.2014, o julgamento \n\nimprocedente da manifestação de inconformidade. \n\nRecurso Voluntário   \n\nNotificada em 23.12.2014, e-fl. 87, a Recorrente apresentou o recurso voluntário \n\nem 22.01.2015, e-fls. 88-104, esclarecendo a peça atende aos pressupostos de admissibilidade. \n\nDiscorre sobre o procedimento fiscal contra o qual se insurge. \n\nRecurso Repetitivo \n\nO presente processo tramita na definição regimental de paradigma, nos termos do \n\nart. 87 do Anexo do Regimento Interno do CARF aprovado pela Portaria MF nº 1.634, de 21 de \n\ndezembro de 2023. \n\nDecisão de Segunda Instância \n\nEstá registrado na Resolução da 1ª TEx/1ª Seção nº 1001-0771, de 03.10.2024, e-fls. \n\n188-202: \n\nResolvem os membros do colegiado, por unanimidade de votos, conhecer do \n\nrecurso voluntário e converter o julgamento do recurso voluntário em diligência à \n\nUnidade de Origem para: (a) instruir os autos com a comprovação da notificação \n\nválida a Recorrente do Termo de Intimação de 25.11.2020 com rastreamento nº \n\n018333746, e-fls. 71; (b) proceder à análise do valor efetivamente extinto da \n\nestimativa do período de apuração de outubro para fins de apuração do saldo \n\nnegativo de IRPJ do ano-calendário de 2009 pleiteado nos presentes autos; e (c) \n\ncotejar as informações constantes nos sistemas da RFB e aquelas originárias dos \n\nregistros contábeis e fiscais e demais documentos que a Recorrente deve ser \n\nintimada a apresentar. \n\nEmbargos  \n\nA Presidente da Turma opôs embargos inominados em 24.02.2025, e-fls. 203-204, \n\npara correção da parte dispositiva da Resolução da 1ª TEx/1ª Seção nº 1001-0771, de 03.10.2024, \n\ntendo em vista a necessidade de adequação ao procedimento de recursos repetitivos (art. 87 e \n\nart. 117 do Anexo do Regimento Interno do CARF, aprovado pela Portaria MF nº 1.634, de 21 de \n\ndezembro de 2023). \n\nÉ o Relatório. \n\n \n \n\nVOTO \n\nConselheira Carmen Ferreira Saraiva, Relatora. \n\nFl. 207DF  CARF  MF\n\nOriginal\n\n\n\nD\nO\n\nC\nU\n\nM\nE\n\nN\nT\n\nO\n V\n\nA\nL\n\nID\nA\n\nD\nO\n\n \n\nRESOLUÇÃO  1001-000.819 – 1ª SEÇÃO/1ª TURMA EXTRAORDINÁRIA  PROCESSO  10875.903513/2012-81 \n\n 3 \n\nTempestividade \n\nOs embargos inominados atendem aos requisitos de admissibilidade previstos nas \n\nnormas de regência, nos termos do art. 117 do Anexo do Regimento Interno do CARF, aprovado \n\npela Portaria MF nº 1.634, de 21 de dezembro de 2023, para correção do voto condutor da \n\ndecisão de segunda instância. \n\nEmbargos \n\nA Recorrente alega que há inexatidão material no voto condutor da decisão de \n\nsegunda instância. \n\nVerificada a ocorrência de inexatidão material tendo em vista a necessidade de \n\nadequação ao procedimento de recursos repetitivos na parte dispositiva da Resolução da 1ª \n\nTEx/1ª Seção nº 1001-0770, de 03.10.2024, deve-se corrigi-la no seguinte sentido (art. 87 e art. \n\n117 do Anexo do Regimento Interno do CARF, aprovado pela Portaria MF nº 1.634, de 21 de \n\ndezembro de 2023): \n\nDE \n\nResolvem os membros do colegiado, por unanimidade de votos, conhecer do \n\nrecurso voluntário e converter o julgamento do recurso voluntário em diligência à \n\nUnidade de Origem para: (a) instruir os autos com a comprovação da notificação \n\nválida a Recorrente do Termo de Intimação de 25.11.2020 com rastreamento nº \n\n018333746, e-fls. 71; (b) proceder à análise do valor efetivamente extinto da \n\nestimativa do período de apuração de outubro para fins de apuração do saldo \n\nnegativo de IRPJ do ano-calendário de 2009 pleiteado nos presentes autos; e (c) \n\ncotejar as informações constantes nos sistemas da RFB e aquelas originárias dos \n\nregistros contábeis e fiscais e demais documentos que a Recorrente deve ser \n\nintimada a apresentar. Este julgamento seguiu a sistemática dos recursos \n\nrepetitivos, sendo-lhes aplicado o decidido na Resolução nº 1001-000.770, de 3 de \n\noutubro de 2024, prolatada no julgamento do processo 10875.903513/2012-81, \n\nparadigma ao qual o presente processo foi vinculado. \n\nPARA \n\nResolvem os membros do colegiado, por unanimidade de votos, conhecer do \n\nrecurso voluntário e converter o julgamento do recurso voluntário em diligência à \n\nUnidade de Origem para: (a) instruir os autos com a comprovação da notificação \n\nválida a Recorrente do Termo de Intimação; (b) proceder à análise da apuração do \n\nindébito pleiteado nos presentes autos; e (c) cotejar as informações constantes \n\nnos sistemas da RFB e aquelas originárias dos registros contábeis e fiscais e \n\ndemais documentos que a Recorrente deve ser intimada a apresentar. Este \n\njulgamento seguiu a sistemática dos recursos repetitivos, sendo-lhes aplicado o \n\ndecidido na Resolução nº 1001-000.770, de 3 de outubro de 2024, prolatada no \n\njulgamento do processo 10875.903513/2012-81, paradigma ao qual o presente \n\nprocesso foi vinculado. \n\nFl. 208DF  CARF  MF\n\nOriginal\n\n\n\nD\nO\n\nC\nU\n\nM\nE\n\nN\nT\n\nO\n V\n\nA\nL\n\nID\nA\n\nD\nO\n\n \n\nRESOLUÇÃO  1001-000.819 – 1ª SEÇÃO/1ª TURMA EXTRAORDINÁRIA  PROCESSO  10875.903513/2012-81 \n\n 4 \n\nPrincípio da Legalidade \n\nTem-se que nos estritos termos legais este procedimento está de acordo com o \n\nprincípio da legalidade ao qual o agente público está vinculado em razão da obrigatoriedade da \n\naplicação da lei de ofício. Trata-se de poder-dever funcional irrenunciável vinculado à norma \n\njurídica, cuja atuação está direcionada ao cumprimento das determinações constantes no \n\nordenamento jurídico. Como corolário encontra-se o princípio da indisponibilidade que decorre da \n\nsupremacia do interesse público no que tange aos direitos fundamentais (art. 37 da Constituição \n\nFederal, art. 116 da Lei nº 8.112, de 11 de dezembro de 1990, art. 2º da Lei nº 9.784, de 29 de \n\njaneiro de 1999, art. 26-A do Decreto nº 70.235, de 06 de março de 1972 e art. 98 do Anexo do \n\nRegimento Interno do CARF, aprovado pela Portaria MF nº 1.634, de 21 de dezembro de 2023). \n\nDispositivo  \n\nEm assim sucedendo, voto em conhecer e acolher, com efeitos infringentes, os \n\nembargos inominados para correção da parte dispositiva da Resolução da 1ª TEx/1ª Seção nº \n\n1001-0770, de 03.10.2024, cujo conteúdo passa a integrá-la. \n\nAssinado Digitalmente \n\nCarmen Ferreira Saraiva \n\n \n \n\n \n\n \n\nFl. 209DF  CARF  MF\n\nOriginal\n\n\n\tResolução\n\tRelatório\n\tVoto\n\n",
+        "score":4.7192955}]
+  },
+  "facet_counts":{
+    "facet_queries":{},
+    "facet_fields":{
+      "turma_s":[
+        "Primeira Turma Extraordinária da Primeira Seção",1],
+      "camara_s":[],
+      "secao_s":[
+        "Primeira Seção de Julgamento",1],
+      "materia_s":[],
+      "nome_relator_s":[
+        "CARMEN FERREIRA SARAIVA",1],
+      "ano_sessao_s":[
+        "2025",1],
+      "ano_publicacao_s":[
+        "2025",1],
+      "_nomeorgao_s":[],
+      "_turma_s":[],
+      "_materia_s":[],
+      "_recurso_s":[],
+      "_julgamento_s":[],
+      "_ementa_assunto_s":[],
+      "_tiporecurso_s":[],
+      "_processo_s":[],
+      "_resultadon2_s":[],
+      "_orgao_s":[],
+      "_recorrida_s":[],
+      "_tipodocumento_s":[],
+      "_nomerelator_s":[],
+      "_recorrente_s":[],
+      "decisao_txt":[
+        "03.10.2024",1,
+        "0770",1,
+        "1001",1,
+        "1ª",1,
+        "a",1,
+        "acolher",1,
+        "ana",1,
+        "anchieta",1,
+        "assinado",1,
+        "autos",1,
+        "borges",1,
+        "carmen",1,
+        "cecília",1,
+        "cláudia",1,
+        "colegiado",1]},
+    "facet_ranges":{},
+    "facet_intervals":{},
+    "facet_heatmaps":{}},
+  "spellcheck":{
+    "suggestions":[],
+    "collations":[]}}
