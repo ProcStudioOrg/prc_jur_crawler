@@ -29,7 +29,21 @@ ver [`CLAUDE-CARF.md`](CLAUDE-CARF.md). Sobras opcionais do CARF: interface
 antiga (sincon JSF) e as Súmulas CARF/Pareceres Vinculantes (páginas estáticas),
 não mapeadas de propósito.
 
-### 2.2 CRPS — Conselho de Recursos da Previdência Social (INSS)
+### 2.2 CRPS — 🔴 BLOQUEADO em 31/07/2026 (não re-tente o perfil dedicado)
+
+> **Esta seção abaixo está SUPERADA.** O que ela chama de "plano B" foi construído
+> (`jur crps --login`) e **falhou na tentativa real**: captcha no Gov.br **e** recusa
+> por navegador desconhecido — o Gov.br valida o dispositivo, então perfil novo e
+> isolado é exatamente o que ele rejeita. A hipótese de que "o gate pode estar só em
+> parte do fluxo" também caiu: o HTTP 200 sem cookie era a **tela de login**.
+> Único caminho restante: **CDP contra o Chrome pessoal já logado**, não testado,
+> operação assistida. **Estado atual e ressalvas: [`CLAUDE-CRPS.md`](CLAUDE-CRPS.md).**
+> Mantido abaixo só como registro do raciocínio original.
+
+<details>
+<summary>Plano original (superado)</summary>
+
+#### CRPS — Conselho de Recursos da Previdência Social (INSS)
 
 Busca de julgados/pareceres do contencioso previdenciário administrativo.
 **Hard gate: exige login Gov.br** (e-Recursos). O repo não automatiza captcha
@@ -54,6 +68,8 @@ respondeu **HTTP 200 sem redirect** para curl sem cookie; o hard gate de Gov.br
 pode estar só em parte do fluxo (download/inteiro teor?) — confirmar no
 mapeamento. Enunciados e súmulas do CRPS são públicos e podem ser um primeiro
 crawler sem login.
+
+</details>
 
 ### 2.3 TCEs — Tribunais de Contas Estaduais
 

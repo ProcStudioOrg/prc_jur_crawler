@@ -60,6 +60,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `stj`  | **Superior Tribunal de Justiça** | Nacional (lei federal infraconstitucional) | `CLAUDE-STJ.md` | 🔴 **BLOQUEADO — não rodar** (desafio interativo do Cloudflare desde 27/07/2026; ver alerta no topo) |
 | `tcu`  | Tribunal de Contas da União | Federal (acórdãos) | `CLAUDE-TCU.md` | 🟢 OK |
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
+| `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjce` | TJ do Ceará | CE | `CLAUDE-TJCE.md` | 🟢 OK (API direta, sem browser — SJURIS, **SAJ + PJe juntos**; **não** use o e-SAJ) |
 | `tjdft` | TJ do DF e Territórios | DF | `CLAUDE-TJDFT.md` | 🟢 OK (**API pública oficial**, sem browser) |
 | `tjgo` | TJ de Goiás | GO | `CLAUDE-TJGO.md` | 🟢 OK (HTTP direto, sem browser) |
@@ -180,6 +181,13 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   **não indexa número CNJ** — peça o número no formato do STJ (`REsp 1809043`) ou o
   registro (`2019/0116080-0`)
 - "Acórdãos do TCU" → `tcu` → leia `CLAUDE-TCU.md`
+- **Contencioso administrativo PREVIDENCIÁRIO** ("o que o CRPS decidiu", recurso contra
+  indeferimento do INSS, Junta de Recursos, Câmara de Julgamento) → 🔴 **não há busca**:
+  o portal exige login Gov.br e o contorno por perfil de Chrome dedicado **já foi tentado
+  e falhou** (captcha + Gov.br recusa navegador não validado).
+  **Diga isso ao usuário**, não ofereça zero como resposta.
+  Alternativas honestas: `trf*` da região (matéria já judicializada) e os **Enunciados do
+  CRPS**, públicos em PDF no gov.br. Leia `CLAUDE-CRPS.md`
 - **Contencioso administrativo TRIBUTÁRIO federal** ("o que o CARF decidiu", auto de
   infração da Receita, IRPF/IRPJ/PIS/COFINS/IPI em recurso administrativo, CSRF) →
   `carf` → leia `CLAUDE-CARF.md`. É instância ADMINISTRATIVA, não Judiciário: para a

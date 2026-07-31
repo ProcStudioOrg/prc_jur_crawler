@@ -1,0 +1,83 @@
+[
+  {
+    "tag": "input",
+    "name": "accountId",
+    "id": "accountId",
+    "type": "tel",
+    "placeholder": "Digite seu CPF",
+    "ngModel": null,
+    "label": null
+  },
+  {
+    "tag": "input",
+    "name": "_csrf",
+    "id": null,
+    "type": "hidden",
+    "placeholder": null,
+    "ngModel": null,
+    "label": null
+  },
+  {
+    "tag": "input",
+    "name": null,
+    "id": "operation-field",
+    "type": "hidden",
+    "placeholder": null,
+    "ngModel": null,
+    "label": null
+  },
+  {
+    "tag": "input",
+    "name": null,
+    "id": "provider-id-field",
+    "type": "hidden",
+    "placeholder": null,
+    "ngModel": null,
+    "label": null
+  },
+  {
+    "tag": "input",
+    "name": null,
+    "id": "flow-token-field",
+    "type": "hidden",
+    "placeholder": null,
+    "ngModel": null,
+    "label": null
+  },
+  {
+    "tag": "textarea",
+    "name": "h-captcha-response",
+    "id": "h-captcha-response-068dlb0xeyr2",
+    "type": null,
+    "placeholder": null,
+    "ngModel": null,
+    "label": null
+  },
+  {
+    "tag": "input",
+    "name": "operation",
+    "id": null,
+    "type": "hidden",
+    "placeholder": null,
+    "ngModel": null,
+    "label": null
+  },
+  {
+    "tag": "input",
+    "name": "token",
+    "id": null,
+    "type": "hidden",
+    "placeholder": null,
+    "ngModel": null,
+    "label": null
+  },
+  {
+    "tag": "input",
+    "name": "_csrf",
+    "id": null,
+    "type": "hidden",
+    "placeholder": null,
+    "ngModel": null,
+    "label": null
+  }
+]

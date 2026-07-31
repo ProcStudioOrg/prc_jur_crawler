@@ -53,6 +53,7 @@ const STFNavigator = require('../src/STFNavigator');
 const STJCrawler = require('../src/STJCrawler');
 const STJChecker = require('../src/STJChecker');
 const STJNavigator = require('../src/STJNavigator');
+const CRPSNavigator = require('../src/CRPSNavigator');
 
 const program = new Command();
 
@@ -3238,6 +3239,74 @@ program
         process.exit(1);
       }
       console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('crps')
+  .description('CRPS (Conselho de Recursos da Previdencia Social) — portal atras de login Gov.br')
+  .option('--login', '[FALHOU 31/07/2026 — captcha + Gov.br recusa navegador nao validado] perfil dedicado')
+  .option('--capturar', 'Com a sessao viva: grava prints, campos e o XHR da busca (material do codegen)')
+  .option('--status', 'A sessao salva ainda vive? Grava a medicao para montar a curva de TTL')
+  .option('--profile-dir <dir>', 'Perfil dedicado do Chrome (NUNCA aponte para o seu Chrome pessoal)')
+  .option('--capture-dir <dir>', 'Onde gravar a captura (default: human-codegen/CRPS)')
+  .option('--timeout-min <min>', 'Minutos de espera pelo login humano', '10')
+  .option('-q, --query <text>', 'Busca — ainda NAO mapeada (ver ressalva abaixo)')
+  .option('--json', 'Quiet mode: JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    const nav = new CRPSNavigator({
+      log,
+      ...(opts.profileDir ? { profileDir: opts.profileDir } : {}),
+      ...(opts.captureDir ? { captureDir: opts.captureDir } : {}),
+    });
+
+    try {
+      if (opts.status) {
+        const m = await nav.status();
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...m }) + '\n');
+        process.exit(m.autenticado ? 0 : 1);
+      }
+
+      if (opts.login) {
+        const r = await nav.login({ timeoutMin: Number(opts.timeoutMin) });
+        if (!r.autenticado) {
+          if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: 'login nao concluido' }) + '\n');
+          process.exit(1);
+        }
+        // logou: aproveita a sessao viva e captura na mesma janela — a sessao
+        // Gov.br e o recurso escasso, nao da para "voltar depois com calma"
+        const cap = await nav.capturar({ ctx: r.ctx, page: r.page });
+        await r.ctx.close();
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...cap }) + '\n');
+        process.exit(0);
+      }
+
+      if (opts.capturar) {
+        const cap = await nav.capturar({});
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: !!cap.ok, ...cap }) + '\n');
+        process.exit(cap.ok ? 0 : 1);
+      }
+
+      if (opts.query) {
+        throw new Error(
+          'A busca do CRPS NAO existe: o portal exige login Gov.br e o contorno por perfil de '
+          + 'Chrome dedicado foi tentado em 31/07/2026 e FALHOU (captcha + Gov.br recusa navegador '
+          + 'nao validado). NAO re-tente `--login`. Unico caminho aberto: CDP contra o Chrome '
+          + 'pessoal ja logado (nao testado, operacao assistida) — ver CLAUDE-CRPS.md. '
+          + 'Para o usuario: ofereca `trf*` da regiao e os Enunciados do CRPS (PDF publico no gov.br).',
+        );
+      }
+
+      throw new Error('Informe --login, --capturar ou --status. Veja `jur crps --help`.');
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error('Erro:', error.message);
       process.exit(1);
     }
   });

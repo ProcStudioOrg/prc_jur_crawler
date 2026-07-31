@@ -1,0 +1,11 @@
+# A captura da área logada do CRPS carrega segredo de sessão e dado pessoal:
+#  - o HTML do ServiceNow embute o token CSRF `g_ck` e o contexto do usuário;
+#  - o XHR carrega payloads da sessão Gov.br autenticada;
+#  - os prints mostram o nome/CPF de quem logou.
+# Nada disso entra no git por padrão. O que DEVE ser versionado é o mapeamento
+# destilado (o .txt do MODELO-TRIBUNAL e o -campos.json sem valores de sessão),
+# adicionado à mão depois de revisado.
+*.html
+xhr-sessao.json
+*.png
+sessao-ttl.log
