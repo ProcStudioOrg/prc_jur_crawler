@@ -100,3 +100,19 @@ que se lê como "não há julgado", a armadilha clássica do repo.
 Falta tudo: nenhum TCE foi sondado ainda (portal de jurisprudência, API,
 captcha). Começar pelos que provavelmente têm busca aberta e rodar `codegen`
 um a um.
+
+## 3. `jur-web/` — pendências
+
+O [`jur-web/`](../jur-web/) nasceu em 03/08/2026 com 29 acervos (FALCÃO, CARF,
+TJPR, TJGO). Duas coisas ficaram para depois:
+
+- [ ] **Validar no navegador de verdade.** A medição prova que os portais
+      respondem a GET puro com `curl`/`fetch`; falta confirmar que o `web_fetch`
+      do Claude.ai entrega a resposta legível (HTML → markdown sem perder a
+      ementa, JSON sem truncar). **Até isso ser feito o `jur-web/` não é 100%.**
+- [ ] **Empacotar como plugin do marketplace** — `plugins/jur-web/` + entrada no
+      `.claude-plugin/marketplace.json`, para instalar por `/plugin install`.
+      Hoje só existe a pasta; depende da validação acima.
+- [ ] Reavaliar os reprovados quando os portais mudarem: TRF6 e TJRJ aceitam GET
+      mas **não buscam** (devolvem listagem fixa) — se um dia passarem a filtrar,
+      entram sem trabalho novo. Basta rodar `node jur-web/medicao/medir.mjs`.

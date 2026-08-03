@@ -44,12 +44,27 @@ federais `trf2` `trf4` `trf5` `trf6` · os estaduais `tjce` `tjdft` `tjgo` `tjmg
 Instáveis: `trf1` `trf3` · bloqueados por captcha: **`stj`** (desde 27/07/2026 — desafio
 interativo do Cloudflare; ver `jur/CLAUDE-STJ.md`) `tjma` (só consulta por nº) `tjsp`.
 
+## Sem Chrome? `jur-web/`
+
+Para Claude.ai, Claude Code na web e Windows sem dependências — onde não há shell,
+browser nem Playwright, só uma tool que faz GET numa URL. Não é o crawler portado: é a
+**gramática de URL** dos tribunais que sobrevivem a essa restrição.
+
+**29 acervos**: a Justiça do Trabalho inteira (TST + 24 TRTs + CSJT), CARF, TJPR e TJGO.
+Placar medido e critérios em [`jur-web/TRIBUNAIS.md`](jur-web/TRIBUNAIS.md); a skill em
+[`jur-web/SKILL.md`](jur-web/SKILL.md).
+
+O corte é medido, não estimado — `node jur-web/medicao/medir.mjs` reprova tribunal que
+responde mas **não busca**. Foi o que barrou TRF6 e TJRJ, que devolviam 24 e 22 julgados
+para qualquer string, inclusive `xkqzwvbnhjplmrt`.
+
 ## Estrutura
 
 ```
 prc_jur_crawler/
 ├── .claude-plugin/marketplace.json   catálogo do marketplace
 ├── plugins/jur-tribunais/            plugin empacotado (skills espelhadas de jur/skills/)
+├── jur-web/                          versão só-URL (Claude.ai / Windows) — 29 acervos
 └── jur/                              o crawler
     ├── CLAUDE.md                     roteamento: qual tribunal / qual doc
     ├── CLAUDE-CODEGEN.md             como mapear um tribunal novo (doc-mestre)

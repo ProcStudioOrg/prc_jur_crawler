@@ -1,0 +1,259 @@
+{
+  "medidoEm": "2026-08-03",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+  "termo": "dano moral",
+  "resultados": [
+    {
+      "id": "carf",
+      "nome": "CARF — contencioso administrativo tributário federal",
+      "formato": "json",
+      "encoding": "utf8",
+      "medidoEm": "2026-08-03",
+      "ok": true,
+      "motivo": null,
+      "motivoTecnico": null,
+      "status": 200,
+      "url": "https://acordaos.economia.gov.br/solr/acordaos2/browse?q=dano+moral&wt=json&rows=20&start=0",
+      "total": 5256,
+      "totalDeclaradoPelaPagina": null,
+      "julgados": 20,
+      "julgadosAcento": 20,
+      "amostra": "13952.000009/2007-98",
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 0
+      }
+    },
+    {
+      "id": "falcao",
+      "nome": "FALCÃO — TST + 24 TRTs + CSJT (26 acervos)",
+      "formato": "json",
+      "encoding": "utf8",
+      "medidoEm": "2026-08-03",
+      "ok": true,
+      "motivo": null,
+      "motivoTecnico": null,
+      "status": 200,
+      "url": "https://jurisprudencia.jt.jus.br/jurisprudencia-nacional-backend/api/no-auth/pesquisa?sessionId=jurweb26&latitude=0&longitude=0&texto=dano%20moral&verTodosPrecedentes=false&tribunais=TST&pesquisaSomenteNasEmentas=false&colecao=acordaos&ordenacao=mais_relevante&page=0&size=10",
+      "total": 10000,
+      "totalDeclaradoPelaPagina": null,
+      "julgados": 10,
+      "julgadosAcento": 10,
+      "amostra": "0010680-83.2019.5.03.0094",
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 0
+      }
+    },
+    {
+      "id": "tjpr",
+      "nome": "TJPR — Tribunal de Justiça do Paraná",
+      "formato": "html",
+      "encoding": "latin1",
+      "medidoEm": "2026-08-03",
+      "ok": true,
+      "motivo": null,
+      "motivoTecnico": null,
+      "status": 200,
+      "url": "https://portal.tjpr.jus.br/jurisprudencia/publico/pesquisa.do?actionType=pesquisar&criterioPesquisa=dano+moral&idLocalPesquisa=1&ambito=-1&idsTipoDecisaoSelecionados=-1&segredoJustica=pesquisar+com&pageNumber=1&sortColumn=processo_sDataJulgamento&sortOrder=DESC&iniciar=Pesquisar",
+      "total": null,
+      "totalDeclaradoPelaPagina": null,
+      "julgados": 40,
+      "julgadosAcento": 48,
+      "amostra": "0003611-14.2017.8.16.0011",
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 0
+      }
+    },
+    {
+      "id": "tjgo",
+      "nome": "TJGO — Tribunal de Justiça de Goiás",
+      "formato": "html",
+      "encoding": "utf8",
+      "medidoEm": "2026-08-03",
+      "ok": true,
+      "motivo": null,
+      "motivoTecnico": null,
+      "status": 200,
+      "url": "https://projudi.tjgo.jus.br/ConsultaJurisprudencia?PaginaAtual=2&PosicaoPaginaAtual=0&Texto=dano+moral&Id_Instancia=0&Id_Area=0&Id_ServentiaSubTipo=0&qtdeItensPagina=50",
+      "total": 1353819,
+      "totalDeclaradoPelaPagina": 1353819,
+      "julgados": 97,
+      "julgadosAcento": 92,
+      "amostra": "5716523-68.2026.8.09.0051",
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 1
+      }
+    },
+    {
+      "id": "trf2",
+      "nome": "TRF2 — Justiça Federal RJ/ES (e-Proc)",
+      "formato": "html",
+      "encoding": "utf8",
+      "medidoEm": "2026-08-03",
+      "ok": false,
+      "motivo": "POST-only: o GET devolve a tela de busca em branco, tanto em `listar_resultados` quanto em `pesquisar`",
+      "motivoTecnico": "busca devolveu 0 julgado(s)",
+      "status": 200,
+      "url": "https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados&txtPesquisa=dano-moral&selOrigem%5B%5D=1&chkAgruparResultados=on&rdoCampo=I&selOrdenacao=1&selTamanhoPagina=10",
+      "total": 0,
+      "totalDeclaradoPelaPagina": 0,
+      "julgados": 0,
+      "julgadosAcento": 0,
+      "amostra": null,
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 0
+      }
+    },
+    {
+      "id": "trf6",
+      "nome": "TRF6 — Justiça Federal MG (e-Proc, base 2023+)",
+      "formato": "html",
+      "encoding": "utf8",
+      "medidoEm": "2026-08-03",
+      "ok": false,
+      "motivo": "aceita o GET e devolve 24 julgados para QUALQUER termo — não busca, lista",
+      "motivoTecnico": "NÃO BUSCA: devolve a mesma listagem para qualquer termo (lixo=25, real=0)",
+      "status": 200,
+      "url": "https://eproc-jur.trf6.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados&txtPesquisa=dano+moral&selOrigem%5B%5D=1&chkAgruparResultados=on&rdoCampo=I&selOrdenacao=1&selTamanhoPagina=10",
+      "total": 316929,
+      "totalDeclaradoPelaPagina": 316929,
+      "julgados": 0,
+      "julgadosAcento": 7,
+      "amostra": "0029471-91.2014.4.01.3820",
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 25
+      }
+    },
+    {
+      "id": "tjrj",
+      "nome": "TJRJ — Tribunal de Justiça do Rio de Janeiro (e-Proc)",
+      "formato": "html",
+      "encoding": "utf8",
+      "medidoEm": "2026-08-03",
+      "ok": false,
+      "motivo": "aceita o GET e devolve 22 julgados para QUALQUER termo — não busca, lista",
+      "motivoTecnico": "NÃO BUSCA: devolve a mesma listagem para qualquer termo (lixo=22, real=0)",
+      "status": 200,
+      "url": "https://eproc1g.tjrj.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/listar_resultados&txtPesquisa=dano+moral&rdoCampo=E&selOrigem%5B%5D=1&selTipoDocumento%5B%5D=1&selTipoDocumento%5B%5D=2&selOrdenacao=1&chkAgruparResultados=on",
+      "total": 33324,
+      "totalDeclaradoPelaPagina": 33324,
+      "julgados": 0,
+      "julgadosAcento": 3,
+      "amostra": "0001632-66.2024.8.19.0050",
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 22
+      }
+    },
+    {
+      "id": "tjrs",
+      "nome": "TJRS — Tribunal de Justiça do Rio Grande do Sul (Solr)",
+      "formato": "json",
+      "encoding": "utf8",
+      "medidoEm": "2026-08-03",
+      "ok": false,
+      "motivo": "POST-only: o GET no ajax.php devolve corpo vazio (0 bytes)",
+      "motivoTecnico": "busca devolveu 0 julgado(s)",
+      "status": 200,
+      "url": "https://www.tjrs.jus.br/buscas/jurisprudencia/ajax.php?action=consultas_solr_ajax&metodo=buscar_resultados&parametros=aba%3Djurisprudencia%26realizando_pesquisa%3D1%26pagina_atual%3D1%26q_palavra_chave%3Ddano%2Bmoral%26conteudo_busca%3Dementa_completa%26filtroTribunal%3D3%26filtroRelator%3D-1%26filtroOrgaoJulgador%3D-1%26filtroTipoProcesso%3D-1%26wt%3Djson%26ordem%3Ddesc%26start%3D0",
+      "total": null,
+      "totalDeclaradoPelaPagina": null,
+      "julgados": 0,
+      "julgadosAcento": 0,
+      "amostra": null,
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 0
+      }
+    },
+    {
+      "id": "tjdft",
+      "nome": "TJDFT — Tribunal de Justiça do DF e Territórios (API pública)",
+      "formato": "json",
+      "encoding": "utf8",
+      "medidoEm": "2026-08-03",
+      "ok": false,
+      "motivo": "o GET em /pesquisa devolve as FACETAS (lista de relatores), nunca resultados; a busca é POST",
+      "motivoTecnico": "busca devolveu 0 julgado(s)",
+      "status": 200,
+      "url": "https://jurisdf.tjdft.jus.br/api/v1/pesquisa?query=dano+moral&pagina=0&tamanho=20",
+      "total": 0,
+      "totalDeclaradoPelaPagina": null,
+      "julgados": 0,
+      "julgadosAcento": 0,
+      "amostra": null,
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 0
+      }
+    },
+    {
+      "id": "tjmg",
+      "nome": "TJMG — Tribunal de Justiça de Minas Gerais (Consulta Unificada)",
+      "formato": "json",
+      "encoding": "utf8",
+      "medidoEm": "2026-08-03",
+      "ok": false,
+      "motivo": "POST-only, confirmado pelo próprio OpenAPI em /v3/api-docs: os únicos GET são rotas de status/admin",
+      "motivoTecnico": "HTTP 500",
+      "status": 500,
+      "url": "https://jurisprudencia-api.tjmg.jus.br/jurisprudencias/filter?size=20&page=0&sort=relevancia,DESC&texto=dano+moral&tipoTexto=EMENTA",
+      "total": null,
+      "totalDeclaradoPelaPagina": null,
+      "julgados": 0,
+      "julgadosAcento": 0,
+      "amostra": null,
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 0
+      }
+    },
+    {
+      "id": "tjce",
+      "nome": "TJCE — Tribunal de Justiça do Ceará (SJURIS)",
+      "formato": "json",
+      "encoding": "utf8",
+      "medidoEm": "2026-08-03",
+      "ok": false,
+      "motivo": "POST-only, dito pela própria API: {code:500, messages:[\"...Request method 'GET' not supported\"]}",
+      "motivoTecnico": "HTTP 500",
+      "status": 500,
+      "url": "https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/?page=0&size=20&busca=dano+moral",
+      "total": null,
+      "totalDeclaradoPelaPagina": null,
+      "julgados": 0,
+      "julgadosAcento": 0,
+      "amostra": null,
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 0
+      }
+    },
+    {
+      "id": "tjpa",
+      "nome": "TJPA — Tribunal de Justiça do Pará",
+      "formato": "json",
+      "encoding": "utf8",
+      "medidoEm": "2026-08-03",
+      "ok": false,
+      "motivo": "POST-only: HTTP 405 Method Not Allowed no /bff/api/decisoes/buscar",
+      "motivoTecnico": "HTTP 405",
+      "status": 405,
+      "url": "https://jurisprudencia.tjpa.jus.br/bff/api/decisoes/buscar?query=dano+moral&queryType=free&queryScope=ementa&page=0&size=20&sortBy=relevancia&sortOrder=desc",
+      "total": null,
+      "totalDeclaradoPelaPagina": null,
+      "julgados": 0,
+      "julgadosAcento": 0,
+      "amostra": null,
+      "controleLixo": {
+        "julgados": 0,
+        "mobiliaIgnorada": 0
+      }
+    }
+  ]
+}
