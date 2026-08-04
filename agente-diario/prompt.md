@@ -57,3 +57,11 @@ Não tente adiantar o segundo alvo: a outra execução é que faz isso.
   devolvendo formulário vazio com HTTP 200. Prove antes de concluir.
 - Contagem igual com e sem filtro = filtro ignorado, mesmo que a busca "funcione".
 - A cobertura é **gerada**, não escrita à mão.
+
+## Notificação de finalização
+
+Antes de encerrar, escreva **uma única linha** resumindo o slot em `__NOTIFY_FILE__`
+(o runner a envia como notificação; no feed vira `Bot Jur Crawler — ok · <hora> · <sua linha>`).
+Ex.: `TJPR mapeado — porta REST v2, cobertura 92%, 28 alvos restantes.` Se abriu PR,
+inclua a URL (o runner extrai para o campo `pr`). Sem escrever nada, o runner manda
+uma genérica com o slot e a contagem da fila — então isto é só para dar contexto.
