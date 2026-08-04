@@ -1,0 +1,65 @@
+TJAC — 01-cjsg — §7 ORIGEM: A DESAMBIGUAÇÃO JUSTIÇA COMUM × JUIZADO
+===================================================================
+
+Print: `07.01-checkbox-origem.png`
+
+## O elemento — é um par de checkboxes, não um combo
+
+```html
+<input type="checkbox" name="dados.origensSelecionadas" id="origem2grau"    value="T">
+<input type="checkbox" name="dados.origensSelecionadas" id="origemRecursal" value="R">
+```
+
+Rótulos na tela: **"2º Grau"** (T) e **"Turmas Recursais"** (R). São enviados
+como campos repetidos no POST (`dados.origensSelecionadas=T&dados.origensSelecionadas=R`),
+não como um valor único.
+
+## Prova de que o filtro é aplicado (contagens, não "a busca respondeu")
+
+`dano moral` na ementa, tipo Acórdão:
+
+| Origem enviada | Total |
+|---|---|
+| `T` (2º grau / Justiça Comum) | **7.649** |
+| `R` (Turmas Recursais / Juizado) | **21.353** |
+| `T` + `R` | **29.002** |
+
+7.649 + 21.353 = 29.002 exatamente. O filtro é aplicado e é **aditivo**, sem
+sobreposição entre as duas origens.
+
+## ⚠️ NO TJAC O JUIZADO É MAIOR QUE A JUSTIÇA COMUM — 2,8×
+
+Esta é a ressalva de uso mais importante do tribunal. Em quase todo TJ mapeado
+neste repo o 2º grau domina o acervo; **no Acre é o contrário**: as Turmas
+Recursais têm 21.353 acórdãos com "dano moral" contra 7.649 do 2º grau.
+
+Duas consequências práticas:
+
+1. **O default `--origem comum` esconde 74% do acervo** sobre um tema de
+   consumo/dano moral. Quem pedir "jurisprudência do TJAC sobre dano moral" e
+   receber só a Justiça Comum recebe a minoria do que existe.
+2. **Um número baixo em `--origem comum` não é escassez de jurisprudência.**
+   Antes de dizer "o TJAC julgou pouco sobre X", rode `--origem turmas`.
+
+O crawler mantém `comum` como default por coerência com os outros tribunais do
+repo (a distinção precisa ser explícita, não implícita), mas o
+`CLAUDE-TJAC.md` manda oferecer as duas em matéria de consumo.
+
+## No CLI
+
+```
+--origem comum    (default)  -> dados.origensSelecionadas=T
+--origem turmas              -> dados.origensSelecionadas=R
+--origem ambas               -> T e R
+```
+
+`TJACNavigator.ORIGENS = { comum: 'T', turmas: 'R' }`
+
+## Ressalva de escopo que este filtro NÃO resolve
+
+Nenhum dos dois valores traz **1º grau (sentenças)**. Isso é o módulo `cjpg`
+(Consulta de Julgados de 1º Grau), que existe no host
+(`https://esaj.tjac.jus.br/cjpg/pesquisar.do` → HTTP 200) mas **não está
+mapeado** e não tem crawler. Não confunda "Turmas Recursais" com "1º grau":
+Turma Recursal é o colegiado recursal dos Juizados, continua sendo 2º grau
+funcional.

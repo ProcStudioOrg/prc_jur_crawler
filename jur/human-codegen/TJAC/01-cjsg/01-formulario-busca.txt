@@ -1,0 +1,395 @@
+TJAC — 01-cjsg — FORMULÁRIO DE BUSCA
+====================================
+
+## Identificação
+
+```
+Tribunal:               TJAC — Tribunal de Justiça do Acre
+Estado(s):              AC
+Módulo:                 e-SAJ cjsg — "Consulta de Jurisprudência do Segundo Grau"
+Link principal:         https://esaj.tjac.jus.br/cjsg/consultaCompleta.do
+Sistema judicial:       ESAJ (SAJ/Softplan) — formulário clássico, POST, sem SPA
+Sistema irmão mapeado:  TJMS (human-codegen/TJMS/01-cjsg/) — mesmo módulo, MESMO
+                        formulário, mas com quatro diferenças medidas (§0 abaixo)
+Abrangência da base:    2º grau (Câmaras/Órgão Especial) + Turmas Recursais.
+                        SEM 1º grau. Medido: 7.649 acórdãos de 2º grau e 21.353
+                        de Turma Recursal com "dano moral" na ementa.
+                        Base começa por volta de 2000 (2000 -> 4; 1990 -> 0).
+Data do mapeamento:     04/08/2026
+```
+
+## §0 — O QUE NÃO SE HERDA DO TJMS
+
+O formulário é byte a byte o mesmo molde do e-SAJ. **Quatro coisas mudam**, e
+todas foram medidas hoje. Copiar as suposições do TJMS produz bug silencioso:
+
+| | TJMS | **TJAC** |
+|---|---|---|
+| Resultados por página | 100 | **20** |
+| Acento na query | **muda tudo** (usucapiao=3 × usucapião=3.885) | **não muda nada** (334 × 334) |
+| Abas de tipo | A, H, D | **só A e D** (não existe "Homologação de Acordo") |
+| Paginação | instável (~1 em 100 pulado) | **estável** (3/3 idênticas) |
+| `trocaDePagina.do` sem sessão | HTTP 200 com zero cards (bug silencioso) | **HTTP 404** (falha barulhenta) |
+| Inteiro teor (PDF) | livre, com rate limit | **atrás de reCAPTCHA** (§14) |
+| Rodapé de citação | `(TJMS. Classe n. …)` | `(Relator (a): …; Comarca: …)`, sem sigla |
+| Teto de 1 ano na data | zero **mudo** | zero **com aviso na tela** |
+
+## Passo 0 — API pública: PROCURADA, NÃO EXISTE para jurisprudência
+
+Medido em 04/08/2026. O que foi verificado e o resultado:
+
+| Onde procurei | Resultado |
+|---|---|
+| `dadosabertos.tjac.jus.br` | **resolve DNS, mas NÃO é API** — ver armadilha abaixo |
+| `api.tjac.jus.br` | **resolve DNS, mas NÃO é API** — idem |
+| `jurisprudencia.tjac.jus.br` | **resolve DNS, mas NÃO é API** — idem |
+| `www.tjac.jus.br/dados-abertos` | 404 |
+| `www.tjac.jus.br/transparencia/dados-abertos` | 404 |
+| `www.tjac.jus.br/dados_abertos`, `/institucional/dados-abertos` | 404 |
+| `www.tjac.jus.br/api-docs`, `/swagger-ui.html` | 404 |
+| `esaj.tjac.jus.br/cjsg/swagger-ui.html` | 404 |
+
+⚠️ **A armadilha do DNS curinga.** Os três subdomínios "promissores"
+(`dadosabertos`, `api`, `jurisprudencia`) **resolvem** e respondem **HTTP 200**.
+Parece dados abertos; não é. Todos servem o **mesmo HTML da home do portal** —
+provado por md5 idêntico ao de `www.tjac.jus.br`:
+
+```
+jurisprudencia.tjac.jus.br  -> 3ef4ac90ee77235fa13dacdc3a84c1d1
+dadosabertos.tjac.jus.br    -> 3ef4ac90ee77235fa13dacdc3a84c1d1
+api.tjac.jus.br             -> 3ef4ac90ee77235fa13dacdc3a84c1d1
+www.tjac.jus.br             -> 3ef4ac90ee77235fa13dacdc3a84c1d1
+```
+
+É um vhost curinga. **DNS que resolve ≠ serviço que existe**, e 200 com o
+tamanho da home é o sinal. Quem parar no `getent hosts` conclui que o TJAC tem
+API de jurisprudência e escreve um crawler contra uma página institucional.
+
+Conclusão: **não existe API oficial de jurisprudência do TJAC.** Não é "não
+procurei" — está medido acima. O acesso do crawler é `http` (POST direto no
+cjsg, sem browser).
+
+O portal oficial, por sua vez, **linka o cjsg**: `www.tjac.jus.br/jurisprudencia/`
+traz `https://esaj.tjac.jus.br/cjsg/resultadoCompleta.do`. A porta está certa.
+
+## O outro módulo: e-Proc — EXISTE o host, NÃO existe a jurisprudência
+
+O TJAC roda **ESAJ e e-Proc em paralelo** (`tribunais.json` registra os dois em
+1ª e 2ª instância; o `portal` cadastrado é `portal-eproc.tjac.jus.br`). Os hosts
+do e-Proc respondem:
+
+```
+https://eproc1g.tjac.jus.br/  -> 200
+https://eproc2g.tjac.jus.br/  -> 200
+```
+
+Mas o **módulo de jurisprudência do e-Proc não está habilitado**. Medido:
+
+```
+GET https://eproc2g.tjac.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+-> HTTP 200, 29.601 bytes, ISO-8859-1 — mas o corpo é a página de erro:
+   <div id="divInfraExcecao" class="infraExcecao">Falha no processamento da solicitação.
+   com o botão "Voltar" (btnInfraVoltarExcecao), e nenhum <form> de busca.
+   (o de 1º grau, eproc1g, devolve o mesmo erro em 31.051 bytes)
+
+Menu público do e-Proc do TJAC — NÃO tem item "Jurisprudência". Tem:
+   Consulta Pública / Consulta Processo / Consulta Processos
+   Consulta de Processo com Chave / Consulta Documento pela Chave
+   Consulta Autenticidade de Certidão (3 variantes)
+   Sessões de Julgamento
+   **Consulta Pública SAJ**  <- o próprio e-Proc aponta de volta para o SAJ
+```
+
+⚠️ **O HTTP 200 aqui é enganoso** — é a mesma armadilha do TJMS. Só olhando o
+corpo se descobre que é erro. Igual ao TJMS e diferente do TJRJ, onde esse
+caminho funciona e virou o `TJRJNavigator`.
+
+**Consequência de escopo:** julgados nascidos no e-Proc não aparecem no cjsg,
+que é o índice do SAJ. **Reteste periódico obrigatório** — ver CLAUDE-TJAC.md.
+
+## 1. Busca principal (query)
+
+São **dois campos de texto distintos**, e a escolha entre eles muda a busca:
+
+| Campo | `name` | `id` | O que faz |
+|---|---|---|---|
+| Pesquisa Livre | `dados.buscaInteiroTeor` | `iddados.buscaInteiroTeor` | procura no **inteiro teor** do acórdão |
+| Ementa | `dados.buscaEmenta` | `iddados.buscaEmenta` | procura **só na ementa** |
+
+Medido com o mesmo termo (`dano moral`, 2º grau, acórdãos):
+- `dados.buscaEmenta` → **7.649**
+- `dados.buscaInteiroTeor` → **14.662**
+
+No crawler: `--escopo ementa` (default) × `--escopo inteiroTeor`.
+
+⚠️ Note que `--escopo inteiroTeor` busca **dentro** do inteiro teor mas **não
+dá acesso a ele** — o texto continua atrás do reCAPTCHA (§14). O que se ganha é
+recall, não documento.
+
+⚠️ **A busca com os dois campos vazios devolve ZERO** (medido: origens T+R,
+tipos A+D, sem termo → 0 cards, 69.159 bytes). Não existe "listar tudo".
+
+```html
+<input type="text" name="dados.buscaInteiroTeor" id="iddados.buscaInteiroTeor">
+<input type="text" name="dados.buscaEmenta"      id="iddados.buscaEmenta">
+```
+
+Prints: `01.01-tela-inicial.png`, `01.02-formulario-preenchido.png`
+HTML completo do formulário: `01-formulario-busca.html`
+
+### 1b. ✅ ACENTO NÃO IMPORTA AQUI — e é o oposto do TJMS
+
+O índice do TJAC **normaliza acentuação**. Três pares medidos no mesmo campo
+`dados.buscaEmenta`, 2º grau, acórdãos:
+
+```
+usucapiao    ->    334   |  usucapião     ->    334
+execucao     -> 11.078   |  execução      -> 11.078
+prisao       ->  7.949   |  prisão        ->  7.949
+alimenticia  ->    130   |  alimentícia   ->    130
+```
+
+Contagem **idêntica** nos quatro pares ⇒ o backend normaliza. **Não avise o
+usuário sobre acento neste tribunal** — seria mandá-lo refazer uma busca que já
+estava certa, e a suspeita erraria o diagnóstico do zero verdadeiro.
+
+Isto é o inverso exato do TJMS (3 × 3.885). **A ressalva é por instalação, não
+por família de sistema.** Meça antes de copiar.
+
+## 2. Operadores — testados um a um, não presumidos
+
+A tela oferece quatro botões que inserem operadores no campo: `E`, `OU`, `NÃO`,
+`" "` (aspas). Testado com `dano`/`moral` em `dados.buscaEmenta`, 2º grau,
+acórdãos (`dano` sozinho = 10.907):
+
+| Operador | Funciona? | Medição | Observação |
+|---|---|---|---|
+| (espaço) | sim, é **E implícito** | `dano moral` → 7.649 | idêntico a `dano E moral` |
+| `E` | **sim** | `dano E moral` → 7.649 | conjunção |
+| `OU` | **sim** | `dano OU moral` → 11.163 | maior que E, como esperado |
+| `NAO` (sem acento) | **sim** | `dano NAO moral` → 3.258 | exclusão |
+| `NÃO` (com acento) | **NÃO é operador** | `dano NÃO moral` → 6.429 | vira termo literal |
+| `"frase exata"` | **sim** | `"dano moral"` → 7.149 | menor que o E implícito |
+| `$` (radical) | **NÃO** | `usucapi$` → **0** | zera a busca |
+| `ADJ` | **NÃO** | `dano ADJ2 moral` → **0** | vira texto literal e zera |
+| `PROX` | **NÃO** | `dano PROX5 moral` → **0** | vira texto literal e zera |
+
+**Prova aritmética de que `NAO` é o operador e `NÃO` não é:**
+
+```
+dano                 = 10.907
+dano moral           =  7.649   (E implícito)
+dano NAO moral       =  3.258   = 10.907 - 7.649  ✅ é a diferença exata
+dano NÃO moral       =  6.429   ✗ não bate com nada; é "dano E não E moral"
+```
+
+⚠️ **Três formas de zerar a busca sem erro neste portal**: `ADJ`, `PROX` e `$`.
+O `$` é a diferença contra o TJMS, onde ele ao menos devolvia algo (4). O
+`TJACCrawler.avisarOperadores()` alerta nos três casos.
+
+```html
+<input type="button" name="E"   value=" E "  >
+<input type="button" name="OU"  value=" OU " >
+<input type="button" name="NAO" value=" NÃO ">
+<input type="button" name="ASP" value="&quot;&nbsp;&nbsp;&quot;">
+```
+
+## 3. Sinônimos
+
+```html
+<input type="checkbox" name="dados.pesquisarComSinonimos" id="checkBoxSinonimos" value="S">
+<input type="hidden"   name="dados.pesquisarComSinonimos" value="S">
+```
+
+A flag `--sem-sinonimos` existe por fidelidade ao formulário. **Não foi medida
+isoladamente no TJAC** (no TJMS ela se mostrou inócua: 224 × 224). Registrado
+como não verificado — não afirme que funciona nem que não funciona.
+
+## 4. Filtro de data — julgamento
+
+```html
+<input type="text" name="dados.dtJulgamentoInicio" id="iddados.dtJulgamentoInicio">
+<input type="text" name="dados.dtJulgamentoFim"    id="iddados.dtJulgamentoFim">
+```
+
+Formato **DD/MM/AAAA**. Restringe de fato — medido com `dano moral`:
+sem data **7.649** → `01/01/2025`–`31/03/2025` **326**.
+
+Cobertura temporal medida: `1990` → **0**; `2000` → **4**; `2026` (até 04/08) →
+**1.025**. A base é rala antes dos anos 2000.
+
+### 4b. ⚠️ TETO DE 1 ANO — acima disso, zero (mas COM aviso na tela)
+
+O intervalo aceito é de no máximo **365 dias corridos**, ou seja **364 dias de
+diferença** entre início e fim. Um dia a mais e a resposta é **0**:
+
+```
+01/01/2025 -> 31/12/2025  (364 de diferença) -> 1.804
+01/01/2025 -> 01/01/2026  (365 de diferença) ->     0
+01/01/2025 -> 02/01/2026  (366 de diferença) ->     0
+04/08/2025 -> 04/08/2026  (365 de diferença) ->     0
+01/01/2020 -> 31/12/2025  (6 anos)           ->     0
+```
+
+Vale **igual** para a data de publicação (medido: `04/08/2025`–`04/08/2026` por
+publicação → 0).
+
+⚠️ **Diferença contra o TJMS:** aqui a tela **avisa**. A resposta traz o texto
+
+```
+Atenção — A faixa entre data de inicio e data de fim deve ser de no máximo 1 ano.
+```
+
+Mas o **HTTP continua 200** e o corpo é o **formulário de consulta de volta**,
+não o resultado. Um crawler que só conta cards lê 0 do mesmo jeito.
+
+**O sinal técnico para distinguir os dois casos** (e o `TJACNavigator` usa este):
+
+```
+estouro de 1 ano  -> NENHUM hidden totalResultadoAba-*   (totais = {})   69.183 B
+zero genuíno      -> totalResultadoAba-A = 0             (totais = {A:0}) 68.970 B
+```
+
+O `TJACCrawler` fatia o intervalo em janelas de 364 dias, junta e deduplica por
+`cdAcordao` — e avisa, porque aí `-m N` passa a valer **por janela**.
+Medido: `01/01/2024`–`04/08/2026` vira 3 janelas (968 + 1.819 + 1.025).
+
+## 5. Filtro de data — publicação
+
+```html
+<input type="text" name="dados.dtPublicacaoInicio" id="iddados.dtPublicacaoInicio">
+<input type="text" name="dados.dtPublicacaoFim"    id="iddados.dtPublicacaoFim">
+```
+
+**É um filtro diferente**, e a medição prova: o mesmo intervalo
+`01/01/2025`–`31/03/2025` devolve **326** por julgamento e **321** por
+publicação. CLI: `-di/-df` (julgamento) × `-dpi/-dpf` (publicação).
+
+⚠️ O teto de 1 ano da §4b vale aqui também.
+
+(As seções 7, 8, 10, 11, 12 e 13 estão em `07-origem.txt`, `08-tipo-publicacao.txt`,
+`10-resultados.txt`, `11-turma-recursal.txt`, `12-monocratica.txt` e
+`13-escada-ate-o-documento.txt`, uma por bloco de prints, como manda o §3 do
+CLAUDE-CODEGEN.)
+
+## 6. Combos em árvore — NÃO enumerados neste mapeamento
+
+O formulário tem três seletores em árvore (popup do SAJ), presentes como hidden:
+
+```html
+<input type="hidden" name="classesTreeSelection.values"  id="classes">
+<input type="text"   name="classesTreeSelection.text"    id="classes_selectionText">
+<input type="hidden" name="assuntosTreeSelection.values" id="assuntos">
+<input type="text"   name="assuntosTreeSelection.text"   id="assuntos_selectionText">
+<input type="hidden" name="secoesTreeSelection.values"   id="secoes">
+<input type="text"   name="secoesTreeSelection.text"     id="secoes_selectionText">
+```
+
+⚠️ **PENDÊNCIA CONHECIDA E DECLARADA.** No TJMS estes três foram enumerados
+(`06-orgao-julgador.json`, `06-classe.json`, `06-assunto.json`). Aqui **não
+foram** — o mapeamento do TJAC gastou o tempo na descoberta do reCAPTCHA do
+inteiro teor (§14), que muda o status do tribunal. O crawler **não expõe** flags
+de classe/assunto/seção, então isso não gera bug: gera lacuna de recurso.
+
+Não escreva que o TJAC não tem esses filtros. Ele tem; não foram listados.
+
+## 9. Ordenação
+
+```html
+<input type="radio" name="dados.ordenarPor" value="dtPublicacao" checked> Data de publicação
+<input type="radio" name="dados.ordenarPor" value="relevancia">           Relevância
+```
+
+CLI: `-ord publicacao` (default) | `relevancia`.
+
+## 10. Consulta por número de processo — alimenta o Checker
+
+```html
+<input type="text" name="dados.nuProcOrigem" id="iddados.nuProcOrigem">   <!-- funciona -->
+<input type="text" name="dados.nuRegistro"   id="iddados.nuRegistro">     <!-- nº de registro, não CNJ -->
+```
+
+Medido com `0714244-12.2025.8.01.0001`:
+
+- `dados.nuProcOrigem` **com máscara** → A=1, D=0 → 1 documento, cdAcordao 2509158
+- `dados.nuProcOrigem` **sem máscara** (`07142441220258010001`) → **idêntico**
+
+CNJ do TJAC: Justiça Estadual (`8`), tribunal `01`.
+
+## 11. Relator / Juiz prolator
+
+```html
+<input type="text" name="nmAgente" id="nmAgente">        <!-- Relator(a) -->
+<input type="text" name="nmJuiz"   id="nmJuiz">          <!-- Juiz prolator (1º grau) -->
+<input type="hidden" name="agenteSelectedEntitiesList" id="agenteSelectedEntitiesList">
+<input type="text" name="codigoCr"><input type="text" name="codigoTr">
+```
+
+CLI: `-r/--relator` preenche `nmAgente`. Os contadores (`contadoragente`,
+`contadorMaioragente`, …) vão em `0` — é o que a tela envia quando nada foi
+escolhido pelo popup de entidades.
+
+## 14. Bloqueio e proteção — as três respostas (LEIA ESTA SEÇÃO)
+
+| Pergunta | Resposta medida em 04/08/2026 |
+|---|---|
+| Existe restrição na **tela de busca**? | **NÃO.** `typeof window.grecaptcha === "undefined"`, nenhum `sitekey` no HTML, e os únicos requests da tela são estáticos do próprio host |
+| **A busca** funciona sem resolver nada? | **SIM** — POST direto, sem browser, sem cookie prévio |
+| **O download** do inteiro teor funciona sem resolver nada? | 🔴 **NÃO. reCAPTCHA v2.** Ver abaixo |
+
+🔴 **O bloqueio é ASSIMÉTRICO e essa é a descoberta principal deste mapeamento.**
+
+`GET /cjsg/getArquivo.do?cdAcordao=<id>&cdForo=<foro>` — o contrato extraído do
+`cjsg-2.2.5-0.js`:
+
+```js
+$('a.downloadEmenta').bind('click', function(){
+  var cdForo    = $(this).attr('cdForo');
+  var cdAcordao = $(this).attr('cdAcordao');
+  var url = window.saj.env.root + "/getArquivo.do?cdAcordao=" + cdAcordao + '&cdForo=' + cdForo;
+  abrirJanelaPopUp(url, 'Documento');
+});
+```
+
+**Nunca devolve PDF.** Medido com e sem a sessão da busca, em 3 documentos:
+
+```
+HTTP 200  text/html;charset=UTF-8  ~10.657 bytes   (não é PDF: não começa com %PDF-)
+Texto: "Para acessar o conteúdo do Acórdão, por favor digite o código da figura
+        no campo abaixo. Esta validação lhe dará acesso para visualizar 20 resultados."
+Form:  <input type="hidden" name="cdAcordao"  value="2509158">
+       <input type="hidden" name="cdForo"     value="0">
+       <input type="hidden" name="uuidCaptcha" id="uuidCaptcha" value="">
+       <input type="submit" name="pbEnviar" value="Enviar">
+Script: https://www.google.com/recaptcha/api.js?hl=pt-BR
+sitekey (data-sitekey): 6LevDTsUAAAAAN6dsn77RReaDKhYAQrOVkTUOgOD
+iframes: recaptcha/api2/anchor e /bframe  -> reCAPTCHA v2 (desafio visual)
+```
+
+⚠️ **A sessão da busca NÃO destrava.** Testado com o JSESSIONID ativo da própria
+busca: mesma tela de captcha, mesmos 10.657 bytes.
+
+Este repo não automatiza captcha. Consequência prática, e ela é boa:
+**a ementa íntegra já vem no HTML da busca** (§10-resultados §2), então não se
+perde o texto analítico — perde-se o relatório e o voto. Ver §14 de
+`13-escada-ate-o-documento.txt`.
+
+Print do bloqueio: `13.03-inteiro-teor-bloqueado-captcha.png`
+
+## 15. Encoding
+
+`Content-Type: text/html;charset=UTF-8` — na tela **e** nas respostas. É incomum:
+o e-SAJ clássico costuma ser ISO-8859-1 (o e-Proc do próprio TJAC responde em
+ISO-8859-1). O corpo do POST vai em **UTF-8** e o servidor aceita.
+
+O HTML usa entidades nomeadas antigas dentro do bloco de ementa sem formatação.
+Além das do TJMS, o TJAC usa **`&sect;`** de verdade ("CPC, arts. 509, &sect; 2º")
+— o `TJACNavigator.decodeEntidades` cobre `&sect;`, `&deg;`, `&para;`,
+`&laquo;`/`&raquo;`, `&ndash;`/`&mdash;` além das acentuadas.
+
+## 16. Balanceador
+
+O JSESSIONID termina em `.cjsg1` ou `.cjsg2` — há pelo menos dois nós. Ao
+contrário do TJMS, **não** foi observada divergência de total entre eles nas
+medições de hoje, e a paginação saiu estável. Não foi feito um teste dedicado de
+dessincronização entre nós: registrado como **não medido**, não como "não existe".

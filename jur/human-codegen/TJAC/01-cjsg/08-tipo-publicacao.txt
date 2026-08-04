@@ -1,0 +1,75 @@
+TJAC — 01-cjsg — §8 TIPO DE DECISÃO (as abas do resultado)
+==========================================================
+
+Print: `08.01-checkbox-tipo-publicacao.png`
+
+## O elemento — DOIS checkboxes, não três
+
+```html
+<input type="checkbox" name="tipoDecisaoSelecionados" id="Acheckbox" value="A">
+<input type="checkbox" name="tipoDecisaoSelecionados" id="Dcheckbox" value="D">
+```
+
+| valor | rótulo | `TJACNavigator.NOME_TIPO` |
+|---|---|---|
+| `A` | Acórdão | `Acórdão` |
+| `D` | Decisão Monocrática | `Decisão Monocrática` |
+
+## ⚠️ NÃO EXISTE A ABA `H` QUE EXISTE NO TJMS
+
+O cjsg do TJMS tem três tipos: `A`, `H` ("Homologação de Acordo") e `D`. **O do
+TJAC tem dois.** O `H` não está no formulário.
+
+Enviar `tipoDecisaoSelecionados=H` mesmo assim **não dá erro**: o cjsg responde
+HTTP 200 com `totalResultadoAba-H = 0`. Ou seja, uma aba inexistente se
+apresenta como aba vazia. Quem herdar o mapa do TJMS e pedir `--tipo todos` com
+os três valores lê "0 homologações no TJAC" — o que soa como fato sobre o acervo
+e não é: é aba que não existe.
+
+Por isso `TJACNavigator.TIPOS` tem só `{ acordao: 'A', monocratica: 'D' }`, e
+`--tipo homologacao` é recusado com erro explícito no `TJACCrawler`.
+
+## Como o resultado é entregue — uma aba por tipo
+
+Quando mais de um tipo é pedido, o cjsg devolve um container por tipo:
+
+```html
+<div id="divDadosResultado-A"> … 20 cards … </div>
+<div id="divDadosResultado-D"> … 20 cards … </div>
+<input type="hidden" id="totalResultadoAba-A" value="7649">
+<input type="hidden" id="totalResultadoAba-D" value="29">
+```
+
+⚠️ **O total autoritativo é o hidden `totalResultadoAba-<tipo>`**, não o texto
+do topo. O texto ("Resultados 1 a 20 de 7649") é só da aba ativa e não serve
+quando há mais de um tipo selecionado.
+
+⚠️ **A paginação é POR ABA**: `trocaDePagina.do?tipoDeDecisao=A&pagina=N`. O
+`TJACCrawler` pagina cada aba em separado.
+
+## Medições — `dano moral` na ementa, 2º grau
+
+| Pedido | Resposta |
+|---|---|
+| `A` | `{A: 7649}` — 20 cards na página 1 |
+| `D` | `{D: 29}` — 20 cards na página 1 |
+| `A` + `D` | `{A: 7649, D: 29}` — 40 cards (20 de cada aba) |
+| `H` | `{H: 0}` — 0 cards, **aba inexistente**, não acervo vazio |
+
+## ⚠️ Decisão monocrática é acervo residual — 29 contra 7.649
+
+Não é filtro quebrado: a aba `D` responde certo com os 29, e os cards têm ementa
+(ver `12-monocratica.txt`). É acervo mesmo — 0,4% do volume de acórdãos.
+
+**Não prometa cobertura de monocrática do TJAC.** É a mesma proporção que o TJMS
+(48 contra 67.529), e provavelmente reflete a política de publicação do SAJ, não
+o volume real de monocráticas proferidas.
+
+## No CLI
+
+```
+-t acordao       (default)  -> A
+-t monocratica              -> D
+-t todos                    -> A e D
+-t homologacao              -> ERRO explícito (não existe no TJAC)
+```

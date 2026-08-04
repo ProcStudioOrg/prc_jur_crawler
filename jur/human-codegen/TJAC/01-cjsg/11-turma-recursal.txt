@@ -1,0 +1,61 @@
+TJAC — 01-cjsg — §11 CARD DE TURMA RECURSAL (2º tipo de documento)
+==================================================================
+
+Print: `11.01-resultados-turma-recursal.png`
+Card cru: `11-card-turma-recursal.html`
+
+Busca: `dano moral` na ementa, `dados.origensSelecionadas=R`, tipo `A`.
+
+## Por que esta seção existe
+
+A skill `browser-post-search` exige dissecar o card em **mais de um tipo de
+documento** — foi assim que o TJMG saiu errado no passado (a primeira amostra
+era Turma Recursal e não representava o acervo).
+
+## Medição
+
+```
+HTML do card:                  15.000 bytes
+Texto visível colapsado:          710 chars
+div#textAreaDados_<cd>:         5.620 chars   <- ementa ÍNTEGRA
+Órgão julgador:                 "2ª Turma Recursal"
+```
+
+Primeiros caracteres da ementa:
+
+```
+DIREITO PROCESSUAL CIVIL. RECURSOS INOMINADOS. CONFLITO POSSESSÓRIO E DIVISÓRIO
+ENTRE IMÓVEIS RURAIS CONFRONTANTES. ALEGAÇÃO DE INVASÃO DE ÁREA. NECESSIDADE DE
+LEVANTAMENTO TOPOGRÁFICO E GEORREFERE…
+```
+
+## ✅ A ementa da Turma Recursal do TJAC é REAL, e é a MAIOR das três
+
+Esta é a diferença que mais importa contra outros tribunais do repo:
+
+| Tribunal | Ementa de Turma Recursal |
+|---|---|
+| TJMG | 🔴 vazia no escopo padrão — exige `--escopo inteiroTeor` |
+| TJCE | 🔴 monocrática sem ementa (247.991 delas) |
+| **TJAC** | ✅ **5.620 chars, íntegra, estruturada no padrão CNJ** |
+
+Não repasse ao usuário o aviso genérico do repo ("em Turma Recursal a ementa é
+uma frase genérica, use `--fetch-inteiro-teor`") **neste tribunal**: aqui é
+falso, e além disso o `--fetch-inteiro-teor` do TJAC não traz o PDF (reCAPTCHA).
+A ementa da Turma Recursal do TJAC é o melhor texto disponível e é bom.
+
+## Estrutura do card — idêntica à do acórdão
+
+Mesmos rótulos (`Classe/Assunto:`, `Relator(a):`, `Comarca:`, `Órgão julgador:`,
+`Data do julgamento:`, `Data de publicação:`), mesmo `textAreaDados_<cdAcordao>`,
+mesmo rodapé de citação, mesmos links. **O parser é o mesmo** — nenhum campo
+falta neste tipo.
+
+O que muda é o valor de `orgaoJulgador` (`Nª Turma Recursal` em vez de
+`Primeira/Segunda Câmara Cível` / `Câmara Criminal`).
+
+## ⚠️ E é aqui que está o grosso do acervo
+
+21.353 contra 7.649 do 2º grau — ver `07-origem.txt`. Um pedido de
+jurisprudência do TJAC sobre consumo/dano moral que ignore `--origem turmas`
+perde 74% do que existe.

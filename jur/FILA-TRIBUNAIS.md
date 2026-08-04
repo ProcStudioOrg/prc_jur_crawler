@@ -51,7 +51,7 @@ plugam host + conferem as diferenças. Entradas **medidas em 31/07/2026 15:59**.
 | # | Alvo | UF | Entrada (medida) | Status |
 |---|---|---|---|---|
 | 1 | **TJMS** | MS | `https://esaj.tjms.jus.br/cjsg/consultaCompleta.do` → **200** | ok 04/08 |
-| 2 | **TJAC** | AC | `https://esaj.tjac.jus.br/cjsg/consultaCompleta.do` → **200** | pendente |
+| 2 | **TJAC** | AC | `https://esaj.tjac.jus.br/cjsg/consultaCompleta.do` → **200** | ok 04/08 |
 | 3 | **TJAM** | AM | `https://consultasaj.tjam.jus.br/cjsg/consultaCompleta.do` → **200** | pendente |
 | 4 | **TJAL** | AL | `https://www2.tjal.jus.br/cjsg/consultaCompleta.do` → **200** | pendente |
 
@@ -82,6 +82,40 @@ metade do trabalho já está lá. O `src/TJMS{Navigator,Crawler,Checker}.js` é 
 - **A ementa íntegra e a citação oficial já vêm no HTML da busca**
   (`div#textAreaDados_<cdAcordao>`); o inteiro teor é PDF por
   `getArquivo.do?cdAcordao=&cdForo=`, com rate limit.
+
+📌 **O que o TJAC (feito em 04/08/2026) acrescentou — leia
+[`CLAUDE-TJAC.md`](CLAUDE-TJAC.md) junto com o do TJMS.** A lição do dia é que
+**duas instalações do mesmo cjsg divergem em oito comportamentos medidos**, e
+copiar as suposições do irmão produz bug silencioso. Meça cada item nos dois
+tribunais que faltam:
+
+- **Página de 20 no TJAC, 100 no TJMS.** Meça `POR_PAGINA` em vez de herdar.
+- **Acento: TJMS exige, TJAC normaliza** (`usucapiao`/`usucapião` = 334 os dois).
+  A ressalva mais cara do TJMS é **falsa** no TJAC. Teste um par antes de avisar.
+- **O `$` zera no TJAC** (e dava 4 no TJMS). `ADJ`/`PROX` zeram nos dois.
+  E o **`NÃO` acentuado não é operador no TJAC** — só `NAO`.
+- **A aba `H` (Homologação) não existe no TJAC** — e enviá-la responde
+  `totalResultadoAba-H = 0`, aba inexistente se passando por aba vazia.
+- **A citação tem formato por instalação.** No TJAC é
+  `(Relator (a): …; Comarca: …; Data de registro: …)`, sem sigla do tribunal e
+  com sufixo depois do parêntese. O regex do TJMS não casa nada.
+- 🔴 **O reCAPTCHA pode estar SÓ no download.** No TJAC a busca é livre e o
+  `getArquivo.do` está atrás de reCAPTCHA v2 — e a sessão da busca não destrava.
+  **Meça busca e download em separado**; um não prova o outro.
+- 🔴 **Sem `getArquivo.do` não há permalink**, porque o popup de ementa é modal
+  sem URL. Aí a verificação é só por reconsulta (`-n`).
+- ⚠️ **`trocaDePagina.do` pagina a ÚLTIMA busca da sessão** — a URL não
+  identifica a busca. Intercalar buscas e paginar devolve a página errada com
+  HTTP 200 e cards válidos, sem sintoma nenhum.
+- ⚠️ **DNS que resolve ≠ API que existe.** `dadosabertos`/`api`/`jurisprudencia`
+  `.tjac.jus.br` resolvem e dão 200 servindo a home institucional (md5 idêntico
+  ao do `www`). É vhost curinga. Confira o md5 antes de comemorar.
+- **No Acre o Juizado é 2,8× maior que a Justiça Comum** (21.353 × 7.649),
+  invertendo o padrão dos outros TJs. Não presuma qual origem domina.
+
+⚠️ **Pendência declarada do TJAC:** os combos-árvore (classe, assunto, seção)
+**não** foram enumerados — o tempo foi para a descoberta do reCAPTCHA. Existem
+no formulário e o crawler não expõe flags para eles.
 
 ## Bloco 2 — ESAJ bloqueados, exigem descoberta (2 alvos)
 

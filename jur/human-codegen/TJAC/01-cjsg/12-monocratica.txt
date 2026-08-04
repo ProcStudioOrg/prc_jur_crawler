@@ -1,0 +1,70 @@
+TJAC — 01-cjsg — §12 CARD DE DECISÃO MONOCRÁTICA (3º tipo de documento)
+=======================================================================
+
+Print: `12.01-resultados-monocratica.png`
+Card cru: `12-card-monocratica.html`
+
+Busca: `dano moral` na ementa, origem `T`, `tipoDecisaoSelecionados=D`.
+
+## Medição
+
+```
+HTML do card:                 5.758 bytes   <- menos da metade do card de acórdão
+div#textAreaDados_<cd>:       1.000 chars   <- ementa íntegra, mas CURTA
+Total da aba D:                  29 documentos (contra 7.649 acórdãos)
+```
+
+Exemplo (processo 0701178-62.2021.8.01.0014):
+
+```
+Classe/Assunto: Apelação Cível / Acidente de Trânsito
+Relator(a): Des. Júnior Alberto
+Comarca: Tarauacá
+Órgão julgador: Segunda Câmara Cível
+Data do julgamento: 12/12/2024
+Data de publicação: 12/12/2024
+Ementa: APELAÇÃO CÍVEL. AÇÃO DE INDENIZAÇÃO POR DANO MORAL. OFICIOSA PRELIMINAR
+        DE INCOMPETÊNCIA ABSOLUTA DEST…
+```
+
+Rótulos presentes no card, extraídos do HTML:
+
+```
+Classe/Assunto:  Relator(a):  Comarca:  Órgão julgador:
+Data do julgamento:  Data de publicação:  Ementa:
+```
+
+## ✅ TEM EMENTA — ao contrário do TJCE
+
+O `textAreaDados` vem preenchido (1.000 chars). **Nenhum campo falta** em
+relação ao card de acórdão; o parser é o mesmo.
+
+Contraste com o TJCE, onde as 247.991 decisões monocráticas vêm **sem ementa**
+indexada e o crawler precisa avisar. Aqui não é o caso.
+
+⚠️ Mas note a ordem de grandeza: **1.000 chars contra 4.411 do acórdão**. A
+ementa da monocrática existe e é útil, mas é bem mais rasa — não traz o bloco
+estruturado `I. CASO EM EXAME / II. QUESTÃO EM DISCUSSÃO / …` completo dos
+acórdãos recentes.
+
+## ⚠️ 29 documentos. É acervo residual, não filtro quebrado
+
+Com `dano moral`, 2º grau: **7.649 acórdãos × 29 monocráticas** (0,4%).
+
+Prova de que não é o filtro: a aba `D` responde `totalResultadoAba-D = 29` e
+devolve os cards normalmente, com ementa e metadados completos. Se o filtro
+estivesse quebrado, ou daria zero, ou devolveria o mesmo total dos acórdãos.
+
+**Não prometa cobertura de decisão monocrática do TJAC.** A mesma proporção
+aparece no TJMS (48 × 67.529), o que sugere política de publicação do SAJ e não
+volume real de monocráticas proferidas.
+
+## No CLI
+
+```
+./bin/jur tjac -q "dano moral" -t monocratica       # só as 29
+./bin/jur tjac -q "dano moral" -t todos             # A + D, paginadas por aba
+```
+
+Medido: `-t monocratica -m 1 --json` → `count: 20`, `totaisPorTipo: {D: 29}`,
+`paginasDisponiveis: 2`.

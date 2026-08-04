@@ -1,0 +1,142 @@
+TJAC — 01-cjsg — §13 A ESCADA ATÉ O DOCUMENTO
+==============================================
+
+Prints: `13.01-modal-ementa-sem-formatacao.png`
+        `13.02-ementa-expandida-no-card.png`
+        `13.03-inteiro-teor-bloqueado-captcha.png`   <- o print que mais importa
+
+A skill `browser-post-search` manda clicar cada degrau e tirar print de todos,
+**inclusive dos que falham**. No TJAC o último degrau falha, e é por isso que
+esta seção existe.
+
+## Resumo em uma linha
+
+**Ementa sim, íntegra, de graça, já no payload da busca. Inteiro teor não,
+reCAPTCHA.**
+
+## Degrau 1 — "+" expandir ementa no card
+
+| | |
+|---|---|
+| Elemento | `<img class="mostrarOcultarEmenta cursorPointer" title="Visualizar Ementa Completa">` |
+| Abre onde | **no lugar**, no próprio card |
+| XHR? | **NENHUM** — é toggle de CSS |
+| Medição | texto do card 718 chars → **4.507 chars** após o clique |
+| Print | `13.02-ementa-expandida-no-card.png` |
+
+⚠️ Não escreva um "expandir ementa" no crawler. O texto completo já está no HTML
+que a busca devolveu; o clique só tira o `display:none`.
+
+## Degrau 2 — ícone TXT, "ementa sem formatação"
+
+| | |
+|---|---|
+| Elemento | `<a class="textoSemFormatacao" onclick="abrirPopUpDadosSemFormatacao(2509158);">` |
+| Abre onde | **modal na própria página** |
+| Nova aba? | **não** — `ctx.pages()` continua com 1 página |
+| URL muda? | 🔴 **NÃO.** Antes e depois: `https://esaj.tjac.jus.br/cjsg/resultadoCompleta.do` |
+| XHR? | nenhum — o conteúdo já está no DOM, em `div#dadosSemFormatacao_<cd>` |
+| Print | `13.01-modal-ementa-sem-formatacao.png` |
+
+⚠️ **Modal sem URL própria ⇒ este caminho não gera permalink.** É um dos dois
+candidatos descartados na Fase 6 (ver `10-resultados.txt` §6).
+
+O conteúdo do modal é exatamente `div#textAreaDados_<cdAcordao>`, que o crawler
+já lê direto do HTML. **É a ementa íntegra + a citação oficial.**
+
+## Degrau 3 — inteiro teor 🔴 BLOQUEADO
+
+| | |
+|---|---|
+| Elementos | `<a class="esajLinkLogin downloadEmenta" cdacordao cdforo>` (o nº do processo) e `<a class="downloadEmenta">` (ícone PDF) |
+| Contrato (do `cjsg-2.2.5-0.js`) | `GET /cjsg/getArquivo.do?cdAcordao=<id>&cdForo=<foro>`, aberto em popup |
+| Abre onde | nova janela |
+| **Resultado** | 🔴 **tela de reCAPTCHA. Nunca o PDF.** |
+| Print | `13.03-inteiro-teor-bloqueado-captcha.png` |
+
+### O contrato, reproduzido FORA do browser (como a skill exige)
+
+```
+GET https://esaj.tjac.jus.br/cjsg/getArquivo.do?cdAcordao=2509158&cdForo=0
+
+-> HTTP 200
+   Content-Type: text/html;charset=UTF-8
+   ~10.657 bytes
+   NÃO é PDF (não começa com %PDF-)
+   Content-Disposition: (ausente)
+```
+
+Corpo da resposta:
+
+```
+"Para acessar o conteúdo do Acórdão, por favor digite o código da figura no
+ campo abaixo. Esta validação lhe dará acesso para visualizar 20 resultados."
+
+<form name="getArquivoForm" action="/cjsg/getArquivo.do;jsessionid=…">
+  <input type="hidden" name="cdAcordao"   value="2509158">
+  <input type="hidden" name="cdForo"      value="0">
+  <input type="hidden" name="uuidCaptcha" id="uuidCaptcha" value="">
+  <input type="submit" name="pbEnviar"    value="Enviar">
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js?hl=pt-BR"></script>
+data-sitekey: 6LevDTsUAAAAAN6dsn77RReaDKhYAQrOVkTUOgOD
+iframes:      google.com/recaptcha/api2/anchor  +  /bframe   -> reCAPTCHA v2
+```
+
+### ⚠️ A sessão da busca NÃO destrava
+
+Testado nos dois cenários, em 3 documentos diferentes (2509158, 2509146, 2509126):
+
+```
+sem cookie                    -> HTTP 200, text/html, 10.702 B, captcha
+COM o JSESSIONID da busca     -> HTTP 200, text/html, 10.657 B, captcha
+```
+
+Não é sessão. É captcha. Este repo não automatiza captcha.
+
+### A chave é composta
+
+`cdAcordao` **e** `cdForo`. Os dois vêm como atributos do `<a>` no card. No TJAC
+o `cdForo` medido foi `0` em todos os cards, mas é enviado assim mesmo — o
+formulário do captcha o carrega como hidden, o que confirma que faz parte da
+chave e não é decorativo.
+
+## Degrau 4 — não existem
+
+Não há botão "copiar citação", "consulta processual do processo",
+"compartilhar" nem "documento original em outro formato". A citação oficial vem
+como texto dentro do `textAreaDados` (ver `10-resultados.txt` §2).
+
+## O que o crawler faz com isso
+
+`--fetch-inteiro-teor` no TJAC **não baixa PDF**. Grava um `.txt` por julgado com:
+
+- metadados completos (processo, cdAcordao, classe, assunto, órgão, comarca,
+  relator, as duas datas);
+- a **citação oficial**;
+- uma linha dizendo que **não existe permalink** e qual é a URL bloqueada;
+- a instrução de verificação por reconsulta (`./bin/jur tjac -n <nº>`);
+- a **EMENTA ÍNTEGRA**, rotulada como ementa;
+- um bloco `=== INTEIRO TEOR ===` dizendo explicitamente **NÃO DISPONÍVEL** e
+  por quê.
+
+A alternativa — tentar o `getArquivo.do` e gravar o que voltar — gravaria 10 KB
+de HTML de captcha num arquivo com nome de acórdão. É exatamente o erro que a
+invariante nº 1 do repo proíbe.
+
+`--tentar-pdf` força uma tentativa real por documento. Serve para **reconferir
+se o bloqueio caiu**; se algum PDF vier, o crawler grita
+("🎉 … o reCAPTCHA do TJAC pode ter caído") e o `CLAUDE-TJAC.md` precisa ser
+revisto.
+
+## Reteste — o que medir quando alguém perguntar "ainda está travado?"
+
+```bash
+curl -s -o /tmp/tjac-it.bin -w "%{http_code} %{content_type} %{size_download}\n" \
+  "https://esaj.tjac.jus.br/cjsg/getArquivo.do?cdAcordao=2509158&cdForo=0"
+head -c5 /tmp/tjac-it.bin    # "%PDF-" = destravou; "<!DOC"/"<html" = ainda travado
+```
+
+Ou, pelo repo: `node src/TJACTestes.js` — o teste 8 mede exatamente isso e passa
+tanto se o bloqueio persistir (esperado) quanto se cair (e avisa).
