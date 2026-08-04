@@ -1,0 +1,787 @@
+[
+  {
+    "value": "88",
+    "texto": "Correição Parcial ou Reclamação Correicional",
+    "selecionavel": true
+  },
+  {
+    "value": "1265",
+    "texto": "Precatório",
+    "selecionavel": true
+  },
+  {
+    "value": "256",
+    "texto": "Representação por Excesso de Prazo",
+    "selecionavel": true
+  },
+  {
+    "value": "1266",
+    "texto": "Requisição de Pequeno Valor",
+    "selecionavel": true
+  },
+  {
+    "value": "331",
+    "texto": "Incidentes",
+    "selecionavel": false
+  },
+  {
+    "value": "14678",
+    "texto": "Acordo de Não Persecução Penal",
+    "selecionavel": true
+  },
+  {
+    "value": "1178",
+    "texto": "Incidente de Arguição de Inconstitucionalidade Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "432",
+    "texto": "Desaforamento de Julgamento",
+    "selecionavel": true
+  },
+  {
+    "value": "433",
+    "texto": "Incidente de Uniformização de Jurisprudência",
+    "selecionavel": true
+  },
+  {
+    "value": "332",
+    "texto": "Incidente de Falsidade",
+    "selecionavel": true
+  },
+  {
+    "value": "333",
+    "texto": "Insanidade Mental do Acusado",
+    "selecionavel": true
+  },
+  {
+    "value": "11034",
+    "texto": "Conselho de Justificação",
+    "selecionavel": true
+  },
+  {
+    "value": "15160",
+    "texto": "Cumprimento de Sentença de Ações Coletivas",
+    "selecionavel": true
+  },
+  {
+    "value": "1199",
+    "texto": "Pedido de Providências",
+    "selecionavel": true
+  },
+  {
+    "value": "1298",
+    "texto": "Processo Administrativo",
+    "selecionavel": true
+  },
+  {
+    "value": "1727",
+    "texto": "Petição Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "11881",
+    "texto": "Agravo em Recurso Especial",
+    "selecionavel": true
+  },
+  {
+    "value": "11955",
+    "texto": "Cautelar Inominada Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "11398",
+    "texto": "Recurso em sentido estrito/Recurso ex officio",
+    "selecionavel": true
+  },
+  {
+    "value": "413",
+    "texto": "Agravo de Execução Penal",
+    "selecionavel": true
+  },
+  {
+    "value": "1733",
+    "texto": "Procedimento Investigatório Criminal (PIC-MP)",
+    "selecionavel": true
+  },
+  {
+    "value": "10943",
+    "texto": "Ação Penal - Procedimento Sumário",
+    "selecionavel": true
+  },
+  {
+    "value": "10944",
+    "texto": "Ação Penal - Procedimento Sumaríssimo",
+    "selecionavel": true
+  },
+  {
+    "value": "1268",
+    "texto": "Medidas Protetivas de Urgência (Lei Maria da Penha)  - Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "1289",
+    "texto": "Outras medidas provisionais",
+    "selecionavel": true
+  },
+  {
+    "value": "1715",
+    "texto": "Embargos do Acusado",
+    "selecionavel": true
+  },
+  {
+    "value": "1725",
+    "texto": "Notificação",
+    "selecionavel": true
+  },
+  {
+    "value": "11026",
+    "texto": "Petição Infância e Juventude Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "326",
+    "texto": "Restituição de Coisas Apreendidas",
+    "selecionavel": true
+  },
+  {
+    "value": "327",
+    "texto": "Embargos de Terceiro Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "355",
+    "texto": "Carta Precatória Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "420",
+    "texto": "Embargos de Declaração Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "426",
+    "texto": "Recurso em Sentido Estrito",
+    "selecionavel": true
+  },
+  {
+    "value": "278",
+    "texto": "Termo Circunstanciado",
+    "selecionavel": true
+  },
+  {
+    "value": "279",
+    "texto": "Inquérito Policial",
+    "selecionavel": true
+  },
+  {
+    "value": "280",
+    "texto": "Auto de Prisão em Flagrante",
+    "selecionavel": true
+  },
+  {
+    "value": "283",
+    "texto": "Ação Penal - Procedimento Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "12133",
+    "texto": "Tutela Provisória de Urgência e Tutela Provisória de Evidência",
+    "selecionavel": false
+  },
+  {
+    "value": "12135",
+    "texto": "Tutela Antecipada Antecedente",
+    "selecionavel": true
+  },
+  {
+    "value": "12394",
+    "texto": "Revisão Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "307",
+    "texto": "Habeas Corpus Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "309",
+    "texto": "Pedido de Busca e Apreensão Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "310",
+    "texto": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico",
+    "selecionavel": true
+  },
+  {
+    "value": "178",
+    "texto": "Arresto",
+    "selecionavel": true
+  },
+  {
+    "value": "181",
+    "texto": "Busca e Apreensão",
+    "selecionavel": true
+  },
+  {
+    "value": "183",
+    "texto": "Cautelar Inominada",
+    "selecionavel": true
+  },
+  {
+    "value": "186",
+    "texto": "Exibição",
+    "selecionavel": true
+  },
+  {
+    "value": "191",
+    "texto": "Protesto",
+    "selecionavel": true
+  },
+  {
+    "value": "193",
+    "texto": "Produção Antecipada da Prova",
+    "selecionavel": true
+  },
+  {
+    "value": "196",
+    "texto": "Seqüestro",
+    "selecionavel": true
+  },
+  {
+    "value": "12121",
+    "texto": "Comunicado de Mandado de Prisão",
+    "selecionavel": true
+  },
+  {
+    "value": "12357",
+    "texto": "Pedido de Efeito Suspensivo à Apelação",
+    "selecionavel": true
+  },
+  {
+    "value": "1711",
+    "texto": "Agravo de Instrumento em Recurso Especial",
+    "selecionavel": true
+  },
+  {
+    "value": "1712",
+    "texto": "Agravo de Instrumento em Recurso Extraordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "1729",
+    "texto": "Agravo Interno Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "417",
+    "texto": "Apelação Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "418",
+    "texto": "Carta Testemunhável",
+    "selecionavel": true
+  },
+  {
+    "value": "419",
+    "texto": "Correição Parcial Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "421",
+    "texto": "Embargos Infringentes e de Nulidade",
+    "selecionavel": true
+  },
+  {
+    "value": "427",
+    "texto": "Remessa Necessária Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "428",
+    "texto": "Revisão Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "11036",
+    "texto": "Representação p/ Perda da Graduação",
+    "selecionavel": true
+  },
+  {
+    "value": "211",
+    "texto": "Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "212",
+    "texto": "Recurso Extraordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "213",
+    "texto": "Recurso Especial",
+    "selecionavel": true
+  },
+  {
+    "value": "460",
+    "texto": "Recurso Inominado Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "1730",
+    "texto": "Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "12084",
+    "texto": "Tutela Cautelar Antecedente",
+    "selecionavel": true
+  },
+  {
+    "value": "198",
+    "texto": "Apelação Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "1728",
+    "texto": "Apelação / Remessa Necessária",
+    "selecionavel": true
+  },
+  {
+    "value": "10942",
+    "texto": "Correição Parcial Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "199",
+    "texto": "Remessa Necessária Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "270",
+    "texto": "Notícia-Crime",
+    "selecionavel": true
+  },
+  {
+    "value": "273",
+    "texto": "Pedido de Arquivamento em Representação Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "208",
+    "texto": "Embargos Infringentes",
+    "selecionavel": true
+  },
+  {
+    "value": "215",
+    "texto": "Incidentes",
+    "selecionavel": false
+  },
+  {
+    "value": "12085",
+    "texto": "Incidente de Resolução de Demandas Repetitivas",
+    "selecionavel": true
+  },
+  {
+    "value": "12087",
+    "texto": "Incidente de Assunção de Competência",
+    "selecionavel": true
+  },
+  {
+    "value": "12080",
+    "texto": "Incidente de Impedimento Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "221",
+    "texto": "Conflito de competência cível",
+    "selecionavel": true
+  },
+  {
+    "value": "216",
+    "texto": "Incidente De Arguição de Inconstitucionalidade Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "233",
+    "texto": "Incidente de Uniformização de Jurisprudência",
+    "selecionavel": true
+  },
+  {
+    "value": "12119",
+    "texto": "Incidente de Desconsideração de Personalidade Jurídica",
+    "selecionavel": true
+  },
+  {
+    "value": "218",
+    "texto": "Assistência Judiciária",
+    "selecionavel": true
+  },
+  {
+    "value": "231",
+    "texto": "Impugnação ao Valor da Causa Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "1702",
+    "texto": "Impugnação de Assistência Judiciária",
+    "selecionavel": true
+  },
+  {
+    "value": "12078",
+    "texto": "Cumprimento de Sentença contra a Fazenda Pública",
+    "selecionavel": true
+  },
+  {
+    "value": "1208",
+    "texto": "Agravo Interno Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "202",
+    "texto": "Agravo de Instrumento",
+    "selecionavel": true
+  },
+  {
+    "value": "204",
+    "texto": "Agravo de Instrumento em Recurso Extraordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "206",
+    "texto": "Agravo Regimental Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "10970",
+    "texto": "Conflito de Competência Infância e Juventude",
+    "selecionavel": true
+  },
+  {
+    "value": "406",
+    "texto": "Incidentes",
+    "selecionavel": false
+  },
+  {
+    "value": "11957",
+    "texto": "Remição de Pena",
+    "selecionavel": true
+  },
+  {
+    "value": "407",
+    "texto": "Conversão de Pena",
+    "selecionavel": true
+  },
+  {
+    "value": "264",
+    "texto": "Carta Rogatória Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "242",
+    "texto": "Comunicação",
+    "selecionavel": true
+  },
+  {
+    "value": "12122",
+    "texto": "Reclamação Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "241",
+    "texto": "Petição Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "258",
+    "texto": "Carta de Ordem Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "272",
+    "texto": "Representação Criminal/Notícia de Crime",
+    "selecionavel": true
+  },
+  {
+    "value": "275",
+    "texto": "Notificação para Explicações",
+    "selecionavel": true
+  },
+  {
+    "value": "7",
+    "texto": "Procedimento Comum Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "313",
+    "texto": "Pedido de Prisão Preventiva",
+    "selecionavel": true
+  },
+  {
+    "value": "321",
+    "texto": "Exceção de Ilegitimidade de Parte",
+    "selecionavel": true
+  },
+  {
+    "value": "323",
+    "texto": "Exceção de Impedimento",
+    "selecionavel": true
+  },
+  {
+    "value": "324",
+    "texto": "Exceção da Verdade",
+    "selecionavel": true
+  },
+  {
+    "value": "151",
+    "texto": "Liquidação por Arbitramento",
+    "selecionavel": true
+  },
+  {
+    "value": "152",
+    "texto": "Liquidação de Sentença pelo Procedimento Comum",
+    "selecionavel": true
+  },
+  {
+    "value": "172",
+    "texto": "Embargos à Execução",
+    "selecionavel": true
+  },
+  {
+    "value": "287",
+    "texto": "Crimes de Responsabilidade dos Funcionários Públicos",
+    "selecionavel": true
+  },
+  {
+    "value": "288",
+    "texto": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular",
+    "selecionavel": true
+  },
+  {
+    "value": "291",
+    "texto": "Restauração de Autos Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "302",
+    "texto": "Procedimento Especial dos Crimes de Abuso de Autoridade",
+    "selecionavel": true
+  },
+  {
+    "value": "305",
+    "texto": "Liberdade Provisória com ou sem fiança",
+    "selecionavel": true
+  },
+  {
+    "value": "306",
+    "texto": "Relaxamento de Prisão",
+    "selecionavel": true
+  },
+  {
+    "value": "1111",
+    "texto": "Execução de Título Judicial",
+    "selecionavel": true
+  },
+  {
+    "value": "1114",
+    "texto": "Execução Contra a Fazenda Pública",
+    "selecionavel": true
+  },
+  {
+    "value": "329",
+    "texto": "Seqüestro",
+    "selecionavel": true
+  },
+  {
+    "value": "1689",
+    "texto": "Embargos de Declaração Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "1691",
+    "texto": "Mandado de Segurança Infância e Juventude Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "1710",
+    "texto": "Mandado de Segurança Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "229",
+    "texto": "Impugnação ao Cumprimento de Sentença",
+    "selecionavel": true
+  },
+  {
+    "value": "156",
+    "texto": "Cumprimento de sentença",
+    "selecionavel": true
+  },
+  {
+    "value": "157",
+    "texto": "Cumprimento Provisório de Sentença",
+    "selecionavel": true
+  },
+  {
+    "value": "10973",
+    "texto": "Impugnação ao Valor da Causa Infância e Juventude",
+    "selecionavel": true
+  },
+  {
+    "value": "10980",
+    "texto": "Cumprimento Provisório de Decisão",
+    "selecionavel": true
+  },
+  {
+    "value": "10981",
+    "texto": "Impugnação ao Cumprimento de Decisão",
+    "selecionavel": true
+  },
+  {
+    "value": "10975",
+    "texto": "Exceção de Impedimento",
+    "selecionavel": true
+  },
+  {
+    "value": "10976",
+    "texto": "Exceção de Incompetência",
+    "selecionavel": true
+  },
+  {
+    "value": "10977",
+    "texto": "Exceção de Suspeição",
+    "selecionavel": true
+  },
+  {
+    "value": "1230",
+    "texto": "Exceção de Impedimento",
+    "selecionavel": true
+  },
+  {
+    "value": "1231",
+    "texto": "Exceção de Suspeição",
+    "selecionavel": true
+  },
+  {
+    "value": "1232",
+    "texto": "Exceção de Incompetência",
+    "selecionavel": true
+  },
+  {
+    "value": "12375",
+    "texto": "Reclamação",
+    "selecionavel": true
+  },
+  {
+    "value": "12226",
+    "texto": "Notificação",
+    "selecionavel": true
+  },
+  {
+    "value": "12233",
+    "texto": "Tutela Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "988",
+    "texto": "Dissídio Coletivo de Greve",
+    "selecionavel": true
+  },
+  {
+    "value": "47",
+    "texto": "Ação Rescisória",
+    "selecionavel": true
+  },
+  {
+    "value": "1296",
+    "texto": "Ação Declaratória de Constitucionalidade",
+    "selecionavel": true
+  },
+  {
+    "value": "95",
+    "texto": "Ação Direta de Inconstitucionalidade",
+    "selecionavel": true
+  },
+  {
+    "value": "1269",
+    "texto": "Habeas Corpus Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "1297",
+    "texto": "Intervenção em Município",
+    "selecionavel": true
+  },
+  {
+    "value": "244",
+    "texto": "Reclamação",
+    "selecionavel": true
+  },
+  {
+    "value": "145",
+    "texto": "Suspensão de Execução de Sentença",
+    "selecionavel": true
+  },
+  {
+    "value": "144",
+    "texto": "Suspensão de Liminar ou Antecipação de Tutela",
+    "selecionavel": true
+  },
+  {
+    "value": "11555",
+    "texto": "Suspensão de Liminar e de Sentença",
+    "selecionavel": true
+  },
+  {
+    "value": "11556",
+    "texto": "Suspensão de Segurança Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "37",
+    "texto": "Embargos de Terceiro Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "46",
+    "texto": "Restauração de Autos Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "64",
+    "texto": "Ação Civil de Improbidade Administrativa",
+    "selecionavel": true
+  },
+  {
+    "value": "65",
+    "texto": "Ação Civil Pública",
+    "selecionavel": true
+  },
+  {
+    "value": "66",
+    "texto": "Ação Popular",
+    "selecionavel": true
+  },
+  {
+    "value": "110",
+    "texto": "Habeas Data Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "118",
+    "texto": "Mandado de Injunção",
+    "selecionavel": true
+  },
+  {
+    "value": "119",
+    "texto": "Mandado de Segurança Coletivo",
+    "selecionavel": true
+  },
+  {
+    "value": "120",
+    "texto": "Mandado de Segurança Cível",
+    "selecionavel": true
+  }
+]

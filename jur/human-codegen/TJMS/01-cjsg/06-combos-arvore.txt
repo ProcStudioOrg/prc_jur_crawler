@@ -1,0 +1,35 @@
+TJMS — 01-cjsg — COMBOS-ÁRVORE: CLASSE, ASSUNTO, ÓRGÃO JULGADOR
+======================================================
+
+Não são `<select>`: são **árvores em modal**, carregadas por AJAX. O HTML
+estático da página tem **zero** `<select>` — quem mapeasse por `curl` concluiria
+que não há filtro nenhum aqui.
+
+| Filtro | campo hidden | campo texto | URL da árvore |
+|---|---|---|---|
+| Classe | `classesTreeSelection.values` (`#classes`) | `classesTreeSelection.text` | `/cjsg/classesTreeSelect.do` |
+| Assuntos | `assuntosTreeSelection.values` (`#assuntos`) | `assuntosTreeSelection.text` | `/cjsg/assuntosTreeSelect.do` |
+| Órgão julgador | `secoesTreeSelection.values` (`#secoes`) | `secoesTreeSelection.text` | `/cjsg/secaoTreeSelect.do` |
+
+Enumerados no browser e salvos ao lado (o `value` é o que vai no POST):
+
+- `orgao-julgador.json` — **136 nós**, 132 selecionáveis (1ª Câmara Cível
+  `0-2`, 1ª Câmara Criminal `0-8`, Seções, Órgão Especial, Turmas Recursais…)
+- `classe.json` — **157 nós**, 153 selecionáveis
+- `assunto.json` — **3.346 nós** selecionáveis (a tabela CNJ inteira)
+
+Estrutura de um nó, do DOM depois do AJAX:
+
+```html
+<span id="secoes_tree_node_0-2" class="node selectable checkable Unchecked"
+      value="0-2" searchid="1" searchvalue="1ª camara civel"
+      tabindex="0" role="checkbox" aria-label="1ª camara civel">1ª Câmara Cível</span>
+```
+
+Prints: `06.01-arvore-orgao-julgador.png`, `06.02-arvore-classe.png`,
+`06.03-arvore-assunto.png`
+
+⚠️ **Não implementados no crawler v1.** A desambiguação Justiça Comum × Juizado
+já é resolvida pelo checkbox de Origem (§7), que é mais barato e mais confiável.
+As árvores ficam mapeadas aqui para quem precisar de filtro por Câmara.
+

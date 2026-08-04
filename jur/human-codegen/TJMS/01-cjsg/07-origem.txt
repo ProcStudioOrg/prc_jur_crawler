@@ -1,0 +1,28 @@
+TJMS — 01-cjsg — ORIGEM — JUSTIÇA COMUM × TURMAS RECURSAIS
+=================================================
+
+**É o filtro que separa Juizado Especial de Justiça Comum**, e ele é um par de
+checkboxes, não um combo:
+
+```html
+<label ...>Origem</label>
+<input type="checkbox" name="dados.origensSelecionadas" value="T" id="origem2grau" checked="checked">
+  <label for="origem2grau"> 2° grau </label>
+<input type="checkbox" name="dados.origensSelecionadas" value="R" id="origemRecursal">
+  <label for="origemRecursal"> Turmas Recursais </label>
+```
+
+**A contagem muda de fato** — medido com `dano moral` na ementa, acórdãos:
+
+| Origem | POST | Total |
+|---|---|---|
+| 2º grau (default) | `dados.origensSelecionadas=T` | **67.328** |
+| Turmas Recursais | `dados.origensSelecionadas=R` | **21.801** |
+| ambas | `T` **e** `R` (o campo repete) | **89.129** |
+
+67.328 + 21.801 = 89.129 — as bases são disjuntas e o filtro é aplicado.
+
+CLI: `--origem comum` (default) | `--origem turmas` | `--origem ambas`.
+
+Print: `07.01-checkbox-origem.png`
+

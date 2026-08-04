@@ -66,6 +66,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjgo` | TJ de Goiás | GO | `CLAUDE-TJGO.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjma` | TJ do Maranhão | MA | `CLAUDE-TJMA.md` | 🔴 busca **bloqueada por captcha**; só `-n` (nº do processo, via DataJud) |
 | `tjmg` | TJ de Minas Gerais | MG | `CLAUDE-TJMG.md` | 🟢 OK (API direta, sem browser — Consulta Unificada; **não** use o `www5`) |
+| `tjms` | TJ de Mato Grosso do Sul | MS | `CLAUDE-TJMS.md` | 🟢 OK (HTTP direto, sem browser — e-SAJ cjsg, **sem captcha**; base **só SAJ**, não cobre o e-Proc) |
 | `tjpa` | TJ do Pará | PA | `CLAUDE-TJPA.md` | 🟢 OK (API direta, sem browser) |
 | `tjpr` | TJ do Paraná | PR | `CLAUDE-TJPR.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjrj` | TJ do Rio de Janeiro | RJ | `CLAUDE-TJRJ.md` | 🟢 OK (HTTP direto, sem browser — só e-Proc/Justiça Comum 2º grau) |
@@ -155,6 +156,22 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   ⚠️ **Nunca use `www5.tjmg.jus.br/jurisprudencia`** — é o portal antigo, devolve 401 +
   captcha, e é o único que a página oficial do TJMG ainda linka. A base **não tem 1º grau
   (sentenças) nem súmulas**; para matéria federal mineira use `trf6` (2023+) ou `trf1` (até 2022)
+- "TJMS" / "Mato Grosso do Sul estadual" / "Campo Grande" → `tjms` → leia `CLAUDE-TJMS.md`.
+  Juizado Especial / Turma Recursal sul-mato-grossense → `tjms --origem turmas`; Justiça
+  Comum 2º grau é `--origem comum` (default). A distinção é obrigatória e está medida
+  (67.328 × 21.801 para o mesmo termo).
+  ⚠️ **Acento é obrigatório na query e não é normalizado**: `usucapiao` devolve 3 e
+  `usucapião` devolve 3.885. Um número baixo aqui é quase sempre acento faltando, não
+  ausência de jurisprudência. O crawler avisa; repasse o aviso.
+  ⚠️ **`ADJ` e `PROX` não existem** neste portal — viram texto literal e **zeram a busca
+  sem erro**. `E`, `OU`, `NÃO`, `"frase exata"` funcionam.
+  ⚠️ **Intervalo de data acima de 365 dias corridos devolve 0 sem erro** — e "o último
+  ano" cai exatamente nisso. O crawler fatia em janelas sozinho e avisa; só saiba que
+  aí o `-m N` passa a valer **por janela**.
+  ⚠️ A base é **só 2º grau + Turmas Recursais do sistema SAJ**: não tem 1º grau, e
+  **não cobre o acervo do e-Proc** (o TJMS migra desde 01/07/2026 e o módulo de
+  jurisprudência do e-Proc não está no ar). Para pedido de jurisprudência **muito
+  recente**, diga isso. Matéria federal com origem em MS → `trf3`
 - "Matéria previdenciária federal em SP" → `trf3` (instável; ver doc), com TRF4/TRF5 de comparativo
 - **Matéria constitucional / precedente de maior hierarquia** ("o que o Supremo decidiu",
   "é constitucional?", ADI/ADPF/ADC, recurso extraordinário) → `stf` → leia `CLAUDE-STF.md`.

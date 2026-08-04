@@ -1,0 +1,682 @@
+[
+  {
+    "value": "",
+    "texto": "01-TRIBUNAL DE JUSTIÇA",
+    "selecionavel": false
+  },
+  {
+    "value": "0-2",
+    "texto": "1ª Câmara Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-8",
+    "texto": "1ª Câmara Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-38",
+    "texto": "1ª Câmara Criminal - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "0-29",
+    "texto": "1ª Câmara Especial - Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-31",
+    "texto": "1ª Câmara Especial - Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-5",
+    "texto": "1ª Seção Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-34",
+    "texto": "1ª Seção Cível - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "0-53",
+    "texto": "1ª Seção Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-81",
+    "texto": "1ª Turma Recursal Mista",
+    "selecionavel": true
+  },
+  {
+    "value": "0-100",
+    "texto": "1ª Turma Recursal Mista - Recurso Extraordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "0-3",
+    "texto": "2ª Câmara Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-9",
+    "texto": "2ª Câmara Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-39",
+    "texto": "2ª Câmara Criminal - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "0-30",
+    "texto": "2ª Câmara Especial - Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-32",
+    "texto": "2ª Câmara Especial - Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-6",
+    "texto": "2ª Seção Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-35",
+    "texto": "2ª Seção Cível - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "0-51",
+    "texto": "2ª Seção Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-82",
+    "texto": "2ª Turma Recursal Mista",
+    "selecionavel": true
+  },
+  {
+    "value": "0-101",
+    "texto": "2ª Turma Recursal Mista - Recurso Extraordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "0-4",
+    "texto": "3ª Câmara Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-49",
+    "texto": "3ª Câmara Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-15",
+    "texto": "3ª Seção Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-36",
+    "texto": "3ª Seção Cível - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "0-83",
+    "texto": "3ª Turma Recursal Mista",
+    "selecionavel": true
+  },
+  {
+    "value": "0-102",
+    "texto": "3ª Turma Recursal Mista - Recurso Extraordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "0-27",
+    "texto": "4ª Câmara Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-46",
+    "texto": "4ª Seção Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-48",
+    "texto": "4ª Seção Cível - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "0-45",
+    "texto": "5ª Câmara Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-21",
+    "texto": "Câmara Civel",
+    "selecionavel": true
+  },
+  {
+    "value": "0-105",
+    "texto": "Câmara Cível I - Mutirão",
+    "selecionavel": true
+  },
+  {
+    "value": "0-106",
+    "texto": "Câmara Cível II - Mutirão",
+    "selecionavel": true
+  },
+  {
+    "value": "0-107",
+    "texto": "Câmara Cível III - Mutirão",
+    "selecionavel": true
+  },
+  {
+    "value": "0-26",
+    "texto": "Câmara Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-116",
+    "texto": "Câmara Especial - Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-19",
+    "texto": "Câmara Especial - Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-22",
+    "texto": "Câmara Qualificada de 4 Membros",
+    "selecionavel": true
+  },
+  {
+    "value": "0-23",
+    "texto": "Câmara Qualificada de 5 Membros",
+    "selecionavel": true
+  },
+  {
+    "value": "0-20",
+    "texto": "Câmara Simples",
+    "selecionavel": true
+  },
+  {
+    "value": "0-25",
+    "texto": "Câmaras Cíveis Reunidas",
+    "selecionavel": true
+  },
+  {
+    "value": "0-40",
+    "texto": "CEJA",
+    "selecionavel": true
+  },
+  {
+    "value": "0-99",
+    "texto": "Conciliação",
+    "selecionavel": true
+  },
+  {
+    "value": "0-11",
+    "texto": "Conselho Superior da Magistratura",
+    "selecionavel": true
+  },
+  {
+    "value": "0-14",
+    "texto": "Corregedoria",
+    "selecionavel": true
+  },
+  {
+    "value": "0-43",
+    "texto": "Corregedoria-Geral de Justiça",
+    "selecionavel": true
+  },
+  {
+    "value": "0-113",
+    "texto": "Mutirão - Câmara Cível I - Provimento nº 391/2017 (DESATIVADO)",
+    "selecionavel": true
+  },
+  {
+    "value": "0-114",
+    "texto": "Mutirão - Câmara Cível II - Provimento nº 391/2017 (DESATIVADO)",
+    "selecionavel": true
+  },
+  {
+    "value": "0-115",
+    "texto": "Mutirão - Câmara Cível III - Provimento nº 391/2017 (DESATIVADO)",
+    "selecionavel": true
+  },
+  {
+    "value": "0-0",
+    "texto": "Nao informado",
+    "selecionavel": true
+  },
+  {
+    "value": "0-47",
+    "texto": "Órgão Especial",
+    "selecionavel": true
+  },
+  {
+    "value": "0-33",
+    "texto": "Plantão",
+    "selecionavel": true
+  },
+  {
+    "value": "0-28",
+    "texto": "Precatórios",
+    "selecionavel": true
+  },
+  {
+    "value": "0-12",
+    "texto": "Presidência",
+    "selecionavel": true
+  },
+  {
+    "value": "0-17",
+    "texto": "Seção Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-10",
+    "texto": "Seção Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-37",
+    "texto": "Seção Criminal - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "0-16",
+    "texto": "Seção Especial - Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "0-52",
+    "texto": "Seção Especial - Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-85",
+    "texto": "Seção Especial e de Uniformização de Jurisprudênci",
+    "selecionavel": true
+  },
+  {
+    "value": "0-7",
+    "texto": "Seção Uniformização Jurisprudência",
+    "selecionavel": true
+  },
+  {
+    "value": "0-1",
+    "texto": "Tribunal Pleno",
+    "selecionavel": true
+  },
+  {
+    "value": "0-24",
+    "texto": "Tribunal Pleno (7001)",
+    "selecionavel": true
+  },
+  {
+    "value": "0-18",
+    "texto": "Tribunal Pleno - Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "0-9999",
+    "texto": "Único - Fictícia",
+    "selecionavel": true
+  },
+  {
+    "value": "0-13",
+    "texto": "Vice-Presidência",
+    "selecionavel": true
+  },
+  {
+    "value": "",
+    "texto": "02-TURMA RECURSAL",
+    "selecionavel": false
+  },
+  {
+    "value": "9000-2",
+    "texto": "1ª Câmara Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-8",
+    "texto": "1ª Câmara Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-38",
+    "texto": "1ª Câmara Criminal - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-29",
+    "texto": "1ª Câmara Especial - Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-31",
+    "texto": "1ª Câmara Especial - Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-5",
+    "texto": "1ª Seção Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-34",
+    "texto": "1ª Seção Cível - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-91",
+    "texto": "1ª Turma Recursal Mista",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-100",
+    "texto": "1ª Turma Recursal Mista - Recurso Extraordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-3",
+    "texto": "2ª Câmara Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-9",
+    "texto": "2ª Câmara Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-39",
+    "texto": "2ª Câmara Criminal - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-30",
+    "texto": "2ª Câmara Especial - Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-32",
+    "texto": "2ª Câmara Especial - Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-6",
+    "texto": "2ª Seção Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-35",
+    "texto": "2ª Seção Cível - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-92",
+    "texto": "2ª Turma Recursal Mista",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-101",
+    "texto": "2ª Turma Recursal Mista - Recurso Extraordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-4",
+    "texto": "3ª Câmara Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-15",
+    "texto": "3ª Seção Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-36",
+    "texto": "3ª Seção Cível - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-93",
+    "texto": "3ª Turma Recursal Mista",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-102",
+    "texto": "3ª Turma Recursal Mista - Recurso Extraordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-27",
+    "texto": "4ª Câmara Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-46",
+    "texto": "4ª Seção Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-48",
+    "texto": "4ª Seção Cível - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-156",
+    "texto": "4ª Turma Recursal Mista",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-157",
+    "texto": "4ª Turma Recursal Mista - Recurso Extraordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-45",
+    "texto": "5ª Câmara Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-21",
+    "texto": "Câmara Civel",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-26",
+    "texto": "Câmara Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-19",
+    "texto": "Câmara Especial - Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-22",
+    "texto": "Câmara Qualificada de 4 Membros",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-23",
+    "texto": "Câmara Qualificada de 5 Membros",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-20",
+    "texto": "Câmara Simples",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-25",
+    "texto": "Câmaras Cíveis Reunidas",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-40",
+    "texto": "CEJA",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-99",
+    "texto": "Conciliação",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-11",
+    "texto": "Conselho Superior da Magistratura",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-14",
+    "texto": "Corregedoria",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-43",
+    "texto": "Corregedoria-Geral de Justiça",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-103",
+    "texto": "Mutirão - 1ª Turma Recursal Mista",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-104",
+    "texto": "Mutirão - 2ª Turma Recursal Mista",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-105",
+    "texto": "Mutirão - 3ª Turma Recursal Mista",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-0",
+    "texto": "Nao informado",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-47",
+    "texto": "Órgão Especial",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-33",
+    "texto": "Plantão",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-28",
+    "texto": "Precatórios",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-12",
+    "texto": "Presidência",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-17",
+    "texto": "Seção Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-10",
+    "texto": "Seção Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-37",
+    "texto": "Seção Criminal - Recurso Ordinário",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-94",
+    "texto": "Seção de Uniformização e Jurisprudência",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-16",
+    "texto": "Seção Especial - Cível",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-85",
+    "texto": "Seção Especial e de Uniformização de Jurisprudênci",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-7",
+    "texto": "Seção Uniformização Jurisprudência",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-1",
+    "texto": "Tribunal Pleno",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-24",
+    "texto": "Tribunal Pleno (7001)",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-18",
+    "texto": "Tribunal Pleno - Criminal",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-9999",
+    "texto": "Único - Fictícia",
+    "selecionavel": true
+  },
+  {
+    "value": "9000-13",
+    "texto": "Vice Presidência",
+    "selecionavel": true
+  },
+  {
+    "value": "",
+    "texto": "COMISSÃO REGIONAL DE SOLUÇÕES FUNDIÁRIAS",
+    "selecionavel": false
+  },
+  {
+    "value": "68-1",
+    "texto": "Comissão Regional de Soluções Fundiárias",
+    "selecionavel": true
+  },
+  {
+    "value": "68-2",
+    "texto": "Comissão Regional de Soluções Fundiárias - Fictícia",
+    "selecionavel": true
+  },
+  {
+    "value": "",
+    "texto": "04-TESTE TRIBUNAL DE JUSTIÇA",
+    "selecionavel": false
+  },
+  {
+    "value": "9999-106",
+    "texto": "Órgão Julgador Teste - Sem Sessão",
+    "selecionavel": true
+  },
+  {
+    "value": "9999-103",
+    "texto": "Orgão Julgador Teste - Voto Antecipado",
+    "selecionavel": true
+  },
+  {
+    "value": "9999-9999",
+    "texto": "Único Fictícia - TESTE DAJ",
+    "selecionavel": true
+  }
+]

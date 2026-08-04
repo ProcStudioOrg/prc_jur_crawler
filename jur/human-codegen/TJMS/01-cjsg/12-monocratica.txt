@@ -1,0 +1,48 @@
+TJMS — 01-cjsg — CARD DE DECISÃO MONOCRÁTICA (3º tipo de documento)
+===================================================================
+
+## Como chegar
+
+Formulário → marcar `#Dcheckbox` e desmarcar `#Acheckbox`
+(`tipoDecisaoSelecionados=D`) → Pesquisar.
+
+⚠️ **A ordem importa.** Desmarcar "Acórdãos" primeiro faz o JS da tela remarcá-lo
+sozinho (não é permitido ficar sem nenhum tipo). Marque `D` **antes** de
+desmarcar `A` — foi assim que o script de prints passou a funcionar.
+
+Print: `12.01-resultados-monocratica.png`
+HTML do card: `12-card-monocratica.html`
+
+## O que muda
+
+O card é **estruturalmente idêntico** ao do acórdão: mesmos rótulos, mesmo
+`cdacordao`/`cdforo`, mesma ementa em `textAreaDados`, mesma citação. Na amostra
+gravada a ementa tem **1.121 chars** — maior que a do acórdão de 2º grau (407) e
+que a da Turma Recursal (365).
+
+O que **não** vem do card é o tipo: o HTML do `<tr>` não diz "monocrática".
+Quem diz é o container da aba, `<div id="divDadosResultado-D">`. Por isso
+`TJMSNavigator.parsear()` lê o `divDadosResultado-<tipo>` e passa o tipo para
+`parsearCards()` — sem isso **toda monocrática sairia rotulada como "Acórdão"**.
+
+## ⚠️ A ressalva de cobertura: a base é quase só acórdão
+
+Medido com `dano moral`, 2º grau:
+
+| Tipo | Total |
+|---|---|
+| Acórdãos | **67.529** |
+| Homologações de Acordo | **0** (a aba nem aparece) |
+| Decisões Monocráticas | **48** |
+
+48 monocráticas contra 67 mil acórdãos, para o mesmo termo. A indexação de
+monocrática no cjsg do TJMS é **residual** — não é filtro quebrado (a aba `D`
+responde e devolve os 48 corretamente), é acervo mesmo.
+
+Consequência prática: **não prometa cobertura de decisão monocrática do TJMS.**
+Se o usuário pede especificamente decisão monocrática, diga que o portal indexa
+pouquíssimas e que o caminho é o acórdão.
+
+E "Homologações de Acordo" (`H`) devolve **zero para tudo** que foi testado —
+mantido no CLI (`-t homologacao`) por fidelidade ao formulário, mas trate o
+resultado vazio como esperado, não como falha.

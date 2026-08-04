@@ -1,0 +1,292 @@
+TJMS — 01-cjsg — PÓS-BUSCA (skill browser-post-search)
+======================================================
+
+Mapeado em 04/08/2026. Cobre o caminho de "achei N resultados" até "tenho o
+texto do acórdão e um link que outra pessoa abre".
+
+## 1. Onde o resultado aparece
+
+| Pergunta | Resposta medida |
+|---|---|
+| Mesma página ou outra rota? | **Outra rota**: `consultaCompleta.do` → **POST** → `resultadoCompleta.do` |
+| A URL de resultado é reutilizável? | **NÃO.** É POST; colar `resultadoCompleta.do` numa aba limpa devolve o formulário vazio |
+| Nova aba / popup? | Não na listagem. Só o inteiro teor abre popup (`window.open`) |
+| Os controles de busca somem? | **NÃO** — o formulário inteiro continua no topo, já preenchido, e as abas de resultado vêm abaixo |
+| O total aparece? | Sim, em dois lugares — ver §2 |
+
+Prints: `10.01-resultados-topo.png`, `10.02-resultados-rodape.png`,
+`10.03-resultados-full.png`
+
+## 2. O total — leia o hidden, não o texto
+
+Há **um par de aba + total por tipo de decisão**:
+
+```html
+<li tipo="A" class="spwTabs-selected">
+  <a href="A"><span id="nomeAba-A">Acórdãos(3)</span>
+  <input id="totalResultadoAba-A" type="hidden" value="3"></a>
+</li>
+```
+
+e, dentro do painel da aba ativa:
+
+```html
+<td bgcolor="#EEEEEE"> Resultados <strong> 1 a 3 </strong> de 3 </td>
+```
+
+⚠️ **O crawler lê `totalResultadoAba-<tipo>`**, não o texto "de N". O texto é só
+da aba ativa; quando mais de um tipo é pedido (`-t todos`), só o hidden dá o
+total de cada aba. Foi por ler o texto que a primeira medição deste mapeamento
+registrou "Turmas Recursais = 6" — o número certo era **21.801**.
+
+### Total é EXATO, não saturado
+
+Testado com termo raro, que é como se distingue teto de contador de acervo real:
+
+| Termo | Total |
+|---|---|
+| `dano moral` | 67.328 |
+| `usucapião` | 3.885 |
+| `anencefalia` | **0** |
+| `criptomoeda` | **0** |
+
+Zero limpo e números não-redondos ⇒ **contador exato**, sem teto artificial.
+
+### ⚠️ O total oscila entre nós do balanceador
+
+O JSESSIONID termina em `.cjsg2` ou `.cjsg3` — são nós distintos, com índices
+levemente dessincronizados. A **mesma busca** devolve:
+
+```
+dano moral / 2º grau / acórdãos  ->  67.322 | 67.328 | 67.529   (três medições)
+usucapião  / 2º grau / acórdãos  ->   3.885 | 3.895
+```
+
+Variação de ~0,3%. Não é bug do parser: é o nó que atendeu. **Não trate o total
+do TJMS como número exato reprodutível** — trate como ordem de grandeza. O
+`TJMSTestes.js` usa tolerância por isso; comparações de filtro (com × sem)
+continuam válidas porque a diferença que importa é de ordem de grandeza.
+
+## 3. Anatomia do card
+
+Cada julgado é um `<tr class="fundocinza1">`. `outerHTML` gravado em três tipos
+de documento (o mapeamento do TJMG errou por olhar um tipo só):
+
+| Arquivo | Tipo | Órgão | Ementa (chars) | Citação |
+|---|---|---|---|---|
+| `10-card-resultado.html` | Acórdão | 2ª Câmara Cível | 407 | sim |
+| `11-card-turma-recursal.html` | Acórdão (Turma Recursal) | 2ª Turma Recursal Mista | 365 | sim |
+| `12-card-monocratica.html` | Decisão Monocrática | 3ª Câmara Cível | 1.121 | sim |
+
+**Os três tipos têm o MESMO layout de card** — ao contrário do TJMG, aqui não há
+campo que exista num tipo e falte noutro. Turma Recursal e monocrática trazem
+ementa igual aos acórdãos.
+
+### O texto do card é EMENTA, não trecho
+
+Há **duas** cópias da ementa no card, e elas não são equivalentes:
+
+1. `<div align="justify"><strong>Ementa: </strong>…` — **truncada** para caber na
+   tela, com o termo buscado em `<em>` (**highlight**) e um botão "Visualizar
+   Ementa Completa". Usar esta é o erro clássico.
+2. `<div id="textAreaDados_<cdAcordao>" class="mensagemSemFormatacao">` —
+   a **ementa íntegra**, sem highlight, seguida da citação oficial.
+
+O `TJMSNavigator` lê a **(2)**. Medição de tamanho, no julgado 1934242:
+
+```
+ementa do card (textAreaDados) : 2.166 chars
+inteiro teor (PDF -> texto)    : ~23.000 a 29.000 chars
+```
+
+Razão ~1:12 ⇒ a ementa é ementa (resumo oficial), e o PDF traz relatório + voto
++ dispositivo. Nenhum dos dois é "trecho com o termo destacado".
+
+### Campos que vêm sem clicar nada
+
+| Campo no DOM | Significado | Vira no repo |
+|---|---|---|
+| `a.downloadEmenta[cdacordao]` | **identificador do documento** | `id`, `cdAcordao` |
+| `a.downloadEmenta[cdforo]` | foro (0 no 2º grau) | `cdForo` |
+| texto do `a.downloadEmenta` | nº CNJ do processo | `processo`, `numeroProcesso` |
+| `<strong>Classe/Assunto:</strong>` | "Agravo de Instrumento / Tutela de Urgência" | `classe` + `assunto` |
+| `<strong>Relator(a):</strong>` | "Des. Nélio Stábile" | `relator` |
+| `<strong>Comarca:</strong>` | "Campo Grande" | `comarca` |
+| `<strong>Órgão julgador:</strong>` | "2ª Câmara Cível" | `orgaoJulgador` |
+| `<strong>Data do julgamento:</strong>` | DD/MM/AAAA | `dataJulgamento` |
+| `<strong>Data de publicação:</strong>` | DD/MM/AAAA | `dataPublicacao` |
+| `div#textAreaDados_<id>` | ementa íntegra + citação | `ementa` + `citacao` |
+| `span.segredoJustica` | "(N ocorrências … no inteiro teor)" | `ocorrenciasInteiroTeor` |
+
+### A citação oficial vem pronta
+
+O rodapé do `textAreaDados` é o formato de citação do próprio tribunal:
+
+```
+(TJMS. Conflito de competência cível n. 1603466-18.2026.8.12.0000,  Dourados,
+ 3ª Câmara Cível, Relator (a):  Juiz Fábio Possik Salamene, j: 31/07/2026, p: 04/08/2026)
+```
+
+⚠️ Armadilha de parsing: a sigla vem em `<b>TJMS</b>`. Depois de trocar tags por
+espaço o texto é `( TJMS . Conflito…` — um regex `\(TJMS\.` **não casa nada** e
+a citação sai vazia em 100% dos cards. O regex correto é `\(\s*TJMS\s*\.`.
+
+## 4. A escada até o documento
+
+Botões do card, **todos clicados**:
+
+| # | Elemento | O que acontece |
+|---|---|---|
+| 1 | `a.esajLinkLogin.downloadEmenta` (o nº do processo) | mesmo destino do ícone PDF |
+| 2 | `a.downloadEmenta` + `img ico_pdf.gif` ("Visualizar inteiro teor") | `window.open` do **PDF** |
+| 3 | `a.textoSemFormatacao` + `img ico_txt.gif` ("Visualizar ementa sem formatação") | **modal in-page**, sem request — o texto já estava no HTML |
+| 4 | `img.mostrarOcultarEmenta` ("Visualizar Ementa Completa") | troca a div truncada pela íntegra, **sem request** |
+
+Prints: `13.01-modal-ementa-sem-formatacao.png`,
+`13.02-inteiro-teor-pdf-pagina1.png`
+
+**Não existe** botão "Copiar citação" nem link para a consulta processual.
+
+### O contrato do inteiro teor
+
+Está no JS `/cjsg/js/cjsg-2.2.5-0.js`:
+
+```js
+var cdForo    = linkDocumento.attr('cdForo');
+var cdAcordao = linkDocumento.attr('cdAcordao');
+var url = window.saj.env.root + "/getArquivo.do?cdAcordao=" + cdAcordao + '&cdForo=' + cdForo;
+abrirJanelaPopUp(url, 'Documento');
+```
+
+```
+GET https://esaj.tjms.jus.br/cjsg/getArquivo.do?cdAcordao=<id>&cdForo=<foro>
+```
+
+**Chave composta** `cdAcordao` + `cdForo`. Reproduzido **fora do browser**
+(node fetch, contexto sem cookie):
+
+```
+status=200
+content-type: application/pdf;charset=UTF-8
+content-disposition: inline; filename=20260000097697.pdf
+bytes=334073   magic=%PDF-1.4
+```
+
+Funciona **com e sem** o JSESSIONID da busca, com bytes idênticos.
+
+### ⚠️ Rate limit no download (e SÓ no download)
+
+Medido baixando 100 documentos em sequência sem pausa:
+**53 sucessos, 47 × HTTP 403** — o 403 começa por volta do 50º.
+
+**Não é bloqueio.** Os mesmos `cdAcordao` que deram 403 voltaram **200 com PDF
+íntegro** após ~4s de pausa. O `TJMSCrawler` passou a usar 1,2s entre downloads
+com backoff ×3 até 20s; com isso o mesmo lote fecha **100/100**.
+
+O bloqueio é **assimétrico**: a busca e a paginação não sofrem rate limit
+observável; só o `getArquivo.do`.
+
+## 5. Paginação
+
+```
+GET https://esaj.tjms.jus.br/cjsg/trocaDePagina.do?tipoDeDecisao=<A|H|D>&pagina=<N>
+Cookie: JSESSIONID=<o da busca>
+```
+
+| Item | Medição |
+|---|---|
+| Resultados por página | **100**, fixo — não há combo para mudar |
+| Parâmetro | querystring `pagina` (1-based), **GET** |
+| Paginação é por ABA | sim — `tipoDeDecisao` escolhe qual |
+| Sessão | **obrigatória** |
+| Profundidade | sem teto artificial: `dano moral` (67.328) pagina até a **675**; a **676** vem vazia (67.328/100 = 673,3) |
+| Ao estourar | **HTTP 200 com 0 cards** (5.936 bytes), não erro |
+
+### ⚠️ Paginar SEM cookie devolve HTTP 200 com zero resultados
+
+Medido: `trocaDePagina.do` sem `JSESSIONID` → 200, 0 cards, três vezes seguidas
+"estável". Um crawler que ignore isso conclui que a busca acabou na página 1.
+Por isso `TJMSNavigator.paginar()` **lança erro** se não há cookie, em vez de
+devolver lista vazia.
+
+### ⚠️ Paginação INSTÁVEL — testada duas (cinco) vezes
+
+Mesma página, mesma sessão, requisições repetidas:
+
+```
+página 2 de "usucapião", 3×, com cookie  -> 2 variantes distintas
+página 5 de "dano moral", 5×, com cookie -> 2 variantes; 100 cards sempre;
+                                            diferença: 1 documento só em A, 1 só em B
+```
+
+Causa: `dados.ordenarPor=dtPublicacao` **sem campo de desempate** — documentos
+publicados no mesmo dia trocam de lugar entre requisições. Diferente do TJDFT,
+**reenviar o cookie NÃO resolve** aqui (o teste acima já é com cookie fixo).
+
+Impacto real: ~1 documento em 100 por página pode ser repetido ou **pulado**.
+Mitigação no crawler: dedupe por `cdAcordao` ao acumular páginas (`search()`
+usa um `Set`). Não elimina o documento pulado — **registre isso ao reportar
+cobertura exaustiva de um tema no TJMS**.
+
+## 6. Permalink e identidade do documento
+
+| Pergunta | Resposta |
+|---|---|
+| Existe URL estável por documento? | **SIM**: `getArquivo.do?cdAcordao=<id>&cdForo=<foro>` |
+| Confirmada em aba limpa? | **SIM** — HTTP 200 + PDF sem nenhum cookie |
+| Ela renderiza no navegador? | **Não**: `Content-Disposition: inline; filename=<n>.pdf` faz o Chromium **baixar** em vez de exibir. O print `13.02` é a 1ª página do PDF renderizada com `pdftoppm` |
+| Qual campo identifica o documento? | **`cdAcordao`** |
+| O nº do processo identifica? | **NÃO** — medido: `1401542-58.2023.8.12.0000` devolve `cdAcordao` 1372357 (acórdão) **e** outro documento (monocrática) |
+| O identificador da lista serve na consulta por número? | Não: a consulta por número usa `dados.nuProcOrigem` (CNJ). `cdAcordao` só serve no `getArquivo.do` |
+
+⚠️ O `filename` do PDF (`20260000097697.pdf`) é o **nº de registro do acórdão**,
+outro identificador ainda. Não confunda com `cdAcordao` nem com o CNJ.
+
+## 7. O texto já veio no payload da busca?
+
+**Parcialmente — e é a resposta que economiza requisições:**
+
+- **A ementa íntegra JÁ VEIO** no `textAreaDados_<cdAcordao>` do próprio HTML da
+  busca. Não existe request de "expandir ementa": os botões da §4 itens 3 e 4
+  são puro JS sobre HTML já baixado. **Nunca faça um request por ementa.**
+- **O inteiro teor NÃO veio** — é o PDF do `getArquivo.do`, um request por
+  documento, sujeito ao rate limit da §4.
+
+Ou seja: quem só precisa de ementa + metadados + citação **não precisa baixar
+nada além da busca**. `--fetch-inteiro-teor` é só para o voto e o relatório.
+
+## 8. O documento
+
+```
+Formato:            PDF (application/pdf;charset=UTF-8)
+Tamanho típico:     330 KB – 530 KB
+Texto útil:         ~23.000 a 29.000 caracteres (pdftotext -layout)
+Vem completo?       SIM — ementa + relatório + voto + dispositivo
+Precisa de sessão?  NÃO (testado em contexto limpo)
+Precisa de captcha? NÃO
+Rate limit?         SIM — ver §4
+```
+
+O `TJMSCrawler.fetchInteiroTeorBatch` grava **os dois**: o `.pdf` original e um
+`.txt` com cabeçalho de metadados + ementa + texto extraído. Se `pdftotext` não
+estiver instalado, o PDF é salvo mesmo assim e o `.txt` diz isso explicitamente.
+
+## 9. Mapa campo → repo
+
+| DOM | Campo no JSON de saída |
+|---|---|
+| `cdacordao` | `id`, `cdAcordao` |
+| `cdforo` | `cdForo` |
+| aba (`divDadosResultado-<X>`) | `tipoDocumento` (Acórdão / Homologação de Acordo / Decisão Monocrática) |
+| texto do link | `processo`, `numeroProcesso` |
+| Classe/Assunto | `classe`, `assunto` |
+| Relator(a) | `relator` |
+| Comarca | `comarca` |
+| Órgão julgador | `orgaoJulgador` |
+| Data do julgamento | `dataJulgamento` |
+| Data de publicação | `dataPublicacao` |
+| `textAreaDados` (sem o rodapé) | `ementa` |
+| rodapé `(TJMS. …)` | `citacao` |
+| `span.segredoJustica` | `ocorrenciasInteiroTeor` |
+| — (constante) | `uf: "MS"`, `tribunal: "TJMS"` |
+| `getArquivo.do?...` | `inteiroTeorLink`, `processoUrl` |

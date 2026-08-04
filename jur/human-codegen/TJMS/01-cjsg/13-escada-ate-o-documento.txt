@@ -1,0 +1,62 @@
+TJMS — 01-cjsg — A ESCADA ATÉ O DOCUMENTO
+=========================================
+
+Cada degrau clicado, com print. O detalhamento das medições está em
+`10-resultados.txt` §4, §6 e §8; este arquivo é o mapa dos prints.
+
+## Degrau 1 — Ementa completa (dentro do card)
+
+`img.mostrarOcultarEmenta` ("Visualizar Ementa Completa") troca a div truncada
+pela íntegra. **Zero requests**: as duas versões já vieram no HTML da busca.
+
+## Degrau 2 — Ementa sem formatação (modal)
+
+`a.textoSemFormatacao` → `abrirPopUpDadosSemFormatacao(<cdAcordao>)` abre um
+modal com a ementa íntegra **mais a citação oficial**, e já seleciona o texto
+para copiar. **Zero requests** — o conteúdo é o `div#textAreaDados_<cdAcordao>`
+que estava escondido no card.
+
+Print: `13.01-modal-ementa-sem-formatacao.png`
+
+É deste modal que sai o campo `citacao` do crawler:
+
+```
+(TJMS. Conflito de competência cível n. 1603466-18.2026.8.12.0000,  Dourados,
+ 3ª Câmara Cível, Relator (a):  Juiz Fábio Possik Salamene, j: 31/07/2026, p: 04/08/2026)
+```
+
+## Degrau 3 — Inteiro teor (PDF)
+
+`a.downloadEmenta` (o nº do processo e o ícone PDF levam ao mesmo lugar).
+O handler está em `/cjsg/js/cjsg-2.2.5-0.js`:
+
+```js
+var url = window.saj.env.root + "/getArquivo.do?cdAcordao=" + cdAcordao + '&cdForo=' + cdForo;
+abrirJanelaPopUp(url, 'Documento');
+```
+
+**Contrato:** `GET /cjsg/getArquivo.do?cdAcordao=<id>&cdForo=<foro>` —
+chave composta. Reproduzido fora do browser, sem cookie:
+
+```
+200 | application/pdf;charset=UTF-8 | 334.073 bytes | %PDF-1.4
+Content-Disposition: inline; filename=20260000097697.pdf
+```
+
+Print: `13.02-inteiro-teor-pdf-pagina1.png`
+
+⚠️ **Este print foi gerado com `pdftoppm`, não com o Playwright.** Abrir a URL
+numa aba limpa do Chromium não renderiza: o `Content-Disposition` dispara
+download e o Playwright aborta o `goto` com "Download is starting". O permalink
+funciona (200 + PDF sem cookie), ele só não é uma página.
+
+## Degrau 4 — Documento original / consulta processual
+
+**Não existem.** O card não tem link para o processo no e-SAJ nem botão
+"copiar citação" nem "imprimir". O PDF do degrau 3 é o documento final.
+
+## O que NÃO existe nesta escada
+
+- Nenhum degrau exige sessão. Nenhum exige captcha.
+- O único limite é o **rate limit do `getArquivo.do`** (~50 downloads seguidos
+  → HTTP 403, recupera em segundos). Ver `10-resultados.txt` §4.

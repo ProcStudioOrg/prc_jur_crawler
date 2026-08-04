@@ -1263,19 +1263,20 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://esaj.tjms.jus.br/cjsg/consultaCompleta.do",
+        "comando": "tjms",
+        "acesso": "http",
+        "status": "ok",
+        "nota": "PRIMEIRO e-SAJ cjsg com crawler no repo — e o que prova que \"cjsg = captcha\" é falso: esta instalação NÃO tem reCAPTCHA (sem grecaptcha, sem sitekey, único request da tela é o próprio consultaCompleta.do), ao contrário do cjsg do TJCE e do TJSP. POST direto em resultadoCompleta.do, sem browser, sem cookie prévio. ⚠️ CHARSET UTF-8, não ISO-8859-1 como o e-SAJ clássico. ESCOPO: 2º grau (Câmaras/Seções/Órgão Especial) + Turmas Recursais, ambos no sistema SAJ; NÃO tem 1º grau (é o cjpg, sem crawler) e NÃO cobre o acervo do e-Proc — o TJMS migra desde 01/07/2026 e o módulo de jurisprudência do e-Proc NÃO está habilitado (eproc2g…acao=jurisprudencia@jurisprudencia/pesquisar devolve HTTP 200 com \"Falha no processamento da solicitação\" e o menu público não tem item Jurisprudência, ao contrário do TJRJ). API oficial PROCURADA E INEXISTENTE: dadosabertos./api./jurisprudencia.tjms.jus.br são NXDOMAIN, /api-docs e swagger dão 404, e o portal de dados abertos publica exatamente DOIS endpoints (estrutura-judicial/foros e /varas), nenhum de jurisprudência. ⚠️ OITO ARMADILHAS MEDIDAS: (0) INTERVALO DE DATA ACIMA DE 365 DIAS CORRIDOS (364 de diferença) devolve 0 SEM MENSAGEM NENHUMA, tanto em julgamento quanto em publicação — 01/01/2025→31/12/2025 dá 6.567 e 01/01/2025→01/01/2026 dá 0; \"o último ano\" cai exatamente nisso, e o TJMSCrawler fatia em janelas sozinho (aí -m N passa a valer POR JANELA); (1) ACENTO É OBRIGATÓRIO e não é normalizado — usucapiao=3 × usucapião=3.885, e NAO=39.003 × NÃO=54.751; o crawler avisa quando a query tem palavra suspeita sem acento; (2) ADJ e PROX NÃO EXISTEM e ZERAM a busca sem erro (dano ADJ2 moral = 0, dano PROX5 moral = 0), enquanto E/OU/NÃO/\"frase exata\" funcionam; (3) trocaDePagina.do SEM o JSESSIONID da busca devolve HTTP 200 com ZERO cards — o Navigator lança erro nesse caso de propósito, senão o crawler lê \"acabou\" na página 1; (4) RATE LIMIT só no download: 100 PDFs seguidos sem pausa = 53 OK + 47 HTTP 403, e os mesmos voltam 200 após ~4s; com 1,2s + backoff ×3 fecha 100/100 (a busca e a paginação não sofrem); (5) paginação INSTÁVEL — ordenação sem desempate faz a mesma página (5×, mesma sessão) devolver 2 variantes diferindo em 1 documento; fixar cookie NÃO resolve (diferente do TJDFT); o crawler deduplica por cdAcordao, mas ~1/100 pode ser pulado; (6) o total OSCILA entre os nós do balanceador (JSESSIONID .cjsg2/.cjsg3): a mesma busca dá 67.322/67.328/67.529, ~0,3% — trate como ordem de grandeza; (7) o checkbox de sinônimos NÃO faz nada (veiculo com S = 224, com N = 224). Desambiguação Juizado × Justiça Comum pelo checkbox dados.origensSelecionadas T/R, medida e disjunta: 2º grau 67.328 + Turmas Recursais 21.801 = ambas 89.129. Tipo de publicação: Acórdãos 67.529 × Homologações de Acordo 0 (aba nem aparece) × Decisões Monocráticas 48 — monocrática é acervo RESIDUAL, não filtro quebrado. Busca sem termo devolve 0 (não existe \"listar tudo\"). Total EXATO, não saturado (anencefalia=0, criptomoeda=0). Página fixa de 100; sem teto de profundidade (dano moral pagina até a 675, a 676 vem vazia). A EMENTA ÍNTEGRA + a CITAÇÃO OFICIAL do tribunal JÁ VÊM no HTML da busca (div#textAreaDados_<cdAcordao>) — zero request por ementa; cuidado que a sigla vem em <b>TJMS</b>, então o regex da citação precisa ser \\(\\s*TJMS\\s*\\. e não \\(TJMS\\. (senão sai vazia em 100% dos cards). Inteiro teor é PDF (~330–530 KB, ~23–29 mil chars) por GET getArquivo.do?cdAcordao=<id>&cdForo=<foro> — chave COMPOSTA, sem sessão e sem captcha; é também o PERMALINK, confirmado em contexto limpo, mas com Content-Disposition inline que faz o navegador BAIXAR em vez de renderizar. Quem identifica o documento é o cdAcordao, NÃO o nº do processo (1401542-58.2023.8.12.0000 devolve acórdão E monocrática). Consulta por número em dados.nuProcOrigem funciona COM e SEM máscara (dados.nuRegistro NÃO aceita CNJ — é o nº de registro interno). Combos-árvore (Classe 157, Órgão julgador 136, Assunto 3.346) enumerados em human-codegen/TJMS/01-cjsg/06-*.json mas não implementados no crawler v1: a desambiguação que importa já sai do checkbox de origem."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
-        "codegen": "nao",
-        "screenshots": 0,
-        "tests": false,
+        "crawler": "src/TJMSCrawler.js",
+        "extra": "TJMSNavigator.js (POST no cjsg em UTF-8, total pelo hidden totalResultadoAba-<tipo>, paginacao por trocaDePagina.do que EXIGE o JSESSIONID — sem cookie lanca erro em vez de devolver lista vazia — e getArquivo.do com chave composta cdAcordao+cdForo) + TJMSCrawler.js (aviso de acento faltando, dedupe por cdAcordao entre paginas, throttle com backoff no download por causa do 403 do getArquivo.do) + TJMSChecker.js (consulta por dados.nuProcOrigem com ou sem mascara, casando por cdAcordao porque um processo tem mais de um documento)",
+        "codegen": "completo",
+        "screenshots": 14,
+        "tests": "src/TJMSTestes.js",
         "skills": [],
-        "working": false
+        "working": true
       }
     },
     {

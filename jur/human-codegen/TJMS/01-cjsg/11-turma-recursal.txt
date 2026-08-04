@@ -1,0 +1,42 @@
+TJMS — 01-cjsg — CARD DE TURMA RECURSAL (2º tipo de documento)
+==============================================================
+
+Existe porque a skill `browser-post-search` exige dissecar **mais de um tipo de
+documento**: foi olhar um tipo só que fez o TJMG ser mapeado errado.
+
+## Como chegar
+
+Formulário → desmarcar `#origem2grau`, marcar `#origemRecursal`
+(`dados.origensSelecionadas=R`) → Pesquisar.
+
+Print: `11.01-resultados-turma-recursal.png`
+HTML do card: `11-card-turma-recursal.html`
+
+## O que muda em relação ao acórdão de 2º grau
+
+**Nada na estrutura.** Medido no card gravado:
+
+| Campo | Acórdão 2º grau | Turma Recursal |
+|---|---|---|
+| `cdacordao` / `cdforo` | presentes | presentes |
+| Classe/Assunto | presente | presente |
+| Relator(a) | "Des. …" | juiz de Turma Recursal |
+| Comarca | presente | presente |
+| Órgão julgador | "2ª Câmara Cível" | **"2ª Turma Recursal Mista"** |
+| Data do julgamento / publicação | presentes | presentes |
+| `textAreaDados` (ementa íntegra) | 407 chars na amostra | **365 chars** na amostra |
+| citação `(TJMS. …)` | sim | **sim** |
+| link `getArquivo.do` | sim | sim |
+
+O mesmo parser (`TJMSNavigator.parsearCards`) atende os dois sem ramificação.
+
+## ⚠️ Ressalva de uso, não de parsing
+
+A ementa de Turma Recursal é curta (365 chars na amostra, contra 2.166 do
+acórdão da §3 de `10-resultados.txt`). Vale aqui a regra geral do repo: para
+Juizado Especial / Turma Recursal, **baixe o inteiro teor**
+(`--fetch-inteiro-teor`) em vez de citar só a ementa.
+
+Contagem que prova que a origem é filtro de verdade (não é este arquivo que
+mede, é `07-origem.txt`): `dano moral` → 2º grau 67.328 × Turmas Recursais
+21.801.

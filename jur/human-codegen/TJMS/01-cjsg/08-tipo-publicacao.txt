@@ -1,0 +1,33 @@
+TJMS — 01-cjsg — TIPO DE PUBLICAÇÃO
+==========================
+
+```html
+<div id="linhaTipoDecisao">
+  <input type="checkbox" name="tipoDecisaoSelecionados" value="A" checked="checked" id="Acheckbox">
+    <label for="Acheckbox"> Acórdãos </label>
+  <input type="checkbox" name="tipoDecisaoSelecionados" value="H" id="Hcheckbox">
+    <label for="Hcheckbox"> Homologações de Acordo </label>
+  <input type="checkbox" name="tipoDecisaoSelecionados" value="D" id="Dcheckbox">
+    <label for="Dcheckbox"> Decisões Monocráticas </label>
+</div>
+```
+
+Medido com `dano moral`, 2º grau:
+
+| Tipo | value | Total |
+|---|---|---|
+| Acórdãos (default) | `A` | **67.529** |
+| Homologações de Acordo | `H` | **0** — a aba nem aparece |
+| Decisões Monocráticas | `D` | **48** |
+
+⚠️ **A base é quase só acórdão.** 48 monocráticas contra 67 mil acórdãos para o
+mesmo termo: a indexação de monocráticas é residual. Não prometa cobertura de
+decisão monocrática do TJMS.
+
+⚠️ Na tela, **desmarcar todos os tipos faz o JS remarcar "Acórdãos"** — não há
+como pesquisar sem tipo.
+
+CLI: `-t acordao` (default) | `homologacao` | `monocratica` | `todos`.
+
+Print: `08.01-checkbox-tipo-publicacao.png`
+

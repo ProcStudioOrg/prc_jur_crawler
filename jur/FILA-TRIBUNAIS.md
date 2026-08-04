@@ -50,7 +50,7 @@ plugam host + conferem as diferenças. Entradas **medidas em 31/07/2026 15:59**.
 
 | # | Alvo | UF | Entrada (medida) | Status |
 |---|---|---|---|---|
-| 1 | **TJMS** | MS | `https://esaj.tjms.jus.br/cjsg/consultaCompleta.do` → **200** | pendente |
+| 1 | **TJMS** | MS | `https://esaj.tjms.jus.br/cjsg/consultaCompleta.do` → **200** | ok 04/08 |
 | 2 | **TJAC** | AC | `https://esaj.tjac.jus.br/cjsg/consultaCompleta.do` → **200** | pendente |
 | 3 | **TJAM** | AM | `https://consultasaj.tjam.jus.br/cjsg/consultaCompleta.do` → **200** | pendente |
 | 4 | **TJAL** | AL | `https://www2.tjal.jus.br/cjsg/consultaCompleta.do` → **200** | pendente |
@@ -62,8 +62,26 @@ plugam host + conferem as diferenças. Entradas **medidas em 31/07/2026 15:59**.
   oficial linka o sistema velho. O cjsg cobre só o SAJ — se o tribunal tiver PJe ou
   Projudi (TJAL e TJAM têm Projudi; TJAC tem e-Proc), o cjsg **não cobre esse acervo**.
   Procure o portal unificado antes. Se não houver, registre a lacuna no `CLAUDE-<T>.md`.
-- O cjsg tem **reCAPTCHA v3**: quando falha devolve formulário vazio com HTTP 200, sem
-  erro. Nunca leia 0 resultados como "não há jurisprudência" sem checar isso.
+- O cjsg **pode** ter reCAPTCHA v3, e quando falha devolve formulário vazio com HTTP 200,
+  sem erro. Nunca leia 0 resultados como "não há jurisprudência" sem checar isso.
+
+📌 **O que o TJMS (feito em 04/08/2026) ensinou para os três seguintes** — leia
+[`CLAUDE-TJMS.md`](CLAUDE-TJMS.md) e `human-codegen/TJMS/01-cjsg/` antes de começar;
+metade do trabalho já está lá. O `src/TJMS{Navigator,Crawler,Checker}.js` é o molde:
+
+- **reCAPTCHA no cjsg não é regra, é por instalação.** O do TJMS **não tem** — sem
+  `grecaptcha`, sem sitekey. Meça antes de presumir que precisa de browser.
+- **O charset pode ser UTF-8**, não o ISO-8859-1 do e-SAJ clássico. Confirme no
+  `Content-Type` em vez de herdar a suposição.
+- **Quatro zeros silenciosos** que provavelmente se repetem: intervalo de data acima de
+  365 dias corridos; `ADJ`/`PROX` (não existem); acento não normalizado na query;
+  `trocaDePagina.do` sem o JSESSIONID.
+- **A desambiguação Juizado × Justiça Comum** é o par de checkboxes
+  `dados.origensSelecionadas` T/R, não um combo.
+- **O total autoritativo** é o hidden `totalResultadoAba-<tipo>`, não o texto "de N".
+- **A ementa íntegra e a citação oficial já vêm no HTML da busca**
+  (`div#textAreaDados_<cdAcordao>`); o inteiro teor é PDF por
+  `getArquivo.do?cdAcordao=&cdForo=`, com rate limit.
 
 ## Bloco 2 — ESAJ bloqueados, exigem descoberta (2 alvos)
 

@@ -1,0 +1,276 @@
+TJMS — 01-cjsg — FORMULÁRIO DE BUSCA
+====================================
+
+## Identificação
+
+```
+Tribunal:               TJMS — Tribunal de Justiça de Mato Grosso do Sul
+Estado(s):              MS
+Módulo:                 e-SAJ cjsg — "Consulta de Jurisprudência do Segundo Grau"
+Link principal:         https://esaj.tjms.jus.br/cjsg/consultaCompleta.do
+Sistema judicial:       ESAJ (SAJ/Softplan) — formulário clássico, POST, sem SPA
+Sistema irmão mapeado:  nenhum. É o PRIMEIRO cjsg com crawler neste repo.
+                        O TJCE tem cjsg mas foi mapeado pelo SJURIS (CLAUDE-TJCE.md);
+                        o TJSP tem cjsg e está 🔴 por captcha (CLAUDE-TJSP.md).
+Abrangência da base:    2º grau (Câmaras/Seções/Órgão Especial) + Turmas Recursais.
+                        SEM 1º grau. Julgados desde ~2000; medido: 67.328 acórdãos
+                        de 2º grau com "dano moral" na ementa.
+Data do mapeamento:     04/08/2026
+```
+
+## Passo 0 — API pública: PROCURADA, NÃO EXISTE para jurisprudência
+
+Medido em 04/08/2026. O que foi verificado e o resultado:
+
+| Onde procurei | Resultado |
+|---|---|
+| `dadosabertos.tjms.jus.br` | **sem DNS** |
+| `api.tjms.jus.br` | **sem DNS** |
+| `jurisprudencia.tjms.jus.br` | **sem DNS** |
+| `www.tjms.jus.br/transparencia/dados-abertos` | 404 (redireciona p/ `www5`) |
+| `www.tjms.jus.br/dados-abertos` | **200 — existe, mas só tem DOIS endpoints** |
+| `www.tjms.jus.br/api-docs`, `/swagger-ui.html` | 404 / 302 |
+| `esaj.tjms.jus.br/cjsg/swagger-ui.html` | 404 |
+
+A página oficial de Dados Abertos do TJMS publica exatamente dois serviços, e
+**nenhum é de jurisprudência**:
+
+```
+GET https://www.tjms.jus.br/api/estrutura-judicial/foros            -> 200, JSON [{id, nome}]
+GET https://www.tjms.jus.br/api/estrutura-judicial/varas?idForo={n} -> JSON [{id, nome}]
+```
+
+Conclusão: **não existe API oficial de jurisprudência do TJMS.** Não é "não
+procurei" — está medido acima. O acesso do crawler é `http` (POST direto no
+cjsg, sem browser).
+
+## O outro módulo: e-Proc — EXISTE o host, NÃO existe a jurisprudência
+
+O TJMS iniciou a migração para e-Proc em **01/07/2026** (justiça comum e 2º
+grau; notícia `www.tjms.jus.br/noticia/67359`) e ampliou em 05/08/2026 para as
+varas cíveis residuais da capital. Os hosts respondem:
+
+```
+https://eproc1g.tjms.jus.br/  -> 200
+https://eproc2g.tjms.jus.br/  -> 200
+```
+
+Mas o **módulo de jurisprudência do e-Proc não está habilitado**. Medido:
+
+```
+GET https://eproc2g.tjms.jus.br/eproc/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar
+-> HTTP 200, 25.450 bytes, mas o corpo é a página de erro:
+   "Erro — Falha no processamento da solicitação."
+   e o menu público NÃO tem item "Jurisprudência"
+   (tem: Consulta Pública de Processos, Precedentes Qualificados, Sessões de
+   Julgamento, Certidões… — nenhum de jurisprudência)
+```
+
+Isso é diferente do TJRJ, onde o mesmo caminho `jurisprudencia@jurisprudencia/
+pesquisar` funciona e virou o `TJRJNavigator`. **Consequência de escopo:** os
+julgados nascidos no e-Proc a partir de 07/2026 tendem a NÃO aparecer no cjsg,
+que é o índice do SAJ. Reteste periódico obrigatório — ver CLAUDE-TJMS.md.
+
+## 1. Busca principal (query)
+
+São **dois campos de texto distintos**, e a escolha entre eles muda a busca por
+ordem de grandeza:
+
+| Campo | `name` | `id` | O que faz |
+|---|---|---|---|
+| Pesquisa Livre | `dados.buscaInteiroTeor` | `iddados.buscaInteiroTeor` | procura no **inteiro teor** do acórdão |
+| Ementa | `dados.buscaEmenta` | `iddados.buscaEmenta` | procura **só na ementa** |
+
+Medido com o mesmo termo (`dano moral`, 2º grau, acórdãos):
+- `dados.buscaEmenta` → **67.328**
+- `dados.buscaInteiroTeor` → **153.586**
+
+No crawler: `--escopo ementa` (default) × `--escopo inteiroTeor`.
+
+⚠️ **A busca com os dois campos vazios devolve ZERO** (medido: origens T+R,
+tipos A+H+D, sem termo → 0 cards). Não existe "listar tudo".
+
+```html
+<input type="text" name="dados.buscaInteiroTeor" id="iddados.buscaInteiroTeor" ...>
+<input type="text" name="dados.buscaEmenta"      id="iddados.buscaEmenta" ...>
+```
+
+Prints: `01.01-tela-inicial.png`, `01.02-formulario-preenchido.png`
+HTML completo do formulário: `01-formulario-busca.html`
+
+### 1b. ⚠️ ACENTO É OBRIGATÓRIO — a ressalva mais cara deste tribunal
+
+O índice **não normaliza acentuação**. Medido no mesmo campo `dados.buscaEmenta`:
+
+```
+usucapiao  ->     3 resultados
+usucapião  -> 3.885 resultados
+```
+
+Três resultados não é "quase nada sobre usucapião em MS" — é a query errada.
+Quem lê 3 como "o TJMS tem pouca jurisprudência" comete o erro que a invariante
+do repo proíbe. O `TJMSCrawler.avisarAcento()` alerta quando a query tem palavra
+da lista de suspeitas sem nenhum acento.
+
+## 2. Operadores — testados um a um, não presumidos
+
+A tela oferece quatro botões que inserem operadores no campo: `E`, `OU`, `NÃO`,
+`" "` (aspas). Testado com `dano`/`moral` em `dados.buscaEmenta`, 2º grau,
+acórdãos:
+
+| Operador | Funciona? | Medição | Observação |
+|---|---|---|---|
+| (espaço) | sim, é **E implícito** | `dano moral` → 67.328 | igual a `dano E moral` |
+| `E` | **sim** | `dano E moral` → 67.529 | conjunção |
+| `OU` | **sim** | `dano OU moral` → 110.242 | maior que E, como esperado |
+| `NAO` (sem acento) | **sim** | `dano NAO moral` → 39.003 | exclusão |
+| `NÃO` (com acento) | **sim, e é OUTRO resultado** | `dano NÃO moral` → 54.751 | ⚠️ difere de `NAO` |
+| `"frase exata"` | **sim** | `"dano moral"` → 65.752 | menor que o E implícito |
+| `$` (radical) | **parcial** | `usucapi$` → 4 (contra `usucapiao` → 3) | efeito mínimo; não confie |
+| `ADJ` | **NÃO** | `dano ADJ2 moral` → 0 | vira texto literal e zera |
+| `PROX` | **NÃO** | `dano PROX5 moral` → 0 | vira texto literal e zera |
+
+⚠️ **`ADJ` e `PROX` devolvem ZERO**, não erro. É o modo mais fácil de ler
+"não há jurisprudência" onde o que houve foi operador inexistente.
+
+⚠️ A diferença entre `NAO` e `NÃO` é a mesma armadilha de acento da §1b
+atravessando o operador.
+
+```html
+<input type="button" name="E"   value=" E "  >
+<input type="button" name="OU"  value=" OU " >
+<input type="button" name="NAO" value=" NÃO ">
+<input type="button" name="ASP" value="&quot;&nbsp;&nbsp;&quot;">
+```
+
+## 3. Sinônimos — checkbox que NÃO muda nada
+
+```html
+<input type="checkbox" name="dados.pesquisarComSinonimos" id="checkBoxSinonimos" value="S" >
+<input type="hidden"   name="dados.pesquisarComSinonimos" value="S">
+```
+
+Medido: `veiculo` com `S` → **224**; com `N` → **224**. Contagem idêntica ⇒ o
+filtro **não está sendo aplicado** pelo backend, apesar de a tela oferecê-lo.
+A flag `--sem-sinonimos` existe no CLI por fidelidade ao formulário, mas
+**não espere efeito**.
+
+## 4. Filtro de data — julgamento
+
+```html
+<input type="text" name="dados.dtJulgamentoInicio" id="iddados.dtJulgamentoInicio">
+<input type="text" name="dados.dtJulgamentoFim"    id="iddados.dtJulgamentoFim">
+```
+
+Formato **DD/MM/AAAA**. Restringe de fato — medido com `dano moral`:
+sem data **67.529** → `01/01/2025`–`31/03/2025` **1.699**.
+
+### 4b. ⚠️ TETO DE 365 DIAS CORRIDOS — acima disso, zero sem erro
+
+O intervalo aceito é de no máximo **365 dias corridos**, ou seja **364 dias de
+diferença** entre início e fim. Um dia a mais e a resposta é **0**, sem nenhuma
+mensagem — a página volta como se não houvesse julgado.
+
+```
+01/01/2025 -> 31/12/2025  (364 de diferença) -> 6.567
+01/01/2025 -> 01/01/2026  (365 de diferença) ->     0
+01/01/2025 -> 02/01/2026  (366 de diferença) ->     0
+04/08/2025 -> 03/08/2026  (364 de diferença) -> 5.847
+04/08/2025 -> 04/08/2026  (365 de diferença) ->     0
+```
+
+Vale **igual** para a data de publicação (§5). Foi este teto que reprovou o
+`tests/smoke.js` na primeira execução: o smoke pede exatamente 12 meses.
+
+O `TJMSCrawler` fatia o intervalo em janelas de 365 dias corridos, junta os
+resultados e deduplica por `cdAcordao` — e avisa no log, porque nesse caso
+`-m N` passa a valer **por janela**.
+
+## 5. Filtro de data — publicação
+
+```html
+<input type="text" name="dados.dtPublicacaoInicio" id="iddados.dtPublicacaoInicio">
+<input type="text" name="dados.dtPublicacaoFim"    id="iddados.dtPublicacaoFim">
+```
+
+**É um filtro diferente**, e prova disso está na medição: o mesmo intervalo
+`01/01/2025`–`31/03/2025` devolve **1.699** por julgamento e **1.667** por
+publicação. CLI: `-di/-df` (julgamento) × `-dpi/-dpf` (publicação).
+
+⚠️ O **teto de 365 dias corridos** da §4b vale aqui também (medido:
+`04/08/2025`–`04/08/2026` por publicação → **0**).
+
+A tela também documenta uma "Data de Registro" no texto de ajuda, mas **não há
+campo correspondente no formulário** — é resquício de outra instalação do SAJ.
+
+(As seções 6, 7 e 8 estão em `06-combos-arvore.txt`, `07-origem.txt` e
+`08-tipo-publicacao.txt` — uma por bloco de prints, como manda o §3 do
+CLAUDE-CODEGEN.)
+
+## 9. Ordenação
+
+```html
+<input type="radio" name="dados.ordenarPor" value="dtPublicacao" checked=""> Data de publicação
+<input type="radio" name="dados.ordenarPor" value="relevancia">              Relevância
+```
+
+CLI: `-ord publicacao` (default) | `relevancia`.
+
+⚠️ Nenhuma das duas tem campo de desempate — ver a instabilidade de paginação
+em `10-resultados.txt` §5.
+
+## 10. Consulta por número de processo — alimenta o Checker
+
+```html
+<input type="text" name="dados.nuProcOrigem" id="iddados.nuProcOrigem">   <!-- funciona -->
+<input type="text" name="dados.nuRegistro"   id="iddados.nuRegistro">     <!-- NÃO aceita CNJ -->
+```
+
+Medido com `1401542-58.2023.8.12.0000`:
+
+- `dados.nuProcOrigem` **com máscara** → A=1, H=0, D=1 (2 documentos)
+- `dados.nuProcOrigem` **sem máscara** (`14015425820238120000`) → idêntico
+- `dados.nuRegistro` com o mesmo CNJ → **0**. Esse campo é o nº de registro
+  interno do acórdão, não o CNJ.
+
+⚠️ O mesmo processo devolveu **um acórdão E uma monocrática**. É a prova de que
+**o nº do processo não identifica o documento** — quem identifica é o
+`cdAcordao` (ver `10-resultados.txt` §6).
+
+## 11. Relator / Juiz prolator
+
+Dois blocos de "entidade selecionada", cada um com um campo de texto livre que
+o SAJ resolve contra a base:
+
+```html
+<input type="text" name="nmAgente" id="nmAgente">        <!-- Relator(a) -->
+<input type="text" name="nmJuiz"   id="nmJuiz">          <!-- Juiz prolator (1º grau) -->
+<input type="hidden" name="agenteSelectedEntitiesList" id="agenteSelectedEntitiesList">
+<input type="hidden" name="juizProlatorSelectedEntitiesList" ...>
+<input type="text" name="codigoCr"><input type="text" name="codigoTr">
+```
+
+CLI: `-r/--relator` preenche `nmAgente`. Os contadores
+(`contadoragente`, `contadorMaioragente`, …) vão em `0` — é o que a tela envia
+quando nada foi escolhido pelo popup de entidades.
+
+## 12. Bloqueio e proteção — as três respostas
+
+| Pergunta | Resposta medida em 04/08/2026 |
+|---|---|
+| Existe restrição (Cloudflare/Turnstile/captcha)? | **NÃO.** A página não carrega `grecaptcha`, não há `sitekey` no HTML, e o único request da tela inicial é o próprio `consultaCompleta.do` |
+| **A busca** funciona sem resolver nada? | **SIM** — POST direto, sem browser, sem cookie prévio |
+| **O download** funciona sem resolver nada? | **SIM** — `getArquivo.do` devolve o PDF sem sessão. **Mas tem rate limit**: ver `10-resultados.txt` §4 |
+
+Isso é o oposto do cjsg do TJCE e do TJSP, que têm reCAPTCHA v3. **Não presuma
+que "cjsg = captcha"**: neste tribunal não tem.
+
+## 13. Encoding
+
+`Content-Type: text/html; charset=utf-8` — na página **e** nas respostas. É
+incomum: o e-SAJ clássico costuma ser ISO-8859-1 (é o caso do Projudi do TJGO e
+do e-Proc do TJRJ). O corpo do POST vai em **UTF-8** e o servidor aceita.
+
+O HTML usa entidades nomeadas antigas (`&Ccedil;`, `&atilde;`, `&ordf;`) dentro
+do bloco de ementa sem formatação — o `TJMSNavigator.decodeEntidades` cobre as
+que aparecem na prática.
