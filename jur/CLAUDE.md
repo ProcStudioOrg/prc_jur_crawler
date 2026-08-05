@@ -62,6 +62,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
+| `tjal` | TJ de Alagoas | AL | `CLAUDE-TJAL.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg), **base corrente**; inteiro teor 🔴 reCAPTCHA e **sem permalink**. A ementa íntegra vem na busca |
 | `tjam` | TJ do Amazonas | AM | `CLAUDE-TJAM.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg), mas a **base congelou em jan/2025**; inteiro teor 🔴 reCAPTCHA e **sem permalink**. A ementa íntegra vem na busca |
 | `tjce` | TJ do Ceará | CE | `CLAUDE-TJCE.md` | 🟢 OK (API direta, sem browser — SJURIS, **SAJ + PJe juntos**; **não** use o e-SAJ) |
 | `tjdft` | TJ do DF e Territórios | DF | `CLAUDE-TJDFT.md` | 🟢 OK (**API pública oficial**, sem browser) |
@@ -209,6 +210,34 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   contra 472.094 acórdãos). Isso é o cjsg não indexar, não o tribunal não decidir.
   A base é **só 2º grau + Colégios Recursais do SAJ**: não tem 1º grau (o `cjpg`
   não existe aqui) e não cobre o Projudi
+- "TJAL" / "Alagoas estadual" / "Maceió" → `tjal` → leia `CLAUDE-TJAL.md`.
+  ⚠️ **Aqui a inversão do TJAC/TJAM se DESFAZ: em Alagoas a Justiça Comum é 3,3×
+  o Juizado** (103.280 × 31.474 para o mesmo termo). Não generalize em nenhum
+  sentido — quem concluiu de AC e AM que "nos TJs pequenos o Juizado domina"
+  erra aqui. O default `--origem comum` ainda esconde 23% do acervo, então em
+  consumo ofereça também `--origem turmas`. ⚠️ o filtro se chama "Colégios
+  Recursais" na tela, mas o órgão que volta é `Turma Recursal Unificada`, e lá
+  **o relator vem genérico** (`Juiz 1 Turma Recursal Unificada`) — `-r` por nome
+  de pessoa não acha julgado de Turma Recursal.
+  ✅ **A base está CORRENTE** (jul/2026 com 981 publicações; julgado mais recente
+  23/07/2026) — ao contrário do TJAM. E **não há data-sentinela**: `-di/-df`
+  (julgamento) é confiável aqui, tanto quanto `-dpi/-dpf`.
+  ⚠️ **O inteiro teor está atrás de reCAPTCHA — só o download; a busca é livre.**
+  O que se tem é a **ementa íntegra**, que já vem na busca e é a mais rica da
+  família (média 4.746 chars em acórdão). **Não a apresente como se fosse o
+  acórdão inteiro.**
+  ⚠️ **NÃO EXISTE PERMALINK.** Nunca invente link de acórdão do TJAL — a
+  verificação é por reconsulta: `./bin/jur tjal -n "<nº>"`.
+  ⚠️ **NÃO avise sobre acento aqui** — o índice normaliza (`usucapiao` e
+  `usucapião` dão 1.819 os dois). O que zera sem erro é `ADJ` e `PROX`; e `NÃO`
+  acentuado **não** é o operador (escreva `NAO`). ⚠️ o `$` aqui **não zera,
+  degenera**: `dan$` devolve 2 — parece busca específica e não é.
+  ⚠️ O formulário só oferece a aba "Acórdãos", mas `-t monocratica` funciona
+  assim mesmo (43 documentos). `-t homologacao` devolve 0 e esse zero é
+  **ambíguo** — não diga que o TJAL não homologa acordos.
+  A base é **só 2º grau + Colégios Recursais do SAJ**, de ~2013 em diante: não
+  tem 1º grau (o `cjpg` não existe aqui) e não cobre o Projudi.
+  Matéria federal com origem em AL → `trf5`
 - "TJMS" / "Mato Grosso do Sul estadual" / "Campo Grande" → `tjms` → leia `CLAUDE-TJMS.md`.
   Juizado Especial / Turma Recursal sul-mato-grossense → `tjms --origem turmas`; Justiça
   Comum 2º grau é `--origem comum` (default). A distinção é obrigatória e está medida

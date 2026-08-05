@@ -1,0 +1,115 @@
+TJAL — 01-cjsg — §20 A ESCADA ATÉ O DOCUMENTO
+==============================================
+
+**Prints:** `13.01-modal-ementa-sem-formatacao.png`,
+`13.02-ementa-expandida-no-card.png`, `13.03-inteiro-teor.png` (o bloqueio)
+
+Cada degrau foi clicado. O que falhou também tem print.
+
+## Degrau 1 — "Visualizar Ementa Completa" (accordion no próprio card)
+
+Expande o `div#textAreaDados_<cdAcordao>`, que **já estava no HTML** da resposta
+da busca. **Nenhum XHR** — medido interceptando todos os requests da página.
+
+Print: `13.02-ementa-expandida-no-card.png`
+
+## Degrau 2 — "Visualizar ementa sem formatação" (`abrirPopUpDadosSemFormatacao`)
+
+```js
+onclick="abrirPopUpDadosSemFormatacao(853550);"
+```
+
+Abre um **modal sobre a mesma página**. Medido:
+
+```
+páginas abertas no contexto após o clique:  1  (nenhuma aba nova)
+URL depois do clique:  inalterada (…/resultadoCompleta.do;jsessionid=…)
+XHR disparados:        NENHUM
+```
+
+Print: `13.01-modal-ementa-sem-formatacao.png`
+
+⚠️ **Consequência para o crawler: este degrau é gratuito e já foi pago.** O
+texto que o modal mostra é o mesmo `textAreaDados_<cdAcordao>` que veio no
+payload da busca. Escrever um downloader de ementa aqui seria gastar requisições
+por um texto que já está em mãos.
+
+⚠️ **Consequência para a citação:** modal sem URL = **este caminho não gera
+permalink**.
+
+## Degrau 3 — "Visualizar inteiro teor" (`getArquivo.do`) — 🔴 BLOQUEADO
+
+```
+GET https://www2.tjal.jus.br/cjsg/getArquivo.do?cdAcordao=853550&cdForo=0
+->  HTTP 200  text/html;charset=UTF-8  3.420 bytes
+```
+
+O corpo **nunca é PDF**. É a tela:
+
+> "Para acessar o conteúdo do Acórdão, por favor digite o código da figura no
+> campo abaixo. **Esta validação lhe dará acesso para visualizar 20 resultados.**"
+
+```
+data-sitekey: 6LfALTkUAAAAALzYBt8XXduGuX-XRaljNf99yVpX   ← PRÓPRIA DE ALAGOAS
+```
+
+Print: `13.03-inteiro-teor.png`
+
+⚠️ **A sitekey é do TJAL.** A do TJAM (`6LcnC3cd…`) não serve — cada instalação
+tem a sua. Não reaproveite.
+
+⚠️ **Chave composta:** o endpoint pede `cdAcordao` **e** `cdForo`. O
+`cdAcordao` sozinho não basta. Ambos vêm como atributos do `<tr>` do card.
+
+📌 **Detalhe que os irmãos não têm:** a tela diz que a validação libera **20
+resultados**, não um. O destravamento seria por lote. Isso não muda nada para o
+crawler (continua exigindo resolver o captcha), mas fica registrado porque muda
+o custo de uma eventual operação assistida.
+
+## 🔴 A ASSIMETRIA — medida em separado, um não prova o outro
+
+```
+BUSCA     ✅ livre.  Nenhum grecaptcha na tela, nenhum sitekey, POST direto responde.
+DOWNLOAD  🔴 reCAPTCHA v2. E a sessão da busca NÃO destrava.
+```
+
+Este é o terceiro tribunal seguido da família com o mesmo padrão (TJAC, TJAM,
+TJAL) — mas continua sendo obrigatório medir os dois, porque o TJMS não tem
+captcha em lugar nenhum. Escrever "o TJAL é bloqueado" seria falso: a busca é
+completamente livre, e a ementa íntegra vem nela.
+
+## Degrau 4 — Consulta processual
+
+O nº do processo no card é `<a class="downloadEmenta">` sem `href` — não leva
+ao `cposg`. A consulta processual do TJAL existe (`www2.tjal.jus.br/cposg/`)
+mas é **outro sistema (tramitação)**, fora do escopo de jurisprudência.
+
+## Degrau 5 — "Copiar citação"
+
+**Não existe** botão de citação. O que há é o rodapé em texto dentro da ementa,
+que o `separarCitacao()` extrai — ver `10-resultados.txt` §19.
+
+## Formato do documento — resumo
+
+```
+Formato do que se CONSEGUE:  HTML (ementa íntegra, dentro do payload da busca)
+Tamanho típico:              2.892–7.758 chars (média 4.746 em acórdão)
+Vem completo?                Ementa estruturada CNJ completa. SEM relatório e SEM voto.
+Precisa de sessão?           Não — a ementa vem no mesmo POST da busca.
+Precisa de captcha?          Não para a ementa. SIM para o PDF.
+Já veio na busca?            ✅ SIM — é o melhor caso. Zero requests extras.
+Formato do que NÃO se consegue: PDF do acórdão (relatório + voto)
+```
+
+## Como o repo trata isso
+
+`TJALNavigator.inteiroTeor()` **falha com mensagem explícita** ao ver o captcha,
+em vez de gravar o HTML da tela de validação com nome de acórdão — que é
+exatamente o erro que a invariante nº 1 do repo proíbe.
+
+`--fetch-inteiro-teor` grava a **ementa íntegra** num `.txt` que diz, no corpo do
+arquivo, que o inteiro teor não veio e por quê. `--tentar-pdf` força a tentativa
+real (é o que o `fixer` usa para reconferir se o bloqueio caiu).
+
+`src/TJALTestes.js` tem um **teste-sentinela** que falha em voz alta se o
+`getArquivo.do` um dia devolver algo que não seja o captcha.

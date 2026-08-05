@@ -1,0 +1,68 @@
+TJAL — 01-cjsg — §7 ORIGEM (a desambiguação Justiça Comum × Juizado)
+====================================================================
+
+**Print:** `07.01-checkbox-origem.png`
+
+## Descrição humana
+
+Par de checkboxes, não combo. Separa o acervo de **2º grau** (Câmaras e Seções
+do Tribunal) do acervo dos **Colégios Recursais** (o nome que Alagoas dá às
+Turmas Recursais dos Juizados Especiais). O `2° grau` já vem marcado.
+
+É a desambiguação obrigatória deste tribunal: pedir "Juizado Especial em
+Alagoas" e rodar o default devolve o acervo errado, com HTTP 200 e cards
+válidos.
+
+## HTML do elemento
+
+```html
+<label for="cjsg.consultaCompleta.label.origem" style="float:left;font-weight:bold;">Origem</label>
+<input type="checkbox" name="dados.origensSelecionadas" value="T" id="origem2grau" checked="checked">
+<label for="origem2grau"> 2° grau </label>
+<input type="checkbox" name="dados.origensSelecionadas" value="R" id="origemRecursal">
+<label for="origemRecursal"> Colégios Recursais </label>
+```
+
+## Medição — o filtro NÃO é ignorado (soma exata)
+
+`dano moral` na ementa, acórdãos, 05/08/2026:
+
+```
+T  (2° grau)             -> 103.280
+R  (Colégios Recursais)  ->  31.474
+T + R                    -> 134.754    = 103.280 + 31.474, exato
+```
+
+A soma bater na unidade é a prova de que o portal aplica o filtro. Contagem
+igual seria filtro ignorado, mesmo com a busca "funcionando".
+
+## 🔴 A INVERSÃO SE DESFAZ EM ALAGOAS
+
+Este é o achado do dia. Nos dois tribunais anteriores o Juizado era **maior**
+que a Justiça Comum; aqui o padrão volta ao normal:
+
+```
+TJAC   Juizado 2,8× a Justiça Comum   (21.353 × 7.649)
+TJAM   Juizado 7,7× a Justiça Comum   (252.381 × 32.755)
+TJAL   Justiça Comum 3,3× o Juizado   (103.280 × 31.474)  ← aqui
+```
+
+**Não presuma qual origem domina em nenhum sentido.** Quem tivesse generalizado
+"nos TJs pequenos o Juizado é maior" a partir de AC e AM erraria em AL. O
+default `--origem comum` aqui **não** esconde a maior parte do acervo — mas
+ainda esconde 23% dele, e em matéria de consumo vale rodar as duas.
+
+`src/TJALTestes.js` tem um teste-sentinela que falha se a relação inverter.
+
+## ⚠️ O rótulo da tela não é o rótulo dos dados
+
+O filtro se chama **"Colégios Recursais"** na tela, mas o `orgaoJulgador` que
+volta nos resultados é **`Turma Recursal Unificada`** — e o relator vem como
+`Juiz 1 Turma Recursal Unificada`. Procurar "Colégio" nos dados não acha nada.
+(Mesma divergência do TJAM, onde o rótulo era igual e o dado voltava como
+`2ª Turma Recursal`.)
+
+## Mapeamento no repo
+
+`TJALNavigator.ORIGENS = { comum: 'T', turmas: 'R' }`
+CLI: `--origem comum` (default) | `turmas` | `ambas`

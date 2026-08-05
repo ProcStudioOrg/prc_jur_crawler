@@ -1,0 +1,98 @@
+TJAL — 01-cjsg — §21 PAGINAÇÃO, PROFUNDIDADE E EXATIDÃO DO TOTAL
+=================================================================
+
+**Print do rodapé:** `10.02-resultados-rodape.png`
+
+## Parâmetros
+
+```
+GET https://www2.tjal.jus.br/cjsg/trocaDePagina.do?tipoDeDecisao=A&pagina=<N>&conversationId=
+Cookie: JSESSIONID=<da busca>   ← OBRIGATÓRIO
+```
+
+Não há combo de tamanho de página, não há cursor, não há offset. A paginação é
+**por número de página, dentro da sessão**.
+
+```
+Resultados por página:  20  (fixo — TJAC 20, TJAM 10, TJMS 100)
+Parâmetro:              querystring (pagina), estado na sessão
+Máximo aceito:          não aplicável (não há `size`)
+```
+
+## Total EXATO, não saturado — provado por aritmética
+
+Corte usado: `dano moral`, publicação 01/07/2026–31/07/2026, 2º grau, acórdãos.
+
+```
+total declarado (hidden totalResultadoAba-A):  981
+páginas esperadas a 20/pág:                     50
+
+pág 1  -> 20 cards
+pág 2  -> 20 cards   (ids 853528, 853530, 853534 …)
+pág 3  -> 20 cards
+pág 50 ->  1 card    (id 845862)          ← 49 × 20 + 1 = 981  ✅ bate exato
+pág 51 ->  0 cards   (5.943 bytes)
+pág 55 ->  0 cards   (5.943 bytes)
+```
+
+Reconferido com **termo raro**, que é o teste de contador saturado:
+
+```
+"litispendência superveniente"                      ->  48   (não redondo ✅)
+"usucapião extraordinária de bem imóvel rural"      ->   0
+```
+
+Nada de tetos redondos (1.000 / 10.000). **O total é exato.**
+
+Estourar a última página **não dá erro**: devolve HTTP 200 com 0 cards e um
+corpo curto (5.943 bytes). O crawler para pelo total, não pelo corpo vazio.
+
+## Estabilidade — medida DUAS vezes, e nas duas direções
+
+```
+mesma página 2, 3× na MESMA sessão:      3/3 idênticas  ✅
+mesma página 2, 3× em SESSÕES NOVAS:     3/3 idênticas  ✅
+página 2 ∩ página 1:                     vazio (sem repetição)
+```
+
+A ordenação `dtPublicacao` tem desempate estável neste portal — ao contrário do
+TJRJ/TJMG, onde a mesma página devolvia documentos diferentes. Testado também
+através do balanceador (respostas vieram por `.cjsg2`); não houve divergência
+entre nós.
+
+## 🔴 ARMADILHA: `trocaDePagina.do` pagina a ÚLTIMA busca da SESSÃO
+
+A URL **não identifica a busca** — só tem `tipoDeDecisao` e `pagina`. O servidor
+devolve a página N do último resultado daquele JSESSIONID.
+
+Experimento (medido, não herdado do TJAC/TJAM):
+
+```
+1. busca A ("dano moral", jul/2026)
+2. GET trocaDePagina.do?pagina=2   -> ids 853528, 853530, 853534
+3. busca B ("usucapião") no MESMO cookie
+4. GET trocaDePagina.do?pagina=2   -> ids 850400, 848809, 848665   ← busca ERRADA
+```
+
+HTTP 200, cards válidos, metadados coerentes, **sintoma nenhum**. Um crawler que
+intercale buscas e pagine depois monta um resultado silenciosamente misturado.
+
+**Como o repo trata:** `TJALCrawler` refaz `buscar()` imediatamente antes de
+`paginar()`, e `TJALNavigator.paginar()` aceita uma `assinaturaEsperada` (o corpo
+do POST da busca). Paginação órfã vira **erro**, não resultado errado. Há teste.
+
+## Falha sem sessão é barulhenta
+
+```
+GET trocaDePagina.do sem Cookie  ->  HTTP 404  (773 bytes)
+```
+
+Não é 200-com-zero-cards. Igual ao TJAC e ao TJAM — ao menos essa falha se
+percebe.
+
+## Profundidade
+
+Não foi encontrado teto de offset: a página 50 de 50 respondeu normalmente.
+Não foi medido o comportamento em buscas de 5.164 páginas (o total de
+`dano moral` sem filtro de data) — **registrado como não medido**, não como
+inexistente.

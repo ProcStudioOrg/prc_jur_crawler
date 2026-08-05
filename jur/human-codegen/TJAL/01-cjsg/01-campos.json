@@ -1,0 +1,353 @@
+[
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "conversationId",
+    "id": "",
+    "value": "",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "dados.buscaInteiroTeor",
+    "id": "iddados.buscaInteiroTeor",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "button",
+    "name": "E",
+    "id": "",
+    "value": " E ",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "button",
+    "name": "OU",
+    "id": "",
+    "value": " OU ",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "button",
+    "name": "NAO",
+    "id": "",
+    "value": " NÃO ",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "button",
+    "name": "ASP",
+    "id": "",
+    "value": "\"  \"",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "checkbox",
+    "name": "dados.pesquisarComSinonimos",
+    "id": "checkBoxSinonimos",
+    "value": "S",
+    "checked": true,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "dados.pesquisarComSinonimos",
+    "id": "",
+    "value": "S",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "dados.buscaEmenta",
+    "id": "iddados.buscaEmenta",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "dados.nuProcOrigem",
+    "id": "iddados.nuProcOrigem",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "agenteSelectedEntitiesList",
+    "id": "agenteSelectedEntitiesList",
+    "value": "",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "contadoragente",
+    "id": "contadoragente",
+    "value": "0",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "contadorMaioragente",
+    "id": "contadorMaioragente",
+    "value": "0",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "codigoCr",
+    "id": "codigoCr",
+    "value": "",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "codigoTr",
+    "id": "codigoTr",
+    "value": "",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "nmAgente",
+    "id": "nmAgente",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "juizProlatorSelectedEntitiesList",
+    "id": "juizProlatorSelectedEntitiesList",
+    "value": "",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "contadorjuizProlator",
+    "id": "contadorjuizProlator",
+    "value": "0",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "contadorMaiorjuizProlator",
+    "id": "contadorMaiorjuizProlator",
+    "value": "0",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "codigoJuizCr",
+    "id": "codigoJuizCr",
+    "value": "",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "codigoJuizTr",
+    "id": "codigoJuizTr",
+    "value": "",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "nmJuiz",
+    "id": "nmJuiz",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "classesTreeSelection.values",
+    "id": "classes",
+    "value": "",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "classesTreeSelection.text",
+    "id": "classes_selectionText",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "assuntosTreeSelection.values",
+    "id": "assuntos",
+    "value": "",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "assuntosTreeSelection.text",
+    "id": "assuntos_selectionText",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "secoesTreeSelection.values",
+    "id": "secoes",
+    "value": "",
+    "checked": false,
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "secoesTreeSelection.text",
+    "id": "secoes_selectionText",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "dados.dtJulgamentoInicio",
+    "id": "iddados.dtJulgamentoInicio",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "dados.dtJulgamentoFim",
+    "id": "iddados.dtJulgamentoFim",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "dados.dtPublicacaoInicio",
+    "id": "iddados.dtPublicacaoInicio",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "dados.dtPublicacaoFim",
+    "id": "iddados.dtPublicacaoFim",
+    "value": "",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "checkbox",
+    "name": "dados.origensSelecionadas",
+    "id": "origem2grau",
+    "value": "T",
+    "checked": true,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "checkbox",
+    "name": "dados.origensSelecionadas",
+    "id": "origemRecursal",
+    "value": "R",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "checkbox",
+    "name": "tipoDecisaoSelecionados",
+    "id": "Acheckbox",
+    "value": "A",
+    "checked": true,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "radio",
+    "name": "dados.ordenarPor",
+    "id": "id_cjsg.consultaCompleta.label.ordenardtPublicacao",
+    "value": "dtPublicacao",
+    "checked": true,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "radio",
+    "name": "dados.ordenarPor",
+    "id": "id_cjsg.consultaCompleta.label.ordenarRelevancia",
+    "value": "relevancia",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "submit",
+    "name": "pbSubmit",
+    "id": "pbSubmit",
+    "value": "Pesquisar",
+    "checked": false,
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "button",
+    "name": "pbLimpar",
+    "id": "pbLimpar",
+    "value": "Limpar",
+    "checked": false,
+    "visivel": true
+  }
+]

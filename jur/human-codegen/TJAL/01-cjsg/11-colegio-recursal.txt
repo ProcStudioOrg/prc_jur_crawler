@@ -1,0 +1,42 @@
+TJAL — 01-cjsg — §11 CARD DO COLÉGIO RECURSAL (2º tipo de documento)
+====================================================================
+
+**Print:** `11.01-resultados-colegio-recursal.png`
+**HTML:** `11-card-colegio-recursal.html`
+
+Dissecado em separado porque foi assim que o TJMG saiu errado: um só tipo de
+documento não representa o acervo.
+
+## O que muda em relação ao acórdão de 2º grau
+
+```
+total (dano moral)   31.474  (contra 103.280 do 2º grau)
+ementa               média 3.876 chars (contra 4.746)  — íntegra, mesma estrutura CNJ
+orgaoJulgador        "Turma Recursal Unificada"        ← e NÃO "Colégio Recursal"
+relator              "Juiz 1 Turma Recursal Unificada" ← nome genérico, não pessoal
+comarca              "8º Juizado Especial Cível da Capital"
+classe               "Recurso Inominado"
+```
+
+⚠️ **O relator vem genérico.** No 2º grau é `Des. <nome>`; aqui é
+`Juiz 1 Turma Recursal Unificada`. Um filtro `-r` por nome de pessoa não
+encontra julgado de Colégio Recursal — o campo não traz pessoa.
+
+⚠️ **O rótulo da tela ("Colégios Recursais") não aparece nos dados.** Ver
+`07-origem.txt`.
+
+## O que NÃO muda
+
+Estrutura do card, atributos `cdacordao`/`cdforo`, formato do rodapé de citação
+(`Número do Processo: …`) e a presença da ementa íntegra no payload da busca são
+idênticos. O mesmo parser atende os dois — medido: 20/20 cards com todos os
+campos preenchidos nas duas origens.
+
+Exemplo medido:
+
+```
+(Número do Processo: 0702229-18.2023.8.02.0077; Relator (a): Juiz 1 Turma
+ Recursal Unificada; Comarca: 8º Juizado Especial Cível da Capital; Órgão
+ julgador: Turma Recursal Unificada; Data do julgamento: 17/06/2026;
+ Data de registro: 07/07/2026)
+```

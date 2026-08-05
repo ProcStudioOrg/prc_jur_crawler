@@ -1,0 +1,272 @@
+TJAL — 01-cjsg — FORMULÁRIO DE BUSCA
+====================================
+
+## Identificação
+
+```
+Tribunal:               TJAL — Tribunal de Justiça de Alagoas
+Estado(s):              AL
+Módulo:                 e-SAJ cjsg — "Consulta de Jurisprudência do Segundo Grau"
+                        (título exato da página)
+Link principal:         https://www2.tjal.jus.br/cjsg/consultaCompleta.do
+Sistema judicial:       ESAJ (SAJ/Softplan) — formulário clássico, POST, sem SPA
+Irmãos já mapeados:     TJMS, TJAC e TJAM (human-codegen/TJ{MS,AC,AM}/01-cjsg/)
+                        — MESMO formulário, comportamentos divergentes (§0)
+Abrangência da base:    2º grau (Câmaras/Seções) + Colégios Recursais.
+                        SEM 1º grau (o módulo cjpg NÃO existe aqui).
+                        Medido com "dano moral" na ementa: 103.280 acórdãos de
+                        2º grau e 31.474 de Colégio Recursal.
+                        ✅ BASE CORRENTE — ver §17.
+                        Começa por volta de 2013 (2012 = 1, 2014 = 300).
+Data do mapeamento:     05/08/2026
+Acesso do crawler:      http (POST direto, sem browser). Busca sem captcha;
+                        download do inteiro teor COM reCAPTCHA v2.
+```
+
+## §0 — O QUE NÃO SE HERDA DOS TRÊS IRMÃOS
+
+O formulário é o mesmo molde do e-SAJ. Estas coisas mudam, todas medidas hoje:
+
+| | TJMS | TJAC | TJAM | **TJAL** |
+|---|---|---|---|---|
+| Host | `esaj.` | `esaj.` | `consultasaj.` | **`www2.`** (`esaj.tjal` = NXDOMAIN) |
+| Resultados por página | 100 | 20 | 10 | **20** |
+| Acento na query | **exige** | normaliza | normaliza | **normaliza** |
+| `$` (radical) | 4 | 0 | 0 | **2** (degenera, não zera) |
+| Checkbox `H` | existe | **não existe** | existe (vazia) | **não existe** (total 0, ambíguo) |
+| Checkbox `D` | existe | existe | existe | **NÃO existe — mas o parâmetro FUNCIONA (43)** |
+| Juizado × Comum | comum 3× | **Juizado 2,8×** | **Juizado 7,7×** | **comum 3,3×** (volta ao padrão) |
+| Abre a citação por | — | `Relator (a)` | classe processual | **`Número do Processo:`** |
+| Estado da base | viva | viva | 🔴 **parada jan/2025** | ✅ **corrente (jul/2026)** |
+
+⚠️ **Quatro instalações, quatro conjuntos de comportamento.** Nada aqui foi
+herdado: cada linha desta tabela tem uma medição no §s correspondente.
+
+## §1 — Busca principal (query)
+
+Dois campos de texto, mutuamente exclusivos na prática (o crawler usa um por vez):
+
+- `dados.buscaEmenta` (id `iddados.buscaEmenta`) — busca **na ementa** (default do repo)
+- `dados.buscaInteiroTeor` (id `iddados.buscaInteiroTeor`) — busca **no inteiro teor**
+
+Medido com `dano moral`: ementa = **103.280**, inteiroTeor = **144.628**.
+
+```html
+<input type="text" name="dados.buscaEmenta" id="iddados.buscaEmenta" ...>
+<input type="text" name="dados.buscaInteiroTeor" id="iddados.buscaInteiroTeor" ...>
+```
+
+**Print:** `01.01-tela-inicial.png` (tela vazia), `01.02-formulario-preenchido.png`.
+
+⚠️ **Busca com os dois campos vazios não lista tudo** — devolve a tela de
+consulta de volta. Não existe "listar o acervo" neste portal.
+
+## §2 — Operadores (cada um testado, nenhum presumido)
+
+Botões da tela: `E`, `OU`, `NÃO` (rótulo com til, valor sem), `ASP` (aspas).
+
+Medido em 05/08/2026, `dano`/`moral` na ementa, 2º grau, acórdãos:
+
+```
+dano                     114.180
+dano moral               103.280   (espaço = E implícito)
+dano E moral             103.280   ✅ idêntico ao espaço
+dano OU moral            114.791   ✅ maior que "dano" sozinho
+dano NAO moral            10.900   ✅ 103.280 + 10.900 = 114.180 EXATO
+dano NÃO moral            83.138   ❌ com til NÃO é operador (não bate com nada)
+"dano moral"              99.258   ✅ frase exata restringe
+dano ADJ2 moral                0   ❌ zera sem erro
+dano PROX5 moral               0   ❌ zera sem erro
+dan$                           2   ❌ DEGENERA (no TJAC/TJAM zerava)
+```
+
+⚠️ **O `$` é a armadilha nova deste tribunal.** Nos irmãos ele zerava — sintoma
+óbvio. Aqui devolve **2 resultados**, que se leem como "busca muito específica".
+O `TJALCrawler.avisarOperadores()` avisa nos três casos.
+
+```html
+<input type="button" name="E" value=" E ">
+<input type="button" name="OU" value=" OU ">
+<input type="button" name="NAO" value=" NÃO ">
+<input type="button" name="ASP" value='" "'>
+```
+
+## §3 — Sinônimos
+
+`dados.pesquisarComSinonimos` (checkbox `checkBoxSinonimos`, valor `S`, marcado
+por default; há um hidden de mesmo nome com `S`).
+
+⚠️ **Medido: desligar NÃO muda a contagem** — `dano moral` dá 103.280 com e sem.
+(No TJAM isso ficou como pendência não medida; aqui foi medido.) A flag
+`--sem-sinonimos` existe por paridade com os irmãos, mas hoje é inócua.
+
+```html
+<input type="checkbox" name="dados.pesquisarComSinonimos" id="checkBoxSinonimos" value="S" checked>
+```
+
+## §4 — Número do processo
+
+`dados.nuProcOrigem` (id `iddados.nuProcOrigem`). Consulta direta, independente
+do termo — é o que alimenta o `TJALChecker` e a flag `-n`.
+
+Medido: `0701284-29.2025.8.02.0055` devolve `A = 1`, **com e sem máscara**.
+
+## §5 — Relator / Juiz prolator
+
+- `nmAgente` (id `nmAgente`) — relator(a). Usado pela flag `-r`.
+- `nmJuiz` (id `nmJuiz`) — juiz prolator (não exposto no CLI).
+
+Ambos vêm acompanhados de hiddens de seleção (`agenteSelectedEntitiesList`,
+`contadoragente`, `contadorMaioragente` e os equivalentes de `juizProlator`) que
+o POST precisa enviar mesmo vazios — estão em `CAMPOS_BASE`.
+
+## §6 — Combos-árvore: classe, assunto, seção
+
+⚠️ **PENDÊNCIA DECLARADA — não enumerados** (mesma pendência do TJAC e do TJAM).
+
+Existem no formulário como par hidden + campo de texto:
+
+```html
+<input type="hidden" name="classesTreeSelection.values"  id="classes">
+<input type="text"   name="classesTreeSelection.text"    id="classes_selectionText">
+<input type="hidden" name="assuntosTreeSelection.values" id="assuntos">
+<input type="text"   name="assuntosTreeSelection.text"   id="assuntos_selectionText">
+<input type="hidden" name="secoesTreeSelection.values"   id="secoes">
+<input type="text"   name="secoesTreeSelection.text"     id="secoes_selectionText">
+```
+
+**A página tem ZERO elementos `<select>`** (medido; ver `01-selects.json`, que
+está vazio de propósito). Os três "combos" são popups do SAJ que gravam nos
+hiddens — não dá para enumerá-los lendo `<option>`. O crawler não expõe flags
+para eles: **é lacuna de recurso, não bug**. Não escreva que o TJAL não tem
+esses filtros; ele tem, não foram listados.
+
+## §7 — Origem (a desambiguação Justiça Comum × Juizado) — ver `07-origem.txt`
+
+## §8 — Tipo de publicação — ver `08-tipo-publicacao.txt`
+
+## §9 — Datas
+
+Quatro campos, dois pares independentes:
+
+```html
+<input type="text" name="dados.dtJulgamentoInicio"  id="iddados.dtJulgamentoInicio">
+<input type="text" name="dados.dtJulgamentoFim"     id="iddados.dtJulgamentoFim">
+<input type="text" name="dados.dtPublicacaoInicio"  id="iddados.dtPublicacaoInicio">
+<input type="text" name="dados.dtPublicacaoFim"     id="iddados.dtPublicacaoFim">
+```
+
+✅ **Os dois pares são confiáveis aqui** — julgamento e publicação batem em 2024
+(28.016 × 27.924). **Não há data-sentinela**: 2004 inteiro = 0, `01/06/2004` = 0,
+2010 = 0. Isso é o oposto do TJAM, onde 481 julgados carregavam `01/06/2004` e
+37% das publicações recentes caíam nesse balde. Aqui `-di/-df` pode ser usado.
+
+⚠️ **Teto de 1 ano de CALENDÁRIO** (não de dias corridos). Provado por dois
+intervalos de 366 dias com respostas opostas:
+
+```
+01/03/2023 → 29/02/2024  (366 dias) -> 13.594  ✅ aceita
+15/06/2023 → 15/06/2024  (366 dias) ->      0  ❌ recusada
+15/06/2025 → 14/06/2026  (364 dias) -> 26.039  ✅ aceita
+15/06/2025 → 15/06/2026  (365 dias) ->      0  ❌ recusada
+01/01/2025 → 01/01/2026             ->      0  ❌ recusada
+02/01/2025 → 01/01/2026             -> 26.504  ✅ aceita
+```
+
+Regra: `fim <= início + 1 ano − 1 dia`. Acima disso a tela avisa ("A faixa entre
+data de inicio e data de fim deve ser de no máximo 1 ano") mas responde **HTTP
+200 com o formulário de volta** — um crawler que só conta cards lê 0. O
+`TJALCrawler` distingue recusa de zero genuíno e fatia sozinho.
+
+## §10 — Ordenação
+
+`dados.ordenarPor`, radio: `dtPublicacao` (default, marcado) | `relevancia`.
+
+## §11 — Submit
+
+```html
+<input type="submit" name="pbSubmit" id="pbSubmit" value="Pesquisar">
+<input type="button" name="pbLimpar" id="pbLimpar" value="Limpar">
+```
+
+POST para `resultadoCompleta.do`. **Charset UTF-8** (`Content-Type:
+text/html;charset=UTF-8`), como no TJMS — não é o ISO-8859-1 do e-SAJ clássico.
+
+## §12 — reCAPTCHA na BUSCA: **não existe**
+
+Medido no Playwright na tela de consulta:
+
+```
+typeof window.grecaptcha  -> "undefined"
+[data-sitekey]            -> []
+script[src*=captcha]      -> []
+/captcha/i no HTML        -> false
+```
+
+⚠️ **Mas o download tem** — ver `13-escada-ate-o-documento.txt`. Busca e
+download foram medidos **em separado**; um não prova o outro.
+
+## §13 — Passo 0: API pública — **NÃO EXISTE**, e o portal mente com 200
+
+Procurado em 05/08/2026:
+
+```
+dadosabertos.tjal.jus.br  -> 45.169.162.16, 302 → https://tjal.jus.br/enderecos
+                             (página de endereços do portal, não dados abertos)
+api.tjal.jus.br           -> 172.17.35.106 — IP PRIVADO (RFC1918), não responde
+                             de fora. Vazamento de DNS interno, não API pública.
+jurisprudencia.tjal...    -> NXDOMAIN
+esaj.tjal.jus.br          -> NXDOMAIN  (⚠️ o host do e-SAJ aqui é `www2`)
+```
+
+⚠️ **ARMADILHA: todo path inventado responde HTTP 200.** Medido, com md5:
+
+```
+tjal.jus.br/dados-abertos            200  md5 f47ba538d050  1730 bytes
+tjal.jus.br/swagger                  200  md5 f47ba538d050  1730 bytes
+tjal.jus.br/openapi.json             200  md5 f47ba538d050  1730 bytes
+tjal.jus.br/api/  /rest/  /v1/       200  md5 f47ba538d050  1730 bytes
+tjal.jus.br/qualquer-coisa-inventada-9z  200  md5 f47ba538d050  ← A PROVA
+www2.tjal.jus.br/<qualquer coisa>    200  md5 9ab136c8168f  5705 bytes
+```
+
+O md5 é **idêntico ao da home** em todos os casos: é a shell do SPA (Vite) em
+`tjal.jus.br` e uma página fixa em `www2`. É a armadilha do TJAC (vhost curinga)
+em forma mais perigosa, porque aqui o path inventado também passa.
+**Confira o md5 antes de comemorar um 200.**
+
+**DataJud (CNJ)** continua sendo a única API pública possível para este tribunal,
+e só serve ao Checker (não tem ementa nem inteiro teor). O `TJALChecker` não
+precisa dele: o próprio `dados.nuProcOrigem` responde por número.
+
+## §14 — Módulos vizinhos
+
+```
+www2.tjal.jus.br/cjpg/   -> 200, 5.701 bytes, SEM formulário de busca.
+                            O módulo de 1º grau NÃO EXISTE aqui (igual TJAM).
+projudi.tjal.jus.br      -> NXDOMAIN
+eproc.tjal.jus.br        -> NXDOMAIN
+pje.tjal.jus.br          -> resolve (177.12.238.26)
+```
+
+O TJAL roda **Projudi no 1º grau** segundo `cobertura/tribunais.json`, mas não
+há consulta pública de jurisprudência do Projudi mapeável neste domínio. Fica
+registrado como **acervo não coberto**, não como acervo inexistente.
+
+## §17 — ✅ ESTADO DA BASE: CORRENTE (a medição que o TJAM ensinou a fazer)
+
+Medido em 05/08/2026, `dano moral` na ementa, 2º grau, acórdãos:
+
+```
+por julgamento   2021: 3.532 | 2022: 9.100 | 2023: 12.404
+                 2024: 28.016 | 2025: 26.657 | 2026 (jan–jul): 11.215
+por publicação   2024: 27.924 | 2025: 26.504 | 2026 (jan–jul): 11.483
+                 jul/2026 sozinho: 981
+```
+
+Julgado mais recente da amostra: julgamento **23/07/2026**, publicação
+**24/07/2026** — a base está a dias do presente.
+
+Isto é o contrário do TJAM (congelado em jan/2025) e é por isso que a medição
+virou parte obrigatória do processo. `src/TJALTestes.js` tem um teste-sentinela
+que **falha em voz alta** se o ano corrente cair abaixo de 100 publicações.

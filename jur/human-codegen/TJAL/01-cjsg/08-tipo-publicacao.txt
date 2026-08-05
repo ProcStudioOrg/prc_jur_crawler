@@ -1,0 +1,82 @@
+TJAL — 01-cjsg — §8 TIPO DE PUBLICAÇÃO (as abas do resultado)
+=============================================================
+
+**Print:** `08.01-checkbox-tipo-publicacao.png`
+
+## Descrição humana
+
+Na tela do TJAL este filtro tem **um único checkbox**: Acórdãos. Nos irmãos ele
+tem dois (TJAC: A e D) ou três (TJAM: A, H e D). O `<div id="linhaTipoDecisao">`
+do TJAL contém só o `A`, já marcado, e não há como desmarcá-lo para chegar em
+outro acervo pela interface.
+
+## HTML do elemento (o que a tela REALMENTE tem)
+
+```html
+<label for="cjsg.consultaCompleta.label.tpDecisao" style="float:left;font-weight:bold;">Tipo de Publicação</label>
+<div id="linhaTipoDecisao">
+  <input type="checkbox" name="tipoDecisaoSelecionados" value="A" checked="checked" id="Acheckbox">
+  <label for="Acheckbox"> Acórdãos </label>
+</div>
+```
+
+## 🔴 ARMADILHA MEDIDA: checkbox ausente ≠ aba inexistente
+
+Enviar `tipoDecisaoSelecionados=D` no POST **funciona**, mesmo sem o checkbox:
+
+```
+tipos=[A]     -> totalResultadoAba-A = 103.280   20 cards
+tipos=[D]     -> totalResultadoAba-D =      43   20 cards  ← existe de verdade
+tipos=[A,D]   -> A = 103.280, D = 43             40 cards
+tipos=[H]     -> totalResultadoAba-H =       0    0 cards
+```
+
+Os cards de `D` são documentos reais e distintos: `cdAcordao` próprios
+(797529, 797038, 774608…), datas próprias, órgãos variados (2ª/3ª/4ª/1ª Câmara
+Cível, Seção Especializada Cível). Ver `12-card-monocratica.html` e
+`12.01-resultados-monocratica.png`.
+
+⚠️ **A lição:** nos três tribunais anteriores a pergunta era "o checkbox existe?"
+e a resposta bastava. Aqui ela não basta — o parâmetro é aceito pelo servidor
+independentemente do que a tela oferece. **Teste o parâmetro, não o checkbox.**
+
+## ⚠️ O zero da aba H é AMBÍGUO — e isso fica registrado como não decidido
+
+`H` devolve 0 **e** não tem checkbox. Os dois casos possíveis já foram vistos
+na família:
+
+- **TJAM**: o checkbox existe, o total é 0 → aba real e **vazia**.
+- **TJAC**: o checkbox não existe, o total é 0 → aba **inexistente** se passando
+  por aba vazia.
+
+No TJAL não há como distinguir com o que foi medido. **Não escreva que "o TJAL
+não homologa acordos"** — o dado não sustenta isso. O `TJALCrawler` avisa
+exatamente essa ambiguidade quando `-t homologacao` é usado.
+
+## Volume relativo — a aba D é mínima
+
+```
+              acórdão     monocrática
+dano moral    103.280              43
+```
+
+43 documentos contra 103 mil. Isso é **o cjsg não indexar monocráticas**, não o
+tribunal não decidir monocraticamente. O crawler avisa quando `-t monocratica`
+devolve menos de 100.
+
+## Mapeamento no repo
+
+`TJALNavigator.TIPOS = { acordao: 'A', homologacao: 'H', monocratica: 'D' }`
+CLI: `-t acordao` (default) | `homologacao` | `monocratica` | `todos`
+
+O total autoritativo é o hidden `totalResultadoAba-<tipo>`, não o texto
+"Resultados 1 a 20 de N".
+
+⚠️ **O atributo `id` vem ANTES do `type` neste portal:**
+
+```html
+<input id="totalResultadoAba-A" type="hidden" value="103280" />
+```
+
+Um regex que exija `id=` depois de `type="hidden"` não casa nada e o crawler lê
+zero em toda busca. Foi o primeiro bug do mapeamento de hoje.

@@ -1,0 +1,61 @@
+TJAL — 01-cjsg — §22 PERMALINK E IDENTIDADE DO DOCUMENTO
+========================================================
+
+**Print:** `15.01-permalink-aba-limpa.png`
+
+## 🔴 NÃO EXISTE PERMALINK NO TJAL
+
+Testado em **contexto de browser limpo** (sem cookies, sem sessão), 05/08/2026:
+
+| Candidato a permalink | Resultado medido |
+|---|---|
+| `resultadoCompleta.do;jsessionid=<SID>` colado em aba limpa | **HTTP 200 com ZERO cards** |
+| `resultadoCompleta.do` sem sessão nenhuma | 0 cards |
+| `getArquivo.do?cdAcordao=…&cdForo=…` | a tela do **reCAPTCHA** |
+| popup `abrirPopUpDadosSemFormatacao(…)` | **modal, não muda a URL** |
+
+O estado da busca vive inteiramente na sessão. A URL de resultado carrega o
+`jsessionid` no path, mas colá-la em outro contexto não reconstrói nada.
+
+⚠️ **Nunca invente link de acórdão do TJAL.** Não existe URL para colar numa
+resposta. Isso vale igualmente para o TJAC e para o TJAM.
+
+## Qual campo identifica o DOCUMENTO
+
+```
+cdAcordao   ← ESTE. Atributo `cdacordao` do <tr class="fundocinza1">.
+cdForo      ← acompanha, e o getArquivo.do exige os dois (chave composta).
+```
+
+⚠️ **O nº do processo NÃO identifica o documento.** Um processo costuma ter mais
+de um julgado (acórdão de apelação, embargos, monocrática de admissibilidade…).
+No repo, `id` = `cdAcordao`, e o `TJALChecker` confere justamente se o mesmo
+`cdAcordao` volta da reconsulta — não só se o processo existe.
+
+## Como se verifica um julgado do TJAL, então
+
+**Por reconsulta**, que é a única forma:
+
+```bash
+./bin/jur tjal -n "0701284-29.2025.8.02.0055"
+```
+
+Medido: responde `A = 1`, **com e sem máscara** (o campo `dados.nuProcOrigem`
+aceita os 20 dígitos crus). Auditoria em lote:
+
+```bash
+./bin/jur tjal -q "dano moral" -m 1 --verificar 5
+```
+
+Medido em 05/08/2026: **5/5 confirmados**.
+
+## O identificador da lista é o mesmo aceito na consulta por número?
+
+**Não, e são coisas diferentes de propósito:**
+
+- a lista identifica o documento por `cdAcordao` (853550);
+- a consulta por número usa o **nº CNJ do processo** (`dados.nuProcOrigem`).
+
+Não há endpoint que aceite `cdAcordao` como chave de consulta sem captcha. Por
+isso a verificação é "o processo existe **e** traz este `cdAcordao` de volta",
+em duas etapas, e não uma consulta direta ao documento.

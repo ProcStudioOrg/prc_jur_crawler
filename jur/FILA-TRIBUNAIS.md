@@ -53,7 +53,7 @@ plugam host + conferem as diferenças. Entradas **medidas em 31/07/2026 15:59**.
 | 1 | **TJMS** | MS | `https://esaj.tjms.jus.br/cjsg/consultaCompleta.do` → **200** | ok 04/08 |
 | 2 | **TJAC** | AC | `https://esaj.tjac.jus.br/cjsg/consultaCompleta.do` → **200** | ok 04/08 |
 | 3 | **TJAM** | AM | `https://consultasaj.tjam.jus.br/cjsg/consultaCompleta.do` → **200** | ok 05/08 |
-| 4 | **TJAL** | AL | `https://www2.tjal.jus.br/cjsg/consultaCompleta.do` → **200** | pendente |
+| 4 | **TJAL** | AL | `https://www2.tjal.jus.br/cjsg/consultaCompleta.do` → **200** | ok 05/08 |
 
 ⚠️ **Ressalvas medidas hoje, não repita o erro do TODO antigo:**
 - `esaj.tjal.jus.br` **não tem DNS** — host morto. A entrada do TJAL é `www2`.
@@ -156,6 +156,51 @@ acervo é parte do mapeamento, não extra:
 enumerados (o formulário não tem nenhum `<select>`; são popups do SAJ). E não foi
 medido se `--sem-sinonimos` muda algo, nem se os ≥3 nós do balanceador
 dessincronizam.
+
+📌 **O que o TJAL (feito em 05/08/2026) fechou — leia
+[`CLAUDE-TJAL.md`](CLAUDE-TJAL.md).** Com ele o **Bloco 1 acabou**: quatro
+instalações do mesmo cjsg mapeadas, e a lição final é que **a família não
+converge — quatro instalações, quatro conjuntos de comportamento**. Nada do que
+está abaixo era dedutível dos três anteriores:
+
+- 🔴 **CHECKBOX AUSENTE ≠ ABA INEXISTENTE.** A descoberta metodológica do dia. O
+  formulário do TJAL tem **um único checkbox** de tipo (`A`), mas enviar
+  `tipoDecisaoSelecionados=D` no POST **funciona** e devolve 43 monocráticas
+  reais. Nos três tribunais anteriores bastava perguntar "o checkbox existe?";
+  aqui o servidor aceita o parâmetro independentemente do que a tela oferece.
+  **Teste o parâmetro, não o controle.** (E o zero da aba `H` fica **ambíguo**,
+  registrado como não decidido, porque o checkbox dela também não existe.)
+- 🔴 **A inversão Juizado × Comum SE DESFAZ em Alagoas.** TJAC 2,8× e TJAM 7,7×
+  a favor do Juizado; **TJAL 3,3× a favor da Justiça Comum** (103.280 × 31.474).
+  Quem tivesse generalizado de AC e AM erraria aqui. Meça nos dois sentidos.
+- ✅ **A medição de distribuição por ano agora absolve em vez de condenar:** a
+  base do TJAL está **corrente** (jul/2026 = 981 publicações; julgado mais
+  recente 23/07/2026). O passo que o TJAM impôs continua obrigatório — o
+  resultado é que muda.
+- **O `$` não zera, DEGENERA**: `dan$` = 2, não 0. No TJAC e no TJAM zerava, o
+  que dava sintoma óbvio; 2 resultados se leem como "busca específica".
+- **Quarto formato de citação**: abre por `Número do Processo:` (TJAC abre por
+  `Relator (a)`, TJAM pela classe). A âncora que sobrevive aos quatro é
+  `Data de registro:` + caminhada por profundidade de parênteses.
+- ⚠️ **O `id` vem ANTES do `type` no hidden do total** — o regex do TJAM não
+  casava nada e o crawler lia zero em toda busca. Foi o primeiro bug do dia.
+- ⚠️ **No Colégio Recursal o relator vem GENÉRICO** (`Juiz 1 Turma Recursal
+  Unificada`): `-r` por nome de pessoa não acha nada lá. Armadilha nova.
+- 🔴 **A armadilha do vhost do TJAC, em forma pior: TODO PATH INVENTADO responde
+  200.** `/qualquer-coisa-inventada-9z` devolve o mesmo md5 de `/swagger` e da
+  home. `api.tjal.jus.br` resolve para um **IP privado** (172.17.35.106).
+  **Confira o md5 antes de comemorar um 200** — o path inventado é a prova.
+- **Página de 20**, acento normalizado, sem data-sentinela (`-di/-df` confiável
+  aqui), teto de data de 1 ano de calendário, reCAPTCHA só no download com
+  sitekey própria, sem permalink. Ementa íntegra na busca e **a mais rica da
+  família** (média 4.746 chars em acórdão).
+- ✅ **Pendência do TJAM fechada:** `--sem-sinonimos` **não muda a contagem**.
+
+⚠️ **Pendência declarada do TJAL:** os mesmos combos-árvore continuam **não
+enumerados** (a página tem zero `<select>`; são popups do SAJ). E não foi medido
+o comportamento da paginação em buscas muito profundas nem se os nós do
+balanceador dessincronizam. **Três tribunais seguidos com a mesma pendência de
+combo — vale virar tarefa própria em vez de reincidir no quarto.**
 
 ## Bloco 2 — ESAJ bloqueados, exigem descoberta (2 alvos)
 

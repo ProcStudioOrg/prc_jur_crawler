@@ -1,0 +1,40 @@
+TJAL — 01-cjsg — §12 CARD DA MONOCRÁTICA (3º tipo de documento)
+===============================================================
+
+**Print:** `12.01-resultados-monocratica.png`
+**HTML:** `12-card-monocratica.html`
+
+## Por que este print é diferente dos outros
+
+⚠️ **Esta aba não é alcançável pela interface.** O formulário do TJAL só tem o
+checkbox `A` (ver `08-tipo-publicacao.txt`), então não existe clique que leve
+até aqui. O print foi feito renderizando a **resposta real do servidor** ao POST
+com `tipoDecisaoSelecionados=D` — é o documento que o portal devolve, não uma
+tela que o portal ofereça.
+
+Isso está registrado explicitamente para que ninguém procure o botão depois.
+
+## Medição
+
+```
+total (dano moral)   43        (contra 103.280 acórdãos — 0,04%)
+cards na página 1    20
+ementa               média 3.394 chars — íntegra, mesma estrutura CNJ
+cdAcordao            797529, 797038, 774608 …  distintos dos acórdãos
+orgaoJulgador        2ª/3ª/4ª/1ª Câmara Cível, Seção Especializada Cível
+relator              Des. <nome> (pessoal, como no 2º grau)
+```
+
+Exemplo medido:
+
+```
+(Número do Processo: 0700897-76.2023.8.02.0057; Relator (a): Des. Carlos
+ Cavalcanti de Albuquerque Filho; Comarca: Foro de Viçosa; Órgão julgador:
+ 2ª Câmara Cível; Data do julgamento: 06/03/2026; Data de registro: 06/03/2026)
+```
+
+## Como relatar isso ao usuário
+
+43 documentos é **o cjsg não indexar monocráticas**, não o tribunal não decidir
+monocraticamente. As duas afirmações são diferentes e só a primeira está medida.
+O `TJALCrawler` avisa quando `-t monocratica` devolve menos de 100.

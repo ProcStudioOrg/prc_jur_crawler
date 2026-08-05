@@ -1,0 +1,104 @@
+TJAL — 01-cjsg — §10 A TELA DE RESULTADOS (skill browser-post-search)
+=====================================================================
+
+**Prints:** `10.01-resultados-topo.png`, `10.02-resultados-rodape.png`,
+`10.03-resultados-full.png`
+**HTML do card:** `10-card-resultado.html` (8.473 bytes, um `<tr>`)
+
+## §18 — Onde o resultado aparece
+
+```
+rota antes:    https://www2.tjal.jus.br/cjsg/consultaCompleta.do
+rota depois:   https://www2.tjal.jus.br/cjsg/resultadoCompleta.do;jsessionid=<SID>.cjsg2
+método:        POST (form clássico), nenhum XHR de resultado
+nova aba:      não
+modal:         não na busca (só no clique da ementa — §20)
+form de busca: PERMANECE na página de resultado (o campo #iddados.buscaEmenta
+               continua presente) — o refinamento é reenviando o formulário inteiro
+total:         hidden `totalResultadoAba-A` + texto "Resultados 1 a 20 de 103280"
+```
+
+⚠️ O `;jsessionid=<SID>.cjsg2` no path revela o **balanceador**: há ao menos os
+nós `cjsg1` e `cjsg2`. A paginação foi medida estável entre eles (§21), mas se
+um dia divergir, é aqui que se olha.
+
+## §19 — Anatomia do card
+
+Cada julgado é um `<tr class="fundocinza1">`. Metadados visíveis sem clicar
+nada, todos como `<strong>Rótulo:</strong> valor`:
+
+| Campo na tela | Campo no repo | Exemplo medido |
+|---|---|---|
+| (link do nº) | `processo` / `numeroProcesso` | `0701284-29.2025.8.02.0055` |
+| Classe/Assunto | `classe` + `assunto` | `Apelação Cível` / `Defeito, nulidade ou anulação` |
+| Relator(a) | `relator` | `Des. Carlos Cavalcanti de Albuquerque Filho` |
+| Comarca | `comarca` | `Santana do Ipanema` |
+| Órgão julgador | `orgaoJulgador` | `2ª Câmara Cível` |
+| Data do julgamento | `dataJulgamento` | `23/07/2026` |
+| Data de publicação | `dataPublicacao` | `24/07/2026` |
+| `cdacordao` (atributo) | `id` / `cdAcordao` | `853550` ← **identifica o DOCUMENTO** |
+| `cdforo` (atributo) | `cdForo` | `0` |
+
+### O texto do card é EMENTA ÍNTEGRA, não trecho
+
+Medido em `div#textAreaDados_<cdAcordao>`, que **já vem no HTML da busca**:
+
+```
+acórdão 2º grau      2.892  3.171  5.854  5.454  3.492 …   média 4.746 chars
+Turma Recursal       4.057  3.270  5.951  3.559  3.891 …   média 3.876 chars
+monocrática          3.183  3.091  4.610  4.610  4.441 …   média 3.394 chars
+```
+
+- **Sem `<b>`/`<mark>`** no texto → não é highlight de busca.
+- É a ementa **estruturada no padrão CNJ** (CASO EM EXAME / QUESTÃO EM DISCUSSÃO
+  / RAZÕES DE DECIDIR / TESE / Dispositivos citados / Jurisprudência citada).
+- **É a mais rica da família ESAJ mapeada** (TJAM: 2.589 em acórdão).
+
+⚠️ **Ementa ≠ inteiro teor.** O relatório e o voto só existem no PDF, que está
+bloqueado (§20). Não apresente esta ementa como se fosse o acórdão inteiro.
+
+### Ações do card (todas listadas)
+
+```
+<a class="downloadEmenta">0701284-29.2025.8.02.0055</a>   (nº do processo)
+title="Visualizar inteiro teor"                           → getArquivo.do
+onclick="abrirPopUpDadosSemFormatacao(853550);"           → modal, sem URL
+title="Visualizar ementa sem formatação"
+title="Visualizar Ementa Completa"                        (×2, accordion do card)
+```
+
+O **único `onclick`** do card é `abrirPopUpDadosSemFormatacao(<cdAcordao>)`.
+
+### Rodapé de citação — QUARTO formato da família
+
+```
+(Número do Processo: 0701284-29.2025.8.02.0055; Relator (a): Des. Carlos
+ Cavalcanti de Albuquerque Filho; Comarca: Foro de Santana do Ipanema;
+ Órgão julgador: 2ª Câmara Cível; Data do julgamento: 23/07/2026;
+ Data de registro: 24/07/2026)
+```
+
+Comparado com os irmãos:
+
+```
+TJAC   (Relator (a): …; Comarca: …; Data de registro: …)
+TJAM   (Apelação Cível Nº <CNJ>; Relator (a): …; …)      ← abre pela classe
+TJAL   (Número do Processo: <CNJ>; Relator (a): …; …)    ← abre pelo rótulo
+```
+
+⚠️ O regex do TJAC (`\(\s*Relator`) não casa aqui, e o do TJAM esperava a classe.
+"Pegar o último parêntese" também quebra, porque `Relator (a)` é parêntese
+aninhado. A estratégia que sobrevive aos quatro: achar `Data de registro:` —
+o único campo que os quatro põem por último — e caminhar para trás **contando
+profundidade** até o `(` que abre o grupo. Ver `TJALNavigator.separarCitacao()`.
+
+Medido: 20/20 cards com citação extraída e **zero** rodapés vazando para dentro
+do campo `ementa`.
+
+## §20 — A escada até o documento
+
+**Prints:** `13.01`, `13.02`, `13.03` — ver `13-escada-ate-o-documento.txt`.
+
+## §21 — Paginação e profundidade — ver `14-paginacao.txt`
+
+## §22 — Permalink — ver `15-permalink.txt`
