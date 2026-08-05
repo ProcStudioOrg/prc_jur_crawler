@@ -4,6 +4,7 @@ const { Command } = require('commander');
 const path = require('path');
 const fs = require('fs');
 const TRF4Crawler = require('../src/TRF4Crawler');
+const TRF4Checker = require('../src/TRF4Checker');
 const TRF1Crawler = require('../src/TRF1Crawler');
 const TRF2Crawler = require('../src/TRF2Crawler');
 const TRF2Checker = require('../src/TRF2Checker');
@@ -69,7 +70,10 @@ program
 program
   .command('trf4')
   .description('Search TRF4 (Tribunal Regional Federal da 4a Regiao) jurisprudence')
-  .requiredOption('-q, --query <text>', 'Search query')
+  .option('-q, --query <text>', 'Search query')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de processo (CNJ) — usa o TRF4Checker (browser)')
+  .option('--verificar [amostra]', 'Audit results: re-query N sampled processos against the base (default 5)')
+  .option('--datajud', 'Com -n: consulta tambem o DataJud (CNJ) como fonte secundaria de metadados')
   .option('-di, --data-inicio <date>', 'Decision start date (DD/MM/YYYY)')
   .option('-df, --data-fim <date>', 'Decision end date (DD/MM/YYYY)')
   .option('-dpi, --data-pub-inicio <date>', 'Publication start date (DD/MM/YYYY)')
@@ -87,6 +91,27 @@ program
   .action(async (opts) => {
     const jsonMode = opts.json;
     const log = jsonMode ? () => {} : console.log.bind(console);
+
+    // Modo consulta direta por numero (TRF4Checker) — a verificacao de um julgado
+    if (opts.numero) {
+      try {
+        const checker = new TRF4Checker({ log, headless: !(opts.visible || opts.headed) });
+        const res = await checker.consultarProcesso(opts.numero, { datajud: !!opts.datajud });
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      } catch (error) {
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        else console.error('Erro na consulta:', error.message);
+        process.exit(1);
+      }
+    }
+    if (!opts.query) {
+      const msg = 'Informe -q "<termos>" (ou -n <numero> para consulta direta)';
+      if (jsonMode) { process.stdout.write(JSON.stringify({ success: false, error: msg }) + '\n'); process.exit(1); }
+      console.error(msg);
+      process.exit(1);
+    }
 
     log('='.repeat(60));
     log('TRF4 Jurisprudencia Crawler');
@@ -110,6 +135,7 @@ program
       headless,
       slowMo: headless ? 0 : 100,
       timeout: 60000,
+      log, // com --json o stdout fica só com o resumo
     });
 
     try {
@@ -137,6 +163,14 @@ program
         log(`Total results on server: ${results.totalResults}`);
       }
 
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando ${amostra} resultados contra a base (browser, uma sessão)...`);
+        verificacao = await new TRF4Checker({ log }).verificarResultados(results, { amostra, log });
+        log(`Verificação: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
       if (opts.fetchInteiroTeor) {
         const { batchDownload } = require('../src/inteiroTeorFetcher');
         log(`\nDownloading inteiro teor for ${results.length} results...`);
@@ -157,6 +191,7 @@ program
               downloaded: successCount,
               failed: failCount,
               outputDir,
+              ...(verificacao ? { verificacao } : {}),
             }) + '\n'
           );
         }
@@ -173,6 +208,7 @@ program
               totalResults: results.totalResults || null,
               count: results.length,
               output: outputPath,
+              ...(verificacao ? { verificacao } : {}),
             }) + '\n'
           );
         }
