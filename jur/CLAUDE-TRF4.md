@@ -37,9 +37,20 @@ Além das flags comuns (ver `CLAUDE.md`):
   logo conjunção, não disjunção. É o **oposto do TRF2** (onde o espaço quebra a busca e o
   crawler hifeniza sozinho) e igual ao TRF6: **nunca hifenize a query do TRF4**.
 
-- **Não existe flag `-n`.** Para conferir um julgado, passe o número CNJ como texto livre em
-  `-q` — devolve exatamente o documento (medido em 2 processos, 1 resultado cada). Ao citar
-  julgado do TRF4, diga que a verificação é **parcial**: não há Checker dedicado.
+- **Verificação por número: `-n` (TRF4Checker).** `./bin/jur trf4 -n <CNJ>` consulta a
+  base marcando TODAS as origens (acervo principal + Turmas Recursais) e devolve exit 0
+  se o julgado existe, 1 se não. `--datajud` acrescenta o DataJud como fonte secundária
+  (metadados do PROCESSO, não da decisão). `--verificar [N]` audita uma busca reconsultando
+  N amostras — numa ÚNICA sessão de browser (cada sessão custa 15-25s).
+  ⚠️ O número vira busca de texto livre no inteiro teor: podem voltar cards de OUTROS
+  processos que citam o número (medido: 5 cards, 4 do processo) — o Checker filtra por
+  igualdade de dígitos do `numeroProcesso`, sem o sufixo `/TRF4`.
+  ⚠️ O `id` dos cards repetiu entre duas consultas (medido 05/08/2026), mas o formato não
+  é documentado: a conferência do `--verificar` usa a tupla numeroProcesso + tipoDocumento
+  + dataJulgamento, não o id.
+  ⚠️ Vazio × indefinido: decidido pelo input `hdnTotalResultado` da página (com resultados
+  `value="N"`; vazio sem value; input ausente = listagem não carregou → ERRO "repita",
+  nunca "não existe"). Medido em 05/08/2026.
 
 - **Volume:** 9.198 documentos em 30 dias com `-q "previdenciário"` — o maior do repo em
   matéria federal. Cerca de **70% são decisões monocráticas**; para tese colegiada, filtre.
