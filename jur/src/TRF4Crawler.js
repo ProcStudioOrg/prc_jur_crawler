@@ -8,6 +8,8 @@ class TRF4Crawler extends BaseCrawler {
   constructor(options = {}) {
     super(options);
     this.baseUrl = 'https://eproc-jur.trf4.jus.br/eproc2trf4/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar';
+    // Logs de progresso roteáveis (o Checker precisa de stdout limpo p/ JSON)
+    this.log = options.log ?? console.log.bind(console);
   }
 
   /**
@@ -48,7 +50,7 @@ class TRF4Crawler extends BaseCrawler {
         ultimoErro = e;
       }
       if (i < tentativas) {
-        console.log(`TRF4 indisponível (tentativa ${i}/${tentativas}): ${ultimoErro.message.split('\n')[0]} — repetindo`);
+        this.log(`TRF4 indisponível (tentativa ${i}/${tentativas}): ${ultimoErro.message.split('\n')[0]} — repetindo`);
         await this.page.waitForTimeout(1500 * i); // backoff: 1,5s, 3s
       }
     }
@@ -142,7 +144,7 @@ class TRF4Crawler extends BaseCrawler {
         }
         sel.dispatchEvent(new Event('change', { bubbles: true }));
       });
-      console.log('Set origin: todas');
+      this.log('Set origin: todas');
     } else if (filters.origem === 'turmas-recursais') {
       // Use jQuery selectpicker if available, otherwise direct DOM
       await this.page.evaluate(() => {
@@ -158,7 +160,7 @@ class TRF4Crawler extends BaseCrawler {
         }
         sel.dispatchEvent(new Event('change', { bubbles: true }));
       });
-      console.log('Set origin: Turmas Recursais');
+      this.log('Set origin: Turmas Recursais');
     } else if (filters.orgaos && filters.orgaos.length > 0) {
       await this.page.evaluate((orgaos) => {
         const sel = document.getElementById('selOrigem');
@@ -183,19 +185,19 @@ class TRF4Crawler extends BaseCrawler {
 
     if (filters.dataDecisaoInicio) {
       await fillDate('#dtDecisaoInicio', filters.dataDecisaoInicio);
-      console.log(`Set decision start date: ${filters.dataDecisaoInicio}`);
+      this.log(`Set decision start date: ${filters.dataDecisaoInicio}`);
     }
     if (filters.dataDecisaoFim) {
       await fillDate('#dtDecisaoFim', filters.dataDecisaoFim);
-      console.log(`Set decision end date: ${filters.dataDecisaoFim}`);
+      this.log(`Set decision end date: ${filters.dataDecisaoFim}`);
     }
     if (filters.dataDisponibilizacaoInicio) {
       await fillDate('#dtPublicacaoInicio', filters.dataDisponibilizacaoInicio);
-      console.log(`Set publication start date: ${filters.dataDisponibilizacaoInicio}`);
+      this.log(`Set publication start date: ${filters.dataDisponibilizacaoInicio}`);
     }
     if (filters.dataDisponibilizacaoFim) {
       await fillDate('#dtPublicacaoFim', filters.dataDisponibilizacaoFim);
-      console.log(`Set publication end date: ${filters.dataDisponibilizacaoFim}`);
+      this.log(`Set publication end date: ${filters.dataDisponibilizacaoFim}`);
     }
   }
 
@@ -207,7 +209,7 @@ class TRF4Crawler extends BaseCrawler {
     const searchBox = this.page.locator('#txtPesquisa');
     await searchBox.click();
     await searchBox.fill(query);
-    console.log(`Set search query: ${query}`);
+    this.log(`Set search query: ${query}`);
 
     // Click the search button
     await this.page.locator('button:has-text("Pesquisar"), #btnConsultar').first().click();
@@ -229,7 +231,7 @@ class TRF4Crawler extends BaseCrawler {
 
     // Extract each result item using the correct selector
     const items = await this.page.locator('.resultadoItem').all();
-    console.log(`Found ${items.length} result items on page`);
+    this.log(`Found ${items.length} result items on page`);
 
     for (const item of items) {
       try {
@@ -294,7 +296,7 @@ class TRF4Crawler extends BaseCrawler {
           results.push(result);
         }
       } catch (e) {
-        console.error('Error extracting result:', e.message);
+        this.log(`Error extracting result: ${e.message}`);
       }
     }
 
