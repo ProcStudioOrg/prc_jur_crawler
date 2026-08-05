@@ -130,7 +130,20 @@ class TRF4Crawler extends BaseCrawler {
    */
   async configureFilters(filters = {}) {
     // Configure origin selection
-    if (filters.origem === 'turmas-recursais') {
+    if (filters.origem === 'todas') {
+      // Checker: o julgado pode estar no acervo principal ou nas Turmas
+      // Recursais — a verificação não presume onde.
+      await this.page.evaluate(() => {
+        const sel = document.getElementById('selOrigem');
+        if (!sel) return;
+        for (const opt of sel.options) opt.selected = true;
+        if (typeof jQuery !== 'undefined' && jQuery.fn.selectpicker) {
+          jQuery('#selOrigem').selectpicker('refresh');
+        }
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      console.log('Set origin: todas');
+    } else if (filters.origem === 'turmas-recursais') {
       // Use jQuery selectpicker if available, otherwise direct DOM
       await this.page.evaluate(() => {
         const sel = document.getElementById('selOrigem');
@@ -329,6 +342,21 @@ class TRF4Crawler extends BaseCrawler {
     } catch {
       return null;
     }
+  }
+
+  /**
+   * Vazio × indefinido — medido em 05/08/2026: a página de resultados traz
+   * <input name="hdnTotalResultado"> SEMPRE; com resultados value="N", sem
+   * resultados value ausente/vazio. Input não presente = a listagem não
+   * carregou — para um verificador isso é ERRO, nunca "não existe".
+   */
+  async estadoResultados() {
+    const el = this.page.locator('input[name="hdnTotalResultado"]');
+    if (await el.count() === 0) return { estado: 'indefinido', total: null };
+    const v = (await el.first().getAttribute('value')) ?? '';
+    if (v.trim() === '') return { estado: 'vazio', total: 0 };
+    const n = parseInt(v.replace(/\./g, ''), 10);
+    return { estado: 'itens', total: Number.isNaN(n) ? null : n };
   }
 }
 
