@@ -1,0 +1,3668 @@
+<form name="consultaCompletaForm" method="post" action="/cjsg/resultadoCompleta.do;jsessionid=67BB3CC03C3D04AE69A903F5F10D35E4.cjsg3" autocomplete="off" enctype="" onsubmit="return applySubmit(this, eval('function spwSubmit(t, e){decodificaInputMulSelOnSubmit();if (!IS_enableSubmit) return false; return BENV_isCamposValidos(t); } spwSubmit(this, event);'));" id="" target="" novalidate="">
+	<input type="hidden" name="conversationId" value="" style="">
+
+			
+				
+
+
+<div style="display: none;"> 
+	
+	<div id="inteiroTeor">
+		<b>"Pesquisa Livre"</b> <br>Busca acórdãos que contenham as <br> palavras/expressões desejadas no seu inteiro teor.
+	</div>
+	
+	<div id="ementa">
+		<b>"Ementa"</b><br>Busca acórdaos que contenham as palavras/expressões<br>desejadas na ementa do acórdão.
+	</div>
+	
+	<div id="classesTooltip">
+		<b>"Classe"</b><br>Busca decisões que sejam de uma determinada classe processual.<br> Exemplo: Ação Penal.
+	</div>
+	
+	<div id="assuntosTooltip">
+		<b>"Assuntos"</b><br>Busca acórdãos que sejam de um determinado assunto.
+	</div>
+	
+	<div id="secoesTooltip">
+		<b>"Orgão julgadores"</b><br> Busca acórdãos que sejam de uma determinado orgão julgador.
+	</div>
+	
+	<div id="dtJulgamentoInicioTooltip">
+		<b>"Data do Julgamento"</b><br>Busca acórdãos de julgamentos<br> que tenham sido realizados em determinado período.
+	</div>
+	
+	<div id="dtJulgamentoFimTooltip">
+		<b>"Data do Julgamento"</b><br>Busca acórdãos de julgamentos<br> que tenham sido realizados em determinado período.
+	</div>
+	
+	<div id="dtPublicacaoInicioTooltip">
+		<b>"Data de Publicação"</b><br> Busca acórdãos que tenham sido publicados em determinado período.
+	</div>
+
+	<div id="dtPublicacaoFimTooltip">
+		<b>"Data de Publicação"</b><br> Busca acórdãos que tenham sido publicados em determinado período.
+	</div>
+	
+	<div id="dtRegistroInicioTooltip">
+		<b>"Data de Registro"</b><br> Busca acórdãos que tenham sido registradas em determinado período.
+	</div>
+
+	<div id="dtRegistroFimTooltip">
+		<b>"Data de Registro"</b><br> Busca acórdãos que tenham sido registradas em determinado período.
+	</div>
+	
+	<div id="orgaoJulgador">
+		<b>"Órgão Julgador"</b><br>Busca acórdãos que sejam de um determinado órgão julgador.<br>Exemplo: 10ª Câmara de Direito Público.
+	</div>
+	
+	<div id="comarcaTooltip">
+		<b>"Comarca"</b><br>Busca acórdãos que sejam de uma determinada comarca de origem.<br> Exemplo: São Paulo.
+	</div>
+	
+	<div id="agenteTooltip">
+		<b>"Relator"</b><br>Busca acórdãos que sejam de um determinado relator.
+	</div>
+	
+	<div id="juizProlatorTooltip">
+		<b>"Juiz prolator"</b><br>Busca acórdãos para o juiz prolator selecionado.<br>
+	</div>
+	
+	<div id="nuRegistro">
+		<b>"Número do Registro"</b><br>Busca acórdãos que tenham sido registrados<br>com o número informado.
+	</div>
+	
+	<div id="nuProcOrigem">
+		<b>"Número do recurso"</b><br>Busca acórdãos que se referem ao<br>número de recurso informado.
+	</div>
+
+
+</div>	
+
+			
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+		
+			
+		
+		
+	
+	
+	<div class="">
+		
+			<br>
+			
+			
+				
+				
+					
+
+
+
+
+
+
+
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tbody><tr valign="top">
+		<td height="21" valign="top" nowrap="" background="/cjsg/imagens/spw/fundo_subtitulo.gif"> 
+			
+				
+				
+					<h2 class="subtitle">
+						Consulta Completa
+						
+					</h2>
+				
+			
+		</td>
+		<td background="/cjsg/imagens/spw/fundo_subtitulo2.gif" width="90%" aria-hidden="true">
+			<img src="/cjsg/imagens/spw/final_subtitulo.gif" width="16" height="20" tabindex="-1">
+		</td>
+	</tr>
+</tbody></table>
+
+				
+			
+			<br>
+		
+		<table id="" class="secaoFormBody" width="100%" style="" cellpadding="2" cellspacing="0" border="0">
+			
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
+
+
+
+	
+
+
+<style>
+	/* remove borda vermelha de elementos required */
+	input:invalid {
+		box-shadow:none;
+	}
+</style>
+
+<script type="text/javascript">
+	(function($){
+		$(function() {
+			var saj = $.saj;
+			var id = 'iddados.buscaInteiroTeor';
+			var idObjetoReferencia = '#' + id;
+			if ('' !== '' && !false) {
+				$(idObjetoReferencia).registrarTooltip({
+					conteudoTooltip: '',
+					posicaoTooltip: 'direita',
+					objReferenciaPosicaoTooltip:$(idObjetoReferencia)
+				});
+			}
+			//remove comportamento de exibir mensagem de erro típica do html5
+			$('form:visible').attr('novalidate','');
+			if (''){
+				$(idObjetoReferencia).attr('aria-required','true').attr('required','');
+			}
+		});		
+	})(jQuery);
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tbody><tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="top">
+			
+			  
+		  	  
+				
+				<label for="iddados.buscaInteiroTeor" class="" style="float:left;font-weight:bold;margin-top:3px;">Pesquisa livre</label><div style="text-align:right;font-weight:bold;margin-top:3px;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="top">
+		  
+		
+			
+	
+	
+	
+	
+	
+	<input type="text" name="dados.buscaInteiroTeor" size="100" value="" formattype="TEXT" formato="120" obrigatorio="" rotulo="Pesquisa livre" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" style="" class="spwCampoTexto " id="iddados.buscaInteiroTeor" title="" alt="">
+		
+	
+	
+	
+		
+	    
+						
+						<div class="botoesOperadores" style="margin-top: 3px;">	
+							<input type="button" value=" E " name="E" class="conJurisOperador" style="">
+							<input type="button" value=" OU " name="OU" class="conJurisOperador" style="">
+							<input type="button" value=" NÃO " name="NAO" class="conJurisOperador" style="">
+							<input type="button" value="&quot;&nbsp;&nbsp;&quot;" name="ASP" class="conJurisOperador" style="">
+							<a style="font-size: 11px; font-weight: bold; padding-left: 10px; padding-right: 2px;" href="https://consultasaj.tjam.jus.br/WebHelp//#id_operadores_logicos.htm" target="_blank">
+								
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+
+	
+	
+	
+	
+	
+		<span id="">
+		
+	
+	
+	<span id="">Como utilizar os filtros</span>
+	
+	
+	
+	    
+    
+	
+	
+		
+	
+	
+	
+	
+		</span>
+	
+
+
+
+							</a>							
+							<input type="checkbox" name="dados.pesquisarComSinonimos" value="S" checked="checked" uncheckedvalue="N" onclick="CH_updateHiddenValue(this);" style="width: 10px;" id="checkBoxSinonimos"><input type="hidden" value="S" name="dados.pesquisarComSinonimos" inputcheckbox="true" style="">
+							<label for="checkBoxSinonimos">
+								Pesquisar por sinônimos
+							</label>
+							&nbsp;&nbsp;&nbsp;
+						</div>
+					
+    
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+
+
+								
+				
+		</tbody></table>
+	</div>
+	
+	
+	
+
+					 
+				
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+		
+			
+		
+		
+	
+	
+	<div class="">
+		
+			<br>
+			
+			
+				
+				
+					
+
+
+
+
+
+
+
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tbody><tr valign="top">
+		<td height="21" valign="top" nowrap="" background="/cjsg/imagens/spw/fundo_subtitulo.gif"> 
+			
+				
+				
+					<h2 class="subtitle">
+						Pesquisa por campos específicos
+						
+					</h2>
+				
+			
+		</td>
+		<td background="/cjsg/imagens/spw/fundo_subtitulo2.gif" width="90%" aria-hidden="true">
+			<img src="/cjsg/imagens/spw/final_subtitulo.gif" width="16" height="20" tabindex="-1">
+		</td>
+	</tr>
+</tbody></table>
+
+				
+			
+			<br>
+		
+		<table id="" class="secaoFormBody" width="100%" style="" cellpadding="2" cellspacing="0" border="0">
+			
+					
+					
+					
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
+
+
+
+	
+
+
+<style>
+	/* remove borda vermelha de elementos required */
+	input:invalid {
+		box-shadow:none;
+	}
+</style>
+
+<script type="text/javascript">
+	(function($){
+		$(function() {
+			var saj = $.saj;
+			var id = 'iddados.buscaEmenta';
+			var idObjetoReferencia = '#' + id;
+			if ('' !== '' && !false) {
+				$(idObjetoReferencia).registrarTooltip({
+					conteudoTooltip: '',
+					posicaoTooltip: 'direita',
+					objReferenciaPosicaoTooltip:$(idObjetoReferencia)
+				});
+			}
+			//remove comportamento de exibir mensagem de erro típica do html5
+			$('form:visible').attr('novalidate','');
+			if (''){
+				$(idObjetoReferencia).attr('aria-required','true').attr('required','');
+			}
+		});		
+	})(jQuery);
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tbody><tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="iddados.buscaEmenta" class="" style="float:left;font-weight:bold;">Ementa</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	<input type="text" name="dados.buscaEmenta" size="100%" value="" formattype="TEXT" formato="120" obrigatorio="" rotulo="Ementa" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" style="" class="spwCampoTexto " id="iddados.buscaEmenta" title="" alt="">
+		
+	
+	
+	
+		
+	    
+    
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+
+
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
+
+
+
+	
+
+
+<style>
+	/* remove borda vermelha de elementos required */
+	input:invalid {
+		box-shadow:none;
+	}
+</style>
+
+<script type="text/javascript">
+	(function($){
+		$(function() {
+			var saj = $.saj;
+			var id = 'iddados.nuProcOrigem';
+			var idObjetoReferencia = '#' + id;
+			if ('' !== '' && !false) {
+				$(idObjetoReferencia).registrarTooltip({
+					conteudoTooltip: '',
+					posicaoTooltip: 'direita',
+					objReferenciaPosicaoTooltip:$(idObjetoReferencia)
+				});
+			}
+			//remove comportamento de exibir mensagem de erro típica do html5
+			$('form:visible').attr('novalidate','');
+			if (''){
+				$(idObjetoReferencia).attr('aria-required','true').attr('required','');
+			}
+		});		
+	})(jQuery);
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="iddados.nuProcOrigem" class="" style="float:left;font-weight:bold;">Número do recurso</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	<input type="text" name="dados.nuProcOrigem" size="100%" value="" formattype="TEXT" formato="120" obrigatorio="" rotulo="Número do recurso" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" style="" class="spwCampoTexto " id="iddados.nuProcOrigem" title="" alt="">
+		
+	
+	
+	
+		
+	    
+    
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+
+
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
+
+
+
+	
+
+
+<style>
+	/* remove borda vermelha de elementos required */
+	input:invalid {
+		box-shadow:none;
+	}
+</style>
+
+<script type="text/javascript">
+	(function($){
+		$(function() {
+			var saj = $.saj;
+			var id = 'iddados.nuRegistro';
+			var idObjetoReferencia = '#' + id;
+			if ('' !== '' && !false) {
+				$(idObjetoReferencia).registrarTooltip({
+					conteudoTooltip: '',
+					posicaoTooltip: 'direita',
+					objReferenciaPosicaoTooltip:$(idObjetoReferencia)
+				});
+			}
+			//remove comportamento de exibir mensagem de erro típica do html5
+			$('form:visible').attr('novalidate','');
+			if (''){
+				$(idObjetoReferencia).attr('aria-required','true').attr('required','');
+			}
+		});		
+	})(jQuery);
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="iddados.nuRegistro" class="" style="float:left;font-weight:bold;">Número do registro</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	<input type="text" name="dados.nuRegistro" size="100%" value="" formattype="TEXT" formato="120" obrigatorio="" rotulo="Número do registro" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" style="" class="spwCampoTexto " id="iddados.nuRegistro" title="" alt="">
+		
+	
+	
+	
+		
+	    
+    
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+
+
+
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="cjsg.consultaCompleta.label.relator" class="" style="float:left;font-weight:bold;">Relator(a)</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	<table cellpadding="0" cellspacing="0" border="0" width="518">
+		<tbody><tr>
+			<td>
+				
+				
+				
+						
+
+
+
+
+
+
+
+<table width="100%" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td class="inputSelectPersonalizado" width="*">
+			
+							
+								
+								
+								
+							<script>
+
+var agenteNomeCamposArray = new Array();
+ agenteNomeCamposArray[0] = 'codigoCr';
+ agenteNomeCamposArray[1] = 'codigoTr';
+ agenteNomeCamposArray[2] = 'nmAgente';
+ var codigoCrNomeCamposArray = agenteNomeCamposArray;
+ var codigoTrNomeCamposArray = agenteNomeCamposArray;
+ var nmAgenteNomeCamposArray = agenteNomeCamposArray;</script>
+
+<table class="spwInputSelect" width="100%" border="0" cellspacing="0" cellpadding="0" id="agente" idpai="null" filtropai="null" url="jsp/search/searchAgente.jsp" input-select="agente" property="dados.agentes" name="codigoCr" title="Relatores" ctxpath="/cjsg" multiplaselecao="true" useaction="false" bindings="&amp;bind_codigoCr=codigoCr&amp;bind_codigoTr=codigoTr&amp;bind_nmAgente=nmAgente" entitypkclass="agentePK" idiframe="" altura="300" largura="500" usemodulo="true" desabilitarselecionados="false" carregafilho="false"><tbody>
+<input type="hidden" name="agenteSelectedEntitiesList" value="" id="agenteSelectedEntitiesList" style="">
+<input type="hidden" name="contadoragente" value="0" id="contadoragente" style="">
+<input type="hidden" name="contadorMaioragente" value="0" id="contadorMaioragente" style="">
+    <tr>
+								<td>
+            <input type="text" name="codigoCr" id="codigoCr" bindingreference="codigoCr" value="" formattype="TEXT" obrigatorio="false" pk="true" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" onchange="IS_request('agente','/AjaxServlet.ajax', 'agente', 'codigoCr', this.value,'/cjsg','jsp/search/searchAgente.jsp', 'true', 'Relatores','300','500', '&amp;bind_codigoCr=codigoCr&amp;bind_codigoTr=codigoTr&amp;bind_nmAgente=nmAgente', 'false', event, 'InputSelectAutoComplete', '','false'); " style="width: 100%;" class="hidden" input-select="agente" idiframe=""></td>
+								<td>
+            <input type="text" name="codigoTr" id="codigoTr" bindingreference="codigoTr" value="" formattype="TEXT" obrigatorio="false" pk="true" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" onchange="IS_request('agente','/AjaxServlet.ajax', 'agente', 'codigoTr', this.value,'/cjsg','jsp/search/searchAgente.jsp', 'true', 'Relatores','300','500', '&amp;bind_codigoCr=codigoCr&amp;bind_codigoTr=codigoTr&amp;bind_nmAgente=nmAgente', 'false', event, 'InputSelectAutoComplete', '','false'); " style="width: 100%;" class="hidden" input-select="agente" idiframe=""></td>
+								<td>
+            <input type="text" name="nmAgente" id="nmAgente" bindingreference="nmAgente" value="" formattype="TEXT" obrigatorio="false" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" onchange="IS_request('agente','/AjaxServlet.ajax', 'agente', 'nmAgente', this.value,'/cjsg','jsp/search/searchAgente.jsp', 'true', 'Relatores','300','500', '&amp;bind_codigoCr=codigoCr&amp;bind_codigoTr=codigoTr&amp;bind_nmAgente=nmAgente', 'false', event, 'InputSelectAutoComplete', '','false'); " style="width: 477px;" input-select="agente" idiframe=""></td>
+							
+        <td width="20" align="center"><img src="/cjsg/imagens/spw/botProcurar.gif" width="16" height="17" border="0" title="Abre a consulta" onmouseover="IH_mOver(this)" onmouseout="IH_mOut(this)" onclick="IS_request('agente','/AjaxServlet.ajax', 'agente', 'codigoCr','','/cjsg','jsp/search/searchAgente.jsp', 'true', 'Relatores','300','500', '&amp;bind_codigoCr=codigoCr&amp;bind_codigoTr=codigoTr&amp;bind_nmAgente=nmAgente', 'true', event, 'InputSelectSearchGrid','','false')"><img src="/cjsg/imagens/spw/botProcurar-d.gif" width="16" height="17" border="0" style="display:none">
+        </td>
+    </tr>
+</tbody>
+</table>
+<script>
+
+</script>
+
+						
+		</td>
+		<td width="16" valign="middle">
+			<img src="/cjsg/imagens/spw/botLimpar.gif" width="16" height="17" border="0" title="Limpar campo" onclick="jQuery.saj.limparInputSelect('agente');" onmouseout="IH_mOut(this)" onmouseover="IH_mOver(this)" style="cursor:pointer;" id="agenteLimpar">
+		</td>
+	</tr>
+</tbody></table>
+
+					
+				
+			</td>
+		</tr>
+	  </tbody></table>
+	
+	
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="cjsg.consultaCompleta.label.juizProlator" class="" style="float:left;font-weight:bold;">Magistrado prolator</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	<table cellpadding="0" cellspacing="0" border="0" width="518">
+		<tbody><tr>
+			<td>
+				
+				
+				
+						
+
+
+
+
+
+
+
+<table width="100%" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td class="inputSelectPersonalizado" width="*">
+			
+							
+								
+								
+								
+							<script>
+
+var juizProlatorNomeCamposArray = new Array();
+ juizProlatorNomeCamposArray[0] = 'codigoJuizCr';
+ juizProlatorNomeCamposArray[1] = 'codigoJuizTr';
+ juizProlatorNomeCamposArray[2] = 'nmJuiz';
+ var codigoJuizCrNomeCamposArray = juizProlatorNomeCamposArray;
+ var codigoJuizTrNomeCamposArray = juizProlatorNomeCamposArray;
+ var nmJuizNomeCamposArray = juizProlatorNomeCamposArray;</script>
+
+<table class="spwInputSelect" width="100%" border="0" cellspacing="0" cellpadding="0" id="juizProlator" idpai="null" filtropai="null" url="jsp/search/searchJuizProlator.jsp" input-select="juizProlator" property="dados.juizesProlatores" name="codigoJuizCr" title="Juizes prolatores" ctxpath="/cjsg" multiplaselecao="true" useaction="false" bindings="&amp;bind_codigoJuizCr=codigoJuizCr&amp;bind_codigoJuizTr=codigoJuizTr&amp;bind_nmJuiz=nmJuiz" entitypkclass="agentePK" idiframe="" altura="300" largura="500" usemodulo="true" desabilitarselecionados="false" carregafilho="false"><tbody>
+<input type="hidden" name="juizProlatorSelectedEntitiesList" value="" id="juizProlatorSelectedEntitiesList" style="">
+<input type="hidden" name="contadorjuizProlator" value="0" id="contadorjuizProlator" style="">
+<input type="hidden" name="contadorMaiorjuizProlator" value="0" id="contadorMaiorjuizProlator" style="">
+    <tr>
+								<td>
+            <input type="text" name="codigoJuizCr" id="codigoJuizCr" bindingreference="codigoJuizCr" value="" formattype="TEXT" obrigatorio="false" pk="true" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" onchange="IS_request('juizProlator','/AjaxServlet.ajax', 'juizProlator', 'codigoJuizCr', this.value,'/cjsg','jsp/search/searchJuizProlator.jsp', 'true', 'Juizes prolatores','300','500', '&amp;bind_codigoJuizCr=codigoJuizCr&amp;bind_codigoJuizTr=codigoJuizTr&amp;bind_nmJuiz=nmJuiz', 'false', event, 'InputSelectAutoComplete', '','false'); " style="width: 100%;" class="hidden" input-select="juizProlator" idiframe=""></td>
+								<td>
+            <input type="text" name="codigoJuizTr" id="codigoJuizTr" bindingreference="codigoJuizTr" value="" formattype="TEXT" obrigatorio="false" pk="true" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" onchange="IS_request('juizProlator','/AjaxServlet.ajax', 'juizProlator', 'codigoJuizTr', this.value,'/cjsg','jsp/search/searchJuizProlator.jsp', 'true', 'Juizes prolatores','300','500', '&amp;bind_codigoJuizCr=codigoJuizCr&amp;bind_codigoJuizTr=codigoJuizTr&amp;bind_nmJuiz=nmJuiz', 'false', event, 'InputSelectAutoComplete', '','false'); " style="width: 100%;" class="hidden" input-select="juizProlator" idiframe=""></td>
+								<td>
+            <input type="text" name="nmJuiz" id="nmJuiz" bindingreference="nmJuiz" value="" formattype="TEXT" obrigatorio="false" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" onchange="IS_request('juizProlator','/AjaxServlet.ajax', 'juizProlator', 'nmJuiz', this.value,'/cjsg','jsp/search/searchJuizProlator.jsp', 'true', 'Juizes prolatores','300','500', '&amp;bind_codigoJuizCr=codigoJuizCr&amp;bind_codigoJuizTr=codigoJuizTr&amp;bind_nmJuiz=nmJuiz', 'false', event, 'InputSelectAutoComplete', '','false'); " style="width: 477px;" input-select="juizProlator" idiframe=""></td>
+							
+        <td width="20" align="center"><img src="/cjsg/imagens/spw/botProcurar.gif" width="16" height="17" border="0" title="Abre a consulta" onmouseover="IH_mOver(this)" onmouseout="IH_mOut(this)" onclick="IS_request('juizProlator','/AjaxServlet.ajax', 'juizProlator', 'codigoJuizCr','','/cjsg','jsp/search/searchJuizProlator.jsp', 'true', 'Juizes prolatores','300','500', '&amp;bind_codigoJuizCr=codigoJuizCr&amp;bind_codigoJuizTr=codigoJuizTr&amp;bind_nmJuiz=nmJuiz', 'true', event, 'InputSelectSearchGrid','','false')"><img src="/cjsg/imagens/spw/botProcurar-d.gif" width="16" height="17" border="0" style="display:none">
+        </td>
+    </tr>
+</tbody>
+</table>
+<script>
+
+</script>
+
+						
+		</td>
+		<td width="16" valign="middle">
+			<img src="/cjsg/imagens/spw/botLimpar.gif" width="16" height="17" border="0" title="Limpar campo" onclick="jQuery.saj.limparInputSelect('juizProlator');" onmouseout="IH_mOut(this)" onmouseover="IH_mOver(this)" style="cursor:pointer;" id="juizLimpar">
+		</td>
+	</tr>
+</tbody></table>
+
+					
+				
+			</td>
+		</tr>
+	  </tbody></table>
+	
+	
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="classes_selectionText" class="" style="float:left;font-weight:bold;">Classe</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table id="classesId" cellspacing="0" cellpadding="0" width="517" class="treeSelect">
+	<tbody><tr>
+		<td width="*">
+			<table cellspacing="0" cellpadding="0" width="100%">
+				<tbody><tr>
+					<td>
+						<input type="hidden" name="classesTreeSelection.values" value="" id="classes" style="">
+						<span id="classes_action" value="/cjsg/classesTreeSelect.do">
+						
+						<input type="text" name="classesTreeSelection.text" value="" formattype="TEXT" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" onchange="$.saj.tree.onTextPropertyChangeEvent({data:{ campoId: 'classes', 
+								treeSelectId: 'classesId',
+								url: '/cjsg/classesTreeSelect.do', 
+								processandoImgUrl: '/cjsg/imagens/spw/processandoNovo.gif', 
+								width: 600,
+								expectedHeight: 400, 
+								reload: '' }}, event);" style="width: 100%;" id="classes_selectionText">
+					     
+					</span></td>
+					<td align="center" width="20">
+						<img id="botaoProcurar_classes" src="/cjsg/imagens/spw/botProcurar.gif" class="treeSelect_botaoHabilitado" height="17" border="0" width="16" title="Abre a consulta" style="cursor: pointer; margin-left: 4px;" onmouseout="IH_mOut(this)" onmouseover="IH_mOver(this)"><img src="/cjsg/imagens/spw/botProcurar-d.gif" class="treeSelect_botaoDesabilitado" height="17" border="0" width="16" style="display:none; margin-left: 8px;">
+					</td>
+				</tr>
+			</tbody></table>
+        </td>
+		<td width="16" valign="middle">
+			<img id="botaoLimpar_classes" src="/cjsg/imagens/spw/botLimpar.gif" class="treeSelect_botaoHabilitado" height="17" width="16" border="0" title="Limpa campo" onmouseout="IH_mOut(this)" onmouseover="IH_mOver(this)"><img src="/cjsg/imagens/spw/botLimpar-d.gif" class="treeSelect_botaoDesabilitado" height="17" width="16" border="0" style="display:none">
+		</td>
+		
+		
+    </tr>
+</tbody></table>
+<script>
+	(function($) {
+				
+		var bindTreeSelect = function() {
+			var options = {
+				campoId: 'classes',
+				treeSelectId: 'classesId',
+				url: '/cjsg/classesTreeSelect.do',
+				processandoImgUrl: '/cjsg/imagens/spw/processandoNovo.gif',
+				width: 600,
+				expectedHeight: 400,
+				reload: '',
+				mostrarBotoesSelecaoRapida: true
+			};
+
+			$.saj.tree.updateSelectionText(options);
+			
+			$('#botaoProcurar_classes').bind('click', options, $.saj.tree.onPopupEvent);
+			$('#botaoLimpar_classes').bind('click', options, $.saj.tree.onClearSelection);
+			
+			
+		};
+
+		bindTreeSelect();
+
+		
+		
+	})(jQuery);
+</script>
+	
+
+	
+	
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="assuntos_selectionText" class="" style="float:left;font-weight:bold;">Assunto</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table id="assuntosId" cellspacing="0" cellpadding="0" width="517" class="treeSelect">
+	<tbody><tr>
+		<td width="*">
+			<table cellspacing="0" cellpadding="0" width="100%">
+				<tbody><tr>
+					<td>
+						<input type="hidden" name="assuntosTreeSelection.values" value="" id="assuntos" style="">
+						<span id="assuntos_action" value="/cjsg/assuntosTreeSelect.do">
+						
+						<input type="text" name="assuntosTreeSelection.text" value="" formattype="TEXT" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" onchange="$.saj.tree.onTextPropertyChangeEvent({data:{ campoId: 'assuntos', 
+								treeSelectId: 'assuntosId',
+								url: '/cjsg/assuntosTreeSelect.do', 
+								processandoImgUrl: '/cjsg/imagens/spw/processandoNovo.gif', 
+								width: 600,
+								expectedHeight: 400, 
+								reload: '' }}, event);" style="width: 100%;" id="assuntos_selectionText">
+					     
+					</span></td>
+					<td align="center" width="20">
+						<img id="botaoProcurar_assuntos" src="/cjsg/imagens/spw/botProcurar.gif" class="treeSelect_botaoHabilitado" height="17" border="0" width="16" title="Abre a consulta" style="cursor: pointer; margin-left: 4px;" onmouseout="IH_mOut(this)" onmouseover="IH_mOver(this)"><img src="/cjsg/imagens/spw/botProcurar-d.gif" class="treeSelect_botaoDesabilitado" height="17" border="0" width="16" style="display:none; margin-left: 8px;">
+					</td>
+				</tr>
+			</tbody></table>
+        </td>
+		<td width="16" valign="middle">
+			<img id="botaoLimpar_assuntos" src="/cjsg/imagens/spw/botLimpar.gif" class="treeSelect_botaoHabilitado" height="17" width="16" border="0" title="Limpa campo" onmouseout="IH_mOut(this)" onmouseover="IH_mOver(this)"><img src="/cjsg/imagens/spw/botLimpar-d.gif" class="treeSelect_botaoDesabilitado" height="17" width="16" border="0" style="display:none">
+		</td>
+		
+		
+    </tr>
+</tbody></table>
+<script>
+	(function($) {
+				
+		var bindTreeSelect = function() {
+			var options = {
+				campoId: 'assuntos',
+				treeSelectId: 'assuntosId',
+				url: '/cjsg/assuntosTreeSelect.do',
+				processandoImgUrl: '/cjsg/imagens/spw/processandoNovo.gif',
+				width: 600,
+				expectedHeight: 400,
+				reload: '',
+				mostrarBotoesSelecaoRapida: true
+			};
+
+			$.saj.tree.updateSelectionText(options);
+			
+			$('#botaoProcurar_assuntos').bind('click', options, $.saj.tree.onPopupEvent);
+			$('#botaoLimpar_assuntos').bind('click', options, $.saj.tree.onClearSelection);
+			
+			
+		};
+
+		bindTreeSelect();
+
+		
+		
+	})(jQuery);
+</script>
+	
+
+	
+	
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+					
+					
+						
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="secoes_selectionText" class="" style="float:left;font-weight:bold;">Órgão julgador</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table id="secaoId" cellspacing="0" cellpadding="0" width="517" class="treeSelect">
+	<tbody><tr>
+		<td width="*">
+			<table cellspacing="0" cellpadding="0" width="100%">
+				<tbody><tr>
+					<td>
+						<input type="hidden" name="secoesTreeSelection.values" value="" id="secoes" style="">
+						<span id="secoes_action" value="/cjsg/secaoTreeSelect.do">
+						
+						<input type="text" name="secoesTreeSelection.text" value="" formattype="TEXT" onkeypress="CT_KPS(this, event);" onblur="CT_BLR(this);" onkeydown="CT_KDN(this, event);" onmousemove="CT_MMOV(this, event);" onmouseout="CT_MOUT(this, event);" onmouseover="CT_MOV(this, event);" onfocus="C_OFC(this, event);" onchange="$.saj.tree.onTextPropertyChangeEvent({data:{ campoId: 'secoes', 
+								treeSelectId: 'secaoId',
+								url: '/cjsg/secaoTreeSelect.do', 
+								processandoImgUrl: '/cjsg/imagens/spw/processandoNovo.gif', 
+								width: 600,
+								expectedHeight: 400, 
+								reload: '' }}, event);" style="width: 100%;" id="secoes_selectionText">
+					     
+					</span></td>
+					<td align="center" width="20">
+						<img id="botaoProcurar_secoes" src="/cjsg/imagens/spw/botProcurar.gif" class="treeSelect_botaoHabilitado" height="17" border="0" width="16" title="Abre a consulta" style="cursor: pointer; margin-left: 4px;" onmouseout="IH_mOut(this)" onmouseover="IH_mOver(this)"><img src="/cjsg/imagens/spw/botProcurar-d.gif" class="treeSelect_botaoDesabilitado" height="17" border="0" width="16" style="display:none; margin-left: 8px;">
+					</td>
+				</tr>
+			</tbody></table>
+        </td>
+		<td width="16" valign="middle">
+			<img id="botaoLimpar_secoes" src="/cjsg/imagens/spw/botLimpar.gif" class="treeSelect_botaoHabilitado" height="17" width="16" border="0" title="Limpa campo" onmouseout="IH_mOut(this)" onmouseover="IH_mOver(this)"><img src="/cjsg/imagens/spw/botLimpar-d.gif" class="treeSelect_botaoDesabilitado" height="17" width="16" border="0" style="display:none">
+		</td>
+		
+		
+    </tr>
+</tbody></table>
+<script>
+	(function($) {
+				
+		var bindTreeSelect = function() {
+			var options = {
+				campoId: 'secoes',
+				treeSelectId: 'secaoId',
+				url: '/cjsg/secaoTreeSelect.do',
+				processandoImgUrl: '/cjsg/imagens/spw/processandoNovo.gif',
+				width: 600,
+				expectedHeight: 400,
+				reload: '',
+				mostrarBotoesSelecaoRapida: true
+			};
+
+			$.saj.tree.updateSelectionText(options);
+			
+			$('#botaoProcurar_secoes').bind('click', options, $.saj.tree.onPopupEvent);
+			$('#botaoLimpar_secoes').bind('click', options, $.saj.tree.onClearSelection);
+			
+			
+		};
+
+		bindTreeSelect();
+
+		
+		
+	})(jQuery);
+</script>
+	
+
+	
+	
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+				
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="cjsg.consultaCompleta.label.dtJulgamento" class="" style="float:left;font-weight:bold;">Data do julgamento</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	<table cellpadding="0" cellspacing="0" border="0" width="600">
+		<tbody><tr>
+			<td>
+				
+				
+				
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
+
+
+<style>
+	/* remove borda vermelha de elementos required */
+	input:invalid {
+		box-shadow:none;
+	}
+</style>
+
+<script type="text/javascript">
+	(function($){
+		$(function() {
+			var saj = $.saj;
+			var id = 'iddados.dtJulgamentoInicio';
+			var idObjetoReferencia = '#' + id;
+			if ('' !== '' && !false) {
+				$(idObjetoReferencia).registrarTooltip({
+					conteudoTooltip: '',
+					posicaoTooltip: 'direita',
+					objReferenciaPosicaoTooltip:$(idObjetoReferencia)
+				});
+			}
+			//remove comportamento de exibir mensagem de erro típica do html5
+			$('form:visible').attr('novalidate','');
+			if (''){
+				$(idObjetoReferencia).attr('aria-required','true').attr('required','');
+			}
+		});		
+	})(jQuery);
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+	
+	
+	
+		<span id="dtJulgamentoInicio">
+		
+	
+	
+	<input type="text" name="dados.dtJulgamentoInicio" size="" value="" formattype="DATE" formato="" obrigatorio="" rotulo="(dd/mm/aaaa) " onkeypress="CD_KPS(this, event);" onblur="CD_BLR(this);" onkeydown="CD_KDN(this, event);" onmousemove="CD_MMOV(this, event);" onmouseout="CD_MOUT(this, event);" onmouseover="CD_MOV(this, event);" onfocus="CD_OFC(this, event);" style="" class="spwCampoTexto " id="iddados.dtJulgamentoInicio" title="" alt="">
+		
+	
+	
+	
+		
+	    
+    
+	
+	
+	
+		
+	
+	
+	
+	
+		</span>
+	
+
+
+
+
+
+							até
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
+
+
+<style>
+	/* remove borda vermelha de elementos required */
+	input:invalid {
+		box-shadow:none;
+	}
+</style>
+
+<script type="text/javascript">
+	(function($){
+		$(function() {
+			var saj = $.saj;
+			var id = 'iddados.dtJulgamentoFim';
+			var idObjetoReferencia = '#' + id;
+			if ('' !== '' && !false) {
+				$(idObjetoReferencia).registrarTooltip({
+					conteudoTooltip: '',
+					posicaoTooltip: 'direita',
+					objReferenciaPosicaoTooltip:$(idObjetoReferencia)
+				});
+			}
+			//remove comportamento de exibir mensagem de erro típica do html5
+			$('form:visible').attr('novalidate','');
+			if (''){
+				$(idObjetoReferencia).attr('aria-required','true').attr('required','');
+			}
+		});		
+	})(jQuery);
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+	
+	
+	
+		<span id="dtJulgamentoFim">
+		
+	
+	
+	<input type="text" name="dados.dtJulgamentoFim" size="" value="" formattype="DATE" formato="" obrigatorio="" rotulo="(dd/mm/aaaa) " onkeypress="CD_KPS(this, event);" onblur="CD_BLR(this);" onkeydown="CD_KDN(this, event);" onmousemove="CD_MMOV(this, event);" onmouseout="CD_MOUT(this, event);" onmouseover="CD_MOV(this, event);" onfocus="CD_OFC(this, event);" style="" class="spwCampoTexto " id="iddados.dtJulgamentoFim" title="" alt="">
+		
+	
+	
+	
+		
+	    
+    
+	
+	
+	
+		
+	
+	
+	
+	
+		</span>
+	
+
+
+
+
+
+							<span id="dtJulgamentoFormato"> 
+								(dd/mm/aaaa) 
+							</span>
+					
+				
+			</td>
+		</tr>
+	  </tbody></table>
+	
+	
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+	
+				
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="cjsg.consultaCompleta.label.dtPublicacao" class="" style="float:left;font-weight:bold;">Data de publicação</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	<table cellpadding="0" cellspacing="0" border="0" width="600">
+		<tbody><tr>
+			<td>
+				
+				
+				
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
+
+
+<style>
+	/* remove borda vermelha de elementos required */
+	input:invalid {
+		box-shadow:none;
+	}
+</style>
+
+<script type="text/javascript">
+	(function($){
+		$(function() {
+			var saj = $.saj;
+			var id = 'iddados.dtPublicacaoInicio';
+			var idObjetoReferencia = '#' + id;
+			if ('' !== '' && !false) {
+				$(idObjetoReferencia).registrarTooltip({
+					conteudoTooltip: '',
+					posicaoTooltip: 'direita',
+					objReferenciaPosicaoTooltip:$(idObjetoReferencia)
+				});
+			}
+			//remove comportamento de exibir mensagem de erro típica do html5
+			$('form:visible').attr('novalidate','');
+			if (''){
+				$(idObjetoReferencia).attr('aria-required','true').attr('required','');
+			}
+		});		
+	})(jQuery);
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+	
+	
+	
+		<span id="dtPublicacaoInicio">
+		
+	
+	
+	<input type="text" name="dados.dtPublicacaoInicio" size="" value="" formattype="DATE" formato="" obrigatorio="" rotulo="(dd/mm/aaaa) " onkeypress="CD_KPS(this, event);" onblur="CD_BLR(this);" onkeydown="CD_KDN(this, event);" onmousemove="CD_MMOV(this, event);" onmouseout="CD_MOUT(this, event);" onmouseover="CD_MOV(this, event);" onfocus="CD_OFC(this, event);" style="" class="spwCampoTexto " id="iddados.dtPublicacaoInicio" title="" alt="">
+		
+	
+	
+	
+		
+	    
+    
+	
+	
+	
+		
+	
+	
+	
+	
+		</span>
+	
+
+
+
+
+
+						até
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
+
+
+<style>
+	/* remove borda vermelha de elementos required */
+	input:invalid {
+		box-shadow:none;
+	}
+</style>
+
+<script type="text/javascript">
+	(function($){
+		$(function() {
+			var saj = $.saj;
+			var id = 'iddados.dtPublicacaoFim';
+			var idObjetoReferencia = '#' + id;
+			if ('' !== '' && !false) {
+				$(idObjetoReferencia).registrarTooltip({
+					conteudoTooltip: '',
+					posicaoTooltip: 'direita',
+					objReferenciaPosicaoTooltip:$(idObjetoReferencia)
+				});
+			}
+			//remove comportamento de exibir mensagem de erro típica do html5
+			$('form:visible').attr('novalidate','');
+			if (''){
+				$(idObjetoReferencia).attr('aria-required','true').attr('required','');
+			}
+		});		
+	})(jQuery);
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+	
+	
+	
+		<span id="dtPublicacaoFim">
+		
+	
+	
+	<input type="text" name="dados.dtPublicacaoFim" size="" value="" formattype="DATE" formato="" obrigatorio="" rotulo="(dd/mm/aaaa) " onkeypress="CD_KPS(this, event);" onblur="CD_BLR(this);" onkeydown="CD_KDN(this, event);" onmousemove="CD_MMOV(this, event);" onmouseout="CD_MOUT(this, event);" onmouseover="CD_MOV(this, event);" onfocus="CD_OFC(this, event);" style="" class="spwCampoTexto " id="iddados.dtPublicacaoFim" title="" alt="">
+		
+	
+	
+	
+		
+	    
+    
+	
+	
+	
+		
+	
+	
+	
+	
+		</span>
+	
+
+
+
+
+
+						<span id="dtPublicacaoFormato">
+							(dd/mm/aaaa) 
+						</span>
+					
+				
+			</td>
+		</tr>
+	  </tbody></table>
+	
+	
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+					
+					
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="cjsg.consultaCompleta.label.origem" class="" style="float:left;font-weight:bold;">Origem</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<tbody><tr>
+			<td>
+				
+				
+				
+						<input type="checkbox" name="dados.origensSelecionadas" value="T" id="origem2grau" checked="checked" style="">
+						<label for="origem2grau">
+							2° grau
+						</label>
+						<input type="checkbox" name="dados.origensSelecionadas" value="R" id="origemRecursal" style="">
+						<label for="origemRecursal">
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+		
+		
+					
+
+
+		
+
+
+Colégios Recursais
+
+
+						</label>
+					
+				
+			</td>
+		</tr>
+	  </tbody></table>
+	
+	
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="cjsg.consultaCompleta.label.tpDecisao" class="" style="float:left;font-weight:bold;">Tipo de Publicação</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<tbody><tr>
+			<td>
+				
+				
+				
+						<div id="linhaTipoDecisao">
+							
+								<input type="checkbox" name="tipoDecisaoSelecionados" value="A" checked="checked" id="Acheckbox" style="">
+								<label for="Acheckbox">
+									Acórdãos
+								</label>
+							
+								<input type="checkbox" name="tipoDecisaoSelecionados" value="H" id="Hcheckbox" style="">
+								<label for="Hcheckbox">
+									Homologações de Acordo
+								</label>
+							
+								<input type="checkbox" name="tipoDecisaoSelecionados" value="D" id="Dcheckbox" style="">
+								<label for="Dcheckbox">
+									Decisões Monocráticas
+								</label>
+							
+						</div>
+					
+				
+			</td>
+		</tr>
+	  </tbody></table>
+	
+	
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+	
+
+
+
+
+
+
+	
+	
+		
+		
+			
+				<tr class="">
+				
+			
+		
+		
+		
+		  <td id="" width="150" valign="">
+			
+			  
+		  	  
+				
+				<label for="cjsg.consultaCompleta.label.ordenar" class="" style="float:left;font-weight:bold;">Ordenar por</label><div style="text-align:right;font-weight:bold;">: </div>
+			  
+		      
+		    
+		  </td>
+		
+		
+		
+		  
+		  
+		    <td valign="">
+		  
+		
+			
+	
+	
+	
+	
+	
+	<table cellpadding="0" cellspacing="0" border="0" width="600">
+		<tbody><tr>
+			<td>
+				
+				
+				
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+
+
+
+	
+
+
+
+	
+
+
+
+
+
+	<span id="">
+		<label for="id_cjsg.consultaCompleta.label.ordenardtPublicacao">
+			<input type="radio" name="dados.ordenarPor" id="id_cjsg.consultaCompleta.label.ordenardtPublicacao" value="dtPublicacao" style="vertical-align: middle;" onclick="" class="" title="" checked="">
+			Data de publicação
+		</label>
+		
+	</span>
+
+
+						
+						
+						
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+
+
+
+	
+
+
+
+
+
+
+
+	<span id="">
+		<label for="id_cjsg.consultaCompleta.label.ordenarRelevancia">
+			<input type="radio" name="dados.ordenarPor" id="id_cjsg.consultaCompleta.label.ordenarRelevancia" value="relevancia" style="vertical-align: middle;" onclick="" class="" title="">
+			Relevância 
+		</label>
+		
+	</span>
+
+
+					
+				
+			</td>
+		</tr>
+	  </tbody></table>
+	
+	
+	
+	
+	
+	
+		
+		</td>
+		
+			</tr>
+		
+	
+	
+
+
+
+									
+				
+		</tbody></table>
+	</div>
+	
+	
+	
+
+
+				
+				
+				
+
+
+
+
+
+
+
+
+
+
+
+	<table id="" class="secaoBotoesBody" width="100%" style="" cellpadding="2" cellspacing="0" border="0">
+		<tbody><tr>
+ 			
+ 				<td width="150">&nbsp;</td>
+ 			
+			<td align="">
+			
+			    	
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+	
+	<input type="submit" name="pbSubmit" value="Pesquisar" onclick="" onmouseover="B_mOver(this);" onmouseout="B_mOut(this);" class="spwBotaoDefault " id="pbSubmit" style="">
+
+
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+	
+	
+	    
+	<input type="button" name="pbLimpar" value="Limpar" onclick="" onmouseover="B_mOver(this);" onmouseout="B_mOut(this);" class="spwBotao" id="pbLimpar" style="">
+
+
+				
+			</td>
+		</tr>
+	</tbody></table>
+
+
+				
+				
+				
+			
+</form>

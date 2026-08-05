@@ -62,6 +62,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
+| `tjam` | TJ do Amazonas | AM | `CLAUDE-TJAM.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg), mas a **base congelou em jan/2025**; inteiro teor 🔴 reCAPTCHA e **sem permalink**. A ementa íntegra vem na busca |
 | `tjce` | TJ do Ceará | CE | `CLAUDE-TJCE.md` | 🟢 OK (API direta, sem browser — SJURIS, **SAJ + PJe juntos**; **não** use o e-SAJ) |
 | `tjdft` | TJ do DF e Territórios | DF | `CLAUDE-TJDFT.md` | 🟢 OK (**API pública oficial**, sem browser) |
 | `tjgo` | TJ de Goiás | GO | `CLAUDE-TJGO.md` | 🟢 OK (HTTP direto, sem browser) |
@@ -178,6 +179,36 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   A base é **só 2º grau + Turmas Recursais do SAJ**: não tem 1º grau e não cobre o
   acervo do e-Proc (o TJAC roda os dois sistemas). Começa por volta de **2000**.
   Matéria federal com origem no AC → `trf1`
+- "TJAM" / "Amazonas estadual" / "Manaus" → `tjam` → leia `CLAUDE-TJAM.md`.
+  🔴 **A BASE CONGELOU NO COMEÇO DE 2025 — diga isso antes de entregar resultado.**
+  Medido: por data de julgamento, 2024 = 9.023 e 2025 = 62; **2026 = 0**; o
+  documento mais recente é de publicação 06/10/2025. Confirmado em três cortes
+  independentes. Pedido de jurisprudência recente do AM devolve 0, e esse zero
+  **não** é ausência de jurisprudência. A base cobre bem **2013–2024**; para
+  matéria federal com origem no AM use `trf1`. **Não há substituto estadual**
+  (Projudi atrás de WAF, PJe não responde, não existe e-Proc).
+  🔴 **No Amazonas o Juizado é 7,7× a Justiça Comum** (252.381 × 32.755 para o
+  mesmo termo) — a inversão do TJAC levada ao extremo. O default `--origem comum`
+  esconde 89% do acervo em matéria de consumo. Em dano moral, telefonia, banco,
+  plano de saúde e transporte aéreo, **ofereça as duas** (`--origem turmas` e
+  `--origem comum`). ⚠️ o filtro se chama "Colégios Recursais" na tela, mas o
+  órgão que volta nos dados é `2ª Turma Recursal`.
+  ⚠️ **Use `-dpi/-dpf` (publicação), não `-di/-df` (julgamento)**: 481 julgados
+  carregam a data-sentinela `01/06/2004` — e numa amostra das 30 publicações
+  mais recentes, 11 estavam assim. Filtrar por julgamento descarta os documentos
+  recentes em silêncio. O crawler avisa; repasse o aviso.
+  ⚠️ **O inteiro teor está atrás de reCAPTCHA — só o download; a busca é livre.**
+  O que se tem é a ementa íntegra (média 2.589 chars em acórdão), que já vem na
+  busca. **Não a apresente como se fosse o acórdão inteiro.**
+  ⚠️ **NÃO EXISTE PERMALINK.** Nunca invente link de acórdão do TJAM — a
+  verificação é por reconsulta: `./bin/jur tjam -n "<nº>"`.
+  ⚠️ **NÃO avise sobre acento aqui** — o índice normaliza (`usucapiao` e
+  `usucapião` dão 340 os dois). O que zera a busca sem erro é `ADJ`, `PROX` e
+  `$`; e `NÃO` acentuado **não** é o operador de exclusão (escreva `NAO`).
+  ⚠️ As abas `homologacao` e `monocratica` são **quase vazias** (193 monocráticas
+  contra 472.094 acórdãos). Isso é o cjsg não indexar, não o tribunal não decidir.
+  A base é **só 2º grau + Colégios Recursais do SAJ**: não tem 1º grau (o `cjpg`
+  não existe aqui) e não cobre o Projudi
 - "TJMS" / "Mato Grosso do Sul estadual" / "Campo Grande" → `tjms` → leia `CLAUDE-TJMS.md`.
   Juizado Especial / Turma Recursal sul-mato-grossense → `tjms --origem turmas`; Justiça
   Comum 2º grau é `--origem comum` (default). A distinção é obrigatória e está medida

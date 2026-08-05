@@ -1,0 +1,199 @@
+TJAM — 01-cjsg — §18–20 O QUE VEM DEPOIS DA BUSCA
+==================================================
+
+Seção produzida pela skill `browser-post-search`, em 05/08/2026.
+Prints: `10.01-resultados-topo.png`, `10.02-resultados-rodape.png`,
+`10.03-resultados-full.png`. HTML do card: `10-card-resultado.html`.
+
+## §18.1 — Onde o resultado aparece
+
+| Pergunta | Resposta medida |
+|---|---|
+| Mesma página, outra rota ou nova aba? | **Outra rota**, mesma aba: `POST /cjsg/consultaCompleta.do` → `/cjsg/resultadoCompleta.do;jsessionid=…` |
+| A URL de resultado é reutilizável? | **NÃO.** Colada em aba limpa (contexto sem cookies) devolve HTTP 200 com o **formulário vazio**, 0 cards. O estado da busca vive na sessão |
+| Os controles de busca somem? | **NÃO** — o formulário inteiro continua na tela de resultado (medido: `#iddados.buscaEmenta` presente). O refinamento reenvia o estado todo |
+| Abre popup/modal? | Só ao clicar na ementa (§19.2). A listagem em si não |
+| O total aparece? | **SIM**, em dois lugares: o texto `Resultados 1 a 10 de 32755` e o hidden `<input id="totalResultadoAba-A" type="hidden" value="32755" />` |
+
+⚠️ O hidden usa **`id=`**, não `name=` (`<input id="totalResultadoAba-A"
+type="hidden" value="32755" />`). Um regex ancorado em `name="totalResultado…"`
+não casa nada e o crawler lê total 0 com HTTP 200 e cards válidos na tela — o
+tipo de bug que não aparece em teste feliz. Os `TJMSNavigator`/`TJACNavigator` já
+usam a forma com `id`; o `TJAMNavigator` segue a mesma.
+
+## §18.2 — Anatomia do card
+
+Cada julgado é um `<tr class="fundocinza1">`. Metadados que aparecem **sem
+clicar nada**:
+
+| Campo na tela | Como sai no repo | Exemplo medido |
+|---|---|---|
+| nº do processo (é o link) | `processo` / `numeroProcesso` | `0708349-62.2020.8.04.0001` |
+| `(N ocorrências encontradas no inteiro teor)` | `ocorrenciasInteiroTeor` | `42` |
+| `Classe/Assunto` | `classe` + `assunto` (split no `/`) | `Apelação Cível` / `Indenização por Dano Material` |
+| `Relator(a)` | `relator` | `Délcio Luís Santos` |
+| `Comarca` | `comarca` | `Manaus` |
+| `Órgão julgador` | `orgaoJulgador` | `Segunda Câmara Cível` |
+| `Data do julgamento` | `dataJulgamento` | `25/11/2024` ⚠️ ver §4c do 01-formulario |
+| `Data de publicação` | `dataPublicacao` | `18/09/2025` |
+| — | `cdAcordao` (atributo do link) | `3363939` ← **identifica o documento** |
+
+### O texto do card é TRECHO; a ementa íntegra está no MESMO HTML
+
+Medido no mesmo documento (cdAcordao 3363939):
+
+```
+texto visível do card         ->   697 chars (corta no meio: "…SENTENÇA ")
+div#textAreaDados_3363939     -> 2.877 chars (ementa completa + rodapé)
+ementa depois de separar      -> 2.234 chars
+```
+
+**Não há `<b>`/`<mark>` no card** (medido: `false`) — o portal não destaca o
+termo buscado, então o trecho não é "highlight", é truncamento simples.
+
+⚠️ **Chamar os 697 chars de "ementa" seria citar recorte como se fosse o todo.**
+O `TJAMNavigator` ignora o texto do card e lê sempre o `div#textAreaDados_<id>`.
+
+## §18.3 — Medido em TRÊS tipos de documento
+
+Exigência da skill: card dissecado em 2+ tipos. Foram três.
+
+| Tipo | Print / HTML | card (chars) | ementa íntegra min/média/máx |
+|---|---|---|---|
+| Acórdão 2º grau | `10.01-*`, `10-card-resultado.html` | 697 | 543 / **2.589** / 3.700 |
+| Colégio Recursal | `11.01-*`, `11-card-colegio-recursal.html` | 684 | 291 / **1.979** / 7.338 |
+| Decisão Monocrática | `12.01-*`, `12-card-monocratica.html` | 718 | 121 / **808** / 3.628 |
+
+✅ **Os três têm ementa de verdade e citação extraível (10/10 em cada).**
+Diferente do TJMG, onde 3 dos 4 tipos vinham sem ementa — aqui o card é o mesmo
+molde nos três, com os mesmos rótulos. A monocrática é a mais curta (média 808),
+mas não é vazia.
+
+⚠️ O `orgaoJulgador` de um documento de **Colégio Recursal** vem como
+`2ª Turma Recursal` — não contém a palavra "Colégio", que só aparece no rótulo
+do checkbox. Ver `07-origem.txt`.
+
+## §19 — A escada até o documento
+
+| Degrau | O que foi medido |
+|---|---|
+| **Ementa (link `a.textoSemFormatacao`)** | Abre **modal** (`#popupModalDiv`). **A URL não muda.** ⇒ não há permalink por aqui |
+| **XHR desse clique** | 🔴 **NENHUM.** O texto já estava no HTML da busca (`div#textAreaDados_<cdAcordao>`, 10 deles na página, um por card) |
+| **Inteiro teor (link `a.downloadEmenta`)** | `GET /cjsg/getArquivo.do?cdAcordao=<id>&cdForo=<foro>` → 🔴 **reCAPTCHA v2**, nunca PDF. Ver §14 |
+| **Consulta processual** | Não há link do card para o `cposg`. Fora do escopo |
+| **Copiar citação** | Não existe botão. O rodapé de citação vem **dentro** do bloco de ementa (§19.1) |
+
+✅ **MELHOR CASO: o texto já veio no payload da busca.** Não escreva um
+downloader de ementa — seria um request por documento à toa. O que o
+`--fetch-inteiro-teor` faz é gravar em disco o que já está em memória.
+
+### §19.1 — O rodapé de citação, e por que o regex do TJAC não serve
+
+O bloco `textAreaDados` termina com o rodapé de citação. Formato do TJAM:
+
+```
+(Apelação Cível Nº 0708349-62.2020.8.04.0001; Relator (a): Délcio Luís Santos;
+ Comarca: Manaus/AM; Órgão julgador: Segunda Câmara Cível;
+ Data do julgamento: 25/11/2024; Data de registro: 18/09/2025)
+```
+
+Três diferenças contra os irmãos:
+
+1. **Abre pela CLASSE processual**, não por `Relator`. O regex do TJAC ancora em
+   `\(\s*Relator\s*\(a\)` e **não casa nada aqui**.
+2. A comarca traz a **UF junto** (`Manaus/AM`); no TJAC é só `Rio Branco`.
+3. `Relator (a)` tem **parênteses aninhados**, então "pegar o último parêntese"
+   com um regex ingênuo quebra no lugar errado.
+
+O `TJAMNavigator.separarCitacao` acha `Data de registro:` e caminha para trás
+contando profundidade de parênteses até o `(` que abre o grupo — assim o prefixo
+pode variar de classe para classe sem quebrar. Medido: **10/10 citações
+extraídas** e nenhuma ementa com o rodapé vazado dentro.
+
+## §19.2 — Formato do documento
+
+```
+Ementa (o que se consegue):  HTML, já no payload da busca, 121–7.338 chars úteis
+                             conforme o tipo (§18.3). Vem no padrão estruturado
+                             do CNJ: I. CASO EM EXAME / II. QUESTÃO EM DISCUSSÃO /
+                             III. RAZÕES DE DECIDIR / IV. DISPOSITIVO E TESE
+Inteiro teor (o que falta):  PDF via getArquivo.do — 🔴 BLOQUEADO (reCAPTCHA)
+Precisa de sessão?           a ementa NÃO (vem na resposta do POST)
+Precisa de captcha?          só o download
+Já veio na busca?            ✅ SIM (a ementa; o relatório/voto não)
+```
+
+⚠️ **Assimetria do bloqueio, registrada em separado como manda a skill:**
+
+```
+BUSCA    -> livre. Sem grecaptcha na tela, POST direto responde, sem cookie prévio.
+DOWNLOAD -> reCAPTCHA v2, sitekey 6LcnC3cdAAAAABWUEy-SzR8kMrk3FA9llI6hU934
+            HTTP 200, text/html;charset=UTF-8, ~10,7 KB, nunca %PDF-
+            "Para acessar o conteúdo do Acórdão, por favor digite o código da figura"
+            A SESSÃO DA BUSCA NÃO DESTRAVA (testado com JSESSIONID ativo e
+            cdAcordao válido: mesma tela, 10.652 bytes)
+```
+
+## §20 — Paginação e profundidade
+
+```
+Resultados por página:  10 (fixo — não há combo de tamanho)
+Parâmetro:              GET /cjsg/trocaDePagina.do?tipoDeDecisao=<A|H|D>&pagina=<N>
+Depende de sessão?      SIM. Sem JSESSIONID -> HTTP 404 (773 bytes)
+Total exposto:          hidden totalResultadoAba-<tipo> + texto "de 32755"
+Total é exato?          ✅ EXATO, provado por aritmética (abaixo)
+Profundidade:           sem teto de offset observado
+```
+
+### O total é EXATO, não saturado — prova aritmética
+
+```
+total declarado          = 32.755
+páginas de 10            = 3.275 cheias + resto
+página 3.276 (a última)  = 5 cards        <- medido
+3.275 × 10 + 5           = 32.755          ✅ fecha
+```
+
+Páginas 2, 3, 10, 100, 1.000 e 3.276 foram todas requisitadas: as cinco
+primeiras devolveram 10 ids cada, a última devolveu 5. Não há teto redondo
+(1.000/10.000) — o contador não está saturado.
+
+### Estabilidade: MEDIDA, não presumida
+
+A mesma página 2 foi requisitada **3 vezes** na mesma sessão e os 10 ids vieram
+**idênticos nas três** (`new Set(amostras).size === 1`). A ordenação por data de
+publicação tem desempate suficiente. Diferente do TJRJ/TJMG, aqui não é preciso
+fixar nó por cookie para ter paginação reprodutível — mas a sessão **é**
+obrigatória, por outro motivo (o 404).
+
+### ⚠️ `trocaDePagina.do` pagina a ÚLTIMA busca da sessão
+
+A URL só carrega `tipoDeDecisao` e `pagina` — **não identifica a busca**. Duas
+buscas intercaladas no mesmo JSESSIONID e a paginação devolve as páginas da
+busca errada, com HTTP 200 e cards perfeitamente válidos. Mesma armadilha do
+TJAC. O `TJAMCrawler` sempre refaz `buscar()` antes de `paginar()`, e o
+`TJAMNavigator.paginar()` aceita uma `assinaturaEsperada` que transforma
+paginação órfã em erro em vez de dado errado (coberto por teste).
+
+## §20.1 — Permalink e identidade do documento
+
+🔴 **NÃO EXISTE PERMALINK NO TJAM.** Os três candidatos foram testados em aba
+limpa (contexto Playwright sem cookies), 05/08/2026:
+
+```
+/cjsg/resultadoCompleta.do                    -> 200, formulário vazio, 0 cards
+/cjsg/getArquivo.do?cdAcordao=…&cdForo=…      -> 200, tela do reCAPTCHA
+popup "ementa sem formatação"                 -> modal, a URL NÃO muda
+```
+
+**Nunca invente link de acórdão do TJAM.** A verificação é por reconsulta:
+`./bin/jur tjam -n "<nº>"`.
+
+**Quem identifica o documento é o `cdAcordao`**, não o nº do processo — um
+processo costuma ter mais de um julgado. O `cdAcordao` é o atributo do link
+`a.downloadEmenta` e é também o sufixo do `div#textAreaDados_<id>`, o que amarra
+card e ementa sem ambiguidade.
+
+⚠️ O identificador aceito na **consulta por número** é outro campo
+(`dados.nuProcOrigem`, o nº CNJ) — o `cdAcordao` não é consultável pela tela.
+São chaves diferentes para propósitos diferentes.

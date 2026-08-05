@@ -1,0 +1,43 @@
+TJAM — 01-cjsg — §11 CARD DE COLÉGIO RECURSAL (2º tipo de documento)
+=====================================================================
+
+Print: `11.01-resultados-colegio-recursal.png`
+HTML do card: `11-card-colegio-recursal.html`
+
+Busca: `dano moral` em `dados.buscaEmenta`, origem **R**, tipo **A**.
+Total: **252.381** (contra 32.755 do 2º grau — ver `07-origem.txt`).
+
+## O card é o MESMO molde do 2º grau
+
+Mesmos rótulos, mesma estrutura `<tr class="fundocinza1">`, mesmo
+`div#textAreaDados_<cdAcordao>` com a ementa íntegra. Não há campo que exista
+num e falte no outro — que é exatamente o que a skill `browser-post-search`
+manda conferir, porque foi assim que o TJMG saiu errado.
+
+Exemplo medido:
+
+```
+0426326-04.2024.8.04.0001   (10 ocorrências encontradas no inteiro teor do documento)
+Classe/Assunto: Recurso Inominado Cível / Cláusulas Abusivas
+Relator(a): Luciana da Eira Nasser
+Comarca: Manaus
+Órgão julgador: 2ª Turma Recursal
+Data do julgamento: 06/10/2025
+Data de publicação: 06/10/2025
+```
+
+texto visível do card: **684 chars** (trecho truncado)
+ementa íntegra: min 291 / média **1.979** / máx 7.338 chars (amostra de 10)
+citação extraída: **10/10**
+
+## ⚠️ "Colégio Recursal" é o rótulo do FILTRO; o card diz "Turma Recursal"
+
+O checkbox se chama **Colégios Recursais** (`origemRecursal`), mas o
+`orgaoJulgador` que volta é `2ª Turma Recursal`. Os dois vocabulários convivem
+na mesma tela. Não procure a string "Colégio" nos resultados — não está lá.
+
+## Este é o documento mais recente que a base tem
+
+`Data de publicação: 06/10/2025` é a publicação mais nova encontrada em todo o
+mapeamento (a busca vem ordenada por publicação decrescente, então o primeiro
+card desta busca é o teto da base). Ver §17 de `01-formulario-busca.txt`.

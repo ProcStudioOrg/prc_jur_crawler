@@ -1,0 +1,48 @@
+TJAM — 01-cjsg — §14 A ABA "HOMOLOGAÇÃO DE ACORDO" VAZIA
+=========================================================
+
+Print: `14.01-resultados-homologacao-vazia.png`
+
+Busca: `dano moral` em `dados.buscaEmenta`, origem **T**, tipo **H**.
+
+## Por que esta seção existe
+
+Porque `0` aqui significa uma coisa no TJAM e **outra** no TJAC, e o número é o
+mesmo. Sem esta medição, um agente que leia `totalResultadoAba-H = 0` nos dois
+tribunais tira a mesma conclusão para dois fatos diferentes:
+
+| | TJAC | **TJAM** |
+|---|---|---|
+| O checkbox `H` existe no formulário? | **não** | **sim** (`id="Hcheckbox"`, "Homologações de Acordo") |
+| `totalResultadoAba-H` | `0` | `0` |
+| O que o 0 significa | **aba inexistente** se passando por aba vazia | **acervo genuinamente vazio** |
+
+## O que a tela devolve
+
+```
+cards renderizados:                 0
+linha "Resultados 1 a N de M":      NÃO APARECE
+totalResultadoAba-H:                0
+```
+
+⚠️ Repare que isto é **diferente da busca recusada** por estouro do intervalo de
+datas (§4b de `01-formulario-busca.txt`), que devolve o **formulário inteiro de
+volta** e **nenhum** hidden `totalResultadoAba-*`. Os dois casos dão "zero
+resultados" para quem só conta cards, e o `TJAMNavigator.parsear()` os separa
+pelo campo `formularioDeVolta`:
+
+```
+aba H vazia (aqui)      -> totais = {H: 0}   formularioDeVolta = false
+intervalo > 1 ano       -> totais = {}       formularioDeVolta = true
+```
+
+## Medido nas duas origens
+
+`H = 0` com origem **T** e com origem **R**, em todas as buscas do mapeamento.
+Não é o termo: `dano moral`, `recurso`, `agravo` e `apelação` dão o mesmo.
+
+## Como dizer isso ao usuário
+
+Não diga "não há homologação de acordo no Amazonas" — não foi isso que se mediu.
+Diga que **o cjsg não indexa esse tipo de decisão**. É outra afirmação, e é a
+verdadeira.

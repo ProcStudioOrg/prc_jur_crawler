@@ -1,0 +1,75 @@
+TJAM — 01-cjsg — §8 TIPO DE PUBLICAÇÃO (as abas do resultado)
+=============================================================
+
+Prints: `08.01-checkbox-tipo-publicacao.png`, `14.01-resultados-homologacao-vazia.png`
+
+## O elemento
+
+Três checkboxes com o mesmo `name`. Só "Acórdãos" vem marcado.
+
+```html
+<input type="checkbox" name="tipoDecisaoSelecionados" id="Acheckbox" value="A" checked> <!-- Acórdãos -->
+<input type="checkbox" name="tipoDecisaoSelecionados" id="Hcheckbox" value="H">         <!-- Homologações de Acordo -->
+<input type="checkbox" name="tipoDecisaoSelecionados" id="Dcheckbox" value="D">         <!-- Decisões Monocráticas -->
+```
+
+Cada tipo pedido vira uma **aba** no resultado, com seu próprio total
+(`totalResultadoAba-<tipo>`) e sua própria paginação (`trocaDePagina.do?
+tipoDeDecisao=<tipo>&pagina=N`).
+
+## ⚠️ AS TRÊS ABAS EXISTEM — MAS DUAS SÃO PRATICAMENTE VAZIAS
+
+Esta é a divergência mais fácil de documentar errado. No TJAC a aba `H` **não
+existe no formulário** e enviá-la responde `totalResultadoAba-H = 0` — aba
+inexistente se passando por aba vazia. **No TJAM o checkbox existe de verdade**,
+e o zero é acervo vazio de verdade. São diagnósticos diferentes para o mesmo
+número.
+
+Medido em 05/08/2026, `dano moral` em `dados.buscaEmenta`:
+
+```
+                       origem T        origem R
+tipo A (acórdão)         32.755         252.381
+tipo H (homologação)          0               0
+tipo D (monocrática)          3               9
+```
+
+E com termos amplos (origens T+R), para descartar que fosse o termo:
+
+```
+                    tipo A       tipo D
+recurso            472.094          193
+agravo              61.228           96
+apelação           115.604          134
+```
+
+**As monocráticas são ~0,04% do acervo.** No TJAC elas são um acervo de verdade;
+aqui, não. E `H` deu **0 em todas as medições, nas duas origens** — a aba está no
+formulário e o acervo está vazio.
+
+⚠️ Ao responder um usuário: não diga que "o TJAM não publica decisões
+monocráticas" (não foi isso que se mediu) nem que "não há homologação de acordo
+no Amazonas". O que está medido é que **o cjsg não as indexa em quantidade
+relevante**.
+
+## Prova visual de que a aba H vazia não devolve tela de erro
+
+`14.01-resultados-homologacao-vazia.png` — busca com origem T e tipo H: a
+página carrega, **0 cards**, e **nem a linha "Resultados 1 a N de M" aparece**.
+É diferente da busca recusada por intervalo de datas (§4b), que devolve o
+formulário inteiro de volta.
+
+## CLI
+
+```
+-t acordao       -> A   (default)
+-t homologacao   -> H
+-t monocratica   -> D
+-t todos         -> A, H e D
+```
+
+## Rótulo humano no repo
+
+```js
+{ A: 'Acórdão', H: 'Homologação de Acordo', D: 'Decisão Monocrática' }
+```

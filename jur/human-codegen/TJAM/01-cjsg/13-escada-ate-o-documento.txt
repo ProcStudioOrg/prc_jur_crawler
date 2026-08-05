@@ -1,0 +1,76 @@
+TJAM — 01-cjsg — §13/§14 A ESCADA ATÉ O DOCUMENTO
+==================================================
+
+Prints: `13.01-modal-ementa-sem-formatacao.png`,
+        `13.02-ementa-expandida-no-card.png`,
+        `13.03-inteiro-teor-bloqueado-captcha.png`
+
+## Degrau 1 — Ementa sem formatação: modal, e SEM request
+
+Clicar em `a.textoSemFormatacao` abre `#popupModalDiv` com a ementa íntegra
+(2.463 chars no documento medido).
+
+🔴 **O clique não dispara NENHUM XHR** (medido: lista de requests vazia depois
+do clique). O texto já estava no HTML da busca, em `div#textAreaDados_<cdAcordao>`
+— **10 desses divs por página, um por card**.
+
+⚠️ **A URL não muda ao abrir o modal.** Logo, este caminho **não** dá permalink.
+
+Consequência para o crawler: **não escreva um downloader de ementa.** Seria um
+request por documento para buscar o que já está em memória. É a lição do TJDFT
+aplicada aqui.
+
+## Degrau 2 — O "+" do card
+
+`13.02-ementa-expandida-no-card.png` — o card já traz a ementa parcial visível.
+O toggle é CSS, não carrega nada. Mesmo assim o texto exibido continua **trecho**
+(697 chars contra 2.877 do bloco completo): a expansão visual não equivale à
+ementa íntegra. Use sempre o `textAreaDados`.
+
+## Degrau 3 — 🔴 Inteiro teor: reCAPTCHA v2
+
+Contrato extraído do card (atributos do link `a.downloadEmenta`):
+
+```
+GET https://consultasaj.tjam.jus.br/cjsg/getArquivo.do?cdAcordao=<id>&cdForo=<foro>
+```
+
+Reproduzido **fora do browser**, com e sem a sessão da busca:
+
+```
+HTTP 200  text/html;charset=UTF-8  ~10.700 bytes   (não é PDF: não começa com %PDF-)
+Texto: "Para acessar o conteúdo do Acórdão, por favor digite o código da figura
+        no campo abaixo."
+data-sitekey: 6LcnC3cdAAAAABWUEy-SzR8kMrk3FA9llI6hU934      <- PRÓPRIA do TJAM
+             (a do TJAC é 6LevDTsUAAAAAN6dsn77RReaDKhYAQrOVkTUOgOD — outra)
+```
+
+⚠️ **A sessão da busca NÃO destrava.** Testado com o JSESSIONID ativo da própria
+busca e um `cdAcordao` válido (3363939): mesma tela de captcha, 10.652 bytes.
+**Busca e download foram medidos em separado; um não prova o outro.**
+
+Este repo não automatiza captcha. Consequência prática, e ela é boa:
+**a ementa íntegra já vem no HTML da busca**, então não se perde o texto
+analítico — perde-se o relatório e o voto.
+
+## O que o crawler faz com isso
+
+`TJAMNavigator.inteiroTeor()` **falha com mensagem explícita** em vez de gravar
+o HTML do captcha com nome de acórdão. `--fetch-inteiro-teor` grava a ementa
+íntegra num `.txt` que diz, no corpo do arquivo, que o inteiro teor não veio e
+por quê. `--tentar-pdf` força a tentativa por documento — é o que o `fixer` usa
+para reconferir se o bloqueio caiu.
+
+## §20.1 — Permalink: NÃO EXISTE
+
+Testado em aba limpa (contexto sem cookies):
+
+```
+/cjsg/resultadoCompleta.do                -> 200, formulário vazio, 0 cards
+/cjsg/getArquivo.do?cdAcordao=…&cdForo=…  -> 200, tela do reCAPTCHA
+modal de ementa                           -> sem URL própria
+```
+
+**Nunca invente link de acórdão do TJAM.** A verificação é por reconsulta:
+`./bin/jur tjam -n "<nº>"` — e ela funciona (medido: A=1 para
+`0708349-62.2020.8.04.0001`, com e sem máscara).

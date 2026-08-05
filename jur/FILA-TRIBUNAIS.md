@@ -52,7 +52,7 @@ plugam host + conferem as diferenças. Entradas **medidas em 31/07/2026 15:59**.
 |---|---|---|---|---|
 | 1 | **TJMS** | MS | `https://esaj.tjms.jus.br/cjsg/consultaCompleta.do` → **200** | ok 04/08 |
 | 2 | **TJAC** | AC | `https://esaj.tjac.jus.br/cjsg/consultaCompleta.do` → **200** | ok 04/08 |
-| 3 | **TJAM** | AM | `https://consultasaj.tjam.jus.br/cjsg/consultaCompleta.do` → **200** | pendente |
+| 3 | **TJAM** | AM | `https://consultasaj.tjam.jus.br/cjsg/consultaCompleta.do` → **200** | ok 05/08 |
 | 4 | **TJAL** | AL | `https://www2.tjal.jus.br/cjsg/consultaCompleta.do` → **200** | pendente |
 
 ⚠️ **Ressalvas medidas hoje, não repita o erro do TODO antigo:**
@@ -116,6 +116,46 @@ tribunais que faltam:
 ⚠️ **Pendência declarada do TJAC:** os combos-árvore (classe, assunto, seção)
 **não** foram enumerados — o tempo foi para a descoberta do reCAPTCHA. Existem
 no formulário e o crawler não expõe flags para eles.
+
+📌 **O que o TJAM (feito em 05/08/2026) acrescentou — leia
+[`CLAUDE-TJAM.md`](CLAUDE-TJAM.md).** Só falta o **TJAL** neste bloco, e a lição
+do dia é que **o crawler pode ficar verde e a base estar morta** — medir o
+acervo é parte do mapeamento, não extra:
+
+- 🔴 **MEÇA A DISTRIBUIÇÃO POR ANO ANTES DE FECHAR.** A base do TJAM **congelou
+  em jan/2025** (2024 = 9.023, 2025 = 62, 2026 = **0**; último documento
+  publicado em 06/10/2025). O crawler passa em todo teste feliz e mesmo assim
+  não responde pedido recente. Rode a contagem ano a ano no TJAL.
+- 🔴 **Cuidado com data-sentinela.** No TJAM, 481 julgados têm
+  `Data do julgamento: 01/06/2004` — o **ano de 2004 inteiro é esse único dia** —
+  e **37% das publicações mais recentes** estão nesse balde. Filtrar por
+  julgamento apaga os recentes em silêncio; o campo confiável é publicação.
+  Confira `-di/-df` contra `-dpi/-dpf` antes de escolher o default.
+- **O teto de data é de CALENDÁRIO, não de 364 dias corridos.** Provado por dois
+  intervalos de 366 dias com respostas opostas (`01/03/2023→29/02/2024` aceita,
+  `15/06/2023→15/06/2024` recusada). A regra é `fim ≤ início + 1 ano − 1 dia`.
+  O fatiador de 364 dias do TJAC funciona, mas parte ano bissexto à toa.
+- **Página de 10** (TJAC 20, TJMS 100). Três instalações, três números.
+- **A aba `H` existe no TJAM e é vazia; no TJAC ela nem existe.** O mesmo
+  `totalResultadoAba-H = 0` significa coisas diferentes — confira o checkbox.
+- **O Juizado é 7,7× a Justiça Comum** (252.381 × 32.755). O rótulo do filtro é
+  "Colégios Recursais", mas o órgão que volta nos dados é `2ª Turma Recursal`.
+- **O host é `consultasaj`, não `esaj`** — `esaj.tjam.jus.br` resolve para o
+  mesmo IP e dá **404 com corpo vazio**. Confirma a ressalva já medida em 31/07.
+- **A citação tem um TERCEIRO formato**: abre pela **classe** (`Apelação Cível
+  Nº …; Relator (a): …; Comarca: Manaus/AM; …`). O regex do TJAC, ancorado em
+  `\(\s*Relator`, não casa nada — e `Relator (a)` tem parêntese aninhado, então
+  "pegar o último parêntese" também quebra.
+- ✅ **Aqui NÃO há vhost curinga**: `dadosabertos`/`api`/`jurisprudencia` são
+  **NXDOMAIN**. A armadilha do TJAC existe na família, não em toda instalação —
+  meça em vez de herdar a conclusão nos dois sentidos.
+- **reCAPTCHA só no download**, com **sitekey própria** (a do TJAC não serve), e
+  a sessão da busca não destrava. Sem permalink, como no TJAC.
+
+⚠️ **Pendência declarada do TJAM:** os mesmos combos-árvore do TJAC **não** foram
+enumerados (o formulário não tem nenhum `<select>`; são popups do SAJ). E não foi
+medido se `--sem-sinonimos` muda algo, nem se os ≥3 nós do balanceador
+dessincronizam.
 
 ## Bloco 2 — ESAJ bloqueados, exigem descoberta (2 alvos)
 

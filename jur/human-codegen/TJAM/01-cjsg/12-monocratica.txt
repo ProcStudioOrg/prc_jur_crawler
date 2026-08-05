@@ -1,0 +1,48 @@
+TJAM — 01-cjsg — §12 CARD DE DECISÃO MONOCRÁTICA (3º tipo de documento)
+========================================================================
+
+Print: `12.01-resultados-monocratica.png`
+HTML do card: `12-card-monocratica.html`
+
+Busca: `recurso` em `dados.buscaEmenta`, origem **R**, tipo **D**.
+Total: **66** — e é esse número pequeno que importa.
+
+## ⚠️ O acervo de monocráticas do TJAM é residual
+
+Medido com termos amplos, origens T+R:
+
+```
+              tipo A       tipo D
+recurso      472.094          193
+agravo        61.228           96
+apelação     115.604          134
+```
+
+~0,04% do acervo. No TJAC as monocráticas são um acervo de verdade; aqui, não.
+Ver `08-tipo-publicacao.txt` para a tabela completa e para a aba `H`, que é
+**zero em todas as medições**.
+
+## Mas o card, quando existe, é completo
+
+Mesmo molde dos outros dois tipos. Exemplo medido:
+
+```
+0526632-15.2023.8.04.0001   (14 ocorrências encontradas no inteiro teor do documento)
+Classe/Assunto: Recurso Inominado Cível / Práticas Abusivas
+Relator(a): Maria do Perpetuo Socorro da Silva Menezes
+Comarca: Manaus
+Órgão julgador: 2ª Turma Recursal
+Data do julgamento: 10/05/2024
+```
+
+texto visível do card: **718 chars**
+ementa íntegra: min 121 / média **808** / máx 3.628 chars (amostra de 10)
+citação extraída: **10/10**
+
+✅ **A monocrática do TJAM TEM ementa** — é a mais curta dos três tipos (média
+808 contra 2.589 do acórdão), mas não vem vazia. Isto é o oposto do TJCE, onde
+as 247.991 monocráticas vêm sem ementa indexada, e do TJMG, onde só `Acórdão`
+tem ementa. Não copie aquela ressalva para cá.
+
+⚠️ O que se deve dizer ao usuário não é "o TJAM não tem monocráticas", e sim
+que **o cjsg não as indexa em quantidade relevante**. É outra afirmação.

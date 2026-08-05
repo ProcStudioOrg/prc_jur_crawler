@@ -1,0 +1,53 @@
+TJAM — 01-cjsg — §7 ORIGEM (a desambiguação Justiça Comum × Juizado)
+====================================================================
+
+Print: `07.01-checkbox-origem.png`
+
+## O elemento
+
+Não é combo: são **dois checkboxes com o mesmo `name`**, exatamente como no
+TJMS e no TJAC. Só o de 2º grau vem marcado.
+
+```html
+<input type="checkbox" name="dados.origensSelecionadas" id="origem2grau"    value="T" checked>  <!-- "2° grau" -->
+<input type="checkbox" name="dados.origensSelecionadas" id="origemRecursal" value="R">          <!-- "Colégios Recursais" -->
+```
+
+⚠️ **O rótulo aqui é "Colégios Recursais"**, não "Turmas Recursais" (TJMS) nem
+"Turma Recursal". É o nome que o Amazonas dá ao órgão. O `orgaoJulgador` dos
+cards, porém, vem como `2ª Turma Recursal` — os dois vocabulários convivem na
+mesma tela. Não procure a string "Colégio" nos resultados.
+
+## 🔴 A medição que inverte a intuição — e vai mais longe que a do TJAC
+
+Medido em 05/08/2026, `dano moral` em `dados.buscaEmenta`, tipo A (acórdãos):
+
+```
+origem T (2º grau)            ->    32.755
+origem R (Colégios Recursais) ->   252.381     <- 7,7× MAIOR
+origem T+R                    ->   285.136     = 32.755 + 252.381 (soma EXATA)
+```
+
+A soma exata prova que **o filtro não é ignorado** — o critério de aceite do
+codegen exige essa comparação, e ela passa.
+
+**No Amazonas o Juizado é 7,7× a Justiça Comum.** O TJAC já invertia o padrão do
+repo (2,8×); o TJAM leva a inversão ao extremo. O default `--origem comum`
+esconde **89%** do acervo em matéria de consumo.
+
+⚠️ Consequência prática: em dano moral, telefonia, banco, plano de saúde e
+transporte aéreo, **ofereça as duas origens**. Número baixo em `comum` no TJAM
+não é escassez de jurisprudência — é a origem errada.
+
+## CLI
+
+```
+--origem comum    -> T   (default)
+--origem turmas   -> R
+--origem ambas    -> T e R
+```
+
+## O que NÃO foi medido
+
+Se `T+R` numa mesma busca preserva a ordenação global por data de publicação, ou
+se concatena as duas origens. Registrado como **não medido**.
