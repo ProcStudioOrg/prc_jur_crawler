@@ -34,6 +34,7 @@ const TJSCChecker = require('../src/TJSCChecker');
 const TJSCNavigator = require('../src/TJSCNavigator');
 const TJMACrawler = require('../src/TJMACrawler');
 const TJMAChecker = require('../src/TJMAChecker');
+const TJRNChecker = require('../src/TJRNChecker');
 const TJMANavigator = require('../src/TJMANavigator');
 const TJRJCrawler = require('../src/TJRJCrawler');
 const TJRJChecker = require('../src/TJRJChecker');
@@ -3117,6 +3118,84 @@ program
         process.exit(1);
       }
       console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjrn')
+  .description('TJRN (Rio Grande do Norte) — DOMINIO 403 (Akamai); -n consulta processo via DataJud')
+  .option('-q, --query <text>', 'Search query (BLOQUEADA: todo o dominio do TJRN responde 403 — ver CLAUDE-TJRN.md)')
+  .option('-n, --numero <numero>', 'Consulta por numero de processo CNJ (via DataJud/CNJ — FUNCIONA)')
+  .option('--diagnostico', 'Checa ao vivo se o 403 do TJRN ainda existe')
+  .option('--verificar [amostra]', 'Audita N processos de um JSON contra o DataJud (default 5)')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjrn.json')
+  .option('-v, --visible', 'Ignored (TJRN nao tem busca; o DataJud e HTTP direto)')
+  .option('--headed', 'Ignored (TJRN nao tem busca; o DataJud e HTTP direto)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    try {
+      const checker = new TJRNChecker({ log });
+
+      // --- Diagnostico do bloqueio (nao precisa de browser) ---
+      if (opts.diagnostico) {
+        if (!jsonMode) log('Medindo o bloqueio do TJRN ao vivo...');
+        const diag = await checker.diagnosticar();
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({ success: true, ...diag }) + '\n');
+        } else {
+          console.log(JSON.stringify(diag, null, 2));
+        }
+        process.exit(0);
+      }
+
+      // --- Consulta por numero de processo (DataJud) — o que funciona ---
+      if (opts.numero) {
+        const res = await checker.consultarProcesso(opts.numero);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        } else {
+          console.log(JSON.stringify(res, null, 2));
+        }
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      // --- Auditoria de um JSON de resultados ---
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        const caminho = path.resolve(opts.output);
+        const results = JSON.parse(fs.readFileSync(caminho, 'utf-8'));
+        const verificacao = await checker.verificarResultados(results, { amostra, log });
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({ success: true, verificacao }) + '\n');
+        } else {
+          console.log(JSON.stringify(verificacao, null, 2));
+        }
+        process.exit(0);
+      }
+
+      throw new Error(
+        'A busca por termo (-q) NAO existe no TJRN: todo o dominio publico do '
+        + 'tribunal responde HTTP 403 (Access Denied do Akamai), inclusive o site '
+        + 'institucional. Nao e captcha — nao ha o que resolver. Use -n <numero> '
+        + 'para confirmar que um processo existe (via DataJud, funciona) ou '
+        + '--diagnostico para checar se o bloqueio caiu. Leia CLAUDE-TJRN.md.',
+      );
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({
+          success: false,
+          error: error.message,
+          bloqueio: 'akamai-403',
+          tribunal: 'TJRN',
+          alternativa: 'TRF5 (RN e da 5a Regiao) para materia federal; nenhum TJ vizinho cobre jurisprudencia estadual do RN',
+        }) + '\n');
+        process.exit(1);
+      }
+      console.error('Erro:', error.message);
       process.exit(1);
     }
   });

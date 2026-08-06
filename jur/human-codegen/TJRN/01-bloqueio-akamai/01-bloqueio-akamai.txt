@@ -1,0 +1,153 @@
+# TJRN — 01 Bloqueio Akamai (mapeamento interrompido na porta)
+
+Medido em 06/08/2026, entre 20:00 e 21:00 BRT.
+
+Este diretório não documenta filtros de busca porque **nenhuma tela do TJRN chegou a
+carregar**. O que ele documenta é o bloqueio, com a medição que permite retestar sem
+refazer a investigação. Se o 403 cair, o mapeamento recomeça da Fase 1 do `codegen`.
+
+---
+
+## 1. O que responde e o que não responde
+
+Todos com UA de Chrome 126 e `Accept-Language: pt-BR`.
+
+| Host / URL | HTTP | Corpo |
+|---|---|---|
+| `https://esaj.tjrn.jus.br/cjsg/consultaCompleta.do` (a entrada da fila) | **403** | Access Denied (Akamai) |
+| `https://jurisprudencia.tjrn.jus.br/` | **403** | Access Denied (Akamai) |
+| `https://www.tjrn.jus.br/` (site institucional) | **403** | Access Denied (Akamai) |
+| `https://www.tjrn.jus.br/robots.txt` | **403** | Access Denied (Akamai) |
+| `https://portal.tjrn.jus.br/` | **403** | Access Denied (Akamai) |
+| `https://transparencia.tjrn.jus.br/` | **403** | Access Denied (Akamai) |
+| `https://sistemas.tjrn.jus.br/` | **403** | Access Denied (Akamai) |
+| `https://apps.tjrn.jus.br/` | **403** | Access Denied (Akamai) |
+| `https://diario.tjrn.jus.br/` | **403** | Access Denied (Akamai) |
+| `https://pje2g.tjrn.jus.br/pje/login.seam` | **403** | Access Denied (Akamai) |
+| `https://projudi.tjrn.jus.br/` | **403** | redireciona p/ `tjrn.jus.br/projudi` → 403 |
+| `https://pje.tjrn.jus.br/` | 200 | só um `<meta refresh>` para `https://tjrn.jus.br` (que dá 403) |
+| `https://pje.tjrn.jus.br/pje/login.seam` | 404 | 404 do Apache — o host responde, a app não está ali |
+| `https://sistemas2.tjrn.jus.br/` | **000** | conexão não estabelece |
+
+Corpo do 403 (idêntico em todos), gravado em `01-access-denied.html`:
+
+```html
+<HTML><HEAD>
+<TITLE>Access Denied</TITLE>
+</HEAD><BODY>
+<H1>Access Denied</H1>
+You don't have permission to access "http://www.tjrn.jus.br/" on this server.<P>
+Reference #18.1bc41002.1786057240.e64bb0e9
+<P>https://errors.edgesuite.net/18.1bc41002.1786057240.e64bb0e9</P>
+</BODY>
+</HTML>
+```
+
+## 2. Por que isto NÃO é captcha nem bot-scoring
+
+Cada linha abaixo foi medida; nenhuma é inferência.
+
+- **Chega instantâneo, sem `Set-Cookie`, sem JavaScript, sem challenge.** Captcha e
+  Cloudflare interativo mandam uma página com algo a resolver e plantam cookie. Aqui não
+  há nada: é uma ACL negando antes da aplicação.
+- **Chromium real recebe a mesma coisa que `curl`.** O primeiro teste usou Playwright
+  headless com UA padrão (`HeadlessChrome`, `navigator.webdriver = true`) — o que seria
+  motivo legítimo de bloqueio. O teste foi **refeito** com UA de Chrome 126,
+  `--disable-blink-features=AutomationControlled`, `navigator.webdriver` mascarado,
+  `locale pt-BR` e `timezone America/Fortaleza`: **403 igual**, mesmo tamanho de corpo.
+- **Não depende de protocolo nem de família de endereço.** HTTP/2, HTTP/1.1 forçado,
+  TLS 1.2 fixo, IPv4 e IPv6: 403 nos seis.
+- **Não é o path.** `/robots.txt` e a home institucional dão 403 igual ao `cjsg`.
+- **O `/path-inventado-9z` dá 403 e não 404** — logo o teste de vhost curinga do TJAL/TJBA
+  não se aplica aqui: nada chega ao servidor de origem para poder distinguir.
+- **A origem do próprio tribunal responde para nós.** `pje.tjrn.jus.br`
+  (200.23.118.118, **fora do Akamai**) devolve 200 e 404 normalmente. Nossos pacotes
+  chegam ao datacenter do TJRN sem problema — quem nega é a configuração do edge.
+
+**Conclusão:** ACL no edge Akamai contra a nossa saída de rede. Não há o que resolver do
+lado do cliente, e insistir com anti-detecção seria evasão, não mapeamento.
+
+⚠️ **O que NÃO foi medido:** se um navegador de um usuário comum, na mesma conexão,
+carrega o site. Esta máquina sai por NAT residencial (192.168.1.15 via 192.168.1.1) mas o
+ambiente do agente usa roteamento por marca de pacote (`ip rule` com `fwmark`, tabela 52)
+e tem um endereço da AWS São Paulo (54.232.189.113) preso na `lo` — ou seja, **a saída
+efetiva do agente pode não ser a mesma do usuário**. Se o Akamai do TJRN bloqueia faixas
+de datacenter, o portal funciona para o usuário e não para o crawler. Isso muda o
+prognóstico e está por testar — ver a receita de reteste no `CLAUDE-TJRN.md`.
+
+## 3. Passo 0 — o que existe e o que não existe de API
+
+Procurado (não presumido):
+
+| Alvo | Resultado |
+|---|---|
+| `dadosabertos.tjrn.jus.br` | **NXDOMAIN** |
+| `api.tjrn.jus.br`, `apis`, `ws`, `webservice`, `dados`, `openapi`, `swagger` | **NXDOMAIN** |
+| `juris`, `jurisprudencia2`, `cjsg`, `cjpg`, `bdjur`, `biblioteca`, `consultapublica`, `busca`, `pesquisa`, `eproc`, `esaj2` (+ 15 outros) | **NXDOMAIN** |
+| `jurisprudencia.tjrn.jus.br` | resolve (Akamai) → **403** |
+| `dados.gov.br` (API de conjuntos de dados) | **401** — exige credencial; não consultável daqui |
+| **DataJud (CNJ), `api_publica_tjrn`** | ✅ **funciona** — ver §4 |
+
+Não foi possível procurar link de dados abertos **dentro** do portal do tribunal: o portal
+é justamente o que responde 403.
+
+## 4. DataJud (CNJ) — a única porta aberta
+
+`POST https://api-publica.datajud.cnj.jus.br/api_publica_tjrn/_search`, chave pública do
+CNJ. Medido em 06/08/2026:
+
+| Métrica | Valor |
+|---|---|
+| Total de processos | **2.651.445** |
+| G1 (1º grau) | 1.244.248 |
+| JE (Juizado Especial) | 914.799 |
+| G2 (2º grau) | 302.661 |
+| TR (Turma Recursal) | 189.737 |
+| Sistema `PJe` | **2.597.787 (98,0%)** |
+| Sistema `SAJ` | 53.288 (2,0%) |
+| Sistema `Pje` (grafia divergente, bucket próprio) | 370 |
+| Atualização mais recente | **03/08/2026** (base corrente) |
+
+Campos do `_source`: `@timestamp`, `assuntos`, `classe`, `dataAjuizamento`,
+`dataHoraUltimaAtualizacao`, `formato`, `grau`, `id`, `movimentos`, `nivelSigilo`,
+`numeroProcesso`, `orgaoJulgador`, `sistema`, `tribunal`.
+**Não há `ementa` nem `inteiroTeor`** — confirmado varrendo as chaves.
+
+⚠️ Armadilhas medidas na consulta:
+- `grau` e `sistema.nome` são campos **text**: agregar direto devolve
+  `Fielddata is disabled`. Use `sistema.nome.keyword`, ou conte por `match` para o `grau`.
+- `"size": 0` **dentro de um `terms`** é erro 400 (`[size] must be greater than 0`),
+  diferente do `size: 0` do topo da query, que é válido.
+- Ordenar por `dataAjuizamento` desc devolveu **hits vazios** com total correto — o campo
+  é string `AAAAMMDDHHMMSS` e não ordena de forma confiável. `dataHoraUltimaAtualizacao`
+  ordena bem.
+
+## 5. A pista da fila estava errada de duas maneiras
+
+A fila mandava descobrir a partir de `esaj.tjrn.jus.br/cjsg/` → 403, tratando o 403 como
+"testar se é UA/geo".
+
+1. **O 403 não é do cjsg** — é do domínio inteiro, incluindo o site institucional. Testar
+   UA/geo no `cjsg` teria confundido um bloqueio de borda com um bloqueio de aplicação.
+2. **Mesmo sem bloqueio, o cjsg seria a porta errada.** O DataJud mostra que o acervo do
+   TJRN é **98% PJe** e só 2% SAJ. O `cjsg` cobre exclusivamente o SAJ — o mesmo erro que
+   o TJBA ensinou em 06/08/2026, aqui confirmado por medição independente do portal.
+
+## 6. Prints
+
+| Arquivo | O que mostra |
+|---|---|
+| `01.01-esaj-cjsg-access-denied.png` | o `cjsg` da entrada da fila, negado |
+| `01.02-jurisprudencia-access-denied.png` | `jurisprudencia.tjrn.jus.br`, negado |
+| `01.03-portal-institucional-access-denied.png` | o site institucional, negado — a prova de que não é o módulo de jurisprudência |
+| `01-medicao-bruta.json` | status, headers e corpo dos três, capturados pelo Playwright |
+| `01-access-denied.html` | o corpo do 403 |
+
+## 7. Reteste
+
+```bash
+./bin/jur tjrn --diagnostico          # 403 nos três = bloqueio de pé
+```
+
+Se qualquer host sair do 403, o mapeamento recomeça: skill `codegen`, Fase 1, tendo em
+mente que o alvo é a base **PJe** e não o `cjsg`.

@@ -1770,16 +1770,17 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://esaj.tjrn.jus.br/cjsg/consultaCompleta.do",
+        "comando": "tjrn",
+        "acesso": "api",
+        "status": "sem-acesso",
+        "nota": "DOMINIO INTEIRO BLOQUEADO — 403 Access Denied do Akamai em TODO host publico do TJRN, medido 06/08/2026: o cjsg da fila, jurisprudencia.tjrn.jus.br, o site institucional www.tjrn.jus.br e ate o /robots.txt. NAO E CAPTCHA: resposta instantanea, sem Set-Cookie, sem JavaScript, sem challenge — nao ha o que resolver e --headed nao muda nada. PROVADO QUE NAO E DETECCAO DE BOT: Chromium real (UA Chrome 126, navigator.webdriver mascarado, disable-blink-features=AutomationControlled, locale pt-BR, timezone America/Fortaleza) recebe o MESMO 403 que o curl, com o mesmo tamanho de corpo; 403 tambem em HTTP/2, HTTP/1.1, TLS 1.2, IPv4 e IPv6. E ACL no edge, nao pontuacao de bot. A ORIGEM DO TRIBUNAL RESPONDE PARA NOS: pje.tjrn.jus.br (200.23.118.118, fora do Akamai) devolve 200/404 normalmente — nossos pacotes chegam ao datacenter do TJRN, quem nega e a configuracao do edge. HIPOTESE POR TESTAR que muda o prognostico: se o Akamai bloqueia faixas de datacenter, o portal funciona para o usuario e nao para o agente (o ambiente roteia por fwmark e carrega um IP da AWS-SP na lo) — fechar isso custa 30s: abrir www.tjrn.jus.br no navegador do usuario. A ENTRADA DA FILA ESTAVA ERRADA DUAS VEZES: (1) o 403 nao e do cjsg, e do dominio inteiro, entao testar UA/geo no cjsg confundiria bloqueio de borda com bloqueio de aplicacao; (2) mesmo destravado o cjsg seria a porta errada — o DataJud mostra o acervo do TJRN 98,0% PJe (2.597.787) contra 2,0% SAJ (53.288), e o cjsg so cobre SAJ (a licao do TJBA confirmada por medicao independente do portal). Quem retomar: o alvo e a base PJe do 2o grau. PASSO 0 (procurado, nao presumido): dadosabertos/api/apis/ws/webservice/dados/openapi/swagger e mais 20 nomes = NXDOMAIN; sistemas2 resolve mas a conexao nao estabelece (000); dados.gov.br exige credencial (401); procurar link de dados abertos dentro do portal e impossivel porque o portal e o que da 403. O QUE FUNCIONA: DataJud/CNJ (api_publica_tjrn) — 2.651.445 processos (G1 1.244.248, JE 914.799, G2 302.661, TR 189.737), base corrente (atualizacao mais recente 03/08/2026), SEM ementa e SEM inteiro teor. Logo -n confirma o PROCESSO, nunca o JULGADO: nao citar acordao do TJRN de memoria enquanto durar. Armadilhas do indice: grau e sistema.nome sao text (agregar da Fielddata is disabled — usar sistema.nome.keyword); size:0 dentro de um terms e erro 400 embora seja valido no topo da query; ordenar por dataAjuizamento desc devolve hits VAZIOS com total correto (string AAAAMMDDHHMMSS) — ordenar por dataHoraUltimaAtualizacao; os buckets PJe e Pje sao separados. Alternativas: trf5 (o RN e da 5a Regiao), trt21/tst para trabalhista, stf para constitucional — nenhum TJ vizinho cobre jurisprudencia estadual do RN. `./bin/jur tjrn --diagnostico` diz ao vivo se o bloqueio caiu."
       },
       "repo": {
         "crawler": null,
-        "extra": null,
-        "codegen": "nao",
-        "screenshots": 0,
+        "extra": "TJRNChecker.js (consulta por nº via DataJud/CNJ + diagnosticar() do bloqueio — é o único caminho que funciona). Sem Crawler/Navigator: nenhuma tela do TJRN chegou a carregar. human-codegen/TJRN/01-bloqueio-akamai/ grava a medição e os 3 prints do Access Denied",
+        "codegen": "parcial",
+        "screenshots": 3,
         "tests": false,
         "skills": [],
         "working": false

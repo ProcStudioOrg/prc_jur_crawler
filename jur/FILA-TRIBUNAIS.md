@@ -207,7 +207,7 @@ combo — vale virar tarefa própria em vez de reincidir no quarto.**
 | # | Alvo | UF | Entrada | Status |
 |---|---|---|---|---|
 | 5 | **TJBA** | BA | `esaj.tjba.jus.br` resolve (168.228.240.160) mas **conexão morre (000)**. Descobrir pelo portal `www.tjba.jus.br` (301) | ok 06/08 |
-| 6 | **TJRN** | RN | `esaj.tjrn.jus.br/cjsg/` → **403**. Testar se é UA/geo; descobrir portal próprio | pendente |
+| 6 | **TJRN** | RN | `esaj.tjrn.jus.br/cjsg/` → **403**. Testar se é UA/geo; descobrir portal próprio | bloqueado 06/08 |
 
 📌 **O que o TJBA (feito em 06/08/2026) ensinou — leia
 [`CLAUDE-TJBA.md`](CLAUDE-TJBA.md).** O bloco 2 existia porque o e-SAJ estava
@@ -259,6 +259,45 @@ Passo 0 de distância:
   com OpenAPI legível em `/v3/api-docs` e **401 em tudo**. Não a persiga.
 - **Sem teto de intervalo de data** (5 anos respondem) — o fatiador da família
   ESAJ não é necessário aqui. Só há filtro de **publicação**.
+
+📌 **O que o TJRN (feito em 06/08/2026) ensinou — leia
+[`CLAUDE-TJRN.md`](CLAUDE-TJRN.md).** Com ele o **Bloco 2 acabou**, e a lição é
+que **a entrada medida da tabela pode estar errada em duas camadas de uma vez**:
+
+- 🔴 **O 403 NÃO ERA DO `cjsg` — era do domínio inteiro**, inclusive o site
+  institucional `www.tjrn.jus.br` e o `/robots.txt`. A instrução da fila ("testar
+  se é UA/geo") teria gasto o dia afinando User-Agent contra uma tela que nunca
+  ia carregar. **Meça o domínio antes de investigar o módulo:** um 403 na home
+  institucional diz que o problema não é a aplicação.
+- 🔴 **E mesmo destravado, o `cjsg` seria a porta errada.** O DataJud mostra o
+  acervo do TJRN **98,0% PJe** (2.597.787) contra **2,0% SAJ** (53.288). É a
+  lição do TJBA ("o e-SAJ morto não era a porta") repetida — só que desta vez
+  medida **sem conseguir abrir o portal**, pelo DataJud. **Dá para saber qual é a
+  porta certa antes de ter acesso a qualquer porta.**
+- 🔴 **"Não é captcha" é uma conclusão que se prova, não se presume.** Access
+  Denied do Akamai chega **instantâneo, sem `Set-Cookie`, sem JS, sem challenge**
+  — não há o que resolver, e `--headed` não muda nada. Diferente do TJMA
+  (captcha), do STJ (desafio interativo) e do CRPS (login).
+- ⚠️ **O primeiro teste de bot foi MEU erro e quase virou diagnóstico.** Rodei
+  Playwright headless com o UA padrão (`HeadlessChrome`, `navigator.webdriver`
+  ligado) — motivo legítimo de bloqueio. Só refazendo com fingerprint de Chrome
+  real é que o 403 virou evidência de ACL. **Antes de culpar o site, confira que
+  o seu cliente não está se anunciando como robô.**
+- ✅ **A origem do tribunal respondia para nós o tempo todo:**
+  `pje.tjrn.jus.br` (IP direto, fora do Akamai) devolve 200/404 normal. Nossos
+  pacotes chegam ao datacenter; quem nega é a borda. É o que separa "o tribunal
+  está fora do ar" de "a borda não gosta de nós".
+- ⚠️ **HIPÓTESE ABERTA, e ela muda o veredito:** se o Akamai bloqueia faixas de
+  datacenter, **o portal funciona para o usuário e não para o agente** (o
+  ambiente roteia por `fwmark` e tem IP da AWS-SP na `lo`). Custa 30 segundos
+  fechar: abrir `www.tjrn.jus.br` no navegador do usuário. **Carregou → o TJRN
+  volta para a fila**, com alvo PJe.
+- ✅ **`bloqueado` não precisa ser mão vazia:** ficou `jur tjrn -n` funcionando
+  por DataJud (base **corrente**, atualizada em 03/08/2026), no molde do TJMA.
+
+⚠️ **Pendência declarada do TJRN:** nenhum filtro foi mapeado — nenhuma tela
+carregou. E o smoke **não cobre** tribunal `sem-acesso` (o `tjma` se comporta
+igual): `node tests/smoke.js tjrn` responde "nenhum tribunal corresponde".
 
 ## Bloco 3 — TJs sem pista (10 alvos)
 

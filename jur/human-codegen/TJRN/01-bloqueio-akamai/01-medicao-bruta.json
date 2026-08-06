@@ -1,0 +1,47 @@
+[
+  {
+    "url": "https://esaj.tjrn.jus.br/cjsg/consultaCompleta.do",
+    "status": 403,
+    "headers": {
+      "cache-control": "max-age=0, no-cache, no-store",
+      "content-length": "404",
+      "content-type": "text/html",
+      "date": "Thu, 06 Aug 2026 23:07:29 GMT",
+      "expires": "Thu, 06 Aug 2026 23:07:29 GMT",
+      "mime-version": "1.0",
+      "pragma": "no-cache"
+    },
+    "cookies": 0,
+    "body": "<html><head>\n<title>Access Denied</title>\n</head><body>\n<h1>Access Denied</h1>\n \nYou don't have permission to access \"http://esaj.tjrn.jus.br/cjsg/consultaCompleta.do\" on this server.<p>\nReference #18.e0841402.1786057649.6e06a56\n</p><p>https://errors.edgesuite.net/18.e0841402.1786057649.6e06a56</p>\n\n\n</body></html>"
+  },
+  {
+    "url": "https://jurisprudencia.tjrn.jus.br/",
+    "status": 403,
+    "headers": {
+      "cache-control": "max-age=0, no-cache, no-store",
+      "content-length": "384",
+      "content-type": "text/html",
+      "date": "Thu, 06 Aug 2026 23:07:29 GMT",
+      "expires": "Thu, 06 Aug 2026 23:07:29 GMT",
+      "mime-version": "1.0",
+      "pragma": "no-cache"
+    },
+    "cookies": 0,
+    "body": "<html><head>\n<title>Access Denied</title>\n</head><body>\n<h1>Access Denied</h1>\n \nYou don't have permission to access \"http://jurisprudencia.tjrn.jus.br/\" on this server.<p>\nReference #18.12c41002.1786057649.cde6f3ba\n</p><p>https://errors.edgesuite.net/18.12c41002.1786057649.cde6f3ba</p>\n\n\n</body></html>"
+  },
+  {
+    "url": "https://www.tjrn.jus.br/",
+    "status": 403,
+    "headers": {
+      "cache-control": "max-age=0, no-cache, no-store",
+      "content-length": "371",
+      "content-type": "text/html",
+      "date": "Thu, 06 Aug 2026 23:07:29 GMT",
+      "expires": "Thu, 06 Aug 2026 23:07:29 GMT",
+      "mime-version": "1.0",
+      "pragma": "no-cache"
+    },
+    "cookies": 0,
+    "body": "<html><head>\n<title>Access Denied</title>\n</head><body>\n<h1>Access Denied</h1>\n \nYou don't have permission to access \"http://www.tjrn.jus.br/\" on this server.<p>\nReference #18.c6841402.1786057649.a862d61\n</p><p>https://errors.edgesuite.net/18.c6841402.1786057649.a862d61</p>\n\n\n</body></html>"
+  }
+]

@@ -74,6 +74,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjpa` | TJ do Pará | PA | `CLAUDE-TJPA.md` | 🟢 OK (API direta, sem browser) |
 | `tjpr` | TJ do Paraná | PR | `CLAUDE-TJPR.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjrj` | TJ do Rio de Janeiro | RJ | `CLAUDE-TJRJ.md` | 🟢 OK (HTTP direto, sem browser — só e-Proc/Justiça Comum 2º grau) |
+| `tjrn` | TJ do Rio Grande do Norte | RN | `CLAUDE-TJRN.md` | 🔴 **sem busca** — o domínio **inteiro** do TJRN responde 403 (Akamai); só `-n` (nº do processo, via DataJud) |
 | `tjrs` | TJ do Rio Grande do Sul | RS | `CLAUDE-TJRS.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjsc` | TJ de Santa Catarina | SC | `CLAUDE-TJSC.md` | 🟢 OK (browser — portal atrás de verificação de segurança) |
 | `tjsp` | TJ de São Paulo | SP | `CLAUDE-TJSP.md` | 🔴 sem acesso — não rodar |
@@ -105,6 +106,17 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   Só `./bin/jur tjma -n <nº>` (confirma que um processo existe, via DataJud) e
   `--diagnostico` funcionam. Para matéria federal com origem no MA ofereça `trf1` —
   leia `CLAUDE-TJMA.md`
+- "TJRN" / "Rio Grande do Norte estadual" / "Natal" → ⚠️ **não existe busca**: **todo o
+  domínio do TJRN responde 403** (Access Denied do Akamai) — o portal de jurisprudência, o
+  site institucional e o `/robots.txt`. **Não é captcha**, não há o que resolver, e não
+  adianta `--headed`. Diga isso ao usuário em vez de entregar zero.
+  Só `./bin/jur tjrn -n <nº>` (confirma que um processo **existe**, via DataJud) e
+  `--diagnostico` funcionam. ⚠️ **`-n` confirma processo, nunca julgado** — o DataJud não
+  tem ementa nem inteiro teor. **Não cite acórdão do TJRN de memória**: o `verificador`
+  não consegue confirmar julgado do RN enquanto o 403 durar.
+  Ofereça `trf5` (o RN é da 5ª Região) para matéria federal, `trt21`/`tst` para
+  trabalhista e `stf` para constitucional — **nenhum TJ vizinho cobre jurisprudência
+  estadual do RN**. Leia `CLAUDE-TJRN.md`
 - "Busque no TRF2" / "RJ ou ES" → `trf2` → leia `CLAUDE-TRF2.md`.
   Juizado Especial Federal / Turma Recursal no RJ ou ES → `trf2 --origem turmas`
   (Justiça Federal comum é o default `--origem trf2`). ⚠️ **neste portal o espaço entre
