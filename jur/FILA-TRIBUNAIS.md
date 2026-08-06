@@ -206,8 +206,59 @@ combo — vale virar tarefa própria em vez de reincidir no quarto.**
 
 | # | Alvo | UF | Entrada | Status |
 |---|---|---|---|---|
-| 5 | **TJBA** | BA | `esaj.tjba.jus.br` resolve (168.228.240.160) mas **conexão morre (000)**. Descobrir pelo portal `www.tjba.jus.br` (301) | pendente |
+| 5 | **TJBA** | BA | `esaj.tjba.jus.br` resolve (168.228.240.160) mas **conexão morre (000)**. Descobrir pelo portal `www.tjba.jus.br` (301) | ok 06/08 |
 | 6 | **TJRN** | RN | `esaj.tjrn.jus.br/cjsg/` → **403**. Testar se é UA/geo; descobrir portal próprio | pendente |
+
+📌 **O que o TJBA (feito em 06/08/2026) ensinou — leia
+[`CLAUDE-TJBA.md`](CLAUDE-TJBA.md).** O bloco 2 existia porque o e-SAJ estava
+bloqueado, e a lição é que **o e-SAJ bloqueado não era o problema: era a pista
+errada**. O TJBA tem porta melhor que a dos quatro do Bloco 1, e ela estava a um
+Passo 0 de distância:
+
+- 🔴 **O ESAJ NÃO ERA A PORTA — e persegui-lo teria queimado o dia.** O
+  `esaj.tjba.jus.br` está mesmo morto (portas 80/443 aceitam TCP, mas o servidor
+  **derruba o handshake TLS**: `errno=104`, "SSL handshake has read 0 bytes";
+  não é UA nem geo, não chega a haver requisição HTTP). **Não importa:** o portal
+  real é `jurisprudencia.tjba.jus.br`, uma SPA cujo backend é um **GraphQL
+  público com introspecção aberta**, sem auth e **sem captcha em lugar nenhum**.
+  O endpoint estava no bundle webpack (`t.serverUrl`), não foi chutado.
+  **Para os alvos restantes do Bloco 2 e 3: o Passo 0 vale mais que a entrada
+  medida da tabela.**
+- 🔴 **OS OPERADORES QUE A PRÓPRIA TELA OFERECE PODEM ESTAR QUEBRADOS — e falhar
+  para MAIS.** Os botões `E`, `OU` e `NÃO` do TJBA são palavra literal:
+  `usucapião E posse` = **3.596.546** de 4.008.679 documentos, contra 2.171 do
+  termo sozinho. Até aqui a família ESAJ ensinava operadores que **zeravam**
+  (`ADJ`, `PROX`, `$`), e zero é sintoma visível. **Inflar não é** — 3,5 milhões
+  se leem como "tema vastíssimo". Os que funcionam são os ingleses (`AND`=810,
+  `NOT`=1.043). **Teste os operadores nos DOIS sentidos: o que zera e o que
+  infla.**
+- 🔴 **O espaço entre termos era OR, não AND**, provado por aritmética exata
+  (2.171 + 86.140 − 810 = 87.501). Nunca presuma o conectivo implícito.
+- 🔴 **A API repete cada documento, e o pior caso é o DEFAULT.** Com
+  `--origem comum` o fator é **2,00** (50 devolvidos, 25 hashes distintos) e o
+  `itemCount` vem inflado junto; com `turmas`/`ambas` é ~1,03. **Conte hashes
+  distintos dentro de UMA página antes de confiar no total** — nenhum dos quatro
+  tribunais do Bloco 1 fazia isso e ninguém teria procurado.
+- 🔴 **Um filtro pode partir a base perfeitamente e mesmo assim não compor.** Sem
+  termo, acórdão + monocrática = 4.008.679 = total, exato. **Com termo**,
+  `apelação` dá 712.913 contra 539.050 reais, e a instância passa a ser
+  **ignorada**. **Prove a composição com termo, não só a partição sozinha.**
+- 🔴 **Zero silencioso por tipo de parâmetro:** `orgaos`/`classes` querem **id**,
+  `relatores` quer **nome**. Passar o id do relator devolve **0 sem erro**
+  (id 185 = 0 × `EMILIO SALOMAO PINTO RESEDA` = 4.435).
+- ⚠️ **O campo chamado `ementa` era o INTEIRO TEOR** (idêntico a `conteudo`,
+  do cabeçalho à assinatura). ✅ Ótimo — vem de graça, sem captcha, diferente de
+  TJAC/TJAM/TJAL. ⚠️ Mas **não existe ementa separada**, e chamá-lo de ementa
+  pelo nome do campo seria errar a natureza do texto.
+- ⚠️ **A medição de distribuição por ano quase condenou o tribunal errado:**
+  `usucapião` cai a **0 em 2026** enquanto a base tem **81.737** publicações no
+  ano e documento de 07/08/2026. **Meça a BASE INTEIRA, não a série de um
+  termo** — o passo que o TJAM impôs precisa do denominador certo.
+- ✅ **Sem vhost curinga aqui** (`/path-inventado-9z` → 404), e
+  ⚠️ **`api.tjba.jus.br` não é a API de jurisprudência**: é a **processual**,
+  com OpenAPI legível em `/v3/api-docs` e **401 em tudo**. Não a persiga.
+- **Sem teto de intervalo de data** (5 anos respondem) — o fatiador da família
+  ESAJ não é necessário aqui. Só há filtro de **publicação**.
 
 ## Bloco 3 — TJs sem pista (10 alvos)
 

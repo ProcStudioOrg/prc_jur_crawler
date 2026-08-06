@@ -1,0 +1,157 @@
+[
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "assunto",
+    "id": "",
+    "ph": "Digite palavras sobre o assunto desejado. Ex.: Concursos Públicos",
+    "txt": "",
+    "cls": ""
+  },
+  {
+    "tag": "BUTTON",
+    "type": "submit",
+    "name": "",
+    "id": "",
+    "txt": "Pesquisar",
+    "cls": "btn btn-custom-action"
+  },
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "name": "",
+    "id": "",
+    "txt": "E",
+    "cls": "btn btn-custom-clear btn-sm"
+  },
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "name": "",
+    "id": "",
+    "txt": "OU",
+    "cls": "btn btn-custom-clear btn-sm"
+  },
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "name": "",
+    "id": "",
+    "txt": "NÃO",
+    "cls": "btn btn-custom-clear btn-sm"
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "numeroRecurso",
+    "id": "",
+    "ph": "Número do Recurso",
+    "txt": "",
+    "cls": "form-control"
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "relator",
+    "id": "",
+    "ph": "Relator(a)",
+    "txt": "",
+    "cls": "form-control"
+  },
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "name": "",
+    "id": "",
+    "txt": "",
+    "cls": "btn btn-custom-action icon-wrapper-button"
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "orgao",
+    "id": "",
+    "ph": "Órgão Julgador",
+    "txt": "",
+    "cls": "form-control"
+  },
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "name": "",
+    "id": "",
+    "txt": "",
+    "cls": "btn btn-custom-action icon-wrapper-button"
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "classe",
+    "id": "",
+    "ph": "Classes",
+    "txt": "",
+    "cls": "form-control"
+  },
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "name": "",
+    "id": "",
+    "txt": "",
+    "cls": "btn btn-custom-action icon-wrapper-button"
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "",
+    "id": "",
+    "ph": "Publicações De",
+    "txt": "",
+    "cls": "custom-datepicker"
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "",
+    "id": "",
+    "ph": "Publicações Até",
+    "txt": "",
+    "cls": "custom-datepicker"
+  },
+  {
+    "tag": "INPUT",
+    "type": "checkbox",
+    "name": "segundoGrau",
+    "id": "",
+    "ph": "",
+    "txt": "",
+    "cls": "form-check-input"
+  },
+  {
+    "tag": "INPUT",
+    "type": "checkbox",
+    "name": "turmasRecursais",
+    "id": "",
+    "ph": "",
+    "txt": "",
+    "cls": "form-check-input"
+  },
+  {
+    "tag": "INPUT",
+    "type": "checkbox",
+    "name": "tipoAcordao",
+    "id": "",
+    "ph": "",
+    "txt": "",
+    "cls": "form-check-input"
+  },
+  {
+    "tag": "INPUT",
+    "type": "checkbox",
+    "name": "tipoDecisaoMonocratica",
+    "id": "",
+    "ph": "",
+    "txt": "",
+    "cls": "form-check-input"
+  }
+]

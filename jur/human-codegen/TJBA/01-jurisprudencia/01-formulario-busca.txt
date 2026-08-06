@@ -1,0 +1,366 @@
+# TJBA — 01 Jurisprudência (SPA React + GraphQL público)
+
+## Identificação
+
+```
+Tribunal:                   TJBA — Tribunal de Justiça da Bahia
+Estado(s):                  BA
+Módulo:                     Jurisprudência (SPA React/Apollo)
+Link principal:             https://jurisprudencia.tjba.jus.br
+Backend (a porta de fato):  https://jurisprudenciaws.tjba.jus.br/graphql
+Sistema judicial:           Próprio (SPA). O acervo vem de Projudi + PJe (ver §2)
+Sistema irmão já mapeado:   TJPA (também SPA com API JSON aberta e HTTP direto)
+Abrangência da base:        2º grau + Turmas Recursais. NÃO tem 1º grau.
+                            4.008.679 documentos; corrente (2026 = 81.737 publicações)
+Data do mapeamento:         06/08/2026
+```
+
+---
+
+## 0. Passo 0 — o que existe e o que NÃO existe de API
+
+Medido em 06/08/2026, antes de abrir a tela.
+
+| Candidato | Resultado |
+|---|---|
+| `dadosabertos.tjba.jus.br` | **NXDOMAIN** |
+| `www.tjba.jus.br/portal/dados-abertos/` | **404** |
+| `www.tjba.jus.br/dados-abertos` | **404** |
+| `api.tjba.jus.br` | resolve; **401 em tudo**, inclusive em path inventado |
+| `api.tjba.jus.br/v3/api-docs` | **200** — OpenAPI "TJBA API v1" |
+| `jurisprudencia.tjba.jus.br` | **200** — SPA React |
+| `jurisprudenciaws.tjba.jus.br/graphql` | **200 — a porta. Sem auth, introspecção ABERTA** |
+
+⚠️ **`api.tjba.jus.br` NÃO é a API de jurisprudência.** O OpenAPI dela descreve
+consulta **processual** (`/processo/*`, `/serventia/*`, `/realizador/*`,
+`/v2/processo/processopje1g`…) e todo endpoint responde 401. Foi registrada aqui
+para que ninguém a persiga de novo achando que é a base de julgados.
+
+✅ **Não há vhost curinga neste tribunal** — a armadilha do TJAC/TJAL não se
+repete aqui. Prova: `www.tjba.jus.br/path-inventado-9z-nao-existe` → **404**
+(md5 `62962daa`), diferente da home (301 → `/portal`). `api.tjba.jus.br` responde
+401 tanto na raiz quanto no path inventado, o que é muro de auth, não curinga.
+
+🔴 **O e-SAJ do TJBA continua morto, e a medição de 31/07/2026 se confirma.**
+`esaj.tjba.jus.br` resolve (168.228.240.160), as portas **80 e 443 aceitam TCP**,
+mas o servidor **derruba o handshake TLS** (`openssl s_client`: `write:errno=104`,
+"SSL handshake has read 0 bytes"; curl: `(35) Recv failure`). Não é filtro de UA
+nem geo — não chega a haver requisição HTTP. **Isso não importa mais**: o e-SAJ
+não é a porta do TJBA, e o portal SPA cobre acervo maior (Projudi + PJe).
+
+---
+
+## 1. Busca principal (query) — campo `assunto`
+
+Único campo de texto livre. Vira `decisaoFilter.assunto` no GraphQL. O termo é
+casado contra o texto integral do documento (medido: 10/10 dos primeiros
+resultados de `usucapião` contêm a palavra).
+
+```html
+<input type="text" name="assunto"
+       placeholder="Digite palavras sobre o assunto desejado. Ex.: Concursos Públicos">
+```
+
+Print: `01.01-tela-inicial.png`, `01.02-form-preenchido.png`
+
+### 🔴 Operadores — a armadilha mais cara deste tribunal
+
+A tela oferece três botões, `E`, `OU` e `NÃO`, que inserem essas palavras na
+query. **Os três estão quebrados**: não são operadores, são palavra literal, e
+como o default é OR eles **inflam** a busca em vez de restringir.
+
+| Query | Resultado | Leitura |
+|---|---|---|
+| `usucapião` | 2.171 | referência |
+| `posse` | 86.140 | referência |
+| `usucapião E posse` | **3.596.546** | 🔴 quase a base inteira (4.008.679) |
+| `usucapião OU posse` | **2.232.843** | 🔴 idem |
+| `usucapião NÃO posse` | **2.610.979** | 🔴 idem |
+| `usucapião NAO posse` | 123.105 | 🔴 idem, sem acento |
+| `usucapião posse` (espaço) | 87.501 | **espaço = OR** |
+| `usucapião AND posse` | **810** | ✅ AND de verdade |
+| `usucapião OR posse` | 87.501 | ✅ = espaço |
+| `usucapião NOT posse` | **1.043** | ✅ exclusão de verdade |
+| `"usucapião extraordinário"` | 86 | ✅ frase exata |
+| `usucapi*` | 4.196 | ✅ curinga |
+| `usucapi` | 1 | sem stemming/prefixo implícito |
+| `usucapião PROX5 posse` | 87.501 | PROX **ignorado** (= espaço) |
+| `usucapião ADJ posse` | 87.611 | ADJ é palavra literal |
+| `xyzqwkzzz` | 0 | não satura |
+
+**O espaço é OR, provado por aritmética exata:** 2.171 + 86.140 − 810 = **87.501**,
+o valor devolvido por `usucapião posse`. É sintaxe Lucene/Elasticsearch.
+
+⚠️ Consequência prática: uma query de duas palavras devolve a **união**, não a
+interseção. `dano moral` = 1.235.718; `"dano moral"` = 1.027.021.
+
+### Acento
+
+🔴 **O índice NÃO normaliza acento** — `usucapiao` = **4**, `usucapião` = **2.171**.
+Padrão do TJMS, **oposto** de TJAC/TJAM/TJAL. Caixa é indiferente
+(`USUCAPIÃO` = `usucapião` = 2.171).
+
+---
+
+## 2. Instância — Justiça Comum × Turma Recursal
+
+Par de booleanos `segundoGrau` / `turmasRecursais`. É a desambiguação obrigatória.
+
+**Medido (termo `usucapião`), e a partição é exata:**
+
+| Filtro | Contagem |
+|---|---|
+| ambos | 2.171 |
+| só `segundoGrau` | 1.336 |
+| só `turmasRecursais` | 835 |
+| **soma** | **2.171** ✅ bate com o total |
+| **nenhum dos dois** | **2.173** 🔴 |
+
+🔴 **Desmarcar os dois NÃO devolve zero — devolve 2 documentos a MAIS que marcar
+os dois.** "Nenhum selecionado" é lido pelo backend como "sem filtro", e o
+superset inclui 2 documentos que não estão em nenhuma das duas instâncias. Um
+crawler que mande `false/false` achando que está restringindo recebe o acervo
+inteiro em silêncio.
+
+Confirmado na base inteira (sem termo): 1.524.858 + 2.483.821 = **4.008.679** = total.
+
+📌 **Na Bahia a Turma Recursal é 1,6× a Justiça Comum na base inteira**
+(2.483.821 × 1.524.858) — mesma direção de TJAC e TJAM, contrária ao TJAL. Mas
+**por termo a direção se inverte**: em `usucapião` a Justiça Comum é 1,6× a Turma
+Recursal (1.336 × 835), o que é esperado numa matéria de direito real. Não
+generalize em nenhum sentido: meça por termo.
+
+---
+
+## 3. Tipo de decisão — 🔴 filtro que NÃO compõe
+
+Par de booleanos `tipoAcordaos` / `tipoDecisoesMonocraticas`.
+
+**Sem termo de busca a partição é exata:** 3.128.425 (acórdão) + 880.254
+(monocrática) = **4.008.679** = total. ✅
+
+**Com termo de busca ela quebra:**
+
+| Termo | acórdão | monocrática | soma | total real |
+|---|---|---|---|---|
+| `usucapião` | 835 | 2.074 | 2.909 | **2.171** 🔴 |
+| `apelação` | 211.538 | 501.375 | 712.913 | **539.050** 🔴 |
+
+E o cruzamento com instância mostra que **a restrição de instância é ignorada**
+quando o tipo é estreitado: `2º grau + monocrática` para `apelação` = **501.375**,
+que é exatamente `monocrática` sozinha (as duas instâncias juntas).
+
+**Conclusão medida: com termo de busca, o filtro de tipo não é confiável e não
+compõe com o de instância.** O crawler expõe `-t` mas avisa, e o recorte
+recomendado é `--origem`.
+
+📌 Fato colateral, medido: nesta base **tipo e instância são quase perfeitamente
+correlacionados** — Turma Recursal grava como `ACORDAO`, 2º grau grava como
+`DECISAO_MONOCRATICA`. Em `apelação` só **14** documentos de 2º grau são acórdão.
+Amostras de 8 documentos confirmaram: `tipoAcordaos` só → 8/8 `ACORDAO` e 8/8
+`TURMA_RECURSAL`; `tipoDecisoesMonocraticas` só → 8/8 `DECISAO_MONOCRATICA` e 8/8
+`SEGUNDO_GRAU`.
+
+---
+
+## 4. Datas — `dataInicial` / `dataFinal`
+
+Um único par de datas, e ele é de **PUBLICAÇÃO** (`dataPublicacao`). O campo
+`dataJulgamento` existe no resultado mas **não é filtrável** — não há input para
+ele. Por isso o CLI expõe só `-dpi/-dpf`.
+
+- Formato aceito: `YYYY-MM-DD` e ISO completo. A SPA manda
+  `1980-02-01T03:00:00.000Z` como piso quando o usuário não filtra — o crawler
+  reproduz esse piso (`TJBACrawler.DATA_PISO`).
+- **Não há teto de intervalo.** Ao contrário de TJMS/TJAC/TJAM/TJAL (1 ano),
+  aqui um intervalo de 5 anos responde normalmente: `2015-01-01→2020-12-31` =
+  1.899. Não é preciso fatiar.
+- O filtro **restringe de fato**: sem data 2.171, só 2019 = 306.
+
+### ✅ A base está CORRENTE (a medição que o TJAM tornou obrigatória)
+
+Distribuição por ano da **base inteira**, por `dataPublicacao`:
+
+```
+2010    4.824      2016  235.858      2022  297.567
+2011    7.471      2017  254.601      2023  202.062
+2012   35.892      2018  334.351      2024  268.113
+2013   36.980      2019  356.623      2025  395.923
+2014   74.119      2020  304.266      2026   81.737  ← corrente
+2015  176.774      2021  231.662
+```
+
+Documento mais recente: publicação **07/08/2026**. Não há congelamento como no
+TJAM, nem data-sentinela detectada.
+
+⚠️ **Mas cuidado ao ler a distribuição de UM termo.** `usucapião` cai de 503
+(2018) para 21 (2025) e **0 em 2026**, enquanto a base cresce. Isso é do termo,
+não da base — foi verificado contra o total. Não repita aqui o diagnóstico do
+TJAM sem medir a base inteira antes.
+
+---
+
+## 5. Combos — órgão julgador, relator, classe
+
+⚠️ **A página tem ZERO `<select>`** (medido no Playwright). Os filtros são
+componentes React. Mas o GraphQL expõe as listas inteiras, o que é melhor que
+enumerar o widget:
+
+| Query | Conteúdo | Arquivo |
+|---|---|---|
+| `findAllOrgaosJulgadoresGroupByInstancia` | 25 de 2º grau + 13 de Turma Recursal | `orgaos-julgadores.json` |
+| `findAllRelatoresGroupByInstancia` | 148 de 2º grau + 117 de Turma Recursal | `relatores.json` |
+| `findAllClasses` | 263 classes | `classes.json` |
+
+**Os três filtros restringem de fato — provado por contagem** (termo `apelação`,
+base 539.050):
+
+| Filtro | Valor | Contagem |
+|---|---|---|
+| `orgaos` | 17 = PRIMEIRA CAMARA CRIMINAL | 25 |
+| `orgaos` | 21 = PRIMEIRA CAMARA CRIMINAL - PRIMEIRA TURMA | 16.417 |
+| `orgaos` | os dois juntos | **16.442** (soma exata → aditivo e disjunto) |
+| `classes` | 1689 = Embargos de Declaração | 38.791 |
+| `relatores` | 185 = EMILIO SALOMAO PINTO RESEDA | 4.435 |
+
+🔴 **`orgaos` e `classes` querem o ID; `relatores` quer o NOME** — e passar o id
+em `relatores` devolve **0 sem erro**:
+
+| Relator | por id | por nome |
+|---|---|---|
+| MARINEIS FREITAS CERQUEIRA (140) | **0** | 279 |
+| MOACYR PITTA LIMA FILHO (180) | **0** | 313 |
+| EMILIO SALOMAO PINTO RESEDA (185) | **0** | 4.435 |
+| NICIA OLGA ANDRADE DE SOUZA DANTAS (229) | **0** | 33.251 |
+
+O schema já dizia (`orgaos: [Int]`, `classes: [Int]`, `relatores: [String]`),
+mas a assimetria é fácil de não ver e o sintoma é zero silencioso.
+
+⚠️ **O agrupamento por instância do próprio tribunal está sujo:** a lista
+`orgaosJulgadoresTurmaRecursal` inclui `PRIMEIRA CAMARA CRIMINAL - SEGUNDA TURMA`,
+`PRIMEIRA CAMARA CÍVEL` e `QUARTA CAMARA CÍVEL`, que são câmaras de 2º grau, não
+turmas recursais. Não use essa lista como definição de "Juizado" — o filtro
+booleano `turmasRecursais` é confiável, a lista de nomes não é.
+
+---
+
+## 6. Resultados — anatomia e caminho até o documento (Fase 3b)
+
+Prints: `01.03-resultados.png`. HTML: `01-resultados-pagina.html`.
+XHR capturado: `01-xhr-busca.json`.
+
+### 🔴 O campo `ementa` NÃO é ementa — é o inteiro teor
+
+`ementa` e `conteudo` são **a mesma string** (comparação `===` em 3 documentos:
+13.813 / 12.741 / 6.734 chars, idênticos). E o texto é o **documento completo**:
+começa no cabeçalho do tribunal com endereço e partes
+(`Tribunal de Justiça do Estado da Bahia PODER JUDICIÁRIO QUARTA TURMA RECURSAL -
+PROJUDI … Recorrente(s): … Recorrido(s): …`) e termina na assinatura da relatora
+(`… Salvador/BA, na data registrada no sistema. MARTHA CAVALCANTI SILVA DE
+OLIVEIRA JUÍZA DE DIREITO RELATORA`).
+
+✅ **Consequência boa: o inteiro teor já vem no payload da busca.** Não há
+segunda requisição, não há PDF, **não há captcha em lugar nenhum** — diferente de
+TJAC/TJAM/TJAL, onde o download é bloqueado. `--fetch-inteiro-teor` só grava em
+disco.
+
+⚠️ **Consequência ruim: não existe campo de ementa separado.** Quem quiser só a
+ementa tem de recortá-la do texto. O cabeçalho `PROJUDI` no corpo também confirma
+que **o acervo cobre Projudi**, não só um sistema.
+
+### 🔴 Não existe permalink
+
+Após a busca a URL permanece `https://jurisprudencia.tjba.jus.br/` — a SPA não
+tem rota por documento. O identificador do documento é o campo `hash`
+(UUID v3, ex.: `102301fb-e029-3f29-b283-c47dcd1cdac8`), útil para deduplicar mas
+**não endereçável por URL**. Verificação de julgado é por reconsulta (`-n`).
+
+### 🔴 A API repete documentos dentro da própria página
+
+Medido em 06/08/2026, `itemsPerPage: 40`, termo `usucapião`:
+
+| Filtro | itemCount | devolvidos | hashes distintos | fator |
+|---|---|---|---|---|
+| `--origem ambas` | 2.171 | 40 | 39 | 1,03 |
+| `--origem turmas` | 835 | 40 | 39 | 1,03 |
+| **`--origem comum`** | 1.336 | 40 | **21** | **1,90** 🔴 |
+
+Com `itemsPerPage: 50` em `--origem comum` o fator é exatamente **2,00** (50
+devolvidos, 25 distintos, cada hash aparecendo 2×). **O default do CLI é
+`--origem comum`, ou seja, o pior caso.** Sem deduplicação o usuário recebe cada
+julgado duas vezes e o total parece o dobro do acervo.
+
+O crawler deduplica por `hash`, conta o fator e avisa quando ≥ 1,15, publicando
+`totalDeduplicadoEstimado` no resumo JSON.
+
+### Paginação
+
+- `itemsPerPage` aceita ao menos **1.000** sem erro (testado 10/50/100/200/500/1000,
+  todos devolveram o pedido). O crawler usa 50.
+- `pageNumber` é **0-based**; página 0 e página 1 não se sobrepõem.
+- **Estável**: a mesma página pedida duas vezes devolveu os mesmos hashes na
+  mesma ordem.
+- ⚠️ **Estourar a última página não devolve página vazia — devolve erro**:
+  `pageNumber: 9999` com `pageCount: 435` responde
+  `Internal Server Error(s) while executing query`. O crawler pára em `pageCount`.
+- `itemCount` é **exato** (não saturado) — confirmado pela partição de instância
+  fechar na soma.
+
+---
+
+## 7. Consulta por número — o Checker
+
+Duas portas, e só uma serve.
+
+✅ **`decisaoFilter.numeroRecurso`** — consulta o mesmo índice da busca, é rápida
+e devolve os documentos do processo. Número **com máscara**
+(`0046401-59.2024.8.05.0080` → 1 documento; `9999999-99.9999.8.05.9999` → 0).
+É o que o `TJBAChecker` usa.
+
+🔴 **`detalharProcesso(numeroProcesso)`** — fala com o sistema de tramitação ao
+vivo. **Não é confiável para verificação**: estourou **120 s** sem responder e
+devolveu `Internal Server Error` para o mesmo número que a busca acha na hora.
+Para número inexistente devolve `null` limpo. Fica disponível como enriquecimento
+opcional e tolerante a falha (`consultarProcesso(n, { detalhar: true })`).
+
+---
+
+## 8. Escopo da base — o que ela NÃO cobre
+
+- **Não tem 1º grau** (sentenças).
+- Cobre **2º grau + Turmas Recursais**, com acervo de **Projudi e PJe**
+  (o cabeçalho dos documentos identifica o sistema de origem).
+- O TJBA roda **três** sistemas de tramitação (ESAJ, PJe, Projudi). O e-SAJ está
+  inacessível e **não** foi possível confirmar se o acervo ESAJ está indexado
+  aqui — ver pendência.
+- Matéria federal com origem na BA → `trf1`.
+
+---
+
+## 9. Ordenação — só existe uma
+
+`ordenadoPor` aceita `dataPublicacao` (o default da SPA) e `dataJulgamento`, e
+os dois devolvem a **mesma ordem**. `score` **derruba a consulta**
+(`Internal Server Error`), assim como qualquer valor desconhecido. **Não há
+ordenação por relevância** neste portal, apesar de o schema expor o campo
+`score` no tipo `Decisao`.
+
+---
+
+## Pendências declaradas
+
+1. **Não foi medido se o acervo do e-SAJ está indexado.** O portal SPA mostra
+   documentos com cabeçalho `PROJUDI`; não se confirmou presença de documentos
+   originários do ESAJ, e o `esaj.tjba.jus.br` está inacessível para comparação.
+2. **A causa da duplicação não foi isolada** — sabe-se que é específica de
+   `segundoGrau` sozinho e que o fator é ~2, não por que ocorre. O crawler
+   deduplica, o que é remédio e não diagnóstico.
+3. **Não há `src/TJBATestes.js`.** O tribunal passou no checklist de aceite e no
+   `tests/smoke.js`, mas não tem a suíte de integração com sentinelas que
+   TJAM/TJAL têm. As sentinelas naturais seriam: a base deixar de ser corrente,
+   o fator de duplicação sumir (correção no servidor tornaria o dedupe
+   desnecessário) e os operadores `E`/`OU`/`NÃO` passarem a funcionar.
+
+✅ **Fechadas ainda neste mapeamento:** os filtros `orgaos`/`relatores`/`classes`
+foram provados por contagem e expostos no CLI (§5), e a ordenação foi verificada
+(§9).

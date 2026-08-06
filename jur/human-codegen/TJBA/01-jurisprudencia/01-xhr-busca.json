@@ -1,0 +1,10 @@
+[
+  {
+    "method": "POST",
+    "post": "{\"operationName\":\"OrgaoJulgador\",\"variables\":{},\"query\":\"query OrgaoJulgador {\\n findAllClasses {\\n id\\ncodPai\\ndescricao\\nsegundoGrau\\n__typename\\n}\\nfindAllOrgaosJulgadoresGroupByInstancia {\\n orgaosJulgadoresSegundoGrau {\\n id\\nnome\\ninstancia\\n__typename\\n}\\norgaosJulgadoresTurmaRecursal {\\n id\\nnome\\ninstancia\\n__typename\\n}\\ntodos {\\n id\\nnome\\ninstancia\\n__typename\\n}\\n__typename\\n}\\nfindAllRelatoresGroupByInstancia {\\n relatoresSegundoGrau {\\n id\\nnome\\ninstancia\\n__typename\\n}\\nrelatoresTurmaRecursal {\\n id\\nnome\\ninstancia\\n__typename\\n}\\ntodos {\\n id\\nnome\\ninstancia\\n__typename\\n}\\n__typename\\n}\\n}\\n\"}"
+  },
+  {
+    "method": "POST",
+    "post": "{\"operationName\":\"filter\",\"variables\":{\"decisaoFilter\":{\"assunto\":\"usucapião\",\"orgaos\":[],\"relatores\":[],\"classes\":[],\"dataInicial\":\"1980-02-01T03:00:00.000Z\",\"segundoGrau\":true,\"turmasRecursais\":true,\"tipoAcordaos\":true,\"tipoDecisoesMonocraticas\":true,\"ordenadoPor\":\"dataPublicacao\"},\"pageNumber\":0,\"itemsPerPage\":10},\"query\":\"query filter($decisaoFilter: DecisaoFilter!,$pageNumber: Int!,$itemsPerPage: Int!) {\\n filter(decisaoFilter: $decisaoFilter,pageNumber: $pageNumber,itemsPerPage: $itemsPerPage) {\\n decisoes {\\n dataPublicacao\\nrelator {\\n id\\nnome\\n__typename\\n}\\norgaoJulgador {\\n id\\nnome\\n__typename\\n}\\nclasse {\\n id\\ndescricao\\n__typename\\n}\\nconteudo\\ntipoDecisao\\nementa\\nhash\\nnumeroProcesso\\n__typename\\n}\\nrelatores {\\n key\\nvalue\\n__typename\\n}\\norgaos {\\n key\\nvalue\\n__typename\\n}\\nclasses {\\n key\\nvalue\\n__typename\\n}\\npageCount\\nitemCount\\n__typename\\n}\\n}\\n\"}"
+  }
+]

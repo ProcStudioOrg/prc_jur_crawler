@@ -1,0 +1,2106 @@
+[
+  {
+    "id": "1689",
+    "codPai": 207,
+    "descricao": "Embargos de Declaração",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "1702",
+    "codPai": 215,
+    "descricao": "Impugnação de Assistência Judiciária",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "1710",
+    "codPai": 292,
+    "descricao": "Mandado de Segurança",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "1711",
+    "codPai": 412,
+    "descricao": "Agravo de Instrumento em Recurso Especial",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1712",
+    "codPai": 412,
+    "descricao": "Agravo de Instrumento em Recurso Extraordinário",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1725",
+    "codPai": 175,
+    "descricao": "Notificação",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1726",
+    "codPai": 175,
+    "descricao": "Interpelação",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1727",
+    "codPai": 268,
+    "descricao": "Petição",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "1728",
+    "codPai": 197,
+    "descricao": "Apelação / Reexame Necessário ",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1729",
+    "codPai": 412,
+    "descricao": "Agravo Regimental",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1731",
+    "codPai": 277,
+    "descricao": "Investigação contra magistrado",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1733",
+    "codPai": 277,
+    "descricao": "Procedimento Investigatório do MP (Peças de Informação)",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "275",
+    "codPai": 274,
+    "descricao": "Notificação para Explicações",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "2",
+    "codPai": null,
+    "descricao": "PROCESSO CÍVEL E DO TRABALHO",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "26",
+    "codPai": 1107,
+    "descricao": "Procedimentos Especiais",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "27",
+    "codPai": 26,
+    "descricao": "Procedimentos Especiais de Jurisdição Contenciosa",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "32",
+    "codPai": 27,
+    "descricao": "Consignação em Pagamento",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "37",
+    "codPai": 27,
+    "descricao": "Embargos de Terceiro",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "38",
+    "codPai": 27,
+    "descricao": "Habilitação",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "46",
+    "codPai": 27,
+    "descricao": "Restauração de Autos",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "47",
+    "codPai": 27,
+    "descricao": "Ação Rescisória",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "62",
+    "codPai": 26,
+    "descricao": "Procedimentos Regidos por Outros Códigos, Leis Esparsas e Regimentos",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "64",
+    "codPai": 62,
+    "descricao": "Ação Civil de Improbidade Administrativa",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "65",
+    "codPai": 62,
+    "descricao": "Ação Civil Pública",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "66",
+    "codPai": 62,
+    "descricao": "Ação Popular",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "88",
+    "codPai": 1198,
+    "descricao": "Correição Parcial ou Reclamação Correicional",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "95",
+    "codPai": 62,
+    "descricao": "Direta de Inconstitucionalidade",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "107",
+    "codPai": 62,
+    "descricao": "Expropriação da Lei 8.257/91",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "110",
+    "codPai": 62,
+    "descricao": "Habeas Data",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "118",
+    "codPai": 62,
+    "descricao": "Mandado de Injunção",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "119",
+    "codPai": 62,
+    "descricao": "Mandado de Segurança Coletivo",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "120",
+    "codPai": 62,
+    "descricao": "Mandado de Segurança",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "144",
+    "codPai": 62,
+    "descricao": "Suspensão de Liminar ou Antecipação de Tutela",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "145",
+    "codPai": 62,
+    "descricao": "Suspensão de Execução de Sentença",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "151",
+    "codPai": 150,
+    "descricao": "Liquidação por Arbitramento",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "152",
+    "codPai": 150,
+    "descricao": "Liquidação por Artigos",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "153",
+    "codPai": 150,
+    "descricao": "Liquidação Provisória por Arbitramento",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "154",
+    "codPai": 150,
+    "descricao": "Liquidação Provisória por Artigos",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "156",
+    "codPai": 155,
+    "descricao": "Cumprimento de Sentença",
+    "natureza": "Execução",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "157",
+    "codPai": 155,
+    "descricao": "Cumprimento Provisório de Sentença",
+    "natureza": "Execução",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "172",
+    "codPai": 169,
+    "descricao": "Embargos à Execução",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "178",
+    "codPai": 175,
+    "descricao": "Arresto ",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "179",
+    "codPai": 175,
+    "descricao": "Arrolamento de Bens",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "180",
+    "codPai": 175,
+    "descricao": "Atentado",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "181",
+    "codPai": 175,
+    "descricao": "Busca e Apreensão",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "182",
+    "codPai": 175,
+    "descricao": "Caução",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "186",
+    "codPai": 175,
+    "descricao": "Exibição",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "191",
+    "codPai": 175,
+    "descricao": "Protesto",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "193",
+    "codPai": 175,
+    "descricao": "Produção Antecipada de Provas",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "195",
+    "codPai": 175,
+    "descricao": "Separação de Corpos",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "196",
+    "codPai": 175,
+    "descricao": "Seqüestro",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "197",
+    "codPai": 2,
+    "descricao": "Recursos",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "198",
+    "codPai": 197,
+    "descricao": "Apelação",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "199",
+    "codPai": 197,
+    "descricao": "Reexame Necessário",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "200",
+    "codPai": 197,
+    "descricao": "Agravos",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "202",
+    "codPai": 200,
+    "descricao": "Agravo de Instrumento",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "203",
+    "codPai": 200,
+    "descricao": "Agravo de Instrumento em Recurso Especial",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "204",
+    "codPai": 200,
+    "descricao": "Agravo de Instrumento em Recurso Extraordinário",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "206",
+    "codPai": 200,
+    "descricao": "Agravo Regimental",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "207",
+    "codPai": 197,
+    "descricao": "Embargos",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "208",
+    "codPai": 207,
+    "descricao": "Embargos Infringentes",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "214",
+    "codPai": 2,
+    "descricao": "Outros Procedimentos",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "215",
+    "codPai": 214,
+    "descricao": "Incidentes",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "216",
+    "codPai": 215,
+    "descricao": "Argüição de Inconstitucionalidade",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "218",
+    "codPai": 215,
+    "descricao": "Assistência Judiciária",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "221",
+    "codPai": 215,
+    "descricao": "Conflito de competência",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "224",
+    "codPai": 215,
+    "descricao": "Exceções",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "228",
+    "codPai": 215,
+    "descricao": "Exibição de Documento ou Coisa",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "230",
+    "codPai": 215,
+    "descricao": "Impugnação ao Pedido de Assistência Litisconsorcial ou Simples",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "231",
+    "codPai": 215,
+    "descricao": "Impugnação ao Valor da Causa",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "232",
+    "codPai": 215,
+    "descricao": "Incidente de Falsidade",
+    "natureza": "Comum",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "233",
+    "codPai": 215,
+    "descricao": "Incidente de Uniformização de Jurisprudência",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "236",
+    "codPai": 215,
+    "descricao": "Oposição",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "237",
+    "codPai": 214,
+    "descricao": "Atos e expedientes",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "238",
+    "codPai": 237,
+    "descricao": "Avocatória",
+    "natureza": "Administrativo",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "241",
+    "codPai": 237,
+    "descricao": "Petição",
+    "natureza": "Ato",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "242",
+    "codPai": 237,
+    "descricao": "Comunicação",
+    "natureza": "Ato",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "244",
+    "codPai": 62,
+    "descricao": "Reclamação",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "256",
+    "codPai": 1198,
+    "descricao": "Representação por Excesso de Prazo",
+    "natureza": "Administrativo",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "258",
+    "codPai": 257,
+    "descricao": "Carta de ordem",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "261",
+    "codPai": 257,
+    "descricao": "Carta Precatória",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "268",
+    "codPai": null,
+    "descricao": "PROCESSO CRIMINAL",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "270",
+    "codPai": 269,
+    "descricao": "Notícia-Crime",
+    "natureza": "Inquérito",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "272",
+    "codPai": 271,
+    "descricao": "Representação Criminal",
+    "natureza": "Inquérito",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "276",
+    "codPai": 274,
+    "descricao": "Notificação para Explicações (Lei de Imprensa)",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "278",
+    "codPai": 277,
+    "descricao": "Termo Circunstanciado",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "279",
+    "codPai": 277,
+    "descricao": "Inquérito Policial",
+    "natureza": "Inquérito",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "280",
+    "codPai": 277,
+    "descricao": "Auto de Prisão em Flagrante",
+    "natureza": "Inquérito",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "282",
+    "codPai": 281,
+    "descricao": "Ação Penal de Competência do Júri",
+    "natureza": "Comum",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "283",
+    "codPai": 281,
+    "descricao": "Ação Penal",
+    "natureza": "Comum",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "284",
+    "codPai": 268,
+    "descricao": "Processo Especial",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "285",
+    "codPai": 284,
+    "descricao": "Processo Especial do Código de Processo Penal",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "287",
+    "codPai": 285,
+    "descricao": "Crimes de Responsabilidade dos Funcionários Públicos",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "288",
+    "codPai": 285,
+    "descricao": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "289",
+    "codPai": 285,
+    "descricao": "Crimes Contra a Propriedade Imaterial",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "290",
+    "codPai": 285,
+    "descricao": "Processo Sumário (Detenção)",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "291",
+    "codPai": 285,
+    "descricao": "Restauração de Autos",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "292",
+    "codPai": 284,
+    "descricao": "Processo Especial de Leis Esparsas",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "293",
+    "codPai": 292,
+    "descricao": "Crimes Ambientais",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "294",
+    "codPai": 292,
+    "descricao": "Crimes Contra a Propriedade Industrial",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "295",
+    "codPai": 292,
+    "descricao": "Crimes Contra a Propriedade Intelectual",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "297",
+    "codPai": 292,
+    "descricao": "Crimes de Imprensa",
+    "natureza": "Comum",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "300",
+    "codPai": 292,
+    "descricao": "Procedimento Especial da Lei Antitóxicos",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "302",
+    "codPai": 292,
+    "descricao": "Procedimento Especial dos Crimes de Abuso de Autoridade",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "303",
+    "codPai": 268,
+    "descricao": "Medidas Garantidoras",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "305",
+    "codPai": 304,
+    "descricao": "Liberdade Provisória com ou sem fiança",
+    "natureza": "Prisão/Liberdade",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "306",
+    "codPai": 304,
+    "descricao": "Relaxamento de Prisão",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "307",
+    "codPai": 303,
+    "descricao": "Habeas Corpus",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "309",
+    "codPai": 308,
+    "descricao": "Pedido de Busca e Apreensão Criminal",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "310",
+    "codPai": 308,
+    "descricao": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "311",
+    "codPai": 308,
+    "descricao": "Medidas Investigatórias Sobre Organizações Criminosas",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "313",
+    "codPai": 312,
+    "descricao": "Pedido de Prisão Preventiva",
+    "natureza": "Prisão/Liberdade",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "314",
+    "codPai": 312,
+    "descricao": "Pedido de Prisão Temporária",
+    "natureza": "Prisão/Liberdade",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "316",
+    "codPai": 268,
+    "descricao": "Questões e Processos Incidentes",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "317",
+    "codPai": 316,
+    "descricao": "Exceções",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "318",
+    "codPai": 317,
+    "descricao": "Exceção de Suspeição",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "319",
+    "codPai": 317,
+    "descricao": "Exceção de Incompetência de Juízo",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "320",
+    "codPai": 317,
+    "descricao": "Litispendência",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "321",
+    "codPai": 317,
+    "descricao": "Ilegitimidade de Parte",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "322",
+    "codPai": 317,
+    "descricao": "Coisa Julgada",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "323",
+    "codPai": 317,
+    "descricao": "Exceção de Impedimento",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "324",
+    "codPai": 317,
+    "descricao": "Exceção da Verdade",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "325",
+    "codPai": 331,
+    "descricao": "Conflito de Jurisdição",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "326",
+    "codPai": 316,
+    "descricao": "Restituição de Coisas Apreendidas",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "327",
+    "codPai": 316,
+    "descricao": "Embargos de Terceiro",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "329",
+    "codPai": 328,
+    "descricao": "Seqüestro",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "330",
+    "codPai": 328,
+    "descricao": "Arresto / Hipoteca Legal",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "331",
+    "codPai": 316,
+    "descricao": "Incidentes",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "332",
+    "codPai": 331,
+    "descricao": "Incidente de Falsidade",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "333",
+    "codPai": 331,
+    "descricao": "Insanidade Mental do Acusado",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "335",
+    "codPai": 334,
+    "descricao": "Carta de Ordem",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "355",
+    "codPai": 334,
+    "descricao": "Carta Precatória",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "386",
+    "codPai": 385,
+    "descricao": "Execução da Pena",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "412",
+    "codPai": 268,
+    "descricao": "Recursos",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "413",
+    "codPai": 412,
+    "descricao": "Agravo de Execução Penal",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "417",
+    "codPai": 412,
+    "descricao": "Apelação",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "418",
+    "codPai": 412,
+    "descricao": "Carta Testemunhável",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "419",
+    "codPai": 412,
+    "descricao": "Correição Parcial",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "420",
+    "codPai": 412,
+    "descricao": "Embargos de Declaração",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "421",
+    "codPai": 412,
+    "descricao": "Embargos Infringentes e de Nulidade",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "424",
+    "codPai": 412,
+    "descricao": "Recurso de Medida Cautelar",
+    "natureza": "Recurso",
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "426",
+    "codPai": 412,
+    "descricao": "Recurso em Sentido Estrito",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "427",
+    "codPai": 412,
+    "descricao": "Reexame Necessário",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "428",
+    "codPai": 412,
+    "descricao": "Revisão Criminal",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "432",
+    "codPai": 331,
+    "descricao": "Desaforamento de Julgamento",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "433",
+    "codPai": 331,
+    "descricao": "Incidente de Uniformização de Jurisprudência",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "460",
+    "codPai": 197,
+    "descricao": "Recurso Inominado",
+    "natureza": "Recurso",
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "547",
+    "codPai": null,
+    "descricao": "JUIZADOS DA INFÂNCIA E DA JUVENTUDE",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "1106",
+    "codPai": 2,
+    "descricao": "Processo de Conhecimento",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "1107",
+    "codPai": 1106,
+    "descricao": "Procedimento de Conhecimento",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "1114",
+    "codPai": 1111,
+    "descricao": "Execução Contra a Fazenda Pública",
+    "natureza": "EXECUÇÃO",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1178",
+    "codPai": 331,
+    "descricao": "Arguição de Inconstitucionalidade",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1199",
+    "codPai": 1198,
+    "descricao": "Pedido de Providências",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1208",
+    "codPai": 200,
+    "descricao": "Agravo",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1230",
+    "codPai": 224,
+    "descricao": "Exceção de Impedimento",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "1231",
+    "codPai": 224,
+    "descricao": "Exceção de Suspeição",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "1262",
+    "codPai": 1198,
+    "descricao": "Processo Administrativo Disciplinar em face de Servidor",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1264",
+    "codPai": 1198,
+    "descricao": "Processo Administrativo Disciplinar em face de Magistrado",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1265",
+    "codPai": 1198,
+    "descricao": "Precatório",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1266",
+    "codPai": 1198,
+    "descricao": "Requisição de Pequeno Valor",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1268",
+    "codPai": 308,
+    "descricao": "Medidas Protetivas de urgência (Lei Maria da Penha)",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1269",
+    "codPai": 62,
+    "descricao": "Habeas Corpus",
+    "natureza": "Cível",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "1289",
+    "codPai": 175,
+    "descricao": "Outras medidas provisionais",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1291",
+    "codPai": 331,
+    "descricao": "Reabilitação",
+    "natureza": "Penal",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1296",
+    "codPai": 62,
+    "descricao": "Declaratória de Constitucionalidade",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1297",
+    "codPai": 62,
+    "descricao": "Intervenção em Município",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1298",
+    "codPai": 1198,
+    "descricao": "Processo Administrativo",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1299",
+    "codPai": 1198,
+    "descricao": "Recurso Administrativo",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1301",
+    "codPai": 1198,
+    "descricao": "Reclamação Disciplinar",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1303",
+    "codPai": 1198,
+    "descricao": "Correição Extraordinária",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1304",
+    "codPai": 1198,
+    "descricao": "Inspeção",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1306",
+    "codPai": 1198,
+    "descricao": "Recurso em Processo Administrativo Disciplinar em face de Servidor",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1307",
+    "codPai": 1198,
+    "descricao": "Correição Ordinária",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1308",
+    "codPai": 1198,
+    "descricao": "Sindicância",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1385",
+    "codPai": 547,
+    "descricao": "Seção Cível",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "1436",
+    "codPai": 1385,
+    "descricao": "Processos Cautelares",
+    "natureza": null,
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "10942",
+    "codPai": 197,
+    "descricao": "Correição Parcial",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10943",
+    "codPai": 281,
+    "descricao": "Ação Penal - Procedimento Sumário",
+    "natureza": "Comum",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10970",
+    "codPai": 10969,
+    "descricao": "Conflito de Competência",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10972",
+    "codPai": 10969,
+    "descricao": "Exibição de Documento ou Coisa",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10973",
+    "codPai": 10969,
+    "descricao": "Impugnação ao Valor da Causa",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10974",
+    "codPai": 10969,
+    "descricao": "Incidente de Falsidade",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10975",
+    "codPai": 10971,
+    "descricao": "Exceção de Impedimento",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10976",
+    "codPai": 10971,
+    "descricao": "Exceção de Incompetência",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10977",
+    "codPai": 10971,
+    "descricao": "Exceção de Suspeição",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10979",
+    "codPai": 1459,
+    "descricao": "Petição",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10981",
+    "codPai": 155,
+    "descricao": "Impugnação ao Cumprimento  de Decisão",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "11026",
+    "codPai": 1385,
+    "descricao": "Petição",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "11398",
+    "codPai": 412,
+    "descricao": "Recurso em sentido estrito/Recurso ex officio",
+    "natureza": "Recurso",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "11399",
+    "codPai": 385,
+    "descricao": "Execução de Medida de Segurança",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "11787",
+    "codPai": 331,
+    "descricao": "Assistência Judiciária",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "11788",
+    "codPai": 331,
+    "descricao": "Exibição de Documento ou Coisa ",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "11789",
+    "codPai": 331,
+    "descricao": "Impugnação ao Valor da Causa",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "11790",
+    "codPai": 331,
+    "descricao": "Impugnação de Assistência Judiciária",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "11793",
+    "codPai": 308,
+    "descricao": "Justificação Criminal",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "11794",
+    "codPai": 1459,
+    "descricao": "Restituição de Coisas Apreendidas - Infracional",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12119",
+    "codPai": 215,
+    "descricao": "Incidente de Desconsideração de Personalidade Jurídica",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "12121",
+    "codPai": 277,
+    "descricao": "Auto de Prisão",
+    "natureza": "Investigatória",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12122",
+    "codPai": 292,
+    "descricao": "Reclamação Criminal",
+    "natureza": "Especial",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "12133",
+    "codPai": 2,
+    "descricao": "Tutela Provisória",
+    "natureza": "Tutela Provisória",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "12136",
+    "codPai": 11099,
+    "descricao": "Pedido de Mediação Pré-Processual",
+    "natureza": "Pré-Processual",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12134",
+    "codPai": 12133,
+    "descricao": "Tutela Cautelar Antecedente",
+    "natureza": "Tutela Provisória",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "12135",
+    "codPai": 12133,
+    "descricao": "Tutela Antecipada Antecedente",
+    "natureza": "Tutela Provisória",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "12080",
+    "codPai": 215,
+    "descricao": "Incidente de Impedimento",
+    "natureza": "1",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "12081",
+    "codPai": 215,
+    "descricao": "Incidente de Suspeição ",
+    "natureza": "1",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "11955",
+    "codPai": 308,
+    "descricao": "Cautelar Inominada Criminal",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "987",
+    "codPai": 1067,
+    "descricao": "Dissídio Coletivo",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "988",
+    "codPai": 1067,
+    "descricao": "Dissídio Coletivo de Greve",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1111",
+    "codPai": 158,
+    "descricao": "Execução de Título Judicial",
+    "natureza": "Execução ",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "1271",
+    "codPai": 197,
+    "descricao": "Recurso de Medida Cautelar Cível",
+    "natureza": "Recursal",
+    "segundoGrau": false,
+    "turma": true
+  },
+  {
+    "id": "1691",
+    "codPai": 1386,
+    "descricao": "Mandado de Segurança Infância e Juventude Cível",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10980",
+    "codPai": 155,
+    "descricao": "Cumprimento Provisório de Decisão",
+    "natureza": "Cumprimento de Sentença/Decisão",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10944",
+    "codPai": 281,
+    "descricao": "Ação Penal - Procedimento Sumaríssimo",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "10967",
+    "codPai": 308,
+    "descricao": "Medidas Protetivas - Estatuto do Idoso Criminal ",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "1719",
+    "codPai": 331,
+    "descricao": "Avaliação para atestar dependência de drogas",
+    "natureza": "Incidental",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "11556",
+    "codPai": 62,
+    "descricao": "Suspensão de Segurança Cível",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "11555",
+    "codPai": 62,
+    "descricao": "Suspensão de Liminar e de Sentença",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "11875",
+    "codPai": 11099,
+    "descricao": "Reclamação Pré-processual",
+    "natureza": "Pré-processual",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12079",
+    "codPai": 159,
+    "descricao": "Execução de Título Extrajudicial contra a Fazenda Pública",
+    "natureza": "Execução ",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12082",
+    "codPai": 257,
+    "descricao": "Carta Arbitral",
+    "natureza": "Carta",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12085",
+    "codPai": 215,
+    "descricao": "Incidente de Resolução de Demandas Repetitivas",
+    "natureza": "incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12086",
+    "codPai": 27,
+    "descricao": "Dissolução Parcial de Sociedade",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12087",
+    "codPai": 215,
+    "descricao": "Incidente de Assunção de Competência",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12070",
+    "codPai": 1386,
+    "descricao": "Pedido de Medida de Proteção",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12071",
+    "codPai": 1459,
+    "descricao": "Procedimentos Cautelares",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12072",
+    "codPai": 12071,
+    "descricao": "Busca e Apreensão Infracional",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12073",
+    "codPai": 12071,
+    "descricao": "Internação Provisória",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12074",
+    "codPai": 12071,
+    "descricao": "Pedido De Desinternação/Reavaliação/Substituição/Suspensão da Medida",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12075",
+    "codPai": 215,
+    "descricao": "Procedimento Conciliatório",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12077",
+    "codPai": 331,
+    "descricao": "Homologação em Acordo de Colaboração Premiada",
+    "natureza": "Incidental",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12078",
+    "codPai": 155,
+    "descricao": "Cumprimento de Sentença contra a Fazenda Pública",
+    "natureza": "Cumprimento de Sentença/Decisão",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12375",
+    "codPai": 27,
+    "descricao": "Reclamação",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12386",
+    "codPai": 10969,
+    "descricao": "Incidente de Impedimento Infância e Juventude",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12388",
+    "codPai": 10969,
+    "descricao": "Incidente de Suspeição Infância e Juventude",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12394",
+    "codPai": 285,
+    "descricao": "Revisão Criminal",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "12423",
+    "codPai": 12071,
+    "descricao": "Medidas Protetivas de Urgência (Lei Maria da Penha) Infracional",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12424",
+    "codPai": 12071,
+    "descricao": "Medidas Protetivas - Estatuto do Idoso Infracional",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12226",
+    "codPai": 50,
+    "descricao": "Notificação",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12227",
+    "codPai": 50,
+    "descricao": "Interpelação",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12228",
+    "codPai": 50,
+    "descricao": "Protesto",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12229",
+    "codPai": 50,
+    "descricao": "Protesto formado a bordo",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12230",
+    "codPai": 1386,
+    "descricao": "Guarda c/c destitui��ão do poder familiar",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12231",
+    "codPai": 155,
+    "descricao": "Cumprimento de sentença - Lei Arbitral (Lei 9.307/1996)",
+    "natureza": "Cumprimento de Sentença/Decisão",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12233",
+    "codPai": 50,
+    "descricao": "Tutela Cível",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12246",
+    "codPai": 155,
+    "descricao": "Cumprimento de Sentença de Obrigação de Prestar Alimentos",
+    "natureza": "Cumprimento de Sentença/Decisão",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12247",
+    "codPai": 159,
+    "descricao": "Execução Extrajudicial de Alimentos",
+    "natureza": "Execução",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12248",
+    "codPai": 1198,
+    "descricao": "Pedido de Cooperação Jurisdicional",
+    "natureza": "Administrativa",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "12251",
+    "codPai": 1111,
+    "descricao": "Execução de Título Judicial - CEJUSC",
+    "natureza": "Execução ",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12357",
+    "codPai": 237,
+    "descricao": "Pedido de Efeito Suspensivo à Apelação",
+    "natureza": "Atos e Expedientes",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12370",
+    "codPai": 62,
+    "descricao": "Tomada de Decisão Apoiada",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "12728",
+    "codPai": 385,
+    "descricao": "Transferência Entre Estabelecimentos Penais",
+    "natureza": null,
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "12729",
+    "codPai": 385,
+    "descricao": "Execução de Medidas Alternativas no Juízo Comum",
+    "natureza": "Execução Criminal",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "14123",
+    "codPai": 316,
+    "descricao": "Destinação de Bens Apreendidos",
+    "natureza": "Incidental",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "15160",
+    "codPai": 155,
+    "descricao": "Cumprimento de Sentença de Ações Coletivas",
+    "natureza": "Cumprimento de Sentença/Decisão",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "15167",
+    "codPai": 214,
+    "descricao": "Acordo de Não Persecução Cível",
+    "natureza": "Outros",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "14678",
+    "codPai": 331,
+    "descricao": "Acordo de Não Persecução Penal",
+    "natureza": "Incidental",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "14701",
+    "codPai": 292,
+    "descricao": "Habeas Data Criminal",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "14734",
+    "codPai": 308,
+    "descricao": "Medidas Protetivas - Criança e Adolescente (Lei 13.431)",
+    "natureza": "Cautelar",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "14991",
+    "codPai": 215,
+    "descricao": "Classificação de Crédito Público",
+    "natureza": "Incidental",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "12727",
+    "codPai": 385,
+    "descricao": "Execução de Pena de Multa",
+    "natureza": "Execução",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "7",
+    "codPai": 1107,
+    "descricao": "Procedimento Comum Cível",
+    "natureza": "Conhecimento",
+    "segundoGrau": true,
+    "turma": false
+  },
+  {
+    "id": "457",
+    "codPai": 215,
+    "descricao": "Pedido de Uniformização de Interpretação de Lei Cível",
+    "natureza": "Incidente",
+    "segundoGrau": true,
+    "turma": true
+  },
+  {
+    "id": "11791",
+    "codPai": 331,
+    "descricao": "Pedido de Uniformização de Interpretação de Lei Criminal",
+    "natureza": "Incidental",
+    "segundoGrau": true,
+    "turma": true
+  }
+]

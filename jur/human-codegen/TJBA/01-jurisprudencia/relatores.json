@@ -1,0 +1,1331 @@
+{
+  "relatoresSegundoGrau": [
+    {
+      "id": "140",
+      "nome": "MARINEIS FREITAS CERQUEIRA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "180",
+      "nome": "MOACYR PITTA LIMA FILHO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "185",
+      "nome": "EMILIO SALOMAO PINTO RESEDA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "229",
+      "nome": "NICIA OLGA ANDRADE DE SOUZA DANTAS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "36",
+      "nome": "ADRIANO AUGUSTO GOMES BORGES",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "39",
+      "nome": "ANTONIO CARLOS DA SILVEIRA SIMARO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "13",
+      "nome": "LICIA DE CASTRO LARANJEIRA CARVALHO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "14",
+      "nome": "PILAR CELIA TOBIO DE CLARO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "16",
+      "nome": "SILVIA CARNEIRO SANTOS ZARIF",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "17",
+      "nome": "MARIO AUGUSTO ALBIANI ALVES JUNIOR",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "18",
+      "nome": "MARIA DE LOURDES PINHO MEDAUAR",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "20",
+      "nome": "MARIA DA GRACA OSORIO PIMENTEL LEAL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "23",
+      "nome": "SARA SILVA DE BRITO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "28",
+      "nome": "BALTAZAR MIRANDA SARAIVA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "103",
+      "nome": "LISBETE MARIA TEIXEIRA ALMEIDA C SANTOS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "232",
+      "nome": "RICARDO AUGUSTO SCHMITT",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "154",
+      "nome": "PEDRO AUGUSTO COSTA GUERRA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "157",
+      "nome": "JULIO CEZAR LEMOS TRAVESSA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "160",
+      "nome": "IVETE CALDAS SILVA FREITAS MUNIZ",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "161",
+      "nome": "ESERVAL ROCHA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "162",
+      "nome": "NILSON SOARES CASTELO BRANCO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "173",
+      "nome": "NARTIR DANTAS WEBER",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "174",
+      "nome": "JOSE ALFREDO CERQUEIRA DA SILVA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "230",
+      "nome": "LAURA SCALLDAFERRI PESSOA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "234",
+      "nome": "CLAUDIO CESARE BRAGA PEREIRA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "26",
+      "nome": "MANUEL CARNEIRO BAHIA DE ARAUJO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "24",
+      "nome": "ROLEMBERG JOSE ARAUJO COSTA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "25",
+      "nome": "MARIA DO ROSARIO PASSOS DA SILVA CALIXTO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "27",
+      "nome": "VERA LUCIA FREIRE DE CARVALHO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "37",
+      "nome": "MARIELZA MAUES PINHEIRO LIMA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "248",
+      "nome": "MARIA DAS GRACAS GUERRA DE SANTANA HAMILTON",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "122",
+      "nome": "JOSE CICERO LANDIN NETO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "124",
+      "nome": "TELMA LAURA SILVA BRITTO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "144",
+      "nome": "MARCIA BORGES FARIA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "152",
+      "nome": "PAULO CESAR BANDEIRA DE MELO JORGE",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "32",
+      "nome": "CASSINELZA DA COSTA SANTOS LOPES",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "34",
+      "nome": "DINALVA GOMES LARANJEIRA PIMENTEL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "35",
+      "nome": "MARIA MARTA KARAOGLAN MARTINS ABREU",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "40",
+      "nome": "ANTONIO MARON AGLE FILHO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "100",
+      "nome": "MARIA DE FATIMA SILVA CARVALHO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "107",
+      "nome": "EDMILSON JATAHY FONSECA JUNIOR",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "131",
+      "nome": "JERONIMO DOS SANTOS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "132",
+      "nome": "CYNTHIA MARIA PINA RESENDE",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "134",
+      "nome": "OSVALDO DE ALMEIDA BOMFIM",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "138",
+      "nome": "HUMBERTO NOGUEIRA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "139",
+      "nome": "ANTONIO PESSOA CARDOSO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "156",
+      "nome": "CARLOS ROBERTO SANTOS ARAUJO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "169",
+      "nome": "ABELARDO PAULO DA MATTA NETO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "228",
+      "nome": "ZANDRA ANUNCIACAO ALVAREZ PARADA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "96",
+      "nome": "ILZA MARIA DA ANUNCIACAO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "110",
+      "nome": "JOSE EDIVALDO ROCHA ROTONDANO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "114",
+      "nome": "MARTA MOREIRA SANTANA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "210",
+      "nome": "ANGELA BACELLAR BATISTA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "231",
+      "nome": "MARIELZA BRANDAO FRANCO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "233",
+      "nome": "ELIENE SIMONE SILVA OLIVEIRA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "148",
+      "nome": "BENICIO MASCARENHAS NETO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "150",
+      "nome": "GARDENIA PEREIRA DUARTE",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "222",
+      "nome": "ANTONIO ADONIAS AGUIAR BASTOS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "207",
+      "nome": "ROSALVO AUGUSTO VIEIRA DA SILVA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "102",
+      "nome": "MARIA DO SOCORRO BARRETO SANTIAGO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "106",
+      "nome": "GESIVALDO NASCIMENTO BRITTO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "178",
+      "nome": "DELMA MARGARIDA GOMES LOBO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "218",
+      "nome": "MARCELO SILVA BRITTO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "244",
+      "nome": "MARCON ROUBERT DA SILVA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "29",
+      "nome": "JOSE JORGE LOPES BARRETO DA SILVA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "30",
+      "nome": "MARCOS ADRIANO SILVA LEDO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "31",
+      "nome": "PEDRO ROGERIO CASTRO GODINHO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "41",
+      "nome": "JOAO BATISTA ALCANTARA FILHO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "127",
+      "nome": "HELOISA PINTO DE FREITAS VIEIRA GRADDI",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "155",
+      "nome": "MARIO ALBERTO SIMOES HIRS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "171",
+      "nome": "MARIVALDA ALMEIDA MOUTINHO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "190",
+      "nome": "PRESIDENCIA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "33",
+      "nome": "RUY EDUARDO ALMEIDA BRITTO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "125",
+      "nome": "ROSITA FALCAO DE ALMEIDA MAIA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "130",
+      "nome": "CARLOS ALBERTO DULTRA CINTRA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "136",
+      "nome": "JOSE OLEGARIO MONCAO CALDAS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "141",
+      "nome": "AIDE OUAIS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "194",
+      "nome": "GEDER LUIZ ROCHA GOMES",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "214",
+      "nome": "MARIANA VARJAO ALVES EVANGELISTA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "224",
+      "nome": "LICIA PINTO FRAGOSO MODESTO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "225",
+      "nome": "ANDREA PAULA MATOS RODRIGUES DE MIRANDA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "15",
+      "nome": "GUSTAVO SILVA PEQUENO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "19",
+      "nome": "LIDIVALDO REAICHE RAIMUNDO BRITTO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "21",
+      "nome": "AUGUSTO DE LIMA BISPO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "22",
+      "nome": "MARIA DA PURIFICACAO DA SILVA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "38",
+      "nome": "ADRIANA SALES BRAGA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "119",
+      "nome": "EDUARDO AUGUSTO VIANA BARRETO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "129",
+      "nome": "ALDENILSON BARBOSA DOS SANTOS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "133",
+      "nome": "ROBERTO MAYNARD FRANK",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "226",
+      "nome": "RAIMUNDO NONATO BORGES BRAGA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "259",
+      "nome": "RILTON GOES RIBEIRO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "142",
+      "nome": "ARACY LIMA BORGES",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "145",
+      "nome": "ILONA MARCIA REIS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "147",
+      "nome": "JOSE SOARES FERREIRA ARAS NETO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "149",
+      "nome": "EZIR ROCHA DO BOMFIM",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "151",
+      "nome": "ANA CONCEICAO BARBUDA SANCHES GUIMARAES FERREIRA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "158",
+      "nome": "LOURIVAL ALMEIDA TRINDADE",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "164",
+      "nome": "JEFFERSON ALVES DE ASSIS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "166",
+      "nome": "RITA DE CASSIA MACHADO MAGALHAES",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "167",
+      "nome": "NAGILA MARIA SALES BRITO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "170",
+      "nome": "INEZ MARIA BRITO SANTOS MIRANDA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "184",
+      "nome": "MARIA DO SOCORRO SANTA ROSA DE CARVALHO HABIB",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "199",
+      "nome": "JOSE REGINALDO COSTA RODRIGUES NOGUEIRA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "206",
+      "nome": "EDSON RUY BAHIENSE GUIMARAES",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "217",
+      "nome": "ANGELO JERONIMO E SILVA VITA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "247",
+      "nome": "RICARDO REGIS DOURADO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "258",
+      "nome": "GRACA MARINA VIEIRA FURTADO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "104",
+      "nome": "ICARO ALMEIDA MATOS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "105",
+      "nome": "MAURICIO KERTZMAN SZPORER",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "108",
+      "nome": "LIGIA MARIA RAMOS CUNHA LIMA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "109",
+      "nome": "ANTONIO CUNHA CAVALCANTI",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "111",
+      "nome": "ARNALDO FREIRE FRANCO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "112",
+      "nome": "JOSE LUIZ PESSOA CARDOSO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "113",
+      "nome": "CLESIO ROMULO CARRILHO ROSA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "118",
+      "nome": "JOAO BOSCO DE OLIVEIRA SEIXAS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "121",
+      "nome": "JOANICE MARIA GUIMARAES DE JESUS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "123",
+      "nome": "MOACYR MONTENEGRO SOUTO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "128",
+      "nome": "DAISY LAGO RIBEIRO COELHO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "135",
+      "nome": "JOAO AUGUSTO ALVES DE OLIVEIRA PINTO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "137",
+      "nome": "ALBERTO RAIMUNDO GOMES DOS SANTOS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "153",
+      "nome": "LEONIDES BISPO DOS SANTOS SILVA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "163",
+      "nome": "SORAYA MORADILLO PINTO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "168",
+      "nome": "IVONE RIBEIRO GONCALVES BESSA RAMOS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "175",
+      "nome": "JANETE FADUL DE OLIVEIRA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "176",
+      "nome": "EDUARDA DE LIMA VIDAL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "182",
+      "nome": "EDUARDO AFONSO MAIA CARICCHIO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "186",
+      "nome": "ANA QUEILA LOULA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "187",
+      "nome": "MARIA DE FATIMA MONTEIRO VILAS BOAS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "195",
+      "nome": "JOSEVANDO SOUZA ANDRADE",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "201",
+      "nome": "ALMIR PEREIRA DE JESUS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "179",
+      "nome": "VILMA COSTA VEIGA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "191",
+      "nome": "PAULO SERGIO BARBOSA DE OLIVEIRA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "193",
+      "nome": "PAULO ALBERTO NUNES CHENAUD",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "200",
+      "nome": "RENATO RIBEIRO MARQUES DA COSTA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "101",
+      "nome": "REGINA HELENA RAMOS REIS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "116",
+      "nome": "IVANILTON SANTOS DA SILVA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "126",
+      "nome": "SANDRA INES MORAIS RUSCIOLELLI AZEVEDO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "143",
+      "nome": "CARMEM LUCIA SANTOS PINHEIRO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "146",
+      "nome": "RAIMUNDO SERGIO SALES CAFEZEIRO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "159",
+      "nome": "LUIZ FERNANDO LIMA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "165",
+      "nome": "ALIOMAR SILVA BRITTO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "172",
+      "nome": "FRANCISCO DE OLIVEIRA BISPO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "181",
+      "nome": "ABELARDO VIRGINIO DE CARVALHO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "183",
+      "nome": "ALVARO MARQUES DE FREITAS FILHO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "188",
+      "nome": "ANDREMARA DOS SANTOS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "196",
+      "nome": "REGINA HELENA SANTOS E SILVA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "216",
+      "nome": "CASSIO JOSE BARBOSA MIRANDA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "246",
+      "nome": "NIVALDO DOS SANTOS AQUINO",
+      "instancia": "SEGUNDO_GRAU"
+    }
+  ],
+  "relatoresTurmaRecursal": [
+    {
+      "id": "92",
+      "nome": "VERA LUCIA MEDAUAR REIS MOREIRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "223",
+      "nome": "BENICIO MASCARENHAS NETO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "235",
+      "nome": "CELIA MARIA CARDOZO R. QUEIROZ",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "67",
+      "nome": "CARLA CARNEIRO TEIXEIRA CEARA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "1",
+      "nome": "NICIA OLGA ANDRADE DE SOUZA DANTAS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "2",
+      "nome": "MARTHA CAVALCANTI SILVA DE OLIVEIRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "3",
+      "nome": "ELIENE SIMONE SILVA OLIVEIRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "5",
+      "nome": "SANDRA SOUSA DO NASCIMENTO MORENO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "7",
+      "nome": "TAMARA LIBORIO DIAS TEIXEIRA DE FREITAS SILVA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "8",
+      "nome": "MARIA AUXILIADORA SOBRAL LEITE",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "9",
+      "nome": "ROSALVO AUGUSTO VIEIRA DA SILVA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "11",
+      "nome": "MARIA VIRGINIA ANDRADE DE FREITAS CRUZ",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "12",
+      "nome": "ALBENIO LIMA DA SILVA HONORIO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "43",
+      "nome": "MARY ANGELICA SANTOS COELHO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "44",
+      "nome": "ANTONIO SERRAVALLE REIS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "45",
+      "nome": "AURELINO OTACILIO PEREIRA NETO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "70",
+      "nome": "ADRIANO AUGUSTO GOMES BORGES",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "79",
+      "nome": "MILENA OLIVEIRA WATT",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "82",
+      "nome": "ANA KARENA NOBRE",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "85",
+      "nome": "ANA CONCEICAO BARBUDA SANCHES GUIMARAES FERREIRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "88",
+      "nome": "ARNALDO FREIRE FRANCO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "95",
+      "nome": "JONNY MAIKEL DOS SANTOS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "120",
+      "nome": "RAYMUNDO CESAR DORIA COSTA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "240",
+      "nome": "ADRIANA SALES BRAGA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "254",
+      "nome": "MARIA DAS GRACAS GUERRA DE SANTANA HAMILTON",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "260",
+      "nome": "MARIA DE LOURDES PINHO MEDAUAR",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "227",
+      "nome": "ANA LUCIA FERREIRA MATOS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "46",
+      "nome": "BALTAZAR MIRANDA SARAIVA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "47",
+      "nome": "WALTER AMERICO CALDAS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "54",
+      "nome": "MARIA CARLOTA SAMPAIO DOS H OLIVEIRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "56",
+      "nome": "CELIA MARIA CARDOZO DOS REIS QUEIROZ",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "58",
+      "nome": "LUCIANA MAGALHAES DE OLIVEIRA AMORIM",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "64",
+      "nome": "CLAUDIA VALERIA PANETTA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "72",
+      "nome": "ANDERSON DE SOUZA BASTOS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "73",
+      "nome": "MARIA HELENA PEIXOTO MEGA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "78",
+      "nome": "ANTONIO CARLOS DA SILVEIRA SIMARO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "86",
+      "nome": "PAULO CESAR BANDEIRA DE MELO JORGE",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "89",
+      "nome": "PAULO CESAR ALMEIDA RIBEIRO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "93",
+      "nome": "JOANICE MARIA GUIMARAES DE JESUS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "265",
+      "nome": "ANGELO JERONIMO E SILVA VITA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "264",
+      "nome": "JOSEVANDO SOUZA ANDRADE",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "55",
+      "nome": "BENEDITO ALVES COELHO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "60",
+      "nome": "ERICO ARAUJO BASTOS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "61",
+      "nome": "ANTONIO MARCELO OLIVEIRA LIBONATI",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "68",
+      "nome": "ISABELLA SANTOS LAGO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "69",
+      "nome": "GUSTAVO DA SILVA MACHADO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "77",
+      "nome": "KARLA KRISTIANY MORENO DE OLIVEIRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "83",
+      "nome": "ALESSANDRA GONCALVES PAIM BONANZA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "90",
+      "nome": "DINALVA GOMES LARANJEIRA PIMENTEL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "94",
+      "nome": "MARIA ANGELICA ALVES MATOS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "97",
+      "nome": "LUCIANA VIANA BARRETO FARO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "98",
+      "nome": "JANETE FADUL DE OLIVEIRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "117",
+      "nome": "GRACA MARINA VIEIRA DA SILVA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "211",
+      "nome": "RAIMUNDO SERGIO SALES CAFEZEIRO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "239",
+      "nome": "RITA DE CASSIA MACHADO MAGALHAES",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "243",
+      "nome": "CASSINELZA DA COSTA SANTOS LOPES",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "215",
+      "nome": "CARLA RODRIGUES DE ARAUJO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "262",
+      "nome": "EDSON RUY BAHIENSE GUIMARAES",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "51",
+      "nome": "ELOISA MATTA DA SILVEIRA LOPES",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "71",
+      "nome": "MARCIA GOTTSCHALD FERREIRA ADIL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "80",
+      "nome": "FRANCISCA CRISTIANE SIMOES VERAS CORDEIRO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "208",
+      "nome": "LUIS ROBERTO CAPPIO GUEDES PEREIRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "236",
+      "nome": "MARCON ROUBERT DA SILVA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "252",
+      "nome": "JULIO CEZAR LEMOS TRAVESSA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "212",
+      "nome": "JOSE SOARES FERREIRA ARAS NETO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "238",
+      "nome": "MARIELZA MAUES PINHEIRO LIMA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "192",
+      "nome": "MARIO SOARES CAYMMI GOMES",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "213",
+      "nome": "VALECIUS PASSOS BESERRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "241",
+      "nome": "ROSITA FALCAO DE ALMEIDA MAIA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "257",
+      "nome": "FRANCISCO DE OLIVEIRA BISPO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "237",
+      "nome": "SILVIA CARNEIRO SANTOS ZARIF",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "245",
+      "nome": "LIDIVALDO REAICHE RAIMUNDO BRITTO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "263",
+      "nome": "MARIO AUGUSTO ALBIANI ALVES JUNIOR",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "75",
+      "nome": "LEONIDES BISPO DOS SANTOS SILVA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "84",
+      "nome": "CASSIO JOSE BARBOSA MIRANDA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "87",
+      "nome": "AMANDA PALITOT VILLAR DE MELLO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "91",
+      "nome": "DANIELA PEREIRA GARRIDO PAZOS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "177",
+      "nome": "JOSE EDIVALDO ROCHA ROTONDANO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "49",
+      "nome": "JOSEFA CRISTINA TOMAZ MARTINS KUNRATH",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "66",
+      "nome": "CRISTIANE MENEZES SANTOS BARRETO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "81",
+      "nome": "JOAO BATISTA ALCANTARA FILHO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "205",
+      "nome": "ZANDRA ANUNCIACAO ALVAREZ PARADA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "221",
+      "nome": "PEDRO AUGUSTO COSTA GUERRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "250",
+      "nome": "LICIA PINTO FRAGOSO MODESTO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "253",
+      "nome": "MANUEL CARNEIRO BAHIA DE ARAUJO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "4",
+      "nome": "MARIAH MEIRELLES DE FONSECA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "6",
+      "nome": "JUSTINO DE FARIAS FILHO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "10",
+      "nome": "ISABELA KRUSCHEWSKY PEDREIRA DA SILVA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "42",
+      "nome": "MARIA LUCIA COELHO MATOS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "48",
+      "nome": "MARCIO REINALDO MIRANDA BRAGA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "50",
+      "nome": "JUNIA ARAUJO RIBEIRO DIAS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "52",
+      "nome": "MARCELO SILVA BRITTO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "53",
+      "nome": "EDSON PEREIRA FILHO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "57",
+      "nome": "MARCIA DENISE MENEIRO SAMPAIO MASCARENHAS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "59",
+      "nome": "ALVARO MARQUES DE FREITAS FILHO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "62",
+      "nome": "FABIANA ANDREA DE ALMEIDA OLIVEIRA PELLEGRINO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "63",
+      "nome": "ANDREA TOURINHO CERQUEIRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "65",
+      "nome": "ANA LUCIA MATOS DE SOUZA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "74",
+      "nome": "CAROLINA ALMEIDA DA CUNHA GUEDES VITA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "76",
+      "nome": "IVANA CARVALHO SILVA FERNANDES",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "249",
+      "nome": "MARIELZA BRANDAO FRANCO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "255",
+      "nome": "ROBERTO MAYNARD FRANK",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "261",
+      "nome": "ANTONIO ADONIAS AGUIAR BASTOS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "209",
+      "nome": "SANDRA INES MORAIS RUSCIOLELLI AZEVEDO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "220",
+      "nome": "MARINEIS FREITAS CERQUEIRA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "251",
+      "nome": "MARIA DA PURIFICACAO DA SILVA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "267",
+      "nome": "EDUARDO AFONSO MAIA CARICCHIO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "99",
+      "nome": "LUCIANA CARINHANHA SETUBAL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "197",
+      "nome": "REGINA HELENA RAMOS REIS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "189",
+      "nome": "MARCIA BORGES FARIA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "256",
+      "nome": "LISBETE MARIA TEIXEIRA ALMEIDA C SANTOS",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "115",
+      "nome": "CARMEM LUCIA SANTOS PINHEIRO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "204",
+      "nome": "GUSTAVO SILVA PEQUENO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "219",
+      "nome": "MARCELA BASTOS BARBALHO DA SILVA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "242",
+      "nome": "CYNTHIA MARIA PINA RESENDE",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "266",
+      "nome": "INEZ MARIA BRITO SANTOS MIRANDA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "268",
+      "nome": "ANTONIO MARON AGLE FILHO",
+      "instancia": "TURMA_RECURSAL"
+    }
+  ]
+}

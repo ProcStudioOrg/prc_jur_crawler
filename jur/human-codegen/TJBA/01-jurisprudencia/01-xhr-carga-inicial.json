@@ -1,0 +1,7 @@
+[
+  {
+    "url": "https://jurisprudenciaws.tjba.jus.br/graphql",
+    "method": "POST",
+    "post": "{\"operationName\":\"OrgaoJulgador\",\"variables\":{},\"query\":\"query OrgaoJulgador {\\n findAllClasses {\\n id\\ncodPai\\ndescricao\\nsegundoGrau\\n__typename\\n}\\nfindAllOrgaosJulgadoresGroupByInstancia {\\n orgaosJulgadoresSegundoGrau {\\n id\\nnome\\ninstancia\\n__typename\\n}\\norgaosJulgadoresTurmaRecursal {\\n id\\nnome\\ninstancia\\n__typename\\n}\\ntodos {\\n id\\nnome\\ninstancia\\n__typename\\n}\\n__typename\\n}\\nfindAllRelatoresGroupByInstancia {\\n relatoresSegundoGrau {\\n id\\nnome\\ninstancia\\n__typename\\n}\\nrelatoresTurmaRecursal {\\n id\\nnome\\ninstancia\\n__typename\\n}\\ntodos {\\n id\\nnome\\ninstancia\\n__typename\\n}\\n__typename\\n}\\n}\\n\"}"
+  }
+]

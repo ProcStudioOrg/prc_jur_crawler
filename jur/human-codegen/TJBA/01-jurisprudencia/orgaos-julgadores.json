@@ -1,0 +1,196 @@
+{
+  "orgaosJulgadoresSegundoGrau": [
+    {
+      "id": "14",
+      "nome": "2ª VICE-PRESIDÊNCIA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "25",
+      "nome": "CONSELHO DA MAGISTRATURA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "28",
+      "nome": "CÂMARA ESPECIAL DO EXTREMO OESTE BAIANO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "34",
+      "nome": "PLANTÃO JUDICIÁRIO 2º GRAU",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "17",
+      "nome": "PRIMEIRA CAMARA CRIMINAL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "21",
+      "nome": "PRIMEIRA CAMARA CRIMINAL - PRIMEIRA TURMA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "20",
+      "nome": "PRIMEIRA CAMARA CRIMINAL - SEGUNDA TURMA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "6",
+      "nome": "PRIMEIRA CAMARA CÍVEL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "10",
+      "nome": "QUARTA CAMARA CÍVEL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "12",
+      "nome": "QUINTA CAMARA CÍVEL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "24",
+      "nome": "SECAO CRIMINAL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "19",
+      "nome": "SECAO CÍVEL DE DIREITO PRIVADO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "15",
+      "nome": "SECAO CÍVEL DE DIREITO PUBLICO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "18",
+      "nome": "SEGUNDA CAMARA CRIMINAL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "22",
+      "nome": "SEGUNDA CAMARA CRIMINAL - PRIMEIRA TURMA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "23",
+      "nome": "SEGUNDA CAMARA CRIMINAL - SEGUNDA TURMA",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "8",
+      "nome": "SEGUNDA CAMARA CÍVEL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "30",
+      "nome": "SEXTA TURMA RECURSAL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "13",
+      "nome": "SEÇÕES CÍVEIS REUNIDAS",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "9",
+      "nome": "TERCEIRA CAMARA CÍVEL",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "16",
+      "nome": "TRIBUNAL PLENO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "27",
+      "nome": "TURMA CRIMINAL DA CAMARA ESPECIAL DO EXTREMO OESTE BAIANO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "26",
+      "nome": "TURMA CÍVEL DA CAMARA ESPECIAL DO EXTREMO OESTE BAIANO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "32",
+      "nome": "TURMA DE UNIFORMIZACAO",
+      "instancia": "SEGUNDO_GRAU"
+    },
+    {
+      "id": "33",
+      "nome": "ÓRGÃO ESPECIAL",
+      "instancia": "SEGUNDO_GRAU"
+    }
+  ],
+  "orgaosJulgadoresTurmaRecursal": [
+    {
+      "id": "37",
+      "nome": "PRIMEIRA CAMARA CRIMINAL - SEGUNDA TURMA",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "29",
+      "nome": "PRIMEIRA CAMARA CÍVEL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "1",
+      "nome": "PRIMEIRA TURMA RECURSAL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "38",
+      "nome": "QUARTA CAMARA CÍVEL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "2",
+      "nome": "QUARTA TURMA RECURSAL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "36",
+      "nome": "QUINTA CAMARA CÍVEL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "3",
+      "nome": "QUINTA TURMA RECURSAL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "5",
+      "nome": "SEGUNDA TURMA RECURSAL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "11",
+      "nome": "SEXTA TURMA RECURSAL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "35",
+      "nome": "TERCEIRA CAMARA CÍVEL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "4",
+      "nome": "TERCEIRA TURMA RECURSAL",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "31",
+      "nome": "TURMA DE UNIFORMIZAÇÃO - JULGAMENTO",
+      "instancia": "TURMA_RECURSAL"
+    },
+    {
+      "id": "7",
+      "nome": "TURMA RECURSAL DE ADMISSIBILIDADE",
+      "instancia": "TURMA_RECURSAL"
+    }
+  ]
+}

@@ -63,6 +63,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
 | `tjal` | TJ de Alagoas | AL | `CLAUDE-TJAL.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg), **base corrente**; inteiro teor 🔴 reCAPTCHA e **sem permalink**. A ementa íntegra vem na busca |
+| `tjba` | TJ da Bahia | BA | `CLAUDE-TJBA.md` | 🟢 OK (GraphQL público, HTTP direto, sem browser — **sem captcha**; o **inteiro teor já vem na busca**). Base corrente, cobre Projudi + PJe |
 | `tjam` | TJ do Amazonas | AM | `CLAUDE-TJAM.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg), mas a **base congelou em jan/2025**; inteiro teor 🔴 reCAPTCHA e **sem permalink**. A ementa íntegra vem na busca |
 | `tjce` | TJ do Ceará | CE | `CLAUDE-TJCE.md` | 🟢 OK (API direta, sem browser — SJURIS, **SAJ + PJe juntos**; **não** use o e-SAJ) |
 | `tjdft` | TJ do DF e Territórios | DF | `CLAUDE-TJDFT.md` | 🟢 OK (**API pública oficial**, sem browser) |
@@ -238,6 +239,38 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   A base é **só 2º grau + Colégios Recursais do SAJ**, de ~2013 em diante: não
   tem 1º grau (o `cjpg` não existe aqui) e não cobre o Projudi.
   Matéria federal com origem em AL → `trf5`
+- "TJBA" / "Bahia estadual" / "Salvador" → `tjba` → leia `CLAUDE-TJBA.md`.
+  Juizado Especial / Turma Recursal baiana → `tjba --origem turmas`; Justiça Comum
+  2º grau é `--origem comum` (default). A distinção é obrigatória e está medida
+  (1.336 × 835 para o mesmo termo).
+  🔴 **NUNCA use `E`, `OU` ou `NÃO` na query do TJBA** — apesar de o portal
+  oferecer os três botões, eles **não são operadores**: viram palavra literal e
+  **inflam** a busca (`usucapião E posse` = 3.596.546 de 4.008.679 documentos).
+  Os que funcionam são os ingleses: `AND`, `OR`, `NOT`, mais `"frase exata"` e
+  curinga `*`. `PROX`/`ADJ` não existem. O crawler avisa; repasse o aviso.
+  🔴 **Espaço entre termos é OR, não AND** (provado: 2.171 + 86.140 − 810 =
+  87.501). Query de duas palavras devolve a **união** — o número grande é o
+  segundo termo, não abundância de jurisprudência. Use `AND` para exigir os dois.
+  🔴 **A API repete cada documento em `--origem comum`** (fator 2,00), que é o
+  default. O crawler deduplica e publica `totalDeduplicadoEstimado` — **relate
+  esse número, não o total do servidor**, que está inflado na mesma proporção.
+  ⚠️ **O campo "ementa" é na verdade o INTEIRO TEOR** (cabeçalho, partes,
+  relatório, voto, assinatura); não existe ementa separada nesta base. ✅ Em
+  compensação **não há captcha nenhum** e o inteiro teor vem de graça na busca —
+  `--fetch-inteiro-teor` só grava em disco.
+  ⚠️ **Acento é obrigatório e não é normalizado** (`usucapiao` = 4,
+  `usucapião` = 2.171) — padrão TJMS, oposto de TJAC/TJAM/TJAL.
+  ⚠️ **O filtro `-t` (tipo) não compõe com `--origem`**: com termo de busca,
+  acórdão + monocrática somam MAIS que o total, e a instância é ignorada.
+  Recorte por `--origem`. E note que nesta base Turma Recursal grava como
+  `ACORDAO` e 2º grau como `DECISAO_MONOCRATICA` — `-t acordao` te dá, na
+  prática, Turma Recursal.
+  ⚠️ **NÃO EXISTE PERMALINK.** Nunca invente link de acórdão do TJBA — a
+  verificação é por reconsulta: `./bin/jur tjba -n "<nº>"`.
+  ⚠️ Só há filtro de data de **publicação** (`-dpi/-dpf`); `dataJulgamento` não é
+  filtrável. ✅ Não há teto de intervalo (não precisa fatiar) nem data-sentinela.
+  A base é **2º grau + Turmas Recursais** (Projudi + PJe), **sem 1º grau**, e
+  está **corrente**. Matéria federal com origem na BA → `trf1`
 - "TJMS" / "Mato Grosso do Sul estadual" / "Campo Grande" → `tjms` → leia `CLAUDE-TJMS.md`.
   Juizado Especial / Turma Recursal sul-mato-grossense → `tjms --origem turmas`; Justiça
   Comum 2º grau é `--origem comum` (default). A distinção é obrigatória e está medida
