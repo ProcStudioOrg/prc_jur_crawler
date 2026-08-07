@@ -1,0 +1,47 @@
+# TJES — Consulta Jurisprudência (sistemas.tjes.jus.br/consulta-jurisprudencia)
+
+Mapeado em 07/08/2026. Playwright headless, Chromium, UA de Chrome real.
+Acesso final do crawler: **`api`** — API REST pública na mesma origem, sem autenticação
+e **sem captcha em etapa nenhuma**.
+
+## 0. Passo 0 — o que existe e o que NÃO existe de API
+
+**Existe** (medido, não presumido):
+
+- `GET https://sistemas.tjes.jus.br/consulta-jurisprudencia/api/cores`
+  → os 5 acervos, com `total_docs` de cada um.
+- `GET .../api/facets?core=<core>` → as opções de todos os combos daquele acervo, já com
+  contagem por opção. É a fonte do `--listar-filtros`.
+- `GET .../api/search?core=&q=&page=&per_page=&…` → a busca. Contrato completo na §10.
+
+**NÃO existe** (procurado em 07/08/2026):
+
+- `dadosabertos.tjes.jus.br` — **NXDOMAIN**
+- `api.tjes.jus.br` — **NXDOMAIN**
+- `jurisprudencia.tjes.jus.br` — **NXDOMAIN**
+- `projudi.tjes.jus.br`, `esaj.tjes.jus.br` — **NXDOMAIN**
+- `www.tjes.jus.br/dados-abertos`, `/transparencia/dados-abertos` — **404**
+- Swagger/OpenAPI: `.../consulta-jurisprudencia/{swagger-ui.html,v3/api-docs,api-docs}`
+  respondem **HTTP 200 com 749 bytes** — que é o `index.html` do SPA, não documentação.
+  **Falso positivo do fallback do SPA.** Confirmado pelo tamanho idêntico ao da raiz.
+
+✅ **Não há vhost curinga.** `https://www.tjes.jus.br/path-inventado-9z-qqcoisa` devolve
+**404 real** (página de erro do nginx, 143.508 bytes, md5 `ac873363…`), distinto da home
+(183.229 bytes, md5 `6a5e6d47…`). A armadilha do TJAC/TJAL não se repete aqui.
+
+⚠️ `sistemas.tjes.jus.br/` **na raiz devolve 503** — o path
+`/consulta-jurisprudencia/` responde 200. Um 503 na raiz não diz nada sobre o módulo.
+
+⚠️ A resposta de `/api/cores` **vaza o endereço interno do Solr**
+(`http://172.27.208.227:8080/solr/<core>`). É IP privado (RFC 1918), inalcançável de fora,
+e **não foi acessado**. Registrado porque documenta a arquitetura, não porque seja porta.
+
+## 1. Como se chega — a descoberta
+
+A URL não estava em `tribunais.json` (o campo `jurisprudencia.url` era `null` e o `portal`
+apontava para o PJe de tramitação). Achada pela home institucional
+`https://www.tjes.jus.br/` → link `https://sistemas.tjes.jus.br/consulta-jurisprudencia/`.
+
+A tela é uma SPA **Vue 3 + Vite** (`assets/index-<hash>.js`). O endpoint da API **não está
+no bundle principal** (que só tem Vue/Bootstrap/NProgress) — foi capturado pela aba Network
+do Playwright, não por chute.

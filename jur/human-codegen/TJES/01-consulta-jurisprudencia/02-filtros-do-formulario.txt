@@ -1,0 +1,43 @@
+# TJES — Consulta Jurisprudência · Filtros do formulário
+
+(Continuação de `01-consulta-jurisprudencia.txt`. Prints: `02.01`, `02.02`.)
+
+## 2. Termo de pesquisa
+
+`<input type="text" class="search-input">`, sem `name` nem `id` (a SPA lê pelo v-model).
+Placeholder: *"Digite os termos da busca (opcional - você pode buscar apenas com filtros
+abaixo)"*.
+
+Vira o parâmetro **`q`**. `q` vazio + nenhum filtro devolve **`total=0`**; **omitir `q`
+por completo** devolve o acervo inteiro (219.643 no `pje2g`). São coisas diferentes.
+
+Print: `01.01-tela-inicial.png`, `02.01-form-preenchido.png`.
+
+## 3. Busca Exata — `<input type="checkbox">`
+
+Não é parâmetro próprio: o checkbox **envolve o termo em aspas** dentro do próprio `q`.
+`q="usucapião extraordinária"` = 445, contra 49.789 do mesmo par sem aspas.
+
+## 4. Acervo — as cinco abas (`<button class="tab">`)
+
+Vira o parâmetro **`core`**. Medido em `/api/cores` em 07/08/2026:
+
+| Aba na tela | `--acervo` | `core` | Documentos |
+|---|---|---|---|
+| 1º Grau PJe | `pje1g` | `pje1g` | **1.509.942** |
+| 2º Grau PJe | `pje2g` | `pje2g` | 219.643 |
+| 2º Grau Monocrático PJe | `pje2g-mono` | `pje2g_mono` | 96.869 |
+| 2º Grau - Físicos | `fisicos` | `legado` | 326.849 |
+| Turmas Recursais - Projudi | `turmas` | `turma_recursal_legado` | 59.491 |
+
+**Total: 2.212.794 documentos.**
+
+⚠️ **A aba ativa por padrão é "2º Grau Monocrático PJe"**, não "2º Grau PJe" — e
+**omitir `core` na API cai nesse mesmo default** (medido: `?q=usucapião` sem `core` →
+`core_used: "pje2g_mono"`, total 558). Quem não passar `core` mede o menor acervo do PJe
+achando que mediu o principal. O crawler manda `core` sempre.
+
+✅ **Este é o único tribunal do repo com 1º grau (sentenças) na base de jurisprudência**, e
+ele é o **maior acervo**: 1,5 milhão dos 2,2 milhões.
+
+Print: `02.02-filtros-completos.png`.

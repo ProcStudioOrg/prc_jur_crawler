@@ -1,0 +1,32 @@
+# TJES — Consulta Jurisprudência · Os combos, enumerados no browser
+
+Todos os seis `<select>` da tela são populados por **AJAX** (`GET /api/facets?core=<core>`).
+No HTML estático eles chegam **vazios** — só o `<option value="">Todos`. Foram enumerados
+no DOM depois do AJAX, no Playwright, e salvos em **`05-combos-pje2g.json`** (acervo
+`pje2g`), com a contagem que a própria API devolve por opção.
+
+| # | Combo | Parâmetro da API | Opções | Print |
+|---|---|---|---|---|
+| 1 | Jurisdição | `jurisdicao` | 3 | `05.01-combo-jurisdicao.png` |
+| 2 | Órgão Julgador | `orgao_julgador` | 20 | `05.02-combo-orgao-julgador.png` |
+| 3 | Magistrado | `magistrado` | 101 | `05.03-combo-magistrado.png` |
+| 4 | Classe Judicial | `classe_judicial` | 79 | `05.04-combo-classe-judicial.png` |
+| 5 | Lista de Assuntos | `lista_assunto` | 101 | `05.05-combo-lista-assunto.png` |
+| 6 | Ordenação | `sort` | 5 | `05.06-combo-ordenacao.png` |
+
+⚠️ **Todos os combos passam o NOME como valor, nunca um id.** É o oposto do TJBA (onde
+`orgaos`/`classes` querem id e passar o nome devolve 0) e do TJPE (`orgaoJulgador.in`,
+que só aceita id). Aqui um id devolveria 0 em silêncio.
+
+⚠️ **Os combos de Magistrado, Classe e Assunto listam as 100 opções MAIS FREQUENTES**, não
+todas — o "101" da tabela inclui o "Todos". A API aceita qualquer valor que exista no
+índice, mas **não há endpoint que devolva a lista completa**. Um relator fora do top 100
+funciona no filtro e não aparece no combo.
+
+⚠️ Os combos foram enumerados **só no `pje2g`**. O `pje1g` expõe `comarca`, que não existe
+no 2º grau, e **não foi enumerado** — está declarado como pendência.
+
+📌 O print de um `<select>` nativo não mostra a lista suspensa (o popup é do sistema
+operacional, fora do viewport do Chromium). Os prints acima foram feitos setando
+`size` no elemento, o que expande as opções **inline** — é o que documenta as opções de
+verdade.

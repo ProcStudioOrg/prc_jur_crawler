@@ -1,0 +1,227 @@
+# TJES — Consulta Jurisprudência · Filtros de recorte e resultados
+
+(Prints: `03.01` topo, `03.02` rodapé, `03.03` Turmas Recursais, `03.04` página inteira. Card em `03-card-resultado.html`.)
+
+## 5. Jurisdição — Justiça Comum × Turma Recursal
+
+`<select>` com 3 opções, populado por AJAX (`/api/facets`). Vira **`jurisdicao`**.
+Só existe nos cores `pje2g` e `pje2g_mono`.
+
+Medido no `pje2g` **sem termo** (a base inteira):
+
+| Opção | Documentos |
+|---|---|
+| Todos | 219.643 |
+| Tribunal de Justiça | 141.155 |
+| Turma Recursal | 78.488 |
+
+141.155 + 78.488 = **219.643, exato** → o filtro **parte a base perfeitamente**.
+
+E **compõe com termo**, ao contrário do TJPE e do TJBA:
+- `usucapião`: 1.552 + 22 = **1.574** = total ✅
+- `dano AND moral`: 19.276 + 39.118 = **58.394** = total ✅
+
+⚠️ **A proporção depende MUITO do tema**: em `usucapião` a Turma Recursal é 1,4% do
+acervo; em `dano AND moral` é **67%** (39.118 × 19.276 — a Turma Recursal é 2× a Justiça
+Comum). Em matéria de consumo o default esconde a maioria.
+
+Combo enumerado em `combos-pje2g.json`.
+
+## 6. Órgão Julgador — `<select>`, 20 opções
+
+Vira **`orgao_julgador`** (o **nome**, não um id). Enumerado em `combos-pje2g.json`.
+Cobre 6 Câmaras, 3 Reunidas, Tribunal Pleno, 5 Turmas Recursais, Plenário do Colégio
+Recursal e Turma de Uniformização.
+
+⚠️ Valor inventado (`jurisdicao=INVENTADO_9Z`) devolve **0 com HTTP 200** — zero silencioso
+por valor inexistente. Confira o nome contra `--listar-filtros`.
+
+## 7. Magistrado — `<select>`, 101 opções
+
+Vira **`magistrado`** (nome em CAIXA ALTA, sem acento no valor). Enumerado em
+`combos-pje2g.json`. O combo lista os **100 mais frequentes**, não todos — a API aceita
+qualquer nome que exista no índice.
+
+## 8. Classe Judicial — `<select>`, 79 opções
+
+Vira **`classe_judicial`**. ⚠️ **O índice tem a mesma classe em várias grafias**:
+`APELAÇÃO CÍVEL` (55.407) e `Recurso Inominado Cível` (46.974) convivem com
+`RECURSO INOMINADO CÍVEL` (29.907), e há valores com **espaço no início**
+(`" Habeas Corpus Criminal "` = 2.717). Filtrar por uma grafia perde as outras.
+
+## 9. Lista de Assuntos — `<select>`, 101 opções
+
+Vira **`lista_assunto`**. Mesmas 100 opções mais frequentes.
+
+## 10. Datas — 🔴 a ressalva mais cara deste tribunal
+
+Dois `<input type="date" class="field-input">`, rotulados "data inicial" / "data final".
+Viram **`dataIni`** e **`dataFim`**, em **`YYYY-MM-DD`**.
+
+🔴 **O campo filtrado é `dt_juntada` — data de JUNTADA do documento ao processo — e a tela
+o exibe rotulado como "Julg:".** Provado de duas formas:
+
+1. `dataIni=2025-06-01&dataFim=2025-06-30` devolve 33 documentos e **0 deles** tem
+   `dt_juntada` fora de junho/2025.
+2. O card do processo `5007137-47.2022.8.08.0011` exibe **"Julg: 15/05/2024"**, e o campo
+   `dt_juntada` desse mesmo documento é **`2024-05-15T21:57:47.315Z`**. É o mesmo valor.
+
+**Nos três cores do PJe não existe campo de data de julgamento nem de publicação** — o
+único campo de data é `dt_juntada`. Quem lê "Julg:" na tela e cita como data de julgamento
+está citando a data em que o PDF foi anexado aos autos.
+
+✅ **Só os dois cores legados têm datas reais**: `legado` tem `data_julgamento` **e**
+`data_publicacao`; `turma_recursal_legado` tem `data_julgamento`. **E a API não expõe
+filtro por elas** — `dataIni`/`dataFim` nesses cores não se aplicam.
+
+✅ **`sort=dt_juntada desc` nos cores legados devolve HTTP 500 com mensagem explícita do
+Solr**: `sort param field can't be found: dt_juntada`. Erro visível, não silencioso — e
+`core` inválido idem (`Core 'X' não encontrado`). É o oposto dos zeros silenciosos da §6.
+
+✅ **Não há teto de intervalo de data** (1900→2100 responde), e não há data-sentinela.
+
+## 11. Ordenação — `<select>`, 5 opções
+
+Vira **`sort`**: `""` (Relevância), `dt_juntada desc`, `dt_juntada asc`, e duas por número
+de processo. Só funciona nos cores do PJe (§10).
+
+## 12. 🔴 Operadores — testados um a um, não presumidos
+
+Medido no `pje2g` em 07/08/2026, com `usucapião` = 1.574 e `posse` = 49.466:
+
+| Operador | Contagem | Veredito |
+|---|---|---|
+| `usucapião posse` (espaço) | 49.789 | **é OR** |
+| `usucapião AND posse` | **1.251** | ✅ funciona (interseção) |
+| `usucapião NOT posse` | **323** | ✅ funciona |
+| `usucapião OR posse` | 49.789 | ✅ (= o espaço) |
+| `"usucapião extraordinária"` | 445 | ✅ frase exata |
+| `usucapi*` | 1.595 | ✅ curinga |
+| `usucapião E posse` | 49.789 | ❌ **ignorado** (idêntico ao espaço) |
+| `usucapião OU posse` | 49.789 | ❌ **ignorado** |
+| `usucapião ADJ posse` | 49.789 | ❌ **ignorado** |
+| `usucapião NAO posse` | **52.139** | 🔴 **INFLA** — vira palavra literal |
+| `usucapião PROX posse` | **50.577** | 🔴 **INFLA** |
+
+**Prova de que o espaço é OR, por aritmética exata:**
+1.574 + 49.466 − 1.251 = **49.789**. ✅
+**Prova de que `NOT` funciona:** 1.574 − 1.251 = **323**. ✅
+
+🔴 **Os operadores em português são o oposto do TJPE** (onde `E`/`OU`/`NAO`/`PROX`
+funcionam e os ingleses enganam) e iguais ao TJBA. **Três tribunais seguidos, três
+conjuntos distintos — não se herda nada.**
+
+✅ **Acento é normalizado**: `usucapiao` = `usucapião` = **1.574**. Não avise sobre acento.
+
+## 13. 🔴 O FILTRO NO-OP QUE MUDA A CONTAGEM — descoberta metodológica do dia
+
+A invariante do repo diz "contagem igual com e sem filtro = filtro ignorado". **O TJES
+exibe o defeito espelhado: um filtro que não exclui nada MUDA a contagem.**
+
+| Query | Contagem |
+|---|---|
+| `dano moral` | **106.282** |
+| `dano moral` + `dataIni=1900-01-01&dataFim=2100-01-01` | **61.480** |
+| `dano AND moral` | 58.394 |
+| `dano moral` + `sort=dt_juntada desc` | 106.282 |
+| `dano moral` + `jurisdicao=` (vazio) | 106.282 |
+
+O intervalo 1900→2100 **não exclui um único documento** (o total sem termo é idêntico com e
+sem ele). Mesmo assim a contagem cai 42%. Só o filtro de **data** provoca isso; `sort` e
+parâmetro vazio não.
+
+**Efeito medido:** na presença de um filtro de data, o conectivo implícito da query passa
+de **OR** para **AND**. Isso explica por que `jurisdicao` parecia não compor com
+`dano moral` (22.066 + 39.414 = 61.480 ≠ 106.282): os dois lados foram medidos **já no
+regime AND**, e somam exatamente o total do regime AND. **A composição está correta; o que
+muda é o denominador.**
+
+**Consequência prática:** contagem **com** filtro de data **não é comparável** com contagem
+**sem** filtro de data, a menos que a query traga operador explícito. O crawler avisa.
+*A causa interna não foi isolada* — o observado é o efeito, não o parser.
+
+## 14. Número do processo
+
+Existe o parâmetro **`nr_processo`** (não aparece na tela; descoberto testando). Aceita o
+número **COM máscara**. Medido para `5007137-47.2022.8.08.0011`:
+
+| Forma | Resultado |
+|---|---|
+| `nr_processo=5007137-47.2022.8.08.0011` | **1** ✅ |
+| `q=5007137-47.2022.8.08.0011` | **31** ❌ (o CNJ é tokenizado no texto) |
+| `q="5007137-47.2022.8.08.0011"` | **2** ❌ — o 2º é o processo `0019529-77.2017.8.08.0012`, que apenas **cita** aquele número no acórdão |
+| `q=50071374720228080011` (sem máscara) | **0** ❌ |
+
+🔴 **Consultar julgado por `q` traz lixo citacional.** É o `nr_processo` que serve ao
+`Checker`. E é o **oposto do TJPE**, onde o campo quer 20 dígitos sem máscara.
+
+⚠️ Os cores legados **não aceitam `nr_processo`** (guardam o número em
+`numero_processo_legado` / `num_processo`); o `Checker` cai para frase exata neles e
+confere o número dígito a dígito antes de aceitar.
+
+## 15. Bloqueios — busca e download, medidos em separado
+
+| | Resultado |
+|---|---|
+| Captcha na busca | **Não existe** |
+| Captcha no download | **Não existe** — não há download: o texto vem na busca |
+| Autenticação | **Nenhuma** |
+| Cloudflare / WAF | Nenhum sinal; `curl` sem cookie responde igual ao browser |
+| Rate limit | Não observado em ~120 requisições seguidas |
+| Cadeia TLS | ✅ completa (diferente do TJPE) |
+
+## 16. O que ficou de fora
+
+- Os combos de Órgão/Magistrado/Classe/Assunto foram enumerados **só no `pje2g`**.
+  O `pje1g` tem `comarca` (que o `pje2g` não tem) e não foi enumerado.
+- **Não foi medido** se `classe_judicial` e `lista_assunto` compõem por contagem (estão
+  expostos como flags, com a ressalva das múltiplas grafias na §8).
+- A causa interna da §13 não foi isolada.
+
+---
+
+# 17–20. PÓS-BUSCA (skill `browser-post-search`, 07/08/2026)
+
+## 17. Onde o resultado aparece
+
+**Mesma página, mesma rota.** A URL continua
+`https://sistemas.tjes.jus.br/consulta-jurisprudencia/` antes e depois de buscar, e
+**também depois de abrir um documento**. Os controles de busca **permanecem** na tela
+(refinamento incremental). Nenhuma nova aba, nenhum popup com URL própria.
+
+**Total exibido:** no rodapé, `Página 1 de 79 (1.574 resultados)`. Bate exatamente com o
+campo `total` da API. Prints: `03.01-resultados-topo.png`, `03.02-resultados-rodape.png`.
+
+## 18. Anatomia do card — é uma TABELA, não um card
+
+Não há `<div class="card">`: a listagem é `table.results-table`, e **cada resultado ocupa
+DUAS linhas irmãs**:
+
+- `tr.result-row` — os metadados (`td.col-processo`, `div.processo-info`)
+- `tr.excerpt-row` — o texto (`td.excerpt-cell` → `div.excerpt-container` → `div.excerpt-line`)
+
+Quem mapear só `tr.result-row` perde o texto inteiro. `outerHTML` das duas em
+`03-card-resultado.html` (2.133 bytes no `pje2g`).
+
+**Dissecado em dois tipos de documento:**
+
+| | `pje2g` (acórdão 2º grau) | `turmas` (Turma Recursal Projudi) |
+|---|---|---|
+| processo | `1054542-51.1998.8.08.0024` (com máscara) | `101455620168080746` (**sem máscara**) |
+| classe | `APELAÇÃO CÍVEL` | **`N/A`** |
+| magistrado | `SERGIO RICARDO DE SOUZA` | `UBIRAJARA PAIXAO PINHEIRO` |
+| órgão | `3ª Câmara Cível` | `3ª TURMA RECURSAL` |
+| jurisdição | `Tribunal de Justiça` | *(ausente)* |
+| data | `Julg: 08/11/2024` | `Julg: 03/07/2018` |
+| botões | `👁️` (`button.btn-action.btn-view`, title "Ver detalhes") | idem |
+
+🔴 **A segunda prova do rótulo enganoso da §10**: o card do `pje2g` exibe
+"Julg: 08/11/2024" e o `dt_juntada` desse documento é `2024-11-08T18:11:58.097Z`. **O
+mesmo campo com outro nome**, agora confirmado em um segundo documento independente.
+No acervo `turmas` o "Julg:" é `data_julgamento` de verdade — **o mesmo rótulo significa
+coisas diferentes conforme o acervo.**
+
+**O texto do card é EMENTA (truncada na exibição), não highlight.** Medido: o
+`div.excerpt-line` tem **741 chars** e termina em "…" com um link "Ver mais"; o campo
+`ementa` do payload tem **2.976 chars** e o `acordao`, **18.562**. Não há `<b>`/`<mark>`:
+não é trecho com destaque do termo, é a ementa cortada por CSS/JS.

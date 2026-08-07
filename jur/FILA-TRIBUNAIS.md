@@ -308,7 +308,7 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 | # | Alvo | UF | Sistemas de tramitação (pista, não garantia) | Status |
 |---|---|---|---|---|
 | 7 | **TJPE** | PE | PJe, Projudi | ok 07/08 |
-| 8 | **TJES** | ES | PJe, Projudi | pendente |
+| 8 | **TJES** | ES | PJe, Projudi | ok 07/08 |
 | 9 | **TJMT** | MT | PJe, Projudi | pendente |
 | 10 | **TJPB** | PB | PJe, Projudi | pendente |
 | 11 | **TJPI** | PI | PJe, Projudi | pendente |
@@ -374,6 +374,64 @@ ementa **e** inteiro teor de graça na busca. As lições valem para os 9 restan
 a causa do vazamento do filtro de órgão **não foi isolada**; `classeCNJ.in` e
 `assuntoCNJ.in` estão expostos como flags mas **não foram provados por
 contagem**; e não se mediu se o documento ilegível é sempre o mesmo registro.
+
+📌 **O que o TJES (feito em 07/08/2026) ensinou — leia
+[`CLAUDE-TJES.md`](CLAUDE-TJES.md).** Segundo alvo do Bloco 3, e o de maior acervo do
+repo inteiro: **2.212.794 documentos**, API REST pública, sem captcha em etapa nenhuma.
+As lições valem para os 8 restantes:
+
+- 🔴 **UM FILTRO QUE NÃO EXCLUI NADA PODE MUDAR A CONTAGEM — o espelho da invariante do
+  repo.** A regra conhecida é "contagem igual com e sem filtro = filtro ignorado";
+  aqui um filtro **no-op** derruba a contagem em 42%. `dano moral` = 106.282, e a mesma
+  query com `dataIni=1900-01-01&dataFim=2100-01-01` — intervalo que não exclui um único
+  documento, provado — devolve **61.480**. Na presença de filtro de data o conectivo
+  implícito vira AND. **Meça o filtro NO-OP também, não só o restritivo:** foi ele que
+  desfez um falso positivo (a jurisdição parecia não compor, e compunha — os dois lados
+  estavam medidos já no regime AND, e somam exatamente o total desse regime).
+- 🔴 **A TELA PODE MENTIR NO RÓTULO DO CAMPO.** O card do TJES exibe "Julg: 15/05/2024",
+  e o único campo de data do documento é `dt_juntada = 2024-05-15` — **data de juntada
+  aos autos rotulada como julgamento**, confirmado em dois documentos independentes. Nos
+  três acervos do PJe **não existe** data de julgamento nem de publicação. **Case o
+  rótulo da tela com o campo do payload antes de acreditar nele.** E o mesmo rótulo
+  "Julg:" é data de julgamento **de verdade** nos dois acervos legados — o rótulo
+  significa coisas diferentes conforme o acervo.
+- 🔴 **UM PORTAL PODE TER VÁRIOS ACERVOS COM SCHEMAS DIFERENTES.** Cinco cores Solr,
+  **quatro schemas**: `nr_processo` × `numero_processo_legado` × `num_processo`;
+  `acordao` × `inteiro_teor` × `conteudo_decisao_html`; e **o 1º grau não tem ementa**
+  enquanto as Turmas Recursais do Projudi **não têm inteiro teor**. Mapear um acervo e
+  presumir os outros produz campo vazio silencioso.
+- 🔴 **O DEFAULT DA API PODE SER O MENOR ACERVO.** Omitir `core` cai em `pje2g_mono`
+  (96.869 docs) porque é a aba ativa da tela — quem chamar a API sem esse parâmetro mede
+  558 achando que mediu 1.574. **Confira qual aba está ativa antes de aceitar o default.**
+- 🔴 **TRÊS TRIBUNAIS SEGUIDOS, TRÊS CONJUNTOS DE OPERADORES.** TJBA: ingleses funcionam,
+  portugueses inflam. TJPE: o inverso exato. TJES: **igual ao TJBA e oposto ao TJPE** —
+  `AND`/`NOT` exatos, `E`/`OU`/`ADJ` **ignorados**, e `NAO` (52.139) e `PROX`
+  (50.577) **inflando**. **Não se herda operador, nem do irmão de ontem.**
+- 🔴 **CONSULTAR CNJ POR TERMO DE BUSCA TRAZ LIXO CITACIONAL.** `q=<número>` devolve 31
+  documentos e `q="<número>"` devolve 2 — sendo o segundo **outro processo**, que
+  apenas cita aquele número no corpo do acórdão. O parâmetro certo (`nr_processo`)
+  devolve 1, e quer a **máscara** — o oposto do TJPE, que quer 20 dígitos.
+- ⚠️ **SWAGGER PODE SER FALSO POSITIVO DE SPA.** `/swagger-ui.html` e `/v3/api-docs`
+  respondem **HTTP 200** — com os mesmos **749 bytes** do `index.html`. É o fallback do
+  roteador. **Confira o tamanho, como se confere o md5 do vhost curinga.**
+- ⚠️ **503 NA RAIZ NÃO DIZ NADA SOBRE O MÓDULO.** `sistemas.tjes.jus.br/` devolve 503 e
+  `/consulta-jurisprudencia/` devolve 200. Some à lição do TJPE (HTTP 000 ≠ fora do ar).
+- ⚠️ **A LISTAGEM PODE SER TABELA, E O RESULTADO OCUPAR DUAS LINHAS IRMÃS**
+  (`tr.result-row` + `tr.excerpt-row`). Quem mapear só a primeira perde o texto inteiro.
+- ✅ **Aqui várias armadilhas da família NÃO se repetiram, e isso também se mede:** o
+  filtro de jurisdição **compõe exatamente** com termo (diferente de TJPE e TJBA); a
+  paginação é **estável** (3/3 idênticas, sem o problema do TJDFT/TJRJ); o total é
+  **exato**, sem teto; `per_page` **não tem teto medido** (5.000 responde); não há vhost
+  curinga; e a base está **corrente** (documento de 07/08/2026, o próprio dia).
+- ✅ **É o ÚNICO tribunal do repo com 1º grau na base de jurisprudência** — e o 1º grau é
+  o maior acervo (1.509.942 de 2.212.794). Sentença de 1º grau é um pedido que só ele
+  atende. **Vale perguntar por 1º grau nos alvos restantes em vez de presumir que não há.**
+
+⚠️ **Pendências declaradas do TJES:** os combos foram enumerados **só no `pje2g`** — o
+`pje1g` tem `comarca`, que não existe no 2º grau, e não foi enumerado; `-c` e `-a`
+estão expostos como flags mas **não foram provados por contagem**; a causa interna do
+filtro no-op **não foi isolada**; e os combos listam as **100 opções mais frequentes**,
+não todas, sem endpoint que devolva a lista completa.
 
 ## Bloco 4 — Módulo faltante (1 alvo)
 

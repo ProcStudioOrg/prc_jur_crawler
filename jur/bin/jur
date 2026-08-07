@@ -51,6 +51,8 @@ const TJBACrawler = require('../src/TJBACrawler');
 const TJBAChecker = require('../src/TJBAChecker');
 const TJPECrawler = require('../src/TJPECrawler');
 const TJPEChecker = require('../src/TJPEChecker');
+const TJESCrawler = require('../src/TJESCrawler');
+const TJESChecker = require('../src/TJESChecker');
 const TJMGCrawler = require('../src/TJMGCrawler');
 const TJMGChecker = require('../src/TJMGChecker');
 const TJMGNavigator = require('../src/TJMGNavigator');
@@ -4251,6 +4253,143 @@ program
       }
 
       throw new Error('Informe --login, --capturar ou --status. Veja `jur crps --help`.');
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error('Erro:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjes')
+  .description('Search TJES (Tribunal de Justica do Espirito Santo) jurisprudence — API REST publica, HTTP direto, sem browser')
+  .option('-q, --query <text>', 'Search query (operadores em INGLES: AND, OR, NOT, "frase exata", * — NAO use E/OU/NAO/PROX)')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de processo (TJESChecker); dispensa -q')
+  .option('--acervo <acervo>', 'pje2g (default) | pje1g | pje2g-mono | fisicos | turmas', 'pje2g')
+  .option('--origem <origem>', 'ambas (default) | comum (Tribunal de Justica) | turmas (Turma Recursal) — so nos acervos pje2g', 'ambas')
+  .option('-di, --data-inicio <date>', 'Data de JUNTADA inicial (DD/MM/YYYY) — NAO e data de julgamento')
+  .option('-df, --data-fim <date>', 'Data de JUNTADA final (DD/MM/YYYY) — NAO e data de julgamento')
+  .option('-oj, --orgao <nome>', 'Orgao julgador — NOME exato (use --listar-filtros)')
+  .option('-r, --relator <nome>', 'Magistrado(a) — NOME exato (use --listar-filtros)')
+  .option('-c, --classe <nome>', 'Classe judicial — NOME exato (use --listar-filtros)')
+  .option('-a, --assunto <nome>', 'Assunto — NOME exato (use --listar-filtros)')
+  .option('-p, --processo <numero>', 'Filtro por numero de processo DENTRO da busca (use -n p/ consulta direta)')
+  .option('--ordenar <sort>', 'Ordenacao: "dt_juntada desc" | "dt_juntada asc" (so nos acervos do PJe)')
+  .option('--listar-filtros', 'Lista os combos do acervo escolhido, com contagem, e sai')
+  .option('--listar-acervos', 'Lista os 5 acervos e o total de documentos de cada um, e sai')
+  .option('--verificar [amostra]', 'Audita N resultados reconsultando por numero (default 5)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (100 registros/pagina)', 10)
+  .option('--per-page <number>', 'Registros por pagina (sem teto medido; 100 por padrao)', 100)
+  .option('--max-results <number>', 'Maximum total results to collect')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjes.json')
+  .option('--fetch-inteiro-teor', 'Grava o inteiro teor (ja vem na busca — sem request extra)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tjes')
+  .option('-v, --visible', 'Ignored (TJES usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TJES usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    try {
+      const { TJESNavigator, ACERVOS } = require('../src/TJESNavigator');
+
+      if (opts.numero) {
+        const res = await new TJESChecker().consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (opts.listarAcervos) {
+        const cores = await new TJESNavigator({ log }).cores();
+        const out = Object.entries(ACERVOS).map(([k, v]) => ({
+          acervo: k, rotulo: v.rotulo, core: v.core, grau: v.grau,
+          totalDocumentos: cores[v.core] ? cores[v.core].total_docs : null,
+        }));
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, acervos: out }) + '\n');
+        else console.log(JSON.stringify(out, null, 2));
+        process.exit(0);
+      }
+
+      if (opts.listarFiltros) {
+        const def = ACERVOS[opts.acervo];
+        if (!def) throw new Error(`Acervo desconhecido: "${opts.acervo}".`);
+        const f = await new TJESNavigator({ log }).facets(def.core);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, acervo: opts.acervo, filtros: f }) + '\n');
+        else console.log(JSON.stringify(f, null, 2));
+        process.exit(0);
+      }
+
+      if (!opts.query && !opts.processo) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero> para consulta direta)');
+      }
+
+      log('='.repeat(60));
+      log('TJES Jurisprudencia Crawler (API REST publica, HTTP direto, sem browser)');
+      log('ESCOPO: 5 acervos — 1o grau PJe, 2o grau PJe, 2o grau monocratico PJe,');
+      log('        2o grau fisicos (legado) e Turmas Recursais (Projudi). ~2,21 mi de docs.');
+      log('ATENCAO: o espaco entre termos e OR, nao AND. Operadores sao os INGLESES.');
+      log('ATENCAO: -di/-df filtram DATA DE JUNTADA, nao data de julgamento.');
+      log('ATENCAO: NAO EXISTE PERMALINK por documento. Verificacao e por reconsulta (-n).');
+      log('='.repeat(60));
+      log(`Acervo: ${opts.acervo} | Query: ${opts.query || '-'}`);
+      log(`Data Juntada: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'} | Origem: ${opts.origem}`);
+      log('='.repeat(60));
+
+      const crawler = new TJESCrawler({ timeout: 90000, log, includeFullText: !!opts.fetchInteiroTeor });
+      const saida = await crawler.crawl({
+        query: opts.query,
+        acervo: opts.acervo,
+        origem: opts.origem,
+        dataInicio: opts.dataInicio,
+        dataFim: opts.dataFim,
+        orgao: opts.orgao,
+        relator: opts.relator,
+        classe: opts.classe,
+        assunto: opts.assunto,
+        processo: opts.processo,
+        maxPages: opts.maxPages,
+        perPage: Number(opts.perPage),
+        maxResults: opts.maxResults,
+        ordenar: opts.ordenar,
+      });
+
+      const fs = require('fs');
+      const path = require('path');
+      const outFile = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outFile), { recursive: true });
+      fs.writeFileSync(outFile, JSON.stringify(saida.resultados, null, 2), 'utf8');
+
+      let gravacao = null;
+      if (opts.fetchInteiroTeor) {
+        gravacao = crawler.gravarInteiroTeor(saida.resultados, path.resolve(opts.outputDir));
+        log(`Inteiro teor gravado: ${gravacao.gravados} arquivo(s) em ${gravacao.dir}` +
+            (gravacao.semTexto ? ` (${gravacao.semTexto} sem texto)` : ''));
+      }
+
+      let auditoria = null;
+      if (opts.verificar) {
+        const n = opts.verificar === true ? 5 : Number(opts.verificar);
+        auditoria = await new TJESChecker().auditar(saida.resultados, n);
+        log(`Auditoria: ${auditoria.confirmados}/${auditoria.amostra} confirmados por reconsulta.`);
+      }
+
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({
+          success: true, count: saida.coletados, total: saida.total,
+          acervo: saida.acervo, avisos: saida.avisos,
+          output: outFile, gravacao, auditoria,
+        }) + '\n');
+      } else {
+        log(`\nColetados: ${saida.coletados} de ${saida.total} (acervo "${saida.acervoRotulo}")`);
+        log(`Documento mais recente coletado: ${saida.documentoMaisRecenteColetado || '-'}`);
+        log(`Salvo em: ${outFile}`);
+        if (auditoria) log(JSON.stringify(auditoria, null, 2));
+      }
     } catch (error) {
       if (jsonMode) {
         process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');

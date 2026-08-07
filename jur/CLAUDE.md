@@ -73,6 +73,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjms` | TJ de Mato Grosso do Sul | MS | `CLAUDE-TJMS.md` | 🟢 OK (HTTP direto, sem browser — e-SAJ cjsg, **sem captcha**; base **só SAJ**, não cobre o e-Proc) |
 | `tjpa` | TJ do Pará | PA | `CLAUDE-TJPA.md` | 🟢 OK (API direta, sem browser) |
 | `tjpe` | TJ de Pernambuco | PE | `CLAUDE-TJPE.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa **e** inteiro teor já vêm na busca). Base corrente, cobre PJe + Projudi |
+| `tjes` | TJ do Espírito Santo | ES | `CLAUDE-TJES.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa e inteiro teor já vêm na busca). Base corrente, e **o único do repo com 1º grau** (1,5 mi de sentenças) |
 | `tjpr` | TJ do Paraná | PR | `CLAUDE-TJPR.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjrj` | TJ do Rio de Janeiro | RJ | `CLAUDE-TJRJ.md` | 🟢 OK (HTTP direto, sem browser — só e-Proc/Justiça Comum 2º grau) |
 | `tjrn` | TJ do Rio Grande do Norte | RN | `CLAUDE-TJRN.md` | 🔴 **sem busca** — o domínio **inteiro** do TJRN responde 403 (Akamai); só `-n` (nº do processo, via DataJud) |
@@ -317,6 +318,39 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   inteira; o crawler pula só o documento ruim e avisa quantos se perderam.
   A base é **2º grau + Turmas Recursais** (PJe + Projudi), **sem 1º grau**, e está
   **corrente**. Matéria federal com origem em PE → `trf5`
+- "TJES" / "Espírito Santo estadual" / "Vitória" / "Vila Velha" / "Serra" → `tjes` → leia
+  `CLAUDE-TJES.md`. ✅ **É o ÚNICO tribunal do repo com 1º grau (sentenças) na base de
+  jurisprudência — e o 1º grau é o MAIOR acervo**: 1.509.942 de 2.212.794 documentos.
+  São cinco acervos, e o comando escolhe por `--acervo`: `pje1g` (1º grau),
+  `pje2g` (default, 2º grau), `pje2g-mono` (monocráticas), `fisicos` (acervo físico
+  legado) e `turmas` (Turmas Recursais do Projudi). Sentença de 1º grau capixaba é um
+  pedido que **só o TJES atende** — nenhum outro tribunal do repo tem isso.
+  Juizado Especial / Turma Recursal dentro do 2º grau do PJe → `tjes --origem turmas`;
+  Justiça Comum é `--origem comum` (o default `--origem ambas` **mistura os dois**).
+  ✅ Aqui a partição **compõe exatamente** (141.155 + 78.488 = 219.643), diferente do
+  TJPE e do TJBA. ⚠️ Mas a proporção depende muito do tema: em `usucapião` a Turma
+  Recursal é 1,4% do acervo e em `dano AND moral` é **67%** — em consumo, ofereça as duas.
+  🔴 **O espaço entre termos é OR, não AND** (provado: 1.574 + 49.466 − 1.251 = 49.789).
+  Query de duas palavras devolve a UNIÃO. **Use `AND`.**
+  🔴 **Os operadores são os INGLESES** (`AND`, `OR`, `NOT`, `"frase exata"`, `*`).
+  Os portugueses `E`/`OU`/`ADJ` são **ignorados**, e `NAO` e `PROX` **INFLAM** a
+  contagem (52.139 e 50.577 contra 49.789) em vez de zerar — inflar não dá sintoma.
+  É o **inverso do TJPE**; não herde de lá. ⚠️ **NÃO avise sobre acento** (o índice normaliza).
+  🔴 **`-di/-df` filtram DATA DE JUNTADA, não data de julgamento — e a tela do tribunal
+  exibe esse mesmo campo rotulado "Julg:"**. Nos três acervos do PJe **não existe** data
+  de julgamento nem de publicação. **Nunca cite o "Julg:" do TJES como data de julgamento
+  do acórdão.** Só `fisicos` e `turmas` têm `data_julgamento` real, e neles a API não
+  filtra por ela. O crawler avisa; repasse o aviso.
+  🔴 **Um filtro de data que não exclui nada muda a contagem**: `dano moral` = 106.282, e
+  a mesma query com intervalo de 1900 a 2100 = **61.480**. Contagem com data **não é
+  comparável** com contagem sem data, a menos que a query traga operador explícito.
+  ⚠️ **O 1º grau e o acervo físico NÃO têm ementa** (só o texto integral), e as Turmas
+  Recursais do Projudi têm **só ementa**, sem inteiro teor. Não apresente um pelo outro.
+  🔴 **NÃO EXISTE PERMALINK.** Nunca invente link de acórdão do TJES — a verificação é por
+  reconsulta: `./bin/jur tjes -n "<nº>"`. ⚠️ E **consultar o CNJ por termo de busca traz
+  lixo**: o número devolve 31 documentos, sendo alguns que apenas o **citam** no corpo.
+  ✅ Ementa e inteiro teor vêm de graça na busca, sem captcha em etapa nenhuma.
+  Matéria federal com origem no ES → `trf2`
 - "TJMS" / "Mato Grosso do Sul estadual" / "Campo Grande" → `tjms` → leia `CLAUDE-TJMS.md`.
   Juizado Especial / Turma Recursal sul-mato-grossense → `tjms --origem turmas`; Justiça
   Comum 2º grau é `--origem comum` (default). A distinção é obrigatória e está medida
