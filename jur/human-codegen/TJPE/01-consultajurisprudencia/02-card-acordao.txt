@@ -1,0 +1,771 @@
+DOCUMENTO 1 
+Acompanhamento Processual
+Resultado sem Formatação
+Imprimir
+ACÓRDÃO
+PROCESSO
+0056907-55.2023.8.17.2001 
+CLASSE CNJ
+198 APELAÇÃO CÍVEL
+ASSUNTO CNJ
+7698 Perdas e Danos
+RELATOR(A)
+CARLOS FREDERICO GONCALVES DE MORAES
+ÓRGÃO JULGADOR
+Gabinete do Des. Carlos Frederico Gonçalves de Moraes (4ª CC)
+DATA DE JULGAMENTO
+31/07/2026
+DATA DA PUBLICAÇÃO/FONTE
+31/07/2026
+MEIO DE TRAMITAÇÃO
+ELETRONICO
+EMENTA
+
+        
+
+  
+
+
+
+
+QUARTA CÂMARA CÍVEL 
+
+
+
+
+APELAÇÃO CÍVEL Nº 0056907-55.2023.8.17.2001 
+
+
+
+
+APELANTE: EDNALDO AMARO DOS SANTOS 
+
+
+
+
+APELADA: WILENE MANTA DOS SANTOS 
+
+
+
+
+JUÍZO DE ORIGEM: SEÇÃO A DA 8ª VARA CÍVEL DA CAPITAL 
+
+
+
+
+RELATOR: DES. CARLOS MORAES
+
+
+
+ 
+
+
+
+
+
+
+EMENTA 
+
+
+
+
+I. CASO EM EXAME
+
+
+
+
+1.  Apelação cível contra sentença que julgou procedente ação de reintegração de posse de imóvel urbano, fundamentada em nulidade de contrato de compra e venda reconhecida em processo anterior com trânsito em julgado.
+
+
+
+
+II. QUESTÃO EM DISCUSSÃO 
+
+
+
+
+2. A questão consiste em definir se a posse exercida com base em título declarado nulo judicialmente configura esbulho possessório e se o decurso do tempo (17 anos) obsta a reintegração de posse pela proprietária.
+
+
+
+
+III. RAZÕES DE DECIDIR 
+
+
+
+
+3. A declaração judicial de nulidade absoluta de negócio jurídico (venda a non domino) opera efeitos ex tunc, tornando a posse do adquirente injusta e precária (Art. 166 e 169, CC). 
+
+
+
+
+4. A existência de coisa julgada sobre a nulidade do título afasta a boa-fé e o justo título necessários para a manutenção da posse ou reconhecimento de usucapião ordinária. 
+
+
+
+
+5. O julgamento antecipado da lide não configura cerceamento de defesa quando a prova documental (sentença anulatória transitada em julgado) é suficiente para o convencimento do juízo (Art. 355, I, CPC). 
+
+
+
+
+6. A posse indireta da proprietária, ainda que residente no exterior, é protegida contra o esbulho praticado por quem detém o bem sem título jurídico válido.
+
+
+
+
+IV. DISPOSITIVO E TESE 
+
+
+
+
+7. Recurso não provido. Majorado os honorários advocatícios para 15% sobre o valor da causa, observada a gratuidade da justiça.
+
+
+
+
+Tese de julgamento: "1. A posse exercida com base em contrato de compra e venda declarado nulo por sentença transitada em julgado é injusta, autorizando a reintegração de posse. 2. O vício de nulidade absoluta não convalesce pelo decurso do tempo, inexistindo decadência para a retomada do bem esbulhado." Dispositivos relevantes citados: CC, arts. 169 e 1.200; CPC, art. 355, I.
+
+
+
+
+ACÓRDÃO
+
+
+
+
+Vistos, relatados e discutidos os presentes autos da Apelação Cível nº 0056907-55.2023.8.17.2001, ACORDAM os Desembargadores integrantes da 4ª Câmara Cível do Tribunal de Justiça do Estado de Pernambuco, à unanimidade, em NEGAR PROVIMENTO ao recurso, nos termos do voto do Relator, da ementa e das eventuais notas taquigráficas em anexo, integrantes do julgado.
+
+
+
+
+Recife, data registrada no sistema.
+
+
+
+
+Des. Carlos Moraes 
+
+
+
+
+Relator
+
+
+
+
+ 
+
+
+      
+ACÓRDÃO
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tribunal de Justiça de Pernambuco
+ Poder Judiciário
+
+
+
+
+
+4ª Câmara Cível - Recife
+
+
+
+
+ - F:(  ) 
+
+
+
+
+Processo nº 0056907-55.2023.8.17.2001
+
+
+
+
+APELANTE: EDNALDO AMARO DOS SANTOS
+
+
+
+
+APELADO(A): WILENE MANTA DOS SANTOS
+
+
+
+
+
+
+
+
+
+INTEIRO TEOR
+
+
+
+
+
+
+
+
+
+Relator: 
+CARLOS FREDERICO GONCALVES DE MORAES
+
+
+
+
+
+
+
+
+
+
+Relatório:
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+QUARTA CÂMARA CÍVEL 
+
+
+
+
+EMBARGOS DE DECLARAÇÃO NA APELAÇÃO CÍVEL Nº 0056907-55.2023.8.17.2001 
+
+
+
+
+EMBARGANTE: EDNALDO AMARO DOS SANTOS 
+
+
+
+
+EMBARGADA: WILENE MANTA DOS SANTOS RELATOR: 
+
+
+
+
+DES. CARLOS MORAES
+
+
+
+
+____________________________________________________________ 
+
+
+
+
+RELATÓRIO
+
+
+
+
+Trata-se de Embargos de Declaração (ID 62309720) opostos por EDNALDO AMARO DOS SANTOS em face do acórdão proferido por esta Quarta Câmara Cível (ID 61028552), que, à unanimidade, negou provimento ao seu recurso de apelação, mantendo a sentença de procedência da Ação de Reintegração de Posse ajuizada por WILENE MANTA DOS SANTOS.
+
+
+
+
+Em suas razões, o embargante alega, em síntese, a existência de omissões e contradições no julgado. Sustenta que o acórdão foi omisso quanto à tese de cerceamento de defesa, decorrente do julgamento antecipado da lide sem a produção de prova testemunhal requerida. Aponta omissão e contradição no tocante à prejudicialidade externa com a Ação de Usucapião nº 0000895-51.2016.8.17.0001. Aduz, ainda, omissão sobre os limites objetivos da coisa julgada formada na Ação Anulatória nº 0072648-73.2013.8.17.0001, que, segundo defende, não poderia qualificar automaticamente sua posse como injusta. Por fim, alega omissão na análise das teses de posse velha, decadência e prescrição da pretensão possessória. Requer o acolhimento dos embargos, com efeitos infringentes, ou, subsidiariamente, para fins de prequestionamento dos dispositivos legais e constitucionais que elenca.
+
+
+
+
+Contrarrazões dispensadas, em face de não ser a hipótese de aplicação de efeitos infringentes aos presentes embargos (AgInt nos EDcl no AREsp n. 2.292.044/GO, relator Ministro Humberto Martins, Terceira Turma, julgado em 4/12/2023, DJe de 6/12/2023).
+
+
+
+
+É o relatório.
+
+
+
+
+Inclua-se o feito na pauta de julgamento.
+
+
+
+
+Recife, data registrada no sistema.
+
+
+
+
+Des. Carlos Moraes 
+
+
+
+
+Relator
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+Voto vencedor:
+
+
+
+
+ 
+
+
+
+
+  
+
+
+
+
+QUARTA CÂMARA CÍVEL 
+
+
+
+
+EMBARGOS DE DECLARAÇÃO NA APELAÇÃO CÍVEL Nº 0056907-55.2023.8.17.2001 
+
+
+
+
+EMBARGANTE: EDNALDO AMARO DOS SANTOS 
+
+
+
+
+EMBARGADA: WILENE MANTA DOS SANTOS RELATOR: 
+
+
+
+
+DES. CARLOS MORAES 
+
+
+
+ 
+
+
+
+
+
+
+VOTO
+
+
+
+
+Os presentes embargos de declaração, embora tempestivos, não merecem acolhimento.
+
+
+
+
+O recurso de embargos de declaração possui fundamentação vinculada, restringindo-se às hipóteses taxativamente previstas no art. 1.022 do Código de Processo Civil, quais sejam, sanar obscuridade, eliminar contradição, suprir omissão ou corrigir erro material. Não se presta, portanto, à rediscussão de matéria já devidamente analisada e decidida no acórdão embargado.
+
+
+
+
+O embargante, a pretexto de apontar vícios, busca, na verdade, a reforma do julgado por mero inconformismo com a tese adotada, o que é inviável na via estreita dos aclaratórios.
+
+
+
+
+A alegada omissão sobre o cerceamento de defesa não se sustenta. O acórdão foi explícito ao fundamentar que a questão controvertida era eminentemente de direito e documental, tornando desnecessária a produção de prova oral. A existência de coisa julgada material, consubstanciada no acórdão proferido no processo nº 0072648-73.2013.8.17.0001, que declarou a nulidade absoluta do título que embasava a posse do embargante, torna a dilação probatória para comprovar a natureza da posse um ato inócuo. A posse, nascida de um ato nulo, é juridicamente injusta, e nenhuma prova testemunhal poderia alterar essa qualificação jurídica. O julgamento antecipado, nesse contexto, foi um dever do magistrado, em observância ao art. 355, I, do CPC.
+
+
+
+
+No que tange à omissão e contradição quanto à conexão com a Ação de Usucapião, o acórdão também enfrentou a questão de forma clara, assentando a independência entre os juízos possessório e petitório. A procedência da reintegração de posse se baseia na injustiça da posse do embargante, vício que decorre da nulidade absoluta do seu título de aquisição. Tal nulidade, declarada em juízo com trânsito em julgado, impede o reconhecimento de justo título e boa-fé, requisitos indispensáveis para a usucapião ordinária. A posse que se iniciou de forma precária, por derivar de negócio nulo, não se convalida para fins de usucapião em detrimento do proprietário esbulhado.
+
+
+
+
+Quanto à suposta omissão sobre os limites objetivos da coisa julgada, o argumento do embargante beira a má-fé. O acórdão não extrapolou os limites da decisão proferida na ação anulatória. Pelo contrário, apenas aplicou a consequência jurídica inarredável daquele julgado. A declaração de nulidade de um negócio jurídico opera efeitos ex tunc, retroagindo para fulminar todos os efeitos produzidos pelo ato. Assim, a posse do embargante, que se originou do negócio nulo, é considerada injusta desde o seu nascedouro. Trata-se de aplicação direta do direito, e não de ampliação da coisa julgada. A propósito, o Superior Tribunal de Justiça já pacificou que a venda realizada por quem não é proprietário é nula de pleno direito, sendo insuscetível de convalidação. 
+
+
+
+
+Finalmente, a omissão sobre posse velha, decadência e prescrição também não procede. O acórdão foi categórico ao afirmar que a nulidade absoluta não se convalesce com o tempo, nos termos do art. 169 do Código Civil. A pretensão de reintegração de posse, neste caso, não se submete a prazo prescricional enquanto perdurar o esbulho, pois a posse do embargante é continuamente injusta. Confundir a imprescritibilidade da nulidade com a prescrição da pretensão possessória é um equívoco que não encontra amparo na ordem jurídica.
+
+
+
+
+O pleito de prequestionamento também não merece prosperar, pois, para tal finalidade, é necessária a demonstração de um dos vícios do art. 1.022 do CPC, o que não ocorreu. O julgado abordou todas as questões relevantes para o deslinde da causa, não havendo necessidade de menção expressa a todos os dispositivos legais invocados pela parte.
+
+
+
+
+O que se verifica, em verdade, é o inconformismo do embargante com o resultado do julgamento, o que não se admite em sede de embargos de declaração. Nesse sentido, cite-se a jurisprudência do Superior Tribunal de Justiça:
+
+
+
+
+EMBARGOS DE DECLARAÇÃO NO RECURSO ESPECIAL. PROCESSO CIVIL. PREVIDÊNCIA COMPLEMENTAR. PREVIDÊNCIA USIMINAS. OMISSÃO, CONTRADIÇÃO OU OBSCURIDADE. INEXISTÊNCIA. ERRO MATERIAL. EXISTÊNCIA. Os embargos de declaração objetivam sanar eventual existência de obscuridade, contradição, omissão e/ou erro material no julgado (CPC, art. 1.022), sendo inadmissível a oposição para rediscussão de questão debatida e devidamente fundamentada na decisão embargada, principalmente porque não se prestam para provocar novo julgamento do feito. (EDcl no REsp n. 1.964.067/ES, relator Ministro João Otávio de Noronha, relator para acórdão Ministro Humberto Martins, Segunda Seção, julgado em 23/8/2023, DJe de 13/9/2023.)
+
+
+
+
+EMBARGOS DE DECLARAÇÃO NO AGRAVO INTERNO. RECURSO ESPECIAL. AÇÃO DE INDENIZAÇÃO. DANOS MATERIAIS E MORAIS. OPERAÇÃO DE CÂMBIO. MÁ PRESTAÇÃO DE SERVIÇOS. COMPROVAÇÃO. APLICAÇÃO DA SÚMULA 7/STJ. OMISSÃO. INEXISTÊNCIA. 1. Os embargos de declaração somente se prestam a sanar vício porventura existente no acórdão, não servindo à rediscussão da matéria já julgada no recurso. 2. Embargos de declaração rejeitados. (EDcl no AgInt no REsp n. 1.456.036/SP, relatora Ministra Maria Isabel Gallotti, Quarta Turma, julgado em 10/8/2021, DJe de 23/8/2021).
+
+
+
+
+Ante o exposto, inexistindo qualquer vício a ser sanado, REJEITO os presentes embargos de declaração.
+
+
+
+
+É como voto.
+
+
+
+
+Recife, data registrada no sistema.
+
+
+
+
+Des. Carlos Moraes 
+
+
+
+
+Relator
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+Demais votos:
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+Ementa:
+
+
+
+
+ 
+
+
+
+
+  
+
+
+
+
+QUARTA CÂMARA CÍVEL 
+
+
+
+
+EMBARGOS DE DECLARAÇÃO NA APELAÇÃO CÍVEL Nº 0056907-55.2023.8.17.2001 
+
+
+
+
+EMBARGANTE: EDNALDO AMARO DOS SANTOS 
+
+
+
+
+EMBARGADA: WILENE MANTA DOS SANTOS RELATOR: 
+
+
+
+
+DES. CARLOS MORAES 
+
+
+
+ 
+
+
+
+
+
+
+EMENTA
+
+
+
+
+I. CASO EM EXAME
+
+
+
+
+1.          Embargos de Declaração opostos em face de acórdão que negou provimento à apelação e manteve a sentença de procedência em ação de reintegração de posse, fundamentada na nulidade de negócio jurídico de compra e venda, reconhecida em processo anterior com trânsito em julgado.
+
+
+
+
+II. QUESTÃO EM DISCUSSÃO 
+
+
+
+
+2. A questão consiste em definir se o acórdão embargado padece dos vícios de omissão e contradição, ao rejeitar as teses de cerceamento de defesa, conexão com ação de usucapião, e ao não se pronunciar sobre os limites da coisa julgada, prescrição e decadência.
+
+
+
+
+III. RAZÕES DE DECIDIR 
+
+
+
+
+3. Os embargos de declaração não constituem via adequada para a rediscussão do mérito da causa, mas tão somente para sanar os vícios elencados no art. 1.022 do CPC. 
+
+
+
+
+4. Inexiste cerceamento de defesa quando o julgamento antecipado da lide se fundamenta na suficiência da prova documental e na existência de coisa julgada sobre questão prejudicial, tornando inócua a produção de prova testemunhal. 
+
+
+
+
+5. A posse decorrente de negócio jurídico declarado nulo por sentença transitada em julgado é injusta e precária, não podendo ser convalidada pelo tempo nem servir de base para usucapião, o que afasta a alegada prejudicialidade externa. 
+
+
+
+
+6. A nulidade absoluta é vício insanável e imprescritível, operando efeitos ex tunc e impedindo a convalidação do ato pelo decurso do tempo, conforme art. 169 do Código Civil. 
+
+
+
+
+7. A ausência dos vícios autorizadores e o nítido caráter de inconformismo com o resultado do julgamento impõem a rejeição dos aclaratórios, ainda que para fins de prequestionamento.
+
+
+
+
+IV. DISPOSITIVO E TESE 
+
+
+
+
+8. Embargos de declaração rejeitados. 
+
+
+
+
+Tese de julgamento: "1. Os embargos de declaração não se prestam à rediscussão de matéria já decidida, visando apenas sanar vícios de omissão, contradição, obscuridade ou erro material. 2. Inexistindo os vícios do art. 1.022 do CPC, e evidenciado o mero inconformismo da parte com o resultado do julgamento, a rejeição dos aclaratórios é medida que se impõe, ainda que para fins de prequestionamento." Dispositivos relevantes citados: Código de Processo Civil, arts. 355, I, e 1.022; Código Civil, art. 169.
+
+
+
+ 
+
+
+
+
+
+
+ACÓRDÃO
+
+
+
+
+Vistos, relatados e discutidos os presentes autos, ACORDAM os Desembargadores integrantes da Quarta Câmara Cível do Tribunal de Justiça de Pernambuco, à unanimidade, em REJEITAR os embargos de declaração, nos termos do voto do Relator, da ementa e das notas taquigráficas em anexo, que fazem parte integrante deste julgado.
+
+
+
+
+Recife, data registrada no sistema.
+
+
+
+
+Des. Carlos Moraes 
+
+
+
+
+Relator
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+Proclamação da decisão:
+
+
+
+
+À unanimidade de votos, foram rejeitados os Embargos de Declaração, nos termos do voto da Relatoria.
+
+
+
+
+
+
+
+
+
+
+Magistrados: [ADALBERTO DE OLIVEIRA MELO, HUMBERTO COSTA VASCONCELOS JUNIOR, CARLOS FREDERICO GONCALVES DE MORAES]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Recife, 31 de julho de 2026
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+Magistrado
+
+
+      

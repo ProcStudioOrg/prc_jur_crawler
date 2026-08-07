@@ -1,0 +1,343 @@
+# TJPE — Consulta Jurisprudência (`consultajurisprudencia.app.tjpe.jus.br`)
+
+## Identificação
+
+| Campo | Valor |
+|---|---|
+| Tribunal | TJPE — Tribunal de Justiça de Pernambuco |
+| UF | PE |
+| Módulo | `01-consultajurisprudencia` — módulo **principal** de jurisprudência |
+| URL da tela | `https://consultajurisprudencia.app.tjpe.jus.br/` |
+| Backend | `https://consultajurisprudencia.app.tjpe.jus.br/api/v1/…` (mesma origem) |
+| Stack | SPA **Angular** (`+Jurisprudência v4.4.0-M174994`) sobre API **JHipster / Spring** |
+| Forma de acesso do crawler | **`api`** — HTTP direto, sem browser |
+| Mapeado em | 07/08/2026, Playwright 1.62 + medições HTTP |
+| Sistemas de tramitação cobertos | PJe e Projudi (2º grau + Turmas Recursais) |
+
+### Como o portal foi descoberto (não foi chutado)
+
+`www.tjpe.jus.br` devolve 200 com **117 bytes**: é um `<meta http-equiv="refresh">`
+para `http://portal.tjpe.jus.br/` (que fica atrás de Cloudflare). O portal real
+linka `https://consultajurisprudencia.app.tjpe.jus.br/`. Nenhuma URL foi inventada.
+
+### Passo 0 — o que existe e o que NÃO existe
+
+| Sondagem | Resultado (07/08/2026) |
+|---|---|
+| `jurisprudencia.tjpe.jus.br` | **NXDOMAIN** |
+| `dadosabertos.tjpe.jus.br` | **NXDOMAIN** |
+| `api.tjpe.jus.br` | **NXDOMAIN** |
+| `esaj.tjpe.jus.br` | **NXDOMAIN** — o TJPE não é da família e-SAJ |
+| `busca` / `consultas` / `projudi` / `pje2g`.tjpe.jus.br | **NXDOMAIN** |
+| `pje.tjpe.jus.br` | resolve (177.221.33.43) — é tramitação, não jurisprudência |
+| `/v3/api-docs`, `/api-docs`, `/openapi.json`, `/management/info` | **404** — spec desabilitada |
+| `/swagger-ui/index.html` | **200**, mas só os estáticos; sem spec, não lista nada |
+
+✅ **Não há vhost curinga aqui.** Os subdomínios inexistentes dão NXDOMAIN de
+verdade — diferente do TJAC (curinga servindo a home) e do TJAL (todo path
+respondendo 200). Não foi preciso conferir md5.
+
+⚠️ **A API REST foi achada no bundle**, não chutada: o `main.js` é um stub que
+carrega o chunk 45 por lazy-load, e é lá que estão os paths
+(`api/v1/jurisprudencias`, `/api/v1/classes`, …) e o mapa de filtros inteiro.
+
+### 🔴 O bloqueio que não era bloqueio — cadeia TLS incompleta
+
+`curl https://consultajurisprudencia.app.tjpe.jus.br/` devolve **HTTP 000**.
+Parece o TJBA (servidor derrubando o handshake) e **não é**. Medido em camadas:
+
+- TCP 80 e 443: **abrem** normalmente.
+- TLS: o servidor responde `Server hello` + `Certificate` e o cliente é que
+  aborta com `TLS alert, unknown CA (560)` → `unable to get local issuer certificate`.
+- Causa: o servidor apresenta **só o certificado folha** (1 cert na cadeia),
+  `CN=*.app.tjpe.jus.br`, emitido por `Amazon RSA 2048 M01`, e **omite o
+  intermediário**.
+- O **navegador não liga** porque busca o intermediário sozinho pelo AIA
+  (`http://crt.r2m01.amazontrust.com/r2m01.cer`). `curl` e Node **não fazem** isso.
+
+**Correção adotada:** o `TJPENavigator` embute o intermediário e o soma às raízes
+do sistema. `rejectUnauthorized` continua **ligado** — não se desliga verificação
+de TLS para contornar defeito de configuração alheia.
+
+> **Lição para os próximos alvos:** HTTP 000 **não** é sinônimo de portal fora do
+> ar. Separe TCP de TLS de HTTP antes de marcar `bloqueado`; aqui a diferença foi
+> entre "TJPE inacessível" e "TJPE é o melhor tribunal do bloco 3".
+
+---
+
+# Ferramentas Comuns
+
+## 1. Busca principal (query)
+
+Campo `Pesquisa Livre` → `<input name="pesquisaLivre" id="field_pesquisaLivre">`
+→ parâmetro **`pesquisaLivre.contains`**.
+
+```
+GET /api/v1/jurisprudencias?page=0&size=20
+    &pesquisaLivre.contains=usucapiao
+    &origem.in=ELETRONICO,FISICO
+    &tipoSentenca.in=A,D
+    &sort=dataJulgamento,desc
+```
+
+🔴 **`tipoSentenca.in` é OBRIGATÓRIO junto com o termo.** Sem ele a API responde
+**HTTP 500 `Erro ao processar a consulta.`** — medido, determinístico. O mesmo
+vale para `pesquisaLivre` + só `origem.in` (também 500). O crawler sempre manda
+o default `A,D`.
+
+✅ **Acento é normalizado**: `usucapiao` = `usucapião` = **6.266**.
+**Não avisar sobre acento neste tribunal** (ao contrário de TJMS e TJBA).
+
+## 2. Operadores
+
+🔴 **O TJPE é o INVERSO do TJBA: aqui os operadores em PORTUGUÊS funcionam e os
+INGLESES é que enganam.** Todos medidos contra `usucapiao` = 6.266:
+
+| Query | Total | Veredito |
+|---|---|---|
+| `usucapiao` | 6.266 | referência |
+| `posse` | 10.000 | saturado |
+| `usucapiao posse` | 4.269 | **espaço = E (AND)** |
+| `usucapiao E posse` | 4.269 | ✅ funciona (idêntico ao espaço) |
+| `usucapiao OU posse` | 10.000 | ✅ funciona (saturou) |
+| `usucapiao NAO posse` | 2.007 | ✅ funciona |
+| `usucapiao NÃO posse` | 2.007 | ✅ funciona **acentuado também** |
+| `usucapiao PROX posse` | 13 | ✅ funciona (muito restritivo) |
+| `"usucapiao extraordinario"` | 930 | ✅ frase exata funciona |
+| `usucapiao AND posse` | **0** | 🔴 palavra literal — ZERA |
+| `usucapiao OR posse` | **1** | 🔴 palavra literal |
+| `usucapiao NOT posse` | **1.281** | 🔴 **o pior caso**: devolve número plausível e ≠ de `NAO` (2.007) |
+| `usucapiao ADJ posse` | **0** | 🔴 não existe |
+| `usucapiao$` | 6.266 | `$` é **ignorado**, não trunca |
+| `usucapi*` | **921** | 🔴 curinga devolve **MENOS** que o termo inteiro |
+
+⚠️ **`NOT` é a armadilha cara**: não zera (o que daria sintoma), devolve 1.281 —
+lê-se como busca legítima. É a lição do TJBA ("teste nos dois sentidos") aplicada
+com os papéis dos idiomas trocados.
+
+⚠️ **`a` devolve 0** — stopword.
+
+## 3. Número máximo de páginas / resultados
+
+| Medição | Valor |
+|---|---|
+| `size` default da tela | 20 |
+| `size` **máximo** | **100** (200 → HTTP 500) |
+| Teto do contador `x-total-count` | **10.000** — SATURADO, não exato |
+| Teto da janela de paginação | `page*size` ≤ 10.000 (`page=100&size=100` → 500) |
+| Total **exato** | quando < 10.000 (`usucapiao` = 6.266, confirmado: página 62 devolve 66 e a 63 devolve 0 → 62×100+66 = 6.266 ✓) |
+
+⚠️ **`recurso`, `posse`, `direito` e `alimentos` batem todos em 10.000 exatos** —
+é teto, não contagem. Nunca relate 10.000 como número de julgados.
+
+## 4. Filtro de data — julgamento
+
+`dataJulgamento.greaterThanOrEqual` / `dataJulgamento.lessThanOrEqual`, em
+**`YYYY-MM-DD`**. Restringe de fato: `usucapiao` sem data = 6.266; em 2025 = 930;
+em 2015 = 80. ✅ **Não há teto de intervalo** (diferente da família e-SAJ) —
+não é preciso fatiar.
+
+## 5. Filtro de data — publicação
+
+`dataPublicacao.greaterThanOrEqual` / `.lessThanOrEqual` existem e funcionam
+(2025 = 930, igual ao de julgamento).
+
+🔴 **RESSALVA MEDIDA — as duas datas não são independentes.** Amostra de 60
+documentos por origem:
+
+| Origem | `dataJulgamento` == `dataPublicacao` (<2s) | `dataJulgamento` só-data |
+|---|---|---|
+| `ELETRONICO` | **60/60** | 0/60 |
+| `FISICO` | **0/60** | **60/60** |
+
+- No acervo **ELETRÔNICO** as duas datas são o **mesmo instante** (diferem por
+  milissegundos: `2026-07-31 17:57:47.580` × `…47.559`). Ou seja: **não existe
+  data de publicação distinta** nesse acervo — o campo é o carimbo de
+  assinatura/ingestão. Filtrar por uma ou por outra dá o mesmo.
+- No acervo **FÍSICO** as datas são reais e distintas (só-data, com semanas de
+  intervalo: 28 e 31 dias na amostra).
+
+⚠️ Não é a data-sentinela do TJAM (que apagava recentes em silêncio): aqui o
+filtro funciona nas duas pontas. Mas **não prometa ao usuário um recorte por
+publicação que o eletrônico não tem**.
+
+## 6. Filtro de instância
+
+Não existe filtro de instância. A base é **só 2º grau + Turmas Recursais** —
+**não há 1º grau (sentenças)**.
+
+## 7. Filtro de competência (Juizado × Justiça Comum)
+
+**Na tela:** o combo `Órgão Julgador` (`orgaoJulgador.in`), alimentado por
+`/api/v1/unidades-judiciais` (353 unidades). O campo `tipoUnidade.descricao`
+agrupa em três: `2Grau` (222), `Camara2G` (53) e **`Colégio Recursal` (78)`**.
+
+🔴 **MAS O FILTRO DE ÓRGÃO DA API NÃO É CONFIÁVEL PARA AGRUPAR.** Medições:
+
+- `orgaoJulgador.in=7313` (1º Gab. da Sexta Turma Recursal) → 7 documentos,
+  **7/7 do órgão pedido** ✅
+- `orgaoJulgador.in=7316` (Turma Estadual de Uniformização) → 318, **40/40 corretos** ✅
+- `orgaoJulgador.in=7314` (1º Gab. da Terceira Turma Recursal) → **3.439
+  documentos, 35 dos 40 primeiros são do "1º Grupo de Câmaras Cíveis"** 🔴
+- Com os 78 ids do grupo `Colégio Recursal` → 2.325, mas a amostra traz
+  `5ª Câmara Cível`, `1ª Câmara de Direito Público`, `2ª Câmara Cível`…
+- E a soma não fecha: turmas (2.325) + comum (5.765) = **8.090** contra um total
+  de **6.266**. Sobra de 1.824 → as partições **se sobrepõem**.
+
+⚠️ **Passar `codigoUnidade` no lugar de `id` devolve documentos de outros órgãos
+com o total IDÊNTICO ao sem filtro (10.000)** — o filtro é ignorado em silêncio.
+É a invariante "contagem igual = filtro ignorado" pega ao vivo. E passar o
+**nome** devolve HTTP 400.
+
+**Decisão do crawler:** `--origem turmas|comum|ambas` é aplicado **no cliente**,
+por regex sobre `nomeOrgaoJulgador` do próprio documento
+(`/turma recursal|colégio recursal|jecrc|turma (estadual )?de uniformiza/i`).
+Medido numa página de 100:
+
+| Tema | Turmas | Comum |
+|---|---|---|
+| `usucapiao` | 0,5 % | 99,5 % |
+| `dano moral` | **34 %** | 66 % |
+
+→ Em consumo a distinção importa muito; em direito real, quase nada.
+
+## 8. Filtro de área (Cível × Criminal)
+
+**Não existe** filtro de área. O recorte possível é por `classeCNJ.in` (798
+classes) ou `assuntoCNJ.in` (4.457 assuntos) — ver §13.
+
+## 9–10. Órgão / unidade
+
+`/api/v1/unidades-judiciais` → 353 itens, salvos em `unidades-judiciais.json`.
+Campos: `id` (o único aceito pelo filtro), `codigoUnidade`, `codigoPje`, `nome`,
+`tipoUnidade{id,descricao}`.
+
+## 11. Magistrada ou magistrado
+
+`relator.in` — **por NOME**, não por id. `/api/v1/relatores` → **2.076** nomes,
+salvos em `relatores.json`.
+
+⚠️ **O nome vem SEM acento na base** (`CARLOS FREDERICO GONCALVES DE MORAES`) —
+use exatamente a string do combo.
+
+## 12. Tipo de ato
+
+`tipoSentenca.in`. 🔴 **O enum da API é a LETRA, não o rótulo da tela**:
+
+```js
+ACORDAO = "A"    DECISAO = "D"
+```
+
+- `tipoSentenca.in=A,D` → 6.266 ✅
+- `tipoSentenca.in=ACORDAO,DECISAO` → **0, HTTP 200, sem erro** 🔴
+
+A tela mostra "Acórdãos" / "Decisões Monocráticas" e o `formFiltersDefaults` do
+Angular manda `"A,D"`. Quem copiar o rótulo da tela recebe zero silencioso.
+
+| Tipo | `usucapiao` |
+|---|---|
+| `A` (acórdão) | 4.303 |
+| `D` (monocrática) | 1.922 |
+| `A,D` | **6.266** |
+
+⚠️ **4.303 + 1.922 = 6.225, não 6.266.** Há **41 documentos** cujo `tipoSentenca`
+não é nem `A` nem `D` — invisíveis ao default do próprio portal. Não foram
+identificados (ver Pendências).
+
+## 13. Relator / classe / assunto
+
+| Filtro | Parâmetro | Fonte | Formato |
+|---|---|---|---|
+| Relator | `relator.in` | `/api/v1/relatores` (2.076) | **nome** |
+| Classe CNJ | `classeCNJ.in` | `/api/v1/classes` (798) | **código** |
+| Assunto CNJ | `assuntoCNJ.in` | `/api/v1/assuntos` (4.457) | **código** |
+| Órgão | `orgaoJulgador.in` | `/api/v1/unidades-judiciais` (353) | **id** (⚠️ §7) |
+
+## 14. Número do processo
+
+Dois campos, escolhidos por radio na tela:
+
+- `npuSemFormatacao.equals` — CNJ, **20 dígitos SEM máscara**
+- `numAntigo.equals` — numeração antiga (máscara `999999-9/99`)
+
+🔴 **Passar o CNJ COM máscara devolve HTTP 200 e total 0, sem erro.**
+Medido: `00569075520238172001` → 1; `0056907-55.2023.8.17.2001` → **0**.
+⚠️ Isso mordeu o próprio mapeamento: `cnj.normalizar()` do repo **preserva** a
+máscara, então o `Checker` precisa de `.replace(/\D/g,'')`.
+
+---
+
+# Especificidades
+
+## 15. Bloqueios
+
+✅ **NÃO HÁ NENHUM.** Medido em separado, como manda a lição TJAC:
+
+| Etapa | Bloqueio |
+|---|---|
+| Carregar a tela | nenhum |
+| Buscar | nenhum — sem captcha, sem token, sem cookie obrigatório |
+| Ler ementa | nenhum — vem no payload da busca |
+| Ler inteiro teor | **nenhum** — vem no payload da busca |
+| Consulta processual | nenhum |
+
+Sem reCAPTCHA, sem Cloudflare, sem Akamai, sem login. O único percalço é a
+cadeia TLS incompleta (§ topo), que é defeito de configuração, não defesa.
+
+⚠️ `www.tjpe.jus.br/robots.txt` traz `User-agent: * / Disallow: /` — registrado
+aqui como medição. Vale para o portal institucional; o crawler consulta a base
+oficial de jurisprudência em volume de pesquisa jurídica, não varredura.
+
+## 16. Forma de acesso
+
+**`api`** — REST JSON, mesma origem, `GET` puro, sem autenticação.
+O mapeamento foi feito no Playwright; o crawler final é HTTP direto.
+
+## 17. Sessão e estado
+
+Nenhum estado necessário. O servidor manda um cookie de balanceador
+(`fb0fd4472624dd745cdc7db16353cd77=…`), mas a busca funciona sem ele
+(reproduzida fora do browser em todas as medições acima).
+
+---
+
+# Testes exploratórios obrigatórios
+
+| # | Teste | Resultado |
+|---|---|---|
+| 1 | Busca simples sem filtro | ✅ `usucapiao` = 6.266 |
+| 2 | Juizado × Justiça Comum | ✅ recorte no cliente; `dano moral` = 34 % × 66 % |
+| 3 | Cível × Criminal | ❌ **não existe** filtro de área (só classe/assunto) |
+| 4 | Órgão / matéria | ✅ 353 unidades, 798 classes, 4.457 assuntos enumerados |
+| 5 | Unidade específica | ⚠️ funciona por `id`, mas ver ressalva §7 |
+| 6 | Magistrado | ✅ `relator.in` por nome; 2.076 enumerados |
+| 7 | Tipo de ato | ✅ `A`/`D`; 🔴 rótulo da tela zera |
+| 8 | Número do processo | ✅ `npuSemFormatacao.equals`, 20 dígitos |
+| 9 | Datas + operadores | ✅ ver §2, §4 e §5 |
+
+**Vigência da base (obrigatório desde o TJAM):** ✅ **CORRENTE.**
+Documento mais recente: `0022944-06.2026.8.17.9000`, julgado em **01/08/2026**
+(mapeamento em 07/08/2026 → 6 dias de defasagem). 01/08 tem 275 documentos;
+02–07/08 ainda com 0 (ingestão em lote).
+⚠️ A série por ano satura em 10.000 em **todos** os anos de 2019 a 2026 — a
+medição de vigência precisou de janela **diária**, não anual.
+
+---
+
+# Pendências e defeitos de mapeamento
+
+1. 🔴 **Os 41 documentos com `tipoSentenca` fora de `A`/`D` não foram
+   identificados.** São invisíveis ao default do próprio portal
+   (4.303 + 1.922 = 6.225 contra 6.266). Não se sabe se é lixo de indexação ou
+   uma terceira espécie de ato.
+2. 🔴 **O filtro `orgaoJulgador.in` não foi domado.** Sabe-se que aceita `id`,
+   que ignora `codigoUnidade` em silêncio, e que **alguns ids vazam outro órgão**
+   (7314 → 3.439 documentos majoritariamente do "1º Grupo de Câmaras Cíveis").
+   A causa não foi determinada. Por isso `--origem` é recorte de cliente.
+3. ⚠️ **`classeCNJ.in` e `assuntoCNJ.in` foram enumerados mas NÃO foram testados
+   quanto a restringir de fato** — não passaram pelo teste de contagem.
+4. ⚠️ **Não foi medido** se o documento envenenado é sempre o mesmo registro
+   (independente da query) ou um por corte.
+5. ⚠️ **`numAntigo.equals` não foi exercitado** com um número antigo real.
+6. ⚠️ Não foi medido o comportamento com vários nós de balanceador (o cookie
+   existe mas nunca foi necessário).

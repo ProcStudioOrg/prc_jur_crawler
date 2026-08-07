@@ -1,0 +1,161 @@
+<jhi-jurisprudencia-filter class="lg:sticky lg:top-5 lg:w-96" _nghost-ng-c2424530690=""><div _ngcontent-ng-c2424530690="" class="bg-white p-6 !pb-0 shadow-lg rounded-lg lg:w-full lg:max-h-[calc(100vh-70px)] overflow-y-auto">
+    <div _ngcontent-ng-c2424530690="" class="grid grid-cols-12 gap-x-4 gap-y-3">
+      <div _ngcontent-ng-c2424530690="" class="col-span-12">
+        <div _ngcontent-ng-c2424530690="" class="flex justify-between align-end">
+          <label _ngcontent-ng-c2424530690="" for="field_pesquisaLivre" class="font-semibold inline-block mb-0">Pesquisa Livre</label>
+          <!---->
+        </div>
+        <span _ngcontent-ng-c2424530690="" class="p-input-icon-right w-full">
+          <i _ngcontent-ng-c2424530690="" class="pi pi-search"></i>
+          <input _ngcontent-ng-c2424530690="" pinputtext="" type="text" name="pesquisaLivre" id="field_pesquisaLivre" data-cy="pesquisaLivre" class="p-inputtext p-component p-element w-full ng-untouched ng-pristine ng-valid" style="">
+        </span>
+      </div>
+      <div _ngcontent-ng-c2424530690="" class="col-span-12">
+        <p-button _ngcontent-ng-c2424530690="" label="E" styleclass="p-button-rounded py-0" ptooltip="Incluir operador de pesquisa E
+            para localizar documentos que contenham todas as palavras digitadas.
+            Operador padrão - não precisa ser digitado. Exemplo: contas E regulares" tooltipposition="bottom" class="p-element"><button pripple="" class="p-ripple p-element p-button p-component p-button-rounded py-0" type="button" data-pc-name="button" data-pc-section="root"><!----><!----><!----><!----><!----><!----><span class="p-button-label ng-star-inserted" data-pc-section="label">E</span><!----><!----></button></p-button><!---->
+
+        <p-button _ngcontent-ng-c2424530690="" label="OU" styleclass="p-button-rounded py-0" ptooltip="Incluir operador de pesquisa OU para localizar
+          documentos que contenham qualquer uma e ou todas as palavras digitadas.
+          Exemplo: regulares OU irregulares" tooltipposition="bottom" class="p-element"><button pripple="" class="p-ripple p-element p-button p-component p-button-rounded py-0" type="button" data-pc-name="button" data-pc-section="root"><!----><!----><!----><!----><!----><!----><span class="p-button-label ng-star-inserted" data-pc-section="label">OU</span><!----><!----></button></p-button><!---->
+
+        <p-button _ngcontent-ng-c2424530690="" label="NÃO" styleclass="p-button-rounded py-0" ptooltip="Incluir operador de pesquisa NÃO para
+          localizar documentos que contenham a primeira
+          palavra digitada e não contenham a segunda palavra.
+          Exemplo: regulares NÃO ressalvas" tooltipposition="bottom" class="p-element"><button pripple="" class="p-ripple p-element p-button p-component p-button-rounded py-0" type="button" data-pc-name="button" data-pc-section="root"><!----><!----><!----><!----><!----><!----><span class="p-button-label ng-star-inserted" data-pc-section="label">NÃO</span><!----><!----></button></p-button><!---->
+
+        <p-button _ngcontent-ng-c2424530690="" label="PROX" styleclass="p-button-rounded py-0" ptooltip="Incluir operador de pesquisa PROX para localizar
+          documentos que contenham como adjacentes as palavras digitadas,
+          em qualquer ordem, em um mesmo campo do tipoConsulta. Um número x pode ser
+          utilizado para definir a distância entre as palavras (PROXx).
+          Se não for especificada, a distância será de até uma palavra entre
+          as palavras digitadas. Ex: regulares PROX2 contas" tooltipposition="bottom" class="p-element"><button pripple="" class="p-ripple p-element p-button p-component p-button-rounded py-0" type="button" data-pc-name="button" data-pc-section="root"><!----><!----><!----><!----><!----><!----><span class="p-button-label ng-star-inserted" data-pc-section="label">PROX</span><!----><!----></button></p-button><!---->
+      </div>
+      <div _ngcontent-ng-c2424530690="" class="col-span-12">
+        <div _ngcontent-ng-c2424530690="" class="flex flex-wrap gap-2 mb-1">
+          <div _ngcontent-ng-c2424530690="" class="flex align-center">
+            <p-radiobutton _ngcontent-ng-c2424530690="" value="NPU" inputid="tipoNumeroProcessoNpu" class="p-element ng-untouched ng-pristine ng-valid"><div data-pc-name="radiobutton" data-pc-section="root" class="p-radiobutton p-component p-radiobutton-checked"><div class="p-hidden-accessible" data-pc-section="hiddenInputWrapper"><input type="radio" value="NPU" id="tipoNumeroProcessoNpu" aria-checked="true" data-pc-section="hiddenInput" style=""></div><div data-pc-section="input" class="p-radiobutton-box p-highlight"><span class="p-radiobutton-icon" data-pc-section="icon"></span></div></div><!----></p-radiobutton>
+            <label _ngcontent-ng-c2424530690="" for="tipoNumeroProcessoNpu" class="font-semibold ml-2">Número NPU</label>
+          </div>
+
+          <div _ngcontent-ng-c2424530690="" class="flex align-items-center">
+            <p-radiobutton _ngcontent-ng-c2424530690="" value="NUMERO_ANTIGO" inputid="tipoNumeroProcessoAntigo" class="p-element ng-untouched ng-pristine ng-valid"><div data-pc-name="radiobutton" data-pc-section="root" class="p-radiobutton p-component"><div class="p-hidden-accessible" data-pc-section="hiddenInputWrapper"><input type="radio" value="NUMERO_ANTIGO" id="tipoNumeroProcessoAntigo" aria-checked="false" data-pc-section="hiddenInput" style=""></div><div data-pc-section="input" class="p-radiobutton-box"><span class="p-radiobutton-icon" data-pc-section="icon"></span></div></div><!----></p-radiobutton>
+            <label _ngcontent-ng-c2424530690="" for="tipoNumeroProcessoAntigo" class="font-semibold ml-2">Número Antigo</label>
+          </div>
+        </div>
+
+        <div _ngcontent-ng-c2424530690="">
+          <p-inputmask _ngcontent-ng-c2424530690="" id="numeroOld" styleclass="w-full" class="p-element ng-untouched ng-pristine ng-valid"><input pinputtext="" pautofocus="" class="p-inputtext p-component p-element p-inputmask w-full" type="text" data-pc-name="inputmask" data-pc-section="root" style=""><!----></p-inputmask>
+        </div>
+      </div>
+      <div _ngcontent-ng-c2424530690="" class="col-span-12">
+        <div _ngcontent-ng-c2424530690="" class="flex justify-between align-end">
+          <label _ngcontent-ng-c2424530690="" for="field_dataJulgamentoInicio" class="font-semibold inline-block mb-0">Data de Julgamento Inicial</label>
+          <!---->
+        </div>
+        <p-calendar _ngcontent-ng-c2424530690="" jhicalendarinputmask="" id="field_dataJulgamentoInicio" styleclass="w-full" data-cy="dataJulgamentoInicio" dateformat="dd/mm/yy" class="p-element p-inputwrapper ng-tns-c3632051545-2 ng-untouched ng-pristine ng-valid ng-star-inserted"><span class="ng-tns-c3632051545-2 w-full p-calendar p-calendar-w-btn"><input type="text" role="combobox" aria-autocomplete="none" aria-haspopup="dialog" autocomplete="off" class="ng-tns-c3632051545-2 p-inputtext p-component ng-star-inserted" placeholder="" aria-controls="pn_id_10_panel" inputmode="text" style=""><!----><button type="button" aria-haspopup="dialog" pbutton="" pripple="" tabindex="0" class="p-element p-ripple p-datepicker-trigger p-button-icon-only ng-tns-c3632051545-2 p-button p-component ng-star-inserted" aria-label="Escolha Data" aria-controls="pn_id_10_panel"><!----><calendaricon class="p-element p-icon-wrapper ng-tns-c3632051545-2 ng-star-inserted"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="p-icon" aria-hidden="true"><path d="M10.7838 1.51351H9.83783V0.567568C9.83783 0.417039 9.77804 0.272676 9.6716 0.166237C9.56516 0.0597971 9.42079 0 9.27027 0C9.11974 0 8.97538 0.0597971 8.86894 0.166237C8.7625 0.272676 8.7027 0.417039 8.7027 0.567568V1.51351H5.29729V0.567568C5.29729 0.417039 5.2375 0.272676 5.13106 0.166237C5.02462 0.0597971 4.88025 0 4.72973 0C4.5792 0 4.43484 0.0597971 4.3284 0.166237C4.22196 0.272676 4.16216 0.417039 4.16216 0.567568V1.51351H3.21621C2.66428 1.51351 2.13494 1.73277 1.74467 2.12305C1.35439 2.51333 1.13513 3.04266 1.13513 3.59459V11.9189C1.13513 12.4709 1.35439 13.0002 1.74467 13.3905C2.13494 13.7807 2.66428 14 3.21621 14H10.7838C11.3357 14 11.865 13.7807 12.2553 13.3905C12.6456 13.0002 12.8649 12.4709 12.8649 11.9189V3.59459C12.8649 3.04266 12.6456 2.51333 12.2553 2.12305C11.865 1.73277 11.3357 1.51351 10.7838 1.51351ZM3.21621 2.64865H4.16216V3.59459C4.16216 3.74512 4.22196 3.88949 4.3284 3.99593C4.43484 4.10237 4.5792 4.16216 4.72973 4.16216C4.88025 4.16216 5.02462 4.10237 5.13106 3.99593C5.2375 3.88949 5.29729 3.74512 5.29729 3.59459V2.64865H8.7027V3.59459C8.7027 3.74512 8.7625 3.88949 8.86894 3.99593C8.97538 4.10237 9.11974 4.16216 9.27027 4.16216C9.42079 4.16216 9.56516 4.10237 9.6716 3.99593C9.77804 3.88949 9.83783 3.74512 9.83783 3.59459V2.64865H10.7838C11.0347 2.64865 11.2753 2.74831 11.4527 2.92571C11.6301 3.10311 11.7297 3.34371 11.7297 3.59459V5.67568H2.27027V3.59459C2.27027 3.34371 2.36993 3.10311 2.54733 2.92571C2.72473 2.74831 2.96533 2.64865 3.21621 2.64865ZM10.7838 12.8649H3.21621C2.96533 12.8649 2.72473 12.7652 2.54733 12.5878C2.36993 12.4104 2.27027 12.1698 2.27027 11.9189V6.81081H11.7297V11.9189C11.7297 12.1698 11.6301 12.4104 11.4527 12.5878C11.2753 12.7652 11.0347 12.8649 10.7838 12.8649Z" fill="currentColor"></path></svg></calendaricon><!----><!----><!----><!----></button><!----><!----><!----><!----></span></p-calendar>
+        
+      </div>
+      <div _ngcontent-ng-c2424530690="" class="col-span-12">
+        <div _ngcontent-ng-c2424530690="" class="flex justify-between align-end">
+          <label _ngcontent-ng-c2424530690="" for="field_dataJulgamentoFim" class="font-semibold inline-block mb-0">Data de Julgamento Final</label>
+          <!---->
+        </div>
+        <p-calendar _ngcontent-ng-c2424530690="" jhicalendarinputmask="" id="field_dataJulgamentoFim" styleclass="w-full" data-cy="dataJulgamentoFim" dateformat="dd/mm/yy" class="p-element p-inputwrapper ng-tns-c3632051545-3 ng-untouched ng-pristine ng-valid ng-star-inserted"><span class="ng-tns-c3632051545-3 w-full p-calendar p-calendar-w-btn"><input type="text" role="combobox" aria-autocomplete="none" aria-haspopup="dialog" autocomplete="off" class="ng-tns-c3632051545-3 p-inputtext p-component ng-star-inserted" placeholder="" aria-controls="pn_id_11_panel" inputmode="text" style=""><!----><button type="button" aria-haspopup="dialog" pbutton="" pripple="" tabindex="0" class="p-element p-ripple p-datepicker-trigger p-button-icon-only ng-tns-c3632051545-3 p-button p-component ng-star-inserted" aria-label="Escolha Data" aria-controls="pn_id_11_panel"><!----><calendaricon class="p-element p-icon-wrapper ng-tns-c3632051545-3 ng-star-inserted"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="p-icon" aria-hidden="true"><path d="M10.7838 1.51351H9.83783V0.567568C9.83783 0.417039 9.77804 0.272676 9.6716 0.166237C9.56516 0.0597971 9.42079 0 9.27027 0C9.11974 0 8.97538 0.0597971 8.86894 0.166237C8.7625 0.272676 8.7027 0.417039 8.7027 0.567568V1.51351H5.29729V0.567568C5.29729 0.417039 5.2375 0.272676 5.13106 0.166237C5.02462 0.0597971 4.88025 0 4.72973 0C4.5792 0 4.43484 0.0597971 4.3284 0.166237C4.22196 0.272676 4.16216 0.417039 4.16216 0.567568V1.51351H3.21621C2.66428 1.51351 2.13494 1.73277 1.74467 2.12305C1.35439 2.51333 1.13513 3.04266 1.13513 3.59459V11.9189C1.13513 12.4709 1.35439 13.0002 1.74467 13.3905C2.13494 13.7807 2.66428 14 3.21621 14H10.7838C11.3357 14 11.865 13.7807 12.2553 13.3905C12.6456 13.0002 12.8649 12.4709 12.8649 11.9189V3.59459C12.8649 3.04266 12.6456 2.51333 12.2553 2.12305C11.865 1.73277 11.3357 1.51351 10.7838 1.51351ZM3.21621 2.64865H4.16216V3.59459C4.16216 3.74512 4.22196 3.88949 4.3284 3.99593C4.43484 4.10237 4.5792 4.16216 4.72973 4.16216C4.88025 4.16216 5.02462 4.10237 5.13106 3.99593C5.2375 3.88949 5.29729 3.74512 5.29729 3.59459V2.64865H8.7027V3.59459C8.7027 3.74512 8.7625 3.88949 8.86894 3.99593C8.97538 4.10237 9.11974 4.16216 9.27027 4.16216C9.42079 4.16216 9.56516 4.10237 9.6716 3.99593C9.77804 3.88949 9.83783 3.74512 9.83783 3.59459V2.64865H10.7838C11.0347 2.64865 11.2753 2.74831 11.4527 2.92571C11.6301 3.10311 11.7297 3.34371 11.7297 3.59459V5.67568H2.27027V3.59459C2.27027 3.34371 2.36993 3.10311 2.54733 2.92571C2.72473 2.74831 2.96533 2.64865 3.21621 2.64865ZM10.7838 12.8649H3.21621C2.96533 12.8649 2.72473 12.7652 2.54733 12.5878C2.36993 12.4104 2.27027 12.1698 2.27027 11.9189V6.81081H11.7297V11.9189C11.7297 12.1698 11.6301 12.4104 11.4527 12.5878C11.2753 12.7652 11.0347 12.8649 10.7838 12.8649Z" fill="currentColor"></path></svg></calendaricon><!----><!----><!----><!----></button><!----><!----><!----><!----></span></p-calendar>
+        
+      </div>
+      <div _ngcontent-ng-c2424530690="" class="col-span-12">
+        <div _ngcontent-ng-c2424530690="" class="flex justify-between align-end">
+          <label _ngcontent-ng-c2424530690="" for="field_relator" class="font-semibold mb-0">Relator</label>
+          <!---->
+        </div>
+        <div _ngcontent-ng-c2424530690="" class="w-full">
+          <p-multiselect _ngcontent-ng-c2424530690="" styleclass="w-full" id="field_relator" name="relator" optionlabel="nomeRelator" optionvalue="nomeRelator" data-cy="relator" datakey="id" placeholder="Selecinone" class="p-element p-inputwrapper ng-untouched ng-pristine ng-valid"><div id="field_relator" class="w-full p-multiselect p-component p-inputwrapper"><div class="p-hidden-accessible" data-p-hidden-accessible="true"><input role="combobox" class="p-element" aria-disabled="false" aria-haspopup="listbox" aria-controls="field_relator_list" tabindex="0" style=""><!----></div><div class="p-element p-multiselect-label-container"><div class="p-multiselect-label p-placeholder"><!---->
+            <!---->
+            <div _ngcontent-ng-c2424530690="" class="ng-star-inserted">Selecione os relatores
+            </div><!---->
+          <!----></div><!----></div><!----><div class="p-multiselect-trigger"><!----><chevrondownicon class="p-element p-icon-wrapper ng-star-inserted" data-pc-section="triggericon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="p-icon p-multiselect-trigger-icon" aria-hidden="true"><path d="M7.01744 10.398C6.91269 10.3985 6.8089 10.378 6.71215 10.3379C6.61541 10.2977 6.52766 10.2386 6.45405 10.1641L1.13907 4.84913C1.03306 4.69404 0.985221 4.5065 1.00399 4.31958C1.02276 4.13266 1.10693 3.95838 1.24166 3.82747C1.37639 3.69655 1.55301 3.61742 1.74039 3.60402C1.92777 3.59062 2.11386 3.64382 2.26584 3.75424L7.01744 8.47394L11.769 3.75424C11.9189 3.65709 12.097 3.61306 12.2748 3.62921C12.4527 3.64535 12.6199 3.72073 12.7498 3.84328C12.8797 3.96582 12.9647 4.12842 12.9912 4.30502C13.0177 4.48162 12.9841 4.662 12.8958 4.81724L7.58083 10.1322C7.50996 10.2125 7.42344 10.2775 7.32656 10.3232C7.22968 10.3689 7.12449 10.3944 7.01744 10.398Z" fill="currentColor"></path></svg></chevrondownicon><!----><!----><!----><!----></div><p-overlay class="p-element ng-tns-c3177733119-4 ng-star-inserted"><!----></p-overlay></div></p-multiselect>
+        </div>
+      </div>
+      <div _ngcontent-ng-c2424530690="" class="col-span-12">
+        <div _ngcontent-ng-c2424530690="" class="flex justify-between align-end">
+          <label _ngcontent-ng-c2424530690="" for="field_classe" class="font-semibold mb-0">Classe CNJ</label>
+          <!---->
+        </div>
+        <p-dropdown _ngcontent-ng-c2424530690="" styleclass="w-full" id="field_classe" optionlabel="nome" optionvalue="codigo" filterby="nome,codigo" placeholder="Selecione " datakey="codigo" appendto="body" class="p-element p-inputwrapper ng-untouched ng-pristine ng-valid"><div id="field_classe" class="w-full p-dropdown p-component p-inputwrapper"><span role="combobox" pautofocus="" class="p-element p-dropdown-label p-inputtext p-placeholder ng-star-inserted" aria-disabled="false" aria-label="Selecione " aria-haspopup="listbox" aria-controls="field_classe_list" tabindex="0"><span class="ng-star-inserted">Selecione </span><!----><!----><!----><!----></span><!----><!----><!----><!----><div role="button" aria-label="dropdown trigger" aria-haspopup="listbox" class="p-dropdown-trigger" data-pc-section="trigger"><!----><chevrondownicon class="p-element p-icon-wrapper ng-star-inserted"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="p-dropdown-trigger-icon p-icon" aria-hidden="true"><path d="M7.01744 10.398C6.91269 10.3985 6.8089 10.378 6.71215 10.3379C6.61541 10.2977 6.52766 10.2386 6.45405 10.1641L1.13907 4.84913C1.03306 4.69404 0.985221 4.5065 1.00399 4.31958C1.02276 4.13266 1.10693 3.95838 1.24166 3.82747C1.37639 3.69655 1.55301 3.61742 1.74039 3.60402C1.92777 3.59062 2.11386 3.64382 2.26584 3.75424L7.01744 8.47394L11.769 3.75424C11.9189 3.65709 12.097 3.61306 12.2748 3.62921C12.4527 3.64535 12.6199 3.72073 12.7498 3.84328C12.8797 3.96582 12.9647 4.12842 12.9912 4.30502C13.0177 4.48162 12.9841 4.662 12.8958 4.81724L7.58083 10.1322C7.50996 10.2125 7.42344 10.2775 7.32656 10.3232C7.22968 10.3689 7.12449 10.3944 7.01744 10.398Z" fill="currentColor"></path></svg></chevrondownicon><!----><!----><!----><!----></div><p-overlay class="p-element ng-tns-c3177733119-5 ng-star-inserted"><!----></p-overlay></div></p-dropdown>
+      </div>
+
+      <div _ngcontent-ng-c2424530690="" class="col-span-12">
+        <div _ngcontent-ng-c2424530690="" class="flex justify-between align-end">
+          <label _ngcontent-ng-c2424530690="" for="field_assunto" class="font-semibold mb-0">Assunto CNJ</label>
+          <!---->
+        </div>
+        <p-dropdown _ngcontent-ng-c2424530690="" id="field_assunto" styleclass="w-full" optionlabel="nome" optionvalue="codigo" filterby="nome,codigo" placeholder="Selecione " datakey="codigo" appendto="body" class="p-element p-inputwrapper ng-untouched ng-pristine ng-valid"><div id="field_assunto" class="w-full p-dropdown p-component p-inputwrapper"><span role="combobox" pautofocus="" class="p-element p-dropdown-label p-inputtext p-placeholder ng-star-inserted" aria-disabled="false" aria-label="Selecione " aria-haspopup="listbox" aria-controls="field_assunto_list" tabindex="0"><span class="ng-star-inserted">Selecione </span><!----><!----><!----><!----></span><!----><!----><!----><!----><div role="button" aria-label="dropdown trigger" aria-haspopup="listbox" class="p-dropdown-trigger" data-pc-section="trigger"><!----><chevrondownicon class="p-element p-icon-wrapper ng-star-inserted"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="p-dropdown-trigger-icon p-icon" aria-hidden="true"><path d="M7.01744 10.398C6.91269 10.3985 6.8089 10.378 6.71215 10.3379C6.61541 10.2977 6.52766 10.2386 6.45405 10.1641L1.13907 4.84913C1.03306 4.69404 0.985221 4.5065 1.00399 4.31958C1.02276 4.13266 1.10693 3.95838 1.24166 3.82747C1.37639 3.69655 1.55301 3.61742 1.74039 3.60402C1.92777 3.59062 2.11386 3.64382 2.26584 3.75424L7.01744 8.47394L11.769 3.75424C11.9189 3.65709 12.097 3.61306 12.2748 3.62921C12.4527 3.64535 12.6199 3.72073 12.7498 3.84328C12.8797 3.96582 12.9647 4.12842 12.9912 4.30502C13.0177 4.48162 12.9841 4.662 12.8958 4.81724L7.58083 10.1322C7.50996 10.2125 7.42344 10.2775 7.32656 10.3232C7.22968 10.3689 7.12449 10.3944 7.01744 10.398Z" fill="currentColor"></path></svg></chevrondownicon><!----><!----><!----><!----></div><p-overlay class="p-element ng-tns-c3177733119-6 ng-star-inserted"><!----></p-overlay></div></p-dropdown>
+      </div>
+
+      <div _ngcontent-ng-c2424530690="" class="col-span-12">
+        <div _ngcontent-ng-c2424530690="" class="flex justify-between align-end">
+          <label _ngcontent-ng-c2424530690="" for="field_orgao_julgador" class="font-semibold mb-0">Órgão Julgador</label>
+          <!---->
+        </div>
+        <div _ngcontent-ng-c2424530690="" class="w-full">
+          <p-multiselect _ngcontent-ng-c2424530690="" styleclass="w-full" id="field_orgao_julgador" name="orgaoJulgador" optionlabel="nome" data-cy="nome" datakey="id" placeholder="Selecinone" class="p-element p-inputwrapper ng-untouched ng-pristine ng-valid"><div id="field_orgao_julgador" class="w-full p-multiselect p-component p-inputwrapper"><div class="p-hidden-accessible" data-p-hidden-accessible="true"><input role="combobox" class="p-element" aria-disabled="false" aria-haspopup="listbox" aria-controls="field_orgao_julgador_list" tabindex="0" style=""><!----></div><div class="p-element p-multiselect-label-container"><div class="p-multiselect-label p-placeholder"><!---->
+            <!---->
+            <div _ngcontent-ng-c2424530690="" class="ng-star-inserted">Selecione os órgãos julgadores
+            </div><!---->
+          <!----></div><!----></div><!----><div class="p-multiselect-trigger"><!----><chevrondownicon class="p-element p-icon-wrapper ng-star-inserted" data-pc-section="triggericon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="p-icon p-multiselect-trigger-icon" aria-hidden="true"><path d="M7.01744 10.398C6.91269 10.3985 6.8089 10.378 6.71215 10.3379C6.61541 10.2977 6.52766 10.2386 6.45405 10.1641L1.13907 4.84913C1.03306 4.69404 0.985221 4.5065 1.00399 4.31958C1.02276 4.13266 1.10693 3.95838 1.24166 3.82747C1.37639 3.69655 1.55301 3.61742 1.74039 3.60402C1.92777 3.59062 2.11386 3.64382 2.26584 3.75424L7.01744 8.47394L11.769 3.75424C11.9189 3.65709 12.097 3.61306 12.2748 3.62921C12.4527 3.64535 12.6199 3.72073 12.7498 3.84328C12.8797 3.96582 12.9647 4.12842 12.9912 4.30502C13.0177 4.48162 12.9841 4.662 12.8958 4.81724L7.58083 10.1322C7.50996 10.2125 7.42344 10.2775 7.32656 10.3232C7.22968 10.3689 7.12449 10.3944 7.01744 10.398Z" fill="currentColor"></path></svg></chevrondownicon><!----><!----><!----><!----></div><p-overlay class="p-element ng-tns-c3177733119-7 ng-star-inserted"><!----></p-overlay></div></p-multiselect>
+        </div>
+      </div>
+
+      <div _ngcontent-ng-c2424530690="" class="col-span-12">
+        <label _ngcontent-ng-c2424530690="" class="font-semibold inline-block mb-0">Meio de Tramitação</label>
+        <div _ngcontent-ng-c2424530690="" class="flex flex-col md:flex-row flex-wrap gap-3">
+          <div _ngcontent-ng-c2424530690="" class="flex align-items-center">
+            <p-radiobutton _ngcontent-ng-c2424530690="" name="meioTramitacao" value="AMBOS" inputid="origemAmbos" class="p-element ng-untouched ng-pristine ng-valid"><div data-pc-name="radiobutton" data-pc-section="root" class="p-radiobutton p-component p-radiobutton-checked"><div class="p-hidden-accessible" data-pc-section="hiddenInputWrapper"><input type="radio" value="AMBOS" id="origemAmbos" name="meioTramitacao" aria-checked="true" data-pc-section="hiddenInput" style=""></div><div data-pc-section="input" class="p-radiobutton-box p-highlight"><span class="p-radiobutton-icon" data-pc-section="icon"></span></div></div><!----></p-radiobutton>
+            <label _ngcontent-ng-c2424530690="" for="origemAmbos" class="ml-2">Ambos</label>
+          </div>
+
+          <div _ngcontent-ng-c2424530690="" class="flex align-items-center">
+            <p-radiobutton _ngcontent-ng-c2424530690="" name="meioTramitacao" value="ELETRONICO" inputid="origemEletronico" class="p-element ng-untouched ng-pristine ng-valid"><div data-pc-name="radiobutton" data-pc-section="root" class="p-radiobutton p-component"><div class="p-hidden-accessible" data-pc-section="hiddenInputWrapper"><input type="radio" value="ELETRONICO" id="origemEletronico" name="meioTramitacao" aria-checked="false" data-pc-section="hiddenInput" style=""></div><div data-pc-section="input" class="p-radiobutton-box"><span class="p-radiobutton-icon" data-pc-section="icon"></span></div></div><!----></p-radiobutton>
+            <label _ngcontent-ng-c2424530690="" for="origemEletronico" class="ml-2">Eletrônico</label>
+          </div>
+
+          <div _ngcontent-ng-c2424530690="" class="flex align-items-center">
+            <p-radiobutton _ngcontent-ng-c2424530690="" name="meioTramitacao" value="FISICO" inputid="origemFisico" class="p-element ng-untouched ng-pristine ng-valid"><div data-pc-name="radiobutton" data-pc-section="root" class="p-radiobutton p-component"><div class="p-hidden-accessible" data-pc-section="hiddenInputWrapper"><input type="radio" value="FISICO" id="origemFisico" name="meioTramitacao" aria-checked="false" data-pc-section="hiddenInput" style=""></div><div data-pc-section="input" class="p-radiobutton-box"><span class="p-radiobutton-icon" data-pc-section="icon"></span></div></div><!----></p-radiobutton>
+            <label _ngcontent-ng-c2424530690="" for="origemFisico" class="ml-2">Físico</label>
+          </div>
+        </div>
+      </div>
+      <div _ngcontent-ng-c2424530690="" class="col-span-12">
+        <label _ngcontent-ng-c2424530690="" class="font-semibold inline-block mb-0">Tipo de consulta</label>
+        <div _ngcontent-ng-c2424530690="" class="flex flex-col md:flex-row flex-wrap gap-3">
+          <div _ngcontent-ng-c2424530690="" class="flex align-items-center">
+            <p-radiobutton _ngcontent-ng-c2424530690="" name="tipoConsulta" value="AMBOS" inputid="tipoConsultaAmbos" class="p-element ng-untouched ng-pristine ng-valid"><div data-pc-name="radiobutton" data-pc-section="root" class="p-radiobutton p-component p-radiobutton-checked"><div class="p-hidden-accessible" data-pc-section="hiddenInputWrapper"><input type="radio" value="AMBOS" id="tipoConsultaAmbos" name="tipoConsulta" aria-checked="true" data-pc-section="hiddenInput" style=""></div><div data-pc-section="input" class="p-radiobutton-box p-highlight"><span class="p-radiobutton-icon" data-pc-section="icon"></span></div></div><!----></p-radiobutton>
+            <label _ngcontent-ng-c2424530690="" for="tipoConsultaAmbos" class="ml-2">Ambos</label>
+          </div>
+
+          <div _ngcontent-ng-c2424530690="" class="flex align-items-center">
+            <p-radiobutton _ngcontent-ng-c2424530690="" name="tipoConsulta" value="ACORDAO" inputid="tipoConsultaAcordaos" class="p-element ng-untouched ng-pristine ng-valid"><div data-pc-name="radiobutton" data-pc-section="root" class="p-radiobutton p-component"><div class="p-hidden-accessible" data-pc-section="hiddenInputWrapper"><input type="radio" value="ACORDAO" id="tipoConsultaAcordaos" name="tipoConsulta" aria-checked="false" data-pc-section="hiddenInput" style=""></div><div data-pc-section="input" class="p-radiobutton-box"><span class="p-radiobutton-icon" data-pc-section="icon"></span></div></div><!----></p-radiobutton>
+            <label _ngcontent-ng-c2424530690="" for="tipoConsultaAcordaos" class="ml-2">Acórdãos</label>
+          </div>
+
+          <div _ngcontent-ng-c2424530690="" class="flex align-items-center">
+            <p-radiobutton _ngcontent-ng-c2424530690="" name="tipoConsulta" value="DECISAO" inputid="tipoConsultaDecisoes" class="p-element ng-untouched ng-pristine ng-valid"><div data-pc-name="radiobutton" data-pc-section="root" class="p-radiobutton p-component"><div class="p-hidden-accessible" data-pc-section="hiddenInputWrapper"><input type="radio" value="DECISAO" id="tipoConsultaDecisoes" name="tipoConsulta" aria-checked="false" data-pc-section="hiddenInput" style=""></div><div data-pc-section="input" class="p-radiobutton-box"><span class="p-radiobutton-icon" data-pc-section="icon"></span></div></div><!----></p-radiobutton>
+            <label _ngcontent-ng-c2424530690="" for="tipoConsultaDecisoes" class="ml-2">Decisões Monocráticas</label>
+          </div>
+        </div>
+      </div>
+
+      <div _ngcontent-ng-c2424530690="" class="col-span-12 flex justify-end pt-3 pb-6 lg:bg-white lg:sticky lg:bottom-0">
+        <div _ngcontent-ng-c2424530690="" class="flex items-center">
+          <a _ngcontent-ng-c2424530690="" class="text-primary mr-4 hover:text-red-300 transition-duration-150 underline">
+            <span _ngcontent-ng-c2424530690="">Limpar Todos</span>
+          </a>
+          <button _ngcontent-ng-c2424530690="" type="button" class="p-component p-button p-button-sm">
+            <span _ngcontent-ng-c2424530690="" class="p-button-label">Aplicar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</jhi-jurisprudencia-filter>

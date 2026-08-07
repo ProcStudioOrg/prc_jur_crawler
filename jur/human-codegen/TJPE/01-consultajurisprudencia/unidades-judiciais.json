@@ -1,0 +1,3532 @@
+[
+ {
+  "id": 7037,
+  "codigoUnidade": 748,
+  "codigoPje": 104,
+  "nome": "Gabinete do Des. Demócrito Ramos Reinaldo Filho (Processos Vinculados - 2ª TCRC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7038,
+  "codigoUnidade": -1,
+  "codigoPje": 105,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 1ª CÂMARA CRIMINAL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7039,
+  "codigoUnidade": -1,
+  "codigoPje": 106,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 1ª CÂMARA CRIMINAL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7040,
+  "codigoUnidade": -1,
+  "codigoPje": 107,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 2ª CÂMARA CRIMINAL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7113,
+  "codigoUnidade": 832,
+  "codigoPje": 234,
+  "nome": "Gabinete do Des. Raimundo Nonato de Souza Braid Filho (1ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7041,
+  "codigoUnidade": -1,
+  "codigoPje": 108,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 2ª CÂMARA CRIMINAL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7114,
+  "codigoUnidade": 833,
+  "codigoPje": 236,
+  "nome": "Gabinete do Des. Eduardo Guilliod Maranhão (Processos Vinculados - 3ª CDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7042,
+  "codigoUnidade": -1,
+  "codigoPje": 109,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 1ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7115,
+  "codigoUnidade": 834,
+  "codigoPje": 235,
+  "nome": "Gabinete do Des. Luiz Gustavo Mendonça de Araújo (Processos Vinculados - 1ª TCRC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7043,
+  "codigoUnidade": -1,
+  "codigoPje": 110,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 1ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7116,
+  "codigoUnidade": 836,
+  "codigoPje": 245,
+  "nome": "Gabinete do Des. Alexandre Freire Pimentel (1ª TCRC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7117,
+  "codigoUnidade": -1,
+  "codigoPje": 248,
+  "nome": "Gabinete do Des. Luiz Gustavo Mendonça de Araújo (5ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7118,
+  "codigoUnidade": -1,
+  "codigoPje": 254,
+  "nome": "Gabinete do Des. Isaías Andrade Lins Neto (2ª CCRIM) (2)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7119,
+  "codigoUnidade": -1,
+  "codigoPje": 260,
+  "nome": "Gabinete do Des. Waldemir Tavares de Albuquerque Filho (2ª CDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7120,
+  "codigoUnidade": -1,
+  "codigoPje": 261,
+  "nome": "Gabinete do Des. Paulo Roberto Alves da Silva (3ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7121,
+  "codigoUnidade": 840,
+  "codigoPje": 262,
+  "nome": "Gabinete do Des. André Vicente Pires Rosa (1ª CCRIM)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7122,
+  "codigoUnidade": -1,
+  "codigoPje": 263,
+  "nome": "Gabinete do Des. José Severino Barbosa (1ª TCRC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7123,
+  "codigoUnidade": 708,
+  "codigoPje": 35,
+  "nome": "Gab. Des. Waldemir Tavares de Albuquerque Filho",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7044,
+  "codigoUnidade": -1,
+  "codigoPje": 111,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 2ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7124,
+  "codigoUnidade": 632,
+  "codigoPje": 88,
+  "nome": "Gab. Des. Stênio José de Sousa Neiva Coêlho",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7045,
+  "codigoUnidade": -1,
+  "codigoPje": 112,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 2ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7125,
+  "codigoUnidade": 158,
+  "codigoPje": -1,
+  "nome": "Gab. Des. Roberto Ferreira Lins",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7046,
+  "codigoUnidade": -1,
+  "codigoPje": 113,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 3ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7126,
+  "codigoUnidade": 628,
+  "codigoPje": 76,
+  "nome": "Gab. Des. Roberto da Silva Maia",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7047,
+  "codigoUnidade": -1,
+  "codigoPje": 114,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 3ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7048,
+  "codigoUnidade": -1,
+  "codigoPje": 116,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 4ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7127,
+  "codigoUnidade": 170,
+  "codigoPje": 97,
+  "nome": "Gabinete do Des. Ricardo de Oliveira Paes Barreto (Processos Vinculados 2ª CDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7049,
+  "codigoUnidade": -1,
+  "codigoPje": 117,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 4ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7128,
+  "codigoUnidade": 673,
+  "codigoPje": 103,
+  "nome": "Gab. Des. Rafael Machado da Cunha Cavalcanti",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7050,
+  "codigoUnidade": -1,
+  "codigoPje": 118,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 5ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7051,
+  "codigoUnidade": -1,
+  "codigoPje": 119,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 5ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7129,
+  "codigoUnidade": 672,
+  "codigoPje": -1,
+  "nome": "Gab. Des. Odilon de Oliveira Neto",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7052,
+  "codigoUnidade": -1,
+  "codigoPje": 120,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 6ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7130,
+  "codigoUnidade": 188,
+  "codigoPje": 195,
+  "nome": "Gab. Des. Mauro Alencar De Barros",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7131,
+  "codigoUnidade": 156,
+  "codigoPje": 200,
+  "nome": "Gab. Des. Marco Antonio Cabral Maggi",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7133,
+  "codigoUnidade": 169,
+  "codigoPje": 100,
+  "nome": "Gab. Des. Luiz Carlos Figueirêdo",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7134,
+  "codigoUnidade": 142,
+  "codigoPje": 169,
+  "nome": "Gab. Des. Leopoldo de Arruda Raposo",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7053,
+  "codigoUnidade": -1,
+  "codigoPje": 121,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 6ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7135,
+  "codigoUnidade": 118,
+  "codigoPje": 84,
+  "nome": "Gab. Des. Jovaldo Nunes Gomes",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7136,
+  "codigoUnidade": 207,
+  "codigoPje": 73,
+  "nome": "Gab. Des. Josué Antônio Fonseca de Sena",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7054,
+  "codigoUnidade": -1,
+  "codigoPje": 122,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 1ª CÂMARA DE DIREITO PÚBLICO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7137,
+  "codigoUnidade": 724,
+  "codigoPje": 32,
+  "nome": "Gabinete do Des. José Viana Ulisses Filho (Processos Vinculados - 1ª TCRC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7138,
+  "codigoUnidade": 205,
+  "codigoPje": 96,
+  "nome": "Gab. Des. José Ivo de Paula Guimarães",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7139,
+  "codigoUnidade": 50,
+  "codigoPje": 83,
+  "nome": "Gab. Des. José Fernandes",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7140,
+  "codigoUnidade": 186,
+  "codigoPje": 87,
+  "nome": "Gab. Des. José Carlos Patriota Malta",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7141,
+  "codigoUnidade": 629,
+  "codigoPje": 94,
+  "nome": "Gab. Des. Jorge Américo Pereira de Lira",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7142,
+  "codigoUnidade": 99,
+  "codigoPje": 80,
+  "nome": "Gab. Des. Jones Figueirêdo",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7055,
+  "codigoUnidade": -1,
+  "codigoPje": 123,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 1ª CÂMARA DE DIREITO PÚBLICO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7143,
+  "codigoUnidade": 618,
+  "codigoPje": 79,
+  "nome": "Gab. Des. Itabira de Brito Filho",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7056,
+  "codigoUnidade": -1,
+  "codigoPje": 124,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 2ª CÂMARA DE DIREITO PÚBLICO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7144,
+  "codigoUnidade": 707,
+  "codigoPje": 34,
+  "nome": "Gab. Des. Humberto Costa Vasconcelos Júnior",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7145,
+  "codigoUnidade": 132,
+  "codigoPje": 72,
+  "nome": "Gab. Des. Frederico Ricardo de Almeida Neves",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7057,
+  "codigoUnidade": -1,
+  "codigoPje": 125,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 2ª CÂMARA DE DIREITO PÚBLICO",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7146,
+  "codigoUnidade": 183,
+  "codigoPje": 95,
+  "nome": "Gab. Des. Francisco José dos Anjos Bandeira de Mello",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7058,
+  "codigoUnidade": -1,
+  "codigoPje": 126,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 3ª CÂMARA DE DIREITO PÚBLICO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7148,
+  "codigoUnidade": 129,
+  "codigoPje": 71,
+  "nome": "Gab. Des. Fernando Ferreira",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7149,
+  "codigoUnidade": 167,
+  "codigoPje": 93,
+  "nome": "Gab. Des. Fernando Cerqueira",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7150,
+  "codigoUnidade": 196,
+  "codigoPje": 193,
+  "nome": "Gab. Des. Fausto de Castro Campos",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7059,
+  "codigoUnidade": -1,
+  "codigoPje": 127,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 3ª CÂMARA DE DIREITO PÚBLICO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7060,
+  "codigoUnidade": -1,
+  "codigoPje": 128,
+  "nome": "1º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 4ª CÂMARA DE DIREITO PÚBLICO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7151,
+  "codigoUnidade": 681,
+  "codigoPje": 150,
+  "nome": "Gab. Des. Fábio Eugênio Dantas de Oliveira Lima",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7061,
+  "codigoUnidade": -1,
+  "codigoPje": 130,
+  "nome": "2º GABINETE SESSÃO JULGAMENTO EXPANDIDO - 4ª CÂMARA DE DIREITO PÚBLICO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7152,
+  "codigoUnidade": 675,
+  "codigoPje": 170,
+  "nome": "Gabinete do Des. Evandro Sérgio Netto de Magalhães Melo (Processos Vinculados - 1ª CCRIM)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7062,
+  "codigoUnidade": -1,
+  "codigoPje": 142,
+  "nome": "Gab. Des. José Ivo de Paula Guimarães (CEDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7153,
+  "codigoUnidade": 187,
+  "codigoPje": 81,
+  "nome": "Gab. Des. Eurico de Barros Correia Filho",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7063,
+  "codigoUnidade": -1,
+  "codigoPje": 143,
+  "nome": "Gab. Des. Alfredo Sérgio Magalhães Jambo (CEDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7154,
+  "codigoUnidade": 679,
+  "codigoPje": 199,
+  "nome": "Gab. Des. Eudes dos Prazeres França",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7064,
+  "codigoUnidade": -1,
+  "codigoPje": 144,
+  "nome": "Gab. Des. Demócrito Ramos Reinaldo Filho (CEDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7155,
+  "codigoUnidade": 630,
+  "codigoPje": 92,
+  "nome": "Gab. Des. Erik de Sousa Dantas Simões",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7065,
+  "codigoUnidade": -1,
+  "codigoPje": 145,
+  "nome": "Gab. Des. Jovaldo Nunes Gomes (CEC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7156,
+  "codigoUnidade": 134,
+  "codigoPje": 86,
+  "nome": "Gab. Des. Eduardo Augusto Paura Peres",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7066,
+  "codigoUnidade": -1,
+  "codigoPje": 146,
+  "nome": "Gab. Des. Josué Antônio Fonseca de Sena (CEC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7069,
+  "codigoUnidade": 517,
+  "codigoPje": -1,
+  "nome": "Gab. Juiz José André Machado Barbosa Pinto",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7157,
+  "codigoUnidade": 678,
+  "codigoPje": 198,
+  "nome": "Gab. Des. Daisy Maria de Andrade Costa Pereira",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7158,
+  "codigoUnidade": 199,
+  "codigoPje": 197,
+  "nome": "Gab. Des. Cláudio Jean Nogueira Virgínio",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7159,
+  "codigoUnidade": 680,
+  "codigoPje": 171,
+  "nome": "Gab. Des. Carlos Frederico Gonçalves de Moraes",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7160,
+  "codigoUnidade": 166,
+  "codigoPje": 75,
+  "nome": "Gab. Des. Cândido José da Fonte Saraiva de Moraes",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7162,
+  "codigoUnidade": 165,
+  "codigoPje": 90,
+  "nome": "Gab. Des. Antônio Fernando de Araújo Martins",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7163,
+  "codigoUnidade": 180,
+  "codigoPje": 194,
+  "nome": "Gab. Des. Antônio de Melo e Lima",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7164,
+  "codigoUnidade": 206,
+  "codigoPje": 196,
+  "nome": "Gab. Des. Antônio Carlos Alves da Silva",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7077,
+  "codigoUnidade": 462,
+  "codigoPje": -1,
+  "nome": "Gab. Juiz José Raimundo dos Santos Costa",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7165,
+  "codigoUnidade": 671,
+  "codigoPje": 101,
+  "nome": "Gab. Des. André Oliveira da Silva Guimarães",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7166,
+  "codigoUnidade": 620,
+  "codigoPje": 98,
+  "nome": "Gab. Des. Alfredo Sérgio Magalhães Jambo",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7167,
+  "codigoUnidade": 185,
+  "codigoPje": 173,
+  "nome": "Gab. Des. Alexandre Guedes Alcoforado Assunção",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7168,
+  "codigoUnidade": 172,
+  "codigoPje": 74,
+  "nome": "Gab. Des. Alberto Nogueira Virgínio",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7169,
+  "codigoUnidade": 608,
+  "codigoPje": 85,
+  "nome": "Gab. Des. Agenor Ferreira de Lima Filho",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7170,
+  "codigoUnidade": 159,
+  "codigoPje": 89,
+  "nome": "Gabinete do Des. Adalberto de Oliveira Melo (Processos Vinculados - 2ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7083,
+  "codigoUnidade": -1,
+  "codigoPje": 159,
+  "nome": "Gabinete do Des. Josué Antônio Fonseca de Sena (4ª CDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7084,
+  "codigoUnidade": -1,
+  "codigoPje": 160,
+  "nome": "Gabinete Vago - 1ª CC",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7085,
+  "codigoUnidade": -1,
+  "codigoPje": 176,
+  "nome": "1º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7086,
+  "codigoUnidade": -1,
+  "codigoPje": 177,
+  "nome": "2º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7087,
+  "codigoUnidade": -1,
+  "codigoPje": 178,
+  "nome": "3º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7088,
+  "codigoUnidade": -1,
+  "codigoPje": 179,
+  "nome": "4º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7089,
+  "codigoUnidade": -1,
+  "codigoPje": 180,
+  "nome": "5º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7090,
+  "codigoUnidade": -1,
+  "codigoPje": 181,
+  "nome": "6º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7091,
+  "codigoUnidade": -1,
+  "codigoPje": 182,
+  "nome": "7º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7092,
+  "codigoUnidade": -1,
+  "codigoPje": 183,
+  "nome": "8º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7093,
+  "codigoUnidade": -1,
+  "codigoPje": 184,
+  "nome": "9º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7094,
+  "codigoUnidade": -1,
+  "codigoPje": 186,
+  "nome": "10º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7095,
+  "codigoUnidade": -1,
+  "codigoPje": 187,
+  "nome": "11º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7096,
+  "codigoUnidade": -1,
+  "codigoPje": 188,
+  "nome": "12º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7097,
+  "codigoUnidade": -1,
+  "codigoPje": 189,
+  "nome": "13º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7208,
+  "codigoUnidade": 96,
+  "codigoPje": 91,
+  "nome": "Gab. Des. Presidente",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7098,
+  "codigoUnidade": -1,
+  "codigoPje": 190,
+  "nome": "14º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7099,
+  "codigoUnidade": -1,
+  "codigoPje": 191,
+  "nome": "15º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7100,
+  "codigoUnidade": -1,
+  "codigoPje": 192,
+  "nome": "16º Gabinete do Órgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7101,
+  "codigoUnidade": -1,
+  "codigoPje": 214,
+  "nome": "Gabinete do Des. Francisco Manoel Tenório dos Santos (5ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7102,
+  "codigoUnidade": -1,
+  "codigoPje": 215,
+  "nome": "Gabinete do Des. Francisco Manoel Tenório dos Santos (Processos Vinculados - 4ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7103,
+  "codigoUnidade": -1,
+  "codigoPje": 216,
+  "nome": "Gabinete do Des. Stênio José de Sousa Neiva Coêlho (4ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7104,
+  "codigoUnidade": 829,
+  "codigoPje": 218,
+  "nome": "Gabinete do Des. Isaías Andrade Lins Neto (Processos Vinculados - 2ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7105,
+  "codigoUnidade": -1,
+  "codigoPje": 222,
+  "nome": "Gabinete do Des. Waldemir Tavares de Albuquerque Filho (Processos Vinculados - 3ª CDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7106,
+  "codigoUnidade": -1,
+  "codigoPje": 219,
+  "nome": "Gabinete do Des. Fábio Eugênio Dantas de Oliveira Lima (2ª CDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7107,
+  "codigoUnidade": -1,
+  "codigoPje": 221,
+  "nome": "Gabinete do Des. Isaías Andrade Lins Neto (2ª CCRIM) (1) (Processos Vinculados)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7108,
+  "codigoUnidade": -1,
+  "codigoPje": 225,
+  "nome": "Gabinete do Des. Sílvio Neves Baptista Filho (5ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7111,
+  "codigoUnidade": -1,
+  "codigoPje": 232,
+  "nome": "Gabinete do Des. Ruy Trezena Patu Júnior (2ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7112,
+  "codigoUnidade": -1,
+  "codigoPje": 233,
+  "nome": "Gabinete do Des. Eduardo Guilliod Maranhão (Processos Vinculados - 2ª TCRC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7220,
+  "codigoUnidade": 674,
+  "codigoPje": 102,
+  "nome": "Gab. Des. Itamar Pereira Da Silva Junior",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7222,
+  "codigoUnidade": 676,
+  "codigoPje": 40,
+  "nome": "Gab. Des. 1º Vice-Presidente",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7223,
+  "codigoUnidade": 677,
+  "codigoPje": 41,
+  "nome": "Gab. Des. 2º Vice-Presidente",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7313,
+  "codigoUnidade": 17,
+  "codigoPje": 17,
+  "nome": "1º GABINETE DA SEXTA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7226,
+  "codigoUnidade": 189,
+  "codigoPje": 99,
+  "nome": "Gab. Des. Antenor Cardoso Soares Junior",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7314,
+  "codigoUnidade": 8,
+  "codigoPje": 8,
+  "nome": "1º GABINETE DA TERCEIRA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7227,
+  "codigoUnidade": 197,
+  "codigoPje": 82,
+  "nome": "Gab. Des. Francisco Manoel Tenorio dos Santos",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7316,
+  "codigoUnidade": 246,
+  "codigoPje": 246,
+  "nome": "1º GABINETE DA TURMA ESTADUAL DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7317,
+  "codigoUnidade": 56,
+  "codigoPje": 56,
+  "nome": "1º GABINETE DA TURMA FAZENDÁRIA EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7318,
+  "codigoUnidade": 50,
+  "codigoPje": 50,
+  "nome": "1º GABINETE DA 1ª TURMA CÍVEL EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7319,
+  "codigoUnidade": 238,
+  "codigoPje": 238,
+  "nome": "1º GABINETE DA 1ª TURMA RECURSAL DO I COLÉGIO RECURSAL DA CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7235,
+  "codigoUnidade": 253,
+  "codigoPje": -1,
+  "nome": "Gab. Juiz Demócrito Ramos Reinaldo Filho",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7320,
+  "codigoUnidade": 53,
+  "codigoPje": 53,
+  "nome": "1º GABINETE DA 2ª TURMA CÍVEL EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7321,
+  "codigoUnidade": 241,
+  "codigoPje": 241,
+  "nome": "1º GABINETE DA 2ª TURMA RECURSAL DO I COLÉGIO RECURSAL DA CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7322,
+  "codigoUnidade": 59,
+  "codigoPje": 59,
+  "nome": "1º GABINETE DA 3ª TURMA CÍVEL EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7323,
+  "codigoUnidade": 26,
+  "codigoPje": 26,
+  "nome": "1º GABINETE VICE-PRESIDÊNCIA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7325,
+  "codigoUnidade": 24,
+  "codigoPje": 24,
+  "nome": "2º GABINETE DA OITAVA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7326,
+  "codigoUnidade": 3,
+  "codigoPje": 3,
+  "nome": "2º GABINETE DA PRIMEIRA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7327,
+  "codigoUnidade": 29,
+  "codigoPje": 29,
+  "nome": "2º GABINETE DA PRIMEIRA TURMA RECURSAL FAZENDÁRIA E CRIMINAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7328,
+  "codigoUnidade": 69,
+  "codigoPje": 69,
+  "nome": "2º GABINETE DA PRIMEIRA TURMA RECURSAL JUIZADOS - JECRC - CARUARU",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7241,
+  "codigoUnidade": 746,
+  "codigoPje": 39,
+  "nome": "Gab. Des. Sílvio Neves Baptista Filho",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7242,
+  "codigoUnidade": -1,
+  "codigoPje": 153,
+  "nome": "Gabinete do Des. Humberto Costa Vasconcelos Júnior (Processos Vinculados - 2ªTPCRC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7329,
+  "codigoUnidade": 66,
+  "codigoPje": 66,
+  "nome": "2º GABINETE DA PRIMEIRA TURMA RECURSAL JUIZADOS - JECRC - GARANHUNS",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7330,
+  "codigoUnidade": 63,
+  "codigoPje": 63,
+  "nome": "2º GABINETE DA PRIMEIRA TURMA RECURSAL JUIZADOS - JECRC - PETROLINA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7244,
+  "codigoUnidade": -1,
+  "codigoPje": 163,
+  "nome": "Gabinete do Des. Roberto da Silva Maia - 1ª CC",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7331,
+  "codigoUnidade": 12,
+  "codigoPje": 12,
+  "nome": "2º GABINETE DA QUARTA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7245,
+  "codigoUnidade": -1,
+  "codigoPje": 166,
+  "nome": "Gabinete do Des. Waldemir Tavares de Albuquerque Filho (1ª CDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7332,
+  "codigoUnidade": 15,
+  "codigoPje": 15,
+  "nome": "2º GABINETE DA QUINTA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7333,
+  "codigoUnidade": 6,
+  "codigoPje": 6,
+  "nome": "2º GABINETE DA SEGUNDA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7334,
+  "codigoUnidade": 156,
+  "codigoPje": 156,
+  "nome": "2º GABINETE DA SEGUNDA TURMA RECURSAL FAZENDÁRIA E CRIMINAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7335,
+  "codigoUnidade": 21,
+  "codigoPje": 21,
+  "nome": "2º GABINETE DA SÉTIMA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7336,
+  "codigoUnidade": 18,
+  "codigoPje": 18,
+  "nome": "2º GABINETE DA SEXTA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7337,
+  "codigoUnidade": 9,
+  "codigoPje": 9,
+  "nome": "2º GABINETE DA TERCEIRA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7247,
+  "codigoUnidade": -1,
+  "codigoPje": 165,
+  "nome": "Gabinete do Des. Fábio Eugênio Dantas de Oliveira Lima (Processos Vinculados - 2ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7339,
+  "codigoUnidade": 247,
+  "codigoPje": 247,
+  "nome": "2º GABINETE DA TURMA ESTADUAL DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7248,
+  "codigoUnidade": 803,
+  "codigoPje": 168,
+  "nome": "Gabinete do Des. Honório Gomes do Rego Filho (Processos Vinculados)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7340,
+  "codigoUnidade": 57,
+  "codigoPje": 57,
+  "nome": "2º GABINETE DA TURMA FAZENDÁRIA EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7341,
+  "codigoUnidade": 51,
+  "codigoPje": 51,
+  "nome": "2º GABINETE DA 1ª TURMA CÍVEL EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7249,
+  "codigoUnidade": -1,
+  "codigoPje": 175,
+  "nome": "Gabinete do Des. Fábio Eugênio Dantas de Oliveira Lima (6ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7342,
+  "codigoUnidade": 239,
+  "codigoPje": 239,
+  "nome": "2º GABINETE DA 1ª TURMA RECURSAL DO I COLÉGIO RECURSAL DA CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7343,
+  "codigoUnidade": 54,
+  "codigoPje": 54,
+  "nome": "2º GABINETE DA 2ª TURMA CÍVEL EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7344,
+  "codigoUnidade": 242,
+  "codigoPje": 242,
+  "nome": "2º GABINETE DA 2ª TURMA RECURSAL DO I COLÉGIO RECURSAL DA CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7345,
+  "codigoUnidade": 60,
+  "codigoPje": 60,
+  "nome": "2º GABINETE DA 3ª TURMA CÍVEL EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7346,
+  "codigoUnidade": 27,
+  "codigoPje": 27,
+  "nome": "2º GABINETE VICE-PRESIDÊNCIA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7347,
+  "codigoUnidade": 25,
+  "codigoPje": 25,
+  "nome": "3º GABINETE DA OITAVA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7348,
+  "codigoUnidade": 4,
+  "codigoPje": 4,
+  "nome": "3º GABINETE DA PRIMEIRA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7349,
+  "codigoUnidade": 30,
+  "codigoPje": 30,
+  "nome": "3º GABINETE DA PRIMEIRA TURMA RECURSAL FAZENDÁRIA E CRIMINAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7350,
+  "codigoUnidade": 70,
+  "codigoPje": 70,
+  "nome": "3º GABINETE DA PRIMEIRA TURMA RECURSAL JUIZADOS - JECRC - CARUARU",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7253,
+  "codigoUnidade": 155,
+  "codigoPje": -1,
+  "nome": "Gab. Des. Corregedor",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7351,
+  "codigoUnidade": 67,
+  "codigoPje": 67,
+  "nome": "3º GABINETE DA PRIMEIRA TURMA RECURSAL JUIZADOS - JECRC - GARANHUNS",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7254,
+  "codigoUnidade": 825,
+  "codigoPje": 213,
+  "nome": "Gabinete do Des. Ruy Trezena Patu Júnior (Processos Vinculados - 1ª TCRC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7352,
+  "codigoUnidade": 64,
+  "codigoPje": 64,
+  "nome": "3º GABINETE DA PRIMEIRA TURMA RECURSAL JUIZADOS - JECRC - PETROLINA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7353,
+  "codigoUnidade": 13,
+  "codigoPje": 13,
+  "nome": "3º GABINETE DA QUARTA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7354,
+  "codigoUnidade": 16,
+  "codigoPje": 16,
+  "nome": "3º GABINETE DA QUINTA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7355,
+  "codigoUnidade": 7,
+  "codigoPje": 7,
+  "nome": "3º GABINETE DA SEGUNDA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7356,
+  "codigoUnidade": 157,
+  "codigoPje": 157,
+  "nome": "3º GABINETE DA SEGUNDA TURMA RECURSAL FAZENDÁRIA E CRIMINAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7357,
+  "codigoUnidade": 22,
+  "codigoPje": 22,
+  "nome": "3º GABINETE DA SÉTIMA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7358,
+  "codigoUnidade": 19,
+  "codigoPje": 19,
+  "nome": "3º GABINETE DA SEXTA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7359,
+  "codigoUnidade": 10,
+  "codigoPje": 10,
+  "nome": "3º GABINETE DA TERCEIRA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7255,
+  "codigoUnidade": -1,
+  "codigoPje": 211,
+  "nome": "Gabinete do Des. Fábio Eugênio Dantas de Oliveira Lima (Processos Vinculados - 4ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7549,
+  "codigoUnidade": 1,
+  "codigoPje": null,
+  "nome": "TRIBUNAL PLENO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7256,
+  "codigoUnidade": -1,
+  "codigoPje": 210,
+  "nome": "Gabinete do Des. Márcio Fernando de Aguiar Silva (6ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7257,
+  "codigoUnidade": -1,
+  "codigoPje": 212,
+  "nome": "Gabinete do Des. Sílvio Neves Baptista Filho (3ª CDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7258,
+  "codigoUnidade": -1,
+  "codigoPje": 174,
+  "nome": "Plantão Judiciário Cível de 2º Grau",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7259,
+  "codigoUnidade": -1,
+  "codigoPje": 217,
+  "nome": "Plantão Judiciário Criminal de 2º Grau",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7361,
+  "codigoUnidade": 139,
+  "codigoPje": 139,
+  "nome": "3º GABINETE DA TURMA ESTADUAL DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7262,
+  "codigoUnidade": -1,
+  "codigoPje": 172,
+  "nome": "Corregedor Geral da Justiça",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7362,
+  "codigoUnidade": 58,
+  "codigoPje": 58,
+  "nome": "3º GABINETE DA TURMA FAZENDÁRIA EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7263,
+  "codigoUnidade": -1,
+  "codigoPje": 223,
+  "nome": "Gabinete do Des. Fábio Eugênio Dantas de Oliveira Lima (1ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7363,
+  "codigoUnidade": 52,
+  "codigoPje": 52,
+  "nome": "3º GABINETE DA 1ª TURMA CÍVEL EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7364,
+  "codigoUnidade": 240,
+  "codigoPje": 240,
+  "nome": "3º GABINETE DA 1ª TURMA RECURSAL DO I COLÉGIO RECURSAL DA CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7264,
+  "codigoUnidade": 830,
+  "codigoPje": 224,
+  "nome": "Gabinete do Des. Paulo Romero de Sá Araújo",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7265,
+  "codigoUnidade": 831,
+  "codigoPje": 226,
+  "nome": "Gabinete do Des. Gabriel de Oliveira Cavalcanti Filho",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7365,
+  "codigoUnidade": 55,
+  "codigoPje": 55,
+  "nome": "3º GABINETE DA 2ª TURMA CÍVEL EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7366,
+  "codigoUnidade": 243,
+  "codigoPje": 243,
+  "nome": "3º GABINETE DA 2ª TURMA RECURSAL DO I COLÉGIO RECURSAL DA CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7266,
+  "codigoUnidade": -1,
+  "codigoPje": 230,
+  "nome": "Gabinete do Des. Demócrito Ramos Reinaldo Filho (4ª CCRIM)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7367,
+  "codigoUnidade": 61,
+  "codigoPje": 61,
+  "nome": "3º GABINETE DA 3ª TURMA CÍVEL EXTRAORDINÁRIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7267,
+  "codigoUnidade": -1,
+  "codigoPje": 231,
+  "nome": "Gabinete do Des. Adalberto de Oliveira Melo (4ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7268,
+  "codigoUnidade": 835,
+  "codigoPje": 237,
+  "nome": "Gabinete do Des. Paulo Augusto de Freitas Oliveira 2ª TCRC (1) (Processos Vinculados)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7269,
+  "codigoUnidade": 837,
+  "codigoPje": 249,
+  "nome": "Gabinete do Des. Luciano de Castro Campos (1ª TCRC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7270,
+  "codigoUnidade": -1,
+  "codigoPje": 253,
+  "nome": "NUGEPNAC - Núcleo de gerenciamento de precedentes e ações coletivas",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7414,
+  "codigoUnidade": 5,
+  "codigoPje": -1,
+  "nome": "Colégio Recursal Fazendário e Criminal da Capital",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7271,
+  "codigoUnidade": 838,
+  "codigoPje": 256,
+  "nome": "Gabinete do Desa. Valéria Bezerra Pereira Wanderley 2ª TCRC",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7369,
+  "codigoUnidade": 140,
+  "codigoPje": 140,
+  "nome": "4º GABINETE DA TURMA ESTADUAL DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7272,
+  "codigoUnidade": -1,
+  "codigoPje": 255,
+  "nome": "Gabinete do Des. Paulo Roberto Alves da Silva 2ª CCRIM",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7566,
+  "codigoUnidade": 20,
+  "codigoPje": null,
+  "nome": "ÓRGÃO ESPECIAL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7569,
+  "codigoUnidade": 29,
+  "codigoPje": null,
+  "nome": "PRESIDÊNCIA",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7276,
+  "codigoUnidade": 787,
+  "codigoPje": 149,
+  "nome": "Gabinete do Des. Evio Marques da Silva 2ª TCRC",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7277,
+  "codigoUnidade": -1,
+  "codigoPje": 151,
+  "nome": "Gab. Des. Stênio José de Sousa Neiva Coêlho (2ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7371,
+  "codigoUnidade": 141,
+  "codigoPje": 141,
+  "nome": "5º GABINETE DA TURMA ESTADUAL DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7278,
+  "codigoUnidade": -1,
+  "codigoPje": 152,
+  "nome": "Gab. Des. Márcio Fernando de Aguiar Silva (3ª CDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7372,
+  "codigoUnidade": 134,
+  "codigoPje": 330,
+  "nome": "6º GABINETE DA TURMA ESTADUAL DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7420,
+  "codigoUnidade": 6,
+  "codigoPje": -1,
+  "nome": "1ºCol.Recursal Cível,Criminal e Fazendário-Turma 1 da Capital",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7281,
+  "codigoUnidade": -1,
+  "codigoPje": 164,
+  "nome": "Centro Judiciário de Solução de Conflitos e Cidadania do 2º grau Recife",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7421,
+  "codigoUnidade": 7,
+  "codigoPje": -1,
+  "nome": "1ºCol.Recursal Cível,Criminal e Fazendário-Turma 2 da Capital",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7282,
+  "codigoUnidade": -1,
+  "codigoPje": 202,
+  "nome": "Gabinete do Des. Itabira de Brito Filho (CEC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7283,
+  "codigoUnidade": -1,
+  "codigoPje": 203,
+  "nome": "Gabinete do Des. José Carlos Patriota Malta (CEC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7284,
+  "codigoUnidade": -1,
+  "codigoPje": 201,
+  "nome": "Gabinete do Des. Márcio Fernando de Aguiar Silva (CEC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7285,
+  "codigoUnidade": -1,
+  "codigoPje": 205,
+  "nome": "Gabinete Presidência Cartris",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7286,
+  "codigoUnidade": -1,
+  "codigoPje": 206,
+  "nome": "Gabinete Presidência Precatórios",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7287,
+  "codigoUnidade": -1,
+  "codigoPje": 207,
+  "nome": "Gabinete Presidência Orgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7288,
+  "codigoUnidade": -1,
+  "codigoPje": 208,
+  "nome": "Gabinete da 1ª Vice Presidência Orgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7578,
+  "codigoUnidade": null,
+  "codigoPje": 309,
+  "nome": "GAB. DES. CARLOS GIL RODRIGUES FILHO",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7579,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "NÚCLEO DE JUSTIÇA 4.0 - REGIONAL 2º GRAU - (NÚCLEO 4.0 2º GRAU – R2G)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7289,
+  "codigoUnidade": -1,
+  "codigoPje": 209,
+  "nome": "Gabinete da 2ª Vice Presidência Orgão Especial",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7580,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 1ª TURMA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7290,
+  "codigoUnidade": -1,
+  "codigoPje": 204,
+  "nome": "Centro Judiciário de Solução de Conflitos e Cidadania do 2º grau Caruaru",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7581,
+  "codigoUnidade": null,
+  "codigoPje": 315,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 1ª TURMA - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7291,
+  "codigoUnidade": -1,
+  "codigoPje": 227,
+  "nome": "Gabinete do Des. Gabriel de Oliveira Cavalcanti Filho (6ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7582,
+  "codigoUnidade": null,
+  "codigoPje": 316,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 1ª TURMA - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7583,
+  "codigoUnidade": null,
+  "codigoPje": 317,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 1ª TURMA - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7292,
+  "codigoUnidade": -1,
+  "codigoPje": 228,
+  "nome": "Gabinete do Des. Raimundo Nonato de Souza Braid Filho (Processos Vinculados - 3ª CDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7293,
+  "codigoUnidade": -1,
+  "codigoPje": 229,
+  "nome": "Gabinete do Des. Carlos Frederico Gonçalves de Moraes (3ª CDP)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7294,
+  "codigoUnidade": -1,
+  "codigoPje": 244,
+  "nome": "Gabinete do Des. Humberto Costa Vasconcelos Júnior (4ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7295,
+  "codigoUnidade": -1,
+  "codigoPje": 250,
+  "nome": "Gabinete do Des. Honório Gomes do Rego Filho (1ª CCRIM)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7296,
+  "codigoUnidade": -1,
+  "codigoPje": 251,
+  "nome": "Gabinete do Des. Paulo Augusto de Freitas Oliveira 2ª TCRC (2)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7584,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 1ª TURMA - 1º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7297,
+  "codigoUnidade": -1,
+  "codigoPje": 252,
+  "nome": "Gabinete Des. Luciano de Castro Campos (Processos Vinculados - 2ª TCRC - Antigo 4° Gabinete VAGO)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7298,
+  "codigoUnidade": -1,
+  "codigoPje": 257,
+  "nome": "Gabinete do Des. Evandro Sérgio Netto de Magalhães Melo 2ª CCRIM",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7299,
+  "codigoUnidade": -1,
+  "codigoPje": 258,
+  "nome": "Gabinete do Des. Eduardo Guilliod Maranhão 4ª CCRIM",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7437,
+  "codigoUnidade": -1,
+  "codigoPje": 71,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 1ª TURMA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7585,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 1ª TURMA - 2º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7300,
+  "codigoUnidade": -1,
+  "codigoPje": 259,
+  "nome": "Gabinete do Des. José Viana Ulisses Filho (1ª CCRIM)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7390,
+  "codigoUnidade": 0,
+  "codigoPje": 268,
+  "nome": "7ª CÂMARA CÍVEL ESPECIALIZADA - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7438,
+  "codigoUnidade": -1,
+  "codigoPje": 72,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 2ª TURMA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7301,
+  "codigoUnidade": 49,
+  "codigoPje": 49,
+  "nome": "GABINETE PRESIDÊNCIA DA TURMA ESTADUAL DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7391,
+  "codigoUnidade": 0,
+  "codigoPje": 269,
+  "nome": "7ª CÂMARA CÍVEL ESPECIALIZADA - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7586,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 2ª TURMA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7439,
+  "codigoUnidade": -1,
+  "codigoPje": 286,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 1ª TURMA - 1º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7392,
+  "codigoUnidade": 0,
+  "codigoPje": 270,
+  "nome": "7ª CÂMARA CÍVEL ESPECIALIZADA - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7440,
+  "codigoUnidade": -1,
+  "codigoPje": 279,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 1ª TURMA - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7441,
+  "codigoUnidade": -1,
+  "codigoPje": 287,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 1ª TURMA - 2º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7442,
+  "codigoUnidade": -1,
+  "codigoPje": 280,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 1ª TURMA - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7393,
+  "codigoUnidade": 0,
+  "codigoPje": 271,
+  "nome": "8ª CÂMARA CÍVEL ESPECIALIZADA - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7587,
+  "codigoUnidade": null,
+  "codigoPje": 318,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 2ª TURMA - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7443,
+  "codigoUnidade": -1,
+  "codigoPje": 281,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 1ª TURMA - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7303,
+  "codigoUnidade": 2,
+  "codigoPje": 2,
+  "nome": "1º GABINETE DA PRIMEIRA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7394,
+  "codigoUnidade": 0,
+  "codigoPje": 272,
+  "nome": "8ª CÂMARA CÍVEL ESPECIALIZADA - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7444,
+  "codigoUnidade": -1,
+  "codigoPje": 288,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 2ª TURMA - 1º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7588,
+  "codigoUnidade": null,
+  "codigoPje": 319,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 2ª TURMA - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7304,
+  "codigoUnidade": 28,
+  "codigoPje": 28,
+  "nome": "1º GABINETE DA PRIMEIRA TURMA RECURSAL FAZENDÁRIA E CRIMINAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7395,
+  "codigoUnidade": 0,
+  "codigoPje": 273,
+  "nome": "8ª CÂMARA CÍVEL ESPECIALIZADA - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7445,
+  "codigoUnidade": -1,
+  "codigoPje": 282,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 2ª TURMA - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7396,
+  "codigoUnidade": 0,
+  "codigoPje": 274,
+  "nome": "Gabinete do Des. Marcelo Russell Wanderley (1ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7589,
+  "codigoUnidade": null,
+  "codigoPje": 320,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 2ª TURMA - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7305,
+  "codigoUnidade": 68,
+  "codigoPje": 68,
+  "nome": "1º GABINETE DA PRIMEIRA TURMA RECURSAL JUIZADOS - JECRC - CARUARU",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7446,
+  "codigoUnidade": -1,
+  "codigoPje": 289,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 2ª TURMA - 2º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7397,
+  "codigoUnidade": 0,
+  "codigoPje": 275,
+  "nome": "Gabinete da Desa. Ângela Cristina de Norões Lins Cavalcanti (3ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7447,
+  "codigoUnidade": -1,
+  "codigoPje": 283,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 2ª TURMA - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7398,
+  "codigoUnidade": 0,
+  "codigoPje": 276,
+  "nome": "Gabinete da Desa. Andréa Epaminondas Tenório de Brito (3ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7306,
+  "codigoUnidade": 65,
+  "codigoPje": 65,
+  "nome": "1º GABINETE DA PRIMEIRA TURMA RECURSAL JUIZADOS - JECRC - GARANHUNS",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7590,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 2ª TURMA - 1º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7591,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "NÚCLEO 4.0 2º GRAU – R2G - 2ª TURMA - 2º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7592,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "DIRETORIA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7448,
+  "codigoUnidade": -1,
+  "codigoPje": 285,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 2ª TURMA - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7593,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "DIRETORIA CRIMINAL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7307,
+  "codigoUnidade": 62,
+  "codigoPje": 62,
+  "nome": "1º GABINETE DA PRIMEIRA TURMA RECURSAL JUIZADOS - JECRC - PETROLINA",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7308,
+  "codigoUnidade": 11,
+  "codigoPje": 11,
+  "nome": "1º GABINETE DA QUARTA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7594,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "DIRETORIA REGIONAL DE CARUARU",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7309,
+  "codigoUnidade": 14,
+  "codigoPje": 14,
+  "nome": "1º GABINETE DA QUINTA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7595,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "2ª CÂMARA CRIMINAL - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7451,
+  "codigoUnidade": -1,
+  "codigoPje": -1,
+  "nome": "Corregedoria Geral da Justiça",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7596,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "2ª CÂMARA CRIMINAL - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7597,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "2ª CÂMARA CRIMINAL - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7598,
+  "codigoUnidade": null,
+  "codigoPje": 291,
+  "nome": "1º GABINETE DA 1ª TURMA JUSTIÇA EFICIENTE - 1º COLÉGIO RECURSAL - CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7403,
+  "codigoUnidade": 48,
+  "codigoPje": 67,
+  "nome": "7ª CÂMARA CÍVEL ESPECIALIZADA",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7599,
+  "codigoUnidade": null,
+  "codigoPje": 292,
+  "nome": "2º GABINETE DA 1ª TURMA JUSTIÇA EFICIENTE - 1º COLÉGIO RECURSAL - CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7404,
+  "codigoUnidade": 49,
+  "codigoPje": 68,
+  "nome": "8ª CÂMARA CÍVEL ESPECIALIZADA",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7310,
+  "codigoUnidade": 5,
+  "codigoPje": 5,
+  "nome": "1º GABINETE DA SEGUNDA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7600,
+  "codigoUnidade": null,
+  "codigoPje": 293,
+  "nome": "3º GABINETE DA 1ª TURMA JUSTIÇA EFICIENTE - 1º COLÉGIO RECURSAL - CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7601,
+  "codigoUnidade": null,
+  "codigoPje": 294,
+  "nome": "1º GABINETE DA 2ª TURMA JUSTIÇA EFICIENTE - 1º COLÉGIO RECURSAL - CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7602,
+  "codigoUnidade": null,
+  "codigoPje": 295,
+  "nome": "2º GABINETE DA 2ª TURMA JUSTIÇA EFICIENTE - 1º COLÉGIO RECURSAL - CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7458,
+  "codigoUnidade": -1,
+  "codigoPje": 303,
+  "nome": "Gabinete do Des. Paulo Victor Vasconcelos de Almeida",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7311,
+  "codigoUnidade": 154,
+  "codigoPje": 154,
+  "nome": "1º GABINETE DA SEGUNDA TURMA RECURSAL FAZENDÁRIA E CRIMINAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7459,
+  "codigoUnidade": 6,
+  "codigoPje": 296,
+  "nome": "3º GABINETE DA 2ª TURMA JUSTIÇA EFICIENTE - 1º COLÉGIO RECURSAL - CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7312,
+  "codigoUnidade": 20,
+  "codigoPje": 20,
+  "nome": "1º GABINETE DA SÉTIMA TURMA RECURSAL - JECRC",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7460,
+  "codigoUnidade": 0,
+  "codigoPje": 297,
+  "nome": "8ª CÂMARA CÍVEL ESPECIALIZADA - 1º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7603,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "1º COLÉGIO RECURSAL - CAPITAL - 3ª TURMA RECURSAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7461,
+  "codigoUnidade": 0,
+  "codigoPje": 298,
+  "nome": "8ª CÂMARA CÍVEL ESPECIALIZADA - 2º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7462,
+  "codigoUnidade": 0,
+  "codigoPje": 299,
+  "nome": "7ª CÂMARA CÍVEL ESPECIALIZADA - 1º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7463,
+  "codigoUnidade": 0,
+  "codigoPje": 300,
+  "nome": "7ª CÂMARA CÍVEL ESPECIALIZADA - 2º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7604,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "1º GABINETE DA 3ª TURMA RECURSAL - 1º COLÉGIO RECURSAL - CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7605,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "2º GABINETE DA 3ª TURMA RECURSAL - 1º COLÉGIO RECURSAL - CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7497,
+  "codigoUnidade": 26,
+  "codigoPje": 33,
+  "nome": "1ª CÂMARA DIREITO PÚBLICO - RECIFE",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7606,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "3º GABINETE DA 3ª TURMA RECURSAL - 1º COLÉGIO RECURSAL - CAPITAL",
+  "tipoUnidade": {
+   "id": 3,
+   "descricao": "Colégio Recursal"
+  }
+ },
+ {
+  "id": 7498,
+  "codigoUnidade": 32,
+  "codigoPje": 36,
+  "nome": "4ª CÂMARA DIREITO PÚBLICO - RECIFE",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7499,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "1ª CÂMARA REGIONAL DO TRIBUNAL DE JUSTIÇA DO ESTADO DE PERNAMBUCO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7608,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "3ª CÂMARA CRIMINAL - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7500,
+  "codigoUnidade": 36,
+  "codigoPje": 12,
+  "nome": "1ª CÂMARA REGIONAL DE CARUARU - 1ª TURMA",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7501,
+  "codigoUnidade": 37,
+  "codigoPje": 13,
+  "nome": "1ª CÂMARA REGIONAL DE CARUARU - 2ª TURMA",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7502,
+  "codigoUnidade": 3,
+  "codigoPje": 25,
+  "nome": "1ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7609,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "3ª CÂMARA CRIMINAL - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7610,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "3ª CÂMARA CRIMINAL - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7503,
+  "codigoUnidade": 4,
+  "codigoPje": 26,
+  "nome": "2ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7611,
+  "codigoUnidade": null,
+  "codigoPje": 329,
+  "nome": "GABINETE DO DES. FÁBIO EUGÊNIO DANTAS DE OLIVEIRA LIMA (PROCESSOS VINCULADOS - 2ª TCRC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7504,
+  "codigoUnidade": 5,
+  "codigoPje": 27,
+  "nome": "3ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7505,
+  "codigoUnidade": 6,
+  "codigoPje": 28,
+  "nome": "4ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7506,
+  "codigoUnidade": 7,
+  "codigoPje": 29,
+  "nome": "5ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7507,
+  "codigoUnidade": 24,
+  "codigoPje": 30,
+  "nome": "6ª CÂMARA CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7612,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "1ª CÂMARA CRIMINAL - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7508,
+  "codigoUnidade": 11,
+  "codigoPje": 54,
+  "nome": "1ª CÂMARA CRIMINAL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7509,
+  "codigoUnidade": 12,
+  "codigoPje": 55,
+  "nome": "2ª CÂMARA CRIMINAL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7613,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "1ª CÂMARA CRIMINAL - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7510,
+  "codigoUnidade": 13,
+  "codigoPje": 56,
+  "nome": "3ª CÂMARA CRIMINAL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7511,
+  "codigoUnidade": 27,
+  "codigoPje": 57,
+  "nome": "4ª CÂMARA CRIMINAL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7614,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "1ª CÂMARA CRIMINAL - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7512,
+  "codigoUnidade": 25,
+  "codigoPje": 38,
+  "nome": "2ª CÂMARA DE DIREITO PÚBLICO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7513,
+  "codigoUnidade": 30,
+  "codigoPje": 35,
+  "nome": "3ª CÂMARA DE DIREITO PÚBLICO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7615,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "4ª CÂMARA CRIMINAL - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7514,
+  "codigoUnidade": 8,
+  "codigoPje": 51,
+  "nome": "1º GRUPO DE CÂMARAS CÍVEIS",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7515,
+  "codigoUnidade": 9,
+  "codigoPje": 52,
+  "nome": "2º GRUPO DE CÂMARAS CÍVEIS",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7616,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "4ª CÂMARA CRIMINAL - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7516,
+  "codigoUnidade": 10,
+  "codigoPje": 59,
+  "nome": "SEÇÃO CRIMINAL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7517,
+  "codigoUnidade": 40,
+  "codigoPje": 53,
+  "nome": "SEÇÃO DE DIREITO PÚBLICO",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7617,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "4ª CÂMARA CRIMINAL - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7518,
+  "codigoUnidade": 39,
+  "codigoPje": 50,
+  "nome": "SEÇÃO CÍVEL",
+  "tipoUnidade": {
+   "id": 8,
+   "descricao": "Camara2G"
+  }
+ },
+ {
+  "id": 7618,
+  "codigoUnidade": null,
+  "codigoPje": 93,
+  "nome": "1ª CÂMARA DE DIREITO PÚBLICO - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7619,
+  "codigoUnidade": null,
+  "codigoPje": 94,
+  "nome": "1ª CÂMARA DE DIREITO PÚBLICO - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7519,
+  "codigoUnidade": null,
+  "codigoPje": 75,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 3ª TURMA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7620,
+  "codigoUnidade": null,
+  "codigoPje": 92,
+  "nome": "1ª CÂMARA DE DIREITO PÚBLICO - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7520,
+  "codigoUnidade": null,
+  "codigoPje": 310,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 3ª TURMA - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7621,
+  "codigoUnidade": null,
+  "codigoPje": 97,
+  "nome": "2ª CÂMARA DE DIREITO PÚBLICO - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7622,
+  "codigoUnidade": null,
+  "codigoPje": 308,
+  "nome": "2ª CÂMARA DE DIREITO PÚBLICO - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7623,
+  "codigoUnidade": null,
+  "codigoPje": 96,
+  "nome": "2ª CÂMARA DE DIREITO PÚBLICO - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7521,
+  "codigoUnidade": null,
+  "codigoPje": 311,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 3ª TURMA - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7624,
+  "codigoUnidade": null,
+  "codigoPje": 100,
+  "nome": "3ª CÂMARA DE DIREITO PÚBLICO - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7522,
+  "codigoUnidade": null,
+  "codigoPje": 312,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 3ª TURMA - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7625,
+  "codigoUnidade": null,
+  "codigoPje": 99,
+  "nome": "3ª CÂMARA DE DIREITO PÚBLICO - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7523,
+  "codigoUnidade": null,
+  "codigoPje": 313,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 3ª TURMA - 1º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7524,
+  "codigoUnidade": null,
+  "codigoPje": 314,
+  "nome": "NÚCLEO 4.0 2º GRAU – ECECC - 3ª TURMA - 2º GABINETE SESSÃO EXPANDIDA",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7626,
+  "codigoUnidade": null,
+  "codigoPje": 305,
+  "nome": "3ª CÂMARA DE DIREITO PÚBLICO - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7627,
+  "codigoUnidade": null,
+  "codigoPje": 159,
+  "nome": "4ª CÂMARA DE DIREITO PÚBLICO - 1º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7628,
+  "codigoUnidade": null,
+  "codigoPje": 101,
+  "nome": "4ª CÂMARA DE DIREITO PÚBLICO - 2º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7629,
+  "codigoUnidade": null,
+  "codigoPje": 102,
+  "nome": "4ª CÂMARA DE DIREITO PÚBLICO - 3º GABINETE",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7630,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "NÚCLEO DE JUSTIÇA 4.0 - 2º GRAU - EMPRÉSTIMO CONSIGNADO E CARTÃO DE CRÉDITO (NÚCLEO 4.0 2º GRAU – ECECC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7632,
+  "codigoUnidade": null,
+  "codigoPje": null,
+  "nome": "NÚCLEO DE JUSTIÇA 4.0 - 2º GRAU - METAS E INDICADORES NACIONAIS (NÚCLEO 4.0 2G – MIN)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ },
+ {
+  "id": 7634,
+  "codigoUnidade": null,
+  "codigoPje": 338,
+  "nome": "GABINETE EM PROVIMENTO (6ª CC)",
+  "tipoUnidade": {
+   "id": 7,
+   "descricao": "2Grau"
+  }
+ }
+]

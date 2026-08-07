@@ -1,0 +1,18 @@
+[
+ {
+  "method": "GET",
+  "url": "https://consultajurisprudencia.app.tjpe.jus.br/api/v1/relatores"
+ },
+ {
+  "method": "GET",
+  "url": "https://consultajurisprudencia.app.tjpe.jus.br/api/v1/classes"
+ },
+ {
+  "method": "GET",
+  "url": "https://consultajurisprudencia.app.tjpe.jus.br/api/v1/assuntos"
+ },
+ {
+  "method": "GET",
+  "url": "https://consultajurisprudencia.app.tjpe.jus.br/api/v1/unidades-judiciais"
+ }
+]

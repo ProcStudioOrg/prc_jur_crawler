@@ -72,6 +72,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjmg` | TJ de Minas Gerais | MG | `CLAUDE-TJMG.md` | 🟢 OK (API direta, sem browser — Consulta Unificada; **não** use o `www5`) |
 | `tjms` | TJ de Mato Grosso do Sul | MS | `CLAUDE-TJMS.md` | 🟢 OK (HTTP direto, sem browser — e-SAJ cjsg, **sem captcha**; base **só SAJ**, não cobre o e-Proc) |
 | `tjpa` | TJ do Pará | PA | `CLAUDE-TJPA.md` | 🟢 OK (API direta, sem browser) |
+| `tjpe` | TJ de Pernambuco | PE | `CLAUDE-TJPE.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa **e** inteiro teor já vêm na busca). Base corrente, cobre PJe + Projudi |
 | `tjpr` | TJ do Paraná | PR | `CLAUDE-TJPR.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjrj` | TJ do Rio de Janeiro | RJ | `CLAUDE-TJRJ.md` | 🟢 OK (HTTP direto, sem browser — só e-Proc/Justiça Comum 2º grau) |
 | `tjrn` | TJ do Rio Grande do Norte | RN | `CLAUDE-TJRN.md` | 🔴 **sem busca** — o domínio **inteiro** do TJRN responde 403 (Akamai); só `-n` (nº do processo, via DataJud) |
@@ -283,6 +284,39 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   filtrável. ✅ Não há teto de intervalo (não precisa fatiar) nem data-sentinela.
   A base é **2º grau + Turmas Recursais** (Projudi + PJe), **sem 1º grau**, e
   está **corrente**. Matéria federal com origem na BA → `trf1`
+- "TJPE" / "Pernambuco estadual" / "Recife" → `tjpe` → leia `CLAUDE-TJPE.md`.
+  Juizado Especial / Turma Recursal pernambucana → `tjpe --origem turmas`; Justiça
+  Comum 2º grau é `--origem comum` (o default `--origem ambas` **mistura os dois**).
+  ⚠️ **Aqui a distinção é recorte de CLIENTE** — o filtro de órgão da API não é
+  confiável (ids vazam outro órgão) — então com `--origem` o total do servidor se
+  refere ao acervo **sem** o recorte. O crawler avisa; repasse. Quanto importa
+  depende do tema: `dano moral` = 34% Turma Recursal, `usucapião` = 0,5%. Em
+  consumo, ofereça as duas.
+  🔴 **Os operadores aqui são em PORTUGUÊS — `E`, `OU`, `NAO`, `PROX`,
+  `"frase exata"` — e os INGLESES é que enganam** (o inverso do TJBA): `AND` e
+  `ADJ` **zeram**, `OR` devolve 1, e **`NOT` devolve 1.281 contra 2.007 do `NAO`**
+  — número plausível, resultado errado. O espaço entre termos é `E` (AND).
+  ⚠️ `$` é ignorado e o curinga `*` devolve **menos** que o termo inteiro.
+  ⚠️ **NÃO avise sobre acento** — o índice normaliza (`usucapiao` = `usucapião` = 6.266).
+  🔴 **O total satura em 10.000** e a paginação para aí. `recurso`, `posse`,
+  `direito` batem todos nesse número — **não relate 10.000 como contagem**;
+  refine com `-di/-df`. O crawler marca `saturado`.
+  🔴 **NÃO EXISTE PERMALINK, e o link da busca entrega ZERO FALSO**: a URL que
+  aparece depois de buscar restaura o formulário mas **não roda a busca** — colada
+  numa aba limpa mostra "Nenhum resultado encontrado" onde há 6.266 julgados.
+  Nunca mande esse link como prova. A verificação é por reconsulta
+  (`./bin/jur tjpe -n "<nº>"`), e o documento é identificado pela `chave`, não
+  pelo número do processo.
+  ✅ **Ementa e inteiro teor são campos distintos e reais, e os dois já vêm na
+  busca**, sem captcha — `--fetch-inteiro-teor` só grava em disco.
+  ⚠️ **Decisão monocrática vem SEM ementa** (só o texto da decisão) — não a
+  apresente como ementa.
+  ⚠️ **No acervo eletrônico não existe data de publicação distinta**: `dataJulgamento`
+  e `dataPublicacao` são o mesmo instante (medido 60/60). No físico são datas reais.
+  ⚠️ Existem **documentos ilegíveis** que devolvem HTTP 500 e derrubam a página
+  inteira; o crawler pula só o documento ruim e avisa quantos se perderam.
+  A base é **2º grau + Turmas Recursais** (PJe + Projudi), **sem 1º grau**, e está
+  **corrente**. Matéria federal com origem em PE → `trf5`
 - "TJMS" / "Mato Grosso do Sul estadual" / "Campo Grande" → `tjms` → leia `CLAUDE-TJMS.md`.
   Juizado Especial / Turma Recursal sul-mato-grossense → `tjms --origem turmas`; Justiça
   Comum 2º grau é `--origem comum` (default). A distinção é obrigatória e está medida

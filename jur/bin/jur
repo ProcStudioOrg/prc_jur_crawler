@@ -49,6 +49,8 @@ const TJALCrawler = require('../src/TJALCrawler');
 const TJALChecker = require('../src/TJALChecker');
 const TJBACrawler = require('../src/TJBACrawler');
 const TJBAChecker = require('../src/TJBAChecker');
+const TJPECrawler = require('../src/TJPECrawler');
+const TJPEChecker = require('../src/TJPEChecker');
 const TJMGCrawler = require('../src/TJMGCrawler');
 const TJMGChecker = require('../src/TJMGChecker');
 const TJMGNavigator = require('../src/TJMGNavigator');
@@ -1972,6 +1974,146 @@ program
 
       const resumo = {
         totalResults: crawler.ultimaBusca ? crawler.ultimaBusca.totalTJBA : null,
+        ...crawler.ultimaBusca,
+        ...(verificacao ? { verificacao } : {}),
+      };
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        log(`\nGravando ${results.length} inteiros teores (ja vieram na busca)...`);
+        const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
+        const successCount = downloaded.filter(r => r.arquivo).length;
+        const failCount = downloaded.filter(r => !r.arquivo).length;
+        log(`\nGravacao concluida: ${successCount} arquivo(s), ${failCount} falha(s)`);
+        log(`Files saved to: ${outputDir}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, downloaded: successCount,
+            failed: failCount, outputDir, ...resumo,
+          }) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, output: outputPath, ...resumo,
+          }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjpe')
+  .description('Search TJPE (Tribunal de Justica de Pernambuco) jurisprudence — API REST publica, HTTP direto, sem browser')
+  .option('-q, --query <text>', 'Search query (operadores em PORTUGUES: E, OU, NAO, PROX, "frase exata" — NAO use AND/OR/NOT)')
+  .option('-n, --numero <numero>', 'Consulta direta por numero de processo (TJPEChecker); dispensa -q')
+  .option('-di, --data-inicio <date>', 'Judgment start date (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Judgment end date (DD/MM/YYYY)')
+  .option('--origem <origem>', 'ambas (default) | comum (2º grau) | turmas (Turmas Recursais) — recorte no cliente', 'ambas')
+  .option('--meio <meio>', 'ambos (default) | eletronico | fisico — meio de tramitacao', 'ambos')
+  .option('-t, --tipo <tipo>', 'todos (default) | acordao | monocratica', 'todos')
+  .option('-p, --processo <numero>', 'Filtro por numero de processo DENTRO da busca (use -n p/ consulta direta)')
+  .option('-r, --relator <nome>', 'Relator(a) — NOME exato (use --listar-filtros)')
+  .option('-c, --classe <codigos>', 'Classe(s) CNJ — codigos separados por virgula')
+  .option('-a, --assunto <codigos>', 'Assunto(s) CNJ — codigos separados por virgula')
+  .option('--listar-filtros', 'Lista relatores, classes, assuntos e unidades judiciais e sai')
+  .option('--verificar [amostra]', 'Audita N resultados reconsultando por numero (default 5)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (100 registros/pagina)', 10)
+  .option('--max-results <number>', 'Maximum total results to collect')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjpe.json')
+  .option('--fetch-inteiro-teor', 'Grava o inteiro teor (ja vem na busca — sem request extra)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tjpe')
+  .option('-v, --visible', 'Ignored (TJPE usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TJPE usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    try {
+      if (opts.numero) {
+        const res = await new TJPEChecker().consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (opts.listarFiltros) {
+        const TJPENavigator = require('../src/TJPENavigator');
+        const nav = new TJPENavigator();
+        const [relatores, classes, assuntos, unidades] = await Promise.all([
+          nav.relatores(), nav.classes(), nav.assuntos(), nav.unidadesJudiciais(),
+        ]);
+        const out = { relatores, classes, assuntos, unidadesJudiciais: unidades };
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...out }) + '\n');
+        else console.log(JSON.stringify(out, null, 2));
+        process.exit(0);
+      }
+
+      if (!opts.query && !opts.processo) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero> para consulta direta)');
+      }
+
+      log('='.repeat(60));
+      log('TJPE Jurisprudencia Crawler (API REST publica, HTTP direto, sem browser)');
+      log('ESCOPO: 2º grau + Turmas Recursais (PJe e Projudi). NAO tem 1º grau.');
+      log('ATENCAO: a ementa e o INTEIRO TEOR vem juntos na busca, sem captcha.');
+      log('ATENCAO: NAO EXISTE PERMALINK por documento. Verificacao e por reconsulta (-n).');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '-'}`);
+      log(`Data Julgamento: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log(`Origem: ${opts.origem} | Tipo: ${opts.tipo} | Meio: ${opts.meio}`);
+      log(`Max Pages: ${opts.maxPages}`);
+      log('='.repeat(60));
+
+      const crawler = new TJPECrawler({
+        timeout: 90000,
+        log,
+        includeFullText: !!opts.fetchInteiroTeor,
+      });
+      const filters = {
+        origem: opts.origem,
+        meio: opts.meio,
+        tipo: opts.tipo,
+        processo: opts.processo || null,
+        relator: opts.relator || null,
+        classe: opts.classe || null,
+        assunto: opts.assunto || null,
+        dataInicio: opts.dataInicio || null,
+        dataFim: opts.dataFim || null,
+      };
+
+      const results = await crawler.search(opts.query || '', filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+        maxResults: opts.maxResults ? parseInt(opts.maxResults, 10) : undefined,
+      });
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+        verificacao = await new TJPEChecker().verificarResultados(results, { amostra, log });
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
+      const resumo = {
+        totalResults: crawler.ultimaBusca ? crawler.ultimaBusca.totalTJPE : null,
         ...crawler.ultimaBusca,
         ...(verificacao ? { verificacao } : {}),
       };

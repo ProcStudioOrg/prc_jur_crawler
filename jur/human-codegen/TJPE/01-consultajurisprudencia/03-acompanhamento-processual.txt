@@ -1,0 +1,54 @@
+# TJPE — o terceiro degrau: acompanhamento processual
+
+> Parte 3 do mapeamento. Entrada em [`01-busca-e-filtros.txt`](01-busca-e-filtros.txt),
+> resultados e documento em [`02-resultados.txt`](02-resultados.txt).
+
+O card de resultado tem **três** botões. Todos foram clicados numa página limpa,
+com print e captura de rede.
+
+| Botão | Print | O que faz | XHR |
+|---|---|---|---|
+| `Acompanhamento Processual` | `03.01-acompanhamento.png` | expande a tramitação **no lugar**, sem trocar de rota nem abrir aba | `GET /api/v1/processo/{codigoProcesso}/{origem}` |
+| `Resultado sem Formatação` | `03.02-resultado.png` | remove a formatação do texto já exibido | **nenhum** |
+| `Imprimir` | `03.03-imprimir.png` | abre o diálogo de impressão do navegador | **nenhum** |
+
+✅ Dois dos três botões **não fazem request nenhum**. Isso confirma, por um
+segundo caminho, que o documento inteiro já veio no payload da busca: não há o
+que buscar depois.
+
+## O contrato da consulta processual
+
+Reproduzido fora do browser, sem sessão nem cookie:
+
+```
+GET https://consultajurisprudencia.app.tjpe.jus.br/api/v1/processo/859085/ELETRONICO
+→ 200 {"processo":{"npu":"0056907-55.2023.8.17.2001","classeCNJ":"198",
+       "descrClasseCNJ":"APELAÇÃO CÍVEL","dataAutuacao":"2025-07-30T00:00:00-03:00",
+       "nomeParteAtivaPrincipal":"EDNALDO AMARO DOS SANTOS", …},
+   "partes":[3], "movimento":[25], "peticoes":[…], "decisoesProcesso":[…],
+   "processoOrigens":[…]}
+```
+
+🔴 **A chave é COMPOSTA: `codigoProcesso` + `origem`** — e `codigoProcesso`
+**não** é o `chave` do documento.
+
+| Passando | Resposta |
+|---|---|
+| `codigoProcesso` = `859085` + `ELETRONICO` | ✅ 200 com o processo completo |
+| `chave` = `2859085` + `ELETRONICO` | ⚠️ **200 com `processo: null` e todos os arrays vazios** |
+
+O segundo caso não é erro: é HTTP 200. Quem usar a chave errada conclui que o
+processo não existe. É o mesmo padrão de zero silencioso que aparece no
+`tipoSentenca` (rótulo × letra) e no `npuSemFormatacao` (com × sem máscara).
+
+Observação: nos documentos vistos, `chave` = `"2" + codigoProcesso`. **Não confie
+nisso** como regra de derivação — não foi verificado em toda a base, e o
+`TJPEChecker` lê os dois campos do próprio documento em vez de calcular um a
+partir do outro.
+
+## Escopo
+
+Este endpoint é do sistema de **tramitação**, não de jurisprudência. Está
+mapeado porque alimenta o `--detalhar` do `TJPEChecker` (partes e movimentos
+confirmam que o processo é real), mas **não** substitui o julgado: ele não traz
+ementa nem inteiro teor.

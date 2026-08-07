@@ -307,7 +307,7 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 
 | # | Alvo | UF | Sistemas de tramitação (pista, não garantia) | Status |
 |---|---|---|---|---|
-| 7 | **TJPE** | PE | PJe, Projudi | pendente |
+| 7 | **TJPE** | PE | PJe, Projudi | ok 07/08 |
 | 8 | **TJES** | ES | PJe, Projudi | pendente |
 | 9 | **TJMT** | MT | PJe, Projudi | pendente |
 | 10 | **TJPB** | PB | PJe, Projudi | pendente |
@@ -317,6 +317,63 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 | 14 | **TJTO** | TO | e-Proc, Projudi — irmão do TJRS/TJSC/TRF4 (e-Proc) | pendente |
 | 15 | **TJAP** | AP | Tucujuris, PJe | pendente |
 | 16 | **TJRR** | RR | PJe, Projudi | pendente |
+
+📌 **O que o TJPE (feito em 07/08/2026) ensinou — leia
+[`CLAUDE-TJPE.md`](CLAUDE-TJPE.md).** Primeiro alvo do Bloco 3 e o tribunal mais
+limpo do bloco estadual: API REST pública, sem captcha em etapa nenhuma, com
+ementa **e** inteiro teor de graça na busca. As lições valem para os 9 restantes:
+
+- 🔴 **HTTP 000 NÃO É SINÔNIMO DE PORTAL FORA DO AR — e quase custou o alvo.**
+  `curl` devolvia 000, igual ao e-SAJ morto do TJBA. Medindo em camadas: TCP 80
+  e 443 **abrem**, o servidor manda `Server hello` + `Certificate`, e quem aborta
+  é o **cliente** — o TJPE apresenta só o certificado folha e **omite o
+  intermediário**; o navegador o busca sozinho pelo AIA, `curl` e Node não.
+  **Separe TCP de TLS de HTTP antes de marcar `bloqueado`.** A correção é
+  fornecer o intermediário, **não** desligar a verificação.
+- 🔴 **OS OPERADORES SÃO O INVERSO DO TJBA.** Lá os botões em português estavam
+  quebrados e os ingleses funcionavam; **aqui os portugueses funcionam** (`E`,
+  `OU`, `NAO`, `NÃO` acentuado, `PROX`) **e os ingleses enganam** (`AND`=0,
+  `ADJ`=0, `OR`=1, e **`NOT`=1.281 contra `NAO`=2.007** — não zera, devolve
+  número plausível). E o **espaço é `E` (AND)**, não o OR do TJBA.
+  **Dois tribunais seguidos, dois conjuntos opostos: não se herda nada.**
+- 🔴 **O DOCUMENTO ENVENENADO — defeito novo no repo.** Um único registro faz a
+  API devolver **HTTP 500 em qualquer página que o contenha** (offset 186 em
+  `usucapiao`, 8/8 determinístico, vizinhas verdes). Com `size=100` isso custa
+  **100 documentos**, e é raro o bastante para não aparecer em teste feliz.
+  O crawler bisecta e pula só o offset ruim, **contando o que se perdeu**.
+- 🔴 **TRÊS ZEROS SILENCIOSOS POR TIPO DE PARÂMETRO, todos HTTP 200:**
+  `tipoSentenca.in` quer a **letra** (`A`/`D`) e o rótulo da tela
+  (`ACORDAO`/`DECISAO`) devolve 0; `npuSemFormatacao.equals` quer **20 dígitos**
+  e o CNJ com máscara devolve 0 — **isso mordeu o próprio mapeamento**, porque
+  `cnj.normalizar()` do repo **preserva** a máscara; e o endpoint de processo
+  quer chave composta `codigoProcesso`+`origem`, devolvendo `processo: null` com
+  200 se receber a `chave` do documento.
+- 🔴 **O PERMALINK DE BUSCA ENTREGA UM ZERO FALSO.** A URL que aparece depois de
+  buscar **restaura o formulário mas não executa a busca**: em aba limpa ela
+  mostra "Nenhum resultado encontrado" onde existem 6.266 julgados. É pior que
+  não ter permalink — **nunca mande esse link como prova**.
+- ⚠️ **"Contagem igual = filtro ignorado" pega ao vivo:** `orgaoJulgador.in` com
+  `codigoUnidade` devolve outros órgãos com **total idêntico ao sem filtro**. E
+  o filtro **vaza mesmo com o id certo** (id 7314, de Turma Recursal, traz 3.439
+  documentos do "1º Grupo de Câmaras Cíveis"), com as partições somando 8.090
+  contra 6.266. Por isso Juizado × Comum virou recorte de **cliente**.
+- ⚠️ **A medição de vigência precisou de janela DIÁRIA**: a série por ano satura
+  em 10.000 em **todos** os anos de 2019 a 2026. ✅ Base **corrente** (mais
+  recente 01/08/2026). O passo que o TJAM impôs continua valendo — só que o
+  denominador do TJBA não bastou aqui.
+- ✅ **Ementa e inteiro teor são campos DISTINTOS e reais** (2,4 mil × 10,7 mil
+  chars úteis) — diferente do TJBA, onde o campo "ementa" era o inteiro teor.
+  ⚠️ Mas **monocrática vem sem ementa** (40/40), como no TJCE.
+- ⚠️ **O texto é export do MS Word**: ~51 KB de markup para ~2,4 KB úteis, com
+  **todo acento em entidade HTML**. Strip ingênuo produz "Justi a de Pernambuco".
+- ✅ **Sem vhost curinga** (NXDOMAIN de verdade) — a armadilha do TJAC/TJAL não
+  se repetiu, e não foi preciso conferir md5.
+
+⚠️ **Pendências declaradas do TJPE:** 41 documentos com `tipoSentenca` fora de
+`A`/`D` ficaram **não identificados** (invisíveis ao default do próprio portal);
+a causa do vazamento do filtro de órgão **não foi isolada**; `classeCNJ.in` e
+`assuntoCNJ.in` estão expostos como flags mas **não foram provados por
+contagem**; e não se mediu se o documento ilegível é sempre o mesmo registro.
 
 ## Bloco 4 — Módulo faltante (1 alvo)
 

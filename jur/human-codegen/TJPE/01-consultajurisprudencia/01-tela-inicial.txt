@@ -1,0 +1,34 @@
+Pesquisa Livre
+E
+ 
+OU
+ 
+NÃO
+ 
+PROX
+Número NPU
+Número Antigo
+Data de Julgamento Inicial
+Data de Julgamento Final
+Relator
+Selecione os relatores
+Classe CNJ
+Selecione
+Assunto CNJ
+Selecione
+Órgão Julgador
+Selecione os órgãos julgadores
+Meio de Tramitação
+Ambos
+Eletrônico
+Físico
+Tipo de consulta
+Ambos
+Acórdãos
+Decisões Monocráticas
+Limpar Todos
+Aplicar
+Nenhum resultado encontrado
+Ajuste seus filtros e tente novamente.
++Jurisprudência | Versão v4.4.0-M174994
+Precisando de ajuda?

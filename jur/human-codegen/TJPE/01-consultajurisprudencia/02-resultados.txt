@@ -1,0 +1,151 @@
+# TJPE — Consulta Jurisprudência · resultados, documento e paginação
+
+> Parte 2 do mapeamento. A entrada (filtros, operadores, combos) está em
+> [`01-busca-e-filtros.txt`](01-busca-e-filtros.txt).
+
+## 18. Tela de resultados
+
+- **Mesma página**, sem troca de rota. Os controles de busca **permanecem** à
+  esquerda (refinamento incremental).
+- **Não abre modal nem nova aba.**
+- **Total** aparece como texto `Total: 6266` — bate exatamente com o header
+  **`x-total-count`** da API, que é o que o crawler lê.
+- Componentes: `jhi-jurisprudencia-detail` (20 por página) é o card;
+  `jhi-jurisprudencia-data` é o corpo do documento.
+
+## 19. Do card ao documento — a escada
+
+✅ **Não há escada: o documento inteiro já está no card.** O `innerText` de um
+card de acórdão tem **14.247 caracteres** e contém `EMENTA`, `RELATÓRIO`,
+`VOTO` e o dispositivo (`ACORDAM`).
+
+Anatomia (medida nos dois tipos):
+
+| Campo da API | Significado | Vira no repo |
+|---|---|---|
+| `chave` | **identifica o DOCUMENTO** | `id`, `chave` |
+| `codigoProcesso` | id do processo (= `chave` sem o 1º dígito) | `codigoProcesso` |
+| `npu` | CNJ com máscara | `numeroProcesso` |
+| `npuSemFormatacao` | CNJ 20 dígitos | (usado pelo Checker) |
+| `nomeOrgaoJulgador` | órgão (às vezes gabinete, às vezes câmara) | `orgaoJulgador` |
+| `relator` | nome, sem acento | `relator` |
+| `classeCNJ` / `descrClasseCNJ` | classe | `classe` |
+| `assuntoCNJ` / `descrAssuntoCNJ` | assunto | `assunto` |
+| `dataJulgamento` / `dataPublicacao` | ⚠️ ver §5 | idem, em DD/MM/YYYY |
+| `tipoSentenca` | `A` / `D` | `tipoDocumento` |
+| `origem` | `ELETRONICO` / `FISICO` | `meioTramitacao` |
+| **`textoEmenta`** | **ementa de verdade** (só em `A`) | `ementa` |
+| **`textoAcordao`** | **inteiro teor** (só em `A`) | `inteiroTeor` |
+| **`textoDecisao`** | inteiro teor da monocrática (só em `D`) | `inteiroTeor` |
+
+**Preenchimento medido (40 documentos de cada tipo):**
+
+| Campo | ACÓRDÃO (`A`) | MONOCRÁTICA (`D`) |
+|---|---|---|
+| `textoEmenta` | 39/40 · média **30.066** chars de HTML | **0/40** |
+| `textoAcordao` | 40/40 · média **109.294** chars de HTML | 0/40 |
+| `textoDecisao` | 0/40 | 40/40 · média **33.613** chars |
+| `indexacao`, `textoReferenciaLegislativa` | 0/40 | 0/40 |
+
+⚠️ **Monocrática NÃO tem ementa separada** — só `textoDecisao`. Como no TJCE.
+
+✅ **Aqui ementa e inteiro teor são campos DISTINTOS e REAIS** (diferente do
+TJBA, onde o campo "ementa" era o inteiro teor). Após limpar o HTML:
+ementa ≈ **2.429** chars, acórdão ≈ **10.693** chars, e a ementa **não** é
+prefixo nem substring do acórdão.
+
+🔴 **O texto é export do MS Word**: ~51 KB de markup para ~2,4 KB úteis, com
+cabeçalho `Normal 0 21 false false false PT-BR X-NONE X-NONE` e **todo acento em
+entidade HTML** (`&ccedil;`). Um strip que só remove `<tag>` produz
+"Justi a de Pernambuco". O `TJPECrawler.limparHtml` decodifica entidade,
+remove o cabeçalho do Word e preserva quebra de parágrafo.
+
+✅ **Sem highlight**: não há `<b>`/`<mark>` envolvendo o termo buscado — o texto
+do card é o documento, não um trecho realçado.
+
+**Os três botões do card** (todos clicados, com print):
+
+| Botão | O que faz | XHR |
+|---|---|---|
+| `Acompanhamento Processual` | abre a tramitação **no lugar** | `GET /api/v1/processo/{codigoProcesso}/{origem}` |
+| `Resultado sem Formatação` | tira a formatação do texto exibido | **nenhum** — client-side |
+| `Imprimir` | diálogo de impressão | **nenhum** — client-side |
+
+**Contrato da consulta processual, reproduzido fora do browser:**
+
+```
+GET /api/v1/processo/859085/ELETRONICO  → 200, {processo:{…}, partes:[3], movimento:[25], …}
+```
+
+🔴 **Chave COMPOSTA: `codigoProcesso` + `origem`.** Passar a `chave` do documento
+(`2859085`) no lugar do `codigoProcesso` (`859085`) devolve
+**HTTP 200 com `processo: null` e todos os arrays vazios** — mais um zero
+silencioso, que se lê como "processo inexistente".
+
+## 20. Paginação e profundidade
+
+| Item | Medição |
+|---|---|
+| Parâmetro | querystring `page` (0-based) + `size` |
+| Default / máximo | 20 / **100** |
+| Ordenação | `sort=dataJulgamento,desc` |
+| **Estabilidade** | ✅ **ESTÁVEL** — mesma página 2× = md5 idêntico (page 0 e page 3) |
+| Sobreposição entre páginas | **0** |
+| Duplicatas dentro da página | **0** (diferente do TJBA) |
+| Fim do acervo | página além do fim devolve `[]` com HTTP 200 |
+| Estouro da janela | `page=100&size=100` → HTTP 500 |
+
+🔴 **DEFEITO NOVO NESTE REPO — O DOCUMENTO ENVENENADO.**
+
+Existe registro que faz a API devolver **HTTP 500 em QUALQUER página que o
+contenha**. Com `usucapiao`:
+
+- `page=1&size=100` → **500 em 8 de 8 tentativas** (determinístico), enquanto
+  `page=0` e `page=2..8` respondem 200.
+- Bissecção: `size=20&page=9` → 500; `size=10&page=18` → 500;
+  `size=1&page=186` → **500**; `page=185` e `page=187` → 200.
+- Ou seja: **um único documento**, no offset 186, derruba a página inteira.
+
+Consequência: um crawler ingênuo com `size=100` **perde 100 documentos** ou
+aborta. Não é sistemático — varrendo 8 páginas de `alimentos`, `despejo` e
+`honorarios` não apareceu nenhum. Mas quando aparece, é silencioso.
+
+**Tratamento:** `TJPECrawler._buscarPaginaTolerante` captura o 500, bisecta a
+página em requisições de `size=1`, pula **só** o offset ruim e **avisa quantos
+documentos se perderam** — nunca em silêncio. Verificado: página 2 de
+`usucapiao` recupera 99 de 100.
+
+## 20b. Permalink e identidade do documento
+
+🔴 **NÃO EXISTE PERMALINK POR DOCUMENTO.**
+
+- `GET /api/v1/jurisprudencias/{chave}` → **404** (a rota de detalhe não existe;
+  o Angular tem o método `find()` mas a tela nunca o usa).
+- A SPA vive toda em `/`; não há rota por documento.
+
+🔴 **E o "permalink de busca" é PIOR que não ter.** Após buscar, a URL vira:
+
+```
+https://consultajurisprudencia.app.tjpe.jus.br/?page=1&size=20&sort=dataJulgamento,desc
+  &filter%5BpesquisaLivre.contains%5D=usucapiao
+  &filter%5Borigem.in%5D=ELETRONICO,FISICO&filter%5BtipoSentenca.in%5D=A,D
+```
+
+Colada numa **aba limpa** (medido, print `02.04-permalink-aba-limpa.png`):
+o campo `Pesquisa Livre` **é restaurado com "usucapiao"**, os 4 combos carregam
+— e **a busca NÃO é executada**. A tela mostra:
+
+> **Nenhum resultado encontrado — Ajuste seus filtros e tente novamente.**
+
+⚠️ **Compartilhar essa URL entrega um ZERO FALSO** onde existem 6.266 julgados.
+Nunca mande esse link a um usuário como se fosse a prova da busca.
+
+**Identidade do documento:** o campo é **`chave`**, não o número do processo —
+o mesmo `npu` aparece em vários documentos (medido: 5 repetições de `npu` numa
+página de 100, com `chave` distinta e 0 `chave` duplicada). Por isso o nome do
+arquivo do inteiro teor leva `processo__chave`.
+
+**Verificação de julgado:** só por reconsulta — `./bin/jur tjpe -n "<nº>"`.
+
+---
+

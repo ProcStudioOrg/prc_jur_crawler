@@ -1,0 +1,3992 @@
+[
+ {
+  "id": 0,
+  "codigo": 51,
+  "nome": "ABERTURA, REGISTRO E CUMPRIMENTO DE TESTAMENTO"
+ },
+ {
+  "id": 1,
+  "codigo": 11887,
+  "nome": "ACOMPANHAMENTO DE CUMPRIMENTO DE DECISÃO"
+ },
+ {
+  "id": 2,
+  "codigo": 15167,
+  "nome": "ACORDO DE NÃO PERSECUÇÃO CÍVEL"
+ },
+ {
+  "id": 3,
+  "codigo": 14678,
+  "nome": "ACORDO DE NÃO PERSECUÇÃO PENAL"
+ },
+ {
+  "id": 4,
+  "codigo": 1401,
+  "nome": "ADOÇÃO"
+ },
+ {
+  "id": 5,
+  "codigo": 1412,
+  "nome": "ADOÇÃO C/C DESTITUIÇÃO DO PODER FAMILIAR"
+ },
+ {
+  "id": 6,
+  "codigo": 15192,
+  "nome": "ADOÇÃO FORA DO CADASTRO"
+ },
+ {
+  "id": 7,
+  "codigo": 15193,
+  "nome": "ADOÇÃO FORA DO CADASTRO C/C DESTITUIÇÃO DO PODER FAMILIAR"
+ },
+ {
+  "id": 8,
+  "codigo": 15191,
+  "nome": "ADOÇÃO PELO CADASTRO"
+ },
+ {
+  "id": 9,
+  "codigo": 1472,
+  "nome": "ADVERTÊNCIA"
+ },
+ {
+  "id": 10,
+  "codigo": 1000,
+  "nome": "AGRAVO"
+ },
+ {
+  "id": 11,
+  "codigo": 413,
+  "nome": "AGRAVO DE EXECUÇÃO PENAL"
+ },
+ {
+  "id": 12,
+  "codigo": 202,
+  "nome": "AGRAVO DE INSTRUMENTO"
+ },
+ {
+  "id": 13,
+  "codigo": 1044,
+  "nome": "AGRAVO DE INSTRUMENTO"
+ },
+ {
+  "id": 14,
+  "codigo": 1320,
+  "nome": "AGRAVO DE INSTRUMENTO"
+ },
+ {
+  "id": 15,
+  "codigo": 1001,
+  "nome": "AGRAVO DE INSTRUMENTO EM AGRAVO DE PETIÇÃO"
+ },
+ {
+  "id": 16,
+  "codigo": 1002,
+  "nome": "AGRAVO DE INSTRUMENTO EM RECURSO DE REVISTA"
+ },
+ {
+  "id": 17,
+  "codigo": 203,
+  "nome": "AGRAVO DE INSTRUMENTO EM RECURSO ESPECIAL"
+ },
+ {
+  "id": 18,
+  "codigo": 1711,
+  "nome": "AGRAVO DE INSTRUMENTO EM RECURSO ESPECIAL"
+ },
+ {
+  "id": 19,
+  "codigo": 204,
+  "nome": "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO"
+ },
+ {
+  "id": 20,
+  "codigo": 1712,
+  "nome": "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO"
+ },
+ {
+  "id": 21,
+  "codigo": 1003,
+  "nome": "AGRAVO DE INSTRUMENTO EM RECURSO ORDINÁRIO"
+ },
+ {
+  "id": 22,
+  "codigo": 11400,
+  "nome": "AGRAVO DE INSTRUMENTO EM RECURSO ORDINÁRIO PARA O STF"
+ },
+ {
+  "id": 23,
+  "codigo": 1004,
+  "nome": "AGRAVO DE PETIÇÃO"
+ },
+ {
+  "id": 24,
+  "codigo": 12120,
+  "nome": "AGRAVO EM EXECUÇÃO DE MEDIDAS SÓCIO-EDUCATIVAS"
+ },
+ {
+  "id": 25,
+  "codigo": 1013,
+  "nome": "AGRAVO EM RECURSO DE HABEAS CORPUS"
+ },
+ {
+  "id": 26,
+  "codigo": 1046,
+  "nome": "AGRAVO EM RECURSO DE MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": 27,
+  "codigo": 11881,
+  "nome": "AGRAVO EM RECURSO ESPECIAL"
+ },
+ {
+  "id": 28,
+  "codigo": 1045,
+  "nome": "AGRAVO EM RECURSO EXTRAORDINÁRIO"
+ },
+ {
+  "id": 29,
+  "codigo": 1319,
+  "nome": "AGRAVO INTERNO"
+ },
+ {
+  "id": 30,
+  "codigo": 1729,
+  "nome": "AGRAVO INTERNO CRIMINAL"
+ },
+ {
+  "id": 31,
+  "codigo": 1208,
+  "nome": "AGRAVO INTERNO CÍVEL"
+ },
+ {
+  "id": 32,
+  "codigo": 1321,
+  "nome": "AGRAVO REGIMENTAL"
+ },
+ {
+  "id": 33,
+  "codigo": 206,
+  "nome": "AGRAVO REGIMENTAL CÍVEL"
+ },
+ {
+  "id": 34,
+  "codigo": 1005,
+  "nome": "AGRAVO REGIMENTAL TRABALHISTA"
+ },
+ {
+  "id": 35,
+  "codigo": 200,
+  "nome": "AGRAVOS"
+ },
+ {
+  "id": 36,
+  "codigo": 1209,
+  "nome": "AGRAVOS"
+ },
+ {
+  "id": 37,
+  "codigo": 1717,
+  "nome": "ALIENAÇÃO DE BENS DO ACUSADO"
+ },
+ {
+  "id": 38,
+  "codigo": 52,
+  "nome": "ALIENAÇÃO JUDICIAL DE BENS"
+ },
+ {
+  "id": 39,
+  "codigo": 69,
+  "nome": "ALIMENTOS - LEI ESPECIAL Nº 5.478/68"
+ },
+ {
+  "id": 40,
+  "codigo": 176,
+  "nome": "ALIMENTOS - PROVISIONAIS"
+ },
+ {
+  "id": 41,
+  "codigo": 12371,
+  "nome": "ALTERAÇÃO DE REGIME DE BENS"
+ },
+ {
+  "id": 42,
+  "codigo": 72,
+  "nome": "ALTERAÇÃO DO REGIME DE BENS"
+ },
+ {
+  "id": 43,
+  "codigo": 1295,
+  "nome": "ALVARÁ JUDICIAL"
+ },
+ {
+  "id": 44,
+  "codigo": 74,
+  "nome": "ALVARÁ JUDICIAL - LEI 6858/80"
+ },
+ {
+  "id": 45,
+  "codigo": 409,
+  "nome": "ANISTIA"
+ },
+ {
+  "id": 46,
+  "codigo": 28,
+  "nome": "ANULAÇÃO E SUBSTITUIÇÃO DE TÍTULOS AO PORTADOR"
+ },
+ {
+  "id": 47,
+  "codigo": 1728,
+  "nome": "APELAÇÃO / REMESSA NECESSÁRIA"
+ },
+ {
+  "id": 48,
+  "codigo": 417,
+  "nome": "APELAÇÃO CRIMINAL"
+ },
+ {
+  "id": 49,
+  "codigo": 1359,
+  "nome": "APELAÇÃO CRIMINAL"
+ },
+ {
+  "id": 50,
+  "codigo": 198,
+  "nome": "APELAÇÃO CÍVEL"
+ },
+ {
+  "id": 51,
+  "codigo": 1035,
+  "nome": "APELAÇÃO CÍVEL"
+ },
+ {
+  "id": 52,
+  "codigo": 1358,
+  "nome": "APELAÇÃO CÍVEL"
+ },
+ {
+  "id": 53,
+  "codigo": 416,
+  "nome": "APELAÇÃO EM MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": 54,
+  "codigo": 177,
+  "nome": "APREENSÃO DE  TÍTULOS"
+ },
+ {
+  "id": 55,
+  "codigo": 76,
+  "nome": "APREENSÃO DE EMBARCAÇÕES"
+ },
+ {
+  "id": 56,
+  "codigo": 29,
+  "nome": "APREENSÃO E DEPÓSITO DE COISA VENDIDA COM RESERVA DE DOMÍNIO"
+ },
+ {
+  "id": 57,
+  "codigo": 11530,
+  "nome": "APURAÇÃO DE ELEIÇÃO"
+ },
+ {
+  "id": 58,
+  "codigo": 1392,
+  "nome": "APURAÇÃO DE INFRAÇÃO ADMINISTRATIVA ÀS NORMAS DE PROTEÇÃO À CRIANÇA OU ADOLESCENTE"
+ },
+ {
+  "id": 59,
+  "codigo": 1391,
+  "nome": "APURAÇÃO DE IRREGULARIDADES EM ENTIDADES DE ATENDIMENTO"
+ },
+ {
+  "id": 60,
+  "codigo": 1322,
+  "nome": "ARGUIÇÃO DE DESCUMPRIMENTO DE PRECEITO FUNDAMENTAL"
+ },
+ {
+  "id": 61,
+  "codigo": 15543,
+  "nome": "ARGUIÇÃO DE DESCUMPRIMENTO DE PRECEITO FUNDAMENTO PREVISTO EM CONSTITUIÇÃO ESTADUAL"
+ },
+ {
+  "id": 62,
+  "codigo": 1360,
+  "nome": "ARGUIÇÃO DE RELEVÂNCIA"
+ },
+ {
+  "id": 63,
+  "codigo": 1323,
+  "nome": "ARGUIÇÃO DE SUSPEIÇÃO"
+ },
+ {
+  "id": 64,
+  "codigo": 11953,
+  "nome": "ARGUIÇÃO DE SUSPEIÇÃO E DE IMPEDIMENTO"
+ },
+ {
+  "id": 65,
+  "codigo": 53,
+  "nome": "ARRECADAÇÃO DAS COISAS VAGAS"
+ },
+ {
+  "id": 66,
+  "codigo": 178,
+  "nome": "ARRESTO"
+ },
+ {
+  "id": 67,
+  "codigo": 330,
+  "nome": "ARRESTO / HIPOTECA LEGAL"
+ },
+ {
+  "id": 68,
+  "codigo": 77,
+  "nome": "ARRIBADAS FORÇADAS"
+ },
+ {
+  "id": 69,
+  "codigo": 30,
+  "nome": "ARROLAMENTO COMUM"
+ },
+ {
+  "id": 70,
+  "codigo": 179,
+  "nome": "ARROLAMENTO DE BENS"
+ },
+ {
+  "id": 71,
+  "codigo": 31,
+  "nome": "ARROLAMENTO SUMÁRIO"
+ },
+ {
+  "id": 72,
+  "codigo": 218,
+  "nome": "ASSISTÊNCIA JUDICIÁRIA"
+ },
+ {
+  "id": 73,
+  "codigo": 11787,
+  "nome": "ASSISTÊNCIA JUDICIÁRIA"
+ },
+ {
+  "id": 74,
+  "codigo": 180,
+  "nome": "ATENTADO"
+ },
+ {
+  "id": 75,
+  "codigo": 11888,
+  "nome": "ATO NORMATIVO"
+ },
+ {
+  "id": 76,
+  "codigo": 237,
+  "nome": "ATOS E EXPEDIENTES"
+ },
+ {
+  "id": 77,
+  "codigo": 1461,
+  "nome": "AUTO DE APREENSÃO EM FLAGRANTE"
+ },
+ {
+  "id": 78,
+  "codigo": 280,
+  "nome": "AUTO DE PRISÃO EM FLAGRANTE"
+ },
+ {
+  "id": 79,
+  "codigo": 1703,
+  "nome": "AUTORIZAÇÃO JUDICIAL"
+ },
+ {
+  "id": 80,
+  "codigo": 1719,
+  "nome": "AVALIAÇÃO PARA ATESTAR DEPENDÊNCIA DE DROGAS"
+ },
+ {
+  "id": 81,
+  "codigo": 80,
+  "nome": "AVARIAS"
+ },
+ {
+  "id": 82,
+  "codigo": 123,
+  "nome": "AVERIGUAÇÃO DE PATERNIDADE"
+ },
+ {
+  "id": 83,
+  "codigo": 238,
+  "nome": "AVOCATÓRIA"
+ },
+ {
+  "id": 84,
+  "codigo": 1312,
+  "nome": "AÇÃO  ORIGINÁRIA"
+ },
+ {
+  "id": 85,
+  "codigo": 976,
+  "nome": "AÇÃO ANULATÓRIA DE CLÁUSULAS CONVENCIONAIS"
+ },
+ {
+  "id": 86,
+  "codigo": 1311,
+  "nome": "AÇÃO CAUTELAR"
+ },
+ {
+  "id": 87,
+  "codigo": 12061,
+  "nome": "AÇÃO CAUTELAR"
+ },
+ {
+  "id": 88,
+  "codigo": 63,
+  "nome": "AÇÃO CIVIL COLETIVA"
+ },
+ {
+  "id": 89,
+  "codigo": 64,
+  "nome": "AÇÃO CIVIL DE IMPROBIDADE ADMINISTRATIVA"
+ },
+ {
+  "id": 90,
+  "codigo": 65,
+  "nome": "AÇÃO CIVIL PÚBLICA"
+ },
+ {
+  "id": 91,
+  "codigo": 1690,
+  "nome": "AÇÃO CIVIL PÚBLICA INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 92,
+  "codigo": 1315,
+  "nome": "AÇÃO CÍVEL ORIGINÁRIA"
+ },
+ {
+  "id": 93,
+  "codigo": 1389,
+  "nome": "AÇÃO DE ALIMENTOS DE INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 94,
+  "codigo": 980,
+  "nome": "AÇÃO DE CUMPRIMENTO"
+ },
+ {
+  "id": 95,
+  "codigo": 45,
+  "nome": "AÇÃO DE EXIGIR CONTAS"
+ },
+ {
+  "id": 96,
+  "codigo": 1670,
+  "nome": "AÇÃO DE IMPROBIDADE ADMINISTRATIVA"
+ },
+ {
+  "id": 97,
+  "codigo": 11526,
+  "nome": "AÇÃO DE IMPUGNAÇÃO DE MANDATO ELETIVO"
+ },
+ {
+  "id": 98,
+  "codigo": 11527,
+  "nome": "AÇÃO DE INVESTIGAÇÃO JUDICIAL ELEITORAL"
+ },
+ {
+  "id": 99,
+  "codigo": 12232,
+  "nome": "AÇÃO DE PARTILHA"
+ },
+ {
+  "id": 100,
+  "codigo": 12389,
+  "nome": "AÇÃO DE PARTILHA"
+ },
+ {
+  "id": 101,
+  "codigo": 12390,
+  "nome": "AÇÃO DE PARTILHA"
+ },
+ {
+  "id": 102,
+  "codigo": 1313,
+  "nome": "AÇÃO DECLARATÓRIA DE CONSTITUCIONALIDADE"
+ },
+ {
+  "id": 103,
+  "codigo": 1314,
+  "nome": "AÇÃO DIRETA DE INCONSTITUCIONALIDADE"
+ },
+ {
+  "id": 104,
+  "codigo": 1356,
+  "nome": "AÇÃO ORDINÁRIA REGRESSIVA"
+ },
+ {
+  "id": 105,
+  "codigo": 1316,
+  "nome": "AÇÃO ORIGINÁRIA ESPECIAL"
+ },
+ {
+  "id": 106,
+  "codigo": 1033,
+  "nome": "AÇÃO PENAL"
+ },
+ {
+  "id": 107,
+  "codigo": 1317,
+  "nome": "AÇÃO PENAL"
+ },
+ {
+  "id": 108,
+  "codigo": 283,
+  "nome": "AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO"
+ },
+ {
+  "id": 109,
+  "codigo": 10944,
+  "nome": "AÇÃO PENAL - PROCEDIMENTO SUMARÍSSIMO"
+ },
+ {
+  "id": 110,
+  "codigo": 10943,
+  "nome": "AÇÃO PENAL - PROCEDIMENTO SUMÁRIO"
+ },
+ {
+  "id": 111,
+  "codigo": 282,
+  "nome": "AÇÃO PENAL DE COMPETÊNCIA DO JÚRI"
+ },
+ {
+  "id": 112,
+  "codigo": 11528,
+  "nome": "AÇÃO PENAL ELEITORAL"
+ },
+ {
+  "id": 113,
+  "codigo": 11037,
+  "nome": "AÇÃO PENAL MILITAR - PROCEDIMENTO ORDINÁRIO"
+ },
+ {
+  "id": 114,
+  "codigo": 66,
+  "nome": "AÇÃO POPULAR"
+ },
+ {
+  "id": 115,
+  "codigo": 1357,
+  "nome": "AÇÃO REGRESSIVA"
+ },
+ {
+  "id": 116,
+  "codigo": 47,
+  "nome": "AÇÃO RESCISÓRIA"
+ },
+ {
+  "id": 117,
+  "codigo": 1318,
+  "nome": "AÇÃO RESCISÓRIA"
+ },
+ {
+  "id": 118,
+  "codigo": 1669,
+  "nome": "AÇÃO RESCISÓRIA"
+ },
+ {
+  "id": 119,
+  "codigo": 985,
+  "nome": "AÇÃO TRABALHISTA - RITO ORDINÁRIO"
+ },
+ {
+  "id": 120,
+  "codigo": 1125,
+  "nome": "AÇÃO TRABALHISTA - RITO SUMARÍSSIMO"
+ },
+ {
+  "id": 121,
+  "codigo": 1126,
+  "nome": "AÇÃO TRABALHISTA - RITO SUMÁRIO (ALÇADA)"
+ },
+ {
+  "id": 122,
+  "codigo": 1463,
+  "nome": "BOLETIM DE OCORRÊNCIA CIRCUNSTANCIADA"
+ },
+ {
+  "id": 123,
+  "codigo": 181,
+  "nome": "BUSCA E APREENSÃO"
+ },
+ {
+  "id": 124,
+  "codigo": 81,
+  "nome": "BUSCA E APREENSÃO EM ALIENAÇÃO FIDUCIÁRIA"
+ },
+ {
+  "id": 125,
+  "codigo": 12072,
+  "nome": "BUSCA E APREENSÃO INFRACIONAL"
+ },
+ {
+  "id": 126,
+  "codigo": 1438,
+  "nome": "BUSCA E APREENSÃO INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 127,
+  "codigo": 12549,
+  "nome": "CANCELAMENTO DE INSCRIÇÃO ELEITORAL (CIE)"
+ },
+ {
+  "id": 128,
+  "codigo": 82,
+  "nome": "CANCELAMENTO DE NATURALIZAÇÃO"
+ },
+ {
+  "id": 129,
+  "codigo": 11535,
+  "nome": "CANCELAMENTO DE REGISTRO DE PARTIDO POLÍTICO"
+ },
+ {
+  "id": 130,
+  "codigo": 12082,
+  "nome": "CARTA ARBITRAL"
+ },
+ {
+  "id": 131,
+  "codigo": 335,
+  "nome": "CARTA DE ORDEM CRIMINAL"
+ },
+ {
+  "id": 132,
+  "codigo": 258,
+  "nome": "CARTA DE ORDEM CÍVEL"
+ },
+ {
+  "id": 133,
+  "codigo": 1474,
+  "nome": "CARTA DE ORDEM INFRACIONAL"
+ },
+ {
+  "id": 134,
+  "codigo": 1451,
+  "nome": "CARTA DE ORDEM INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 135,
+  "codigo": 355,
+  "nome": "CARTA PRECATÓRIA CRIMINAL"
+ },
+ {
+  "id": 136,
+  "codigo": 261,
+  "nome": "CARTA PRECATÓRIA CÍVEL"
+ },
+ {
+  "id": 137,
+  "codigo": 1478,
+  "nome": "CARTA PRECATÓRIA INFRACIONAL"
+ },
+ {
+  "id": 138,
+  "codigo": 1455,
+  "nome": "CARTA PRECATÓRIA INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 139,
+  "codigo": 1047,
+  "nome": "CARTA ROGATÓRIA"
+ },
+ {
+  "id": 140,
+  "codigo": 1324,
+  "nome": "CARTA ROGATÓRIA"
+ },
+ {
+  "id": 141,
+  "codigo": 375,
+  "nome": "CARTA ROGATÓRIA CRIMINAL"
+ },
+ {
+  "id": 142,
+  "codigo": 264,
+  "nome": "CARTA ROGATÓRIA CÍVEL"
+ },
+ {
+  "id": 143,
+  "codigo": 418,
+  "nome": "CARTA TESTEMUNHÁVEL"
+ },
+ {
+  "id": 144,
+  "codigo": 1361,
+  "nome": "CARTA TESTEMUNHÁVEL"
+ },
+ {
+  "id": 145,
+  "codigo": 257,
+  "nome": "CARTAS"
+ },
+ {
+  "id": 146,
+  "codigo": 334,
+  "nome": "CARTAS"
+ },
+ {
+  "id": 147,
+  "codigo": 1450,
+  "nome": "CARTAS"
+ },
+ {
+  "id": 148,
+  "codigo": 1473,
+  "nome": "CARTAS"
+ },
+ {
+  "id": 149,
+  "codigo": 83,
+  "nome": "CAUTELAR FISCAL"
+ },
+ {
+  "id": 150,
+  "codigo": 183,
+  "nome": "CAUTELAR INOMINADA"
+ },
+ {
+  "id": 151,
+  "codigo": 11955,
+  "nome": "CAUTELAR INOMINADA CRIMINAL"
+ },
+ {
+  "id": 152,
+  "codigo": 1440,
+  "nome": "CAUTELAR INOMINADA INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 153,
+  "codigo": 182,
+  "nome": "CAUÇÃO"
+ },
+ {
+  "id": 154,
+  "codigo": 14991,
+  "nome": "CLASSIFICAÇÃO DE CRÉDITO PÚBLICO"
+ },
+ {
+  "id": 155,
+  "codigo": 84,
+  "nome": "COBRANÇA DE CÉDULA DE CRÉDITO INDUSTRIAL"
+ },
+ {
+  "id": 156,
+  "codigo": 11894,
+  "nome": "COMISSÃO"
+ },
+ {
+  "id": 157,
+  "codigo": 12550,
+  "nome": "COMPOSIÇÃO DE MESA RECEPTORA"
+ },
+ {
+  "id": 158,
+  "codigo": 85,
+  "nome": "COMPROMISSO ARBITRAL"
+ },
+ {
+  "id": 159,
+  "codigo": 12121,
+  "nome": "COMUNICADO DE MANDADO DE PRISÃO"
+ },
+ {
+  "id": 160,
+  "codigo": 242,
+  "nome": "COMUNICAÇÃO"
+ },
+ {
+  "id": 161,
+  "codigo": 1325,
+  "nome": "COMUNICAÇÃO"
+ },
+ {
+  "id": 162,
+  "codigo": 1671,
+  "nome": "COMUNICAÇÃO"
+ },
+ {
+  "id": 163,
+  "codigo": 411,
+  "nome": "COMUTAÇÃO DE PENA"
+ },
+ {
+  "id": 164,
+  "codigo": 54,
+  "nome": "CONFIRMAÇÃO DE TESTAMENTO"
+ },
+ {
+  "id": 165,
+  "codigo": 1053,
+  "nome": "CONFLITO DE ATRIBUIÇÃO"
+ },
+ {
+  "id": 166,
+  "codigo": 1285,
+  "nome": "CONFLITO DE ATRIBUIÇÃO"
+ },
+ {
+  "id": 167,
+  "codigo": 1362,
+  "nome": "CONFLITO DE ATRIBUIÇÕES"
+ },
+ {
+  "id": 168,
+  "codigo": 1054,
+  "nome": "CONFLITO DE COMPETÊNCIA"
+ },
+ {
+  "id": 169,
+  "codigo": 1145,
+  "nome": "CONFLITO DE COMPETÊNCIA"
+ },
+ {
+  "id": 170,
+  "codigo": 1326,
+  "nome": "CONFLITO DE COMPETÊNCIA"
+ },
+ {
+  "id": 171,
+  "codigo": 221,
+  "nome": "CONFLITO DE COMPETÊNCIA CÍVEL"
+ },
+ {
+  "id": 172,
+  "codigo": 10970,
+  "nome": "CONFLITO DE COMPETÊNCIA INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 173,
+  "codigo": 325,
+  "nome": "CONFLITO DE JURISDIÇÃO"
+ },
+ {
+  "id": 174,
+  "codigo": 1363,
+  "nome": "CONFLITO DE JURISDIÇÃO"
+ },
+ {
+  "id": 175,
+  "codigo": 11034,
+  "nome": "CONSELHO DE JUSTIFICAÇÃO"
+ },
+ {
+  "id": 176,
+  "codigo": 86,
+  "nome": "CONSIGNATÓRIA DE ALUGUÉIS"
+ },
+ {
+  "id": 177,
+  "codigo": 32,
+  "nome": "CONSIGNAÇÃO EM PAGAMENTO"
+ },
+ {
+  "id": 178,
+  "codigo": 11551,
+  "nome": "CONSULTA"
+ },
+ {
+  "id": 179,
+  "codigo": 1680,
+  "nome": "CONSULTA ADMINISTRATIVA"
+ },
+ {
+  "id": 180,
+  "codigo": 12139,
+  "nome": "CONTESTAÇÃO EM FORO DIVERSO"
+ },
+ {
+  "id": 181,
+  "codigo": 1723,
+  "nome": "CONTRAPROTESTO JUDICIAL"
+ },
+ {
+  "id": 182,
+  "codigo": 407,
+  "nome": "CONVERSÃO DE PENA"
+ },
+ {
+  "id": 183,
+  "codigo": 87,
+  "nome": "CONVERSÃO DE SEPARAÇÃO JUDICIAL EM DIVÓRCIO"
+ },
+ {
+  "id": 184,
+  "codigo": 12464,
+  "nome": "CORREGEDORIA ELEITORAL"
+ },
+ {
+  "id": 185,
+  "codigo": 11542,
+  "nome": "CORREIÇÃO"
+ },
+ {
+  "id": 186,
+  "codigo": 1303,
+  "nome": "CORREIÇÃO EXTRAORDINÁRIA"
+ },
+ {
+  "id": 187,
+  "codigo": 1307,
+  "nome": "CORREIÇÃO ORDINÁRIA"
+ },
+ {
+  "id": 188,
+  "codigo": 419,
+  "nome": "CORREIÇÃO PARCIAL CRIMINAL"
+ },
+ {
+  "id": 189,
+  "codigo": 10942,
+  "nome": "CORREIÇÃO PARCIAL CÍVEL"
+ },
+ {
+  "id": 190,
+  "codigo": 11042,
+  "nome": "CORREIÇÃO PARCIAL MILITAR"
+ },
+ {
+  "id": 191,
+  "codigo": 88,
+  "nome": "CORREIÇÃO PARCIAL OU RECLAMAÇÃO CORREICIONAL"
+ },
+ {
+  "id": 192,
+  "codigo": 11543,
+  "nome": "CRIAÇÃO DE ZONA ELEITORAL OU REMANEJAMENTO"
+ },
+ {
+  "id": 193,
+  "codigo": 293,
+  "nome": "CRIMES AMBIENTAIS"
+ },
+ {
+  "id": 194,
+  "codigo": 289,
+  "nome": "CRIMES CONTRA A PROPRIEDADE IMATERIAL"
+ },
+ {
+  "id": 195,
+  "codigo": 294,
+  "nome": "CRIMES CONTRA A PROPRIEDADE INDUSTRIAL"
+ },
+ {
+  "id": 196,
+  "codigo": 295,
+  "nome": "CRIMES CONTRA A PROPRIEDADE INTELECTUAL"
+ },
+ {
+  "id": 197,
+  "codigo": 288,
+  "nome": "CRIMES DE CALÚNIA, INJÚRIA E DIFAMAÇÃO DE COMPETÊNCIA DO JUIZ SINGULAR"
+ },
+ {
+  "id": 198,
+  "codigo": 297,
+  "nome": "CRIMES DE IMPRENSA"
+ },
+ {
+  "id": 199,
+  "codigo": 287,
+  "nome": "CRIMES DE RESPONSABILIDADE DOS FUNCIONÁRIOS PÚBLICOS"
+ },
+ {
+  "id": 200,
+  "codigo": 156,
+  "nome": "CUMPRIMENTO DE SENTENÇA"
+ },
+ {
+  "id": 201,
+  "codigo": 12231,
+  "nome": "CUMPRIMENTO DE SENTENÇA - LEI ARBITRAL (LEI 9.307/1996)"
+ },
+ {
+  "id": 202,
+  "codigo": 15430,
+  "nome": "CUMPRIMENTO DE SENTENÇA - RECLAMAÇÃO PRÉ-PROCESSUAL"
+ },
+ {
+  "id": 203,
+  "codigo": 12078,
+  "nome": "CUMPRIMENTO DE SENTENÇA CONTRA A FAZENDA PÚBLICA"
+ },
+ {
+  "id": 204,
+  "codigo": 15215,
+  "nome": "CUMPRIMENTO DE SENTENÇA CONTRA A FAZENDA PÚBLICA MEDIANTE EXECUÇÃO INVERTIDA"
+ },
+ {
+  "id": 205,
+  "codigo": 15160,
+  "nome": "CUMPRIMENTO DE SENTENÇA DE AÇÕES COLETIVAS"
+ },
+ {
+  "id": 206,
+  "codigo": 12246,
+  "nome": "CUMPRIMENTO DE SENTENÇA DE OBRIGAÇÃO DE PRESTAR ALIMENTOS"
+ },
+ {
+  "id": 207,
+  "codigo": 10980,
+  "nome": "CUMPRIMENTO PROVISÓRIO DE DECISÃO"
+ },
+ {
+  "id": 208,
+  "codigo": 157,
+  "nome": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA"
+ },
+ {
+  "id": 209,
+  "codigo": 15161,
+  "nome": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA DE AÇÕES COLETIVAS"
+ },
+ {
+  "id": 210,
+  "codigo": 12234,
+  "nome": "CURATELA"
+ },
+ {
+  "id": 211,
+  "codigo": 1296,
+  "nome": "DECLARATÓRIA DE CONSTITUCIONALIDADE"
+ },
+ {
+  "id": 212,
+  "codigo": 55,
+  "nome": "DECLARAÇÃO DE AUSÊNCIA"
+ },
+ {
+  "id": 213,
+  "codigo": 34,
+  "nome": "DEMARCAÇÃO / DIVISÃO"
+ },
+ {
+  "id": 214,
+  "codigo": 1364,
+  "nome": "DENÚNCIA"
+ },
+ {
+  "id": 215,
+  "codigo": 35,
+  "nome": "DEPÓSITO"
+ },
+ {
+  "id": 216,
+  "codigo": 89,
+  "nome": "DEPÓSITO DA LEI 8. 866/94"
+ },
+ {
+  "id": 217,
+  "codigo": 432,
+  "nome": "DESAFORAMENTO DE JULGAMENTO"
+ },
+ {
+  "id": 218,
+  "codigo": 90,
+  "nome": "DESAPROPRIAÇÃO"
+ },
+ {
+  "id": 219,
+  "codigo": 91,
+  "nome": "DESAPROPRIAÇÃO IMÓVEL RURAL POR INTERESSE SOCIAL"
+ },
+ {
+  "id": 220,
+  "codigo": 12551,
+  "nome": "DESCARTE DE MATERIAL"
+ },
+ {
+  "id": 221,
+  "codigo": 11043,
+  "nome": "DESERÇÃO"
+ },
+ {
+  "id": 222,
+  "codigo": 11045,
+  "nome": "DESERÇÃO DE OFICIAL"
+ },
+ {
+  "id": 223,
+  "codigo": 11046,
+  "nome": "DESERÇÃO DE PRAÇA"
+ },
+ {
+  "id": 224,
+  "codigo": 92,
+  "nome": "DESPEJO"
+ },
+ {
+  "id": 225,
+  "codigo": 93,
+  "nome": "DESPEJO POR FALTA DE PAGAMENTO"
+ },
+ {
+  "id": 226,
+  "codigo": 94,
+  "nome": "DESPEJO POR FALTA DE PAGAMENTO CUMULADO COM COBRANÇA"
+ },
+ {
+  "id": 227,
+  "codigo": 14123,
+  "nome": "DESTINAÇÃO DE BENS APREENDIDOS"
+ },
+ {
+  "id": 228,
+  "codigo": 15190,
+  "nome": "DESTITUIÇÃO DO PODER FAMILIAR"
+ },
+ {
+  "id": 229,
+  "codigo": 12552,
+  "nome": "DIREITOS POLÍTICOS"
+ },
+ {
+  "id": 230,
+  "codigo": 95,
+  "nome": "DIRETA DE INCONSTITUCIONALIDADE"
+ },
+ {
+  "id": 231,
+  "codigo": 96,
+  "nome": "DISCRIMINATÓRIA"
+ },
+ {
+  "id": 232,
+  "codigo": 97,
+  "nome": "DISSOLUÇÃO E LIQUIDAÇÃO DE SOCIEDADE"
+ },
+ {
+  "id": 233,
+  "codigo": 12086,
+  "nome": "DISSOLUÇÃO PARCIAL DE SOCIEDADE"
+ },
+ {
+  "id": 234,
+  "codigo": 987,
+  "nome": "DISSÍDIO COLETIVO"
+ },
+ {
+  "id": 235,
+  "codigo": 988,
+  "nome": "DISSÍDIO COLETIVO DE GREVE"
+ },
+ {
+  "id": 236,
+  "codigo": 98,
+  "nome": "DIVÓRCIO CONSENSUAL"
+ },
+ {
+  "id": 237,
+  "codigo": 12372,
+  "nome": "DIVÓRCIO CONSENSUAL"
+ },
+ {
+  "id": 238,
+  "codigo": 99,
+  "nome": "DIVÓRCIO LITIGIOSO"
+ },
+ {
+  "id": 239,
+  "codigo": 12373,
+  "nome": "DIVÓRCIO LITIGIOSO"
+ },
+ {
+  "id": 240,
+  "codigo": 12541,
+  "nome": "DIVÓRCIO LITIGIOSO"
+ },
+ {
+  "id": 241,
+  "codigo": 12553,
+  "nome": "DUPLICIDADE/PLURALIDADE DE INSCRIÇÕES - COINCIDÊNCIAS"
+ },
+ {
+  "id": 242,
+  "codigo": 100,
+  "nome": "DÚVIDA"
+ },
+ {
+  "id": 243,
+  "codigo": 1233,
+  "nome": "EFEITO SUSPENSIVO"
+ },
+ {
+  "id": 244,
+  "codigo": 1415,
+  "nome": "EMANCIPAÇÃO"
+ },
+ {
+  "id": 245,
+  "codigo": 169,
+  "nome": "EMBARGOS"
+ },
+ {
+  "id": 246,
+  "codigo": 207,
+  "nome": "EMBARGOS"
+ },
+ {
+  "id": 247,
+  "codigo": 1006,
+  "nome": "EMBARGOS"
+ },
+ {
+  "id": 248,
+  "codigo": 1327,
+  "nome": "EMBARGOS DE DECLARAÇÃO"
+ },
+ {
+  "id": 249,
+  "codigo": 420,
+  "nome": "EMBARGOS DE DECLARAÇÃO CRIMINAL"
+ },
+ {
+  "id": 250,
+  "codigo": 1689,
+  "nome": "EMBARGOS DE DECLARAÇÃO CÍVEL"
+ },
+ {
+  "id": 251,
+  "codigo": 11956,
+  "nome": "EMBARGOS DE DIVERGÊNCIA EM AGRAVO EM RECURSO ESPECIAL"
+ },
+ {
+  "id": 252,
+  "codigo": 1016,
+  "nome": "EMBARGOS DE DIVERGÊNCIA EM AGRAVO REGIMENTAL"
+ },
+ {
+  "id": 253,
+  "codigo": 1015,
+  "nome": "EMBARGOS DE DIVERGÊNCIA EM RECURSO DE MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": 254,
+  "codigo": 1137,
+  "nome": "EMBARGOS DE DIVERGÊNCIA EM RECURSO ESPECIAL"
+ },
+ {
+  "id": 255,
+  "codigo": 173,
+  "nome": "EMBARGOS DE RETENÇÃO POR BENFEITORIAS"
+ },
+ {
+  "id": 256,
+  "codigo": 327,
+  "nome": "EMBARGOS DE TERCEIRO CRIMINAL"
+ },
+ {
+  "id": 257,
+  "codigo": 37,
+  "nome": "EMBARGOS DE TERCEIRO CÍVEL"
+ },
+ {
+  "id": 258,
+  "codigo": 1704,
+  "nome": "EMBARGOS DE TERCEIRO INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 259,
+  "codigo": 1328,
+  "nome": "EMBARGOS DIVERGENTES"
+ },
+ {
+  "id": 260,
+  "codigo": 1715,
+  "nome": "EMBARGOS DO ACUSADO"
+ },
+ {
+  "id": 261,
+  "codigo": 11038,
+  "nome": "EMBARGOS EM AÇÃO PENAL MILITAR"
+ },
+ {
+  "id": 262,
+  "codigo": 208,
+  "nome": "EMBARGOS INFRINGENTES"
+ },
+ {
+  "id": 263,
+  "codigo": 1007,
+  "nome": "EMBARGOS INFRINGENTES"
+ },
+ {
+  "id": 264,
+  "codigo": 1329,
+  "nome": "EMBARGOS INFRINGENTES"
+ },
+ {
+  "id": 265,
+  "codigo": 421,
+  "nome": "EMBARGOS INFRINGENTES E DE NULIDADE"
+ },
+ {
+  "id": 266,
+  "codigo": 1037,
+  "nome": "EMBARGOS INFRINGENTES EM APELAÇÃO CÍVEL"
+ },
+ {
+  "id": 267,
+  "codigo": 1066,
+  "nome": "EMBARGOS INFRINGENTES EM AÇÃO RESCISÓRIA"
+ },
+ {
+  "id": 268,
+  "codigo": 210,
+  "nome": "EMBARGOS INFRINGENTES NA EXECUÇÃO FISCAL"
+ },
+ {
+  "id": 269,
+  "codigo": 12153,
+  "nome": "EMBARGOS PARCIAIS À AÇÃO MONITÓRIA"
+ },
+ {
+  "id": 270,
+  "codigo": 1365,
+  "nome": "EMBARGOS REMETIDOS"
+ },
+ {
+  "id": 271,
+  "codigo": 170,
+  "nome": "EMBARGOS À ADJUDICAÇÃO"
+ },
+ {
+  "id": 272,
+  "codigo": 171,
+  "nome": "EMBARGOS À ARREMATAÇÃO"
+ },
+ {
+  "id": 273,
+  "codigo": 172,
+  "nome": "EMBARGOS À EXECUÇÃO"
+ },
+ {
+  "id": 274,
+  "codigo": 1018,
+  "nome": "EMBARGOS À EXECUÇÃO EM AÇÃO RECISORIA"
+ },
+ {
+  "id": 275,
+  "codigo": 1017,
+  "nome": "EMBARGOS À EXECUÇÃO EM MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": 276,
+  "codigo": 1019,
+  "nome": "EMBARGOS À EXECUÇÃO EM MEDIDA CAUTELAR"
+ },
+ {
+  "id": 277,
+  "codigo": 1118,
+  "nome": "EMBARGOS À EXECUÇÃO FISCAL"
+ },
+ {
+  "id": 278,
+  "codigo": 15140,
+  "nome": "ENTREGA VOLUNTÁRIA"
+ },
+ {
+  "id": 279,
+  "codigo": 56,
+  "nome": "ESPECIALIZAÇÃO DE HIPOTECA LEGAL"
+ },
+ {
+  "id": 280,
+  "codigo": 408,
+  "nome": "EXCESSO OU DESVIO"
+ },
+ {
+  "id": 281,
+  "codigo": 324,
+  "nome": "EXCEÇÃO DA VERDADE"
+ },
+ {
+  "id": 282,
+  "codigo": 1063,
+  "nome": "EXCEÇÃO DA VERDADE"
+ },
+ {
+  "id": 283,
+  "codigo": 1366,
+  "nome": "EXCEÇÃO DA VERDADE"
+ },
+ {
+  "id": 284,
+  "codigo": 322,
+  "nome": "EXCEÇÃO DE COISA JULGADA"
+ },
+ {
+  "id": 285,
+  "codigo": 321,
+  "nome": "EXCEÇÃO DE ILEGITIMIDADE DE PARTE"
+ },
+ {
+  "id": 286,
+  "codigo": 323,
+  "nome": "EXCEÇÃO DE IMPEDIMENTO"
+ },
+ {
+  "id": 287,
+  "codigo": 1230,
+  "nome": "EXCEÇÃO DE IMPEDIMENTO"
+ },
+ {
+  "id": 288,
+  "codigo": 1672,
+  "nome": "EXCEÇÃO DE IMPEDIMENTO"
+ },
+ {
+  "id": 289,
+  "codigo": 10975,
+  "nome": "EXCEÇÃO DE IMPEDIMENTO INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 290,
+  "codigo": 1232,
+  "nome": "EXCEÇÃO DE INCOMPETÊNCIA"
+ },
+ {
+  "id": 291,
+  "codigo": 319,
+  "nome": "EXCEÇÃO DE INCOMPETÊNCIA DE JUÍZO"
+ },
+ {
+  "id": 292,
+  "codigo": 10976,
+  "nome": "EXCEÇÃO DE INCOMPETÊNCIA INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 293,
+  "codigo": 320,
+  "nome": "EXCEÇÃO DE LITISPENDÊNCIA"
+ },
+ {
+  "id": 294,
+  "codigo": 318,
+  "nome": "EXCEÇÃO DE SUSPEIÇÃO"
+ },
+ {
+  "id": 295,
+  "codigo": 1231,
+  "nome": "EXCEÇÃO DE SUSPEIÇÃO"
+ },
+ {
+  "id": 296,
+  "codigo": 1367,
+  "nome": "EXCEÇÃO DE SUSPEIÇÃO"
+ },
+ {
+  "id": 297,
+  "codigo": 1673,
+  "nome": "EXCEÇÃO DE SUSPEIÇÃO"
+ },
+ {
+  "id": 298,
+  "codigo": 10977,
+  "nome": "EXCEÇÃO DE SUSPEIÇÃO INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 299,
+  "codigo": 224,
+  "nome": "EXCEÇÕES"
+ },
+ {
+  "id": 300,
+  "codigo": 317,
+  "nome": "EXCEÇÕES"
+ },
+ {
+  "id": 301,
+  "codigo": 10971,
+  "nome": "EXCEÇÕES"
+ },
+ {
+  "id": 302,
+  "codigo": 1114,
+  "nome": "EXECUÇÃO CONTRA A FAZENDA PÚBLICA"
+ },
+ {
+  "id": 303,
+  "codigo": 386,
+  "nome": "EXECUÇÃO DA PENA"
+ },
+ {
+  "id": 304,
+  "codigo": 1112,
+  "nome": "EXECUÇÃO DE ALIMENTOS"
+ },
+ {
+  "id": 305,
+  "codigo": 1432,
+  "nome": "EXECUÇÃO DE ALIMENTOS INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 306,
+  "codigo": 993,
+  "nome": "EXECUÇÃO DE CERTIDÃO DE CRÉDITO JUDICIAL"
+ },
+ {
+  "id": 307,
+  "codigo": 1434,
+  "nome": "EXECUÇÃO DE MEDIDA DE PROTEÇÃO À CRIANÇA E ADOLESCENTE"
+ },
+ {
+  "id": 308,
+  "codigo": 11399,
+  "nome": "EXECUÇÃO DE MEDIDA DE SEGURANÇA"
+ },
+ {
+  "id": 309,
+  "codigo": 12729,
+  "nome": "EXECUÇÃO DE MEDIDAS ALTERNATIVAS NO JUÍZO COMUM"
+ },
+ {
+  "id": 310,
+  "codigo": 14696,
+  "nome": "EXECUÇÃO DE MEDIDAS ALTERNATIVAS NOS JUIZADOS ESPECIAIS"
+ },
+ {
+  "id": 311,
+  "codigo": 1465,
+  "nome": "EXECUÇÃO DE MEDIDAS SOCIOEDUCATIVAS"
+ },
+ {
+  "id": 312,
+  "codigo": 1435,
+  "nome": "EXECUÇÃO DE MULTA"
+ },
+ {
+  "id": 313,
+  "codigo": 12727,
+  "nome": "EXECUÇÃO DE PENA DE MULTA"
+ },
+ {
+  "id": 314,
+  "codigo": 991,
+  "nome": "EXECUÇÃO DE TERMO DE AJUSTE DE CONDUTA"
+ },
+ {
+  "id": 315,
+  "codigo": 992,
+  "nome": "EXECUÇÃO DE TERMO DE CONCILIAÇÃO DE CCP"
+ },
+ {
+  "id": 316,
+  "codigo": 159,
+  "nome": "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL"
+ },
+ {
+  "id": 317,
+  "codigo": 990,
+  "nome": "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL"
+ },
+ {
+  "id": 318,
+  "codigo": 12154,
+  "nome": "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL"
+ },
+ {
+  "id": 319,
+  "codigo": 12079,
+  "nome": "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL CONTRA A FAZENDA PÚBLICA"
+ },
+ {
+  "id": 320,
+  "codigo": 1111,
+  "nome": "EXECUÇÃO DE TÍTULO JUDICIAL"
+ },
+ {
+  "id": 321,
+  "codigo": 12251,
+  "nome": "EXECUÇÃO DE TÍTULO JUDICIAL - CEJUSC"
+ },
+ {
+  "id": 322,
+  "codigo": 1020,
+  "nome": "EXECUÇÃO EM AÇÃO RESCISÓRIA"
+ },
+ {
+  "id": 323,
+  "codigo": 1023,
+  "nome": "EXECUÇÃO EM MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": 324,
+  "codigo": 1024,
+  "nome": "EXECUÇÃO EM MEDIDA CAUTELAR"
+ },
+ {
+  "id": 325,
+  "codigo": 1021,
+  "nome": "EXECUÇÃO EM SENTENÇA ESTRANGEIRA"
+ },
+ {
+  "id": 326,
+  "codigo": 1022,
+  "nome": "EXECUÇÃO EM SENTENÇA ESTRANGEIRA CONTESTADA"
+ },
+ {
+  "id": 327,
+  "codigo": 12247,
+  "nome": "EXECUÇÃO EXTRAJUDICIAL DE ALIMENTOS"
+ },
+ {
+  "id": 328,
+  "codigo": 1116,
+  "nome": "EXECUÇÃO FISCAL"
+ },
+ {
+  "id": 329,
+  "codigo": 1117,
+  "nome": "EXECUÇÃO HIPOTECÁRIA DO SISTEMA FINANCEIRO DA HABITAÇÃO"
+ },
+ {
+  "id": 330,
+  "codigo": 385,
+  "nome": "EXECUÇÃO PENAL E DE MEDIDAS ALTERNATIVAS"
+ },
+ {
+  "id": 331,
+  "codigo": 1714,
+  "nome": "EXECUÇÃO PROVISÓRIA"
+ },
+ {
+  "id": 332,
+  "codigo": 994,
+  "nome": "EXECUÇÃO PROVISÓRIA EM AUTOS SUPLEMENTARES"
+ },
+ {
+  "id": 333,
+  "codigo": 186,
+  "nome": "EXIBIÇÃO"
+ },
+ {
+  "id": 334,
+  "codigo": 11788,
+  "nome": "EXIBIÇÃO DE DOCUMENTO OU COISA CRIMINAL"
+ },
+ {
+  "id": 335,
+  "codigo": 228,
+  "nome": "EXIBIÇÃO DE DOCUMENTO OU COISA CÍVEL"
+ },
+ {
+  "id": 336,
+  "codigo": 10972,
+  "nome": "EXIBIÇÃO DE DOCUMENTO OU COISA INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 337,
+  "codigo": 107,
+  "nome": "EXPROPRIAÇÃO DA LEI 8.257/91"
+ },
+ {
+  "id": 338,
+  "codigo": 12762,
+  "nome": "EXTINÇÃO CONSENSUAL DE UNIÃO ESTÁVEL"
+ },
+ {
+  "id": 339,
+  "codigo": 11397,
+  "nome": "EXTINÇÃO DAS OBRIGAÇÕES DO FALIDO"
+ },
+ {
+  "id": 340,
+  "codigo": 1330,
+  "nome": "EXTRADIÇÃO"
+ },
+ {
+  "id": 341,
+  "codigo": 108,
+  "nome": "FALÊNCIA DE EMPRESÁRIOS, SOCIEDADES EMPRESÁRIAIS, MICROEMPRESAS E EMPRESAS DE PEQUENO PORTE"
+ },
+ {
+  "id": 342,
+  "codigo": 12554,
+  "nome": "FILIAÇÃO PARTIDÁRIA"
+ },
+ {
+  "id": 343,
+  "codigo": 12230,
+  "nome": "GUARDA C/C DESTITUIÇÃO DO PODER FAMILIAR"
+ },
+ {
+  "id": 344,
+  "codigo": 14671,
+  "nome": "GUARDA DE FAMÍLIA"
+ },
+ {
+  "id": 345,
+  "codigo": 1420,
+  "nome": "GUARDA DE INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 346,
+  "codigo": 1331,
+  "nome": "HABEAS CORPUS"
+ },
+ {
+  "id": 347,
+  "codigo": 1720,
+  "nome": "HABEAS CORPUS"
+ },
+ {
+  "id": 348,
+  "codigo": 307,
+  "nome": "HABEAS CORPUS CRIMINAL"
+ },
+ {
+  "id": 349,
+  "codigo": 1269,
+  "nome": "HABEAS CORPUS CÍVEL"
+ },
+ {
+  "id": 350,
+  "codigo": 1049,
+  "nome": "HABEAS DATA"
+ },
+ {
+  "id": 351,
+  "codigo": 1332,
+  "nome": "HABEAS DATA"
+ },
+ {
+  "id": 352,
+  "codigo": 14701,
+  "nome": "HABEAS DATA CRIMINAL"
+ },
+ {
+  "id": 353,
+  "codigo": 110,
+  "nome": "HABEAS DATA CÍVEL"
+ },
+ {
+  "id": 354,
+  "codigo": 38,
+  "nome": "HABILITAÇÃO"
+ },
+ {
+  "id": 355,
+  "codigo": 111,
+  "nome": "HABILITAÇÃO DE CRÉDITO"
+ },
+ {
+  "id": 356,
+  "codigo": 10933,
+  "nome": "HABILITAÇÃO PARA ADOÇÃO"
+ },
+ {
+  "id": 357,
+  "codigo": 239,
+  "nome": "HABILITAÇÃO PARA CASAMENTO"
+ },
+ {
+  "id": 358,
+  "codigo": 57,
+  "nome": "HERANÇA JACENTE"
+ },
+ {
+  "id": 359,
+  "codigo": 12374,
+  "nome": "HOMOLOGAÇÃO DA TRANSAÇÃO EXTRAJUDICIAL"
+ },
+ {
+  "id": 360,
+  "codigo": 112,
+  "nome": "HOMOLOGAÇÃO DE TRANSAÇÃO EXTRAJUDICIAL"
+ },
+ {
+  "id": 361,
+  "codigo": 188,
+  "nome": "HOMOLOGAÇÃO DO PENHOR LEGAL"
+ },
+ {
+  "id": 362,
+  "codigo": 12761,
+  "nome": "HOMOLOGAÇÃO DO PENHOR LEGAL"
+ },
+ {
+  "id": 363,
+  "codigo": 12077,
+  "nome": "HOMOLOGAÇÃO EM ACORDO DE COLABORAÇÃO PREMIADA"
+ },
+ {
+  "id": 364,
+  "codigo": 113,
+  "nome": "IMISSÃO NA POSSE"
+ },
+ {
+  "id": 365,
+  "codigo": 10981,
+  "nome": "IMPUGNAÇÃO AO CUMPRIMENTO  DE DECISÃO"
+ },
+ {
+  "id": 366,
+  "codigo": 229,
+  "nome": "IMPUGNAÇÃO AO CUMPRIMENTO DE SENTENÇA"
+ },
+ {
+  "id": 367,
+  "codigo": 230,
+  "nome": "IMPUGNAÇÃO AO PEDIDO DE ASSISTÊNCIA LITISCONSORCIAL OU SIMPLES"
+ },
+ {
+  "id": 368,
+  "codigo": 11789,
+  "nome": "IMPUGNAÇÃO AO VALOR DA CAUSA"
+ },
+ {
+  "id": 369,
+  "codigo": 231,
+  "nome": "IMPUGNAÇÃO AO VALOR DA CAUSA CÍVEL"
+ },
+ {
+  "id": 370,
+  "codigo": 10973,
+  "nome": "IMPUGNAÇÃO AO VALOR DA CAUSA INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 371,
+  "codigo": 1702,
+  "nome": "IMPUGNAÇÃO DE ASSISTÊNCIA JUDICIÁRIA"
+ },
+ {
+  "id": 372,
+  "codigo": 11790,
+  "nome": "IMPUGNAÇÃO DE ASSISTÊNCIA JUDICIÁRIA"
+ },
+ {
+  "id": 373,
+  "codigo": 114,
+  "nome": "IMPUGNAÇÃO DE CRÉDITO"
+ },
+ {
+  "id": 374,
+  "codigo": 12556,
+  "nome": "IMPUGNAÇÃO PERANTE AS JUNTAS ELEITORAIS"
+ },
+ {
+  "id": 375,
+  "codigo": 12555,
+  "nome": "IMPUGNAÇÃO À COMPOSIÇÃO DE JUNTA ELEITORAL"
+ },
+ {
+  "id": 376,
+  "codigo": 1178,
+  "nome": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CRIMINAL"
+ },
+ {
+  "id": 377,
+  "codigo": 216,
+  "nome": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL"
+ },
+ {
+  "id": 378,
+  "codigo": 12087,
+  "nome": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA"
+ },
+ {
+  "id": 379,
+  "codigo": 12119,
+  "nome": "INCIDENTE DE DESCONSIDERAÇÃO DE PERSONALIDADE JURÍDICA"
+ },
+ {
+  "id": 380,
+  "codigo": 1025,
+  "nome": "INCIDENTE DE DESLOCAMENTO DE COMPETÊNCIA"
+ },
+ {
+  "id": 381,
+  "codigo": 232,
+  "nome": "INCIDENTE DE FALSIDADE"
+ },
+ {
+  "id": 382,
+  "codigo": 332,
+  "nome": "INCIDENTE DE FALSIDADE"
+ },
+ {
+  "id": 383,
+  "codigo": 10974,
+  "nome": "INCIDENTE DE FALSIDADE INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 384,
+  "codigo": 12080,
+  "nome": "INCIDENTE DE IMPEDIMENTO CÍVEL"
+ },
+ {
+  "id": 385,
+  "codigo": 12386,
+  "nome": "INCIDENTE DE IMPEDIMENTO INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 386,
+  "codigo": 12060,
+  "nome": "INCIDENTE DE IMPEDIMENTO/SUSPEIÇÃO"
+ },
+ {
+  "id": 387,
+  "codigo": 12132,
+  "nome": "INCIDENTE DE JULGAMENTO DE RECURSO DE REVISTA E DE EMBARGOS REPETITIVOS"
+ },
+ {
+  "id": 388,
+  "codigo": 12085,
+  "nome": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS"
+ },
+ {
+  "id": 389,
+  "codigo": 10960,
+  "nome": "INCIDENTE DE SANIDADE MENTAL"
+ },
+ {
+  "id": 390,
+  "codigo": 12081,
+  "nome": "INCIDENTE DE SUSPEIÇÃO CÍVEL"
+ },
+ {
+  "id": 391,
+  "codigo": 12388,
+  "nome": "INCIDENTE DE SUSPEIÇÃO INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 392,
+  "codigo": 233,
+  "nome": "INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA"
+ },
+ {
+  "id": 393,
+  "codigo": 433,
+  "nome": "INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA"
+ },
+ {
+  "id": 394,
+  "codigo": 12391,
+  "nome": "INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA"
+ },
+ {
+  "id": 395,
+  "codigo": 215,
+  "nome": "INCIDENTES"
+ },
+ {
+  "id": 396,
+  "codigo": 331,
+  "nome": "INCIDENTES"
+ },
+ {
+  "id": 397,
+  "codigo": 406,
+  "nome": "INCIDENTES"
+ },
+ {
+  "id": 398,
+  "codigo": 10969,
+  "nome": "INCIDENTES"
+ },
+ {
+  "id": 399,
+  "codigo": 1070,
+  "nome": "INCIDENTES TRABALHISTAS"
+ },
+ {
+  "id": 400,
+  "codigo": 410,
+  "nome": "INDULTO"
+ },
+ {
+  "id": 401,
+  "codigo": 1333,
+  "nome": "INQUERITO"
+ },
+ {
+  "id": 402,
+  "codigo": 1042,
+  "nome": "INQUÉRITO"
+ },
+ {
+  "id": 403,
+  "codigo": 1368,
+  "nome": "INQUÉRITO ADMINISTRATIVO"
+ },
+ {
+  "id": 404,
+  "codigo": 12466,
+  "nome": "INQUÉRITO ADMINISTRATIVO"
+ },
+ {
+  "id": 405,
+  "codigo": 115,
+  "nome": "INQUÉRITO EXTRAJUDICIAL"
+ },
+ {
+  "id": 406,
+  "codigo": 986,
+  "nome": "INQUÉRITO PARA APURAÇÃO DE FALTA GRAVE"
+ },
+ {
+  "id": 407,
+  "codigo": 279,
+  "nome": "INQUÉRITO POLICIAL"
+ },
+ {
+  "id": 408,
+  "codigo": 1369,
+  "nome": "INQUÉRITO POLICIAL"
+ },
+ {
+  "id": 409,
+  "codigo": 1370,
+  "nome": "INQUÉRITO POLICIAL ESPECIAL"
+ },
+ {
+  "id": 410,
+  "codigo": 11041,
+  "nome": "INQUÉRITO POLICIAL MILITAR"
+ },
+ {
+  "id": 411,
+  "codigo": 333,
+  "nome": "INSANIDADE MENTAL DO ACUSADO"
+ },
+ {
+  "id": 412,
+  "codigo": 165,
+  "nome": "INSOLVÊNCIA CIVIL"
+ },
+ {
+  "id": 413,
+  "codigo": 166,
+  "nome": "INSOLVÊNCIA REQUERIDA PELO CREDOR"
+ },
+ {
+  "id": 414,
+  "codigo": 167,
+  "nome": "INSOLVÊNCIA REQUERIDA PELO DEVEDOR OU PELO ESPÓLIO"
+ },
+ {
+  "id": 415,
+  "codigo": 1304,
+  "nome": "INSPEÇÃO"
+ },
+ {
+  "id": 416,
+  "codigo": 15196,
+  "nome": "INSPEÇÃO"
+ },
+ {
+  "id": 417,
+  "codigo": 11544,
+  "nome": "INSTRUÇÃO"
+ },
+ {
+  "id": 418,
+  "codigo": 240,
+  "nome": "INSTRUÇÃO DE RESCISÓRIA"
+ },
+ {
+  "id": 419,
+  "codigo": 11553,
+  "nome": "INSTRUÇÃO PROVISÓRIA DE DESERÇÃO"
+ },
+ {
+  "id": 420,
+  "codigo": 11800,
+  "nome": "INSTRUÇÃO PROVISÓRIA DE DESERÇÃO"
+ },
+ {
+  "id": 421,
+  "codigo": 11799,
+  "nome": "INSTRUÇÃO PROVISÓRIA DE INSUBMISSÃO"
+ },
+ {
+  "id": 422,
+  "codigo": 11044,
+  "nome": "INSUBMISSÃO"
+ },
+ {
+  "id": 423,
+  "codigo": 1709,
+  "nome": "INTERDITO PROIBITÓRIO"
+ },
+ {
+  "id": 424,
+  "codigo": 58,
+  "nome": "INTERDIÇÃO/CURATELA"
+ },
+ {
+  "id": 425,
+  "codigo": 1466,
+  "nome": "INTERNAÇÃO COM ATIVIDADES EXTERNAS"
+ },
+ {
+  "id": 426,
+  "codigo": 12073,
+  "nome": "INTERNAÇÃO PROVISÓRIA"
+ },
+ {
+  "id": 427,
+  "codigo": 1467,
+  "nome": "INTERNAÇÃO SEM ATIVIDADES EXTERNAS"
+ },
+ {
+  "id": 428,
+  "codigo": 1371,
+  "nome": "INTERPELAÇÃO"
+ },
+ {
+  "id": 429,
+  "codigo": 1726,
+  "nome": "INTERPELAÇÃO"
+ },
+ {
+  "id": 430,
+  "codigo": 12227,
+  "nome": "INTERPELAÇÃO"
+ },
+ {
+  "id": 431,
+  "codigo": 1034,
+  "nome": "INTERPELAÇÃO JUDICIAL"
+ },
+ {
+  "id": 432,
+  "codigo": 274,
+  "nome": "INTERPELAÇÕES"
+ },
+ {
+  "id": 433,
+  "codigo": 1297,
+  "nome": "INTERVENÇÃO EM MUNICÍPIO"
+ },
+ {
+  "id": 434,
+  "codigo": 1334,
+  "nome": "INTERVENÇÃO FEDERAL"
+ },
+ {
+  "id": 435,
+  "codigo": 1674,
+  "nome": "INTERVENÇÃO FEDERAL"
+ },
+ {
+  "id": 436,
+  "codigo": 39,
+  "nome": "INVENTÁRIO"
+ },
+ {
+  "id": 437,
+  "codigo": 1731,
+  "nome": "INVESTIGAÇÃO CONTRA MAGISTRADO"
+ },
+ {
+  "id": 438,
+  "codigo": 190,
+  "nome": "JUSTIFICAÇÃO"
+ },
+ {
+  "id": 439,
+  "codigo": 1124,
+  "nome": "JUSTIFICAÇÃO DE DINHEIRO A RISCO"
+ },
+ {
+  "id": 440,
+  "codigo": 304,
+  "nome": "LIBERDADE"
+ },
+ {
+  "id": 441,
+  "codigo": 1469,
+  "nome": "LIBERDADE ASSISTIDA"
+ },
+ {
+  "id": 442,
+  "codigo": 305,
+  "nome": "LIBERDADE PROVISÓRIA COM OU SEM FIANÇA"
+ },
+ {
+  "id": 443,
+  "codigo": 1372,
+  "nome": "LIQUIDAÇÃO DE SENTENÇA"
+ },
+ {
+  "id": 444,
+  "codigo": 152,
+  "nome": "LIQUIDAÇÃO DE SENTENÇA PELO PROCEDIMENTO COMUM"
+ },
+ {
+  "id": 445,
+  "codigo": 151,
+  "nome": "LIQUIDAÇÃO POR ARBITRAMENTO"
+ },
+ {
+  "id": 446,
+  "codigo": 154,
+  "nome": "LIQUIDAÇÃO PROVISÓRIA DE SENTENÇA PELO PROCEDIMENTO COMUM"
+ },
+ {
+  "id": 447,
+  "codigo": 12088,
+  "nome": "LIQUIDAÇÃO PROVISÓRIA DE SENTENÇA PELO PROCEDIMENTO COMUM"
+ },
+ {
+  "id": 448,
+  "codigo": 153,
+  "nome": "LIQUIDAÇÃO PROVISÓRIA POR ARBITRAMENTO"
+ },
+ {
+  "id": 449,
+  "codigo": 12560,
+  "nome": "LISTA DE APOIAMENTO PARA CRIAÇÃO DE PARTIDO POLÍTICO"
+ },
+ {
+  "id": 450,
+  "codigo": 11545,
+  "nome": "LISTA TRÍPLICE"
+ },
+ {
+  "id": 451,
+  "codigo": 12128,
+  "nome": "LIVRAMENTO CONDICIONAL"
+ },
+ {
+  "id": 452,
+  "codigo": 118,
+  "nome": "MANDADO DE INJUNÇÃO"
+ },
+ {
+  "id": 453,
+  "codigo": 1335,
+  "nome": "MANDADO DE INJUNÇÃO"
+ },
+ {
+  "id": 454,
+  "codigo": 1675,
+  "nome": "MANDADO DE INJUNÇÃO"
+ },
+ {
+  "id": 455,
+  "codigo": 1029,
+  "nome": "MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": 456,
+  "codigo": 1336,
+  "nome": "MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": 457,
+  "codigo": 119,
+  "nome": "MANDADO DE SEGURANÇA COLETIVO"
+ },
+ {
+  "id": 458,
+  "codigo": 1710,
+  "nome": "MANDADO DE SEGURANÇA CRIMINAL"
+ },
+ {
+  "id": 459,
+  "codigo": 120,
+  "nome": "MANDADO DE SEGURANÇA CÍVEL"
+ },
+ {
+  "id": 460,
+  "codigo": 1691,
+  "nome": "MANDADO DE SEGURANÇA INFÂNCIA E JUVENTUDE CÍVEL"
+ },
+ {
+  "id": 461,
+  "codigo": 1062,
+  "nome": "MEDIDA CAUTELAR"
+ },
+ {
+  "id": 462,
+  "codigo": 1337,
+  "nome": "MEDIDA CAUTELAR"
+ },
+ {
+  "id": 463,
+  "codigo": 328,
+  "nome": "MEDIDAS ASSECURATÓRIAS"
+ },
+ {
+  "id": 464,
+  "codigo": 308,
+  "nome": "MEDIDAS CAUTELARES"
+ },
+ {
+  "id": 465,
+  "codigo": 14734,
+  "nome": "MEDIDAS DE PROTEÇÃO - CRIANÇA E ADOLESCENTE (LEI 13.431) CRIMINAIS"
+ },
+ {
+  "id": 466,
+  "codigo": 15172,
+  "nome": "MEDIDAS DE PROTEÇÃO - CRIANÇA E ADOLESCENTE (LEI 13.431) INFRACIONAIS"
+ },
+ {
+  "id": 467,
+  "codigo": 10967,
+  "nome": "MEDIDAS DE PROTEÇÃO À PESSOA IDOSA - CRIMINAL"
+ },
+ {
+  "id": 468,
+  "codigo": 12424,
+  "nome": "MEDIDAS DE PROTEÇÃO À PESSOA IDOSA - INFRACIONAL"
+ },
+ {
+  "id": 469,
+  "codigo": 303,
+  "nome": "MEDIDAS GARANTIDORAS"
+ },
+ {
+  "id": 470,
+  "codigo": 311,
+  "nome": "MEDIDAS INVESTIGATÓRIAS SOBRE ORGANIZAÇÕES CRIMINOSAS"
+ },
+ {
+  "id": 471,
+  "codigo": 269,
+  "nome": "MEDIDAS PREPARATÓRIAS"
+ },
+ {
+  "id": 472,
+  "codigo": 1268,
+  "nome": "MEDIDAS PROTETIVAS DE URGÊNCIA (LEI MARIA DA PENHA)  - CRIMINAL"
+ },
+ {
+  "id": 473,
+  "codigo": 15309,
+  "nome": "MEDIDAS PROTETIVAS DE URGÊNCIA (LEI MARIA DA PENHA) - CÍVEL"
+ },
+ {
+  "id": 474,
+  "codigo": 12423,
+  "nome": "MEDIDAS PROTETIVAS DE URGÊNCIA (LEI MARIA DA PENHA) - INFRACIONAL"
+ },
+ {
+  "id": 475,
+  "codigo": 15170,
+  "nome": "MEDIDAS PROTETIVAS DE URGÊNCIA - CRIANÇAS E ADOLESCENTES (LEI HENRY BOREL - LEI 14.344/2022) CRIMINAIS"
+ },
+ {
+  "id": 476,
+  "codigo": 15171,
+  "nome": "MEDIDAS PROTETIVAS DE URGÊNCIA - CRIANÇAS E ADOLESCENTES (LEI HENRY BOREL - LEI 14.344/2022) INFRACIONAIS"
+ },
+ {
+  "id": 477,
+  "codigo": 40,
+  "nome": "MONITÓRIA"
+ },
+ {
+  "id": 478,
+  "codigo": 121,
+  "nome": "NATURALIZAÇÃO"
+ },
+ {
+  "id": 479,
+  "codigo": 1701,
+  "nome": "NOMEAÇÃO DE ADVOGADO"
+ },
+ {
+  "id": 480,
+  "codigo": 11889,
+  "nome": "NOTA TÉCNICA"
+ },
+ {
+  "id": 481,
+  "codigo": 1373,
+  "nome": "NOTIFICAÇÃO"
+ },
+ {
+  "id": 482,
+  "codigo": 1725,
+  "nome": "NOTIFICAÇÃO"
+ },
+ {
+  "id": 483,
+  "codigo": 12226,
+  "nome": "NOTIFICAÇÃO"
+ },
+ {
+  "id": 484,
+  "codigo": 275,
+  "nome": "NOTIFICAÇÃO PARA EXPLICAÇÕES"
+ },
+ {
+  "id": 485,
+  "codigo": 276,
+  "nome": "NOTIFICAÇÃO PARA EXPLICAÇÕES (LEI DE IMPRENSA)"
+ },
+ {
+  "id": 486,
+  "codigo": 12561,
+  "nome": "NOTÍCIA DE IRREGULARIDADE EM PROPAGANDA ELEITORAL"
+ },
+ {
+  "id": 487,
+  "codigo": 270,
+  "nome": "NOTÍCIA-CRIME"
+ },
+ {
+  "id": 488,
+  "codigo": 41,
+  "nome": "NUNCIAÇÃO DE OBRA NOVA"
+ },
+ {
+  "id": 489,
+  "codigo": 1471,
+  "nome": "OBRIGAÇÃO DE REPARAR O DANO"
+ },
+ {
+  "id": 490,
+  "codigo": 236,
+  "nome": "OPOSIÇÃO"
+ },
+ {
+  "id": 491,
+  "codigo": 122,
+  "nome": "OPÇÃO DE NACIONALIDADE"
+ },
+ {
+  "id": 492,
+  "codigo": 59,
+  "nome": "ORGANIZAÇÃO E FISCALIZAÇÃO DE FUNDAÇÃO"
+ },
+ {
+  "id": 493,
+  "codigo": 1289,
+  "nome": "OUTRAS MEDIDAS PROVISIONAIS"
+ },
+ {
+  "id": 494,
+  "codigo": 12129,
+  "nome": "OUTROS INCIDENTES DE EXECUÇÃO INICIADOS DE OFÍCIO"
+ },
+ {
+  "id": 495,
+  "codigo": 214,
+  "nome": "OUTROS PROCEDIMENTOS"
+ },
+ {
+  "id": 496,
+  "codigo": 1294,
+  "nome": "OUTROS PROCEDIMENTOS DE JURISDIÇÃO VOLUNTÁRIA"
+ },
+ {
+  "id": 497,
+  "codigo": 11890,
+  "nome": "PARECER DE MÉRITO SOBRE ANTEPROJETO DE LEI"
+ },
+ {
+  "id": 498,
+  "codigo": 273,
+  "nome": "PEDIDO DE ARQUIVAMENTO EM REPRESENTAÇÃO CRIMINAL"
+ },
+ {
+  "id": 499,
+  "codigo": 1374,
+  "nome": "PEDIDO DE AVOCAÇÃO"
+ },
+ {
+  "id": 500,
+  "codigo": 309,
+  "nome": "PEDIDO DE BUSCA E APREENSÃO CRIMINAL"
+ },
+ {
+  "id": 501,
+  "codigo": 11976,
+  "nome": "PEDIDO DE BUSCA E APREENSÃO INFRACIONAL"
+ },
+ {
+  "id": 502,
+  "codigo": 12248,
+  "nome": "PEDIDO DE COOPERAÇÃO JUDICIÁRIA"
+ },
+ {
+  "id": 503,
+  "codigo": 11552,
+  "nome": "PEDIDO DE DESAFORAMENTO"
+ },
+ {
+  "id": 504,
+  "codigo": 12074,
+  "nome": "PEDIDO DE DESINTERNAÇÃO/REAVALIAÇÃO/SUBSTITUIÇÃO/SUSPENSÃO DA MEDIDA"
+ },
+ {
+  "id": 505,
+  "codigo": 12357,
+  "nome": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO"
+ },
+ {
+  "id": 506,
+  "codigo": 14676,
+  "nome": "PEDIDO DE INCLUSÃO NO CADASTRO DE PROGRAMA DE APADRINHAMENTO"
+ },
+ {
+  "id": 507,
+  "codigo": 12136,
+  "nome": "PEDIDO DE MEDIAÇÃO PRÉ-PROCESSUAL"
+ },
+ {
+  "id": 508,
+  "codigo": 12070,
+  "nome": "PEDIDO DE MEDIDA DE PROTEÇÃO"
+ },
+ {
+  "id": 509,
+  "codigo": 312,
+  "nome": "PEDIDO DE PRISÃO"
+ },
+ {
+  "id": 510,
+  "codigo": 313,
+  "nome": "PEDIDO DE PRISÃO PREVENTIVA"
+ },
+ {
+  "id": 511,
+  "codigo": 314,
+  "nome": "PEDIDO DE PRISÃO TEMPORÁRIA"
+ },
+ {
+  "id": 512,
+  "codigo": 315,
+  "nome": "PEDIDO DE PRISÃO/ LIBERDADE VIGIADA PARA FINS DE EXPULSÃO"
+ },
+ {
+  "id": 513,
+  "codigo": 1199,
+  "nome": "PEDIDO DE PROVIDÊNCIAS"
+ },
+ {
+  "id": 514,
+  "codigo": 310,
+  "nome": "PEDIDO DE QUEBRA DE SIGILO DE DADOS E/OU TELEFÔNICO"
+ },
+ {
+  "id": 515,
+  "codigo": 124,
+  "nome": "PEDIDO DE RESPOSTA OU RETIFICAÇÃO DA LEI DE IMPRENSA"
+ },
+ {
+  "id": 516,
+  "codigo": 1072,
+  "nome": "PEDIDO DE REVISÃO DO VALOR DA CAUSA"
+ },
+ {
+  "id": 517,
+  "codigo": 11791,
+  "nome": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CRIMINAL"
+ },
+ {
+  "id": 518,
+  "codigo": 457,
+  "nome": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CÍVEL"
+ },
+ {
+  "id": 519,
+  "codigo": 1426,
+  "nome": "PERDA OU SUSPENSÃO DO PODER FAMILIAR"
+ },
+ {
+  "id": 520,
+  "codigo": 12562,
+  "nome": "PET-ADM"
+ },
+ {
+  "id": 521,
+  "codigo": 1057,
+  "nome": "PETIÇÃO"
+ },
+ {
+  "id": 522,
+  "codigo": 1338,
+  "nome": "PETIÇÃO"
+ },
+ {
+  "id": 523,
+  "codigo": 12465,
+  "nome": "PETIÇÃO CORREGEDORIA"
+ },
+ {
+  "id": 524,
+  "codigo": 1727,
+  "nome": "PETIÇÃO CRIMINAL"
+ },
+ {
+  "id": 525,
+  "codigo": 241,
+  "nome": "PETIÇÃO CÍVEL"
+ },
+ {
+  "id": 526,
+  "codigo": 10979,
+  "nome": "PETIÇÃO INFRACIONAL"
+ },
+ {
+  "id": 527,
+  "codigo": 11026,
+  "nome": "PETIÇÃO INFÂNCIA E JUVENTUDE CÍVEL"
+ },
+ {
+  "id": 528,
+  "codigo": 192,
+  "nome": "POSSE EM NOME DO NASCITURO"
+ },
+ {
+  "id": 529,
+  "codigo": 1265,
+  "nome": "PRECATÓRIO"
+ },
+ {
+  "id": 530,
+  "codigo": 1677,
+  "nome": "PRECATÓRIO"
+ },
+ {
+  "id": 531,
+  "codigo": 11531,
+  "nome": "PRESTAÇÃO DE CONTAS"
+ },
+ {
+  "id": 532,
+  "codigo": 44,
+  "nome": "PRESTAÇÃO DE CONTAS - OFERECIDAS"
+ },
+ {
+  "id": 533,
+  "codigo": 12377,
+  "nome": "PRESTAÇÃO DE CONTAS ANUAL"
+ },
+ {
+  "id": 534,
+  "codigo": 12193,
+  "nome": "PRESTAÇÃO DE CONTAS ELEITORAIS"
+ },
+ {
+  "id": 535,
+  "codigo": 1425,
+  "nome": "PRESTAÇÃO DE CONTAS INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 536,
+  "codigo": 1470,
+  "nome": "PRESTAÇÃO DE SERVIÇOS A COMUNIDADE"
+ },
+ {
+  "id": 537,
+  "codigo": 1339,
+  "nome": "PRISÃO PREVENTIVA PARA EXTRADIÇÃO"
+ },
+ {
+  "id": 538,
+  "codigo": 281,
+  "nome": "PROCEDIMENTO COMUM"
+ },
+ {
+  "id": 539,
+  "codigo": 7,
+  "nome": "PROCEDIMENTO COMUM CÍVEL"
+ },
+ {
+  "id": 540,
+  "codigo": 1706,
+  "nome": "PROCEDIMENTO COMUM INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 541,
+  "codigo": 12075,
+  "nome": "PROCEDIMENTO CONCILIATÓRIO"
+ },
+ {
+  "id": 542,
+  "codigo": 1107,
+  "nome": "PROCEDIMENTO DE CONHECIMENTO"
+ },
+ {
+  "id": 543,
+  "codigo": 11891,
+  "nome": "PROCEDIMENTO DE CONTROLE ADMINISTRATIVO"
+ },
+ {
+  "id": 544,
+  "codigo": 155,
+  "nome": "PROCEDIMENTO DE CUMPRIMENTO DE SENTENÇA/DECISÃO"
+ },
+ {
+  "id": 545,
+  "codigo": 15708,
+  "nome": "PROCEDIMENTO DE JUSTIÇA RESTAURATIVA ADMINISTRATIVO"
+ },
+ {
+  "id": 546,
+  "codigo": 15710,
+  "nome": "PROCEDIMENTO DE JUSTIÇA RESTAURATIVA EM EXECUÇÃO PENAL"
+ },
+ {
+  "id": 547,
+  "codigo": 15709,
+  "nome": "PROCEDIMENTO DE JUSTIÇA RESTAURATIVA PRÉ-PROCESSUAL"
+ },
+ {
+  "id": 548,
+  "codigo": 150,
+  "nome": "PROCEDIMENTO DE LIQUIDAÇÃO"
+ },
+ {
+  "id": 549,
+  "codigo": 15217,
+  "nome": "PROCEDIMENTO DE REPACTUAÇÃO DE DÍVIDAS (SUPERENDIVIDAMENTO)"
+ },
+ {
+  "id": 550,
+  "codigo": 299,
+  "nome": "PROCEDIMENTO DO JUIZADO ESPECIAL CRIMINAL - SUMARIÍSSIMO"
+ },
+ {
+  "id": 551,
+  "codigo": 436,
+  "nome": "PROCEDIMENTO DO JUIZADO ESPECIAL CÍVEL"
+ },
+ {
+  "id": 552,
+  "codigo": 14695,
+  "nome": "PROCEDIMENTO DO JUIZADO ESPECIAL DA FAZENDA PÚBLICA"
+ },
+ {
+  "id": 553,
+  "codigo": 11031,
+  "nome": "PROCEDIMENTO ESPECIAL"
+ },
+ {
+  "id": 554,
+  "codigo": 300,
+  "nome": "PROCEDIMENTO ESPECIAL DA LEI ANTITÓXICOS"
+ },
+ {
+  "id": 555,
+  "codigo": 302,
+  "nome": "PROCEDIMENTO ESPECIAL DOS CRIMES DE ABUSO DE AUTORIDADE"
+ },
+ {
+  "id": 556,
+  "codigo": 1733,
+  "nome": "PROCEDIMENTO INVESTIGATÓRIO CRIMINAL (PIC-MP)"
+ },
+ {
+  "id": 557,
+  "codigo": 50000,
+  "nome": "PROCEDIMENTO ORDINÁRIO"
+ },
+ {
+  "id": 558,
+  "codigo": 15545,
+  "nome": "PROCEDIMENTO RELATIVO À POSSE DE MACONHA PARA CONSUMO PESSOAL"
+ },
+ {
+  "id": 559,
+  "codigo": 22,
+  "nome": "PROCEDIMENTO SUMÁRIO"
+ },
+ {
+  "id": 560,
+  "codigo": 1198,
+  "nome": "PROCEDIMENTOS ADMINISTRATIVOS"
+ },
+ {
+  "id": 561,
+  "codigo": 11540,
+  "nome": "PROCEDIMENTOS ADMINISTRATIVOS DA JUSTIÇA ELEITORAL"
+ },
+ {
+  "id": 562,
+  "codigo": 12071,
+  "nome": "PROCEDIMENTOS CAUTELARES"
+ },
+ {
+  "id": 563,
+  "codigo": 547,
+  "nome": "PROCEDIMENTOS DE INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 564,
+  "codigo": 26,
+  "nome": "PROCEDIMENTOS ESPECIAIS"
+ },
+ {
+  "id": 565,
+  "codigo": 27,
+  "nome": "PROCEDIMENTOS ESPECIAIS DE JURISDIÇÃO CONTENCIOSA"
+ },
+ {
+  "id": 566,
+  "codigo": 50,
+  "nome": "PROCEDIMENTOS ESPECIAIS DE JURISDIÇÃO VOLUNTÁRIA"
+ },
+ {
+  "id": 567,
+  "codigo": 11029,
+  "nome": "PROCEDIMENTOS ESPECIAIS PREVISTOS EM LEIS ESPARSAS"
+ },
+ {
+  "id": 568,
+  "codigo": 277,
+  "nome": "PROCEDIMENTOS INVESTIGATÓRIOS"
+ },
+ {
+  "id": 569,
+  "codigo": 1460,
+  "nome": "PROCEDIMENTOS INVESTIGATÓRIOS"
+ },
+ {
+  "id": 570,
+  "codigo": 11032,
+  "nome": "PROCEDIMENTOS INVESTIGATÓRIOS"
+ },
+ {
+  "id": 571,
+  "codigo": 11099,
+  "nome": "PROCEDIMENTOS PRÉ-PROCESSUAIS DE RESOLUÇÃO CONSENSUAL DE CONFLITOS"
+ },
+ {
+  "id": 572,
+  "codigo": 62,
+  "nome": "PROCEDIMENTOS REGIDOS POR OUTROS CÓDIGOS, LEIS ESPARSAS E REGIMENTOS"
+ },
+ {
+  "id": 573,
+  "codigo": 11534,
+  "nome": "PROCEDIMENTOS RELATIVOS A PARTIDOS POLÍTICOS"
+ },
+ {
+  "id": 574,
+  "codigo": 11529,
+  "nome": "PROCEDIMENTOS RELATIVOS A REALIZAÇÃO DE ELEIÇÃO"
+ },
+ {
+  "id": 575,
+  "codigo": 1067,
+  "nome": "PROCEDIMENTOS TRABALHISTAS"
+ },
+ {
+  "id": 576,
+  "codigo": 1298,
+  "nome": "PROCESSO ADMINISTRATIVO"
+ },
+ {
+  "id": 577,
+  "codigo": 1340,
+  "nome": "PROCESSO ADMINISTRATIVO"
+ },
+ {
+  "id": 578,
+  "codigo": 1264,
+  "nome": "PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE MAGISTRADO"
+ },
+ {
+  "id": 579,
+  "codigo": 1262,
+  "nome": "PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE SERVIDOR"
+ },
+ {
+  "id": 580,
+  "codigo": 175,
+  "nome": "PROCESSO CAUTELAR"
+ },
+ {
+  "id": 581,
+  "codigo": 1375,
+  "nome": "PROCESSO CRIME"
+ },
+ {
+  "id": 582,
+  "codigo": 268,
+  "nome": "PROCESSO CRIMINAL"
+ },
+ {
+  "id": 583,
+  "codigo": 11030,
+  "nome": "PROCESSO CRIMINAL"
+ },
+ {
+  "id": 584,
+  "codigo": 2,
+  "nome": "PROCESSO CÍVEL E DO TRABALHO"
+ },
+ {
+  "id": 585,
+  "codigo": 11798,
+  "nome": "PROCESSO DE APLICAÇÃO DE MEDIDA DE SEGURANÇA POR FATO NÃO CRIMINOSO"
+ },
+ {
+  "id": 586,
+  "codigo": 1464,
+  "nome": "PROCESSO DE APURAÇÃO DE ATO INFRACIONAL"
+ },
+ {
+  "id": 587,
+  "codigo": 1106,
+  "nome": "PROCESSO DE CONHECIMENTO"
+ },
+ {
+  "id": 588,
+  "codigo": 1386,
+  "nome": "PROCESSO DE CONHECIMENTO"
+ },
+ {
+  "id": 589,
+  "codigo": 158,
+  "nome": "PROCESSO DE EXECUÇÃO"
+ },
+ {
+  "id": 590,
+  "codigo": 1430,
+  "nome": "PROCESSO DE EXECUÇÃO"
+ },
+ {
+  "id": 591,
+  "codigo": 1068,
+  "nome": "PROCESSO DE EXECUÇÃO TRABALHISTA"
+ },
+ {
+  "id": 592,
+  "codigo": 11427,
+  "nome": "PROCESSO ELEITORAL"
+ },
+ {
+  "id": 593,
+  "codigo": 284,
+  "nome": "PROCESSO ESPECIAL"
+ },
+ {
+  "id": 594,
+  "codigo": 292,
+  "nome": "PROCESSO ESPECIAL DE LEIS ESPARSAS"
+ },
+ {
+  "id": 595,
+  "codigo": 285,
+  "nome": "PROCESSO ESPECIAL DO CÓDIGO DE PROCESSO PENAL"
+ },
+ {
+  "id": 596,
+  "codigo": 1376,
+  "nome": "PROCESSO JUDICIAL"
+ },
+ {
+  "id": 597,
+  "codigo": 11028,
+  "nome": "PROCESSO MILITAR"
+ },
+ {
+  "id": 598,
+  "codigo": 290,
+  "nome": "PROCESSO SUMÁRIO (DETENÇÃO)"
+ },
+ {
+  "id": 599,
+  "codigo": 1436,
+  "nome": "PROCESSOS CAUTELARES"
+ },
+ {
+  "id": 600,
+  "codigo": 11525,
+  "nome": "PROCESSOS CÍVEIS-ELEITORAIS"
+ },
+ {
+  "id": 601,
+  "codigo": 193,
+  "nome": "PRODUÇÃO ANTECIPADA DA PROVA"
+ },
+ {
+  "id": 602,
+  "codigo": 15620,
+  "nome": "PRODUÇÃO ANTECIPADA DE PROVAS"
+ },
+ {
+  "id": 603,
+  "codigo": 11793,
+  "nome": "PRODUÇÃO ANTECIPADA DE PROVAS CRIMINAL"
+ },
+ {
+  "id": 604,
+  "codigo": 12125,
+  "nome": "PROGRESSÃO DE REGIME"
+ },
+ {
+  "id": 605,
+  "codigo": 11536,
+  "nome": "PROPAGANDA PARTIDÁRIA"
+ },
+ {
+  "id": 606,
+  "codigo": 191,
+  "nome": "PROTESTO"
+ },
+ {
+  "id": 607,
+  "codigo": 12228,
+  "nome": "PROTESTO"
+ },
+ {
+  "id": 608,
+  "codigo": 127,
+  "nome": "PROTESTO FORMADO A BORDO"
+ },
+ {
+  "id": 609,
+  "codigo": 12229,
+  "nome": "PROTESTO FORMADO A BORDO"
+ },
+ {
+  "id": 610,
+  "codigo": 422,
+  "nome": "PROTESTO POR NOVO JÚRI"
+ },
+ {
+  "id": 611,
+  "codigo": 1424,
+  "nome": "PROVIDÊNCIA"
+ },
+ {
+  "id": 612,
+  "codigo": 1377,
+  "nome": "QUEIXA CRIME"
+ },
+ {
+  "id": 613,
+  "codigo": 1341,
+  "nome": "QUESTÃO DE ORDEM"
+ },
+ {
+  "id": 614,
+  "codigo": 316,
+  "nome": "QUESTÕES E PROCESSOS INCIDENTES"
+ },
+ {
+  "id": 615,
+  "codigo": 1291,
+  "nome": "REABILITAÇÃO"
+ },
+ {
+  "id": 616,
+  "codigo": 244,
+  "nome": "RECLAMAÇÃO"
+ },
+ {
+  "id": 617,
+  "codigo": 1030,
+  "nome": "RECLAMAÇÃO"
+ },
+ {
+  "id": 618,
+  "codigo": 1202,
+  "nome": "RECLAMAÇÃO"
+ },
+ {
+  "id": 619,
+  "codigo": 1342,
+  "nome": "RECLAMAÇÃO"
+ },
+ {
+  "id": 620,
+  "codigo": 12375,
+  "nome": "RECLAMAÇÃO"
+ },
+ {
+  "id": 621,
+  "codigo": 12122,
+  "nome": "RECLAMAÇÃO CRIMINAL"
+ },
+ {
+  "id": 622,
+  "codigo": 1301,
+  "nome": "RECLAMAÇÃO DISCIPLINAR"
+ },
+ {
+  "id": 623,
+  "codigo": 11039,
+  "nome": "RECLAMAÇÃO MILITAR"
+ },
+ {
+  "id": 624,
+  "codigo": 11893,
+  "nome": "RECLAMAÇÃO PARA GARANTIA DAS DECISÕES"
+ },
+ {
+  "id": 625,
+  "codigo": 11875,
+  "nome": "RECLAMAÇÃO PRÉ-PROCESSUAL"
+ },
+ {
+  "id": 626,
+  "codigo": 12763,
+  "nome": "RECONHECIMENTO E EXTINÇÃO DE UNIÃO ESTÁVEL"
+ },
+ {
+  "id": 627,
+  "codigo": 128,
+  "nome": "RECUPERAÇÃO EXTRAJUDICIAL"
+ },
+ {
+  "id": 628,
+  "codigo": 129,
+  "nome": "RECUPERAÇÃO JUDICIAL"
+ },
+ {
+  "id": 629,
+  "codigo": 1299,
+  "nome": "RECURSO ADMINISTRATIVO"
+ },
+ {
+  "id": 630,
+  "codigo": 11533,
+  "nome": "RECURSO CONTRA EXPEDIÇÃO DE DIPLOMA"
+ },
+ {
+  "id": 631,
+  "codigo": 1343,
+  "nome": "RECURSO CRIMINAL"
+ },
+ {
+  "id": 632,
+  "codigo": 1378,
+  "nome": "RECURSO DE APREENSÃO DE LIVRO"
+ },
+ {
+  "id": 633,
+  "codigo": 1379,
+  "nome": "RECURSO DE LIQUIDAÇÃO DE SENTENÇA"
+ },
+ {
+  "id": 634,
+  "codigo": 424,
+  "nome": "RECURSO DE MEDIDA CAUTELAR CRIMINAL"
+ },
+ {
+  "id": 635,
+  "codigo": 1271,
+  "nome": "RECURSO DE MEDIDA CAUTELAR CÍVEL"
+ },
+ {
+  "id": 636,
+  "codigo": 1267,
+  "nome": "RECURSO DE MULTA"
+ },
+ {
+  "id": 637,
+  "codigo": 1008,
+  "nome": "RECURSO DE REVISTA"
+ },
+ {
+  "id": 638,
+  "codigo": 1380,
+  "nome": "RECURSO DE REVISTA"
+ },
+ {
+  "id": 639,
+  "codigo": 11882,
+  "nome": "RECURSO DE REVISTA COM AGRAVO"
+ },
+ {
+  "id": 640,
+  "codigo": 425,
+  "nome": "RECURSO DE SENTENÇA CRIMINAL"
+ },
+ {
+  "id": 641,
+  "codigo": 11548,
+  "nome": "RECURSO ELEITORAL"
+ },
+ {
+  "id": 642,
+  "codigo": 1344,
+  "nome": "RECURSO EM HABEAS CORPUS"
+ },
+ {
+  "id": 643,
+  "codigo": 1345,
+  "nome": "RECURSO EM HABEAS DATA"
+ },
+ {
+  "id": 644,
+  "codigo": 1346,
+  "nome": "RECURSO EM MANDADO DE INJUNÇÃO"
+ },
+ {
+  "id": 645,
+  "codigo": 1347,
+  "nome": "RECURSO EM MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": 646,
+  "codigo": 1306,
+  "nome": "RECURSO EM PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE SERVIDOR"
+ },
+ {
+  "id": 647,
+  "codigo": 426,
+  "nome": "RECURSO EM SENTIDO ESTRITO"
+ },
+ {
+  "id": 648,
+  "codigo": 11398,
+  "nome": "RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO"
+ },
+ {
+  "id": 649,
+  "codigo": 213,
+  "nome": "RECURSO ESPECIAL"
+ },
+ {
+  "id": 650,
+  "codigo": 1032,
+  "nome": "RECURSO ESPECIAL"
+ },
+ {
+  "id": 651,
+  "codigo": 11549,
+  "nome": "RECURSO ESPECIAL ELEITORAL"
+ },
+ {
+  "id": 652,
+  "codigo": 212,
+  "nome": "RECURSO EXTRAORDINÁRIO"
+ },
+ {
+  "id": 653,
+  "codigo": 1348,
+  "nome": "RECURSO EXTRAORDINÁRIO"
+ },
+ {
+  "id": 654,
+  "codigo": 11880,
+  "nome": "RECURSO EXTRAORDINÁRIO COM AGRAVO"
+ },
+ {
+  "id": 655,
+  "codigo": 460,
+  "nome": "RECURSO INOMINADO CÍVEL"
+ },
+ {
+  "id": 656,
+  "codigo": 11040,
+  "nome": "RECURSO INOMINADO MILITAR"
+ },
+ {
+  "id": 657,
+  "codigo": 1031,
+  "nome": "RECURSO ORDINÁRIO"
+ },
+ {
+  "id": 658,
+  "codigo": 11886,
+  "nome": "RECURSO ORDINÁRIO - RITO SUMARÍSSIMO"
+ },
+ {
+  "id": 659,
+  "codigo": 1730,
+  "nome": "RECURSO ORDINÁRIO CRIMINAL"
+ },
+ {
+  "id": 660,
+  "codigo": 211,
+  "nome": "RECURSO ORDINÁRIO CÍVEL"
+ },
+ {
+  "id": 661,
+  "codigo": 11550,
+  "nome": "RECURSO ORDINÁRIO ELEITORAL"
+ },
+ {
+  "id": 662,
+  "codigo": 1722,
+  "nome": "RECURSO ORDINÁRIO EM HABEAS CORPUS"
+ },
+ {
+  "id": 663,
+  "codigo": 1721,
+  "nome": "RECURSO ORDINÁRIO EM MANDADO DE SEGURANÇA"
+ },
+ {
+  "id": 664,
+  "codigo": 1009,
+  "nome": "RECURSO ORDINÁRIO TRABALHISTA"
+ },
+ {
+  "id": 665,
+  "codigo": 12557,
+  "nome": "RECURSO/IMPUGNAÇÃO DE ALISTAMENTO ELEITORAL"
+ },
+ {
+  "id": 666,
+  "codigo": 197,
+  "nome": "RECURSOS"
+ },
+ {
+  "id": 667,
+  "codigo": 412,
+  "nome": "RECURSOS"
+ },
+ {
+  "id": 668,
+  "codigo": 11033,
+  "nome": "RECURSOS"
+ },
+ {
+  "id": 669,
+  "codigo": 11547,
+  "nome": "RECURSOS ELEITORAIS"
+ },
+ {
+  "id": 670,
+  "codigo": 1071,
+  "nome": "RECURSOS TRABALHISTAS"
+ },
+ {
+  "id": 671,
+  "codigo": 12057,
+  "nome": "REEXAME NECESSÁRIO ELEITORAL"
+ },
+ {
+  "id": 672,
+  "codigo": 15159,
+  "nome": "REGIME CENTRALIZADO DE EXECUÇÕES"
+ },
+ {
+  "id": 673,
+  "codigo": 11532,
+  "nome": "REGISTRO DE CANDIDATURA"
+ },
+ {
+  "id": 674,
+  "codigo": 251,
+  "nome": "REGISTRO DE CASAMENTO NUNCUPATIVO"
+ },
+ {
+  "id": 675,
+  "codigo": 11538,
+  "nome": "REGISTRO DE COMITÊ FINANCEIRO"
+ },
+ {
+  "id": 676,
+  "codigo": 12558,
+  "nome": "REGISTRO DE DEBATES"
+ },
+ {
+  "id": 677,
+  "codigo": 11539,
+  "nome": "REGISTRO DE PARTIDO POLÍTICO"
+ },
+ {
+  "id": 678,
+  "codigo": 11537,
+  "nome": "REGISTRO DE ÓRGÃO DE PARTIDO POLÍTICO EM FORMAÇÃO"
+ },
+ {
+  "id": 679,
+  "codigo": 134,
+  "nome": "REGISTRO TORRENS"
+ },
+ {
+  "id": 680,
+  "codigo": 12126,
+  "nome": "REGRESSÃO DE REGIME"
+ },
+ {
+  "id": 681,
+  "codigo": 194,
+  "nome": "REGULAMENTAÇÃO DE VISITAS"
+ },
+ {
+  "id": 682,
+  "codigo": 14677,
+  "nome": "REGULAMENTAÇÃO DE VISITAS"
+ },
+ {
+  "id": 683,
+  "codigo": 1417,
+  "nome": "REGULARIZAÇÃO DE REGISTRO CIVIL"
+ },
+ {
+  "id": 684,
+  "codigo": 12559,
+  "nome": "REGULARIZAÇÃO DE SITUAÇÃO DO ELEITOR"
+ },
+ {
+  "id": 685,
+  "codigo": 79,
+  "nome": "REGULAÇÃO DE AVARIA GROSSA"
+ },
+ {
+  "id": 686,
+  "codigo": 12376,
+  "nome": "REGULAÇÃO DE AVARIA GROSSA"
+ },
+ {
+  "id": 687,
+  "codigo": 1707,
+  "nome": "REINTEGRAÇÃO / MANUTENÇÃO DE POSSE"
+ },
+ {
+  "id": 688,
+  "codigo": 1462,
+  "nome": "RELATÓRIO DE INVESTIGAÇÕES"
+ },
+ {
+  "id": 689,
+  "codigo": 135,
+  "nome": "RELATÓRIO FALIMENTAR"
+ },
+ {
+  "id": 690,
+  "codigo": 306,
+  "nome": "RELAXAMENTO DE PRISÃO"
+ },
+ {
+  "id": 691,
+  "codigo": 11027,
+  "nome": "REMESSA NECESSÁRIA / RECURSO ORDINÁRIO"
+ },
+ {
+  "id": 692,
+  "codigo": 427,
+  "nome": "REMESSA NECESSÁRIA CRIMINAL"
+ },
+ {
+  "id": 693,
+  "codigo": 199,
+  "nome": "REMESSA NECESSÁRIA CÍVEL"
+ },
+ {
+  "id": 694,
+  "codigo": 1064,
+  "nome": "REMESSA NECESSÁRIA EM HABEAS CORPUS"
+ },
+ {
+  "id": 695,
+  "codigo": 1685,
+  "nome": "REMESSA NECESSÁRIA TRABALHISTA"
+ },
+ {
+  "id": 696,
+  "codigo": 12127,
+  "nome": "REMIÇÃO"
+ },
+ {
+  "id": 697,
+  "codigo": 11957,
+  "nome": "REMIÇÃO DE PENA"
+ },
+ {
+  "id": 698,
+  "codigo": 136,
+  "nome": "REMIÇÃO DO IMÓVEL HIPOTECADO"
+ },
+ {
+  "id": 699,
+  "codigo": 234,
+  "nome": "REMOÇÃO DE INVENTARIANTE"
+ },
+ {
+  "id": 700,
+  "codigo": 1705,
+  "nome": "REMOÇÃO, MODIFICAÇÃO  E DISPENSA DE TUTOR OU CURADOR"
+ },
+ {
+  "id": 701,
+  "codigo": 137,
+  "nome": "RENOVATÓRIA DE LOCAÇÃO"
+ },
+ {
+  "id": 702,
+  "codigo": 12089,
+  "nome": "RENOVAÇÃO DE PERMANÊNCIA EM ESTABELECIMENTO PENAL FEDERAL"
+ },
+ {
+  "id": 703,
+  "codigo": 1038,
+  "nome": "REPRESENTAÇÃO"
+ },
+ {
+  "id": 704,
+  "codigo": 1381,
+  "nome": "REPRESENTAÇÃO"
+ },
+ {
+  "id": 705,
+  "codigo": 11541,
+  "nome": "REPRESENTAÇÃO"
+ },
+ {
+  "id": 706,
+  "codigo": 271,
+  "nome": "REPRESENTAÇÃO CRIMINAL"
+ },
+ {
+  "id": 707,
+  "codigo": 272,
+  "nome": "REPRESENTAÇÃO CRIMINAL/NOTÍCIA DE CRIME"
+ },
+ {
+  "id": 708,
+  "codigo": 11035,
+  "nome": "REPRESENTAÇÃO P/ DECLARAÇÃO DE INDIGNIDADE/INCOMPATIBILIDADE"
+ },
+ {
+  "id": 709,
+  "codigo": 11036,
+  "nome": "REPRESENTAÇÃO P/ PERDA DA GRADUAÇÃO"
+ },
+ {
+  "id": 710,
+  "codigo": 256,
+  "nome": "REPRESENTAÇÃO POR EXCESSO DE PRAZO"
+ },
+ {
+  "id": 711,
+  "codigo": 12137,
+  "nome": "REQUERIMENTO DE APREENSÃO DE VEÍCULO"
+ },
+ {
+  "id": 712,
+  "codigo": 12138,
+  "nome": "REQUERIMENTO DE REINTEGRAÇÃO DE POSSE"
+ },
+ {
+  "id": 713,
+  "codigo": 1040,
+  "nome": "REQUISIÇÃO DE PEQUENO VALOR"
+ },
+ {
+  "id": 714,
+  "codigo": 1266,
+  "nome": "REQUISIÇÃO DE PEQUENO VALOR"
+ },
+ {
+  "id": 715,
+  "codigo": 12076,
+  "nome": "RESTABELECIMENTO DO PODER FAMILIAR"
+ },
+ {
+  "id": 716,
+  "codigo": 291,
+  "nome": "RESTAURAÇÃO DE AUTOS CRIMINAL"
+ },
+ {
+  "id": 717,
+  "codigo": 46,
+  "nome": "RESTAURAÇÃO DE AUTOS CÍVEL"
+ },
+ {
+  "id": 718,
+  "codigo": 138,
+  "nome": "RESTITUIÇÃO DE COISA OU DINHEIRO NA FALÊNCIA DO DEVEDOR EMPRESÁRIO"
+ },
+ {
+  "id": 719,
+  "codigo": 326,
+  "nome": "RESTITUIÇÃO DE COISAS APREENDIDAS"
+ },
+ {
+  "id": 720,
+  "codigo": 11794,
+  "nome": "RESTITUIÇÃO DE COISAS APREENDIDAS INFRACIONAL"
+ },
+ {
+  "id": 721,
+  "codigo": 1382,
+  "nome": "RETIFICAÇÃO DE NOME ESTRANGEIRO"
+ },
+ {
+  "id": 722,
+  "codigo": 1683,
+  "nome": "RETIFICAÇÃO DE REGISTRO DE IMÓVEL"
+ },
+ {
+  "id": 723,
+  "codigo": 1682,
+  "nome": "RETIFICAÇÃO OU SUPRIMENTO OU RESTAURAÇÃO DE REGISTRO CIVIL"
+ },
+ {
+  "id": 724,
+  "codigo": 140,
+  "nome": "REVISIONAL DE ALUGUEL"
+ },
+ {
+  "id": 725,
+  "codigo": 428,
+  "nome": "REVISÃO CRIMINAL"
+ },
+ {
+  "id": 726,
+  "codigo": 1349,
+  "nome": "REVISÃO CRIMINAL"
+ },
+ {
+  "id": 727,
+  "codigo": 1678,
+  "nome": "REVISÃO CRIMINAL"
+ },
+ {
+  "id": 728,
+  "codigo": 12394,
+  "nome": "REVISÃO CRIMINAL"
+ },
+ {
+  "id": 729,
+  "codigo": 11546,
+  "nome": "REVISÃO DE ELEITORADO"
+ },
+ {
+  "id": 730,
+  "codigo": 11892,
+  "nome": "REVISÃO DISCIPLINAR"
+ },
+ {
+  "id": 731,
+  "codigo": 15423,
+  "nome": "REVISÃO JUDICIAL - CONSELHO DE JUSTIFICAÇÃO"
+ },
+ {
+  "id": 732,
+  "codigo": 15321,
+  "nome": "REVISÃO JUDICIAL - RDII"
+ },
+ {
+  "id": 733,
+  "codigo": 1390,
+  "nome": "REVISÃO JUDICIAL DE DECISÃO DO CONSELHO TUTELAR"
+ },
+ {
+  "id": 734,
+  "codigo": 12123,
+  "nome": "ROTEIRO DE PENA"
+ },
+ {
+  "id": 735,
+  "codigo": 12124,
+  "nome": "ROTEIRO DE PENA"
+ },
+ {
+  "id": 736,
+  "codigo": 1468,
+  "nome": "SEMILIBERDADE"
+ },
+ {
+  "id": 737,
+  "codigo": 1383,
+  "nome": "SENTENÇA ARBITRAL"
+ },
+ {
+  "id": 738,
+  "codigo": 1026,
+  "nome": "SENTENÇA ESTRANGEIRA"
+ },
+ {
+  "id": 739,
+  "codigo": 1350,
+  "nome": "SENTENÇA ESTRANGEIRA"
+ },
+ {
+  "id": 740,
+  "codigo": 1027,
+  "nome": "SENTENÇA ESTRANGEIRA CONTESTADA"
+ },
+ {
+  "id": 741,
+  "codigo": 1351,
+  "nome": "SENTENÇA ESTRANGEIRA CONTESTADA"
+ },
+ {
+  "id": 742,
+  "codigo": 60,
+  "nome": "SEPARAÇÃO CONSENSUAL"
+ },
+ {
+  "id": 743,
+  "codigo": 12764,
+  "nome": "SEPARAÇÃO CONTENCIOSA"
+ },
+ {
+  "id": 744,
+  "codigo": 195,
+  "nome": "SEPARAÇÃO DE CORPOS"
+ },
+ {
+  "id": 745,
+  "codigo": 141,
+  "nome": "SEPARAÇÃO LITIGIOSA"
+ },
+ {
+  "id": 746,
+  "codigo": 196,
+  "nome": "SEQÜESTRO"
+ },
+ {
+  "id": 747,
+  "codigo": 329,
+  "nome": "SEQÜESTRO"
+ },
+ {
+  "id": 748,
+  "codigo": 15195,
+  "nome": "SEÇÃO ADMINISTRATIVA"
+ },
+ {
+  "id": 749,
+  "codigo": 1385,
+  "nome": "SEÇÃO CÍVEL"
+ },
+ {
+  "id": 750,
+  "codigo": 1459,
+  "nome": "SEÇÃO INFRACIONAL"
+ },
+ {
+  "id": 751,
+  "codigo": 1355,
+  "nome": "SIGLAS DOS PROCESSOS EXTINTOS"
+ },
+ {
+  "id": 752,
+  "codigo": 1028,
+  "nome": "SINDICÂNCIA"
+ },
+ {
+  "id": 753,
+  "codigo": 1308,
+  "nome": "SINDICÂNCIA"
+ },
+ {
+  "id": 754,
+  "codigo": 48,
+  "nome": "SOBREPARTILHA"
+ },
+ {
+  "id": 755,
+  "codigo": 142,
+  "nome": "SONEGADOS"
+ },
+ {
+  "id": 756,
+  "codigo": 5,
+  "nome": "SUPERIOR TRIBUNAL DE JUSTIÇA"
+ },
+ {
+  "id": 757,
+  "codigo": 1283,
+  "nome": "SUPERVENIÊNCIA DE DOENÇA MENTAL"
+ },
+ {
+  "id": 758,
+  "codigo": 1310,
+  "nome": "SUPREMO TRIBUNAL FEDERAL"
+ },
+ {
+  "id": 759,
+  "codigo": 1414,
+  "nome": "SUPRIMENTO DE CAPACIDADE OU DE CONSENTIMENTO PARA CASAR"
+ },
+ {
+  "id": 760,
+  "codigo": 143,
+  "nome": "SUPRIMENTO DE IDADE E/OU CONSENTIMENTO"
+ },
+ {
+  "id": 761,
+  "codigo": 1384,
+  "nome": "SUSPENSÃO DE DIREITOS"
+ },
+ {
+  "id": 762,
+  "codigo": 145,
+  "nome": "SUSPENSÃO DE EXECUÇÃO DE SENTENÇA"
+ },
+ {
+  "id": 763,
+  "codigo": 1352,
+  "nome": "SUSPENSÃO DE LIMINAR"
+ },
+ {
+  "id": 764,
+  "codigo": 1036,
+  "nome": "SUSPENSÃO DE LIMINAR E DE SENTENÇA"
+ },
+ {
+  "id": 765,
+  "codigo": 11555,
+  "nome": "SUSPENSÃO DE LIMINAR E DE SENTENÇA"
+ },
+ {
+  "id": 766,
+  "codigo": 144,
+  "nome": "SUSPENSÃO DE LIMINAR OU ANTECIPAÇÃO DE TUTELA"
+ },
+ {
+  "id": 767,
+  "codigo": 1353,
+  "nome": "SUSPENSÃO DE SEGURANÇA"
+ },
+ {
+  "id": 768,
+  "codigo": 1679,
+  "nome": "SUSPENSÃO DE SEGURANÇA"
+ },
+ {
+  "id": 769,
+  "codigo": 12058,
+  "nome": "SUSPENSÃO DE SEGURANÇA"
+ },
+ {
+  "id": 770,
+  "codigo": 12059,
+  "nome": "SUSPENSÃO DE SEGURANÇA - ELEITORAL"
+ },
+ {
+  "id": 771,
+  "codigo": 11556,
+  "nome": "SUSPENSÃO DE SEGURANÇA CÍVEL"
+ },
+ {
+  "id": 772,
+  "codigo": 1354,
+  "nome": "SUSPENSÃO DE TUTELA PROVISÓRIA"
+ },
+ {
+  "id": 773,
+  "codigo": 12117,
+  "nome": "SUSPENSÃO DO INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS"
+ },
+ {
+  "id": 774,
+  "codigo": 15194,
+  "nome": "SUSPENSÃO DO PODER FAMILIAR"
+ },
+ {
+  "id": 775,
+  "codigo": 12118,
+  "nome": "SUSPENSÃO EM INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS"
+ },
+ {
+  "id": 776,
+  "codigo": 12249,
+  "nome": "SUSPENSÃO EM IRDR"
+ },
+ {
+  "id": 777,
+  "codigo": 12250,
+  "nome": "SUSPENSÃO EM IRDR"
+ },
+ {
+  "id": 778,
+  "codigo": 12190,
+  "nome": "SUSPENSÃO NACIONAL DO INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS"
+ },
+ {
+  "id": 779,
+  "codigo": 278,
+  "nome": "TERMO CIRCUNSTANCIADO"
+ },
+ {
+  "id": 780,
+  "codigo": 12369,
+  "nome": "TOMADA DE DECISÃO APOIADA"
+ },
+ {
+  "id": 781,
+  "codigo": 12370,
+  "nome": "TOMADA DE DECISÃO APOIADA"
+ },
+ {
+  "id": 782,
+  "codigo": 1288,
+  "nome": "TRANSFERÊNCIA ENTRE ESTABELECIMENTOS PENAIS"
+ },
+ {
+  "id": 783,
+  "codigo": 12728,
+  "nome": "TRANSFERÊNCIA ENTRE ESTABELECIMENTOS PENAIS"
+ },
+ {
+  "id": 784,
+  "codigo": 12083,
+  "nome": "TUTELA ANTECIPADA ANTECEDENTE"
+ },
+ {
+  "id": 785,
+  "codigo": 12135,
+  "nome": "TUTELA ANTECIPADA ANTECEDENTE"
+ },
+ {
+  "id": 786,
+  "codigo": 1399,
+  "nome": "TUTELA C/C DESTITUIÇÃO DO PODER FAMILIAR"
+ },
+ {
+  "id": 787,
+  "codigo": 12084,
+  "nome": "TUTELA CAUTELAR ANTECEDENTE"
+ },
+ {
+  "id": 788,
+  "codigo": 12134,
+  "nome": "TUTELA CAUTELAR ANTECEDENTE"
+ },
+ {
+  "id": 789,
+  "codigo": 12233,
+  "nome": "TUTELA CÍVEL"
+ },
+ {
+  "id": 790,
+  "codigo": 61,
+  "nome": "TUTELA E CURATELA -  NOMEAÇÃO"
+ },
+ {
+  "id": 791,
+  "codigo": 1122,
+  "nome": "TUTELA E CURATELA - REMOÇÃO E DISPENSA"
+ },
+ {
+  "id": 792,
+  "codigo": 1396,
+  "nome": "TUTELA INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "id": 793,
+  "codigo": 12191,
+  "nome": "TUTELA PROVISÓRIA ANTECEDENTE"
+ },
+ {
+  "id": 794,
+  "codigo": 12133,
+  "nome": "TUTELA PROVISÓRIA DE URGÊNCIA E TUTELA PROVISÓRIA DE EVIDÊNCIA"
+ },
+ {
+  "id": 795,
+  "codigo": 12192,
+  "nome": "TUTELA PROVISÓRIA INCIDENTAL"
+ },
+ {
+  "id": 796,
+  "codigo": 1284,
+  "nome": "UNIFICAÇÃO DE PENAS"
+ },
+ {
+  "id": 797,
+  "codigo": 49,
+  "nome": "USUCAPIÃO"
+ }
+]
