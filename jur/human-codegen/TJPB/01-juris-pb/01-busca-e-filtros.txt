@@ -1,0 +1,298 @@
+# TJPB — Juris-PB — busca e filtros (mapeamento PARCIAL)
+
+## Identificação
+
+```
+Tribunal:                 TJPB — Tribunal de Justiça da Paraíba
+Estado(s):                PB
+Módulo:                   Juris-PB (SPA Angular 19 + PrimeNG, backend Spring Boot)
+Link principal:           https://app.tjpb.jus.br/juris-pb/  (rota de busca: /juris-pb/buscar)
+API (medida, não chutada): https://app.tjpb.jus.br/juris-pb-backend/public/search
+Sistema judicial:         PJe (1º e 2º grau) + Projudi
+Sistema irmão já mapeado: TJES (CLAUDE-TJES.md) — o outro tribunal do repo com 1º grau
+Abrangência da base:      1º grau (sentenças) + 2º grau + Turmas Recursais. 2.515.026 documentos.
+Data do mapeamento:       08/08/2026
+Status:                   PARCIAL — API inteira mapeada e destravada; FALTA O CRAWLER.
+```
+
+> **Quem pegar o TJPB na volta da fila começa do §1 com o contrato pronto.** Não é preciso
+> reabrir o bundle nem repetir medição: tudo abaixo foi medido em 08/08/2026, com o comando
+> que produziu o número ao lado. O que **não** foi feito está no §10.
+
+---
+
+## 0. Como o portal foi descoberto (e por que o Passo 0 quase falhou aqui)
+
+O `tribunais.json` tinha `jurisprudencia.url = null`. Os nomes óbvios **não existem**:
+
+```
+jurisprudencia.tjpb.jus.br   NXDOMAIN
+dadosabertos.tjpb.jus.br     NXDOMAIN
+api.tjpb.jus.br              NXDOMAIN
+pesquisa/busca/sistemas/consultas.tjpb.jus.br   NXDOMAIN
+```
+
+✅ **Sem vhost curinga** — os NXDOMAIN são de verdade, não a armadilha do TJAC/TJAL. Não foi
+preciso conferir md5.
+
+O link real saiu **navegando o menu do portal oficial** (`www.tjpb.jus.br`, seção
+Transparência/Serviços), não de chute:
+
+```
+Jurisprudência  ->  https://app.tjpb.jus.br/juris-pb
+```
+
+---
+
+## 1. O CONTRATO DA API — é só isto que o crawler precisa
+
+Base: `https://app.tjpb.jus.br/juris-pb-backend`
+
+| Endpoint | Método | Observação |
+|---|---|---|
+| `/public/search` | GET | a busca; devolve **ementa E inteiro teor** no próprio payload |
+| `/public/options/{competencias,classes,comarcas,varas,orgaos-julgadores,relatores,processos}` | GET | os combos (autocomplete) |
+| `/public/documentos/{id}` | GET | ⚠️ exige **chave composta**: `?grau=` obrigatório (ver §8) |
+
+**Sem auth, sem token, sem cookie, sem captcha, sem sessão.** O `curl` cru responde:
+
+```sh
+curl -A "<UA de Chrome>" -H "Accept: application/json" \
+ "https://app.tjpb.jus.br/juris-pb-backend/public/search?searchTerm=usucapi%C3%A3o&page=0&size=50&sort=DATA_JULGAMENTO&order=DESC"
+```
+
+### Parâmetros (extraídos de `SearchService` no bundle `search.page-FJ6LZSVZ.js`)
+
+| Parâmetro | Valores | Medido |
+|---|---|---|
+| `searchTerm` | texto | ver §3 (operadores) |
+| `page` | 0-based | a tela mostra 1-based |
+| `size` | **máx. 50** | 51+ → HTTP 400 explícito (§5) |
+| `sort` | `DATA_JULGAMENTO` | único valor visto |
+| `order` | `ASC`/`DESC` | |
+| `grau` | `1` \| `2` | ⚠️ **só no modo simples** (§2) |
+| `instancia` | enum `InstanciaAgrupada` | 🔴 **IGNORADO** (§4) |
+| `advanced` | `true` | 🔴 **liga a data e desliga o grau** (§2) |
+| `consultarApenasEmenta` | `true` | só no modo avançado; 12.206 → 10.960 |
+| `intervaloJulgamentoPrimeiroDia` / `intervaloJulgamentoUltimoDia` | `YYYY-MM-DD` | só no modo avançado (§2) |
+| `codigoCompetencia`, `codigoClasse`, `codigoComarca`, `codigoVara`, `codigoOrgaoJulgador`, `idRelator` | id (repetível) | **não provados por contagem** (§10) |
+| `numeroProcesso` | **20 dígitos, sem máscara** | o bundle aplica `cnjProcessNumberDigits()` |
+
+### Resposta (Spring `Page`)
+
+```
+content[], pageable, last, totalPages, totalElements, size, number, sort, first, numberOfElements, empty
+```
+
+Campos do item:
+`id, numeroProcesso, grau, instancia, estruturaJurisdicional, tipoDocumento, dataJulgamento,
+ementa, inteiroTeor, comarca, classe, vara, orgao, relator, origem, competencia, meioPublicacao`
+
+⚠️ `totalPages` vem **igual a `totalElements` quando `size=1`** — é `totalElements/size`, não um
+número de páginas absoluto. Não o leia como "o acervo tem 2,5 milhões de páginas".
+
+---
+
+## 2. 🔴 A LIÇÃO DO DIA — `advanced=true` LIGA UM FILTRO E DESLIGA O OUTRO
+
+Defeito novo no repo. **Dois filtros que funcionam, em modos mutuamente exclusivos** — e o
+que está fora do seu modo é **ignorado em silêncio**, com HTTP 200 e contagem plausível.
+
+Medido com `searchTerm=usucapião` (12.206 sem filtro nenhum):
+
+| Requisição | Total | Leitura |
+|---|---|---|
+| modo simples + `grau=1` | **8.997** | ✅ funciona |
+| modo simples + `grau=2` | **3.209** | ✅ funciona — e **8.997 + 3.209 = 12.206**, partição exata |
+| modo simples + data 2026-01-01..2026-08-08 | **12.206** | 🔴 data **ignorada** |
+| modo simples + data 2025 inteiro | **12.206** | 🔴 ignorada |
+| modo simples + data em `DD/MM/YYYY` | **12.206** | 🔴 ignorada |
+| `advanced=true` + data 2026-01-01..2026-08-08 | **347** | ✅ funciona |
+| `advanced=true` + data 2025 inteiro | **2.244** | ✅ funciona |
+| `advanced=true` + data 2020 inteiro | **1.291** | ✅ funciona |
+| `advanced=true` + `grau=1` | **12.206** | 🔴 grau **ignorado** |
+| `advanced=true` + `grau=2` | **12.206** | 🔴 grau **ignorado** |
+
+**Consequência para o crawler:** não dá para recortar por grau **e** por data na mesma
+requisição. Escolha um por busca, ou faça o recorte de grau no cliente (o campo `grau` vem em
+todo item). **Nunca mande data sem `advanced=true`** — devolve a base inteira e parece que
+filtrou.
+
+### ✅ E o teste NO-OP do TJES foi o que absolveu a data
+
+Sozinho, "a janela 1900..2100 devolve 12.206, igual a sem filtro" se lê como filtro ignorado.
+Não é: é o comportamento **correto** de um intervalo que não exclui nada. O que separa os dois
+casos é o par de medições — **no-op = total E janela estreita = número pequeno**. Só o par
+prova. (No TJES o no-op *derrubava* a contagem em 42%, o defeito oposto.)
+
+---
+
+## 3. Operadores — o primeiro conjunto COERENTE do repo
+
+Sexto tribunal, sexto conjunto — mas este é o primeiro em que português e inglês funcionam
+**e a aritmética fecha exata**. A tela promete `(E, OU, NÃO, '()')` no placeholder e **cumpre**.
+
+| Query | Total | Prova |
+|---|---|---|
+| `usucapião` | 12.206 | |
+| `posse` | 120.847 | |
+| `usucapião posse` (espaço) | **7.324** | espaço = **AND** |
+| `usucapião E posse` | 7.324 | ✅ = espaço |
+| `usucapião AND posse` | 7.324 | ✅ inglês também |
+| `usucapião OU posse` | **125.729** | ✅ **12.206 + 120.847 − 7.324 = 125.729**, exato |
+| `usucapião OR posse` | 125.729 | ✅ idem |
+| `usucapião NÃO posse` | **4.882** | ✅ **12.206 − 7.324 = 4.882**, exato |
+| `usucapião NOT posse` | 4.882 | ✅ idem |
+| `(usucapião OU posse) E dano` | 28.125 | ✅ parênteses funcionam |
+| `"usucapião extraordinário"` | 2.175 | ✅ frase exata |
+| `usucapião XPTO posse` (**token inventado**) | **0** | ✅ vira termo literal e **zera** — sintoma visível |
+
+O teste do token inventado (truque do TJMT) aqui **absolve**: não há operador decorativo
+passando batido. `NÃO` acentuado **é** operador aqui — ao contrário de TJAC/TJAM/TJAL.
+
+### ⚠️ Acento é OBRIGATÓRIO e não é normalizado
+
+```
+usucapiao  ->     64
+usucapião  -> 12.206
+```
+
+Padrão TJMS/TJBA, oposto de TJAC/TJAM/TJAL/TJPE. **Número baixo aqui é quase sempre acento
+faltando, não escassez de jurisprudência.** O crawler tem de avisar.
+
+---
+
+## 4. 🔴 `instancia` é IGNORADO — e o valor inválido erra, o válido não
+
+```
+sem filtro                      -> 2.515.026
+instancia=TURMAS_RECURSAIS      -> 2.515.026   <-- idêntico = filtro ignorado
+instancia=XXINVALIDOXX          -> HTTP 400 "Campo inválido: 'instancia' ... InstanciaAgrupada"
+```
+
+A armadilha é fina: o valor **inventado** é rejeitado com erro claro, o que dá a impressão de
+que o parâmetro é levado a sério. O valor **válido** é aceito e não filtra nada. Testar só o
+valor inventado teria produzido a conclusão errada — **é preciso comparar a contagem do valor
+válido com a contagem sem filtro**.
+
+⚠️ Isso significa que **a desambiguação Juizado × Justiça Comum não tem filtro de servidor**
+utilizável. Ela tem de ser recorte de **cliente**, pelos campos `instancia` /
+`estruturaJurisdicional` / `origem` do item (valor visto: `TURMAS_RECURSAIS`,
+`origem = "Turmas Recursais"`). Padrão TJPE.
+
+---
+
+## 5. Paginação, `size` e total
+
+- `size` **máximo 50**. Acima disso, **HTTP 400 honesto**:
+  `{"message":"search.size: deve ser menor que ou igual à 50"}`. Não é zero silencioso.
+- ✅ **Paginação estável**: `page=1&size=10` rodada duas vezes devolveu **os mesmos 10 ids na
+  mesma ordem**. Sem o problema do TJRJ/TJMG/TJMT.
+- ✅ **Total exato, sem saturação** — 2.515.026 sem filtro; não há teto de 10.000 como no TJPE.
+- Não foi medido o comportamento em paginação muito profunda (§10).
+
+---
+
+## 6. Grau — o TJPB é o SEGUNDO tribunal do repo com 1º grau, e o maior
+
+```
+sem filtro   2.515.026
+grau=1       1.970.661   (78,4%)
+grau=2         544.365   (21,6%)
+1.970.661 + 544.365 = 2.515.026   <-- partição EXATA
+```
+
+**O 1º grau é 78% da base** — maior que o 1º grau do TJES (1.509.942). Sentença de 1º grau
+paraibana é um pedido que só o TJPB atende.
+
+⚠️ `grau=9` (**valor inventado**) devolve **544.365 = grau=2**: o backend não valida, faz
+fallback para 2º grau em silêncio. Nunca passe grau fora de `1|2`.
+
+---
+
+## 7. Ementa × inteiro teor — dependem do grau
+
+Medido em dois documentos de tipos diferentes:
+
+| Documento | `tipoDocumento` | `grau` | `ementa` | `inteiroTeor` |
+|---|---|---|---|---|
+| sentença | `SENTENCA` | 1 | **null** | 10.083 chars |
+| acórdão | `ACORDAO` | 2 | 6.999 chars | 21.042 chars |
+| decisão de Turma Recursal | `DECISAO_MONOCRATICA` | 2 | **null** | 7.790 chars |
+
+✅ **Os dois campos vêm de graça na busca**, sem captcha e sem request extra — como TJPE/TJBA.
+⚠️ **1º grau não tem ementa** (padrão TJES) e **monocrática também não** (padrão TJPE/TJCE/TJMT).
+O texto é **plain text com `\n`**, não HTML com entidade — não repete o problema de export do
+Word do TJPE.
+
+---
+
+## 8. `/public/documentos/{id}` — chave composta
+
+```
+GET /public/documentos/43825611
+-> HTTP 400 {"detail":"Required parameter 'grau' is not present."}
+```
+
+O documento é identificado por **`id` + `grau`**, não só pelo id. É a lição do TJPE
+(chave composta `codigoProcesso`+`origem`) repetida em outra forma. **Não foi testada a
+resposta com `grau` correto** (§10).
+
+---
+
+## 9. ✅ Vigência da base — CORRENTE
+
+Distribuição por ano, medida na **base inteira** (sem termo — o denominador certo, lição TJBA),
+no modo `advanced=true`:
+
+```
+2019  159.167
+2021  275.299
+2023  349.576
+2024  457.484
+2025  382.696
+2026   53.178   (até 08/08)
+```
+
+O documento mais recente devolvido pela busca sem termo tem `dataJulgamento` de
+**2026-08-08T18:14** — **o próprio dia do mapeamento**. Nada do congelamento do TJAM.
+
+---
+
+## 10. ⚠️ O QUE NÃO FOI FEITO — leia antes de continuar
+
+1. 🔴 **O CRAWLER NÃO EXISTE.** Não há `src/TJPB*.js` nem subcomando em `bin/jur`.
+   Nenhum item do checklist de aceite do `CLAUDE-CODEGEN.md` §7 foi cumprido.
+2. 🔴 **A TELA NUNCA RENDERIZOU** — e por isso **não há print útil**. O
+   `01.01-tela-busca.png` mostra só o cabeçalho e um `router-outlet` vazio (10 KB); está
+   gravado como registro honesto do que se viu, **não** como mapeamento da tela.
+   Causa medida: o Cloudflare do `app.tjpb.jus.br` **rate-limita a partir do ~9º recurso** da
+   mesma página e devolve 403 nos chunks lazy (`search.page-*.js`), quebrando o
+   `import()` dinâmico do Angular. Em contexto novo e como **primeira** requisição, o mesmo
+   chunk responde 200 — **o 403 é cota, não bloqueio do recurso**. Servir os chunks do disco
+   fez todos responderem 200 e mesmo assim o `router-outlet` continuou vazio; a causa disso
+   **não foi isolada**.
+   👉 **Consequência:** a Fase 3b (skill `browser-post-search`) **não foi executada**, e nada
+   do que ela mapeia — anatomia do card, escada até o documento pela tela, permalink
+   confirmado em aba limpa — está aqui. O que existe é o contrato da API, que é outra coisa.
+3. **Os combos não foram enumerados.** Os 7 endpoints de `/public/options/*` estão
+   identificados (§1) mas **nenhum foi chamado**. Não há `comarcas.json`, `relatores.json` etc.
+4. **`codigoCompetencia`, `codigoClasse`, `codigoComarca`, `codigoVara`,
+   `codigoOrgaoJulgador`, `idRelator` NÃO foram provados por contagem** — estão no contrato
+   porque o bundle os monta, não porque foram medidos. Lição do TJBA: `orgaos` queria id e
+   `relatores` queria nome; aqui **não se sabe** qual quer o quê.
+5. **`numeroProcesso` não foi testado** — logo o caminho do `Checker` está por validar.
+   O bundle manda **20 dígitos sem máscara** (como o TJPE, e ao contrário do TJES).
+6. **Não há permalink confirmado.** Não se sabe se `/juris-pb/buscar?...` restaura a busca
+   nem se existe URL por documento. **Não invente link de acórdão do TJPB.**
+7. Não foi medido: teto de intervalo de data; paginação profunda; se existe filtro por data de
+   **publicação** (só se viu `dataJulgamento`; `meioPublicacao` veio `null` nos 3 documentos);
+   nem o significado exato de cada valor do enum `InstanciaAgrupada`.
+8. **DataJud não foi sondado** para o TJPB — nem para o `Checker`, nem para conferir a
+   proporção PJe × Projudi do acervo (o truque que resolveu o TJRN sem abrir o portal).
+
+## 11. Arquivos desta pasta
+
+- `01-busca-e-filtros.txt` — este arquivo
+- `01-payload-busca-exemplo.json` — resposta real de `/public/search` (2 documentos, size=2)
+- `01.01-tela-busca.png` — a tela **em branco**, ver §10.2

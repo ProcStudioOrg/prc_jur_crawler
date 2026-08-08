@@ -309,14 +309,14 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 |---|---|---|---|---|
 | 7 | **TJPE** | PE | PJe, Projudi | ok 07/08 |
 | 8 | **TJES** | ES | PJe, Projudi | ok 07/08 |
-| 9 | **TJPB** | PB | PJe, Projudi | pendente |
-| 10 | **TJPI** | PI | PJe, Projudi | pendente |
-| 11 | **TJRO** | RO | PJe, Projudi | pendente |
-| 12 | **TJSE** | SE | Próprio (1ª e 2ª) — sistema caseiro, pode ter portal próprio | pendente |
-| 13 | **TJTO** | TO | e-Proc, Projudi — irmão do TJRS/TJSC/TRF4 (e-Proc) | pendente |
-| 14 | **TJAP** | AP | Tucujuris, PJe | pendente |
-| 15 | **TJRR** | RR | PJe, Projudi | pendente |
-| 16 | **TJMT** | MT | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
+| 9 | **TJPI** | PI | PJe, Projudi | pendente |
+| 10 | **TJRO** | RO | PJe, Projudi | pendente |
+| 11 | **TJSE** | SE | Próprio (1ª e 2ª) — sistema caseiro, pode ter portal próprio | pendente |
+| 12 | **TJTO** | TO | e-Proc, Projudi — irmão do TJRS/TJSC/TRF4 (e-Proc) | pendente |
+| 13 | **TJAP** | AP | Tucujuris, PJe | pendente |
+| 14 | **TJRR** | RR | PJe, Projudi | pendente |
+| 15 | **TJMT** | MT | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
+| 16 | **TJPB** | PB | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
 
 📌 **O que o TJPE (feito em 07/08/2026) ensinou — leia
 [`CLAUDE-TJPE.md`](CLAUDE-TJPE.md).** Primeiro alvo do Bloco 3 e o tribunal mais
@@ -476,6 +476,61 @@ valem para os 7 restantes do bloco:
 estão expostos como flags mas **não foram provados por contagem**; a causa interna do
 filtro no-op **não foi isolada**; e os combos listam as **100 opções mais frequentes**,
 não todas, sem endpoint que devolva a lista completa.
+
+📌 **O que o TJPB (08/08/2026) deixou pronto — `parcial`, leia
+[`human-codegen/TJPB/01-juris-pb/01-busca-e-filtros.txt`](human-codegen/TJPB/01-juris-pb/01-busca-e-filtros.txt).**
+**A API está inteira mapeada e destravada; falta o crawler** — mesmo estado do TJMT. O portal
+é o **Juris-PB** (`app.tjpb.jus.br/juris-pb`), SPA Angular sobre backend Spring, com
+`/juris-pb-backend/public/search` **sem auth, sem token, sem captcha**, ementa **e** inteiro
+teor de graça no payload, e **2.515.026 documentos**. As lições valem para os 6 restantes:
+
+- 🔴 **UM PARÂMETRO DE MODO PODE LIGAR UM FILTRO E DESLIGAR OUTRO — defeito novo no repo.**
+  `advanced=true` faz o filtro de data funcionar (2026 = 347 contra 12.206 sem janela) **e ao
+  mesmo tempo faz o `grau` ser ignorado** (12.206 nos dois graus). No modo simples é o inverso:
+  `grau` particiona exato (8.997 + 3.209 = 12.206) e **toda janela de data devolve a base
+  inteira**, com HTTP 200 e número plausível. **Não dá para recortar por grau e por data na
+  mesma requisição** — e quem mandar data sem `advanced` acha que filtrou. **Teste cada filtro
+  dentro E fora do modo**, não só isoladamente.
+- 🔴 **O TESTE NO-OP DO TJES MUDOU DE PAPEL: aqui ele ABSOLVE, e sozinho não decide nada.**
+  A janela 1900..2100 devolve 12.206 = o total sem filtro. Isolado, isso se lê como "filtro
+  ignorado" — e é o **comportamento correto** de um intervalo que não exclui nada. O que separa
+  os dois casos é **o par**: no-op = total **e** janela estreita = número pequeno. Uma medição
+  só é ambígua nos dois sentidos.
+- 🔴 **O VALOR INVENTADO PODE ERRAR ENQUANTO O VÁLIDO É IGNORADO.** `instancia=XXINVALIDOXX`
+  devolve HTTP 400 nomeando o enum Java — o que passa a impressão de parâmetro levado a sério —
+  mas `instancia=TURMAS_RECURSAIS` devolve **2.515.026, o total inteiro**. O truque do TJMT
+  (testar valor inventado) **não basta**: é preciso comparar o valor **válido** com o sem
+  filtro. E `grau=9` nem erra — faz **fallback silencioso para grau=2**.
+- ✅ **PRIMEIRO CONJUNTO DE OPERADORES COERENTE EM SEIS TRIBUNAIS.** Português e inglês
+  funcionam e a aritmética fecha exata: `OU` = 125.729 = 12.206 + 120.847 − 7.324, `NÃO` =
+  4.882 = 12.206 − 7.324. Espaço = AND, parênteses e frase exata funcionam, `NÃO` acentuado
+  **é** operador, e o token inventado **zera** (sintoma visível). Depois de TJBA/TJPE/TJES/TJMT
+  se herdaria caos — e aqui era o caso limpo. **Continua sem herdar: medir foi o que provou.**
+- ⚠️ **Acento é OBRIGATÓRIO e não normalizado** (`usucapiao` = 64, `usucapião` = 12.206) —
+  padrão TJMS/TJBA, oposto de TJAC/TJAM/TJAL/TJPE.
+- ✅ **É o SEGUNDO tribunal do repo com 1º grau — e o maior de todos**: 1.970.661 de 2.515.026
+  (78%), contra 1.509.942 do TJES. A pergunta que o TJES mandou fazer ("tem 1º grau?")
+  **rendeu na primeira tentativa**. Continue perguntando nos 6 restantes.
+- ✅ Paginação **estável** (mesmos 10 ids em duas rodadas), total **exato** sem saturação,
+  `size` máx. **50** com HTTP 400 honesto acima disso, base **corrente** (documento do próprio
+  dia do mapeamento), e **sem vhost curinga** (NXDOMAIN de verdade).
+- ⚠️ **Cloudflare com `cf-mitigated: challenge` no domínio ≠ portal inacessível.** O
+  `www.tjpb.jus.br` devolve 403 ao `curl`, como o STJ — mas é **managed challenge**, que
+  **auto-resolve** em Chrome real (200, sem interação), diferente do desafio interativo do STJ.
+  E **a API `/public/*` está fora do challenge**: responde ao `curl` cru. **Meça o challenge
+  antes de marcar bloqueado, e meça a API separado da tela.**
+- 🔴 **RATE LIMIT DO CLOUDFLARE SE DISFARÇA DE RECURSO BLOQUEADO.** A partir do ~9º recurso da
+  mesma página os chunks lazy do Angular levam 403 e o `import()` quebra — mas o **mesmo**
+  chunk responde 200 como primeira requisição de um contexto novo. **403 em asset é cota até
+  prova em contrário.** Foi o que impediu a tela de renderizar (ver ressalva abaixo).
+
+⚠️ **Pendências declaradas do TJPB:** o **crawler não existe**; a **tela nunca renderizou**,
+então **não há print útil e a Fase 3b (`browser-post-search`) não foi executada** — não há
+anatomia de card, escada até o documento pela tela nem permalink confirmado; os **7 endpoints
+de `/public/options/*` estão identificados mas nenhum foi chamado** (combos não enumerados);
+os filtros de classe/comarca/vara/órgão/relator **não foram provados por contagem** (não se
+sabe se querem id ou nome — a armadilha do TJBA); `numeroProcesso` **não foi testado**, logo o
+caminho do `Checker` está por validar; e **o DataJud não foi sondado** para o TJPB.
 
 ## Bloco 4 — Módulo faltante (1 alvo)
 
