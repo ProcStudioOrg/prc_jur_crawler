@@ -1,0 +1,189 @@
+# TJMT — o que vem DEPOIS da busca (skill `browser-post-search`)
+
+Complementa `01-busca-e-filtros.txt`. Prints: `02.01`–`02.05`.
+Card gravado: `02-card-resultado-acordao.html`. Payload: `02-payload-busca-exemplo.json`.
+
+---
+
+## 1. Onde o resultado aparece
+
+| Pergunta | Medido |
+|---|---|
+| Mesma página / outra rota / nova aba? | **Outra rota**, mesma aba: `/` → `/consulta?aba=Acordao&…` |
+| A URL de resultado é reutilizável? | ✅ **SIM** — ver §6 |
+| Os controles de busca somem? | **Não** — o formulário continua na coluna esquerda (refinamento incremental) |
+| Abre popup/modal? | **Não** |
+| Nova aba? | **Não** (nenhum evento `page` no contexto) |
+| Onde aparece o total | Texto: `Exibindo 1 - 5 de aproximadamente 3849 resultados para usucapião`. No JSON: `CountAcordaoDocumento` / `CountTotal` |
+
+⚠️ A tela escreve **"aproximadamente"**, mas o total é **exato** (§5). O advérbio é da tela.
+
+⚠️ **Uma execução não basta para diagnosticar esta SPA.** Na 1ª tentativa a rota `/consulta`
+renderizou **página em branco** (só cabeçalho e rodapé, zero XHR) por causa de
+`Loading chunk 8 failed` — 404 num chunk lazy. Isso me levou a gravar, erradamente, que o
+permalink estava morto. No reteste os 9 chunks respondem 200, o `index.html` **não** mudou de
+md5 (`8991060f…`, logo não foi redeploy) e o permalink funciona. Transitório.
+
+Abas do cabeçalho de resultados: `Acórdão 3849` · `Decisões Monocráticas 2299`.
+Estrutura: `.resultado > app-header-resultados > nav > ul.nav-abas` e
+`section.card-resultado > app-card-resultado` (5 nós).
+
+---
+
+## 2. Anatomia do card — **dois tipos, dois schemas**
+
+### Card na tela (acórdão) — `02-card-resultado-acordao.html`, 62.366 bytes
+
+Ordem do texto: nº do processo · toggle **`Ementa | Inteiro Teor`** · Julgado em · Publicado em ·
+Órgão Julgador · Classe · Classe Feito · Relator · Ação · Tipo do Processo · Assunto ·
+Tipo de julgamento · o texto.
+
+Botões/links do card: **`Relatório`** e um dropdown sem rótulo (PDF / RTF / TXT — o template
+só o renderiza com `body.tipoConsulta === 'Acordao'`).
+
+⚠️ O card traz **os dois textos já no DOM** (18.872 chars de `innerText`): o toggle
+Ementa/Inteiro Teor é visual e **não dispara request**.
+
+### O card no payload — é aqui que os tipos divergem
+
+| campo | Acórdão | Monocrática |
+|---|---|---|
+| `Id` | ✅ **identifica o documento** | ✅ |
+| `Conteudo` | **a ementa** — 987 a 3.604 chars úteis | **a decisão inteira** — 10.939 a 19.445 chars |
+| `Documento` | ✅ **o inteiro teor** — 9.098 a 21.363 chars úteis (69–143 KB brutos) | 🔴 **NÃO EXISTE** (ausente, não nulo) — 5/5 |
+| `Observacao` | ✅ citação oficial pronta | ✅ |
+| `StatusBoletim` | `Desabilitado` | ausente |
+| `TipoDecisao`, `TipoProcesso` | ausentes | ✅ existem |
+| `NumFound` | total da coleção | idem |
+| `Processo` | objeto de 30 campos | idem |
+
+**O texto do card é ementa, trecho ou nada?**
+- **Acórdão: `Conteudo` é a EMENTA de verdade** — texto estruturado no padrão CNJ
+  (`EMENTA / I. CASO EM EXAME / II. Questão em discussão / III. Razões de decidir /
+  IV. Dispositivo e tese`), com `<em class="highlight">` no termo buscado. Razão
+  ementa:inteiro teor ≈ **1:5** (2.296 × 12.564 no doc 0).
+- **Monocrática: NÃO HÁ EMENTA.** O `Conteudo` é o texto integral da decisão. Apresentá-lo
+  como ementa erra a natureza do texto. Padrão TJPE/TJCE.
+
+⚠️ Há destaque `<em class="highlight">` nos dois — mas aqui **highlight não significa trecho**:
+o campo vem inteiro, só com o termo marcado. Medir o tamanho é o que desfaz a dúvida.
+
+---
+
+## 3. A escada até o documento
+
+| Degrau | O que acontece |
+|---|---|
+| **Ementa** | Toggle no próprio card, **sem request**. Já está no DOM. |
+| **Inteiro teor** | Idem — **sem request**. Já veio no payload da busca. |
+| **Relatório** | Botão presente; **não exercitado** (pendência). |
+| **PDF / RTF / TXT** | Dropdown → `{api_url}/VisualizaRelatorio/RetornaDocumentoAcordao[Rtf|Txt]?id=&colegiado=&origem=&token=` — **chave composta**, **não exercitado**. |
+| **Processo** | `https://consultaprocessual.tjmt.jus.br/?numeroUnico=…` (nova aba). É tramitação, fora do escopo. |
+| **Copiar citação** | Não existe botão — mas o campo `Observacao` **já é** a citação oficial. |
+
+✅ **RESPOSTA À PERGUNTA QUE MAIS IMPORTA: o texto JÁ VEIO NO PAYLOAD DA BUSCA.** Não há
+downloader a escrever para o inteiro teor de acórdão. `--fetch-inteiro-teor` só gravaria em
+disco, sem request extra (padrão TJDFT/TJBA/TJPE).
+
+**Bloqueio, medido em separado:**
+- Busca: **livre** (só o header `token`).
+- Documento: **livre** (vem junto).
+- Download do PDF assinado: **não testado**.
+
+---
+
+## 4. O documento
+
+```
+Formato:            HTML (export do MS Word — <p class="MsoNormal">, mso-layout-grid-align)
+Tamanho típico:     69–143 KB brutos  ->  9–21 KB úteis após stripHtml
+Vem completo?       SIM — ementa + relatório + voto + dispositivo + assinatura
+Precisa de sessão?  NÃO (reproduzido em curl puro, contexto limpo)
+Precisa de captcha? NÃO
+Já veio na busca?   SIM  <- melhor caso
+```
+
+⚠️ **Cada acórdão embute 1 imagem `data:image/png;base64`** (o brasão) dentro de `Documento`.
+É a origem do peso: ~100 KB por documento de imagem inútil ao texto. Um strip ingênuo carrega
+a imagem inteira em memória — remova `data:image` antes de processar.
+
+---
+
+## 5. Paginação e profundidade
+
+| Item | Medido |
+|---|---|
+| Por página (default da tela) | 5 |
+| Parâmetro | `filtro.indicePagina` (1-based) + `filtro.quantidadePagina`, querystring |
+| **Máximo aceito** | **100** — `200`/`500`/`1000` → **HTTP 500** (1.735 bytes, ~90 ms) |
+| Profundidade | `indicePagina=770` → 4 itens; `1000` → coleção vazia. 3.849/5 ≈ 770 → **pagina tudo** |
+| Total | ✅ **EXATO** — termo raro devolve 2; `xilofone` e `pterodactilo` devolvem 0 |
+
+**Custo por página** (q=`usucapião`):
+
+| `quantidadePagina` | bytes | tempo |
+|---|---|---|
+| 5 | 713.076 | 685 ms |
+| 10 | 2.343.231 | 1,8 s |
+| 20 | 3.530.012 | 2,7 s |
+| 50 | 21.070.714 | 16,8 s |
+| **100** | **33.749.422** | **25,7 s** |
+
+🔴 **33,7 MB por página de 100.** Recomendação para o crawler: **20 por página** (3,5 MB / 2,7 s).
+
+🔴 **A PAGINAÇÃO É INSTÁVEL — sem campo de desempate.** Mesma página 2, 3 execuções seguidas,
+mesmo filtro:
+
+```
+1ª: 389310890, 389154864, 388638868, 388748380, …
+2ª: 389310890, 388638868, 388748380, 389154864, …   <- mesmo conjunto, ordem diferente
+3ª: 389265895, 388638868, 388748380, 389154864, …   <- CONJUNTO DIFERENTE
+```
+
+`new Set(3 execuções).size === 1` → **false**. O `389265895` que apareceu na 3ª execução da
+página 2 estava na **página 1** de execução anterior: documento **repete** numa página e
+**some** de outra. Padrão TJRJ/TJMG.
+
+✅ Dentro de **uma mesma execução**, interseção página 1 × página 2 = **0**.
+
+⚠️ A correção do TJDFT (fixar o nó do balanceador reenviando o cookie de sessão) **não foi
+testada** — pendência. No mínimo, o crawler deve **deduplicar por `Id`** ao paginar.
+
+---
+
+## 6. Permalink e identidade do documento
+
+✅ **PERMALINK DE BUSCA EXISTE E FUNCIONA EM ABA LIMPA** — confirmado em contexto novo, sem
+cookie (print `02.02`): renderiza a lista e dispara **1** XHR de `api/Consulta`.
+
+```
+https://jurisprudencia.tjmt.jus.br/consulta?aba=Acordao&isTelaInicial=false
+  &txtBusca=usucapi%C3%A3o&isBasica=true&indice=1&quantidade=5
+  &ordenarPor=DataDecrescente&ordenarDataPor=Julgamento&tipoBusca=1&thesaurus=false&fqTermos=&k=gr9k5
+```
+
+É melhor que o TJPE, cujo link de busca devolve **zero falso**. (O `k=` é um nonce
+`Math.random().toString(36).substring(7)` gerado pelo cliente; não parece necessário.)
+
+🔴 **MAS NÃO HÁ PERMALINK POR DOCUMENTO.** O card abre ementa e inteiro teor no próprio DOM,
+sem rota por julgado. **Nunca invente link de acórdão do TJMT.**
+
+**Quem identifica o documento é o campo `Id`** (ex. `389287396`) — **não** o número do
+processo, que pode ter vários julgados (o mesmo `NumeroUnico` aparece como acórdão e como
+monocrática). ⚠️ **Não foi testado** se esse `Id` é aceito numa consulta por número — o
+endpoint `filtro.numeroProtocolo` não foi exercitado (pendência que bloqueia o `Checker`).
+
+---
+
+## Critério de aceite — o que ficou em aberto
+
+- [x] Print da listagem no topo e no rodapé · [x] `outerHTML` do card gravado
+- [x] Card dissecado em 2 tipos · [x] ementa/trecho/nada respondido com tamanhos
+- [x] Contrato reproduzido fora do browser (curl) · [x] formato e tamanho anotados
+- [x] "o texto já vinha na busca?" respondido · [x] bloqueio separado busca/download
+- [x] `size` máximo medido e comportamento ao estourar · [x] total classificado (exato)
+- [x] Paginação testada 2+ vezes e instabilidade registrada
+- [x] Permalink de busca confirmado em aba limpa; permalink por documento **declarado inexistente**
+- [x] Campo que identifica o documento registrado (`Id`)
+- [ ] ⚠️ **Botões `Relatório` e PDF/RTF/TXT não foram clicados** — sem print. Como o texto já
+      vem na busca, não bloqueiam o crawler, mas o critério não está cumprido.

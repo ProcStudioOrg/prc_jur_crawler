@@ -1,0 +1,490 @@
+# TJMT — Portal de Jurisprudência (SPA Angular + API REST hellsgate)
+
+## Identificação
+
+```
+Tribunal:                   TJMT — Tribunal de Justiça de Mato Grosso
+Estado(s):                  MT
+Módulo:                     Portal de Jurisprudência (SPA Angular 5, bundle webpack)
+Link principal:             https://jurisprudencia.tjmt.jus.br/
+API (medida):               https://hellsgate-preview.tjmt.jus.br/jurisprudencia
+Sistema judicial:           PJe (1º e 2º grau) + Projudi (1º e 2º grau)
+Sistema irmão já mapeado:   TJPE e TJES (ambos PJe+Projudi, ambos API REST pública)
+Abrangência da base:        2º grau (acórdãos + decisões monocráticas). SEM 1º grau.
+                            SEM Turma Recursal exposta (ver §7).
+                            1.543.137 documentos (1.088.967 acórdão + 454.170 monocrática)
+Data do mapeamento:         08/08/2026 (16:00–17:30 BRT)
+Status:                     PARCIAL — mapeamento gravado, crawler NÃO escrito (timebox)
+```
+
+---
+
+## 0. Passo 0 — o que existe e o que NÃO existe de API pública
+
+Procurado **antes** de abrir a tela.
+
+| Candidato | Resultado medido |
+|---|---|
+| `dadosabertos.tjmt.jus.br` | **NXDOMAIN** |
+| `api.tjmt.jus.br` | **NXDOMAIN** |
+| `sistemas.tjmt.jus.br` | **NXDOMAIN** |
+| `busca.tjmt.jus.br` / `consultas.tjmt.jus.br` | **NXDOMAIN** |
+| `servicos.tjmt.jus.br` | 200.195.230.241 → **HTTP 503** na raiz (não investigado adiante) |
+| `jurisprudencia.tjmt.jus.br` | ✅ 200 — SPA Angular, 2.342 bytes de `index.html` |
+| `/swagger`, `/v3/api-docs` | **não existem como documento próprio** — ver armadilha abaixo |
+
+⚠️ **Vhost/rota curinga (armadilha TJAC/TJAL/TJES):** `jurisprudencia.tjmt.jus.br/path-inventado-9z`
+devolve **HTTP 200, 2.342 bytes, md5 `8991060fe11fdbc60cae342f733ae7e1`** — exatamente o mesmo
+da raiz. É o fallback do roteador da SPA. **Qualquer 200 nesse host só prova que o Angular
+respondeu.** Confira o md5 antes de comemorar um swagger.
+
+**A API foi descoberta no bundle, não chutada.** Em `main.4fbae9a9bb684a741e57.bundle.js`,
+objeto de environment:
+
+```js
+{ production: true,
+  api_url:                "https://hellsgate-preview.tjmt.jus.br/jurisprudencia",
+  api_url_old:            "http://jurisprudencia-api.tjmt.jus.br",
+  api_hellsgate_token:    "3u35s547H0twxVuT",
+  api_url_site:           "https://old.tjmt.jus.br/webapi/api",
+  api_administrativo_url: "https://jurisprudencia-admin-api.tjmt.jus.br",
+  recaptcha: { url_api: "https://verificador-recaptcha-api.tjmt.jus.br",
+               site_key: "fçsjaçkfshdkçwqçee89-w8e- ",   // literal do bundle
+               sistema_id: 2353 } }
+```
+
+### O gateway e o token
+
+`GET /jurisprudencia/...` **sem header** devolve **HTTP 401**
+`{"message":"No API key found in request","request_id":"..."}` — gateway Kong.
+
+O SPA injeta por interceptor (três interceptors idênticos no bundle):
+
+```js
+e.url.startsWith("https://hellsgate") && (e = e.clone({ setHeaders: { token: i.a.api_hellsgate_token } }))
+```
+
+Com `token: 3u35s547H0twxVuT` → **HTTP 200**. Nenhuma outra credencial, cookie ou sessão.
+
+### reCAPTCHA — medido em separado, busca e download
+
+✅ **NÃO HÁ CAPTCHA EM ETAPA NENHUMA.** Existe um host `verificador-recaptcha-api.tjmt.jus.br`
+referenciado no environment, mas a `site_key` gravada no bundle é **texto de placeholder**
+(`"fçsjaçkfshdkçwqçee89-w8e- "`), e nenhuma requisição de busca ou de documento passou por ele
+durante o mapeamento no Playwright. Busca: livre. Documento: livre (e já vem no payload — §8).
+
+---
+
+## 1. O contrato da busca
+
+```
+GET https://hellsgate-preview.tjmt.jus.br/jurisprudencia/api/Consulta
+Header: token: 3u35s547H0twxVuT
+Accept: application/json
+```
+
+Parâmetros (todos com prefixo `filtro.`, todos enviados sempre, mesmo vazios):
+
+| Parâmetro | Efeito medido |
+|---|---|
+| `filtro.termoDeBusca` | o termo. Vazio = base inteira |
+| `filtro.indicePagina` | 1-based |
+| `filtro.quantidadePagina` | ver §6 — **máx. 100** |
+| `filtro.tipoBusca` | `1` Ementa · `2` Inteiro Teor · `3` Todos. **Só afeta acórdão** |
+| `filtro.periodoDataDe` / `filtro.periodoDataAte` | 🔴 **QUEBRADO — ver §5** |
+| `filtro.tipoProcesso` | `Cível` / `Criminal` — **exige o acento** (§4) |
+| `filtro.area` | `Judiciaria` (default) / `Administrativa` (=0) |
+| `filtro.ordenacao.ordenarPor` | `DataDecrescente` etc. |
+| `filtro.ordenacao.ordenarDataPor` | `Julgamento` / `Publicacao` — **não muda contagem** |
+| `filtro.thesaurus` | `true`/`false` — busca por sinônimos |
+| `filtro.fqRelator`, `filtro.fqOrgaoJulgador`, `filtro.fqTipoProcesso`, `filtro.fqJulgamento`, `filtro.fqAssunto` | facets (ids) — **não provados por contagem** (pendência) |
+| `filtro.tipoConsulta` | 🔴 **IGNORADO — ver §3** |
+| `filtro.colegiado`, `filtro.localConsultaAcordao` | 🔴 **IGNORADOS — ver §7** |
+| `filtro.numeroProtocolo`, `filtro.relator`, `filtro.julgamento`, `filtro.orgaoJulgador` | não medidos (pendência) |
+
+Endpoints auxiliares (todos 200 com o mesmo header):
+
+```
+GET /jurisprudencia/camaras     ->  lista de câmaras (Nome, IdCamara)          21.861 bytes
+GET /jurisprudencia/classe      ->  lista de classes (IDClasse, NomeClasse)    99.561 bytes
+GET /jurisprudencia/relator     ->  magistrados (IDMagistrado, Nome)          136.019 bytes
+GET /jurisprudencia/consulta/ultima-atualizacao-pje-acordao
+GET /jurisprudencia/consulta/ultima-atualizacao-pje-decisao
+GET /jurisprudencia/Thesaurus   ->  672.484 bytes
+```
+
+✅ **Base CORRENTE**: `ultima-atualizacao-pje-acordao` devolveu
+`"DataAtualizacaoFormatada":"08/08/2026 05:04:40"` — indexada no próprio dia do mapeamento.
+Documento mais recente observado: julgado 05/08/2026, publicado 07/08/2026.
+
+---
+
+## 2. Formulário da tela (para o `fixer`)
+
+`#txtBusca` (busca livre ou número único) · `#btnPesquisar` · `#txtComExpressao` ·
+`#txtQlqrUmaDasPalavras` · `#txtSemAsPalavras` · checkbox "Pesquisar sinônimos (Thesauro)".
+HTML completo em `01-formulario.html`. Prints `01.01`, `01.02`.
+
+Botões de operador que a tela oferece: **`E` · `OU` · `NÃO` · `PRÓXIMO`** — dois deles
+não funcionam (§4).
+
+Filtros da tela de resultado: `Data de publicação` · `Buscar em: Ementa/Inteiro Teor/Todos` ·
+`Tipos de Processo: Todos/Criminal/Cível` · `Colegiado: Todos/Tribunal de Justiça/Turma Recursal` ·
+`Órgão Julgador (21)` · facets de Relator/Assunto/Julgamento.
+
+---
+
+## 3. 🔴 `tipoConsulta` É IGNORADO — a aba é conceito de CLIENTE
+
+A resposta traz **quatro coleções de uma vez**, independentemente do que se peça:
+
+```
+AcordaoCollection · DecisaoMonocraticaCollection · ResumoProcessoCollection · RecursalEletronicoCollection
+CountAcordaoDocumento · CountDecisaoMonocratica · CountResumoProcesso · CountRecursalEletronico · CountTotal
+```
+
+Medido com `q=usucapião`, variando **só** `filtro.tipoConsulta`:
+
+| valor enviado | A | D | TOT | itens devolvidos |
+|---|---|---|---|---|
+| `Acordao` | 3.849 | 2.299 | 6.148 | Acordao:5 Mono:5 |
+| `Decisao` | 3.849 | 2.299 | 6.148 | Acordao:5 Mono:5 |
+| `Projudi` | 3.849 | 2.299 | 6.148 | Acordao:5 Mono:5 |
+| `RecursalEletronico` | 3.849 | 2.299 | 6.148 | Acordao:5 Mono:5 |
+| **`XXinvalidoXX`** | **3.849** | **2.299** | **6.148** | **Acordao:5 Mono:5** |
+
+**Oito valores, inclusive um inventado, resposta byte-a-byte equivalente.** O parâmetro não
+existe para o servidor; a aba "Acórdão / Decisões Monocráticas" é recorte que o Angular faz
+escolhendo qual coleção renderizar.
+
+**Consequência para o crawler:** o recorte por tipo é **de cliente** — escolha a coleção. E
+**cada busca paga o custo das duas** (§6). Não adianta pedir só monocrática para economizar.
+
+---
+
+## 4. Operadores — o QUINTO conjunto distinto da série
+
+Base: `usucapião` = 3.849 acórdãos · `posse` = 60.783 acórdãos.
+
+| Query | Acórdãos | Leitura |
+|---|---|---|
+| `usucapião` | 3.849 | referência |
+| `usucapiao` (sem acento) | **3.849** | ✅ índice **normaliza** — não avisar sobre acento |
+| `usucapião posse` (espaço) | 2.315 | ✅ **espaço = E (AND)** |
+| `usucapião E posse` | 2.315 | ✅ igual ao espaço — `E` funciona (ou é descartado, dá no mesmo) |
+| `usucapião OU posse` | **2.315** | 🔴 **`OU` É IGNORADO E VIRA AND** — pediu união, recebeu interseção |
+| `usucapião NÃO posse` (acentuado) | **2.315** | 🔴 **ignorado, vira AND** — pediu exclusão, recebeu interseção |
+| `usucapião NAO posse` (sem acento) | 1 | ⚠️ responde, mas 1 ≠ 1.534 (=3.849−2.315) esperado. **Semântica não confirmada** |
+| `usucapião PROXIMO posse` | 72 | ✅ funciona |
+| `usucapião PROX posse` | **0** | 🔴 zero silencioso |
+| `usucapião ADJ posse` | **0** | 🔴 zero silencioso |
+| `usucapião AND posse` | 62.360 | 🔴 **infla** — vira OR (3.849+60.783−2.315 ≈ 62.317) |
+| `usucapião OR posse` | 62.512 | 🔴 infla — idem |
+| `usucapião NOT posse` | 62.366 | 🔴 infla — idem |
+| `"usucapião extraordinária"` | 1.106 | ✅ frase exata funciona |
+| `usucapi*` | 3.890 | ✅ curinga funciona |
+| `usucapi$` | **2** | ⚠️ **degenera** (padrão TJAL): 2 se lê como busca específica |
+
+🔴 **DUAS DAS QUATRO TECLAS QUE A PRÓPRIA TELA OFERECE ESTÃO QUEBRADAS, E QUEBRAM PARA AND.**
+`OU` e `NÃO` são silenciosamente descartados e a query cai no AND implícito do espaço. O
+usuário que clica `OU` recebe **menos** resultados do que pediu, e o número é plausível —
+não há sintoma. É a lição TJBA ("operadores da tela quebrados") em forma nova: lá inflava
+(sintoma visível em milhões), aqui **contrai para um número crível**.
+
+🔴 **Os ingleses transformam a query inteira em OR.** Um token desconhecido (`and`, `or`,
+`not`) desliga o AND implícito e a busca vira união — 62 mil onde o usuário esperava 2 mil.
+
+**Série do repo, cinco tribunais, cinco conjuntos:** TJBA (ingleses ok, portugueses inflam) ·
+TJPE (portugueses ok, ingleses enganam) · TJES (ingleses ok, `NAO`/`PROX` inflam) ·
+TJMT (**`E` e `PRÓXIMO` ok; `OU` e `NÃO` viram AND; ingleses viram OR**). Não se herda nada.
+
+---
+
+## 5. 🔴🔴 O FILTRO DE DATA LÊ **MM/DD/YYYY** ENQUANTO O PORTAL ENVIA **DD/MM/YYYY**
+
+**O achado mais grave do dia.** O filtro *parece* funcionar — a contagem muda — e está errado.
+
+### A prova
+
+Janela de **um dia só**, sem termo, olhando a data de julgamento do que volta:
+
+| Enviado | Intenção brasileira | Julgados devolvidos | Veredito |
+|---|---|---|---|
+| `05/08/2026` | 5 de **agosto** | **07/05/2026** (7 de maio) | ❌ leu "May 8" |
+| `08/05/2026` | (MM/DD de 5/ago) | **04/08/2026** (4 de agosto) | ✅ leu "Aug 5" |
+| `03/07/2026` | 3 de **julho** | **24/02/2026** | ❌ leu "Mar 7" |
+| `07/03/2026` | (MM/DD de 3/jul) | **01/07/2026** (1º de julho) | ✅ leu "Jul 3" |
+
+### O corolário: dia > 12 faz o limite ser DESCARTADO em silêncio
+
+Quando o componente do dia brasileiro cai no slot do mês e passa de 12, o parse falha e o
+servidor **ignora aquele limite** — sem erro, HTTP 200.
+
+| Enviado | `CountTotal` | Leitura |
+|---|---|---|
+| sem filtro nenhum | 1.543.137 | base inteira |
+| `13/08/2026 .. 13/08/2026` | **1.543.137** | 🔴 **os dois limites descartados = base inteira** |
+| `01/01/2019 .. 31/12/2019` | 1.008.217 | `31/12` inválido → **vira "de 2019 em diante"** |
+| `01/01/2019 .. (vazio)` | **1.008.217** | idêntico — prova que o `Ate` não fez nada |
+| `(vazio) .. 31/12/2019` | **1.543.137** | `Ate` sozinho não filtra nada |
+| `01/01/2026 .. 31/01/2026` | 108.990 | `31/01` inválido → aberto |
+| `01/01/2026 .. 01/01/2026` | 2 | ambos válidos e iguais → funciona |
+| `01/01/2026 .. 02/01/2026` | 7.937 | leu "Jan 1 a **Feb 1**" — um mês, não dois dias |
+
+⚠️ **É por isso que a "distribuição por ano" enganou primeiro.** A série 2019=1.008.217,
+2020=920.251 … 2026=108.990 **não é a série anual**: é "de tal ano em diante", porque todo
+`31/12` foi descartado. Quem publicar essa tabela como distribuição anual publica número errado.
+A base **não está congelada** — está corrente (§1).
+
+**Consequência:** o crawler tem de converter DD/MM/YYYY → **MM/DD/YYYY** antes de enviar, e
+nunca repassar a data do usuário crua. E vale registrar que **o filtro de data do portal está
+errado para o próprio usuário do TJMT**: toda data com dia ≤ 12 devolve o mês trocado e toda
+data com dia > 12 devolve a base inteira.
+
+---
+
+## 6. Paginação, teto e ESTABILIDADE
+
+| Item | Medido |
+|---|---|
+| `quantidadePagina` default da tela | 5 |
+| **Máximo aceito** | **100**. `200`, `500`, `1000` → **HTTP 500** (1.735 bytes, ~90 ms) |
+| Profundidade | `indicePagina=770` responde 4 itens; `1000` devolve coleção vazia. 3.849/5 ≈ 770 → **pagina o conjunto inteiro** |
+| Total | ✅ **EXATO**, não saturado — termo raro devolve 2, `xilofone`/`pterodactilo` devolvem 0 |
+
+🔴 **CUSTO DE PAYLOAD ABSURDO — cada acórdão carrega o inteiro teor com imagem base64:**
+
+| `quantidadePagina` | bytes | tempo |
+|---|---|---|
+| 5 | 713.076 | 685 ms |
+| 10 | 2.343.231 | 1,8 s |
+| 20 | 3.530.012 | 2,7 s |
+| 50 | 21.070.714 | 16,8 s |
+| **100** | **33.749.422** | **25,7 s** |
+
+**33,7 MB para 100 documentos.** Cada acórdão traz 1 imagem `data:image/png;base64` (o brasão)
+dentro do campo `Documento`. Um crawler que peça 100 por página em 10 páginas move **337 MB**.
+Recomendação: página de 20 (3,5 MB / 2,7 s) como default.
+
+🔴 **A PAGINAÇÃO É INSTÁVEL — não há desempate na ordenação.** Mesma página 2, três vezes
+seguidas, mesmo filtro:
+
+```
+1ª: 389310890, 389154864, 388638868, 388748380, ...
+2ª: 389310890, 388638868, 388748380, 389154864, ...   <- mesmo conjunto, ordem diferente
+3ª: 389265895, 388638868, 388748380, 389154864, ...   <- CONJUNTO DIFERENTE
+```
+
+`new Set(3 execuções).size === 1` → **false**. O id `389265895` que apareceu na 3ª execução da
+página 2 estava na **página 1** de uma execução anterior. É o problema do TJRJ/TJMG: sem campo
+de desempate, o mesmo documento **repete** numa página e **some** de outra.
+✅ Interseção página 1 × página 2 numa mesma execução = **0** (dentro de uma execução está ok).
+
+⚠️ **A correção do TJDFT (fixar o nó do balanceador reenviando o cookie de sessão) NÃO foi
+testada aqui** — pendência. O crawler deve, no mínimo, deduplicar por `Id` ao paginar.
+
+⚠️ **Instabilidade da SPA (não afeta o crawler, afeta o mapeamento):** numa das execuções o
+Angular falhou com `Loading chunk 8 failed` (404) e a rota `/consulta` renderizou **página em
+branco** — o que me fez concluir erradamente que o permalink de busca estava morto. Reteste
+minutos depois: os 9 chunks respondem 200 e o permalink funciona (§9). O `index.html` **não**
+mudou de md5, então não foi redeploy. Foi transitório. **Não diagnostique o portal por uma
+execução só.**
+
+---
+
+## 7. 🔴 NÃO HÁ Turma Recursal / Juizado nesta base — e os filtros que prometem isso são IGNORADOS
+
+A tela oferece `Colegiado: Todos os colegiados / Tribunal de Justiça / Turma Recursal`, e o
+facet `Órgão Julgador` lista `Primeira Turma Recursal`. Mas:
+
+| parâmetro | valores testados | resultado |
+|---|---|---|
+| `filtro.colegiado` | `''`, `TribunalJustica`, `TribunalDeJustica`, `RecursalEletronico`, `TurmaRecursal` | **contagem idêntica nos 5** |
+| `filtro.localConsultaAcordao` | `''`, `TribunalJustica`, `RecursalEletronico`, `Projudi`, `1`, `2` | **contagem idêntica nos 6** |
+
+E `CountRecursalEletronico` e `CountResumoProcesso` são **0 em toda busca feita**, inclusive
+nas de consumo, onde Turma Recursal deveria dominar:
+
+```
+q="dano moral" -> A=241.791  D=81.833   R=0  RE=0
+q="juizado"    -> A=149.090  D=72.645   R=0  RE=0
+q="telefonia"  -> A= 25.020  D= 4.728   R=0  RE=0
+q=""           -> A=1.088.967 D=454.170 R=0  RE=0
+```
+
+**Veredito:** a desambiguação Juizado × Justiça Comum — obrigatória em todo TJ do repo —
+**não existe no TJMT**, porque o acervo de Turma Recursal (Projudi) não está indexado neste
+portal. Isso precisa ser dito ao usuário, não silenciado: pedido de jurisprudência de Juizado
+Especial de MT **não tem resposta aqui**, e o zero de `RecursalEletronico` **não** é ausência
+de julgado.
+
+⚠️ **Não foi investigado** se existe outro portal para o Projudi/Turma Recursal do TJMT
+(o `jurisprudencia-antigo.tjmt.jus.br`, citado no bundle, não foi aberto). Pendência.
+
+---
+
+## 8. Filtros que FUNCIONAM (contagem comparada)
+
+| Filtro | Sem | Com | Veredito |
+|---|---|---|---|
+| `tipoProcesso=Cível` | 3.849 | 3.848 | ✅ filtra |
+| `tipoProcesso=Criminal` | 3.849 | 1 | ✅ filtra (3.848+1=3.849, **partição exata**) |
+| `tipoProcesso=Civel` (sem acento) | 3.849 | **0** | 🔴 **zero silencioso — exige o acento** |
+| `tipoProcesso=1` / `=2` (id) | 3.849 | **0** | 🔴 quer o rótulo, não o id |
+| `area=Administrativa` | 3.849 | 0 | ✅ (base é toda Judiciária) |
+| `tipoBusca=1` (Ementa) | — | 3.849 | ✅ default |
+| `tipoBusca=2` (Inteiro Teor) | — | 8.695 | ✅ filtra — **e é 2,3× mais** |
+| `tipoBusca=3` (Todos) | — | 8.698 | ✅ |
+
+⚠️ **`tipoBusca` só mexe no acórdão**: a contagem de monocrática fica travada em 2.299 nos
+três valores. Coerente com §9 — monocrática não tem ementa separada.
+
+⚠️ `ordenarDataPor=Julgamento` × `Publicacao` **não muda contagem nenhuma** (823 nos dois).
+Ou é ignorado, ou só afeta ordenação. **Não decidido** — pendência.
+
+---
+
+## 9. O documento — ✅ MELHOR CASO: já vem tudo no payload da busca
+
+**Nenhum request extra é necessário.** Medido em 5 acórdãos + 5 monocráticas.
+
+### Acórdão — ementa **e** inteiro teor, campos distintos e reais
+
+| campo | o que é | tamanho medido (5 docs) |
+|---|---|---|
+| `Conteudo` | **a ementa**, com `<em class="highlight">` no termo | 987 – 3.604 chars úteis |
+| `Documento` | **o INTEIRO TEOR**, HTML export do MS Word | 9.098 – 21.363 chars úteis (69–143 KB brutos) |
+| `Observacao` | ✅ **a citação oficial pronta** (ver abaixo) | — |
+| `Id` | **identifica o DOCUMENTO** (≠ nº do processo) | ex. `389287396` |
+| `NumFound` | repete o total da coleção | 3.849 |
+| `Processo` | objeto com 30 campos de metadado | — |
+| `StatusBoletim` | `Desabilitado` | — |
+
+### Monocrática — **schema DIFERENTE**
+
+| campo | situação |
+|---|---|
+| `Documento` | 🔴 **NÃO EXISTE** (ausente, não nulo) — 5/5 |
+| `Conteudo` | é o **texto integral da decisão**, 10.939 – 19.445 chars — **não é ementa** |
+| `TipoDecisao`, `TipoProcesso` | campos extras que o acórdão não tem |
+| `StatusBoletim` | ausente |
+
+⚠️ **Monocrática vem SEM EMENTA** (padrão TJPE/TJCE): o que há é a decisão inteira no campo
+que no acórdão é a ementa. **Apresentar `Conteudo` de monocrática como ementa é errar a
+natureza do texto** — e apresentar o de acórdão como inteiro teor também.
+
+### Objeto `Processo` (o metadado)
+
+```
+DataJulgamentoFormatada  05/08/2026     DataPublicacaoFormatada 07/08/2026
+DataJulgamento           2026-08-05     DataPublicacao          2026-08-07
+NumeroUnicoFormatado     0001375-66.2014.8.11.0033
+NumeroUnico              00013756620148110033      <- 20 dígitos, SEM máscara
+UID                      c59431ee-1fb4-46ae-84b6-cbe0853413ac
+NomeClasseEsferaProcessual  APELAÇÃO CÍVEL          DescricaoCamara  Segunda Câmara de Direito Privado
+NomeRelator              MARILSEN ANDRADE ADDARIO   NomeRedatorDesignado  null
+SiglaClasseFeito         CÂMARAS ISOLADAS CÍVEIS DE DIREITO PRIVADO
+Instancia                Segunda                    Origem           PJe
+TipoProcesso             Cível                      Assunto          Usucapião Extraordinária
+TipoAcao                 DIREITO CIVIL (899) \ Coisas (10432) \ Propriedade (10448) \ ...
+Julgamento               Recurso prejudicado        Area             Judiciaria
+IDCamara 18 · IDRelator 286 · IDClasse 17 · IDAssunto 414 · IDJulgamento 230 · IDEsferaProcessual 570
+```
+
+✅ **Datas de julgamento E publicação, as duas reais e distintas** (05/08 × 07/08) — diferente
+do TJES (que só tem juntada) e do TJPE (onde as duas são o mesmo instante no acervo eletrônico).
+
+✅ **A citação oficial vem pronta em `Observacao`** — nada de regex, ao contrário dos quatro
+tribunais da família ESAJ:
+
+```
+(N.U 0001375-66.2014.8.11.0033, CÂMARAS ISOLADAS CÍVEIS DE DIREITO PRIVADO,
+ MARILSEN ANDRADE ADDARIO, Segunda Câmara de Direito Privado,
+ Julgado em 05/08/2026, Publicado no DJE 07/08/2026)
+```
+
+⚠️ **O texto é export do MS Word** (padrão TJPE): `Documento` traz 69–143 KB de markup para
+9–21 KB úteis, com `<p class="MsoNormal">`, `mso-layout-grid-align` e **uma imagem base64 de
+~100 KB por documento**. Strip ingênuo vai carregar a imagem inteira em memória.
+
+### Rotas de download (mapeadas, NÃO testadas — pendência)
+
+```
+{api_url}/VisualizaRelatorio/RetornaDocumentoAcordao?id=&colegiado=&origem=&token=   (PDF)
+{api_url}/VisualizaRelatorio/RetornaDocumentoAcordaoRtf?id=&colegiado=&origem=&token=
+{api_url}/VisualizaRelatorio/RetornaDocumentoAcordaoTxt?id=&colegiado=&origem=&token=
+{api_url}/VisualizaRelatorio/RelatorioEmentaJurisprudencia?id=&colegiado=&tipoProcesso=&token=
+{api_url}/relatorio/RetornaInteiroTeor/{id}/{?}/{?}
+{api_url}/url/retorna-url-acesso-documento-pje/{id}
+```
+
+⚠️ Chave **composta** (`id` + `colegiado` + `origem`) — padrão TJMG. Como o texto já vem na
+busca, essas rotas só interessam para o PDF assinado. **Não foram exercitadas.**
+
+---
+
+## 10. Permalink
+
+✅ **EXISTE PERMALINK DE BUSCA E ELE FUNCIONA EM ABA LIMPA** — raro no repo (o do TJPE
+devolve zero falso).
+
+```
+https://jurisprudencia.tjmt.jus.br/consulta?aba=Acordao&isTelaInicial=false
+  &txtBusca=usucapi%C3%A3o&isBasica=true&indice=1&quantidade=5
+  &ordenarPor=DataDecrescente&ordenarDataPor=Julgamento&tipoBusca=1&thesaurus=false&fqTermos=&k=gr9k5
+```
+
+Colado em contexto novo, sem cookie: renderiza
+`Exibindo 1 - 5 de aproximadamente 3849 resultados para usucapião`, dispara **1** XHR de
+`api/Consulta` e monta a lista. Print `02.02`.
+
+⚠️ **Mas é permalink de BUSCA, não de DOCUMENTO.** Não foi encontrada URL estável por julgado
+(o card abre Ementa/Inteiro Teor no próprio DOM, sem rota). **Quem identifica o documento é o
+campo `Id`** (ex. `389287396`) — não o número do processo, que pode ter vários julgados.
+A verificação de um julgado terá de ser por reconsulta.
+
+⚠️ O texto da tela diz **"aproximadamente"** 3.849 — mas a medição de §6 mostra que o total é
+**exato**. O advérbio é da tela, não do dado.
+
+---
+
+## 11. Anatomia do card (para o `fixer`)
+
+`section.card-resultado > app-card-resultado` (5 por página). HTML em
+`02-card-resultado-acordao.html` (62.366 bytes). Prints `02.03` (topo), `02.04` (rodapé),
+`02.05` (card).
+
+Texto do card, na ordem: nº do processo · toggle **`Ementa | Inteiro Teor`** · Julgado em ·
+Publicado em · Órgão Julgador · Classe · Classe Feito · Relator · Ação · Tipo do Processo ·
+Assunto · Tipo de julgamento · o texto. Botões: **`Relatório`** + um dropdown sem rótulo
+(PDF / RTF / TXT — só aparece em `tipoConsulta === 'Acordao'`).
+
+Abas do cabeçalho: `Acórdão 3849` · `Decisões Monocráticas 2299`.
+
+⚠️ O card do acórdão traz **os dois textos já no DOM** (18.872 chars de innerText) — o toggle
+Ementa/Inteiro Teor é puramente visual, não dispara request.
+
+---
+
+## 12. PENDÊNCIAS DECLARADAS (o que NÃO foi feito)
+
+1. 🔴 **O crawler não foi escrito.** Timebox de 90 min consumido pela descoberta da API e
+   pela investigação do filtro de data (§5), que exigiu 4 rodadas de medição para sair de
+   "parece quebrado" a causa provada.
+2. Os facets `fqRelator` / `fqOrgaoJulgador` / `fqTipoProcesso` / `fqJulgamento` / `fqAssunto`
+   **não foram provados por contagem** — só se sabe que os ids existem no payload.
+3. `filtro.numeroProtocolo` e a **consulta por número de processo** (que alimenta o `Checker`)
+   **não foram testadas**. Não se sabe se quer 20 dígitos ou máscara — e a lição TJPE×TJES é
+   que isso muda por tribunal.
+4. As rotas de download (§9) **não foram exercitadas**; a chave composta é hipótese lida do
+   bundle.
+5. A correção do TJDFT para a **paginação instável** (fixar nó por cookie) não foi tentada.
+6. `ordenarDataPor` não muda contagem — **não se decidiu** se é ignorado ou só ordena.
+7. O acervo de **Turma Recursal / Projudi** (§7) — não se procurou portal alternativo
+   (`jurisprudencia-antigo.tjmt.jus.br` está no bundle e não foi aberto).
+8. `jurisprudencia-admin-api.tjmt.jus.br` (jurisprudência **administrativa**, endpoints
+   `/api/consulta/{tipo}`, `/adminextrajudicial/...`) foi identificado e **não** foi mapeado —
+   é um segundo módulo.
+9. Não se mediu se `thesaurus=true` muda a contagem.
+10. `servicos.tjmt.jus.br` devolve 503 na raiz; **não** se testou subpath (a lição TJES é que
+    503 na raiz não diz nada sobre o módulo).

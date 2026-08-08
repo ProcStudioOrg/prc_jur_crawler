@@ -309,14 +309,14 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 |---|---|---|---|---|
 | 7 | **TJPE** | PE | PJe, Projudi | ok 07/08 |
 | 8 | **TJES** | ES | PJe, Projudi | ok 07/08 |
-| 9 | **TJMT** | MT | PJe, Projudi | pendente |
-| 10 | **TJPB** | PB | PJe, Projudi | pendente |
-| 11 | **TJPI** | PI | PJe, Projudi | pendente |
-| 12 | **TJRO** | RO | PJe, Projudi | pendente |
-| 13 | **TJSE** | SE | Próprio (1ª e 2ª) — sistema caseiro, pode ter portal próprio | pendente |
-| 14 | **TJTO** | TO | e-Proc, Projudi — irmão do TJRS/TJSC/TRF4 (e-Proc) | pendente |
-| 15 | **TJAP** | AP | Tucujuris, PJe | pendente |
-| 16 | **TJRR** | RR | PJe, Projudi | pendente |
+| 9 | **TJPB** | PB | PJe, Projudi | pendente |
+| 10 | **TJPI** | PI | PJe, Projudi | pendente |
+| 11 | **TJRO** | RO | PJe, Projudi | pendente |
+| 12 | **TJSE** | SE | Próprio (1ª e 2ª) — sistema caseiro, pode ter portal próprio | pendente |
+| 13 | **TJTO** | TO | e-Proc, Projudi — irmão do TJRS/TJSC/TRF4 (e-Proc) | pendente |
+| 14 | **TJAP** | AP | Tucujuris, PJe | pendente |
+| 15 | **TJRR** | RR | PJe, Projudi | pendente |
+| 16 | **TJMT** | MT | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
 
 📌 **O que o TJPE (feito em 07/08/2026) ensinou — leia
 [`CLAUDE-TJPE.md`](CLAUDE-TJPE.md).** Primeiro alvo do Bloco 3 e o tribunal mais
@@ -426,6 +426,50 @@ As lições valem para os 8 restantes:
 - ✅ **É o ÚNICO tribunal do repo com 1º grau na base de jurisprudência** — e o 1º grau é
   o maior acervo (1.509.942 de 2.212.794). Sentença de 1º grau é um pedido que só ele
   atende. **Vale perguntar por 1º grau nos alvos restantes em vez de presumir que não há.**
+
+📌 **O que o TJMT (08/08/2026) deixou pronto — `parcial`, leia
+[`human-codegen/TJMT/01-jurisprudencia/01-busca-e-filtros.txt`](human-codegen/TJMT/01-jurisprudencia/01-busca-e-filtros.txt).**
+**A API inteira está mapeada e destravada; só falta escrever o crawler.** Quem pegar o
+TJMT na volta da fila começa do §1 daquele arquivo com o contrato pronto. As lições
+valem para os 7 restantes do bloco:
+
+- 🔴 **UM FILTRO DE DATA PODE ESTAR ERRADO SEM ESTAR MORTO — e o do TJMT lê
+  `MM/DD/YYYY` enquanto o próprio portal envia `DD/MM/YYYY`.** Defeito novo no repo.
+  A contagem **muda**, então passa em todo teste de "o filtro funciona": janela
+  `05/08/2026..05/08/2026` (5 de agosto) devolve julgados de **07/05/2026**, três meses
+  fora; enviando `08/05/2026` (MM/DD) volta 04/08, no alvo. E quando o dia passa de 12 o
+  parse falha e o limite é **descartado em silêncio**: `13/08/2026..13/08/2026` devolve
+  **1.543.137 = a base inteira**. Corolário caro: a "distribuição por ano" do TJMT é
+  falsa — todo `31/12` é inválido, então cada linha é "de tal ano em diante", não o ano.
+  **Meça a data devolvida pelo documento, não só a contagem.**
+- 🔴 **`tipoConsulta` é IGNORADO — a aba é recorte de cliente.** Oito valores testados,
+  inclusive `XXinvalidoXX`, devolvem contagem idêntica; a resposta traz **as quatro
+  coleções sempre**. **Teste um valor inventado**: é o jeito barato de flagrar parâmetro
+  decorativo, e serviu também para `colegiado` e `localConsultaAcordao`.
+- 🔴 **A desambiguação Juizado × Justiça Comum NÃO EXISTE aqui**, apesar de a tela
+  oferecer `Colegiado: Turma Recursal`. Os dois parâmetros que prometem isso são
+  ignorados e `CountRecursalEletronico` é **0 em toda busca** — inclusive `dano moral`
+  (241.791 acórdãos, 0 turma). Foi o primeiro TJ do repo sem essa partição.
+- 🔴 **Quinto conjunto de operadores em cinco tribunais.** `E` e `PRÓXIMO` funcionam;
+  **`OU` e `NÃO` são ignorados e viram AND** (pediu união, recebeu interseção — número
+  menor e plausível, sem sintoma); os ingleses `AND`/`OR`/`NOT` **transformam a query
+  inteira em OR** (62 mil onde se esperava 2 mil). Espaço = AND. `PROX`/`ADJ` zeram.
+- 🔴 **PAYLOAD DE 33,7 MB PARA 100 DOCUMENTOS** — cada acórdão carrega o inteiro teor
+  com uma imagem base64 embutida. `quantidadePagina` acima de 100 devolve **HTTP 500**.
+  ✅ Em compensação, **ementa e inteiro teor já vêm na busca**, sem captcha nenhum.
+- 🔴 **Paginação instável** (padrão TJRJ/TJMG): a mesma página 2, três vezes, devolveu
+  três resultados diferentes — sem campo de desempate, documento repete e some.
+- ⚠️ **Não diagnostique o portal por uma execução só:** um `Loading chunk 8 failed`
+  transitório fez a rota `/consulta` renderizar **página em branco**, e eu quase gravei
+  "o permalink de busca está morto". No reteste os 9 chunks respondem 200 e o
+  ✅ **permalink de busca funciona em aba limpa** — raro (o do TJPE dá zero falso).
+- ✅ **A citação oficial vem pronta no campo `Observacao`** — nada de regex, ao contrário
+  dos quatro do Bloco 1. E há **data de julgamento E de publicação, reais e distintas**
+  (diferente do TJES, que só tem juntada, e do TJPE, onde as duas coincidem).
+- ⚠️ **Monocrática vem sem ementa** e com **schema diferente** do acórdão (o campo
+  `Documento` simplesmente **não existe** nela) — padrão TJPE/TJCE.
+- ✅ **Sem captcha, sem cookie, sem sessão:** só o header `token` achado no bundle.
+  O 401 do gateway Kong ("No API key found in request") é a única barreira.
 
 ⚠️ **Pendências declaradas do TJES:** os combos foram enumerados **só no `pje2g`** — o
 `pje1g` tem `comarca`, que não existe no 2º grau, e não foi enumerado; `-c` e `-a`

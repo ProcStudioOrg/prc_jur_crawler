@@ -1,0 +1,562 @@
+{
+ "_nota": "GET /jurisprudencia/api/Consulta?filtro.termoDeBusca=usucapião ... (header token). Documento e Conteudo truncados aqui; ver 01-busca-e-filtros.txt §9",
+ "CountAcordaoDocumento": 3849,
+ "CountDecisaoMonocratica": 2299,
+ "CountResumoProcesso": 0,
+ "CountRecursalEletronico": 0,
+ "CountTotal": 6148,
+ "FacetCamara": [
+  {
+   "Descricao": "QUARTA CÂMARA DE DIREITO PRIVADO",
+   "Key": "14",
+   "Quantidade": 865
+  },
+  {
+   "Descricao": "PRIMEIRA CÂMARA DE DIREITO PRIVADO",
+   "Key": "11",
+   "Quantidade": 820
+  },
+  {
+   "Descricao": "SEGUNDA CÂMARA DE DIREITO PRIVADO",
+   "Key": "18",
+   "Quantidade": 782
+  },
+  {
+   "Descricao": "TERCEIRA CÂMARA DE DIREITO PRIVADO",
+   "Key": "22",
+   "Quantidade": 713
+  },
+  {
+   "Descricao": "Quinta Câmara de Direito Privado",
+   "Key": "47",
+   "Quantidade": 215
+  },
+  {
+   "Descricao": "PRIMEIRA CÂMARA DE DIREITO PÚBLICO E COLETIVO",
+   "Key": "12",
+   "Quantidade": 131
+  },
+  {
+   "Descricao": "SEGUNDA CÂMARA DE DIREITO PÚBLICO E COLETIVO",
+   "Key": "19",
+   "Quantidade": 96
+  },
+  {
+   "Descricao": "PRIMEIRA TURMA DE CÂMARAS CÍVEIS REUNIDAS DE DIREITO PRIVADO",
+   "Key": "13",
+   "Quantidade": 94
+  },
+  {
+   "Descricao": "SEGUNDA TURMA DE CÂMARAS CÍVEIS REUNIDAS DE DIREITO PRIVADO",
+   "Key": "20",
+   "Quantidade": 66
+  },
+  {
+   "Descricao": "Terceira Câmara de Direito Público e Coletivo",
+   "Key": "50",
+   "Quantidade": 28
+  },
+  {
+   "Descricao": "TURMA RECURSAL ÚNICA",
+   "Key": "30",
+   "Quantidade": 9
+  },
+  {
+   "Descricao": "TURMA DE CÂMARAS CÍVEIS REUNIDAS DE DIREITO PÚBLICO E COLETIVO",
+   "Key": "24",
+   "Quantidade": 6
+  },
+  {
+   "Descricao": "NÃO INFORMADO",
+   "Key": "31",
+   "Quantidade": 6
+  },
+  {
+   "Descricao": "CÂMARAS CIVEIS REUNIDAS",
+   "Key": "6",
+   "Quantidade": 5
+  },
+  {
+   "Descricao": "TERCEIRA TURMA RECURSAL",
+   "Key": "29",
+   "Quantidade": 5
+  },
+  {
+   "Descricao": "PRIMEIRA TURMA RECURSAL",
+   "Key": "27",
+   "Quantidade": 2
+  },
+  {
+   "Descricao": "SEGUNDA TURMA RECURSAL",
+   "Key": "28",
+   "Quantidade": 2
+  },
+  {
+   "Descricao": "SEÇÃO DE DIREITO PRIVADO",
+   "Key": "15",
+   "Quantidade": 1
+  },
+  {
+   "Descricao": "TERCEIRA CÂMARA CRIMINAL",
+   "Key": "21",
+   "Quantidade": 1
+  },
+  {
+   "Descricao": "Secretaria de Plantão Criminal",
+   "Key": "41",
+   "Quantidade": 1
+  },
+  {
+   "Descricao": "Secretaria da Presidência da Terceira Turma Recursal",
+   "Key": "42",
+   "Quantidade": 1
+  }
+ ],
+ "FacetTipoProcesso": [
+  {
+   "Descricao": "APELAÇÃO CÍVEL",
+   "Key": "570",
+   "Quantidade": 1913
+  },
+  {
+   "Descricao": "APELAÇÃO",
+   "Key": "24",
+   "Quantidade": 837
+  },
+  {
+   "Descricao": "AGRAVO DE INSTRUMENTO",
+   "Key": "17",
+   "Quantidade": 744
+  },
+  {
+   "Descricao": "CONFLITO DE COMPETÊNCIA",
+   "Key": "68",
+   "Quantidade": 82
+  },
+  {
+   "Descricao": "EMBARGOS DE DECLARAÇÃO",
+   "Key": "114",
+   "Quantidade": 66
+  },
+  {
+   "Descricao": "AÇÃO RESCISÓRIA",
+   "Key": "14",
+   "Quantidade": 44
+  },
+  {
+   "Descricao": "EMBARGOS DE DECLARAÇÃO CÍVEL",
+   "Key": "1036",
+   "Quantidade": 40
+  },
+  {
+   "Descricao": "CONFLITO DE COMPETÊNCIA CÍVEL",
+   "Key": "2178",
+   "Quantidade": 20
+  },
+  {
+   "Descricao": "AGRAVO REGIMENTAL",
+   "Key": "21",
+   "Quantidade": 17
+  },
+  {
+   "Descricao": "RECURSO INOMINADO",
+   "Key": "942",
+   "Quantidade": 11
+  },
+  {
+   "Descricao": "CUMPRIMENTO DE SENTENÇA",
+   "Key": "94",
+   "Quantidade": 10
+  },
+  {
+   "Descricao": "PROCEDIMENTO DO JUIZADO ESPECIAL CÍVEL",
+   "Key": "870",
+   "Quantidade": 10
+  },
+  {
+   "Descricao": "REMESSA NECESSÁRIA",
+   "Key": "469",
+   "Quantidade": 9
+  },
+  {
+   "Descricao": "AGRAVO REGIMENTAL CÍVEL",
+   "Key": "1033",
+   "Quantidade": 8
+  },
+  {
+   "Descricao": "REMESSA NECESSÁRIA CÍVEL",
+   "Key": "1042",
+   "Quantidade": 6
+  },
+  {
+   "Descricao": "APELAÇÃO / REMESSA NECESSÁRIA",
+   "Key": "25",
+   "Quantidade": 5
+  },
+  {
+   "Descricao": "EMBARGOS INFRINGENTES",
+   "Key": "117",
+   "Quantidade": 5
+  },
+  {
+   "Descricao": "AGRAVO",
+   "Key": "15",
+   "Quantidade": 4
+  },
+  {
+   "Descricao": "APELAÇÃO / REMESSA NECESSÁRIA CÍVEL",
+   "Key": "1035",
+   "Quantidade": 3
+  },
+  {
+   "Descricao": "RECURSO CÍVEL INOMINADO",
+   "Key": "1045",
+   "Quantidade": 3
+  },
+  {
+   "Descricao": "CAUTELAR INOMINADA",
+   "Key": "58",
+   "Quantidade": 2
+  },
+  {
+   "Descricao": "INCIDENTE DE FALSIDADE",
+   "Key": "161",
+   "Quantidade": 2
+  },
+  {
+   "Descricao": "MANDADO DE SEGURANÇA",
+   "Key": "198",
+   "Quantidade": 2
+  },
+  {
+   "Descricao": "IMPUGNAÇÃO AO VALOR DA CAUSA",
+   "Key": "156",
+   "Quantidade": 1
+  },
+  {
+   "Descricao": "IMPUGNAÇÃO DE ASSISTÊNCIA JUDICIÁRIA",
+   "Key": "157",
+   "Quantidade": 1
+  },
+  {
+   "Descricao": "PETIÇÃO",
+   "Key": "377",
+   "Quantidade": 1
+  },
+  {
+   "Descricao": "RECLAMAÇÃO",
+   "Key": "433",
+   "Quantidade": 1
+  },
+  {
+   "Descricao": "RECURSO EM SENTIDO ESTRITO",
+   "Key": "458",
+   "Quantidade": 1
+  },
+  {
+   "Descricao": "MANDADO DE SEGURANÇA CÍVEL",
+   "Key": "1040",
+   "Quantidade": 1
+  }
+ ],
+ "FacetJulgamento": [
+  {
+   "Descricao": "Não-Provimento",
+   "Key": "239",
+   "Quantidade": 1353
+  },
+  {
+   "Descricao": "NÃO INFORMADO",
+   "Key": "0",
+   "Quantidade": 1244
+  },
+  {
+   "Descricao": "Provimento",
+   "Key": "237",
+   "Quantidade": 647
+  },
+  {
+   "Descricao": "Não-Acolhimento de Embargos de Declaração",
+   "Key": "200",
+   "Quantidade": 294
+  },
+  {
+   "Descricao": "Provimento em Parte",
+   "Key": "238",
+   "Quantidade": 145
+  },
+  {
+   "Descricao": "Não-Conhecimento",
+   "Key": "235",
+   "Quantidade": 36
+  },
+  {
+   "Descricao": "Acolhimento de Embargos de Declaração",
+   "Key": "198",
+   "Quantidade": 23
+  },
+  {
+   "Descricao": "Procedência",
+   "Key": "219",
+   "Quantidade": 23
+  },
+  {
+   "Descricao": "Improcedência",
+   "Key": "220",
+   "Quantidade": 16
+  },
+  {
+   "Descricao": "Acolhimento em parte de Embargos de Declaração",
+   "Key": "871",
+   "Quantidade": 16
+  },
+  {
+   "Descricao": "Recurso prejudicado",
+   "Key": "230",
+   "Quantidade": 12
+  },
+  {
+   "Descricao": "Conhecimento em Parte e Provimento",
+   "Key": "240",
+   "Quantidade": 9
+  },
+  {
+   "Descricao": "Sentença confirmada",
+   "Key": "12252",
+   "Quantidade": 7
+  },
+  {
+   "Descricao": "Conhecimento em Parte e Não-Provimento",
+   "Key": "242",
+   "Quantidade": 5
+  },
+  {
+   "Descricao": "Outras Decisões",
+   "Key": "12164",
+   "Quantidade": 5
+  },
+  {
+   "Descricao": "Ausência de pressupostos processuais",
+   "Key": "459",
+   "Quantidade": 3
+  },
+  {
+   "Descricao": "Declaração de competência em conflito",
+   "Key": "11796",
+   "Quantidade": 3
+  },
+  {
+   "Descricao": "Procedência em Parte",
+   "Key": "221",
+   "Quantidade": 2
+  },
+  {
+   "Descricao": "Anulação de sentença/acórdão",
+   "Key": "11373",
+   "Quantidade": 2
+  },
+  {
+   "Descricao": "Sentença desconstituída",
+   "Key": "12254",
+   "Quantidade": 2
+  },
+  {
+   "Descricao": "Procedência",
+   "Key": "12451",
+   "Quantidade": 1
+  },
+  {
+   "Descricao": "Prejudicado",
+   "Key": "12459",
+   "Quantidade": 1
+  }
+ ],
+ "FacetRelator": [
+  {
+   "Descricao": "SERLY MARCONDES ALVES",
+   "Key": "367",
+   "Quantidade": 321
+  },
+  {
+   "Descricao": "RUBENS DE OLIVEIRA SANTOS FILHO",
+   "Key": "356",
+   "Quantidade": 260
+  },
+  {
+   "Descricao": "MARILSEN ANDRADE ADDARIO",
+   "Key": "286",
+   "Quantidade": 235
+  },
+  {
+   "Descricao": "GUIOMAR TEODORO BORGES",
+   "Key": "163",
+   "Quantidade": 230
+  },
+  {
+   "Descricao": "JOÃO FERREIRA FILHO",
+   "Key": "189",
+   "Quantidade": 226
+  },
+  {
+   "Descricao": "CARLOS ALBERTO ALVES DA ROCHA",
+   "Key": "60",
+   "Quantidade": 223
+  },
+  {
+   "Descricao": "MARIA HELENA GARGAGLIONE PÓVOAS",
+   "Key": "280",
+   "Quantidade": 212
+  },
+  {
+   "Descricao": "DIRCEU DOS SANTOS",
+   "Key": "100",
+   "Quantidade": 200
+  },
+  {
+   "Descricao": "SEBASTIAO BARBOSA FARIAS",
+   "Key": "361",
+   "Quantidade": 200
+  },
+  {
+   "Descricao": "NILZA MARIA PÔSSAS DE CARVALHO",
+   "Key": "308",
+   "Quantidade": 176
+  }
+ ],
+ "FacetAssunto": [
+  {
+   "Descricao": "Usucapião Extraordinária",
+   "Key": "414",
+   "Quantidade": 917
+  },
+  {
+   "Descricao": "Apelação",
+   "Key": "191",
+   "Quantidade": 837
+  },
+  {
+   "Descricao": "Usucapião Ordinária",
+   "Key": "549",
+   "Quantidade": 286
+  },
+  {
+   "Descricao": "Esbulho / Turbação / Ameaça",
+   "Key": "84",
+   "Quantidade": 206
+  },
+  {
+   "Descricao": "Agravo de Instrumento",
+   "Key": "199",
+   "Quantidade": 186
+  },
+  {
+   "Descricao": "Reivindicação",
+   "Key": "101",
+   "Quantidade": 154
+  },
+  {
+   "Descricao": "Posse",
+   "Key": "329",
+   "Quantidade": 113
+  },
+  {
+   "Descricao": "Usucapião Especial (Constitucional)",
+   "Key": "858",
+   "Quantidade": 113
+  },
+  {
+   "Descricao": "Imissão",
+   "Key": "138",
+   "Quantidade": 107
+  },
+  {
+   "Descricao": "Conflito de competência",
+   "Key": "201",
+   "Quantidade": 84
+  }
+ ],
+ "AcordaoCollection": [
+  {
+   "Tipo": "Acordao",
+   "StatusBoletim": "Desabilitado",
+   "Conteudo": "E M E N T A <br/>APELAÇÃO CÍVEL - AÇÃO DE <em class=\"highlight\">USUCAPIÃO</em> EXTRAORDINÁRIA - IMPROCEDÊNCIA - CONEXÃO COM AÇÃO POSSESSÓRIA - IMPROCEDÊNCIA NA AÇÃO CONEXA – AUSÊNCIA DE POSSE COM ANIMUS DOMINI – MESMAS PARTES E MESMO OBJETO - PERDA DO OBJETO RECURSAL - RECURSO PREJUDICADO. <br/>I. Caso em exame <br/>1. Apelação Cível interposta contra sentença que julgou improcedente a ação de <em …[truncado]",
+   "Id": 389287396,
+   "Documento": "…[inteiro teor, 143456 bytes brutos, truncado]",
+   "NumFound": 3849,
+   "Observacao": "(N.U 0001375-66.2014.8.11.0033, CÂMARAS ISOLADAS CÍVEIS DE DIREITO PRIVADO, MARILSEN ANDRADE ADDARIO, Segunda Câmara de Direito Privado, Julgado em 05/08/2026, Publicado no DJE 07/08/2026)",
+   "Processo": {
+    "DataJulgamentoFormatada": "05/08/2026",
+    "DataPublicacaoFormatada": "07/08/2026",
+    "DataJulgamento": "2026-08-05T00:00:00",
+    "DataPublicacao": "2026-08-07T00:00:00",
+    "NumeroUnicoFormatado": "0001375-66.2014.8.11.0033",
+    "UID": "c59431ee-1fb4-46ae-84b6-cbe0853413ac",
+    "AnoProtocolo": null,
+    "NumeroProtocolo": "",
+    "NumeroUnico": "00013756620148110033",
+    "NomeClasseEsferaProcessual": "APELAÇÃO CÍVEL",
+    "DescricaoCamara": "Segunda Câmara de Direito Privado",
+    "NomeRelator": "MARILSEN ANDRADE ADDARIO",
+    "NomeRedatorDesignado": null,
+    "SiglaClasseFeito": "CÂMARAS ISOLADAS CÍVEIS DE DIREITO PRIVADO",
+    "Instancia": "Segunda",
+    "Origem": "PJe",
+    "IDProcessoAtenas": null,
+    "IDCamara": 18,
+    "IDRelator": 286,
+    "IDRedatorDesignado": null,
+    "IDEsferaProcessual": 570,
+    "IDClasse": 17,
+    "TipoProcesso": "Cível",
+    "TipoAcao": "DIREITO CIVIL (899) \\ Coisas (10432) \\ Propriedade (10448) \\ Aquisição (10455) \\ Usucapião Extraordinária (10458)",
+    "Assunto": "Usucapião Extraordinária",
+    "Area": "Judiciaria",
+    "IDJulgamento": 230,
+    "Julgamento": "Recurso prejudicado",
+    "IDAssunto": 414
+   }
+  }
+ ],
+ "DecisaoMonocraticaCollection": [
+  {
+   "Tipo": "DecisaoMonocratica",
+   "Id": 388897358,
+   "Conteudo": "ESTADO DE MATO GROSSO<br/>PODER JUDICIÁRIO<br/>GABINETE DA VICE-PRESIDÊNCIA<br/>RECURSO ESPECIAL Nº 1029709-54.2023.8.11.0041<br/>RECORRENTE(S): JUCILEY ALVES DA CRUZ FEITOSA<br/>RECORRIDA(S): ANTONIO CARLOS GONCALVES DO NASCIMENTO<br/>Trata-se de Recurso Especial interposto por JUCILEY ALVES DA CRUZ FEITOSA, com fundamento no artigo 105, inciso III, alíneas “a” e “c”, da Constituição Federal, con …[truncado]",
+   "NumFound": 2299,
+   "TipoDecisao": "Pje",
+   "TipoProcesso": "Cível",
+   "Observacao": "(N.U 1029709-54.2023.8.11.0041, CÂMARAS ISOLADAS CÍVEIS DE DIREITO PRIVADO, NILZA MARIA POSSAS DE CARVALHO, Vice-Presidência, Julgado em 07/08/2026, Publicado no DJE 07/08/2026)",
+   "Processo": {
+    "DataJulgamentoFormatada": "07/08/2026",
+    "DataPublicacaoFormatada": "07/08/2026",
+    "DataJulgamento": "2026-08-07T00:00:00",
+    "DataPublicacao": "2026-08-07T00:00:00",
+    "NumeroUnicoFormatado": "1029709-54.2023.8.11.0041",
+    "UID": "2994ec3a-e6a9-4c51-8110-d4f10cd60c79",
+    "AnoProtocolo": null,
+    "NumeroProtocolo": "",
+    "NumeroUnico": "10297095420238110041",
+    "NomeClasseEsferaProcessual": "APELAÇÃO CÍVEL",
+    "DescricaoCamara": "Vice-Presidência",
+    "NomeRelator": "NILZA MARIA POSSAS DE CARVALHO",
+    "NomeRedatorDesignado": null,
+    "SiglaClasseFeito": "CÂMARAS ISOLADAS CÍVEIS DE DIREITO PRIVADO",
+    "Instancia": "Segunda",
+    "Origem": "PJe",
+    "IDProcessoAtenas": null,
+    "IDCamara": 26,
+    "IDRelator": 308,
+    "IDRedatorDesignado": null,
+    "IDEsferaProcessual": 570,
+    "IDClasse": 17,
+    "TipoProcesso": "Cível",
+    "TipoAcao": "DIREITO CIVIL (899) \\ Coisas (10432) \\ Posse (10444) \\ Esbulho / Turbação / Ameaça (10445)",
+    "Assunto": "Esbulho / Turbação / Ameaça",
+    "Area": "Judiciaria",
+    "IDJulgamento": 433,
+    "Julgamento": "Recurso Especial",
+    "IDAssunto": 84
+   }
+  }
+ ]
+}

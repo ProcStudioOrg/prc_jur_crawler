@@ -1,0 +1,70 @@
+[
+ {
+  "m": "GET",
+  "url": "https://hellsgate-preview.tjmt.jus.br/jurisprudencia/consulta/ultima-atualizacao-pje-acordao",
+  "headers": {
+   "sec-ch-ua-platform": "\"Linux\"",
+   "referer": "https://jurisprudencia.tjmt.jus.br/",
+   "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+   "accept": "application/json, text/plain, */*",
+   "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+   "token": "3u35s547H0twxVuT",
+   "sec-ch-ua-mobile": "?0"
+  },
+  "post": null,
+  "status": 200,
+  "len": 149,
+  "sample": "{\"IDPjeAcordao\":6776,\"Tamanho\":0,\"DataAtualizacao\":\"2026-08-08T05:04:40.247\",\"DataAtualizacaoFormatada\":\"08/08/2026 05:04:40\",\"QuantidadeIndexado\":0}"
+ },
+ {
+  "m": "GET",
+  "url": "https://hellsgate-preview.tjmt.jus.br/jurisprudencia/consulta/ultima-atualizacao-pje-decisao",
+  "headers": {
+   "sec-ch-ua-platform": "\"Linux\"",
+   "referer": "https://jurisprudencia.tjmt.jus.br/",
+   "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+   "accept": "application/json, text/plain, */*",
+   "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+   "token": "3u35s547H0twxVuT",
+   "sec-ch-ua-mobile": "?0"
+  },
+  "post": null,
+  "status": 200,
+  "len": 149,
+  "sample": "{\"IDPjeDecisao\":6908,\"Tamanho\":0,\"DataAtualizacao\":\"2026-08-08T05:04:40.477\",\"DataAtualizacaoFormatada\":\"08/08/2026 05:04:40\",\"QuantidadeIndexado\":0}"
+ },
+ {
+  "m": "GET",
+  "url": "https://hellsgate-preview.tjmt.jus.br/jurisprudencia/Thesaurus",
+  "headers": {
+   "sec-ch-ua-platform": "\"Linux\"",
+   "referer": "https://jurisprudencia.tjmt.jus.br/",
+   "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+   "accept": "application/json, text/plain, */*",
+   "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+   "token": "3u35s547H0twxVuT",
+   "sec-ch-ua-mobile": "?0"
+  },
+  "post": null,
+  "status": 200,
+  "len": 672484,
+  "sample": "[{\"IDTermo\":1,\"Termo\":\"FATOR PREVIDENCIÁRIO\"},{\"IDTermo\":2,\"Termo\":\"ESCOLA DE ADMINISTRAÇÃO FAZENDÁRIA\"},{\"IDTermo\":3,\"Termo\":\"INSCRIÇÃO DEFINITIVA\"},{\"IDTermo\":4,\"Termo\":\"INSCRIÇÃO PRELIMINAR\"},{\"IDTermo\":5,\"Termo\":\"PROGRAMA NACIONAL DE ALIMENTAÇÃO ESCOLAR (PNAE)\"},{\"IDTermo\":6,\"Termo\":\"PROGRAMA NACIONAL DE ALIMENTAÇÃO ESCOLAR\"},{\"IDTermo\":7,\"Termo\":\"CONSELHO REGIONAL DOS MÚSICOS\"},{\"IDTermo\":8,\"Termo\":\"TENTATIVA BRANCA\"},{\"IDTermo\":9,\"Termo\":\"EMPRESA PRESTADORA DE SERVIÇO\"},{\"IDTermo\":10,\"Termo\":\"EMPRESA TOMADORA DE SERVIÇO\"},{\"IDTermo\":11,\"Termo\":\"TERCEIRIZAÇÃO\"},{\"IDTermo\":12,\"Termo\":\"ESAF"
+ },
+ {
+  "m": "GET",
+  "url": "https://hellsgate-preview.tjmt.jus.br/jurisprudencia/api/Consulta?filtro.isBasica=true&filtro.indicePagina=1&filtro.quantidadePagina=5&filtro.tipoConsulta=Acordao&filtro.termoDeBusca=usucapi%C3%A3o&filtro.area=&filtro.numeroProtocolo=&filtro.periodoDataDe=&filtro.periodoDataAte=&filtro.tipoBusca=1&filtro.relator=&filtro.julgamento=&filtro.orgaoJulgador=&filtro.colegiado=&filtro.localConsultaAcordao=&filtro.fqOrgaoJulgador=&filtro.fqTipoProcesso=&filtro.fqRelator=&filtro.fqJulgamento=&filtro.fqAssunto=&filtro.ordenacao.ordenarPor=DataDecrescente&filtro.ordenacao.ordenarDataPor=Julgamento&filtro.tipoProcesso=&filtro.thesaurus=false&filtro.fqTermos=undefined",
+  "headers": {
+   "sec-ch-ua-platform": "\"Linux\"",
+   "referer": "https://jurisprudencia.tjmt.jus.br/",
+   "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+   "accept": "application/json, text/plain, */*",
+   "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+   "token": "3u35s547H0twxVuT",
+   "sec-ch-ua-mobile": "?0"
+  },
+  "post": null,
+  "status": 200,
+  "len": 713076,
+  "sample": "{\"AcordaoCollection\":[{\"Tipo\":\"Acordao\",\"StatusBoletim\":\"Desabilitado\",\"Conteudo\":\"EMENTA <br/>DIREITO CIVIL E PROCESSUAL CIVIL. APELAÇÃO CÍVEL E RECURSO ADESIVO. AÇÃO REIVINDICATÓRIA. <em class=\\\"highlight\\\">USUCAPIÃO</em> ARGUIDA EM DEFESA. HERDEIRO ABSOLUTAMENTE INCAPAZ. SUSPENSÃO DO PRAZO DA PRESCRIÇÃO AQUISITIVA. PRINCÍPIO DA SAISINE. POSSE DE BOA-FÉ. BENFEITORIAS. DIREITO DE RETENÇÃO. PERDAS E DANOS. AUSÊNCIA DE PROVA DO PREJUÍZO. RECURSOS NÃO PROVIDOS. <br/>I. CASO EM EXAME <br/>Apelação cível interposta pelo réu contra sentença que julgou procedente ação reivindicatória, afastou a aleg"
+ }
+]
