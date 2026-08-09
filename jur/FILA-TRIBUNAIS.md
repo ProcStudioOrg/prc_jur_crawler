@@ -310,13 +310,13 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 | 7 | **TJPE** | PE | PJe, Projudi | ok 07/08 |
 | 8 | **TJES** | ES | PJe, Projudi | ok 07/08 |
 | 9 | **TJPI** | PI | PJe, Projudi | ok 09/08 |
-| 10 | **TJRO** | RO | PJe, Projudi | pendente |
-| 11 | **TJSE** | SE | Próprio (1ª e 2ª) — sistema caseiro, pode ter portal próprio | pendente |
-| 12 | **TJTO** | TO | e-Proc, Projudi — irmão do TJRS/TJSC/TRF4 (e-Proc) | pendente |
-| 13 | **TJAP** | AP | Tucujuris, PJe | pendente |
-| 14 | **TJRR** | RR | PJe, Projudi | pendente |
-| 15 | **TJMT** | MT | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
-| 16 | **TJPB** | PB | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
+| 10 | **TJSE** | SE | Próprio (1ª e 2ª) — sistema caseiro, pode ter portal próprio | pendente |
+| 11 | **TJTO** | TO | e-Proc, Projudi — irmão do TJRS/TJSC/TRF4 (e-Proc) | pendente |
+| 12 | **TJAP** | AP | Tucujuris, PJe | pendente |
+| 13 | **TJRR** | RR | PJe, Projudi | pendente |
+| 14 | **TJMT** | MT | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
+| 15 | **TJPB** | PB | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
+| 16 | **TJRO** | RO | PJe, Projudi — **API mapeada + Navigator escrito**, falta o crawler | parcial 09/08 |
 
 📌 **O que o TJPE (feito em 07/08/2026) ensinou — leia
 [`CLAUDE-TJPE.md`](CLAUDE-TJPE.md).** Primeiro alvo do Bloco 3 e o tribunal mais
@@ -598,6 +598,80 @@ de `/public/options/*` estão identificados mas nenhum foi chamado** (combos nã
 os filtros de classe/comarca/vara/órgão/relator **não foram provados por contagem** (não se
 sabe se querem id ou nome — a armadilha do TJBA); `numeroProcesso` **não foi testado**, logo o
 caminho do `Checker` está por validar; e **o DataJud não foi sondado** para o TJPB.
+
+📌 **O que o TJRO (09/08/2026) deixou pronto — `parcial`, leia
+[`human-codegen/TJRO/01-juris/01-busca-e-filtros.txt`](human-codegen/TJRO/01-juris/01-busca-e-filtros.txt).**
+**A API está inteira mapeada e o `src/TJRONavigator.js` já existe e funciona** (todas as
+medições passaram por ele); falta o Crawler/Checker/Testes e o subcomando. O portal é o
+**JURIS** (`juris.tjro.jus.br`), SPA React sobre um **Elasticsearch exposto quase cru, sem
+auth**, com **4.079.398 documentos** — o maior acervo do repo. As lições valem para os 5 restantes:
+
+- 🔴 **UM BOTÃO DA TELA PODE ENTREGAR O ACERVO OPOSTO AO QUE PROMETE.** A pior armadilha já
+  medida no repo, porque não zera nem infla — **troca o acervo**. A tela tem três botões de
+  instância, e "Turma recursal" e "Segundo grau" mandam **o mesmo payload**
+  (`grau_jurisdicao:"2"`); e esse filtro **exclui as Turmas Recursais**. Provado num
+  documento só: `nr_processo=70031613220228220003` tem `grau_jurisdicao: 2` no próprio
+  `_source` e some quando se pede `grau="2"` (1 hit → 0 hits). Quem clicar em "Turma
+  recursal" no portal oficial recebe Justiça Comum, com HTTP 200 e resultados plausíveis.
+  **Não basta ver o filtro mudar a contagem: confira QUE documentos ele devolve.**
+- 🔴 **O GAP DE UM FILTRO PODE SER O ACERVO QUE VOCÊ PROCURA.** `sem grau` = 347.938 e
+  `grau="2"` = 163.307 — os 184.631 que faltam são exatamente as Turmas Recursais
+  (1ª TR 151.219 + 2ª TR 33.376 = 184.595). **Quando a partição não fecha, o resto tem
+  nome.** A partição correta é por `ds_orgao_julgador_colegiado.raw`, não por grau.
+  E em RO **o Juizado é maior que a Justiça Comum** (53% × 47%) — padrão TJAC/TJAM,
+  oposto do TJAL.
+- 🔴 **HTTP 200 PODE SER PÁGINA DE BLOQUEIO.** O WAF "STIC" responde a `curl` com **200** e
+  corpo "Página Bloqueada — suspeita de robotização". Quem olhar só o status conclui que o
+  portal está no ar e a busca voltou vazia. ✅ Cura: UA de Chrome real (2.568 b → 61.645 b).
+  Some à lição do TJPI (o zero nem sempre é zero): **aqui o 200 nem sempre é 200.**
+- 🔴 **RATE LIMIT QUE MENTE NO PROTOCOLO HTTP — defeito novo.** Passando de ~35 requisições
+  sem pausa, o backend responde com HTTP **malformado** (um `\x00` antes dos headers) e o
+  Node nem parseia: chega `HPE_INVALID_HEADER_TOKEN`, um **erro de rede genérico**, não 429.
+  Um crawler ingênuo lê isso como instabilidade e retenta em loop. Dura **~12 min**, é **por
+  IP** (cookie não destrava) e **por host** (a tela continuava abrindo). **Throttle não é
+  otimização neste tribunal.** O `TJRONavigator` já traduz o erro e pausa 1,2 s.
+- 🔴 **CHAVE DESCONHECIDA EM `fields` ZERA A BUSCA EM SILÊNCIO.** Cinco nomes plausíveis para
+  o filtro de data devolveram **0 com HTTP 200** antes de eu capturar o certo
+  (`dtjulgamento_inicio`/`_fim`, `YYYY-MM-DD`). **Um zero pode ser nome de campo errado.**
+  Capture o payload da tela; não adivinhe o nome do parâmetro.
+- ✅ **TRÊS ARMADILHAS DE DATA DO REPO NÃO SE REPETIRAM — e isso também se mede.** O no-op
+  1900..2100 devolve o total (não derruba, como no TJES); a meia ponta **funciona** (não é
+  ignorada, como no TJPI); e `DD/MM/YYYY` dá **HTTP 500 honesto** (não o parse `MM/DD`
+  silencioso do TJMT). Aritmética exata: `316 + 439 − 81 = 674`.
+- 🔴 **TODOS os filtros querem NOME, nunca id** — `ds_nome`, `ds_classe_judicial` e
+  `ds_orgao_julgador_colegiado` devolvem **0** se receberem o código (a armadilha do TJBA,
+  aqui uniforme). E **`nr_processo` quer 20 dígitos**: a máscara devolve 0 calado —
+  ⚠️ **enquanto o placeholder da própria tela é `0000000-00.0000.8.22.0000`, com máscara.**
+- 🔴 **Oitavo tribunal, oitavo conjunto de operadores.** Ingleses funcionam (`AND`=454,
+  `NOT`=220, frase exata, `*`); portugueses são **ignorados** (`E`/`OU`/`NAO`/`ADJ`) ou
+  **inflam**: `NÃO` **acentuado** devolve **237.098** contra 220 da exclusão correta — 24× a
+  busca sem operador, sem sintoma nenhum. **O espaço é OR**, provado:
+  `674 + 9.631 − 454 = 9.851` exato. ✅ Acento é normalizado no índice.
+- ✅ **TERCEIRO tribunal do repo com 1º grau, e o segundo maior**: 1.926.426 sentenças —
+  atrás do TJPB (1.970.661) e à frente do TJES (1.509.942). `SENTENÇA` é **100% grau 1**, e
+  `grau="1"` em EMENTA é 0. A pergunta que o TJES mandou fazer ("tem 1º grau?") rendeu pela
+  terceira vez seguida. **Continue perguntando nos 5 restantes.**
+- ✅ **Ementa e inteiro teor de graça na busca** (`ds_modelo_documento`), sem captcha em etapa
+  nenhuma. ⚠️ Mas o texto tem **duas camadas** de perda de acento: entidades HTML no
+  cabeçalho (`A&Ccedil;&Atilde;O`) **e acento já perdido na origem no corpo** (`Apelao`,
+  `sentena`) — este segundo **não tem conserto**. Pior que o export de Word do TJPE.
+- ✅ Paginação **estável**, total **exato** sem saturação, base **corrente** (07/08/2026),
+  **sem vhost curinga** (NXDOMAIN de verdade), e o **DataJud do TJRO responde**
+  (`api_publica_tjro`, atualizado em 04/08/2026). ⚠️ Mas **`from` tem teto de 10.000**
+  (`max_result_window` do ES, com 500 honesto) — acervo grande exige recorte por data.
+- ⚠️ **Só há data de JULGAMENTO**: `dtpublicacao` é **null em 20/20**. Espelho do TJPI, que
+  só tem publicação. **Nunca apresente a data do TJRO como data de publicação.**
+- ⚠️ **O permalink de busca restaura o formulário e NÃO executa a busca** (testado em aba
+  limpa) — versão branda do defeito do TJPE. E **não há permalink por documento**.
+
+⚠️ **Pendências declaradas do TJRO:** o **crawler não existe** (só o Navigator); a **Fase 3b
+não foi executada na tela** — a lista de resultados nunca renderizou, então não há anatomia
+de card nem escada de cliques (o contrato do documento está mapeado **pela API**); os **4
+campos da pesquisa avançada** (Todas/Quaisquer/Sem/Trecho exato) **não tiveram os nomes de
+payload capturados** — e chave errada zera em silêncio; os combos de **órgão julgador** e
+**ordenação** não foram enumerados; os **3 documentos** com `tipo` fora dos oito da tela não
+foram identificados; e os **módulos irmãos** (súmulas, caderno de ementas, repositório de
+jurisprudência, NUGEPNAC), todos linkados no mapa do site oficial, não foram tocados.
 
 ## Bloco 4 — Módulo faltante (1 alvo)
 

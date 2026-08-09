@@ -1,0 +1,597 @@
+# TJRO — JURIS (Consulta de Jurisprudência) — busca e filtros
+
+## Identificação
+
+```
+Tribunal:               TJRO — Tribunal de Justiça do Estado de Rondônia
+Estado(s):              RO
+Módulo:                 JURIS — Consulta de Jurisprudência (SPA React + backend Elasticsearch)
+Link principal:         https://juris.tjro.jus.br/
+Backend (API):          https://juris-back.tjro.jus.br/
+Sistema judicial:       PJe (1º e 2º grau) + Projudi (1º grau). O JURIS indexa os dois.
+Sistema irmão mapeado:  Nenhum idêntico. O F5/TSPD da TELA é o mesmo do TJSC
+                        (ver src/TJSCNavigator.js); a API-Elasticsearch-crua não tem irmão no repo.
+Abrangência da base:    4.079.398 documentos, base CORRENTE (doc de 07/08/2026).
+                        1º grau (SENTENÇA = 1.926.426), 2º grau (Câmaras) e Turmas Recursais.
+                        É o MAIOR acervo do repo (TJPB 2.515.026, TJES 2.212.794).
+Data do mapeamento:     09/08/2026
+```
+
+---
+
+## 0. Passo 0 — o que existe e o que NÃO existe de API pública
+
+Medido em 09/08/2026, antes de abrir qualquer tela.
+
+**NÃO existe** (NXDOMAIN de verdade — não é vhost curinga, não foi preciso conferir md5):
+
+```
+dadosabertos.tjro.jus.br  -> NXDOMAIN
+api.tjro.jus.br           -> NXDOMAIN
+jurisprudencia.tjro.jus.br-> NXDOMAIN
+```
+
+**NÃO existe** documentação OpenAPI/Swagger no backend — e o 404 é **honesto**
+(179 bytes, `text/html`), diferente do fallback de SPA que o TJES devolvia com 200:
+
+```
+https://juris-back.tjro.jus.br/v3/api-docs        -> 404 (179 b)
+https://juris-back.tjro.jus.br/swagger-ui/index.html -> 404 (179 b)
+https://juris-back.tjro.jus.br/actuator           -> 404 (179 b)
+```
+
+**DataJud — EXISTE e responde** (sondado em 09/08/2026, com a chave pública padrão do repo):
+
+```
+POST https://api-publica.datajud.cnj.jus.br/api_publica_tjro/_search   -> HTTP 200
+hits.total = {"value":10000,"relation":"gte"}   (teto do ES, acervo maior)
+exemplo: numeroProcesso=01228075120058220101  tribunal=TJRO  grau=G1
+         dataHoraUltimaAtualizacao=2026-08-04T05:34:49Z  -> base CORRENTE
+```
+
+⚠️ No DataJud o `numeroProcesso` vem **sem máscara (20 dígitos)** — o oposto do que o campo
+da tela do JURIS pede (`0000000-00.0000.8.22.0000`). É o caminho de fallback do `Checker`
+se o JURIS estiver bloqueado, no molde do que o repo já faz para TJMA e TJRN.
+⚠️ **Não substitui o crawler**: o DataJud não tem ementa nem inteiro teor.
+
+**EXISTE, e é a porta:** o backend do próprio JURIS é um **Elasticsearch exposto quase cru,
+sem autenticação** — descrito no §1. Não foi chutado: apareceu na aba Network ao abrir a tela.
+
+### Como o portal foi descoberto (não inventado)
+
+1. `https://www.tjro.jus.br/` → o **robots.txt** libera o sitemap do Joomla
+   (`/component/osmap/?view=xml&id=1&format=xml`).
+2. A home **não linka** jurisprudência; o sitemap (4,2 MB) só tem notícias.
+3. O **mapa do site** (`https://www.tjro.jus.br/mapa-site`) linka
+   **`https://juris.tjro.jus.br`** — essa é a origem da URL.
+
+Outros módulos vistos no mapa do site e **não** mapeados aqui (ficam como pendência):
+`/servicos-judiciais/jurisprudencia/sumulas`, `/servicos-judiciais/jurisprudencia/caderno-de-ementas`,
+`/repositorio-de-jurisprudencia`, `/precedentes`, `/nugepnac`.
+
+---
+
+## 0b. 🔴 O WAF do TJRO — TRÊS barreiras diferentes, e a terceira travou o dia
+
+Este tribunal tem três proteções distintas, com causas e curas diferentes. Confundi-las custa o dia.
+
+### Barreira 1 — o WAF "STIC" bloqueia por User-Agent (fácil, resolvida)
+
+`curl` com UA padrão recebe **HTTP 200** com o corpo:
+
+```
+STIC - Página Bloqueada
+Seu acesso a esta página foi bloqueado por suspeita de robotização.
+Por favor, abra um chamado através do e-mail suporte@tjro.jus.br (...)
+Seu support ID é:
+```
+
+🔴 **É HTTP 200, não 403.** Quem só olhar o status code conclui que o portal está no ar e
+que a busca devolveu vazio. **Confira o corpo.** (Some à lição do TJPI: às vezes o zero nem
+é zero — aqui o 200 nem é 200.)
+
+✅ Trocar o UA para Chrome real resolve: `www.tjro.jus.br` sai de 2.568 b (bloqueio) para
+61.645 b (portal real). **Antes de culpar o site, confira que o seu cliente não está se
+anunciando como robô** — lição do TJRN, confirmada aqui.
+
+### Barreira 2 — o F5/BIG-IP (TSPD) na TELA, não na API
+
+`https://juris.tjro.jus.br/` devolve 6.120 b de JavaScript ofuscado (`window["bobcmn"]`,
+cookies `TSPD_101`, `TS...`) — é o **desafio JS do F5**, o mesmo que o `TJSCNavigator` já
+atravessa neste repo. **Não é captcha**: resolve sozinho em browser real.
+
+Receita medida: Playwright headless + UA de Chrome real +
+`--disable-blink-features=AutomationControlled`, em **loop de goto** com 2,5 s de espera,
+até `input[type="search"]` existir. **Libera na 2ª tentativa.**
+
+✅ **E o backend `juris-back.tjro.jus.br` NÃO está atrás do F5** — responde a `curl` cru,
+sem cookie, sem token, sem browser. É a lição do TJPB ("meça a API separado da tela") e da
+tabela anti-racionalização ("captcha protege a tela, não o endpoint") confirmada de novo.
+
+### 🔴 Barreira 3 — RATE LIMIT POR IP no backend, e ele MENTE no protocolo HTTP
+
+**Defeito novo no repo.** Depois de ~35 requisições rápidas (sem pausa) ao
+`juris-back.tjro.jus.br`, o WAF passa a responder à requisição seguinte com uma resposta
+**HTTP malformada**, que o cliente do Node **não consegue nem parsear**:
+
+```
+TypeError: fetch failed
+  cause: HTTPParserError: Response does not match the HTTP/1.1 protocol
+         (Invalid header value char)   code: HPE_INVALID_HEADER_TOKEN
+  data: '\x00\r\nContent-Type: text/html\r\nContent-Length: 3065\r\n
+         Set-Cookie: TScb011391027=...\r\n\r\n<html><title>STIC - Página Bloqueada</title>'
+```
+
+Ou seja: o corpo **é** a página de bloqueio do STIC, mas vem precedido de um byte `\x00`
+que quebra o parser. **O sintoma que chega ao código não é "403" nem "429": é um erro de
+rede genérico** (`fetch failed`). Um crawler ingênuo trata isso como instabilidade e
+retenta em loop, piorando o bloqueio.
+
+Medições do bloqueio:
+- Disparou após ~35 requisições sem throttle.
+- **Durou ~12 minutos** (bloqueio às ~20:05, liberado às 20:16:50 BRT; probe de 60 em 60 s).
+- É **por IP e por host**: com o bloqueio ativo no `juris-back`, a **tela**
+  `juris.tjro.jus.br` continuava abrindo normalmente no Playwright (liberada na 1ª
+  tentativa), e um `fetch` para o backend **de dentro do browser** dava
+  `TypeError: Failed to fetch`. Logo, cookie de sessão **não** destrava — é o IP.
+
+⚠️ **Consequência para o crawler: throttle é obrigatório, não otimização.** Sem pausa entre
+requisições o TJRO se auto-bloqueia em menos de um minuto de uso.
+
+---
+
+## 1. A API — contrato medido
+
+Dois endpoints, ambos `POST`, ambos `Content-Type: application/json`, **ambos sem
+`Authorization`**. A resposta é o **JSON nativo do Elasticsearch** (`hits.total.value`,
+`hits.hits[]._source`), sem envelope próprio.
+
+⚠️ O portal carrega um Keycloak (`rhbk.tjro.jus.br/realms/PJRO`, `client_id=juris`) com
+`prompt=none` — SSO silencioso para usuário interno. **A busca pública não precisa dele**:
+todas as medições abaixo foram feitas sem token nenhum.
+
+### 1.1 `POST /search/varios_parametros/` — a busca
+
+⚠️ **A barra final importa** (é o path exato que a SPA usa).
+
+```json
+{
+  "from": 0,
+  "size": 10,
+  "fields": {
+    "nr_processo": "",
+    "query": "usucapião",
+    "tipo.raw": ["EMENTA"],
+    "ds_nome.raw": [],
+    "ds_orgao_julgador.raw": [],
+    "ds_orgao_julgador_colegiado.raw": [],
+    "ds_classe_judicial.raw": []
+  },
+  "sort": [{ "_score": "desc" }, { "dtjulgamento": "desc" }],
+  "highlight": {
+    "type": "plain", "number_of_fragments": 1, "fragment_size": 3000,
+    "require_field_match": "true",
+    "pre_tags": ["<em class=\"destaque\">"], "post_tags": ["</em>"],
+    "fields": [{ "ds_modelo_documento": { "number_of_fragments": 1 } },
+               { "ds_modelo_documento.suggest": { "number_of_fragments": 1 } }]
+  }
+}
+```
+
+Cabeçalhos usados nas medições (os dois últimos por precaução, não provados obrigatórios):
+
+```
+Content-Type: application/json
+User-Agent: <Chrome real>
+Origin: https://juris.tjro.jus.br
+Referer: https://juris.tjro.jus.br/
+```
+
+### 1.2 `POST /search/agregacoes` — os facets (combos da tela)
+
+```json
+{"fields":{"tipo.raw":["EMENTA"],"grau_jurisdicao":"","ds_classe_judicial.raw":[],
+           "ds_nome.raw":[],"ds_orgao_julgador.raw":[],"ds_orgao_julgador_colegiado.raw":[]}}
+```
+
+Devolve `aggregations.classes_judiciais.buckets[]` (e outros — **não** foram todos
+enumerados; ver pendências). É de onde a tela popula os combos, e é o caminho para
+enumerá-los sem abrir a tela.
+
+### 1.3 Campos de `_source` (31, medidos)
+
+```
+ds_orgao_julgador, tipo, dtpublicacao, ds_modelo_documento, ds_orgao_julgador_colegiado,
+nome_relator_processo, id_documento_principal, ds_classe_judicial_sigla, nome_relator_acordao,
+nr_processo, nivel_sigilo_processo, dtjulgamento_str, ds_nome, nmpresidente, ds_md5_documento,
+data_indexacao, id_orgao_julgador_colegiado, cd_classe_judicial, sistema_origem,
+grau_jurisdicao, id_processo_documento, ds_assunto_trf, datarodape, id_processo_documento_bin,
+id_orgao_julgador, cd_assunto_trf, ds_classe_judicial, id_processo, cod_ini, dtjulgamento
+```
+
+✅ **`ds_modelo_documento` é o texto do documento em HTML e já vem na busca** — sem captcha,
+sem GET extra. `_id` tem a forma `36113645-PJESG` (id + sufixo do sistema de origem).
+
+---
+
+## 2. Tipos de documento — `tipo.raw`
+
+Oito valores, todos medidos sem termo de busca (base inteira):
+
+| Tipo | Documentos |
+|---|---|
+| SENTENÇA | 1.926.426 |
+| ACÓRDÃO | 592.386 |
+| DECISÃO | 454.728 |
+| VOTO | 352.641 |
+| EMENTA | 347.938 |
+| RELATÓRIO | 347.129 |
+| DECISÃO DA PRESIDÊNCIA | 56.676 |
+| VOTO VENCEDOR | 1.471 |
+| **soma das partes** | **4.079.395** |
+| **`tipo.raw: []` (todos)** | **4.079.398** |
+
+⚠️ **Sobram 3 documentos** com `tipo` fora dos oito valores que a tela oferece — invisíveis
+ao default do próprio portal. É o mesmo defeito do TJPE (41 lá), em escala menor.
+**Não foram identificados.**
+
+✅ `tipo.raw: ["XXINVALIDOXX"]` devolve **0** — o truque do TJMT (testar valor inventado)
+funciona aqui: o parâmetro é levado a sério, não é decorativo.
+
+🔴 **O default da tela é `EMENTA`** (a URL inicial é `/?tipo=EMENTA`), que é só **8,5%** da
+base. Quem chamar a API copiando o payload da tela mede 347.938 achando que mediu 4.079.398.
+Mesma armadilha do TJES (lá o default caía no menor acervo).
+
+✅ **1º grau existe e é a maior fatia**: 1.926.426 SENTENÇAS. É o **terceiro** tribunal do
+repo com 1º grau, depois de TJES (1.509.942) e TJPB (1.970.661) — e o maior dos três.
+A pergunta que o TJES mandou fazer rendeu pela terceira vez seguida.
+
+---
+
+## 3. Operadores — medidos um a um, com aritmética fechando
+
+Base de referência: `tipo.raw: ["EMENTA"]`, sem outros filtros.
+
+| Query | Total | Veredito |
+|---|---|---|
+| `usucapião` | 674 | termo isolado |
+| `usucapiao` (sem acento) | 674 | ✅ **índice normaliza acento** |
+| `posse` | 9.631 | termo isolado |
+| `usucapião posse` (espaço) | 9.851 | 🔴 **espaço = OR** |
+| `usucapião AND posse` | **454** | ✅ AND funciona |
+| `usucapião NOT posse` | **220** | ✅ NOT funciona |
+| `usucapião OR posse` | 9.851 | ✅ (= o default, indistinguível de ignorado) |
+| `usucapião E posse` | 9.851 | ⚠️ **`E` é IGNORADO** (idêntico ao espaço) |
+| `usucapião OU posse` | 9.851 | ⚠️ **`OU` é IGNORADO** |
+| `usucapião NAO posse` | 9.851 | ⚠️ **`NAO` é IGNORADO** |
+| `usucapião NÃO posse` | **237.098** | 🔴 **INFLA 24×** |
+| `usucapião ADJ posse` | 9.851 | ⚠️ ignorado |
+| `usucapião PROX5 posse` | 9.851 | ⚠️ ignorado |
+| `usucapião PROX posse` | 9.898 | ⚠️ **infla de leve** (vira token literal) |
+| `"usucapião extraordinária"` | 195 | ✅ frase exata funciona |
+| `usucapi*` | 679 | ✅ curinga `*` funciona |
+| `usucapi$` | 22 | ⚠️ **`$` DEGENERA**, não zera (padrão TJAL) |
+| `xyzzyqwertynaoexiste` | 0 | ✅ token inventado zera (sintoma visível) |
+
+### A prova aritmética
+
+```
+espaço  = 674 + 9.631 − 454 = 9.851   ✓ EXATO  → o espaço é OR (união)
+NOT     = 674 − 454         = 220     ✓ EXATO  → NOT é subtração real
+```
+
+🔴 **`NÃO` acentuado é a armadilha cara deste tribunal.** Pediu exclusão (esperado: 220) e
+recebeu **237.098** — 24× a busca sem operador, 68% da base de EMENTA. A causa é o espaço
+ser OR e `não` ser palavra comuníssima em ementa: a query vira `usucapião OR não OR posse`.
+**Inflar não dá sintoma** — 237 mil se lê como "tema vastíssimo". É a lição do TJBA repetida,
+agora com o acento como gatilho.
+
+⚠️ **Oitavo tribunal do bloco, oitavo conjunto de operadores.** Aqui os **ingleses funcionam
+e os portugueses são ignorados ou inflam** — igual a TJBA/TJES, **oposto** a TJPE/TJPI/TJPB.
+Continua sem herdar nada.
+
+### ✅ O contorno estruturado — a pesquisa avançada
+
+A tela tem um modo "Pesquisa avançada" com **quatro campos separados**, que dispensam
+operador na query:
+
+- **Todas as Palavras** — "documentos que contenham TODAS as palavras informadas" (AND)
+- **Quaisquer das Palavras** — "PELO MENOS uma das palavras" (OR)
+- **Sem as Palavras** — "que NÃO contenham as palavras" (NOT)
+- **Trecho(s) Exato(s)** — "uma frase ou expressão específica"
+
+⚠️ **Os nomes dos campos no payload da API NÃO foram capturados** (o backend entrou em
+rate limit antes) — ver pendências. Preencher esses campos é o caminho correto para
+AND/OR/NOT no TJRO, em vez de operador textual.
+
+---
+
+## 4. 🔴 Instância — a descoberta mais cara do dia
+
+A tela oferece **três** botões: **Primeiro grau**, **Segundo grau**, **Turma recursal**.
+Capturando o POST de cada clique no Playwright:
+
+| Botão clicado | Payload enviado |
+|---|---|
+| Primeiro grau | `"grau_jurisdicao":"1"` |
+| Segundo grau | `"grau_jurisdicao":"2"` |
+| **Turma recursal** | **`"grau_jurisdicao":"2"`** ← *idêntico a Segundo grau* |
+
+🔴 **"Turma recursal" e "Segundo grau" mandam exatamente o mesmo payload.** Três botões,
+dois valores. E o campo só aceita numérico: `"1"`, `"2"`, `"3"` respondem 200 (com 0 para
+`3`) e **qualquer valor não-numérico devolve HTTP 500** — erro honesto, sem o fallback
+silencioso do TJPB.
+
+### 🔴 E o filtro `grau_jurisdicao:"2"` EXCLUI as Turmas Recursais
+
+Este é o defeito, e ele é pior que o botão duplicado. Medido em tipo `EMENTA`:
+
+```
+sem filtro de grau  = 347.938
+grau = "1"          =       0
+grau = "2"          = 163.307      <- faltam 184.631
+```
+
+O gap não é ausência de dado — **é a Turma Recursal**, e a aritmética fecha pelos facets:
+
+```
+1ª Turma Recursal = 151.219
+2ª Turma Recursal =  33.376
+                    ---------
+                    184.595   ≈  184.631 (o resto são TRs menores fora do top-12)
+```
+
+**Prova direta, num documento só.** O documento `nr_processo = 70031613220228220003`
+(2ª Turma Recursal) tem **`grau_jurisdicao: 2` no seu próprio `_source`**:
+
+```
+busca por nr_processo, SEM filtro de grau  -> 1 hit
+busca por nr_processo, COM grau="2"        -> 0 hits
+```
+
+Ou seja: **o filtro não filtra pelo campo que ele diz filtrar.** Um documento cujo
+`grau_jurisdicao` vale 2 desaparece quando se pede `grau_jurisdicao = 2`. Na prática
+`grau="2"` significa "Justiça Comum de 2º grau (Câmaras + Pleno)".
+
+⚠️ **Consequência para o usuário do portal oficial: clicar em "Turma recursal" devolve
+Justiça Comum** — o oposto exato do que o botão promete, com HTTP 200 e resultados
+plausíveis. É a armadilha mais silenciosa já medida neste repo: não zera, não infla,
+**troca o acervo**.
+
+### A partição correta, e como o crawler deve fazê-la
+
+| Recorte | Como pedir | EMENTA |
+|---|---|---|
+| Justiça Comum 2º grau | `grau_jurisdicao: "2"` | 163.307 (46,9%) |
+| **Turma Recursal (Juizado)** | `ds_orgao_julgador_colegiado.raw: ["1ª Turma Recursal","2ª Turma Recursal"]` | 184.595 (53,0%) |
+| 1º grau (sentenças) | `grau_jurisdicao: "1"` + `tipo.raw: ["SENTENÇA"]` | 1.926.426 |
+
+🔴 **Em Rondônia o Juizado é MAIOR que a Justiça Comum** (53% × 47% em ementa) — padrão
+TJAC (2,8×) e TJAM (7,7×), **oposto** do TJAL (3,3× a favor da Comum). Não se generaliza
+em nenhum sentido; aqui foi medido.
+
+### Grau × tipo de documento
+
+```
+tipo=EMENTA    grau=""  347.938   grau="1"        0   grau="2"  163.307
+tipo=ACÓRDÃO   grau=""  592.386   grau="1"        0   grau="2"  374.624
+tipo=VOTO      grau=""  352.641   grau="1"        0   grau="2"  162.775
+tipo=SENTENÇA  grau=""1.926.426   grau="1"1.926.426   grau="2"        0
+```
+
+✅ **SENTENÇA é 100% grau 1 e nada mais é.** O 1º grau publica sentença; o 2º grau publica
+ementa/acórdão/voto. `sistema_origem` confirma: `PJEPG` (1º grau) × `PJESG` (2º grau).
+
+---
+
+## 5. Filtros — todos provados por contagem
+
+⚠️ **Todos querem NOME, nunca id** (a armadilha do TJBA, onde `relatores` queria nome e
+`orgaos` queria id — aqui é nome em tudo):
+
+| Filtro | Campo | Medição |
+|---|---|---|
+| Órgão colegiado | `ds_orgao_julgador_colegiado.raw` | `["1ª Turma Recursal"]` = 151.219; `["3ª Câmara Cível"]` = 37.234; **inventado = 0** ✅ |
+| Magistrado | `ds_nome.raw` | `["JOSE AUGUSTO ALVES MARTINS"]` = 28.710; **id `["9800"]` = 0** 🔴 |
+| Classe judicial | `ds_classe_judicial.raw` | `["RECURSO INOMINADO CÍVEL"]` = 168.837; **código `["460"]` = 0** 🔴 |
+| Órgão julgador | `ds_orgao_julgador.raw` | (gabinetes — enumerado nos facets) |
+| Tipo de documento | `tipo.raw` | ver §2; inventado = 0 ✅ |
+
+São arrays: passar dois valores soma (`["1ª TR","2ª TR"]` = 184.595 = 151.219 + 33.376).
+
+### 5.1 Data de julgamento — `dtjulgamento_inicio` / `dtjulgamento_fim`
+
+Formato **`YYYY-MM-DD`** (capturado do POST real da tela, não chutado).
+
+Base: `usucapião` + `EMENTA` = **674**.
+
+| Filtro | Total | Veredito |
+|---|---|---|
+| sem filtro | 674 | — |
+| `2024-01-01` … `2024-12-31` | 81 | ✅ restringe de fato |
+| **no-op `1900-01-01` … `2100-12-31`** | **674** | ✅ **compõe perfeitamente** |
+| só `_inicio` (2024-01-01) | 316 | ✅ meia ponta **funciona** |
+| só `_fim` (2024-12-31) | 439 | ✅ meia ponta **funciona** |
+| formato `DD/MM/YYYY` | **HTTP 500** | ✅ erro honesto |
+
+**A aritmética fecha:** `316 + 439 − 81 = 674` ✅ exato.
+
+✅ Três armadilhas conhecidas do repo **não** se repetem aqui, e isso foi medido, não presumido:
+- **não** é o filtro no-op que derruba a contagem (defeito do TJES);
+- **não** é a meia ponta ignorada em silêncio (defeito do TJPI);
+- **não** é o parse `MM/DD` silencioso (defeito do TJMT) — formato errado dá 500, não número errado.
+
+🔴 **Só existe data de JULGAMENTO.** O campo `dtpublicacao` existe no `_source` e é
+**`null` em 20/20** documentos amostrados. **Nunca apresente data do TJRO como data de
+publicação**, e não há como filtrar por ela. (Espelho do TJPI, que só tem publicação.)
+
+⚠️ **Chave desconhecida em `fields` ZERA a busca em silêncio.** Antes de capturar o nome
+certo, cinco variantes plausíveis (`dataInicial`, `data_inicial`, `dtjulgamento_inicial`…)
+devolveram **0 com HTTP 200** — não 674, não erro. **Um zero aqui pode ser nome de campo
+errado, não ausência de julgado.** Capture o payload da tela; não adivinhe o nome.
+
+---
+
+## 6. Paginação, tetos e estabilidade
+
+| Item | Medição |
+|---|---|
+| `size` | 100 ✅, 500 ✅, 1.000 e 10.000 devolvem o acervo inteiro da query — **sem teto medido** |
+| `from` (offset) | 0 ✅, 500 ✅, 9.990 ✅ … **10.000 → HTTP 500** |
+| Teto de resultados | **10.000** (o `max_result_window` padrão do Elasticsearch), com erro honesto |
+| Total | **exato** (`relation: "eq"`), **sem saturação** — diferente do TJPE, que satura em 10.000 |
+| Estabilidade | ✅ **estável**: a mesma página (`from=20,size=10`) duas vezes devolveu os 10 mesmos `_id` |
+
+⚠️ Total exato **e** teto de 10.000 convivem: a contagem de 4 milhões é confiável, mas só
+os 10.000 primeiros são **paginável**. Recorte por data para varrer acervo grande.
+
+---
+
+## 7. O documento — ementa e inteiro teor vêm de graça na busca
+
+✅ **`ds_modelo_documento` traz o texto completo em HTML, já no payload da busca.** Não há
+GET extra, não há captcha em etapa nenhuma — diferente de TJAC/TJAM/TJAL.
+
+Tamanhos medidos (5 documentos por tipo, `usucapião`), HTML bruto × texto útil:
+
+| Tipo | HTML | Texto útil |
+|---|---|---|
+| EMENTA | 3,2–8,9 KB | **1.475–2.487** chars |
+| ACÓRDÃO | 47–137 KB | **6.578–10.761** chars |
+| SENTENÇA | 17–59 KB | **6.159–10.835** chars |
+| DECISÃO | 14–60 KB | **4.884–12.734** chars |
+| VOTO | 9–50 KB | **4.496–7.516** chars |
+| RELATÓRIO | 3,9–21 KB | **1.481–4.215** chars |
+
+✅ **Ementa e inteiro teor são documentos DISTINTOS e reais** (tipos separados), como no
+TJPE — não o caso do TJBA, onde o campo "ementa" era o inteiro teor.
+
+### ⚠️ O texto tem DUAS camadas de corrupção de acento — pior que o TJPE
+
+Amostra real de uma ementa:
+
+```
+Ementa: DIREITO CIVIL. A&Ccedil;&Atilde;O DE USUCAPI&Atilde;O. IM&Oacute;VEL P&Uacute;BLICO.
+(...) Apelao interposta contra sentena que julgou liminarmente improcedente a ao de usucapio
+```
+
+1. **O cabeçalho** vem com **entidades HTML** (`A&Ccedil;&Atilde;O` = `AÇÃO`) — precisa
+   decodificar, como no TJPE ("Justi a de Pernambuco").
+2. 🔴 **O corpo já perdeu os acentos NA ORIGEM** (`Apelao` = Apelação, `sentena` = sentença,
+   `usucapio` = usucapião). **Isso não é bug de parsing — não há como recuperar.**
+
+⚠️ Consequência para a busca: como o índice **normaliza acento** (§3), `usucapião` e
+`usucapiao` acham os dois. Mas ao **exibir** o texto ao usuário, avise que o corpo do
+documento do TJRO vem com acentuação degradada na origem.
+
+### Metadados úteis do mesmo documento
+
+```
+nr_processo                 = "70098291520248220014"
+ds_classe_judicial          = "APELAÇÃO CÍVEL"
+ds_orgao_julgador           = "Gabinete Des. José Antonio Robles"
+ds_orgao_julgador_colegiado = "1ª Câmara Cível"
+ds_nome                     = "JOSE ANTONIO ROBLES"      (o relator)
+dtjulgamento_str            = "18/03/2025"               (DD/MM/YYYY, pronto para exibir)
+dtpublicacao                = null                        <- sempre
+sistema_origem              = "PJESG"
+ds_assunto_trf              = "Usucapião Ordinária"       <- assunto, e vem de graça
+```
+
+⚠️ `nome_relator_acordao` veio **vazio** neste documento; quem traz o relator é `ds_nome`.
+
+---
+
+## 8. Número do processo — o `Checker`
+
+🔴 **A API quer 20 DÍGITOS SEM MÁSCARA, e a máscara devolve 0 calado:**
+
+```
+nr_processo = "70031613220228220003"        -> 5 hits (ACÓRDÃO, RELATÓRIO, VOTO…)
+nr_processo = "7003161-32.2022.8.22.0003"   -> 0 hits, HTTP 200, sem erro
+```
+
+🔴 **E a tela pede o formato que a API rejeita**: o placeholder do campo é
+`0000000-00.0000.8.22.0000`, **com máscara**. Quem copiar o formato da tela recebe zero.
+É a mordida que o TJPE já deu no repo (lá `cnj.normalizar()` **preserva** a máscara) —
+**confira o que `cnj.normalizar()` devolve antes de mandar para cá.**
+
+✅ Um número devolve **vários documentos** do mesmo processo (um por tipo: ACÓRDÃO,
+RELATÓRIO, VOTO…). O `Checker` deve deduplicar por `nr_processo`, não contar hits.
+
+---
+
+## 9. Vigência da base — o passo obrigatório do TJAM
+
+Distribuição por ano, **base inteira** (sem termo, todos os tipos) — o denominador certo
+que o TJBA ensinou a usar:
+
+| Ano | Documentos |
+|---|---|
+| 2020 | 344.612 |
+| 2022 | 424.286 |
+| 2024 | 423.948 |
+| 2025 | 433.263 |
+| 2026 | 225.878 (ano em curso) |
+
+Meses de 2026: **jun = 35.669 · jul = 38.749 · ago = 6.330** (até o dia 7).
+Documento mais recente: **07/08/2026** — dois dias antes do mapeamento.
+
+✅ **BASE CORRENTE, sem defasagem de ponta.** Nem congelada (TJAM), nem corrente-com-atraso
+(TJPI): julho de 2026 tem volume normal e agosto já indexa. O TJRO responde a pedido recente.
+
+---
+
+## 10. Permalink
+
+A URL depois da busca é `https://juris.tjro.jus.br/?tipo=EMENTA&query=usucapi%C3%A3o`.
+
+⚠️ **Testado em aba limpa (contexto novo, sem cookie):** a página abre, o campo de busca
+**é restaurado** com `usucapião`… e **a busca NÃO é executada** — nenhum POST a
+`/search/varios_parametros/` sai. É o defeito do TJPE, em versão mais branda: lá a tela
+exibia "Nenhum resultado encontrado" (zero falso); aqui ela apenas **não mostra nada**.
+
+🔴 **Não mande esse link como prova de um julgado.** E **não existe permalink por
+documento** — não há rota `/documento/<id>`; a SPA vive toda em `/`.
+A verificação tem de ser por **reconsulta** por `nr_processo`.
+
+---
+
+## 11. Prints
+
+| Print | Conteúdo |
+|---|---|
+| `01.01-tela-inicial.png` | Tela do JURIS depois de atravessar o F5 |
+| `01.02-pesquisa-avancada.png` | Painel avançado: 4 campos de texto + todos os filtros, tipos e instância |
+| `01.03-resultados.png` | ⚠️ capturado com o backend em rate limit — a lista **não** renderizou |
+| `01.04-busca-com-data.png` | Busca com as duas datas preenchidas (origem do payload do §5.1) |
+| `01.05-permalink-aba-limpa.png` | O permalink em contexto novo — formulário restaurado, busca não executada |
+
+---
+
+## 12. Estado do mapeamento — o que ficou de fora
+
+🔴 **O crawler NÃO existe.** Há `src/TJRONavigator.js` (escrito e exercitado — todas as
+medições deste documento passaram por ele), mas **não** há `TJROCrawler`, `TJROChecker`,
+`TJROTestes`, nem subcomando em `bin/jur`. **Quem pegar o TJRO na volta da fila começa do
+§1 com o contrato pronto e o Navigator funcionando.**
+
+⚠️ **A Fase 3b (`browser-post-search`) não foi executada na tela.** O contrato do documento
+está mapeado **pela API** (§7) — que é o que o crawler vai usar —, mas **não** há anatomia
+de card renderizado, nem a escada de cliques até o documento pela interface. A lista de
+resultados nunca renderizou: na primeira tentativa o rate limit derrubou o backend, e
+depois o tempo foi para as medições de filtro.
+
+⚠️ **Não medido:**
+- os 4 campos da **pesquisa avançada** (Todas / Quaisquer / Sem / Trecho exato) — os nomes
+  deles no payload **não foram capturados**. É o caminho correto para AND/OR/NOT, e fica
+  em aberto. ⚠️ Cuidado: chave errada em `fields` **zera em silêncio** (§5.1).
+- as opções do combo **Ordenação** (só o default "Relevância" foi visto);
+- o combo **Órgão julgador** (gabinetes) foi visto nos facets mas **não** enumerado inteiro;
+- se `sort` por `dtjulgamento` muda o total (não deveria, não foi conferido);
+- os **3 documentos** com `tipo` fora dos oito da tela (§2);
+- se o rate limit tem cota fixa ou janela deslizante — só se sabe o gatilho (~35 req sem
+  pausa) e a duração (~12 min).
+
+⚠️ **Módulos irmãos não mapeados** (todos linkados no mapa do site oficial):
+súmulas, caderno de ementas, repositório de jurisprudência, precedentes/NUGEPNAC.
