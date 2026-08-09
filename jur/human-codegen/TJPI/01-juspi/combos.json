@@ -1,0 +1,858 @@
+{
+  "tipo": [
+    {
+      "value": "",
+      "texto": "Tipos [Todos]"
+    },
+    {
+      "value": "Acórdão",
+      "texto": "Acórdão"
+    },
+    {
+      "value": "Decisão Terminativa",
+      "texto": "Decisão Terminativa"
+    },
+    {
+      "value": "Súmula",
+      "texto": "Súmula"
+    }
+  ],
+  "relator": [
+    {
+      "value": "",
+      "texto": "Relator [Todos]"
+    },
+    {
+      "value": "ADERSON ANTONIO BRITO NOGUEIRA",
+      "texto": "ADERSON ANTONIO BRITO NOGUEIRA"
+    },
+    {
+      "value": "AGRIMAR RODRIGUES DE ARAUJO",
+      "texto": "AGRIMAR RODRIGUES DE ARAUJO"
+    },
+    {
+      "value": "ANTONIO DE PAIVA SALES",
+      "texto": "ANTONIO DE PAIVA SALES"
+    },
+    {
+      "value": "ANTONIO LOPES DE OLIVEIRA",
+      "texto": "ANTONIO LOPES DE OLIVEIRA"
+    },
+    {
+      "value": "ANTONIO REIS DE JESUS NOLLETO",
+      "texto": "ANTONIO REIS DE JESUS NOLLETO"
+    },
+    {
+      "value": "ANTONIO SOARES DOS SANTOS",
+      "texto": "ANTONIO SOARES DOS SANTOS"
+    },
+    {
+      "value": "CARLOS HAMILTON BEZERRA LIMA",
+      "texto": "CARLOS HAMILTON BEZERRA LIMA"
+    },
+    {
+      "value": "CYNARA VALERIA CAVALCANTE CHAVES",
+      "texto": "CYNARA VALERIA CAVALCANTE CHAVES"
+    },
+    {
+      "value": "DIOCLECIO SOUSA DA SILVA",
+      "texto": "DIOCLECIO SOUSA DA SILVA"
+    },
+    {
+      "value": "EDISON ROGERIO LEITAO RODRIGUES",
+      "texto": "EDISON ROGERIO LEITAO RODRIGUES"
+    },
+    {
+      "value": "EDSON ALVES DA SILVA",
+      "texto": "EDSON ALVES DA SILVA"
+    },
+    {
+      "value": "EDVALDO DE SOUSA REBOUCAS NETO",
+      "texto": "EDVALDO DE SOUSA REBOUCAS NETO"
+    },
+    {
+      "value": "EDVALDO PEREIRA DE MOURA",
+      "texto": "EDVALDO PEREIRA DE MOURA"
+    },
+    {
+      "value": "ELIANA MARCIA NUNES DE CARVALHO",
+      "texto": "ELIANA MARCIA NUNES DE CARVALHO"
+    },
+    {
+      "value": "ELIAS RIBEIRO DE MOURA JUNIOR",
+      "texto": "ELIAS RIBEIRO DE MOURA JUNIOR"
+    },
+    {
+      "value": "ELVANICE PEREIRA DE SOUSA",
+      "texto": "ELVANICE PEREIRA DE SOUSA"
+    },
+    {
+      "value": "ELVANICE PEREIRA DE SOUSA FROTA GOMES",
+      "texto": "ELVANICE PEREIRA DE SOUSA FROTA GOMES"
+    },
+    {
+      "value": "ERIVAN JOSE DA SILVA LOPES",
+      "texto": "ERIVAN JOSE DA SILVA LOPES"
+    },
+    {
+      "value": "EUCASSIO GONCALVES LIMA JUNIOR",
+      "texto": "EUCASSIO GONCALVES LIMA JUNIOR"
+    },
+    {
+      "value": "EULALIA MARIA RIBEIRO GONCALVES NASCIMENTO PINHEIRO",
+      "texto": "EULALIA MARIA RIBEIRO GONCALVES NASCIMENTO PINHEIRO"
+    },
+    {
+      "value": "FABRICIO PAULO CYSNE DE NOVAES",
+      "texto": "FABRICIO PAULO CYSNE DE NOVAES"
+    },
+    {
+      "value": "FERNANDO CARVALHO MENDES",
+      "texto": "FERNANDO CARVALHO MENDES"
+    },
+    {
+      "value": "FERNANDO LOPES E SILVA NETO",
+      "texto": "FERNANDO LOPES E SILVA NETO"
+    },
+    {
+      "value": "FRANCISCO ANTONIO PAES LANDIM FILHO",
+      "texto": "FRANCISCO ANTONIO PAES LANDIM FILHO"
+    },
+    {
+      "value": "FRANCISCO GOMES DA COSTA NETO",
+      "texto": "FRANCISCO GOMES DA COSTA NETO"
+    },
+    {
+      "value": "FRANCISCO JOAO DAMASCENO",
+      "texto": "FRANCISCO JOAO DAMASCENO"
+    },
+    {
+      "value": "GLAUCIA MENDES DE MACEDO",
+      "texto": "GLAUCIA MENDES DE MACEDO"
+    },
+    {
+      "value": "HAROLDO OLIVEIRA REHEM",
+      "texto": "HAROLDO OLIVEIRA REHEM"
+    },
+    {
+      "value": "HAYDEE LIMA DE CASTELO BRANCO",
+      "texto": "HAYDEE LIMA DE CASTELO BRANCO"
+    },
+    {
+      "value": "HILO DE ALMEIDA SOUSA",
+      "texto": "HILO DE ALMEIDA SOUSA"
+    },
+    {
+      "value": "IGOR RAFAEL CARVALHO DE ALENCAR",
+      "texto": "IGOR RAFAEL CARVALHO DE ALENCAR"
+    },
+    {
+      "value": "IGOR TIAGO DE LIMA",
+      "texto": "IGOR TIAGO DE LIMA"
+    },
+    {
+      "value": "JOAO ANTONIO BITTENCOURT BRAGA NETO",
+      "texto": "JOAO ANTONIO BITTENCOURT BRAGA NETO"
+    },
+    {
+      "value": "JOAO GABRIEL FURTADO BAPTISTA",
+      "texto": "JOAO GABRIEL FURTADO BAPTISTA"
+    },
+    {
+      "value": "JOAO HENRIQUE SOUSA GOMES",
+      "texto": "JOAO HENRIQUE SOUSA GOMES"
+    },
+    {
+      "value": "JOAO MANOEL DE MOURA AYRES",
+      "texto": "JOAO MANOEL DE MOURA AYRES"
+    },
+    {
+      "value": "JOAQUIM DIAS DE SANTANA FILHO",
+      "texto": "JOAQUIM DIAS DE SANTANA FILHO"
+    },
+    {
+      "value": "JOSE FRANCISCO DO NASCIMENTO",
+      "texto": "JOSE FRANCISCO DO NASCIMENTO"
+    },
+    {
+      "value": "JOSE JAMES GOMES PEREIRA",
+      "texto": "JOSE JAMES GOMES PEREIRA"
+    },
+    {
+      "value": "JOSE OLINDO GIL BARBOSA",
+      "texto": "JOSE OLINDO GIL BARBOSA"
+    },
+    {
+      "value": "JOSE RIBAMAR OLIVEIRA",
+      "texto": "JOSE RIBAMAR OLIVEIRA"
+    },
+    {
+      "value": "JOSE VIDAL DE FREITAS FILHO",
+      "texto": "JOSE VIDAL DE FREITAS FILHO"
+    },
+    {
+      "value": "JOSE WILSON FERREIRA DE ARAUJO JUNIOR",
+      "texto": "JOSE WILSON FERREIRA DE ARAUJO JUNIOR"
+    },
+    {
+      "value": "JULIO CESAR MENEZES GARCEZ",
+      "texto": "JULIO CESAR MENEZES GARCEZ"
+    },
+    {
+      "value": "KARITIANA LIMA LUSTOSA",
+      "texto": "KARITIANA LIMA LUSTOSA"
+    },
+    {
+      "value": "KELSON CARVALHO LOPES DA SILVA",
+      "texto": "KELSON CARVALHO LOPES DA SILVA"
+    },
+    {
+      "value": "LARISSA SENTO SE ROSSI",
+      "texto": "LARISSA SENTO SE ROSSI"
+    },
+    {
+      "value": "LEANDRO RODRIGUES SAMPAIO",
+      "texto": "LEANDRO RODRIGUES SAMPAIO"
+    },
+    {
+      "value": "LEONARDO LUCIO FREIRE TRIGUEIRO",
+      "texto": "LEONARDO LUCIO FREIRE TRIGUEIRO"
+    },
+    {
+      "value": "LIRTON NOGUEIRA SANTOS",
+      "texto": "LIRTON NOGUEIRA SANTOS"
+    },
+    {
+      "value": "LISABETE MARIA MARCHETTI",
+      "texto": "LISABETE MARIA MARCHETTI"
+    },
+    {
+      "value": "LITELTON VIEIRA DE OLIVEIRA",
+      "texto": "LITELTON VIEIRA DE OLIVEIRA"
+    },
+    {
+      "value": "LUCICLEIDE PEREIRA BELO",
+      "texto": "LUCICLEIDE PEREIRA BELO"
+    },
+    {
+      "value": "LUIZ DE MOURA CORREIA",
+      "texto": "LUIZ DE MOURA CORREIA"
+    },
+    {
+      "value": "LUIZ GONZAGA BRANDAO DE CARVALHO",
+      "texto": "LUIZ GONZAGA BRANDAO DE CARVALHO"
+    },
+    {
+      "value": "MANOEL DE SOUSA DOURADO",
+      "texto": "MANOEL DE SOUSA DOURADO"
+    },
+    {
+      "value": "MARCELO MESQUITA SILVA",
+      "texto": "MARCELO MESQUITA SILVA"
+    },
+    {
+      "value": "MARCUS KLINGER MADEIRA DE VASCONCELOS",
+      "texto": "MARCUS KLINGER MADEIRA DE VASCONCELOS"
+    },
+    {
+      "value": "MARIA CELIA LIMA LUCIO",
+      "texto": "MARIA CELIA LIMA LUCIO"
+    },
+    {
+      "value": "MARIA DALVA DE CARVALHO LOPES SILVA",
+      "texto": "MARIA DALVA DE CARVALHO LOPES SILVA"
+    },
+    {
+      "value": "MARIA DAS NEVES RAMALHO BARBOSA LIMA",
+      "texto": "MARIA DAS NEVES RAMALHO BARBOSA LIMA"
+    },
+    {
+      "value": "MARIA DO ROSARIO DE FATIMA MARTINS L DIAS",
+      "texto": "MARIA DO ROSARIO DE FATIMA MARTINS L DIAS"
+    },
+    {
+      "value": "MARIA DO ROSARIO DE FATIMA MARTINS LEITE DIAS",
+      "texto": "MARIA DO ROSARIO DE FATIMA MARTINS LEITE DIAS"
+    },
+    {
+      "value": "MARIA DO SOCORRO ROCHA CIPRIANO",
+      "texto": "MARIA DO SOCORRO ROCHA CIPRIANO"
+    },
+    {
+      "value": "MARIA LUIZA DE MOURA MELLO E FREITAS",
+      "texto": "MARIA LUIZA DE MOURA MELLO E FREITAS"
+    },
+    {
+      "value": "MARIA ZILNAR COUTINHO LEAL",
+      "texto": "MARIA ZILNAR COUTINHO LEAL"
+    },
+    {
+      "value": "MARIO BASILIO DE MELO",
+      "texto": "MARIO BASILIO DE MELO"
+    },
+    {
+      "value": "OLIMPIO JOSE PASSOS GALVAO",
+      "texto": "OLIMPIO JOSE PASSOS GALVAO"
+    },
+    {
+      "value": "OTON MARIO JOSE LUSTOSA TORRES",
+      "texto": "OTON MARIO JOSE LUSTOSA TORRES"
+    },
+    {
+      "value": "PATRICIA COIMBRA SANTOS",
+      "texto": "PATRICIA COIMBRA SANTOS"
+    },
+    {
+      "value": "PAULO ROBERTO DE ARAUJO BARROS",
+      "texto": "PAULO ROBERTO DE ARAUJO BARROS"
+    },
+    {
+      "value": "PEDRO DE ALCANTARA DA SILVA MACEDO",
+      "texto": "PEDRO DE ALCANTARA DA SILVA MACEDO"
+    },
+    {
+      "value": "RAFAEL DE FREITAS GOMES",
+      "texto": "RAFAEL DE FREITAS GOMES"
+    },
+    {
+      "value": "RAIMUNDO EUFRASIO ALVES FILHO",
+      "texto": "RAIMUNDO EUFRASIO ALVES FILHO"
+    },
+    {
+      "value": "RAIMUNDO HOLLAND MOURA DE QUEIROZ",
+      "texto": "RAIMUNDO HOLLAND MOURA DE QUEIROZ"
+    },
+    {
+      "value": "RAIMUNDO JOSE DE MACAU FURTADO",
+      "texto": "RAIMUNDO JOSE DE MACAU FURTADO"
+    },
+    {
+      "value": "RAIMUNDO NONATO DA COSTA ALENCAR",
+      "texto": "RAIMUNDO NONATO DA COSTA ALENCAR"
+    },
+    {
+      "value": "REGINALDO PEREIRA LIMA DE ALENCAR",
+      "texto": "REGINALDO PEREIRA LIMA DE ALENCAR"
+    },
+    {
+      "value": "RICARDO GENTIL EULALIO DANTAS",
+      "texto": "RICARDO GENTIL EULALIO DANTAS"
+    },
+    {
+      "value": "SEBASTIAO FIRMINO LIMA FILHO",
+      "texto": "SEBASTIAO FIRMINO LIMA FILHO"
+    },
+    {
+      "value": "SEBASTIAO RIBEIRO MARTINS",
+      "texto": "SEBASTIAO RIBEIRO MARTINS"
+    },
+    {
+      "value": "THIAGO BRANDAO DE ALMEIDA",
+      "texto": "THIAGO BRANDAO DE ALMEIDA"
+    },
+    {
+      "value": "TRIBUNAL DE JUSTICA DO ESTADO DO PIAUI",
+      "texto": "TRIBUNAL DE JUSTICA DO ESTADO DO PIAUI"
+    },
+    {
+      "value": "Tribunal Pleno",
+      "texto": "Tribunal Pleno"
+    },
+    {
+      "value": "VALDENIA MOURA MARQUES DE SA",
+      "texto": "VALDENIA MOURA MARQUES DE SA"
+    },
+    {
+      "value": "VIRGILIO MADEIRA MARTINS FILHO",
+      "texto": "VIRGILIO MADEIRA MARTINS FILHO"
+    }
+  ],
+  "classe": [
+    {
+      "value": "",
+      "texto": "Classe [Todos]"
+    },
+    {
+      "value": "ACORDO DE NÃO PERSECUÇÃO CÍVEL",
+      "texto": "ACORDO DE NÃO PERSECUÇÃO CÍVEL"
+    },
+    {
+      "value": "AGRAVO DE EXECUÇÃO PENAL",
+      "texto": "AGRAVO DE EXECUÇÃO PENAL"
+    },
+    {
+      "value": "AGRAVO DE INSTRUMENTO",
+      "texto": "AGRAVO DE INSTRUMENTO"
+    },
+    {
+      "value": "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO",
+      "texto": "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO"
+    },
+    {
+      "value": "AGRAVO INTERNO CRIMINAL",
+      "texto": "AGRAVO INTERNO CRIMINAL"
+    },
+    {
+      "value": "AGRAVO INTERNO CÍVEL",
+      "texto": "AGRAVO INTERNO CÍVEL"
+    },
+    {
+      "value": "APELAÇÃO / REMESSA NECESSÁRIA",
+      "texto": "APELAÇÃO / REMESSA NECESSÁRIA"
+    },
+    {
+      "value": "APELAÇÃO CRIMINAL",
+      "texto": "APELAÇÃO CRIMINAL"
+    },
+    {
+      "value": "APELAÇÃO CÍVEL",
+      "texto": "APELAÇÃO CÍVEL"
+    },
+    {
+      "value": "AUTO DE PRISÃO EM FLAGRANTE",
+      "texto": "AUTO DE PRISÃO EM FLAGRANTE"
+    },
+    {
+      "value": "AÇÃO DIRETA DE INCONSTITUCIONALIDADE",
+      "texto": "AÇÃO DIRETA DE INCONSTITUCIONALIDADE"
+    },
+    {
+      "value": "AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO",
+      "texto": "AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO"
+    },
+    {
+      "value": "AÇÃO PENAL - PROCEDIMENTO SUMARÍSSIMO",
+      "texto": "AÇÃO PENAL - PROCEDIMENTO SUMARÍSSIMO"
+    },
+    {
+      "value": "AÇÃO PENAL - PROCEDIMENTO SUMÁRIO",
+      "texto": "AÇÃO PENAL - PROCEDIMENTO SUMÁRIO"
+    },
+    {
+      "value": "AÇÃO POPULAR",
+      "texto": "AÇÃO POPULAR"
+    },
+    {
+      "value": "AÇÃO RESCISÓRIA",
+      "texto": "AÇÃO RESCISÓRIA"
+    },
+    {
+      "value": "CARTA DE ORDEM CÍVEL",
+      "texto": "CARTA DE ORDEM CÍVEL"
+    },
+    {
+      "value": "CARTA PRECATÓRIA CRIMINAL",
+      "texto": "CARTA PRECATÓRIA CRIMINAL"
+    },
+    {
+      "value": "CARTA TESTEMUNHÁVEL",
+      "texto": "CARTA TESTEMUNHÁVEL"
+    },
+    {
+      "value": "CAUTELAR INOMINADA CRIMINAL",
+      "texto": "CAUTELAR INOMINADA CRIMINAL"
+    },
+    {
+      "value": "CONFLITO DE COMPETÊNCIA CÍVEL",
+      "texto": "CONFLITO DE COMPETÊNCIA CÍVEL"
+    },
+    {
+      "value": "CONFLITO DE COMPETÊNCIA INFÂNCIA E JUVENTUDE",
+      "texto": "CONFLITO DE COMPETÊNCIA INFÂNCIA E JUVENTUDE"
+    },
+    {
+      "value": "CONFLITO DE JURISDIÇÃO",
+      "texto": "CONFLITO DE JURISDIÇÃO"
+    },
+    {
+      "value": "CORREIÇÃO PARCIAL CRIMINAL",
+      "texto": "CORREIÇÃO PARCIAL CRIMINAL"
+    },
+    {
+      "value": "CORREIÇÃO PARCIAL CÍVEL",
+      "texto": "CORREIÇÃO PARCIAL CÍVEL"
+    },
+    {
+      "value": "CUMPRIMENTO DE SENTENÇA",
+      "texto": "CUMPRIMENTO DE SENTENÇA"
+    },
+    {
+      "value": "CUMPRIMENTO DE SENTENÇA CONTRA A FAZENDA PÚBLICA",
+      "texto": "CUMPRIMENTO DE SENTENÇA CONTRA A FAZENDA PÚBLICA"
+    },
+    {
+      "value": "CUMPRIMENTO PROVISÓRIO DE DECISÃO",
+      "texto": "CUMPRIMENTO PROVISÓRIO DE DECISÃO"
+    },
+    {
+      "value": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA",
+      "texto": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA"
+    },
+    {
+      "value": "DECLARATÓRIA DE CONSTITUCIONALIDADE",
+      "texto": "DECLARATÓRIA DE CONSTITUCIONALIDADE"
+    },
+    {
+      "value": "DESAFORAMENTO DE JULGAMENTO",
+      "texto": "DESAFORAMENTO DE JULGAMENTO"
+    },
+    {
+      "value": "DIRETA DE INCONSTITUCIONALIDADE",
+      "texto": "DIRETA DE INCONSTITUCIONALIDADE"
+    },
+    {
+      "value": "DISSÍDIO COLETIVO DE GREVE",
+      "texto": "DISSÍDIO COLETIVO DE GREVE"
+    },
+    {
+      "value": "EMBARGOS DE DECLARAÇÃO CRIMINAL",
+      "texto": "EMBARGOS DE DECLARAÇÃO CRIMINAL"
+    },
+    {
+      "value": "EMBARGOS DE DECLARAÇÃO CÍVEL",
+      "texto": "EMBARGOS DE DECLARAÇÃO CÍVEL"
+    },
+    {
+      "value": "EMBARGOS DE TERCEIRO CÍVEL",
+      "texto": "EMBARGOS DE TERCEIRO CÍVEL"
+    },
+    {
+      "value": "EMBARGOS INFRINGENTES E DE NULIDADE",
+      "texto": "EMBARGOS INFRINGENTES E DE NULIDADE"
+    },
+    {
+      "value": "EMBARGOS À EXECUÇÃO",
+      "texto": "EMBARGOS À EXECUÇÃO"
+    },
+    {
+      "value": "EXCEÇÃO DA VERDADE",
+      "texto": "EXCEÇÃO DA VERDADE"
+    },
+    {
+      "value": "EXCEÇÃO DE IMPEDIMENTO",
+      "texto": "EXCEÇÃO DE IMPEDIMENTO"
+    },
+    {
+      "value": "EXCEÇÃO DE INCOMPETÊNCIA DE JUÍZO",
+      "texto": "EXCEÇÃO DE INCOMPETÊNCIA DE JUÍZO"
+    },
+    {
+      "value": "EXCEÇÃO DE SUSPEIÇÃO",
+      "texto": "EXCEÇÃO DE SUSPEIÇÃO"
+    },
+    {
+      "value": "HABEAS CORPUS CRIMINAL",
+      "texto": "HABEAS CORPUS CRIMINAL"
+    },
+    {
+      "value": "HABEAS CORPUS CÍVEL",
+      "texto": "HABEAS CORPUS CÍVEL"
+    },
+    {
+      "value": "HABEAS DATA CRIMINAL",
+      "texto": "HABEAS DATA CRIMINAL"
+    },
+    {
+      "value": "HABEAS DATA CÍVEL",
+      "texto": "HABEAS DATA CÍVEL"
+    },
+    {
+      "value": "HABILITAÇÃO",
+      "texto": "HABILITAÇÃO"
+    },
+    {
+      "value": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL",
+      "texto": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL"
+    },
+    {
+      "value": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA",
+      "texto": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA"
+    },
+    {
+      "value": "INCIDENTE DE DESCONSIDERAÇÃO DE PERSONALIDADE JURÍDICA",
+      "texto": "INCIDENTE DE DESCONSIDERAÇÃO DE PERSONALIDADE JURÍDICA"
+    },
+    {
+      "value": "INCIDENTE DE IMPEDIMENTO CÍVEL",
+      "texto": "INCIDENTE DE IMPEDIMENTO CÍVEL"
+    },
+    {
+      "value": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS",
+      "texto": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS"
+    },
+    {
+      "value": "INCIDENTE DE SUSPEIÇÃO CÍVEL",
+      "texto": "INCIDENTE DE SUSPEIÇÃO CÍVEL"
+    },
+    {
+      "value": "INQUÉRITO POLICIAL",
+      "texto": "INQUÉRITO POLICIAL"
+    },
+    {
+      "value": "INSANIDADE MENTAL DO ACUSADO",
+      "texto": "INSANIDADE MENTAL DO ACUSADO"
+    },
+    {
+      "value": "INTERPELAÇÃO",
+      "texto": "INTERPELAÇÃO"
+    },
+    {
+      "value": "LIQUIDAÇÃO POR ARBITRAMENTO",
+      "texto": "LIQUIDAÇÃO POR ARBITRAMENTO"
+    },
+    {
+      "value": "MANDADO DE INJUNÇÃO",
+      "texto": "MANDADO DE INJUNÇÃO"
+    },
+    {
+      "value": "MANDADO DE SEGURANÇA COLETIVO",
+      "texto": "MANDADO DE SEGURANÇA COLETIVO"
+    },
+    {
+      "value": "MANDADO DE SEGURANÇA CRIMINAL",
+      "texto": "MANDADO DE SEGURANÇA CRIMINAL"
+    },
+    {
+      "value": "MANDADO DE SEGURANÇA CÍVEL",
+      "texto": "MANDADO DE SEGURANÇA CÍVEL"
+    },
+    {
+      "value": "PEDIDO DE BUSCA E APREENSÃO CRIMINAL",
+      "texto": "PEDIDO DE BUSCA E APREENSÃO CRIMINAL"
+    },
+    {
+      "value": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO",
+      "texto": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO"
+    },
+    {
+      "value": "PEDIDO DE QUEBRA DE SIGILO DE DADOS E/OU TELEFÔNICO",
+      "texto": "PEDIDO DE QUEBRA DE SIGILO DE DADOS E/OU TELEFÔNICO"
+    },
+    {
+      "value": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CÍVEL",
+      "texto": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CÍVEL"
+    },
+    {
+      "value": "PETIÇÃO CRIMINAL",
+      "texto": "PETIÇÃO CRIMINAL"
+    },
+    {
+      "value": "PETIÇÃO CÍVEL",
+      "texto": "PETIÇÃO CÍVEL"
+    },
+    {
+      "value": "PRECATÓRIO",
+      "texto": "PRECATÓRIO"
+    },
+    {
+      "value": "PROCEDIMENTO COMUM CÍVEL",
+      "texto": "PROCEDIMENTO COMUM CÍVEL"
+    },
+    {
+      "value": "PROCEDIMENTO INVESTIGATÓRIO CRIMINAL (PIC-MP)",
+      "texto": "PROCEDIMENTO INVESTIGATÓRIO CRIMINAL (PIC-MP)"
+    },
+    {
+      "value": "PROCESSO ADMINISTRATIVO",
+      "texto": "PROCESSO ADMINISTRATIVO"
+    },
+    {
+      "value": "PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE MAGISTRADO",
+      "texto": "PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE MAGISTRADO"
+    },
+    {
+      "value": "REABILITAÇÃO",
+      "texto": "REABILITAÇÃO"
+    },
+    {
+      "value": "RECLAMAÇÃO",
+      "texto": "RECLAMAÇÃO"
+    },
+    {
+      "value": "RECURSO DE MEDIDA CAUTELAR CÍVEL",
+      "texto": "RECURSO DE MEDIDA CAUTELAR CÍVEL"
+    },
+    {
+      "value": "RECURSO EM SENTIDO ESTRITO",
+      "texto": "RECURSO EM SENTIDO ESTRITO"
+    },
+    {
+      "value": "RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO",
+      "texto": "RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO"
+    },
+    {
+      "value": "RECURSO INOMINADO CÍVEL",
+      "texto": "RECURSO INOMINADO CÍVEL"
+    },
+    {
+      "value": "REMESSA NECESSÁRIA CRIMINAL",
+      "texto": "REMESSA NECESSÁRIA CRIMINAL"
+    },
+    {
+      "value": "REMESSA NECESSÁRIA CÍVEL",
+      "texto": "REMESSA NECESSÁRIA CÍVEL"
+    },
+    {
+      "value": "REPRESENTAÇÃO CRIMINAL/NOTÍCIA DE CRIME",
+      "texto": "REPRESENTAÇÃO CRIMINAL/NOTÍCIA DE CRIME"
+    },
+    {
+      "value": "REPRESENTAÇÃO P/ PERDA DA GRADUAÇÃO",
+      "texto": "REPRESENTAÇÃO P/ PERDA DA GRADUAÇÃO"
+    },
+    {
+      "value": "RESTAURAÇÃO DE AUTOS CRIMINAL",
+      "texto": "RESTAURAÇÃO DE AUTOS CRIMINAL"
+    },
+    {
+      "value": "RESTAURAÇÃO DE AUTOS CÍVEL",
+      "texto": "RESTAURAÇÃO DE AUTOS CÍVEL"
+    },
+    {
+      "value": "REVISÃO CRIMINAL",
+      "texto": "REVISÃO CRIMINAL"
+    },
+    {
+      "value": "SUSPENSÃO DE EXECUÇÃO DE SENTENÇA",
+      "texto": "SUSPENSÃO DE EXECUÇÃO DE SENTENÇA"
+    },
+    {
+      "value": "SUSPENSÃO DE LIMINAR E DE SENTENÇA",
+      "texto": "SUSPENSÃO DE LIMINAR E DE SENTENÇA"
+    },
+    {
+      "value": "SUSPENSÃO DE LIMINAR OU ANTECIPAÇÃO DE TUTELA",
+      "texto": "SUSPENSÃO DE LIMINAR OU ANTECIPAÇÃO DE TUTELA"
+    },
+    {
+      "value": "SUSPENSÃO DE SEGURANÇA CÍVEL",
+      "texto": "SUSPENSÃO DE SEGURANÇA CÍVEL"
+    },
+    {
+      "value": "SÚMULA",
+      "texto": "SÚMULA"
+    },
+    {
+      "value": "TERMO CIRCUNSTANCIADO",
+      "texto": "TERMO CIRCUNSTANCIADO"
+    },
+    {
+      "value": "TUTELA ANTECIPADA ANTECEDENTE",
+      "texto": "TUTELA ANTECIPADA ANTECEDENTE"
+    },
+    {
+      "value": "TUTELA CAUTELAR ANTECEDENTE",
+      "texto": "TUTELA CAUTELAR ANTECEDENTE"
+    }
+  ],
+  "orgao": [
+    {
+      "value": "",
+      "texto": "Órgão Colegiado [Todos]"
+    },
+    {
+      "value": "1ª Câmara Especializada Criminal",
+      "texto": "1ª Câmara Especializada Criminal"
+    },
+    {
+      "value": "1ª Câmara Especializada Cível",
+      "texto": "1ª Câmara Especializada Cível"
+    },
+    {
+      "value": "1ª Câmara de Direito Público",
+      "texto": "1ª Câmara de Direito Público"
+    },
+    {
+      "value": "1ª Turma Recursal",
+      "texto": "1ª Turma Recursal"
+    },
+    {
+      "value": "2ª Câmara Especializada Criminal",
+      "texto": "2ª Câmara Especializada Criminal"
+    },
+    {
+      "value": "2ª Câmara Especializada Cível",
+      "texto": "2ª Câmara Especializada Cível"
+    },
+    {
+      "value": "2ª Câmara de Direito Público",
+      "texto": "2ª Câmara de Direito Público"
+    },
+    {
+      "value": "2ª Turma Recursal",
+      "texto": "2ª Turma Recursal"
+    },
+    {
+      "value": "3ª Câmara Especializada Cível",
+      "texto": "3ª Câmara Especializada Cível"
+    },
+    {
+      "value": "3ª Câmara de Direito Público",
+      "texto": "3ª Câmara de Direito Público"
+    },
+    {
+      "value": "3ª Turma Recursal",
+      "texto": "3ª Turma Recursal"
+    },
+    {
+      "value": "4ª Câmara Especializada Cível",
+      "texto": "4ª Câmara Especializada Cível"
+    },
+    {
+      "value": "4ª Câmara de Direito Público",
+      "texto": "4ª Câmara de Direito Público"
+    },
+    {
+      "value": "5ª Câmara de Direito Público",
+      "texto": "5ª Câmara de Direito Público"
+    },
+    {
+      "value": "6ª Câmara de Direito Público",
+      "texto": "6ª Câmara de Direito Público"
+    },
+    {
+      "value": "Câmaras Criminais (Plantão)",
+      "texto": "Câmaras Criminais (Plantão)"
+    },
+    {
+      "value": "Câmaras Cíveis (Plantão)",
+      "texto": "Câmaras Cíveis (Plantão)"
+    },
+    {
+      "value": "Câmaras Reunidas Criminais",
+      "texto": "Câmaras Reunidas Criminais"
+    },
+    {
+      "value": "Câmaras Reunidas Cíveis",
+      "texto": "Câmaras Reunidas Cíveis"
+    },
+    {
+      "value": "Câmaras de Direito Público (Plantão)",
+      "texto": "Câmaras de Direito Público (Plantão)"
+    },
+    {
+      "value": "Precatório",
+      "texto": "Precatório"
+    },
+    {
+      "value": "Presidência do Tribunal de Justiça",
+      "texto": "Presidência do Tribunal de Justiça"
+    },
+    {
+      "value": "STIC",
+      "texto": "STIC"
+    },
+    {
+      "value": "Tribunal Pleno",
+      "texto": "Tribunal Pleno"
+    },
+    {
+      "value": "Turma de Uniformização do Sistema dos Juizados Especiais",
+      "texto": "Turma de Uniformização do Sistema dos Juizados Especiais"
+    },
+    {
+      "value": "Vice-Presidência do Tribunal de Justiça",
+      "texto": "Vice-Presidência do Tribunal de Justiça"
+    }
+  ]
+}

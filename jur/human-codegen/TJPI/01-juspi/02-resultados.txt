@@ -1,0 +1,161 @@
+# TJPI — JusPI — tela de resultados, card, escada até o documento e paginação
+
+Entregável da skill `browser-post-search`. Medido em 09/08/2026.
+Prints: 02.01-resultados.png, 02.02-lista-topo.png, 02.03-lista-rodape-paginacao.png,
+        02.04-card-acordao-fechado.png, 02.05-card-expandido.png,
+        02.06-permalink-aba-limpa.png
+HTML:   02-card-acordao.html, 02-card-acordao-expandido.html, 02-card-terminativa.html,
+        02-card-sumula.html, 02-documento-permalink.html
+
+## 18. Tela de resultados
+
+MESMA ROTA, mesma URL: GET /jurisprudences/search?q=… responde a listagem.
+A URL de resultado é REUTILIZÁVEL — colada em aba limpa refaz a busca e mostra
+os mesmos resultados (✅ diferente do TJPE, cujo link restaura o formulário e
+mostra "nenhum resultado" onde há 6.266 julgados).
+
+⚠️ OS CONTROLES DE BUSCA NÃO "PERMANECEM": ELES APARECEM.
+   A tela inicial (01.01) tem só o campo de texto. Os quatro combos (`tipo`,
+   `relator`, `classe`, `orgao`) e os dois campos de data só existem na página
+   de RESULTADO (02.01). Quem raspar a home conclui que o portal não tem filtro.
+
+Sem popup, sem modal, sem nova aba. O card é um link comum com target="_blank",
+então clicar abre aba nova — mas para uma URL própria e estável (§20b).
+
+TOTAL — 🔴 DOIS TEXTOS DIFERENTES, e casar só o primeiro faz o crawler ler ZERO
+em toda busca que caiba numa página:
+  várias páginas:  Exibindo <b>1&nbsp;-&nbsp;25</b> de um total de <b>585</b> jurisprudência(s)
+  uma página só:   Exibindo <b>18</b> jurisprudência(s)          ← sem "de um total de"
+  zero resultados: nenhum dos dois textos existe
+`TJPICrawler.lerTotal()` cobre os três casos.
+
+## 19. Do card ao documento — a escada
+
+Seletor do card: div.callout.callout-danger  (25 por página)
+
+Anatomia (02-card-acordao.html):
+  <a target="_blank" href="/jurisprudences/34082462/public">   → ID DO DOCUMENTO
+     <i class="fa fa-fw fa-solid fa-scale-balanced"></i>
+     Imissão                                                    → ASSUNTO
+     0763373-15.2025.8.18.0000                                  → Nº CNJ
+     <span class="right badge bg-danger">Acórdão de 2º Grau</span> → TIPO
+  <h6>Publicação: 13/07/2026</h6>                               → ÚNICA data
+  <div class="text-justify"> …texto com <mark>usucapião</mark>… → TRECHO
+    <div class="mt-3"><div data-reveal-target="item">           → ESCONDIDO por CSS
+        Ementa: … (ementa íntegra)
+        (TJPI - AGRAVO DE INSTRUMENTO 0763373-15.2025.8.18.0000 -
+         Relator: HILO DE ALMEIDA SOUSA - 1ª Câmara Especializada Cível
+         - Data 13/07/2026)                                     → CITAÇÃO OFICIAL
+
+Dois botões, e os dois são LOCAIS — nenhum faz request:
+  [+]  data-action="click->reveal#toggle"   title "Ver Ementa Completa"
+  [📋] data-action="clipboard#copy"          title "Copiar"
+
+🔴 O TEXTO DO CARD FECHADO É TRECHO, NÃO EMENTA — e tem <mark> no meio, que é a
+   assinatura de highlight. Medido no mesmo documento:
+     card fechado          =    796 chars   (trecho com <mark>)
+     card expandido        =  4.056 chars   (EMENTA ÍNTEGRA)
+     documento no permalink= 18.452 chars   (inteiro teor: relatório + voto + decisão)
+   Chamar os 796 de ementa é citar recorte como se fosse o todo.
+
+✅ A EMENTA ÍNTEGRA E A CITAÇÃO OFICIAL JÁ VÊM NO HTML DA BUSCA.
+   O clique no [+] dispara ZERO XHR — ele só tira a classe `d-none` de um `<div>`
+   que já estava na resposta. Um crawler que fizesse um request por documento
+   para pegar ementa estaria gastando à toa (a lição do TJDFT, repetida).
+   ⚠️ Só o INTEIRO TEOR exige o GET do permalink.
+
+✅ A CITAÇÃO VEM PRONTA — nada de regex sobre campos soltos, ao contrário dos
+   quatro e-SAJ do Bloco 1 (que renderam quatro formatos incompatíveis).
+   Formato: (TJPI - <CLASSE> <CNJ> - Relator: <NOME> - <ÓRGÃO> - Data DD/MM/YYYY)
+   É dela que o crawler extrai classe, relator e órgão julgador, porque esses
+   três campos NÃO existem em lugar nenhum do card fora da citação.
+
+### Os três tipos de documento — dissecados
+
+  ACÓRDÃO (id 34082462)
+    badge "Acórdão de 2º Grau" · processo ✔ · relator ✔ · órgão ✔ · classe ✔
+    publicação ✔ · ementa 4.056 · trecho 796 · citação ✔ · permalink ✔ (18.452)
+
+  DECISÃO TERMINATIVA (id 33416059)
+    badge "Decisão Terminativa de 2º Grau" · processo ✔ · relator ✔ · órgão ✔
+    classe ✔ · publicação ✔ · ementa 3.393 · trecho 871 · citação ✔
+    permalink ✔ (4.101 chars — bem menor que o acórdão, é decisão monocrática)
+    ✅ AO CONTRÁRIO DE TJPE/TJCE/TJMT, A MONOCRÁTICA DAQUI TEM EMENTA de verdade
+       (3.393 chars, no padrão estruturado do CNJ). Não repita a ressalva deles.
+
+  SÚMULA (id 83)
+    badge "Súmula de 2º Grau" · processo ✗ · relator ✗ · órgão ✗ · classe ✗
+    publicação ✗ · ementa 501 (é o texto da súmula) · trecho 432 · citação ✗
+    🔴 PERMALINK QUEBRADO: /jurisprudences/83/public → HTTP 500.
+       Medido em 5 súmulas seguidas (83, 85, 86, 87, 88): 5/5 dão 500, enquanto
+       acórdão e terminativa abrem. NÃO é documento envenenado avulso como o do
+       TJPE — é o TIPO INTEIRO que não tem página pública.
+       Por isso o crawler devolve processoUrl/inteiroTeorLink = null em súmula:
+       publicar uma URL que dá 500 é pior que declarar que não há.
+    ⚠️ Quem dissecasse só o acórdão concluiria "o TJPI tem permalink" e estaria
+       errado num terço dos tipos. Foi exatamente o erro do TJMG.
+
+## Documento na íntegra (02-documento-permalink.html)
+
+Formato:            HTML (não há PDF, não há DOCX, não há download de original)
+Tamanho típico:     42 KB de HTML → 18,4 mil chars úteis em acórdão;
+                    4,1 mil em decisão terminativa
+Vem completo?       SIM: ementa + ACÓRDÃO (cabeçalho, partes, advogados) +
+                    RELATÓRIO + VOTO DO RELATOR + DECISÃO + composição da turma
+Precisa de sessão?  NÃO — aberto em contexto Playwright NOVO, sem cookies (02.06)
+Precisa de captcha? NÃO, em etapa nenhuma
+Já veio na busca?   A EMENTA sim; o inteiro teor não (1 GET por documento)
+
+A página traz ainda uma tabela "Detalhes" com campos que o card não expõe:
+  Processo · Órgão Julgador · Órgão Julgador Colegiado · Relator(a) ·
+  Classe Judicial · Competência · Assunto Principal · Autor · Réu · Publicação
+⚠️ ARMADILHA DE RÓTULO: o campo chamado "Órgão Julgador" contém uma PESSOA
+   ("Desembargador HILO DE ALMEIDA SOUSA"); quem é órgão de verdade é
+   "Órgão Julgador Colegiado" ("1ª Câmara Especializada Cível"). Ler o primeiro
+   como órgão produz um campo com nome de gente. `fetchDetalhes()` devolve a
+   tabela crua; o `orgaoJulgador` do resultado vem da CITAÇÃO, que é confiável.
+
+## 20. Paginação e profundidade
+
+Parâmetro:            `page` na querystring (GET), 1-based. page=1 é o default.
+Resultados/página:    25, FIXO.
+🔴 NÃO HÁ COMO MUDAR O TAMANHO DA PÁGINA. `per_page=100`, `per=100` e `limit=100`
+   são todos IGNORADOS EM SILÊNCIO — devolvem os mesmos 25 cards e o mesmo total.
+   Quem passar `per_page` acha que pediu 100 e recebe 25. Não há combo na tela.
+
+✅ TOTAL EXATO, NÃO SATURADO — a aritmética da última página fecha nos dois testes:
+     usucapião = 585      → página 24 devolve 10 cards  (23×25 + 10 = 585) ✔
+                             página 25 devolve 0
+     q=de   = 397.031     → página 15.882 devolve 6     (15.881×25 + 6 = 397.031) ✔
+                             página 15.883 devolve 0
+   Nenhum número redondo, nenhum teto de 1.000/10.000 (≠ TJPE, que satura em 10.000).
+
+✅ SEM TETO DE OFFSET: page=1.000, 5.000 e 15.881 respondem normalmente na base
+   inteira. Não há o limite de janela do Elasticsearch.
+
+✅ PAGINAÇÃO ESTÁVEL — testada TRÊS vezes, não uma:
+   `q=usucapião&page=2` devolveu os MESMOS 25 ids, na MESMA ordem, em 3/3 rodadas:
+     32857104,32700903,32836019,32733163,33416059,33453031,33340844,33381929,
+     33380033,33268577,33094100,33164780,33223677,32868886,31588510,32682571,
+     32492317,31567919,32460836,32470837,32191615,32413416,31446289,31695148,32305165
+   Nada da dessincronização de balanceador do TJDFT/TJRJ/TJMG/TJMT.
+
+Ordenação: por data de publicação, decrescente. Não há combo de ordenação.
+Página além do fim: devolve a listagem sem nenhum card e sem o texto do total
+(não é erro, não é 404) — o crawler para quando `fatiarCards` volta vazio.
+
+## 20b. Permalink e identidade do documento
+
+✅ EXISTE PERMALINK PÚBLICO E ESTÁVEL — e isso é raro no repo:
+     https://jurisprudencia.tjpi.jus.br/jurisprudences/<id>/public
+   Confirmado em contexto Playwright LIMPO, sem cookie e sem sessão: HTTP 200,
+   página completa, zero XHR (print 02.06). É citável.
+   🔴 EXCETO PARA SÚMULA, que dá HTTP 500 (ver §19).
+
+QUEM IDENTIFICA O DOCUMENTO: o `id` numérico da URL (ex. 34082462), NÃO o número
+do processo. Um mesmo processo tem vários julgados — e o número do processo nem
+existe em súmula. Súmulas usam ids curtos (83, 85, 86…), de outra faixa.
+
+⚠️ O id da listagem é o mesmo aceito no permalink (não há a divergência do TJMG).
+   Mas ele NÃO é aceito na busca: não há `?id=`. Reencontrar um documento pelo
+   número exige o contorno do §14.

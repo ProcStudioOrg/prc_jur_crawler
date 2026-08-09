@@ -74,6 +74,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjpa` | TJ do Pará | PA | `CLAUDE-TJPA.md` | 🟢 OK (API direta, sem browser) |
 | `tjpe` | TJ de Pernambuco | PE | `CLAUDE-TJPE.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa **e** inteiro teor já vêm na busca). Base corrente, cobre PJe + Projudi |
 | `tjes` | TJ do Espírito Santo | ES | `CLAUDE-TJES.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa e inteiro teor já vêm na busca). Base corrente, e **o único do repo com 1º grau** (1,5 mi de sentenças) |
+| `tjpi` | TJ do Piauí | PI | `CLAUDE-TJPI.md` | 🟢 OK (portal JusPI, HTTP direto, sem browser — **sem captcha**; ementa íntegra e **citação oficial** já vêm na busca, e **há permalink público**). Base corrente; inclui **súmulas do próprio TJ** |
 | `tjpr` | TJ do Paraná | PR | `CLAUDE-TJPR.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjrj` | TJ do Rio de Janeiro | RJ | `CLAUDE-TJRJ.md` | 🟢 OK (HTTP direto, sem browser — só e-Proc/Justiça Comum 2º grau) |
 | `tjrn` | TJ do Rio Grande do Norte | RN | `CLAUDE-TJRN.md` | 🔴 **sem busca** — o domínio **inteiro** do TJRN responde 403 (Akamai); só `-n` (nº do processo, via DataJud) |
@@ -351,6 +352,39 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   lixo**: o número devolve 31 documentos, sendo alguns que apenas o **citam** no corpo.
   ✅ Ementa e inteiro teor vêm de graça na busca, sem captcha em etapa nenhuma.
   Matéria federal com origem no ES → `trf2`
+- "TJPI" / "Piauí estadual" / "Teresina" / "Parnaíba" → `tjpi` → leia `CLAUDE-TJPI.md`.
+  ⚠️ **Não existe Juizado × Justiça Comum no TJPI** — os 27 órgãos são Câmaras
+  Especializadas, Grupos, Pleno e Vice-Presidências; **não há Turma Recursal na
+  base**. Não ofereça o recorte, e não leia a ausência como "o crawler não filtra".
+  ✅ **É o primeiro tribunal do repo com SÚMULAS do próprio TJ pesquisáveis**
+  (39 delas): `tjpi -q "<termo>" -t sumula`. 🔴 **Mas súmula não tem permalink**
+  (HTTP 500 em 5/5 testadas) e não traz processo, relator, órgão nem citação —
+  cite pelo texto, não por link.
+  🔴 **A base NÃO TEM data de julgamento, só publicação.** Não existe `-di/-df`;
+  use `-dpi/-dpf`. **Nunca apresente a data do TJPI como data de julgamento.**
+  🔴 **`-dpi` sozinho é IGNORADO em silêncio** (devolve o acervo inteiro, com
+  HTTP 200 e número plausível). Mande sempre as duas pontas. O crawler avisa.
+  🔴 **Os operadores são em PORTUGUÊS** (`E`, `OU`, `NÃO` **acentuado**,
+  `"frase exata"`, parênteses); `AND`/`OR`/`NOT`/`ADJ`/`PROX` **zeram a busca**.
+  E ⚠️ **`nao` SEM acento não é operador** — vira palavra e a contagem **sobe**
+  (282 contra 279), sem sintoma. **É o oposto do TJAC/TJAM/TJAL**, onde `NAO` é
+  que funciona. O espaço entre termos é `E` (AND).
+  ⚠️ **NÃO avise sobre acento na query** — o índice normaliza
+  (`usucapiao` = `usucapião` = 585). O acento só importa para o operador.
+  🔴 **Número de processo sozinho não funciona**, apesar de indexado e de o
+  próprio campo prometer "Processos": o CNJ **mascarado** derruba a busca com
+  **HTTP 500** e o sem máscara devolve **0 calado**. Use `./bin/jur tjpi -n "<nº>"`,
+  que aplica o contorno medido. ⚠️ Ele pode arrastar acórdão que apenas **cita** o número —
+  o Checker descarta e avisa.
+  ✅ **Ementa íntegra, citação oficial pronta e permalink público** já vêm na
+  busca, sem captcha em etapa nenhuma. O inteiro teor é 1 GET por documento
+  (`--fetch-inteiro-teor`). ✅ **Decisão terminativa TEM ementa** — não repita
+  aqui a ressalva de TJPE/TJCE/TJMT.
+  ⚠️ A base é **só 2º grau, de 2018 em diante**: não tem 1º grau. Está
+  **corrente**, mas com **defasagem de indexação nos últimos meses**
+  (mai/2026 = 10.980, jun = 6.580, jul = 3.782) — em pedido dos últimos 30–60
+  dias, diga isso em vez de entregar o número baixo como se fosse o acervo.
+  Matéria federal com origem no PI → `trf1`
 - "TJMS" / "Mato Grosso do Sul estadual" / "Campo Grande" → `tjms` → leia `CLAUDE-TJMS.md`.
   Juizado Especial / Turma Recursal sul-mato-grossense → `tjms --origem turmas`; Justiça
   Comum 2º grau é `--origem comum` (default). A distinção é obrigatória e está medida

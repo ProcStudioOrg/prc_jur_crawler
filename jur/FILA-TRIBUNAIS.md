@@ -309,7 +309,7 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 |---|---|---|---|---|
 | 7 | **TJPE** | PE | PJe, Projudi | ok 07/08 |
 | 8 | **TJES** | ES | PJe, Projudi | ok 07/08 |
-| 9 | **TJPI** | PI | PJe, Projudi | pendente |
+| 9 | **TJPI** | PI | PJe, Projudi | ok 09/08 |
 | 10 | **TJRO** | RO | PJe, Projudi | pendente |
 | 11 | **TJSE** | SE | Próprio (1ª e 2ª) — sistema caseiro, pode ter portal próprio | pendente |
 | 12 | **TJTO** | TO | e-Proc, Projudi — irmão do TJRS/TJSC/TRF4 (e-Proc) | pendente |
@@ -426,6 +426,73 @@ As lições valem para os 8 restantes:
 - ✅ **É o ÚNICO tribunal do repo com 1º grau na base de jurisprudência** — e o 1º grau é
   o maior acervo (1.509.942 de 2.212.794). Sentença de 1º grau é um pedido que só ele
   atende. **Vale perguntar por 1º grau nos alvos restantes em vez de presumir que não há.**
+
+📌 **O que o TJPI (feito em 09/08/2026) ensinou — leia
+[`CLAUDE-TJPI.md`](CLAUDE-TJPI.md).** Terceiro alvo do Bloco 3 e o primeiro portal
+**Rails renderizado no servidor** do repo — não SPA, não API, e mesmo assim o mais
+generoso do bloco: **permalink público**, **citação oficial pronta** e **ementa
+íntegra já no HTML da busca**, sem captcha em etapa nenhuma. As lições valem para
+os 5 restantes:
+
+- 🔴 **UM ZERO PODE SER UM HTTP 500 DISFARÇADO — e eu caí nisso por seis horas.**
+  O helper de contagem que usei o dia inteiro lia só o **corpo** da resposta, e
+  página de erro sem card se lê **exatamente** como "nenhum resultado". Registrei
+  três variantes de busca por número como "devolve 0"; eram **HTTP 500**, e só
+  apareceram quando a suíte passou a usar o `Navigator`, que confere o status.
+  **CONFIRA O STATUS ANTES DE CHAMAR UM ZERO DE ZERO** — some isto à invariante
+  do repo ("zero quase nunca é ausência de jurisprudência"): às vezes o zero nem
+  é zero. O erro custou uma ressalva errada gravada em quatro arquivos.
+- 🔴 **O CAMPO DE BUSCA PODE PROMETER O QUE NÃO ENTREGA.** O placeholder diz
+  "Pesquisa por (…) **Processos**, etc" e o número **não funciona sozinho**: o
+  CNJ mascarado **derruba a busca com 500** (a pontuação sozinha quebra o parser)
+  e o sem máscara devolve **0 calado**. ✅ Mas o número **está indexado**:
+  `<CNJ> e de` acha o documento certo. **O contorno é pendurar um termo de
+  altíssima frequência e deixar o AND implícito trabalhar** — vale testar isso
+  no próximo tribunal cuja consulta por número "não existir".
+- 🔴 **UM TIPO DE DOCUMENTO INTEIRO PODE NÃO TER PERMALINK.** Acórdão e decisão
+  terminativa abrem em `/jurisprudences/<id>/public`; **as súmulas dão HTTP 500,
+  5 de 5**. Não é o documento envenenado avulso do TJPE — é a categoria toda.
+  Quem dissecasse só o acórdão gravaria "o TJPI tem permalink" e erraria num
+  terço dos tipos. **Disseque os TRÊS tipos, não dois.**
+- 🔴 **`nao` SEM ACENTO NÃO É OPERADOR AQUI — o OPOSTO exato do Bloco 1.** Em
+  TJAC/TJAM/TJAL o `NAO` é que funciona e o acentuado não; no TJPI é ao
+  contrário, e o erro **infla** (282 contra 279 da exclusão correta), sem
+  sintoma. ✅ Como *termo*, `nao` e `não` são o mesmo token — **o acento importa
+  para o parser de operador, não para o índice**. Distinção nova no repo.
+  Sétimo tribunal do bloco, sétimo conjunto de operadores: continua sem herdar.
+- 🔴 **UMA PONTA SÓ DO FILTRO DE DATA É IGNORADA EM SILÊNCIO** — `-dpi` sozinho
+  devolve o acervo inteiro (585 = sem filtro) com HTTP 200. **Teste cada filtro
+  meio aplicado, não só aplicado e ausente.**
+- ✅ **A DOCUMENTAÇÃO DO PRÓPRIO PORTAL PODE ESTAR ERRADA.** O JusPI publica uma
+  página de conectivos (`/jurisprudences/conectives`) — útil e, num ponto,
+  falsa: afirma que o `OU` exige parênteses, e sem eles dá o mesmo número.
+  **Leia a documentação do portal e meça mesmo assim.**
+- ⚠️ **OS FILTROS PODEM NÃO EXISTIR NA HOME.** A tela inicial tem só o campo de
+  texto; os quatro combos e as duas datas **só aparecem na página de resultado**.
+  Quem raspar a home conclui que o portal não filtra nada.
+- ⚠️ **UM CAMPO CHAMADO "Órgão Julgador" PODE CONTER UMA PESSOA** (o
+  desembargador); quem é órgão é o "Órgão Julgador Colegiado". Some à lição do
+  TJES sobre rótulo que mente.
+- ✅ **BASE CORRENTE, MAS COM DEFASAGEM VISÍVEL NA PONTA**: mai/2026 = 10.980,
+  jun = 6.580, jul = 3.782, ago = 26. O passo do TJAM continua obrigatório, e
+  aqui ele produziu um terceiro resultado — nem "congelada" (TJAM) nem "corrente"
+  (TJAL/TJES): **corrente com atraso de indexação**, que pede aviso próprio.
+- ✅ **É o PRIMEIRO tribunal do repo com SÚMULAS do próprio TJ pesquisáveis**
+  (39) e o **segundo sem partição Juizado × Justiça Comum**, depois do TJMT —
+  ausência medida no combo de 27 órgãos, não presumida.
+- ✅ Total **exato** com a aritmética da última página fechando nos dois testes,
+  **sem teto de offset** (página 15.881 responde), paginação **estável** 3/3, e
+  **sem vhost curinga**. ⚠️ Página de **25 fixos**: `per_page`/`per`/`limit` são
+  ignorados em silêncio.
+- ⚠️ **DOIS FALSOS CAMINHOS DE API NUM PORTAL RAILS**: `search.json` → **406**
+  (não existe respondedor JSON) e `/jurisprudences.json` → **401** (índice real,
+  atrás de login). Nenhum é bloqueio a vencer; o certo era o HTML mesmo.
+
+⚠️ **Pendências declaradas do TJPI:** o **DataJud não foi sondado** (não foi
+preciso, mas fica como não medido); `assunto` aparece no card e nos Detalhes mas
+**não é filtrável**; a **queda de 2025** (37.713 contra 99.400 de 2024) não foi
+explicada; a defasagem dos meses recentes **não foi quantificada** contra o
+volume real de publicação; e `-r` (relator) foi provado por contagem **num nome só**.
 
 📌 **O que o TJMT (08/08/2026) deixou pronto — `parcial`, leia
 [`human-codegen/TJMT/01-jurisprudencia/01-busca-e-filtros.txt`](human-codegen/TJMT/01-jurisprudencia/01-busca-e-filtros.txt).**

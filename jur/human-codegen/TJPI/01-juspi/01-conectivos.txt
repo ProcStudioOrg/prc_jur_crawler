@@ -1,0 +1,44 @@
+ Jurisprudências - TJPI
+ ACESSO
+Conectivos
+ E
+Descrição
+Localiza documentos que incluam todos os termos buscados, sem considerar a proximidade ou a posição das palavras no texto.
+Exemplo
+roubo e veículo e garagem
+Resultado
+O sistema irá retornar documentos que contenham as três palavras especificadas, independentemente da ordem em que aparecem ou da distância entre elas.
+ OU
+Descrição
+Retorna documentos que incluam um ou mais termos listados. Os termos devem sempre estar agrupados entre parênteses.
+Exemplo
+(carro ou moto ou bicicleta)
+Resultado
+O sistema apresentará documentos que contenham pelo menos uma, duas ou todas as palavras mencionadas.
+ NÃO
+Descrição
+Permite excluir documentos que contenham um termo específico, ainda que os outros termos estejam presentes.
+Exemplo
+roubo e garagem não bicicleta
+Resultado
+O sistema recuperará documentos que contenham as palavras "roubo" e "garagem", mas eliminará aqueles que também mencionam a palavra "bicicleta".
+ " "
+Descrição
+Busca documentos que contenham exatamente a frase ou expressão digitada entre aspas, sem alterações na ordem ou nos termos.
+Exemplo
+"roubo de carga em rodovia estadual"
+Resultado
+A busca retornará apenas documentos que apresentem a frase completa e exatamente da forma escrita. Se houver qualquer alteração, nenhum resultado será encontrado.
+ ()
+Descrição
+Define a prioridade e o agrupamento dos conectivos, similar ao uso de parênteses na Matemática, assegurando que certas partes da pesquisa sejam processadas juntas antes de outras combinações.
+Exemplos
+(acidente e (carro ou ônibus))
+(educação e básica) ou (hospitais e região)
+(dano e (material ou moral)) não familiar
+Resultado
+Documentos que incluam "acidente" e, adicionalmente, pelo menos um dos termos "carro" ou "ônibus".
+Documentos que mencionem "educação" e "básica" juntos, ou "hospitais" e "região" juntos.
+Documentos que abordem "dano" associado a "material" ou "moral", mas que não mencionem o termo "familiar".
+TJPI
+Secretaria de Tecnologia da Informação e Comunicação - 2026

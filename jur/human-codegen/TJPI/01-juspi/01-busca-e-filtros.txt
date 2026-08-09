@@ -1,0 +1,274 @@
+# TJPI — JusPI (Pesquisa de Jurisprudências do TJPI) — busca e filtros
+
+## Identificação
+
+Tribunal:   TJPI — Tribunal de Justiça do Piauí (estadual, PI)
+Módulo:     JusPI — https://jurisprudencia.tjpi.jus.br/jurisprudences/search
+Mapeado em: 09/08/2026 (Playwright + HTTP direto)
+Acesso do crawler: `http` (GET com querystring; resposta é HTML server-side)
+Prints:     01.01-tela-inicial.png, 01.02-termo-preenchido.png, 01.03-conectivos.png,
+            02.01-resultados.png, 02.02-lista-topo.png, 02.03-lista-rodape-paginacao.png,
+            02.04-card-acordao-fechado.png, 02.05-card-expandido.png,
+            02.06-permalink-aba-limpa.png
+HTML:       01-formulario-inicial.html, 01-formulario-completo.html,
+            02-card-acordao.html, 02-card-acordao-expandido.html,
+            02-documento-permalink.html, combos.json
+
+## Passo 0 — o que existe e o que NÃO existe de API
+
+🔴 NÃO EXISTE API. Medido e registrado nos dois sentidos, para ninguém repetir a busca:
+
+  NXDOMAIN (sem vhost curinga):
+    dadosabertos.tjpi.jus.br · api.tjpi.jus.br · juris.tjpi.jus.br
+    sistemas.tjpi.jus.br · app.tjpi.jus.br · portal.tjpi.jus.br · pje2g.tjpi.jus.br
+  Resolvem:
+    tjpi.jus.br 18.228.121.158 · www.tjpi.jus.br 54.232.39.98 (FortiWeb Cloud WAF)
+    jurisprudencia.tjpi.jus.br 201.71.217.245 · projudi.tjpi.jus.br 201.71.217.244
+    pje.tjpi.jus.br 164.152.43.125
+  404 reais:
+    /dados-abertos, /transparencia/dados-abertos, /portaldatransparencia/dados-abertos
+    (no www) e /swagger, /v3/api-docs, /actuator, /api (no jurisprudencia)
+
+✅ SEM VHOST CURINGA — a armadilha do TJAC/TJAL não se repete:
+    /                              → 200, md5 49a12c45f7788706d54cd33d95ca9cca
+    /qualquer-coisa-inventada-9z   → 404, md5 4ead20c186eaf2f7c09d6627ab7c0102
+    /swagger                       → 404, MESMO md5 do 404 (é o 404 padrão do Rails)
+   Os md5 são distintos: 200 é 200 e 404 é 404 de verdade.
+
+⚠️ DOIS FALSOS CAMINHOS QUE PARECEM API E NÃO SÃO:
+    /jurisprudences/search.json → HTTP 406 "Not Acceptable" — o Rails não tem
+      respondedor JSON para essa rota. Não é bloqueio, é ausência.
+    /jurisprudences.json        → HTTP 401 — existe um índice JSON, mas atrás do
+      login "ACESSO" (/u/sign_in). Não serve e não se tentou destravar.
+
+⚠️ Também não é SPA: o HTML já vem renderizado (Rails + Turbo + Sprockets). Não há
+   XHR para interceptar — a busca dispara UM request de documento e mais nada.
+   (01-xhr-carga.json registra a captura vazia.)
+
+DataJud: NÃO foi sondado para o TJPI — não foi preciso, porque a busca por termo
+   funciona e o `-n` tem contorno próprio dentro do JusPI. Fica declarado como
+   não medido, não como inexistente.
+
+## 16. Forma de acesso
+
+`http` puro. GET https://jurisprudencia.tjpi.jus.br/jurisprudences/search?<params>
+Charset UTF-8 (Content-Type: text/html; charset=utf-8) — nada de ISO-8859-1.
+
+✅ SEM CAPTCHA EM ETAPA NENHUMA, e isso foi medido separadamente para busca e para
+   documento (a assimetria que mordeu TJAC/TJAM/TJAL/TJGO):
+     busca      → responde ao `curl` cru, sem cookie, sem token, sem referer
+     documento  → idem; o permalink abre em contexto Playwright NOVO, sem cookies
+   Não há Cloudflare nem WAF no host de jurisprudência (o FortiWeb está no `www`
+   institucional, que não é usado pelo crawler).
+
+## 17. Sessão e estado
+
+Nenhum. Não há cookie obrigatório, não há JSESSIONID, não há token de bundle.
+Cada requisição é independente — nada do problema do `trocaDePagina.do` do e-SAJ,
+em que a URL não identifica a busca.
+
+## 1. Busca principal (query)
+
+Campo:  <input type="text" name="q" id="q"
+          placeholder="Pesquisa por Acórdãos, Decisões Terminativas, Súmulas,
+                       Ementas, Processos, etc" class="form-control form-control-lg">
+Form:   <form action="/jurisprudences/search" accept-charset="UTF-8" method="get">
+
+⚠️ O placeholder promete "Processos" e a busca por número de processo SOZINHO não
+   funciona — o CNJ mascarado chega a derrubar a requisição com HTTP 500. Ver §14.
+
+✅ ACENTO É NORMALIZADO — não avise sobre acento aqui:
+     usucapião = 585   usucapiao = 585   USUCAPIÃO = 585
+   (padrão TJAC/TJAM/TJAL/TJPE/TJES; oposto de TJMS/TJBA/TJPB)
+
+Busca vazia (`q=`) devolve a página de zero resultados, não o acervo inteiro.
+
+## 2. Operadores
+
+O portal documenta os conectivos em /jurisprudences/conectives (print 01.03).
+Todos foram testados por contagem contra `usucapião`=585, `posse`=27.221:
+
+  ✅ FUNCIONAM (português):
+     espaço          usucapião posse            = 306   ← o implícito é E (AND)
+     E               usucapião e posse          = 306   (idêntico ao espaço)
+     OU              (usucapião ou posse)       = 27.500
+     NÃO (acentuado) usucapião não posse        = 279
+     "frase exata"   "usucapião extraordinária" = 210
+     ( )             (usucapião e (posse ou propriedade)) = 346
+
+  ✅ A ARITMÉTICA FECHA EXATA — é o segundo tribunal do repo com operadores
+     coerentes (depois do TJPB), e continua não sendo herdável, foi medido:
+       OU:  585 + 27.221 − 306 = 27.500  ✔ exato
+       NÃO: 585 − 306          = 279     ✔ exato
+
+  🔴 ZERAM (inglês) — sintoma visível, o que é a boa notícia:
+     AND / OR / NOT / ADJ / PROX → 0 resultados, todos.
+     Viram termo literal e o AND implícito nunca casa. É o inverso do TJBA e do
+     TJES (onde os ingleses é que funcionam) e do TJMT (onde os ingleses viram OR).
+     SÉTIMO TRIBUNAL DO BLOCO, SÉTIMO CONJUNTO: não se herda operador.
+
+  🔴 `nao` SEM ACENTO NÃO É OPERADOR — e o erro NÃO DÁ SINTOMA:
+       usucapião não posse  = 279  ← exclusão correta (585 − 306)
+       usucapião nao posse  = 282  ← "nao" entra como PALAVRA no AND
+     Provado: `usucapião e posse e nao` = 282, exatamente o mesmo número.
+     282 > 279, então o erro INFLA em vez de zerar — pediu exclusão, recebeu
+     interseção com um termo a mais, e 282 se lê como resposta normal.
+     ⚠️ Isto é o OPOSTO do TJAC/TJAM/TJAL, onde `NAO` é que funciona e `NÃO`
+        acentuado não. Herdar a ressalva do Bloco 1 aqui produz o bug.
+     Nota fina: como termo, `nao` e `não` são o MESMO token (ambos = 328.633).
+     O acento importa para o PARSER DE OPERADOR, não para o índice.
+
+  ⚠️ A documentação do próprio portal está errada num ponto: ela diz que os
+     termos do OU "devem sempre estar agrupados entre parênteses". Medido:
+     `usucapião ou posse` sem parênteses = 27.500, idêntico à versão com
+     parênteses. Os parênteses são opcionais.
+
+  ⚠️ `$` e `*` não constam dos conectivos e não foram provados como curinga.
+
+## 3. Paginação — ver §20 (arquivo 02-resultados.txt)
+
+## 4. Filtro de data — julgamento
+
+🔴 NÃO EXISTE. A base do TJPI **não expõe data de julgamento** em lugar nenhum:
+   nem como filtro, nem no card, nem na página do documento, nem na citação
+   oficial (que traz "Data 13/07/2026" = a data de PUBLICAÇÃO).
+   O único campo de data de todo o acervo é Publicação.
+   ⚠️ Não repita o erro do TJES ao contrário: aqui não há rótulo mentindo —
+      simplesmente não há o campo. `dataJulgamento` fica '' de propósito.
+
+## 5. Filtro de data — publicação
+
+Campos: <input type="date" name="data_min" id="data_min" data-daterange-target="dataMin">
+        <input type="date" name="data_max" id="data_max" data-daterange-target="dataMax">
+Formato: ISO YYYY-MM-DD (é `<input type="date">`, não DD/MM/YYYY).
+
+🔴 UMA PONTA SÓ É IGNORADA EM SILÊNCIO — zero silencioso ao contrário (infla):
+     usucapião                                    = 585
+     usucapião + data_min=2026-01-01              = 585   ← IGNOROU
+     usucapião + data_min=2026-01-01&data_max=... = 110   ← aplicou
+   Quem mandar só `-dpi` recebe o acervo inteiro com HTTP 200 e número plausível,
+   achando que filtrou. O crawler avisa quando só uma ponta vem.
+
+✅ O TESTE NO-OP DO TJES ABSOLVE AQUI (como no TJPB): 1900-01-01..2100-12-31 = 585
+   = o total sem filtro. E o par fecha: janela estreita devolve número pequeno.
+   Uma medição só seria ambígua; é o PAR que decide.
+
+✅ O FILTRO É HONESTO — a lição do TJMT (que lia MM/DD) foi verificada explicitamente
+   comparando a data DEVOLVIDA pelo documento, não só a contagem:
+     2026-07-01..2026-07-31 → cards com Publicação 31/07, 14/07, 14/07…  ✔ dentro
+     2024-03-01..2024-03-05 → cards com Publicação 05/03/2024…            ✔ dentro
+     2019-01-01..2019-01-31 → cards com Publicação 31/01, 30/01, 29/01…   ✔ dentro
+   E a partição por ano soma quase exato: 2018..2026 = 396.995 contra 397.031 da
+   base (36 documentos fora da janela 2018–2026).
+
+## 6. Filtro de instância
+
+Não existe filtro de instância. Todo o acervo é 2º grau — o badge do card diz
+sempre "… de 2º Grau". NÃO HÁ 1º GRAU (a pergunta que o TJES mandou fazer foi
+feita: aqui a resposta é não).
+
+## 7. Filtro de competência (Juizado × Justiça Comum)
+
+🔴 NÃO EXISTE — e não é omissão do mapeamento, é ausência na base. O combo `orgao`
+   tem 27 opções e NENHUMA é Turma ou Colégio Recursal (ver combos.json): são as
+   Câmaras Especializadas Cíveis/Criminais, os Grupos de Câmaras, o Pleno, as
+   Vice-Presidências e o Conselho da Magistratura. Segundo tribunal do repo sem
+   essa partição, depois do TJMT.
+   `--origem comum|turmas` existe no CLI por uniformidade e é recorte de cliente
+   pelo nome do órgão; na prática `turmas` devolve vazio.
+
+## 8. Filtro de área (Cível × Criminal)
+
+Não há filtro próprio, mas o combo `orgao` distingue na prática
+("1ª Câmara Especializada Cível" × "1ª Câmara Especializada Criminal").
+
+## 9. Filtro de órgão / matéria
+
+Campo: <select name="orgao" id="orgao" class="form-control form-control-lg"
+         data-controller="tom-select">   — 27 opções, enumeradas em combos.json
+⚠️ QUER O NOME EXATO, NÃO ID (o oposto da armadilha do TJBA, onde `orgaos` queria id).
+Medido: orgao="1ª Câmara Especializada Cível" + usucapião = 98 (contra 585 sem).
+✅ Valor inventado (`orgao=XXINVALIDOXX`) devolve 0 — o filtro é levado a sério,
+   não é decorativo (o teste do TJMT aplicado e passado).
+
+## 10. Unidade específica (serventia / comarca)
+
+Não existe. A base é só 2º grau; não há campo de comarca no formulário nem no
+documento.
+
+## 11. Magistrada ou magistrado
+
+Campo: <select name="relator" id="relator" data-controller="tom-select">
+       87 opções, enumeradas em combos.json. QUER O NOME EXATO, não id.
+Medido: relator="HILO DE ALMEIDA SOUSA" + usucapião = 18.
+✅ Valor inventado devolve 0.
+
+## 12. Tipo de ato
+
+Campo: <select name="tipo" id="tipo" data-controller="tom-select">
+       [Todos] | Acórdão | Decisão Terminativa | Súmula
+⚠️ QUER O RÓTULO COM ACENTO ("Acórdão"), não um código. Valor inventado → 0.
+
+✅ A PARTIÇÃO É EXATA, provada duas vezes:
+     usucapião: 356 (Acórdão) + 229 (Decisão Terminativa) + 0 (Súmula) = 585 ✔
+     q=a:   235.040 + 127.366 + 39 = 362.445 ✔ (= q=a sem filtro)
+   Nada da não-composição do TJPE/TJBA.
+
+✅ SÚMULA É UM TIPO REAL E POVOADO: 39 súmulas na base (q=a&tipo=Súmula).
+   É o primeiro tribunal do repo com súmulas do próprio TJ pesquisáveis junto
+   com os acórdãos. ⚠️ O card da súmula não tem relator nem órgão nem citação
+   (ver 02-resultados.txt).
+
+## 13. Relator / revisor, classe, assunto
+
+classe:  <select name="classe" id="classe" data-controller="tom-select"> — 94 opções
+Medido: classe="APELAÇÃO CÍVEL" + usucapião = 351.
+assunto: NÃO há combo. O assunto aparece no card (é o texto antes do nº do processo,
+         ex. "Imissão") e na tabela Detalhes ("Assunto Principal"), mas não é filtrável.
+
+⚠️ Os quatro combos (`tipo`, `relator`, `classe`, `orgao`) só existem na página de
+   RESULTADO — a tela inicial (/jurisprudences/search sem `q`) tem apenas o campo
+   de texto. Quem raspar a home não acha filtro nenhum. Ver 01.01 × 02.01.
+✅ Os combos vêm populados no HTML (Tom Select monta em cima do `<select>` pronto);
+   não é AJAX. Enumerados assim mesmo pelo browser, como manda o processo.
+
+## 14. Número do processo
+
+🔴 O NÚMERO SOZINHO NÃO FUNCIONA, APESAR DE ESTAR INDEXADO — e falha de DUAS
+   formas diferentes, o que importa porque só uma delas dá sintoma. É o achado
+   mais caro do dia e contradiz o placeholder do próprio campo ("… Processos,
+   etc"). Medido contra 0763373-15.2025.8.18.0000, que EXISTE:
+
+     q=0763373-15.2025.8.18.0000              → 🔴 HTTP 500 (1.635 bytes de erro)
+     q="0763373-15.2025.8.18.0000"            → 🔴 HTTP 500  (idem, frase exata)
+     q=07633731520258180000                   → 200, 0 resultados (sem máscara)
+     q=0763373        /  q=0763373-15         → 200, 0 resultados (pedaços)
+     q=0763373-15.2025.8.18.0000 e de         → 200, 1 ✅ o documento certo
+     q=de e 0763373-15.2025.8.18.0000         → 200, 1 ✅ a ordem não importa
+
+   A pontuação do CNJ mascarado, SOZINHA na query, derruba o parser do JusPI.
+   Com qualquer outro termo junto ele parseia normalmente.
+
+   ⚠️ ERRO DE MEDIÇÃO QUE QUASE VIROU RESSALVA ERRADA: o primeiro helper de
+      contagem deste mapeamento só olhava o CORPO da resposta, e uma página de
+      erro sem cards se lê exatamente como "nenhum resultado". As três primeiras
+      linhas acima ficaram registradas como "0" até a suíte de testes, que usa o
+      Navigator (o qual confere o status), acusar o 500.
+      CONFIRA O STATUS ANTES DE CHAMAR UM ZERO DE ZERO.
+
+   ✅ CONTORNO: pendurar um termo de altíssima frequência e deixar o AND implícito
+      trabalhar. `de` sozinho devolve 397.031 de ~397.067 documentos. É o que o
+      TJPIChecker faz, tentando `de`, depois `a`, depois `que`.
+   ⚠️ Falso negativo residual declarado: um julgado sem nenhuma das três âncoras
+      não seria achado. Improvável em português jurídico, mas não é impossível.
+   ⚠️ E o número casa no TEXTO INTEIRO, então a busca pode arrastar acórdão que
+      apenas CITA aquele número (a armadilha medida no TJES). O Checker descarta
+      o que não bate no campo `numeroProcesso` do card e conta quantos descartou.
+
+   Formato indexado: a MÁSCARA (como no TJES), não os 20 dígitos (como no TJPE).
+
+## 15. Bloqueios
+
+Nenhum. Sem captcha, sem reCAPTCHA, sem Turnstile, sem Cloudflare, sem login,
+sem rate limit observado (≈60 requisições seguidas sem 429 durante o mapeamento).
+Medido em separado para busca e para download — os dois livres.
