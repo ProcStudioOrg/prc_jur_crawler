@@ -11,9 +11,25 @@ Não tente adiantar o segundo alvo: a outra execução é que faz isso.
 
 1. **Leia a fila**: `jur/FILA-TRIBUNAIS.md`. Leia inclusive o bloco `<CERCA>` — ele é
    obrigatório, não decorativo.
-2. **Pegue o primeiro alvo com status `pendente`.** Esse é o seu alvo do dia.
-   **Só ele.** Se não houver nenhum `pendente`, escreva no log que a fila acabou e
-   **encerre sem fazer nada** — não invente trabalho novo.
+2. **Escolha o alvo do dia — depende do seu slot (você é o `__SLOT__`).**
+
+   **Regra da dívida de crawler.** Um alvo `parcial` é um tribunal já mapeado
+   esperando *só* o crawler. Como `parcial` volta para o **fim** da fila, atrás de
+   dezenas de `pendente`, sozinho ele nunca mais é chamado — e o repo acumula
+   mapeamento que não vira crawler. Então:
+
+   | Seu slot | O que você pega |
+   |---|---|
+   | **1600** (tarde) | o primeiro `pendente` — abre tribunal novo, como sempre |
+   | **2000** (noite) | **se houver ≥ 3 `parcial`**, pegue o `parcial` **mais antigo** e feche o crawler dele. Menos de 3 → siga a regra da tarde e pegue o primeiro `pendente` |
+
+   Fechar um `parcial` = retomar do human-codegen já gravado (não remapeie o que
+   já está medido), levar o crawler a 🟢 e trocar o status para `ok DD/MM`. Se
+   estourar o timebox de novo, ele continua `parcial` — registre **o que faltou
+   desta vez**, para o próximo slot não recomeçar do zero.
+
+   **Só um alvo.** Se não sobrar nem `pendente` nem `parcial`, escreva no log que a
+   fila acabou e **encerre sem fazer nada** — não invente trabalho novo.
 3. **Invoque a skill `codegen`** e siga o processo dela do começo ao fim, incluindo o
    Passo 0 (procurar API pública antes de abrir a tela) e a Fase 3b (rodar a skill
    `browser-post-search` assim que a busca devolver resultados).
@@ -46,9 +62,16 @@ Não tente adiantar o segundo alvo: a outra execução é que faz isso.
    Adicione **só os caminhos que você mesmo criou ou editou**, um a um, nomeados.
    Se `git status` mostrar arquivo modificado que não é seu, **deixe quieto** e
    registre no relatório do dia que havia trabalho alheio na árvore.
-4. **Escreva o relatório do dia** em `agente-diario/reports/__DATE__.md`:
+4. **ACRESCENTE a sua seção** ao relatório do dia `agente-diario/reports/__DATE__.md`:
    alvo, porta de acesso encontrada, o que ficou faltando, ressalvas descobertas,
    e o placar novo (🟢 de quantos).
+
+   ⚠️ **O arquivo é compartilhado pelos dois slots do dia.** Se ele já existir, o
+   slot das 16:00 escreveu nele — **leia-o e ACRESCENTE no fim**, nunca sobrescreva.
+   Abra a sua parte com `## Slot <1600|2000> — <TRIBUNAL>` para as duas caberem.
+   Ferramenta: use `Read` + `Edit` (ou `>>`), **nunca** `Write` por cima.
+   Isto já custou dois relatórios perdidos (08/08 e 09/08) — o `reports/` não
+   estava versionado e não houve recuperação.
 
 ## Invariantes do repo que continuam valendo
 

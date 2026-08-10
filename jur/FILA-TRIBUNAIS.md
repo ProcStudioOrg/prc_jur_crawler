@@ -8,8 +8,10 @@
 ## Regras de escopo — leia antes de sair navegando
 
 <CERCA>
-1. **Um alvo por execução.** O da vez é o primeiro `pendente` da tabela. Não adiante
-   os outros, não "aproveite que estou aqui". Terminou ou travou → pare.
+1. **Um alvo por execução.** O da vez é o primeiro `pendente` da tabela — **exceto**
+   no slot das 20:00 quando houver ≥ 3 `parcial`: aí o alvo é o `parcial` mais
+   antigo (regra da dívida de crawler, abaixo). Não adiante os outros, não
+   "aproveite que estou aqui". Terminou ou travou → pare.
 2. **Domínio permitido:** apenas o domínio oficial do alvo (`*.<tribunal>.jus.br`,
    `*.<tce>.<uf>.gov.br` etc.), mais estas fontes de apoio:
    - `dadosabertos.cnj.jus.br` / API pública do DataJud (só para o `Checker`)
@@ -40,6 +42,18 @@ Ao terminar, troque o `pendente` do alvo por um destes, **com data**:
 | `bloqueado DD/MM` | captcha/login/Cloudflare — com a medição no doc | sai da fila, vira linha no TODO |
 
 Fila vazia = todos os alvos com `ok` ou `bloqueado`. Aí o agente só reporta e não faz nada.
+
+### Regra da dívida de crawler
+
+`parcial` significa **mapeado, sem crawler**. Como ele volta para o fim da fila,
+atrás de dezenas de `pendente`, na prática nunca mais era chamado — o repo passou a
+acumular mapeamento que não vira crawler (3 tribunais seguidos em 08/2026: TJMT,
+TJPB, TJRO).
+
+Por isso o **slot das 20:00 é o slot da dívida**: havendo **≥ 3 `parcial`**, ele
+ignora os `pendente` e pega o **`parcial` mais antigo**, retomando do human-codegen
+já gravado até o crawler ficar 🟢. O slot das 16:00 segue abrindo tribunal novo.
+Abaixo de 3 `parcial`, os dois slots voltam a pegar `pendente`.
 
 ---
 

@@ -79,15 +79,18 @@ if [ -n "${CLAUDE_CODE_OAUTH_TOKEN:-}" ] && [ "${CLAUDE_CODE_OAUTH_TOKEN#sk-ant-
   echo "[$(date)] AVISO: CLAUDE_CODE_OAUTH_TOKEN não começa com 'sk-ant-oat' — provável valor errado (ver CLAUDE-AGENTS-CRON.md §5)" >> "$LOG"
 fi
 
-# Fila acabou? não gasta sessão à toa
-if ! grep -q '| pendente |' "$REPO/jur/FILA-TRIBUNAIS.md"; then
-  echo "[$(date)] slot $SLOT: fila sem alvos pendentes — nada a fazer" >> "$LOG"
+# Fila acabou? não gasta sessão à toa. `parcial` tambem conta como trabalho: sao
+# tribunais ja mapeados esperando so o crawler — se so eles sobrarem, ha o que fazer.
+if ! grep -qE '\| (pendente|parcial) ' "$REPO/jur/FILA-TRIBUNAIS.md"; then
+  echo "[$(date)] slot $SLOT: fila sem alvos pendentes nem parciais — nada a fazer" >> "$LOG"
   exit 0
 fi
 
-# (5) session id gerado aqui e injetado no prompt, pro agente citar o resume
+# (5) session id gerado aqui e injetado no prompt, pro agente citar o resume.
+# __SLOT__ diz ao agente se ele e o slot da tarde (abre tribunal novo) ou o da
+# noite (fecha divida de crawler) — ver "Regra da divida" no prompt.
 SID="$(uuidgen | tr '[:upper:]' '[:lower:]')"
-PROMPT="$(sed -e "s/__SESSION_ID__/$SID/g" -e "s/__DATE__/$STAMP/g" -e "s|__NOTIFY_FILE__|$NOTIFY_FILE|g" "$DIR/prompt.md")"
+PROMPT="$(sed -e "s/__SESSION_ID__/$SID/g" -e "s/__DATE__/$STAMP/g" -e "s/__SLOT__/$SLOT/g" -e "s|__NOTIFY_FILE__|$NOTIFY_FILE|g" "$DIR/prompt.md")"
 
 cd "$REPO"
 echo "[$(date)] slot $SLOT: iniciando sessão $SID ($(grep -c '| pendente |' "$REPO/jur/FILA-TRIBUNAIS.md") alvos na fila)" >> "$LOG"
