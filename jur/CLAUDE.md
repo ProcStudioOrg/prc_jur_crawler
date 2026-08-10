@@ -71,6 +71,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjma` | TJ do Maranhão | MA | `CLAUDE-TJMA.md` | 🔴 busca **bloqueada por captcha**; só `-n` (nº do processo, via DataJud) |
 | `tjmg` | TJ de Minas Gerais | MG | `CLAUDE-TJMG.md` | 🟢 OK (API direta, sem browser — Consulta Unificada; **não** use o `www5`) |
 | `tjms` | TJ de Mato Grosso do Sul | MS | `CLAUDE-TJMS.md` | 🟢 OK (HTTP direto, sem browser — e-SAJ cjsg, **sem captcha**; base **só SAJ**, não cobre o e-Proc) |
+| `tjmt` | TJ de Mato Grosso | MT | `CLAUDE-TJMT.md` | 🟢 OK (API REST, HTTP direto, sem browser — **sem captcha**; ementa e inteiro teor já vêm na busca, e a **citação oficial vem pronta**). Base corrente; ⚠️ **não tem Turma Recursal** |
 | `tjpa` | TJ do Pará | PA | `CLAUDE-TJPA.md` | 🟢 OK (API direta, sem browser) |
 | `tjpe` | TJ de Pernambuco | PE | `CLAUDE-TJPE.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa **e** inteiro teor já vêm na busca). Base corrente, cobre PJe + Projudi |
 | `tjes` | TJ do Espírito Santo | ES | `CLAUDE-TJES.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa e inteiro teor já vêm na busca). Base corrente, e **o único do repo com 1º grau** (1,5 mi de sentenças) |
@@ -90,10 +91,14 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 de uma base nacional única, o FALCÃO — leia [`CLAUDE-FALCAO.md`](CLAUDE-FALCAO.md) para
 escolher o comando. `CLAUDE-TRT9.md` é o mergulho técnico do sistema.
 
-Nenhum tribunal catalogado está mapeado à espera de crawler. Falta ainda o módulo
+Dois tribunais catalogados estão **mapeados à espera de crawler** — **TJPB** e **TJRO**
+(API inteira medida em `human-codegen/`, e o TJRO já tem `src/TJRONavigator.js`). Não há
+comando `jur` para eles ainda: não os ofereça ao usuário. Falta ainda o módulo
 **eJURIS** do TJRJ (legado com Turmas Recursais e acervo histórico — o `jur tjrj` cobre
-só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — veja
-`cobertura/CLAUDE-COBERTURA.md` e use a skill [`codegen`](skills/codegen/SKILL.md) para mapear.
+só o e-Proc). Dos 27 TJs, **17 têm comando 🟢**, 4 estão bloqueados com o motivo medido
+(TJMA, TJRN, TJSE, TJSP), 1 é instável e **3 continuam sem mapeamento nenhum** —
+TJAP, TJRR e TJTO. Veja `cobertura/CLAUDE-COBERTURA.md` e use a skill
+[`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**
 - "Procure no Tribunal do Paraná" → `tjpr` → leia `CLAUDE-TJPR.md`
@@ -398,6 +403,39 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   (mai/2026 = 10.980, jun = 6.580, jul = 3.782) — em pedido dos últimos 30–60
   dias, diga isso em vez de entregar o número baixo como se fosse o acervo.
   Matéria federal com origem no PI → `trf1`
+- "TJMT" / "Mato Grosso estadual" / "Cuiabá" / "Várzea Grande" / "Rondonópolis" → `tjmt` →
+  leia `CLAUDE-TJMT.md`.
+  🔴 **NÃO EXISTE Juizado × Justiça Comum no TJMT — e a tela promete que existe.** Os
+  parâmetros que oferecem "Turma Recursal" são **ignorados** pelo servidor e o contador
+  de Turma Recursal é **0 em toda busca**, inclusive em consumo (`dano moral` = 241.840
+  acórdãos, **0 recursal**). **Pedido de jurisprudência de Juizado Especial de MT não tem
+  resposta aqui** — diga isso ao usuário, porque esse zero **não** é ausência de julgado.
+  O acervo de Turma Recursal (Projudi) não está indexado neste portal.
+  🔴 **A janela de data filtra PUBLICAÇÃO, não julgamento** — use `-dpi/-dpf` (`-di/-df`
+  são alias). A data de julgamento existe no documento e é real, mas **não é filtrável**.
+  **Nunca apresente o recorte do TJMT como sendo por data de julgamento.**
+  ⚠️ E o filtro de data do portal **está errado para o próprio usuário do TJMT**: a API lê
+  MM/DD/YYYY enquanto a tela envia DD/MM/YYYY, então no site toda data com dia ≤ 12
+  devolve o mês trocado e toda data com dia > 12 devolve o acervo inteiro. O crawler
+  converte sozinho — só nunca chame a API na mão com data brasileira crua.
+  🔴 **`OU` e `NÃO` NÃO funcionam**: são descartados em silêncio e a busca vira `E` (AND).
+  Você pede união e recebe **interseção**, com número plausível e sem sintoma. Para união,
+  rode duas buscas e some. E os **ingleses inflam 27×** (`AND`/`OR`/`NOT` desligam o AND
+  implícito e tudo vira OR). O que funciona é `E`, `PROXIMO`, `"frase exata"` e `*`;
+  `PROX` e `ADJ` **zeram**, e `$` **degenera** (`usucapi$` = 2). O crawler avisa em cada
+  caso; repasse o aviso. ⚠️ **NÃO avise sobre acento na query** — o índice normaliza.
+  🔴 **Decisão monocrática vem SEM ementa** (as 454.195 delas): o que existe é a decisão
+  inteira. O crawler marca `semEmenta` e não a apresenta como ementa — repasse.
+  ✅ **Ementa, inteiro teor e a CITAÇÃO OFICIAL já vêm na busca**, sem captcha:
+  `--fetch-inteiro-teor` só grava em disco, e a citação vem pronta (nada de regex).
+  ⚠️ **NÃO EXISTE PERMALINK por documento.** Nunca invente link de acórdão do TJMT — a
+  verificação é por reconsulta: `./bin/jur tjmt -n "<nº>"` (aceita com ou sem máscara).
+  ⚠️ **A paginação é INSTÁVEL** (sem campo de desempate): o crawler deduplica por `Id`,
+  mas em varredura profunda espere lacunas. E **cada página de 100 são 33,7 MB** (o brasão
+  vem em base64 dentro de cada acórdão) — o default `--page-size 20` é deliberado.
+  ⚠️ `--thesaurus` **infla ~10×** (6.151 → 59.606); o número grande não é abundância.
+  A base é **só 2º grau** (acórdão + monocrática), **sem 1º grau**, e está **corrente**.
+  Matéria federal com origem no MT → `trf1`
 - "TJMS" / "Mato Grosso do Sul estadual" / "Campo Grande" → `tjms` → leia `CLAUDE-TJMS.md`.
   Juizado Especial / Turma Recursal sul-mato-grossense → `tjms --origem turmas`; Justiça
   Comum 2º grau é `--origem comum` (default). A distinção é obrigatória e está medida

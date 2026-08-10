@@ -14,8 +14,13 @@ Abrangência da base:        2º grau (acórdãos + decisões monocráticas). SE
                             SEM Turma Recursal exposta (ver §7).
                             1.543.137 documentos (1.088.967 acórdão + 454.170 monocrática)
 Data do mapeamento:         08/08/2026 (16:00–17:30 BRT)
-Status:                     PARCIAL — mapeamento gravado, crawler NÃO escrito (timebox)
+Crawler fechado em:         10/08/2026 (slot 2000, regra da dívida de crawler)
+Status:                     ✅ COMPLETO — crawler 🟢, suíte 19/19, `jur tjmt`
 ```
+
+> ⚠️ **ESTE ARQUIVO FOI CORRIGIDO EM 10/08/2026.** O §5 original dizia que a janela
+> de data filtrava **julgamento**; ela filtra **publicação** (prova no §5). As
+> pendências 3, 6 e 9 do §12 foram fechadas no mesmo dia — estão marcadas lá.
 
 ---
 
@@ -200,11 +205,36 @@ TJMT (**`E` e `PRÓXIMO` ok; `OU` e `NÃO` viram AND; ingleses viram OR**). Não
 
 ---
 
-## 5. 🔴🔴 O FILTRO DE DATA LÊ **MM/DD/YYYY** ENQUANTO O PORTAL ENVIA **DD/MM/YYYY**
+## 5. 🔴🔴 O FILTRO DE DATA: DOIS DEFEITOS EMPILHADOS
 
 **O achado mais grave do dia.** O filtro *parece* funcionar — a contagem muda — e está errado.
 
-### A prova
+### 5.0 🔴 CORREÇÃO DE 10/08/2026 — a janela é de **PUBLICAÇÃO**, não de julgamento
+
+O §5.1 abaixo foi escrito em 08/08 lendo **só a data de julgamento** dos documentos
+devolvidos, e por isso atribuiu a janela ao campo errado. Medindo o **par**
+(julgamento, publicação) de cada documento, a resposta é inequívoca:
+
+| Janela enviada (MM/DD) | Documentos | `DataPublicacao` | `DataJulgamento` |
+|---|---|---|---|
+| `08/03/2026 .. 08/03/2026` | 1.032 | **03/08/2026 em 8/8** | 28/07 e 30/07/2026 |
+| `07/15/2026 .. 07/15/2026` | 141 | **15/07/2026 em 8/8** | 09/07/2026 |
+
+**A publicação bate exatamente; o julgamento não.** É a lição do TJES ("a tela pode
+mentir no rótulo do campo") na forma inversa: aqui não é a tela que mente, é a
+leitura ingênua de quem confere só uma das duas datas.
+
+⚠️ **Consequência:** as flags do crawler são `-dpi`/`-dpf`; `-di`/`-df` são alias, como
+no TJPI. **Não existe filtro por data de julgamento nesta API**, embora o campo exista e
+seja real no documento. E `ordenarDataPor` **não troca o campo filtrado** — só ordena
+(mesma janela, `Julgamento` e `Publicacao` devolvem 1.032 nos dois; **pendência 6 fechada**).
+
+✅ **E a conversão MM/DD é o conserto completo:** depois dela o dia > 12 funciona
+(`07/31/2026` é aceito e filtra). Medido: `01/07..31/07/2026` convertida = 127 contra
+6.151 sem janela; a mesma janela **crua** devolve 826, prova de que o servidor descartou
+um dos limites.
+
+### 5.1 A prova de que o parse é americano
 
 Janela de **um dia só**, sem termo, olhando a data de julgamento do que volta:
 
@@ -468,23 +498,37 @@ Ementa/Inteiro Teor é puramente visual, não dispara request.
 
 ## 12. PENDÊNCIAS DECLARADAS (o que NÃO foi feito)
 
-1. 🔴 **O crawler não foi escrito.** Timebox de 90 min consumido pela descoberta da API e
-   pela investigação do filtro de data (§5), que exigiu 4 rodadas de medição para sair de
-   "parece quebrado" a causa provada.
+1. ✅ **FECHADA em 10/08/2026 — o crawler existe.** `src/TJMT{Navigator,Crawler,Checker,Testes}.js`
+   + subcomando `jur tjmt`; suíte de integração **19/19 verde**.
 2. Os facets `fqRelator` / `fqOrgaoJulgador` / `fqTipoProcesso` / `fqJulgamento` / `fqAssunto`
-   **não foram provados por contagem** — só se sabe que os ids existem no payload.
-3. `filtro.numeroProtocolo` e a **consulta por número de processo** (que alimenta o `Checker`)
-   **não foram testadas**. Não se sabe se quer 20 dígitos ou máscara — e a lição TJPE×TJES é
-   que isso muda por tribunal.
+   **não foram provados por contagem** — só se sabe que os ids existem no payload. **Continua
+   aberta**, e por isso eles **não** viraram flags do CLI.
+3. ✅ **FECHADA em 10/08/2026 — e a resposta foi um zero silencioso a mais.**
+   `filtro.numeroProtocolo` **NÃO é o número do processo**: com o CNJ **mascarado** devolve
+   **1.543.508 = a base inteira** (ou seja, é ignorado), com **valor inventado** devolve a base
+   inteira também, e com os **20 dígitos** devolve **0**. É um campo de protocolo numérico
+   interno — usá-lo para consultar processo produz zero calado ou o acervo todo.
+   O caminho que funciona é a **busca livre** (`filtro.termoDeBusca`), e ⚠️ **ela aceita AS DUAS
+   formas**: `0001375-66.2014.8.11.0033` e `00013756620148110033` devolvem o mesmo documento
+   (`Id 389287396`). É o oposto do TJPE (só 20 dígitos) e do TJES (só máscara) — **aqui não é
+   preciso escolher**. Como é busca livre, pode arrastar documento que apenas **cita** o
+   número (lição do TJES): o `TJMTChecker` compara o `NumeroUnico` e descarta.
 4. As rotas de download (§9) **não foram exercitadas**; a chave composta é hipótese lida do
    bundle.
 5. A correção do TJDFT para a **paginação instável** (fixar nó por cookie) não foi tentada.
-6. `ordenarDataPor` não muda contagem — **não se decidiu** se é ignorado ou só ordena.
+6. ✅ **FECHADA em 10/08/2026 — `ordenarDataPor` SÓ ORDENA.** Com a **mesma janela** de data,
+   `Julgamento` e `Publicacao` devolvem contagem idêntica (1.032) e mudam apenas a ordem dos
+   itens. Não é ignorado (a ordem muda) e **não troca o campo que o filtro de data usa** —
+   que é sempre publicação (§5.0).
 7. O acervo de **Turma Recursal / Projudi** (§7) — não se procurou portal alternativo
    (`jurisprudencia-antigo.tjmt.jus.br` está no bundle e não foi aberto).
 8. `jurisprudencia-admin-api.tjmt.jus.br` (jurisprudência **administrativa**, endpoints
    `/api/consulta/{tipo}`, `/adminextrajudicial/...`) foi identificado e **não** foi mapeado —
    é um segundo módulo.
-9. Não se mediu se `thesaurus=true` muda a contagem.
+9. ✅ **FECHADA em 10/08/2026 — `thesaurus=true` INFLA 9,7×.** `usucapião` vai de **6.151**
+   para **59.606** (acórdão 3.852 → 27.103, monocrática 2.299 → 32.503). O checkbox
+   "Pesquisar sinônimos (Thesauro)" da tela, portanto, **não refina: dilui**. Default do
+   crawler é `false`, e ligar emite aviso — o número grande não é abundância de
+   jurisprudência sobre o termo pedido.
 10. `servicos.tjmt.jus.br` devolve 503 na raiz; **não** se testou subpath (a lição TJES é que
     503 na raiz não diz nada sobre o módulo).

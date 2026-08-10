@@ -328,7 +328,7 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 | 11 | **TJTO** | TO | e-Proc, Projudi — irmão do TJRS/TJSC/TRF4 (e-Proc) | pendente |
 | 12 | **TJAP** | AP | Tucujuris, PJe | pendente |
 | 13 | **TJRR** | RR | PJe, Projudi | pendente |
-| 14 | **TJMT** | MT | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
+| 14 | **TJMT** | MT | PJe, Projudi | ok 10/08 |
 | 15 | **TJPB** | PB | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
 | 16 | **TJRO** | RO | PJe, Projudi — **API mapeada + Navigator escrito**, falta o crawler | parcial 09/08 |
 
@@ -564,11 +564,34 @@ contrato multi-seleção do `dlRelatores` não foi capturado; não se sabe o que
 o `btPesquisarVoto`; e o **`jur tjse -n` por DataJud não foi implementado**,
 apesar de o caminho estar medido.
 
-📌 **O que o TJMT (08/08/2026) deixou pronto — `parcial`, leia
-[`human-codegen/TJMT/01-jurisprudencia/01-busca-e-filtros.txt`](human-codegen/TJMT/01-jurisprudencia/01-busca-e-filtros.txt).**
-**A API inteira está mapeada e destravada; só falta escrever o crawler.** Quem pegar o
-TJMT na volta da fila começa do §1 daquele arquivo com o contrato pronto. As lições
-valem para os 7 restantes do bloco:
+📌 **O que o TJMT ensinou — mapeado em 08/08/2026, crawler fechado em 10/08/2026,
+leia [`CLAUDE-TJMT.md`](CLAUDE-TJMT.md).** Foi o **primeiro alvo da regra da dívida
+de crawler**: o slot das 20:00 retomou o `parcial` mais antigo e o levou a 🟢 sem
+remapear nada. As lições novas do dia de fechamento vêm primeiro:
+
+- 🔴 **UM CAMPO DE DATA SÓ SE IDENTIFICA LENDO O PAR — e o mapeamento de 08/08 errou
+  o campo.** Ficou gravado que a janela filtrava **julgamento**, porque a conferência
+  olhou só a data de julgamento dos documentos devolvidos. Lendo o **par** (julgamento,
+  publicação), a janela de um dia `03/08/2026` devolve **8/8 com `pub=03/08/2026`** e
+  julgamentos espalhados por 28–30/07. **A janela é de PUBLICAÇÃO**, e não existe filtro
+  por julgamento nesta API — embora o campo exista e seja real no documento. É a lição
+  do TJES ("a tela pode mentir no rótulo") pelo avesso: aqui quem erra é a leitura de
+  uma data só. **Confira as DUAS datas do documento antes de nomear a flag.**
+- 🔴 **FECHAR UM `parcial` É BARATO E CORRIGE O QUE FICOU ERRADO.** As três pendências
+  que o crawler obrigou a resolver (consulta por número, `ordenarDataPor`, `thesaurus`)
+  caíram em minutos, e uma delas **desmentiu o mapeamento**. Mapeamento que não vira
+  crawler não é só trabalho parado: é trabalho **não verificado**.
+- 🔴 **O PARÂMETRO COM NOME DE NÚMERO DE PROCESSO PODE NÃO SER O NÚMERO DO PROCESSO.**
+  `filtro.numeroProtocolo` com o CNJ **mascarado** devolve **a base inteira** (ignorado),
+  com **valor inventado** devolve a base inteira também, e com **20 dígitos** devolve
+  **0**. Três respostas, nenhuma delas erro. O caminho certo era a **busca livre**, que
+  ⚠️ **aceita as duas formas** — oposto do TJPE (só dígitos) e do TJES (só máscara).
+  **O teste do valor inventado sozinho não decide: aqui ele e o valor válido dão a mesma
+  coisa.** Só comparar os três com o sem-filtro separa "ignorado" de "campo errado".
+- 🔴 **O CHECKBOX DE SINÔNIMOS DILUI, NÃO REFINA:** `thesaurus=true` infla **9,7×**
+  (6.151 → 59.606). É controle que a tela oferece como refinamento e que multiplica.
+
+As lições do mapeamento de 08/08 valem para os 4 restantes do bloco:
 
 - 🔴 **UM FILTRO DE DATA PODE ESTAR ERRADO SEM ESTAR MORTO — e o do TJMT lê
   `MM/DD/YYYY` enquanto o próprio portal envia `DD/MM/YYYY`.** Defeito novo no repo.
