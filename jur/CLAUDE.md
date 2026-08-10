@@ -80,6 +80,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjrn` | TJ do Rio Grande do Norte | RN | `CLAUDE-TJRN.md` | 🔴 **sem busca** — o domínio **inteiro** do TJRN responde 403 (Akamai); só `-n` (nº do processo, via DataJud) |
 | `tjrs` | TJ do Rio Grande do Sul | RS | `CLAUDE-TJRS.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjsc` | TJ de Santa Catarina | SC | `CLAUDE-TJSC.md` | 🟢 OK (browser — portal atrás de verificação de segurança) |
+| — | TJ de Sergipe | SE | `CLAUDE-TJSE.md` | 🔴 **sem comando** — captcha nos **dois** módulos (Turnstile no judicial, reCAPTCHA no administrativo); nem `-n` existe |
 | `tjsp` | TJ de São Paulo | SP | `CLAUDE-TJSP.md` | 🔴 sem acesso — não rodar |
 | `tst` | **Tribunal Superior do Trabalho** | Nacional (**trabalhista**) | `CLAUDE-FALCAO.md` | 🟢 OK (API direta, sem browser) |
 | `trt1`…`trt24` | TRTs 1ª a 24ª Região (**trabalhista**) | todo o país — ver tabela no doc | `CLAUDE-FALCAO.md` | 🟢 OK (API direta, sem browser) |
@@ -120,6 +121,18 @@ só o e-Proc). Os outros 16 tribunais (TJs restantes) não estão mapeados — v
   Ofereça `trf5` (o RN é da 5ª Região) para matéria federal, `trt21`/`tst` para
   trabalhista e `stf` para constitucional — **nenhum TJ vizinho cobre jurisprudência
   estadual do RN**. Leia `CLAUDE-TJRN.md`
+- "TJSE" / "Sergipe estadual" / "Aracaju" → ⚠️ **não existe comando**: os **dois**
+  módulos de jurisprudência do TJSE estão atrás de captcha — **Cloudflare Turnstile**
+  no judicial e **reCAPTCHA** no administrativo — e este repo não resolve captcha.
+  **Diga isso ao usuário em vez de entregar zero.** Aqui nem o `-n` existe (o
+  caminho por DataJud está medido mas não foi implementado), então **não há nada a
+  rodar**. ⚠️ **Não cite acórdão do TJSE de memória** — o `verificador` não confirma
+  julgado sergipano enquanto o captcha durar. Ofereça `trf5` (Sergipe é da 5ª
+  Região) para matéria federal, `trt20`/`tst` para trabalhista e `stf` para
+  constitucional. ⚠️ **Nenhum TJ vizinho cobre jurisprudência estadual de SE** — não
+  ofereça TJBA nem TJAL como substituto. 🟡 Pode ser que o portal funcione **no
+  navegador do usuário** (o Turnstile pune IP de datacenter): se ele confirmar que
+  carrega, o TJSE volta para a fila com o mapeamento pronto. Leia `CLAUDE-TJSE.md`
 - "Busque no TRF2" / "RJ ou ES" → `trf2` → leia `CLAUDE-TRF2.md`.
   Juizado Especial Federal / Turma Recursal no RJ ou ES → `trf2 --origem turmas`
   (Justiça Federal comum é o default `--origem trf2`). ⚠️ **neste portal o espaço entre

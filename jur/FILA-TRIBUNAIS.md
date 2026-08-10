@@ -324,7 +324,7 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 | 7 | **TJPE** | PE | PJe, Projudi | ok 07/08 |
 | 8 | **TJES** | ES | PJe, Projudi | ok 07/08 |
 | 9 | **TJPI** | PI | PJe, Projudi | ok 09/08 |
-| 10 | **TJSE** | SE | Próprio (1ª e 2ª) — sistema caseiro, pode ter portal próprio | pendente |
+| 10 | **TJSE** | SE | ⚠️ a pista estava errada: é **eproc**, não "Próprio" — e a jurisprudência é uma app JSF à parte | bloqueado 10/08 |
 | 11 | **TJTO** | TO | e-Proc, Projudi — irmão do TJRS/TJSC/TRF4 (e-Proc) | pendente |
 | 12 | **TJAP** | AP | Tucujuris, PJe | pendente |
 | 13 | **TJRR** | RR | PJe, Projudi | pendente |
@@ -507,6 +507,62 @@ preciso, mas fica como não medido); `assunto` aparece no card e nos Detalhes ma
 **não é filtrável**; a **queda de 2025** (37.713 contra 99.400 de 2024) não foi
 explicada; a defasagem dos meses recentes **não foi quantificada** contra o
 volume real de publicação; e `-r` (relator) foi provado por contagem **num nome só**.
+
+📌 **O que o TJSE (10/08/2026) ensinou — `bloqueado`, leia
+[`CLAUDE-TJSE.md`](CLAUDE-TJSE.md).** Quarto alvo do Bloco 3 e o primeiro
+**JSF/PrimeFaces** do repo. O formulário inteiro, os 4 combos e o contrato de POST
+estão mapeados; o que não roda é a busca, por **captcha**. As lições valem para os
+4 restantes:
+
+- 🔴 **`grep turnstile` NÃO É TESTE DE CAPTCHA — e por um minuto pareceu porta
+  aberta.** O módulo administrativo do TJSE **não contém a palavra `turnstile`**,
+  o que se lê como "sem captcha"; ele usa o widget `Captcha` do PrimeFaces, isto
+  é, **reCAPTCHA**, com sitekey própria, e responde **"Preencha o Captcha."**.
+  Dois módulos do mesmo tribunal, **dois fornecedores de captcha diferentes**.
+  **O que prova é mandar o POST e ler a mensagem**, não procurar a string no HTML.
+- 🔴 **UM WIDGET QUE RODA E DECIDE NÃO EMITIR TOKEN é um terceiro tipo de
+  bloqueio.** O Turnstile (sitekey `0x4AAAAAABm4wVSbc9uzC01E`) carrega, troca
+  requisições com o `challenge-platform` e cria o `cf-turnstile-response` — e
+  fica vazio em 60 s, em Chromium headless, em Chromium antidetecção **e em
+  Google Chrome real**. Não é script bloqueado (TJPB), não é negação na borda
+  sem challenge (TJRN), não é desafio interativo visível (STJ). **Registre qual
+  dos quatro é**, porque o contorno de cada um é diferente.
+- 🟡 **A hipótese do IP de datacenter voltou, e aqui ela custa o alvo inteiro.**
+  O Turnstile pune faixa de datacenter, e o ambiente roteia por uma. **Pode ser
+  que o portal funcione para o usuário e não para o agente** — 30 s no navegador
+  pessoal fecham a dúvida, e **se fechar a favor, o TJSE volta para a fila** com
+  o mapeamento todo pronto. Mesma pendência aberta do TJRN.
+- 🔴 **A PISTA DA FILA ESTAVA ERRADA EM DOIS PONTOS.** A coluna dizia "Próprio
+  (1ª e 2ª) — sistema caseiro": o TJSE roda **eproc** (o próprio
+  `tribunais.json` já registrava), e o portal de jurisprudência **não é o sistema
+  de tramitação** — é uma app JSF separada em `/Dgorg/`. **Confira a pista contra
+  a base antes de gastar tempo com ela.**
+- ✅ **O eproc NÃO tem jurisprudência pública, e isso se prova barato.** As ações
+  `jurisprudencia_pesquisar`, `consulta_jurisprudencia` e `principal_externo`
+  devolvem **todas a mesma tela de login** — e `acao=XXinventadaXX9z` devolve a
+  mesma coisa. **O teste do valor inventado (TJMT/TJAL) serve para rota, não só
+  para parâmetro.**
+- ✅ **O PORTAL PODE ESTAR DENTRO DE UM IFRAME.** A página do menu
+  (`/portal/consultas/jurisprudencia/judicial`) é invólucro Joomla; o sistema real
+  está no `src` de um `<iframe>`. Quem raspar a página do menu acha só o campo de
+  busca do site (`com_search`) e conclui que o tribunal não tem jurisprudência.
+- ✅ **JSF entrega os combos de graça, sem popup.** 112 relatores, 9 órgãos e
+  **1.084 classes processuais** enumerados num `combos.json` — a pendência que se
+  repetiu em quatro tribunais do Bloco 1 (combos-árvore do SAJ) **não existe em
+  JSF**. E o charset do módulo é **UTF-8**, enquanto o portal `www` é ISO-8859-1:
+  **não herde o charset do institucional.**
+- ✅ **Sem vhost curinga** (`/path-inventado-9z` → 404) e **DataJud corrente**
+  (3.311.224 processos, atualizado em 04/08/2026) — ⚠️ mas `sistema.nome` vem
+  como literal **"Inválido"** em 99,5% e não lista `eproc`, apesar de o tribunal
+  rodar eproc. **Campo inútil neste tribunal.**
+
+⚠️ **Pendências declaradas do TJSE:** a **Fase 3b não foi executada** (a busca
+nunca devolveu resultado) — não há anatomia de card, escada até o inteiro teor,
+paginação nem permalink; **nenhum operador foi testado**; os combos foram
+capturados só na competência `SG` (mudar para `TR` os repopula por AJAX); o
+contrato multi-seleção do `dlRelatores` não foi capturado; não se sabe o que faz
+o `btPesquisarVoto`; e o **`jur tjse -n` por DataJud não foi implementado**,
+apesar de o caminho estar medido.
 
 📌 **O que o TJMT (08/08/2026) deixou pronto — `parcial`, leia
 [`human-codegen/TJMT/01-jurisprudencia/01-busca-e-filtros.txt`](human-codegen/TJMT/01-jurisprudencia/01-busca-e-filtros.txt).**

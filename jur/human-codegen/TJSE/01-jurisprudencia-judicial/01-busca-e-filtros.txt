@@ -1,0 +1,381 @@
+# TJSE — Pesquisa de Jurisprudência Judicial
+
+## Identificação
+
+- **Tribunal:** Tribunal de Justiça de Sergipe (TJSE) — UF: SE
+- **Módulo:** Jurisprudência Judicial (o principal; há um segundo módulo, o
+  Administrativo, mapeado no §22 abaixo)
+- **URL da tela:** `https://www.tjse.jus.br/portal/consultas/jurisprudencia/judicial`
+  — mas essa página é só o invólucro Joomla do portal. **O sistema real está num
+  iframe:**
+  `https://www.tjse.jus.br/Dgorg/paginas/jurisprudencia/consultarJurisprudencia.tjse`
+- **Tecnologia:** JSF/PrimeFaces 8.0 sobre servidor Apache/Tomcat (`ntomsrv05`),
+  extensão de rota própria `.tjse`. Formulário renderizado no servidor, POST para
+  si mesmo, com `javax.faces.ViewState` e `jsessionid` obrigatórios.
+- **Charset:** UTF-8 no módulo de jurisprudência (`Content-Type:
+  text/html;charset=UTF-8`) — ⚠️ **diferente do portal institucional**, que é
+  ISO-8859-1. Não herde o charset do `www`.
+- **Data do mapeamento:** 10/08/2026
+- **Status:** 🔴 **BLOQUEADO — captcha na busca.** Todo o formulário, os combos e
+  o contrato de POST estão mapeados; o que não se consegue é **executar a busca**.
+
+---
+
+## §0 — Passo 0: procura por API pública (o que existe e o que NÃO existe)
+
+Medido em 10/08/2026, **antes** de abrir a tela.
+
+| Sonda | Resultado |
+|---|---|
+| `dadosabertos.tjse.jus.br` | **NXDOMAIN** |
+| `api.tjse.jus.br` | **NXDOMAIN** |
+| `juris.tjse.jus.br` | **NXDOMAIN** |
+| `esaj.tjse.jus.br` / `consultasaj.tjse.jus.br` | **NXDOMAIN** (o TJSE não é e-SAJ) |
+| `jurisprudencia.tjse.jus.br` | Resolve para **45.5.14.9, o mesmo IP do `www`**, e faz 301 para `www.jurisprudencia.tjse.jus.br`, que não serve nada. É redirect curinga, não host próprio |
+| `/swagger`, `/v3/api-docs`, `/api/`, `/rest/` | não há SPA nem backend JSON: a aplicação é JSF renderizada no servidor. **Não existe API interna a capturar** — o POST do formulário É o contrato |
+| **DataJud (CNJ)** | ✅ **`api_publica_tjse` RESPONDE** — ver §21 |
+
+✅ **Não há vhost curinga no `www`**: `https://www.tjse.jus.br/path-inventado-9z`
+devolve **404** (md5 diferente da home). A armadilha do TJAC/TJAL **não** se
+repete aqui — medida, não presumida.
+
+⚠️ **A pista da fila estava errada em dois pontos.** A `FILA-TRIBUNAIS.md` dizia
+"Próprio (1ª e 2ª) — sistema caseiro, pode ter portal próprio". Na verdade:
+(a) o `cobertura/tribunais.json` já registrava **eproc** para os dois graus, e
+(b) o portal de jurisprudência **não** é o sistema de tramitação — é uma aplicação
+JSF separada (`/Dgorg/`). Confirma a ressalva do processo: a família do sistema de
+tramitação é pista, não garantia sobre a jurisprudência.
+
+---
+
+# Ferramentas Comuns
+
+## 1. Busca principal (query)
+
+- **Campo:** `itTermos` (`<input id="itTermos" name="itTermos" type="text" size="60">`)
+- **Rótulo na tela:** "Termo — O termo pode ser uma palavra, frase ou combinação de
+  palavras + operadores"
+- 🔴 **NÃO FOI POSSÍVEL MEDIR NENHUMA CONTAGEM** — a busca não executa (§15).
+  Tudo abaixo sobre operadores, acento e totais está **não medido**, e o repo já
+  provou oito vezes que isso não se herda.
+
+## 2. Operadores
+
+🔴 **NÃO MEDIDOS.** A tela promete "palavra, frase ou combinação de palavras +
+operadores", mas **nenhum operador foi testado**, porque nenhuma busca rodou.
+
+⚠️ **Não presuma nada aqui.** Nove tribunais mapeados neste repo produziram
+**nove conjuntos diferentes** de operadores (TJBA ingleses × TJPE portugueses ×
+TJES igual ao TJBA × TJMT híbrido × TJPB coerente × TJPI portugueses acentuados ×
+TJRO ingleses…). Quem escrever o crawler do TJSE começa esta seção do zero.
+
+## 3. Número máximo de páginas / resultados
+
+🔴 **NÃO MEDIDO** — sem busca não há página de resultados. Não se sabe o tamanho
+de página, se o total é exato ou saturado, nem se a paginação é estável.
+
+## 4/5. Filtros de data — julgamento × publicação
+
+**Mapeado no formulário, não medido em contagem.**
+
+- `sorTipoPeriodo` — radio com **dois valores**:
+  - `DI` = **Disponibilização** (publicação)
+  - `JU` = **Julgamento** — ✅ **é o default** (`checked`)
+- `dtInicial_input` / `dtFinal_input` — campos de data livres (PrimeFaces Calendar)
+- `somPeriodoDefinido` — combo de atalho de período, **4 opções medidas**:
+  `3` (3 meses), `6` (6 meses), `12` (1 ano), `60` (5 anos)
+
+✅ **O TJSE tem as duas datas, e são campos distintos** — diferente do TJPI (só
+publicação), do TJRO (só julgamento) e do TJES (só juntada). Qual das duas é
+confiável **não foi medido** (a armadilha da data-sentinela do TJAM continua aberta).
+
+## 6/7. Filtro de instância e competência (Juizado × Justiça Comum)
+
+✅ **A desambiguação EXISTE e é um radio de primeira classe** — achado importante,
+porque no TJMT e no TJPI ela simplesmente não existia.
+
+- `sorCompetencia` — radio com **dois valores**:
+  - `SG` = **Segundo Grau** (Justiça Comum) — ✅ default (`checked`)
+  - `TR` = **Turma Recursal** (Juizado Especial)
+
+⚠️ **É radio, não checkbox: são mutuamente exclusivos.** Não há opção "ambos" na
+tela — o crawler que quiser o acervo inteiro precisa de duas requisições.
+
+⚠️ **O `sorCompetencia` dispara AJAX ao mudar** (`PrimeFaces.ab` com
+`u:"msgs fsRelatores fsOrgaosJulgadores fsClassesProcessuais..."`): trocar a
+competência **repopula os combos de relator, órgão e classe**. Ou seja, **as listas
+de relator e órgão são diferentes em SG e TR** — as enumeradas em `combos.json`
+são as do default `SG`. As de `TR` **não foram capturadas**.
+
+🔴 **A proporção Juizado × Justiça Comum não foi medida** (sem busca). O DataJud
+dá uma pista de ordem de grandeza no acervo processual (§21): G2 = 350.581 contra
+TR = 333.011 — quase empatados. Mas **isso é processo, não julgado indexado**;
+não vale como medição de jurisprudência.
+
+## 8. Filtro de área (Cível × Criminal)
+
+**Não há filtro de área próprio.** O recorte cível/criminal sai do **órgão
+julgador** (§9): `CÂMARA CRIMINAL` de um lado, `1ª`/`2ª CÂMARA CÍVEL` e
+`SEÇÃO ESPECIALIZADA CÍVEL` do outro.
+
+## 9. Filtro de órgão / matéria
+
+- **Campo:** `somOrgaoJulgador` (PrimeFaces SelectOneMenu; o `<select>` real é
+  `somOrgaoJulgador_input`)
+- ✅ **Enumerado no browser: 10 opções** (9 órgãos + "Selecione..."), salvas em
+  `combos.json`. O valor é **id numérico**:
+
+| id | Órgão |
+|---|---|
+| 7 | 1ª CÂMARA CÍVEL |
+| 10 | **1ª TURMA RECURSAL** |
+| 8 | 2ª CÂMARA CÍVEL |
+| 11 | **2ª TURMA RECURSAL** |
+| 3 | CÂMARA CRIMINAL |
+| 4 | CONSELHO DA MAGISTRATURA |
+| 6 | SEÇÃO ESPECIALIZADA CÍVEL |
+| 1 | TRIBUNAL PLENO |
+| 12 | TURMA DE UNIFORMIZAÇÃO |
+
+⚠️ **As duas Turmas Recursais aparecem nesta lista mesmo com `sorCompetencia=SG`
+selecionado** — então o combo de órgão e o radio de competência podem se
+contradizer. Qual vence **não foi medido**. É exatamente o tipo de par que o TJRO
+mostrou entregar o acervo oposto ao prometido: **quem for fechar este crawler
+precisa conferir QUE documentos voltam, não só que a contagem muda.**
+
+✅ **`TURMA DE UNIFORMIZAÇÃO` é órgão pesquisável** — incomum no repo, vale
+lembrar quando o pedido for sobre uniformização de jurisprudência estadual.
+
+## 10. Unidade específica (serventia / comarca)
+
+**Não existe** filtro de comarca/vara no formulário. Coerente com uma base de
+2º grau + Turmas Recursais (sem 1º grau) — mas **isso não foi confirmado**, porque
+não se viu nenhum resultado.
+
+## 11. Magistrada ou magistrado (relator)
+
+- **Campo:** `somRelator` (`<select id="somRelator_input">`), com campo de filtro
+  digitável (`somRelator_filter`)
+- ✅ **Enumerado no browser: 113 opções** (112 magistrados + "Selecione..."),
+  salvas em `combos.json`. Valor é **id numérico**; o texto traz o cargo por
+  extenso (`Desembargadora Ana Bernadete Leite de Carvalho Andrade`,
+  `Magistrado Aldo de Albuquerque Mello`).
+- ⚠️ **Há um segundo controle, `dlRelatores`** ("Relatores selecionados"),
+  atualizado por AJAX ao escolher no combo: o filtro é **multi-seleção acumulada**,
+  não valor único. O contrato exato do POST multi-relator **não foi capturado** —
+  a lista mostrava "Nenhum registro encontrado" o tempo todo.
+- ⚠️ O rótulo inclui **"Magistrado"** e não só "Desembargador": há juízes de
+  Turma Recursal na lista. Some à lição do TJPI (um campo "Órgão Julgador" que
+  continha uma pessoa) — aqui é o inverso, e está correto.
+
+## 12. Tipo de ato
+
+- **Campo:** `sorTipoDocumento` — radio, **dois valores**:
+  - `AC` = **Acórdão** — ✅ default (`checked`)
+  - `DM` = **Decisão Monocrática**
+- ⚠️ Radio, então também mutuamente exclusivo. **Não há "ambos".**
+- ⚠️ **Não medido** se a monocrática vem sem ementa (padrão TJPE/TJCE/TJMT/TJCE).
+
+✅ **Há um SEGUNDO botão de busca: `btPesquisarVoto`** (além de `btPesquisar`).
+Pelo nome, pesquisa **no texto do voto** em vez de na ementa — seria o equivalente
+ao `--escopo inteiroTeor` do TJMG. **Não foi possível testar**; fica registrado
+como o achado mais promissor para quem retomar.
+
+## 13. Classe processual
+
+- **Campo:** `somClassesProcessuais` (`<select id="somClassesProcessuais_input">`),
+  com filtro digitável
+- ✅ **Enumerado no browser: 1.085 opções** — salvas em `combos.json`. Valor é
+  **id numérico** (`875` = "Abandono de Posto", `1215` = "Abertura, Registro e
+  Cumprimento de Testamento"…).
+- ✅ **Isto fecha, para o TJSE, a pendência que se repetiu em quatro tribunais do
+  Bloco 1** (TJAC/TJAM/TJAL: "combos-árvore não enumerados"). Aqui são `<select>`
+  de verdade, não popup do SAJ, e couberam num JSON.
+- ⚠️ **Não provado por contagem** — como tudo o mais.
+
+## 14. Número do processo
+
+✅ **Há DOIS campos distintos**, e a diferença importa para o `Checker`:
+
+- `nrProc` — número **próprio do TJSE** (numeração antiga do tribunal)
+- `nrUnico` — número **único do CNJ**
+
+Os dois são `ui-inputmask` (PrimeFaces), então **esperam máscara**, não dígitos
+crus. ⚠️ Mas o repo já mediu o oposto do que a máscara da tela promete em dois
+tribunais (TJRO: placeholder com máscara, backend quer 20 dígitos; TJPE: idem).
+**Não confie na máscara sem medir.**
+
+🔴 **Também não foi possível testar** — a consulta por número passa pelo mesmo
+`btPesquisar`, logo pelo mesmo captcha (§15).
+
+---
+
+# Especificidades
+
+## 15. 🔴 BLOQUEIOS — o motivo do `bloqueado`
+
+### 15.1 Judicial: Cloudflare Turnstile
+
+- **Widget:** `<div class="cf-turnstile" id="turnstile-div">`, com
+  `<input id="turnstile-hidden" name="turnstile-hidden" type="hidden">`
+- **Script:** `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback`
+- **Sitekey:** `0x4AAAAAABm4wVSbc9uzC01E`
+- **Modo:** render explícito (`turnstile.render`), com callback que grava o token
+  em `turnstile-hidden`
+
+**O servidor valida de verdade.** POST montado à mão, com `jsessionid` e
+`ViewState` corretos e `turnstile-hidden` vazio → **HTTP 200** com a mensagem
+**"Captcha inválido"** e nenhum resultado. Não é decoração de tela.
+
+**Medições da tentativa de obter o token automaticamente:**
+
+| Tentativa | Resultado |
+|---|---|
+| Chromium headless (Playwright), UA de Chrome real, 40 s | token **vazio** |
+| Chromium headless + `--disable-blink-features=AutomationControlled` + `navigator.webdriver` mascarado, 60 s | token **vazio** |
+| **Google Chrome real** (`channel:'chrome'`), headless, 45 s | token **vazio** |
+| Chrome real **headed** | ❌ **não foi possível testar — o ambiente não tem `DISPLAY` nem `Xvfb`** |
+
+⚠️ **O widget ESTÁ funcionando, não é script bloqueado.** Medido: o
+`challenges.cloudflare.com` responde 200, o `challenge-platform` troca requisições
+(`/rch/`, `/fo/`, `/ci/`, `/i/`), e o Turnstile cria o `<input
+name="cf-turnstile-response">` dentro do container. Ele roda e **decide não emitir
+token**. Isso é diferente do TJRN (Akamai negando na borda, sem challenge nenhum)
+e diferente do STJ (desafio interativo visível).
+
+🔴 **HIPÓTESE ABERTA, e ela muda o veredito** — a mesma do TJRN, e aqui vale ainda
+mais: o Turnstile pontua **IP de datacenter** com severidade. Este ambiente roteia
+por `fwmark` com IP de datacenter (foi o que já explicou o 403 do TJRN). É
+plausível que **o portal funcione para o usuário no navegador dele e não para o
+agente**. **Custa 30 segundos fechar:** abrir
+`https://www.tjse.jus.br/portal/consultas/jurisprudencia/judicial` no navegador
+pessoal e ver se o Turnstile marca o "check" sozinho. **Se marcar, o TJSE volta
+para a fila** — o mapeamento inteiro deste arquivo já está pronto e só falta
+executar a busca com um navegador real e display.
+
+### 15.2 Administrativo: reCAPTCHA (captcha diferente, mesmo veredito)
+
+O módulo **Jurisprudência Administrativa — Processos Eletrônicos**
+(`/Dgorg/paginas/jurisprudenciaAdm/consultarJurisprudenciaAdm.tjse`) **não contém
+a palavra `turnstile`** — o que, por um minuto, pareceu uma porta aberta.
+
+🔴 **Não é.** Ele usa o widget `Captcha` do PrimeFaces, isto é, **Google
+reCAPTCHA**, com **sitekey própria**: `6LeGAoIrAAAAAA_oH_DZqWbkPvzukrfsZX-OXwYT`.
+POST montado à mão → **HTTP 200** com **"Preencha o Captcha."**.
+
+⚠️ **Lição para os próximos alvos: `grep turnstile` não é teste de captcha.** Dois
+módulos do mesmo tribunal, dois fornecedores de captcha diferentes. O que prova é
+**mandar o POST e ler a mensagem** — foi o que separou "sem Turnstile" de "sem
+captcha", que não são a mesma coisa.
+
+### 15.3 A porta que não existe: eproc
+
+O TJSE roda **eproc** no 1º e no 2º grau (`eproc1g`/`eproc2g.tjse.jus.br`), e o
+eproc é a família do TJRS/TJSC/TJRJ/TRF4 — valia sondar.
+
+🔴 **Não há módulo público de jurisprudência no eproc do TJSE.** Medido: as ações
+`jurisprudencia_pesquisar`, `consulta_jurisprudencia` e `principal_externo` do
+`externo_controlador.php` **devolvem todas HTTP 200 com a mesma tela de login**
+(1.210 caracteres de texto útil, idênticos). ✅ **Provado com o teste da ação
+inventada** (lição TJAL/TJBA): `acao=XXinventadaXX9z` devolve **a mesma tela de
+login**. É fallback de roteador, não módulo existente.
+
+## 16. Forma de acesso (para o crawler futuro)
+
+**`http` puro seria suficiente** — não há SPA, não há API JSON, o POST do
+formulário é o contrato inteiro e o servidor renderiza HTML. **Mas o captcha
+obriga `browser`**, e ainda assim só com display real. Enquanto o Turnstile
+estiver assim, a forma de acesso viável é **nenhuma**.
+
+## 17. Sessão e estado
+
+Mapeado e reproduzido fora do browser (a parte que funciona):
+
+1. `GET` na página → captura `Set-Cookie` (`JSESSIONID`, `cookiesession1`)
+2. O `action` do form **carrega o `;jsessionid=<ID>` embutido na URL** — o Tomcat
+   aceita cookie **e** path param
+3. Extrair `javax.faces.ViewState` (`value="<num>:<num>"`) e reenviá-lo no POST
+4. POST `application/x-www-form-urlencoded` com `frmPrincipal=frmPrincipal`,
+   os campos, `btPesquisar=` e o ViewState
+
+⚠️ **O `ViewState` do JSF é de uso único por árvore** — paginar provavelmente
+exige o ViewState devolvido na resposta anterior, não o original. **Não medido.**
+
+---
+
+# Acessando os resultados
+
+## 18–20b. Tela de resultados, escada até o documento, paginação, permalink
+
+🔴 **NADA DISSO FOI MAPEADO, e é a metade que falta.**
+
+**A Fase 3b (skill `browser-post-search`) NÃO FOI EXECUTADA**, porque ela exige que
+a busca devolva resultados e a busca não devolve. Portanto **não há**: anatomia de
+card, medição de ementa × trecho, escada Ementa → Inteiro teor → PDF, contrato XHR
+do documento, formato do inteiro teor, limite e estabilidade de paginação, total
+exato × saturado, nem permalink confirmado.
+
+Quem retomar o TJSE **começa por aí**, não pelo formulário — o formulário está
+pronto neste arquivo.
+
+## 21. ✅ DataJud (CNJ) — o que sobrou de aproveitável
+
+Medido em 10/08/2026, endpoint `api_publica_tjse`:
+
+- **HTTP 200**, chave pública padrão do repo funciona
+- **3.311.224 processos** (`track_total_hits`, contagem exata)
+- **Distribuição por grau:** `G1` 1.951.979 · `JE` 675.653 · `G2` 350.581 ·
+  `TR` 333.011
+- ✅ **Base corrente:** documento mais recente atualizado em **04/08/2026**
+  (processo `00860793520258250001`), 6 dias antes do mapeamento
+- **Sistema:** `Inválido` 3.295.945 · `Projudi` 15.279 — ⚠️ o campo `sistema.nome`
+  do TJSE vem quase todo como literal **"Inválido"**; não serve para distinguir
+  acervo. Curiosidade: aparece `Projudi`, e **nenhum `eproc`**, apesar de o TJSE
+  rodar eproc. **O campo é lixo aqui** — não o use.
+
+⚠️ **O DataJud confirma processo, NUNCA julgado**: não tem ementa nem inteiro
+teor. Serve ao `Checker` (`-n`), no molde já usado em `tjma` e `tjrn`, e a nada
+mais.
+
+---
+
+# Testes exploratórios obrigatórios — o que rodou e o que não rodou
+
+| # | Teste | Resultado |
+|---|---|---|
+| 1 | Busca simples sem filtro | 🔴 **"Captcha inválido"** — não roda |
+| 2 | Juizado × Justiça Comum | 🔴 filtro **identificado** (`sorCompetencia` SG/TR), contagem **não medida** |
+| 3 | Cível × Criminal | ✅ **não há filtro próprio**; sai do órgão julgador |
+| 4 | Órgão / matéria | ✅ **9 órgãos enumerados** com id |
+| 5 | Unidade (comarca/vara) | ✅ **não existe** no formulário |
+| 6 | Magistrado | ✅ **112 relatores enumerados** com id |
+| 7 | Tipo de ato | ✅ `AC`/`DM` identificados; comportamento **não medido** |
+| 8 | Número do processo | 🔴 dois campos (`nrProc`, `nrUnico`) identificados; **não testados** |
+| 9 | Datas + operadores | 🔴 campos identificados (`DI`/`JU`, 4 períodos); **nenhum operador testado** |
+
+---
+
+# Pendências e defeitos de mapeamento
+
+🔴 **O bloqueio é o defeito principal** — e é do site, não do mapeamento.
+
+**O que está pronto e não precisa ser refeito:**
+- contrato completo do POST (§17) e do formulário (`01-formulario.html`)
+- os 4 combos enumerados (`combos.json`): 112 relatores, 9 órgãos, 1.084 classes,
+  4 períodos
+- todos os nomes de campo e valores de radio
+- o DataJud medido (§21)
+- os três becos já fechados: eproc (login), módulo administrativo (reCAPTCHA),
+  hosts de API (NXDOMAIN)
+
+**O que falta, em ordem:**
+1. **Fechar a hipótese do IP de datacenter** (§15.1) — 30 s do usuário, e é o que
+   decide se o TJSE é `bloqueado` ou volta para a fila
+2. Toda a Fase 3b (§18–20b) — nada mapeado
+3. Todos os operadores (§2) — nada medido
+4. Combos de relator/órgão **na competência `TR`** (repopulados por AJAX; só os de
+   `SG` foram capturados)
+5. Contrato multi-seleção do `dlRelatores` (§11)
+6. O que faz o `btPesquisarVoto` (§12) — o achado mais promissor
+7. Se o `ViewState` precisa ser renovado a cada página (§17)
+8. Qual das duas datas (`DI`/`JU`) é confiável — a armadilha do TJAM está aberta

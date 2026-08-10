@@ -1840,7 +1840,7 @@
         "crawler": null,
         "extra": null,
         "codegen": "nao",
-        "screenshots": 0,
+        "screenshots": 5,
         "tests": false,
         "skills": [],
         "working": false
@@ -2077,16 +2077,17 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
+        "url": "https://www.tjse.jus.br/Dgorg/paginas/jurisprudencia/consultarJurisprudencia.tjse",
         "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "acesso": "browser",
+        "status": "sem-acesso",
+        "nota": "CAPTCHA NOS DOIS MODULOS DE JURISPRUDENCIA, medido 10/08/2026 — nao ha comando jur tjse. Judicial: Cloudflare Turnstile (sitekey 0x4AAAAAABm4wVSbc9uzC01E) e o servidor VALIDA de verdade — POST montado a mao com jsessionid e javax.faces.ViewState corretos e token vazio devolve HTTP 200 com \"Captcha invalido\". Administrativo: widget Captcha do PrimeFaces, isto e reCAPTCHA, sitekey propria 6LeGAoIrAAAAAA_oH_DZqWbkPvzukrfsZX-OXwYT, devolve \"Preencha o Captcha.\" — LICAO: grep turnstile NAO E TESTE DE CAPTCHA, dois modulos do mesmo tribunal usam fornecedores diferentes; o que prova e mandar o POST e ler a mensagem. TERCEIRO TIPO DE BLOQUEIO DO REPO: o widget RODA e decide nao emitir token (challenge-platform troca requisicoes, cria o cf-turnstile-response, e fica vazio em 60s) — diferente do TJPB (chunk 403 por cota), do TJRN (Akamai negando na borda sem challenge) e do STJ (desafio interativo visivel). Tentativas: Chromium headless 40s, Chromium antideteccao (webdriver mascarado, disable-blink-features) 60s e Google Chrome real channel:chrome headless 45s — todas token vazio; headed NAO TESTAVEL, o ambiente nao tem DISPLAY nem Xvfb. HIPOTESE ABERTA que muda o veredito: o Turnstile pune faixa de datacenter e o ambiente roteia por uma, entao o portal pode funcionar para o usuario e nao para o agente — 30s no navegador pessoal fecham, e se fechar a favor o TJSE volta para a fila com o mapeamento pronto. A PISTA DA FILA ESTAVA ERRADA DUAS VEZES: dizia \"Proprio (1a e 2a) sistema caseiro\", mas o TJSE roda eproc (o proprio tribunais.json ja registrava) e a jurisprudencia nao e o sistema de tramitacao — e uma app JSF/PrimeFaces 8.0 separada em /Dgorg/, com rota de extensao propria .tjse, dentro de um IFRAME na pagina do menu (quem raspar /portal/consultas/jurisprudencia/judicial acha so o com_search do Joomla). Charset UTF-8 no modulo, ISO-8859-1 no portal www — nao herde. O EPROC NAO TEM JURISPRUDENCIA PUBLICA: as acoes jurisprudencia_pesquisar, consulta_jurisprudencia e principal_externo do externo_controlador.php devolvem todas a MESMA tela de login (1.210 chars de texto util), provado com acao=XXinventadaXX9z que devolve a mesma coisa — o teste do valor inventado serve para ROTA, nao so para parametro. PASSO 0 (procurado, nao presumido): dadosabertos/api/juris/esaj/consultasaj.tjse.jus.br = NXDOMAIN; jurisprudencia.tjse.jus.br resolve no mesmo IP do www (45.5.14.9) e faz 301 para host que nao serve nada; sem swagger/openapi/SPA — e JSF server-side, o POST do form E o contrato. SEM VHOST CURINGA: /path-inventado-9z no www da 404 de verdade. O QUE ESTA MAPEADO E NAO PRECISA SER REFEITO (human-codegen/TJSE/01-jurisprudencia-judicial/): formulario inteiro, contrato do POST (GET -> JSESSIONID + ;jsessionid= no action + javax.faces.ViewState -> POST urlencoded), e combos.json com 112 relatores, 9 orgaos julgadores e 1.084 classes processuais — JSF entrega os combos de graca, sem os popups do SAJ que ficaram pendentes em quatro tribunais do Bloco 1. Campos: itTermos (termo), nrProc (n proprio) e nrUnico (CNJ), sorTipoDocumento AC acordao/DM monocratica, sorCompetencia SG segundo grau/TR Turma Recursal (a desambiguacao Juizado x Justica Comum EXISTE aqui, ao contrario de TJMT e TJPI, mas e RADIO nao checkbox — o acervo inteiro exige duas requisicoes), sorTipoPeriodo DI disponibilizacao/JU julgamento (ha as DUAS datas, melhor que TJPI/TJRO/TJES), somPeriodoDefinido 3/6/12/60 meses, e os combos por id numerico. Trocar sorCompetencia REPOPULA os combos por AJAX — os enumerados sao os de SG, os de TR nao foram capturados. Ha um segundo botao btPesquisarVoto (busca no texto do voto?), nao testado, o achado mais promissor para quem retomar. O QUE NAO ESTA MAPEADO: a Fase 3b nao foi executada (a busca nunca devolveu resultado) — sem anatomia de card, escada ate o inteiro teor, formato, paginacao, total exato x saturado nem permalink; e NENHUM operador foi testado, nem acento, nem contagem de filtro nenhum. DataJud/CNJ (api_publica_tjse) RESPONDE: 3.311.224 processos (G1 1.951.979, JE 675.653, G2 350.581, TR 333.011), base corrente (mais recente atualizado em 04/08/2026), SEM ementa e SEM inteiro teor — logo confirmaria PROCESSO, nunca JULGADO; ⚠️ sistema.nome e lixo neste tribunal (3.295.945 vem como literal \"Invalido\" e aparece Projudi mas nenhum eproc, apesar de o TJSE rodar eproc). O `jur tjse -n` por DataJud, no molde de tjma/tjrn, NAO foi implementado — o timebox de 90 min acabou, mas o caminho esta medido. Alternativas honestas: trf5 (Sergipe e da 5a Regiao), trt20/tst para trabalhista, stf para constitucional — nenhum TJ vizinho cobre jurisprudencia estadual de SE."
       },
       "repo": {
         "crawler": null,
-        "extra": null,
-        "codegen": "nao",
-        "screenshots": 0,
+        "extra": "Sem Crawler/Navigator/Checker: a tela CARREGA e o formulário inteiro está mapeado, mas a busca não executa (captcha). human-codegen/TJSE/01-jurisprudencia-judicial/ grava o formulário, os 2 prints, o contrato do POST e combos.json (112 relatores, 9 órgãos, 1.084 classes). Falta a Fase 3b inteira e todos os operadores",
+        "codegen": "parcial",
+        "screenshots": 2,
         "tests": false,
         "skills": [],
         "working": false
