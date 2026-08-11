@@ -1,0 +1,31 @@
+# TJAP — 03 O captcha da busca (Cloudflare Turnstile)
+
+Seção dedicada ao portão que bloqueia este módulo. O detalhe completo está em
+01-busca-e-filtros.txt; aqui ficam os artefatos.
+
+Prints:
+  03.01-captcha-apos-pesquisar.png — a tela depois de clicar Pesquisar. A mensagem
+    "A verificação de segurança falhou" aparece no rodapé do formulário. NENHUM widget
+    de captcha é exibido ao usuário: não há nada para resolver na tela.
+  03.02-turnstile-60s.png — a mesma tela após 60 s. Continua sem widget.
+
+Artefatos:
+  03-captcha-componente.html — captcha.html buscado por ctx.request (Playwright).
+    ⚠️ Veio a página de desafio do Cloudflare, NÃO o componente: ctx.request não executa
+    JS e por isso não passa a borda. Guardado como prova dessa distinção.
+  03-captcha-fluxo.json — o mesmo captcha.html buscado por fetch() de DENTRO da página:
+    aí sim veio o componente real (HTTP 200).
+  03-captcha-js.json — js/captcha.js, componentes/captcha/captcha.js e
+    servicos/publicoService.js na íntegra. É onde estão as duas sitekeys e o contrato
+    de "passe".
+  03-ds.js — o transporte da app. Medido: NÃO contém nenhuma menção a captcha, o que
+    confirma que o token viaja no CORPO da requisição, não em header.
+
+Fornecedor: Cloudflare Turnstile, sitekey 0x4AAAAAABxUlvVnxyw9z7Xj.
+Segundo fornecedor carregado e não usado pela busca: reCAPTCHA,
+sitekey 6LdAcykTAAAAACD4MfZAyI8C_VAHA-DOceOBH8T7.
+
+⚠️ Os prints 04.* que existiam aqui (sumulas/sentencas) foram REMOVIDOS: eram capturas
+de 404 de URLs que eu inventei. Os módulos reais são
+www.tjap.jus.br/portal/consultas/sumulas.html e bancosentencas.tjap.jus.br — ambos
+saíram do HTML da página, e o segundo está mapeado em ../02-banco-sentencas/.

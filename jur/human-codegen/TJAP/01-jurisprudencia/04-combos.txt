@@ -1,0 +1,24 @@
+# TJAP — 04 Combos do formulário de jurisprudência
+
+Enumerados no browser (DOM vivo, depois do AJAX) — arquivo combos-select.json.
+
+  classe      31 opções
+  classe     113 opções   (são DOIS selects de classe na página; a diferença entre eles
+                           NÃO foi investigada — pendência)
+  origem      15 opções
+  relator    107 opções   (nomes por extenso: "Desembargador ADÃO CARVALHO" etc.;
+                           o valor enviado é o próprio nome, campo mat_relat)
+  secretaria  39 opções
+  votacao      3 opções
+
+Fonte alternativa dos mesmos dados, sem tela:
+  GET /api/publico/carregar-filtros-combo-jurisprudencia
+  (responde 200 e devolve os combos inteiros SEM exigir captcha — o captcha protege a
+  busca, não a carga dos filtros). Resposta guardada em 01-xhr-carga.json.
+
+Radio "Órgão Julgador" (não é select, é radio name="orgao"):
+  Todos (valor "0") | Tribunal | Turma recursal
+  <- é AQUI que mora a desambiguação Juizado × Justiça Comum neste tribunal.
+  ⚠️ NÃO provado por contagem: a busca não roda.
+
+Combo "Ano": 30 anos, gerado em JS como (ano atual - índice), 1997..2026.

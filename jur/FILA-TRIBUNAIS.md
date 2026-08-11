@@ -326,11 +326,11 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 | 9 | **TJPI** | PI | PJe, Projudi | ok 09/08 |
 | 10 | **TJSE** | SE | ⚠️ a pista estava errada: é **eproc**, não "Próprio" — e a jurisprudência é uma app JSF à parte | bloqueado 10/08 |
 | 11 | **TJTO** | TO | ⚠️ a pista de "irmão do e-Proc" **não serviu**: a jurisprudência é portal próprio PHP+Solr | ok 11/08 |
-| 12 | **TJAP** | AP | Tucujuris, PJe | pendente |
-| 13 | **TJRR** | RR | PJe, Projudi | pendente |
-| 14 | **TJMT** | MT | PJe, Projudi | ok 10/08 |
-| 15 | **TJPB** | PB | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
-| 16 | **TJRO** | RO | PJe, Projudi — **API mapeada + Navigator escrito**, falta o crawler | parcial 09/08 |
+| 12 | **TJRR** | RR | PJe, Projudi | pendente |
+| 13 | **TJMT** | MT | PJe, Projudi | ok 10/08 |
+| 14 | **TJPB** | PB | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
+| 15 | **TJRO** | RO | PJe, Projudi — **API mapeada + Navigator escrito**, falta o crawler | parcial 09/08 |
+| 16 | **TJAP** | AP | ⚠️ a jurisprudência mora **dentro** do Tucujuris e está atrás de **Turnstile**; a porta aberta é o **Banco de Sentenças** (host à parte, 1º grau, sem captcha) — falta o crawler | parcial 11/08 |
 
 📌 **O que o TJPE (feito em 07/08/2026) ensinou — leia
 [`CLAUDE-TJPE.md`](CLAUDE-TJPE.md).** Primeiro alvo do Bloco 3 e o tribunal mais
@@ -843,6 +843,76 @@ payload capturados** — e chave errada zera em silêncio; os combos de **órgã
 **ordenação** não foram enumerados; os **3 documentos** com `tipo` fora dos oito da tela não
 foram identificados; e os **módulos irmãos** (súmulas, caderno de ementas, repositório de
 jurisprudência, NUGEPNAC), todos linkados no mapa do site oficial, não foram tocados.
+
+📌 **O que o TJAP (11/08/2026) ensinou — `parcial`, leia
+[`human-codegen/TJAP/`](human-codegen/TJAP/INDEX.md).** Sexto alvo do Bloco 3 e o
+primeiro tribunal do repo em que **a jurisprudência mora dentro do sistema de
+tramitação**. O módulo principal está murado por Turnstile; a porta que abriu foi
+outra. As lições valem para os 3 restantes:
+
+- 🔴 **UM TRIBUNAL PODE TER UM MÓDULO MURADO E OUTRO ESCANCARADO — e o aberto não
+  aparece no DNS.** `tucujuris.tjap.jus.br` (acórdãos) exige Turnstile;
+  `bancosentencas.tjap.jus.br` (1º grau) responde **200 a `curl` puro**, sem browser,
+  sem UA especial, sem captcha em lugar nenhum. O segundo host **não saiu da varredura
+  de DNS** — eu não o chutei; saiu do HTML da página do primeiro. É a lição do TJBA
+  ("o endpoint estava no bundle") aplicada a **host**, não a rota. **Leia o HTML do
+  módulo bloqueado antes de marcar o tribunal como bloqueado.**
+- 🔴 **DESAFIO DE BORDA ≠ CAPTCHA DE APLICAÇÃO — e o TJAP tem os DOIS, em camadas.**
+  A borda do `tucujuris` é Cloudflare com desafio **automático**: 403 para `curl`, mas
+  **HTTP 200 na 1ª tentativa** no Playwright headless com UA de Chrome real, sem espera
+  e sem interação (≠ o desafio interativo do STJ). Passada a borda, a **busca** exige
+  Turnstile no corpo do POST. **Vencer a borda não é vencer o portão** — meça os dois
+  em separado, como TJAC mandou medir busca × download.
+- 🔴 **403 UNIFORME TORNA `curl` CEGO PARA DESCOBERTA DE ROTA.** No `tucujuris` até
+  `/path-inventado-9z` dá 403 — não dá para distinguir rota que existe de rota que não
+  existe. ✅ **Mas a API por dentro erra com honestidade** (Symfony):
+  `"No route found for POST /api/publico/consultar-sumula"` e
+  `"Method Not Allowed (Allow: GET)"`. **Enumere rota de dentro da página, não da borda.**
+- ⚠️ **`ctx.request` do Playwright NÃO passa desafio de borda** (não executa JS): buscar
+  um recurso do próprio host por `ctx.request` devolve a página de desafio. De dentro da
+  página, `fetch()` funciona. Foi a diferença entre ler e não ler o componente de captcha.
+- ⚠️ **`networkidle` NUNCA dispara aqui** — o beacon RUM do Cloudflare mantém a rede
+  viva para sempre. A receita da Fase 3 precisa de espera explícita neste host.
+- 🔴 **O TOKEN DO CAPTCHA PODE VIAJAR NO CORPO, NÃO EM HEADER.** `filtro.captcha` é
+  campo do JSON do POST, alimentado pelo callback do Turnstile — e `ds.js`, o transporte,
+  **não menciona captcha em lugar nenhum**. Procurar header teria dado "não achei".
+  Há ainda um conceito de **"passe"** (`requerido: !passe`): se o servidor entregasse
+  passe, não haveria captcha — mas `buscar-passe-captcha` devolve `dados: null`.
+- ⚠️ **Dois fornecedores de captcha carregados na mesma página**: Turnstile
+  (`0x4AAAAAABxUlvVnxyw9z7Xj`, o que a busca usa) e reCAPTCHA
+  (`6LdAcykTAAAAACD4MfZAyI8C_VAHA-DOceOBH8T7`, caminho legado). `window.grecaptcha` **e**
+  `window.turnstile` são ambos `object`. Achar um não diz qual está em uso.
+- 🔴 **ACENTO OBRIGATÓRIO NO BANCO DE SENTENÇAS — e quase gravei a base como minúscula.**
+  `usucapiao` = **1** resultado; `usucapião` = **2.001**. Padrão TJMS/TJBA, oposto de
+  TJAC/TJAM/TJAL/TJPE/TJPI/TJTO. E o total **satura em 10.000** (`dano moral` e `a` dão
+  o mesmo número). O "1 resultado" é a forma mais convincente de zero silencioso que
+  apareceu até agora: não é zero, então não levanta suspeita.
+- ✅ **Seria o 5º tribunal do repo com 1º GRAU** (depois de TJES, TJPB, TJRO, TJTO). A
+  pergunta que o TJES mandou fazer rendeu pela **quinta vez seguida** — continue fazendo.
+- ⚠️ **Família nova: Laravel + Livewire + Alpine.** Não é SPA-com-REST, JSF, Rails nem
+  PHP+Solr. Livewire é server-driven (snapshot assinado por checksum via
+  `POST /livewire/update`), então **não há endpoint REST limpo** — se a busca roda por
+  http puro é a **primeira coisa a medir** no próximo slot.
+- ⚠️ **A data do card chama-se "Juntada"**, como o `dt_juntada` do TJES. Aqui o rótulo
+  da tela é honesto — mas continua não sendo julgamento nem publicação.
+
+⚠️ **A falha de processo do dia foi minha, e ela invalida uma medição:** rodei o teste
+decisivo do Turnstile com `channel:'chrome'` mas **esqueci de sobrescrever o userAgent**,
+então o navegador se anunciou como `HeadlessChrome/150` e levou 403 **na borda**, sem
+nunca chegar ao Turnstile. O "token vazio" que ele produziu **não é evidência sobre o
+captcha** — é evidência de que me anunciei como robô. É a armadilha do TJRN se repetindo.
+**O teste em Chrome real continua NÃO MEDIDO.**
+
+⚠️ **Pendências declaradas do TJAP:** no módulo de acórdãos a **Fase 3b não foi
+executada** (a busca nunca respondeu) e nenhum filtro foi provado por contagem; no Banco
+de Sentenças falta **tudo depois da busca** — anatomia do card, se há ementa, escada até
+o documento, paginação, permalink, consulta por número, operadores, distribuição por ano
+e a prova de que os filtros compõem. O **DataJud não foi sondado**. E os **dois selects
+de `classe`** (31 e 113 opções) não foram distinguidos.
+
+🔴 **Com o TJAP a fila passou a ter TRÊS `parcial` (TJPB 08/08, TJRO 09/08, TJAP 11/08)
+— o gatilho da regra da dívida de crawler.** O próximo slot das 20:00 deve pegar o
+**TJPB**, o mais antigo, em vez de abrir tribunal novo.
 
 ## Bloco 4 — Módulo faltante (1 alvo)
 

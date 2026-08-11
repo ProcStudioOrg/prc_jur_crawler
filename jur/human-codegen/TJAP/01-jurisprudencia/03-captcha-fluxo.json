@@ -1,0 +1,11 @@
+{
+  "inline": [
+    "SRC:https://www.gstatic.com/recaptcha/releases/XOqlk8PL_yVx6IdpLbpXdiLy/recaptcha__pt_br.js",
+    "SRC:https://tucujuris.tjap.jus.br/componentes/captcha/captcha.js?bust=20260724102313",
+    "SRC:https://tucujuris.tjap.jus.br/js/captcha.js?bust=20260724102313",
+    "SRC:https://www.google.com/recaptcha/api.js?onload=onloadCallbackRecaptcha&render=explicit&bust=20260724102313"
+  ],
+  "fetched": [
+    "200 :: <style>\n    .tj-caixa-captcha {\n        position: relative;\n        width: 300px;\n        height: 74px;\n        border: 1px solid #d3d3d3;\n        border-radius: 3px;\n    }\n\n    .tj-caixa-captcha span {\n        display: inline-block;\n        line-height: 74px;\n        vertical-align: middle;\n    }    \n    \n    .tj-caixa-captcha .tj-captcha-icon{\n        padding-left: 10px;\n        font-size: 40px;        \n    }\n\n    .tj-caixa-captcha .icon-check{\n        color: green;\n    }    \n\n    .tj-caixa-captcha .icon-security{\n        color: #2365B2;\n    }    \n\n    .tj-caixa-captcha .tj-captcha-texto{\n        font-family: Roboto,helvetica,arial,sans-serif;\n        font-size: 14px;\n    }\n\n    .tj-captcha-tem-passe .captcha-placeholder > div {\n        /* hack pra esconder o captcha que sempre é renderizado */\n        opacity: 0;\n        height: 0;\n        transition: 0.3s;\n        z-index: -1; /* evita que o maldito captcha fique na frente dos controles */\n    }\n</style>\n\n<div class=\"captcha\">\n    <!-- ko if : captchaInfo  -->\n        <!-- ko if : captchaInfo.id === null && captchaInfo.passe === null -->\n        <div class=\"tj-caixa-captcha\">\n            <span class=\"tj-captcha-icon icon-security\"></span>\n            <span class=\"tj-captcha-texto\">Verificando sua identidade...</span>\n        </div>\n        <!-- /ko -->    \n\n        <div data-bind=\"css : (captchaInfo.requerido ? '': 'hidden')\">\n            <div class=\"captcha-placeholder\"></div>\n        </div>\n    <!-- /ko -->\n</div>"
+  ]
+}

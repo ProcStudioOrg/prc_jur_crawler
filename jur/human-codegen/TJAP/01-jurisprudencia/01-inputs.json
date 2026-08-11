@@ -1,0 +1,83 @@
+[
+  {
+    "tag": "INPUT",
+    "type": "radio",
+    "name": "orgao",
+    "id": "",
+    "ngModel": null,
+    "placeholder": "",
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "radio",
+    "name": "orgao",
+    "id": "",
+    "ngModel": null,
+    "placeholder": "",
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "radio",
+    "name": "orgao",
+    "id": "",
+    "ngModel": null,
+    "placeholder": "",
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "",
+    "id": "numeroCnj",
+    "ngModel": null,
+    "placeholder": "",
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "",
+    "id": "ementa",
+    "ngModel": null,
+    "placeholder": "",
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "checkbox",
+    "name": "",
+    "id": "palavraExata",
+    "ngModel": null,
+    "placeholder": "",
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "",
+    "id": "numeroAcordao",
+    "ngModel": null,
+    "placeholder": "",
+    "visivel": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "name": "",
+    "id": "numeroAno",
+    "ngModel": null,
+    "placeholder": "",
+    "visivel": false
+  },
+  {
+    "tag": "INPUT",
+    "type": "hidden",
+    "name": "cf-turnstile-response",
+    "id": "cf-chl-widget-je1hg_response",
+    "ngModel": null,
+    "placeholder": "",
+    "visivel": false
+  }
+]

@@ -1,0 +1,1276 @@
+[
+  {
+    "name": null,
+    "id": "classe",
+    "ngModel": null,
+    "options": [
+      {
+        "value": "",
+        "texto": ""
+      },
+      {
+        "value": "2026",
+        "texto": "2026"
+      },
+      {
+        "value": "2025",
+        "texto": "2025"
+      },
+      {
+        "value": "2024",
+        "texto": "2024"
+      },
+      {
+        "value": "2023",
+        "texto": "2023"
+      },
+      {
+        "value": "2022",
+        "texto": "2022"
+      },
+      {
+        "value": "2021",
+        "texto": "2021"
+      },
+      {
+        "value": "2020",
+        "texto": "2020"
+      },
+      {
+        "value": "2019",
+        "texto": "2019"
+      },
+      {
+        "value": "2018",
+        "texto": "2018"
+      },
+      {
+        "value": "2017",
+        "texto": "2017"
+      },
+      {
+        "value": "2016",
+        "texto": "2016"
+      },
+      {
+        "value": "2015",
+        "texto": "2015"
+      },
+      {
+        "value": "2014",
+        "texto": "2014"
+      },
+      {
+        "value": "2013",
+        "texto": "2013"
+      },
+      {
+        "value": "2012",
+        "texto": "2012"
+      },
+      {
+        "value": "2011",
+        "texto": "2011"
+      },
+      {
+        "value": "2010",
+        "texto": "2010"
+      },
+      {
+        "value": "2009",
+        "texto": "2009"
+      },
+      {
+        "value": "2008",
+        "texto": "2008"
+      },
+      {
+        "value": "2007",
+        "texto": "2007"
+      },
+      {
+        "value": "2006",
+        "texto": "2006"
+      },
+      {
+        "value": "2005",
+        "texto": "2005"
+      },
+      {
+        "value": "2004",
+        "texto": "2004"
+      },
+      {
+        "value": "2003",
+        "texto": "2003"
+      },
+      {
+        "value": "2002",
+        "texto": "2002"
+      },
+      {
+        "value": "2001",
+        "texto": "2001"
+      },
+      {
+        "value": "2000",
+        "texto": "2000"
+      },
+      {
+        "value": "1999",
+        "texto": "1999"
+      },
+      {
+        "value": "1998",
+        "texto": "1998"
+      },
+      {
+        "value": "1997",
+        "texto": "1997"
+      }
+    ]
+  },
+  {
+    "name": null,
+    "id": "classe",
+    "ngModel": null,
+    "options": [
+      {
+        "value": "",
+        "texto": "Selecione uma classe"
+      },
+      {
+        "value": "AÇÃO CIVIL PÚBLICA",
+        "texto": "AÇÃO CIVIL PÚBLICA"
+      },
+      {
+        "value": "AÇÃO DE EXECUÇÃO PENAL",
+        "texto": "AÇÃO DE EXECUÇÃO PENAL"
+      },
+      {
+        "value": "AÇÃO DIRETA DE INCONSTITUCIONALIDADE",
+        "texto": "AÇÃO DIRETA DE INCONSTITUCIONALIDADE"
+      },
+      {
+        "value": "AÇÃO PENAL",
+        "texto": "AÇÃO PENAL"
+      },
+      {
+        "value": "AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO",
+        "texto": "AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO"
+      },
+      {
+        "value": "AÇÃO RESCISÓRIA",
+        "texto": "AÇÃO RESCISÓRIA"
+      },
+      {
+        "value": "AGRAVO DE EXECUÇÃO PENAL",
+        "texto": "AGRAVO DE EXECUÇÃO PENAL"
+      },
+      {
+        "value": "AGRAVO DE INSTRUMENTO",
+        "texto": "AGRAVO DE INSTRUMENTO"
+      },
+      {
+        "value": "AGRAVO DE INSTRUMENTO ",
+        "texto": "AGRAVO DE INSTRUMENTO"
+      },
+      {
+        "value": "AGRAVO DE INSTRUMENTO EM RECURSO ESPECIAL",
+        "texto": "AGRAVO DE INSTRUMENTO EM RECURSO ESPECIAL"
+      },
+      {
+        "value": "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO",
+        "texto": "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO"
+      },
+      {
+        "value": "AGRAVO EM EXECUCAO",
+        "texto": "AGRAVO EM EXECUCAO"
+      },
+      {
+        "value": "AGRAVO EM EXECUÇÃO - SEEU",
+        "texto": "AGRAVO EM EXECUÇÃO - SEEU"
+      },
+      {
+        "value": "AGRAVO INTERNO",
+        "texto": "AGRAVO INTERNO"
+      },
+      {
+        "value": "AGRAVO INTERNO CÍVEL",
+        "texto": "AGRAVO INTERNO CÍVEL"
+      },
+      {
+        "value": "AGRAVO INTERNO CRIMINAL",
+        "texto": "AGRAVO INTERNO CRIMINAL"
+      },
+      {
+        "value": "AGRAVO INTERNO (PLENO)",
+        "texto": "AGRAVO INTERNO (PLENO)"
+      },
+      {
+        "value": "AGRAVO REGIMENTAL",
+        "texto": "AGRAVO REGIMENTAL"
+      },
+      {
+        "value": "APELAÇÃO",
+        "texto": "APELAÇÃO"
+      },
+      {
+        "value": "APELAÇÃO CÍVEL",
+        "texto": "APELAÇÃO CÍVEL"
+      },
+      {
+        "value": "APELAÇÃO CRIMINAL",
+        "texto": "APELAÇÃO CRIMINAL"
+      },
+      {
+        "value": "APELAÇÃO/REEXAME NECESSÁRIO",
+        "texto": "APELAÇÃO/REEXAME NECESSÁRIO"
+      },
+      {
+        "value": "APELAÇÃO / REMESSA NECESSÁRIA",
+        "texto": "APELAÇÃO / REMESSA NECESSÁRIA"
+      },
+      {
+        "value": "AUTORIZAÇÃO PARA INSTAURAÇÃO DE INQUERITO",
+        "texto": "AUTORIZAÇÃO PARA INSTAURAÇÃO DE INQUERITO"
+      },
+      {
+        "value": "CARTA TESTEMUNHÁVEL",
+        "texto": "CARTA TESTEMUNHÁVEL"
+      },
+      {
+        "value": "CAUTELAR INOMINADA CRIMINAL",
+        "texto": "CAUTELAR INOMINADA CRIMINAL"
+      },
+      {
+        "value": "CONFLITO DE ATRIBUIÇÕES",
+        "texto": "CONFLITO DE ATRIBUIÇÕES"
+      },
+      {
+        "value": "CONFLITO DE COMPETENCIA(CC)",
+        "texto": "CONFLITO DE COMPETENCIA(CC)"
+      },
+      {
+        "value": "CONFLITO DE COMPETÊNCIA CÍVEL",
+        "texto": "CONFLITO DE COMPETÊNCIA CÍVEL"
+      },
+      {
+        "value": "CONFLITO DE JURISDIÇÃO",
+        "texto": "CONFLITO DE JURISDIÇÃO"
+      },
+      {
+        "value": "CORREICAO PARCIAL(CP)",
+        "texto": "CORREICAO PARCIAL(CP)"
+      },
+      {
+        "value": "CRIMES DA LEI ANTIDROGAS (LEI N. 11.343/06)",
+        "texto": "CRIMES DA LEI ANTIDROGAS (LEI N. 11.343/06)"
+      },
+      {
+        "value": "CRIMES DA LEI DE DROGAS",
+        "texto": "CRIMES DA LEI DE DROGAS"
+      },
+      {
+        "value": "EMBARGOS DE DECLARAÇÃO",
+        "texto": "EMBARGOS DE DECLARAÇÃO"
+      },
+      {
+        "value": "EMBARGOS DE DECLARAÇÃO CÍVEL",
+        "texto": "EMBARGOS DE DECLARAÇÃO CÍVEL"
+      },
+      {
+        "value": "EMBARGOS DE DECLARAÇÃO CRIMINAL",
+        "texto": "EMBARGOS DE DECLARAÇÃO CRIMINAL"
+      },
+      {
+        "value": "EMBARGOS DE TERCEIRO CRIMINAL",
+        "texto": "EMBARGOS DE TERCEIRO CRIMINAL"
+      },
+      {
+        "value": "EMBARGOS INFRINGENTES",
+        "texto": "EMBARGOS INFRINGENTES"
+      },
+      {
+        "value": "EMBARGOS INFRINGENTES E DE NULIDADE",
+        "texto": "EMBARGOS INFRINGENTES E DE NULIDADE"
+      },
+      {
+        "value": "EXCEÇÃO DA VERDADE",
+        "texto": "EXCEÇÃO DA VERDADE"
+      },
+      {
+        "value": "EXCEÇÃO DE IMPEDIMENTO",
+        "texto": "EXCEÇÃO DE IMPEDIMENTO"
+      },
+      {
+        "value": "EXCEÇÃO DE INCOMPETÊNCIA",
+        "texto": "EXCEÇÃO DE INCOMPETÊNCIA"
+      },
+      {
+        "value": "EXCEÇÃO DE INCOMPETÊNCIA DE JUÍZO",
+        "texto": "EXCEÇÃO DE INCOMPETÊNCIA DE JUÍZO"
+      },
+      {
+        "value": "EXCEÇÃO DE SUSPEIÇÃO",
+        "texto": "EXCEÇÃO DE SUSPEIÇÃO"
+      },
+      {
+        "value": "HABEAS CORPUS",
+        "texto": "HABEAS CORPUS"
+      },
+      {
+        "value": "HABEAS CORPUS CÍVEL",
+        "texto": "HABEAS CORPUS CÍVEL"
+      },
+      {
+        "value": "HABEAS CORPUS CRIMINAL",
+        "texto": "HABEAS CORPUS CRIMINAL"
+      },
+      {
+        "value": "HABEAS DATA",
+        "texto": "HABEAS DATA"
+      },
+      {
+        "value": "HABEAS DATA CÍVEL",
+        "texto": "HABEAS DATA CÍVEL"
+      },
+      {
+        "value": "IMPUGNAÇÃO AO VALOR DA CAUSA",
+        "texto": "IMPUGNAÇÃO AO VALOR DA CAUSA"
+      },
+      {
+        "value": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL",
+        "texto": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL"
+      },
+      {
+        "value": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA",
+        "texto": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA"
+      },
+      {
+        "value": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA - IAC",
+        "texto": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA - IAC"
+      },
+      {
+        "value": "INCIDENTE DE FALSIDADE",
+        "texto": "INCIDENTE DE FALSIDADE"
+      },
+      {
+        "value": "INCIDENTE DE INCONSTITUCIONALIDADE",
+        "texto": "INCIDENTE DE INCONSTITUCIONALIDADE"
+      },
+      {
+        "value": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS",
+        "texto": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS"
+      },
+      {
+        "value": "INCIDENTE DE SUSPEIÇÃO CÍVEL",
+        "texto": "INCIDENTE DE SUSPEIÇÃO CÍVEL"
+      },
+      {
+        "value": "INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+        "texto": "INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA"
+      },
+      {
+        "value": "INQUÉRITO",
+        "texto": "INQUÉRITO"
+      },
+      {
+        "value": "INQUÉRITO POLICIAL",
+        "texto": "INQUÉRITO POLICIAL"
+      },
+      {
+        "value": "MANDADO DE INJUNÇÃO",
+        "texto": "MANDADO DE INJUNÇÃO"
+      },
+      {
+        "value": "MANDADO DE SEGURANÇA",
+        "texto": "MANDADO DE SEGURANÇA"
+      },
+      {
+        "value": "MANDADO DE SEGURANÇA CÍVEL",
+        "texto": "MANDADO DE SEGURANÇA CÍVEL"
+      },
+      {
+        "value": "MEDIDA PROTETIVA DE URGÊNCIA",
+        "texto": "MEDIDA PROTETIVA DE URGÊNCIA"
+      },
+      {
+        "value": "PEDIDO DE ARQUIVAMENTO DE INQUÉRITO POLICIAL",
+        "texto": "PEDIDO DE ARQUIVAMENTO DE INQUÉRITO POLICIAL"
+      },
+      {
+        "value": "PEDIDO DE AUTORIZAÇÃO PARA SEPULTAMENTO",
+        "texto": "PEDIDO DE AUTORIZAÇÃO PARA SEPULTAMENTO"
+      },
+      {
+        "value": "PEDIDO DE DESAFORAMENTO",
+        "texto": "PEDIDO DE DESAFORAMENTO"
+      },
+      {
+        "value": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO",
+        "texto": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO"
+      },
+      {
+        "value": "PEDIDO DE PRISÃO PREVENTIVA",
+        "texto": "PEDIDO DE PRISÃO PREVENTIVA"
+      },
+      {
+        "value": "PEDIDO DE PROVIDÊNCIA CORREICIONAL",
+        "texto": "PEDIDO DE PROVIDÊNCIA CORREICIONAL"
+      },
+      {
+        "value": "PEDIDO DE QUEBRA DE SIGILO ",
+        "texto": "PEDIDO DE QUEBRA DE SIGILO"
+      },
+      {
+        "value": "PEDIDO DE REGISTRO TARDIO DE NASCIMENTO",
+        "texto": "PEDIDO DE REGISTRO TARDIO DE NASCIMENTO"
+      },
+      {
+        "value": "PEDIDO DE REGISTRO TARDIO DE ÓBITO ",
+        "texto": "PEDIDO DE REGISTRO TARDIO DE ÓBITO"
+      },
+      {
+        "value": "PEDIDO DE RESTITUIÇÃO DE COISA APREENDIDA",
+        "texto": "PEDIDO DE RESTITUIÇÃO DE COISA APREENDIDA"
+      },
+      {
+        "value": "PETIÇÃO",
+        "texto": "PETIÇÃO"
+      },
+      {
+        "value": "PETIÇÃO CÍVEL",
+        "texto": "PETIÇÃO CÍVEL"
+      },
+      {
+        "value": "PROCEDIMENTO CAUTELAR",
+        "texto": "PROCEDIMENTO CAUTELAR"
+      },
+      {
+        "value": "PROCEDIMENTO COMUM",
+        "texto": "PROCEDIMENTO COMUM"
+      },
+      {
+        "value": "PROCEDIMENTO COMUM CÍVEL",
+        "texto": "PROCEDIMENTO COMUM CÍVEL"
+      },
+      {
+        "value": "PROCEDIMENTO CRIMES MILITARES ",
+        "texto": "PROCEDIMENTO CRIMES MILITARES"
+      },
+      {
+        "value": "PROCEDIMENTO DO TRIBUNAL DO JÚRI",
+        "texto": "PROCEDIMENTO DO TRIBUNAL DO JÚRI"
+      },
+      {
+        "value": "PROCEDIMENTO ORDINÁRIO",
+        "texto": "PROCEDIMENTO ORDINÁRIO"
+      },
+      {
+        "value": "PROCEDIMENTOS DE JURISDIÇÃO VOLUNTÁRIA",
+        "texto": "PROCEDIMENTOS DE JURISDIÇÃO VOLUNTÁRIA"
+      },
+      {
+        "value": "PROCEDIMENTO SUMÁRIO",
+        "texto": "PROCEDIMENTO SUMÁRIO"
+      },
+      {
+        "value": "PROCEDIMENTO SUMARÍSSIMO CRIMINAL",
+        "texto": "PROCEDIMENTO SUMARÍSSIMO CRIMINAL"
+      },
+      {
+        "value": "PROCESSO ADMINISTRATIVO",
+        "texto": "PROCESSO ADMINISTRATIVO"
+      },
+      {
+        "value": "RECLAMAÇÃO",
+        "texto": "RECLAMAÇÃO"
+      },
+      {
+        "value": "RECLAMAÇÃO(RECL)",
+        "texto": "RECLAMAÇÃO(RECL)"
+      },
+      {
+        "value": "RECURSO ADMINISTRATIVO",
+        "texto": "RECURSO ADMINISTRATIVO"
+      },
+      {
+        "value": "RECURSO DE MEDIDA CAUTELAR CÍVEL",
+        "texto": "RECURSO DE MEDIDA CAUTELAR CÍVEL"
+      },
+      {
+        "value": "RECURSO DE OFÍCIO",
+        "texto": "RECURSO DE OFÍCIO"
+      },
+      {
+        "value": "RECURSO EM SENTIDO ESTRITO",
+        "texto": "RECURSO EM SENTIDO ESTRITO"
+      },
+      {
+        "value": "RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO",
+        "texto": "RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO"
+      },
+      {
+        "value": "RECURSO EM SENTIDO ESTRITO(RSE)",
+        "texto": "RECURSO EM SENTIDO ESTRITO(RSE)"
+      },
+      {
+        "value": "RECURSO ESPECIAL ",
+        "texto": "RECURSO ESPECIAL"
+      },
+      {
+        "value": "RECURSO EXTRAORDINÁRIO",
+        "texto": "RECURSO EXTRAORDINÁRIO"
+      },
+      {
+        "value": "RECURSO INOMINADO",
+        "texto": "RECURSO INOMINADO"
+      },
+      {
+        "value": "RECURSO INOMINADO CÍVEL",
+        "texto": "RECURSO INOMINADO CÍVEL"
+      },
+      {
+        "value": "REMESSA EX-OFFICIO(REO)",
+        "texto": "REMESSA EX-OFFICIO(REO)"
+      },
+      {
+        "value": "REMESSA EX-OFICIO(REO)",
+        "texto": "REMESSA EX-OFICIO(REO)"
+      },
+      {
+        "value": "REMESSA NECESSÁRIA CÍVEL",
+        "texto": "REMESSA NECESSÁRIA CÍVEL"
+      },
+      {
+        "value": "REMESSA NECESSÁRIA CRIMINAL",
+        "texto": "REMESSA NECESSÁRIA CRIMINAL"
+      },
+      {
+        "value": "REPRESENTAÇÃO CRIMINAL",
+        "texto": "REPRESENTAÇÃO CRIMINAL"
+      },
+      {
+        "value": "REPRESENTAÇÃO POR INDIGNIDADE",
+        "texto": "REPRESENTAÇÃO POR INDIGNIDADE"
+      },
+      {
+        "value": "RESTAURAÇÃO DE AUTOS",
+        "texto": "RESTAURAÇÃO DE AUTOS"
+      },
+      {
+        "value": "REVISÃO CRIMINAL",
+        "texto": "REVISÃO CRIMINAL"
+      },
+      {
+        "value": "RITO NÃO DEFINIDO",
+        "texto": "RITO NÃO DEFINIDO"
+      },
+      {
+        "value": "SEÇÃO INFRACIONAL",
+        "texto": "SEÇÃO INFRACIONAL"
+      },
+      {
+        "value": "SUSPENSÃO DE LIMINAR E DE SENTENÇA",
+        "texto": "SUSPENSÃO DE LIMINAR E DE SENTENÇA"
+      },
+      {
+        "value": "SUSPENSAO DE SEGURANCA(SS)",
+        "texto": "SUSPENSAO DE SEGURANCA(SS)"
+      },
+      {
+        "value": "TERMO CIRCUNSTANCIADO ",
+        "texto": "TERMO CIRCUNSTANCIADO"
+      },
+      {
+        "value": "TUTELA ANTECIPADA ANTECEDENTE",
+        "texto": "TUTELA ANTECIPADA ANTECEDENTE"
+      }
+    ]
+  },
+  {
+    "name": null,
+    "id": "origem",
+    "ngModel": null,
+    "options": [
+      {
+        "value": "",
+        "texto": "Selecione uma origem"
+      },
+      {
+        "value": "AMAPÁ",
+        "texto": "AMAPÁ"
+      },
+      {
+        "value": "CALÇOENE",
+        "texto": "CALÇOENE"
+      },
+      {
+        "value": "FERREIRA GOMES",
+        "texto": "FERREIRA GOMES"
+      },
+      {
+        "value": "LARANJAL DO JARI",
+        "texto": "LARANJAL DO JARI"
+      },
+      {
+        "value": "MACAPÁ",
+        "texto": "MACAPÁ"
+      },
+      {
+        "value": "MAZAGÃO",
+        "texto": "MAZAGÃO"
+      },
+      {
+        "value": "OIAPOQUE",
+        "texto": "OIAPOQUE"
+      },
+      {
+        "value": "PEDRA BRANCA DO AMAPARI",
+        "texto": "PEDRA BRANCA DO AMAPARI"
+      },
+      {
+        "value": "PORTO GRANDE",
+        "texto": "PORTO GRANDE"
+      },
+      {
+        "value": "SANTANA",
+        "texto": "SANTANA"
+      },
+      {
+        "value": "TARTARUGALZINHO",
+        "texto": "TARTARUGALZINHO"
+      },
+      {
+        "value": "TRIBUNAL DE JUSTIÇA",
+        "texto": "TRIBUNAL DE JUSTIÇA"
+      },
+      {
+        "value": "TURMA RECURSAL",
+        "texto": "TURMA RECURSAL"
+      },
+      {
+        "value": "VITÓRIA DO JARI",
+        "texto": "VITÓRIA DO JARI"
+      }
+    ]
+  },
+  {
+    "name": null,
+    "id": "relator",
+    "ngModel": null,
+    "options": [
+      {
+        "value": "",
+        "texto": "Selecione um relator"
+      },
+      {
+        "value": "Desembargador ADÃO CARVALHO",
+        "texto": "Desembargador ADÃO CARVALHO"
+      },
+      {
+        "value": "Desembargador AGOSTINO SILVÉRIO",
+        "texto": "Desembargador AGOSTINO SILVÉRIO"
+      },
+      {
+        "value": "Desembargadora STELLA SIMONNE RAMOS",
+        "texto": "Desembargadora STELLA SIMONNE RAMOS"
+      },
+      {
+        "value": "Desembargadora SUELI PEREIRA PINI",
+        "texto": "Desembargadora SUELI PEREIRA PINI"
+      },
+      {
+        "value": "Desembargador CARLOS TORK",
+        "texto": "Desembargador CARLOS TORK"
+      },
+      {
+        "value": "Desembargador CARMO ANTÔNIO",
+        "texto": "Desembargador CARMO ANTÔNIO"
+      },
+      {
+        "value": "Desembargador CESAR PEREIRA ",
+        "texto": "Desembargador CESAR PEREIRA"
+      },
+      {
+        "value": "Desembargador CONSTANTINO BRAHUNA",
+        "texto": "Desembargador CONSTANTINO BRAHUNA"
+      },
+      {
+        "value": "Desembargador DÔGLAS EVANGELISTA RAMOS",
+        "texto": "Desembargador DÔGLAS EVANGELISTA RAMOS"
+      },
+      {
+        "value": "Desembargador EDINARDO SOUZA",
+        "texto": "Desembargador EDINARDO SOUZA"
+      },
+      {
+        "value": "Desembargador EDUARDO CONTRERAS",
+        "texto": "Desembargador EDUARDO CONTRERAS"
+      },
+      {
+        "value": "Desembargador GILBERTO PINHEIRO",
+        "texto": "Desembargador GILBERTO PINHEIRO"
+      },
+      {
+        "value": "Desembargador JAYME FERREIRA",
+        "texto": "Desembargador JAYME FERREIRA"
+      },
+      {
+        "value": "Desembargador JOAO LAGES",
+        "texto": "Desembargador JOAO LAGES"
+      },
+      {
+        "value": "Desembargador LUIZ CARLOS",
+        "texto": "Desembargador LUIZ CARLOS"
+      },
+      {
+        "value": "Desembargador MANOEL BRITO",
+        "texto": "Desembargador MANOEL BRITO"
+      },
+      {
+        "value": "Desembargador MÁRIO GURTYEV",
+        "texto": "Desembargador MÁRIO GURTYEV"
+      },
+      {
+        "value": "Desembargador MÁRIO MAZUREK",
+        "texto": "Desembargador MÁRIO MAZUREK"
+      },
+      {
+        "value": "Desembargador MELLO CASTRO",
+        "texto": "Desembargador MELLO CASTRO"
+      },
+      {
+        "value": "Desembargador RAIMUNDO VALES",
+        "texto": "Desembargador RAIMUNDO VALES"
+      },
+      {
+        "value": "Desembargador ROMMEL ARAÚJO DE OLIVEIRA",
+        "texto": "Desembargador ROMMEL ARAÚJO DE OLIVEIRA"
+      },
+      {
+        "value": "ADAO JOEL GOMES DE CARVALHO",
+        "texto": "ADAO JOEL GOMES DE CARVALHO"
+      },
+      {
+        "value": "ADÃO JOEL GOMES DE CARVALHO",
+        "texto": "ADÃO JOEL GOMES DE CARVALHO"
+      },
+      {
+        "value": "AGOSTINO SILVERIO JUNIOR",
+        "texto": "AGOSTINO SILVERIO JUNIOR"
+      },
+      {
+        "value": "AILTON MARCELO MOTA VIDAL",
+        "texto": "AILTON MARCELO MOTA VIDAL"
+      },
+      {
+        "value": "ALAIDE MARIA DE PAULA",
+        "texto": "ALAIDE MARIA DE PAULA"
+      },
+      {
+        "value": "ALMIRO DO SOCORRO AVELAR DENIUR",
+        "texto": "ALMIRO DO SOCORRO AVELAR DENIUR"
+      },
+      {
+        "value": "ANDRE GONÇALVES DE MENEZES",
+        "texto": "ANDRE GONÇALVES DE MENEZES"
+      },
+      {
+        "value": "ANTONIO ERNESTO AMORAS COLLARES",
+        "texto": "ANTONIO ERNESTO AMORAS COLLARES"
+      },
+      {
+        "value": "ANTÔNIO JOSÉ DE MENEZES",
+        "texto": "ANTÔNIO JOSÉ DE MENEZES"
+      },
+      {
+        "value": "AUGUSTO CESAR GOMES LEITE",
+        "texto": "AUGUSTO CESAR GOMES LEITE"
+      },
+      {
+        "value": "CARLINE REGINA DE NEGREIROS CABRAL NUNES",
+        "texto": "CARLINE REGINA DE NEGREIROS CABRAL NUNES"
+      },
+      {
+        "value": "CARLOS AUGUSTO TORK DE OLIVEIRA",
+        "texto": "CARLOS AUGUSTO TORK DE OLIVEIRA"
+      },
+      {
+        "value": "CARMO ANTONIO DE SOUZA",
+        "texto": "CARMO ANTONIO DE SOUZA"
+      },
+      {
+        "value": "CESAR AUGUSTO SCAPIN",
+        "texto": "CESAR AUGUSTO SCAPIN"
+      },
+      {
+        "value": "CONSTANTINO AUGUSTO TORK BRAHUNA",
+        "texto": "CONSTANTINO AUGUSTO TORK BRAHUNA"
+      },
+      {
+        "value": "DECIO JOSE SANTOS RUFINO",
+        "texto": "DECIO JOSE SANTOS RUFINO"
+      },
+      {
+        "value": "DÉCIO JOSÉ SANTOS RUFINO",
+        "texto": "DÉCIO JOSÉ SANTOS RUFINO"
+      },
+      {
+        "value": "DÉLIA SILVA RAMOS",
+        "texto": "DÉLIA SILVA RAMOS"
+      },
+      {
+        "value": "DIEGO MOURA DE ARAUJO",
+        "texto": "DIEGO MOURA DE ARAUJO"
+      },
+      {
+        "value": "DIOGO DE SOUZA SOBRAL",
+        "texto": "DIOGO DE SOUZA SOBRAL"
+      },
+      {
+        "value": "EDUARDO FREIRE CONTRERAS",
+        "texto": "EDUARDO FREIRE CONTRERAS"
+      },
+      {
+        "value": "EDUARDO NAVARRO MACHADO",
+        "texto": "EDUARDO NAVARRO MACHADO"
+      },
+      {
+        "value": "ELAYNE DA SILVA RAMOS CANTUARIA",
+        "texto": "ELAYNE DA SILVA RAMOS CANTUARIA"
+      },
+      {
+        "value": "ELAYNE DA S. R. CANTUARIA KORESSAWA",
+        "texto": "ELAYNE DA S. R. CANTUARIA KORESSAWA"
+      },
+      {
+        "value": "ELEUSA DA SILVA MUNIZ",
+        "texto": "ELEUSA DA SILVA MUNIZ"
+      },
+      {
+        "value": "ERICK SIEBEL CONTI",
+        "texto": "ERICK SIEBEL CONTI"
+      },
+      {
+        "value": "ESCLEPÍADES DE OLIVEIRA NETO",
+        "texto": "ESCLEPÍADES DE OLIVEIRA NETO"
+      },
+      {
+        "value": "ESPAGNER WALLYSEN VAZ LEITE",
+        "texto": "ESPAGNER WALLYSEN VAZ LEITE"
+      },
+      {
+        "value": "FABIO SANTANA DOS SANTOS",
+        "texto": "FABIO SANTANA DOS SANTOS"
+      },
+      {
+        "value": "FÁBIO SILVEIRA GURGEL DO AMARAL",
+        "texto": "FÁBIO SILVEIRA GURGEL DO AMARAL"
+      },
+      {
+        "value": "GELCINETE DA ROCHA LOPES",
+        "texto": "GELCINETE DA ROCHA LOPES"
+      },
+      {
+        "value": "GILBERTO DE PAULA PINHEIRO",
+        "texto": "GILBERTO DE PAULA PINHEIRO"
+      },
+      {
+        "value": "HERALDO NASCIMENTO DA COSTA",
+        "texto": "HERALDO NASCIMENTO DA COSTA"
+      },
+      {
+        "value": "ILANA KABACZNIK LUONGO KAPAH",
+        "texto": "ILANA KABACZNIK LUONGO KAPAH"
+      },
+      {
+        "value": "JAYME HENRIQUE FERREIRA",
+        "texto": "JAYME HENRIQUE FERREIRA"
+      },
+      {
+        "value": "JOAO GUILHERME LAGES MENDES",
+        "texto": "JOAO GUILHERME LAGES MENDES"
+      },
+      {
+        "value": "JOÃO MATOS JÚNIOR",
+        "texto": "JOÃO MATOS JÚNIOR"
+      },
+      {
+        "value": "JOSE BONIFACIO LIMA DA MATA",
+        "texto": "JOSE BONIFACIO LIMA DA MATA"
+      },
+      {
+        "value": "JOSÉ CASTELLÕES MENEZES NETO",
+        "texto": "JOSÉ CASTELLÕES MENEZES NETO"
+      },
+      {
+        "value": "JOSE LUCIANO DE ASSIS",
+        "texto": "JOSE LUCIANO DE ASSIS"
+      },
+      {
+        "value": "JOSÉ LUCIANO DE ASSIS",
+        "texto": "JOSÉ LUCIANO DE ASSIS"
+      },
+      {
+        "value": "juíza convocada ALAIDE MARIA DE PAULA",
+        "texto": "juíza convocada ALAIDE MARIA DE PAULA"
+      },
+      {
+        "value": "Juíza Convocada STELLA SIMONNE RAMOS",
+        "texto": "Juíza Convocada STELLA SIMONNE RAMOS"
+      },
+      {
+        "value": "Juiza Convocada SUELI PINI",
+        "texto": "Juiza Convocada SUELI PINI"
+      },
+      {
+        "value": "Juiz Conv. CONSTANTINO BRAHUNA",
+        "texto": "Juiz Conv. CONSTANTINO BRAHUNA"
+      },
+      {
+        "value": "Juiz Conv. JOAO GUILHERME LAGES MENDES",
+        "texto": "Juiz Conv. JOAO GUILHERME LAGES MENDES"
+      },
+      {
+        "value": "Juiz Convocado ADÃO CARVALHO",
+        "texto": "Juiz Convocado ADÃO CARVALHO"
+      },
+      {
+        "value": "Juiz Convocado ANTONIO ERNESTO A. COLLARES",
+        "texto": "Juiz Convocado ANTONIO ERNESTO A. COLLARES"
+      },
+      {
+        "value": "Juiz Convocado CÉSAR PEREIRA",
+        "texto": "Juiz Convocado CÉSAR PEREIRA"
+      },
+      {
+        "value": "Juiz convocado DÉCIO JOSÉ SANTOS RUFINO",
+        "texto": "Juiz convocado DÉCIO JOSÉ SANTOS RUFINO"
+      },
+      {
+        "value": "Juiz Convocado EDUARDO FREIRE CONTRERAS",
+        "texto": "Juiz Convocado EDUARDO FREIRE CONTRERAS"
+      },
+      {
+        "value": "Juiz Convocado JOÃO BRATTI",
+        "texto": "Juiz Convocado JOÃO BRATTI"
+      },
+      {
+        "value": "Juiz Convocado LUCIANO ASSIS",
+        "texto": "Juiz Convocado LUCIANO ASSIS"
+      },
+      {
+        "value": "Juiz Convocado MARCONI MARINHO PIMENTA",
+        "texto": "Juiz Convocado MARCONI MARINHO PIMENTA"
+      },
+      {
+        "value": "Juiz Convocado MARIO MAZUREK",
+        "texto": "Juiz Convocado MARIO MAZUREK"
+      },
+      {
+        "value": "Juiz Convocado MÁRIO MAZUREK",
+        "texto": "Juiz Convocado MÁRIO MAZUREK"
+      },
+      {
+        "value": "Juiz de Direito Convocado EDUARDO FREIRE CONTRERAS",
+        "texto": "Juiz de Direito Convocado EDUARDO FREIRE CONTRERAS"
+      },
+      {
+        "value": "KEILA CHRISTINE BANHA BASTOS UTZIG",
+        "texto": "KEILA CHRISTINE BANHA BASTOS UTZIG"
+      },
+      {
+        "value": "LAURA COSTEIRA ARAUJO DE OLIVEIRA",
+        "texto": "LAURA COSTEIRA ARAUJO DE OLIVEIRA"
+      },
+      {
+        "value": "LIÉGE CRISTINA DE VASCONCELOS RAMOS GOMES",
+        "texto": "LIÉGE CRISTINA DE VASCONCELOS RAMOS GOMES"
+      },
+      {
+        "value": "LUIZ NAZARENO BORGES HAUSSELER",
+        "texto": "LUIZ NAZARENO BORGES HAUSSELER"
+      },
+      {
+        "value": "MARCELLA PEIXOTO SMITH",
+        "texto": "MARCELLA PEIXOTO SMITH"
+      },
+      {
+        "value": "MARCK WILLIAM MADUREIRA DA COSTA",
+        "texto": "MARCK WILLIAM MADUREIRA DA COSTA"
+      },
+      {
+        "value": "MARCO MIRANDA",
+        "texto": "MARCO MIRANDA"
+      },
+      {
+        "value": "MARCONI MARINHO PIMENTA",
+        "texto": "MARCONI MARINHO PIMENTA"
+      },
+      {
+        "value": "MARINA LORENA LUSTOSA VIDAL",
+        "texto": "MARINA LORENA LUSTOSA VIDAL"
+      },
+      {
+        "value": "MARIO CEZAR KASKELIS",
+        "texto": "MARIO CEZAR KASKELIS"
+      },
+      {
+        "value": "MARIO EUZEBIO MAZUREK",
+        "texto": "MARIO EUZEBIO MAZUREK"
+      },
+      {
+        "value": "MÁRIO MAZUREK",
+        "texto": "MÁRIO MAZUREK"
+      },
+      {
+        "value": "MAYRA JULIA TEIXEIRA BRANDAO",
+        "texto": "MAYRA JULIA TEIXEIRA BRANDAO"
+      },
+      {
+        "value": "NAIF JOSE MAUES NAIF DAIBES",
+        "texto": "NAIF JOSE MAUES NAIF DAIBES"
+      },
+      {
+        "value": "NELBA DE SOUZA SIQUEIRA ALMEIDA",
+        "texto": "NELBA DE SOUZA SIQUEIRA ALMEIDA"
+      },
+      {
+        "value": "NORMANDES ANTONIO DE SOUSA",
+        "texto": "NORMANDES ANTONIO DE SOUSA"
+      },
+      {
+        "value": "NORMANDES ANTÔNIO DE SOUSA",
+        "texto": "NORMANDES ANTÔNIO DE SOUSA"
+      },
+      {
+        "value": "PAULO CÉSAR DO VALE MADEIRA",
+        "texto": "PAULO CÉSAR DO VALE MADEIRA"
+      },
+      {
+        "value": "PRISCYLLA PEIXOTO MENDES",
+        "texto": "PRISCYLLA PEIXOTO MENDES"
+      },
+      {
+        "value": "REGINALDO GOMES DE ANDRADE",
+        "texto": "REGINALDO GOMES DE ANDRADE"
+      },
+      {
+        "value": "ROBERVAL PANTOJA PACHECO",
+        "texto": "ROBERVAL PANTOJA PACHECO"
+      },
+      {
+        "value": "ROMMEL ARAUJO DE OLIVEIRA",
+        "texto": "ROMMEL ARAUJO DE OLIVEIRA"
+      },
+      {
+        "value": "ROMMEL ARAÚJO DE OLIVEIRA",
+        "texto": "ROMMEL ARAÚJO DE OLIVEIRA"
+      },
+      {
+        "value": "RUI GUILHERME DE VASCONCELLOS SOUZA FILHO",
+        "texto": "RUI GUILHERME DE VASCONCELLOS SOUZA FILHO"
+      },
+      {
+        "value": "SALOE FERREIRA DA SILVA",
+        "texto": "SALOE FERREIRA DA SILVA"
+      },
+      {
+        "value": "SIMONE MORAES DOS SANTOS",
+        "texto": "SIMONE MORAES DOS SANTOS"
+      },
+      {
+        "value": "STELLA SIMONNE RAMOS",
+        "texto": "STELLA SIMONNE RAMOS"
+      },
+      {
+        "value": "SUELI PEREIRA PINI",
+        "texto": "SUELI PEREIRA PINI"
+      }
+    ]
+  },
+  {
+    "name": null,
+    "id": "secretaria",
+    "ngModel": null,
+    "options": [
+      {
+        "value": "",
+        "texto": "Selecione uma secretaria"
+      },
+      {
+        "value": "CÂMARA ÚNICA",
+        "texto": "CÂMARA ÚNICA"
+      },
+      {
+        "value": "SECÇÃO ÚNICA",
+        "texto": "SECÇÃO ÚNICA"
+      },
+      {
+        "value": "TRIBUNAL PLENO",
+        "texto": "TRIBUNAL PLENO"
+      },
+      {
+        "value": "TURMA RECURSAL DOS JUIZADOS ESPECIAIS",
+        "texto": "TURMA RECURSAL DOS JUIZADOS ESPECIAIS"
+      },
+      {
+        "value": "1ª VARA CÍVEL DE SANTANA",
+        "texto": "1ª VARA CÍVEL DE SANTANA"
+      },
+      {
+        "value": "1ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ",
+        "texto": "1ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ"
+      },
+      {
+        "value": "1ª VARA DE LARANJAL DO JARI",
+        "texto": "1ª VARA DE LARANJAL DO JARI"
+      },
+      {
+        "value": "2ª VARA DA COMARCA DE OIAPOQUE",
+        "texto": "2ª VARA DA COMARCA DE OIAPOQUE"
+      },
+      {
+        "value": "Câmara Única",
+        "texto": "Câmara Única"
+      },
+      {
+        "value": "CEJUSC DO TRIBUNAL DE JUSTIÇA ",
+        "texto": "CEJUSC DO TRIBUNAL DE JUSTIÇA"
+      },
+      {
+        "value": "GABINETE 01",
+        "texto": "GABINETE 01"
+      },
+      {
+        "value": "GABINETE 02",
+        "texto": "GABINETE 02"
+      },
+      {
+        "value": "GABINETE 03",
+        "texto": "GABINETE 03"
+      },
+      {
+        "value": "GABINETE 04",
+        "texto": "GABINETE 04"
+      },
+      {
+        "value": "GABINETE 05",
+        "texto": "GABINETE 05"
+      },
+      {
+        "value": "GABINETE 06",
+        "texto": "GABINETE 06"
+      },
+      {
+        "value": "GABINETE 07",
+        "texto": "GABINETE 07"
+      },
+      {
+        "value": "GABINETE 08",
+        "texto": "GABINETE 08"
+      },
+      {
+        "value": "GABINETE DES. AGOSTINO SILVÉRIO JÚNIOR",
+        "texto": "GABINETE DES. AGOSTINO SILVÉRIO JÚNIOR"
+      },
+      {
+        "value": "GABINETE DES. GILBERTO PINHEIRO",
+        "texto": "GABINETE DES. GILBERTO PINHEIRO"
+      },
+      {
+        "value": "GABINETE DES. RAIMUNDO NONATO FONSECA VALES",
+        "texto": "GABINETE DES. RAIMUNDO NONATO FONSECA VALES"
+      },
+      {
+        "value": "GABINETE RECURSAL 02",
+        "texto": "GABINETE RECURSAL 02"
+      },
+      {
+        "value": "JUI INF JUV-ÁREA POL.PÚB.EXEC.MEDIDA SÓCIO EDUC.",
+        "texto": "JUI INF JUV-ÁREA POL.PÚB.EXEC.MEDIDA SÓCIO EDUC."
+      },
+      {
+        "value": "Pleno",
+        "texto": "Pleno"
+      },
+      {
+        "value": "Pleno Administrativo",
+        "texto": "Pleno Administrativo"
+      },
+      {
+        "value": "Secção Única",
+        "texto": "Secção Única"
+      },
+      {
+        "value": "SECRETARIA DA PRESIDÊNCIA",
+        "texto": "SECRETARIA DA PRESIDÊNCIA"
+      },
+      {
+        "value": "SECRETARIA ESPECIAL DE PRECATÓRIOS",
+        "texto": "SECRETARIA ESPECIAL DE PRECATÓRIOS"
+      },
+      {
+        "value": "TRIBUNAL PLENO ADMINISTRATIVO",
+        "texto": "TRIBUNAL PLENO ADMINISTRATIVO"
+      },
+      {
+        "value": "Turma Recursal",
+        "texto": "Turma Recursal"
+      },
+      {
+        "value": "VARA ÚNICA DE AMAPÁ",
+        "texto": "VARA ÚNICA DE AMAPÁ"
+      },
+      {
+        "value": "VARA ÚNICA DE CALÇOENE",
+        "texto": "VARA ÚNICA DE CALÇOENE"
+      },
+      {
+        "value": "VARA ÚNICA DE FERREIRA GOMES",
+        "texto": "VARA ÚNICA DE FERREIRA GOMES"
+      },
+      {
+        "value": "VARA UNICA DE MAZAGAO",
+        "texto": "VARA UNICA DE MAZAGAO"
+      },
+      {
+        "value": "VARA ÚNICA DE PEDRA BRANCA DO AMAPARI",
+        "texto": "VARA ÚNICA DE PEDRA BRANCA DO AMAPARI"
+      },
+      {
+        "value": "VARA ÚNICA DE PORTO GRANDE",
+        "texto": "VARA ÚNICA DE PORTO GRANDE"
+      },
+      {
+        "value": "VARA ÚNICA DE TARTARUGALZINHO",
+        "texto": "VARA ÚNICA DE TARTARUGALZINHO"
+      },
+      {
+        "value": "VARA ÚNICA DE VITÓRIA DO JARI",
+        "texto": "VARA ÚNICA DE VITÓRIA DO JARI"
+      }
+    ]
+  },
+  {
+    "name": null,
+    "id": "votacao",
+    "ngModel": null,
+    "options": [
+      {
+        "value": "0",
+        "texto": "Selecione uma votação"
+      },
+      {
+        "value": "Unânime",
+        "texto": "Unânime"
+      },
+      {
+        "value": "Maioria",
+        "texto": "Maioria"
+      }
+    ]
+  }
+]

@@ -1,0 +1,164 @@
+<form id="formPesquisa" method="post" class="form-vertical">
+                                <div class="form-group" data-bind="visible: !consultaExtrajudicial">
+                                    <label class="control-label " for="orgao">Órgão Julgador</label>
+                                    <div>
+                                        <label class="radio-inline"><input type="radio" name="orgao" data-bind="checked: filtro.orgao" value="0" checked="" style="">Todos</label>
+                                        <label class="radio-inline"><input type="radio" name="orgao" data-bind="checked: filtro.orgao" value="tj" style="">Tribunal</label>
+                                        <label class="radio-inline"><input type="radio" name="orgao" data-bind="checked: filtro.orgao" value="recursal" style="">Turma
+                                            recursal</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label " for="numeroCnj">Número unico da justiça</label>
+                                    <input id="numeroCnj" type="text" class="form-control input-md espaco-abaixo numcnj" data-bind="value: filtro.numeroCNJ" style="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label " for="ementa">Pesquisa Livre</label>
+                                    <input id="ementa" type="text" class="form-control input-md " data-bind="value: filtro.ementa" style="">
+                                    <span class="help-block"><small>Utilize aspas para pesquisar por um termo exato.
+                                            Ex.: "Habeas Corpus"</small></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label " for="palavraExata">Usar palavras exatas</label>
+                                    <div>
+                                        <input type="checkbox" id="palavraExata" data-bind="checked: filtro.palavrasExatas" checked="" style=""> <small class="text-muted"> Marque esta caixa para encontrar palavras exatas na
+                                            busca livre</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-bind="visible: !filtro.tipo_jurisprudencia || filtro.tipo_jurisprudencia &amp;&amp; filtro.tipo_jurisprudencia != 99">
+                                    <label class="control-label " for="numeroAcordao">Número do Acórdão</label>
+                                    <input id="numeroAcordao" type="text" class="form-control input-sm espaco-abaixo " data-bind="value: filtro.numeroAcordao" maxlength="7" style="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label " for="numeroAcordao">Ano</label>
+                                    <select class="form-control" id="classe" data-bind="options: anosJurisprudencia,
+                                        optionsText: $data,
+                                        optionsValue: $data,
+                                        value: filtro.ano,
+                                        optionsCaption: ''"><option value=""></option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option><option value="2006">2006</option><option value="2005">2005</option><option value="2004">2004</option><option value="2003">2003</option><option value="2002">2002</option><option value="2001">2001</option><option value="2000">2000</option><option value="1999">1999</option><option value="1998">1998</option><option value="1997">1997</option>
+                                    </select>
+                                </div>
+                                <div id="maisOpcoes" class="text-right espaco-abaixo">
+                                    <a href="#" data-bind="click : exibirMaisOpcoes" class="btn-small"> <small> mais
+                                            opções </small> <span class="caret"></span></a>
+                                </div>
+                                <div id="avancado" class="hide">
+                                    <div class="form-group">
+                                        <label class="control-label " for="numeroAno">Número/Ano</label>
+                                        <input id="numeroAno" type="text" class="form-control input-sm num-ano" data-bind="value: filtro.numeroAno" style="">
+                                        <div>
+                                            <!--<span class="help-block"><small class="text-muted">Publicações anteriores a 16/02/2009</small></span>-->
+                                            <span class="help-block "> <small class="text-muted ">Números e Barra, Ano
+                                                    com quatro digitos, ex: 001858/1999</small></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label " for="classe">Classe</label>
+                                        <select class="form-control" id="classe" data-bind="options: classes,
+                                            optionsText:'descricao',
+                                            optionsValue: 'id',
+                                            value: filtro.classe,
+                                            optionsCaption: 'Selecione uma classe'"><option value="">Selecione uma classe</option><option value="AÇÃO CIVIL PÚBLICA">AÇÃO CIVIL PÚBLICA</option><option value="AÇÃO DE EXECUÇÃO PENAL">AÇÃO DE EXECUÇÃO PENAL</option><option value="AÇÃO DIRETA DE INCONSTITUCIONALIDADE">AÇÃO DIRETA DE INCONSTITUCIONALIDADE</option><option value="AÇÃO PENAL">AÇÃO PENAL</option><option value="AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO">AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO</option><option value="AÇÃO RESCISÓRIA">AÇÃO RESCISÓRIA</option><option value="AGRAVO DE EXECUÇÃO PENAL">AGRAVO DE EXECUÇÃO PENAL</option><option value="AGRAVO DE INSTRUMENTO">AGRAVO DE INSTRUMENTO</option><option value="AGRAVO DE INSTRUMENTO ">AGRAVO DE INSTRUMENTO </option><option value="AGRAVO DE INSTRUMENTO EM RECURSO ESPECIAL">AGRAVO DE INSTRUMENTO EM RECURSO ESPECIAL</option><option value="AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO">AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO</option><option value="AGRAVO EM EXECUCAO">AGRAVO EM EXECUCAO</option><option value="AGRAVO EM EXECUÇÃO - SEEU">AGRAVO EM EXECUÇÃO - SEEU</option><option value="AGRAVO INTERNO">AGRAVO INTERNO</option><option value="AGRAVO INTERNO CÍVEL">AGRAVO INTERNO CÍVEL</option><option value="AGRAVO INTERNO CRIMINAL">AGRAVO INTERNO CRIMINAL</option><option value="AGRAVO INTERNO (PLENO)">AGRAVO INTERNO (PLENO)</option><option value="AGRAVO REGIMENTAL">AGRAVO REGIMENTAL</option><option value="APELAÇÃO">APELAÇÃO</option><option value="APELAÇÃO CÍVEL">APELAÇÃO CÍVEL</option><option value="APELAÇÃO CRIMINAL">APELAÇÃO CRIMINAL</option><option value="APELAÇÃO/REEXAME NECESSÁRIO">APELAÇÃO/REEXAME NECESSÁRIO</option><option value="APELAÇÃO / REMESSA NECESSÁRIA">APELAÇÃO / REMESSA NECESSÁRIA</option><option value="AUTORIZAÇÃO PARA INSTAURAÇÃO DE INQUERITO">AUTORIZAÇÃO PARA INSTAURAÇÃO DE INQUERITO</option><option value="CARTA TESTEMUNHÁVEL">CARTA TESTEMUNHÁVEL</option><option value="CAUTELAR INOMINADA CRIMINAL">CAUTELAR INOMINADA CRIMINAL</option><option value="CONFLITO DE ATRIBUIÇÕES">CONFLITO DE ATRIBUIÇÕES</option><option value="CONFLITO DE COMPETENCIA(CC)">CONFLITO DE COMPETENCIA(CC)</option><option value="CONFLITO DE COMPETÊNCIA CÍVEL">CONFLITO DE COMPETÊNCIA CÍVEL</option><option value="CONFLITO DE JURISDIÇÃO">CONFLITO DE JURISDIÇÃO</option><option value="CORREICAO PARCIAL(CP)">CORREICAO PARCIAL(CP)</option><option value="CRIMES DA LEI ANTIDROGAS (LEI N. 11.343/06)">CRIMES DA LEI ANTIDROGAS (LEI N. 11.343/06)</option><option value="CRIMES DA LEI DE DROGAS">CRIMES DA LEI DE DROGAS</option><option value="EMBARGOS DE DECLARAÇÃO">EMBARGOS DE DECLARAÇÃO</option><option value="EMBARGOS DE DECLARAÇÃO CÍVEL">EMBARGOS DE DECLARAÇÃO CÍVEL</option><option value="EMBARGOS DE DECLARAÇÃO CRIMINAL">EMBARGOS DE DECLARAÇÃO CRIMINAL</option><option value="EMBARGOS DE TERCEIRO CRIMINAL">EMBARGOS DE TERCEIRO CRIMINAL</option><option value="EMBARGOS INFRINGENTES">EMBARGOS INFRINGENTES</option><option value="EMBARGOS INFRINGENTES E DE NULIDADE">EMBARGOS INFRINGENTES E DE NULIDADE</option><option value="EXCEÇÃO DA VERDADE">EXCEÇÃO DA VERDADE</option><option value="EXCEÇÃO DE IMPEDIMENTO">EXCEÇÃO DE IMPEDIMENTO</option><option value="EXCEÇÃO DE INCOMPETÊNCIA">EXCEÇÃO DE INCOMPETÊNCIA</option><option value="EXCEÇÃO DE INCOMPETÊNCIA DE JUÍZO">EXCEÇÃO DE INCOMPETÊNCIA DE JUÍZO</option><option value="EXCEÇÃO DE SUSPEIÇÃO">EXCEÇÃO DE SUSPEIÇÃO</option><option value="HABEAS CORPUS">HABEAS CORPUS</option><option value="HABEAS CORPUS CÍVEL">HABEAS CORPUS CÍVEL</option><option value="HABEAS CORPUS CRIMINAL">HABEAS CORPUS CRIMINAL</option><option value="HABEAS DATA">HABEAS DATA</option><option value="HABEAS DATA CÍVEL">HABEAS DATA CÍVEL</option><option value="IMPUGNAÇÃO AO VALOR DA CAUSA">IMPUGNAÇÃO AO VALOR DA CAUSA</option><option value="INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL">INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL</option><option value="INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA">INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA</option><option value="INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA - IAC">INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA - IAC</option><option value="INCIDENTE DE FALSIDADE">INCIDENTE DE FALSIDADE</option><option value="INCIDENTE DE INCONSTITUCIONALIDADE">INCIDENTE DE INCONSTITUCIONALIDADE</option><option value="INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS">INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS</option><option value="INCIDENTE DE SUSPEIÇÃO CÍVEL">INCIDENTE DE SUSPEIÇÃO CÍVEL</option><option value="INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA">INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA</option><option value="INQUÉRITO">INQUÉRITO</option><option value="INQUÉRITO POLICIAL">INQUÉRITO POLICIAL</option><option value="MANDADO DE INJUNÇÃO">MANDADO DE INJUNÇÃO</option><option value="MANDADO DE SEGURANÇA">MANDADO DE SEGURANÇA</option><option value="MANDADO DE SEGURANÇA CÍVEL">MANDADO DE SEGURANÇA CÍVEL</option><option value="MEDIDA PROTETIVA DE URGÊNCIA">MEDIDA PROTETIVA DE URGÊNCIA</option><option value="PEDIDO DE ARQUIVAMENTO DE INQUÉRITO POLICIAL">PEDIDO DE ARQUIVAMENTO DE INQUÉRITO POLICIAL</option><option value="PEDIDO DE AUTORIZAÇÃO PARA SEPULTAMENTO">PEDIDO DE AUTORIZAÇÃO PARA SEPULTAMENTO</option><option value="PEDIDO DE DESAFORAMENTO">PEDIDO DE DESAFORAMENTO</option><option value="PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO">PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO</option><option value="PEDIDO DE PRISÃO PREVENTIVA">PEDIDO DE PRISÃO PREVENTIVA</option><option value="PEDIDO DE PROVIDÊNCIA CORREICIONAL">PEDIDO DE PROVIDÊNCIA CORREICIONAL</option><option value="PEDIDO DE QUEBRA DE SIGILO ">PEDIDO DE QUEBRA DE SIGILO </option><option value="PEDIDO DE REGISTRO TARDIO DE NASCIMENTO">PEDIDO DE REGISTRO TARDIO DE NASCIMENTO</option><option value="PEDIDO DE REGISTRO TARDIO DE ÓBITO ">PEDIDO DE REGISTRO TARDIO DE ÓBITO </option><option value="PEDIDO DE RESTITUIÇÃO DE COISA APREENDIDA">PEDIDO DE RESTITUIÇÃO DE COISA APREENDIDA</option><option value="PETIÇÃO">PETIÇÃO</option><option value="PETIÇÃO CÍVEL">PETIÇÃO CÍVEL</option><option value="PROCEDIMENTO CAUTELAR">PROCEDIMENTO CAUTELAR</option><option value="PROCEDIMENTO COMUM">PROCEDIMENTO COMUM</option><option value="PROCEDIMENTO COMUM CÍVEL">PROCEDIMENTO COMUM CÍVEL</option><option value="PROCEDIMENTO CRIMES MILITARES ">PROCEDIMENTO CRIMES MILITARES </option><option value="PROCEDIMENTO DO TRIBUNAL DO JÚRI">PROCEDIMENTO DO TRIBUNAL DO JÚRI</option><option value="PROCEDIMENTO ORDINÁRIO">PROCEDIMENTO ORDINÁRIO</option><option value="PROCEDIMENTOS DE JURISDIÇÃO VOLUNTÁRIA">PROCEDIMENTOS DE JURISDIÇÃO VOLUNTÁRIA</option><option value="PROCEDIMENTO SUMÁRIO">PROCEDIMENTO SUMÁRIO</option><option value="PROCEDIMENTO SUMARÍSSIMO CRIMINAL">PROCEDIMENTO SUMARÍSSIMO CRIMINAL</option><option value="PROCESSO ADMINISTRATIVO">PROCESSO ADMINISTRATIVO</option><option value="RECLAMAÇÃO">RECLAMAÇÃO</option><option value="RECLAMAÇÃO(RECL)">RECLAMAÇÃO(RECL)</option><option value="RECURSO ADMINISTRATIVO">RECURSO ADMINISTRATIVO</option><option value="RECURSO DE MEDIDA CAUTELAR CÍVEL">RECURSO DE MEDIDA CAUTELAR CÍVEL</option><option value="RECURSO DE OFÍCIO">RECURSO DE OFÍCIO</option><option value="RECURSO EM SENTIDO ESTRITO">RECURSO EM SENTIDO ESTRITO</option><option value="RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO">RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO</option><option value="RECURSO EM SENTIDO ESTRITO(RSE)">RECURSO EM SENTIDO ESTRITO(RSE)</option><option value="RECURSO ESPECIAL ">RECURSO ESPECIAL </option><option value="RECURSO EXTRAORDINÁRIO">RECURSO EXTRAORDINÁRIO</option><option value="RECURSO INOMINADO">RECURSO INOMINADO</option><option value="RECURSO INOMINADO CÍVEL">RECURSO INOMINADO CÍVEL</option><option value="REMESSA EX-OFFICIO(REO)">REMESSA EX-OFFICIO(REO)</option><option value="REMESSA EX-OFICIO(REO)">REMESSA EX-OFICIO(REO)</option><option value="REMESSA NECESSÁRIA CÍVEL">REMESSA NECESSÁRIA CÍVEL</option><option value="REMESSA NECESSÁRIA CRIMINAL">REMESSA NECESSÁRIA CRIMINAL</option><option value="REPRESENTAÇÃO CRIMINAL">REPRESENTAÇÃO CRIMINAL</option><option value="REPRESENTAÇÃO POR INDIGNIDADE">REPRESENTAÇÃO POR INDIGNIDADE</option><option value="RESTAURAÇÃO DE AUTOS">RESTAURAÇÃO DE AUTOS</option><option value="REVISÃO CRIMINAL">REVISÃO CRIMINAL</option><option value="RITO NÃO DEFINIDO">RITO NÃO DEFINIDO</option><option value="SEÇÃO INFRACIONAL">SEÇÃO INFRACIONAL</option><option value="SUSPENSÃO DE LIMINAR E DE SENTENÇA">SUSPENSÃO DE LIMINAR E DE SENTENÇA</option><option value="SUSPENSAO DE SEGURANCA(SS)">SUSPENSAO DE SEGURANCA(SS)</option><option value="TERMO CIRCUNSTANCIADO ">TERMO CIRCUNSTANCIADO </option><option value="TUTELA ANTECIPADA ANTECEDENTE">TUTELA ANTECIPADA ANTECEDENTE</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label " for="origem">Origem</label>
+                                        <select class="form-control" id="origem" data-bind="options: origens,
+                                            optionsText: 'descricao',
+                                            optionsValue: 'id',
+                                            value: filtro.origem,
+                                            optionsCaption: 'Selecione uma origem'"><option value="">Selecione uma origem</option><option value="AMAPÁ">AMAPÁ</option><option value="CALÇOENE">CALÇOENE</option><option value="FERREIRA GOMES">FERREIRA GOMES</option><option value="LARANJAL DO JARI">LARANJAL DO JARI</option><option value="MACAPÁ">MACAPÁ</option><option value="MAZAGÃO">MAZAGÃO</option><option value="OIAPOQUE">OIAPOQUE</option><option value="PEDRA BRANCA DO AMAPARI">PEDRA BRANCA DO AMAPARI</option><option value="PORTO GRANDE">PORTO GRANDE</option><option value="SANTANA">SANTANA</option><option value="TARTARUGALZINHO">TARTARUGALZINHO</option><option value="TRIBUNAL DE JUSTIÇA">TRIBUNAL DE JUSTIÇA</option><option value="TURMA RECURSAL">TURMA RECURSAL</option><option value="VITÓRIA DO JARI">VITÓRIA DO JARI</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label " for="relator">Relator</label>
+                                        <select class="form-control" id="relator" data-bind="options: relatores,
+                                            optionsText:'descricao',
+                                            optionsValue: 'mat_relat',
+                                            value: filtro.relator,
+                                            optionsCaption: 'Selecione um relator'"><option value="">Selecione um relator</option><option value="Desembargador ADÃO CARVALHO">Desembargador ADÃO CARVALHO</option><option value="Desembargador AGOSTINO SILVÉRIO">Desembargador AGOSTINO SILVÉRIO</option><option value="Desembargadora STELLA SIMONNE RAMOS">Desembargadora STELLA SIMONNE RAMOS</option><option value="Desembargadora SUELI PEREIRA PINI">Desembargadora SUELI PEREIRA PINI</option><option value="Desembargador CARLOS TORK">Desembargador CARLOS TORK</option><option value="Desembargador CARMO ANTÔNIO">Desembargador CARMO ANTÔNIO</option><option value="Desembargador CESAR PEREIRA ">Desembargador CESAR PEREIRA </option><option value="Desembargador CONSTANTINO BRAHUNA">Desembargador CONSTANTINO BRAHUNA</option><option value="Desembargador DÔGLAS EVANGELISTA RAMOS">Desembargador DÔGLAS EVANGELISTA RAMOS</option><option value="Desembargador EDINARDO SOUZA">Desembargador EDINARDO SOUZA</option><option value="Desembargador EDUARDO CONTRERAS">Desembargador EDUARDO CONTRERAS</option><option value="Desembargador GILBERTO PINHEIRO">Desembargador GILBERTO PINHEIRO</option><option value="Desembargador JAYME FERREIRA">Desembargador JAYME FERREIRA</option><option value="Desembargador JOAO LAGES">Desembargador JOAO LAGES</option><option value="Desembargador LUIZ CARLOS">Desembargador LUIZ CARLOS</option><option value="Desembargador MANOEL BRITO">Desembargador MANOEL BRITO</option><option value="Desembargador MÁRIO GURTYEV">Desembargador MÁRIO GURTYEV</option><option value="Desembargador MÁRIO MAZUREK">Desembargador MÁRIO MAZUREK</option><option value="Desembargador MELLO CASTRO">Desembargador MELLO CASTRO</option><option value="Desembargador RAIMUNDO VALES">Desembargador RAIMUNDO VALES</option><option value="Desembargador ROMMEL ARAÚJO DE OLIVEIRA">Desembargador ROMMEL ARAÚJO DE OLIVEIRA</option><option value="ADAO JOEL GOMES DE CARVALHO">ADAO JOEL GOMES DE CARVALHO</option><option value="ADÃO JOEL GOMES DE CARVALHO">ADÃO JOEL GOMES DE CARVALHO</option><option value="AGOSTINO SILVERIO JUNIOR">AGOSTINO SILVERIO JUNIOR</option><option value="AILTON MARCELO MOTA VIDAL">AILTON MARCELO MOTA VIDAL</option><option value="ALAIDE MARIA DE PAULA">ALAIDE MARIA DE PAULA</option><option value="ALMIRO DO SOCORRO AVELAR DENIUR">ALMIRO DO SOCORRO AVELAR DENIUR</option><option value="ANDRE GONÇALVES DE MENEZES">ANDRE GONÇALVES DE MENEZES</option><option value="ANTONIO ERNESTO AMORAS COLLARES">ANTONIO ERNESTO AMORAS COLLARES</option><option value="ANTÔNIO JOSÉ DE MENEZES">ANTÔNIO JOSÉ DE MENEZES</option><option value="AUGUSTO CESAR GOMES LEITE">AUGUSTO CESAR GOMES LEITE</option><option value="CARLINE REGINA DE NEGREIROS CABRAL NUNES">CARLINE REGINA DE NEGREIROS CABRAL NUNES</option><option value="CARLOS AUGUSTO TORK DE OLIVEIRA">CARLOS AUGUSTO TORK DE OLIVEIRA</option><option value="CARMO ANTONIO DE SOUZA">CARMO ANTONIO DE SOUZA</option><option value="CESAR AUGUSTO SCAPIN">CESAR AUGUSTO SCAPIN</option><option value="CONSTANTINO AUGUSTO TORK BRAHUNA">CONSTANTINO AUGUSTO TORK BRAHUNA</option><option value="DECIO JOSE SANTOS RUFINO">DECIO JOSE SANTOS RUFINO</option><option value="DÉCIO JOSÉ SANTOS RUFINO">DÉCIO JOSÉ SANTOS RUFINO</option><option value="DÉLIA SILVA RAMOS">DÉLIA SILVA RAMOS</option><option value="DIEGO MOURA DE ARAUJO">DIEGO MOURA DE ARAUJO</option><option value="DIOGO DE SOUZA SOBRAL">DIOGO DE SOUZA SOBRAL</option><option value="EDUARDO FREIRE CONTRERAS">EDUARDO FREIRE CONTRERAS</option><option value="EDUARDO NAVARRO MACHADO">EDUARDO NAVARRO MACHADO</option><option value="ELAYNE DA SILVA RAMOS CANTUARIA">ELAYNE DA SILVA RAMOS CANTUARIA</option><option value="ELAYNE DA S. R. CANTUARIA KORESSAWA">ELAYNE DA S. R. CANTUARIA KORESSAWA</option><option value="ELEUSA DA SILVA MUNIZ">ELEUSA DA SILVA MUNIZ</option><option value="ERICK SIEBEL CONTI">ERICK SIEBEL CONTI</option><option value="ESCLEPÍADES DE OLIVEIRA NETO">ESCLEPÍADES DE OLIVEIRA NETO</option><option value="ESPAGNER WALLYSEN VAZ LEITE">ESPAGNER WALLYSEN VAZ LEITE</option><option value="FABIO SANTANA DOS SANTOS">FABIO SANTANA DOS SANTOS</option><option value="FÁBIO SILVEIRA GURGEL DO AMARAL">FÁBIO SILVEIRA GURGEL DO AMARAL</option><option value="GELCINETE DA ROCHA LOPES">GELCINETE DA ROCHA LOPES</option><option value="GILBERTO DE PAULA PINHEIRO">GILBERTO DE PAULA PINHEIRO</option><option value="HERALDO NASCIMENTO DA COSTA">HERALDO NASCIMENTO DA COSTA</option><option value="ILANA KABACZNIK LUONGO KAPAH">ILANA KABACZNIK LUONGO KAPAH</option><option value="JAYME HENRIQUE FERREIRA">JAYME HENRIQUE FERREIRA</option><option value="JOAO GUILHERME LAGES MENDES">JOAO GUILHERME LAGES MENDES</option><option value="JOÃO MATOS JÚNIOR">JOÃO MATOS JÚNIOR</option><option value="JOSE BONIFACIO LIMA DA MATA">JOSE BONIFACIO LIMA DA MATA</option><option value="JOSÉ CASTELLÕES MENEZES NETO">JOSÉ CASTELLÕES MENEZES NETO</option><option value="JOSE LUCIANO DE ASSIS">JOSE LUCIANO DE ASSIS</option><option value="JOSÉ LUCIANO DE ASSIS">JOSÉ LUCIANO DE ASSIS</option><option value="juíza convocada ALAIDE MARIA DE PAULA">juíza convocada ALAIDE MARIA DE PAULA</option><option value="Juíza Convocada STELLA SIMONNE RAMOS">Juíza Convocada STELLA SIMONNE RAMOS</option><option value="Juiza Convocada SUELI PINI">Juiza Convocada SUELI PINI</option><option value="Juiz Conv. CONSTANTINO BRAHUNA">Juiz Conv. CONSTANTINO BRAHUNA</option><option value="Juiz Conv. JOAO GUILHERME LAGES MENDES">Juiz Conv. JOAO GUILHERME LAGES MENDES</option><option value="Juiz Convocado ADÃO CARVALHO">Juiz Convocado ADÃO CARVALHO</option><option value="Juiz Convocado ANTONIO ERNESTO A. COLLARES">Juiz Convocado ANTONIO ERNESTO A. COLLARES</option><option value="Juiz Convocado CÉSAR PEREIRA">Juiz Convocado CÉSAR PEREIRA</option><option value="Juiz convocado DÉCIO JOSÉ SANTOS RUFINO">Juiz convocado DÉCIO JOSÉ SANTOS RUFINO</option><option value="Juiz Convocado EDUARDO FREIRE CONTRERAS">Juiz Convocado EDUARDO FREIRE CONTRERAS</option><option value="Juiz Convocado JOÃO BRATTI">Juiz Convocado JOÃO BRATTI</option><option value="Juiz Convocado LUCIANO ASSIS">Juiz Convocado LUCIANO ASSIS</option><option value="Juiz Convocado MARCONI MARINHO PIMENTA">Juiz Convocado MARCONI MARINHO PIMENTA</option><option value="Juiz Convocado MARIO MAZUREK">Juiz Convocado MARIO MAZUREK</option><option value="Juiz Convocado MÁRIO MAZUREK">Juiz Convocado MÁRIO MAZUREK</option><option value="Juiz de Direito Convocado EDUARDO FREIRE CONTRERAS">Juiz de Direito Convocado EDUARDO FREIRE CONTRERAS</option><option value="KEILA CHRISTINE BANHA BASTOS UTZIG">KEILA CHRISTINE BANHA BASTOS UTZIG</option><option value="LAURA COSTEIRA ARAUJO DE OLIVEIRA">LAURA COSTEIRA ARAUJO DE OLIVEIRA</option><option value="LIÉGE CRISTINA DE VASCONCELOS RAMOS GOMES">LIÉGE CRISTINA DE VASCONCELOS RAMOS GOMES</option><option value="LUIZ NAZARENO BORGES HAUSSELER">LUIZ NAZARENO BORGES HAUSSELER</option><option value="MARCELLA PEIXOTO SMITH">MARCELLA PEIXOTO SMITH</option><option value="MARCK WILLIAM MADUREIRA DA COSTA">MARCK WILLIAM MADUREIRA DA COSTA</option><option value="MARCO MIRANDA">MARCO MIRANDA</option><option value="MARCONI MARINHO PIMENTA">MARCONI MARINHO PIMENTA</option><option value="MARINA LORENA LUSTOSA VIDAL">MARINA LORENA LUSTOSA VIDAL</option><option value="MARIO CEZAR KASKELIS">MARIO CEZAR KASKELIS</option><option value="MARIO EUZEBIO MAZUREK">MARIO EUZEBIO MAZUREK</option><option value="MÁRIO MAZUREK">MÁRIO MAZUREK</option><option value="MAYRA JULIA TEIXEIRA BRANDAO">MAYRA JULIA TEIXEIRA BRANDAO</option><option value="NAIF JOSE MAUES NAIF DAIBES">NAIF JOSE MAUES NAIF DAIBES</option><option value="NELBA DE SOUZA SIQUEIRA ALMEIDA">NELBA DE SOUZA SIQUEIRA ALMEIDA</option><option value="NORMANDES ANTONIO DE SOUSA">NORMANDES ANTONIO DE SOUSA</option><option value="NORMANDES ANTÔNIO DE SOUSA">NORMANDES ANTÔNIO DE SOUSA</option><option value="PAULO CÉSAR DO VALE MADEIRA">PAULO CÉSAR DO VALE MADEIRA</option><option value="PRISCYLLA PEIXOTO MENDES">PRISCYLLA PEIXOTO MENDES</option><option value="REGINALDO GOMES DE ANDRADE">REGINALDO GOMES DE ANDRADE</option><option value="ROBERVAL PANTOJA PACHECO">ROBERVAL PANTOJA PACHECO</option><option value="ROMMEL ARAUJO DE OLIVEIRA">ROMMEL ARAUJO DE OLIVEIRA</option><option value="ROMMEL ARAÚJO DE OLIVEIRA">ROMMEL ARAÚJO DE OLIVEIRA</option><option value="RUI GUILHERME DE VASCONCELLOS SOUZA FILHO">RUI GUILHERME DE VASCONCELLOS SOUZA FILHO</option><option value="SALOE FERREIRA DA SILVA">SALOE FERREIRA DA SILVA</option><option value="SIMONE MORAES DOS SANTOS">SIMONE MORAES DOS SANTOS</option><option value="STELLA SIMONNE RAMOS">STELLA SIMONNE RAMOS</option><option value="SUELI PEREIRA PINI">SUELI PEREIRA PINI</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label " for="secretaria">Secretaria</label>
+                                        <select class="form-control" id="secretaria" data-bind="options: secretarias,
+                                            optionsText:'descricao',
+                                            optionsValue: 'id',
+                                            value: filtro.secretaria,
+                                            optionsCaption: 'Selecione uma secretaria'"><option value="">Selecione uma secretaria</option><option value="CÂMARA ÚNICA">CÂMARA ÚNICA</option><option value="SECÇÃO ÚNICA">SECÇÃO ÚNICA</option><option value="TRIBUNAL PLENO">TRIBUNAL PLENO</option><option value="TURMA RECURSAL DOS JUIZADOS ESPECIAIS">TURMA RECURSAL DOS JUIZADOS ESPECIAIS</option><option value="1ª VARA CÍVEL DE SANTANA">1ª VARA CÍVEL DE SANTANA</option><option value="1ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ">1ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ</option><option value="1ª VARA DE LARANJAL DO JARI">1ª VARA DE LARANJAL DO JARI</option><option value="2ª VARA DA COMARCA DE OIAPOQUE">2ª VARA DA COMARCA DE OIAPOQUE</option><option value="Câmara Única">Câmara Única</option><option value="CEJUSC DO TRIBUNAL DE JUSTIÇA ">CEJUSC DO TRIBUNAL DE JUSTIÇA </option><option value="GABINETE 01">GABINETE 01</option><option value="GABINETE 02">GABINETE 02</option><option value="GABINETE 03">GABINETE 03</option><option value="GABINETE 04">GABINETE 04</option><option value="GABINETE 05">GABINETE 05</option><option value="GABINETE 06">GABINETE 06</option><option value="GABINETE 07">GABINETE 07</option><option value="GABINETE 08">GABINETE 08</option><option value="GABINETE DES. AGOSTINO SILVÉRIO JÚNIOR">GABINETE DES. AGOSTINO SILVÉRIO JÚNIOR</option><option value="GABINETE DES. GILBERTO PINHEIRO">GABINETE DES. GILBERTO PINHEIRO</option><option value="GABINETE DES. RAIMUNDO NONATO FONSECA VALES">GABINETE DES. RAIMUNDO NONATO FONSECA VALES</option><option value="GABINETE RECURSAL 02">GABINETE RECURSAL 02</option><option value="JUI INF JUV-ÁREA POL.PÚB.EXEC.MEDIDA SÓCIO EDUC.">JUI INF JUV-ÁREA POL.PÚB.EXEC.MEDIDA SÓCIO EDUC.</option><option value="Pleno">Pleno</option><option value="Pleno Administrativo">Pleno Administrativo</option><option value="Secção Única">Secção Única</option><option value="SECRETARIA DA PRESIDÊNCIA">SECRETARIA DA PRESIDÊNCIA</option><option value="SECRETARIA ESPECIAL DE PRECATÓRIOS">SECRETARIA ESPECIAL DE PRECATÓRIOS</option><option value="TRIBUNAL PLENO ADMINISTRATIVO">TRIBUNAL PLENO ADMINISTRATIVO</option><option value="Turma Recursal">Turma Recursal</option><option value="VARA ÚNICA DE AMAPÁ">VARA ÚNICA DE AMAPÁ</option><option value="VARA ÚNICA DE CALÇOENE">VARA ÚNICA DE CALÇOENE</option><option value="VARA ÚNICA DE FERREIRA GOMES">VARA ÚNICA DE FERREIRA GOMES</option><option value="VARA UNICA DE MAZAGAO">VARA UNICA DE MAZAGAO</option><option value="VARA ÚNICA DE PEDRA BRANCA DO AMAPARI">VARA ÚNICA DE PEDRA BRANCA DO AMAPARI</option><option value="VARA ÚNICA DE PORTO GRANDE">VARA ÚNICA DE PORTO GRANDE</option><option value="VARA ÚNICA DE TARTARUGALZINHO">VARA ÚNICA DE TARTARUGALZINHO</option><option value="VARA ÚNICA DE VITÓRIA DO JARI">VARA ÚNICA DE VITÓRIA DO JARI</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" data-bind="visible: !consultaExtrajudicial">
+                                        <label class="control-label " for="votacao">Votação</label>
+                                        <select class="form-control" id="votacao" data-bind="value: filtro.votacao">
+                                            <option value="0" selected="">Selecione uma votação</option>
+                                            <option value="Unânime">Unânime</option>
+                                            <option value="Maioria">Maioria</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div id="captcha">
+                                        <captcha params="{contexto : $element, captchaInfo: ko.getObservable($data, 'captchaInfo'), callback: captchaCallback}"><style>
+    .tj-caixa-captcha {
+        position: relative;
+        width: 300px;
+        height: 74px;
+        border: 1px solid #d3d3d3;
+        border-radius: 3px;
+    }
+
+    .tj-caixa-captcha span {
+        display: inline-block;
+        line-height: 74px;
+        vertical-align: middle;
+    }    
+    
+    .tj-caixa-captcha .tj-captcha-icon{
+        padding-left: 10px;
+        font-size: 40px;        
+    }
+
+    .tj-caixa-captcha .icon-check{
+        color: green;
+    }    
+
+    .tj-caixa-captcha .icon-security{
+        color: #2365B2;
+    }    
+
+    .tj-caixa-captcha .tj-captcha-texto{
+        font-family: Roboto,helvetica,arial,sans-serif;
+        font-size: 14px;
+    }
+
+    .tj-captcha-tem-passe .captcha-placeholder > div {
+        /* hack pra esconder o captcha que sempre é renderizado */
+        opacity: 0;
+        height: 0;
+        transition: 0.3s;
+        z-index: -1; /* evita que o maldito captcha fique na frente dos controles */
+    }
+</style>
+
+<div class="captcha">
+    <!-- ko if : captchaInfo  -->
+        <!-- ko if : captchaInfo.id === null && captchaInfo.passe === null --><!-- /ko -->    
+
+        <div data-bind="css : (captchaInfo.requerido ? '': 'hidden')">
+            <div class="captcha-placeholder"><div><input type="hidden" name="cf-turnstile-response" id="cf-chl-widget-je1hg_response" style=""></div></div>
+        </div>
+    <!-- /ko -->
+</div></captcha>
+                                    </div>
+                                </div>
+
+                                <div class="form-group espaco-abaixo">
+                                    <!-- Button -->
+                                    <button id="btPesquisar" class="btn btn-primary btn-large" data-bind="click : consultar"><i class="icon-search"></i> Pesquisar</button>
+                                    <a href="#" data-bind="click : limpar" class="btn-small espaco-esquerda"> <small>
+                                            limpar
+                                            campos</small></a>
+                                </div>
+                            </form>

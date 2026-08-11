@@ -1,0 +1,95 @@
+# TJAP — 02 Banco de Decisões e Sentenças — busca e filtros
+
+Mapeado em 11/08/2026, slot 2000. Status do módulo: 🟡 ABERTO, crawler não escrito.
+
+## Onde fica — e por que ele é o alvo certo
+
+https://bancosentencas.tjap.jus.br/
+
+HOST SEPARADO. Não apareceu na varredura de DNS do Passo 0 porque eu não o chutei —
+ele saiu do HTML da página de jurisprudência ("Clique aqui para acessar o Banco de
+Sentenças"). É a lição do TJBA outra vez: a porta estava no bundle, não no palpite.
+
+🔴 A DESCOBERTA DO DIA: o módulo de acórdãos está atrás de Turnstile e este NÃO ESTÁ.
+   `curl` puro, sem browser, sem UA especial: HTTP 200, 450 KB de HTML.
+   Nenhuma menção a captcha em lugar nenhum da página.
+   Dois módulos do mesmo tribunal, dois regimes de acesso — como no TJSE, só que aqui
+   um dos dois está ABERTO.
+
+Print: 01.01-tela-inicial.png · 02.01-resultados.png
+
+## Que sistema é
+
+Laravel + Livewire + Alpine.js + Flux — família NOVA no repo (não é SPA-com-REST, não é
+JSF, não é Rails, não é PHP+Solr do TJTO). Livewire é server-driven: o estado vai e volta
+num snapshot assinado por checksum, via POST /livewire/update.
+Scripts: /livewire-53cc04b2/livewire.min.js, /build/assets/app-DteveQ2O.js, /flux/flux.min.js
+
+⚠️ Consequência para o crawler: NÃO há endpoint REST limpo. Reproduzir a busca fora do
+   browser exige carregar a página, extrair o snapshot Livewire e reenviá-lo. NÃO foi
+   medido se isso funciona por http puro — é a primeira coisa a fazer no próximo slot.
+   Arquivo com o XHR capturado: 02-xhr-busca.json
+
+## Acervo e conteúdo
+
+É 1º GRAU: sentenças e decisões de Vara. Cobre DOIS sistemas (filtro "Sistema"):
+Tucujuris e PJe.
+
+✅ Seria o 5º tribunal do repo com 1º grau (depois de TJES, TJPB, TJRO e TJTO). A pergunta
+   que o TJES mandou fazer rendeu pela QUINTA vez seguida — vale continuar perguntando.
+
+## Filtros da tela (Alpine store `filtersManager`)
+
+  search          — busca livre (input[type=search])
+  match_phrase    — segundo input de busca, frase exata
+  Sistema         — Tucujuris | PJe
+  Tipo            — Ambos | Sentença | Decisão
+  De / Até        — datas (#quick-date-from / #quick-date-to, e os #adv-* nos avançados)
+  Filtros Avançados — painel extra, NÃO enumerado (pendência)
+
+⚠️ NENHUM filtro foi provado por contagem. Só a busca livre foi exercitada.
+
+## Anatomia do resultado (medida, 1 card dissecado)
+
+Campos exibidos no card:
+  Órgão        1ª VARA DA COMARCA DE OIAPOQUE
+  Nº Processo  0001041-58.2016.8.03.0009
+  Classe       Reintegração / Manutenção de Posse
+  Assunto      10445-Esbulho / Turbação / Ameaça,9196-Liminar
+  Juntada      07/12/2017
+  Magistrado   LAURA COSTEIRA ARAUJO DE OLIVEIRA
+Ações por card: Visualizar · Download · Copiar   (+ "Exportar" na lista)
+
+⚠️ A data se chama JUNTADA, não julgamento nem publicação — é o mesmo campo do TJES
+   (`dt_juntada`). NÃO apresentar como data de julgamento. Aqui, ao contrário do TJES,
+   o rótulo da tela é honesto.
+⚠️ NÃO foi medido se o card traz ementa, trecho ou nada, nem o tamanho do texto.
+   Fase 3b NÃO executada neste módulo — é a maior pendência.
+
+## 🔴 DUAS ARMADILHAS MEDIDAS
+
+1. ACENTO É OBRIGATÓRIO E NÃO É NORMALIZADO — e quase me fez registrar a base como
+   minúscula. `usucapiao` = 1 resultado; `usucapião` = 2.001.
+   Padrão TJMS/TJBA, oposto de TJAC/TJAM/TJAL/TJPE/TJPI/TJTO.
+   Um número baixo aqui é acento faltando, não ausência de jurisprudência.
+
+2. O TOTAL SATURA EM 10.000: `dano moral` = 10.000 e `a` = 10.000, o mesmo número.
+   Padrão TJPE. NÃO relatar 10.000 como contagem. Onde a paginação para não foi medido.
+
+Contagens medidas (11/08/2026):
+  usucapiao   1
+  usucapião   2.001
+  dano moral  10.000  (saturado)
+  a           10.000  (saturado)
+
+## PENDÊNCIAS deste módulo — o que o próximo slot precisa fazer
+
+- Provar se a busca roda por http puro (contrato Livewire) ou se exige browser. DECISIVO.
+- Fase 3b inteira: anatomia do card em 2+ tipos, ementa × trecho × nada, escada até o
+  documento (Visualizar/Download), formato, paginação, estabilidade, permalink.
+- Enumerar o painel "Filtros Avançados".
+- Provar CADA filtro por contagem (Sistema, Tipo, datas).
+- Operadores: nenhum testado.
+- Consulta por número de processo: não testada (alimenta o Checker).
+- Distribuição por ano (lição TJAM) — não medida.
+- Rate limit não medido.

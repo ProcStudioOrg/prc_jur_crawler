@@ -1,0 +1,128 @@
+# TJAP — 01 Jurisprudência (Tucujuris) — busca e filtros
+
+Mapeado em 11/08/2026, slot 2000. Status do módulo: 🔴 BLOQUEADO POR CAPTCHA.
+
+## Onde fica
+
+https://tucujuris.tjap.jus.br/pages/consultar-jurisprudencia/consultar-jurisprudencia.html
+
+Descoberto pelo portal institucional (`www.tjap.jus.br/portal/`), na lista de consultas.
+NÃO foi chutado. A jurisprudência do TJAP vive DENTRO do Tucujuris — o mesmo sistema de
+tramitação —, ao contrário dos 7 tribunais anteriores, em que jurisprudência e tramitação
+eram sistemas distintos.
+
+Print: 01.01-tela-inicial.png · 01.02-termo-preenchido.png
+
+## Passo 0 — o que existe e o que NÃO existe
+
+NÃO EXISTE (NXDOMAIN, medido por getent):
+  dadosabertos / api / jurisprudencia / juris / consultas / sistemas / portal /
+  biblioteca .tjap.jus.br
+
+NÃO EXISTE (soft-404: HTTP 200 servindo /404.html, confirmado pela URL efetiva):
+  www.tjap.jus.br/dados-abertos, /transparencia/dados-abertos, /swagger, /v3/api-docs
+  ⚠️ o mesmo acontece com /path-inventado-9z → NÃO há vhost curinga; o "200" é o
+  soft-404. O tell aqui NÃO é o md5 (que varia a cada request), é a URL efetiva.
+
+EXISTE — API interna REST, JSON, sob /api/publico/ (achada na aba Network, não chutada):
+  GET  /api/publico/requer-validacao-captcha            -> {"dados":true}
+  GET  /api/publico/buscar-passe-captcha                -> {"dados":null}
+  GET  /api/publico/buscar-data-banco-dados-jurisprudencia
+  GET  /api/publico/carregar-filtros-combo-jurisprudencia
+  POST /api/publico/consultar-jurisprudencia
+  POST /api/publico/consultar-detalhe-jurisprudencia
+  GET  /api/publico/exportar-jurisprudencia?formato=pdf&identificador=<id>
+
+DataJud: NÃO sondado (o tempo foi para o captcha). Fica como NÃO MEDIDO.
+
+## A borda: Cloudflare, desafio AUTOMÁTICO (não confundir com o captcha da busca)
+
+Todo o host tucujuris.tjap.jus.br responde 403 + `cf-mitigated: challenge` a qualquer
+cliente sem JS — inclusive `/path-inventado-9z`, o que torna curl INÚTIL para descobrir
+rota neste host (403 uniforme não distingue rota que existe de rota que não existe).
+
+✅ MAS O DESAFIO PASSA SOZINHO no Playwright headless com UA de Chrome real: HTTP 200 na
+   1ª tentativa, sem espera, sem interação. É desafio automático, NÃO o desafio interativo
+   do STJ. Cookie resultante: __cf_bm.
+⚠️ Com UA de HeadlessChrome o 403 é permanente — o bloqueio da borda é por UA.
+⚠️ `ctx.request.get()` do Playwright NÃO passa (não executa JS): buscar um recurso do
+   mesmo host por ctx.request devolve a página de desafio. De dentro da página,
+   `fetch()` funciona. Foi assim que captcha.html foi lido.
+
+## O portão de verdade: Cloudflare Turnstile no PAYLOAD da busca
+
+O POST da busca leva o token do Turnstile num CAMPO DO CORPO (`filtro.captcha`), não em
+header. Sem token o servidor responde HTTP 200 com:
+
+  {"ambiente":"producao","status":"ERRO","mensagem":"A verificação de segurança falhou"}
+
+Provado mandando o POST e lendo a mensagem (lição TJSE), não por grep de string.
+
+Sitekeys medidas — o app carrega DOIS fornecedores:
+  Turnstile (o que a busca usa): 0x4AAAAAABxUlvVnxyw9z7Xj   (componentes/captcha/captcha.js)
+  reCAPTCHA (caminho legado):    6LdAcykTAAAAACD4MfZAyI8C_VAHA-DOceOBH8T7  (js/captcha.js)
+  window.grecaptcha e window.turnstile são AMBOS "object" na página.
+
+O conceito de "passe": `requerido: !passe`. Se o servidor entregasse um passe, o captcha
+não seria exigido — mas GET /api/publico/buscar-passe-captcha devolve `dados: null`.
+
+MEDIÇÃO DO TOKEN: o input hidden `cf-turnstile-response` é criado (turnstile.render()
+roda), mas fica VAZIO em 0/20/40/60 s e NENHUM iframe do widget é criado.
+⚠️ Diferente do TJSE: lá o widget renderizava e conversava com o challenge-platform sem
+   emitir token; aqui ele nem chega a montar o iframe.
+
+## ⚠️ NÃO MEDIDO — e a falha foi minha
+
+O teste em Google Chrome REAL não foi validamente executado. Rodei
+`chromium.launch({channel:'chrome'})` mas ESQUECI de sobrescrever o userAgent no contexto,
+então o navegador se anunciou como `HeadlessChrome/150.0.0.0`, levou 403 na BORDA e nunca
+chegou ao Turnstile. O resultado ("token VAZIO") NÃO é evidência sobre o Turnstile — é
+evidência de que eu me anunciei como robô. É exatamente a armadilha registrada no TJRN.
+=> Refazer com UA de Chrome real antes de qualquer conclusão sobre o Turnstile.
+
+## Formulário — contrato completo (do controller, DOM vivo)
+
+Arquivo: 01-formulario-completo.html · 01-controller.js · combos-select.json · 01-inputs.json
+
+POST /api/publico/consultar-jurisprudencia, corpo JSON:
+
+  {
+    orgao,               // radio: "0" Todos | Tribunal | Turma recursal  <- DESAMBIGUAÇÃO
+    numeroCNJ,           // texto
+    ementa,              // texto — a "Pesquisa Livre"
+    numeroAcordao,       // texto
+    numeroAno,           // combo, 30 anos (1997..2026)
+    palavrasExatas,      // checkbox "Usar palavras exatas"
+    relator,             // combo, 107 opções
+    secretaria,          // combo, 39 opções
+    classe,              // combo, 113 opções (há um 2º combo classe de 31)
+    votacao,             // combo, 3 opções
+    origem,              // combo, 15 opções
+    offset,              // paginação
+    tipo_jurisprudencia,
+    captcha              // <- token do Turnstile. SEM ELE A BUSCA NÃO RODA.
+  }
+
+Corpo real capturado no clique (sem captcha):
+  {"orgao":"0","ementa":"usucapiao","votacao":"0","tipo_jurisprudencia":null}
+
+Combos enumerados no browser e salvos em combos-select.json:
+  classe(31) classe(113) origem(15) relator(107) secretaria(39) votacao(3)
+Base atualizada em 11/08/2026 18:05h (GET buscar-data-banco-dados-jurisprudencia)
+— ou seja, base CORRENTE, atualizada no próprio dia do mapeamento.
+
+## A API erra com honestidade — e isso é ferramenta de descoberta
+
+É Symfony, e rota inexistente responde HTTP 200 com mensagem legível:
+  "No route found for \"POST /api/publico/consultar-sumula\""
+  "No route found for \"POST /api/publico/requer-validacao-captcha\": Method Not Allowed (Allow: GET)"
+Dá para enumerar rota e método sem adivinhar — diferente do 403 uniforme da borda.
+
+## PENDÊNCIAS deste módulo
+
+- Fase 3b NÃO executada: a busca nunca devolveu resultado. Não há anatomia de card,
+  escada até o inteiro teor, paginação, permalink nem total.
+- Nenhum operador testado (nada a testar sem busca).
+- Nenhum filtro provado por contagem.
+- O teste em Chrome real precisa ser REFEITO com UA correto (ver acima).
+- DataJud não sondado.
