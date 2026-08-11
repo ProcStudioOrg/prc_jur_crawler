@@ -1,0 +1,55 @@
+<form class="" role="form" action="/consulta.php">
+            <!-- Email address input-->
+
+            <div class="row">
+
+              <div class="input-group">
+                <input type="text" class="form-control" name="q" id="consulta_input" required="" placeholder="Digite o termo a ser pesquisado" style="">
+                <div class="input-group-append">
+                  <button type="submit" onclick="JusTo.jurisprudencia.submitForm();" class="btn btn-outline-secondary btn_subm"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row inf_check">
+              <div class="col">
+                <div class="style_start_filter">
+                  <input class="form-check-input opt_add_filter " type="checkbox" name="soementa" id="somente_ementa_input" value="true" style=""> <label for="somente_ementa_input" class="opt_add_filter">  Pesquisar termo somente na Ementa</label>
+
+
+                 <!-- <div class="filtros_pesquisar_em_start"> Pesquisar Julgamentos em:
+
+                    <ul>
+                      <li>
+                        <input class="form-check-input opt_add_filter" type="checkbox"  id="tipo_decisao_acordao" name="tipo_decisao_acordao" >
+                        <label class="form-check-label_start check_em_start" for="tipo_decisao_acordao">
+                          ACÓRDÃOS
+                        </label>
+                      </li>
+                      <li>
+                        <input class="form-check-input opt_add_filter" type="checkbox"  id="tipo_decisao_sentenca" name="tipo_decisao_sentenca" >
+                        <label class="form-check-label_start check_em_start" for="tipo_decisao_sentenca">
+                          SENTENÇAS
+                        </label>
+                      </li>
+
+                      <li>
+                        <input class="form-check-input opt_add_filter" type="checkbox"  id="dec_monocrativa_is2G_true" name="dec_monocrativa_is2G_true" >
+                        <label class="form-check-label_start check_em_start" for="dec_monocrativa_is2G_true">
+                          DECISÕES MONOCRÁTICAS DE 2ª INSTÂNCIA
+                        </label >
+                      </li>
+                    </ul>
+                  </div>
+                   -->
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row" style="text-align:justify;margin-top:20px">
+              <p><a href="#" onclick="JusTo.jurisprudencia.windowView('https://photos.onedrive.com/share/B57B2A9AEB01B9B3!351577?cid=B57B2A9AEB01B9B3&amp;resId=B57B2A9AEB01B9B3!351577&amp;authkey=!ALHVbZK8o-ZuHzw&amp;ithint=video&amp;e=dUiUce')" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"><b>Acessar Tutorial </b></a></p>
+            </div>
+
+          </form>

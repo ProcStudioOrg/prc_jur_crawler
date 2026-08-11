@@ -83,6 +83,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjsc` | TJ de Santa Catarina | SC | `CLAUDE-TJSC.md` | 🟢 OK (browser — portal atrás de verificação de segurança) |
 | — | TJ de Sergipe | SE | `CLAUDE-TJSE.md` | 🔴 **sem comando** — captcha nos **dois** módulos (Turnstile no judicial, reCAPTCHA no administrativo); nem `-n` existe |
 | `tjsp` | TJ de São Paulo | SP | `CLAUDE-TJSP.md` | 🔴 sem acesso — não rodar |
+| `tjto` | TJ do Tocantins | TO | `CLAUDE-TJTO.md` | 🟢 OK (portal Jurisprudência 4.0, HTTP direto, sem browser — **sem captcha**; ementa, **citação oficial** e **permalink público** já vêm na busca). Base corrente, e **tem 1º grau** (254.501 sentenças, de 2024 em diante) |
 | `tst` | **Tribunal Superior do Trabalho** | Nacional (**trabalhista**) | `CLAUDE-FALCAO.md` | 🟢 OK (API direta, sem browser) |
 | `trt1`…`trt24` | TRTs 1ª a 24ª Região (**trabalhista**) | todo o país — ver tabela no doc | `CLAUDE-FALCAO.md` | 🟢 OK (API direta, sem browser) |
 | `csjt` | Conselho Superior da JT (administrativo) | Nacional | `CLAUDE-FALCAO.md` | 🟢 OK (acervo pequeno) |
@@ -452,6 +453,34 @@ TJAP, TJRR e TJTO. Veja `cobertura/CLAUDE-COBERTURA.md` e use a skill
   **não cobre o acervo do e-Proc** (o TJMS migra desde 01/07/2026 e o módulo de
   jurisprudência do e-Proc não está no ar). Para pedido de jurisprudência **muito
   recente**, diga isso. Matéria federal com origem em MS → `trf3`
+- "TJTO" / "Tocantins estadual" / "Palmas" / "Araguaína" → `tjto` → leia `CLAUDE-TJTO.md`.
+  Juizado Especial / Turma Recursal tocantinense → `tjto --origem turmas`; Justiça Comum é
+  `--origem comum` (o default `--origem ambas` **mistura os dois**). Em TO o Juizado é
+  **8,3%** do acervo — padrão TJAL, oposto de TJAC/TJAM/TJRO. ⚠️ **Não confunda a
+  competência `TURMAS RECURSAIS` (Juizado, 20.785) com `TURMAS DAS CAMARAS CIVEIS`
+  (2º grau comum, 186.534)** — os dois começam por "TURMAS" e são opostos.
+  ✅ **Tem 1º GRAU**: `tjto -t sentenca` (254.501 sentenças) — pedido que só TJTO, TJES,
+  TJPB e TJRO atendem. ⚠️ **Mas sentença e monocrática só existem de 2024 em diante**
+  (acórdão vai a 2019); pedido histórico nesses tipos devolve pouco, e o zero não é
+  ausência de decisão.
+  🔴 **O ESPAÇO ENTRE TERMOS É OR, não AND** (provado: 1.807 + 29.310 − 1.257 = 29.860).
+  Query de duas palavras devolve a UNIÃO. **Use `E` ou `AND`.**
+  🔴 **`NAO` sem acento NÃO é operador e INFLA** (30.282 contra 550 da exclusão correta,
+  sem sintoma) — escreva `NÃO` acentuado ou `NOT`. É o oposto do TJAC/TJAM/TJAL.
+  `ADJ`/`PROX` são ignorados; `"frase exata"`, `*` e `$` funcionam.
+  ⚠️ **NÃO avise sobre acento na query** — o índice normaliza; o acento só importa no `NÃO`.
+  🔴 **Só ACÓRDÃO tem ementa**: sentença e monocrática trazem a **decisão inteira** e vêm
+  **sem relator**. O crawler marca `semEmenta` — não apresente esse texto como ementa.
+  ⚠️ A aba "Decisões Monocráticas" (a maior, 597.990) **mistura despacho de mero
+  expediente** ("INTIME-SE") com decisão de mérito — não relate esse total como jurisprudência.
+  🔴 **A base só tem data de JULGAMENTO** (o par é autuação/julgamento): não existe data de
+  publicação. **Nunca apresente a data do TJTO como publicação.**
+  ✅ **Ementa íntegra, CITAÇÃO OFICIAL pronta e PERMALINK público** (`documento.php?uuid=`,
+  confirmado em aba limpa) vêm sem captcha; o permalink abre o **inteiro teor**.
+  🔴 O que identifica o julgado é o **uuid**, não o nº do processo (um processo tem vários).
+  ⚠️ **O permalink de BUSCA mente sobre o recorte**: por GET o portal ignora todos os
+  filtros em silêncio e só o termo sobrevive. Nunca mande a URL da busca como prova.
+  Matéria federal com origem no TO → `trf1`; trabalhista → `trt10`
 - "Matéria previdenciária federal em SP" → `trf3` (instável; ver doc), com TRF4/TRF5 de comparativo
 - **Matéria constitucional / precedente de maior hierarquia** ("o que o Supremo decidiu",
   "é constitucional?", ADI/ADPF/ADC, recurso extraordinário) → `stf` → leia `CLAUDE-STF.md`.

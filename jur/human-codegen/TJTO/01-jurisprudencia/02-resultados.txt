@@ -1,0 +1,196 @@
+PÓS-BUSCA — TJTO / Jurisprudência 4.0   (skill browser-post-search, 11/08/2026)
+==============================================================================
+
+## 1. Onde o resultado aparece
+
+- **Mesma rota**, `POST /consulta.php`, página inteira re-renderizada. Não há
+  nova aba nem modal para a listagem.
+- ✅ **A URL de resultado é reutilizável como GET** (`?q=usucapiao`) e carrega em
+  aba limpa — mas ⚠️ **só o termo sobrevive**: todos os filtros são ignorados no
+  GET (ver a armadilha central em `01-busca-e-filtros.txt`). Ou seja: o
+  "permalink de busca" existe e **mente sobre o recorte**. Não é o zero falso do
+  TJPE nem o formulário-sem-executar do TJRO — aqui ele executa, com o filtro
+  errado. **Nunca mande a URL da busca como prova de um recorte.**
+- **Os controles PERMANECEM** e ganham companhia: a página de resultado traz os
+  11 grupos de faceta e os 2 `<select>` que a tela inicial não tinha.
+- **O total aparece** como texto `1.807 resultados` e, em paralelo, como os três
+  contadores de aba (`<span class="num_minuta">`).
+
+Prints: `02.01-resultados.png` (topo), `01.03-filtros-resultado.png` (fullPage,
+com a coluna de facetas inteira).
+
+
+## 2. Anatomia do card
+
+Um card = `<div style="width: 99%…" class="container align-self-center panel panel-default">`.
+`outerHTML` gravado em `02-card-acordao.html`.
+
+Metadados **sem clicar em nada** (tabela `<td>rótulo</td><td>valor</td>`):
+Classe · Tipo Julgamento · Assunto(s) · Competência · Relator · Data Autuação ·
+Data Julgamento.
+
+⚠️ **"Tipo Julgamento" NÃO é o tipo do documento**: vale "Mérito", "Embargos de
+Declaração", "Agravo Interno"… O tipo (acórdão × monocrática × sentença) **não
+aparece no card** — é a aba que se pediu. Um mapeamento que lesse "Tipo
+Julgamento" como tipo de documento gravaria "Mérito" onde devia estar "Acórdão".
+
+⚠️ **"Competência" é o campo que faz papel de órgão julgador** — no 2º grau vale
+"TURMAS DAS CAMARAS CIVEIS", no 1º "CIVEL / FAZENDA E REG PÚBLICOS". Some à
+lição do TJPI (rótulo que não é o que parece).
+
+### O texto do card: ementa, trecho ou nada?
+
+**No acórdão é a EMENTA ÍNTEGRA** (`div.content_ementa#content_<uuid>`), no
+formato estruturado do CNJ (I. Caso em exame / II. Questões em discussão /
+III. Razões de decidir / IV. Dispositivo). Medido em 3 documentos:
+
+    card 5.010 chars · ementa.php 4.821    (o card traz ~190 chars a mais)
+    card 2.389       · ementa.php 2.217
+    card 3.482       · ementa.php 3.304
+
+Não é trecho: o inteiro teor do mesmo documento tem **43.277** chars, ordem de
+grandeza diferente. O `<em>` que envolve o termo buscado é **destaque sobre o
+texto íntegro**, não recorte — diferente do `highlight` do TJMG.
+
+🔴 **NA SENTENÇA E NA MONOCRÁTICA NÃO HÁ EMENTA.** O mesmo `content_ementa`
+traz **a decisão inteira**, do cabeçalho em diante — dissecado nos dois:
+
+    Sentença     "Dúvida Nº 0000331-53.2026.8.27.2714/TO … REQUERENTE: …
+                  SENTENÇA … Vistos etc."                        (9.845 chars)
+    Monocrática  "Usucapião Nº 0016530-08.2026.8.27.2729/TO … AUTOR: …
+                  DESPACHO/DECISÃO … INTIME-SE"                  (4.402 chars)
+
+É o defeito do TJBA (o campo chamado ementa era o inteiro teor) num só dos três
+tipos. **Dissecar um tipo só teria gravado "o TJTO traz ementa" e errado em dois
+terços.** O crawler marca `semEmenta: true` fora do acórdão.
+
+🔴 **Sentença e monocrática vêm SEM RELATOR** (`Relator` ausente da tabela) e
+**sem link de processo** (o botão do e-Proc só existe no 2º grau). `-r` por nome
+de pessoa não acha nada em 1º grau.
+
+⚠️ **A aba "Decisões Monocráticas" mistura DESPACHO DE MERO EXPEDIENTE com
+decisão de mérito** — o exemplo dissecado é "Determinação - Emenda à Inicial",
+cujo corpo é "INTIME-SE". É por isso que ela é a maior aba (597.990): esse
+número **não é jurisprudência toda**. Recorte por `fq_tipo_julgamento`.
+
+Botões do card (todos, com o texto exato): **Ementa** · **Inteiro Teor** ·
+**Processo** · `<nº do processo>` (copia) · setas de navegação entre documentos.
+
+
+## 3. A escada até o documento
+
+| Degrau | O que acontece |
+|---|---|
+| **Ementa** | `GET /ementa.php?id=<uuid>` → **JSON cru do Solr**, abre em modal Bootstrap (modal ⇒ sem URL própria). Traz `ementa` + `rodape_ementa`. |
+| **Inteiro Teor** | `GET /viewFileDoc.php?uuid=<uuid>&options=%23page%3D1` → **302** para `documento.php?uuid=<uuid>`. Nova janela nomeada. |
+| **Processo** | `https://eproc2.tjto.jus.br/consulta_publica/2G/processo/<20 dígitos>/` — outro sistema (tramitação), fora do escopo. Só no 2º grau. |
+| **Copiar citação** | Não há botão próprio, mas o `rodape_ementa` **é** a citação oficial e vem no JSON da ementa. |
+
+**Contrato do inteiro teor, reproduzido fora do browser:**
+
+    GET https://jurisprudencia.tjto.jus.br/documento.php?uuid=<uuid>
+    User-Agent: <Chrome>          ← obrigatório (sem ele: 403)
+    → 200, text/html, charset=ISO-8859-1, ~259 KB
+
+Chave **simples** (só o uuid) — sem chave composta, diferente do TJMG.
+
+⚠️ O `Location` do 302 vem com `&amp;` literal (bug de escape do portal).
+Inofensivo, mas o crawler vai direto em `documento.php` e não segue o redirect.
+
+
+## 4. O documento na íntegra
+
+    Formato:            HTML (ISO-8859-1)
+    Tamanho típico:     ~259 KB brutos → ~42-45 mil caracteres úteis
+    Vem completo?       SIM — cabeçalho, partes, advogados (com OAB), relatório,
+                        voto, dispositivo e a lista nominal de votantes
+    Precisa de sessão?  NÃO (testado em contexto limpo, sem cookie)
+    Precisa de captcha? NÃO — em etapa nenhuma
+    Já veio na busca?   A EMENTA sim; o inteiro teor não (1 GET por documento)
+
+🔴 **CHARSET DIVIDIDO NO MESMO HOST:** `consulta.php` e `ementa.php` são
+**UTF-8**; `documento.php` é **ISO-8859-1**. Ler o inteiro teor como UTF-8
+produz mojibake em todo acento. **Não herde o charset de um módulo para o
+outro, nem dentro do mesmo domínio.**
+
+### Bloqueio — medido em separado (busca × download)
+
+    busca:     livre, sem captcha, sem login, sem token, sem cookie
+    ementa:    livre
+    download:  livre
+
+Nenhuma assimetria. Diferente de TJAC/TJAM/TJAL (reCAPTCHA só no download).
+
+
+## 5. Paginação e profundidade
+
+    Resultados por página:  default 20 no portal; `rows` no POST
+    Parâmetro:              rows + start (offset), POST
+    Máximo aceito:          🔴 NÃO É FIXO — ver abaixo
+    Total exposto:          "N resultados" + 3 contadores de aba
+    Total é EXATO           ✅ não saturado
+    Profundidade:           ✅ SEM TETO DE OFFSET
+
+**Total exato**, provado pela aritmética da última página: `usucapiao` = 1.807 e
+`start=1806` devolve **1** card, `start=1820` devolve 0. Em `posse` = 29.310,
+`start=29300` devolve **10**. E `start=20000` responde normal — **não há o
+`max_result_window` de 10.000 do TJRO**.
+
+**Paginação ESTÁVEL:** a mesma página (start=40), 3 vezes, devolveu os mesmos 20
+uuids — 1 variante em 3 rodadas. Sem o problema de TJDFT/TJRJ/TJMG/TJMT.
+
+🔴 **O TETO DE `rows` OSCILA — é peso de payload, não contagem.** Medido duas
+vezes cada, na mesma query:
+
+    rows=100 → 200 / 200   (1,5 MB)   ✅ único estável
+    rows=150 → 200 / 504              ⚠️ oscila (504 = gateway, não app)
+    rows=200 → 500 / 200   (2,4 MB)   ⚠️ oscila
+    rows=250 → 500 / 500
+    rows=300 → 500 / 500   ← passou na primeira bisecção, falhou minutos depois
+    rows=400 → 500 / 500
+
+Cada card carrega a ementa íntegra ou a decisão inteira, então o limite real é o
+tamanho dos documentos **daquela busca**. **Bisectar uma vez só produz um número
+que não se sustenta** — foi o que quebrou o teste 10 na primeira execução da
+suíte. ✅ O erro é honesto (500/504, corpo vazio), nunca truncagem calada.
+O crawler usa 50 por default e trava o teto em 100.
+
+
+## 6. Permalink e identidade do documento
+
+✅ **EXISTE PERMALINK POR DOCUMENTO**, confirmado em contexto limpo:
+
+    https://jurisprudencia.tjto.jus.br/documento.php?uuid=<uuid>
+
+Sem cookie, sem sessão, sem captcha. É o segundo tribunal do Bloco 3 com
+permalink real, depois do TJPI — e aqui ele abre o **inteiro teor**, não só a
+ementa.
+
+🔴 **O identificador do DOCUMENTO é o `uuid` de 32 hex, não o número do
+processo.** Provado: o 0004697-71.2023.8.27.2737 tem **dois** documentos (1
+acórdão + 1 sentença), com uuids distintos. O nº do processo identifica o
+processo; o uuid identifica o julgado.
+
+⚠️ O uuid **não** é aceito no campo `numero_processo` — os dois caminhos de
+consulta são disjuntos.
+
+
+## 7. Tabela campo-a-campo (DOM → repo)
+
+| DOM / card | Significa | Campo no repo |
+|---|---|---|
+| `id="content_<uuid>"` | identidade do documento | `id` |
+| `setcopiarConteudo('…')` | nº CNJ mascarado | `processo` |
+| link `consulta_publica/2G/processo/<20d>` | nº sem máscara + grau | `processoSemMascara`, `processoUrl` |
+| (a aba pedida) | acórdão/monocrática/sentença | `tipoDocumento` |
+| `<td>Tipo Julgamento</td>` | Mérito, Embargos… ⚠️ não é o tipo | `tipoJulgamento` |
+| `<td>Classe</td>` | classe processual | `classe` |
+| `<td>Assunto(s)</td>` | cadeia de assuntos CNJ | `assuntos` |
+| `<td>Competência</td>` | faz papel de órgão julgador | `orgaoJulgador`, `instancia` |
+| `<td>Relator</td>` | ⚠️ ausente em 1º grau | `relator` |
+| `<td>Data Autuação</td>` | autuação | `dataAutuacao` |
+| `<td>Data Julgamento</td>` | julgamento | `dataJulgamento` |
+| — | **não existe** | `dataPublicacao` = null |
+| `div.content_ementa` | ementa (só acórdão) / decisão inteira | `ementa` + `semEmenta` |
+| `documento.php?uuid=` | inteiro teor e permalink | `permalink`, `inteiroTeorLink` |
+| `rodape_ementa` (ementa.php) | **citação oficial pronta** | `fetchCitacao()` |

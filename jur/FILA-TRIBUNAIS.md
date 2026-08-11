@@ -325,7 +325,7 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 | 8 | **TJES** | ES | PJe, Projudi | ok 07/08 |
 | 9 | **TJPI** | PI | PJe, Projudi | ok 09/08 |
 | 10 | **TJSE** | SE | ⚠️ a pista estava errada: é **eproc**, não "Próprio" — e a jurisprudência é uma app JSF à parte | bloqueado 10/08 |
-| 11 | **TJTO** | TO | e-Proc, Projudi — irmão do TJRS/TJSC/TRF4 (e-Proc) | pendente |
+| 11 | **TJTO** | TO | ⚠️ a pista de "irmão do e-Proc" **não serviu**: a jurisprudência é portal próprio PHP+Solr | ok 11/08 |
 | 12 | **TJAP** | AP | Tucujuris, PJe | pendente |
 | 13 | **TJRR** | RR | PJe, Projudi | pendente |
 | 14 | **TJMT** | MT | PJe, Projudi | ok 10/08 |
@@ -636,6 +636,84 @@ As lições do mapeamento de 08/08 valem para os 4 restantes do bloco:
 estão expostos como flags mas **não foram provados por contagem**; a causa interna do
 filtro no-op **não foi isolada**; e os combos listam as **100 opções mais frequentes**,
 não todas, sem endpoint que devolva a lista completa.
+
+📌 **O que o TJTO (feito em 11/08/2026) ensinou — leia
+[`CLAUDE-TJTO.md`](CLAUDE-TJTO.md).** Quinto alvo do Bloco 3 e o primeiro portal
+**PHP + Solr caseiro** do repo: sem captcha em etapa nenhuma, com ementa íntegra,
+**citação oficial pronta** e **permalink público que abre o inteiro teor**. As
+lições valem para os 3 restantes:
+
+- 🔴 **O MÉTODO DECIDE SE O FILTRO EXISTE — defeito novo no repo.** O formulário é
+  `method="POST"`, e por **GET** o `q` funciona enquanto **todo o resto é ignorado
+  em silêncio**, com HTTP 200 e o acervo inteiro:
+  `GET ?q=usucapiao&type_minuta_selected=2` = **1.807** (acórdãos) e o mesmo par
+  por POST = **4.583** (monocráticas). Como o `q` responde nos dois métodos, a
+  busca "funciona" e não filtra — sem erro, sem zero, sem número redondo.
+  **Teste o MÉTODO, não só o parâmetro.** É a variação nova sobre a lição do TJAL
+  ("teste o parâmetro, não o controle"). ⚠️ **Corolário:** o permalink de busca
+  existe e **mente sobre o recorte** — em aba limpa ele *executa* a busca (não é o
+  zero falso do TJPE nem o formulário-sem-executar do TJRO), só que com o filtro
+  errado. **É pior que os dois, porque parece certo.**
+- 🔴 **403 EM TODO PATH É USER-AGENT, NÃO BLOQUEIO.** Sem UA de navegador o nginx
+  nega tudo com 403 de 118 bytes — inclusive `/` e os próprios assets que a página
+  carrega. O primeiro sweep de Passo 0 saiu com "403 em swagger, api, v1, rest,
+  robots.txt, dados-abertos" e **nenhum daqueles 403 significava nada**.
+  **Um 403 uniforme em paths sem relação entre si é cheiro de UA**, não de ACL —
+  diferente do TJRN, onde o 403 do Akamai era o domínio inteiro de verdade.
+- 🔴 **UM FILTRO DE DATA DESTRANCADO POR UM PARÂMETRO-COMPANHEIRO.**
+  `dat_jul_ini`/`_fim` só valem com `tempo_julgados=pers` junto; sem ele as duas
+  datas são **ignoradas em silêncio** (1.807 = acervo inteiro × 478 com o
+  companheiro). Nenhum dos 15 tribunais anteriores tinha isso. ISO também é
+  ignorado; DD/MM/YYYY acerta (não há o parse `MM/DD` do TJMT). ✅ Meia ponta
+  funciona e o no-op 1900..2100 devolve o total.
+- 🔴 **O TETO DE PÁGINA PODE NÃO SER UM NÚMERO — AQUI É PESO DE PAYLOAD, E OSCILA.**
+  Na bisecção `rows=300` respondeu e 400 deu HTTP 500; **minutos depois o mesmo
+  300 deu 500**, quebrando um teste que já tinha passado. Medido 2× cada: 100 →
+  200/200 (único estável), 150 → 200/504, 200 → 500/200, 250+ → sempre 500.
+  **Bisectar uma vez só produz um número que não se sustenta** — meça duas.
+  ✅ O erro é honesto, nunca truncagem calada.
+- 🔴 **SÓ ACÓRDÃO TEM EMENTA, e dissecar um tipo só teria errado em dois terços.**
+  No acórdão o campo é a **ementa íntegra** (padrão CNJ); em **sentença e
+  monocrática o mesmo campo traz a decisão inteira** ("SENTENÇA / Vistos etc.",
+  "DESPACHO/DECISÃO / INTIME-SE"), e os dois vêm **sem relator**. É o defeito do
+  TJBA em um só dos três tipos. ⚠️ E a maior aba (monocráticas, 597.990)
+  **mistura despacho de mero expediente com decisão de mérito** — esse total não
+  é jurisprudência toda.
+- 🔴 **Nono tribunal, nono conjunto de operadores, e o espaço é OR**
+  (1.807 + 29.310 − 1.257 = 29.860, exato). `NÃO` acentuado e `NOT` = 550 =
+  1.807 − 1.257, exato; **`NAO` sem acento não é operador e INFLA** (30.282, sem
+  sintoma) — **oposto do TJAC/TJAM/TJAL**, igual ao TJPI. `ADJ`/`PROX` ignorados.
+  ✅ **O `$` funciona como curinga** (= `*`), novidade: zera em TJAC/TJAM,
+  degenera em TJAL/TJMT, é ignorado no TJPE.
+- 🔴 **Charset dividido no MESMO host:** `consulta.php`/`ementa.php` são UTF-8 e
+  `documento.php` é **ISO-8859-1**. Não se herda charset nem dentro do domínio.
+- ✅ **QUARTO tribunal do repo com 1º grau** — 254.501 sentenças, atrás de TJPB,
+  TJRO e TJES —, com a partição por instância fechando **exata** nos três tipos.
+  A pergunta do TJES rendeu pela **quarta vez seguida**. ⚠️ Mas **monocrática e
+  sentença só existem de 2024 em diante** (acórdão vai a 2019).
+- ⚠️ **O rótulo quase troca o acervo:** `TURMAS RECURSAIS` (Juizado, 20.785) ×
+  `TURMAS DAS CAMARAS CIVEIS` (2º grau comum, 186.534) começam igual e são
+  opostos. Em TO o Juizado é **8,3%** — padrão TJAL, oposto de TJAC/TJAM/TJRO.
+  **Décimo tribunal, e a proporção continua sem se herdar.**
+- ⚠️ **Valor inventado não erra: faz fallback silencioso.**
+  `type_minuta_selected=9` volta para a aba 1. O teste do TJMT, sozinho, não
+  flagra nada aqui. ✅ Já na faceta, valor inventado **zera**.
+- ⚠️ **A base do próprio repo estava errada:** `cobertura/tribunais.json` registra
+  `eproc1g`/`eproc2g.tjto.jus.br` e os **dois são NXDOMAIN** — o e-Proc vivo é
+  `eproc2.tjto.jus.br`. **Confira a pista contra a realidade, não só contra a base.**
+- ✅ Total **exato**, paginação **estável** (3/3), **sem teto de offset**
+  (start=20.000 responde), **sem vhost curinga**, base **corrente**.
+
+⚠️ **Pendências declaradas do TJTO:** o **DataJud não foi sondado** (não medido, não
+inexistente); `fq_classe`, `fq_magistrado`, `fq_orgao_colegiado` e `fq_assuntos` estão
+expostas como flags mas **não foram provadas por contagem** (só `fq_competencia` foi);
+as três facetas de **metadado processual** (antecipação de tutela, justiça gratuita,
+prioridade de atendimento) — inéditas no repo — **não foram testadas**; as facetas são
+da **busca corrente**, não do acervo, e não há endpoint com a lista canônica (mesma
+pendência do TJES); `fq_data_autuacao`/`fq_data_julgamento` não foram exercitados; a
+ordenação (`tip_criterio_data`) não foi conferida por resultado; e **rate limit não foi
+medido**. ⏱️ O timebox de 90 min **estourou** (~2h): busca, Passo 0 e Fase 3b couberam;
+o excedente foi código, documentação e Fase 6.
 
 📌 **O que o TJPB (08/08/2026) deixou pronto — `parcial`, leia
 [`human-codegen/TJPB/01-juris-pb/01-busca-e-filtros.txt`](human-codegen/TJPB/01-juris-pb/01-busca-e-filtros.txt).**

@@ -1,0 +1,271 @@
+MAPEAMENTO — TJTO / Jurisprudência 4.0
+======================================
+
+## Identificação
+
+Tribunal:                Tribunal de Justiça do Tocantins (TJTO)
+Estado(s):               TO
+Módulo:                  "Jurisprudência 4.0" — portal próprio, PHP 8 + Apache Solr
+Link principal:          https://jurisprudencia.tjto.jus.br/
+Sistema judicial:        e-Proc (1ª e 2ª instância) + Projudi (1ª) — mas a
+                         jurisprudência NÃO é módulo do e-Proc: é aplicação à parte
+Sistema irmão mapeado:   nenhum de verdade. O TJTO tramita em e-Proc como
+                         TJRS/TJSC/TJRJ/TRF4, e a pista NÃO serviu: não é o
+                         `eproc-jur` do TRF4/TJRJ, é portal caseiro sobre Solr.
+Abrangência da base:     2º grau (Câmaras) + Turmas Recursais + **1º GRAU**
+                         (sentenças). Acórdãos de 2019 em diante; monocrática e
+                         sentença só de 2024 em diante.
+Data do mapeamento:      11/08/2026
+
+
+## Passo 0 — procura de API pública (o que existe E o que NÃO existe)
+
+NÃO EXISTE API pública. Medido, para não se repetir a busca:
+
+- DNS: `dadosabertos` / `projudi` / `consultas` / `sistemas` / `juris`.tjto.jus.br
+  → **NXDOMAIN**.
+- `api.tjto.jus.br` resolve (177.0.107.33) e **não completa conexão** (HTTP 000).
+- ⚠️ `eproc1g.tjto.jus.br` e `eproc2g.tjto.jus.br` — os hosts registrados no
+  `cobertura/tribunais.json` como consulta processual — são **NXDOMAIN**. O
+  e-Proc vivo é `eproc2.tjto.jus.br`. A base do repo estava desatualizada.
+- No portal de jurisprudência: `/swagger`, `/api`, `/v1/`, `/rest/`, `/api-docs`,
+  `/v3/api-docs`, `/openapi.json`, `/dados-abertos` → **404** (com UA de navegador).
+- `www.tjto.jus.br/dados-abertos` e `/transparencia/dados-abertos` → **404**.
+- Sem vhost curinga: `/path-inventado-9z` → **404 real** de 555 bytes, diferente
+  da home (7.258 b). Não foi preciso conferir md5.
+- DataJud: não sondado (não foi preciso — o portal responde a tudo). Fica
+  declarado como NÃO MEDIDO, não como inexistente.
+
+✅ O que existe é melhor que API documentada e pior que API documentada ao mesmo
+tempo: o XHR `/ementa.php?id=<uuid>` devolve **o JSON cru do Solr**
+(`{response:{numFound, docs:[…]}}`). É o backend aparecendo, sem contrato.
+
+
+## 🔴 A ARMADILHA CENTRAL DESTE PORTAL — o método decide se o filtro existe
+
+O formulário é `method="POST"`. Por **GET**, `q` funciona e **todo o resto é
+ignorado em silêncio**, com HTTP 200 e a contagem do acervo inteiro:
+
+    GET  ?q=usucapiao&type_minuta_selected=2   → 1.807   (aba de acórdãos)
+    POST  q=usucapiao&type_minuta_selected=2   → 4.583   (aba de monocráticas)
+
+Como `q` responde nos dois métodos, a busca "funciona" e não filtra. Não há
+sintoma nenhum: sem erro, sem zero, sem número redondo. **Teste o método, não só
+o parâmetro** — é a variação nova sobre a lição do TJAL ("teste o parâmetro, não
+o controle").
+
+## 🔴 403 EM TUDO = USER-AGENT, NÃO BLOQUEIO
+
+Sem UA de navegador o nginx devolve **403 Forbidden** (118 b) em **todo path**,
+inclusive `/` e os próprios assets que a página carrega. Com UA de Chrome tudo
+vira 200/404. O primeiro sweep de Passo 0 saiu com "403 em swagger, api, v1,
+rest, robots.txt, dados-abertos" — nenhum desses 403 significava coisa alguma.
+**Um 403 uniforme em paths que não têm nada a ver entre si é cheiro de UA.**
+
+
+## 1. Busca principal (query)
+
+Campo `q`. Na tela inicial há só ele e o checkbox `soementa` — **os filtros todos
+só existem na página de resultado** (lição do TJPI, repetida).
+
+```html
+<input type="search" class="form-control" autocomplete="off" name="q"
+       id="consulta_input" required placeholder="Digite o termo da pesquisa">
+```
+
+`q=*:*` devolve o acervo inteiro (é sintaxe Solr e passa direto).
+Base sem termo: **250.249 acórdãos + 597.990 monocráticas + 254.501 sentenças**
+= 1.102.740 documentos.
+
+⚠️ **Acento é NORMALIZADO** — `usucapiao` = `usucapião` = 1.807. Não avise sobre
+acento na query (mas veja o operador `NÃO` abaixo, onde o acento decide tudo).
+
+
+## 2. Operadores — nono tribunal, nono conjunto (medido, base usucapiao=1.807)
+
+| Operador | Funciona? | Contagem | Observação |
+|---|---|---|---|
+| espaço | **é OR** | 29.860 | 🔴 união, não interseção. Aritmética EXATA: 1.807 + 29.310 − 1.257 = 29.860 |
+| `E` | ✅ | 1.257 | interseção |
+| `AND` | ✅ | 1.257 | idêntico ao `E` |
+| `OU` | ✅ | 29.860 | = espaço |
+| `OR` | ✅ | 29.860 | = espaço |
+| `NÃO` (acentuado) | ✅ | 550 | exclusão correta: 1.807 − 1.257 = 550, EXATO |
+| `NOT` | ✅ | 550 | idêntico ao `NÃO` |
+| `NAO` (sem acento) | 🔴 **INFLA** | 30.282 | vira palavra e entra na união. Sem sintoma. |
+| `ADJ` | ❌ ignorado | 29.860 | = espaço |
+| `PROX` | ❌ ignorado | 29.863 | = espaço (a diferença de 3 é o literal "PROX") |
+| `"frase exata"` | ✅ | 660 | |
+| `*` | ✅ | 1.817 | curinga |
+| `$` | ✅ | 1.817 | **funciona como curinga**, idêntico ao `*` |
+| token inventado | ✅ zera | 0 | sintoma visível |
+
+🔴 **`NAO` sem acento é o oposto do Bloco 1** (TJAC/TJAM/TJAL, onde só `NAO`
+funciona) e **igual ao TJPI**. E aqui o erro **infla** (30.282 contra 550) —
+30 mil se leem como "tema vasto".
+
+✅ **O `$` funcionar como curinga é novo no repo**: em TJAC/TJAM ele zera, no
+TJAL e TJMT degenera, no TJPE é ignorado. Aqui é `*`.
+
+
+## 3. Tipo de documento — as três abas ("minuta")
+
+`type_minuta_selected` = 1 acórdão (default) | 2 monocrática | 3 sentença.
+
+🔴 **O DEFAULT É A MENOR ABA** (lição do TJES): acórdãos 1.807 contra 4.583
+monocráticas. Na base inteira, 250.249 contra 597.990.
+
+⚠️ **Valor inventado (`9`) NÃO erra — faz fallback silencioso para a aba 1.**
+O teste do valor inventado, sozinho, não flagra nada aqui.
+
+✅ **Os três totais vêm SEMPRE juntos na mesma resposta**, já refletindo os
+filtros correntes. Uma requisição dá os três acervos — barato e raro.
+
+```html
+<li class="nav-item col-md-3" type_minuta= 1>
+  <a class="nav-link active" …>Acórdãos <span class="num_minuta">(1.807) </span></a>
+</li>
+```
+
+
+## 4. Instância — e o 1º grau
+
+`tip_criterio_inst` = '' todas | 1 (1º Grau) | 2 (2º Grau). É um `<select>` que
+só existe na página de resultado.
+
+✅ **PARTIÇÃO EXATA nos três tipos** (usucapião):
+
+    acórdãos:      7 (1º) + 1.800 (2º) = 1.807   ✅
+    monocráticas:  3.890 (1º) + 693 (2º) = 4.583 ✅
+    sentenças:     1.538 (1º) + 0 (2º) = 1.538   ✅
+
+✅ **SENTENÇA É 100% 1º GRAU.** O TJTO é o **4º tribunal do repo com 1º grau**
+na base de jurisprudência, depois de TJES (1.509.942), TJPB (1.970.661) e TJRO
+(1.926.426). Aqui são **254.501 sentenças**. A pergunta que o TJES mandou fazer
+("tem 1º grau?") rendeu pela quarta vez seguida.
+
+⚠️ Os 7 acórdãos de "1º grau" são exatamente os das **Turmas Recursais** — no
+TJTO a Turma Recursal conta como 1º grau, o que faz `tip_criterio_inst=1`
+misturar Turma Recursal + monocrática de vara + sentença. Para Juizado use a
+faceta de competência, não a instância.
+
+
+## 5. Juizado × Justiça Comum — `fq_competencia`
+
+A partição é a faceta `fq_competencia[TURMAS RECURSAIS]`.
+
+⚠️ **`TURMAS RECURSAIS` × `TURMAS DAS CAMARAS CIVEIS`** — os dois começam por
+"TURMAS" e são coisas opostas: o segundo é 2º grau comum. Base inteira:
+
+    TURMAS RECURSAIS           20.785 acórdãos   (Juizado)
+    TURMAS DAS CAMARAS CIVEIS 186.534 acórdãos   (Justiça Comum)
+
+🔴 **Em TO o Juizado é 8,3% do acervo de acórdãos** — padrão TJAL, oposto de
+TJAC (2,8× a favor do Juizado), TJAM (7,7×) e TJRO (53%). Décimo tribunal, e a
+proporção continua sem se herdar.
+
+⚠️ Só há faceta **positiva**: não existe "tudo menos Turma Recursal". Por isso
+`--origem comum` é recorte de **cliente**, e o total do servidor não o reflete.
+
+
+## 6. Datas
+
+`tempo_julgados=pers` + `dat_jul_ini` + `dat_jul_fim`, em **DD/MM/YYYY**.
+
+🔴 **`tempo_julgados=pers` É OBRIGATÓRIO — defeito novo no repo.** Sem ele as
+duas datas são **ignoradas em silêncio**, com HTTP 200 e o acervo inteiro:
+
+    POST dat_jul_ini=01/01/2026&dat_jul_fim=31/12/2026              → 1.807 (= sem filtro)
+    POST tempo_julgados=pers&dat_jul_ini=…&dat_jul_fim=…            →   478 ✅
+
+Um filtro de data **destrancado por um parâmetro-companheiro**. Nenhum dos 15
+tribunais anteriores tinha isso.
+
+🔴 **ISO `YYYY-MM-DD` é ignorado em silêncio** (devolve 1.807 = total).
+✅ Mas não há o parse `MM/DD` do TJMT: em DD/MM/YYYY a janela acerta o alvo.
+
+✅ **Meia ponta FUNCIONA** (não é ignorada como no TJPI): só `dat_jul_ini` = 478,
+só `dat_jul_fim` = 158.
+✅ **No-op 1900..2100 devolve o total** (não derruba, como no TJES) — e o par
+no-op/janela-estreita separa "ignorado" de "correto", como o TJPB ensinou.
+
+🔴 **A BASE SÓ TEM DATA DE JULGAMENTO.** O par de datas do documento é
+(**autuação**, **julgamento**) — não existe data de publicação, nem campo nem
+filtro. Espelho do TJRO. ⚠️ A citação oficial menciona "juntado aos autos em
+08/07/2026", que é **juntada**, não publicação — não a apresente como tal.
+
+
+## 7. Vigência da base (passo obrigatório desde o TJAM) — base inteira, q=*:*
+
+| Ano | Acórdãos | Monocráticas | Sentenças |
+|---|---|---|---|
+| 2019 | 2.223 | 0 | 0 |
+| 2020 | 31.878 | 1 | 1 |
+| 2021 | 35.507 | 1 | 0 |
+| 2022 | 38.203 | 388 | 18 |
+| 2023 | 33.501 | 5 | 3 |
+| 2024 | 35.017 | 62.378 | 29.555 |
+| 2025 | 35.300 | 301.225 | 129.745 |
+| 2026 | 33.117 | 233.992 | 95.179 |
+
+✅ **BASE CORRENTE**: mai/2026 = 6.129 acórdãos, jun = 5.589, jul = 6.725,
+ago (até o dia 11) = 604. Sem defasagem de indexação (diferente do TJPI).
+
+⚠️ **MONOCRÁTICA E SENTENÇA SÓ EXISTEM DE 2024 EM DIANTE.** De 2019 a 2023 o
+acervo é praticamente só acórdão. Pedido histórico de sentença tocantinense não
+tem resposta aqui — e o zero **não** é ausência de decisão.
+
+
+## 8. Facetas (todas capturadas no browser — `facetas.json`)
+
+Onze campos, todos como checkbox `fq_<campo>[<VALOR LITERAL>]` — **valor, nunca
+id** (a armadilha do TJBA não se repete porque não há id em lugar nenhum):
+
+    fq_assuntos            100 opções (as mais frequentes da busca)
+    fq_data_autuacao        60
+    fq_data_julgamento      45   (formato d(YYYY/MM))
+    fq_magistrado           33
+    fq_classe               16
+    fq_orgao_colegiado      14
+    fq_competencia           7
+    fq_tipo_julgamento       8
+    fq_antecipacao_tutela    3
+    fq_justica_gratuita      3
+    fq_prioridade_atendimento 2
+
+⚠️ **As facetas são da BUSCA CORRENTE, não do acervo** — mudam de conteúdo a
+cada query. `facetas.json` é o retrato de `q=usucapiao`, não a lista canônica.
+Não existe endpoint que devolva a lista completa (mesma pendência do TJES).
+
+✅ Valor inventado na faceta **zera** (`fq_competencia[XXINVENTADOXX9Z]` = 0) —
+o filtro é levado a sério.
+
+Dois `<select>` de verdade, só na página de resultado (`combos-select.json`):
+`tip_criterio_inst` (instância) e `tip_criterio_data` (RELEV/DESC/ASC).
+
+⚠️ **`fq_antecipacao_tutela`, `fq_justica_gratuita` e `fq_prioridade_atendimento`
+são facetas de METADADO PROCESSUAL, não de conteúdo** — não existem em nenhum
+outro tribunal do repo. Não foram provadas por contagem (ver pendências).
+
+
+## 9. Número do processo
+
+Campo dedicado `numero_processo` (não é a busca livre), na página de resultado.
+
+✅ **Aceita as DUAS formas** — `00046977120238272737` e
+`0004697-71.2023.8.27.2737` devolvem o mesmo documento. É o oposto do TJPE (só
+dígitos), do TJES (só máscara) e do TJRO (só dígitos, com a tela prometendo
+máscara). ✅ Dispensa `q`. ✅ Número inventado devolve 0 (sintoma visível).
+
+🔴 **UM PROCESSO TEM MAIS DE UM DOCUMENTO, EM ABAS DIFERENTES.** O
+0004697-71.2023.8.27.2737 tem 1 acórdão **e** 1 sentença. Quem consultar só a
+aba default conclui que o processo tem um julgado só. O `TJTOChecker` varre as
+três.
+
+
+## 10. Acesso escolhido para o crawler: `http`
+
+Não é `api` porque não há API (o `/ementa.php` é XHR interno de um documento só,
+sem contrato). Não é `browser` porque nada exige browser: sem captcha, sem
+login, sem token, sem cookie obrigatório. **O mapeamento foi no Playwright**
+(prints e combos desta pasta); o crawler final é HTTP puro.

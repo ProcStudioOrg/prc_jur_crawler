@@ -1,0 +1,38 @@
+[
+  {
+    "name": "tip_criterio_inst",
+    "id": "",
+    "options": [
+      {
+        "value": "",
+        "texto": "Todas"
+      },
+      {
+        "value": "1",
+        "texto": "1º Grau"
+      },
+      {
+        "value": "2",
+        "texto": "2º Grau"
+      }
+    ]
+  },
+  {
+    "name": "tip_criterio_data",
+    "id": "",
+    "options": [
+      {
+        "value": "RELEV",
+        "texto": "Mais relevantes"
+      },
+      {
+        "value": "DESC",
+        "texto": "Mais recentes"
+      },
+      {
+        "value": "ASC",
+        "texto": "Mais antigos"
+      }
+    ]
+  }
+]
