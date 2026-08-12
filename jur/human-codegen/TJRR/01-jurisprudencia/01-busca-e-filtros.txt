@@ -1,0 +1,310 @@
+MAPEAMENTO — TJRR / Juris (Sistema de Jurisprudência)
+=====================================================
+
+## Identificação
+
+Tribunal:                Tribunal de Justiça de Roraima (TJRR)
+Estado(s):               RR
+Módulo:                  "Juris — Sistema de Jurisprudência", aplicação JSF /
+                         PrimeFaces 10 (`br.jus.tjrr.bpu.*`, "BPU"), server-side
+Link principal:          https://jurisprudencia.tjrr.jus.br/
+Sistema judicial:        ⚠️ **Eproc** — não PJe/Projudi, como diz a pista da fila
+                         (ver "A pista da fila estava errada", abaixo)
+Sistema irmão mapeado:   TJSE, o outro JSF/PrimeFaces do repo — e a família **não
+                         disse nada**: lá os dois módulos são captcha, aqui não há
+                         captcha em etapa nenhuma.
+Abrangência da base:     2º grau (Câmaras, Turmas Cíveis, Pleno, cúpula) +
+                         **Turma Recursal**. NÃO tem 1º grau (sentenças).
+                         126.384 documentos: 77.128 acórdãos + 49.256 monocráticas.
+Data do mapeamento:      12/08/2026
+
+
+## Passo 0 — procura de API pública (o que existe E o que NÃO existe)
+
+NÃO EXISTE API pública. Medido, para não se repetir a busca:
+
+- DNS: `dadosabertos` / `api` / `consultas` / `sistemas` / `busca` / `portal` /
+  `pje2g` / `esaj`.tjrr.jus.br → **NXDOMAIN**.
+- No portal de jurisprudência: `/swagger`, `/swagger-ui.html`, `/v2/api-docs`,
+  `/v3/api-docs`, `/openapi.json`, `/api`, `/api/`, `/rest`, `/dados-abertos`,
+  `/robots.txt` → **404**, todos com o mesmo corpo de 10.667 bytes.
+- Sem vhost curinga: `/path-inventado-9z` → **404 real**, e os hosts vivos têm
+  md5 distintos entre si. Não é a armadilha do TJAC/TJAL.
+
+⚠️ **`juris.tjrr.jus.br` É UM FALSO POSITIVO DE SPA, E ELE CAI EXATAMENTE NO
+PASSO 0.** É uma aplicação Angular separada ("Sistema Juris") e responde
+**HTTP 200 a QUALQUER path** — `/swagger`, `/v3/api-docs`, `/openapi.json`,
+`/dados-abertos` e também `/path-inventado-9z`, todos com o mesmo `index.html`
+de ~1,6 KB. É o fallback do roteador do Angular, a armadilha do TJES. **Confira
+o TAMANHO do corpo antes de comemorar um 200 em `/swagger`** — aqui os cinco
+"200" eram a mesma página em branco.
+
+✅ **DataJud responde**: índice `api_publica_tjrr`, **372.220 processos**,
+atualizado em 28/07/2026. É o que alimenta o `TJRRChecker --datajud`.
+Distribuição por grau: G1 213.817 · JE 98.113 · G2 47.474 · TR 12.816.
+
+
+## 🔴 A PISTA DA FILA ESTAVA ERRADA — e o DataJud desmentiu em 30 segundos
+
+`cobertura/tribunais.json` registra o TJRR como PJe (1ª e 2ª) + Projudi (1ª e
+2ª). O DataJud mostra o acervo real:
+
+    Eproc    372.073   (99,96%)
+    PJe          107
+    Projudi       40
+
+E os dois hosts de consulta processual da base (`pje.tjrr.jus.br`,
+`pje2g.tjrr.jus.br`) estão marcados como "site unreachable" — `pje2g` é
+**NXDOMAIN**. É a lição do TJSE repetida ("confira a pista contra a base antes
+de gastar tempo com ela"), com a variação de que aqui **a própria base do repo
+era a pista errada**, e quem a corrige é o DataJud, não o portal.
+
+⚠️ Sem consequência prática para o crawler: a jurisprudência não é módulo do
+sistema de tramitação — é aplicação à parte, como no TJSE e no TJTO.
+
+
+## Acesso do crawler: `http` puro
+
+A busca é POST de formulário JSF com `javax.faces.ViewState`. Sem browser, sem
+captcha, sem token. O fluxo é:
+
+    GET  /index.xhtml                → cookies (JSESSIONID + INGRESSCOOKIE) + ViewState
+    POST /index.xhtml (menuinicial)  → tela de resultado, com o form `formPesquisa`
+    POST /index.xhtml (formPesquisa) → resultado filtrado
+    POST /index.xhtml (AJAX parcial) → paginação, uma tabela por vez
+
+✅ Não há captcha em etapa nenhuma — **medido mandando o POST e lendo a
+resposta**, não procurando a string `captcha` no HTML. A lição do TJSE (onde
+`grep turnstile` deu falso negativo e o widget era reCAPTCHA do PrimeFaces) foi
+o motivo de medir assim. Aqui: nenhum widget de captcha, e o POST responde com
+os resultados.
+
+
+## 🔴 SÃO DUAS TABELAS DE RESULTADO NA MESMA RESPOSTA
+
+A tela mostra duas abas — **ACÓRDÃOS** e **DECISÃO MONOCRÁTICA** — e o HTML da
+busca traz **as duas renderizadas de uma vez**, com os mesmos ids de card
+(`resultados1`..`resultados10`). O total autoritativo de cada uma é o `rowCount`
+do widget PrimeFaces:
+
+    id:"formPesquisa:j_idt155:dataTablePesquisa"  … rowCount:601   → ACÓRDÃOS
+    id:"formPesquisa:j_idt155:dataTablePesquisa2" … rowCount:390   → MONOCRÁTICAS
+
+Duas consequências, as duas silenciosas:
+
+1. Quem ler só a primeira tabela **perde 39% do acervo** (49.256 de 126.384) sem
+   sintoma nenhum — a página responde 200 e mostra cards.
+2. Quem fatiar a **página inteira** como se fosse uma aba mistura monocrática
+   dentro de acórdão. Os campos batem todos (processo, relator, órgão, datas) e
+   só a ementa vem vazia — que é justamente o campo que se lê como "esse julgado
+   não tem ementa". Foi o primeiro bug do crawler aqui, e por isso **toda página,
+   inclusive a primeira, é lida pelo fragmento AJAX**, que traz uma tabela só.
+
+
+## 🔴 LINHAS POR PÁGINA É LISTA BRANCA — e fora dela a tabela volta VAZIA com 200
+
+O parâmetro `_rows` aceita **exatamente** os três valores que o combo da tela
+oferece: **10, 20 e 30**. Qualquer outro devolve um fragmento AJAX de **57
+bytes** — a tabela sem nenhuma linha, HTTP 200, sem erro:
+
+    rows=3   → 0 documentos (57 b)      rows=20  → 20 documentos (509.899 b)
+    rows=5   → 0 documentos (57 b)      rows=25  → 0 documentos (57 b)
+    rows=10  → 10 documentos (272.603 b) rows=30  → 30 documentos (751.882 b)
+    rows=15  → 0 documentos (57 b)      rows=31  → 0 documentos (57 b)
+    rows=40 / 50 / 100 → 0 documentos (57 b)
+
+Medido **duas vezes**, idêntico nas duas rodadas (a lição do TJTO, cujo teto
+oscilava, mandou repetir).
+
+É o **avesso da lição do TJAL** ("teste o parâmetro, não o controle"): lá o
+servidor aceitava um valor que a tela não oferecia; aqui ele **só** aceita o que
+a tela oferece, e a punição por sair da lista é um zero silencioso. Um crawler
+com `--page-size 50` colheria zero documento em toda página e leria isso como
+"acabaram os resultados". Por isso existe `TJRRNavigator.snapRows()`.
+
+
+## O formulário — dois formulários, na verdade
+
+⚠️ **OS FILTROS NÃO EXISTEM NA HOME** (padrão TJPI). A tela inicial
+(`menuinicial`) tem só termo, número do processo e uma data; os combos de órgão,
+espécie de recurso, relator, Ementa/Indexação e o par de datas **só aparecem na
+tela de resultado** (`formPesquisa`). Quem raspar a home conclui que o portal
+quase não filtra.
+
+Campos de `formPesquisa` (nomes crus do POST):
+
+    formPesquisa:consultaAtual        texto  — termo livre
+    formPesquisa:numProcesso          texto  — nº do processo (ver adiante)
+    formPesquisa:j_idt147             texto  — rótulo "Ementa/Indexação:"
+    formPesquisa:tipoClasseList       select — rótulo "Espécie de Recurso:", 257 opções
+    formPesquisa:tipoOrgaoList        12 checkboxes — órgão julgador
+    formPesquisa:relatorList          16 checkboxes — desembargadores + juízes convocados
+    formPesquisa:relatorList2          7 checkboxes — TURMA RECURSAL
+    formPesquisa:relatorList3         20 checkboxes — magistrados aposentados e ex-convocados
+    formPesquisa:datainicial_input    texto  — DD/MM/YYYY
+    formPesquisa:datafinal_input      texto  — DD/MM/YYYY
+    formPesquisa:tipoProcedimento     select — TODOS / Julgamento / Publicação
+    formPesquisa:j_idt155_activeIndex  aba ativa (0 = acórdãos, 1 = monocráticas)
+
+✅ **JSF entrega os combos de graça, sem popup** — a mesma vantagem medida no
+TJSE. Os 257 valores de classe, os 12 órgãos e os 43 relatores saíram do HTML
+depois do AJAX, sem clique. É a pendência que se repetiu em quatro tribunais do
+Bloco 1 (combos-árvore do SAJ) e que **não existe em JSF**.
+Tudo enumerado em `combos-select.json` e `filtros.json`.
+
+⚠️ O `value` do relator **não é um id**: é o `toString()` de um objeto Java —
+`br.jus.tjrr.bpu.domain.model.MagistradoBPU(matricula:2604, nomeRegimental:ALESSANDRO TRAMUJAS)`.
+Mande o valor cru; não tente montar um id.
+
+
+## Filtro de órgão — a desambiguação Juizado × Justiça Comum
+
+Os 12 valores de `tipoOrgaoList`, e a contagem de cada um em `usucapiao`
+(total sem filtro: **991**):
+
+    CAMARA_CIVEL              558      TRIBUNAL_PLENO             40
+    SEGUNDA_TURMA_CIVEL       129      VICE_PRESIDENCIA           31
+    PRIMEIRA_TURMA_CIVEL      124      CAMARAS_REUNIDAS           10
+    CAMARA_UNICA               94      TURMA_RECURSAL              4
+    CAMARA_CRIMINAL             1      PRESIDENCIA                 0
+    CONSELHO_DA_MAGISTRATURA    0      PLANTAO_JUDICIAL            0
+    ────────────────────────────────────────────────────────────────
+    soma das 12 partes:       991  =  total sem filtro  ✅ EXATO
+
+✅ **A partição fecha exata** — raro neste repo (TJPE vazava órgão, TJBA não
+compunha com termo).
+
+🔴 **O PESO DO JUIZADO DEPENDE DRASTICAMENTE DO TEMA — 94× de variação:**
+
+    usucapião:   Turma Recursal =     4 de    991  (0,4%)
+    dano moral:  Turma Recursal = 5.965 de 15.907  (37,5%)
+
+Décimo primeiro tribunal do repo e a proporção **continua sem se herdar**. Em
+consumo, ofereça as duas origens; em direito real, a Turma Recursal é ruído.
+
+⚠️ **VALOR INVENTADO NÃO ERRA — FAZ FALLBACK SILENCIOSO.**
+`tipoOrgaoList=XXINVENTADO9Z` devolve **991**, o acervo inteiro, com HTTP 200.
+O teste do TJMT (mandar valor inventado) **não flagra nada aqui**, igual ao
+TJTO. O que separa "filtro funciona" de "filtro ignorado" é comparar o valor
+**válido** com o sem-filtro — a lição do TJPB.
+
+
+## Filtro de data — e a ponta que some
+
+O par `datainicial_input` / `datafinal_input` é acompanhado do combo
+`tipoProcedimento`, que decide **qual das duas datas** a janela filtra. Medido em
+`usucapiao` (991 sem filtro):
+
+    01/01/2026–31/12/2026, tipoProcedimento=JULGAMENTO   →  58
+    01/01/2026–31/12/2026, tipoProcedimento=PUBLICACAO   →  60
+    01/01/2026–31/12/2026, tipoProcedimento=(vazio)      →  58   ⚠️
+    só datainicial=01/01/2026                            →  58   ✅ funciona
+    só datafinal=31/12/2026                              → 991   🔴 IGNORADA
+    no-op 01/01/1900–01/01/2100                          → 991   ✅ correto
+    ISO 2026-01-01–2026-12-31                            → 991   🔴 IGNORADO
+    tipoProcedimento sem datas                           → 991   ✅ inócuo
+
+🔴 **A PONTA FINAL SOZINHA É IGNORADA EM SILÊNCIO, E A INICIAL SOZINHA
+FUNCIONA.** É a lição do TJPI ("teste cada filtro meio aplicado") com a metade
+**trocada**: lá quem sumia era o início. Não se herda nem a assimetria.
+
+⚠️ **O rótulo "TODOS" do combo mente**: sem `tipoProcedimento` a janela filtra
+**julgamento** (58 = igual ao JULGAMENTO explícito, contra 60 do PUBLICACAO).
+"TODOS" não é a união dos dois — é o julgamento. Some à lição do TJES sobre
+rótulo de campo que mente.
+
+✅ **A base tem as DUAS datas, reais e distintas**, e as duas são filtráveis —
+diferente do TJPI (só publicação), do TJRO (só julgamento) e do TJES (só
+juntada). O `-di/-df` é julgamento e o `-dpi/-dpf` é publicação.
+
+
+## Operadores — o segundo conjunto COERENTE em onze tribunais
+
+Medido com `dano` = 27.442 e `moral` = 17.373:
+
+    dano moral (espaço)   15.907    ✅ ESPAÇO = E (AND)
+    dano E moral          15.907    ✅ idêntico ao espaço
+    dano OU moral         28.908    ✅ = 27.442 + 17.373 − 15.907, EXATO
+    dano NÃO moral        11.535    ✅ = 27.442 − 15.907, EXATO
+    dano NAO moral        11.535    ✅ acentuado e sem acento são o MESMO operador
+    "dano moral" (frase)  15.015    ✅ menor que o AND, como deve ser
+    usucapi* / usucapi$    1.006    ✅ curinga, os dois iguais (991 sem curinga)
+    zzqqxx9z                   0    ✅ token inventado zera — sintoma visível
+    ─────────────────────────────────────────────────────────────
+    dano AND moral             4    🔴 vira palavra literal
+    dano OR moral             22    🔴 idem
+    dano NOT moral             0    🔴 idem
+    dano ADJ moral             4    🔴 não existe
+    dano PROX moral            1    🔴 não existe
+
+✅ **Os PORTUGUESES funcionam e a aritmética fecha exata**, como no TJPB. Os
+ingleses **destroem** a busca em vez de inflar — e cair para 4 é sintoma visível,
+diferente do `NOT` do TJPE (1.281, plausível) e do `NÃO` do TJRO (237.098).
+
+⚠️ **`NAO` e `NÃO` são o mesmo operador aqui**, o que é inédito: em
+TJAC/TJAM/TJAL só o sem acento funciona, em TJPI/TJTO só o acentuado. A causa
+está medida: o `onsubmit="normalizar(...)"` do próprio formulário tira o acento
+da query **inteira** antes de enviar, então o operador chega sempre sem acento.
+
+⚠️ **NÃO avise sobre acento na query.** Duas camadas normalizam: o cliente
+(pelo `normalizar()`) e o índice. Medido mandando o termo cru, por fora do
+cliente: `usucapiao`, `usucapião` e até o mojibake `usucapiÃo` devolvem os
+**mesmos 991**. As duas camadas foram medidas em separado — fosse só a primeira,
+ficaria gravado "o índice normaliza" sem prova.
+
+
+## Espécie de recurso e Ementa/Indexação — provados por contagem
+
+    tipoClasseList=44  (Apelação Cível)          631 de 991
+    tipoClasseList=10  (Agravo de Instrumento)   174 de 991
+    tipoClasseList=222 (Recurso Inominado)         4 de 991   ← = a Turma Recursal
+    tipoClasseList=9999 (inventado)              991          🔴 ignorado, como o órgão
+
+    j_idt147 "Ementa/Indexação" = posse      276 acórdãos, 0 monocráticas
+    j_idt147 = zzqqxx9z                        0               ✅ zera honestamente
+
+⚠️ O `Recurso Inominado` = 4 bate exatamente com `TURMA_RECURSAL` = 4 — os dois
+recortes são coerentes entre si.
+
+⚠️ E o **0 de monocráticas** no filtro de ementa é a segunda prova de que
+monocrática não tem ementa nesta base (a primeira é a anatomia do card, na
+seção 02).
+
+
+## Consulta por número de processo
+
+O campo `numProcesso` é **dedicado** (não é a busca livre). Medido:
+
+    08410502420238230010          → 2 acórdãos   ✅ 20 dígitos
+    0841050-24.2023.8.23.0010     → 2 acórdãos   ✅ máscara — as duas formas!
+    99999999999999999999          → 0            ✅ inventado zera
+    0010080123456                 → 0            (13 dígitos, ver abaixo)
+
+✅ Aceitar **as duas formas** é o comportamento do TJTO, e o oposto do TJPE (só
+dígitos), do TJES (só máscara) e do TJRO (só dígitos com a tela prometendo
+máscara).
+
+⚠️ O placeholder do campo promete `13 Dígitos - SISCOM / 20 Dígitos - PROJUDI`.
+O SISCOM é a numeração do sistema antigo do TJRR e **não foi possível confirmar
+um número SISCOM real** para testar — fica declarado como **NÃO MEDIDO**, não
+como inexistente. (E note que o placeholder diz PROJUDI onde o acervo é Eproc.)
+
+🔴 **Um número devolve mais de um documento**: o processo conhecido tem 2
+acórdãos (o julgamento e os embargos). Quem olhasse só o primeiro concluiria que
+o processo tem um documento só.
+
+
+## Vigência da base — CORRENTE
+
+Distribuição por ano (base inteira, sem termo, por data de julgamento):
+
+    2018  7.592     2021   8.704     2024  12.652
+    2019  8.335     2022  10.956     2025  15.346
+    2020  9.271     2023  10.656     2026   9.897 (até 12/08)
+
+Meses recentes, por publicação: mai/2026 1.598 · jun 2.074 · jul 1.089 ·
+ago (até dia 12) 271. O julgado mais recente na primeira página é de
+**07/08/2026** — cinco dias antes do mapeamento.
+
+✅ Base **corrente**, sem a defasagem de ponta do TJPI e sem o congelamento do
+TJAM. O passo que o TJAM impôs continua obrigatório; aqui ele absolve.

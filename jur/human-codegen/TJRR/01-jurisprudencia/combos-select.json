@@ -1,0 +1,1046 @@
+{
+  "menuinicial:tipoProcedimento": [
+    {
+      "value": "",
+      "texto": "TODOS"
+    },
+    {
+      "value": "JULGAMENTO",
+      "texto": "Julgamento"
+    },
+    {
+      "value": "PUBLICACAO",
+      "texto": "Publicação"
+    }
+  ],
+  "menuinicial:tipoClasseList": [
+    {
+      "value": "0",
+      "texto": ""
+    },
+    {
+      "value": "1",
+      "texto": "Ação Cautelar"
+    },
+    {
+      "value": "2",
+      "texto": "Ação Cível"
+    },
+    {
+      "value": "3",
+      "texto": "Ação Civil Pública"
+    },
+    {
+      "value": "4",
+      "texto": "Ação Declaratória de Greve"
+    },
+    {
+      "value": "5",
+      "texto": "Ação Declaratória de Ilegalidade de Greve"
+    },
+    {
+      "value": "6",
+      "texto": "Ação Declaratória de Nulidade Insanável"
+    },
+    {
+      "value": "7",
+      "texto": "Ação Direta de Inconstitucionalidade"
+    },
+    {
+      "value": "8",
+      "texto": "Ação Penal"
+    },
+    {
+      "value": "9",
+      "texto": "Ação Rescisória"
+    },
+    {
+      "value": "10",
+      "texto": "Agravo de Instrumento"
+    },
+    {
+      "value": "11",
+      "texto": "Agravo de Instrumento no Recurso Extraordinário"
+    },
+    {
+      "value": "12",
+      "texto": "Agravo em Execução"
+    },
+    {
+      "value": "13",
+      "texto": "Agravo em Execução Penal"
+    },
+    {
+      "value": "14",
+      "texto": "Agravo em Recurso Especial"
+    },
+    {
+      "value": "15",
+      "texto": "Agravo em Recurso Especial na Apelação Cível"
+    },
+    {
+      "value": "16",
+      "texto": "Agravo em Recurso Especial no Agravo de Instrumento"
+    },
+    {
+      "value": "17",
+      "texto": "Agravo em Recurso Especial no Agravo Interno"
+    },
+    {
+      "value": "18",
+      "texto": "Agravo em Recurso Extraordinário"
+    },
+    {
+      "value": "19",
+      "texto": "Agravo Interno"
+    },
+    {
+      "value": "20",
+      "texto": "Agravo Interno do Recurso Especial"
+    },
+    {
+      "value": "21",
+      "texto": "Agravo Interno em Ação Rescisória"
+    },
+    {
+      "value": "22",
+      "texto": "Agravo Interno em Habeas Corpus"
+    },
+    {
+      "value": "23",
+      "texto": "Agravo Interno em Mandado de Segurança"
+    },
+    {
+      "value": "24",
+      "texto": "Agravo Interno em Revisão Criminal"
+    },
+    {
+      "value": "25",
+      "texto": "Agravo Interno na Apelação Cível"
+    },
+    {
+      "value": "26",
+      "texto": "Agravo Interno no Agravo de Instrumento"
+    },
+    {
+      "value": "27",
+      "texto": "Agravo Interno no Agravo de Instrumento no Mandado de Segurança"
+    },
+    {
+      "value": "28",
+      "texto": "Agravo Interno no Agravo de Instrumento no Recurso Especial"
+    },
+    {
+      "value": "29",
+      "texto": "Agravo Interno no Recurso Especial"
+    },
+    {
+      "value": "30",
+      "texto": "Agravo Interno no Recurso Especial em Agravo de Instrumento"
+    },
+    {
+      "value": "31",
+      "texto": "Agravo Interno no Recurso Especial na Apelação Cível"
+    },
+    {
+      "value": "32",
+      "texto": "Agravo Interno no Recurso Extraordinário"
+    },
+    {
+      "value": "33",
+      "texto": "Agravo Interno no Recurso Inominado"
+    },
+    {
+      "value": "34",
+      "texto": "Agravo Interno nos Embargos de Declaração na Apelação Cível"
+    },
+    {
+      "value": "35",
+      "texto": "Agravo Interno nos Embargos de Declaração na Apelação Criminal"
+    },
+    {
+      "value": "36",
+      "texto": "Agravo no Recurso Especial"
+    },
+    {
+      "value": "37",
+      "texto": "Agravo no Recurso Especial na Apelação Cível"
+    },
+    {
+      "value": "38",
+      "texto": "Agravo no Recurso Extraordinário"
+    },
+    {
+      "value": "39",
+      "texto": "Agravo no Recurso Extraordinário na Apelação Cível"
+    },
+    {
+      "value": "40",
+      "texto": "Agravo no Recurso Extraordinário na Apelação Criminal"
+    },
+    {
+      "value": "41",
+      "texto": "Agravo nos Recursos Extraordinário e Especial na Apelação Criminal"
+    },
+    {
+      "value": "42",
+      "texto": "Agravo Regimental"
+    },
+    {
+      "value": "43",
+      "texto": "Agravos em Recurso Especial e Extraordinário na Apelação Cível"
+    },
+    {
+      "value": "44",
+      "texto": "Apelação Cível"
+    },
+    {
+      "value": "45",
+      "texto": "Apelação Cível em Mandado de Segurança"
+    },
+    {
+      "value": "46",
+      "texto": "Apelação Criminal"
+    },
+    {
+      "value": "47",
+      "texto": "Apelação Criminal em Mandado de Segurança"
+    },
+    {
+      "value": "48",
+      "texto": "Apelação em Mandado de Segurança"
+    },
+    {
+      "value": "49",
+      "texto": "Arguição de Inconstitucionalidade"
+    },
+    {
+      "value": "50",
+      "texto": "Arguição de Inconstitucionalidade por Omissão"
+    },
+    {
+      "value": "51",
+      "texto": "Ata de Sessão"
+    },
+    {
+      "value": "52",
+      "texto": "Carta Afiançável"
+    },
+    {
+      "value": "53",
+      "texto": "Carta de Ordem"
+    },
+    {
+      "value": "54",
+      "texto": "Carta Precatória"
+    },
+    {
+      "value": "55",
+      "texto": "Carta Testemunhável"
+    },
+    {
+      "value": "56",
+      "texto": "Cautelar Inominada"
+    },
+    {
+      "value": "57",
+      "texto": "Classe Não Mapeada"
+    },
+    {
+      "value": "58",
+      "texto": "Conflito de Competência"
+    },
+    {
+      "value": "59",
+      "texto": "Conflito de Jurisdição"
+    },
+    {
+      "value": "60",
+      "texto": "Correição Parcial"
+    },
+    {
+      "value": "61",
+      "texto": "Cumprimento de Sentença"
+    },
+    {
+      "value": "62",
+      "texto": "Cumprimento Provisório de Sentença"
+    },
+    {
+      "value": "63",
+      "texto": "Desaforamento de Julgamento"
+    },
+    {
+      "value": "64",
+      "texto": "Dissídio Coletivo"
+    },
+    {
+      "value": "65",
+      "texto": "Embargos à Execução"
+    },
+    {
+      "value": "66",
+      "texto": "Embargos à Penhora"
+    },
+    {
+      "value": "67",
+      "texto": "Embargos de Declaração"
+    },
+    {
+      "value": "68",
+      "texto": "Embargos de Declaração em Recurso em Sentido Estrito"
+    },
+    {
+      "value": "69",
+      "texto": "Embargos de Declaração em Recurso Especial na Apelação Cível"
+    },
+    {
+      "value": "70",
+      "texto": "Embargos de Declaração em Recurso Especial na Apelação Criminal"
+    },
+    {
+      "value": "71",
+      "texto": "Embargos de Declaração em Recurso Especial no Agravo de Instrumento"
+    },
+    {
+      "value": "72",
+      "texto": "Embargos de Declaração em Recurso Especial no Agravo Regimental"
+    },
+    {
+      "value": "73",
+      "texto": "Embargos de Declaração em Recurso Extraordinário na Ação Direta de Inconstitucionalidade"
+    },
+    {
+      "value": "74",
+      "texto": "Embargos de Declaração em Recurso Extraordinário na Apelação Cível"
+    },
+    {
+      "value": "75",
+      "texto": "Embargos de Declaração na Ação Direta de Inconstitucionalidade"
+    },
+    {
+      "value": "76",
+      "texto": "Embargos de Declaração na Ação Penal"
+    },
+    {
+      "value": "77",
+      "texto": "Embargos de Declaração na Ação Rescisória"
+    },
+    {
+      "value": "78",
+      "texto": "Embargos de Declaração na Apelação Cível"
+    },
+    {
+      "value": "79",
+      "texto": "Embargos de Declaração na Apelação Criminal"
+    },
+    {
+      "value": "80",
+      "texto": "Embargos de Declaração na Carta Testemunhável"
+    },
+    {
+      "value": "81",
+      "texto": "Embargos de Declaração na Cautelar Inominada"
+    },
+    {
+      "value": "82",
+      "texto": "Embargos de Declaração na Correição Parcial"
+    },
+    {
+      "value": "83",
+      "texto": "Embargos de Declaração na Exceção de Pré-Executividade"
+    },
+    {
+      "value": "84",
+      "texto": "Embargos de Declaração na Petição"
+    },
+    {
+      "value": "85",
+      "texto": "Embargos de Declaração na Reclamação"
+    },
+    {
+      "value": "86",
+      "texto": "Embargos de Declaração na Remessa Necessária"
+    },
+    {
+      "value": "87",
+      "texto": "Embargos de Declaração na Representação Criminal"
+    },
+    {
+      "value": "88",
+      "texto": "Embargos de Declaração na Revisão Criminal"
+    },
+    {
+      "value": "89",
+      "texto": "Embargos de Declaração no Agravo de Instrumento"
+    },
+    {
+      "value": "90",
+      "texto": "Embargos de Declaração no Agravo em Execução Penal"
+    },
+    {
+      "value": "91",
+      "texto": "Embargos de Declaração no Agravo Interno"
+    },
+    {
+      "value": "92",
+      "texto": "Embargos de Declaração no Agravo Regimental"
+    },
+    {
+      "value": "93",
+      "texto": "Embargos de Declaração no Conflito de Competência"
+    },
+    {
+      "value": "94",
+      "texto": "Embargos de Declaração no Habeas Corpus"
+    },
+    {
+      "value": "95",
+      "texto": "Embargos de Declaração no Habeas Data"
+    },
+    {
+      "value": "96",
+      "texto": "Embargos de Declaração no Incidente de Resolução de Demandas Repetitivas"
+    },
+    {
+      "value": "97",
+      "texto": "Embargos de Declaração no Mandado de Segurança"
+    },
+    {
+      "value": "98",
+      "texto": "Embargos de Declaração no Recurso em Sentido Estrito"
+    },
+    {
+      "value": "99",
+      "texto": "Embargos de Declaração no Recurso Especial"
+    },
+    {
+      "value": "100",
+      "texto": "Embargos de Declaração no Recurso Especial na Apelação Cível"
+    },
+    {
+      "value": "101",
+      "texto": "Embargos de Declaração no Recurso Inominado"
+    },
+    {
+      "value": "102",
+      "texto": "Embargos de Declaração no Reexame Necessário"
+    },
+    {
+      "value": "103",
+      "texto": "Embargos de Declaração nos Embargos de Declaração na Ação Direta de Insconstitcuionalidade"
+    },
+    {
+      "value": "104",
+      "texto": "Embargos de Declaração nos Embargos de Declaração na Apelação Cível"
+    },
+    {
+      "value": "105",
+      "texto": "Embargos de Declaração nos Embargos de Declaração na Apelação Criminal"
+    },
+    {
+      "value": "106",
+      "texto": "Embargos de Declaração nos Embargos de Declaração no Agravo de Execução Penal"
+    },
+    {
+      "value": "107",
+      "texto": "Embargos de Declaração nos Embargos de Declaração no Agravo de Instrumento"
+    },
+    {
+      "value": "108",
+      "texto": "Embargos de Declaração nos Embargos de Declaração no Agravo Interno"
+    },
+    {
+      "value": "109",
+      "texto": "Embargos de Declaração nos Embargos de Declaração no Mandado de Segurança"
+    },
+    {
+      "value": "110",
+      "texto": "Embargos de Declaração nos Embargos de Declaração nos Embargos de Declaração na Apelação Cível"
+    },
+    {
+      "value": "111",
+      "texto": "Embargos de Declaração nos Embargos de Declaração nos Embargos de Declaração no Agravo Interno"
+    },
+    {
+      "value": "112",
+      "texto": "Embargos de Declaração nos Embargos de Declaração nos Embargos de Declaração no Mandado de Segurança"
+    },
+    {
+      "value": "113",
+      "texto": "Embargos de Declaração nos Embargos Infringentes"
+    },
+    {
+      "value": "114",
+      "texto": "Embargos de Terceiro"
+    },
+    {
+      "value": "115",
+      "texto": "Embargos do Devedor"
+    },
+    {
+      "value": "116",
+      "texto": "Embargos Infringentes"
+    },
+    {
+      "value": "117",
+      "texto": "Embargos Infringentes na Apelação Criminal"
+    },
+    {
+      "value": "118",
+      "texto": "Exceção da Verdade"
+    },
+    {
+      "value": "119",
+      "texto": "Exceção de Coisa Julgada"
+    },
+    {
+      "value": "120",
+      "texto": "Exceção de Impedimento"
+    },
+    {
+      "value": "121",
+      "texto": "Exceção de Pré-Executividade"
+    },
+    {
+      "value": "122",
+      "texto": "Exceção de Suspeição"
+    },
+    {
+      "value": "123",
+      "texto": "Execução"
+    },
+    {
+      "value": "124",
+      "texto": "Execução de Honorários na Ação Rescisória"
+    },
+    {
+      "value": "125",
+      "texto": "Habeas Corpus"
+    },
+    {
+      "value": "126",
+      "texto": "Habeas Data"
+    },
+    {
+      "value": "127",
+      "texto": "Impugnação ao Cumprimento de Sentença"
+    },
+    {
+      "value": "128",
+      "texto": "Incidente de Arguição de Inconstitucionalidade"
+    },
+    {
+      "value": "129",
+      "texto": "Incidente de Assunção de Competência"
+    },
+    {
+      "value": "130",
+      "texto": "Incidente de Inconstitucionalidade"
+    },
+    {
+      "value": "131",
+      "texto": "Incidente de Resolução de Demandas Repetitivas"
+    },
+    {
+      "value": "132",
+      "texto": "Incidente de Restituição de Coisa Apreendida"
+    },
+    {
+      "value": "133",
+      "texto": "Incidente de Suspeição"
+    },
+    {
+      "value": "134",
+      "texto": "INCIDENTE DE SUSPEIÇÃO"
+    },
+    {
+      "value": "135",
+      "texto": "Incidente de Uniformização de Jurisprudência"
+    },
+    {
+      "value": "136",
+      "texto": "Inquérito"
+    },
+    {
+      "value": "137",
+      "texto": "Inquérito Policial"
+    },
+    {
+      "value": "138",
+      "texto": "Interpelação Criminal"
+    },
+    {
+      "value": "139",
+      "texto": "Investigação Preliminar"
+    },
+    {
+      "value": "140",
+      "texto": "Juntada de Acórdão"
+    },
+    {
+      "value": "141",
+      "texto": "Mandado de Injunção"
+    },
+    {
+      "value": "142",
+      "texto": "Mandado de Segurança"
+    },
+    {
+      "value": "143",
+      "texto": "Medida Cautelar Inominada Criminal"
+    },
+    {
+      "value": "144",
+      "texto": "Medida Protetiva"
+    },
+    {
+      "value": "145",
+      "texto": "Medida Provisional"
+    },
+    {
+      "value": "146",
+      "texto": "Notícia Crime"
+    },
+    {
+      "value": "147",
+      "texto": "Notificação Judicial"
+    },
+    {
+      "value": "148",
+      "texto": "Orientação"
+    },
+    {
+      "value": "149",
+      "texto": "Pedido de Avocação"
+    },
+    {
+      "value": "150",
+      "texto": "Pedido de Desaforamento de Julgamento"
+    },
+    {
+      "value": "151",
+      "texto": "Pedido de Efeito Suspensivo"
+    },
+    {
+      "value": "152",
+      "texto": "Pedido de Extensão no Habeas Corpus"
+    },
+    {
+      "value": "153",
+      "texto": "Pedido de Liberdade Provisória"
+    },
+    {
+      "value": "154",
+      "texto": "Pedido de prisão temporaria"
+    },
+    {
+      "value": "155",
+      "texto": "Pedido de Prisão Temporária"
+    },
+    {
+      "value": "156",
+      "texto": "Pedido de Reconsideração"
+    },
+    {
+      "value": "157",
+      "texto": "Pedido de Reconsideração na Apelação Cível"
+    },
+    {
+      "value": "158",
+      "texto": "Pedido de Restituição de Bens Apreendidos"
+    },
+    {
+      "value": "159",
+      "texto": "Pedido de Suspensão de Segurança"
+    },
+    {
+      "value": "160",
+      "texto": "Pedido de Suspensão de Sentença"
+    },
+    {
+      "value": "161",
+      "texto": "Pedido de Tutela Antecipada"
+    },
+    {
+      "value": "162",
+      "texto": "Petição"
+    },
+    {
+      "value": "163",
+      "texto": "Petição de Recurso Especial"
+    },
+    {
+      "value": "164",
+      "texto": "Petição de Recurso Ordinário em Habeas Corpus"
+    },
+    {
+      "value": "165",
+      "texto": "Precatório"
+    },
+    {
+      "value": "166",
+      "texto": "Procedimento Administrativo"
+    },
+    {
+      "value": "167",
+      "texto": "Procedimento de Investigação Criminal"
+    },
+    {
+      "value": "168",
+      "texto": "Procedimento Ordinário"
+    },
+    {
+      "value": "169",
+      "texto": "Processo Administrativo"
+    },
+    {
+      "value": "170",
+      "texto": "Processo Administrativo Disciplinar"
+    },
+    {
+      "value": "171",
+      "texto": "Processos Sumários"
+    },
+    {
+      "value": "172",
+      "texto": "Queixa Crime"
+    },
+    {
+      "value": "173",
+      "texto": "Questão de Ordem na Ação Penal"
+    },
+    {
+      "value": "174",
+      "texto": "Questão de Ordem na Apelação Criminal"
+    },
+    {
+      "value": "175",
+      "texto": "Reclamação"
+    },
+    {
+      "value": "176",
+      "texto": "Reclamação Constitucional"
+    },
+    {
+      "value": "177",
+      "texto": "Recurso Administrativo"
+    },
+    {
+      "value": "178",
+      "texto": "Recurso Criminal"
+    },
+    {
+      "value": "179",
+      "texto": "Recurso de Habeas Corpus"
+    },
+    {
+      "value": "180",
+      "texto": "Recurso de Habeas Data"
+    },
+    {
+      "value": "181",
+      "texto": "Recurso de Petição em Apelação Cível"
+    },
+    {
+      "value": "182",
+      "texto": "Recurso em Sentido Estrito"
+    },
+    {
+      "value": "183",
+      "texto": "Recurso Especial"
+    },
+    {
+      "value": "184",
+      "texto": "Recurso Especial e Extraordinário na Apelação Cível"
+    },
+    {
+      "value": "185",
+      "texto": "Recurso Especial e Extraordinário na Apelação Criminal"
+    },
+    {
+      "value": "186",
+      "texto": "Recurso Especial e Extraordinário no Agravo de Instrumento"
+    },
+    {
+      "value": "187",
+      "texto": "Recurso Especial e Extraordinário no Mandado de Segurança"
+    },
+    {
+      "value": "188",
+      "texto": "Recurso Especial em Agravo Interno"
+    },
+    {
+      "value": "189",
+      "texto": "Recurso Especial em Agravo Interno na Apelação Cível"
+    },
+    {
+      "value": "190",
+      "texto": "Recurso Especial na Ação Civil Pública"
+    },
+    {
+      "value": "191",
+      "texto": "Recurso Especial na Ação Direta de Inconstitucionalidade"
+    },
+    {
+      "value": "192",
+      "texto": "Recurso Especial na Ação Rescisória"
+    },
+    {
+      "value": "193",
+      "texto": "Recurso Especial na Apelação Civel"
+    },
+    {
+      "value": "194",
+      "texto": "Recurso Especial na Apelação Criminal"
+    },
+    {
+      "value": "195",
+      "texto": "Recurso Especial na Petição"
+    },
+    {
+      "value": "196",
+      "texto": "Recurso Especial na Revisão Criminal"
+    },
+    {
+      "value": "197",
+      "texto": "Recurso Especial no Agravo de Instrumento"
+    },
+    {
+      "value": "198",
+      "texto": "Recurso Especial no Agravo em Execução Penal"
+    },
+    {
+      "value": "199",
+      "texto": "Recurso Especial no Agravo Interno na Apelação Cível"
+    },
+    {
+      "value": "200",
+      "texto": "Recurso Especial no Agravo Regimental"
+    },
+    {
+      "value": "201",
+      "texto": "Recurso Especial no Mandado de Segurança"
+    },
+    {
+      "value": "202",
+      "texto": "Recurso Especial no Recurso em Sentido Estrito"
+    },
+    {
+      "value": "203",
+      "texto": "Recurso Especial no Reexame Necessário"
+    },
+    {
+      "value": "204",
+      "texto": "Recurso Especial nos Embargos de Declaração"
+    },
+    {
+      "value": "205",
+      "texto": "Recurso Especial nos Embargos Infringentes"
+    },
+    {
+      "value": "206",
+      "texto": "Recurso Extraordinário"
+    },
+    {
+      "value": "207",
+      "texto": "Recurso Extraordinário com Agravo na Apelação Cível"
+    },
+    {
+      "value": "208",
+      "texto": "Recurso Extraordinário e Especial no Agravo de Instrumento"
+    },
+    {
+      "value": "209",
+      "texto": "Recurso Extraordinário na Ação Direta de Inconstitucionalidade"
+    },
+    {
+      "value": "210",
+      "texto": "Recurso Extraordinário na Apelação Cível"
+    },
+    {
+      "value": "211",
+      "texto": "Recurso Extraordinário na Apelação Criminal"
+    },
+    {
+      "value": "212",
+      "texto": "Recurso Extraordinário na Remessa Necessária"
+    },
+    {
+      "value": "213",
+      "texto": "Recurso Extraordinário no Agravo de Instrumento"
+    },
+    {
+      "value": "214",
+      "texto": "Recurso Extraordinário no Agravo Interno"
+    },
+    {
+      "value": "215",
+      "texto": "Recurso Extraordinário no Agravo Regimental"
+    },
+    {
+      "value": "216",
+      "texto": "Recurso Extraordinário no Dissídio Coletivo de Greve"
+    },
+    {
+      "value": "217",
+      "texto": "Recurso Extraordinário no Mandado de Segurança"
+    },
+    {
+      "value": "218",
+      "texto": "Recurso Extraordinário no Recurso em Sentido Estrito"
+    },
+    {
+      "value": "219",
+      "texto": "Recurso Extraordinário no Recurso Especial no Agravo Interno"
+    },
+    {
+      "value": "220",
+      "texto": "Recurso Extraordinário no Reexame Necessário"
+    },
+    {
+      "value": "221",
+      "texto": "RECURSO EXTRORDINÁRIO EM EXECUÇÃO PENAL"
+    },
+    {
+      "value": "222",
+      "texto": "Recurso Inominado"
+    },
+    {
+      "value": "223",
+      "texto": "Recurso Ordinário em Apelação"
+    },
+    {
+      "value": "224",
+      "texto": "Recurso Ordinário em Habeas Corpus"
+    },
+    {
+      "value": "225",
+      "texto": "Recurso Ordinário em Mandado de Segurança"
+    },
+    {
+      "value": "226",
+      "texto": "Recurso Ordinário no Agravo Regimental"
+    },
+    {
+      "value": "227",
+      "texto": "Recursos Especial e Extraodinário nos Embargos Infrigentes"
+    },
+    {
+      "value": "228",
+      "texto": "Recursos Especial e Extraordinário"
+    },
+    {
+      "value": "229",
+      "texto": "Recursos Especial e Extraordinário na Ação Direta de Inconstitucionalidade"
+    },
+    {
+      "value": "230",
+      "texto": "Recursos Especial e Extraordinário na Apelação Cível"
+    },
+    {
+      "value": "231",
+      "texto": "Recursos Especial e Extraordinário na Apelação Criminal"
+    },
+    {
+      "value": "232",
+      "texto": "Recursos Especial e Extraordinário na Petição"
+    },
+    {
+      "value": "233",
+      "texto": "Recursos Especial e Extraordinário no Agravo de Instrumento"
+    },
+    {
+      "value": "234",
+      "texto": "Recursos Especial e Extraordinário no Agravo Interno"
+    },
+    {
+      "value": "235",
+      "texto": "Recursos Especial e Extraordinário no Agravo Regimental"
+    },
+    {
+      "value": "236",
+      "texto": "Recursos Especial e Extraordinário no Mandado de Segurança"
+    },
+    {
+      "value": "237",
+      "texto": "Recursos Especial e Extraordinário no Recurso em Sentido Estrito"
+    },
+    {
+      "value": "238",
+      "texto": "Recursos Especial e Extraordinário no Reexame Necessário"
+    },
+    {
+      "value": "239",
+      "texto": "Recursos Especial e Extraordinário nos Embargos de Declaração"
+    },
+    {
+      "value": "240",
+      "texto": "Reexame Necessário"
+    },
+    {
+      "value": "241",
+      "texto": "Relaxamento de Prisão"
+    },
+    {
+      "value": "242",
+      "texto": "Remessa em Mandado de Segurança"
+    },
+    {
+      "value": "243",
+      "texto": "Remessa Necessária"
+    },
+    {
+      "value": "244",
+      "texto": "Representação"
+    },
+    {
+      "value": "245",
+      "texto": "Representação Criminal"
+    },
+    {
+      "value": "246",
+      "texto": "Representação para Perda de Graduação"
+    },
+    {
+      "value": "247",
+      "texto": "Representação por Indignidade para o Oficialato"
+    },
+    {
+      "value": "248",
+      "texto": "Representação por Quebra de Sigilo Bancário e Fiscal"
+    },
+    {
+      "value": "249",
+      "texto": "Requerimento"
+    },
+    {
+      "value": "250",
+      "texto": "Restituição de Coisa Apreendida"
+    },
+    {
+      "value": "251",
+      "texto": "Revisão Criminal"
+    },
+    {
+      "value": "252",
+      "texto": "Revogação de Prisão Preventiva"
+    },
+    {
+      "value": "253",
+      "texto": "Suspensão de Liminar"
+    },
+    {
+      "value": "254",
+      "texto": "Suspensão de Segurança"
+    },
+    {
+      "value": "255",
+      "texto": "Termo Circunstanciado de Ocorrência"
+    },
+    {
+      "value": "256",
+      "texto": "Tutela Antecipada"
+    }
+  ]
+}

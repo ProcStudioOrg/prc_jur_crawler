@@ -326,7 +326,7 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 | 9 | **TJPI** | PI | PJe, Projudi | ok 09/08 |
 | 10 | **TJSE** | SE | ⚠️ a pista estava errada: é **eproc**, não "Próprio" — e a jurisprudência é uma app JSF à parte | bloqueado 10/08 |
 | 11 | **TJTO** | TO | ⚠️ a pista de "irmão do e-Proc" **não serviu**: a jurisprudência é portal próprio PHP+Solr | ok 11/08 |
-| 12 | **TJRR** | RR | PJe, Projudi | pendente |
+| 12 | **TJRR** | RR | ⚠️ a pista estava errada: o DataJud mostra o acervo **99,96% Eproc**, não PJe/Projudi — e a jurisprudência é uma app JSF à parte | ok 12/08 |
 | 13 | **TJMT** | MT | PJe, Projudi | ok 10/08 |
 | 14 | **TJPB** | PB | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
 | 15 | **TJRO** | RO | PJe, Projudi — **API mapeada + Navigator escrito**, falta o crawler | parcial 09/08 |
@@ -913,6 +913,101 @@ de `classe`** (31 e 113 opções) não foram distinguidos.
 🔴 **Com o TJAP a fila passou a ter TRÊS `parcial` (TJPB 08/08, TJRO 09/08, TJAP 11/08)
 — o gatilho da regra da dívida de crawler.** O próximo slot das 20:00 deve pegar o
 **TJPB**, o mais antigo, em vez de abrir tribunal novo.
+
+
+📌 **O que o TJRR (feito em 12/08/2026) ensinou — leia
+[`CLAUDE-TJRR.md`](CLAUDE-TJRR.md).** Sétimo alvo do Bloco 3 e o **primeiro
+JSF/PrimeFaces aberto do repo**: sem captcha em etapa nenhuma, ementa íntegra na
+busca e PDF de inteiro teor público. As lições valem para os 2 restantes:
+
+- 🔴 **A FAMÍLIA DO PORTAL NÃO DIZ NADA SOBRE O PORTÃO — e aqui ela absolveu.**
+  O único irmão JSF/PrimeFaces mapeado é o **TJSE**, que é captcha nos **dois**
+  módulos (Turnstile e reCAPTCHA). O TJRR roda a mesma pilha e **não tem captcha
+  nenhum**. Isso foi medido **mandando o POST e lendo a resposta**, que é
+  exatamente o que o TJSE mandou fazer depois de `grep turnstile` dar falso
+  negativo lá. **A pilha prevê o contrato do POST, nunca o bloqueio.**
+- 🔴 **LINHAS POR PÁGINA PODE SER LISTA BRANCA, E FORA DELA A TABELA VOLTA VAZIA
+  COM HTTP 200 — defeito novo no repo.** `_rows` aceita **exatamente** 10, 20 e
+  30, os três valores do combo; qualquer outro (3, 5, 15, 25, 31, 40, 50, 100)
+  devolve fragmento de **57 bytes** — tabela sem uma linha, sem erro, sem 500.
+  Medido duas vezes, idêntico. É o **avesso da lição do TJAL** ("teste o
+  parâmetro, não o controle"): lá o servidor aceitava o que a tela não oferecia;
+  aqui ele **só** aceita o que a tela oferece, e sair da lista custa um zero
+  silencioso — `--page-size 50` colheria zero em toda página, o que se lê como
+  fim da lista. **Bisecte o tamanho de página mesmo quando a tela sugere o
+  limite.**
+- 🔴 **DUAS TABELAS DE RESULTADO NA MESMA RESPOSTA, com os MESMOS ids de card.**
+  `dataTablePesquisa` (acórdãos, 77.128) e `dataTablePesquisa2` (monocráticas,
+  49.256) vêm renderizadas juntas. Ler só a primeira perde **39% do acervo** sem
+  sintoma; e fatiar a página inteira como se fosse uma aba **mistura monocrática
+  dentro de acórdão** — os campos batem todos e só a ementa vem vazia, que é
+  indistinguível da monocrática legítima. Foi o primeiro bug do crawler. **Conte
+  quantas tabelas a resposta tem antes de fatiar.**
+- 🔴 **UM ATRIBUTO DE ESTILO PODE APAGAR O CAMPO MAIS IMPORTANTE.** O `docTexto`
+  da EMENTA carrega `style="text-align: justify"` e os demais não: o seletor
+  `div.docTexto` cru casa processo, relator, órgão e as duas datas e **perde
+  exatamente a ementa**, calado. O card volta completo com `ementa: null` — o
+  mesmo sintoma da monocrática que legitimamente não tem ementa. Segundo bug do
+  dia. **Case o container com `[^>]*`, e desconfie de campo nulo que "faz
+  sentido".**
+- 🔴 **NEM TODO DOCUMENTO TEM INTEIRO TEOR, e descartá-lo perde julgado em
+  silêncio.** 1 das 10 monocráticas da primeira página não traz link de PDF
+  nenhum. O parser inicial o descartava por falta de id — o crawler agora o
+  mantém com `id: null` e `semInteiroTeor: true`. **O que o portal não entrega
+  tem de aparecer no resultado como ausência declarada, não como ausência.**
+- ✅ **SEGUNDO CONJUNTO DE OPERADORES COERENTE EM ONZE TRIBUNAIS** (depois do
+  TJPB): os portugueses funcionam com aritmética exata (`OU` = 27.442 + 17.373 −
+  15.907 = 28.908; `NÃO` = 27.442 − 15.907 = 11.535), o espaço é AND, e os
+  ingleses **destroem** a busca (`AND` = 4, `NOT` = 0) em vez de inflar — cair
+  para 4 é sintoma visível. ⚠️ E `NAO` e `NÃO` são **o mesmo** operador aqui,
+  inédito: a causa está medida, o `onsubmit="normalizar()"` do formulário tira o
+  acento da query inteira antes de enviar.
+- ⚠️ **DUAS CAMADAS DE NORMALIZAÇÃO, e só medir as duas em separado dá a
+  resposta.** O cliente normaliza (pelo `normalizar()`) **e** o índice também:
+  mandando o termo cru por fora do cliente, `usucapiao`, `usucapião` e até o
+  mojibake `usucapiÃo` devolvem os **mesmos 991**. Fosse medido só por dentro da
+  tela, ficaria gravado "o índice normaliza" sem prova nenhuma.
+- 🔴 **A PONTA FINAL DA JANELA DE DATA É IGNORADA SOZINHA, E A INICIAL FUNCIONA**
+  — a lição do TJPI com a **metade trocada** (lá quem sumia era o início). Não se
+  herda nem a assimetria. ⚠️ E o combo diz "TODOS" e filtra **julgamento**: 58,
+  igual ao explícito, contra 60 do PUBLICACAO. ✅ Em compensação a base tem as
+  **duas datas, reais, distintas e filtráveis** — diferente de TJPI (só
+  publicação), TJRO (só julgamento) e TJES (só juntada).
+- ⚠️ **O PASSO 0 QUASE ENTREGOU UMA API QUE NÃO EXISTE:** `juris.tjrr.jus.br` é
+  outra aplicação (SPA Angular) e responde **200 a qualquer path**, inclusive
+  `/path-inventado-9z`, sempre com o mesmo `index.html` de 1,6 KB. Cinco "200"
+  em `/swagger`, `/v3/api-docs`, `/openapi.json`, `/api` e `/dados-abertos` eram
+  a mesma página em branco — a armadilha do TJES, e o que separa é o **tamanho**
+  do corpo. ✅ No host de jurisprudência não há vhost curinga.
+- 🔴 **A PISTA DA FILA ESTAVA ERRADA, E QUEM CORRIGIU FOI O DATAJUD, NÃO O
+  PORTAL.** O `tribunais.json` registra PJe + Projudi; o acervo real é **99,96%
+  Eproc** (372.073 de 372.220, contra PJe 107 e Projudi 40). É a lição do TJSE
+  repetida, só que desta vez **a base do próprio repo era a pista errada** — e
+  custou 30 segundos de DataJud descobrir.
+- ⚠️ **A pergunta do TJES ("tem 1º grau?") deu NÃO pela primeira vez em seis** —
+  depois de TJPB, TJRO, TJES, TJTO e TJAP. **Continue perguntando:** o "não"
+  medido vale tanto quanto o "sim", e é o que impede prometer sentença de RR.
+- ✅ **A partição por órgão fecha EXATA** (as 12 partes somam 991 = o total),
+  raro no repo. 🔴 Mas **o peso do Juizado varia 94× conforme o tema**: Turma
+  Recursal é 37,5% em `dano moral` e 0,4% em `usucapião`. Décimo primeiro
+  tribunal, e a proporção continua sem se herdar.
+- ⚠️ **Valor inventado é IGNORADO, não recusado** (devolve o acervo inteiro, com
+  200), em órgão e em classe: o teste do TJMT não flagra nada aqui — igual ao
+  TJTO. O que decide é comparar o valor **válido** com o sem-filtro.
+- ✅ **JSF entrega os combos de graça** (12 órgãos, 257 classes, 43 relatores,
+  sem popup), confirmando o que o TJSE mediu. ⚠️ E os filtros **não existem na
+  home**: só aparecem na tela de resultado, padrão TJPI.
+
+⚠️ **Pendências declaradas do TJRR:** os **43 relatores** estão enumerados e no
+`--listar-filtros`, mas **não há flag `-r`** e o filtro **não foi provado por
+contagem**; o caminho **SISCOM (13 dígitos)** que o placeholder promete não foi
+medido, por falta de um número real; os **módulos irmãos** linkados no menu
+(Jurisprudência Temática, Súmulas, Enunciados, Legislação, Precedentes
+Obrigatórios) não foram tocados; **rate limit não foi medido**; não se mediu se
+as abas **compõem com o filtro de data**; e `/impressao.xhtml?id=` respondeu 200
+mas **não foi dissecada**. ⏱️ O timebox de 90 min **estourou** (~3h30): Passo 0,
+busca, Fase 3b e a bateria de medições couberam em ~1h20; o excedente foi
+código, dois bugs de parser e a Fase 6 inteira.
 
 ## Bloco 4 — Módulo faltante (1 alvo)
 

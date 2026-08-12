@@ -79,6 +79,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjpr` | TJ do Paraná | PR | `CLAUDE-TJPR.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjrj` | TJ do Rio de Janeiro | RJ | `CLAUDE-TJRJ.md` | 🟢 OK (HTTP direto, sem browser — só e-Proc/Justiça Comum 2º grau) |
 | `tjrn` | TJ do Rio Grande do Norte | RN | `CLAUDE-TJRN.md` | 🔴 **sem busca** — o domínio **inteiro** do TJRN responde 403 (Akamai); só `-n` (nº do processo, via DataJud) |
+| `tjrr` | TJ de Roraima | RR | `CLAUDE-TJRR.md` | 🟢 OK (portal Juris/JSF, HTTP direto, sem browser — **sem captcha**; ementa íntegra na busca e **PDF de inteiro teor público**). Base corrente; ⚠️ **monocrática vem sem ementa** |
 | `tjrs` | TJ do Rio Grande do Sul | RS | `CLAUDE-TJRS.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjsc` | TJ de Santa Catarina | SC | `CLAUDE-TJSC.md` | 🟢 OK (browser — portal atrás de verificação de segurança) |
 | — | TJ de Sergipe | SE | `CLAUDE-TJSE.md` | 🔴 **sem comando** — captcha nos **dois** módulos (Turnstile no judicial, reCAPTCHA no administrativo); nem `-n` existe |
@@ -92,14 +93,14 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 de uma base nacional única, o FALCÃO — leia [`CLAUDE-FALCAO.md`](CLAUDE-FALCAO.md) para
 escolher o comando. `CLAUDE-TRT9.md` é o mergulho técnico do sistema.
 
-Dois tribunais catalogados estão **mapeados à espera de crawler** — **TJPB** e **TJRO**
-(API inteira medida em `human-codegen/`, e o TJRO já tem `src/TJRONavigator.js`). Não há
-comando `jur` para eles ainda: não os ofereça ao usuário. Falta ainda o módulo
-**eJURIS** do TJRJ (legado com Turmas Recursais e acervo histórico — o `jur tjrj` cobre
-só o e-Proc). Dos 27 TJs, **17 têm comando 🟢**, 4 estão bloqueados com o motivo medido
-(TJMA, TJRN, TJSE, TJSP), 1 é instável e **3 continuam sem mapeamento nenhum** —
-TJAP, TJRR e TJTO. Veja `cobertura/CLAUDE-COBERTURA.md` e use a skill
-[`codegen`](skills/codegen/SKILL.md) para mapear.
+Três tribunais catalogados estão **mapeados à espera de crawler** — **TJPB**, **TJRO**
+e **TJAP** (medição inteira em `human-codegen/`, e o TJRO já tem
+`src/TJRONavigator.js`). Não há comando `jur` para eles ainda: não os ofereça ao
+usuário. Falta ainda o módulo **eJURIS** do TJRJ (legado com Turmas Recursais e acervo
+histórico — o `jur tjrj` cobre só o e-Proc). Dos 27 TJs, **19 têm comando 🟢**, 4 estão
+bloqueados com o motivo medido (TJMA, TJRN, TJSE, TJSP), 1 é instável (TJAM, base
+congelada) e 3 são os `parcial` acima. Veja `cobertura/CLAUDE-COBERTURA.md` e use a
+skill [`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**
 - "Procure no Tribunal do Paraná" → `tjpr` → leia `CLAUDE-TJPR.md`
@@ -153,6 +154,33 @@ TJAP, TJRR e TJTO. Veja `cobertura/CLAUDE-COBERTURA.md` e use a skill
   em 2019 é de subseções mineiras). Um pedido histórico exige os dois comandos.
   ⚠️ Ao contrário do TRF2, aqui o espaço entre termos funciona e os operadores são em
   português (`e`, `ou`, `não`, `prox`) — **nunca hifenize a query do TRF6**
+- "TJRR" / "Roraima estadual" / "Boa Vista" → `tjrr` → leia `CLAUDE-TJRR.md`.
+  ⚠️ **O peso do Juizado varia 94× conforme o tema**: Turma Recursal é **37,5%**
+  em `dano moral` (5.965 de 15.907) e **0,4%** em `usucapião` (4 de 991). Em
+  consumo ofereça também `--origem turmas`; em direito real ela é ruído. ✅ A
+  partição por órgão **fecha exata** (as 12 partes somam o total).
+  🔴 **Só ACÓRDÃO tem ementa.** As 49.256 monocráticas (39% do acervo) vêm com
+  card **sem bloco de ementa** — só processo, relator, órgão e datas; o texto
+  delas só existe no PDF (`--fetch-inteiro-teor`). O crawler marca `semEmenta`;
+  repasse o aviso e **não apresente o card da monocrática como ementa**.
+  🔴 **A data FINAL sozinha é ignorada em silêncio** (devolve o acervo inteiro
+  com HTTP 200); a inicial sozinha funciona. Mande as duas pontas — o crawler
+  avisa. ⚠️ E o combo diz "TODOS" mas filtra **julgamento**: `-di/-df` é
+  julgamento e `-dpi/-dpf` é publicação, e as duas datas são **reais e
+  distintas** (diferente de TJPI, TJRO e TJES).
+  🔴 **Os operadores são os PORTUGUESES** (`E`, `OU`, `NÃO`/`NAO`,
+  `"frase exata"`, `*`, `$`), com aritmética exata; o **espaço é E (AND)**.
+  `AND`/`OR`/`NOT`/`ADJ`/`PROX` **destroem** a busca (4, 22, 0, 4, 1).
+  ⚠️ Aqui `NAO` e `NÃO` são o **mesmo** operador — inédito no repo.
+  ⚠️ **Não avise sobre acento**: o cliente e o índice normalizam.
+  ✅ **Há permalink por documento e o inteiro teor é PDF público**
+  (`/pdf?id=<id>`, sem sessão e sem captcha). 🔴 Mas **a busca não tem URL** —
+  nunca mande link de busca do TJRR como prova —, quem identifica o julgado é o
+  **`id` do portal** (um processo tem vários documentos) e **1 em 10
+  monocráticas não tem PDF nenhum** (o crawler marca `semInteiroTeor`).
+  ⚠️ **Não há citação oficial pronta** — monte-a dos campos do card.
+  A base é **só 2º grau + Turma Recursal**, de 2018 em diante, **sem 1º grau**,
+  e está **corrente**. Matéria federal com origem em RR → `trf1`
 - "TJRJ" / "Rio de Janeiro estadual" → `tjrj` → leia `CLAUDE-TJRJ.md`.
   ⚠️ só Justiça Comum 2º grau no e-Proc (~2023+); **Juizado Especial / Turma Recursal
   carioca e acervo antigo estão no eJURIS, sem crawler** — diga isso ao usuário em vez

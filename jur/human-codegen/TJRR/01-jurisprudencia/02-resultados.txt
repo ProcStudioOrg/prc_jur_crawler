@@ -1,0 +1,137 @@
+PÓS-BUSCA — TJRR / Juris (Fase 3b, skill `browser-post-search`)
+===============================================================
+
+Data: 12/08/2026. Busca de referência: `usucapiao` (991 documentos —
+601 acórdãos + 390 monocráticas).
+
+
+## 1. Onde o resultado aparece
+
+**Na mesma rota** (`/index.xhtml`), pelo POST do formulário — não há navegação
+para outra página nem nova aba. A URL não muda e **não identifica a busca**:
+não existe permalink de busca (nem o zero falso do TJPE, nem o
+formulário-sem-executar do TJRO, nem o filtro-errado do TJTO — aqui simplesmente
+não há URL de busca).
+
+✅ **Os controles NÃO somem depois de buscar — eles APARECEM.** A tela inicial
+tem só termo e número; os combos de órgão, espécie de recurso, relator,
+Ementa/Indexação e as duas datas só existem na tela de resultado. É o padrão
+TJPI, ao contrário dos portais que escondem o formulário depois da busca.
+
+Prints: `01.01-tela-inicial.png`, `01.02-termo-preenchido.png`,
+`02.01-resultados.png`, `02.02-pagina-2.png`, `02.03-inteiro-teor.png`.
+
+
+## 2. Anatomia do card — e ele muda com o tipo de documento
+
+Cada resultado é `<div id="resultados<N>" class="row">`, uma linha da dataTable,
+montada com pares `<div class="docTitulo">RÓTULO</div>` +
+`<div class="docTexto">valor</div>`.
+
+ACÓRDÃO (`02-card-acordao.html`) — 7 blocos:
+
+    PROCESSO             "AC - Apelação Cível" + <br><br> + 08410502420238230010
+    RELATOR              ALMIRO PADILHA
+    ÓRGÃO JULGADOR:      Câmara Cível
+    DATA DO JULGAMENTO:  07/08/2026
+    DATA DA PUBLICAÇÃO:  07/08/2026
+    EMENTA:              ementa íntegra, formato estruturado do CNJ
+                         (I. Caso em exame / II. Questões em discussão /
+                          III. Razões de decidir / IV. Dispositivo)
+
+MONOCRÁTICA (`02-card-monocratica.html`) — os mesmos 6 primeiros blocos e
+**nenhum bloco de EMENTA**.
+
+🔴 **SÓ ACÓRDÃO TEM EMENTA — e dissecar um tipo só teria errado em 39% do
+acervo** (49.256 monocráticas de 126.384). Medido de duas formas independentes:
+a anatomia do card, e o filtro "Ementa/Indexação" com `posse`, que devolve
+**276 acórdãos e 0 monocráticas**.
+
+⚠️ **O CARD DA MONOCRÁTICA MOSTRA MESMO ASSIM O BOTÃO "Copia a ementa para a
+área de transferência"** — um controle que promete um campo que aquele documento
+não tem. Some à lição do TJES sobre rótulo que mente: aqui quem mente é o botão.
+
+⚠️ **A ementa medida é ementa mesmo, não trecho**: média de 2.109 caracteres na
+primeira página, mínimo 817, máximo 4.870. Não é o snippet de 200 chars que
+alguns portais exibem.
+
+⚠️ O bloco `PROCESSO` empacota **classe e número na mesma célula**, separados por
+`<br><br>`. Quem pegar o texto do bloco inteiro grava
+`"AC - Apelação Cível 08410502420238230010"` como número do processo.
+
+🔴 **O `docTexto` da EMENTA carrega `style="text-align: justify"` e os demais
+não.** Um seletor `div.docTexto` cru (sem `[^>]*`) casa processo, relator, órgão
+e as duas datas — e **perde exatamente a ementa**, calado. Foi o segundo bug do
+crawler aqui: o card vinha completo, com `ementa: null`, o que se lê como
+"esse julgado não tem ementa" e é indistinguível da monocrática legítima.
+
+
+## 3. A escada até o documento
+
+    card → botão "Exibir o inteiro teor" → iframe carrega /inteiroTeor.xhtml?id=<id>
+                                         → que embrulha um <object> apontando para
+                                           /arquivo.pdf (preso à sessão)
+                                         → e oferece o link direto /pdf?id=<id>
+
+✅ **`/pdf?id=<id>` é PDF público**: responde **HTTP 200, `application/pdf`, sem
+cookie, sem sessão, sem captcha**, testado em contexto limpo. Medidos: id 123646
+= 55.074 b / 5 páginas; id 126535 = 142.092 b / 10 páginas. O texto sai limpo no
+`pdftotext`, com acento correto.
+
+⚠️ **`/inteiroTeor.xhtml?id=<id>` NÃO é o documento** — é o visualizador: 2.407
+bytes de HTML embrulhando um `<object>`. Confundir um com o outro grava "o
+inteiro teor tem 2 KB".
+
+🔴 **NEM TODO DOCUMENTO TEM INTEIRO TEOR.** Na primeira página de monocráticas de
+`usucapiao`, **1 dos 10** cards não traz nenhum `inteiroTeor.xhtml?id=` — o card
+existe, com processo, relator, órgão e datas, e não há PDF. O crawler o mantém
+com `id: null` e `semInteiroTeor: true` em vez de descartá-lo: descartar por
+falta de id perderia o julgado em silêncio.
+
+
+## 4. Permalink
+
+✅ **Por documento existe e funciona em contexto limpo:**
+`https://jurisprudencia.tjrr.jus.br/pdf?id=<id>` (o PDF em si) e
+`https://jurisprudencia.tjrr.jus.br/inteiroTeor.xhtml?id=<id>` (o visualizador).
+Os dois abrem sem sessão.
+
+🔴 **O que identifica o documento é o `id` do portal, não o número do processo** —
+um processo tem vários documentos (o conhecido tem 2 acórdãos).
+
+🔴 **De busca não há permalink nenhum**: a URL nunca muda. Nunca mande a URL da
+busca como prova.
+
+
+## 5. Paginação
+
+AJAX parcial do PrimeFaces, uma tabela por vez:
+
+    POST /index.xhtml
+      javax.faces.partial.ajax = true
+      javax.faces.source       = formPesquisa:j_idt155:dataTablePesquisa[2]
+      javax.faces.behavior.event = page
+      …_pagination = true   …_first = <offset>   …_rows = <10|20|30>
+      + o formulário inteiro + ViewState
+
+- **Página**: 10, 20 ou 30 — e **só** esses três (ver a lista branca na seção 01).
+- **Total**: **exato**, sem saturação. `rowCount` bate com a aritmética dos
+  operadores em todos os testes.
+- **Offset profundo funciona**: `first=590` de 601 devolve as 10 últimas linhas.
+- ✅ **Estabilidade medida**: a mesma página 2, duas vezes, devolveu os mesmos 10
+  ids na mesma ordem. Sem o problema do TJRJ/TJMG/TJMT.
+- ⚠️ **Cada documento é renderizado DUAS vezes no HTML** (layouts desktop e
+  mobile), e o `id` aparece mais de uma vez dentro do mesmo card. A deduplicação
+  por `id` é obrigatória; sem ela o crawler devolve tudo em dobro.
+- ⚠️ Peso: 30 linhas = 752 KB, porque cada linha carrega a ementa íntegra.
+
+
+## 6. O texto já veio na busca?
+
+✅ **A ementa do acórdão sim** — íntegra, no HTML da busca, sem request extra.
+🔴 **O inteiro teor não**, e a monocrática **não tem nada além dos metadados**:
+para ela, `--fetch-inteiro-teor` (1 GET por documento) não é opcional se o
+usuário quiser o texto.
+
+⚠️ **Não há citação oficial pronta** (diferente de TJMT, TJPI e TJTO): a citação
+tem de ser montada a partir dos campos do card.
