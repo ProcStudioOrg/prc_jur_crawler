@@ -1097,18 +1097,29 @@ o módulo pronto não tem**:
   por dia e tem publicação — **os dois módulos do mesmo tribunal divergem até
   nos campos de data**.
 
-⚠️ **Pendências declaradas do TJRJ/eJURIS:** os filtros `--ramo`,
-`--magistrado` e `-oj` estão expostos e resolvem o label, mas **não foram
-provados por contagem**; o botão "+" (multi-seleção via `hfCodRamos`/`hfCodMags`/
-`hfCodOrgs`) **não foi mapeado** — o crawler manda um valor por combo; o
-`chkAtivo`/`chkInativo` (situação do magistrado) é enviado sempre marcado e
-**não foi medido**; o tipo **EMENTÁRIO** tem 27 campos próprios em
-`Ementarios[0]` que **não são expostos** no resultado; não se mediu **rate
-limit**; e o **DataJud não foi sondado** para este módulo. ⏱️ O timebox de 90
-min **estourou** (~2h): Passo 0, contrato, Fase 3b e a bateria de medições
-couberam em ~60 min; o excedente foi código, a Fase 6 e o registro da entrada
-`TJRJ_EJURIS` na cobertura (que é keyed por tribunal, e um **módulo** de
-tribunal não cabia no modelo — precisou de upsert sintético, como CARF/TCU).
+- 🔴 **O `<select>` ERA DECORATIVO — QUEM FILTRA É O HIDDEN, e por meia hora o
+  crawler teve três flags ignoradas em silêncio.** `cmbOrgaoJulgador=431`
+  devolve **51.972**, exatamente a contagem sem filtro; `hfCodOrgs=431` devolve
+  **48**. Idem ramo e magistrado. Quem carrega a seleção é o hidden que o botão
+  "+" alimenta — o combo visível não é enviado a lugar nenhum útil. Eu havia
+  fechado o crawler mandando só o `<select>` e **declarado os três filtros como
+  "não provados por contagem"**; foi provar que o defeito apareceu. **A
+  invariante do repo ("contagem igual = filtro ignorado") não é só para relatar
+  ao usuário: é teste de aceite do próprio crawler, e pendência declarada é onde
+  o bug se esconde.** ✅ Multi-valor por `;`, e a partição **fecha exata**
+  (431 = 48, 432 = 23, `431;432` = 71); ⚠️ `;` sobrando responde 500.
+
+⚠️ **Pendências declaradas do TJRJ/eJURIS:** o `chkAtivo`/`chkInativo` (situação
+do magistrado) é enviado sempre marcado e **não foi medido**; o tipo
+**EMENTÁRIO** tem 27 campos próprios em `Ementarios[0]` que **não são expostos**
+no resultado; não se mediu **rate limit**; e o **DataJud não foi sondado** para
+este módulo. ⏱️ O timebox **não foi estourado**: 16:00 → 16:35, ~35 min no
+total. ⚠️ Um tropeço de processo vale registro: a primeira versão deste
+parágrafo afirmava "estourou, ~2h" porque eu estimei o relógio em vez de
+consultá-lo — **a duração é medição como qualquer outra, e `date` custa o mesmo
+que um palpite**. O único atrito real foi o registro da entrada `TJRJ_EJURIS`
+na cobertura, que é keyed por tribunal e não previa **módulo** de tribunal:
+precisou de upsert sintético, como CARF/TCU já fazem.
 
 ## Bloco 5 — Tribunais de Contas Estaduais (13 alvos)
 

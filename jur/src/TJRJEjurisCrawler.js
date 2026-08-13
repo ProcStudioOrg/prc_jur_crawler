@@ -135,21 +135,21 @@ class TJRJEjurisCrawler {
       );
     }
 
+    // Os três filtros multi-valor. O usuário separa por vírgula; na rede vai
+    // por ";" no hidden correspondente (ver TJRJEjurisNavigator._enviarBusca).
     if (opts.ramo || opts.magistrado || opts.orgao) {
       const listas = await this.navigator.listas();
-      if (opts.ramo) {
-        f.ramo = TJRJEjurisNavigator.resolverCombo(listas.ramos, opts.ramo, 'Ramo do direito');
-      }
+      const resolverLista = (valor, lista, rotulo) =>
+        String(valor)
+          .split(',')
+          .map((v) => v.trim())
+          .filter(Boolean)
+          .map((v) => TJRJEjurisNavigator.resolverCombo(lista, v, rotulo));
+      if (opts.ramo) f.ramos = resolverLista(opts.ramo, listas.ramos, 'Ramo do direito');
       if (opts.magistrado) {
-        f.magistrado = TJRJEjurisNavigator.resolverCombo(
-          listas.magistrados,
-          opts.magistrado,
-          'Magistrado'
-        );
+        f.magistrados = resolverLista(opts.magistrado, listas.magistrados, 'Magistrado');
       }
-      if (opts.orgao) {
-        f.orgao = TJRJEjurisNavigator.resolverCombo(listas.orgaos, opts.orgao, 'Orgao julgador');
-      }
+      if (opts.orgao) f.orgaos = resolverLista(opts.orgao, listas.orgaos, 'Orgao julgador');
     }
 
     if (!f.query && !f.numero) {

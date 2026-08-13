@@ -72,6 +72,35 @@ function assert(cond, msg) {
     assert(civel.total !== crim.total, `competência ignorada: ${civel.total} = ${crim.total}`);
   });
 
+  await teste('-oj/--ramo/--magistrado restringem de fato (ressalva 11)', async () => {
+    // Regressão: o <select> sozinho é IGNORADO; quem filtra é o hidden
+    // hfCodOrgs/hfCodRamos/hfCodMags. Se alguém "simplificar" isso, este
+    // teste volta a bater a contagem sem filtro.
+    const base = novoCrawler();
+    await base.search('dano moral', { anoInicio: 2024, anoFim: 2024 }, { maxPages: 1 });
+    for (const [rotulo, filtro] of [
+      ['-oj', { orgao: 'PRIMEIRA CAMARA CIVEL' }],
+      ['--ramo', { ramo: 'DIREITO CIVIL' }],
+      ['--magistrado', { magistrado: 'MARIANNA FUX' }],
+    ]) {
+      const c = novoCrawler();
+      await c.search('dano moral', { anoInicio: 2024, anoFim: 2024, ...filtro }, { maxPages: 1 });
+      assert(c.total < base.total, `${rotulo} foi IGNORADO: ${c.total} = ${base.total}`);
+    }
+  });
+
+  await teste('-oj multi-valor compõe exato (48 + 23 = 71)', async () => {
+    const conta = async (orgao) => {
+      const c = novoCrawler();
+      await c.search('dano moral', { anoInicio: 2024, anoFim: 2024, orgao }, { maxPages: 1 });
+      return c.total;
+    };
+    const a = await conta('PRIMEIRA CAMARA CIVEL');
+    const b = await conta('SEGUNDA CAMARA CIVEL');
+    const ab = await conta('PRIMEIRA CAMARA CIVEL,SEGUNDA CAMARA CIVEL');
+    assert(a + b === ab, `a particao nao fecha: ${a} + ${b} = ${a + b} contra ${ab}`);
+  });
+
   await teste('escopo inteiroTeor acha MAIS que a ementa (ressalva 6)', async () => {
     const em = novoCrawler();
     await em.search('dano moral', { anoInicio: 2024, anoFim: 2024 }, { maxPages: 1 });

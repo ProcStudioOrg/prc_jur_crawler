@@ -43,13 +43,14 @@ O CONTRATO — três passos, uma sessão
      __EVENTVALIDATION           = do HTML do passo 1
      P+hfListaPalavrasBloqueadas = "A;ACIMA;COM;DA;DAS;DE;DO;DOS;E;EM;NA;NAS;
                                     NO;NOS;O;PARA;POR;SEM;SOB;SOBRE"
-     P+hfCodRamos / hfCodMags / hfCodOrgs = "" (multi-seleção do botão "+";
-                                    não usada pelo crawler)
+     P+hfCodRamos / hfCodMags / hfCodOrgs = ids separados por ";"
+                                    🔴 SÃO ESTES QUE FILTRAM — ver abaixo
      P+txtTextoPesq              = a query
      P+cmbOrigem                 = 1..5   (SEM opção "todas")
      P+cmbAnoInicio / cmbAnoFim  = AAAA   (combo 1975..2026)
      P+cmbCompetencia            = 1 Cível | 2 Criminal  (SEM opção "todas")
      P+cmbRamo / cmbMagistrado / cmbOrgaoJulgador = id ou ""
+                                    ⚠️ DECORATIVOS: sozinhos não filtram nada
      P+cmbTipNumeracao           = 1 Num. Única | 2 Num. Antiga
      P+txtNumeracao              = número do processo ou ""
      P+chkAtivo / chkInativo     = "on" (situação do magistrado)
@@ -212,6 +213,19 @@ CONSULTA POR NÚMERO — as três formas funcionam, todas devolvendo 1:
   Numeração antiga 202400189266 (tipo 2)     -> 1  ✅
   ⚠️ generoso ao contrário do TJPE (só dígitos), do TJES (só máscara) e do
      TJPI (o número sozinho derruba a busca).
+
+🔴 O <select> É DECORATIVO — QUEM FILTRA É O HIDDEN (2024, cível, "dano moral";
+   sem filtro = 51.972):
+     cmbOrgaoJulgador=431 (o que a tela mostra) .. 51.972  <- IGNORADO
+     hfCodOrgs=431 ...............................     48  ✅
+     cmbRamo=1 ................................... 51.972  <- IGNORADO
+     hfCodRamos=1 ................................ 13.391  ✅
+   Idem cmbMagistrado / hfCodMags. O botão "+" da tela é que empilha os ids no
+   hidden; o combo sozinho devolve a contagem SEM FILTRO, com HTTP 200 — a
+   armadilha exata da invariante do repo ("contagem igual = filtro ignorado").
+   ✅ Multi-valor separado por ";" e a partição FECHA EXATA:
+      431 (48) + 432 (23) = "431;432" (71).
+   ⚠️ ";" sobrando no fim -> HTTP 500. Separadores "," "|" "-" e espaço -> 500.
 
 ------------------------------------------------------------
 OPERADORES — os PORTUGUESES funcionam; os INGLESES derrubam

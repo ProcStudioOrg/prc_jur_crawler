@@ -48,7 +48,8 @@ de Justiça Comum é melhor no `jur tjrj`, que recorta por dia.
 
 Flags: `--origem comum|turmas|conselho|alcadacivel|alcadacriminal` ·
 `--competencia civel|criminal` · `--escopo ementa|acordao|monocratica|inteiroTeor|ementario|todos`
-· `--ramo/--magistrado/-oj` por label ou trecho · `-di/-df` em **AAAA**.
+· `--ramo/--magistrado/-oj` por label ou trecho, **aceitando vários separados por
+vírgula** · `-di/-df` em **AAAA**.
 
 ## Ressalvas
 
@@ -166,6 +167,24 @@ processo tem várias peças (`Decisoes[]` traz 1 a 3).
   do e-Proc do TJRJ, que desliza a fronteira.
 - ✅ **Total exato**, não saturado (`criptomoeda` = 1, `usucapiao` = 0).
 - ✅ **Sem vhost curinga**: `/path-inventado-9z` devolve o mesmo 404 (md5 igual).
+
+### 11. 🔴 O `<select>` é decorativo — quem filtra é o hidden
+
+Medido (2024, cível, "dano moral", sem filtro = 51.972):
+
+| Enviado | Total |
+|---|---|
+| `cmbOrgaoJulgador=431` (o que a tela mostra) | **51.972** — ignorado |
+| `hfCodOrgs=431` | **48** ✅ |
+
+O mesmo vale para `cmbRamo`/`hfCodRamos` e `cmbMagistrado`/`hfCodMags`. Quem
+carrega a seleção é o hidden que o botão "+" da tela alimenta; o `<select>`
+sozinho não filtra nada e **devolve a contagem sem filtro, com HTTP 200**.
+
+✅ Multi-valor: os ids vão separados por `;` — e a partição **fecha exata**
+(`PRIMEIRA CAMARA CIVEL` 48 + `SEGUNDA CAMARA CIVEL` 23 = as duas juntas 71).
+Na CLI, separe por vírgula: `-oj "PRIMEIRA CAMARA CIVEL,SEGUNDA CAMARA CIVEL"`.
+⚠️ `;` sobrando no fim responde **HTTP 500**.
 
 ### 10. ⚠️ O combo de anos promete 20 anos que não existem
 

@@ -231,17 +231,25 @@ class TJRJEjurisNavigator {
         html,
         `${P}hfListaPalavrasBloqueadas`
       ),
-      [`${P}hfCodRamos`]: '',
-      [`${P}hfCodMags`]: '',
-      [`${P}hfCodOrgs`]: '',
+      // 🔴 QUEM FILTRA SÃO ESTES TRÊS HIDDEN, NÃO OS <select>. Medido:
+      // cmbOrgaoJulgador=431 sozinho devolve 49.063 (= sem filtro, ignorado);
+      // hfCodOrgs=431 devolve 48. O <select> é decorativo — o botão "+" da tela
+      // é que empilha os ids aqui, separados por ";" (SEM ";" no fim: sobra de
+      // separador responde HTTP 500). A partição fecha exata: 431 (48) + 432
+      // (20) = "431;432" (68).
+      [`${P}hfCodRamos`]: (f.ramos || []).join(';'),
+      [`${P}hfCodMags`]: (f.magistrados || []).join(';'),
+      [`${P}hfCodOrgs`]: (f.orgaos || []).join(';'),
       [`${P}txtTextoPesq`]: f.query || '',
       [`${P}cmbOrigem`]: f.origem,
       [`${P}cmbAnoInicio`]: f.anoInicio,
       [`${P}cmbAnoFim`]: f.anoFim,
       [`${P}cmbCompetencia`]: f.competencia,
-      [`${P}cmbRamo`]: f.ramo || '',
-      [`${P}cmbMagistrado`]: f.magistrado || '',
-      [`${P}cmbOrgaoJulgador`]: f.orgao || '',
+      // Os <select> acompanham o primeiro id só para espelhar o que a tela
+      // envia; sozinhos eles não filtram nada.
+      [`${P}cmbRamo`]: (f.ramos || [])[0] || '',
+      [`${P}cmbMagistrado`]: (f.magistrados || [])[0] || '',
+      [`${P}cmbOrgaoJulgador`]: (f.orgaos || [])[0] || '',
       [`${P}cmbTipNumeracao`]: f.tipoNumeracao || '1',
       [`${P}txtNumeracao`]: f.numero || '',
     };
