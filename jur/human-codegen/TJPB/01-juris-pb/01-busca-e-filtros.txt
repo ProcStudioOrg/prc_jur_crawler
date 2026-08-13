@@ -11,9 +11,14 @@ API (medida, não chutada): https://app.tjpb.jus.br/juris-pb-backend/public/sear
 Sistema judicial:         PJe (1º e 2º grau) + Projudi
 Sistema irmão já mapeado: TJES (CLAUDE-TJES.md) — o outro tribunal do repo com 1º grau
 Abrangência da base:      1º grau (sentenças) + 2º grau + Turmas Recursais. 2.515.026 documentos.
-Data do mapeamento:       08/08/2026
-Status:                   PARCIAL — API inteira mapeada e destravada; FALTA O CRAWLER.
+Data do mapeamento:       08/08/2026 · crawler fechado em 13/08/2026
+Status:                   🟢 CRAWLER FECHADO (`jur tjpb`) — ver §12, que CORRIGE §4 e §7.
 ```
+
+> ⚠️ **LEIA O §12 ANTES DO RESTO.** O fechamento de 13/08/2026 desmentiu duas conclusões
+> deste documento (`instancia` "ignorado" e "ACORDAO tem ementa") e refutou a hipótese do
+> §10.2 sobre o 403 dos chunks. O que está entre o §1 e o §11 é o mapeamento como foi
+> gravado em 08/08; as correções estão no fim.
 
 > **Quem pegar o TJPB na volta da fila começa do §1 com o contrato pronto.** Não é preciso
 > reabrir o bundle nem repetir medição: tudo abaixo foi medido em 08/08/2026, com o comando
@@ -296,3 +301,102 @@ O documento mais recente devolvido pela busca sem termo tem `dataJulgamento` de
 - `01-busca-e-filtros.txt` — este arquivo
 - `01-payload-busca-exemplo.json` — resposta real de `/public/search` (2 documentos, size=2)
 - `01.01-tela-busca.png` — a tela **em branco**, ver §10.2
+
+---
+
+## 12. 🟢 FECHAMENTO DO CRAWLER — 13/08/2026 (slot da dívida)
+
+Medições novas, feitas para escrever `src/TJPB{Navigator,Crawler,Checker,Testes}.js`.
+**Três delas corrigem o que está acima.**
+
+### 12.1 🔴 O `advanced=true` é um PORTÃO — e o §2 só viu metade dele
+
+O §2 registrou o par (data × grau). O portão é **geral**: no modo simples **todos** os
+filtros avançados são ignorados; no avançado, o `grau`. Medido com `usucapião` (12.208):
+
+| parâmetro | simples | `advanced=true` |
+|---|---|---|
+| `codigoComarca=200` | 12.208 (ignorado) | **1.689** |
+| `codigoClasse=50` | 12.208 | **3.325** |
+| `codigoOrgaoJulgador=6` | 12.208 | **729** |
+| `codigoVara=47` | 12.208 | **64** |
+| `codigoCompetencia=1` | 12.208 | **1** |
+| `instancia=TURMAS_RECURSAIS` | 12.208 | **41** |
+| `numeroProcesso=<20 díg.>` | **2.515.754 (a base inteira)** | **1** |
+
+✅ Multi-valor: parâmetro repetido é **OR e fecha exato** (`codigoComarca=200&=0` = 4.858
+= 1.689 + 3.169). ⚠️ Exceto `instancia`, que **não é multi-valor** — vale a primeira.
+✅ Id inventado devolve **0** (honesto).
+
+### 12.2 🔴 CORRIGE O §4: `instancia` NÃO é ignorado — e a partição Juizado × Comum EXISTE
+
+O §4 concluiu que a desambiguação teria de ser recorte de cliente. **Estava medindo no
+modo simples.** Com o portão:
+
+```
+PRIMEIRO_GRAU     8.998
+SEGUNDO_GRAU      3.169
+TURMAS_RECURSAIS     41
+                 ------
+                 12.208   <-- partição EXATA
+```
+
+A lição do TJMT se repete inteira: **mapeamento que não vira crawler é trabalho não
+verificado**. E a lição própria do §4 ("o valor inventado errar não prova que o parâmetro
+filtra") continua valendo — só que a conclusão dela era outra.
+
+### 12.3 🔴 CORRIGE O §7: quem tem ementa é o PAR (tipo, instância)
+
+Amostra de **200 documentos** (4 páginas de 50, `usucapião`), 13/08/2026:
+
+| tipo / instância | n | com ementa | com inteiro teor | sem relator |
+|---|---|---|---|---|
+| `SENTENCA` / PRIMEIRO_GRAU | 108 | 0 | 108 | **108** |
+| `ACORDAO` / SEGUNDO_GRAU | 76 | **76** | 76 | 0 |
+| `DECISAO_MONOCRATICA` / SEGUNDO_GRAU | 12 | 0 | 12 | 0 |
+| `ACORDAO` / TURMAS_RECURSAIS | 4 | **0** | 4 | 0 |
+
+O §7 mediu **um** acórdão e escreveu "ACORDAO tem ementa". O acórdão de **Turma Recursal**
+não tem — 0 de 4. E `meioPublicacao` veio **null em 200/200**: não há data de publicação
+nesta base, só `dataJulgamento`, que é **timestamp com milissegundos**
+(`2026-08-13T11:49:51.181`) — assinatura/indexação, não data de sessão.
+
+### 12.4 🔴 REFUTA O §10.2: o 403 dos assets não é (só) cota
+
+O §10.2 gravou "o 403 é cota, não bloqueio do recurso". Refeito em 13/08/2026 em contexto
+novo, **como primeira requisição**: `/juris-pb/browser-*.js`, `/juris-pb/search.page-*.js`,
+os PNG, os woff **e o próprio index** devolvem **403 ao `curl`**, com qualquer UA e com os
+headers `Sec-Fetch-*` de script. No Playwright o documento HTML carrega (46 KB) e os
+sub-recursos continuam 403 — a SPA não renderiza.
+
+👉 **A Fase 3b continua NÃO EXECUTADA**, agora com a causa medida: é bloqueio de borda no
+caminho `/juris-pb/*`, e não a cota que se supôs. ⚠️ Hipótese aberta, a mesma do TJRN e do
+TJSE: pode ser a faixa de datacenter do agente, e a tela abrir no navegador do usuário.
+
+✅ E a separação continua valendo: **o mesmo host serve `/juris-pb-backend/public/*` fora
+do challenge**, respondendo ao `curl` cru. O crawler não depende da tela.
+
+### 12.5 Pendências fechadas do §10
+
+| § | Pendência | Situação em 13/08 |
+|---|---|---|
+| 10.1 | o crawler não existe | ✅ `jur tjpb` 🟢, suíte **18/18** |
+| 10.3 | combos não enumerados | ✅ são **autocomplete** (`?term=`), sem lista canônica — ⚠️ e o mesmo nome tem vários ids (três "João Pessoa": 200/0/9010 → 1.689/3.169/41) |
+| 10.4 | `codigo*`/`idRelator` não provados | ✅ provados por contagem **no modo avançado** — ⚠️ `idRelator=22223` deu 0, não se distinguiu "sem julgado no tema" de "quer outra coisa" |
+| 10.5 | `numeroProcesso` não testado | ✅ aceita **as duas formas**; truncado e inventado dão 0 — 🔴 mas só com o portão |
+| 10.6 | permalink | ✅ medido: **não existe** (`/public/documentos/{id}?grau=1` → 404 `Documento vazio`) |
+| 10.7 | paginação profunda | ✅ teto de **offset 10.000** (`page=500&size=10` ok, `page=1000` → HTTP 404 do Elasticsearch); data de publicação **não existe** |
+| 10.8 | DataJud não sondado | ✅ `api_publica_tjpb` responde (processo `0800795-71.2026.8.15.0000` encontrado, com movimentos) |
+
+### 12.6 O que continua em aberto
+
+- A **Fase 3b** (§12.4) — e com ela anatomia de card e escada pela tela.
+- **Quais documentos** cada filtro por id devolve (só se mediu que a contagem cai) — a
+  lição do TJRO, de um filtro que entrega o acervo oposto ao que promete, **não foi
+  aplicada aqui**.
+- **Rate limit** da API (as medições rodaram com pausa de ~1,2 s).
+- **Teto de intervalo** de data (janelas de 1 e de 200 anos respondem; o limite não foi
+  procurado).
+- Os demais valores do enum `InstanciaAgrupada`.
+- A **natureza exata de `dataJulgamento`**: o texto do acórdão não traz data e o DataJud,
+  no processo consultado, ainda não tinha o movimento de julgamento.

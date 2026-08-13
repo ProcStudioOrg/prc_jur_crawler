@@ -1465,19 +1465,20 @@
         }
       ],
       "jurisprudencia": {
-        "url": null,
-        "comando": null,
-        "acesso": null,
-        "status": "nao-mapeado"
+        "url": "https://app.tjpb.jus.br/juris-pb",
+        "comando": "tjpb",
+        "acesso": "api",
+        "status": "ok",
+        "nota": "PORTAL JURIS-PB — SPA Angular 19 + PrimeNG sobre Spring Boot + Elasticsearch. Mapeado em 08/08/2026 como parcial e FECHADO em 13/08/2026 pelo slot da divida de crawler (segundo alvo da regra, depois do TJMT). API GET https://app.tjpb.jus.br/juris-pb-backend/public/search, PUBLICA: sem auth, sem token, sem cookie, sem sessao e SEM CAPTCHA em etapa nenhuma; ementa e inteiro teor ja vem no payload, em TEXTO PLANO (sem entidade HTML, sem export de Word do TJPE, sem acento perdido do TJRO). 2.515.754 documentos em 13/08/2026, base CORRENTE (documento do proprio dia nas duas medicoes). SEGUNDO TRIBUNAL DO REPO COM 1o GRAU E O MAIOR DELES: 1.970.661 sentencas, 78% do acervo, contra 1.509.942 do TJES. 🔴 DEFEITO CENTRAL, NOVO NO REPO: o `advanced=true` E UM PORTAO, NAO UM FILTRO — a API tem dois conjuntos de filtros MUTUAMENTE EXCLUSIVOS e o que esta fora do modo ativo e IGNORADO com HTTP 200 e contagem plausivel. No modo simples: `grau` particiona exato (8.998 + 3.210 = 12.208) e data/instancia/codigo*/idRelator/numeroProcesso sao ignorados; com `advanced=true` e o inverso, e o `grau` que vira inerte. 🔴 numeroProcesso SEM o portao devolve A BASE INTEIRA (2.515.754), inclusive para numero inventado — um Checker ingenuo leria 2,5 milhoes de documentos confirmando um processo que nao existe. ⚠️ E O MAPEAMENTO DE 08/08 ERROU POR CAUSA DISSO: registrou `instancia` como IGNORADO (medido so no modo simples) e concluiu que nao havia particao Juizado x Justica Comum — com o portao ela existe e FECHA EXATA (PRIMEIRO_GRAU 8.998 + SEGUNDO_GRAU 3.169 + TURMAS_RECURSAIS 41 = 12.208). Fechar o parcial corrigiu o mapeamento, como no TJMT. 🔴 SO ACORDAO DE 2o GRAU COMUM TEM EMENTA (76/76 em amostra de 200): acordao de TURMA RECURSAL nao tem (0/4), sentenca de 1o grau nao tem (0/108, e vem tambem SEM RELATOR) e monocratica nao tem (0/12) — quem tem ementa e o PAR (tipo, instancia), nao o tipo, e o mapeamento de 08/08 dizia so \"ACORDAO tem ementa\". 🔴 ACENTO OBRIGATORIO e indice NAO normaliza (usucapiao = 64 x usucapiao com til = 12.208), padrao TJMS/TJBA. ✅ OPERADORES COERENTES, o caso limpo do repo: portugues E ingles funcionam com aritmetica exata (OU = 125.729 = 12.206 + 120.847 - 7.324; NAO = 4.882 = 12.206 - 7.324), espaco = AND, parenteses e frase exata valem, token desconhecido ZERA (sintoma visivel); PROX/ADJ nao existem. 🔴 SO HA DATA DE JULGAMENTO — meioPublicacao null em 200/200, espelho do TJRO — e ela e um TIMESTAMP COM MILISSEGUNDOS (assinatura/indexacao), nao data de sessao. 🔴 MEIA JANELA DE DATA E IGNORADA em silencio (so a ponta inicial devolve o acervo inteiro, HTTP 200), padrao TJPI; ✅ mas DD/MM/YYYY cru da HTTP 400 honesto, nao o parse MM/DD silencioso do TJMT, e o no-op 1900..2100 devolve o total (comportamento correto: so o PAR no-op+janela estreita decide). 🔴 NAO EXISTE PERMALINK: /public/documentos/{id} exige ?grau= (chave composta, licao TJPE) e responde 404 DocumentNotFoundException \"Documento vazio\" para o id da busca. 🔴 A TELA ESTA ATRAS DO CLOUDFLARE E A API NAO: /juris-pb/* devolve 403 ao curl — index e TODOS os assets (browser-*.js, search.page-*.js, PNG, woff) — inclusive como PRIMEIRA requisicao de um contexto novo, o que CORRIGE a hipotese de 08/08 de que o 403 era cota de rate limit; no Playwright o HTML carrega (46 KB) e os sub-recursos continuam 403, entao a SPA nunca renderiza e a Fase 3b segue NAO EXECUTADA. Combos sao AUTOCOMPLETE (exigem term, sem lista canonica) e o mesmo NOME tem varios ids (tres \"Joao Pessoa\": 200/0/9010 = 1.689/3.169/41); parametro repetido e OR com soma exata, id inventado da 0, mas grau=9 NAO erra — fallback silencioso para 2. ✅ Paginacao ESTAVEL (30 ids identicos em 2 execucoes), total EXATO sem saturacao, size max 50 com HTTP 400 honesto; ⚠️ offset teto de 10.000 (max_result_window do ES) com HTTP 404 ElasticSearchQueryException. ✅ DataJud responde (api_publica_tjpb, medido 13/08/2026). Sem vhost curinga (NXDOMAIN de verdade). Suite: 18/18 verde."
       },
       "repo": {
-        "crawler": null,
-        "extra": null,
-        "codegen": "nao",
+        "crawler": "src/TJPBCrawler.js",
+        "extra": "TJPBNavigator.js (GET https contra app.tjpb.jus.br/juris-pb-backend/public, sem header nenhum alem de UA/Accept — a API esta FORA do challenge do Cloudflare que bloqueia a tela; barra size > 50 e offset > 10.000 antes de gastar request, porque os dois viram erro HTTP do lado de la) + TJPBChecker.js (numeroProcesso nas duas formas, SEMPRE com advanced=true — sem o portao o parametro devolve a base inteira; confere o numero de cada documento e casa o id na auditoria). ⚠️ codegen PARCIAL de proposito: a Fase 3b NUNCA foi executada porque a tela nao renderiza (Cloudflare devolve 403 em todos os assets), entao nao ha anatomia de card, escada de cliques pela tela nem permalink confirmado em aba limpa — o contrato esta mapeado PELA API. Hipotese aberta (mesma do TJRN/TJSE): pode ser bloqueio da faixa de datacenter do agente, e o portal funcionar no navegador do usuario.",
+        "codegen": "parcial",
         "screenshots": 1,
-        "tests": false,
+        "tests": "src/TJPBTestes.js",
         "skills": [],
-        "working": false
+        "working": true
       },
       "portal": "https://pjesg.tjpb.jus.br/pje2g/"
     },

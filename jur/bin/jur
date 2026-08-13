@@ -65,6 +65,9 @@ const TJESChecker = require('../src/TJESChecker');
 const TJMTCrawler = require('../src/TJMTCrawler');
 const TJMTChecker = require('../src/TJMTChecker');
 const TJMTNavigator = require('../src/TJMTNavigator');
+const TJPBCrawler = require('../src/TJPBCrawler');
+const TJPBChecker = require('../src/TJPBChecker');
+const TJPBNavigator = require('../src/TJPBNavigator');
 const TJMGCrawler = require('../src/TJMGCrawler');
 const TJMGChecker = require('../src/TJMGChecker');
 const TJMGNavigator = require('../src/TJMGNavigator');
@@ -4662,6 +4665,164 @@ program
 
       const resumo = {
         totalResults: crawler.ultimaBusca ? crawler.ultimaBusca.totalTJMT : null,
+        ...crawler.ultimaBusca,
+        ...(verificacao ? { verificacao } : {}),
+      };
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        log(`\nGravando ${results.length} inteiros teores (ja vieram na busca)...`);
+        const downloaded = await crawler.fetchInteiroTeorBatch(results, outputDir, { log });
+        const successCount = downloaded.filter(r => r.arquivo).length;
+        const failCount = downloaded.filter(r => !r.arquivo).length;
+        log(`\nGravacao concluida: ${successCount} arquivo(s), ${failCount} falha(s)`);
+        log(`Files saved to: ${outputDir}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, downloaded: successCount,
+            failed: failCount, outputDir, ...resumo,
+          }) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, output: outputPath, ...resumo,
+          }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tjpb')
+  .description('Search TJPB (Tribunal de Justica da Paraiba) jurisprudence — API REST publica, HTTP direto, sem browser')
+  .option('-q, --query <text>', 'Search query (E/OU/NAO/NÃO e AND/OR/NOT funcionam; acento e OBRIGATORIO)')
+  .option('-n, --numero <numero>', 'Consulta por numero de processo (TJPBChecker); dispensa -q')
+  // 🔴 A base so tem data de JULGAMENTO — `meioPublicacao` veio null em 200/200.
+  // -dpi/-dpf ficam como alias que AVISAM, para nao quebrar o contrato do repo.
+  .option('-di, --data-inicio <date>', 'Data de JULGAMENTO inicial (DD/MM/YYYY) — use JUNTO com -df')
+  .option('-df, --data-fim <date>', 'Data de JULGAMENTO final (DD/MM/YYYY) — use JUNTO com -di')
+  .option('-dpi, --data-pub-inicio <date>', 'Alias de -di — o TJPB NAO tem data de publicacao')
+  .option('-dpf, --data-pub-fim <date>', 'Alias de -df — o TJPB NAO tem data de publicacao')
+  .option('--instancia <inst>', 'todas (default) | comum (2º grau) | turmas (Juizado) | primeiro (1º grau)', 'todas')
+  .option('--grau <grau>', 'todos (default) | 1 | 2 — so vale SEM filtro avancado (vira recorte de cliente)', 'todos')
+  .option('-t, --tipo <tipo>', 'todos (default) | acordao | sentenca | monocratica — recorte no cliente', 'todos')
+  .option('--apenas-ementa', 'Procura o termo so na ementa (medido: 12.208 -> 10.961)')
+  .option('--comarca <id>', 'Id de comarca (use --listar-filtros comarcas <termo>)')
+  .option('--classe <id>', 'Id de classe processual')
+  .option('--orgao <id>', 'Id de orgao julgador')
+  .option('--vara <id>', 'Id de vara')
+  .option('--competencia <id>', 'Id de competencia')
+  .option('--relator <id>', 'Id de relator (id, NAO nome)')
+  .option('--listar-filtros <combo> <termo>', 'Autocomplete de um combo (comarcas, classes, relatores, varas, orgaos-julgadores, competencias, processos)')
+  .option('--verificar [amostra]', 'Audita N resultados reconsultando por numero (default 5)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('--max-results <number>', 'Maximum total results to collect')
+  .option('--page-size <number>', 'Registros por pagina (max 50)', 20)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tjpb.json')
+  .option('--fetch-inteiro-teor', 'Grava o inteiro teor (ja vem na busca — sem request extra)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tjpb')
+  .option('-v, --visible', 'Ignored (TJPB usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TJPB usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+
+    try {
+      if (opts.numero) {
+        const res = await new TJPBChecker({ log }).consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (opts.listarFiltros) {
+        // `--listar-filtros comarcas joao` — o combo e AUTOCOMPLETE, exige termo.
+        const combo = opts.listarFiltros;
+        const termo = program.args.filter((a) => a !== 'tjpb').pop();
+        const out = await new TJPBNavigator({ log }).opcoes(combo, termo);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, combo, termo, opcoes: out }) + '\n');
+        else console.log(JSON.stringify(out, null, 2));
+        process.exit(0);
+      }
+
+      if (!opts.query) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero> para consulta direta)');
+      }
+
+      const di = opts.dataInicio || opts.dataPubInicio || null;
+      const df = opts.dataFim || opts.dataPubFim || null;
+      if (opts.dataPubInicio || opts.dataPubFim) {
+        log('AVISO: o TJPB NAO tem data de publicacao (`meioPublicacao` null em 200/200). ' +
+            '-dpi/-dpf foram tratados como JULGAMENTO.');
+      }
+
+      log('='.repeat(60));
+      log('TJPB Jurisprudencia Crawler (API REST publica, HTTP direto, sem browser)');
+      log('ESCOPO: 1º grau (78% da base) + 2º grau + Turmas Recursais.');
+      log('ATENCAO: acento e OBRIGATORIO na query — o indice NAO normaliza.');
+      log('ATENCAO: so ACORDAO de 2º grau comum tem ementa.');
+      log('ATENCAO: NAO EXISTE PERMALINK. Verificacao e por reconsulta (-n).');
+      log('='.repeat(60));
+      log(`Query: ${opts.query}`);
+      log(`Data julgamento: ${di || '-'} a ${df || '-'}`);
+      log(`Instancia: ${opts.instancia} | Grau: ${opts.grau} | Tipo: ${opts.tipo}`);
+      log(`Max Pages: ${opts.maxPages} | Page Size: ${opts.pageSize}`);
+      log('='.repeat(60));
+
+      const crawler = new TJPBCrawler({
+        timeout: 120000,
+        log,
+        pageSize: parseInt(opts.pageSize, 10),
+        includeFullText: !!opts.fetchInteiroTeor,
+      });
+      const filters = {
+        dataInicio: di,
+        dataFim: df,
+        instancia: opts.instancia,
+        grau: opts.grau,
+        tipo: opts.tipo,
+        apenasEmenta: !!opts.apenasEmenta,
+        comarca: opts.comarca,
+        classe: opts.classe,
+        orgao: opts.orgao,
+        vara: opts.vara,
+        competencia: opts.competencia,
+        relator: opts.relator,
+      };
+
+      const results = await crawler.search(opts.query, filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+        maxResults: opts.maxResults ? parseInt(opts.maxResults, 10) : undefined,
+      });
+
+      log('='.repeat(60));
+      log(`Total results collected: ${results.length}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 5 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados contra a base...`);
+        verificacao = await new TJPBChecker({ log }).verificarResultados(results, { amostra, log });
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.verificados} confirmados`);
+      }
+
+      const resumo = {
+        totalResults: crawler.ultimaBusca ? crawler.ultimaBusca.totalTJPB : null,
         ...crawler.ultimaBusca,
         ...(verificacao ? { verificacao } : {}),
       };

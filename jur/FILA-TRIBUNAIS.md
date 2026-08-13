@@ -328,7 +328,7 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 | 11 | **TJTO** | TO | ⚠️ a pista de "irmão do e-Proc" **não serviu**: a jurisprudência é portal próprio PHP+Solr | ok 11/08 |
 | 12 | **TJRR** | RR | ⚠️ a pista estava errada: o DataJud mostra o acervo **99,96% Eproc**, não PJe/Projudi — e a jurisprudência é uma app JSF à parte | ok 12/08 |
 | 13 | **TJMT** | MT | PJe, Projudi | ok 10/08 |
-| 14 | **TJPB** | PB | PJe, Projudi — **API já mapeada**, falta o crawler | parcial 08/08 |
+| 14 | **TJPB** | PB | PJe, Projudi — API mapeada em 08/08, **crawler fechado em 13/08** | ok 13/08 |
 | 15 | **TJRO** | RO | PJe, Projudi — **API mapeada + Navigator escrito**, falta o crawler | parcial 09/08 |
 | 16 | **TJAP** | AP | ⚠️ a jurisprudência mora **dentro** do Tucujuris e está atrás de **Turnstile**; a porta aberta é o **Banco de Sentenças** (host à parte, 1º grau, sem captcha) — falta o crawler | parcial 11/08 |
 
@@ -913,6 +913,56 @@ de `classe`** (31 e 113 opções) não foram distinguidos.
 🔴 **Com o TJAP a fila passou a ter TRÊS `parcial` (TJPB 08/08, TJRO 09/08, TJAP 11/08)
 — o gatilho da regra da dívida de crawler.** O próximo slot das 20:00 deve pegar o
 **TJPB**, o mais antigo, em vez de abrir tribunal novo.
+✅ **Foi o que aconteceu em 13/08/2026** — o TJPB fechou 🟢 e sobraram dois `parcial`
+(TJRO 09/08, TJAP 11/08). **Abaixo de 3, os dois slots voltam a pegar `pendente`** —
+e os `pendente` que restam são todos TCEs do Bloco 5.
+
+📌 **O que o TJPB (crawler fechado em 13/08/2026) ensinou — leia
+[`CLAUDE-TJPB.md`](CLAUDE-TJPB.md).** Segundo alvo da regra da dívida, depois do TJMT, e
+a confirmação mais forte que ela já teve: **o crawler desmentiu três coisas que o
+mapeamento de 08/08 dava por medidas**. As lições valem para os dois `parcial` restantes:
+
+- 🔴 **UM PARÂMETRO DE MODO PODE SER UM PORTÃO PARA O CONJUNTO INTEIRO DE FILTROS.** Em
+  08/08 ficou gravado que `advanced=true` ligava a data e desligava o `grau`. É maior que
+  isso: **todos** os filtros avançados (comarca, classe, órgão, vara, competência,
+  relator, `instancia` e **número de processo**) são ignorados sem ele, com HTTP 200 e
+  contagem plausível. O caso mais caro é o `numeroProcesso`, que **sem o portão devolve a
+  base inteira** (2.515.754) — inclusive para número inventado. Um Checker ingênuo leria
+  2,5 milhões de documentos confirmando um processo que não existe. **Quando achar um
+  parâmetro de modo, teste TODOS os filtros dentro e fora dele, não o par que motivou a
+  descoberta.**
+- 🔴 **A CONCLUSÃO "FILTRO IGNORADO" PODE SER UM ARTEFATO DO MODO EM QUE VOCÊ MEDIU.** O
+  mapeamento declarou `instancia` ignorado e concluiu que **o TJPB não tinha partição
+  Juizado × Justiça Comum**. Tinha: com o portão ela existe e **fecha exata**
+  (8.998 + 3.169 + 41 = 12.208). A ressalva do próprio doc — "o valor inventado errar não
+  prova que o parâmetro filtra" — continuava certa; errada era a conclusão.
+- 🔴 **QUEM TEM EMENTA PODE SER O PAR (TIPO, INSTÂNCIA), NÃO O TIPO.** O doc de 08/08 mediu
+  **um** acórdão e escreveu "ACORDAO tem ementa". Em 200 documentos: acórdão de 2º grau
+  comum **76/76 com ementa**, acórdão de **Turma Recursal 0/4**, sentença 0/108 (e **sem
+  relator**), monocrática 0/12. **Disseque o tipo dentro de cada instância** — some à
+  lição do TJPI ("disseque os três tipos, não dois").
+- 🔴 **UMA HIPÓTESE GRAVADA COMO MEDIÇÃO ENVELHECE MAL.** Em 08/08 ficou escrito que o 403
+  nos chunks da SPA era **cota** ("403 em asset é cota até prova em contrário"). A prova
+  veio: contexto novo, **primeira** requisição, 403 igual — no index e em todos os assets,
+  com qualquer UA. É bloqueio de borda no caminho `/juris-pb/*`. **A Fase 3b segue não
+  executada**, agora com a causa medida. ✅ E a API `/juris-pb-backend/public/*`, no
+  **mesmo host**, continua fora do challenge e responde ao `curl` cru: **meça a API
+  separado da tela**, sempre.
+- ✅ **É o SEGUNDO tribunal do repo com 1º grau e o MAIOR deles**: 1.970.661 sentenças,
+  78% do acervo, à frente de TJRO (1.926.426), TJES (1.509.942) e TJTO (254.501). A
+  pergunta que o TJES mandou fazer rendeu pela **sexta vez seguida**.
+- ✅ **Operadores coerentes** (português e inglês, aritmética exata, token desconhecido
+  zerando) — mas ⚠️ **acento obrigatório e não normalizado** (`usucapiao` = 64 ×
+  `usucapião` = 12.208), padrão TJMS/TJBA.
+- 🔴 **Só há data de JULGAMENTO** (`meioPublicacao` null em 200/200) e ela é um **timestamp
+  com milissegundos** — assinatura/indexação, não data de sessão. ⚠️ E **meia janela de
+  data é ignorada em silêncio** (padrão TJPI). ✅ Mas `DD/MM/YYYY` cru dá **HTTP 400
+  honesto**, não o parse `MM/DD` silencioso do TJMT.
+- ⚠️ **Combos que são autocomplete escondem ids homônimos:** três "João Pessoa"
+  (200, 0, 9010) filtram 1.689, 3.169 e 41. **Pegar o primeiro é escolher errado.**
+- ⚠️ **Teto de offset de 10.000** (`max_result_window` do Elasticsearch, HTTP 404), como no
+  TJRO. ✅ Paginação estável, total exato, `size` máx. 50 com 400 honesto, base corrente
+  (documento do próprio dia), sem vhost curinga e **DataJud respondendo**.
 
 
 📌 **O que o TJRR (feito em 12/08/2026) ensinou — leia

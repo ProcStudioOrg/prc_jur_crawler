@@ -73,6 +73,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjms` | TJ de Mato Grosso do Sul | MS | `CLAUDE-TJMS.md` | 🟢 OK (HTTP direto, sem browser — e-SAJ cjsg, **sem captcha**; base **só SAJ**, não cobre o e-Proc) |
 | `tjmt` | TJ de Mato Grosso | MT | `CLAUDE-TJMT.md` | 🟢 OK (API REST, HTTP direto, sem browser — **sem captcha**; ementa e inteiro teor já vêm na busca, e a **citação oficial vem pronta**). Base corrente; ⚠️ **não tem Turma Recursal** |
 | `tjpa` | TJ do Pará | PA | `CLAUDE-TJPA.md` | 🟢 OK (API direta, sem browser) |
+| `tjpb` | TJ da Paraíba | PB | `CLAUDE-TJPB.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa e inteiro teor já vêm na busca). Base corrente, e **tem 1º grau** (1.970.661 sentenças, 78% do acervo) |
 | `tjpe` | TJ de Pernambuco | PE | `CLAUDE-TJPE.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa **e** inteiro teor já vêm na busca). Base corrente, cobre PJe + Projudi |
 | `tjes` | TJ do Espírito Santo | ES | `CLAUDE-TJES.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa e inteiro teor já vêm na busca). Base corrente, e **o único do repo com 1º grau** (1,5 mi de sentenças) |
 | `tjpi` | TJ do Piauí | PI | `CLAUDE-TJPI.md` | 🟢 OK (portal JusPI, HTTP direto, sem browser — **sem captcha**; ementa íntegra e **citação oficial** já vêm na busca, e **há permalink público**). Base corrente; inclui **súmulas do próprio TJ** |
@@ -94,14 +95,15 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 de uma base nacional única, o FALCÃO — leia [`CLAUDE-FALCAO.md`](CLAUDE-FALCAO.md) para
 escolher o comando. `CLAUDE-TRT9.md` é o mergulho técnico do sistema.
 
-Três tribunais catalogados estão **mapeados à espera de crawler** — **TJPB**, **TJRO**
-e **TJAP** (medição inteira em `human-codegen/`, e o TJRO já tem
-`src/TJRONavigator.js`). Não há comando `jur` para eles ainda: não os ofereça ao
-usuário. O módulo **eJURIS** do TJRJ (legado, com Turmas Recursais e acervo histórico) passou
-a ter comando próprio, `jur tjrj-ejuris` — o `jur tjrj` continua cobrindo só o e-Proc.
-Dos 27 TJs, **19 têm comando 🟢**, 4 estão
+Dois tribunais catalogados estão **mapeados à espera de crawler** — **TJRO** e **TJAP**
+(medição inteira em `human-codegen/`, e o TJRO já tem `src/TJRONavigator.js`). Não há
+comando `jur` para eles ainda: não os ofereça ao usuário. O **TJPB**, que era o terceiro,
+fechou 🟢 em 13/08/2026. O módulo **eJURIS** do TJRJ (legado, com Turmas Recursais e acervo
+histórico) passou a ter comando próprio, `jur tjrj-ejuris` — o `jur tjrj` continua cobrindo
+só o e-Proc.
+Dos 27 TJs, **20 têm comando 🟢**, 4 estão
 bloqueados com o motivo medido (TJMA, TJRN, TJSE, TJSP), 1 é instável (TJAM, base
-congelada) e 3 são os `parcial` acima. Veja `cobertura/CLAUDE-COBERTURA.md` e use a
+congelada) e 2 são os `parcial` acima. Veja `cobertura/CLAUDE-COBERTURA.md` e use a
 skill [`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**
@@ -361,6 +363,41 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   filtrável. ✅ Não há teto de intervalo (não precisa fatiar) nem data-sentinela.
   A base é **2º grau + Turmas Recursais** (Projudi + PJe), **sem 1º grau**, e
   está **corrente**. Matéria federal com origem na BA → `trf1`
+- "TJPB" / "Paraíba estadual" / "João Pessoa" / "Campina Grande" → `tjpb` → leia
+  `CLAUDE-TJPB.md`. ✅ **Tem 1º GRAU**: `tjpb --instancia primeiro` (1.970.661 sentenças,
+  **78% do acervo** — o maior 1º grau do repo, à frente de TJRO, TJES e TJTO). Sentença
+  paraibana é um pedido que só o TJPB atende.
+  Juizado Especial / Turma Recursal paraibana → `tjpb --instancia turmas`; 2º grau comum é
+  `--instancia comum` (o default `--instancia todas` **mistura os três**). A partição
+  **fecha exata** (8.998 + 3.169 + 41 = 12.208). ⚠️ Mas o peso da Turma Recursal depende
+  do tema (0,3% em `usucapião`): em consumo, ofereça as duas.
+  🔴 **O `advanced=true` da API é um PORTÃO, e o filtro fora do modo é IGNORADO com
+  HTTP 200.** Data, comarca, classe, órgão, vara, relator, instância e número de processo
+  **só valem no modo avançado**; `--grau` só vale **fora** dele. O crawler decide sozinho
+  e avisa quando `--grau` virou recorte de cliente — repasse. **Nunca chame a API do TJPB
+  na mão sem o portão**: `numeroProcesso` sem ele devolve a **base inteira** (2.515.754),
+  inclusive para número inventado.
+  🔴 **Acento é OBRIGATÓRIO e o índice NÃO normaliza** (`usucapiao` = 64,
+  `usucapião` = 12.208) — padrão TJMS/TJBA. Número baixo aqui é quase sempre acento
+  faltando. ✅ Os operadores são o **conjunto coerente** do repo: `E`/`OU`/`NÃO` **e**
+  `AND`/`OR`/`NOT` funcionam, com aritmética exata; o espaço é `E` (AND); parênteses e
+  `"frase exata"` valem; token desconhecido **zera** (sintoma visível). `PROX`/`ADJ` não
+  são operadores.
+  🔴 **Só ACÓRDÃO de 2º grau COMUM tem ementa** (76/76). Sentença de 1º grau (que também
+  vem **sem relator**), decisão monocrática e **acórdão de Turma Recursal** trazem só o
+  texto integral. O crawler marca `semEmenta` — não apresente esse texto como ementa.
+  🔴 **A base só tem data de JULGAMENTO** (`meioPublicacao` null em 200/200): não existe
+  publicação, e `-dpi/-dpf` são alias que avisam. ⚠️ E a data é um **timestamp de
+  assinatura/indexação**, não a data da sessão — não a cite como data de sessão de
+  julgamento. 🔴 **Meia janela de data é IGNORADA em silêncio** (devolve o acervo inteiro
+  com HTTP 200): mande as duas pontas.
+  ⚠️ **NÃO EXISTE PERMALINK** — o endpoint de documento responde 404 e a tela está atrás
+  do Cloudflare. Nunca invente link do TJPB; a verificação é por reconsulta
+  (`./bin/jur tjpb -n "<nº>"`, que aceita as duas formas do número). Quem identifica o
+  julgado é o **`id` do documento**, não o número do processo.
+  ✅ Ementa e inteiro teor vêm de graça na busca, sem captcha em etapa nenhuma, em texto
+  plano. Base **corrente** (documento do próprio dia). ⚠️ Offset máximo de **10.000**:
+  varredura profunda exige recorte por data. Matéria federal com origem na PB → `trf5`
 - "TJPE" / "Pernambuco estadual" / "Recife" → `tjpe` → leia `CLAUDE-TJPE.md`.
   Juizado Especial / Turma Recursal pernambucana → `tjpe --origem turmas`; Justiça
   Comum 2º grau é `--origem comum` (o default `--origem ambas` **mistura os dois**).
