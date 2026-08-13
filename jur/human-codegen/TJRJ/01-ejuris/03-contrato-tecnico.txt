@@ -1,0 +1,261 @@
+============================================================
+TJRJ — eJURIS — CONTRATO TÉCNICO (busca, resultado e documento)
+Medido em 13/08/2026 por HTTP puro + Playwright.
+Complementa 01-base-inicial.txt (descrição das telas) e 02-resultados.txt.
+============================================================
+
+URL do formulário:
+  https://www3.tjrj.jus.br/ejuris/ConsultarJurisprudencia.aspx
+Pilha: ASP.NET WebForms (__VIEWSTATE/__EVENTVALIDATION), charset UTF-8.
+
+------------------------------------------------------------
+PASSO 0 — API pública: NÃO EXISTE
+------------------------------------------------------------
+Procurado e NÃO encontrado (13/08/2026):
+  dadosabertos.tjrj.jus.br  -> NXDOMAIN
+  api.tjrj.jus.br           -> NXDOMAIN
+  jurisprudencia.tjrj.jus.br-> NXDOMAIN
+  ejuris.tjrj.jus.br        -> NXDOMAIN
+  www3.tjrj.jus.br/swagger, /v3/api-docs, /openapi.json, /api, /dados-abertos
+                            -> todos HTTP 404 (610 bytes, md5 03183a10b0)
+✅ SEM VHOST CURINGA: /path-inventado-9z devolve o MESMO 404 (md5 idêntico) —
+   a armadilha do TJAC/TJAL/TJES não se repete aqui.
+O que existe é o web-method interno descrito abaixo. Não é documentado.
+
+------------------------------------------------------------
+O CONTRATO — três passos, uma sessão
+------------------------------------------------------------
+1) GET  /ejuris/ConsultarJurisprudencia.aspx
+   -> Set-Cookie: ASP.NET_SessionId
+   -> HTML de ~168 KB com TODOS os combos já populados (1.013 <option>).
+      ⚠️ NÃO há AJAX de combo neste portal: o que o TJSE precisou de POST para
+      repopular, aqui vem no HTML estático. `curl` basta para enumerar.
+
+2) POST /ejuris/ConsultarJurisprudencia.aspx  (application/x-www-form-urlencoded)
+   -> grava os critérios na SESSÃO e responde
+      302 Location: /EJURIS/ProcessarConsJurisES.aspx?PageSeq=N&Version=1.2.1.1
+
+   Campos (prefixo P = "ctl00$ContentPlaceHolder1$"):
+     __EVENTTARGET               = P+btnPesquisar        (obrigatório)
+     __EVENTARGUMENT, __LASTFOCUS= ""
+     __VIEWSTATE                 = do HTML do passo 1
+     __VIEWSTATEGENERATOR        = "17008992"
+     __EVENTVALIDATION           = do HTML do passo 1
+     P+hfListaPalavrasBloqueadas = "A;ACIMA;COM;DA;DAS;DE;DO;DOS;E;EM;NA;NAS;
+                                    NO;NOS;O;PARA;POR;SEM;SOB;SOBRE"
+     P+hfCodRamos / hfCodMags / hfCodOrgs = "" (multi-seleção do botão "+";
+                                    não usada pelo crawler)
+     P+txtTextoPesq              = a query
+     P+cmbOrigem                 = 1..5   (SEM opção "todas")
+     P+cmbAnoInicio / cmbAnoFim  = AAAA   (combo 1975..2026)
+     P+cmbCompetencia            = 1 Cível | 2 Criminal  (SEM opção "todas")
+     P+cmbRamo / cmbMagistrado / cmbOrgaoJulgador = id ou ""
+     P+cmbTipNumeracao           = 1 Num. Única | 2 Num. Antiga
+     P+txtNumeracao              = número do processo ou ""
+     P+chkAtivo / chkInativo     = "on" (situação do magistrado)
+     P+chkAcordao / chkDecMon / chkIntTeor / chkEmentario = "on" quando marcado
+
+   🔴 hfListaPalavrasBloqueadas VAZIO = HTTP 500 "Runtime Error", sem mensagem.
+      Foi o primeiro erro do mapeamento e não há sintoma que aponte a causa.
+      O crawler relê a lista do formulário a cada busca em vez de fixá-la.
+
+3) GET  /EJURIS/ProcessarConsJurisES.aspx?PageSeq=N&Version=1.2.1.1
+   -> 200, ~13,7 KB. É a casca; NÃO traz documento nenhum. Este GET é
+      obrigatório: sem ele o passo 4 responde 500.
+
+4) POST /EJURIS/ProcessarConsJurisES.aspx/ExecutarConsultarJurisprudencia
+   Content-Type: application/json; charset=UTF-8
+   Body: {"numPagina":0,"pageSeq":"N"}
+   -> 200 com {"d":{ ... }} — o resultado, com o TEXTO do documento junto.
+
+------------------------------------------------------------
+🔴 reCAPTCHA: A TELA TEM, O ENDPOINT NÃO EXIGE
+------------------------------------------------------------
+A tela de resultado carrega reCAPTCHA Enterprise e chama
+  POST /EJURIS/Recaptcha.aspx/RecaptchaVerify   {"_token":"03AFcWeA…"}
+que respondeu, no browser:
+  {"success":true,"score":0.9,"action":"processarconsjurises_aspx",
+   "error-codes":["Over Enterprise free quota…"]}
+
+E MESMO ASSIM o passo 4 responde 200 com os documentos em HTTP PURO, sem
+browser, sem token, sem nunca chamar RecaptchaVerify. Medido e reproduzido.
+
+É o AVESSO da lição do TJSE: lá `grep turnstile` deu falso NEGATIVO e só o POST
+provou o bloqueio; aqui `grep recaptcha` daria falso POSITIVO e marcaria o
+tribunal como bloqueado sem tentar. **O que decide continua sendo mandar a
+requisição e ler a resposta** — nos dois sentidos.
+
+------------------------------------------------------------
+RESPOSTA DO WEB-METHOD — campos do topo
+------------------------------------------------------------
+  TotalDocs          total EXATO (ver "total é exato" abaixo)
+  NumRegPorPag       10 — e 20 quando o escopo é Ementário
+  DocumentosConsulta array de documentos (o que interessa)
+  ResultConsulta     lista de CodDoc pré-carregada (20 ids), não é o total
+  ListaPalavras      os termos após remoção de stopword — ["dano","moral"]
+  ParamPesqLivre, NumPagina, PageId, PageSeq, CarregouAntigos
+
+CAMPO A CAMPO — documento → formato do repo
+  CodDoc            -> id            🔴 É O QUE IDENTIFICA O DOCUMENTO.
+                                     Um processo tem vários (Decisoes[] tem 1-3).
+  NumProcCnj        -> processo      número CNJ com máscara
+  NumAntigo         -> numeroAntigo  numeração antiga do TJRJ (2024.001.89266)
+  Classe/DescrRecurso-> classe        APELAÇÃO, RECURSO INOMINADO, …
+  DescrTipDoc       -> tipoDocumento  Acórdão | Decisão monocrática | EMENTÁRIO
+  NomeOrgJulg       -> orgaoJulgador
+  NomeMagRel        -> relator        "Des(a). …" na 2ª Inst, "Juiz(a) …" na TR
+  DtHrMov           -> dataJulgamento /Date(ms)/
+  DtHrPubl          -> dataPublicacao 🔴 SEMPRE DateTime.MinValue
+                                      (-62135589600000) e TemDataPublicacao=false
+                                      em 100% da amostra: NÃO HÁ data de
+                                      publicação nesta base.
+  Texto             -> (com highlight <b class="negritoDestacado">)
+  TextoSemFormat    -> ementa         é o texto sem o markup do highlight
+  ArqGed            -> inteiroTeorLink chave do PDF público (ver abaixo)
+  CodOrig           -> origem         1..5, ecoa o combo
+  Ementarios[]      só preenchido no tipo EMENTÁRIO (27 campos próprios)
+  Decisoes[]        as peças do mesmo CodDoc
+  TemBlobValido     false em parte dos ementários (sem PDF)
+
+------------------------------------------------------------
+A ESCADA ATÉ O DOCUMENTO — o que cada link do card faz
+------------------------------------------------------------
+✅ PERMALINK (o único):
+   https://www3.tjrj.jus.br/gedcacheweb/default.aspx?UZIP=1&GEDID=<ArqGed>
+   Medido em contexto LIMPO (sem cookie nenhum): HTTP 200, application/pdf,
+   202.952 bytes, magic "%PDF-1.5". Público, sem sessão e SEM CAPTCHA.
+   É o inteiro teor, e é o que torna a citação verificável.
+
+🔴 ImpressaoConsJuris.aspx?CodDoc=<id>&PageSeq=0 — NÃO é permalink.
+   Sem sessão devolve HTTP 200 com 1.239 caracteres de casca e um
+   `grecaptcha.ready(...)` — nenhum dado do processo pedido. Testado em 3
+   documentos: o corpo é IDÊNTICO nos três e não contém o número de nenhum
+   deles. É um ZERO FALSO no molde do TJPE: 200 + página plausível + nada.
+   NUNCA mande essa URL como prova.
+
+⚠️ ExportaInteiroTeor.aspx?CodDoc=<id>&PageSeq=0&EFT=1|2 — sem sessão devolve
+   text/html de ~2,7 KB (não é o documento). Depende da sessão da busca.
+
+⚠️ ejud/ConsultaProcesso.aspx?N=<NumAntigo> — consulta processual, outro
+   sistema; fora do escopo de jurisprudência.
+
+⚠️ Cada card traz DOIS links gedcacheweb com GEDIDs diferentes: um é o ArqGed
+   do documento, o outro é de outra peça do mesmo julgado. Casar pelo ArqGed.
+
+------------------------------------------------------------
+O TEXTO DA BUSCA É EMENTA? — medido por tipo
+------------------------------------------------------------
+✅ JÁ VEM NA BUSCA — não há request por documento para ter o texto.
+  Acórdão 2ª Inst   : 959–1.983 chars, abre por "APELAÇÃO CÍVEL. …" — é EMENTA
+                      estruturada. O PDF do mesmo documento tem 202 KB.
+  Monocrática 2ª Inst: 1.659–3.979 chars — é a decisão, não uma ementa.
+  Turma Recursal    : 1.803–10.123 chars, abre por "RECURSO Nº … V O T O" —
+                      é o VOTO/inteiro teor, não ementa.
+  EMENTÁRIO         : 907–2.905 chars + Ementarios[0] com 27 campos próprios.
+  ⚠️ O highlight vem como <b class="negritoDestacado"> dentro de `Texto`;
+     `TextoSemFormat` é o mesmo texto já sem o markup. Usar o segundo.
+
+------------------------------------------------------------
+PAGINAÇÃO
+------------------------------------------------------------
+  Parâmetro           numPagina (0-based) no JSON do passo 4
+  Por página          10 fixos — 20 no escopo Ementário. Não há combo de tamanho.
+  ✅ ESTÁVEL          mesma página 3× em sessões NOVAS: os 10 CodDoc idênticos.
+                      Mesma página 2× na MESMA sessão: idêntico.
+                      (diferente do e-Proc do TJRJ, que desliza a fronteira)
+  Profundidade        páginas 0, 1, 2, 50 e 500 respondem 10 documentos.
+                      Página 4905 em diante -> HTTP 500. Para total=49.063 a
+                      última página é a 4905ª (4906 páginas de 10): o 500 é o
+                      FIM DO RESULTADO, não teto de offset nem erro de rede.
+  ✅ TOTAL EXATO      não satura: `criptomoeda` = 1, `usucapiao` = 0,
+                      `direito` = 1.209 na Turma Recursal. Nada de número redondo.
+
+------------------------------------------------------------
+FILTROS — provados por contagem (q="dano moral" salvo nota)
+------------------------------------------------------------
+ORIGEM (comp=Cível, anos 1975-2026):
+  1 TJRJ 2ª Instância ........ 818.397   <- o acervo de verdade
+  2 Tribunal de Alçada Cível ..      0   (q=direito -> 1)
+  3 Trib. de Alçada Criminal ..      0   (q=direito -> 2)
+  4 Turma Recursal ............  1.002   (q=direito -> 1.209)
+  5 Conselho da Magistratura ..      0   (q=direito -> 78)
+
+🔴 ANO e COMPETÊNCIA SÓ VALEM NA ORIGEM 1. Medido:
+   origem=1: 1975-2026 = 818.397 | 2026 = 34.127 | 2020 = 45.245  -> FUNCIONA
+             Cível = 818.397 | Criminal = 6.784                   -> FUNCIONA
+   origem=4: 2026 = 1.002 | 2024 = 1.002 | 2015 = 1.002 | 1990 = 1.002
+             Cível = 1.002 | Criminal = 1.002                     -> IGNORADO
+   1990 devolver o mesmo número é a prova: a Turma Recursal nem existia assim.
+   O crawler avisa e refaz o recorte de ano no cliente.
+
+PROFUNDIDADE HISTÓRICA (origem=1, cível, "dano moral"):
+  1975=0  1985=0  1995=524  2000=3.252  2005=13.501  2010=29.791
+  2015=42.072  2020=45.245  2023=45.512  2024=51.972  2025=66.554  2026=34.127
+  ✅ Base CORRENTE (2026 com 34 mil em agosto) e começa por volta de 1995 —
+     apesar de o combo oferecer 1975. O combo promete 20 anos que não existem.
+
+OS QUATRO CHECKBOXES SÃO ESCOPO DE BUSCA, NÃO TIPO DE DOCUMENTO
+(origem=1, cível, 2024, "dano moral"):
+  Acórdão + Monocrática (default) .. 51.972
+  só Acórdão ....................... 49.063
+  só Decisão Monocrática ...........  3.334
+  só Inteiro Teor (PDF) ............ 78.066   <- MAIOR que o default
+  só Ementário .....................    161
+  🔴 NENHUM MARCADO ................    161   = igual a "só Ementário".
+     Desmarcar tudo NÃO devolve zero: cai num default silencioso.
+  "Inteiro Teor" procura o termo no texto do PDF em vez de na ementa — por isso
+  acha mais. Não é um tipo de documento a mais.
+
+CONSULTA POR NÚMERO — as três formas funcionam, todas devolvendo 1:
+  CNJ com máscara  0514704-31.2015.8.19.0001 -> 1  ✅
+  CNJ só dígitos   05147043120158190001      -> 1  ✅
+  Numeração antiga 202400189266 (tipo 2)     -> 1  ✅
+  ⚠️ generoso ao contrário do TJPE (só dígitos), do TJES (só máscara) e do
+     TJPI (o número sozinho derruba a busca).
+
+------------------------------------------------------------
+OPERADORES — os PORTUGUESES funcionam; os INGLESES derrubam
+(origem=1, cível, 2024, só acórdão)
+------------------------------------------------------------
+  dano ................... 60.471    moral .............. 49.416
+  dano moral (espaço) .... 49.063  -> 🔴 O ESPAÇO É "E" (AND)
+  dano e moral ........... 49.063  ✅ idêntico ao espaço
+  dano E moral ........... 49.063  ✅ maiúscula indiferente
+  dano ou moral .......... 60.869  ✅ amplia
+  dano nao moral ......... 11.656  ✅ exclui
+  dano não moral ......... 11.656  ✅ NAO e NÃO são O MESMO operador
+  dano adj moral ......... 46.223  ✅ ordem
+  dano prox moral ........ 48.960  ✅
+  dano prox5 moral ....... 48.960  ✅ (mesmo número que PROX puro)
+  "dano moral" ........... 46.126  ✅ frase exata
+  dan$ ................... 61.639  ✅ curinga, AMPLIA (> dano = 60.471)
+  🔴 dano AND moral ...... HTTP 500
+  🔴 dano OR moral ....... HTTP 500
+  🔴 dano NOT moral ...... HTTP 500
+  Os ingleses não são ignorados nem inflam: DERRUBAM a busca. É sintoma
+  visível — melhor que o TJBA (inflava) e que o TJTO (`NAO` inflava calado).
+
+⚠️ ACENTO: o índice normaliza — usucapiao = usucapião = 850. Não avisar.
+⚠️ STOPWORD REMOVIDA EM SILÊNCIO: "contrato de trabalho" = "contrato trabalho"
+   = 944. E o termo que é SÓ stopword ("de") é recusado no passo 2 (302 para o
+   formulário, sem busca). A lista está no próprio hfListaPalavrasBloqueadas.
+
+------------------------------------------------------------
+COMBOS ENUMERADOS (do HTML estático, sem AJAX)
+------------------------------------------------------------
+  cmbOrigem ........  5 opções (sem "todas")   -> no corpo deste arquivo
+  cmbCompetencia ...  2 opções (sem "todas")
+  cmbAnoInicio/Fim .. 52 opções, 1975..2026
+  cmbRamo .......... 16 ramos                  -> ramos-direito.json
+  cmbMagistrado .... 804 magistrados           -> magistrados.json
+  cmbOrgaoJulgador . 77 órgãos                 -> orgaos-julgadores.json
+  cmbTipNumeracao ..  2 opções
+  ✅ A pendência de "combo-árvore não enumerado" que se repetiu em quatro
+     tribunais do Bloco 1 (SAJ) não existe aqui: é tudo <select> no HTML.
+
+------------------------------------------------------------
+PRINTS DESTA SEÇÃO
+------------------------------------------------------------
+  02.08-resultados-topo.png              listagem, cabeçalho
+  02.09-resultados-rodape-paginacao.png  rodapé com a paginação
+  02-card-resultado.html                 outerHTML de um card

@@ -16,7 +16,13 @@
 | # | Seção | Descrição | Prints |
 |---|---|---|---|
 | 01 | Base inicial | [`01-base-inicial.txt`](01-ejuris/01-base-inicial.txt) | [`01.01-tela-inicial.png`](01-ejuris/01.01-tela-inicial.png)<br>[`01.02-combo-origem.png`](01-ejuris/01.02-combo-origem.png)<br>[`01.03-combo-julgados-a-partir-do-ano.png`](01-ejuris/01.03-combo-julgados-a-partir-do-ano.png)<br>[`01.04-combo-competencia.png`](01-ejuris/01.04-combo-competencia.png)<br>[`01.05-combo-ramo-direito.png`](01-ejuris/01.05-combo-ramo-direito.png)<br>[`01.06-botao-conjugar-ramo-direito.png`](01-ejuris/01.06-botao-conjugar-ramo-direito.png)<br>[`01.07-combo-magistrado.png`](01-ejuris/01.07-combo-magistrado.png)<br>[`01.08-botao-conjugar-magistrado.png`](01-ejuris/01.08-botao-conjugar-magistrado.png)<br>[`01.09-combo-orgao-julgador.png`](01-ejuris/01.09-combo-orgao-julgador.png)<br>[`01.10-botao-conjugar-orgao-julgador.png`](01-ejuris/01.10-botao-conjugar-orgao-julgador.png)<br>[`01.11-combo-num.png`](01-ejuris/01.11-combo-num.png)<br>[`01.12-botao-ajuda.png`](01-ejuris/01.12-botao-ajuda.png) |
-| 02 | Resultados | [`02-resultados.txt`](01-ejuris/02-resultados.txt) | [`02.01-tela-resultados.png`](01-ejuris/02.01-tela-resultados.png)<br>[`02.02-consulta-processual.png`](01-ejuris/02.02-consulta-processual.png)<br>[`02.03-visualizacao-html.png`](01-ejuris/02.03-visualizacao-html.png)<br>[`02.04-download-pdf.png`](01-ejuris/02.04-download-pdf.png)<br>[`02.05-versao-para-impressao.png`](01-ejuris/02.05-versao-para-impressao.png)<br>[`02.06-ementa-sem-formatacao.png`](01-ejuris/02.06-ementa-sem-formatacao.png)<br>[`02.07-integra-acordao-pdf.png`](01-ejuris/02.07-integra-acordao-pdf.png) |
+| 02 | Resultados | [`02-resultados.txt`](01-ejuris/02-resultados.txt) | [`02.01-tela-resultados.png`](01-ejuris/02.01-tela-resultados.png)<br>[`02.02-consulta-processual.png`](01-ejuris/02.02-consulta-processual.png)<br>[`02.03-visualizacao-html.png`](01-ejuris/02.03-visualizacao-html.png)<br>[`02.04-download-pdf.png`](01-ejuris/02.04-download-pdf.png)<br>[`02.05-versao-para-impressao.png`](01-ejuris/02.05-versao-para-impressao.png)<br>[`02.06-ementa-sem-formatacao.png`](01-ejuris/02.06-ementa-sem-formatacao.png)<br>[`02.07-integra-acordao-pdf.png`](01-ejuris/02.07-integra-acordao-pdf.png)<br>[`02.08-resultados-topo.png`](01-ejuris/02.08-resultados-topo.png)<br>[`02.09-resultados-rodape-paginacao.png`](01-ejuris/02.09-resultados-rodape-paginacao.png) |
+| 03 | Contrato tecnico | [`03-contrato-tecnico.txt`](01-ejuris/03-contrato-tecnico.txt) | ⚠️ faltando |
+| — | Magistrados | ⚠️ faltando | ⚠️ faltando |
+
+Pendências deste módulo:
+- seções sem descrição em texto: —
+- seções sem print: 03, —
 
 ## `02-eproc/` — Eproc
 

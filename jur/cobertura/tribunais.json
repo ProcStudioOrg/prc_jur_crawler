@@ -1716,13 +1716,40 @@
         "crawler": "src/TJRJCrawler.js",
         "extra": "TJRJNavigator.js + TJRJChecker.js",
         "codegen": "completo",
-        "screenshots": 41,
+        "screenshots": 43,
         "tests": "src/TJRJTestes.js",
         "skills": [
           "verificador/tjrj"
         ],
         "working": true
       }
+    },
+    {
+      "codigo": "TJRJ_EJURIS",
+      "nome": "TJ do Rio de Janeiro — módulo eJURIS (legado)",
+      "segmento": "estadual",
+      "uf": [
+        "RJ"
+      ],
+      "sistemas_processuais": [],
+      "consulta_processual": [],
+      "jurisprudencia": {
+        "url": "https://www3.tjrj.jus.br/ejuris/ConsultarJurisprudencia.aspx",
+        "comando": "tjrj-ejuris",
+        "acesso": "http",
+        "status": "ok",
+        "nota": "Módulo LEGADO do TJRJ, complementar ao `tjrj` (e-Proc): acervo histórico da 2ª Instância (começa ~1995, corrente em 2026) e as Turmas Recursais, que NÃO existem na base do e-Proc. ASP.NET WebForms + web-method JSON (ProcessarConsJurisES.aspx/ExecutarConsultarJurisprudencia). 🔴 A tela carrega reCAPTCHA Enterprise e o endpoint NÃO o exige — HTTP puro responde 200 com os documentos, sem token (avesso da lição do TJSE). Ementa/decisão já vêm na busca e o inteiro teor é PDF PÚBLICO com permalink (gedcacheweb?GEDID=<ArqGed>). RESSALVAS: ano e competência só filtram na origem `comum` (nas outras 4 são ignorados — 1990 e 2026 devolvem o mesmo total); não há data de publicação e o recorte é por ANO, não por dia; a Turma Recursal daqui tem só ~1,6 mil documentos, de 2025-2026; os operadores são os PORTUGUESES e AND/OR/NOT derrubam a busca com HTTP 500; o curinga é `$`; os 4 checkboxes são ESCOPO de busca (desmarcar todos devolve o ementário, não zero); ImpressaoConsJuris.aspx NÃO é permalink (zero falso com HTTP 200). Paginação estável 3/3, total exato."
+      },
+      "repo": {
+        "crawler": "src/TJRJEjurisCrawler.js",
+        "extra": "TJRJEjurisNavigator.js + TJRJEjurisChecker.js",
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": "src/TJRJEjurisTestes.js",
+        "skills": [],
+        "working": true
+      },
+      "moduloDe": "TJRJ"
     },
     {
       "codigo": "TJRN",

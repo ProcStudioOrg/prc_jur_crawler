@@ -1,0 +1,3218 @@
+[
+ {
+  "valor": "10241",
+  "texto": "ABEYLARD GOMES"
+ },
+ {
+  "valor": "11686",
+  "texto": "ADEMIR PAULO PIMENTEL"
+ },
+ {
+  "valor": "20706",
+  "texto": "ADILSON VIEIRA MACABU"
+ },
+ {
+  "valor": "10503",
+  "texto": "ADOLPHINO RIBEIRO"
+ },
+ {
+  "valor": "15386",
+  "texto": "ADOLPHO CORREA DE ANDRADE MELLO JUNIOR"
+ },
+ {
+  "valor": "27310",
+  "texto": "ADRIANA COSTA DOS SANTOS"
+ },
+ {
+  "valor": "16079",
+  "texto": "ADRIANA LOPES MOUTINHO DAUDT D' OLIVEIRA"
+ },
+ {
+  "valor": "29796",
+  "texto": "ADRIANA MARQUES DOS SANTOS LAIA FRANCO"
+ },
+ {
+  "valor": "19477",
+  "texto": "ADRIANA RAMOS DE MELLO"
+ },
+ {
+  "valor": "20732",
+  "texto": "ADRIANA SUCENA MONTEIRO JARA MOURA"
+ },
+ {
+  "valor": "7271",
+  "texto": "ADRIANO CELSO GUIMARÃES"
+ },
+ {
+  "valor": "24715",
+  "texto": "AFONSO HENRIQUE FERREIRA BARBOSA"
+ },
+ {
+  "valor": "10807",
+  "texto": "AFRANIO SAYAO"
+ },
+ {
+  "valor": "29839",
+  "texto": "AGOSTINHO TEIXEIRA DE ALMEIDA FILHO"
+ },
+ {
+  "valor": "18316",
+  "texto": "ALBANO MATTOS CORREA"
+ },
+ {
+  "valor": "3453",
+  "texto": "ALBERTO CRAVEIRO DE ALMEIDA"
+ },
+ {
+  "valor": "200",
+  "texto": "ALBERTO GARCIA"
+ },
+ {
+  "valor": "201",
+  "texto": "ALBERTO LACERDA"
+ },
+ {
+  "valor": "11202",
+  "texto": "ALBERTO MOTTA MORAES"
+ },
+ {
+  "valor": "331",
+  "texto": "ALBERTO MOURAO RUSSEL"
+ },
+ {
+  "valor": "27317",
+  "texto": "ALBERTO REPUBLICANO DE MACEDO JUNIOR"
+ },
+ {
+  "valor": "20719",
+  "texto": "ALBERTO SALOMAO JUNIOR"
+ },
+ {
+  "valor": "15402",
+  "texto": "ALCIDES DA FONSECA NETO"
+ },
+ {
+  "valor": "27316",
+  "texto": "ALESSANDRA CRISTINA TUFVESSON PEIXOTO"
+ },
+ {
+  "valor": "24696",
+  "texto": "ALESSANDRA DE ARAUJO BILAC MOREIRA PINTO"
+ },
+ {
+  "valor": "21714",
+  "texto": "ALESSANDRO OLIVEIRA FELIX"
+ },
+ {
+  "valor": "30745",
+  "texto": "ALEXANDRE  ANTONIO FRANCO FREITAS CÂMARA"
+ },
+ {
+  "valor": "21715",
+  "texto": "ALEXANDRE ABRAHAO DIAS TEIXEIRA"
+ },
+ {
+  "valor": "24122",
+  "texto": "ALEXANDRE CORREA LEITE"
+ },
+ {
+  "valor": "17530",
+  "texto": "ALEXANDRE DE CARVALHO MESQUITA"
+ },
+ {
+  "valor": "15403",
+  "texto": "ALEXANDRE EDUARDO SCISINIO"
+ },
+ {
+  "valor": "11711",
+  "texto": "ALEXANDRE HERCULANO PESSOA VARELLA"
+ },
+ {
+  "valor": "20710",
+  "texto": "ALEXANDRE TEIXEIRA DE SOUZA"
+ },
+ {
+  "valor": "10617",
+  "texto": "ALFREDO MARINHO"
+ },
+ {
+  "valor": "33463",
+  "texto": "ALINE ABREU PESSANHA"
+ },
+ {
+  "valor": "33078",
+  "texto": "ALINE MARIA GOMES MASSONI DA COSTA"
+ },
+ {
+  "valor": "16081",
+  "texto": "ALVARO HENRIQUE TEIXEIRA DE ALMEIDA"
+ },
+ {
+  "valor": "41",
+  "texto": "ÁLVARO HENRIQUE TEIXEIRA DE ALMEIDA"
+ },
+ {
+  "valor": "2322",
+  "texto": "ALVARO JOSE FERREIRA MAYRINK DA COSTA"
+ },
+ {
+  "valor": "1721",
+  "texto": "ALYRIO CAVALLIERI"
+ },
+ {
+  "valor": "10831",
+  "texto": "AMAURY ARRUDA DE SOUZA"
+ },
+ {
+  "valor": "1453",
+  "texto": "AMERICO CANABARRO"
+ },
+ {
+  "valor": "10861",
+  "texto": "AMORIM DA CRUZ"
+ },
+ {
+  "valor": "1691",
+  "texto": "AMYNTOR VERGARA"
+ },
+ {
+  "valor": "26943",
+  "texto": "ANA BEATRIZ MENDES ESTRELLA"
+ },
+ {
+  "valor": "19471",
+  "texto": "ANA CRISTINA NASCIF DIB MIGUEL"
+ },
+ {
+  "valor": "19614",
+  "texto": "ANA LUIZA COIMBRA MAYON NOGUEIRA"
+ },
+ {
+  "valor": "13772",
+  "texto": "ANA MARIA PEREIRA DE OLIVEIRA"
+ },
+ {
+  "valor": "20715",
+  "texto": "ANA PAULA MONTE FIGUEIREDO PENA BARROS"
+ },
+ {
+  "valor": "1454",
+  "texto": "ANAUDIM FREITAS"
+ },
+ {
+  "valor": "31928",
+  "texto": "ANDRE EMILIO RIBEIRO VON MELENTOVYTCH"
+ },
+ {
+  "valor": "24690",
+  "texto": "ANDRE FERNANDES ARRUDA"
+ },
+ {
+  "valor": "13770",
+  "texto": "ANDRE GUSTAVO CORREA DE ANDRADE"
+ },
+ {
+  "valor": "33928",
+  "texto": "ANDRÉ LUÍS MANÇANO MARQUES"
+ },
+ {
+  "valor": "16071",
+  "texto": "ANDRE LUIZ CIDRA"
+ },
+ {
+  "valor": "19602",
+  "texto": "ANDRE RICARDO DE FRANCISCIS RAMOS"
+ },
+ {
+  "valor": "15385",
+  "texto": "ANDREA FORTUNA TEIXEIRA"
+ },
+ {
+  "valor": "17754",
+  "texto": "ANDREA MACIEL PACHA"
+ },
+ {
+  "valor": "27315",
+  "texto": "ANDREIA MAGALHAES ARAUJO"
+ },
+ {
+  "valor": "28811",
+  "texto": "ANELISE DE FARIA MARTORELL DUARTE"
+ },
+ {
+  "valor": "24213",
+  "texto": "ANGELO MOREIRA GLIOCHE"
+ },
+ {
+  "valor": "423",
+  "texto": "ANTONIO ASSUMPCAO"
+ },
+ {
+  "valor": "19774",
+  "texto": "ANTONIO AUGUSTO DE TOLEDO GASPAR"
+ },
+ {
+  "valor": "7510",
+  "texto": "ANTONIO CARLOS AMORIM"
+ },
+ {
+  "valor": "15628",
+  "texto": "ANTONIO CARLOS ARRABIDA PAES"
+ },
+ {
+  "valor": "7269",
+  "texto": "ANTONIO CARLOS DOS SANTOS BITENCOURT"
+ },
+ {
+  "valor": "9744",
+  "texto": "ANTONIO CARLOS ESTEVES TORRES"
+ },
+ {
+  "valor": "6273",
+  "texto": "ANTONIO CARLOS NASCIMENTO AMADO"
+ },
+ {
+  "valor": "9712",
+  "texto": "ANTONIO CESAR ROCHA ANTUNES DE SIQUEIRA"
+ },
+ {
+  "valor": "18068",
+  "texto": "ANTONIO DA ROCHA LOURENCO NETO"
+ },
+ {
+  "valor": "18310",
+  "texto": "ANTONIO EDUARDO FERREIRA DUARTE"
+ },
+ {
+  "valor": "4748",
+  "texto": "ANTONIO FELIPE DA SILVA NEVES"
+ },
+ {
+  "valor": "13933",
+  "texto": "ANTONIO ILOIZIO BARROS BASTOS"
+ },
+ {
+  "valor": "11214",
+  "texto": "ANTONIO IZAIAS DA COSTA ABREU"
+ },
+ {
+  "valor": "14055",
+  "texto": "ANTONIO JAYME BOENTE"
+ },
+ {
+  "valor": "18120",
+  "texto": "ANTONIO JOSE AZEVEDO PINTO"
+ },
+ {
+  "valor": "7562",
+  "texto": "ANTONIO JOSE FERREIRA CARVALHO"
+ },
+ {
+  "valor": "16602",
+  "texto": "ANTONIO MARREIROS DA SILVA MELO NETO"
+ },
+ {
+  "valor": "6315",
+  "texto": "ANTONIO RIBEIRO"
+ },
+ {
+  "valor": "21007",
+  "texto": "ANTONIO RICARDO BINATO DE CASTRO"
+ },
+ {
+  "valor": "9647",
+  "texto": "ANTONIO SALDANHA PALHEIRO"
+ },
+ {
+  "valor": "4720",
+  "texto": "ARNALDO DUARTE"
+ },
+ {
+  "valor": "10544",
+  "texto": "ARRUDA FRANCA"
+ },
+ {
+  "valor": "21707",
+  "texto": "ARTHUR EDUARDO DE MAGALHAES FERREIRA"
+ },
+ {
+  "valor": "15401",
+  "texto": "ARTHUR NARCISO DE OLIVEIRA NETO"
+ },
+ {
+  "valor": "3155",
+  "texto": "ASCLEPIADES RODRIGUES"
+ },
+ {
+  "valor": "1447",
+  "texto": "ASTROGILDO DE FREITAS"
+ },
+ {
+  "valor": "16593",
+  "texto": "AUGUSTO ALVES MOREIRA JUNIOR"
+ },
+ {
+  "valor": "10249",
+  "texto": "AULOMAR COSTA"
+ },
+ {
+  "valor": "202",
+  "texto": "AUREA PIMENTAL PEREIRA"
+ },
+ {
+  "valor": "203",
+  "texto": "AUREO CARNEIRO"
+ },
+ {
+  "valor": "26171",
+  "texto": "BARBARA ALVES XAVIER"
+ },
+ {
+  "valor": "3475",
+  "texto": "BARBOSA MOREIRA"
+ },
+ {
+  "valor": "399",
+  "texto": "BASILEU RIBEIRO FILHO"
+ },
+ {
+  "valor": "21706",
+  "texto": "BEATRIZ PRESTES PANTOJA"
+ },
+ {
+  "valor": "29770",
+  "texto": "BEATRIZ TORRES DE OLIVEIRA"
+ },
+ {
+  "valor": "29817",
+  "texto": "BENEDICTO ULTRA  ABICAIR"
+ },
+ {
+  "valor": "19957",
+  "texto": "BENITO FEROLLA"
+ },
+ {
+  "valor": "11141",
+  "texto": "BERNARDINO MACHADO LEITUGA"
+ },
+ {
+  "valor": "6307",
+  "texto": "BERNARDO MOREIRA GARCEZ NETO"
+ },
+ {
+  "valor": "1255",
+  "texto": "BIAS GONCALVES"
+ },
+ {
+  "valor": "33050",
+  "texto": "BRUNO VINICIUS DA ROS BODART DA COSTA"
+ },
+ {
+  "valor": "6480",
+  "texto": "BUARQUE DE AMORIM"
+ },
+ {
+  "valor": "9984",
+  "texto": "C. A. MENEZES DIREITO"
+ },
+ {
+  "valor": "4033",
+  "texto": "CAETANO COSTA"
+ },
+ {
+  "valor": "20494",
+  "texto": "CAETANO ERNESTO DA FONSECA COSTA"
+ },
+ {
+  "valor": "8873",
+  "texto": "CAIRO ÍTALO FRANÇA DAVID"
+ },
+ {
+  "valor": "8874",
+  "texto": "CAMILO RIBEIRO RULIERE"
+ },
+ {
+  "valor": "28818",
+  "texto": "CARLA FARIA BOUZO"
+ },
+ {
+  "valor": "10620",
+  "texto": "CARLOS ALBERTO DE CARVALHO"
+ },
+ {
+  "valor": "17760",
+  "texto": "CARLOS ALBERTO MACHADO"
+ },
+ {
+  "valor": "35327",
+  "texto": "CARLOS ALBERTO MENEZES DIREITO FILHO"
+ },
+ {
+  "valor": "19776",
+  "texto": "CARLOS AUGUSTO BORGES"
+ },
+ {
+  "valor": "7578",
+  "texto": "CARLOS AZEREDO DE ARAÚJO"
+ },
+ {
+  "valor": "10536",
+  "texto": "CARLOS BRAZIL"
+ },
+ {
+  "valor": "12202",
+  "texto": "CARLOS COELHO LAVIGNE DE LEMOS"
+ },
+ {
+  "valor": "10718",
+  "texto": "CARLOS DAVIDSON DE MENEZES FERRARI"
+ },
+ {
+  "valor": "7566",
+  "texto": "CARLOS EDUARDO BOUCADA TASSARA"
+ },
+ {
+  "valor": "9710",
+  "texto": "CARLOS EDUARDO DA ROSA DA FONSECA PASSOS"
+ },
+ {
+  "valor": "15624",
+  "texto": "CARLOS EDUARDO FREIRE ROBOREDO"
+ },
+ {
+  "valor": "9665",
+  "texto": "CARLOS EDUARDO MOREIRA DA SILVA"
+ },
+ {
+  "valor": "19593",
+  "texto": "CARLOS FERNANDO POTYGUARA PEREIRA"
+ },
+ {
+  "valor": "21710",
+  "texto": "CARLOS GUSTAVO VIANNA DIREITO"
+ },
+ {
+  "valor": "7546",
+  "texto": "CARLOS JOSÉ MARTINS GOMES"
+ },
+ {
+  "valor": "38",
+  "texto": "CARLOS MOTTA"
+ },
+ {
+  "valor": "6267",
+  "texto": "CARLOS RAYMUNDO CARDOSO"
+ },
+ {
+  "valor": "14053",
+  "texto": "CARLOS SANTOS DE OLIVEIRA"
+ },
+ {
+  "valor": "11452",
+  "texto": "CARMINE ANTONIO SAVINO FILHO"
+ },
+ {
+  "valor": "1261",
+  "texto": "CASSIA MEDEIROS"
+ },
+ {
+  "valor": "4746",
+  "texto": "CELIA MARIA VIDAL MELIGA PESSOA"
+ },
+ {
+  "valor": "7573",
+  "texto": "CELIO GERALDO DE MAGALHAES RIBEIRO"
+ },
+ {
+  "valor": "7287",
+  "texto": "CELSO FERREIRA FILHO"
+ },
+ {
+  "valor": "13773",
+  "texto": "CELSO LUIZ DE MATOS PERES"
+ },
+ {
+  "valor": "4755",
+  "texto": "CELSO MUNIZ GUEDES PINTO"
+ },
+ {
+  "valor": "15632",
+  "texto": "CELSO SILVA FILHO"
+ },
+ {
+  "valor": "10952",
+  "texto": "CESAR AUGUSTO LEITE"
+ },
+ {
+  "valor": "15416",
+  "texto": "CESAR FELIPE CURY"
+ },
+ {
+  "valor": "16606",
+  "texto": "CEZAR AUGUSTO RODRIGUES COSTA"
+ },
+ {
+  "valor": "13776",
+  "texto": "CHERUBIN HELCIAS SCHWARTZ JÚNIOR"
+ },
+ {
+  "valor": "28900",
+  "texto": "CHRISTIANO GONCALVES PAES LEME"
+ },
+ {
+  "valor": "16066",
+  "texto": "CINTIA SANTAREM CARDINALI"
+ },
+ {
+  "valor": "21141",
+  "texto": "CLARA MARIA VASSALI COSTA PEREIRA DA SILVA"
+ },
+ {
+  "valor": "10252",
+  "texto": "CLARINDO DE BRITO NICOLAU"
+ },
+ {
+  "valor": "20081",
+  "texto": "CLAUDIA GARCIA COUTO MARI"
+ },
+ {
+  "valor": "18078",
+  "texto": "CLAUDIA MARIA DE OLIVEIRA MOTTA"
+ },
+ {
+  "valor": "14571",
+  "texto": "CLAUDIA PIRES DOS SANTOS FERREIRA"
+ },
+ {
+  "valor": "28820",
+  "texto": "CLAUDIA POMARICO RIBEIRO"
+ },
+ {
+  "valor": "23102",
+  "texto": "CLAUDIA RENATA ALBERICO OAZEN"
+ },
+ {
+  "valor": "31154",
+  "texto": "CLÁUDIA TELLES DE MENEZES"
+ },
+ {
+  "valor": "15376",
+  "texto": "CLAUDIO BRANDÃO DE OLIVEIRA"
+ },
+ {
+  "valor": "19441",
+  "texto": "CLÁUDIO DE MELLO TAVARES"
+ },
+ {
+  "valor": "25375",
+  "texto": "CLAUDIO FERREIRA RODRIGUES"
+ },
+ {
+  "valor": "14566",
+  "texto": "CLÁUDIO LUIZ BRAGA DELL'ORTO"
+ },
+ {
+  "valor": "11470",
+  "texto": "CLÁUDIO TAVARES DE OLIVEIRA"
+ },
+ {
+  "valor": "31934",
+  "texto": "CLAUDIO TAVARES DE OLIVEIRA JUNIOR"
+ },
+ {
+  "valor": "37",
+  "texto": "CLÁUDIO VIANNA DE LIMA"
+ },
+ {
+  "valor": "14995",
+  "texto": "CLEBER GHELFENSTEIN"
+ },
+ {
+  "valor": "8871",
+  "texto": "CONCEIÇÃO APARECIDA MOUSNIER TEIXEIRA DE GUIMARÃES PENA"
+ },
+ {
+  "valor": "29769",
+  "texto": "CRISTIANA  APARECIDA DE SOUZA SANTOS"
+ },
+ {
+  "valor": "27307",
+  "texto": "CRISTIANE DA SILVA BRANDAO LIMA"
+ },
+ {
+  "valor": "33046",
+  "texto": "CRISTIANE TELES MOURA MARQUES"
+ },
+ {
+  "valor": "23098",
+  "texto": "CRISTIANO GONCALVES PEREIRA"
+ },
+ {
+  "valor": "29779",
+  "texto": "CRISTINA DE ARAUJO GOES LAJCHTER"
+ },
+ {
+  "valor": "20068",
+  "texto": "CRISTINA GOMES CAMPOS DE SETA"
+ },
+ {
+  "valor": "16058",
+  "texto": "CRISTINA SERRA FEIJO"
+ },
+ {
+  "valor": "9697",
+  "texto": "CRISTINA TEREZA GAULIA"
+ },
+ {
+  "valor": "9687",
+  "texto": "CUSTÓDIO DE BARROS TOSTES"
+ },
+ {
+  "valor": "1763",
+  "texto": "DALMO SILVA"
+ },
+ {
+  "valor": "2330",
+  "texto": "DALTON COSTA"
+ },
+ {
+  "valor": "25372",
+  "texto": "DANIELA BANDEIRA DE FREITAS"
+ },
+ {
+  "valor": "25374",
+  "texto": "DANIELA BARBOSA  ASSUMPÇÃO DE SOUZA"
+ },
+ {
+  "valor": "16059",
+  "texto": "DANIELA BRANDÃO FERREIRA"
+ },
+ {
+  "valor": "21697",
+  "texto": "DANIELA FERRO AFFONSO RODRIGUES ALVES"
+ },
+ {
+  "valor": "27301",
+  "texto": "DANIELA REETZ DE PAIVA"
+ },
+ {
+  "valor": "10513",
+  "texto": "DARCY LIZARDO DE LIMA"
+ },
+ {
+  "valor": "11007",
+  "texto": "DARCY MOREIRA"
+ },
+ {
+  "valor": "3470",
+  "texto": "DAURO IGNACIO DA SILVA"
+ },
+ {
+  "valor": "3742",
+  "texto": "DECIO CRETTON"
+ },
+ {
+  "valor": "10143",
+  "texto": "DECIO ITABAIANA"
+ },
+ {
+  "valor": "8120",
+  "texto": "DECIO MEIRELLES GOES"
+ },
+ {
+  "valor": "3467",
+  "texto": "DECIO XAVIER GAMA"
+ },
+ {
+  "valor": "8870",
+  "texto": "DENISE BRUYERE ROLINS LOURENCO DOS SANTOS"
+ },
+ {
+  "valor": "27302",
+  "texto": "DENISE DE ARAUJO CAPIBERIBE"
+ },
+ {
+  "valor": "7273",
+  "texto": "DENISE LEVY TREDLER"
+ },
+ {
+  "valor": "17538",
+  "texto": "DENISE NICOLL SIMÕES"
+ },
+ {
+  "valor": "15622",
+  "texto": "DENISE VACCARI MACHADO PAES"
+ },
+ {
+  "valor": "18067",
+  "texto": "DES. CLAUDIA NASCIMENTO VIEIRA"
+ },
+ {
+  "valor": "21716",
+  "texto": "DES. DEBORA MARIA BARBOSA SARMENTO"
+ },
+ {
+  "valor": "18073",
+  "texto": "DES. MARCOS BORBA CARUGGI"
+ },
+ {
+  "valor": "19781",
+  "texto": "DES. REGINA HELENA FABREGAS FERREIRA"
+ },
+ {
+  "valor": "1446",
+  "texto": "DILSON NAVARRO"
+ },
+ {
+  "valor": "6280",
+  "texto": "DURVAL HALE"
+ },
+ {
+  "valor": "2739",
+  "texto": "EBERT CHAMOUN"
+ },
+ {
+  "valor": "4750",
+  "texto": "EDGAR MARIA TEIXEIRA"
+ },
+ {
+  "valor": "11047",
+  "texto": "EDIL PEREIRA DA SILVA"
+ },
+ {
+  "valor": "7272",
+  "texto": "EDSON AGUIAR DE VASCONCELOS"
+ },
+ {
+  "valor": "11682",
+  "texto": "EDSON QUEIROZ SCISINIO DIAS"
+ },
+ {
+  "valor": "33926",
+  "texto": "EDUARDO ABREU BIONDI"
+ },
+ {
+  "valor": "16076",
+  "texto": "EDUARDO ANTONIO KLAUSNER"
+ },
+ {
+  "valor": "15380",
+  "texto": "EDUARDO DE AZEVEDO PAIVA"
+ },
+ {
+  "valor": "16585",
+  "texto": "EDUARDO GUSMAO ALVES DE BRITO NETO"
+ },
+ {
+  "valor": "24112",
+  "texto": "EDUARDO JOSÉ DA SILVA BARBOSA"
+ },
+ {
+  "valor": "3485",
+  "texto": "EDUARDO MAYR"
+ },
+ {
+  "valor": "3469",
+  "texto": "EDUARDO SOCRATES CASTANHEIRA SARMENTO"
+ },
+ {
+  "valor": "15409",
+  "texto": "EGAS MONIZ BARRETO DE ARAGO DAQUER"
+ },
+ {
+  "valor": "7463",
+  "texto": "EGBERTO TOSTES"
+ },
+ {
+  "valor": "26175",
+  "texto": "ELEN DE FREITAS BARBOSA"
+ },
+ {
+  "valor": "6320",
+  "texto": "ELISABETE FILIZZOLA  ASSUNÇÃO"
+ },
+ {
+  "valor": "26912",
+  "texto": "ELISABETE FRANCO LONGOBARDI"
+ },
+ {
+  "valor": "14561",
+  "texto": "ELIZABETE ALVES DE AGUIAR"
+ },
+ {
+  "valor": "5212",
+  "texto": "ELIZABETH GOMES GREGORY"
+ },
+ {
+  "valor": "9824",
+  "texto": "ELLIS HERMYDIO FIGUEIRA"
+ },
+ {
+  "valor": "10596",
+  "texto": "ELMO ARUEIRA"
+ },
+ {
+  "valor": "15384",
+  "texto": "ELTON MARTINEZ CARVALHO LEME"
+ },
+ {
+  "valor": "11201",
+  "texto": "ELY BARBOSA"
+ },
+ {
+  "valor": "221",
+  "texto": "EMERSON PARENTE"
+ },
+ {
+  "valor": "10690",
+  "texto": "EMILIO CARMO"
+ },
+ {
+  "valor": "10186",
+  "texto": "ENEAS COTTA"
+ },
+ {
+  "valor": "10168",
+  "texto": "ENEAS MARZANO"
+ },
+ {
+  "valor": "27276",
+  "texto": "ENRICO CARRANO"
+ },
+ {
+  "valor": "33084",
+  "texto": "ERIC SCAPIM CUNHA BRANDÃO"
+ },
+ {
+  "valor": "19596",
+  "texto": "ÉRICA DE PAULA RODRIGUES DA CUNHA"
+ },
+ {
+  "valor": "3478",
+  "texto": "ERIE SALES CUNHA"
+ },
+ {
+  "valor": "7558",
+  "texto": "ERNANI KLAUSNER"
+ },
+ {
+  "valor": "10589",
+  "texto": "ESTENIO CANTARINO CARDOZO"
+ },
+ {
+  "valor": "5199",
+  "texto": "EUGENIO SIGAUD"
+ },
+ {
+  "valor": "24691",
+  "texto": "EUNICE BITENCOURT HADDAD"
+ },
+ {
+  "valor": "2973",
+  "texto": "EUNICE FERREIRA CALDAS"
+ },
+ {
+  "valor": "24110",
+  "texto": "FABIANO REIS DOS SANTOS"
+ },
+ {
+  "valor": "9700",
+  "texto": "FABIO DUTRA"
+ },
+ {
+  "valor": "18065",
+  "texto": "FABIO UCHOA PINTO DE MIRANDA MONTENEGRO"
+ },
+ {
+  "valor": "3480",
+  "texto": "FABRICIO PAULO BAGUEIRA BANDEIRA FILHO"
+ },
+ {
+  "valor": "7563",
+  "texto": "FATIMA MARIA CLEMENTE"
+ },
+ {
+  "valor": "3738",
+  "texto": "FELISBERTO RIBEIRO"
+ },
+ {
+  "valor": "24767",
+  "texto": "FERDINALDO DO NASCIMENTO"
+ },
+ {
+  "valor": "16600",
+  "texto": "FERNANDA FERNANDES COELHO ARRABIDA PAES"
+ },
+ {
+  "valor": "26896",
+  "texto": "FERNANDA MAGALHAES FREITAS PATUZZO"
+ },
+ {
+  "valor": "28822",
+  "texto": "FERNANDA SEPULVEDA TERRA CARDOSO BARBOSA TELLES"
+ },
+ {
+  "valor": "20757",
+  "texto": "FERNANDA XAVIER DE BRITO"
+ },
+ {
+  "valor": "9783",
+  "texto": "FERNANDO ANTONIO DE ALMEIDA"
+ },
+ {
+  "valor": "20083",
+  "texto": "FERNANDO ANTONIO DE SOUZA E SILVA"
+ },
+ {
+  "valor": "207",
+  "texto": "FERNANDO CELSO GUIMARAES"
+ },
+ {
+  "valor": "15382",
+  "texto": "FERNANDO CERQUEIRA CHAGAS"
+ },
+ {
+  "valor": "17528",
+  "texto": "FERNANDO CESAR FERREIRA VIANA"
+ },
+ {
+  "valor": "29836",
+  "texto": "FERNANDO FERNANDY FERNANDES"
+ },
+ {
+  "valor": "7581",
+  "texto": "FERNANDO FOCH DE LEMOS ARIGONY DA SILVA"
+ },
+ {
+  "valor": "7262",
+  "texto": "FERNANDO MARQUES DE CAMPOS CABRAL"
+ },
+ {
+  "valor": "35319",
+  "texto": "FERNANDO MARQUES DE CAMPOS CABRAL FILHO"
+ },
+ {
+  "valor": "21128",
+  "texto": "FERNANDO ROCHA LOVISI"
+ },
+ {
+  "valor": "215",
+  "texto": "FERNANDO WHITAKER"
+ },
+ {
+  "valor": "10504",
+  "texto": "FERREIRA PINTO"
+ },
+ {
+  "valor": "16595",
+  "texto": "FLÁVIA DE ALMEIDA VIVEIROS DE CASTRO"
+ },
+ {
+  "valor": "27278",
+  "texto": "FLAVIA DE AZEVEDO FARIA REZENDE CHAGAS"
+ },
+ {
+  "valor": "24123",
+  "texto": "FLAVIA MACHADO DA SILVA GONCALVES PEREIRA"
+ },
+ {
+  "valor": "31940",
+  "texto": "FLÁVIA ROMANO DE REZENDE"
+ },
+ {
+  "valor": "18999",
+  "texto": "FLAVIO ITABAIANA DE OLIVEIRA NICOLAU"
+ },
+ {
+  "valor": "15375",
+  "texto": "FLAVIO MARCELO DE AZEVEDO HORTA FERNANDES"
+ },
+ {
+  "valor": "2022",
+  "texto": "FLAVIO NUNES MAGALHAES"
+ },
+ {
+  "valor": "10910",
+  "texto": "FLAVIO PINAUD"
+ },
+ {
+  "valor": "212",
+  "texto": "FONSECA PASSOS"
+ },
+ {
+  "valor": "381",
+  "texto": "FONTES DE FARIA"
+ },
+ {
+  "valor": "11467",
+  "texto": "FRANCISCO DA MOTTA MACEDO"
+ },
+ {
+  "valor": "24744",
+  "texto": "FRANCISCO DE ASSIS PESSANHA"
+ },
+ {
+  "valor": "33441",
+  "texto": "FRANCISCO DE ASSIS PESSANHA FILHO"
+ },
+ {
+  "valor": "11048",
+  "texto": "FRANCISCO DOWER PERLINGEIRO LOVISI"
+ },
+ {
+  "valor": "1456",
+  "texto": "FRANCISCO FARIA"
+ },
+ {
+  "valor": "6292",
+  "texto": "FRANCISCO JOSÉ DE ASEVEDO"
+ },
+ {
+  "valor": "39",
+  "texto": "FRANCISCO RANGEL DE ABREU"
+ },
+ {
+  "valor": "3464",
+  "texto": "GABRIEL CURCIO"
+ },
+ {
+  "valor": "13777",
+  "texto": "GABRIEL DE OLIVEIRA ZEFIRO"
+ },
+ {
+  "valor": "18618",
+  "texto": "GALDINO SIQUEIRA NETTO"
+ },
+ {
+  "valor": "11199",
+  "texto": "GAMALIEL QUINTO DE SOUZA"
+ },
+ {
+  "valor": "10512",
+  "texto": "GENARINO CARVALHO"
+ },
+ {
+  "valor": "15001",
+  "texto": "GEÓRGIA DE CARVALHO LIMA"
+ },
+ {
+  "valor": "208",
+  "texto": "GERALDO ARRUDA GUERREIRO"
+ },
+ {
+  "valor": "11049",
+  "texto": "GERALDO BATISTA"
+ },
+ {
+  "valor": "16583",
+  "texto": "GERALDO DA SILVA BATISTA JUNIOR"
+ },
+ {
+  "valor": "9689",
+  "texto": "GERALDO LUIZ MASCARENHAS PRADO"
+ },
+ {
+  "valor": "16061",
+  "texto": "GERARDO CARNEVALE N DA SILVA"
+ },
+ {
+  "valor": "7288",
+  "texto": "GERSON SILVEIRA ARRAES"
+ },
+ {
+  "valor": "14990",
+  "texto": "GILBERTO CAMPISTA GUARINO"
+ },
+ {
+  "valor": "16610",
+  "texto": "GILBERTO CLÓVIS FARIAS MATOS"
+ },
+ {
+  "valor": "6771",
+  "texto": "GILBERTO DUTRA MOREIRA"
+ },
+ {
+  "valor": "11475",
+  "texto": "GILBERTO FERNANDES"
+ },
+ {
+  "valor": "21684",
+  "texto": "GILBERTO PEREIRA REGO"
+ },
+ {
+  "valor": "15377",
+  "texto": "GILDA MARIA DIAS CARRAPATOSO"
+ },
+ {
+  "valor": "13935",
+  "texto": "GILMAR AUGUSTO TEIXEIRA"
+ },
+ {
+  "valor": "11280",
+  "texto": "GILSON VITORINO"
+ },
+ {
+  "valor": "21708",
+  "texto": "GISELE GUIDA DE FARIA"
+ },
+ {
+  "valor": "20733",
+  "texto": "GISELE SILVA JARDIM"
+ },
+ {
+  "valor": "19615",
+  "texto": "GIUSEPPE ITALO BRASILINO VITAGLIANO"
+ },
+ {
+  "valor": "24764",
+  "texto": "GIZELDA LEITÃO TEIXEIRA"
+ },
+ {
+  "valor": "6319",
+  "texto": "GONCALVES DA FONTE"
+ },
+ {
+  "valor": "378",
+  "texto": "GOULART PIRES"
+ },
+ {
+  "valor": "398",
+  "texto": "GRACCHO AURELIO"
+ },
+ {
+  "valor": "25388",
+  "texto": "GRACE MUSSALEM CALIL"
+ },
+ {
+  "valor": "25386",
+  "texto": "GRACIA CRISTINA MOREIRA DO ROSARIO"
+ },
+ {
+  "valor": "10250",
+  "texto": "GUALBERTO DE MIRANDA"
+ },
+ {
+  "valor": "14057",
+  "texto": "GUARACI DE CAMPOS VIANNA"
+ },
+ {
+  "valor": "35318",
+  "texto": "GUILHERME BRAGA PEÑA DE MORAES"
+ },
+ {
+  "valor": "10237",
+  "texto": "GUSMAR ARAUJO"
+ },
+ {
+  "valor": "3465",
+  "texto": "GUSTAVO ADOLPHO KUHL LEITE"
+ },
+ {
+  "valor": "10242",
+  "texto": "GUSTAVO ALMEIDA DO VALLE"
+ },
+ {
+  "valor": "27318",
+  "texto": "GUSTAVO HENRIQUE NASCIMENTO SILVA"
+ },
+ {
+  "valor": "10466",
+  "texto": "GUSTAVO ITABAIANA"
+ },
+ {
+  "valor": "28816",
+  "texto": "GUSTAVO QUINTANILHA TELLES DE MENEZES"
+ },
+ {
+  "valor": "392",
+  "texto": "HAMILTON MORAES E BARROS"
+ },
+ {
+  "valor": "27396",
+  "texto": "HELDA LIMA MEIRELES"
+ },
+ {
+  "valor": "7289",
+  "texto": "HELENA BELC KLAUSNER"
+ },
+ {
+  "valor": "9658",
+  "texto": "HELENA CANDIDA LISBOA GAEDE"
+ },
+ {
+  "valor": "23103",
+  "texto": "HELENA DIAS TORRES DA SILVA"
+ },
+ {
+  "valor": "2817",
+  "texto": "HELENA GOLDENZON BEKHOR"
+ },
+ {
+  "valor": "13769",
+  "texto": "HELENO RIBEIRO PEREIRA NUNES"
+ },
+ {
+  "valor": "7293",
+  "texto": "HELIO DE FARIAS"
+ },
+ {
+  "valor": "1450",
+  "texto": "HELIO TRINDADE"
+ },
+ {
+  "valor": "10464",
+  "texto": "HELVIO PERORAZIO"
+ },
+ {
+  "valor": "5940",
+  "texto": "HENRIQUE ALBERTO MAGALHES DE ALMEIDA NETO"
+ },
+ {
+  "valor": "9674",
+  "texto": "HENRIQUE CARLOS DE ANDRADE FIGUEIRA"
+ },
+ {
+  "valor": "11448",
+  "texto": "HERALDO SATURNINO DE OLIVEIRA"
+ },
+ {
+  "valor": "4721",
+  "texto": "HERMANO DOS ANJOS"
+ },
+ {
+  "valor": "10461",
+  "texto": "HILARIO DUARTE DE ALENCAR"
+ },
+ {
+  "valor": "13936",
+  "texto": "HORÁCIO DOS SANTOS RIBEIRO NETO"
+ },
+ {
+  "valor": "10597",
+  "texto": "HUDSON BASTOS LOURENCO"
+ },
+ {
+  "valor": "1650",
+  "texto": "HUGO BARCELLOS"
+ },
+ {
+  "valor": "33929",
+  "texto": "HUMBERTO DALLA  BERNARDINA DE PINHO"
+ },
+ {
+  "valor": "2319",
+  "texto": "HUMBERTO DE MENDONCA MANES"
+ },
+ {
+  "valor": "2601",
+  "texto": "HUMBERTO DECNOP BATISTA"
+ },
+ {
+  "valor": "4724",
+  "texto": "HUMBERTO PASCHOAL PERRI"
+ },
+ {
+  "valor": "10943",
+  "texto": "INDIO BRASILEIRO ROCHA"
+ },
+ {
+  "valor": "13771",
+  "texto": "INÊS DA TRINDADE CHAVES DE MELO"
+ },
+ {
+  "valor": "7548",
+  "texto": "IONE PERNES"
+ },
+ {
+  "valor": "29804",
+  "texto": "ISABEL TERESA PINTO COELHO"
+ },
+ {
+  "valor": "18077",
+  "texto": "ISABELA PESSANHA CHAGAS"
+ },
+ {
+  "valor": "28852",
+  "texto": "ISABELLE DA SILVA SCISINIO DIAS"
+ },
+ {
+  "valor": "29818",
+  "texto": "ISMENIO PEREIRA DE CASTRO"
+ },
+ {
+  "valor": "2543",
+  "texto": "ITAMAR BARBALHO"
+ },
+ {
+  "valor": "7285",
+  "texto": "IVAN CURY"
+ },
+ {
+  "valor": "17542",
+  "texto": "IVONE FERREIRA CAETANO"
+ },
+ {
+  "valor": "16065",
+  "texto": "JACQUELINE LIMA MONTENEGRO"
+ },
+ {
+  "valor": "14564",
+  "texto": "JAIME DIAS PINHEIRO FILHO"
+ },
+ {
+  "valor": "11449",
+  "texto": "JAIR PONTES DE ALMEIDA"
+ },
+ {
+  "valor": "25371",
+  "texto": "JANE CARNEIRO SILVA DE AMORIM"
+ },
+ {
+  "valor": "3729",
+  "texto": "JASMIN SIMOES COSTA"
+ },
+ {
+  "valor": "3460",
+  "texto": "JAYRO DOS SANTOS FERREIRA"
+ },
+ {
+  "valor": "16588",
+  "texto": "JEAN ALBERT DE SOUZA SAADI"
+ },
+ {
+  "valor": "11196",
+  "texto": "JEANECY THEREZINHA DE SOUZA"
+ },
+ {
+  "valor": "7267",
+  "texto": "JESSÉ TORRES PEREIRA JÚNIOR"
+ },
+ {
+  "valor": "10509",
+  "texto": "JESUS ANTUNES DE SIQUEIRA"
+ },
+ {
+  "valor": "29790",
+  "texto": "JOANA CARDIA JARDIM CORTES"
+ },
+ {
+  "valor": "11107",
+  "texto": "JOAO ANTONIO DA SILVA"
+ },
+ {
+  "valor": "8868",
+  "texto": "JOAO BAPTISTA CHAGAS F."
+ },
+ {
+  "valor": "16691",
+  "texto": "JOÃO BATISTA DAMASCENO"
+ },
+ {
+  "valor": "6272",
+  "texto": "JOAO BATISTA DE OLIVEIRA LACERDA"
+ },
+ {
+  "valor": "6269",
+  "texto": "JOAO CARLOS BRAGA GUIMARAES"
+ },
+ {
+  "valor": "21717",
+  "texto": "JOÃO CARLOS DE SOUZA CORREA"
+ },
+ {
+  "valor": "2333",
+  "texto": "JOAO CARLOS PESTANA DE AGUIAR SILVA"
+ },
+ {
+  "valor": "1458",
+  "texto": "JOAO DE DEUS LACERDA MENNA BARRETO"
+ },
+ {
+  "valor": "10510",
+  "texto": "JOAO FRANCISCO"
+ },
+ {
+  "valor": "16060",
+  "texto": "JOÃO GUILHERME CHAVES ROSAS FILHO"
+ },
+ {
+  "valor": "20736",
+  "texto": "JOAO MARCOS DE CASTELLO BRANCO FANTINATO"
+ },
+ {
+  "valor": "11021",
+  "texto": "JOAO NICOLAU SPYRIDES"
+ },
+ {
+  "valor": "9681",
+  "texto": "JOAO PAULO FERNANDES PONTES"
+ },
+ {
+  "valor": "29854",
+  "texto": "JOAO PAULO KNAACK CAPANEMA DE SOUZA"
+ },
+ {
+  "valor": "10541",
+  "texto": "JOAO WEHBI DIB"
+ },
+ {
+  "valor": "15627",
+  "texto": "JOÃO ZIRALDO MAIA"
+ },
+ {
+  "valor": "18315",
+  "texto": "JOAQUIM ABILIO MOREIRA ALVES DE BRITO"
+ },
+ {
+  "valor": "10899",
+  "texto": "JOAQUIM CYRILLO BAPTISTA MOUZINHO"
+ },
+ {
+  "valor": "15396",
+  "texto": "JOAQUIM DOMINGOS DE ALMEIDA NETO"
+ },
+ {
+  "valor": "10176",
+  "texto": "JOEL PEREIRA DOS SANTOS"
+ },
+ {
+  "valor": "6036",
+  "texto": "JORGE ALBERTO ROMEIRO JUNIOR"
+ },
+ {
+  "valor": "3450",
+  "texto": "JORGE DE MIRANDA MAGALHAES"
+ },
+ {
+  "valor": "4749",
+  "texto": "JORGE LORETTI"
+ },
+ {
+  "valor": "19583",
+  "texto": "JORGE LUIZ HABIB"
+ },
+ {
+  "valor": "10459",
+  "texto": "JORGE UCHOA DE MENDONCA"
+ },
+ {
+  "valor": "15393",
+  "texto": "JOSÉ ACIR LESSA GIORDANI"
+ },
+ {
+  "valor": "3496",
+  "texto": "JOSE AFFONSO RONDEAU"
+ },
+ {
+  "valor": "29837",
+  "texto": "JOSE AUGUSTO DE ARAUJO NETO"
+ },
+ {
+  "valor": "11947",
+  "texto": "JOSE BAHADIAN"
+ },
+ {
+  "valor": "11712",
+  "texto": "JOSE CARLOS DE FIGUEIREDO"
+ },
+ {
+  "valor": "9677",
+  "texto": "JOSÉ CARLOS MALDONADO DE CARVALHO"
+ },
+ {
+  "valor": "29005",
+  "texto": "JOSÉ CARLOS PAES"
+ },
+ {
+  "valor": "3445",
+  "texto": "JOSE CARLOS SCHMIDT MURTA RIBEIRO"
+ },
+ {
+  "valor": "6287",
+  "texto": "JOSÉ CARLOS VARANDA DOS SANTOS"
+ },
+ {
+  "valor": "3477",
+  "texto": "JOSE CARLOS WATZL"
+ },
+ {
+  "valor": "19480",
+  "texto": "JOSE CLAUDIO DE MACEDO FERNANDES"
+ },
+ {
+  "valor": "7552",
+  "texto": "JOSE DE MAGALHAES PERES"
+ },
+ {
+  "valor": "7282",
+  "texto": "JOSE DE SAMUEL MARQUES"
+ },
+ {
+  "valor": "1455",
+  "texto": "JOSE EDVALDO TAVARES"
+ },
+ {
+  "valor": "9510",
+  "texto": "JOSE GERALDO ANTONIO"
+ },
+ {
+  "valor": "20766",
+  "texto": "JOSÉ GUILHERME VASI WERNER"
+ },
+ {
+  "valor": "2398",
+  "texto": "JOSE LUCAS MOREIRA ALVES DE BRITO"
+ },
+ {
+  "valor": "11441",
+  "texto": "JOSE MOTA FILHO"
+ },
+ {
+  "valor": "29870",
+  "texto": "JOSÉ MUIÑOS PIÑEIRO FILHO"
+ },
+ {
+  "valor": "6322",
+  "texto": "JOSE NILO FERREIRA"
+ },
+ {
+  "valor": "11136",
+  "texto": "JOSE PIMENTEL MARQUES"
+ },
+ {
+  "valor": "9645",
+  "texto": "JOSÉ ROBERTO LAGRANHA TÁVORA"
+ },
+ {
+  "valor": "16062",
+  "texto": "JOSE ROBERTO PORTUGAL COMPASSO"
+ },
+ {
+  "valor": "2323",
+  "texto": "JOSE RODRIGUEZ LEMA"
+ },
+ {
+  "valor": "10505",
+  "texto": "JOVINO MACHADO JORDAO"
+ },
+ {
+  "valor": "35328",
+  "texto": "JUAN LUIZ SOUZA VAZQUEZ"
+ },
+ {
+  "valor": "9714",
+  "texto": "JUAREZ FERNANDES FOLHES"
+ },
+ {
+  "valor": "29793",
+  "texto": "JULIANA ANDRADE BARICHELLO"
+ },
+ {
+  "valor": "29853",
+  "texto": "JULIANA BENEVIDES DE BARROS ARAUJO"
+ },
+ {
+  "valor": "29815",
+  "texto": "JULIANA CARDOSO MONTEIRO DE BARROS"
+ },
+ {
+  "valor": "31954",
+  "texto": "JULIANA LAMAR PEREIRA SIMAO"
+ },
+ {
+  "valor": "3157",
+  "texto": "JULIO CESAR PARAGUASSU"
+ },
+ {
+  "valor": "213",
+  "texto": "JULIO DA ROCHA ALMEIDA"
+ },
+ {
+  "valor": "29783",
+  "texto": "JUSSARA MARIA DE ABREU GUIMARÃES"
+ },
+ {
+  "valor": "31952",
+  "texto": "KARLA DA SILVA BARROSO VELLOSO"
+ },
+ {
+  "valor": "19607",
+  "texto": "KATIA CRISTINA NASCENTES TORRES"
+ },
+ {
+  "valor": "9720",
+  "texto": "KÁTIA MARIA AMARAL JANGUTTA"
+ },
+ {
+  "valor": "14562",
+  "texto": "KATYA MARIA DE PAULA MENEZES MONNERAT"
+ },
+ {
+  "valor": "24713",
+  "texto": "KEYLA BLANK DE CNOP"
+ },
+ {
+  "valor": "438",
+  "texto": "L. LOPES DE SOUSA"
+ },
+ {
+  "valor": "3457",
+  "texto": "LAERSON MAURO"
+ },
+ {
+  "valor": "28829",
+  "texto": "LARISSA NUNES PINTO SALLY"
+ },
+ {
+  "valor": "29825",
+  "texto": "LEANDRO LOYOLA DE ABREU"
+ },
+ {
+  "valor": "9707",
+  "texto": "LEANDRO RIBEIRO DA SILVA"
+ },
+ {
+  "valor": "19481",
+  "texto": "LEDIR DIAS DE ARAUJO"
+ },
+ {
+  "valor": "11946",
+  "texto": "LEILA MARIA CARRILO CAVALCANTE RIBEIRO MARIANO"
+ },
+ {
+  "valor": "27350",
+  "texto": "LEILA MARIA RODRIGUES PINTO DE CARVALHO E ALBUQUERQUE"
+ },
+ {
+  "valor": "16611",
+  "texto": "LEILA SANTOS LOPES"
+ },
+ {
+  "valor": "8869",
+  "texto": "LEONY MARIA GRIVET PINHO"
+ },
+ {
+  "valor": "6303",
+  "texto": "LETICIA DE FARIA SARDAS"
+ },
+ {
+  "valor": "10818",
+  "texto": "LIBORNI BERNARDINO SIQUEIRA"
+ },
+ {
+  "valor": "13887",
+  "texto": "LIDIA MARIA SODRE DE MORAES"
+ },
+ {
+  "valor": "10540",
+  "texto": "LINDBERG MONTENEGRO"
+ },
+ {
+  "valor": "29819",
+  "texto": "LINDOLPHO MORAIS MARINHO"
+ },
+ {
+  "valor": "15387",
+  "texto": "LUCIA HELENA DO PASSO"
+ },
+ {
+  "valor": "9692",
+  "texto": "LÚCIA MARIA MIGUEL DA SILVA LIMA"
+ },
+ {
+  "valor": "17537",
+  "texto": "LUCIA REGINA ESTEVES DE MAGALHAES"
+ },
+ {
+  "valor": "29767",
+  "texto": "LUCIANA DA CUNHA MARTINS OLIVEIRA"
+ },
+ {
+  "valor": "26182",
+  "texto": "LUCIANA MOCCO MOREIRA LIMA"
+ },
+ {
+  "valor": "28823",
+  "texto": "LUCIANA SANTOS TEIXEIRA"
+ },
+ {
+  "valor": "214",
+  "texto": "LUCIANO BELEM"
+ },
+ {
+  "valor": "31933",
+  "texto": "LUCIANO SABOIA RINALDI DE CARVALHO"
+ },
+ {
+  "valor": "15390",
+  "texto": "LUCIANO SILVA BARRETO"
+ },
+ {
+  "valor": "16696",
+  "texto": "LÚCIO DURANTE"
+ },
+ {
+  "valor": "25381",
+  "texto": "LUIS ANDRE BRUZZI RIBEIRO"
+ },
+ {
+  "valor": "13931",
+  "texto": "LUIS FELIPE SALOMAO"
+ },
+ {
+  "valor": "15398",
+  "texto": "LUIS GUSTAVO GRANDINETTI CASTANHO DE CARVALHO"
+ },
+ {
+  "valor": "8876",
+  "texto": "LUISA CRISTINA BOTTREL SOUZA"
+ },
+ {
+  "valor": "25383",
+  "texto": "LUIZ ALBERTO BARBOSA DA SILVA"
+ },
+ {
+  "valor": "16596",
+  "texto": "LUIZ ALBERTO CARVALHO ALVES"
+ },
+ {
+  "valor": "28830",
+  "texto": "LUIZ ALFREDO CARVALHO JUNIOR"
+ },
+ {
+  "valor": "10988",
+  "texto": "LUIZ CARLOS MOTTA"
+ },
+ {
+  "valor": "11442",
+  "texto": "LUIZ CARLOS PECANHA"
+ },
+ {
+  "valor": "10239",
+  "texto": "LUIZ CARLOS PERLINGEIRO"
+ },
+ {
+  "valor": "3487",
+  "texto": "LUIZ CARLOS SALLES GUIMARAES"
+ },
+ {
+  "valor": "10542",
+  "texto": "LUIZ CESAR"
+ },
+ {
+  "valor": "26184",
+  "texto": "LUIZ CLAUDIO SILVA JARDIM MARINHO"
+ },
+ {
+  "valor": "17773",
+  "texto": "LUIZ EDUARDO C CANABARRO"
+ },
+ {
+  "valor": "4723",
+  "texto": "LUIZ EDUARDO GUIMARAES RABELLO"
+ },
+ {
+  "valor": "11871",
+  "texto": "LUIZ FELIPE DA SILVA HADDAD"
+ },
+ {
+  "valor": "9640",
+  "texto": "LUIZ FELIPE MIRANDA DE MEDEIROS FRANCISCO"
+ },
+ {
+  "valor": "17544",
+  "texto": "LUIZ FERNANDO DE ANDRADE PINTO"
+ },
+ {
+  "valor": "6275",
+  "texto": "LUIZ FERNANDO RIBEIRO DE CARVALHO"
+ },
+ {
+  "valor": "6266",
+  "texto": "LUIZ FUX"
+ },
+ {
+  "valor": "15394",
+  "texto": "LUIZ HENRIQUE OLIVEIRA MARQUES"
+ },
+ {
+  "valor": "11687",
+  "texto": "LUIZ LEITE ARAUJO"
+ },
+ {
+  "valor": "19483",
+  "texto": "LUIZ MARCIO VICTOR ALVES PEREIRA"
+ },
+ {
+  "valor": "9671",
+  "texto": "LUIZ NORONHA DANTAS"
+ },
+ {
+  "valor": "3482",
+  "texto": "LUIZ ODILON GOMES BANDEIRA"
+ },
+ {
+  "valor": "17759",
+  "texto": "LUIZ ROBERTO AYOUB"
+ },
+ {
+  "valor": "18138",
+  "texto": "LUIZ ROLDAO DE FREITAS GOMES"
+ },
+ {
+  "valor": "33440",
+  "texto": "LUIZ ROLDAO DE FREITAS GOMES FILHO"
+ },
+ {
+  "valor": "3737",
+  "texto": "LUIZ STEELE"
+ },
+ {
+  "valor": "19595",
+  "texto": "LUIZ UMPIERRE DE MELLO SERRA"
+ },
+ {
+  "valor": "18311",
+  "texto": "LUIZ ZVEITER"
+ },
+ {
+  "valor": "25373",
+  "texto": "MABEL CHRISTINA CASTRIOTO MEIRA DE VASCONCELLOS"
+ },
+ {
+  "valor": "36",
+  "texto": "mafalda"
+ },
+ {
+  "valor": "16601",
+  "texto": "MAFALDA LUCCHESE"
+ },
+ {
+  "valor": "4719",
+  "texto": "MANOEL ALBERTO REBELO DOS SANTOS"
+ },
+ {
+  "valor": "4728",
+  "texto": "MANOEL CARPENA AMORIM"
+ },
+ {
+  "valor": "18070",
+  "texto": "MANOEL TAVARES CAVALCANTI"
+ },
+ {
+  "valor": "19597",
+  "texto": "MARCEL LAGUNA DUQUE ESTRADA"
+ },
+ {
+  "valor": "20069",
+  "texto": "MARCELLO DE SA BAPTISTA"
+ },
+ {
+  "valor": "19470",
+  "texto": "MARCELO ALMEIDA"
+ },
+ {
+  "valor": "16592",
+  "texto": "MARCELO CASTRO ANÁTOCLES DA SILVA FERREIRA"
+ },
+ {
+  "valor": "31153",
+  "texto": "MARCELO LIMA BUHATEM"
+ },
+ {
+  "valor": "24336",
+  "texto": "MARCELO MENAGED"
+ },
+ {
+  "valor": "23112",
+  "texto": "MARCELO OLIVEIRA DA SILVA"
+ },
+ {
+  "valor": "21138",
+  "texto": "MARCELO PEREIRA DA SILVA"
+ },
+ {
+  "valor": "19478",
+  "texto": "MÁRCIA  ALVES SUCCI"
+ },
+ {
+  "valor": "21705",
+  "texto": "MARCIA ANDREA RODRIGUEZ LEMA"
+ },
+ {
+  "valor": "15413",
+  "texto": "MÁRCIA CUNHA SILVA ARAÚJO DE CARVALHO"
+ },
+ {
+  "valor": "24714",
+  "texto": "MARCIA DA SILVA RIBEIRO"
+ },
+ {
+  "valor": "14052",
+  "texto": "MARCIA FERREIRA ALVARENGA"
+ },
+ {
+  "valor": "18033",
+  "texto": "MARCIA MALVAR BARAMBO"
+ },
+ {
+  "valor": "9644",
+  "texto": "MÁRCIA PERRINI BODART"
+ },
+ {
+  "valor": "20727",
+  "texto": "MARCIA SANTOS CAPANEMA DE SOUZA"
+ },
+ {
+  "valor": "25380",
+  "texto": "MARCIO ALEXANDRE PACHECO DA SILVA"
+ },
+ {
+  "valor": "20756",
+  "texto": "MARCIO QUINTES GONCALVES"
+ },
+ {
+  "valor": "16080",
+  "texto": "MARCIUS DA COSTA FERREIRA"
+ },
+ {
+  "valor": "4330",
+  "texto": "MARCO ANTONIO IBRAHIM"
+ },
+ {
+  "valor": "13768",
+  "texto": "MARCO AURELIO BELLIZZE OLIVEIRA"
+ },
+ {
+  "valor": "29872",
+  "texto": "MARCO AURÉLIO BEZERRA DE MELO"
+ },
+ {
+  "valor": "7559",
+  "texto": "MARCO AURELIO DOS SANTOS FROES"
+ },
+ {
+  "valor": "9673",
+  "texto": "MARCOS ALCINO DE AZEVEDO TORRES"
+ },
+ {
+  "valor": "33114",
+  "texto": "MARCOS ANDRE CHUT"
+ },
+ {
+  "valor": "25395",
+  "texto": "MARCOS ANTONIO RIBEIRO DE MOURA BRITO"
+ },
+ {
+  "valor": "9660",
+  "texto": "MARCOS BENTO DE SOUZA"
+ },
+ {
+  "valor": "10958",
+  "texto": "MARCUS ANTONIO DE SOUZA FAVER"
+ },
+ {
+  "valor": "9696",
+  "texto": "MARCUS HENRIQUE PINTO BASÍLIO"
+ },
+ {
+  "valor": "8875",
+  "texto": "MARCUS QUARESMA FERRAZ"
+ },
+ {
+  "valor": "11486",
+  "texto": "MARCUS TULLIUS ALVES"
+ },
+ {
+  "valor": "1764",
+  "texto": "MARDEN GOMES"
+ },
+ {
+  "valor": "16597",
+  "texto": "MARGARET DE OLIVAES VALLE DOS SANTOS"
+ },
+ {
+  "valor": "16608",
+  "texto": "MARIA AGLAE TEDESCO VILARDO"
+ },
+ {
+  "valor": "13775",
+  "texto": "MARIA ANGÉLICA GUIMARÃES GUERRA GUEDES"
+ },
+ {
+  "valor": "6284",
+  "texto": "MARIA AUGUSTA VAZ MONTEIRO DE FIGUEIREDO"
+ },
+ {
+  "valor": "8207",
+  "texto": "MARIA CELESTE PINTO DE CASTRO JATAHY"
+ },
+ {
+  "valor": "16603",
+  "texto": "MARIA CHRISTINA BERARDO RUCKER"
+ },
+ {
+  "valor": "9682",
+  "texto": "MARIA CHRISTINA LOUCHARD DE GOES"
+ },
+ {
+  "valor": "11727",
+  "texto": "MARIA COLLARES FELIPE DA CONCEICAO"
+ },
+ {
+  "valor": "16605",
+  "texto": "MARIA CRISTINA DE BRITO LIMA"
+ },
+ {
+  "valor": "18072",
+  "texto": "MARIA DA GLORIA OLIVEIRA BANDEIRA DE MELLO"
+ },
+ {
+  "valor": "19473",
+  "texto": "MARIA DA PENHA NOBRE MAURO"
+ },
+ {
+  "valor": "7541",
+  "texto": "MARIA DE LOURDES VALLE"
+ },
+ {
+  "valor": "16067",
+  "texto": "MARIA DO CARMO ALVIM PADILHA GERK"
+ },
+ {
+  "valor": "16591",
+  "texto": "MARIA HELENA PINTO MACHADO"
+ },
+ {
+  "valor": "6294",
+  "texto": "MARIA HELENA SALCEDO MAGALHAES"
+ },
+ {
+  "valor": "19271",
+  "texto": "MARIA HENRIQUETA DO AMARAL FONSECA LOBO"
+ },
+ {
+  "valor": "11869",
+  "texto": "MARIA INÊS DA PENHA GASPAR"
+ },
+ {
+  "valor": "17531",
+  "texto": "MARIA ISABEL PAES GONÇALVES"
+ },
+ {
+  "valor": "16078",
+  "texto": "MARIA LUIZA DE FREITAS CARVALHO"
+ },
+ {
+  "valor": "20063",
+  "texto": "MARIA PAULA GOUVEA GALHARDO"
+ },
+ {
+  "valor": "7296",
+  "texto": "MARIA RAIMUNDA TEIXEIRA DE AZEVEDO"
+ },
+ {
+  "valor": "31116",
+  "texto": "MARIA REGINA FONSECA NOVA ALVES"
+ },
+ {
+  "valor": "15630",
+  "texto": "MARIA SANDRA ROCHA KAYAT DIREITO"
+ },
+ {
+  "valor": "216",
+  "texto": "MARIA STELLA RODRIGUES"
+ },
+ {
+  "valor": "17529",
+  "texto": "MARIA TERESA PONTES GAZINEU"
+ },
+ {
+  "valor": "7286",
+  "texto": "MARIA ZELIA PROCOPIO DA SILVA"
+ },
+ {
+  "valor": "33439",
+  "texto": "MARIANNA FUX"
+ },
+ {
+  "valor": "10310",
+  "texto": "MARIANNA PEREIRA NUNES FETEIRA GONCALVES"
+ },
+ {
+  "valor": "209",
+  "texto": "MARIANTE DA FONSECA"
+ },
+ {
+  "valor": "7294",
+  "texto": "MARILENE MELO ALVES"
+ },
+ {
+  "valor": "29834",
+  "texto": "MARÍLIA DE CASTRO NEVES VIEIRA"
+ },
+ {
+  "valor": "7650",
+  "texto": "MARIO ASSIS GONÇALVES"
+ },
+ {
+  "valor": "7266",
+  "texto": "MARIO DOS SANTOS PAULO"
+ },
+ {
+  "valor": "9642",
+  "texto": "MARIO GUIMARÃES NETO"
+ },
+ {
+  "valor": "21125",
+  "texto": "MARIO HENRIQUE MAZZA"
+ },
+ {
+  "valor": "6058",
+  "texto": "MARIO MAGALHAES"
+ },
+ {
+  "valor": "24207",
+  "texto": "MARIO ROBERT MANNHEIMER"
+ },
+ {
+  "valor": "24697",
+  "texto": "MARISA BALBI ROSEMBAK"
+ },
+ {
+  "valor": "11210",
+  "texto": "MARLAN DE MORAES MARINHO"
+ },
+ {
+  "valor": "18122",
+  "texto": "MARLY MACEDONIO FRANCA"
+ },
+ {
+  "valor": "16604",
+  "texto": "MARTHA ELISABETH FALCÃO SOBREIRA"
+ },
+ {
+  "valor": "1312",
+  "texto": "MARTINHO CAMPOS"
+ },
+ {
+  "valor": "3735",
+  "texto": "MARTINS DE ALMEIDA"
+ },
+ {
+  "valor": "24352",
+  "texto": "MAURÍCIO CALDAS LOPES"
+ },
+ {
+  "valor": "11208",
+  "texto": "MAURICIO DA SILVA LINTZ"
+ },
+ {
+  "valor": "11198",
+  "texto": "MAURICIO GONCALVES DE OLIVEIRA"
+ },
+ {
+  "valor": "29792",
+  "texto": "MAURICIO MAGNUS"
+ },
+ {
+  "valor": "7277",
+  "texto": "MAURILIO PASSOS DA SILVA BRAGA"
+ },
+ {
+  "valor": "29858",
+  "texto": "MAURILIO TEIXEIRA DE MELLO JUNIOR"
+ },
+ {
+  "valor": "9680",
+  "texto": "MAURO DICKSTEIN"
+ },
+ {
+  "valor": "11716",
+  "texto": "MAURO FONSECA PINTO NOGUEIRA"
+ },
+ {
+  "valor": "18031",
+  "texto": "MAURO NICOLAU JÚNIOR"
+ },
+ {
+  "valor": "16692",
+  "texto": "MAURO PEREIRA MARTINS"
+ },
+ {
+  "valor": "2316",
+  "texto": "MELLO SERRA"
+ },
+ {
+  "valor": "11440",
+  "texto": "MIGUEL ANGELO BARROS"
+ },
+ {
+  "valor": "4745",
+  "texto": "MIGUEL PACHA"
+ },
+ {
+  "valor": "7283",
+  "texto": "MILTON FERNANDES DE SOUZA"
+ },
+ {
+  "valor": "206",
+  "texto": "MIRANDA ROSA"
+ },
+ {
+  "valor": "24710",
+  "texto": "MIRELA ERBISTI"
+ },
+ {
+  "valor": "7567",
+  "texto": "MOACIR PESSOA DE ARAUJO"
+ },
+ {
+  "valor": "10514",
+  "texto": "MOLEDO SARTORI"
+ },
+ {
+  "valor": "32080",
+  "texto": "MÔNICA DE FARIA SARDAS"
+ },
+ {
+  "valor": "16077",
+  "texto": "MÔNICA FELDMAN DE MATTOS"
+ },
+ {
+  "valor": "20091",
+  "texto": "MONICA LABUTO FRAGOSO MACHADO"
+ },
+ {
+  "valor": "29835",
+  "texto": "MÔNICA MARIA COSTA DI PIERO"
+ },
+ {
+  "valor": "13799",
+  "texto": "MÔNICA TOLLEDO DE OLIVEIRA"
+ },
+ {
+  "valor": "31948",
+  "texto": "MONIQUE ABREU DAVID"
+ },
+ {
+  "valor": "2600",
+  "texto": "MURILLO FABREGAS"
+ },
+ {
+  "valor": "4696",
+  "texto": "MURILO ANDRADE DE CARVALHO"
+ },
+ {
+  "valor": "15626",
+  "texto": "MURILO ANDRÉ KIELING CARDONA PEREIRA"
+ },
+ {
+  "valor": "343",
+  "texto": "MURTA RIBEIRO"
+ },
+ {
+  "valor": "15411",
+  "texto": "MYRIAM MEDEIROS DA FONSECA COSTA"
+ },
+ {
+  "valor": "9000",
+  "texto": "N. DORESTE BAPTISTA"
+ },
+ {
+  "valor": "16590",
+  "texto": "NADIA MARIA DE SOUZA FREIJANES"
+ },
+ {
+  "valor": "6268",
+  "texto": "NAGIB SLAIBI FILHO"
+ },
+ {
+  "valor": "11681",
+  "texto": "NAMETALA MACHADO JORGE"
+ },
+ {
+  "valor": "7292",
+  "texto": "NANCI MAHFUZ"
+ },
+ {
+  "valor": "1448",
+  "texto": "NARCIZO PINTO"
+ },
+ {
+  "valor": "3725",
+  "texto": "NASCIMENTO ANTONIO POVOAS VAZ"
+ },
+ {
+  "valor": "15388",
+  "texto": "NATACHA NASCIMENTO GOMES TOSTES GONÇALVES DE OLIVEIRA"
+ },
+ {
+  "valor": "29812",
+  "texto": "NATASCHA MACULAN ADUM DAZZI"
+ },
+ {
+  "valor": "27288",
+  "texto": "NATHALIA CALIL MIGUEL MAGLUTA"
+ },
+ {
+  "valor": "20086",
+  "texto": "NEARIS DOS SANTOS CARVALHO ARCE DOS SANTOS"
+ },
+ {
+  "valor": "11235",
+  "texto": "NESTOR LUIZ BASTOS AHRENDS"
+ },
+ {
+  "valor": "21139",
+  "texto": "NEUSA REGINA LARSEN DE ALVARENGA LEITE"
+ },
+ {
+  "valor": "11041",
+  "texto": "NEWTON PAULO AZEREDO DA SILVEIRA"
+ },
+ {
+  "valor": "3732",
+  "texto": "NEWTON QUINTELLA"
+ },
+ {
+  "valor": "10141",
+  "texto": "NICOLAU MARY JUNIOR"
+ },
+ {
+  "valor": "24209",
+  "texto": "NILDSON ARAÚJO DA CRUZ"
+ },
+ {
+  "valor": "10729",
+  "texto": "NILSON DE CASTRO DIAO"
+ },
+ {
+  "valor": "3473",
+  "texto": "NILTON MONDEGO DE CARVALHO LIMA"
+ },
+ {
+  "valor": "11684",
+  "texto": "NILZA BITAR"
+ },
+ {
+  "valor": "7579",
+  "texto": "NORMA SUELY FONSECA QUINTES"
+ },
+ {
+  "valor": "7291",
+  "texto": "ODETE KNAACK DE SOUZA"
+ },
+ {
+  "valor": "7569",
+  "texto": "ORLANDO DE ALMEIDA SECCO"
+ },
+ {
+  "valor": "10251",
+  "texto": "ORLINDO ELIAS"
+ },
+ {
+  "valor": "10523",
+  "texto": "OSCAR SILVARES"
+ },
+ {
+  "valor": "217",
+  "texto": "OSWALDO PORTELLA"
+ },
+ {
+  "valor": "6308",
+  "texto": "OTÁVIO RODRIGUES"
+ },
+ {
+  "valor": "25387",
+  "texto": "PATRICIA COGLIATTI DE CARVALHO"
+ },
+ {
+  "valor": "31932",
+  "texto": "PATRÍCIA RIBEIRO SERRA VIEIRA"
+ },
+ {
+  "valor": "28833",
+  "texto": "PATRICIA RODRIGUEZ WHATELY"
+ },
+ {
+  "valor": "19588",
+  "texto": "PAULA FERNANDES MACHADO"
+ },
+ {
+  "valor": "28827",
+  "texto": "PAULA REGINA ADORNO COSSA"
+ },
+ {
+  "valor": "17761",
+  "texto": "PAULO ASSED ESTEFAN"
+ },
+ {
+  "valor": "6271",
+  "texto": "PAULO CESAR SALOMAO"
+ },
+ {
+  "valor": "16589",
+  "texto": "PAULO CESAR VIEIRA C. FILHO"
+ },
+ {
+  "valor": "14991",
+  "texto": "PAULO DE OLIVEIRA LANZILLOTTA BALDEZ"
+ },
+ {
+  "valor": "8877",
+  "texto": "PAULO DE TARSO NEVES"
+ },
+ {
+  "valor": "9540",
+  "texto": "PAULO DOURADO DE GUSMAO"
+ },
+ {
+  "valor": "10830",
+  "texto": "PAULO GOMES DA SILVA"
+ },
+ {
+  "valor": "10506",
+  "texto": "PAULO GOMES DA SILVA FILHO"
+ },
+ {
+  "valor": "11203",
+  "texto": "PAULO LARA"
+ },
+ {
+  "valor": "1462",
+  "texto": "PAULO MALTA FERRAZ"
+ },
+ {
+  "valor": "3510",
+  "texto": "PAULO MAURICIO PEREIRA"
+ },
+ {
+  "valor": "4409",
+  "texto": "PAULO PINTO"
+ },
+ {
+  "valor": "18993",
+  "texto": "PAULO ROBERTO CORREA"
+ },
+ {
+  "valor": "1484",
+  "texto": "PAULO ROBERTO FREITAS"
+ },
+ {
+  "valor": "11191",
+  "texto": "PAULO ROBERTO LEITE VENTURA"
+ },
+ {
+  "valor": "3461",
+  "texto": "PAULO SERGIO DE ARAUJO E SILVA FABIAO"
+ },
+ {
+  "valor": "9661",
+  "texto": "PAULO SÉRGIO PRESTES DOS SANTOS"
+ },
+ {
+  "valor": "31115",
+  "texto": "PAULO SÉRGIO RANGEL DO NASCIMENTO"
+ },
+ {
+  "valor": "33884",
+  "texto": "PAULO WUNDER DE ALENCAR"
+ },
+ {
+  "valor": "5930",
+  "texto": "PECEGUEIRO DO AMARAL"
+ },
+ {
+  "valor": "10511",
+  "texto": "PEDRO AMERICO R. GONCALVES"
+ },
+ {
+  "valor": "9699",
+  "texto": "PEDRO FREIRE RAGUENET"
+ },
+ {
+  "valor": "20077",
+  "texto": "PEDRO HENRIQUE ALVES"
+ },
+ {
+  "valor": "2400",
+  "texto": "PEDRO LIGIERO"
+ },
+ {
+  "valor": "385",
+  "texto": "PEDRO LIMA"
+ },
+ {
+  "valor": "9691",
+  "texto": "PEDRO SARAIVA DE ANDRADE LEMOS"
+ },
+ {
+  "valor": "211",
+  "texto": "PENALVA SANTOS"
+ },
+ {
+  "valor": "15631",
+  "texto": "PETERSON BARROSO SIMÃO"
+ },
+ {
+  "valor": "20084",
+  "texto": "PINDARO LOPES DE CARVALHO"
+ },
+ {
+  "valor": "3101",
+  "texto": "PIRES E ALBUQUERQUE"
+ },
+ {
+  "valor": "14568",
+  "texto": "PLÍNIO PINTO COELHO FILHO"
+ },
+ {
+  "valor": "10829",
+  "texto": "PORTELLA SANTOS"
+ },
+ {
+  "valor": "428",
+  "texto": "PORTO CARREIRO"
+ },
+ {
+  "valor": "29805",
+  "texto": "PRISCILA ABREU DAVID"
+ },
+ {
+  "valor": "28898",
+  "texto": "RAFAEL ESTRELA NOBREGA"
+ },
+ {
+  "valor": "28836",
+  "texto": "RAFAEL REZENDE DAS CHAGAS"
+ },
+ {
+  "valor": "31959",
+  "texto": "RAFAELLA AVILA DE SOUZA TUFFY FELIPPE"
+ },
+ {
+  "valor": "3736",
+  "texto": "RALPH LOPES PINHEIRO"
+ },
+ {
+  "valor": "4007",
+  "texto": "RAPHAEL CIRIGLIANO FILHO"
+ },
+ {
+  "valor": "19606",
+  "texto": "RAQUEL DE OLIVEIRA"
+ },
+ {
+  "valor": "28834",
+  "texto": "RAQUEL GOUVEIA DA CUNHA"
+ },
+ {
+  "valor": "19083",
+  "texto": "RAUL CELSO LINS E SILVA"
+ },
+ {
+  "valor": "1444",
+  "texto": "RAUL DE SAN TIAGO DANTAS BARBOSA QUENTAL"
+ },
+ {
+  "valor": "1457",
+  "texto": "REBELLO DE MENDONCA"
+ },
+ {
+  "valor": "5205",
+  "texto": "REBELLO HORTA"
+ },
+ {
+  "valor": "42",
+  "texto": "REGINA HELENA FÁBREGAS FERREIRA"
+ },
+ {
+  "valor": "23104",
+  "texto": "REGINA LUCIA CHUQUER DE ALMEIDA COSTA DE CASTRO LIMA"
+ },
+ {
+  "valor": "14572",
+  "texto": "REGINA LUCIA PASSOS"
+ },
+ {
+  "valor": "11232",
+  "texto": "REGINALD' DE CARVALHO"
+ },
+ {
+  "valor": "5204",
+  "texto": "REINALDO PINTO ALBERTO FILHO"
+ },
+ {
+  "valor": "30384",
+  "texto": "RENATA MACHADO COTTA"
+ },
+ {
+  "valor": "35258",
+  "texto": "RENATA MARIA NICOLAU CABO"
+ },
+ {
+  "valor": "29800",
+  "texto": "RENATA PALHEIRO MENDES DE ALMEIDA"
+ },
+ {
+  "valor": "33925",
+  "texto": "RENATA SILVARES FRANÇA FADEL"
+ },
+ {
+  "valor": "26901",
+  "texto": "RENATA TRAVASSOS MEDINA DE MACEDO"
+ },
+ {
+  "valor": "16249",
+  "texto": "RENATO LIMA CHARNAUX SERTA"
+ },
+ {
+  "valor": "1445",
+  "texto": "RENATO MANESCHY"
+ },
+ {
+  "valor": "15623",
+  "texto": "RENATO RICARDO BARBOSA"
+ },
+ {
+  "valor": "11685",
+  "texto": "RENATO SIMONI"
+ },
+ {
+  "valor": "18075",
+  "texto": "RICARDO ALBERTO PEREIRA"
+ },
+ {
+  "valor": "29774",
+  "texto": "RICARDO COIMBRA DA SILVA STARLING BARCELLOS"
+ },
+ {
+  "valor": "15404",
+  "texto": "RICARDO COUTO DE CASTRO"
+ },
+ {
+  "valor": "28839",
+  "texto": "RICARDO LAFAYETTE CAMPOS"
+ },
+ {
+  "valor": "29772",
+  "texto": "RICARDO PINHEIRO MACHADO"
+ },
+ {
+  "valor": "9667",
+  "texto": "RICARDO RODRIGUES CARDOZO"
+ },
+ {
+  "valor": "7276",
+  "texto": "RICARDO SILVA DE BUSTAMANTE"
+ },
+ {
+  "valor": "29806",
+  "texto": "RICHARD ROBERT FAIRCLOUGH"
+ },
+ {
+  "valor": "6313",
+  "texto": "ROBERTO DE ABREU E SILVA"
+ },
+ {
+  "valor": "9672",
+  "texto": "ROBERTO DE ALMEIDA RIBEIRO"
+ },
+ {
+  "valor": "10494",
+  "texto": "ROBERTO DE SOUZA CORTES"
+ },
+ {
+  "valor": "8883",
+  "texto": "ROBERTO GUIMARAES"
+ },
+ {
+  "valor": "9664",
+  "texto": "ROBERTO LUIS FELINTO DE OLIVEIRA"
+ },
+ {
+  "valor": "4769",
+  "texto": "ROBERTO MARON"
+ },
+ {
+  "valor": "7542",
+  "texto": "ROBERTO ROCHA FERREIRA"
+ },
+ {
+  "valor": "11193",
+  "texto": "ROBERTO WIDER"
+ },
+ {
+  "valor": "8731",
+  "texto": "ROBERVAL DO MONTE"
+ },
+ {
+  "valor": "13932",
+  "texto": "ROGÉRIO DE OLIVEIRA SOUZA"
+ },
+ {
+  "valor": "3740",
+  "texto": "ROMEU RODRIGUES SILVA"
+ },
+ {
+  "valor": "6296",
+  "texto": "ROMULO LUIZ COLLY"
+ },
+ {
+  "valor": "11219",
+  "texto": "RONALD DOS SANTOS VALLADARES"
+ },
+ {
+  "valor": "9663",
+  "texto": "RONALDO ALVARO LOPES MARTINS"
+ },
+ {
+  "valor": "5207",
+  "texto": "RONALDO ASSED MACHADO"
+ },
+ {
+  "valor": "5211",
+  "texto": "RONALDO JOSE OLIVEIRA ROCHA PASSOS"
+ },
+ {
+  "valor": "3741",
+  "texto": "ROQUE BATISTA"
+ },
+ {
+  "valor": "16064",
+  "texto": "ROSA HELENA PENNA MACEDO GUITA"
+ },
+ {
+  "valor": "21142",
+  "texto": "ROSA MARIA CIRIGLIANO MANESCHY"
+ },
+ {
+  "valor": "28853",
+  "texto": "ROSANA ALBUQUERQUE FRANÇA"
+ },
+ {
+  "valor": "18064",
+  "texto": "ROSANA NAVEGA CHAGAS"
+ },
+ {
+  "valor": "19592",
+  "texto": "ROSE MARIE PIMENTEL MARTINS"
+ },
+ {
+  "valor": "19589",
+  "texto": "ROSELI NALIN"
+ },
+ {
+  "valor": "6324",
+  "texto": "ROSITA MARIA DE OLIVEIRA NETTO"
+ },
+ {
+  "valor": "18069",
+  "texto": "ROSSIDELIO LOPES"
+ },
+ {
+  "valor": "21709",
+  "texto": "RUDI BALDI LOEWENKRON"
+ },
+ {
+  "valor": "11462",
+  "texto": "RUDI LOEWENKRON"
+ },
+ {
+  "valor": "1452",
+  "texto": "RUI OCTAVIO DOMINGUES"
+ },
+ {
+  "valor": "10599",
+  "texto": "RUY MONTEIRO DE CARVALHO"
+ },
+ {
+  "valor": "11683",
+  "texto": "RUYZ ATHAYDE ALCANTARA DE CARVALHO"
+ },
+ {
+  "valor": "3462",
+  "texto": "SALIM JOSE CHALUB"
+ },
+ {
+  "valor": "779",
+  "texto": "SALVADOR PINTO"
+ },
+ {
+  "valor": "11046",
+  "texto": "SAMPAIO PERES"
+ },
+ {
+  "valor": "15389",
+  "texto": "SANDRA SANTARÉM CARDINALI"
+ },
+ {
+  "valor": "21143",
+  "texto": "SANDRO LUCIO BARBOSA PITASSI"
+ },
+ {
+  "valor": "11599",
+  "texto": "SEBASTIAO RUGIER BOLELLI"
+ },
+ {
+  "valor": "2320",
+  "texto": "SEMY GLANZ"
+ },
+ {
+  "valor": "3483",
+  "texto": "SERGIO CAVALIERI FILHO"
+ },
+ {
+  "valor": "7275",
+  "texto": "SERGIO DE SAETA MORAES"
+ },
+ {
+  "valor": "3726",
+  "texto": "SERGIO DE SOUZA VERANI"
+ },
+ {
+  "valor": "9676",
+  "texto": "SERGIO JERONIMO ABREU DA SILVEIRA"
+ },
+ {
+  "valor": "6276",
+  "texto": "SERGIO LUCIO DE OLIVEIRA E CRUZ"
+ },
+ {
+  "valor": "219",
+  "texto": "SERGIO MARIANO"
+ },
+ {
+  "valor": "33113",
+  "texto": "SÉRGIO NOGUEIRA DE AZEREDO"
+ },
+ {
+  "valor": "16075",
+  "texto": "SERGIO RICARDO DE ARRUDA FERNANDES"
+ },
+ {
+  "valor": "24108",
+  "texto": "SERGIO ROBERTO EMILIO LOUZADA"
+ },
+ {
+  "valor": "14056",
+  "texto": "SÉRGIO SEABRA VARELLA"
+ },
+ {
+  "valor": "17753",
+  "texto": "SERGIO WAJZENBERG"
+ },
+ {
+  "valor": "4706",
+  "texto": "SERVIO TULIO SANTOS VIEIRA"
+ },
+ {
+  "valor": "3471",
+  "texto": "SEVERIANO IGNACIO DE ARAGAO"
+ },
+ {
+  "valor": "1577",
+  "texto": "SIDNEY HARTUNG BUARQUE"
+ },
+ {
+  "valor": "14584",
+  "texto": "SIDNEY ROSA DA SILVA"
+ },
+ {
+  "valor": "3490",
+  "texto": "SILVIO TEIXEIRA MOREIRA"
+ },
+ {
+  "valor": "29778",
+  "texto": "SIMONE DALILA NACIF LOPES"
+ },
+ {
+  "valor": "20067",
+  "texto": "SIMONE DE ARAÚJO ROLIM"
+ },
+ {
+  "valor": "20762",
+  "texto": "SIMONE GASTESI CHEVRAND"
+ },
+ {
+  "valor": "10418",
+  "texto": "SIRLEY ABREU BIONDI"
+ },
+ {
+  "valor": "6321",
+  "texto": "SIRO DARLAN DE OLIVEIRA"
+ },
+ {
+  "valor": "15405",
+  "texto": "SÔNIA DE FÁTIMA DIAS"
+ },
+ {
+  "valor": "7555",
+  "texto": "SUELY LOPES MAGALHÃES"
+ },
+ {
+  "valor": "14996",
+  "texto": "SUIMEI MEIRA CAVALIERI"
+ },
+ {
+  "valor": "16752",
+  "texto": "SYLVIO CAPANEMA DE SOUZA"
+ },
+ {
+  "valor": "10167",
+  "texto": "SYNESIO DE AQUINO PINHEIRO"
+ },
+ {
+  "valor": "33971",
+  "texto": "TASSIANA  DA  COSTA  CABRAL"
+ },
+ {
+  "valor": "18287",
+  "texto": "TELMA MUSSE DIUANA"
+ },
+ {
+  "valor": "21129",
+  "texto": "TELMIRA DE BARROS MONDEGO"
+ },
+ {
+  "valor": "14583",
+  "texto": "TERESA DE ANDRADE CASTRO NEVES"
+ },
+ {
+  "valor": "14999",
+  "texto": "TEREZA CRISTINA SOBRAL BITTENCOURT SAMPAIO"
+ },
+ {
+  "valor": "1460",
+  "texto": "THIAGO RIBAS FILHO"
+ },
+ {
+  "valor": "31953",
+  "texto": "TIAGO FERNANDES DE BARROS"
+ },
+ {
+  "valor": "6298",
+  "texto": "TIAGO P. COSTA"
+ },
+ {
+  "valor": "5295",
+  "texto": "TORRES DE MELO"
+ },
+ {
+  "valor": "24701",
+  "texto": "TULA CORREA DE MELLO BARBOSA"
+ },
+ {
+  "valor": "10799",
+  "texto": "ULYSSES VALLADARES"
+ },
+ {
+  "valor": "14585",
+  "texto": "VALÉRIA DACHEUX NASCIMENTO"
+ },
+ {
+  "valor": "2063",
+  "texto": "VALERIA GARCIA DA SILVA MARON"
+ },
+ {
+  "valor": "21698",
+  "texto": "VALERIA PACHA BICHARA"
+ },
+ {
+  "valor": "6289",
+  "texto": "VALMIR DE OLIVEIRA SILVA"
+ },
+ {
+  "valor": "11447",
+  "texto": "VALMIR DOS SANTOS RIBEIRO"
+ },
+ {
+  "valor": "27292",
+  "texto": "VANELE ROCHA FALCAO CESAR"
+ },
+ {
+  "valor": "28844",
+  "texto": "VANESSA DE OLIVEIRA CAVALIERI FELIX"
+ },
+ {
+  "valor": "27294",
+  "texto": "VELEDA SUZETE SALDANHA CARVALHO"
+ },
+ {
+  "valor": "7580",
+  "texto": "VERA MARIA SOARES VAN HOMBEECK"
+ },
+ {
+  "valor": "33927",
+  "texto": "VITOR MARCELO ARANHA  AFONSO RODRIGUES"
+ },
+ {
+  "valor": "23109",
+  "texto": "VIVIANE ALONSO ALKIMIM"
+ },
+ {
+  "valor": "15410",
+  "texto": "WAGNER CINELLI DE PAULA FREITAS"
+ },
+ {
+  "valor": "6863",
+  "texto": "WALDEMAR ZVEITER"
+ },
+ {
+  "valor": "11487",
+  "texto": "WALTER FELIPPE D'AGOSTINO"
+ },
+ {
+  "valor": "6305",
+  "texto": "WANY DO COUTO FARIA"
+ },
+ {
+  "valor": "2332",
+  "texto": "WEBER M. BATISTA"
+ },
+ {
+  "valor": "11725",
+  "texto": "WELLINGTON JONES PAIVA"
+ },
+ {
+  "valor": "424",
+  "texto": "WELLINGTON PIMENTEL"
+ },
+ {
+  "valor": "16700",
+  "texto": "WERSON FRANCO PEREIRA RÊGO"
+ },
+ {
+  "valor": "15629",
+  "texto": "WILSON DO NASCIMENTO REIS"
+ },
+ {
+  "valor": "28851",
+  "texto": "WILSON MARCELO KOZLOWSKI JUNIOR"
+ },
+ {
+  "valor": "3146",
+  "texto": "WILSON MARQUES"
+ },
+ {
+  "valor": "10691",
+  "texto": "WILSON SANTIAGO MESQUITA DE MELLO"
+ },
+ {
+  "valor": "26918",
+  "texto": "WLADIMIR HUNGRIA"
+ },
+ {
+  "valor": "10507",
+  "texto": "XAVIER DA MATTA"
+ },
+ {
+  "valor": "28847",
+  "texto": "YEDDA CHRISTINA CHING SAN FILIZZOLA  ASSUNÇÃO"
+ },
+ {
+  "valor": "10240",
+  "texto": "YOUSSIF SALIM SAKER"
+ },
+ {
+  "valor": "8456",
+  "texto": "ZELIA MARIA MACHADO DOS SANTOS"
+ },
+ {
+  "valor": "24117",
+  "texto": "JDS. ALEXANDRE OLIVEIRA CAMACHO DE FRANÇA"
+ },
+ {
+  "valor": "14196",
+  "texto": "JDS. ANA CÉLIA MONTEMOR SOARES RIOS GONÇALVES"
+ },
+ {
+  "valor": "29845",
+  "texto": "JDS. ANA PAULA ABREU FILGUEIRAS"
+ },
+ {
+  "valor": "19793",
+  "texto": "JDS. ANA PAULA CABO CHINI"
+ },
+ {
+  "valor": "20718",
+  "texto": "JDS. ANA PAULA PONTES CARDOSO"
+ },
+ {
+  "valor": "29801",
+  "texto": "JDS. ANE CRISTINE SCHEELE SANTOS"
+ },
+ {
+  "valor": "21126",
+  "texto": "JDS. CARLOS EDUARDO LUCAS DE MAGALHAES COSTA"
+ },
+ {
+  "valor": "20080",
+  "texto": "JDS. CINTIA SOUTO MACHADO DE ANDRADE"
+ },
+ {
+  "valor": "26190",
+  "texto": "JDS. DANIEL VIANNA VARGAS"
+ },
+ {
+  "valor": "17755",
+  "texto": "JDS. EDUARDO MARQUES HABLITSCHEK"
+ },
+ {
+  "valor": "19609",
+  "texto": "JDS. FABIANA DE CASTRO PEREIRA SOARES"
+ },
+ {
+  "valor": "29768",
+  "texto": "JDS. FLAVIA FERNANDES DE MELO BALIEIRO DINIZ"
+ },
+ {
+  "valor": "20066",
+  "texto": "JDS. GUILHERME PEDROSA LOPES"
+ },
+ {
+  "valor": "29852",
+  "texto": "JDS. HINDENBURG KOHLER BRASIL CABRAL PINTO DA SILVA"
+ },
+ {
+  "valor": "20075",
+  "texto": "JDS. KATIA CILENE DA HORA MACHADO BUGARIM"
+ },
+ {
+  "valor": "29822",
+  "texto": "JDS. LEONARDO CAJUEIRO D AZEVEDO"
+ },
+ {
+  "valor": "24704",
+  "texto": "JDS. LEONARDO GRANDMASSON FERREIRA CHAVES"
+ },
+ {
+  "valor": "26903",
+  "texto": "JDS. LUCIA MOTHE GLIOCHE"
+ },
+ {
+  "valor": "19604",
+  "texto": "JDS. MARIA CRISTINA BARROS GUTIERREZ SLAIBI"
+ },
+ {
+  "valor": "28838",
+  "texto": "JDS. RENATA DE LIMA MACHADO"
+ },
+ {
+  "valor": "27281",
+  "texto": "JDS. RODRIGO FARIA DE SOUSA"
+ },
+ {
+  "valor": "26181",
+  "texto": "JDS. SANDRO DE ARAUJO LONTRA"
+ },
+ {
+  "valor": "6168",
+  "texto": "JDS. VANIA MARA NASCIMENTO GONÇALVES"
+ },
+ {
+  "valor": "28848",
+  "texto": "JDS. VIVIANE TOVAR DE MATTOS ABRAHAO"
+ }
+]

@@ -1013,7 +1013,102 @@ código, dois bugs de parser e a Fase 6 inteira.
 
 | # | Alvo | Escopo | Status |
 |---|---|---|---|
-| 17 | **TJRJ / eJURIS** | O `jur tjrj` cobre só e-Proc (Justiça Comum 2º grau, ~2023+). Falta o **eJURIS**: Turmas Recursais cariocas + acervo histórico. Ler `CLAUDE-TJRJ.md` antes | pendente |
+| 17 | **TJRJ / eJURIS** | ✅ fechado como comando próprio `jur tjrj-ejuris`: acervo histórico da 2ª Instância (desde ~1995) + Turmas Recursais. ⚠️ a Turma Recursal daqui é pequena e só de 2025-2026 | ok 13/08 |
+
+📌 **O que o TJRJ/eJURIS (feito em 13/08/2026) ensinou — leia
+[`CLAUDE-TJRJ-EJURIS.md`](CLAUDE-TJRJ-EJURIS.md).** Único alvo do Bloco 4, e o
+primeiro **ASP.NET WebForms** do repo. Fechou o segundo módulo de um tribunal
+que já tinha crawler — e a lição maior é que **o módulo que faltava tinha o que
+o módulo pronto não tem**:
+
+- 🔴 **A TELA TEM reCAPTCHA E O ENDPOINT NÃO O EXIGE — e `grep recaptcha` teria
+  marcado o tribunal como bloqueado sem tentar.** A tela de resultado carrega
+  reCAPTCHA Enterprise e chama `Recaptcha.aspx/RecaptchaVerify` (respondeu
+  `success:true, score 0.9`); mesmo assim o web-method devolve **200 com os
+  documentos em HTTP puro, sem token, sem browser**. É o **avesso exato da
+  lição do TJSE**: lá `grep turnstile` deu falso NEGATIVO e o POST provou o
+  bloqueio; aqui a string daria falso POSITIVO e o POST provou a porta aberta.
+  **A busca de string erra nos dois sentidos — o que decide é mandar a
+  requisição e ler a resposta.**
+- 🔴 **UM CAMPO HIDDEN DE STOPWORDS, VAZIO, DERRUBA A BUSCA COM HTTP 500 SEM
+  MENSAGEM.** O `hfListaPalavrasBloqueadas` (`A;ACIMA;COM;DA;…;SOBRE`) é a
+  lista de stopwords que a tela devolve ao servidor. Mandá-la vazia responde
+  "Runtime Error" e nada mais — não há sintoma que aponte a causa, e foi o
+  primeiro erro do dia. **Em WebForms, reenvie TODOS os hidden do formulário,
+  inclusive os que parecem decorativos.**
+- 🔴 **UM FILTRO PODE FUNCIONAR NUMA PARTIÇÃO E SER IGNORADO NA OUTRA.** Ano e
+  competência filtram na origem `comum` (2020 = 45.245 × 2026 = 34.127; cível
+  818.397 × criminal 6.784) e são **ignorados** nas outras quatro origens
+  (1990 = 2015 = 2024 = 2026 = **1.002**). Defeito novo no repo: até aqui um
+  filtro funcionava ou não funcionava. **Prove cada filtro DENTRO de cada
+  partição** — medi-lo só no caminho principal esconde metade da verdade. O que
+  fecha a prova é `1990`: a Turma Recursal nem existia assim.
+- 🔴 **OS CHECKBOXES DE "TIPO DE DOCUMENTO" ERAM ESCOPO DE BUSCA — e desmarcar
+  todos NÃO devolve zero.** "Inteiro Teor (PDF)" procura o termo no texto do
+  PDF e acha **78.066** contra 51.972 do default: é mais que o total dos
+  "tipos". E com os quatro desmarcados o servidor devolve **161**, idêntico a
+  "só Ementário" — um default silencioso onde se esperaria zero ou erro.
+  **Some ao TJAL ("teste o parâmetro, não o controle") o caso em que o controle
+  mente sobre a própria natureza.**
+- 🔴 **UM DOS DOIS "PERMALINKS" É ZERO FALSO.** O `gedcacheweb?GEDID=<ArqGed>`
+  entrega o **PDF do inteiro teor** em aba limpa, sem cookie e sem captcha ✅.
+  Já o `ImpressaoConsJuris.aspx?CodDoc=` devolve **HTTP 200 com 1.239 caracteres
+  de casca e um `grecaptcha.ready(...)`** — e o corpo é **idêntico para
+  documentos diferentes**, sem o número de nenhum. Testar um só link e comemorar
+  o 200 grava permalink falso. **Compare o corpo de dois documentos diferentes
+  antes de chamar uma URL de permalink.**
+- 🔴 **OS OPERADORES INGLESES DERRUBAM (HTTP 500) em vez de zerar ou inflar** —
+  quarto comportamento distinto no repo, e o mais honesto: erro visível.
+  Os portugueses funcionam com o espaço valendo AND, o curinga é **`$`** (não
+  `*`), e ⚠️ **`NAO` e `NÃO` são o MESMO operador** (11.656 os dois) — como no
+  TJRR e ao contrário de TJPI e TJTO. ⚠️ E **stopword some em silêncio**:
+  `contrato de trabalho` = `contrato trabalho` = 944.
+- ⚠️ **O TEXTO DO CARD MUDA DE NATUREZA CONFORME O TIPO, no mesmo portal:** em
+  acórdão de 2ª Instância é **ementa** estruturada (959–1.983 ch), em
+  monocrática é a **decisão** (1.659–3.979 ch) e em **Turma Recursal é o voto
+  inteiro** (1.803–10.123 ch, abrindo por "RECURSO Nº … V O T O"). Dissecar um
+  tipo só e generalizar era a armadilha do TJMG, e ela estava aqui inteira.
+- ⚠️ **O COMBO DE ANOS PROMETE 20 ANOS QUE NÃO EXISTEM**: oferece 1975, e 1975
+  e 1985 devolvem **0**. A base começa por volta de **1995** (524) e está
+  **corrente** (2026 = 34.127 em agosto). **Meça as pontas do combo em vez de
+  anunciar o intervalo que ele exibe.**
+- ⚠️ **O ACERVO QUE MOTIVOU O ALVO ERA O MENOR DELE.** A fila pedia "Turmas
+  Recursais cariocas + acervo histórico"; a Turma Recursal do eJURIS tem
+  **~1,6 mil documentos, todos de 2025-2026** (`usucapião` = 0), enquanto a 2ª
+  Instância tem **818.397**. O ganho real do módulo foi o histórico, não o
+  Juizado. **Meça o tamanho de cada partição antes de prometer cobertura por
+  ela** — e as origens `alcadacivel` (1), `alcadacriminal` (2) e `conselho` (78)
+  são resquício, não acervo.
+- ✅ **WEBFORMS ENTREGA OS COMBOS DE GRAÇA, e melhor que o JSF**: 804
+  magistrados, 77 órgãos e 16 ramos vêm no **HTML estático** do GET, sem AJAX e
+  sem POST de repopulação — `curl` basta. A pendência de combo-árvore que se
+  repetiu em quatro tribunais do Bloco 1 não existe aqui.
+- ✅ **Paginação ESTÁVEL** (3/3 em sessões novas, mesmos ids) — ao contrário do
+  **e-Proc do mesmo tribunal**, cuja fronteira desliza. Dois módulos do TJRJ,
+  dois comportamentos de paginação. ✅ Total **exato** (`criptomoeda` = 1),
+  **sem vhost curinga**, e pedir página além do fim responde **500**, não lista
+  vazia — o crawler trata como fim.
+- ✅ **A consulta por número é a mais generosa do repo**: aceita CNJ **com
+  máscara**, CNJ **só dígitos** e a **numeração antiga** do TJRJ, as três
+  devolvendo o mesmo documento. Oposto de TJPE (só dígitos), TJES (só máscara) e
+  TJPI (o número sozinho derruba a busca).
+- ⚠️ **Não há data de publicação**: `TemDataPublicacao` vem false em 100% da
+  amostra e o recorte é por **ano**, não por dia. O `jur tjrj` (e-Proc) filtra
+  por dia e tem publicação — **os dois módulos do mesmo tribunal divergem até
+  nos campos de data**.
+
+⚠️ **Pendências declaradas do TJRJ/eJURIS:** os filtros `--ramo`,
+`--magistrado` e `-oj` estão expostos e resolvem o label, mas **não foram
+provados por contagem**; o botão "+" (multi-seleção via `hfCodRamos`/`hfCodMags`/
+`hfCodOrgs`) **não foi mapeado** — o crawler manda um valor por combo; o
+`chkAtivo`/`chkInativo` (situação do magistrado) é enviado sempre marcado e
+**não foi medido**; o tipo **EMENTÁRIO** tem 27 campos próprios em
+`Ementarios[0]` que **não são expostos** no resultado; não se mediu **rate
+limit**; e o **DataJud não foi sondado** para este módulo. ⏱️ O timebox de 90
+min **estourou** (~2h): Passo 0, contrato, Fase 3b e a bateria de medições
+couberam em ~60 min; o excedente foi código, a Fase 6 e o registro da entrada
+`TJRJ_EJURIS` na cobertura (que é keyed por tribunal, e um **módulo** de
+tribunal não cabia no modelo — precisou de upsert sintético, como CARF/TCU).
 
 ## Bloco 5 — Tribunais de Contas Estaduais (13 alvos)
 

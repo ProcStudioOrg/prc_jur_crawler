@@ -48,7 +48,8 @@ SEMPRE informe o usuário a cada refinamento que você fizer.
 | "TJRS", Rio Grande do Sul, estadual RS | `jur tjrs` (só 2º grau) |
 | Juizado Especial / Turma Recursal **estadual** no RS | `jur tjrs --origem turmas` (Justiça Comum é `--origem comum`, o default) |
 | "TJRJ", Rio de Janeiro, estadual RJ | `jur tjrj` (só e-Proc: Justiça Comum 2º grau, ~2023+; ver `CLAUDE-TJRJ.md`) |
-| Juizado Especial / Turma Recursal **estadual** no RJ, ou acervo carioca antigo | **SEM CRAWLER** — vive no eJURIS legado; diga isso e aponte https://www3.tjrj.jus.br/ejuris/ConsultarJurisprudencia.aspx (nunca rotule resultado do `jur tjrj` como Juizado) |
+| Jurisprudência **histórica** do RJ (anterior a ~2023), ou acervo carioca antigo | `jur tjrj-ejuris` (módulo legado, base desde ~1995; ver `CLAUDE-TJRJ-EJURIS.md`) — o `jur tjrj` só tem e-Proc ~2023+ |
+| Juizado Especial / Turma Recursal **estadual** no RJ | `jur tjrj-ejuris --origem turmas` — ⚠️ acervo **pequeno e só de 2025-2026** (~1,6 mil documentos); diga isso e nunca rotule resultado do `jur tjrj` como Juizado |
 | "TJSC", Santa Catarina, estadual SC | `jur tjsc` (⚠️ dois portais no ar — só o comando; ver `CLAUDE-TJSC.md`) |
 | Juizado Especial / Turma Recursal **estadual** em SC | `jur tjsc --origem turmas` (Justiça Comum é `--origem comum`, o default) |
 | "TJSE", Sergipe, estadual SE, Aracaju | 🔴 **NÃO EXISTE COMANDO — não há nada a rodar.** Os **dois** módulos de jurisprudência estão atrás de captcha (**Turnstile** no judicial, **reCAPTCHA** no administrativo) e este repo não resolve captcha; aqui nem `-n` existe. **Diga isso em vez de entregar zero**, e **nunca cite acórdão do TJSE de memória** (o `verificador` não confirma julgado de SE). Ofereça `trf5` (SE é da 5ª Região), `trt20`/`tst`, `stf` — ⚠️ **nenhum TJ vizinho cobre SE**, não ofereça TJBA nem TJAL. 🟡 pode funcionar no navegador do usuário (Turnstile pune IP de datacenter); ver `CLAUDE-TJSE.md` |

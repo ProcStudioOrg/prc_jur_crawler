@@ -78,6 +78,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjpi` | TJ do Piauí | PI | `CLAUDE-TJPI.md` | 🟢 OK (portal JusPI, HTTP direto, sem browser — **sem captcha**; ementa íntegra e **citação oficial** já vêm na busca, e **há permalink público**). Base corrente; inclui **súmulas do próprio TJ** |
 | `tjpr` | TJ do Paraná | PR | `CLAUDE-TJPR.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjrj` | TJ do Rio de Janeiro | RJ | `CLAUDE-TJRJ.md` | 🟢 OK (HTTP direto, sem browser — só e-Proc/Justiça Comum 2º grau) |
+| `tjrj-ejuris` | TJ do Rio de Janeiro — **módulo legado** | RJ | `CLAUDE-TJRJ-EJURIS.md` | 🟢 OK (HTTP direto, sem browser — **sem captcha efetivo**; ementa e decisão na busca, **inteiro teor em PDF público com permalink**). Cobre o **acervo histórico desde ~1995** e as **Turmas Recursais**, que o `tjrj` não tem |
 | `tjrn` | TJ do Rio Grande do Norte | RN | `CLAUDE-TJRN.md` | 🔴 **sem busca** — o domínio **inteiro** do TJRN responde 403 (Akamai); só `-n` (nº do processo, via DataJud) |
 | `tjrr` | TJ de Roraima | RR | `CLAUDE-TJRR.md` | 🟢 OK (portal Juris/JSF, HTTP direto, sem browser — **sem captcha**; ementa íntegra na busca e **PDF de inteiro teor público**). Base corrente; ⚠️ **monocrática vem sem ementa** |
 | `tjrs` | TJ do Rio Grande do Sul | RS | `CLAUDE-TJRS.md` | 🟢 OK (HTTP direto, sem browser) |
@@ -96,8 +97,9 @@ escolher o comando. `CLAUDE-TRT9.md` é o mergulho técnico do sistema.
 Três tribunais catalogados estão **mapeados à espera de crawler** — **TJPB**, **TJRO**
 e **TJAP** (medição inteira em `human-codegen/`, e o TJRO já tem
 `src/TJRONavigator.js`). Não há comando `jur` para eles ainda: não os ofereça ao
-usuário. Falta ainda o módulo **eJURIS** do TJRJ (legado com Turmas Recursais e acervo
-histórico — o `jur tjrj` cobre só o e-Proc). Dos 27 TJs, **19 têm comando 🟢**, 4 estão
+usuário. O módulo **eJURIS** do TJRJ (legado, com Turmas Recursais e acervo histórico) passou
+a ter comando próprio, `jur tjrj-ejuris` — o `jur tjrj` continua cobrindo só o e-Proc.
+Dos 27 TJs, **19 têm comando 🟢**, 4 estão
 bloqueados com o motivo medido (TJMA, TJRN, TJSE, TJSP), 1 é instável (TJAM, base
 congelada) e 3 são os `parcial` acima. Veja `cobertura/CLAUDE-COBERTURA.md` e use a
 skill [`codegen`](skills/codegen/SKILL.md) para mapear.
@@ -181,10 +183,36 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   ⚠️ **Não há citação oficial pronta** — monte-a dos campos do card.
   A base é **só 2º grau + Turma Recursal**, de 2018 em diante, **sem 1º grau**,
   e está **corrente**. Matéria federal com origem em RR → `trf1`
-- "TJRJ" / "Rio de Janeiro estadual" → `tjrj` → leia `CLAUDE-TJRJ.md`.
-  ⚠️ só Justiça Comum 2º grau no e-Proc (~2023+); **Juizado Especial / Turma Recursal
-  carioca e acervo antigo estão no eJURIS, sem crawler** — diga isso ao usuário em vez
-  de rotular resultado do e-Proc como Juizado
+- "TJRJ" / "Rio de Janeiro estadual" → **o RJ tem DOIS comandos, e escolher errado
+  devolve zero que não é ausência de jurisprudência**:
+  - `tjrj` (e-Proc) → Justiça Comum 2º grau, **~2023 em diante**, recorte por **dia**.
+    É o melhor para pedido recente. Leia `CLAUDE-TJRJ.md`.
+  - `tjrj-ejuris` (eJURIS legado) → **acervo histórico desde ~1995** e as **Turmas
+    Recursais**. Leia `CLAUDE-TJRJ-EJURIS.md`.
+  **Pedido anterior a 2023 só tem resposta no `tjrj-ejuris`** — o e-Proc não tem esse
+  acervo, e o zero dele é a migração, não o tribunal.
+  Juizado Especial / Turma Recursal carioca → `tjrj-ejuris --origem turmas`.
+  🔴 **Mas avise que esse acervo é pequeno e recente**: ~1,6 mil documentos, todos de
+  2025-2026 (`dano moral` = 1.002, `usucapião` = **0**). Não é o histórico dos
+  Juizados; é uma janela. **Nunca rotule resultado do `jur tjrj` como Juizado.**
+  🔴 **No eJURIS o recorte é por ANO, não por dia, e não existe data de publicação** —
+  nunca apresente a data dele como publicação.
+  🔴 **Ano e competência só filtram em `--origem comum`**: nas outras quatro origens o
+  servidor os ignora (1990 e 2026 devolvem o mesmo total). O crawler avisa; repasse.
+  🔴 **Os operadores do eJURIS são os PORTUGUESES** (`E`, `OU`, `NAO`/`NÃO` — que aqui
+  são o **mesmo** operador —, `ADJ`, `PROX`, `"frase exata"`) e o **espaço é E (AND)**.
+  `AND`/`OR`/`NOT` **derrubam a busca com HTTP 500**, e o curinga é **`$`**, não `*`.
+  ⚠️ **NÃO avise sobre acento** (o índice normaliza), mas saiba que **stopword some em
+  silêncio**: `contrato de trabalho` = `contrato trabalho`.
+  ✅ **O inteiro teor é PDF público com permalink** (`gedcacheweb…GEDID=<ArqGed>`,
+  confirmado em aba limpa) — o `tjrj` não tem isso. 🔴 Mas
+  `ImpressaoConsJuris.aspx` **não é permalink**: sem sessão devolve HTTP 200 com uma
+  casca idêntica para documentos diferentes. Nunca mande essa URL como prova.
+  🔴 Quem identifica o julgado é o **`CodDoc`**, não o número do processo.
+  ⚠️ No eJURIS o texto do card **muda de natureza por tipo**: em acórdão de 2ª
+  Instância é ementa, em monocrática é a decisão e em **Turma Recursal é o voto
+  inteiro** — não apresente os dois últimos como ementa.
+  Matéria federal com origem no RJ → `trf2`
 - "TJCE" / "Ceará estadual" / "Fortaleza" → `tjce` → leia `CLAUDE-TJCE.md`.
   Juizado Especial / Turma Recursal cearense → `tjce --base turmas`; Justiça Comum
   2º grau é `--base comum` (default). `--base todos` mistura os dois.

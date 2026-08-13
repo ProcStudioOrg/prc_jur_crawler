@@ -1,0 +1,310 @@
+[
+ {
+  "valor": "18140",
+  "texto": "1° NÚCLEO DIGITAL EM SEGUNDO GRAU - EXECUÇÃO FISCAL"
+ },
+ {
+  "valor": "431",
+  "texto": "PRIMEIRA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "432",
+  "texto": "SEGUNDA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "433",
+  "texto": "TERCEIRA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "434",
+  "texto": "QUARTA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "435",
+  "texto": "QUINTA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "436",
+  "texto": "SEXTA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "437",
+  "texto": "SÉTIMA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "438",
+  "texto": "OITAVA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "439",
+  "texto": "NONA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "440",
+  "texto": "DÉCIMA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "441",
+  "texto": "DÉCIMA PRIMEIRA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "442",
+  "texto": "DÉCIMA SEGUNDA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "526",
+  "texto": "OE - SECRETARIA DO TRIBUNAL PLENO E ORGAO ESPECIAL"
+ },
+ {
+  "valor": "443",
+  "texto": "DÉCIMA TERCEIRA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "444",
+  "texto": "DÉCIMA QUARTA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "445",
+  "texto": "DÉCIMA QUINTA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "446",
+  "texto": "DÉCIMA SEXTA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "447",
+  "texto": "DÉCIMA SÉTIMA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "448",
+  "texto": "DÉCIMA OITAVA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "3904",
+  "texto": "DÉCIMA NONA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "3905",
+  "texto": "VIGÉSIMA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "8478",
+  "texto": "VIGÉSIMA PRIMEIRA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "8479",
+  "texto": "VIGÉSIMA SEGUNDA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "8480",
+  "texto": "VIGÉSIMA TERCEIRA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "8481",
+  "texto": "VIGÉSIMA QUARTA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "8482",
+  "texto": "VIGÉSIMA QUINTA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "8483",
+  "texto": "VIGÉSIMA SEXTA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "8484",
+  "texto": "VIGÉSIMA SÉTIMA CÂMARA CÍVEL"
+ },
+ {
+  "valor": "564",
+  "texto": "PRIMEIRO GRUPO DE CÂMARAS CÍVEIS"
+ },
+ {
+  "valor": "565",
+  "texto": "SEGUNDO GRUPO DE CÂMARAS CÍVEIS"
+ },
+ {
+  "valor": "566",
+  "texto": "TERCEIRO GRUPO DE CÂMARAS CÍVEIS"
+ },
+ {
+  "valor": "567",
+  "texto": "QUARTO GRUPO DE CÂMARAS CÍVEIS"
+ },
+ {
+  "valor": "2083",
+  "texto": "QUINTO GRUPO DE CÂMARAS CÍVEIS"
+ },
+ {
+  "valor": "2180",
+  "texto": "SEXTO GRUPO DE CÂMARAS CÍVEIS"
+ },
+ {
+  "valor": "2181",
+  "texto": "SÉTIMO GRUPO DE CÂMARAS CÍVEIS"
+ },
+ {
+  "valor": "2182",
+  "texto": "OITAVO GRUPO DE CÂMARAS CÍVEIS"
+ },
+ {
+  "valor": "2183",
+  "texto": "NONO GRUPO DE CÂMARAS CÍVEIS"
+ },
+ {
+  "valor": "562",
+  "texto": "SEÇÃO CÍVEL (antiga)"
+ },
+ {
+  "valor": "9377",
+  "texto": "SEÇÃO CÍVEL"
+ },
+ {
+  "valor": "9378",
+  "texto": "SEÇÃO CÍVEL DO CONSUMIDOR"
+ },
+ {
+  "valor": "12273",
+  "texto": "SEÇAO DE DIREITO PUBLICO"
+ },
+ {
+  "valor": "12294",
+  "texto": "SEÇAO DE DIREITO PRIVADO"
+ },
+ {
+  "valor": "12180",
+  "texto": "PRIMEIRA CAMARA DE DIREITO PUBLICO"
+ },
+ {
+  "valor": "12260",
+  "texto": "SEGUNDA CAMARA DE DIREITO PUBLICO (ANTIGA 10ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12261",
+  "texto": "TERCEIRA CAMARA DE DIREITO PUBLICO (ANTIGA 6ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12280",
+  "texto": "QUARTA CAMARA DE DIREITO PUBLICO (ANTIGA 7ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12262",
+  "texto": "QUINTA CAMARA DE DIREITO PUBLICO (ANTIGA 16ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12281",
+  "texto": "SEXTA CAMARA DE DIREITO PUBLICO (ANTIGA 21ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "14180",
+  "texto": "SÉTIMA CÂMARA DE DIREITO PÚBLICO"
+ },
+ {
+  "valor": "14181",
+  "texto": "OITAVA CAMARA DE DIREITO PUBLICO"
+ },
+ {
+  "valor": "17880",
+  "texto": "NONA CAMARA DE DIREITO PUBLICO"
+ },
+ {
+  "valor": "17900",
+  "texto": "DECIMA CAMARA DE DIREITO PUBLICO"
+ },
+ {
+  "valor": "12282",
+  "texto": "PRIMEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 8ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12263",
+  "texto": "SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 3ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12264",
+  "texto": "TERCEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 18ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12283",
+  "texto": "QUARTA CAMARA DE DIREITO PRIVADO (ANTIGA 5ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12265",
+  "texto": "QUINTA CAMARA DE DIREITO PRIVADO (ANTIGA 24ª CÂMARA  CÍVEL)"
+ },
+ {
+  "valor": "12284",
+  "texto": "SEXTA CAMARA DE DIREITO PRIVADO (ANTIGA 13ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12285",
+  "texto": "SETIMA CAMARA DE DIREITO PRIVADO (ANTIGA 12ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12266",
+  "texto": "OITAVA CAMARA DE DIREITO PRIVADO (ANTIGA 17ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12286",
+  "texto": "NONA CAMARA DE DIREITO PRIVADO (ANTIGA 2ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12267",
+  "texto": "DECIMA CAMARA DE DIREITO PRIVADO (ANTIGA 1ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12287",
+  "texto": "DECIMA PRIMEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 27ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12268",
+  "texto": "DECIMA SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 14ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12269",
+  "texto": "DECIMA TERCEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 22ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12288",
+  "texto": "DECIMA QUARTA CAMARA DE DIREITO PRIVADO (ANTIGA 9ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12270",
+  "texto": "DECIMA QUINTA CAMARA DE DIREITO PRIVADO (ANTIGA 20ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12289",
+  "texto": "DECIMA SEXTA CAMARA DE DIREITO PRIVADO (ANTIGA 4ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12290",
+  "texto": "DECIMA SETIMA CAMARA DE DIREITO PRIVADO (ANTIGA 26ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12291",
+  "texto": "DECIMA OITAVA CAMARA DE DIREITO PRIVADO (ANTIGA 15ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12271",
+  "texto": "DECIMA NONA CAMARA DE DIREITO PRIVADO (ANTIGA 25ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12272",
+  "texto": "VIGESIMA CAMARA DE DIREITO PRIVADO (ANTIGA 11ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12292",
+  "texto": "VIGESIMA PRIMEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 19ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "12293",
+  "texto": "VIGESIMA SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 23ª CÂMARA CÍVEL)"
+ },
+ {
+  "valor": "21602",
+  "texto": "PRIMEIRA TURMA DO SEGUNDO NUCLEO DIGITAL EM SEGUNDO GRAU - SAUDE SUPLEMENTAR"
+ },
+ {
+  "valor": "21620",
+  "texto": "SEGUNDA TURMA DO SEGUNDO NUCLEO DIGITAL EM SEGUNDO GRAU - SAUDE SUPLEMENTAR"
+ }
+]
