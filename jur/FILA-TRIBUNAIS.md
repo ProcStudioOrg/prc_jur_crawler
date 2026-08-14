@@ -1312,7 +1312,8 @@ busca. ⏱️ Timebox **não estourado**: 16:00 → 17:01, ~61 min.
 
 📌 **O que o TCE-SC (feito em 14/08/2026, slot 2000) ensinou — leia
 [`CLAUDE-TCESC.md`](CLAUDE-TCESC.md).** Segundo alvo do Bloco 5, fechado 🟢 em
-~19 min. A lição de abertura é que **o segundo TCE não se parece em nada com o
+**~25 min** (20:00 → 20:25, contra os 90 do timebox): o crawler do GraphQL estava
+verde aos ~19 min e o tempo restante fechou as outras três bases. A lição de abertura é que **o segundo TCE não se parece em nada com o
 primeiro**: o TCE-PR era um formulário ASP.NET renderizado no servidor, o TCE-SC
 é um GraphQL público atrás de micro-frontends. As lições valem para os 11
 restantes:
