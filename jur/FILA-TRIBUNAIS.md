@@ -1179,7 +1179,7 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | # | Alvo | UF | Ressalva de escopo | Status |
 |---|---|---|---|---|
 | 18 | **TCE-PR** | PR | ✅ o PR **não tem TCM** — os 399 municípios estão na base do próprio TCE | ok 14/08 |
-| 19 | **TCE-SC** | SC | | pendente |
+| 19 | **TCE-SC** | SC | ✅ SC **não tem TCM** — os 295 municípios estão na base do próprio TCE | ok 14/08 |
 | 20 | **TCE-RS** | RS | | pendente |
 | 21 | **TCE-SP** | SP | ⚠️ **não** cobre a capital — SP capital é do **TCM-SP** | pendente |
 | 22 | **TCE-RJ** | RJ | ⚠️ capital carioca é do **TCM-RJ** | pendente |
@@ -1308,6 +1308,120 @@ partir do card **não foram dissecadas**; a **multi-seleção** do hidden de
 classificação foi testada **com um valor por vez**; o **rate limit não foi
 medido**; e o **dataset de Dados Abertos não foi baixado** nem comparado com a
 busca. ⏱️ Timebox **não estourado**: 16:00 → 17:01, ~61 min.
+
+
+📌 **O que o TCE-SC (feito em 14/08/2026, slot 2000) ensinou — leia
+[`CLAUDE-TCESC.md`](CLAUDE-TCESC.md).** Segundo alvo do Bloco 5, fechado 🟢 em
+~19 min. A lição de abertura é que **o segundo TCE não se parece em nada com o
+primeiro**: o TCE-PR era um formulário ASP.NET renderizado no servidor, o TCE-SC
+é um GraphQL público atrás de micro-frontends. As lições valem para os 11
+restantes:
+
+- 🔴 **O TRIBUNAL PODE TER DOIS DOMÍNIOS OFICIAIS, E O PORTAL ESTAR NO OUTRO.**
+  O institucional é `tcesc.tc.br` (Drupal) e os sistemas moram em
+  `tce.sc.gov.br`. Sondar `dadosabertos`/`api`/`swagger` **só no institucional**
+  devolve NXDOMAIN e 404 em tudo — e a conclusão "não há API" seria falsa: a API
+  está no segundo domínio. **Antes de declarar ausência, ache o domínio dos
+  sistemas.** O link estava na home institucional, não foi chutado.
+- 🔴 **A PORTA SAIU DO BUNDLE, E A INTROSPECÇÃO ENTREGOU O CONTRATO INTEIRO.**
+  `importmap.json` → `/mf-jurisprudencia/main.js` → constante `No_API_GATEWAY`
+  (a técnica do TJBA). E como a **introspecção do GraphQL está aberta**, os 22
+  campos de `JurisprudenciaFiltroInput` foram **lidos do servidor**, incluindo
+  dois que a própria tela nunca envia (`exibirParecerMPC`, `exibirInstrucao`).
+  **Num GraphQL, peça o schema antes de inferir da tela** — é mais rápido e mais
+  completo. ⚠️ Mas a introspecção resumida **não mostra NON_NULL**: `$f` e `$n`
+  precisam de `!` e sem ele o servidor recusa. Derrubou 3 testes na 1ª rodada.
+- 🔴 **QUINTA CASCA DE HTTP 200, E ELA DERROTA A TÉCNICA DO MD5.**
+  `virtual.tce.sc.gov.br` devolve 200 com 5.994 bytes para qualquer path (SPA
+  single-spa, caso conhecido do TJES/TJRR) — só que **o Akamai injeta um beacon
+  com nonce por requisição**, então **o md5 muda a cada chamada** e comparar md5
+  (TJAC/TJAL/TCE-PR) **não desfaz o falso positivo**. O que desfaz é o tamanho
+  idêntico. **A ferramenta de detectar casca também tem contraexemplo.**
+- 🔴 **O ESPAÇO É `OR` E NÃO EXISTE `AND` — o conjunto de operadores mais pobre
+  do repo.** `E`/`OU`/`OR` são **ignorados**; `AND` (9.631), `NOT` (9.493) e
+  `NAO` (26.057) viram **palavra e INFLAM**. Só a **frase exata** funciona.
+  Provado por aritmética: merenda 497 + escolar 4.774 − união 4.783 = 488, e a
+  frase exata dá 446 ≤ 488. Décimo tribunal, décimo conjunto: **continua sem
+  herdar, e desta vez o que falta é o operador mais básico.**
+- 🔴 **TERMO COM MENOS DE 3 CARACTERES É DESCARTADO E DEVOLVE O ACERVO INTEIRO.**
+  `ab` e `de` devolvem os 27.783 do acervo com HTTP 200. A tela anuncia "mínimo 3
+  caracteres" e o servidor **não recusa: ignora o termo**. É o **zero-invertido**
+  mais perigoso já catalogado — um typo curto não dá zero (que se investiga), dá
+  "27.783 resultados" (que se relata). **Teste um termo curto em todo portal
+  novo.**
+- 🔴 **UM MESMO CAMPO DE DATA PODE EXISTIR EM TRÊS VERSÕES COM COBERTURAS
+  OPOSTAS.** Autuação está em **100%** dos documentos (a aritmética
+  `início + fim − interseção` fecha exata no total), publicação em ~79% e
+  **sessão em ~37%** — filtrar por sessão descarta **63%** sem sintoma. O TJAM
+  ensinou a medir a data-sentinela e o TJES a desconfiar do rótulo; aqui a
+  novidade é **medir a COBERTURA de cada eixo antes de escolher o default**, e o
+  teste é a aritmética das duas pontas contra o total.
+- 🔴 **UMA FLAG BOOLEANA PODE NÃO PARTICIONAR A BASE.** `decisaoSingular`
+  true (1.787) + false (25.497) = 27.284 contra **27.783**; com termo, 5.864 +
+  1.588 = 7.452 contra **9.368**. Os de fora têm o campo **null** e *são*
+  decisões singulares — a flag na verdade recorta a aba "Ratificadas por
+  Colegiado". **Omitir a flag devolve um SUPERSET que a própria tela nunca
+  mostra**: as abas do portal somam **menos** que a API. A invariante do repo
+  ganha um terceiro caso: além de "contagem igual = filtro ignorado" (TJPE) e
+  "filtro no-op que muda a contagem" (TJES), agora **"partição que não fecha
+  porque o complemento é null"**.
+- 🔴 **O QUE A TELA CHAMA DE EMENTA É UM SNIPPET DE MATCH.** O campo `ementa`
+  volta null na maioria; o texto exibido é `votoTexto`, que **começa no meio da
+  frase**. Não é ementa e não é inteiro teor. ✅ Mas a **citação oficial vem
+  pronta** (`textoCopiarEmenta`) — 🔴 e ela **rotula `dataDecisao` como
+  "Sessão"** num documento cujo `dataSessao` é **null**, e sai quebrada
+  (`Decisão n. ,`) quando não há número de decisão. **Nem a citação do próprio
+  tribunal é confiável no rótulo.**
+- 🔴 **UMA CONSULTA CHAMADA "PorNumero" PODE NÃO TRAZER JULGADO — E DEVOLVER
+  ARRAY COM NOME NO SINGULAR.** `pesquisarProcessoPorNumero` devolve **metadados
+  do processo** (sigla, assunto, dataEntrada), não os documentos; quem traz os
+  julgados é a busca com filtro `numeroProcesso`. E devolve **array**: tratá-lo
+  como objeto faz `[]` virar "encontrado", e **número inventado passa como
+  válido** — foi um bug real, pego pela suíte. ⚠️ E `numeroProcesso` com valor
+  **não-numérico é IGNORADO**, devolvendo o acervo inteiro.
+- ✅ **O QUE ESTÁ BEM, e medir isso também é o trabalho:** sem captcha em etapa
+  nenhuma; resposta em ~0,7 s; **combos de graça pelo servidor** (205 tipos de
+  processo, 35 relatores) e **facetas com contagem** — a pendência dos
+  combos-árvore que se repetiu em quatro instalações do e-SAJ **não existe em
+  GraphQL**; paginação **estável** (mesma página 2× = mesmos ids, pg1 ∩ pg2 = ∅);
+  total **exato**; **PDF público com permalink** confirmado em requisição limpa e
+  que **começa com `%PDF`** (o magic number vale aqui — ao contrário do TCE-PR);
+  id inventado no storage dá **404 real**; base **corrente e estável**
+  (27.783 documentos, mais recente de 03/08/2026, sem o congelamento do TJAM nem
+  a defasagem de ponta do TJPI). E **SC não tem TCM**: os 295 municípios estão
+  nesta base.
+- 🔴 **UM PORTAL PODE TER 5 BASES EM 3 BACKENDS — e a tela entrega essa conta de
+  graça.** O "Resumo de Resultados" do TCE-SC lista as cinco abas com a contagem
+  de cada uma, e foi ele que denunciou que o GraphQL cobria só duas. **Some as
+  abas antes de declarar cobertura.** As cinco estão implementadas em `--base`:
+  deliberações + singulares (GraphQL), enunciados (2.564) e informativos (2.045)
+  por REST no `cojur`, e súmulas do bundle. ⚠️ **Os dois REST do mesmo tribunal
+  usam nomes diferentes para a mesma coisa** (`query`/`size` num,
+  `termo`/`per_page` no outro).
+- 🔴 **UMA BASE INTEIRA PODE NÃO SER UMA CONSULTA: as SÚMULAS estão HARDCODED no
+  JavaScript.** `/cojur/sumula` e variantes dão **404**; o app carrega o array
+  `Imt_sumulas` do próprio bundle e filtra **em memória**. São **4 registros e só
+  3 documentos distintos** (os ids 1 e 2 são a mesma Súmula TC-003/2021) — a base
+  de súmulas inteira do TCE-SC. **Antes de prometer um acervo, confira se ele
+  existe no servidor**: aqui o "acervo" cabia num literal, e um crawler que
+  fingisse consultá-lo envelheceria com o deploy do portal, não com a base.
+- 🔴 **A MESMA REGRA ANUNCIADA VALE DIFERENTE EM CADA BACKEND DO MESMO PORTAL.**
+  O mínimo de 3 caracteres é validação **do cliente**: no GraphQL o termo curto é
+  **descartado** (devolve o acervo inteiro) e no `prejulgado` ele **é aplicado**
+  (`ab` = 289 de 2.564). **Meça a regra em cada backend, não no portal.**
+- 🔴 **ENUNCIADO DE CONSULTA TEM VIGÊNCIA, E O REVOGADO CONTINUA NA BASE.** O
+  campo `st_valido` diz se o prejulgado ainda está em vigor — e no TCE-SC
+  prejulgado tem **força normativa**, então citar um revogado como orientação
+  atual é erro de mérito, não de forma. **Num tribunal de contas, procure o campo
+  de vigência**: é uma dimensão que os TJs não têm.
+
+⚠️ **Pendências declaradas do TCE-SC:** as **três bases do backend `cojur`** não
+foram implementadas; `-r`, `-t` e `-u` estão expostos mas **não provados por
+contagem**; `numerosProcessoHibrido`, `identificadorDocumento`, `numeroDecisao` e
+`textoRefinamento` **não testados**; **rate limit** e `tamanhoPagina` máximo **não
+medidos**; **não se isolou qual parte do acervo tem ementa indexada** (a
+abrangência EMENTA acha 874 em `licitação`, logo existe); e a **ordenação** não
+foi comparada entre os três valores.
 
 **Armadilha do bloco 5:** onde existe TCM, buscar "contas municipais" no TCE devolve zero
 que se lê como "não há julgado". Ao documentar o TCE, escreva explicitamente o que ele

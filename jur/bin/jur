@@ -60,6 +60,9 @@ const TJTOCrawler = require('../src/TJTOCrawler');
 const TJTOChecker = require('../src/TJTOChecker');
 const TCEPRCrawler = require('../src/TCEPRCrawler');
 const TCEPRChecker = require('../src/TCEPRChecker');
+const TCESCCrawler = require('../src/TCESCCrawler');
+const TCESCChecker = require('../src/TCESCChecker');
+const TCESCCojur = require('../src/TCESCCojur');
 const TJRRCrawler = require('../src/TJRRCrawler');
 const TJRRChecker = require('../src/TJRRChecker');
 const TJESCrawler = require('../src/TJESCrawler');
@@ -5425,6 +5428,193 @@ program
         process.exit(1);
       }
       console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tcesc')
+  .description('Search TCE-SC (Tribunal de Contas do Estado de Santa Catarina) — GraphQL publico, sem browser')
+  .option('-q, --query <text>', 'Termo livre. ATENCAO: o ESPACO e OR (uniao) e NAO existe AND; so "frase exata" restringe')
+  .option('-n, --numero <numero>', 'Consulta por numero de processo (aceita "REP 26/00137305" ou "2600137305"); dispensa -q')
+  .option('--base <b>', 'deliberacoes (default: Deliberacoes/Votos + Decisoes Singulares) | enunciados | informativos | sumulas')
+  .option('--abrangencia <a>', 'inteiro-teor (default) | ementa')
+  .option('--ordenacao <o>', 'relevancia (default) | recentes | antigos')
+  .option('--singular <v>', 'so | sem — recorta as "Decisoes Singulares Ratificadas por Colegiado" (NAO particiona a base)')
+  .option('-r, --relator <id>', 'Identificador do relator (use --listar-filtros)')
+  .option('-t, --tipo-processo <id>', 'Identificador do tipo de processo (use --listar-filtros)')
+  .option('-u, --unidade <id>', 'Identificador da unidade gestora')
+  .option('--refinamento <texto>', 'Texto de refinamento dentro do resultado')
+  .option('--eixo-data <e>', 'autuacao (default, unica completa) | sessao | publicacao', 'autuacao')
+  .option('-di, --data-inicio <date>', 'Data inicial (DD/MM/YYYY ou YYYY-MM-DD)')
+  .option('-df, --data-fim <date>', 'Data final (DD/MM/YYYY ou YYYY-MM-DD)')
+  .option('--listar-filtros', 'Lista tipos de processo e relatores (direto do servidor) e sai')
+  .option('--verificar [amostra]', 'Audita N resultados reabrindo o PDF publico em requisicao limpa (default 3)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('--page-size <n>', 'Resultados por pagina (default 20)', 20)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tcesc.json')
+  .option('--fetch-inteiro-teor', 'Baixa o PDF publico do inteiro teor (1 GET por documento)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tcesc')
+  .option('-v, --visible', 'Ignored (TCE-SC usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TCE-SC usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    try {
+      if (opts.numero) {
+        const res = await new TCESCChecker({ log }).consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (opts.listarFiltros) {
+        const TCESCNavigator = require('../src/TCESCNavigator');
+        const combos = await new TCESCNavigator({ log }).combos();
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, combos }) + '\n');
+        else console.log(JSON.stringify(combos, null, 2));
+        process.exit(0);
+      }
+
+      // As tres bases que NAO estao no GraphQL (ver src/TCESCCojur.js).
+      const baseCojur = ['enunciados', 'informativos', 'sumulas'].includes(opts.base);
+      if (baseCojur) {
+        const cojur = new TCESCCojur({ log });
+        const porPagina = parseInt(opts.pageSize, 10);
+        const maxPages = parseInt(opts.maxPages, 10);
+        let itens = []; let total = 0; const extra = {};
+
+        if (opts.base === 'sumulas') {
+          const r = cojur.sumulas(opts.query || '');
+          itens = r.resultados; total = r.total;
+          extra.totalBase = r.totalBase; extra.distintas = r.distintas;
+          log('ATENCAO: a base de SUMULAS do TCE-SC nao e uma consulta — sao 4 registros');
+          log(`         embutidos no bundle do portal (${r.distintas} distintos; os ids 1 e 2 sao o mesmo`);
+          log('         documento). Nao ha endpoint, e o arquivo envelhece com o deploy do site.');
+        } else {
+          for (let pg = 1; pg <= maxPages; pg++) {
+            const r = opts.base === 'enunciados'
+              ? await cojur.enunciados(opts.query || '', { page: pg, size: porPagina })
+              : await cojur.informativos(opts.query || '', { page: pg, perPage: porPagina });
+            if (pg === 1) { total = r.total; log(`Total no servidor: ${total}`); }
+            if (!r.resultados.length) break;
+            itens = itens.concat(r.resultados);
+            log(`Pagina ${pg}: ${r.resultados.length} resultado(s) — acumulado ${itens.length}`);
+            if (itens.length >= total || pg >= r.ultimaPagina) break;
+          }
+          if (opts.base === 'enunciados') {
+            const revogados = itens.filter((x) => !x.vigente).length;
+            if (revogados) log(`  [aviso] ${revogados} enunciado(s) com st_valido != S — NAO os cite como vigentes.`);
+          }
+        }
+
+        log('='.repeat(60));
+        log(`Base "${opts.base}": ${total} no servidor | coletados: ${itens.length}`);
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, JSON.stringify(itens, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true, count: itens.length, output: outputPath, base: opts.base, totalResults: total, ...extra,
+          }) + '\n');
+        }
+        process.exit(0);
+      }
+
+      if (!opts.query && !opts.relator && !opts.tipoProcesso && !opts.dataInicio) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero>, ou um filtro como -r/-t/-di)');
+      }
+
+      log('='.repeat(60));
+      log('TCE-SC Jurisprudencia Crawler (GraphQL publico, sem browser)');
+      log('ESCOPO: CONTROLE EXTERNO, nao Judiciario — contas, licitacao, contrato e');
+      log('        pessoal do Estado de SC e dos municipios (SC NAO tem TCM).');
+      log('ATENCAO: o ESPACO entre termos e OR (UNIAO) e NAO existe AND.');
+      log('         Nenhum operador booleano funciona; so "frase exata" entre aspas.');
+      log('ATENCAO: termo com menos de 3 caracteres e IGNORADO e devolve o ACERVO INTEIRO.');
+      log('ATENCAO: a maioria dos documentos vem SEM ementa — o texto do card e o');
+      log('         trecho onde o termo casou. Use --fetch-inteiro-teor para o PDF.');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '(sem termo — so filtros)'}`);
+      log(`Eixo de data: ${opts.eixoData} | ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log('='.repeat(60));
+
+      const crawler = new TCESCCrawler({
+        log,
+        porPagina: parseInt(opts.pageSize, 10),
+        includeFullText: !!opts.fetchInteiroTeor,
+      });
+      const filters = {
+        abrangencia: opts.abrangencia || null,
+        ordenacao: opts.ordenacao || null,
+        relator: opts.relator || null,
+        tipoProcesso: opts.tipoProcesso || null,
+        unidadeGestora: opts.unidade || null,
+        refinamento: opts.refinamento || null,
+        eixoData: opts.eixoData || 'autuacao',
+        dataInicio: opts.dataInicio || null,
+        dataFim: opts.dataFim || null,
+        ...(opts.singular === 'so' ? { decisaoSingular: true }
+          : opts.singular === 'sem' ? { decisaoSingular: false } : {}),
+      };
+
+      const results = await crawler.search(opts.query || '', filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+      });
+
+      log('='.repeat(60));
+      log(`Total no servidor: ${results.totalResults} (exato) | coletados: ${results.length}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 3 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} pelo PDF publico...`);
+        verificacao = await new TCESCChecker({ log }).auditar(results, amostra);
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.amostra} confirmados`);
+      }
+
+      const resumo = {
+        totalResults: results.totalResults,
+        semEmenta: results.filter((r) => r.semEmenta).length,
+        semInteiroTeor: results.filter((r) => r.semInteiroTeor).length,
+        avisos: results.avisos,
+        ...(verificacao ? { verificacao } : {}),
+      };
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        fs.mkdirSync(outputDir, { recursive: true });
+        let okC = 0; let failC = 0;
+        for (const r of results) {
+          if (r.inteiroTeorPdfBuffer && r.inteiroTeorPdfBuffer.length > 0) {
+            fs.writeFileSync(path.join(outputDir, `${r.id}.pdf`), r.inteiroTeorPdfBuffer);
+            okC++;
+          } else failC++;
+        }
+        for (const r of results) delete r.inteiroTeorPdfBuffer;
+        log(`\nGravacao concluida: ${okC} arquivo(s), ${failC} falha(s)`);
+        log(`Files saved to: ${outputDir}`);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, downloaded: okC, failed: failC, outputDir, ...resumo,
+          }) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, output: outputPath, ...resumo,
+          }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+      else console.error('Error during crawling:', error.message);
       process.exit(1);
     }
   });

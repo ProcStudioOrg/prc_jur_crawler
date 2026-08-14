@@ -60,6 +60,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `stj`  | **Superior Tribunal de Justiça** | Nacional (lei federal infraconstitucional) | `CLAUDE-STJ.md` | 🔴 **BLOQUEADO — não rodar** (desafio interativo do Cloudflare desde 27/07/2026; ver alerta no topo) |
 | `tcu`  | Tribunal de Contas da União | Federal (acórdãos) | `CLAUDE-TCU.md` | 🟢 OK |
 | `tcepr` | **TCE-PR** (Tribunal de Contas do Estado do Paraná — controle externo) | PR (Estado + **os 399 municípios**) | `CLAUDE-TCEPR.md` | 🟢 OK (portal ViaJuris, HTTP direto, sem browser — **sem captcha**; ementa, **tema**, inteiro teor, **citação oficial** e **permalink público** já vêm na busca). Base corrente, 1998–2026 |
+| `tcesc` | **TCE-SC** (Tribunal de Contas do Estado de Santa Catarina — controle externo) | SC (Estado + **os 295 municípios**) | `CLAUDE-TCESC.md` | 🟢 OK (GraphQL público, HTTP direto, sem browser — **sem captcha**; citação oficial e **PDF público de inteiro teor** já vêm na busca). Base corrente, **5 bases via `--base`** (deliberações, enunciados, informativos, súmulas). 🔴 **O espaço entre termos é OR e não existe AND**; a maioria dos documentos vem **sem ementa** |
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
@@ -632,6 +633,55 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   do TCE-PR como prova.
   ⚠️ O inteiro teor do card vem **fora de ordem** (remontado por janelas de match,
   começa pelo bloco de assinatura): para leitura fiel, use o PDF
+- **Contas públicas de SANTA CATARINA** ("o que o Tribunal de Contas de SC decidiu",
+  licitação e contrato administrativo, ato de pessoal estadual ou municipal, contas de
+  prefeito, tomada de contas, representação) → `tcesc` → leia `CLAUDE-TCESC.md`. É
+  instância de **controle externo**, não Judiciário: para a mesma matéria judicializada,
+  o caminho é `tjsc` (estadual) ou `trf4` (federal).
+  🔴 **Não ofereça o `tcesc` para matéria cível, penal, trabalhista ou previdenciária** —
+  ele não tem esse acervo, e o zero seria o tribunal errado, não ausência de julgado.
+  ✅ **Santa Catarina não tem TCM**: conta de prefeitura, câmara e autarquia municipal
+  está aqui (os 295 municípios). A armadilha "procure o TCM" vale para SP, RJ, BA, GO e
+  PA — não para SC.
+  🔴 **O ESPAÇO ENTRE TERMOS É `OR` (UNIÃO) E NÃO EXISTE `AND`.** Provado por aritmética
+  (merenda 497 + escolar 4.774 − união 4.783 = interseção 488). Query de duas palavras
+  devolve a união, e o número grande é o termo mais comum, não abundância de julgado.
+  **Nenhum operador booleano funciona**: `E`/`OU`/`OR` são **ignorados** e
+  `AND`/`NOT`/`NAO` viram palavra e **INFLAM** (`NAO` = 26.057 contra 9.446). O único
+  recurso é a **frase exata entre aspas** — `-q "\"merenda escolar\""`.
+  🔴 **Termo com menos de 3 caracteres é DESCARTADO e devolve o ACERVO INTEIRO**
+  (27.783, HTTP 200). A tela anuncia "mínimo 3 caracteres" e o servidor não recusa:
+  ignora o termo. **Nunca relate esse total como resultado da busca.**
+  ⚠️ Curinga (`*`, `$`, `?`) **não existe** — é descartado em silêncio.
+  ⚠️ **NÃO avise sobre acento** — o índice normaliza.
+  🔴 **A maioria dos documentos vem SEM ementa**: o texto do card é o **trecho onde o
+  termo casou** (começa no meio da frase). O crawler marca `semEmenta` e guarda em
+  `trechoMatch` — **não o apresente como ementa nem como acórdão inteiro**. Para o texto
+  integral, `--fetch-inteiro-teor`.
+  🔴 **Há TRÊS eixos de data com coberturas muito diferentes**: autuação **100%**,
+  publicação ~79% e **sessão ~37%** — filtrar por sessão descarta 63% em silêncio. O
+  default é `--eixo-data autuacao`. ✅ As duas pontas funcionam sozinhas.
+  🔴 **A citação pronta chama `dataDecisao` de "Sessão"** num documento cujo campo de
+  sessão é null — **nunca apresente a data da citação do TCE-SC como data de sessão**.
+  🔴 **`--singular` não particiona a base** (true + false < total): o que ele recorta é a
+  aba "Ratificadas por Colegiado", e omitir a flag devolve um superset que a própria tela
+  não mostra.
+  ⚠️ **O portal tem 5 bases em três backends, e o comando cobre as cinco** — mas
+  **escolher a base errada devolve zero que não é ausência de julgado**:
+  `--base deliberacoes` (default, 27.783), `--base enunciados` (2.564, com força
+  normativa), `--base informativos` (2.045) e `--base sumulas`. `licitação` dá 9.368 em
+  deliberações, 352 em enunciados e **0** em informativos e súmulas.
+  🔴 **A base de súmulas do TCE-SC são 3 documentos distintos** (4 registros, 2
+  duplicados), embutidos no JavaScript do portal — não há endpoint. Não prometa um
+  acervo de súmulas catarinense.
+  🔴 **Enunciado de consulta tem vigência** (`st_valido`): o crawler marca `vigente` e
+  avisa — **não cite enunciado revogado como orientação atual**.
+  ✅ **Inteiro teor é PDF público com permalink** (confirmado em requisição limpa) e a
+  **citação oficial vem pronta**; 🔴 mas **não existe URL de busca** — nunca mande "o link
+  da busca" do TCE-SC como prova, e quem identifica o julgado é o `identificadorDocumento`,
+  não o número do processo.
+  ⚠️ **Não há número CNJ nem DataJud** (contas não é Judiciário): a verificação é
+  `./bin/jur tcesc -n "REP 26/00137305"` (aceita também `2600137305`)
 - **Contencioso administrativo PREVIDENCIÁRIO** ("o que o CRPS decidiu", recurso contra
   indeferimento do INSS, Junta de Recursos, Câmara de Julgamento) → 🔴 **não há busca**:
   o portal exige login Gov.br e o contorno por perfil de Chrome dedicado **já foi tentado

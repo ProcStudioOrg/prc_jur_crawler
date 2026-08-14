@@ -1,0 +1,262 @@
+# TCE-SC — Portal da Jurisprudência (Pesquisa Integrada)
+
+Mapeado em 14/08/2026 (slot 2000). Alvo #19 da FILA, segundo do Bloco 5.
+
+## Entrada e descoberta
+
+- Institucional: `https://www.tcesc.tc.br/` (Drupal) — **não** hospeda o portal.
+- Portal de jurisprudência: `https://virtual.tce.sc.gov.br/jurisprudencia/jurisprudencia`
+- ⚠️ **O TCE-SC tem DOIS domínios oficiais**: `tcesc.tc.br` (institucional) e
+  `tce.sc.gov.br` (sistemas). O portal está no **segundo**. Quem sondar só o
+  primeiro conclui que não há jurisprudência. O link foi achado na home
+  institucional, **não chutado**.
+
+## Passo 0 — API pública
+
+| Sonda | Resultado |
+|---|---|
+| `dadosabertos.tce.sc.gov.br` | **NXDOMAIN** |
+| `api.tce.sc.gov.br` | **NXDOMAIN** |
+| `www.tcesc.tc.br/dados-abertos`, `/swagger`, `/api`, `/v3/api-docs` | **404 real** |
+| `www.tcesc.tc.br/path-inventado-9z` | **404** (md5 distinto da home → sem vhost curinga) |
+| `virtual.tce.sc.gov.br/importmap.json` | **200** — mapa dos micro-frontends single-spa |
+| `virtual.tce.sc.gov.br/mf-jurisprudencia/main.js` | **200**, 3,4 MB — o bundle |
+| **`api.virtual.tce.sc.gov.br/api-gateway/ms-jurisprudencia/graphql`** | ✅ **200, GraphQL público, introspecção ABERTA** |
+| `api-gateway/ms-visualizador-pecas/.../conteudo-pdf-binario` | **401** — caminho autenticado, não perseguir |
+
+✅ **A porta é GraphQL público, sem auth, sem cookie e sem captcha**, resposta em
+~0,7 s. O endpoint **não foi chutado**: saiu da constante `No_API_GATEWAY` dentro
+do bundle do micro-frontend (a técnica que abriu o TJBA). E como a **introspecção
+está aberta**, o contrato inteiro (`JurisprudenciaFiltroInput`, 22 campos) foi
+**lido do próprio servidor**, não inferido da tela.
+
+⚠️ **Casca de HTTP 200, variante nova.** `virtual.tce.sc.gov.br` devolve **200 com
+5.994 bytes para qualquer path** (SPA single-spa) — até aí é o caso conhecido do
+TJES/TJRR. O que muda: **o Akamai injeta um beacon com nonce por requisição**
+(`ak.rid`, `ak.ak`, timestamp), então **o md5 muda a cada chamada** e a técnica de
+comparar md5 (TJAC/TJAL/TCE-PR) **não funciona aqui**. O que desfaz é o tamanho
+idêntico, ou normalizar fora o `<script>` do boomerang antes de comparar.
+
+## Estrutura — 5 bases, TRÊS backends
+
+A tela "Pesquisa Integrada" soma cinco abas. Medido com `licitação`:
+
+| Aba | Contagem | Backend |
+|---|---|---|
+| Deliberações e Votos | 5.864 | GraphQL `ms-jurisprudencia` |
+| Decisões Singulares Ratificadas por Colegiado | 1.588 | GraphQL `ms-jurisprudencia` |
+| Enunciados de Consulta | 352 | `servicos.tcesc.tc.br/cojur/prejulgado` |
+| Informativos de Jurisprudência | 0 | `servicos.tcesc.tc.br/cojur/jurisprudencia` |
+| Súmulas de Jurisprudência | 0 | 🔴 **nenhum** — array no bundle |
+
+✅ **O crawler cobre as CINCO**, via `--base`. Os três backends estão em
+`src/TCESCNavigator.js` (GraphQL) e `src/TCESCCojur.js` (as outras três).
+
+## Contrato do GraphQL
+
+`POST https://api.virtual.tce.sc.gov.br/api-gateway/ms-jurisprudencia/graphql`
+
+Queries: `pesquisarJurisprudencia(filtro: JurisprudenciaFiltroInput!)`,
+`pesquisarProcessoPorNumero(processoNumero: ID!)`, `processosTipos`, `relator`,
+`unidadesGestoras`.
+
+`JurisprudenciaFiltroInput` — 22 campos, lidos por introspecção:
+
+```
+textoBusca String            abrangencia AbrangenciaBusca      numeroProcesso String
+numeroDecisao Long           identificadorDocumento [ID]        ordenacao OrdenacaoBusca
+pagina Int                   tamanhoPagina Int                  identificadorProcessoTipo [ID]
+identificadorRelator [ID]    identificadorUnidadeGestora [ID]   textoRefinamento String
+dataAutuacaoInicio String    dataAutuacaoFim String             dataSessaoInicio String
+dataSessaoFim String         dataPublicacaoInicio String        dataPublicacaoFim String
+numerosProcessoHibrido [ID]  decisaoSingular Boolean            exibirParecerMPC Boolean
+exibirInstrucao Boolean
+```
+
+- `AbrangenciaBusca` = `INTEIRO_TEOR` (default) | `EMENTA`
+- `OrdenacaoBusca` = `RELEVANCIA` | `MAIS_RECENTES` | `MAIS_ANTIGOS`
+- `pagina` é **zero-based**.
+
+⚠️ **Os dois tipos são NON_NULL e a introspecção resumida não mostra isso.**
+`$f: JurisprudenciaFiltroInput` e `$n: ID` são recusados; é preciso `!` nos dois.
+Foi o primeiro erro do dia e derrubou 3 testes.
+
+## Combos (`combos-servidor.json`)
+
+Vêm do próprio servidor, sem scraping: **205 tipos de processo** e **35 relatores**.
+As facetas da busca (`facets.relatores`, `.tiposProcesso`, `.unidadesGestora`) já
+trazem contagem por valor — não é preciso enumerar `<select>`. ✅ A pendência dos
+combos-árvore que se repetiu em quatro tribunais do e-SAJ **não existe aqui**.
+
+## Medições — operadores (base: licitação=9.368, nepotismo=159)
+
+| Entrada | Contagem | Leitura |
+|---|---|---|
+| `licitação` | 9.368 | referência |
+| `nepotismo` | 159 | referência |
+| `licitação nepotismo` (espaço) | **9.446** | **OR (união)** |
+| `licitação E nepotismo` | 9.446 | `E` **ignorado** |
+| `licitação OU nepotismo` | 9.446 | `OU` **ignorado** |
+| `licitação OR nepotismo` | 9.446 | `OR` no-op (já é OR) |
+| `licitação AND nepotismo` | **9.631** | `AND` **INFLA** (vira palavra) |
+| `licitação NOT nepotismo` | **9.493** | `NOT` **INFLA** |
+| `licitação NAO nepotismo` | **26.057** | `NAO` **INFLA muito** |
+| `"dispensa de licitação"` | **1.821** | ✅ frase exata **funciona** |
+| `dispensa de licitação` | 10.725 | união dos três tokens |
+| `licita` / `licita*` / `licita$` / `licita?` | **608 nos quatro** | curinga **inexistente** |
+| `ab` / `de` (2 chars) | **27.783** | termo **descartado** → acervo inteiro |
+| `licitacao` sem acento | 9.368 | ✅ acento **normalizado** |
+| `zzqx9plim` | 0 | ✅ zero de verdade |
+
+**Prova aritmética de que o espaço é OR:** merenda=497, escolar=4.774,
+`merenda escolar`=4.783 → interseção 488, e `"merenda escolar"`=446 ≤ 488. ✓
+
+🔴 **Décimo conjunto de operadores do repo, e o mais pobre: não existe AND.**
+Para exigir dois termos só há a frase exata.
+
+## Medições — datas (três eixos, coberturas MUITO diferentes)
+
+Com `licitação` (9.368):
+
+| Eixo | Só início ≥2024-01-01 | Só fim ≤2024-12-31 | 2024 inteiro | união | cobertura |
+|---|---|---|---|---|---|
+| **autuação** | 1.541 | 8.416 | 589 | **9.368** | ✅ **100%** |
+| publicação | 1.803 | 6.321 | 761 | 7.363 | ~79% |
+| sessão | 1.502 | 2.605 | 624 | 3.483 | 🔴 **~37%** |
+
+🔴 **Filtrar por sessão descarta 63% dos documentos em silêncio.** O default do
+crawler é **autuação**, a única cujo `início + fim − interseção` fecha no total.
+✅ **As duas pontas funcionam sozinhas** (diferente do TCE-PR, onde a inicial
+zerava e a final era ignorada). Aceita `YYYY-MM-DD` e `DD/MM/YYYY` (624 nos dois).
+Data inválida → **erro visível**, não zero calado.
+
+## Medições — filtros
+
+- `abrangencia`: INTEIRO_TEOR 9.368 × EMENTA 874 → filtra de verdade.
+- 🔴 `decisaoSingular` **não particiona**: true 1.787 + false 25.497 = 27.284
+  contra **27.783** (499 fora). Com `licitação`: 5.864 + 1.588 = 7.452 contra
+  **9.368** (1.916 fora). Os de fora têm `decisaoSingular: null` e **são** decisões
+  singulares (documento titulado "Decisão Singular"). A flag `true` seleciona a aba
+  "Ratificadas por Colegiado", não "decisão singular". **Omitir a flag devolve um
+  superset que a tela nunca mostra.**
+- ⚠️ `exibirParecerMPC` e `exibirInstrucao` **não filtram nada** (true e false dão
+  27.783). Não viraram flag: flag que não filtra mente para o usuário.
+- 🔴 `numeroProcesso` com valor **não-numérico é IGNORADO** e devolve o acervo
+  inteiro (`abc` → 27.783). O Checker só deixa passar dígito.
+
+## Anatomia do resultado (Fase 3b)
+
+Campos por documento: `processoNumeroFormatado`, `numeroProcesso`, `numeroDecisao`,
+`linkProcesso`, `relator`, `unidadeGestora[]`, `tipoProcesso`, `dataDecisao`,
+`dataSessao`, `dataPublicacao`, `ementa`, `votoTexto`, `linkDocumento`,
+`textoCopiarEmenta`, `decisaoSingular`, `documentos[]`.
+
+🔴 **`ementa` volta null na maioria** e o texto exibido é `votoTexto`, que é o
+**trecho de match** (começa no meio da frase: " no momento mais oportuno, podendo…").
+Não é ementa e não é inteiro teor. O crawler marca `semEmenta` e guarda em
+`trechoMatch`.
+
+✅ **`textoCopiarEmenta` é a citação oficial pronta** — nada de regex, o problema
+que custou quatro formatos na família e-SAJ:
+`(TCE/SC, Plenário, Decisão n. , Processo n. 2600137305, Relator José Nei Alberton Ascari, Sessão 03/08/2026.)`
+🔴 **Mas ela rotula `dataDecisao` como "Sessão"** num documento cujo `dataSessao`
+é **null** — o rótulo mente (lição do TJES). E quando `numeroDecisao` é null a
+citação sai quebrada (`Decisão n. ,`); o crawler sinaliza com `citacaoSuspeita`.
+
+✅ **Inteiro teor: PDF público em `storage.tce.sc.gov.br`** (`documentos[].linkPublico`).
+Confirmado em **requisição limpa** (sem cookie, sem Referer): HTTP 200,
+`application/pdf`, 169 KB, 3 páginas, e **começa com `%PDF`** — aqui o magic number
+vale, ao contrário do TCE-PR (envelope PKCS#7 com o PDF no offset 57).
+Id inventado no storage → **404 real**, não casca de 200.
+
+🔴 **Quem identifica o julgado é o `identificadorDocumento`**, não o número do
+processo (um processo rende vários documentos).
+🔴 **Não há permalink de BUSCA** — a rota do SPA não muda com a busca.
+
+## Paginação
+
+- `pagina` zero-based, `tamanhoPagina` livre.
+- ✅ **Estável**: a mesma página lida 2× devolve os mesmos ids na mesma ordem, e
+  página 1 ∩ página 2 = ∅.
+- Total **exato** (termo inventado dá 0 limpo; sem teto redondo).
+
+## Base
+
+**27.783 documentos** no acervo do GraphQL. Distribuição por ano de autuação:
+2015=1.494, 2018=1.493, 2020=1.439, 2022=1.289, 2023=1.258, 2024=1.353,
+2025=1.523, 2026=475 (ano parcial). ✅ **Corrente** — documento de **03/08/2026**,
+11 dias antes do mapeamento. Sem o congelamento do TJAM e sem a defasagem de ponta
+do TJPI.
+
+## Escopo
+
+✅ **Santa Catarina NÃO tem TCM**: o TCE-SC fiscaliza o Estado e os 295 municípios.
+A armadilha declarada do Bloco 5 vale para SP, RJ, BA, GO e PA — não aqui.
+🔴 Não há número CNJ nem DataJud (contas não é Judiciário).
+
+## Prints
+
+- `01.01-tela-inicial.png` — Portal da Jurisprudência, 6 abas, campo único
+- `01.02-form-preenchido.png` — termo `licitação` digitado
+- `01.03-resultados.png` — Resumo de Resultados com as 5 bases e suas contagens
+
+## As três bases fora do GraphQL
+
+### Enunciados de Consulta (prejulgados) — `GET /cojur/prejulgado/`
+
+Paginador Laravel (`{current_page, data[], total, last_page, per_page}`).
+Parâmetros: **`query`** (termo), **`size`**, `page`.
+**Base: 2.564.** `licitação`=352, `nepotismo`=2, inventado=**0** (zero de verdade).
+
+Campos: `nu_prejulgado` (id), `de_prejulgado` (**o texto normativo, ~3,7 mil
+chars — aqui é conteúdo de verdade, não snippet**), `nu_Processo`, `nu_parecer`,
+`nu_decisao`, `nm_relator`, `nm_origem`, `data_sessao`, `data_disponibilizacao`,
+`assuntos[]` (tesauro), `prejulgados_relacionados[]`, `tp_prejulgado` (0/1/2/4),
+**`st_valido`**.
+
+🔴 **`st_valido` é VIGÊNCIA**: um enunciado revogado continua na base. O crawler
+expõe `vigente` e avisa — citar revogado como orientação atual seria erro grave,
+porque prejulgado tem **força normativa** no TCE-SC.
+
+🔴 **AQUI O TERMO DE 2 CARACTERES É APLICADO** (`ab` = 289 de 2.564), ao contrário
+do GraphQL, onde é descartado e devolve o acervo inteiro. **A regra dos 3
+caracteres é do CLIENTE e vale diferente em cada backend do mesmo portal.**
+
+### Informativos de Jurisprudência — `GET /cojur/jurisprudencia/`
+
+Mesmo paginador, mas os parâmetros mudam de nome: **`termo`** e **`per_page`**
+(no de enunciados são `query` e `size`). **Base: 2.045.** `servidor`=630,
+`licitação`=**0** — e esse zero é real, bate com a tela.
+
+Campos: `identificador`, `titulo`, `conteudo` (**HTML**), `numeroProcesso`,
+`informativo{numeroInformativo, dataInicioPeriodo, dataFimPeriodo}`,
+`categoria{identificador, categoria}`. Combo de categorias em
+`/cojur/jurisprudencia/categorias/?per_page=1000` (**10 categorias**).
+
+### Súmulas — 🔴 NÃO EXISTE ENDPOINT
+
+`/cojur/sumula`, `/cojur/sumulas`, `/cojur/informativo`, `/cojur/informativos`
+respondem **404**. A base está **embutida no bundle** (`Imt_sumulas` em
+`mf-jurisprudencia/main.js`) e o app filtra em memória
+(`buscarSumulas()` → `this.allSumulas.filter(...)`).
+
+🔴 **São 4 registros e apenas 3 documentos distintos** — os ids 1 e 2 são ambos
+"Súmula N. TC-003/2021", com a mesma descrição. A base inteira de súmulas do
+TCE-SC: TC-003/2021, TC-002/2017 e TC-001/2016. Gravadas em
+`sumulas-bundle.json`. ✅ Cada uma tem **PDF no site institucional**
+(`arquivoUrl`). ⚠️ Por ser conteúdo de bundle, **envelhece com o deploy do
+portal** — é o único dado do repo que não é consultado ao vivo.
+
+## Pendências declaradas
+
+- `identificadorRelator`, `identificadorProcessoTipo` e `identificadorUnidadeGestora`
+  estão expostos como flag mas **não provados por contagem**.
+- `numerosProcessoHibrido`, `identificadorDocumento` e `numeroDecisao` **não testados**.
+- `textoRefinamento` exposto, **não medido**.
+- **Rate limit não medido**; `tamanhoPagina` máximo **não medido**.
+- Não se mediu se `ementa` é preenchida em algum tipo de documento específico
+  (a abrangência EMENTA acha 874 em `licitação`, logo existe ementa indexada em
+  parte do acervo — **qual parte não foi isolado**).
+- A **ordenação** foi usada mas não comparada entre os três valores.
+- Nas bases do `cojur`: os **operadores não foram testados**, o `tp_prejulgado`
+  (0/1/2/4) **não foi decodificado**, e não se mediu rate limit nem `size` máximo.

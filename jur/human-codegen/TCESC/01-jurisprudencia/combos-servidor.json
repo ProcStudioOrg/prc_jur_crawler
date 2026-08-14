@@ -1,0 +1,1657 @@
+{
+  "processosTipos": {
+    "totalRegistros": 205,
+    "tiposProcesso": [
+      {
+        "identificador": 257,
+        "nome": "Acompanhamento",
+        "sigla": "ACO",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 217,
+        "nome": "Acompanhamento de Cobrança",
+        "sigla": "COD",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 123,
+        "nome": "Acompanhamento de Obras",
+        "sigla": "ACO",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 105,
+        "nome": "Admissão, Adicionais",
+        "sigla": "AD",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 214,
+        "nome": "Agravo",
+        "sigla": "REC",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 106,
+        "nome": "Aposentadoria, Reforma, Pensão",
+        "sigla": "AP",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 201,
+        "nome": "Assuntos da Consultoria Geral",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 236,
+        "nome": "Assuntos da Diretoria de Administração e Finanças",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 237,
+        "nome": "Assuntos da Diretoria de Gestão de Pessoas",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 199,
+        "nome": "Assuntos da Diretoria Geral de Planejamento e Administração",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 200,
+        "nome": "Assuntos da Diretoria-Geral de Controle Externo",
+        "sigla": "ADM",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 198,
+        "nome": "Assuntos da Secretaria Geral",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 195,
+        "nome": "Assuntos do Gabinete da Presidência",
+        "sigla": "ADM",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 261,
+        "nome": "Assuntos do Gabinete da Presidência - Convênio",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 240,
+        "nome": "Assuntos Gerais da Corregedoria",
+        "sigla": "COR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 151,
+        "nome": "Atos de Pessoal",
+        "sigla": "APE",
+        "situacao": "Inativo",
+        "anoDesativacao": 1950
+      },
+      {
+        "identificador": 239,
+        "nome": "Auditoria com Métodos Econométricos",
+        "sigla": "RLA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 267,
+        "nome": "Auditoria de Avaliação de Políticas Públicas",
+        "sigla": "RLA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 124,
+        "nome": "Auditoria de Controle Interno",
+        "sigla": "ACI",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 193,
+        "nome": "Auditoria de Obras e Serviços de Engenharia",
+        "sigla": "RLA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 160,
+        "nome": "Auditoria de Regularidade de Atos de Pessoal",
+        "sigla": "RLA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 161,
+        "nome": "Auditoria de Regularidade em Licitações e Contratos",
+        "sigla": "RLA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 159,
+        "nome": "Auditoria de Regularidade em Registros Contábeis e Execução Orçamentária",
+        "sigla": "RLA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 162,
+        "nome": "Auditoria de Regularidade sobre Recursos Transferidos",
+        "sigla": "RLA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 59,
+        "nome": "Auditoria Especial",
+        "sigla": "AES",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 165,
+        "nome": "Auditoria Especial - art. 3º, I, da Resolução TC-10/2007",
+        "sigla": "RLA",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 60,
+        "nome": "Auditoria Extraordinária",
+        "sigla": "AEX",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 192,
+        "nome": "Auditoria Financeira",
+        "sigla": "RLA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 54,
+        "nome": "Auditoria in loco de Atos de Pessoal",
+        "sigla": "APE",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 52,
+        "nome": "Auditoria in loco de Licitações, Contratos, Conv. e Atos Jurídicos Análogos",
+        "sigla": "ALC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 56,
+        "nome": "Auditoria in loco de Prestações de Contas de Recursos Antecipados",
+        "sigla": "APC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 50,
+        "nome": "Auditoria in loco de Registros Contábeis e Execução Orçamentária",
+        "sigla": "ARC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 164,
+        "nome": "Auditoria Operacional",
+        "sigla": "RLA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 163,
+        "nome": "Auditoria Ordinária ",
+        "sigla": "RLA",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 58,
+        "nome": "Auditoria Ordinária in loco",
+        "sigla": "AOR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 275,
+        "nome": "Auto de Infração Eletrônico",
+        "sigla": "AIE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 255,
+        "nome": "Autorização de Licença Prêmio",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2020
+      },
+      {
+        "identificador": 101,
+        "nome": "Balancete",
+        "sigla": "BLC",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 120,
+        "nome": "Balanço",
+        "sigla": "BL",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 113,
+        "nome": "Balanço Anual",
+        "sigla": "BLA",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 1,
+        "nome": "Cadastramento Inicial",
+        "sigla": "CAD",
+        "situacao": "Inativo",
+        "anoDesativacao": 2004
+      },
+      {
+        "identificador": 254,
+        "nome": "Concessão de Licença Prêmio",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2020
+      },
+      {
+        "identificador": 69,
+        "nome": "Consulta",
+        "sigla": "CON",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 64,
+        "nome": "Contas anuais do Estado Prestadas pelo Governador",
+        "sigla": "PCG",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 65,
+        "nome": "Contas anuais do Município Prestadas pelo Prefeito",
+        "sigla": "PCP",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 115,
+        "nome": "Contrato de Trabalho",
+        "sigla": "CT",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 182,
+        "nome": "Contrato Decorrente de Licitação",
+        "sigla": "LCC",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 103,
+        "nome": "Contratos, Convênios e Termos Aditivos",
+        "sigla": "CO",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 231,
+        "nome": "Convênio ou Instrumento Análogo",
+        "sigla": "LCC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 196,
+        "nome": "Corregedoria-Geral",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 128,
+        "nome": "Correição extraordinária",
+        "sigla": "COR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 129,
+        "nome": "Correição ordinária",
+        "sigla": "COR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 107,
+        "nome": "Decretos",
+        "sigla": "D",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 70,
+        "nome": "Denúncia",
+        "sigla": "DEN",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 109,
+        "nome": "Despesa Orcamentária",
+        "sigla": "DOL",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 274,
+        "nome": "Determinação de Revisão de Enunciado de Consulta",
+        "sigla": "CON",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 127,
+        "nome": "Determinação de Revisão de Prejulgados",
+        "sigla": "CON",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 180,
+        "nome": "Dispensa de Licitação",
+        "sigla": "LCC",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 81,
+        "nome": "Dispensa e Inexigibilidade de Licitação",
+        "sigla": "DIL",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 68,
+        "nome": "Edital de Concorrência",
+        "sigla": "ECO",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 176,
+        "nome": "Edital de Concorrência ",
+        "sigla": "ELC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 234,
+        "nome": "Edital de Concurso",
+        "sigla": "ELC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 233,
+        "nome": "Edital de Leilão",
+        "sigla": "ELC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 137,
+        "nome": "Edital de Licitação",
+        "sigla": "LCC",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 175,
+        "nome": "Edital de Licitação ",
+        "sigla": "ELC",
+        "situacao": "Inativo",
+        "anoDesativacao": 1950
+      },
+      {
+        "identificador": 177,
+        "nome": "Edital de Pregão ",
+        "sigla": "ELC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 232,
+        "nome": "Edital de Tomada de Preços",
+        "sigla": "ELC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 215,
+        "nome": "Embargos de Declaração",
+        "sigla": "REC",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 110,
+        "nome": "Empenhos",
+        "sigla": "E",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 138,
+        "nome": "Exame Prévio de Concessões - Fase de Planejamento",
+        "sigla": "LCC",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 197,
+        "nome": "Gabinete de Conselheiro ",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 181,
+        "nome": "Inexigibilidade de Licitação ",
+        "sigla": "LCC",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 18,
+        "nome": "Inf. de Prest. Contas de Rec. Antec./Prestados",
+        "sigla": "IPC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2004
+      },
+      {
+        "identificador": 20,
+        "nome": "Inf. de Prest. Contas de Rec. Antec/Não Prestados",
+        "sigla": "IPC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2004
+      },
+      {
+        "identificador": 39,
+        "nome": "Informação de Atos de Pessoal",
+        "sigla": "IPE",
+        "situacao": "Inativo",
+        "anoDesativacao": 2004
+      },
+      {
+        "identificador": 38,
+        "nome": "Informação de Licitações, Contratos, Convênios e Atos Jurídicos Análogos",
+        "sigla": "ILC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2004
+      },
+      {
+        "identificador": 121,
+        "nome": "Informação de Registros Contábeis e Execução Orcamentária",
+        "sigla": "IRC",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 117,
+        "nome": "Informações Anuais",
+        "sigla": "IFA",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 5,
+        "nome": "Informações Mensais",
+        "sigla": "IFM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2004
+      },
+      {
+        "identificador": 268,
+        "nome": "Inspeção de Avaliação de Políticas Públicas",
+        "sigla": "RLI",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 218,
+        "nome": "Inspeção de Obras e Serviços de Engenharia",
+        "sigla": "RLI",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 168,
+        "nome": "Inspeção de Regularidade referente a Atos de Pessoal",
+        "sigla": "RLI",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 169,
+        "nome": "Inspeção de Regularidade referente a Licitações e Contratos",
+        "sigla": "RLI",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 170,
+        "nome": "Inspeção de Regularidade referente a Recursos Transferidos",
+        "sigla": "RLI",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 167,
+        "nome": "Inspeção de Regularidade referente a Registros Contábeis e Execução Orçamentária",
+        "sigla": "RLI",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 172,
+        "nome": "Inspeção Especial - art. 3º, I, da Resolução TC-10/2007",
+        "sigla": "RLI",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 130,
+        "nome": "Inspeção Extraordinária",
+        "sigla": "COR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 202,
+        "nome": "Inspeção Financeira",
+        "sigla": "RLI",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 262,
+        "nome": "Inspeção Operacional e de Gestão",
+        "sigla": "RLI",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 131,
+        "nome": "Inspeção ordinária",
+        "sigla": "COR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 171,
+        "nome": "Inspeção Ordinária",
+        "sigla": "RLI",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 238,
+        "nome": "Instituto de Contas",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 132,
+        "nome": "Inventário bienal de processos",
+        "sigla": "COR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 92,
+        "nome": "Levantamento com Métodos Econométricos",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 82,
+        "nome": "Levantamento de Informações",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 88,
+        "nome": "Levantamento de Obras e Serviços de Engenharia",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 91,
+        "nome": "Levantamento de Regularidade de Atos de Gestão",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 84,
+        "nome": "Levantamento de Regularidade de Atos de Pessoal",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 83,
+        "nome": "Levantamento de Regularidade de Registros Contábeis e Execução Orçamentária",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 85,
+        "nome": "Levantamento de Regularidade em Licitações e Contratos",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 86,
+        "nome": "Levantamento de Regularidade sobre Recursos Transferidos",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 89,
+        "nome": "Levantamento de Tecnologia da Informação",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 87,
+        "nome": "Levantamento Financeiro",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 93,
+        "nome": "Levantamento Operacional e Temático",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 102,
+        "nome": "Licitações",
+        "sigla": "L",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 178,
+        "nome": "Licitações, Contratos, Convênios e Instrumentos Análogos",
+        "sigla": "LCC",
+        "situacao": "Inativo",
+        "anoDesativacao": 1950
+      },
+      {
+        "identificador": 265,
+        "nome": "Mesa de Consensualismo",
+        "sigla": "MCO",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 146,
+        "nome": "Monitoramento Auditoria Financeira",
+        "sigla": "PMO",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 147,
+        "nome": "Monitoramento Auditoria Operacional",
+        "sigla": "PMO",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 148,
+        "nome": "Monitoramento de Decisões",
+        "sigla": "PMO",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 149,
+        "nome": "Monitoramento Prestação de Contas do Governador",
+        "sigla": "PMO",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 260,
+        "nome": "Nota Técnica",
+        "sigla": "PNO",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 0,
+        "nome": "NÃO UTILIZE NUMEROS MENOR QUE 50",
+        "sigla": "NAO",
+        "situacao": "Inativo",
+        "anoDesativacao": 1995
+      },
+      {
+        "identificador": 3,
+        "nome": "Orçamento Anual",
+        "sigla": "ORC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2004
+      },
+      {
+        "identificador": 61,
+        "nome": "Pedido de Auditoria",
+        "sigla": "PDA",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 184,
+        "nome": "Pedido de Auditoria Alesc",
+        "sigla": "PDA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 220,
+        "nome": "Pedido de Exclusão da Relação de Responsáveis",
+        "sigla": "RRE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 62,
+        "nome": "Pedido de Informações",
+        "sigla": "PPI",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 185,
+        "nome": "Pedido de Informações Alesc",
+        "sigla": "PPI",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 187,
+        "nome": "Pedido de Reapreciação - Prestação de Contas do Prefeito",
+        "sigla": "PRP",
+        "situacao": "Inativo",
+        "anoDesativacao": 2014
+      },
+      {
+        "identificador": 100,
+        "nome": "Prestação de Contas",
+        "sigla": "PC",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 139,
+        "nome": "Prestação de Contas Anual de consórcios",
+        "sigla": "PCA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 188,
+        "nome": "Prestação de Contas Anual de Unidade Gestora",
+        "sigla": "PCA",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 143,
+        "nome": "Prestação de Contas Anual de órgãos, de fundos, de  autarquias e de fundações estaduais",
+        "sigla": "PCA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 144,
+        "nome": "Prestação de Contas Anual de órgãos, de fundos, de  autarquias e de fundações municipais",
+        "sigla": "PCA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 140,
+        "nome": "Prestação de Contas Anual empresas públicas e sociedades de economia mista",
+        "sigla": "PCA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 142,
+        "nome": "Prestação de Contas Anual Entidades Assoc municípios e câmaras municipais",
+        "sigla": "PCA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 66,
+        "nome": "Prestação de Contas de Administrador",
+        "sigla": "PCA",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 190,
+        "nome": "Prestação de Contas de Recursos Antecipados - Servidor",
+        "sigla": "PCR",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 189,
+        "nome": "Prestação de Contas de Transferências de Recursos para  entes e entidades públicos",
+        "sigla": "PCR",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 191,
+        "nome": "Prestação de Contas de Transferências de Recursos para  pessoas físicas",
+        "sigla": "PCR",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 145,
+        "nome": "Prestação de Contas de Transferências de Recursos para  pessoas jurídicas privadas",
+        "sigla": "PCR",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 256,
+        "nome": "Procedimento Apuratorio Preliminar",
+        "sigla": "PAP",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 73,
+        "nome": "Processo Administrativo",
+        "sigla": "PAD",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 194,
+        "nome": "Processo Administrativo (TCESC )",
+        "sigla": "ADM",
+        "situacao": "Inativo",
+        "anoDesativacao": 1950
+      },
+      {
+        "identificador": 133,
+        "nome": "Processo Administrativo disciplinar",
+        "sigla": "COR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 98,
+        "nome": "Processo Administrativo GAP",
+        "sigla": "TCGAP",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 99,
+        "nome": "Processo Administrativo Interno",
+        "sigla": "TCSEG",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 203,
+        "nome": "Processo de Monitoramento ",
+        "sigla": "PMO",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 63,
+        "nome": "Processo de Verificação de Responsabilidade",
+        "sigla": "PVR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 111,
+        "nome": "Processo de Verificação de Responsabilidade II",
+        "sigla": "PVR",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 74,
+        "nome": "Processo Diverso",
+        "sigla": "PDI",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 179,
+        "nome": "Processo Licitatório ",
+        "sigla": "LCC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 80,
+        "nome": "Processo Normativo",
+        "sigla": "PNO",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 134,
+        "nome": "Processo ético",
+        "sigla": "COR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 90,
+        "nome": "Produção de Informações de Inteligência",
+        "sigla": "LEV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 258,
+        "nome": "Proposta de Ação de Fiscalização",
+        "sigla": "PAF",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 108,
+        "nome": "Prorrogação de Prazo",
+        "sigla": "PP",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 212,
+        "nome": "Reconsideração",
+        "sigla": "REC",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 72,
+        "nome": "Recurso",
+        "sigla": "REC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 211,
+        "nome": "Recurso",
+        "sigla": "REC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2020
+      },
+      {
+        "identificador": 213,
+        "nome": "Reexame",
+        "sigla": "REC",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 119,
+        "nome": "Reexame Contas Municipais",
+        "sigla": "RCM",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 150,
+        "nome": "Reexame de Conselheiro",
+        "sigla": "RCO",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 216,
+        "nome": "Reexame de Conselheiro - art. 81 da LC 202/2000  - DESATIVADO",
+        "sigla": "REC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 155,
+        "nome": "Registro de Ato de Admissão de Pessoal ",
+        "sigla": "APE",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 269,
+        "nome": "Registro de Ato de Admissão de Pessoal em Lote",
+        "sigla": "APE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 152,
+        "nome": "Registro de Ato de Aposentadoria ",
+        "sigla": "APE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 263,
+        "nome": "Registro de Ato de Aposentadoria em Lote",
+        "sigla": "APE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 154,
+        "nome": "Registro de Ato de Reforma",
+        "sigla": "APE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 153,
+        "nome": "Registro de Ato de Transferência para a Reserva Remunerada ",
+        "sigla": "APE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 67,
+        "nome": "Registro do Ato de Pensão e Auxílio Especial",
+        "sigla": "PPA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 264,
+        "nome": "Registro do Ato de Pensão e Auxílio Especial em Lote",
+        "sigla": "PPA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 7,
+        "nome": "Registros Contábeis e Execução Orçamentária",
+        "sigla": "IRC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2004
+      },
+      {
+        "identificador": 104,
+        "nome": "Relatorios de Auditoria",
+        "sigla": "RA",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 158,
+        "nome": "Relatório de Auditoria",
+        "sigla": "RLA",
+        "situacao": "Inativo",
+        "anoDesativacao": 1950
+      },
+      {
+        "identificador": 166,
+        "nome": "Relatório de Inspeção",
+        "sigla": "RLI",
+        "situacao": "Inativo",
+        "anoDesativacao": 1950
+      },
+      {
+        "identificador": 219,
+        "nome": "Relação de Responsáveis com Contas Rejeitadas",
+        "sigla": "RRE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 71,
+        "nome": "Representação",
+        "sigla": "REP",
+        "situacao": "Inativo",
+        "anoDesativacao": 2002
+      },
+      {
+        "identificador": 135,
+        "nome": "Representação",
+        "sigla": "COR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 204,
+        "nome": "Representação",
+        "sigla": "REP",
+        "situacao": "Inativo",
+        "anoDesativacao": 1950
+      },
+      {
+        "identificador": 77,
+        "nome": "Representação - Agente Público (Art.100 RI)",
+        "sigla": "RPA",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 205,
+        "nome": "Representação - art. 113, § 1º, da Lei nº 8.666/93",
+        "sigla": "REP",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 78,
+        "nome": "Representação - Conselheiro (Art.100 RI, Parágrafo Único)",
+        "sigla": "RPC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 79,
+        "nome": "Representação - Judicial (Art.100 RI)",
+        "sigla": "RPJ",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 76,
+        "nome": "Representação - Licitação (Art.113 Lei 8666/93)",
+        "sigla": "RPL",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 206,
+        "nome": "Representação de Agente Público ",
+        "sigla": "REP",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 207,
+        "nome": "Representação de Conselheiro ",
+        "sigla": "REP",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 209,
+        "nome": "Representação do Ministério Público",
+        "sigla": "REP",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 210,
+        "nome": "Representação do Ministério Público junto ao Tribunal de Contas ",
+        "sigla": "REP",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 208,
+        "nome": "Representação do Poder Judiciário",
+        "sigla": "REP",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 266,
+        "nome": "Representação – Lei de Licitações",
+        "sigla": "REP",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 114,
+        "nome": "Rescisão de Julgado",
+        "sigla": "RJ",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 157,
+        "nome": "Retificação de Ato Aposentatório",
+        "sigla": "APE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 156,
+        "nome": "Retificação de Ato de Reforma",
+        "sigla": "APE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 235,
+        "nome": "Retificação de Ato de Transferência para a Reserva Remunerada",
+        "sigla": "APE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 252,
+        "nome": "Retificação do Ato de Pensão e Auxílio Especial",
+        "sigla": "PPA",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 126,
+        "nome": "Revisão",
+        "sigla": "REV",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 230,
+        "nome": "Revisão de Certidão",
+        "sigla": "PRC",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 253,
+        "nome": "Revogação de Registro de Ato Aposentatório",
+        "sigla": "APE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 251,
+        "nome": "RLA - Admissão (nunca existiu)",
+        "sigla": "RLA",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 136,
+        "nome": "Sindicância",
+        "sigla": "COR",
+        "situacao": "Inativo",
+        "anoDesativacao": 2025
+      },
+      {
+        "identificador": 55,
+        "nome": "Solicitação de Atos de Pessoal",
+        "sigla": "SPE",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 118,
+        "nome": "Solicitação de Auditoria",
+        "sigla": "SAU",
+        "situacao": "Inativo",
+        "anoDesativacao": 1994
+      },
+      {
+        "identificador": 53,
+        "nome": "Solicitação de Licitações, Contratos, Convênios e Atos Jurídicos Análogos",
+        "sigla": "SLC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 57,
+        "nome": "Solicitação de Prestações de Contas de Recursos Antecipados",
+        "sigla": "SPC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 51,
+        "nome": "Solicitação de Registros Contábeis e Execução Orçamentária",
+        "sigla": "SRC",
+        "situacao": "Inativo",
+        "anoDesativacao": 2006
+      },
+      {
+        "identificador": 221,
+        "nome": "Súmulas de Jurisprudência",
+        "sigla": "SUM",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 259,
+        "nome": "Termo de Ajustamento de Gestão",
+        "sigla": "TAG",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 122,
+        "nome": "Tomada de Contas Especial",
+        "sigla": "TCE",
+        "situacao": "Inativo",
+        "anoDesativacao": 2015
+      },
+      {
+        "identificador": 224,
+        "nome": "Tomada de Contas Especial decorrente de conversão pelo TCE/SC",
+        "sigla": "TCE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 223,
+        "nome": "Tomada de Contas Especial determinada pelo TCE/SC",
+        "sigla": "TCE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 222,
+        "nome": "Tomada de Contas Especial originária de Unidade Gestora",
+        "sigla": "TCE",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 225,
+        "nome": "Uniformização de Jurisprudência",
+        "sigla": "UNJ",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      },
+      {
+        "identificador": 75,
+        "nome": "Verificação da Lei de Responsabilidade Fiscal",
+        "sigla": "LRF",
+        "situacao": "Ativo",
+        "anoDesativacao": 2050
+      }
+    ]
+  },
+  "relator": {
+    "totalRegistros": 35,
+    "usuarios": [
+      {
+        "usuarioId": 4513550,
+        "pessoaId": 5748,
+        "nome": "Aderson Flores",
+        "usuarioAtivo": true
+      },
+      {
+        "usuarioId": 4509846,
+        "pessoaId": 68830,
+        "nome": "Adircélio de Moraes Ferreira Júnior",
+        "usuarioAtivo": true
+      },
+      {
+        "usuarioId": 4509048,
+        "pessoaId": 63232,
+        "nome": "Cleber Muniz Gavi",
+        "usuarioAtivo": true
+      },
+      {
+        "usuarioId": 4509030,
+        "pessoaId": 62851,
+        "nome": "Gerson dos Santos Sicca",
+        "usuarioAtivo": true
+      },
+      {
+        "usuarioId": 4510194,
+        "pessoaId": 240432,
+        "nome": "Herneus João De Nadal",
+        "usuarioAtivo": true
+      },
+      {
+        "usuarioId": 4511611,
+        "pessoaId": 134217,
+        "nome": "José Nei Alberton Ascari",
+        "usuarioAtivo": true
+      },
+      {
+        "usuarioId": 4511018,
+        "pessoaId": 53803,
+        "nome": "Luiz Eduardo Cherem",
+        "usuarioAtivo": true
+      },
+      {
+        "usuarioId": 4508378,
+        "pessoaId": 192310,
+        "nome": "Luiz Roberto Herbst",
+        "usuarioAtivo": true
+      },
+      {
+        "usuarioId": 4509056,
+        "pessoaId": 76685,
+        "nome": "Sabrina Nunes Iocken",
+        "usuarioAtivo": true
+      },
+      {
+        "usuarioId": 4508343,
+        "pessoaId": 175074,
+        "nome": "Wilson Rogério Wan-Dall",
+        "usuarioAtivo": true
+      },
+      {
+        "usuarioId": 4500130,
+        "pessoaId": 134251,
+        "nome": "Altair Debona Castelan",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4503422,
+        "pessoaId": 314348,
+        "nome": "Antero Nercolini",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4501845,
+        "pessoaId": 92387,
+        "nome": "Carlos Augusto Caminha",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4508840,
+        "pessoaId": 133724,
+        "nome": "Cesar Filomeno Fontes",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4504500,
+        "pessoaId": 314317,
+        "nome": "Clóvis Mattos Balsini",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4560000,
+        "pessoaId": 315276,
+        "nome": "CONVOCADO CLÓVIS MATTOS BALSINI - VG LSM",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4502833,
+        "pessoaId": 92044,
+        "nome": "Dib Cherem",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4505280,
+        "pessoaId": 93042,
+        "nome": "Epitacio Bittencourt",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4500555,
+        "pessoaId": 241324,
+        "nome": "Evangelo Spyros Diamantaras",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4502132,
+        "pessoaId": 314360,
+        "nome": "José Carlos Pacheco",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4510259,
+        "pessoaId": 314878,
+        "nome": "Julio Garcia",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4507592,
+        "pessoaId": 314309,
+        "nome": "Luiz Suzin Marini",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4505271,
+        "pessoaId": 138147,
+        "nome": "Moacir Bertoli",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4540000,
+        "pessoaId": 314965,
+        "nome": "NOMEADO OU AUDITOR CONVOCADO - VG CAN",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4504852,
+        "pessoaId": 66822,
+        "nome": "Octacílio Pedro Ramos",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4508300,
+        "pessoaId": 139433,
+        "nome": "Otávio Gilson dos Santos",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4505999,
+        "pessoaId": 314338,
+        "nome": "Salomão Ribas Junior",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4590000,
+        "pessoaId": 314958,
+        "nome": "SUBSTITUTO - VG JCP",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4570000,
+        "pessoaId": 315257,
+        "nome": "SUBSTITUTO - VG MB ",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4580000,
+        "pessoaId": 314931,
+        "nome": "SUBSTITUTO - VG OGS",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4600000,
+        "pessoaId": 314950,
+        "nome": "SUBSTITUTO - VG SRJ",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4530000,
+        "pessoaId": 314869,
+        "nome": "SUBSTITUTO OU AUDITOR DESIGNADO - VG CAC",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4520000,
+        "pessoaId": 315508,
+        "nome": "SUBSTITUTO OU AUDITOR DESIGNADO - VG DCH",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4510000,
+        "pessoaId": 315395,
+        "nome": "SUBSTITUTO OU AUDITOR DESIGNADO - VG OPR",
+        "usuarioAtivo": false
+      },
+      {
+        "usuarioId": 4501519,
+        "pessoaId": 145202,
+        "nome": "Thereza Apparecida Costa Marques",
+        "usuarioAtivo": false
+      }
+    ]
+  }
+}
