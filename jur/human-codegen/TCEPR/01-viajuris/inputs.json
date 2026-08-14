@@ -1,0 +1,177 @@
+[
+ {
+  "tag": "INPUT",
+  "name": "TermoLivre",
+  "id": "TermoLivre",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "NUMERO_ATO",
+  "id": "NUMERO_ATO",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "NUMERO_PROCESSO",
+  "id": "NUMERO_PROCESSO",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "",
+  "id": "",
+  "type": "text",
+  "value": "Selecione..."
+ },
+ {
+  "tag": "INPUT",
+  "name": "INTERESSADO",
+  "id": "INTERESSADO",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "DtSessaoInicial",
+  "id": "DtSessaoInicial",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "DtSessaoFinal",
+  "id": "DtSessaoFinal",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "ENTIDADE",
+  "id": "ENTIDADE",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "PrecedenteDoTribunal",
+  "id": "PrecedenteDoTribunal",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "",
+  "id": "txtPesquisaTermos",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "NOME_LEI",
+  "id": "NOME_LEI",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "NUMERO_LEI",
+  "id": "NUMERO_LEI",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "ANO_LEI",
+  "id": "ANO_LEI",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "REFERENCIA_LEGISLATIVA",
+  "id": "REFERENCIA_LEGISLATIVA",
+  "type": "hidden",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "ARTIGO_EL",
+  "id": "ARTIGO_EL",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "PARAGRAFO_EL",
+  "id": "PARAGRAFO_EL",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "INCISO_EL",
+  "id": "INCISO_EL",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "ALINEA_EL",
+  "id": "ALINEA_EL",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "ITEM_EL",
+  "id": "ITEM_EL",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "NUMERO_PRECEDENTE",
+  "id": "NUMERO_PRECEDENTE",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "ANO_PRECEDENTE",
+  "id": "ANO_PRECEDENTE",
+  "type": "text",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "LinhasPorPagina",
+  "id": "LinhasPorPagina",
+  "type": "hidden",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "Ordenacao",
+  "id": "Ordenacao",
+  "type": "hidden",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "PaginaAtual",
+  "id": "PaginaAtual",
+  "type": "hidden",
+  "value": ""
+ },
+ {
+  "tag": "INPUT",
+  "name": "CLASSIFICACAO_DECISAO_SELECIONADOS",
+  "id": "CLASSIFICACAO_DECISAO_SELECIONADOS",
+  "type": "hidden",
+  "value": ""
+ }
+]

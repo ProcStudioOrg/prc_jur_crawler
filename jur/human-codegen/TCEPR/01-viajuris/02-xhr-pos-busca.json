@@ -1,0 +1,12 @@
+[
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Pesquisa/PesquisaAcordaos",
+  "pd": ""
+ },
+ {
+  "m": "POST",
+  "u": "https://viajuris.tce.pr.gov.br/Pesquisa/PesquisaAcordaos/Buscar",
+  "pd": "TermoLivre=licita%C3%A7%C3%A3o&IdCampoPesquisa=-1&NUMERO_ATO=&ANO_ATO=-1&COLEGIADO=-1&NUMERO_PROCESSO=&ANO_PROCESSO=-1&NOME_RELATOR=-1&INTERESSADO=&CLASSE_PROCESSUAL=-1&DtSessaoInicial=&DtSessaoFinal=&ENTIDADE=&PrecedenteDoTribunal=&TIPO_LEGISLACAO=-1&EMISSOR_LEI=-1&NOME_LEI=&NUMERO_LEI=&ANO_LEI=&RE"
+ }
+]

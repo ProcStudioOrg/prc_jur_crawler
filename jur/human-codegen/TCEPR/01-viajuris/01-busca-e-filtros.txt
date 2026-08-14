@@ -1,0 +1,296 @@
+MAPEAMENTO — TCE-PR / ViaJuris (Sistema de Jurisprudência)
+==========================================================
+
+## Identificação
+
+Órgão:                   Tribunal de Contas do Estado do Paraná (TCE-PR)
+Estado(s):               PR
+Módulo:                  "ViaJuris — Sistema de Jurisprudência", aplicação
+                         **ASP.NET MVC sobre IIS 10**, renderizada no servidor
+Link principal:          https://viajuris.tce.pr.gov.br/Pesquisa/PesquisaAcordaos
+Como foi descoberto:     link na home oficial `www1.tce.pr.gov.br` — não foi
+                         chutado. A entrada da fila estava em branco.
+Sistema irmão mapeado:   TCU — o outro tribunal de contas do repo. Serviu de
+                         pouco: o TCU é browser e portal Angular; aqui é
+                         formulário clássico com POST, mais parecido com o
+                         eJURIS/TJRJ (e repete o defeito do select decorativo).
+Abrangência da base:     **148.490 acórdãos**, de 1998 a 2026. Colegiados:
+                         Tribunal Pleno, 1ª Câmara e 2ª Câmara.
+Data do mapeamento:      14/08/2026
+
+
+## ⚠️ ISTO NÃO É JUDICIÁRIO — o que muda para quem for usar
+
+O TCE-PR é órgão de **controle externo**, não tribunal do Poder Judiciário.
+Consequências medidas, todas relevantes para o crawler:
+
+- **Não há número CNJ.** O processo é `<sequencial>/<ano>` na numeração própria
+  do Tribunal (`393433/2026`). `src/cnj.js` não se aplica, e validar dígito
+  verificador reprovaria todo processo válido.
+- **Não há DataJud.** A API do CNJ cobre o Judiciário; contas não tem alias
+  `api_publica_*`. Diferente de TJMA/TJRN, aqui não existe plano B — e não é
+  preciso, porque a consulta por número do próprio portal responde.
+- **A matéria é outra**: contas públicas, licitação, contrato, ato de pessoal,
+  aposentadoria de servidor, consulta com força normativa. Pedido de matéria
+  cível, penal, trabalhista ou previdenciária do RGPS **não tem resposta aqui**.
+- O domínio é `.gov.br`, não `.jus.br`.
+
+
+## ✅ A ARMADILHA DO BLOCO 5 NÃO EXISTE NO PARANÁ — e isso se mede
+
+A fila avisa: "onde existe TCM, buscar contas municipais no TCE devolve zero que
+se lê como 'não há julgado'". **No Paraná não há TCM**: o TCE-PR fiscaliza o
+Estado e **todos os 399 municípios**. A prova está no próprio formulário — o
+combo `MUNICIPIO` traz **400 opções**, sendo 399 municípios mais o "Selecione um
+Município", e a lista vai de ABATIÁ a Curitiba. Registrado em `municipios.json`.
+
+Portanto, ao contrário de SP, RJ, BA, GO e PA, aqui **não há acervo municipal
+fora da base**. É uma ausência de ressalva, e ela também precisava ser medida.
+
+
+## Passo 0 — procura de API pública (o que existe E o que NÃO existe)
+
+NÃO EXISTE API pública de jurisprudência. Medido:
+
+- DNS: `dadosabertos.tce.pr.gov.br` e `api.tce.pr.gov.br` → **NXDOMAIN**.
+- 🔴 **TODO PATH DESCONHECIDO DO VIAJURIS RESPONDE 302 PARA O SSO** —
+  `https://cia.tce.pr.gov.br:443/sso?AppKey=F14599B3-…&ReturnUrl=…`. Seguindo o
+  redirect, `/swagger` e `/v1/api-docs` devolvem **HTTP 200 com ~8,3 KB**, que
+  é a **tela de login**, não uma API. O que desfaz o falso positivo é o teste do
+  path inventado: `/path-inventado-9z` devolve exatamente a mesma coisa, e o
+  diff normalizado (removendo o path ecoado na URL de retorno) é **vazio**.
+  → Terceira casca de 200 catalogada no repo, depois do vhost curinga
+    (TJAC/TJAL) e do `index.html` de SPA (TJES/TJRR). Aqui é uma **página de
+    login**, o que é pior: ela tem cara de aplicação, não de erro.
+- `/api` → **HTTP 401** com corpo `Token inválido` e header
+  `WWW-Authenticate: Negotiate`. É camada interna de Windows Auth, não a API de
+  jurisprudência. Não a persiga (mesma lição do `api.tjba.jus.br`).
+- ✅ **Existe DADOS ABERTOS de acórdãos**, e ele é oficial:
+  `viajuris.tce.pr.gov.br/DadosAbertos/DadosAbertos` — conjunto "Jurisprudência
+  Acórdãos", com "Base de Dados", "Dicionário de Dados" (XLSX em
+  `/DadosAbertos/DadosAbertos/DownloadArquivo?nomeArquivo=dicionario_de_dados.xlsx`)
+  e regras de utilização. Grupo: Jurisprudência. **Frequência declarada:
+  semanal. Espectro: ano corrente** (anos anteriores em recurso à parte).
+  ⚠️ **Mas é pacote para download em lote, não endpoint de consulta** — não
+  substitui o crawler, que precisa de busca por termo. E ⚠️ **a atualização
+  declarada não bate com a observada**: o recurso mostrava "Atualizado em:
+  05/06/2026" contra uma base cuja sessão mais recente é de agosto/2026. Para
+  buscar, o formulário está mais fresco que o dado aberto.
+- A página institucional de dados abertos
+  (`www1.tce.pr.gov.br/transparencia-do-tce-pr/dados-abertos-tce-pr.htm`) só
+  linka cartilhas em PDF e uma "Consulta de Bases" — **nenhum dataset de
+  jurisprudência**.
+- ✅ **Sem vhost curinga no www**: `www1.tce.pr.gov.br/path-inventado-9z` → 404
+  real (237 bytes, md5 distinto da home). A armadilha do TJAC/TJAL não se
+  repete no institucional — só no ViaJuris, e lá em forma de login.
+
+
+## ✅ Captcha: NÃO HÁ, em etapa nenhuma — e isto foi medido, não presumido
+
+- No DOM da tela: `grecaptcha` **indefinido**, e as strings `recaptcha`,
+  `turnstile` e `hcaptcha` **ausentes** do HTML inteiro.
+- ⚠️ Mas a lição do TJSE é que `grep turnstile` não é teste de captcha. O que
+  prova é **mandar o POST e ler a resposta**: o POST cru de `curl`/Node, sem
+  cookie, sem sessão e sem token, devolve a listagem com 17.563 registros.
+- E o PDF do inteiro teor responde 200 em contexto limpo. **Busca e download
+  medidos em separado** (a assimetria de TJAC/TJAM/TJAL), e os dois passam.
+
+
+## Forma de acesso escolhida para o crawler: `http`
+
+Formulário clássico. A busca é:
+
+    POST https://viajuris.tce.pr.gov.br/Pesquisa/PesquisaAcordaos/Buscar
+    Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+    X-Requested-With: XMLHttpRequest
+
+A resposta é o **fragmento HTML** da listagem (não JSON, não página inteira),
+com os cards dentro. Não há ViewState, token anti-forgery nem cookie
+obrigatório — o POST funciona isolado. Charset **UTF-8** (declarado e real).
+
+⚠️ **A busca é lenta e o timeout precisa ser generoso.** Com termo responde em
+~4–6 s; sem termo (base inteira) em ~4 s; com `LinhasPorPagina=5000` **estoura
+120 s** e a conexão cai — o `curl` devolve `000`, que a lição do TJPE ensina a
+não ler como "portal fora do ar". O Navigator usa timeout de 180 s.
+
+
+## O formulário — 23 inputs e 11 selects, todos populados no HTML estático
+
+⚠️ Nenhum combo é AJAX aqui: todos vêm preenchidos no HTML da primeira resposta.
+A pendência que se repetiu em quatro tribunais do Bloco 1 (combos-árvore do SAJ,
+que são popups) **não existe neste portal**. Enumerados em `combos-select.json`:
+
+  IdCampoPesquisa          3 opções   ("no campo…", EMENTA, TEMA) — 🔴 IGNORADO
+  ANO_ATO                 30 opções   (1998–2026 + "Ano Acórdão")
+  COLEGIADO                4 opções   (Pleno, Primeira Câmara, Segunda Câmara)
+  ANO_PROCESSO            42 opções
+  NOME_RELATOR            30 opções   (nomes de conselheiros, valor = o nome)
+  CLASSIFICACAO_DECISAO    6 opções   multi-select — 🔴 DECORATIVO (ver abaixo)
+  CLASSE_PROCESSUAL      145 opções   ⚠️ o `value` vem com padding de espaços
+  TIPO_LEGISLACAO         44 opções
+  EMISSOR_LEI             32 opções   (1=Federal, 2=Estadual, 3=Municipal, …)
+  MUNICIPIO              400 opções   (399 municípios; `disabled` até escolher
+                                       o emissor "Municipal")
+  TIPO_PRECEDENTE          6 opções
+
+Inputs de texto: TermoLivre, NUMERO_ATO, NUMERO_PROCESSO, INTERESSADO,
+DtSessaoInicial, DtSessaoFinal, ENTIDADE, PrecedenteDoTribunal, NOME_LEI,
+NUMERO_LEI, ANO_LEI, ARTIGO_EL, PARAGRAFO_EL, INCISO_EL, ALINEA_EL, ITEM_EL,
+NUMERO_PRECEDENTE, ANO_PRECEDENTE.
+Hidden: REFERENCIA_LEGISLATIVA, LinhasPorPagina, Ordenacao, PaginaAtual,
+CLASSIFICACAO_DECISAO_SELECIONADOS.
+Botão: `#btnBuscar` (`type="button"` — não é submit; quem manda é o JS).
+
+⚠️ A tela envia ainda dois campos de cauda que não existem no formulário:
+`FiltrarPor=` (vazio) e `filtro=undefined` (a **string literal** "undefined", um
+bug do próprio portal). Reproduzimos os dois por fidelidade.
+
+
+## 🔴 DOIS CONTROLES DA TELA NÃO FILTRAM NADA — os dois com HTTP 200
+
+Provado por contagem, que é a única prova que vale (invariante do repo:
+"contagem igual com e sem filtro = filtro ignorado").
+
+**(a) `IdCampoPesquisa` — o combo "no campo… / EMENTA / TEMA" é IGNORADO.**
+Com `TermoLivre=licitação`:
+
+    IdCampoPesquisa = -1 (padrão)   → 17.563
+    IdCampoPesquisa = EMENTA        → 17.563
+    IdCampoPesquisa = TEMA          → 17.563
+    IdCampoPesquisa = XXX9 (inventado) → 17.563
+
+Quatro valores, um número. O valor inventado é o que fecha o argumento: se o
+campo fosse lido, ele daria erro ou zero. **Não expusemos flag de escopo de
+campo no CLI** — ela mentiria para o usuário.
+
+**(b) `CLASSIFICACAO_DECISAO` — o `<select multiple>` da tela é DECORATIVO.**
+Quem filtra é o hidden `CLASSIFICACAO_DECISAO_SELECIONADOS`, que o widget
+"chosen" alimenta:
+
+    CLASSIFICACAO_DECISAO             = 4  → 17.563  (= sem filtro; ignorado)
+    CLASSIFICACAO_DECISAO_SELECIONADOS = 4 →      2  (Súmulas)
+    CLASSIFICACAO_DECISAO_SELECIONADOS = 3 →     14  (Prejulgados)
+    CLASSIFICACAO_DECISAO_SELECIONADOS = 1 →    253  (Consulta com força normativa)
+
+É **exatamente** o defeito que o eJURIS/TJRJ ensinou em 13/08 ("o select era
+decorativo, quem filtra é o hidden") — dois portais seguidos, mesma armadilha,
+fornecedores diferentes. Vale como padrão a procurar, não como coincidência:
+**num formulário com widget de multi-seleção, teste o hidden antes do select.**
+
+Os 6 valores: 1 Consulta com Força Normativa · 2 Consulta Sem Força Normativa ·
+3 Prejulgados · 4 Súmulas · 5 Uniformização de Jurisprudência ·
+6 Incidente de Uniformização.
+
+
+## ✅ Os filtros que FUNCIONAM, provados por contagem
+
+Baseline `licitação` = **17.563**.
+
+  COLEGIADO=Tribunal Pleno      → 10.918
+  COLEGIADO=Primeira Câmara     →  3.555
+  COLEGIADO=Segunda Câmara      →  3.090
+                                  ------
+                          soma  → 17.563  ✅ A PARTIÇÃO FECHA EXATA
+
+  COLEGIADO=<valor inventado>   →      0  (sintoma visível — bom)
+  ANO_ATO=2025                  →  1.118
+  ANO_ATO=2026                  →    727
+  NOME_RELATOR=AUGUSTINHO ZUCCHI→    364
+  NOME_RELATOR=<inventado>      →      0  (sintoma visível)
+
+⚠️ O relator quer o **nome exato** do combo (o `value` é o próprio nome, em
+caixa alta e com acento). É o padrão do TJBA (`relatores` quer nome), não o do
+`orgaos`/`classes` (que querem id).
+
+⚠️ **Não existe partição Juizado × Justiça Comum aqui** — é controle externo,
+não há Juizado. O recorte equivalente, e o único que particiona, é o colegiado.
+Ausência medida no combo de 4 opções, não presumida.
+
+
+## 🔴 A JANELA DE DATA FALHA DOS DOIS LADOS, DE MANEIRAS OPOSTAS
+
+Com `licitação` (17.563 sem filtro):
+
+    DtSessaoInicial=01/01/2025 + DtSessaoFinal=31/12/2025 →  1.118  ✅ restringe
+    DtSessaoInicial=05/08/2026 + DtSessaoFinal=05/08/2026 →      4  ✅ 1 dia
+    DtSessaoInicial=01/01/2025 SOZINHA                    →      0  🔴 ZERA
+    DtSessaoFinal=31/12/2025  SOZINHA                     → 17.563  🔴 IGNORADA
+
+**Meia janela nunca é meia resposta**, e as duas metades erram para lados
+opostos — uma some com tudo, a outra não faz nada, as duas com HTTP 200. O
+TJRR e o TJPI tinham **uma** ponta ignorada; aqui o par é assimétrico. O crawler
+não envia meia janela: ou manda as duas pontas, ou nenhuma, e avisa.
+
+✅ Aceita **DD/MM/YYYY e YYYY-MM-DD** (os dois devolvem 1.118 em 2025) — não é
+preciso converter, mas convertemos para o padrão do repo.
+
+⚠️ **A janela filtra a data da SESSÃO de julgamento**, e a data de publicação
+(que existe e é distinta: sessão 05/08/2026, publicação 11/08/2026) **não é
+filtrável**. Nunca apresente o recorte do TCE-PR como sendo por publicação.
+
+
+## 🔴 OS OPERADORES: A TELA ANUNCIA OS PORTUGUESES E QUEM FUNCIONA É O INGLÊS
+
+Logo acima do campo, o portal imprime a legenda: `e ou não ( ) * ? ~`.
+Medido, com A=`nepotismo` (379) e B=`licitação` (17.563):
+
+    A B            (espaço)   →    179   = interseção  → ESPAÇO É E (AND)
+    A e B                     →    179   idem
+    A E B                     →    179   idem
+    A ou B                    →    179   🔴 IGNORADO — devolve INTERSEÇÃO
+    A AND B                   →    179   ✅ (ou ignorado; o efeito é AND)
+    A OR B                    → 17.763   ✅ UNIÃO — e a aritmética FECHA:
+                                            379 + 17.563 − 179 = 17.763
+    B não A                   →    178   🔴 vira palavra (AND de 3 termos)
+    B nao A                   →    179   🔴 idem
+    B NOT A                   → 17.384   ✅ EXCLUSÃO — e fecha: 17.563 − 179
+    (A ou B)                  →    179   🔴 parênteses não salvam o `ou`
+    "concorrência pública"    →    959   ✅ frase exata funciona
+    concorrência pública      →  3.407   (sem aspas: AND dos dois termos)
+    licita*                   → 12.291   ⚠️ DEGENERA (menos que o termo inteiro)
+    licita??o                 →      0   🔴 ZERA em silêncio, apesar da legenda
+    licitacao~                → 12.300   (fuzzy, ~ igual ao curinga)
+    xyzqwk9 (inventado)       →      0   ✅ sintoma visível
+
+🔴 **O `ou` é o operador mais perigoso desta base**: você pede união e recebe
+interseção, com número plausível e sem sintoma nenhum. É o mesmo defeito do
+TJMT (`OU` e `NÃO` descartados em silêncio) — e aqui agravado por a **tela
+anunciar o operador que não funciona**. Terceira vez no repo que a documentação
+do próprio portal está errada (TJPI, TJBA, agora TCE-PR).
+
+⚠️ O `*` **degenera** (12.291 < 17.563 do termo inteiro), porque o termo simples
+já expande sozinho — o curinga restringe em vez de ampliar. Padrão TJPE.
+Nono conjunto de operadores no repo; continua sem herdar de ninguém.
+
+✅ **Acento é NORMALIZADO**: `licitacao` e `licitação` devolvem **17.563** os
+dois. Não avise o usuário sobre acento aqui.
+
+
+## Consulta por número — 🔴 o formato da tela devolve ZERO calado
+
+    NUMERO_PROCESSO=393433/2026  →      0   🔴 (é o formato que o card EXIBE)
+    NUMERO_PROCESSO=393433       →      1   ✅
+    NUMERO_PROCESSO=393433 + ANO_PROCESSO=2026 → 1  ✅
+    NUMERO_PROCESSO=999999999/2099 (inventado) →   0
+    NUMERO_ATO=1979 + ANO_ATO=2026             →   1  ✅ (por nº de acórdão)
+
+O campo quer **só o sequencial**, com o ano à parte. O card mostra
+`Processo: 393433/2026`; copiar isso e colar no campo devolve zero com HTTP 200.
+Por isso o `TCEPRChecker.normalizar()` parte o número. Some à coleção: TJPE quer
+só dígitos, TJES quer só máscara, TJPI derruba com 500, TJMT aceita as duas —
+e o TCE-PR quer o número partido em dois campos.
+
+
+## Vigência da base — ✅ CORRENTE, e medida na BASE, não numa série de termo
+
+Distribuição por `ANO_ATO` **sem termo de busca** (a lição do TJBA: medir o
+denominador certo):
+
+    2026 → 2.160     2025 → 3.931     2024 → 5.150     2023 → 4.530
+    2020 → 4.746     2015 → 6.565     2010 → 3.667     2005 → 6.160
+    2000 → 2.483     1998 → 2.787
+
+Base **corrente** (o acórdão mais recente colhido é de sessão de **05/08/2026**,
+9 dias antes do mapeamento) e **funda** (cobre 1998–2026 sem buraco). Não é o
+caso do TJAM (congelada) nem do TJPI (defasagem na ponta).
+Total da base sem filtro: **148.490**.

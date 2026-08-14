@@ -59,6 +59,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `stf`  | **Supremo Tribunal Federal** | Nacional (constitucional) | `CLAUDE-STF.md` | 🟢 OK (API direta; browser só p/ o token do WAF) |
 | `stj`  | **Superior Tribunal de Justiça** | Nacional (lei federal infraconstitucional) | `CLAUDE-STJ.md` | 🔴 **BLOQUEADO — não rodar** (desafio interativo do Cloudflare desde 27/07/2026; ver alerta no topo) |
 | `tcu`  | Tribunal de Contas da União | Federal (acórdãos) | `CLAUDE-TCU.md` | 🟢 OK |
+| `tcepr` | **TCE-PR** (Tribunal de Contas do Estado do Paraná — controle externo) | PR (Estado + **os 399 municípios**) | `CLAUDE-TCEPR.md` | 🟢 OK (portal ViaJuris, HTTP direto, sem browser — **sem captcha**; ementa, **tema**, inteiro teor, **citação oficial** e **permalink público** já vêm na busca). Base corrente, 1998–2026 |
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
@@ -600,6 +601,37 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   **não indexa número CNJ** — peça o número no formato do STJ (`REsp 1809043`) ou o
   registro (`2019/0116080-0`)
 - "Acórdãos do TCU" → `tcu` → leia `CLAUDE-TCU.md`
+- **Contas públicas do PARANÁ** ("o que o Tribunal de Contas do PR decidiu", licitação e
+  contrato administrativo, aposentadoria/admissão de servidor **estadual ou municipal**,
+  contas de prefeito, LRF, terceirização na administração) → `tcepr` → leia
+  `CLAUDE-TCEPR.md`. É instância de **controle externo**, não Judiciário: para a mesma
+  matéria judicializada, o caminho é `tjpr` (estadual) ou `trf4` (federal).
+  🔴 **Não ofereça o `tcepr` para matéria cível, penal, trabalhista ou previdenciária** —
+  ele não tem esse acervo, e o zero seria o tribunal errado, não ausência de julgado.
+  ✅ **O Paraná não tem TCM**: conta de prefeitura, câmara e autarquia municipal está
+  aqui (o combo de município traz os **399**). A armadilha "procure o TCM" vale para SP,
+  RJ, BA, GO e PA — não para o PR.
+  🔴 **Os operadores são os INGLESES** (`OR`, `NOT`, `"frase exata"`, `*`), e a tela
+  anuncia os portugueses, que **não funcionam**: `ou` e `não` são **ignorados** e a busca
+  vira `E` (AND) — você pede união e recebe interseção, com número plausível e sem
+  sintoma (`nepotismo ou licitação` = 179; com `OR` = 17.763). O espaço é `E` (AND).
+  ⚠️ `?` **zera** em silêncio e `*` **degenera** (devolve menos que o termo inteiro).
+  ⚠️ **NÃO avise sobre acento** — o índice normaliza.
+  🔴 **Sem `-q` o resultado vem SEM inteiro teor** (medido 0% contra 100% com termo):
+  buscar só por filtro devolve ementa e tema, não o texto. Para o texto, use
+  `--fetch-inteiro-teor`.
+  🔴 **As duas pontas da data falham de maneiras opostas**: `-di` sozinho **zera** a
+  busca e `-df` sozinho é **ignorado** (acervo inteiro). Mande as duas — o crawler avisa.
+  ⚠️ E a janela é da **data da SESSÃO**; a publicação existe, é distinta e **não é
+  filtrável**. Nunca apresente o recorte do TCE-PR como sendo por publicação.
+  ⚠️ **Não há número CNJ nem DataJud** (contas não é Judiciário): o processo é
+  `<sequencial>/<ano>`, e a verificação é `./bin/jur tcepr -n "393433/2026"`.
+  🔴 Um processo rende **vários** acórdãos — quem identifica o julgado é o `id`.
+  ✅ **Há permalink público por documento** (confirmado em aba limpa) e **citação
+  oficial pronta**; 🔴 mas **não existe URL de busca** — nunca mande "o link da busca"
+  do TCE-PR como prova.
+  ⚠️ O inteiro teor do card vem **fora de ordem** (remontado por janelas de match,
+  começa pelo bloco de assinatura): para leitura fiel, use o PDF
 - **Contencioso administrativo PREVIDENCIÁRIO** ("o que o CRPS decidiu", recurso contra
   indeferimento do INSS, Junta de Recursos, Câmara de Julgamento) → 🔴 **não há busca**:
   o portal exige login Gov.br e o contorno por perfil de Chrome dedicado **já foi tentado

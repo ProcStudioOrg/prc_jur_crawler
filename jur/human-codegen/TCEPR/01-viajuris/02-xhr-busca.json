@@ -1,0 +1,170 @@
+[
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Pesquisa/PesquisaAcordaos",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/css/CssBundleInit?v=JJa99V_uD2LcONBD8rRcCi79FRFRH2VglLx9vNbwLrM1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/css/CssBundlePlugins?v=ximT-XLX_OleFksW29QpB9yoIH8kH7OBdVmzCsbTEsI1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Styles/CssBundlePaginas?v=lAQdAJdU1Och0Bo2ftKzyAQlK22V53yl5NrGEcOI5BI1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/css/CssBundleAceInit?v=ghb1bTEfgM6bUcKIGZz_Gc6MLweSI2CrnStn4Kv9a0U1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Styles/CssBundleTemaTC?v=-Q24PjU_SggDiYVGMOwjC-EsKT5oAUqJM2PFgP8z3hc1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/fonts/fontello/css/fontello.css",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/js/JSBundleAceExtra?v=84GZnXyneE5c3qDmGzsFNfGFhb64SBg4VGshImWOOeo1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/js/JSBundleJquery?v=-yCaWFrf6CxpJq2WJPSqx1NvKz5fowBnRDsnJWzKUtg1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Scripts/JSBundleValidators?v=QtYgsQkFkky5ZpxMt1lVND7E33re5dOuEWbKtrL93A41",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Scripts/JSBundleTreeView?v=y9iAqNKOuDYkJyAzVxu1EMTcyA8t50XRDJHwZqmXqhQ1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Styles/CssBundleTreeView?v=re7nMQSSX6Qjln5CimO6lA9l-1B0-FhPAhyfmX6YCkk1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Scripts/JurisprudenciaGeral?v=G77jvwEtRHnETQKrFja7Ruak-SszTS3vzdBZBgJ3-VQ1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/js/JSBundleBootstrap?v=DDzGQFwAHvsS6ybjyGBIlCvTT2HN8ld6P5-jqvj9ZBw1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/js/JSBundlePlugins?v=vOLYD1aYGBlXwM5KoG3Fd-CHkCO9_T8dLkD0SIYmBpI1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/js/JSBundlePluginsPaginas?v=2Nxk1V7ugL7pr5jDS7bVGOjiQdNO3nubGmLkQjdvm2c1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/js/JSBundleAce?v=6o-QhIUKUuIP02X_YLJHF6hs1-g44mMTaWBKMZiGnhI1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Scripts/Paginas/FiltrosBuscaFacetadaJS.js?b=abz",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Scripts/Paginas/PesquisaAcordaoJS.js?b=45",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Styles/Paginas/PesquisaAcordao.css?a=1",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Styles/images/imagem_carregamento.gif",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Styles/images/logo_TCE_.png",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Styles/images/logo_viajuris_branco.png",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/fonts/OpenSans-400.woff",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/fonts/fontawesome-webfont.woff2?v=4.7.0",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/fonts/fontello/font/fontello.woff2?9000700",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "GET",
+  "u": "https://viajuris.tce.pr.gov.br/Theme/fonts/glyphicons-halflings-regular.woff2",
+  "ct": "",
+  "pd": ""
+ },
+ {
+  "m": "POST",
+  "u": "https://viajuris.tce.pr.gov.br/Pesquisa/PesquisaAcordaos/Buscar",
+  "ct": "application/x-www-form-urlencoded; charset=UTF-8",
+  "pd": "TermoLivre=licita%C3%A7%C3%A3o&IdCampoPesquisa=-1&NUMERO_ATO=&ANO_ATO=-1&COLEGIADO=-1&NUMERO_PROCESSO=&ANO_PROCESSO=-1&NOME_RELATOR=-1&INTERESSADO=&CLASSE_PROCESSUAL=-1&DtSessaoInicial=&DtSessaoFinal=&ENTIDADE=&PrecedenteDoTribunal=&TIPO_LEGISLACAO=-1&EMISSOR_LEI=-1&NOME_LEI=&NUMERO_LEI=&ANO_LEI=&REFERENCIA_LEGISLATIVA=&ARTIGO_EL=&PARAGRAFO_EL=&INCISO_EL=&ALINEA_EL=&ITEM_EL=&TIPO_PRECEDENTE=-1&NUMERO_PRECEDENTE=&ANO_PRECEDENTE=&LinhasPorPagina=&Ordenacao=&PaginaAtual=&CLASSIFICACAO_DECISAO_SELECIONADOS=&FiltrarPor=&filtro=undefined"
+ }
+]

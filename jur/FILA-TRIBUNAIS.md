@@ -1178,7 +1178,7 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 
 | # | Alvo | UF | Ressalva de escopo | Status |
 |---|---|---|---|---|
-| 18 | **TCE-PR** | PR | | pendente |
+| 18 | **TCE-PR** | PR | ✅ o PR **não tem TCM** — os 399 municípios estão na base do próprio TCE | ok 14/08 |
 | 19 | **TCE-SC** | SC | | pendente |
 | 20 | **TCE-RS** | RS | | pendente |
 | 21 | **TCE-SP** | SP | ⚠️ **não** cobre a capital — SP capital é do **TCM-SP** | pendente |
@@ -1191,6 +1191,123 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 28 | **TCDF** | DF | | pendente |
 | 29 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** | pendente |
 | 30 | **TCE-ES** | ES | | pendente |
+
+📌 **O que o TCE-PR (feito em 14/08/2026) ensinou — leia
+[`CLAUDE-TCEPR.md`](CLAUDE-TCEPR.md).** Primeiro alvo do Bloco 5 e **primeiro
+tribunal de contas estadual do repo**. Fechou 🟢 em ~1 h, e a lição de abertura
+do bloco é que **o TCE não é um TJ com outro nome**: o que muda não é só o
+acervo, é o que o crawler pode presumir. As lições valem para os 12 restantes:
+
+- 🔴 **A ARMADILHA DECLARADA DO BLOCO 5 NÃO EXISTIA NESTE ALVO — e isso também
+  se mede.** A fila avisa "onde existe TCM, buscar contas municipais no TCE
+  devolve zero que se lê como não há julgado". **O Paraná não tem TCM**, e a
+  prova saiu do próprio formulário: o combo `MUNICIPIO` traz **400 opções**, os
+  399 municípios mais o "Selecione". Não foi preciso pesquisar fora do portal.
+  **Nos 12 restantes, conte o combo de município antes de escrever a ressalva** —
+  ela é verdadeira em SP, RJ, BA, GO e PA, e falsa aqui.
+- 🔴 **SEM CNJ E SEM DATAJUD, e as duas ausências são estruturais.** O processo é
+  `<sequencial>/<ano>` na numeração própria (`393433/2026`): `src/cnj.js`
+  reprovaria todo processo válido. E o DataJud é do CNJ, que cobre o
+  **Judiciário** — contas não tem alias `api_publica_*`. Ou seja, **o plano B de
+  TJMA/TJRN não existe no Bloco 5 inteiro**: se o portal de um TCE cair, não há
+  para onde apelar, e `bloqueado` ali será mão vazia de verdade.
+- 🔴 **TERCEIRA CASCA DE HTTP 200 CATALOGADA, e a mais convincente: a TELA DE
+  LOGIN.** `/swagger` e `/v1/api-docs` respondem **200 com 8,3 KB** — porque
+  **todo path desconhecido do ViaJuris devolve 302 para o SSO**
+  (`cia.tce.pr.gov.br/sso?AppKey=…`). Não é vhost curinga (TJAC/TJAL) nem
+  `index.html` de SPA (TJES/TJRR): é uma aplicação de verdade, com formulário e
+  layout, o que a torna muito mais fácil de confundir com um Swagger real. O que
+  desfez foi o de sempre: **`/path-inventado-9z` devolve a mesma coisa**, com
+  diff normalizado vazio. E `/api` responde **401 `Token inválido`** com
+  `WWW-Authenticate: Negotiate` — Windows Auth interno, não a API (a armadilha
+  do `api.tjba.jus.br`, repetida).
+- 🔴 **O SELECT DECORATIVO APARECEU DE NOVO, UM DIA DEPOIS — e num fornecedor
+  diferente.** Em 13/08 o eJURIS/TJRJ ensinou "o `<select>` era decorativo, quem
+  filtra é o hidden". Aqui, num ASP.NET MVC sem nenhum parentesco com o eJURIS,
+  `CLASSIFICACAO_DECISAO` devolve **17.563 = a contagem sem filtro** e o hidden
+  `CLASSIFICACAO_DECISAO_SELECIONADOS` devolve **2 súmulas / 14 prejulgados /
+  253 consultas**. Dois portais seguidos, mesma armadilha: **num formulário com
+  widget de multi-seleção, teste o hidden antes do select** — vale como padrão,
+  não como coincidência.
+- 🔴 **UM SEGUNDO CONTROLE SIMPLESMENTE NÃO FILTRA:** o combo "no campo… /
+  EMENTA / TEMA" (`IdCampoPesquisa`) devolve **17.563 nos quatro valores**
+  testados, inclusive um **inventado**. Foi o valor inventado que fechou o
+  argumento — sem ele, três números iguais ainda admitiriam "o escopo não muda
+  para este termo". **O crawler não expõe flag para ele: flag que não filtra
+  mente para o usuário**, e pendência declarada é onde o bug se esconde.
+- 🔴 **AS DUAS PONTAS DA JANELA DE DATA FALHAM PARA LADOS OPOSTOS.** `-di`
+  sozinho **ZERA** (0 registros) e `-df` sozinho é **IGNORADO** (acervo inteiro),
+  as duas com HTTP 200. TJRR e TJPI tinham **uma** ponta ignorada; aqui o par é
+  **assimétrico**, o que significa que testar uma metade não diz nada sobre a
+  outra. **Teste cada ponta em separado, e nos dois sentidos.**
+- 🔴 **A TELA ANUNCIA OS OPERADORES QUE NÃO FUNCIONAM.** A legenda impressa é
+  `e ou não ( ) * ? ~`, e o medido é o oposto: `ou` e `não` são **ignorados** (a
+  busca vira AND — você pede união e recebe interseção, 179 contra 17.763), e
+  quem funciona é `OR`/`NOT`, com aritmética exata nos dois
+  (379 + 17.563 − 179 = 17.763; 17.563 − 179 = 17.384). E `?`, que a legenda
+  oferece, **zera em silêncio**. Terceira vez que a documentação do próprio
+  portal está errada (TJPI, TJBA, agora TCE-PR) — **leia a legenda e meça mesmo
+  assim.** Nono conjunto de operadores; continua sem herdar.
+- 🔴 **O ARQUIVO SERVIDO COMO `application/pdf` NÃO COMEÇA COM `%PDF` — defeito
+  novo no repo.** É um **envelope PKCS#7 assinado em DER** (a assinatura digital
+  do Tribunal), com o PDF embutido no **offset 57**. O poppler lê assim mesmo,
+  mas `buffer.slice(0,4) === '%PDF'` é falso, e um crawler que validasse o
+  download pelo magic number rejeitaria **todo** inteiro teor do tribunal,
+  reportando "0 baixados" com HTTP 200 em tudo. **Foi o único teste que falhou
+  na primeira suíte** — que é exatamente para isso que a suíte serve. Quarta
+  casca catalogada, e a mais sutil: aqui o `Content-Type` está **certo** e quem
+  tem invólucro é o **corpo**.
+- 🔴 **AO COMPARAR TIPOS DE DOCUMENTO, MUDE UMA VARIÁVEL SÓ — eu não mudei, e
+  quase gravei a ressalva errada.** Medi acórdão **com** termo livre e súmula,
+  prejulgado e consulta **sem** termo (porque o recorte por tipo é filtro), e
+  concluí "os outros três tipos não têm inteiro teor". Refeito com termo, os
+  quatro têm. O que manda **não é o tipo, é o termo**: o bloco "Inteiro Teor" é o
+  *match* do termo no texto, e a medição correta é **100% com termo (50/50,
+  14/14, 20/20, 2/2) contra 0% sem termo (0/50, 0/20, 0/20)**. É o avesso do erro
+  do TJMG, que mediu um tipo só e generalizou: aqui foram quatro tipos, em dois
+  regimes de busca diferentes.
+- 🔴 **O BLOCO DE TEXTO DO CARD MISTURA HIGHLIGHT COM DOCUMENTO.** São três
+  `<div>`: dois **snippets** de ~595 chars que começam com `...` e trazem o termo
+  em amarelo, e o **texto integral** (~15,4 mil). Pegar o primeiro publica
+  recorte como inteiro teor; concatenar os três publica o mesmo parágrafo três
+  vezes. ✅ E o maior **é** o inteiro teor, conferido contra o PDF por
+  `pdftotext`: **0,98 de razão de tamanho e 95% das janelas presentes**.
+  ⚠️ **Mas vem fora de ordem** (começa pelo bloco de assinatura), porque é
+  remontado por janelas de match — serve para análise, não para leitura fiel.
+  **Quando houver PDF, confira o texto do card contra ele: custa um `pdftotext`.**
+- 🔴 **O FORMATO QUE A TELA EXIBE NÃO É O QUE O CAMPO ACEITA.** O card mostra
+  `Processo: 393433/2026` e mandar isso devolve **0 com HTTP 200**; o campo quer
+  o sequencial (`393433`) com o ano à parte. Some à coleção: TJPE só dígitos,
+  TJES só máscara, TJPI derruba com 500, TJMT aceita as duas — e o TCE-PR quer o
+  número **partido em dois campos**.
+- ✅ **Muita coisa aqui está BEM, e medir isso também é o trabalho:** sem captcha
+  em etapa nenhuma (provado mandando o POST, não com `grep`); partição por
+  colegiado **fecha exata** (10.918 + 3.555 + 3.090 = 17.563); total **exato**
+  com a aritmética da última página fechando; paginação **estável 3/3**; zero é
+  **zero de verdade** (631 bytes, `var totalRegistros = 0`); **permalink público**
+  confirmado em requisição limpa; **citação oficial pronta** no `data-content`
+  (nada de regex, o que custou quatro formatos na família e-SAJ); e a base é
+  **corrente e funda** (148.490 acórdãos, 1998–2026, sessão mais recente
+  05/08/2026). Há ainda um campo **`Tema`** — resumo analítico que **nenhum TJ do
+  repo tem**.
+- ⚠️ **Existe DADOS ABERTOS oficial de acórdãos** (`/DadosAbertos/DadosAbertos`,
+  com dicionário em XLSX, frequência declarada **semanal**), mas é **pacote para
+  download em lote, não endpoint de consulta** — não substitui o crawler. E a
+  atualização **declarada não bate com a observada** (recurso marcado 05/06/2026
+  contra base cuja sessão mais recente é de agosto): **para buscar, o formulário
+  está mais fresco que o dado aberto.** Vale sondar o equivalente nos outros TCEs
+  antes de decidir a porta.
+
+⚠️ **Pendências declaradas do TCE-PR:** os combos de **referência normativa**
+(tipo/emissor/nome/número/ano da lei + artigo/parágrafo/inciso/alínea/item) e de
+**precedentes** estão enumerados mas **não foram provados por contagem** nem
+expostos como flag; `--classe` (145 opções) e `--municipio` (399) estão expostos
+mas **não provados por contagem**; o combo de **ordenação** não foi medido; a
+**árvore do tesauro** (`modalArvoreClassificacao`) e a busca por referência a
+partir do card **não foram dissecadas**; a **multi-seleção** do hidden de
+classificação foi testada **com um valor por vez**; o **rate limit não foi
+medido**; e o **dataset de Dados Abertos não foi baixado** nem comparado com a
+busca. ⏱️ Timebox **não estourado**: 16:00 → 17:01, ~61 min.
 
 **Armadilha do bloco 5:** onde existe TCM, buscar "contas municipais" no TCE devolve zero
 que se lê como "não há julgado". Ao documentar o TCE, escreva explicitamente o que ele

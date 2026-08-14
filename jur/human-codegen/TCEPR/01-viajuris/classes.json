@@ -1,0 +1,582 @@
+[
+ {
+  "v": "-1",
+  "t": "Selecione uma Classe Processual"
+ },
+ {
+  "v": "ACOMPANHAMENTO                                    ",
+  "t": "ACOMPANHAMENTO"
+ },
+ {
+  "v": "ADICIONAIS                                        ",
+  "t": "ADICIONAIS"
+ },
+ {
+  "v": "ADITIVO DE CONTRATO                               ",
+  "t": "ADITIVO DE CONTRATO"
+ },
+ {
+  "v": "ADITIVO DE CONVÊNIO E CONGÊNERES                  ",
+  "t": "ADITIVO DE CONVÊNIO E CONGÊNERES"
+ },
+ {
+  "v": "ADMISSÃO DE MEMBRO DO TRIBUNAL                    ",
+  "t": "ADMISSÃO DE MEMBRO DO TRIBUNAL"
+ },
+ {
+  "v": "ADMISSÃO DE PESSOAL                               ",
+  "t": "ADMISSÃO DE PESSOAL"
+ },
+ {
+  "v": "AFASTAMENTO                                       ",
+  "t": "AFASTAMENTO"
+ },
+ {
+  "v": "AJUDA DE CUSTO                                    ",
+  "t": "AJUDA DE CUSTO"
+ },
+ {
+  "v": "ALERTA                                            ",
+  "t": "ALERTA"
+ },
+ {
+  "v": "ALIENAÇÃO DE BENS                                 ",
+  "t": "ALIENAÇÃO DE BENS"
+ },
+ {
+  "v": "ANÁLISE DA GESTÃO FISCAL - VIRTUAL                ",
+  "t": "ANÁLISE DA GESTÃO FISCAL - VIRTUAL"
+ },
+ {
+  "v": "ANEXAÇÃO                                          ",
+  "t": "ANEXAÇÃO"
+ },
+ {
+  "v": "ANOTAÇÃO EM FICHA FUNCIONAL                       ",
+  "t": "ANOTAÇÃO EM FICHA FUNCIONAL"
+ },
+ {
+  "v": "APOSENTADORIA DE MEMBRO DO TRIBUNAL               ",
+  "t": "APOSENTADORIA DE MEMBRO DO TRIBUNAL"
+ },
+ {
+  "v": "ARQUIVAMENTO DE PROTOCOLADO                       ",
+  "t": "ARQUIVAMENTO DE PROTOCOLADO"
+ },
+ {
+  "v": "ASCENSÃO FUNCIONAL                                ",
+  "t": "ASCENSÃO FUNCIONAL"
+ },
+ {
+  "v": "ATESTADO DE CAPACIDADE TÉCNICA                    ",
+  "t": "ATESTADO DE CAPACIDADE TÉCNICA"
+ },
+ {
+  "v": "ATO DE INATIVAÇÃO                                 ",
+  "t": "ATO DE INATIVAÇÃO"
+ },
+ {
+  "v": "ATOS DE CONTRATAÇÃO DO TRIBUNAL                   ",
+  "t": "ATOS DE CONTRATAÇÃO DO TRIBUNAL"
+ },
+ {
+  "v": "ATOS DE REMUNERAÇÃO                               ",
+  "t": "ATOS DE REMUNERAÇÃO"
+ },
+ {
+  "v": "AUDITORIA                                         ",
+  "t": "AUDITORIA"
+ },
+ {
+  "v": "BAIXA DE PENDÊNCIA                                ",
+  "t": "BAIXA DE PENDÊNCIA"
+ },
+ {
+  "v": "BALANCETES                                        ",
+  "t": "BALANCETES"
+ },
+ {
+  "v": "CERTIDÃO LIBERATÓRIA                              ",
+  "t": "CERTIDÃO LIBERATÓRIA"
+ },
+ {
+  "v": "COMPROVAÇÃO DE ADIANTAMENTO                       ",
+  "t": "COMPROVAÇÃO DE ADIANTAMENTO"
+ },
+ {
+  "v": "COMPROVAÇÃO DE AUXÍLIO                            ",
+  "t": "COMPROVAÇÃO DE AUXÍLIO"
+ },
+ {
+  "v": "COMPROVAÇÃO DE SUBVENÇÃO SOCIAL                   ",
+  "t": "COMPROVAÇÃO DE SUBVENÇÃO SOCIAL"
+ },
+ {
+  "v": "COMUNICAÇÃO DE IRREGULARIDADE                     ",
+  "t": "COMUNICAÇÃO DE IRREGULARIDADE"
+ },
+ {
+  "v": "CONCURSO PÚBLICO DO TRIBUNAL                      ",
+  "t": "CONCURSO PÚBLICO DO TRIBUNAL"
+ },
+ {
+  "v": "CONCURSO-TC                                       ",
+  "t": "CONCURSO-TC"
+ },
+ {
+  "v": "CONFLITO DE COMPETÊNCIA                           ",
+  "t": "CONFLITO DE COMPETÊNCIA"
+ },
+ {
+  "v": "CONSULTA                                          ",
+  "t": "CONSULTA"
+ },
+ {
+  "v": "CONTAGEM DE TEMPO                                 ",
+  "t": "CONTAGEM DE TEMPO"
+ },
+ {
+  "v": "CONTRATO                                          ",
+  "t": "CONTRATO"
+ },
+ {
+  "v": "CONVÊNIO E CONGÊNERES                             ",
+  "t": "CONVÊNIO E CONGÊNERES"
+ },
+ {
+  "v": "CONVÊNIO/AJUSTE                                   ",
+  "t": "CONVÊNIO/AJUSTE"
+ },
+ {
+  "v": "CONVERSÃO DE SISTEMAS                             ",
+  "t": "CONVERSÃO DE SISTEMAS"
+ },
+ {
+  "v": "CÓPIA DE AUTOS DE PROCESSO JUDICIAL               ",
+  "t": "CÓPIA DE AUTOS DE PROCESSO JUDICIAL"
+ },
+ {
+  "v": "CORREIÇÃO EXTRAORDINÁRIA                          ",
+  "t": "CORREIÇÃO EXTRAORDINÁRIA"
+ },
+ {
+  "v": "CORREIÇÃO ORDINÁRIA                               ",
+  "t": "CORREIÇÃO ORDINÁRIA"
+ },
+ {
+  "v": "CUMPRIMENTO DE DECISÃO                            ",
+  "t": "CUMPRIMENTO DE DECISÃO"
+ },
+ {
+  "v": "CUSTEIO DE CURSO                                  ",
+  "t": "CUSTEIO DE CURSO"
+ },
+ {
+  "v": "DEFESA                                            ",
+  "t": "DEFESA"
+ },
+ {
+  "v": "DENÚNCIA                                          ",
+  "t": "DENÚNCIA"
+ },
+ {
+  "v": "DEPENDENTES PARA IMPOSTO SOBRE A RENDA            ",
+  "t": "DEPENDENTES PARA IMPOSTO SOBRE A RENDA"
+ },
+ {
+  "v": "DEVOLUÇÃO DE PROTOCOLADO                          ",
+  "t": "DEVOLUÇÃO DE PROTOCOLADO"
+ },
+ {
+  "v": "DIGITALIZAÇÃO                                     ",
+  "t": "DIGITALIZAÇÃO"
+ },
+ {
+  "v": "DIREITO DE PETIÇÃO                                ",
+  "t": "DIREITO DE PETIÇÃO"
+ },
+ {
+  "v": "DIVERSOS                                          ",
+  "t": "DIVERSOS"
+ },
+ {
+  "v": "EMBARGOS DE DECLARAÇÃO                            ",
+  "t": "EMBARGOS DE DECLARAÇÃO"
+ },
+ {
+  "v": "EMBARGOS DE LIQUIDAÇÃO                            ",
+  "t": "EMBARGOS DE LIQUIDAÇÃO"
+ },
+ {
+  "v": "EMENDA REGIMENTAL                                 ",
+  "t": "EMENDA REGIMENTAL"
+ },
+ {
+  "v": "ESCLARECIMENTOS/JUSTIFICATIVAS                    ",
+  "t": "ESCLARECIMENTOS/JUSTIFICATIVAS"
+ },
+ {
+  "v": "EXCEÇÃO DE SUSPEIÇÃO E IMPEDIMENTO                ",
+  "t": "EXCEÇÃO DE SUSPEIÇÃO E IMPEDIMENTO"
+ },
+ {
+  "v": "EXECUÇÃO ORÇAMENTÁRIA                             ",
+  "t": "EXECUÇÃO ORÇAMENTÁRIA"
+ },
+ {
+  "v": "EXONERAÇÃO                                        ",
+  "t": "EXONERAÇÃO"
+ },
+ {
+  "v": "FÉRIAS                                            ",
+  "t": "FÉRIAS"
+ },
+ {
+  "v": "HOMOLOGAÇÃO DE ICMS                               ",
+  "t": "HOMOLOGAÇÃO DE ICMS"
+ },
+ {
+  "v": "HOMOLOGAÇÃO DE RECOMENDAÇÕES                      ",
+  "t": "HOMOLOGAÇÃO DE RECOMENDAÇÕES"
+ },
+ {
+  "v": "IMPUGNAÇÃO                                        ",
+  "t": "IMPUGNAÇÃO"
+ },
+ {
+  "v": "IMPUGNAÇÃO À HOMOLOGAÇÃO                          ",
+  "t": "IMPUGNAÇÃO À HOMOLOGAÇÃO"
+ },
+ {
+  "v": "IMPUGNAÇÃO DE ATO                                 ",
+  "t": "IMPUGNAÇÃO DE ATO"
+ },
+ {
+  "v": "IMPUGNAÇÃO DE DESPESAS                            ",
+  "t": "IMPUGNAÇÃO DE DESPESAS"
+ },
+ {
+  "v": "INCIDENTE DE INCONSTITUCIONALIDADE                ",
+  "t": "INCIDENTE DE INCONSTITUCIONALIDADE"
+ },
+ {
+  "v": "INSPEÇÃO EXTERNA                                  ",
+  "t": "INSPEÇÃO EXTERNA"
+ },
+ {
+  "v": "ISENÇÃO DE CONTRIBUIÇÃO PREVIDENCIÁRIA            ",
+  "t": "ISENÇÃO DE CONTRIBUIÇÃO PREVIDENCIÁRIA"
+ },
+ {
+  "v": "ISENÇÃO DE IMPOSTO DE RENDA                       ",
+  "t": "ISENÇÃO DE IMPOSTO DE RENDA"
+ },
+ {
+  "v": "LEVANTAMENTO                                      ",
+  "t": "LEVANTAMENTO"
+ },
+ {
+  "v": "LICENÇA                                           ",
+  "t": "LICENÇA"
+ },
+ {
+  "v": "MANDADO                                           ",
+  "t": "MANDADO"
+ },
+ {
+  "v": "MANDADO JUDICIAL                                  ",
+  "t": "MANDADO JUDICIAL"
+ },
+ {
+  "v": "MANUAL TÉCNICO                                    ",
+  "t": "MANUAL TÉCNICO"
+ },
+ {
+  "v": "MEDIDA CAUTELAR INOMINADA                         ",
+  "t": "MEDIDA CAUTELAR INOMINADA"
+ },
+ {
+  "v": "MONITORAMENTO                                     ",
+  "t": "MONITORAMENTO"
+ },
+ {
+  "v": "NOMEAÇÃO                                          ",
+  "t": "NOMEAÇÃO"
+ },
+ {
+  "v": "NOTIFICAÇÃO-LRF                                   ",
+  "t": "NOTIFICAÇÃO-LRF"
+ },
+ {
+  "v": "OFÍCIO LIBERATÓRIO                                ",
+  "t": "OFÍCIO LIBERATÓRIO"
+ },
+ {
+  "v": "PARECER TÉCNICO                                   ",
+  "t": "PARECER TÉCNICO"
+ },
+ {
+  "v": "PEDIDO DE ACESSO À INFORMAÇÃO                     ",
+  "t": "PEDIDO DE ACESSO À INFORMAÇÃO"
+ },
+ {
+  "v": "PEDIDO DE RESCISÃO                                ",
+  "t": "PEDIDO DE RESCISÃO"
+ },
+ {
+  "v": "PENSÃO                                            ",
+  "t": "PENSÃO"
+ },
+ {
+  "v": "PLANO ANUAL DE FISCALIZAÇÃO                       ",
+  "t": "PLANO ANUAL DE FISCALIZAÇÃO"
+ },
+ {
+  "v": "PREJULGADO                                        ",
+  "t": "PREJULGADO"
+ },
+ {
+  "v": "PRESTAÇÃO DE CONTAS ANUAL                         ",
+  "t": "PRESTAÇÃO DE CONTAS ANUAL"
+ },
+ {
+  "v": "PRESTAÇÃO DE CONTAS DE EXTINÇÃO DE ENTIDADE       ",
+  "t": "PRESTAÇÃO DE CONTAS DE EXTINÇÃO DE ENTIDADE"
+ },
+ {
+  "v": "PRESTAÇÃO DE CONTAS DE TRANSFERÊNCIA              ",
+  "t": "PRESTAÇÃO DE CONTAS DE TRANSFERÊNCIA"
+ },
+ {
+  "v": "PRESTAÇÃO DE CONTAS DO GOVERNADOR DO ESTADO       ",
+  "t": "PRESTAÇÃO DE CONTAS DO GOVERNADOR DO ESTADO"
+ },
+ {
+  "v": "PRESTAÇÃO DE CONTAS DO PREFEITO MUNICIPAL         ",
+  "t": "PRESTAÇÃO DE CONTAS DO PREFEITO MUNICIPAL"
+ },
+ {
+  "v": "PRESTAÇÃO DE CONTAS ESTADUAL                      ",
+  "t": "PRESTAÇÃO DE CONTAS ESTADUAL"
+ },
+ {
+  "v": "PRESTAÇÃO DE CONTAS MUNICIPAL                     ",
+  "t": "PRESTAÇÃO DE CONTAS MUNICIPAL"
+ },
+ {
+  "v": "PROCEDIMENTO SUMÁRIO                              ",
+  "t": "PROCEDIMENTO SUMÁRIO"
+ },
+ {
+  "v": "PROCESSO ADMINISTRATIVO DISCIPLINAR               ",
+  "t": "PROCESSO ADMINISTRATIVO DISCIPLINAR"
+ },
+ {
+  "v": "PROCESSO DE MEMBRO DO TRIBUNAL                    ",
+  "t": "PROCESSO DE MEMBRO DO TRIBUNAL"
+ },
+ {
+  "v": "PROCESSO DE SERVIDOR DO TRIBUNAL                  ",
+  "t": "PROCESSO DE SERVIDOR DO TRIBUNAL"
+ },
+ {
+  "v": "PROCESSO ÉTICO DE MEMBRO DO TRIBUNAL              ",
+  "t": "PROCESSO ÉTICO DE MEMBRO DO TRIBUNAL"
+ },
+ {
+  "v": "PROCESSO INOMINADO                                ",
+  "t": "PROCESSO INOMINADO"
+ },
+ {
+  "v": "PROJETO DE INSTRUÇÃO NORMATIVA                    ",
+  "t": "PROJETO DE INSTRUÇÃO NORMATIVA"
+ },
+ {
+  "v": "PROJETO DE RESOLUÇÃO                              ",
+  "t": "PROJETO DE RESOLUÇÃO"
+ },
+ {
+  "v": "PROPOSTA                                          ",
+  "t": "PROPOSTA"
+ },
+ {
+  "v": "PRORROGAÇÃO DE PRAZO                              ",
+  "t": "PRORROGAÇÃO DE PRAZO"
+ },
+ {
+  "v": "PUBLICAÇÃO                                        ",
+  "t": "PUBLICAÇÃO"
+ },
+ {
+  "v": "RECONSTITUIÇÃO DE AUTOS                           ",
+  "t": "RECONSTITUIÇÃO DE AUTOS"
+ },
+ {
+  "v": "RECURSO ADMINISTRATIVO                            ",
+  "t": "RECURSO ADMINISTRATIVO"
+ },
+ {
+  "v": "RECURSO DE AGRAVO                                 ",
+  "t": "RECURSO DE AGRAVO"
+ },
+ {
+  "v": "RECURSO DE REVISÃO                                ",
+  "t": "RECURSO DE REVISÃO"
+ },
+ {
+  "v": "RECURSO DE REVISTA                                ",
+  "t": "RECURSO DE REVISTA"
+ },
+ {
+  "v": "RECURSO FISCAL                                    ",
+  "t": "RECURSO FISCAL"
+ },
+ {
+  "v": "RECURSO INOMINADO                                 ",
+  "t": "RECURSO INOMINADO"
+ },
+ {
+  "v": "REFORMA                                           ",
+  "t": "REFORMA"
+ },
+ {
+  "v": "REGISTRO DE PORTARIA DE APOSENTADORIA             ",
+  "t": "REGISTRO DE PORTARIA DE APOSENTADORIA"
+ },
+ {
+  "v": "REINTEGRAÇÃO DE CARGO                             ",
+  "t": "REINTEGRAÇÃO DE CARGO"
+ },
+ {
+  "v": "RELATÓRIO                                         ",
+  "t": "RELATÓRIO"
+ },
+ {
+  "v": "RELATÓRIO DE ADIANTAMENTO                         ",
+  "t": "RELATÓRIO DE ADIANTAMENTO"
+ },
+ {
+  "v": "RELATÓRIO DE AUDITORIA                            ",
+  "t": "RELATÓRIO DE AUDITORIA"
+ },
+ {
+  "v": "RELATÓRIO DE INSPEÇÃO                             ",
+  "t": "RELATÓRIO DE INSPEÇÃO"
+ },
+ {
+  "v": "RELATÓRIO DE MONITORAMENTO                        ",
+  "t": "RELATÓRIO DE MONITORAMENTO"
+ },
+ {
+  "v": "REPRESENTAÇÃO                                     ",
+  "t": "REPRESENTAÇÃO"
+ },
+ {
+  "v": "REPRESENTAÇÃO DA LEI DE LICITAÇÕES",
+  "t": "REPRESENTAÇÃO DA LEI DE LICITAÇÕES"
+ },
+ {
+  "v": "REPRESENTAÇÃO DO OUVIDOR                          ",
+  "t": "REPRESENTAÇÃO DO OUVIDOR"
+ },
+ {
+  "v": "REQUERIMENTO                                      ",
+  "t": "REQUERIMENTO"
+ },
+ {
+  "v": "REQUERIMENTO AO OUVIDOR GERAL                     ",
+  "t": "REQUERIMENTO AO OUVIDOR GERAL"
+ },
+ {
+  "v": "REQUERIMENTO DE ANÁLISE TÉCNICA                   ",
+  "t": "REQUERIMENTO DE ANÁLISE TÉCNICA"
+ },
+ {
+  "v": "REQUERIMENTO EXTERNO                              ",
+  "t": "REQUERIMENTO EXTERNO"
+ },
+ {
+  "v": "REQUERIMENTO INTERNO                              ",
+  "t": "REQUERIMENTO INTERNO"
+ },
+ {
+  "v": "REQUERIMENTOS AO CORREGEDOR-GERAL                 ",
+  "t": "REQUERIMENTOS AO CORREGEDOR-GERAL"
+ },
+ {
+  "v": "RESERVA                                           ",
+  "t": "RESERVA"
+ },
+ {
+  "v": "RESPOSTA A OFÍCIOS                                ",
+  "t": "RESPOSTA A OFÍCIOS"
+ },
+ {
+  "v": "RETIFICAÇÃO DE ATO                                ",
+  "t": "RETIFICAÇÃO DE ATO"
+ },
+ {
+  "v": "REVISÃO DE PENSÃO                                 ",
+  "t": "REVISÃO DE PENSÃO"
+ },
+ {
+  "v": "REVISÃO DE PROCESSO ADMINISTRATIVO DISCIPLINAR    ",
+  "t": "REVISÃO DE PROCESSO ADMINISTRATIVO DISCIPLINAR"
+ },
+ {
+  "v": "REVISÃO DE PROVENTOS                              ",
+  "t": "REVISÃO DE PROVENTOS"
+ },
+ {
+  "v": "SALÁRIO FAMÍLIA                                   ",
+  "t": "SALÁRIO FAMÍLIA"
+ },
+ {
+  "v": "SINDICÂNCIA                                       ",
+  "t": "SINDICÂNCIA"
+ },
+ {
+  "v": "SINDICÂNCIA INVESTIGATIVA                         ",
+  "t": "SINDICÂNCIA INVESTIGATIVA"
+ },
+ {
+  "v": "SINDICÂNCIA PUNITIVA                              ",
+  "t": "SINDICÂNCIA PUNITIVA"
+ },
+ {
+  "v": "SOLICITAÇÃO DE CÓPIAS/VISTAS                      ",
+  "t": "SOLICITAÇÃO DE CÓPIAS/VISTAS"
+ },
+ {
+  "v": "SOLICITAÇÃO DE CURSO/SEMINÁRIO                    ",
+  "t": "SOLICITAÇÃO DE CURSO/SEMINÁRIO"
+ },
+ {
+  "v": "SÚMULA                                            ",
+  "t": "SÚMULA"
+ },
+ {
+  "v": "TERMO DE AJUSTAMENTO DE GESTÃO                    ",
+  "t": "TERMO DE AJUSTAMENTO DE GESTÃO"
+ },
+ {
+  "v": "TOMADA DE CONTAS                                  ",
+  "t": "TOMADA DE CONTAS"
+ },
+ {
+  "v": "TOMADA DE CONTAS ESPECIAL                         ",
+  "t": "TOMADA DE CONTAS ESPECIAL"
+ },
+ {
+  "v": "TOMADA DE CONTAS EXTRAORDINÁRIA                   ",
+  "t": "TOMADA DE CONTAS EXTRAORDINÁRIA"
+ },
+ {
+  "v": "TOMADA DE CONTAS ORDINÁRIA                        ",
+  "t": "TOMADA DE CONTAS ORDINÁRIA"
+ },
+ {
+  "v": "UNIFORMIZAÇÃO DE JURISPRUDÊNCIA                   ",
+  "t": "UNIFORMIZAÇÃO DE JURISPRUDÊNCIA"
+ }
+]

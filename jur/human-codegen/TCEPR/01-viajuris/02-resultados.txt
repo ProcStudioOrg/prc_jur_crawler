@@ -1,0 +1,267 @@
+MAPEAMENTO PÓS-BUSCA — TCE-PR / ViaJuris
+========================================
+(skill `browser-post-search`, executada em 14/08/2026 sobre a busca do
+`01-busca-e-filtros.txt`)
+
+
+## Fase 1 — Onde o resultado aparece
+
+Rota:                    **NÃO MUDA**. A URL continua
+                         `/Pesquisa/PesquisaAcordaos` antes e depois de buscar.
+                         O resultado é injetado por AJAX (POST para
+                         `…/Buscar`), e a resposta é um fragmento HTML.
+Nova aba / popup:        não. Nenhuma `page` nova no contexto.
+Controles de busca:      **permanecem visíveis** (`#TermoLivre` continua no DOM
+                         e preenchido). O refinamento é incremental.
+🔴 Consequência:         **NÃO EXISTE URL DE BUSCA.** Nunca mande "o link da
+                         busca" do TCE-PR como prova — ele não carrega recorte
+                         nenhum. (Diferente do TJTO e do TJPE, onde a URL de
+                         busca existe e mente; aqui ela simplesmente não existe.)
+Total exposto:           texto `Mostrando 1 ao 10 do total de 17563 Registros`,
+                         e a variável JS `var totalRegistros = <n>` no mesmo
+                         fragmento. Lemos as duas (o Navigator tenta nessa
+                         ordem), porque no caso de zero **só a segunda existe**.
+Prints:                  02.01-resultados-topo.png · 02.02-resultados-rodape.png
+
+
+## Fase 2 — Anatomia do card
+
+Seletor:                 `div.conteudo-acordao.card.card-body`  (10 por página
+                         no default; um por documento)
+HTML gravado:            02-card-acordao.html (28.413 bytes)
+                         02-card-sumula.html · 02-card-prejulgado.html ·
+                         02-card-consulta-forca-normativa.html
+
+Cabeçalho (uma linha, dentro do `<a>` do permalink):
+
+    Acórdão: 1979/2026 | Tribunal Pleno | Processo: 393433/2026 | Data da Sessão: 05/08/2026
+
+Seções rotuladas em `<b>`, cada uma num `div.col-lg-12`:
+
+    Relator:                   nome do conselheiro relator
+    Ementa:                    ementa íntegra
+    Tema:                      resumo analítico próprio do TCE-PR (campo que
+                               não existe em nenhum TJ do repo)
+    Inteiro Teor:              ver o bloco 🔴 abaixo
+    Classificação de Termos:   tesauro, em caminho hierárquico
+                               ("LICITAÇÕES E CONTRATOS > Comissão de licitação"),
+                               cada um clicável via `bucarCaminho('12,1505', …)`
+    Referências Normativas:    lei/artigo/parágrafo/inciso citados, via
+                               `bucarReferencia('Lei complementar - Estadual - …')`
+
+### 🔴 O texto do card é ementa, trecho ou nada? — MEDIDO
+
+Card completo (acórdão, com termo livre): **18.830 caracteres** de innerText.
+Decomposto:
+
+    Ementa       →    499 chars   ← ementa de verdade, íntegra
+    Tema         →    822 chars
+    Inteiro Teor → ~16.600 chars
+    tesauro + referências → o resto
+
+🔴 **O bloco "Inteiro Teor:" NÃO é só o texto — são TRÊS `<div>`:** os dois
+primeiros são **snippets de highlight** de ~595 chars, que começam com `...` e
+trazem o termo dentro de `<span style="background-color: yellow">`; o terceiro é
+o texto integral (~15,4 mil chars). Quem concatenar os três publica o mesmo
+parágrafo três vezes; quem pegar o primeiro publica **595 caracteres de recorte
+e chama de inteiro teor**. O crawler fica com o **maior** e guarda os outros em
+`trechos` — que é o que eles são.
+
+✅ **E o maior é mesmo o inteiro teor**, conferido contra o PDF do próprio
+documento (`pdftotext`): **14.970 chars no card contra 15.328 no PDF (razão
+0,98)**, e **36 de 38 janelas de 60 caracteres** amostradas no PDF aparecem no
+card (**95%**).
+⚠️ **Mas ele vem FORA DE ORDEM**: começa pelo bloco de assinatura digital
+("DOCUMENTO E ASSINATURA(S) DIGITAIS…"), enquanto o PDF começa pelo cabeçalho
+("TRIBUNAL DE CONTAS DO ESTADO DO PARANÁ / PROCESSO Nº"). É texto remontado por
+janelas de match, não a leitura linear do documento. Para **análise e busca**
+serve; para **leitura fiel na ordem original**, use o PDF.
+
+### 🔴 A DESCOBERTA MAIS CARA: o inteiro teor depende do TERMO, não do tipo
+
+    COM TermoLivre:   acórdão 50/50 · prejulgado 14/14 · consulta 20/20 · súmula 2/2
+    SEM TermoLivre:   base inteira 0/50 · só colegiado 0/20 · só ano 0/20
+
+**100% contra 0%.** O bloco "Inteiro Teor:" é o *match* do termo no texto: sem
+termo não há o que casar, e o card volta com ementa e tema apenas (mediana de
+2.687 chars contra 21.307 com termo).
+
+⚠️ **A primeira leitura deste mapeamento concluiu "súmula e prejulgado não têm
+inteiro teor"** — porque as amostras dos outros tipos tinham sido colhidas com
+o filtro de classificação e **sem termo livre**. A variável confundida era o
+termo, não o tipo. Refeito com termo, os quatro tipos trazem o texto.
+**Lição de método: ao comparar tipos de documento, mude UMA variável.** Foi o
+avesso do erro do TJMG (que mediu um tipo só e generalizou): aqui mediram-se
+quatro tipos, mas com dois regimes de busca diferentes.
+
+### ✅ A citação oficial vem PRONTA
+
+No atributo `data-content` do botão "Copiar Ementa"
+(`<a class="modalShow" onclick="showModalEmenta(this,event)">`), junto da ementa:
+
+    (REPRESENTAÇÃO DA LEI DE LICITAÇÕES n.º 393433/2026, Acórdão n.º 1979/2026,
+     Tribunal Pleno, Rel. JOSE DURVAL MATTOS DO AMARAL, julgado em 05/08/2026,
+     veiculado em 11/08/2026 no DETC)
+
+Nada de regex de citação — o problema que custou quatro formatos em quatro
+instalações do e-SAJ. ✅ E é dela que sai a **data de publicação** ("veiculado
+em"), que o card não traz em campo próprio.
+
+### Botões do card, todos clicados
+
+    <a id="detalhesAcordao_202642">  → permalink, `target="_blank"` (Fase 6)
+    <a class="modalShow">            → modal "Copiar Ementa" (Fase 3)
+    <a class="btnUrlPDF">            → PDF do inteiro teor, em `data-url`
+    <a onclick="bucarCaminho(…)">    → refaz a busca pelo termo do tesauro
+    <a onclick="bucarReferencia(…)"> → refaz a busca pela referência normativa
+    <a class="expandirConteudo">     → só expande o `div` (CSS), sem request
+
+
+## Fase 3 — A escada até o documento
+
+  Degrau            O que acontece
+  ----------------  --------------------------------------------------------
+  Ementa            Modal (`showModalEmenta`), **sem URL própria** — a rota não
+                    muda. 705 chars: ementa + citação. **Nenhum XHR**: o texto
+                    já estava no `data-content`. Print 02.03-modal-ementa.png
+  Inteiro teor      Já está no card (ver Fase 2). Nenhum clique necessário.
+  Documento original `data-url` → GET direto no PDF. **Nenhum XHR intermediário,
+                    nenhuma chave composta** — diferente do TJMG (id + data).
+  Permalink         GET `/Pesquisa/Visualizar/<slug>/<id>` (Fase 6)
+  Copiar citação    ✅ existe, e o texto copiado é o formato oficial
+
+⚠️ Não há botão para consulta processual/tramitação a partir do card.
+
+
+## Fase 4 — O documento na íntegra
+
+Formato:            PDF … **com uma ressalva que quebra validação ingênua**
+URL:                https://viajuris.tce.pr.gov.br/Arquivos/<ano>/<mês>/<id 9 dígitos>.pdf
+                    ex.: /Arquivos/2026/8/000202642.pdf   (id 202642)
+                    ⚠️ mês **sem zero à esquerda**. Use o `data-url` do card
+                    quando o tiver — o caminho é derivável, mas não adivinhe.
+Tamanho típico:     187.597 bytes brutos → 16.373 chars de texto (pdftotext)
+Precisa de sessão?  **NÃO.** 200 `application/pdf` em contexto limpo, sem cookie.
+Precisa de captcha? **NÃO**, em nenhuma etapa. Busca e download medidos em
+                    separado; os dois passam (a assimetria de TJAC/TJAM/TJAL não
+                    existe aqui).
+Id inexistente:     **404** de verdade (1.245 bytes) — não uma casca de 200.
+Já veio na busca?   ✅ **SIM**, quando há termo livre (ver Fase 2).
+                    `--fetch-inteiro-teor` só grava o PDF em disco.
+
+### 🔴 O ARQUIVO SERVIDO COMO `application/pdf` NÃO COMEÇA COM `%PDF`
+
+`file` diz: **"DER Encoded PKCS#7 Signed Data"**. Os primeiros bytes são
+`30 80 06 09 2a 86 48 86 f7 0d 01 07 02` — um envelope **PKCS#7 assinado em
+DER**, a assinatura digital do Tribunal, com o PDF embutido a partir do
+**offset 57**.
+
+Na prática o poppler/`pdftotext` lê assim mesmo (16.373 chars extraídos), mas
+`buffer.slice(0,4) === '%PDF'` é **falso** — e foi o **único teste que falhou na
+primeira suíte**, o que é exatamente o valor de escrever o teste. Um crawler que
+validasse o download pelo magic number rejeitaria **todo** inteiro teor do
+TCE-PR e reportaria "0 arquivos baixados" com HTTP 200 em todos.
+`TCEPRNavigator.ehPdf()` / `.pdfOffset()` tratam disso.
+
+Quarta casca catalogada no repo, e a mais sutil: aqui o `Content-Type` está
+**certo** e quem tem invólucro é o **corpo**.
+
+
+## Fase 5 — Paginação e profundidade
+
+Parâmetro:          `PaginaAtual` (1-based) + `LinhasPorPagina`, no POST
+Default:            10 por página (o combo da tela oferece 10/20/50/100/500)
+Máximo aceito:      **1.000 devolveu 1.000 cards** — o combo para em 500, mas o
+                    parâmetro aceita mais (lição do TJAL: teste o parâmetro, não
+                    o controle). ⚠️ **5.000 estoura**: >120 s e a conexão cai.
+                    ⚠️ Cada card carrega o inteiro teor, então a página de 500
+                    passa de 20 MB. O default do crawler é 20, deliberado.
+Total exato ou saturado?
+                    **EXATO.** A aritmética da última página fecha:
+                    `licitação` = 17.563; página 1.756 devolve 10 cards, página
+                    **1.757 devolve 3** → 1.756×10 + 3 = **17.563** ✅.
+                    E termo raro devolve número pequeno e não-redondo
+                    (`nepotismo` = 379). Nada de teto em 1.000/10.000.
+Teto de offset:     **não há**. Página 1.756 responde normalmente.
+Estourar o fim:     página 5.000 → 0 cards, sem erro (o crawler para).
+🔴 ESTABILIDADE:    **ESTÁVEL, medido**. A mesma página (pg=2) três vezes
+                    devolve **os mesmos 10 ids na mesma ordem** (3/3 idênticas),
+                    e pg1 ∩ pg2 = **0 documentos repetidos**. Não é o caso do
+                    TJDFT/TJRJ/TJMT. O crawler deduplica por id assim mesmo.
+Ordenação:          combo "Ordenar Por" (`Ordenacao`): Data Publicação
+                    (recentes/antigos), Classificação da Decisão, Ementa, Tema,
+                    Inteiro Teor. Default = publicação, mais recentes primeiro.
+
+
+## Fase 6 — Permalink e identidade do documento
+
+✅ **EXISTE PERMALINK PÚBLICO, confirmado em requisição limpa** (curl sem
+cookie): HTTP 200 com 28.248 bytes e o documento certo.
+
+    https://viajuris.tce.pr.gov.br/Pesquisa/Visualizar/<slug>/<id>
+    ex.: …/Visualizar/1979-2026-tribunal-pleno-jose-durval-mattos-do-amaral-representacao-da-lei-de-licitacoes-7/202642
+
+⚠️ **O slug é DECORATIVO**: trocá-lo por qualquer coisa (`/Visualizar/x/202642`)
+devolve o mesmo documento (28.181 bytes, mesma ficha). Quem resolve é o **id**.
+⚠️ Id inventado → **302** (redireciona), não 200 com casca — dá para confiar.
+
+🔴 **QUEM IDENTIFICA O DOCUMENTO É O `id` DO PORTAL** (`detalhesAcordao_202642`),
+**não o número do processo**: um processo volta ao colegiado em embargos,
+recurso e prejulgado, rendendo vários acórdãos. O `Checker` devolve a lista de
+documentos de um processo justamente por isso.
+
+### A página de detalhe traz campos que o card NÃO traz
+
+Medido no permalink (`02-pagina-detalhe.html`, print 02.04):
+
+    Data de Publicação      11/08/2026   ← o card só tem a data da SESSÃO
+    Veículo de Publicação   DETC
+    Número de Publicação    3733
+    Classe Processual/Assunto  REPRESENTAÇÃO DA LEI DE LICITAÇÕES
+    Origem                  MUNICÍPIO DE PARANAVAÍ
+    Interessados            (lista de pessoas e entidades)
+    Ficha Técnica / Adicionar a cesta de acórdãos / Decisão na Íntegra (PDF)
+
+⚠️ **Origem e Interessados só existem aqui** — quem precisar deles paga 1 GET
+por documento. O crawler não os busca por padrão.
+
+
+## Tabela campo-a-campo → como vira no repo
+
+  DOM / card                          → campo do repo
+  ----------------------------------  ---------------------------------------
+  detalhesAcordao_<n>                 → id                (IDENTIFICA o julgado)
+  "Acórdão: 1979/2026"                → acordao
+  "Processo: 393433/2026"             → processo
+  "| Tribunal Pleno |"                → orgaoJulgador
+  "Data da Sessão: 05/08/2026"        → dataJulgamento
+  data-content … "veiculado em X"     → dataPublicacao   (⚠️ só via citação)
+  <b>Relator:</b>                     → relator
+  data-content (antes do parêntese)   → ementa           (íntegra)
+  <b>Tema:</b>                        → tema             (campo próprio do TCE)
+  <b>Inteiro Teor:</b> (maior div)    → inteiroTeor      (⚠️ fora de ordem)
+  <b>Inteiro Teor:</b> (divs "…")     → trechos          (highlights, NÃO ementa)
+  data-content (o parêntese final)    → citacao          (oficial, pronta)
+  bucarCaminho('…','X > Y')           → classificacaoTermos[]
+  bucarReferencia('…')                → referenciasNormativas[]
+  href /Pesquisa/Visualizar/…/<id>    → processoUrl      (permalink público)
+  a.btnUrlPDF[data-url]               → inteiroTeorLink  (PDF, sem sessão)
+  (sempre)                            → uf = 'PR', tipoDocumento = 'ACORDAO'
+
+
+## Critério de aceite da skill — situação
+
+  [x] Print da listagem no topo e no rodapé
+  [x] outerHTML de um card gravado (4 arquivos, 4 tipos)
+  [x] Card dissecado em 4 tipos (acórdão, súmula, prejulgado, consulta)
+  [x] Texto do card classificado, com tamanhos medidos e conferido contra o PDF
+  [x] Cada botão do card clicado, com print
+  [x] Contrato do documento registrado e reproduzido fora do browser (curl+Node)
+  [x] Formato identificado (⚠️ PKCS#7 envolvendo PDF) e tamanho anotado
+  [x] Respondido: o texto já vinha na busca — SIM, se houver termo livre
+  [x] Bloqueio registrado em separado para busca e download — não há em nenhum
+  [x] `LinhasPorPagina` máximo medido (1.000 ok, 5.000 estoura)
+  [x] Total classificado: EXATO (aritmética da última página fecha)
+  [x] Paginação testada 3× — ESTÁVEL
+  [x] Permalink confirmado em requisição limpa
+  [x] Registrado que quem identifica o documento é o `id`, não o processo

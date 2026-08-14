@@ -1,0 +1,2992 @@
+{
+ "IdCampoPesquisa": [
+  {
+   "v": "-1",
+   "t": "no campo..."
+  },
+  {
+   "v": "EMENTA",
+   "t": "EMENTA"
+  },
+  {
+   "v": "TEMA",
+   "t": "TEMA"
+  }
+ ],
+ "ANO_ATO": [
+  {
+   "v": "-1",
+   "t": "Ano Acórdão"
+  },
+  {
+   "v": "2026",
+   "t": "2026"
+  },
+  {
+   "v": "2025",
+   "t": "2025"
+  },
+  {
+   "v": "2024",
+   "t": "2024"
+  },
+  {
+   "v": "2023",
+   "t": "2023"
+  },
+  {
+   "v": "2022",
+   "t": "2022"
+  },
+  {
+   "v": "2021",
+   "t": "2021"
+  },
+  {
+   "v": "2020",
+   "t": "2020"
+  },
+  {
+   "v": "2019",
+   "t": "2019"
+  },
+  {
+   "v": "2018",
+   "t": "2018"
+  },
+  {
+   "v": "2017",
+   "t": "2017"
+  },
+  {
+   "v": "2016",
+   "t": "2016"
+  },
+  {
+   "v": "2015",
+   "t": "2015"
+  },
+  {
+   "v": "2014",
+   "t": "2014"
+  },
+  {
+   "v": "2013",
+   "t": "2013"
+  },
+  {
+   "v": "2012",
+   "t": "2012"
+  },
+  {
+   "v": "2011",
+   "t": "2011"
+  },
+  {
+   "v": "2010",
+   "t": "2010"
+  },
+  {
+   "v": "2009",
+   "t": "2009"
+  },
+  {
+   "v": "2008",
+   "t": "2008"
+  },
+  {
+   "v": "2007",
+   "t": "2007"
+  },
+  {
+   "v": "2006",
+   "t": "2006"
+  },
+  {
+   "v": "2005",
+   "t": "2005"
+  },
+  {
+   "v": "2004",
+   "t": "2004"
+  },
+  {
+   "v": "2003",
+   "t": "2003"
+  },
+  {
+   "v": "2002",
+   "t": "2002"
+  },
+  {
+   "v": "2001",
+   "t": "2001"
+  },
+  {
+   "v": "2000",
+   "t": "2000"
+  },
+  {
+   "v": "1999",
+   "t": "1999"
+  },
+  {
+   "v": "1998",
+   "t": "1998"
+  }
+ ],
+ "COLEGIADO": [
+  {
+   "v": "-1",
+   "t": "Selecione um Colegiado"
+  },
+  {
+   "v": "Tribunal Pleno",
+   "t": "Tribunal Pleno"
+  },
+  {
+   "v": "Primeira Câmara",
+   "t": "1ª Camara"
+  },
+  {
+   "v": "Segunda Câmara",
+   "t": "2ª Camara"
+  }
+ ],
+ "ANO_PROCESSO": [
+  {
+   "v": "-1",
+   "t": "Ano Processo"
+  },
+  {
+   "v": "2026",
+   "t": "2026"
+  },
+  {
+   "v": "2025",
+   "t": "2025"
+  },
+  {
+   "v": "2024",
+   "t": "2024"
+  },
+  {
+   "v": "2023",
+   "t": "2023"
+  },
+  {
+   "v": "2022",
+   "t": "2022"
+  },
+  {
+   "v": "2021",
+   "t": "2021"
+  },
+  {
+   "v": "2020",
+   "t": "2020"
+  },
+  {
+   "v": "2019",
+   "t": "2019"
+  },
+  {
+   "v": "2018",
+   "t": "2018"
+  },
+  {
+   "v": "2017",
+   "t": "2017"
+  },
+  {
+   "v": "2016",
+   "t": "2016"
+  },
+  {
+   "v": "2015",
+   "t": "2015"
+  },
+  {
+   "v": "2014",
+   "t": "2014"
+  },
+  {
+   "v": "2013",
+   "t": "2013"
+  },
+  {
+   "v": "2012",
+   "t": "2012"
+  },
+  {
+   "v": "2011",
+   "t": "2011"
+  },
+  {
+   "v": "2010",
+   "t": "2010"
+  },
+  {
+   "v": "2009",
+   "t": "2009"
+  },
+  {
+   "v": "2008",
+   "t": "2008"
+  },
+  {
+   "v": "2007",
+   "t": "2007"
+  },
+  {
+   "v": "2006",
+   "t": "2006"
+  },
+  {
+   "v": "2005",
+   "t": "2005"
+  },
+  {
+   "v": "2004",
+   "t": "2004"
+  },
+  {
+   "v": "2003",
+   "t": "2003"
+  },
+  {
+   "v": "2002",
+   "t": "2002"
+  },
+  {
+   "v": "2001",
+   "t": "2001"
+  },
+  {
+   "v": "2000",
+   "t": "2000"
+  },
+  {
+   "v": "1999",
+   "t": "1999"
+  },
+  {
+   "v": "1998",
+   "t": "1998"
+  },
+  {
+   "v": "1997",
+   "t": "1997"
+  },
+  {
+   "v": "1996",
+   "t": "1996"
+  },
+  {
+   "v": "1995",
+   "t": "1995"
+  },
+  {
+   "v": "1994",
+   "t": "1994"
+  },
+  {
+   "v": "1993",
+   "t": "1993"
+  },
+  {
+   "v": "1992",
+   "t": "1992"
+  },
+  {
+   "v": "1991",
+   "t": "1991"
+  },
+  {
+   "v": "1990",
+   "t": "1990"
+  },
+  {
+   "v": "1989",
+   "t": "1989"
+  },
+  {
+   "v": "1988",
+   "t": "1988"
+  },
+  {
+   "v": "1987",
+   "t": "1987"
+  },
+  {
+   "v": "1986",
+   "t": "1986"
+  }
+ ],
+ "NOME_RELATOR": [
+  {
+   "v": "-1",
+   "t": "Selecione um Relator(a)"
+  },
+  {
+   "v": "ARTAGÃO DE MATTOS LEÃO",
+   "t": "ARTAGÃO DE MATTOS LEÃO"
+  },
+  {
+   "v": "AUGUSTINHO ZUCCHI",
+   "t": "AUGUSTINHO ZUCCHI"
+  },
+  {
+   "v": "CAIO MARCIO NOGUEIRA SOARES",
+   "t": "CAIO MARCIO NOGUEIRA SOARES"
+  },
+  {
+   "v": "CLÁUDIO AUGUSTO CANHA",
+   "t": "CLÁUDIO AUGUSTO CANHA"
+  },
+  {
+   "v": "CLÁUDIO AUGUSTO KANIA",
+   "t": "CLÁUDIO AUGUSTO KANIA"
+  },
+  {
+   "v": "EDUARDO DE SOUSA LEMOS",
+   "t": "EDUARDO DE SOUSA LEMOS"
+  },
+  {
+   "v": "FABIO DE SOUZA CAMARGO",
+   "t": "FABIO DE SOUZA CAMARGO"
+  },
+  {
+   "v": "FERNANDO AUGUSTO MELLO GUIMARÃES",
+   "t": "FERNANDO AUGUSTO MELLO GUIMARÃES"
+  },
+  {
+   "v": "HEINZ GEORG HERWIG",
+   "t": "HEINZ GEORG HERWIG"
+  },
+  {
+   "v": "HENRIQUE NAIGEBOREN",
+   "t": "HENRIQUE NAIGEBOREN"
+  },
+  {
+   "v": "HERMAS EURIDES BRANDÃO",
+   "t": "HERMAS EURIDES BRANDÃO"
+  },
+  {
+   "v": "IVAN LELIS BONILHA",
+   "t": "IVAN LELIS BONILHA"
+  },
+  {
+   "v": "IVENS ZSCHOERPER LINHARES",
+   "t": "IVENS ZSCHOERPER LINHARES"
+  },
+  {
+   "v": "JAIME TADEU LECHINSKI",
+   "t": "JAIME TADEU LECHINSKI"
+  },
+  {
+   "v": "JOÃO CANDIDO FERREIRA DA CUNHA PEREIRA",
+   "t": "JOÃO CANDIDO FERREIRA DA CUNHA PEREIRA"
+  },
+  {
+   "v": "JOÃO FÉDER",
+   "t": "JOÃO FÉDER"
+  },
+  {
+   "v": "JOSE DURVAL MATTOS DO AMARAL",
+   "t": "JOSE DURVAL MATTOS DO AMARAL"
+  },
+  {
+   "v": "JOSE MAURICIO DE ANDRADE NETO",
+   "t": "JOSE MAURICIO DE ANDRADE NETO"
+  },
+  {
+   "v": "LIVIO FABIANO SOTERO COSTA",
+   "t": "LIVIO FABIANO SOTERO COSTA"
+  },
+  {
+   "v": "MARINS ALVES DE CAMARGO NETO",
+   "t": "MARINS ALVES DE CAMARGO NETO"
+  },
+  {
+   "v": "MAURÍCIO REQUIÃO DE MELLO E SILVA",
+   "t": "MAURÍCIO REQUIÃO DE MELLO E SILVA"
+  },
+  {
+   "v": "MURYEL HEY",
+   "t": "MURYEL HEY"
+  },
+  {
+   "v": "NESTOR BAPTISTA",
+   "t": "NESTOR BAPTISTA"
+  },
+  {
+   "v": "QUIELSE CRISÓSTOMO DA SILVA",
+   "t": "QUIELSE CRISÓSTOMO DA SILVA"
+  },
+  {
+   "v": "RAFAEL IATAURO",
+   "t": "RAFAEL IATAURO"
+  },
+  {
+   "v": "ROBERTO MACEDO GUIMARÃES",
+   "t": "ROBERTO MACEDO GUIMARÃES"
+  },
+  {
+   "v": "SÉRGIO RICARDO VALADARES FONSECA",
+   "t": "SÉRGIO RICARDO VALADARES FONSECA"
+  },
+  {
+   "v": "THIAGO BARBOSA CORDEIRO",
+   "t": "THIAGO BARBOSA CORDEIRO"
+  },
+  {
+   "v": "TIAGO ALVAREZ PEDROSO",
+   "t": "TIAGO ALVAREZ PEDROSO"
+  }
+ ],
+ "CLASSIFICACAO_DECISAO": [
+  {
+   "v": "1",
+   "t": "Consulta com Força Normativa"
+  },
+  {
+   "v": "2",
+   "t": "Consulta Sem Força Normativa"
+  },
+  {
+   "v": "3",
+   "t": "Prejulgados"
+  },
+  {
+   "v": "4",
+   "t": "Súmulas"
+  },
+  {
+   "v": "5",
+   "t": "Uniformização de Jurisprudência"
+  },
+  {
+   "v": "6",
+   "t": "Incidente de Inconstitucionalidade"
+  }
+ ],
+ "CLASSE_PROCESSUAL": [
+  {
+   "v": "-1",
+   "t": "Selecione uma Classe Processual"
+  },
+  {
+   "v": "ACOMPANHAMENTO                                    ",
+   "t": "ACOMPANHAMENTO"
+  },
+  {
+   "v": "ADICIONAIS                                        ",
+   "t": "ADICIONAIS"
+  },
+  {
+   "v": "ADITIVO DE CONTRATO                               ",
+   "t": "ADITIVO DE CONTRATO"
+  },
+  {
+   "v": "ADITIVO DE CONVÊNIO E CONGÊNERES                  ",
+   "t": "ADITIVO DE CONVÊNIO E CONGÊNERES"
+  },
+  {
+   "v": "ADMISSÃO DE MEMBRO DO TRIBUNAL                    ",
+   "t": "ADMISSÃO DE MEMBRO DO TRIBUNAL"
+  },
+  {
+   "v": "ADMISSÃO DE PESSOAL                               ",
+   "t": "ADMISSÃO DE PESSOAL"
+  },
+  {
+   "v": "AFASTAMENTO                                       ",
+   "t": "AFASTAMENTO"
+  },
+  {
+   "v": "AJUDA DE CUSTO                                    ",
+   "t": "AJUDA DE CUSTO"
+  },
+  {
+   "v": "ALERTA                                            ",
+   "t": "ALERTA"
+  },
+  {
+   "v": "ALIENAÇÃO DE BENS                                 ",
+   "t": "ALIENAÇÃO DE BENS"
+  },
+  {
+   "v": "ANÁLISE DA GESTÃO FISCAL - VIRTUAL                ",
+   "t": "ANÁLISE DA GESTÃO FISCAL - VIRTUAL"
+  },
+  {
+   "v": "ANEXAÇÃO                                          ",
+   "t": "ANEXAÇÃO"
+  },
+  {
+   "v": "ANOTAÇÃO EM FICHA FUNCIONAL                       ",
+   "t": "ANOTAÇÃO EM FICHA FUNCIONAL"
+  },
+  {
+   "v": "APOSENTADORIA DE MEMBRO DO TRIBUNAL               ",
+   "t": "APOSENTADORIA DE MEMBRO DO TRIBUNAL"
+  },
+  {
+   "v": "ARQUIVAMENTO DE PROTOCOLADO                       ",
+   "t": "ARQUIVAMENTO DE PROTOCOLADO"
+  },
+  {
+   "v": "ASCENSÃO FUNCIONAL                                ",
+   "t": "ASCENSÃO FUNCIONAL"
+  },
+  {
+   "v": "ATESTADO DE CAPACIDADE TÉCNICA                    ",
+   "t": "ATESTADO DE CAPACIDADE TÉCNICA"
+  },
+  {
+   "v": "ATO DE INATIVAÇÃO                                 ",
+   "t": "ATO DE INATIVAÇÃO"
+  },
+  {
+   "v": "ATOS DE CONTRATAÇÃO DO TRIBUNAL                   ",
+   "t": "ATOS DE CONTRATAÇÃO DO TRIBUNAL"
+  },
+  {
+   "v": "ATOS DE REMUNERAÇÃO                               ",
+   "t": "ATOS DE REMUNERAÇÃO"
+  },
+  {
+   "v": "AUDITORIA                                         ",
+   "t": "AUDITORIA"
+  },
+  {
+   "v": "BAIXA DE PENDÊNCIA                                ",
+   "t": "BAIXA DE PENDÊNCIA"
+  },
+  {
+   "v": "BALANCETES                                        ",
+   "t": "BALANCETES"
+  },
+  {
+   "v": "CERTIDÃO LIBERATÓRIA                              ",
+   "t": "CERTIDÃO LIBERATÓRIA"
+  },
+  {
+   "v": "COMPROVAÇÃO DE ADIANTAMENTO                       ",
+   "t": "COMPROVAÇÃO DE ADIANTAMENTO"
+  },
+  {
+   "v": "COMPROVAÇÃO DE AUXÍLIO                            ",
+   "t": "COMPROVAÇÃO DE AUXÍLIO"
+  },
+  {
+   "v": "COMPROVAÇÃO DE SUBVENÇÃO SOCIAL                   ",
+   "t": "COMPROVAÇÃO DE SUBVENÇÃO SOCIAL"
+  },
+  {
+   "v": "COMUNICAÇÃO DE IRREGULARIDADE                     ",
+   "t": "COMUNICAÇÃO DE IRREGULARIDADE"
+  },
+  {
+   "v": "CONCURSO PÚBLICO DO TRIBUNAL                      ",
+   "t": "CONCURSO PÚBLICO DO TRIBUNAL"
+  },
+  {
+   "v": "CONCURSO-TC                                       ",
+   "t": "CONCURSO-TC"
+  },
+  {
+   "v": "CONFLITO DE COMPETÊNCIA                           ",
+   "t": "CONFLITO DE COMPETÊNCIA"
+  },
+  {
+   "v": "CONSULTA                                          ",
+   "t": "CONSULTA"
+  },
+  {
+   "v": "CONTAGEM DE TEMPO                                 ",
+   "t": "CONTAGEM DE TEMPO"
+  },
+  {
+   "v": "CONTRATO                                          ",
+   "t": "CONTRATO"
+  },
+  {
+   "v": "CONVÊNIO E CONGÊNERES                             ",
+   "t": "CONVÊNIO E CONGÊNERES"
+  },
+  {
+   "v": "CONVÊNIO/AJUSTE                                   ",
+   "t": "CONVÊNIO/AJUSTE"
+  },
+  {
+   "v": "CONVERSÃO DE SISTEMAS                             ",
+   "t": "CONVERSÃO DE SISTEMAS"
+  },
+  {
+   "v": "CÓPIA DE AUTOS DE PROCESSO JUDICIAL               ",
+   "t": "CÓPIA DE AUTOS DE PROCESSO JUDICIAL"
+  },
+  {
+   "v": "CORREIÇÃO EXTRAORDINÁRIA                          ",
+   "t": "CORREIÇÃO EXTRAORDINÁRIA"
+  },
+  {
+   "v": "CORREIÇÃO ORDINÁRIA                               ",
+   "t": "CORREIÇÃO ORDINÁRIA"
+  },
+  {
+   "v": "CUMPRIMENTO DE DECISÃO                            ",
+   "t": "CUMPRIMENTO DE DECISÃO"
+  },
+  {
+   "v": "CUSTEIO DE CURSO                                  ",
+   "t": "CUSTEIO DE CURSO"
+  },
+  {
+   "v": "DEFESA                                            ",
+   "t": "DEFESA"
+  },
+  {
+   "v": "DENÚNCIA                                          ",
+   "t": "DENÚNCIA"
+  },
+  {
+   "v": "DEPENDENTES PARA IMPOSTO SOBRE A RENDA            ",
+   "t": "DEPENDENTES PARA IMPOSTO SOBRE A RENDA"
+  },
+  {
+   "v": "DEVOLUÇÃO DE PROTOCOLADO                          ",
+   "t": "DEVOLUÇÃO DE PROTOCOLADO"
+  },
+  {
+   "v": "DIGITALIZAÇÃO                                     ",
+   "t": "DIGITALIZAÇÃO"
+  },
+  {
+   "v": "DIREITO DE PETIÇÃO                                ",
+   "t": "DIREITO DE PETIÇÃO"
+  },
+  {
+   "v": "DIVERSOS                                          ",
+   "t": "DIVERSOS"
+  },
+  {
+   "v": "EMBARGOS DE DECLARAÇÃO                            ",
+   "t": "EMBARGOS DE DECLARAÇÃO"
+  },
+  {
+   "v": "EMBARGOS DE LIQUIDAÇÃO                            ",
+   "t": "EMBARGOS DE LIQUIDAÇÃO"
+  },
+  {
+   "v": "EMENDA REGIMENTAL                                 ",
+   "t": "EMENDA REGIMENTAL"
+  },
+  {
+   "v": "ESCLARECIMENTOS/JUSTIFICATIVAS                    ",
+   "t": "ESCLARECIMENTOS/JUSTIFICATIVAS"
+  },
+  {
+   "v": "EXCEÇÃO DE SUSPEIÇÃO E IMPEDIMENTO                ",
+   "t": "EXCEÇÃO DE SUSPEIÇÃO E IMPEDIMENTO"
+  },
+  {
+   "v": "EXECUÇÃO ORÇAMENTÁRIA                             ",
+   "t": "EXECUÇÃO ORÇAMENTÁRIA"
+  },
+  {
+   "v": "EXONERAÇÃO                                        ",
+   "t": "EXONERAÇÃO"
+  },
+  {
+   "v": "FÉRIAS                                            ",
+   "t": "FÉRIAS"
+  },
+  {
+   "v": "HOMOLOGAÇÃO DE ICMS                               ",
+   "t": "HOMOLOGAÇÃO DE ICMS"
+  },
+  {
+   "v": "HOMOLOGAÇÃO DE RECOMENDAÇÕES                      ",
+   "t": "HOMOLOGAÇÃO DE RECOMENDAÇÕES"
+  },
+  {
+   "v": "IMPUGNAÇÃO                                        ",
+   "t": "IMPUGNAÇÃO"
+  },
+  {
+   "v": "IMPUGNAÇÃO À HOMOLOGAÇÃO                          ",
+   "t": "IMPUGNAÇÃO À HOMOLOGAÇÃO"
+  },
+  {
+   "v": "IMPUGNAÇÃO DE ATO                                 ",
+   "t": "IMPUGNAÇÃO DE ATO"
+  },
+  {
+   "v": "IMPUGNAÇÃO DE DESPESAS                            ",
+   "t": "IMPUGNAÇÃO DE DESPESAS"
+  },
+  {
+   "v": "INCIDENTE DE INCONSTITUCIONALIDADE                ",
+   "t": "INCIDENTE DE INCONSTITUCIONALIDADE"
+  },
+  {
+   "v": "INSPEÇÃO EXTERNA                                  ",
+   "t": "INSPEÇÃO EXTERNA"
+  },
+  {
+   "v": "ISENÇÃO DE CONTRIBUIÇÃO PREVIDENCIÁRIA            ",
+   "t": "ISENÇÃO DE CONTRIBUIÇÃO PREVIDENCIÁRIA"
+  },
+  {
+   "v": "ISENÇÃO DE IMPOSTO DE RENDA                       ",
+   "t": "ISENÇÃO DE IMPOSTO DE RENDA"
+  },
+  {
+   "v": "LEVANTAMENTO                                      ",
+   "t": "LEVANTAMENTO"
+  },
+  {
+   "v": "LICENÇA                                           ",
+   "t": "LICENÇA"
+  },
+  {
+   "v": "MANDADO                                           ",
+   "t": "MANDADO"
+  },
+  {
+   "v": "MANDADO JUDICIAL                                  ",
+   "t": "MANDADO JUDICIAL"
+  },
+  {
+   "v": "MANUAL TÉCNICO                                    ",
+   "t": "MANUAL TÉCNICO"
+  },
+  {
+   "v": "MEDIDA CAUTELAR INOMINADA                         ",
+   "t": "MEDIDA CAUTELAR INOMINADA"
+  },
+  {
+   "v": "MONITORAMENTO                                     ",
+   "t": "MONITORAMENTO"
+  },
+  {
+   "v": "NOMEAÇÃO                                          ",
+   "t": "NOMEAÇÃO"
+  },
+  {
+   "v": "NOTIFICAÇÃO-LRF                                   ",
+   "t": "NOTIFICAÇÃO-LRF"
+  },
+  {
+   "v": "OFÍCIO LIBERATÓRIO                                ",
+   "t": "OFÍCIO LIBERATÓRIO"
+  },
+  {
+   "v": "PARECER TÉCNICO                                   ",
+   "t": "PARECER TÉCNICO"
+  },
+  {
+   "v": "PEDIDO DE ACESSO À INFORMAÇÃO                     ",
+   "t": "PEDIDO DE ACESSO À INFORMAÇÃO"
+  },
+  {
+   "v": "PEDIDO DE RESCISÃO                                ",
+   "t": "PEDIDO DE RESCISÃO"
+  },
+  {
+   "v": "PENSÃO                                            ",
+   "t": "PENSÃO"
+  },
+  {
+   "v": "PLANO ANUAL DE FISCALIZAÇÃO                       ",
+   "t": "PLANO ANUAL DE FISCALIZAÇÃO"
+  },
+  {
+   "v": "PREJULGADO                                        ",
+   "t": "PREJULGADO"
+  },
+  {
+   "v": "PRESTAÇÃO DE CONTAS ANUAL                         ",
+   "t": "PRESTAÇÃO DE CONTAS ANUAL"
+  },
+  {
+   "v": "PRESTAÇÃO DE CONTAS DE EXTINÇÃO DE ENTIDADE       ",
+   "t": "PRESTAÇÃO DE CONTAS DE EXTINÇÃO DE ENTIDADE"
+  },
+  {
+   "v": "PRESTAÇÃO DE CONTAS DE TRANSFERÊNCIA              ",
+   "t": "PRESTAÇÃO DE CONTAS DE TRANSFERÊNCIA"
+  },
+  {
+   "v": "PRESTAÇÃO DE CONTAS DO GOVERNADOR DO ESTADO       ",
+   "t": "PRESTAÇÃO DE CONTAS DO GOVERNADOR DO ESTADO"
+  },
+  {
+   "v": "PRESTAÇÃO DE CONTAS DO PREFEITO MUNICIPAL         ",
+   "t": "PRESTAÇÃO DE CONTAS DO PREFEITO MUNICIPAL"
+  },
+  {
+   "v": "PRESTAÇÃO DE CONTAS ESTADUAL                      ",
+   "t": "PRESTAÇÃO DE CONTAS ESTADUAL"
+  },
+  {
+   "v": "PRESTAÇÃO DE CONTAS MUNICIPAL                     ",
+   "t": "PRESTAÇÃO DE CONTAS MUNICIPAL"
+  },
+  {
+   "v": "PROCEDIMENTO SUMÁRIO                              ",
+   "t": "PROCEDIMENTO SUMÁRIO"
+  },
+  {
+   "v": "PROCESSO ADMINISTRATIVO DISCIPLINAR               ",
+   "t": "PROCESSO ADMINISTRATIVO DISCIPLINAR"
+  },
+  {
+   "v": "PROCESSO DE MEMBRO DO TRIBUNAL                    ",
+   "t": "PROCESSO DE MEMBRO DO TRIBUNAL"
+  },
+  {
+   "v": "PROCESSO DE SERVIDOR DO TRIBUNAL                  ",
+   "t": "PROCESSO DE SERVIDOR DO TRIBUNAL"
+  },
+  {
+   "v": "PROCESSO ÉTICO DE MEMBRO DO TRIBUNAL              ",
+   "t": "PROCESSO ÉTICO DE MEMBRO DO TRIBUNAL"
+  },
+  {
+   "v": "PROCESSO INOMINADO                                ",
+   "t": "PROCESSO INOMINADO"
+  },
+  {
+   "v": "PROJETO DE INSTRUÇÃO NORMATIVA                    ",
+   "t": "PROJETO DE INSTRUÇÃO NORMATIVA"
+  },
+  {
+   "v": "PROJETO DE RESOLUÇÃO                              ",
+   "t": "PROJETO DE RESOLUÇÃO"
+  },
+  {
+   "v": "PROPOSTA                                          ",
+   "t": "PROPOSTA"
+  },
+  {
+   "v": "PRORROGAÇÃO DE PRAZO                              ",
+   "t": "PRORROGAÇÃO DE PRAZO"
+  },
+  {
+   "v": "PUBLICAÇÃO                                        ",
+   "t": "PUBLICAÇÃO"
+  },
+  {
+   "v": "RECONSTITUIÇÃO DE AUTOS                           ",
+   "t": "RECONSTITUIÇÃO DE AUTOS"
+  },
+  {
+   "v": "RECURSO ADMINISTRATIVO                            ",
+   "t": "RECURSO ADMINISTRATIVO"
+  },
+  {
+   "v": "RECURSO DE AGRAVO                                 ",
+   "t": "RECURSO DE AGRAVO"
+  },
+  {
+   "v": "RECURSO DE REVISÃO                                ",
+   "t": "RECURSO DE REVISÃO"
+  },
+  {
+   "v": "RECURSO DE REVISTA                                ",
+   "t": "RECURSO DE REVISTA"
+  },
+  {
+   "v": "RECURSO FISCAL                                    ",
+   "t": "RECURSO FISCAL"
+  },
+  {
+   "v": "RECURSO INOMINADO                                 ",
+   "t": "RECURSO INOMINADO"
+  },
+  {
+   "v": "REFORMA                                           ",
+   "t": "REFORMA"
+  },
+  {
+   "v": "REGISTRO DE PORTARIA DE APOSENTADORIA             ",
+   "t": "REGISTRO DE PORTARIA DE APOSENTADORIA"
+  },
+  {
+   "v": "REINTEGRAÇÃO DE CARGO                             ",
+   "t": "REINTEGRAÇÃO DE CARGO"
+  },
+  {
+   "v": "RELATÓRIO                                         ",
+   "t": "RELATÓRIO"
+  },
+  {
+   "v": "RELATÓRIO DE ADIANTAMENTO                         ",
+   "t": "RELATÓRIO DE ADIANTAMENTO"
+  },
+  {
+   "v": "RELATÓRIO DE AUDITORIA                            ",
+   "t": "RELATÓRIO DE AUDITORIA"
+  },
+  {
+   "v": "RELATÓRIO DE INSPEÇÃO                             ",
+   "t": "RELATÓRIO DE INSPEÇÃO"
+  },
+  {
+   "v": "RELATÓRIO DE MONITORAMENTO                        ",
+   "t": "RELATÓRIO DE MONITORAMENTO"
+  },
+  {
+   "v": "REPRESENTAÇÃO                                     ",
+   "t": "REPRESENTAÇÃO"
+  },
+  {
+   "v": "REPRESENTAÇÃO DA LEI DE LICITAÇÕES",
+   "t": "REPRESENTAÇÃO DA LEI DE LICITAÇÕES"
+  },
+  {
+   "v": "REPRESENTAÇÃO DO OUVIDOR                          ",
+   "t": "REPRESENTAÇÃO DO OUVIDOR"
+  },
+  {
+   "v": "REQUERIMENTO                                      ",
+   "t": "REQUERIMENTO"
+  },
+  {
+   "v": "REQUERIMENTO AO OUVIDOR GERAL                     ",
+   "t": "REQUERIMENTO AO OUVIDOR GERAL"
+  },
+  {
+   "v": "REQUERIMENTO DE ANÁLISE TÉCNICA                   ",
+   "t": "REQUERIMENTO DE ANÁLISE TÉCNICA"
+  },
+  {
+   "v": "REQUERIMENTO EXTERNO                              ",
+   "t": "REQUERIMENTO EXTERNO"
+  },
+  {
+   "v": "REQUERIMENTO INTERNO                              ",
+   "t": "REQUERIMENTO INTERNO"
+  },
+  {
+   "v": "REQUERIMENTOS AO CORREGEDOR-GERAL                 ",
+   "t": "REQUERIMENTOS AO CORREGEDOR-GERAL"
+  },
+  {
+   "v": "RESERVA                                           ",
+   "t": "RESERVA"
+  },
+  {
+   "v": "RESPOSTA A OFÍCIOS                                ",
+   "t": "RESPOSTA A OFÍCIOS"
+  },
+  {
+   "v": "RETIFICAÇÃO DE ATO                                ",
+   "t": "RETIFICAÇÃO DE ATO"
+  },
+  {
+   "v": "REVISÃO DE PENSÃO                                 ",
+   "t": "REVISÃO DE PENSÃO"
+  },
+  {
+   "v": "REVISÃO DE PROCESSO ADMINISTRATIVO DISCIPLINAR    ",
+   "t": "REVISÃO DE PROCESSO ADMINISTRATIVO DISCIPLINAR"
+  },
+  {
+   "v": "REVISÃO DE PROVENTOS                              ",
+   "t": "REVISÃO DE PROVENTOS"
+  },
+  {
+   "v": "SALÁRIO FAMÍLIA                                   ",
+   "t": "SALÁRIO FAMÍLIA"
+  },
+  {
+   "v": "SINDICÂNCIA                                       ",
+   "t": "SINDICÂNCIA"
+  },
+  {
+   "v": "SINDICÂNCIA INVESTIGATIVA                         ",
+   "t": "SINDICÂNCIA INVESTIGATIVA"
+  },
+  {
+   "v": "SINDICÂNCIA PUNITIVA                              ",
+   "t": "SINDICÂNCIA PUNITIVA"
+  },
+  {
+   "v": "SOLICITAÇÃO DE CÓPIAS/VISTAS                      ",
+   "t": "SOLICITAÇÃO DE CÓPIAS/VISTAS"
+  },
+  {
+   "v": "SOLICITAÇÃO DE CURSO/SEMINÁRIO                    ",
+   "t": "SOLICITAÇÃO DE CURSO/SEMINÁRIO"
+  },
+  {
+   "v": "SÚMULA                                            ",
+   "t": "SÚMULA"
+  },
+  {
+   "v": "TERMO DE AJUSTAMENTO DE GESTÃO                    ",
+   "t": "TERMO DE AJUSTAMENTO DE GESTÃO"
+  },
+  {
+   "v": "TOMADA DE CONTAS                                  ",
+   "t": "TOMADA DE CONTAS"
+  },
+  {
+   "v": "TOMADA DE CONTAS ESPECIAL                         ",
+   "t": "TOMADA DE CONTAS ESPECIAL"
+  },
+  {
+   "v": "TOMADA DE CONTAS EXTRAORDINÁRIA                   ",
+   "t": "TOMADA DE CONTAS EXTRAORDINÁRIA"
+  },
+  {
+   "v": "TOMADA DE CONTAS ORDINÁRIA                        ",
+   "t": "TOMADA DE CONTAS ORDINÁRIA"
+  },
+  {
+   "v": "UNIFORMIZAÇÃO DE JURISPRUDÊNCIA                   ",
+   "t": "UNIFORMIZAÇÃO DE JURISPRUDÊNCIA"
+  }
+ ],
+ "TIPO_LEGISLACAO": [
+  {
+   "v": "-1",
+   "t": "Selecione um Tipo Normativo"
+  },
+  {
+   "v": "Circular",
+   "t": "Circular"
+  },
+  {
+   "v": "Código",
+   "t": "Código"
+  },
+  {
+   "v": "Constituição",
+   "t": "Constituição"
+  },
+  {
+   "v": "Contrato",
+   "t": "Contrato"
+  },
+  {
+   "v": "Convênio",
+   "t": "Convênio"
+  },
+  {
+   "v": "Decreto",
+   "t": "Decreto"
+  },
+  {
+   "v": "Decreto-lei",
+   "t": "Decreto-lei"
+  },
+  {
+   "v": "Deliberação",
+   "t": "Deliberação"
+  },
+  {
+   "v": "Despacho",
+   "t": "Despacho"
+  },
+  {
+   "v": "Edital",
+   "t": "Edital"
+  },
+  {
+   "v": "Emenda constitucional",
+   "t": "Emenda constitucional"
+  },
+  {
+   "v": "Estatuto",
+   "t": "Estatuto"
+  },
+  {
+   "v": "Informação",
+   "t": "Informação"
+  },
+  {
+   "v": "Instrução de serviço",
+   "t": "Instrução de serviço"
+  },
+  {
+   "v": "Instrução normativa",
+   "t": "Instrução normativa"
+  },
+  {
+   "v": "Lei complementar",
+   "t": "Lei complementar"
+  },
+  {
+   "v": "Lei ordinária",
+   "t": "Lei ordinária"
+  },
+  {
+   "v": "Lei orgânica",
+   "t": "Lei orgânica"
+  },
+  {
+   "v": "Ordem de serviço",
+   "t": "Ordem de serviço"
+  },
+  {
+   "v": "Ordem interna",
+   "t": "Ordem interna"
+  },
+  {
+   "v": "Portaria",
+   "t": "Portaria"
+  },
+  {
+   "v": "Prejulgado",
+   "t": "Prejulgado"
+  },
+  {
+   "v": "Projeto",
+   "t": "Projeto"
+  },
+  {
+   "v": "Regimento",
+   "t": "Regimento"
+  },
+  {
+   "v": "Regulamento",
+   "t": "Regulamento"
+  },
+  {
+   "v": "Resolução",
+   "t": "Resolução"
+  },
+  {
+   "v": "Súmula",
+   "t": "Súmula"
+  },
+  {
+   "v": "Súmula vinculante",
+   "t": "Súmula vinculante"
+  },
+  {
+   "v": "Uniformização de Jurisprudência",
+   "t": "Uniformização de Jurisprudência"
+  },
+  {
+   "v": "Decreto Legislativo",
+   "t": "Decreto Legislativo"
+  },
+  {
+   "v": "Provimento",
+   "t": "Provimento"
+  },
+  {
+   "v": "Instrução Técnica",
+   "t": "Instrução Técnica"
+  },
+  {
+   "v": "Resolução (anterior à 2006)",
+   "t": "Resolução (anterior à 2006)"
+  },
+  {
+   "v": "Resolução Conjunta",
+   "t": "Resolução Conjunta"
+  },
+  {
+   "v": "Decreto Judiciário",
+   "t": "Decreto Judiciário"
+  },
+  {
+   "v": "Medida Provisória",
+   "t": "Medida Provisória"
+  },
+  {
+   "v": "Portaria Conjunta",
+   "t": "Portaria Conjunta"
+  },
+  {
+   "v": "ADCT",
+   "t": "ADCT"
+  },
+  {
+   "v": "Enunciado",
+   "t": "Enunciado"
+  },
+  {
+   "v": "Enunciado Administrativo",
+   "t": "Enunciado Administrativo"
+  },
+  {
+   "v": "Orientação Normativa",
+   "t": "Orientação Normativa"
+  },
+  {
+   "v": "Acórdão de Parecer Prévio",
+   "t": "Acórdão de Parecer Prévio"
+  },
+  {
+   "v": "Acórdão (anterior à 2006)",
+   "t": "Acórdão (anterior à 2006)"
+  }
+ ],
+ "EMISSOR_LEI": [
+  {
+   "v": "-1",
+   "t": "Selecione um Emissor"
+  },
+  {
+   "v": "1",
+   "t": "Federal"
+  },
+  {
+   "v": "2",
+   "t": "Estadual"
+  },
+  {
+   "v": "3",
+   "t": "Municipal"
+  },
+  {
+   "v": "4",
+   "t": "TCE-PR"
+  },
+  {
+   "v": "5",
+   "t": "BACEN"
+  },
+  {
+   "v": "6",
+   "t": "STN"
+  },
+  {
+   "v": "7",
+   "t": "STN/SOF"
+  },
+  {
+   "v": "8",
+   "t": "STF"
+  },
+  {
+   "v": "9",
+   "t": "CNJ"
+  },
+  {
+   "v": "10",
+   "t": "CNMP"
+  },
+  {
+   "v": "11",
+   "t": "CONANDA"
+  },
+  {
+   "v": "12",
+   "t": "INSS"
+  },
+  {
+   "v": "13",
+   "t": "RFB"
+  },
+  {
+   "v": "14",
+   "t": "TSE"
+  },
+  {
+   "v": "15",
+   "t": "SEED"
+  },
+  {
+   "v": "16",
+   "t": "MPS"
+  },
+  {
+   "v": "17",
+   "t": "ANEEL"
+  },
+  {
+   "v": "18",
+   "t": "ANTT"
+  },
+  {
+   "v": "19",
+   "t": "Ministério da Saúde"
+  },
+  {
+   "v": "20",
+   "t": "CONFEA"
+  },
+  {
+   "v": "21",
+   "t": "TJ-PR"
+  },
+  {
+   "v": "22",
+   "t": "Paranaprevidência"
+  },
+  {
+   "v": "23",
+   "t": "TCU"
+  },
+  {
+   "v": "24",
+   "t": "CFC"
+  },
+  {
+   "v": "25",
+   "t": "TST"
+  },
+  {
+   "v": "26",
+   "t": "ANTAQ"
+  },
+  {
+   "v": "27",
+   "t": "STJ"
+  },
+  {
+   "v": "28",
+   "t": "CFN"
+  },
+  {
+   "v": "29",
+   "t": "SEFA"
+  },
+  {
+   "v": "30",
+   "t": "SEAP"
+  },
+  {
+   "v": "31",
+   "t": "Ministério da Fazenda"
+  }
+ ],
+ "MUNICIPIO": [
+  {
+   "v": "-1",
+   "t": "Selecione um Município"
+  },
+  {
+   "v": "9",
+   "t": "ABATIÁ"
+  },
+  {
+   "v": "33",
+   "t": "ADRIANÓPOLIS"
+  },
+  {
+   "v": "77",
+   "t": "AGUDOS DO SUL"
+  },
+  {
+   "v": "124",
+   "t": "ALMIRANTE TAMANDARÉ"
+  },
+  {
+   "v": "134",
+   "t": "ALTAMIRA DO PARANÁ"
+  },
+  {
+   "v": "157",
+   "t": "ALTO PARAÍSO"
+  },
+  {
+   "v": "159",
+   "t": "ALTO PARANÁ"
+  },
+  {
+   "v": "161",
+   "t": "ALTO PIQUIRI"
+  },
+  {
+   "v": "166",
+   "t": "ALTÔNIA"
+  },
+  {
+   "v": "182",
+   "t": "ALVORADA DO SUL"
+  },
+  {
+   "v": "187",
+   "t": "AMAPORÃ"
+  },
+  {
+   "v": "208",
+   "t": "AMPÉRE"
+  },
+  {
+   "v": "211",
+   "t": "ANAHY"
+  },
+  {
+   "v": "226",
+   "t": "ANDIRÁ"
+  },
+  {
+   "v": "243",
+   "t": "ÂNGULO"
+  },
+  {
+   "v": "254",
+   "t": "ANTONINA"
+  },
+  {
+   "v": "264",
+   "t": "ANTÔNIO OLINTO"
+  },
+  {
+   "v": "284",
+   "t": "APUCARANA"
+  },
+  {
+   "v": "332",
+   "t": "ARAPONGAS"
+  },
+  {
+   "v": "334",
+   "t": "ARAPOTI"
+  },
+  {
+   "v": "335",
+   "t": "ARAPUÃ"
+  },
+  {
+   "v": "350",
+   "t": "ARARUNA"
+  },
+  {
+   "v": "356",
+   "t": "ARAUCÁRIA"
+  },
+  {
+   "v": "382",
+   "t": "ARIRANHA DO IVAÍ"
+  },
+  {
+   "v": "404",
+   "t": "ASSAÍ"
+  },
+  {
+   "v": "408",
+   "t": "ASSIS CHATEAUBRIAND"
+  },
+  {
+   "v": "413",
+   "t": "ASTORGA"
+  },
+  {
+   "v": "415",
+   "t": "ATALAIA"
+  },
+  {
+   "v": "468",
+   "t": "BALSA NOVA"
+  },
+  {
+   "v": "479",
+   "t": "BANDEIRANTES"
+  },
+  {
+   "v": "496",
+   "t": "BARBOSA FERRAZ"
+  },
+  {
+   "v": "519",
+   "t": "BARRA DO JACARÉ"
+  },
+  {
+   "v": "534",
+   "t": "BARRACÃO"
+  },
+  {
+   "v": "567",
+   "t": "BELA VISTA DA CAROBA"
+  },
+  {
+   "v": "571",
+   "t": "BELA VISTA DO PARAÍSO"
+  },
+  {
+   "v": "625",
+   "t": "BITURUNA"
+  },
+  {
+   "v": "629",
+   "t": "BOA ESPERANÇA"
+  },
+  {
+   "v": "630",
+   "t": "BOA ESPERANÇA DO IGUAÇU"
+  },
+  {
+   "v": "635",
+   "t": "BOA VENTURA DE SÃO ROQUE"
+  },
+  {
+   "v": "639",
+   "t": "BOA VISTA DA APARECIDA"
+  },
+  {
+   "v": "653",
+   "t": "BOCAIÚVA DO SUL"
+  },
+  {
+   "v": "682",
+   "t": "BOM JESUS DO SUL"
+  },
+  {
+   "v": "694",
+   "t": "BOM SUCESSO"
+  },
+  {
+   "v": "697",
+   "t": "BOM SUCESSO DO SUL"
+  },
+  {
+   "v": "724",
+   "t": "BORRAZÓPOLIS"
+  },
+  {
+   "v": "736",
+   "t": "BRAGANEY"
+  },
+  {
+   "v": "742",
+   "t": "BRASILÂNDIA DO SUL"
+  },
+  {
+   "v": "865",
+   "t": "CAFEARA"
+  },
+  {
+   "v": "866",
+   "t": "CAFELÂNDIA"
+  },
+  {
+   "v": "868",
+   "t": "CAFEZAL DO SUL"
+  },
+  {
+   "v": "902",
+   "t": "CALIFÓRNIA"
+  },
+  {
+   "v": "915",
+   "t": "CAMBARÁ"
+  },
+  {
+   "v": "917",
+   "t": "CAMBÉ"
+  },
+  {
+   "v": "918",
+   "t": "CAMBIRA"
+  },
+  {
+   "v": "933",
+   "t": "CAMPINA DA LAGOA"
+  },
+  {
+   "v": "936",
+   "t": "CAMPINA DO SIMÃO"
+  },
+  {
+   "v": "938",
+   "t": "CAMPINA GRANDE DO SUL"
+  },
+  {
+   "v": "955",
+   "t": "CAMPO BONITO"
+  },
+  {
+   "v": "958",
+   "t": "CAMPO DO TENENTE"
+  },
+  {
+   "v": "965",
+   "t": "CAMPO LARGO"
+  },
+  {
+   "v": "968",
+   "t": "CAMPO MAGRO"
+  },
+  {
+   "v": "970",
+   "t": "CAMPO MOURÃO"
+  },
+  {
+   "v": "1008",
+   "t": "CÂNDIDO DE ABREU"
+  },
+  {
+   "v": "1015",
+   "t": "CANDÓI"
+  },
+  {
+   "v": "1030",
+   "t": "CANTAGALO"
+  },
+  {
+   "v": "1037",
+   "t": "CAPANEMA"
+  },
+  {
+   "v": "1063",
+   "t": "CAPITÃO LEÔNIDAS MARQUES"
+  },
+  {
+   "v": "1079",
+   "t": "CARAMBEÍ"
+  },
+  {
+   "v": "1109",
+   "t": "CARLÓPOLIS"
+  },
+  {
+   "v": "1148",
+   "t": "CASCAVEL"
+  },
+  {
+   "v": "1164",
+   "t": "CASTRO"
+  },
+  {
+   "v": "1170",
+   "t": "CATANDUVAS"
+  },
+  {
+   "v": "1204",
+   "t": "CENTENÁRIO DO SUL"
+  },
+  {
+   "v": "1216",
+   "t": "CERRO AZUL"
+  },
+  {
+   "v": "1224",
+   "t": "CÉU AZUL"
+  },
+  {
+   "v": "1250",
+   "t": "CHOPINZINHO"
+  },
+  {
+   "v": "1257",
+   "t": "CIANORTE"
+  },
+  {
+   "v": "1259",
+   "t": "CIDADE GAÚCHA"
+  },
+  {
+   "v": "1271",
+   "t": "CLEVELÂNDIA"
+  },
+  {
+   "v": "1297",
+   "t": "COLOMBO"
+  },
+  {
+   "v": "1302",
+   "t": "COLORADO"
+  },
+  {
+   "v": "1348",
+   "t": "CONGONHINHAS"
+  },
+  {
+   "v": "1351",
+   "t": "CONSELHEIRO MAIRINCK"
+  },
+  {
+   "v": "1356",
+   "t": "CONTENDA"
+  },
+  {
+   "v": "1363",
+   "t": "CORBÉLIA"
+  },
+  {
+   "v": "1375",
+   "t": "CORNÉLIO PROCÓPIO"
+  },
+  {
+   "v": "1382",
+   "t": "CORONEL DOMINGOS SOARES"
+  },
+  {
+   "v": "1394",
+   "t": "CORONEL VIVIDA"
+  },
+  {
+   "v": "1410",
+   "t": "CORUMBATAÍ DO SUL"
+  },
+  {
+   "v": "1459",
+   "t": "CRUZ MACHADO"
+  },
+  {
+   "v": "1463",
+   "t": "CRUZEIRO DO IGUAÇU"
+  },
+  {
+   "v": "1464",
+   "t": "CRUZEIRO DO OESTE"
+  },
+  {
+   "v": "1467",
+   "t": "CRUZEIRO DO SUL"
+  },
+  {
+   "v": "1470",
+   "t": "CRUZMALTINA"
+  },
+  {
+   "v": "1490",
+   "t": "CURITIBA"
+  },
+  {
+   "v": "1492",
+   "t": "CURIÚVA"
+  },
+  {
+   "v": "1534",
+   "t": "DIAMANTE DO NORTE"
+  },
+  {
+   "v": "1535",
+   "t": "DIAMANTE DO OESTE"
+  },
+  {
+   "v": "1536",
+   "t": "DIAMANTE DO SUL"
+  },
+  {
+   "v": "1569",
+   "t": "DOIS VIZINHOS"
+  },
+  {
+   "v": "1600",
+   "t": "DOURADINA"
+  },
+  {
+   "v": "1604",
+   "t": "DOUTOR CAMARGO"
+  },
+  {
+   "v": "1609",
+   "t": "DOUTOR ULYSSES"
+  },
+  {
+   "v": "1644",
+   "t": "ENÉAS MARQUES"
+  },
+  {
+   "v": "1645",
+   "t": "ENGENHEIRO BELTRÃO"
+  },
+  {
+   "v": "1655",
+   "t": "ENTRE RIOS DO OESTE"
+  },
+  {
+   "v": "1677",
+   "t": "ESPERANÇA NOVA"
+  },
+  {
+   "v": "1681",
+   "t": "ESPIGÃO ALTO DO IGUAÇU"
+  },
+  {
+   "v": "1724",
+   "t": "FAROL"
+  },
+  {
+   "v": "1731",
+   "t": "FAXINAL"
+  },
+  {
+   "v": "1736",
+   "t": "FAZENDA RIO GRANDE"
+  },
+  {
+   "v": "1752",
+   "t": "FÊNIX"
+  },
+  {
+   "v": "1753",
+   "t": "FERNANDES PINHEIRO"
+  },
+  {
+   "v": "1766",
+   "t": "FIGUEIRA"
+  },
+  {
+   "v": "1774",
+   "t": "FLOR DA SERRA DO SUL"
+  },
+  {
+   "v": "1777",
+   "t": "FLORAÍ"
+  },
+  {
+   "v": "1785",
+   "t": "FLORESTA"
+  },
+  {
+   "v": "1790",
+   "t": "FLORESTÓPOLIS"
+  },
+  {
+   "v": "1794",
+   "t": "FLÓRIDA"
+  },
+  {
+   "v": "1803",
+   "t": "FORMOSA DO OESTE"
+  },
+  {
+   "v": "1819",
+   "t": "FOZ DO IGUAÇU"
+  },
+  {
+   "v": "1820",
+   "t": "FOZ DO JORDÃO"
+  },
+  {
+   "v": "1824",
+   "t": "FRANCISCO ALVES"
+  },
+  {
+   "v": "1827",
+   "t": "FRANCISCO BELTRÃO"
+  },
+  {
+   "v": "1879",
+   "t": "GENERAL CARNEIRO"
+  },
+  {
+   "v": "1898",
+   "t": "GODOY MOREIRA"
+  },
+  {
+   "v": "1913",
+   "t": "GOIOERE"
+  },
+  {
+   "v": "1914",
+   "t": "GOIOXIM"
+  },
+  {
+   "v": "1939",
+   "t": "GRANDES RIOS"
+  },
+  {
+   "v": "1958",
+   "t": "GUAÍRA"
+  },
+  {
+   "v": "1960",
+   "t": "GUAIRAÇÁ"
+  },
+  {
+   "v": "1966",
+   "t": "GUAMIRANGA"
+  },
+  {
+   "v": "1973",
+   "t": "GUAPIRAMA"
+  },
+  {
+   "v": "1976",
+   "t": "GUAPOREMA"
+  },
+  {
+   "v": "1980",
+   "t": "GUARACI"
+  },
+  {
+   "v": "1995",
+   "t": "GUARANIAÇU"
+  },
+  {
+   "v": "1999",
+   "t": "GUARAPUAVA"
+  },
+  {
+   "v": "2000",
+   "t": "GUARAQUEÇABA"
+  },
+  {
+   "v": "2006",
+   "t": "GUARATUBA"
+  },
+  {
+   "v": "2042",
+   "t": "HONÓRIO SERPA"
+  },
+  {
+   "v": "2058",
+   "t": "IBAITI"
+  },
+  {
+   "v": "2064",
+   "t": "IBEMA"
+  },
+  {
+   "v": "2081",
+   "t": "IBIPORÃ"
+  },
+  {
+   "v": "2108",
+   "t": "ICARAÍMA"
+  },
+  {
+   "v": "2136",
+   "t": "IGUARAÇU"
+  },
+  {
+   "v": "2140",
+   "t": "IGUATU"
+  },
+  {
+   "v": "2154",
+   "t": "IMBAÚ"
+  },
+  {
+   "v": "2158",
+   "t": "IMBITUVA"
+  },
+  {
+   "v": "2162",
+   "t": "INÁCIO MARTINS"
+  },
+  {
+   "v": "2165",
+   "t": "INAJÁ"
+  },
+  {
+   "v": "2173",
+   "t": "INDIANÓPOLIS"
+  },
+  {
+   "v": "2211",
+   "t": "IPIRANGA"
+  },
+  {
+   "v": "2218",
+   "t": "IPORÃ"
+  },
+  {
+   "v": "2233",
+   "t": "IRACEMA DO OESTE"
+  },
+  {
+   "v": "2247",
+   "t": "IRATI"
+  },
+  {
+   "v": "2250",
+   "t": "IRETAMA"
+  },
+  {
+   "v": "2285",
+   "t": "ITAGUAJÉ"
+  },
+  {
+   "v": "2297",
+   "t": "ITAIPULÂNDIA"
+  },
+  {
+   "v": "2316",
+   "t": "ITAMBARACÁ"
+  },
+  {
+   "v": "2318",
+   "t": "ITAMBÉ"
+  },
+  {
+   "v": "2340",
+   "t": "ITAPEJARA D'OESTE"
+  },
+  {
+   "v": "2343",
+   "t": "ITAPERUÇU"
+  },
+  {
+   "v": "2400",
+   "t": "ITAÚNA DO SUL"
+  },
+  {
+   "v": "2426",
+   "t": "IVAÍ"
+  },
+  {
+   "v": "2427",
+   "t": "IVAIPORÃ"
+  },
+  {
+   "v": "2428",
+   "t": "IVATÉ"
+  },
+  {
+   "v": "2429",
+   "t": "IVATUBA"
+  },
+  {
+   "v": "2438",
+   "t": "JABOTI"
+  },
+  {
+   "v": "2448",
+   "t": "JACAREZINHO"
+  },
+  {
+   "v": "2461",
+   "t": "JAGUAPITÃ"
+  },
+  {
+   "v": "2469",
+   "t": "JAGUARIAÍVA"
+  },
+  {
+   "v": "2484",
+   "t": "JANDAIA DO SUL"
+  },
+  {
+   "v": "2490",
+   "t": "JANIÓPOLIS"
+  },
+  {
+   "v": "2498",
+   "t": "JAPIRA"
+  },
+  {
+   "v": "2503",
+   "t": "JAPURÁ"
+  },
+  {
+   "v": "2512",
+   "t": "JARDIM ALEGRE"
+  },
+  {
+   "v": "2517",
+   "t": "JARDIM OLINDA"
+  },
+  {
+   "v": "2524",
+   "t": "JATAIZINHO"
+  },
+  {
+   "v": "2549",
+   "t": "JESUÍTAS"
+  },
+  {
+   "v": "2574",
+   "t": "JOAQUIM TÁVORA"
+  },
+  {
+   "v": "2611",
+   "t": "JUNDIAÍ DO SUL"
+  },
+  {
+   "v": "2619",
+   "t": "JURANDA"
+  },
+  {
+   "v": "2630",
+   "t": "JUSSARA"
+  },
+  {
+   "v": "2637",
+   "t": "KALORÉ"
+  },
+  {
+   "v": "2706",
+   "t": "LAPA"
+  },
+  {
+   "v": "2709",
+   "t": "LARANJAL"
+  },
+  {
+   "v": "2714",
+   "t": "LARANJEIRAS DO SUL"
+  },
+  {
+   "v": "2735",
+   "t": "LEÓPOLIS"
+  },
+  {
+   "v": "2739",
+   "t": "LIDIANÓPOLIS"
+  },
+  {
+   "v": "2748",
+   "t": "LINDOESTE"
+  },
+  {
+   "v": "2758",
+   "t": "LOANDA"
+  },
+  {
+   "v": "2759",
+   "t": "LOBATO"
+  },
+  {
+   "v": "2761",
+   "t": "LONDRINA"
+  },
+  {
+   "v": "2781",
+   "t": "LUIZIANA"
+  },
+  {
+   "v": "2784",
+   "t": "LUNARDELLI"
+  },
+  {
+   "v": "2786",
+   "t": "LUPIONÓPOLIS"
+  },
+  {
+   "v": "2841",
+   "t": "MALLET"
+  },
+  {
+   "v": "2845",
+   "t": "MAMBORÊ"
+  },
+  {
+   "v": "2854",
+   "t": "MANDAGUAÇU"
+  },
+  {
+   "v": "2855",
+   "t": "MANDAGUARI"
+  },
+  {
+   "v": "2856",
+   "t": "MANDIRITUBA"
+  },
+  {
+   "v": "2858",
+   "t": "MANFRINÓPOLIS"
+  },
+  {
+   "v": "2861",
+   "t": "MANGUEIRINHA"
+  },
+  {
+   "v": "2866",
+   "t": "MANOEL RIBAS"
+  },
+  {
+   "v": "2910",
+   "t": "MARECHAL CÂNDIDO RONDON"
+  },
+  {
+   "v": "2917",
+   "t": "MARIA HELENA"
+  },
+  {
+   "v": "2918",
+   "t": "MARIALVA"
+  },
+  {
+   "v": "2928",
+   "t": "MARILÂNDIA DO SUL"
+  },
+  {
+   "v": "2929",
+   "t": "MARILENA"
+  },
+  {
+   "v": "2931",
+   "t": "MARILUZ"
+  },
+  {
+   "v": "2932",
+   "t": "MARINGÁ"
+  },
+  {
+   "v": "2935",
+   "t": "MARIÓPOLIS"
+  },
+  {
+   "v": "2936",
+   "t": "MARIPÁ"
+  },
+  {
+   "v": "2941",
+   "t": "MARMELEIRO"
+  },
+  {
+   "v": "2944",
+   "t": "MARQUINHO"
+  },
+  {
+   "v": "2951",
+   "t": "MARUMBI"
+  },
+  {
+   "v": "2966",
+   "t": "MATELÂNDIA"
+  },
+  {
+   "v": "2976",
+   "t": "MATINHOS"
+  },
+  {
+   "v": "2981",
+   "t": "MATO RICO"
+  },
+  {
+   "v": "2993",
+   "t": "MAUÁ DA SERRA"
+  },
+  {
+   "v": "3003",
+   "t": "MEDIANEIRA"
+  },
+  {
+   "v": "3011",
+   "t": "MERCEDES"
+  },
+  {
+   "v": "3045",
+   "t": "MIRADOR"
+  },
+  {
+   "v": "3059",
+   "t": "MIRASELVA"
+  },
+  {
+   "v": "3066",
+   "t": "MISSAL"
+  },
+  {
+   "v": "3138",
+   "t": "MOREIRA SALES"
+  },
+  {
+   "v": "3142",
+   "t": "MORRETES"
+  },
+  {
+   "v": "3182",
+   "t": "MUNHOZ DE MELLO"
+  },
+  {
+   "v": "3245",
+   "t": "NOSSA SENHORA DAS GRAÇAS"
+  },
+  {
+   "v": "3252",
+   "t": "NOVA ALIANÇA DO IVAÍ"
+  },
+  {
+   "v": "3256",
+   "t": "NOVA AMÉRICA DA COLINA"
+  },
+  {
+   "v": "3260",
+   "t": "NOVA AURORA"
+  },
+  {
+   "v": "3273",
+   "t": "NOVA CANTU"
+  },
+  {
+   "v": "3280",
+   "t": "NOVA ESPERANÇA"
+  },
+  {
+   "v": "3282",
+   "t": "NOVA ESPERANÇA DO SUDOESTE"
+  },
+  {
+   "v": "3285",
+   "t": "NOVA FÁTIMA"
+  },
+  {
+   "v": "3304",
+   "t": "NOVA LARANJEIRAS"
+  },
+  {
+   "v": "3306",
+   "t": "NOVA LONDRINA"
+  },
+  {
+   "v": "3316",
+   "t": "NOVA OLÍMPIA"
+  },
+  {
+   "v": "3329",
+   "t": "NOVA PRATA DO IGUAÇU"
+  },
+  {
+   "v": "3337",
+   "t": "NOVA SANTA BÁRBARA"
+  },
+  {
+   "v": "3339",
+   "t": "NOVA SANTA ROSA"
+  },
+  {
+   "v": "3342",
+   "t": "NOVA TEBAS"
+  },
+  {
+   "v": "3369",
+   "t": "NOVO ITACOLOMI"
+  },
+  {
+   "v": "3426",
+   "t": "ORTIGUEIRA"
+  },
+  {
+   "v": "3437",
+   "t": "OURIZONA"
+  },
+  {
+   "v": "3450",
+   "t": "OURO VERDE DO OESTE"
+  },
+  {
+   "v": "3470",
+   "t": "PAIÇANDU"
+  },
+  {
+   "v": "3489",
+   "t": "PALMAS"
+  },
+  {
+   "v": "3493",
+   "t": "PALMEIRA"
+  },
+  {
+   "v": "3507",
+   "t": "PALMITAL"
+  },
+  {
+   "v": "3512",
+   "t": "PALOTINA"
+  },
+  {
+   "v": "3537",
+   "t": "PARAÍSO DO NORTE"
+  },
+  {
+   "v": "3546",
+   "t": "PARANACITY"
+  },
+  {
+   "v": "3547",
+   "t": "PARANAGUÁ"
+  },
+  {
+   "v": "3552",
+   "t": "PARANAPOEMA"
+  },
+  {
+   "v": "3556",
+   "t": "PARANAVAÍ"
+  },
+  {
+   "v": "3602",
+   "t": "PATO BRAGADO"
+  },
+  {
+   "v": "3603",
+   "t": "PATO BRANCO"
+  },
+  {
+   "v": "3619",
+   "t": "PAULA FREITAS"
+  },
+  {
+   "v": "3630",
+   "t": "PAULO FRONTIN"
+  },
+  {
+   "v": "3638",
+   "t": "PEABIRU"
+  },
+  {
+   "v": "3707",
+   "t": "PEROBAL"
+  },
+  {
+   "v": "3708",
+   "t": "PÉROLA"
+  },
+  {
+   "v": "3709",
+   "t": "PEROLA D'OESTE"
+  },
+  {
+   "v": "3735",
+   "t": "PIÊN"
+  },
+  {
+   "v": "3757",
+   "t": "PINHAIS"
+  },
+  {
+   "v": "3759",
+   "t": "PINHAL DE SÃO BENTO"
+  },
+  {
+   "v": "3761",
+   "t": "PINHALÃO"
+  },
+  {
+   "v": "3765",
+   "t": "PINHÃO"
+  },
+  {
+   "v": "3786",
+   "t": "PIRAÍ DO SUL"
+  },
+  {
+   "v": "3803",
+   "t": "PIRAQUARA"
+  },
+  {
+   "v": "3817",
+   "t": "PITANGA"
+  },
+  {
+   "v": "3818",
+   "t": "PITANGUEIRAS"
+  },
+  {
+   "v": "3828",
+   "t": "PLANALTINA DO PARANÁ"
+  },
+  {
+   "v": "3831",
+   "t": "PLANALTO"
+  },
+  {
+   "v": "3863",
+   "t": "PONTA GROSSA"
+  },
+  {
+   "v": "3867",
+   "t": "PONTAL DO PARANÁ"
+  },
+  {
+   "v": "3890",
+   "t": "PORECATU"
+  },
+  {
+   "v": "3904",
+   "t": "PORTO AMAZONAS"
+  },
+  {
+   "v": "3905",
+   "t": "PORTO BARREIRO"
+  },
+  {
+   "v": "3926",
+   "t": "PORTO RICO"
+  },
+  {
+   "v": "3932",
+   "t": "PORTO VITÓRIA"
+  },
+  {
+   "v": "3950",
+   "t": "PRADO FERREIRA"
+  },
+  {
+   "v": "3957",
+   "t": "PRANCHITA"
+  },
+  {
+   "v": "3968",
+   "t": "PRESIDENTE CASTELO BRANCO"
+  },
+  {
+   "v": "3996",
+   "t": "PRIMEIRO DE MAIO"
+  },
+  {
+   "v": "4005",
+   "t": "PRUDENTÓPOLIS"
+  },
+  {
+   "v": "4013",
+   "t": "QUARTO CENTENÁRIO"
+  },
+  {
+   "v": "4015",
+   "t": "QUATIGUÁ"
+  },
+  {
+   "v": "4018",
+   "t": "QUATRO BARRAS"
+  },
+  {
+   "v": "4019",
+   "t": "QUATRO PONTES"
+  },
+  {
+   "v": "4021",
+   "t": "QUEDAS DO IGUAÇU"
+  },
+  {
+   "v": "4030",
+   "t": "QUERÊNCIA DO NORTE"
+  },
+  {
+   "v": "4034",
+   "t": "QUINTA DO SOL"
+  },
+  {
+   "v": "4040",
+   "t": "QUITANDINHA"
+  },
+  {
+   "v": "4053",
+   "t": "RAMILÂNDIA"
+  },
+  {
+   "v": "4055",
+   "t": "RANCHO ALEGRE"
+  },
+  {
+   "v": "4056",
+   "t": "RANCHO ALEGRE D'OESTE"
+  },
+  {
+   "v": "4061",
+   "t": "REALEZA"
+  },
+  {
+   "v": "4062",
+   "t": "REBOUÇAS"
+  },
+  {
+   "v": "4079",
+   "t": "RENASCENÇA"
+  },
+  {
+   "v": "4083",
+   "t": "RESERVA"
+  },
+  {
+   "v": "4085",
+   "t": "RESERVA DO IGUAÇU"
+  },
+  {
+   "v": "4121",
+   "t": "RIBEIRÃO CLARO"
+  },
+  {
+   "v": "4125",
+   "t": "RIBEIRÃO DO PINHAL"
+  },
+  {
+   "v": "4139",
+   "t": "RIO AZUL"
+  },
+  {
+   "v": "4141",
+   "t": "RIO BOM"
+  },
+  {
+   "v": "4143",
+   "t": "RIO BONITO DO IGUAÇU"
+  },
+  {
+   "v": "4146",
+   "t": "RIO BRANCO DO IVAÍ"
+  },
+  {
+   "v": "4147",
+   "t": "RIO BRANCO DO SUL"
+  },
+  {
+   "v": "4182",
+   "t": "RIO NEGRO"
+  },
+  {
+   "v": "4214",
+   "t": "ROLÂNDIA"
+  },
+  {
+   "v": "4219",
+   "t": "RONCADOR"
+  },
+  {
+   "v": "4222",
+   "t": "RONDON"
+  },
+  {
+   "v": "4231",
+   "t": "ROSÁRIO DO IVAÍ"
+  },
+  {
+   "v": "4246",
+   "t": "SABÁUDIA"
+  },
+  {
+   "v": "4263",
+   "t": "SALGADO FILHO"
+  },
+  {
+   "v": "4277",
+   "t": "SALTO DO ITARARÉ"
+  },
+  {
+   "v": "4279",
+   "t": "SALTO DO LONTRA"
+  },
+  {
+   "v": "4296",
+   "t": "SANTA AMÉLIA"
+  },
+  {
+   "v": "4311",
+   "t": "SANTA CECÍLIA DO PAVÃO"
+  },
+  {
+   "v": "4325",
+   "t": "SANTA CRUZ DE MONTE CASTELO"
+  },
+  {
+   "v": "4336",
+   "t": "SANTA FÉ"
+  },
+  {
+   "v": "4348",
+   "t": "SANTA HELENA"
+  },
+  {
+   "v": "4353",
+   "t": "SANTA INÊS"
+  },
+  {
+   "v": "4357",
+   "t": "SANTA ISABEL DO IVAÍ"
+  },
+  {
+   "v": "4360",
+   "t": "SANTA IZABEL DO OESTE"
+  },
+  {
+   "v": "4363",
+   "t": "SANTA LÚCIA"
+  },
+  {
+   "v": "4386",
+   "t": "SANTA MARIA DO OESTE"
+  },
+  {
+   "v": "4392",
+   "t": "SANTA MARIANA"
+  },
+  {
+   "v": "4394",
+   "t": "SANTA MÔNICA"
+  },
+  {
+   "v": "4428",
+   "t": "SANTA TEREZA DO OESTE"
+  },
+  {
+   "v": "4434",
+   "t": "SANTA TEREZINHA DE ITAIPU"
+  },
+  {
+   "v": "4455",
+   "t": "SANTANA DO ITARARÉ"
+  },
+  {
+   "v": "4488",
+   "t": "SANTO ANTÔNIO DA PLATINA"
+  },
+  {
+   "v": "4498",
+   "t": "SANTO ANTÔNIO DO CAIUÁ"
+  },
+  {
+   "v": "4508",
+   "t": "SANTO ANTÔNIO DO PARAÍSO"
+  },
+  {
+   "v": "4513",
+   "t": "SANTO ANTÔNIO DO SUDOESTE"
+  },
+  {
+   "v": "4523",
+   "t": "SANTO INÁCIO"
+  },
+  {
+   "v": "4554",
+   "t": "SÃO CARLOS DO IVAÍ"
+  },
+  {
+   "v": "4626",
+   "t": "SÃO JERÔNIMO DA SERRA"
+  },
+  {
+   "v": "4628",
+   "t": "SÃO JOÃO"
+  },
+  {
+   "v": "4654",
+   "t": "SÃO JOÃO DO CAIUÁ"
+  },
+  {
+   "v": "4658",
+   "t": "SÃO JOÃO DO IVAÍ"
+  },
+  {
+   "v": "4675",
+   "t": "SÃO JOÃO DO TRIUNFO"
+  },
+  {
+   "v": "4684",
+   "t": "SAO JORGE D'OESTE"
+  },
+  {
+   "v": "4685",
+   "t": "SÃO JORGE DO IVAÍ"
+  },
+  {
+   "v": "4686",
+   "t": "SÃO JORGE DO PATROCÍNIO"
+  },
+  {
+   "v": "4690",
+   "t": "SÃO JOSÉ DA BOA VISTA"
+  },
+  {
+   "v": "4700",
+   "t": "SÃO JOSÉ DAS PALMEIRAS"
+  },
+  {
+   "v": "4743",
+   "t": "SÃO JOSÉ DOS PINHAIS"
+  },
+  {
+   "v": "4766",
+   "t": "SÃO MANOEL DO PARANÁ"
+  },
+  {
+   "v": "4774",
+   "t": "SÃO MATEUS DO SUL"
+  },
+  {
+   "v": "4790",
+   "t": "SÃO MIGUEL DO IGUAÇU"
+  },
+  {
+   "v": "4811",
+   "t": "SÃO PEDRO DO IGUAÇU"
+  },
+  {
+   "v": "4812",
+   "t": "SÃO PEDRO DO IVAÍ"
+  },
+  {
+   "v": "4813",
+   "t": "SÃO PEDRO DO PARANÁ"
+  },
+  {
+   "v": "4832",
+   "t": "SÃO SEBASTIÃO DA AMOREIRA"
+  },
+  {
+   "v": "4856",
+   "t": "SÃO TOMÉ"
+  },
+  {
+   "v": "4873",
+   "t": "SAPOPEMA"
+  },
+  {
+   "v": "4880",
+   "t": "SARANDI"
+  },
+  {
+   "v": "4889",
+   "t": "SAUDADE DO IGUAÇU"
+  },
+  {
+   "v": "4922",
+   "t": "SENGÉS"
+  },
+  {
+   "v": "4961",
+   "t": "SERRANÓPOLIS DO IGUAÇU"
+  },
+  {
+   "v": "4970",
+   "t": "SERTANEJA"
+  },
+  {
+   "v": "4972",
+   "t": "SERTANÓPOLIS"
+  },
+  {
+   "v": "5005",
+   "t": "SIQUEIRA CAMPOS"
+  },
+  {
+   "v": "5041",
+   "t": "SULINA"
+  },
+  {
+   "v": "5076",
+   "t": "TAMARANA"
+  },
+  {
+   "v": "5078",
+   "t": "TAMBOARA"
+  },
+  {
+   "v": "5094",
+   "t": "TAPEJARA"
+  },
+  {
+   "v": "5099",
+   "t": "TAPIRA"
+  },
+  {
+   "v": "5133",
+   "t": "TEIXEIRA SOARES"
+  },
+  {
+   "v": "5138",
+   "t": "TELÊMACO BORBA"
+  },
+  {
+   "v": "5157",
+   "t": "TERRA BOA"
+  },
+  {
+   "v": "5162",
+   "t": "TERRA RICA"
+  },
+  {
+   "v": "5163",
+   "t": "TERRA ROXA"
+  },
+  {
+   "v": "5170",
+   "t": "TIBAGI"
+  },
+  {
+   "v": "5176",
+   "t": "TIJUCAS DO SUL"
+  },
+  {
+   "v": "5194",
+   "t": "TOLEDO"
+  },
+  {
+   "v": "5197",
+   "t": "TOMAZINA"
+  },
+  {
+   "v": "5221",
+   "t": "TRÊS BARRAS DO PARANÁ"
+  },
+  {
+   "v": "5258",
+   "t": "TUNAS DO PARANÁ"
+  },
+  {
+   "v": "5259",
+   "t": "TUNEIRAS DO OESTE"
+  },
+  {
+   "v": "5269",
+   "t": "TUPÃSSI"
+  },
+  {
+   "v": "5283",
+   "t": "TURVO"
+  },
+  {
+   "v": "5300",
+   "t": "UBIRATÃ"
+  },
+  {
+   "v": "5315",
+   "t": "UMUARAMA"
+  },
+  {
+   "v": "5320",
+   "t": "UNIÃO DA VITÓRIA"
+  },
+  {
+   "v": "5326",
+   "t": "UNIFLOR"
+  },
+  {
+   "v": "5329",
+   "t": "URAÍ"
+  },
+  {
+   "v": "5403",
+   "t": "VENTANIA"
+  },
+  {
+   "v": "5410",
+   "t": "VERA CRUZ DO OESTE"
+  },
+  {
+   "v": "5415",
+   "t": "VERÊ"
+  },
+  {
+   "v": "5464",
+   "t": "VIRMOND"
+  },
+  {
+   "v": "5481",
+   "t": "VITORINO"
+  },
+  {
+   "v": "5491",
+   "t": "WENCESLAU BRAZ"
+  },
+  {
+   "v": "5496",
+   "t": "XAMBRÊ"
+  }
+ ],
+ "TIPO_PRECEDENTE": [
+  {
+   "v": "-1",
+   "t": "Selecione um Tipo"
+  },
+  {
+   "v": "Prejulgado",
+   "t": "Prejulgado"
+  },
+  {
+   "v": "Súmula",
+   "t": "Súmula"
+  },
+  {
+   "v": "Uniformização de Jurispruência",
+   "t": "Uniformização de Jurispruência"
+  },
+  {
+   "v": "Incidente de Inconstitucionalidade",
+   "t": "Incidente de Inconstitucionalidade"
+  },
+  {
+   "v": "Consultas com Força Normativa",
+   "t": "Consultas com Força Normativa"
+  }
+ ]
+}
