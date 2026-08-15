@@ -1181,7 +1181,7 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 18 | **TCE-PR** | PR | ✅ o PR **não tem TCM** — os 399 municípios estão na base do próprio TCE | ok 14/08 |
 | 19 | **TCE-SC** | SC | ✅ SC **não tem TCM** — os 295 municípios estão na base do próprio TCE | ok 14/08 |
 | 20 | **TCE-RS** | RS | ✅ o RS **não tem TCM** — os municípios gaúchos estão na base do próprio TCE | ok 15/08 |
-| 21 | **TCE-SP** | SP | ⚠️ **não** cobre a capital — SP capital é do **TCM-SP** | pendente |
+| 21 | **TCE-SP** | SP | ⚠️ **não** cobre a capital — SP capital é do **TCM-SP** (**confirmado por medição**) | ok 15/08 |
 | 22 | **TCE-RJ** | RJ | ⚠️ capital carioca é do **TCM-RJ** | pendente |
 | 23 | **TCE-MG** | MG | | pendente |
 | 24 | **TCE-BA** | BA | ⚠️ **todos** os municípios baianos são do **TCM-BA** | pendente |
@@ -1542,9 +1542,110 @@ os 2+ que a `browser-post-search` exige; e a lista
 `decisoes-temas-area-de-exame` volta **vazia** no servidor, causa não
 investigada. ⏱️ Timebox **não estourado**: 16:00 → 16:29, ~29 min.
 
+📌 **O que o TCE-SP (feito em 15/08/2026, slot 2000) ensinou — leia
+[`CLAUDE-TCESP.md`](CLAUDE-TCESP.md).** Quarto alvo do Bloco 5, fechado 🟢 em
+**~29 min** (20:00 → 20:29). Quatro TCEs, quatro tecnologias diferentes: o
+TCE-PR era ASP.NET no servidor, o TCE-SC um GraphQL atrás de micro-frontends, o
+TCE-RS uma API REST sobre Elasticsearch, e o **TCE-SP é um Tomcat 8 com Spring
+MVC renderizando HTML** — sem SPA, sem JSON, **zero XHR** medido na carga e na
+busca. As lições valem para os 9 restantes:
+
+- 🔴 **A ARMADILHA DECLARADA DO BLOCO 5 FINALMENTE É VERDADEIRA — e é a ressalva
+  mais cara do alvo.** Em PR, SC e RS a fila avisava sobre o TCM e a medição
+  **absolvia** o tribunal (nenhum dos três tem TCM). Em SP ela se confirma: o
+  TCE-SP cobre o Estado e os **644 demais municípios**, e **a capital é do
+  TCM-SP**, órgão separado que este repo não cobre. ⚠️ E, diferente do TCE-PR,
+  **não há combo de município para contar** — o portal não filtra por município,
+  então a prova é por contagem no acervo, não por enumeração. **Nos 9 restantes,
+  o teste do combo pode não existir: tenha o plano B da contagem.**
+- 🔴 **O ENDPOINT É GET E O POST DEVOLVE 405 — e presumi POST por ser formulário
+  clássico.** Foi o primeiro erro do dia, e custou uma requisição só porque o
+  Tomcat responde `Method Not Allowed` em vez de devolver o formulário.
+  **Mande o método que o servidor aceita, não o que o formulário sugere.**
+- 🔴 **O MODELO DE OPERADORES PODE NÃO SER INLINE — primeiro portal do repo
+  assim, e isso muda a forma da flag, não só o valor dela.** Dez tribunais
+  ensinaram "teste cada operador dentro da query"; aqui **não há operador dentro
+  da query**: são **quatro caixas** (`txtTdPalvs` = AND, `txtExp` = frase,
+  `txtQqUma` = OR, `txtNenhPalvs` = NOT). ✅ E a aritmética **fecha exata nos
+  dois sentidos** (17.806 + 89.312 − 16.707 = 90.411 = OR; 17.806 − 16.707 =
+  1.099 = NOT): é o conjunto mais bem-comportado já medido no repo.
+  🔴 **Mas o inline continua sendo armadilha, e o `OU` é o pior caso**: dentro de
+  `-q` ele é **descartado** e a busca **continua AND** — união pedida, interseção
+  recebida (16.707 contra 90.411), com número plausível e sem sintoma.
+  **Ao achar um portal de N caixas, teste o inline mesmo assim.**
+- 🔴 **UM JULGADO PODE DECIDIR VÁRIOS PROCESSOS — o inverso da armadilha
+  conhecida, e ele infla o total em ~2,9×.** O repo registrou várias vezes que
+  "um processo tem vários julgados" (TJTO, TJRR, TCE-PR). Aqui vale **também o
+  contrário**: o acórdão decide processos apensados e a lista devolve **uma linha
+  por processo**. Medido: 100 linhas → 84 processos → **35 PDFs**; na 1ª página,
+  7 processos apontam para o mesmo PDF. Logo "1.699 registros" **não é 1.699
+  acórdãos**. É a repetição do TJBA vista pelo outro lado — lá a API duplicava o
+  mesmo documento, aqui a duplicação é **semântica e legítima**.
+  **Conte documentos distintos dentro de uma página antes de confiar no total.**
+- 🔴 **UM PORTAL PODE NÃO TER EMENTA — e isso se prova nos três lugares.** Não há
+  ementa no card, nem na página de detalhe, nem no PDF (o acórdão do TCE-SP abre
+  direto em "Representante/Representado/Assunto"). O que existe é **trecho com
+  highlight** (~600–1.200 chars contra 4.855 do PDF). Some à coleção: TJBA tinha
+  o inteiro teor com nome de ementa, TCE-SC tinha o trecho de match, TCE-RS
+  perdia a ementa a partir de 2020 — **e o TCE-SP simplesmente não tem.**
+- 🔴 **METADADO QUE A LISTAGEM NÃO TRAZ PODE ESTAR A UM CLIQUE.** Relator e data
+  de publicação **não existem** nas 8 colunas da tabela; estão no
+  `exibir?proc=`, junto com o Objeto completo (na tabela vem truncado). Um
+  mapeamento que parasse na listagem gravaria "o TCE-SP não expõe relator" — e é
+  falso. **Antes de declarar campo ausente, abra o detalhe.**
+- 🔴 **PROVE UM FILTRO COM MAIS DE UM VALOR — testar um só teria gravado a
+  ressalva errada.** `relator=ANTONIO ROQUE CITADINI` + termo devolve **0**,
+  idêntico ao valor inventado: lê-se como filtro quebrado. Sem termo, Citadini
+  dá **1** e outro relator dá **162.137** — o zero era **real** (ex-conselheiro
+  cujo nome aparece no *texto* de milhares de acórdãos, mas com 1 processo como
+  relator indexado). Fecha por medição a pendência do TJPI (`-r` provado num
+  nome só).
+- 🔴 **UM TIPO DE DOCUMENTO PODE NÃO TER METADADO NENHUM.** Súmula e Boletim são
+  uma **família editorial**: as 8 colunas vêm **vazias**, o `exibir?proc=` sai em
+  branco e o PDF mora em outro host. Quem dissecasse só o Acórdão escreveria um
+  crawler que devolve súmula com tudo vazio e não saberia dizer por quê.
+- ✅ **NEM TODA MEDIÇÃO CONDENA: as datas aqui são o filtro mais bem-comportado
+  do repo.** Dois eixos reais, **as duas metades funcionam sozinhas**, a janela
+  no-op **não altera a contagem** e a aritmética fecha (227 + 1.564 − 92 =
+  1.699). Passa nos três testes que TJPI/TJRR/TCE-PR e TJES reprovaram. ⚠️ E ISO
+  devolve **HTTP 400** — erro honesto, não zero silencioso.
+- ✅ **TRÊS PERMALINKS PÚBLICOS, e um deles é a URL DA BUSCA** — que de fato
+  **executa** a busca em contexto limpo, com todos os filtros sobrevivendo.
+  Isso a separa do **TJPE** (a URL restaura o formulário e mostra zero falso) e
+  do **TJTO** (por GET os filtros somem em silêncio). ⚠️ Há `jsessionid` nos
+  links de ordenação, mas é decorativo: `offset` funciona sem ele — **não se
+  repete a armadilha do `trocaDePagina.do` do TJAC**.
+- ⚠️ **PÁGINA FIXA EM 10, com `size`/`limit`/`qtd` ignorados em silêncio**:
+  varrer 1.699 resultados custa **170 requisições**. É o portal mais caro por
+  documento do Bloco 5 — meça o custo, não só a viabilidade.
+- 🔴 **O PASSO 0 AQUI FECHOU PELA NEGATIVA, e isso também é resultado:**
+  `dadosabertos.`/`api.tce.sp.gov.br` são NXDOMAIN e todos os paths de API dão
+  404 real. **Não há Dados Abertos e não há DataJud** — ou seja, **não existe
+  plano B nenhum** para o Checker. Vale a lição **original** do TCE-PR, que o
+  TCE-RS tinha contraexemplificado no dia anterior com o CKAN. **O plano B do
+  Bloco 5 é por tribunal, não por bloco.**
+- ✅ Sem vhost curinga e sem casca de 200 nos **dois** hosts; acervo de
+  **1.317.838** documentos (168.766 acórdãos), base de **2008** em diante e
+  **corrente**; total **exato** (a última página fecha em 9 de 1.699); paginação
+  **estável** 3/3; combos populados no **HTML estático**, sem AJAX (⚠️ mas são
+  `select2`: o clicável é o `<span>` irmão, e clicar no `<select>` dá timeout —
+  derrubou a primeira rodada de prints).
+
+⚠️ **Pendências declaradas do TCE-SP:** `--auditor` (9 opções) está exposto mas
+**não foi provado por contagem**; `--num-ini/--num-fim` ("Números que variam")
+filtra (1.148 de 1.699) mas **o que ele casa não foi isolado**; **rate limit não
+medido**; a **ordenação** (`campoPulsaOrdem`, 8 colunas) não foi medida; o acervo
+total veio de janela de data ampla e **não foi conferido contra a soma dos 14
+tipos**; não se mediu se `materia` compõe **multi-valor**; e a regra do caminho
+fragmentado do PDF foi **inferida de um exemplo só** (por isso o crawler segue o
+redirect em vez de reconstruí-la). ⏱️ Timebox **não estourado**: 20:00 → 20:29,
+~29 min.
+
 **Armadilha do bloco 5:** onde existe TCM, buscar "contas municipais" no TCE devolve zero
 que se lê como "não há julgado". Ao documentar o TCE, escreva explicitamente o que ele
 **não** cobre e aponte o TCM correspondente.
+✅ **Medida até agora:** falsa em **PR, SC e RS** (não têm TCM), **verdadeira em SP**
+(a capital é do TCM-SP). Faltam medir RJ, BA, GO e PA, onde a fila também a declara.
 
 ---
 

@@ -1,0 +1,205 @@
+# TCE-SP — Módulo 01 — O que vem DEPOIS da busca
+# Skill jur-browser-post-search, executada em 15/08/2026 (slot 2000).
+
+## 18. Onde o resultado aparece
+
+Rota      : **a MESMA** (`/jurisprudencia/pesquisar`), com os parâmetros na
+            querystring. Não abre popup, não abre modal, não abre nova aba.
+Controles : **PERMANECEM** — o formulário inteiro é re-renderizado acima da
+            tabela, já preenchido com o que foi buscado (print 02.01).
+            Isso significa que a paginação NÃO precisa reenviar estado por
+            sessão: tudo está na URL.
+Total     : `<h3 class="nopadding">Foram encontrados 16707 registros</h3>`
+            É esse o texto exato que o crawler lê.
+
+### ✅ A URL DE BUSCA É UM PERMALINK DE VERDADE — raro neste repo
+
+A URL de resultado é reutilizável: colada em contexto limpo (curl **sem cookie,
+sem referer, sem sessão**) ela **executa a busca** e devolve os mesmos 1.699
+registros com as mesmas linhas.
+
+🔴 Isso a separa de dois casos conhecidos:
+   - **TJPE**: a URL restaura o formulário e NÃO roda a busca — em aba limpa
+     mostra "nenhum resultado" onde há 6.266.
+   - **TJTO**: a URL por GET ignora todos os filtros em silêncio e só o termo
+     sobrevive.
+   Aqui **todos os filtros sobrevivem**, provado refazendo cada contagem da §7
+   por curl puro.
+
+⚠️ **Mas há um `jsessionid` nos links de ORDENAÇÃO** gerados pela página
+(`/jurisprudencia/pesquisar;jsessionid=A071...?acao=Executa&offset=0&campoPulsaOrdem=0`).
+Ele é decorativo para a paginação: `offset` funciona **sem** jsessionid nenhum,
+provado em requisições limpas. **Não se repete a armadilha do `trocaDePagina.do`
+do TJAC**, onde a URL não identificava a busca e paginar devolvia a página de
+outra consulta. Aqui a URL identifica a busca inteira.
+
+## 19. Anatomia do card — 🔴 CADA RESULTADO SÃO DUAS `<tr>` IRMÃS
+
+`02-card-resultado.html` traz o par inteiro. A estrutura é:
+
+  <tr class="borda-superior">        <- linha de METADADOS, 8 colunas
+    td1  Tipo do documento + <a href> para o PDF
+    td2  Nº do processo    + <a href="exibir?proc=NNNN/NNN/AA&offset=0">
+    td3  Data de autuação
+    td4  Parte 1
+    td5  Parte 2
+    td6  Matéria
+    td7  Objeto            (TRUNCADO com "..." na tabela)
+    td8  Exercício
+  </tr>
+  <tr><td colspan=8>                 <- linha IRMÃ, com os TRECHOS
+    <div class="titulo-trechos">Trechos localizados no documento:</div>
+    <ul class="trechos-documento"><li>…texto com <span class="texto-resultado-busca">termo</span>…</li></ul>
+  </tr>
+
+🔴 **Quem mapear só a primeira `<tr>` perde 100% do texto.** É a mesma armadilha
+   do TJES (`tr.result-row` + `tr.excerpt-row`), em outro fornecedor.
+
+### 🔴 O texto do card é TRECHO, não ementa — e o TCE-SP não tem ementa
+
+Medido: o `<li>` começa com `...`, contém o termo em `<span
+class="texto-resultado-busca">` (highlight) e tem ~600–1.200 chars, contra
+**4.855 chars úteis** do PDF do mesmo acórdão (`pdftotext`). É recorte.
+
+**Não existe campo de ementa em lugar nenhum deste portal** — nem no card, nem
+na página de detalhe, nem no PDF (os acórdãos do TCE-SP não trazem ementa
+estruturada; abrem direto em "Representante / Representado / Assunto").
+O crawler marca `semEmenta: true` em **todos** os documentos e guarda o recorte
+em `trechos[]`. **Nunca apresente esse trecho como ementa nem como acórdão
+inteiro.**
+
+⚠️ `quantTrechos` (0..6) controla quantos `<li>` vêm por documento:
+   0 -> **nenhum texto** (29 KB de página), 1 -> 10 `<li>`, 3 -> 30, 6 -> 54.
+   🔴 **Com `quantTrechos=0` o crawler não recebe texto nenhum** e a página
+   continua HTTP 200 com contagem certa. O default do crawler é 3.
+
+### 🔴 Card dissecado em TRÊS tipos — e há DUAS FAMÍLIAS de documento
+
+  **(a) Ligados a processo** — Acórdão(3), Relatório/Voto(2), Despacho(1)…
+      Todas as 8 colunas preenchidas. PDF em
+      `https://jurisprudencia.tce.sp.gov.br/arqs_juri/pdf/<id>.pdf`
+
+  **(b) Editoriais** — Súmula(1000) e Boletim de Jurisprudência(0)
+      🔴 **TODAS as 8 colunas vêm VAZIAS**, e o `exibir?proc=` sai com o
+      parâmetro em branco (`exibir?proc=&offset=0`, âncora sem texto).
+      O PDF fica em **outro host e outro caminho**:
+        Súmula  -> https://www.tce.sp.gov.br/sites/default/files/sumulas/SÚMULA Nº 1.pdf
+        Boletim -> https://www.tce.sp.gov.br/sites/default/files/publicacoes/Boletim-Jurisprudencia-TCESP-<Mês>_<Ano>.pdf
+      O texto da segunda `<tr>` é o enunciado ("Súmula nº 1") ou a edição
+      ("Edição: 22 - Março/2023"), não trechos com highlight.
+
+🔴 **Quem dissecasse só o Acórdão escreveria um crawler que devolve súmula com
+   processo vazio, data vazia e parte vazia — e não saberia dizer por quê.**
+   Súmula = 52, Boletim = 50. O crawler marca `familia: 'editorial'` e não
+   promete metadados que não existem.
+
+## 20. A escada até o documento
+
+  Degrau 1 — clique no TIPO DO DOCUMENTO (coluna 1)
+    -> `target="_blank"`, vai DIRETO ao PDF. **Um clique só.**
+    -> Nenhum XHR: é `<a href>` puro. Contrato reproduzido fora do browser.
+
+  Degrau 2 — clique no Nº DO PROCESSO (coluna 2)
+    -> `GET /jurisprudencia/exibir?proc=1681/989/20&offset=0` (print 02.04)
+    -> Página "Documentos Referentes ao Processo", 13.615 bytes, e traz
+       **DOIS campos que a tabela de busca NÃO tem**:
+         🔴 **Relator** (aqui: RENATO MARTINS COSTA)
+         🔴 **Data de Publicação** por documento
+       mais Parte 1, Parte 2, Matéria, Exercício e o **Objeto COMPLETO**
+       (na tabela ele vem truncado com "...").
+    -> Lista os documentos do processo com link de Download para cada PDF.
+       No exemplo: Acórdão (818386), Relatório/Voto (818375), Despacho (799827).
+
+  ✅ **`exibir?proc=` é o SEGUNDO permalink**, público e sem sessão.
+
+  Degrau 3 — "Copiar citação": **NÃO EXISTE.** Não há citação oficial pronta
+    (diferente de TCE-PR, TJMT, TJPI e TJTO). Monte-a dos campos do `exibir`.
+
+## 21. O documento na íntegra
+
+  Formato            : **PDF**, `Content-Type: application/pdf`
+  Tamanho típico     : 251.022 bytes brutos / **4.855 chars úteis** (pdftotext)
+  Vem completo?      : sim — cabeçalho, partes, relatório, voto e dispositivo
+  Precisa de sessão? : **NÃO** — baixado em contexto limpo, sem cookie e sem referer
+  Precisa de captcha?: **NÃO**, em etapa nenhuma (busca nem download)
+  Já veio na busca?  : **NÃO** — só os trechos. O texto exige 1 GET por documento.
+
+  ✅ **O magic number VALE aqui**: o arquivo começa com `%PDF`. Não se repete o
+     envelope PKCS#7 em DER do TCE-PR (que tinha o PDF no offset 57 e faria um
+     validador ingênuo rejeitar todo inteiro teor do tribunal).
+
+  ⚠️ **O download passa por um 302 com caminho FRAGMENTADO por dígitos:**
+       /arqs_juri/pdf/818386.pdf  ->  302  ->  /arqs_juri/pdf/6/8/3/818386.pdf
+     Os três níveis são os últimos dígitos do id em ordem inversa (818386 -> 6,8,3).
+     O crawler segue o redirect em vez de reconstruir o caminho: **a regra foi
+     inferida de um exemplo só e não vale como contrato.**
+
+  ✅ **Bloqueio medido em separado**: busca livre ✅ / download livre ✅.
+     Nenhuma assimetria (diferente de TJAC/TJAM/TJAL, onde só o download trava).
+
+## 22. Paginação e profundidade
+
+  Por página     : **10, FIXO.** `size`, `limit` e `qtd` são **ignorados em
+                   silêncio** (devolvem 10 com HTTP 200).
+  Parâmetro      : `offset` na querystring (0, 10, 20, …), **sem sessão**
+  Última página  : o rodapé linka `offset=1690` para n=1.699 (print 02.03)
+  Ao estourar    : `offset=1700` e `offset=99999` -> **0 linhas, HTTP 200,
+                   contagem preservada**. Não dá erro, não trunca, não repete.
+  offset negativo: devolve o formulário sem contagem
+  Teto de offset : **não encontrado** — 99999 responde normalmente
+
+  ✅ **TOTAL EXATO, não saturado.** Provado pela aritmética da última página:
+     n = 1.699 e `offset=1690` devolve exatamente **9 linhas** (1.690 + 9 = 1.699).
+     Não há teto redondo tipo 10.000 (TJPE/TJPB/TCE-RS).
+
+  ✅ **PAGINAÇÃO ESTÁVEL**: a mesma página (`offset=20`) pedida 3× devolve a
+     mesma lista de processos, na mesma ordem. `new Set(3 assinaturas).size === 1`.
+
+  ⚠️ **Custo**: 10 por página e sem parâmetro de tamanho significa **170
+     requisições** para varrer 1.699 resultados. É o portal mais caro por
+     documento do Bloco 5. O default do crawler é `-m 10` (100 documentos).
+
+## 23. 🔴 IDENTIDADE DO DOCUMENTO — um julgado decide VÁRIOS processos
+
+**Achado novo no repo, e ele inverte a armadilha conhecida.**
+
+O repo já registrou várias vezes que "um processo tem vários julgados" (TJTO,
+TJRR, TCE-PR), logo o nº do processo não identifica o documento. **No TCE-SP
+vale também o contrário**: um mesmo acórdão decide vários processos apensados,
+e a listagem devolve **uma linha por PROCESSO**, não por documento.
+
+Medido em 10 páginas (`merenda escolar`, tipoDocumento=3):
+
+    100 linhas  ->  84 processos distintos  ->  **35 PDFs distintos**
+    fator de repetição do documento = **2,86×**
+
+Na primeira página, **7 processos diferentes** apontam para o mesmo PDF 818386.
+
+🔴 **Consequência: "Foram encontrados 1.699 registros" NÃO é 1.699 acórdãos.**
+   São 1.699 pares processo×documento. Relatar 1.699 como número de decisões
+   infla ~2,9×. O crawler deduplica por id do PDF e publica
+   `totalDeduplicadoEstimado` junto do total do servidor — **relate os dois**.
+
+  Campo que identifica o DOCUMENTO : o **id do PDF** (`arqs_juri/pdf/<id>.pdf`)
+  Campo que identifica o PROCESSO   : `NNNN/NNN/AA` (aceito no `exibir` e no `-n`)
+  ⚠️ E os dois números não se correspondem: o processo `1681/989/20` abre o PDF
+     818386, cujo texto é o acórdão do processo **TC-016626.989.17-2**. O número
+     impresso no PDF **não é** o número da linha que o trouxe.
+
+## 24. Critério de aceite desta skill
+
+  [x] Print da listagem no topo (02.01) e no rodapé (02.03)
+  [x] `outerHTML` do card gravado (02-card-resultado.html, par de <tr>)
+  [x] Card dissecado em 3 tipos: Acórdão, Relatório/Voto e Súmula (02.05)
+  [x] Texto do card classificado: **trecho**, com tamanhos (≈600–1.200 × 4.855)
+  [x] Cada link do card clicado, com print (02.04 exibir, 02.06 PDF)
+  [x] Contrato do inteiro teor registrado e **reproduzido fora do browser** (curl)
+  [x] Formato do documento: PDF, 251 KB / 4.855 chars úteis
+  [x] Respondido: o texto **não** vinha no payload da busca
+  [x] Bloqueio registrado em separado: busca ✅ livre / download ✅ livre
+  [x] `size` máximo medido: **fixo em 10**, parâmetros ignorados
+  [x] Total classificado: **EXATO** (aritmética da última página fecha)
+  [x] Paginação testada 3× — **estável**
+  [x] Permalink confirmado em contexto limpo: **PDF e `exibir?proc=` e a própria
+      URL de busca** — três permalinks, caso raro no repo
+  [x] Registrado qual campo identifica o documento: **id do PDF**, não o processo

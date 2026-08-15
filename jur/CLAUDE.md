@@ -38,7 +38,7 @@ Nunca cite um julgado sem a skill [`verificador`](skills/verificador/SKILL.md).
 | **este arquivo** | Roteamento: qual tribunal, qual doc, quais flags comuns |
 | [`CLAUDE-CJF.md`](CLAUDE-CJF.md) | Os portais do CJF (TRF1, TNU, Unificada) e **por que a Unificada não salva o STJ bloqueado** |
 | [`CLAUDE-CODEGEN.md`](CLAUDE-CODEGEN.md) | Como mapear um tribunal **novo** (processo completo) |
-| [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md) | Os 61 tribunais catalogados e o status de cada um |
+| [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md) | Os 67 tribunais catalogados e o status de cada um |
 | [`TODO.md`](TODO.md) | Próximos alvos: TJs restantes + **instâncias administrativas** (CARF, CRPS, TCEs) |
 | `CLAUDE-<TRIBUNAL>.md` | Flags específicas e **ressalvas** de um tribunal |
 | [`skills/README.md`](skills/README.md) | As 6 skills e quando usar cada uma |
@@ -62,6 +62,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tcepr` | **TCE-PR** (Tribunal de Contas do Estado do Paraná — controle externo) | PR (Estado + **os 399 municípios**) | `CLAUDE-TCEPR.md` | 🟢 OK (portal ViaJuris, HTTP direto, sem browser — **sem captcha**; ementa, **tema**, inteiro teor, **citação oficial** e **permalink público** já vêm na busca). Base corrente, 1998–2026 |
 | `tcesc` | **TCE-SC** (Tribunal de Contas do Estado de Santa Catarina — controle externo) | SC (Estado + **os 295 municípios**) | `CLAUDE-TCESC.md` | 🟢 OK (GraphQL público, HTTP direto, sem browser — **sem captcha**; citação oficial e **PDF público de inteiro teor** já vêm na busca). Base corrente, **5 bases via `--base`** (deliberações, enunciados, informativos, súmulas). 🔴 **O espaço entre termos é OR e não existe AND**; a maioria dos documentos vem **sem ementa** |
 | `tcers` | **TCE-RS** (Tribunal de Contas do Estado do Rio Grande do Sul — controle externo) | RS (Estado + **os municípios gaúchos**) | `CLAUDE-TCERS.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; o **inteiro teor já vem na busca**, conferido contra o PDF). Base corrente, **4 bases via `--base`**. 🔴 **O espaço entre termos é OR** e os operadores que a tela anuncia (`E`/`OU`/`NÃO`/`PROX`/`MESMO`/`$`) **inflam até saturar ou zeram** — use `AND`/`OR`/`NOT`. 🔴 **A ementa desaparece a partir de 2020** |
+| `tcesp` | **TCE-SP** (Tribunal de Contas do Estado de São Paulo — controle externo) | SP (Estado + **644 municípios**; 🔴 **NÃO a capital**, que é do TCM-SP) | `CLAUDE-TCESP.md` | 🟢 OK (HTTP direto, sem browser — **sem captcha**; **três permalinks públicos**, inclusive a **URL da busca**). Base corrente, 1.317.838 documentos, de 2008 em diante. 🔴 **Não existe ementa** — o texto é trecho com highlight. 🔴 **Os operadores são QUATRO CAIXAS, não inline**: `OU` dentro de `-q` é descartado e a busca continua AND. 🔴 **Um julgado decide vários processos** (fator ~2,9×): o total não é o nº de decisões |
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
@@ -722,6 +723,51 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   ⚠️ **Não existe URL de busca** — nunca mande "o link da busca" do TCE-RS como prova.
   ⚠️ **Quatro bases** (`--base decisoes|sumulas|pareceres|informacoes`): a errada devolve
   zero que não é ausência de julgado
+- **Contas públicas de SÃO PAULO** ("o que o Tribunal de Contas de SP decidiu",
+  licitação e contrato administrativo, ato de pessoal estadual ou municipal, contas de
+  prefeito, repasse ao terceiro setor, merenda e transporte escolar) → `tcesp` → leia
+  [`CLAUDE-TCESP.md`](CLAUDE-TCESP.md). É instância de **controle externo**, não
+  Judiciário: para a mesma matéria judicializada, o caminho seria `tjsp` (🔴 sem acesso)
+  ou `trf3` (federal).
+  🔴 **Não ofereça o `tcesp` para matéria cível, penal, trabalhista ou previdenciária** —
+  ele não tem esse acervo, e o zero seria o tribunal errado, não ausência de julgado.
+  🔴 **A CAPITAL NÃO ESTÁ NESTA BASE — é a ressalva mais importante do tribunal.** O
+  TCE-SP cobre o Estado e os **644 demais municípios**; **São Paulo capital é do
+  TCM-SP**, órgão separado que este repo **não cobre**. Pedido sobre contas da
+  Prefeitura de São Paulo **não tem resposta aqui** — diga isso em vez de entregar o
+  número baixo como se fosse o acervo. (A armadilha do TCM é falsa em PR, SC e RS;
+  aqui ela é **verdadeira**.) ⚠️ E não há combo de município para conferir: o portal
+  não filtra por município.
+  🔴 **OS OPERADORES SÃO QUATRO CAIXAS, NÃO INLINE** — primeiro portal do repo assim.
+  `-q` é E (AND), `--frase` é a frase exata, `--qualquer` é OU e `--excluir` é NÃO,
+  e a aritmética **fecha exata** (17.806 + 89.312 − 16.707 = 90.411 = OR).
+  ⚠️ **Dentro de `-q`, `OU` é DESCARTADO e a busca continua AND**: você pede união e
+  recebe interseção (16.707 em vez de 90.411), com número plausível e **sem sintoma**.
+  `AND`/`OR` inline **zeram**; `NAO` inline vira palavra. ✅ Aspas e `*` funcionam.
+  ⚠️ **NÃO avise sobre acento** — o índice normaliza.
+  🔴 **NÃO EXISTE EMENTA no TCE-SP, em tipo nenhum.** O que o portal mostra é um
+  **trecho** com o termo destacado (~600–1.200 chars contra ~4.900 do PDF). O crawler
+  marca `semEmenta` em **todos** — **não apresente o trecho como ementa nem como
+  acórdão inteiro**. Para o texto, `--fetch-inteiro-teor` (PDF público).
+  🔴 **UM JULGADO DECIDE VÁRIOS PROCESSOS**, e a listagem devolve uma linha por
+  **processo**: 100 linhas = 84 processos = **35 documentos** (fator 2,86×). Logo
+  "1.699 registros" **não é 1.699 acórdãos** — relate também o
+  `totalDeduplicadoEstimado`. Quem identifica o julgado é o **id do PDF**, não o
+  número do processo (e o número impresso no PDF nem é o da linha que o trouxe).
+  🔴 **Súmula e Boletim vêm SEM metadados** (todas as colunas vazias): são a família
+  "editorial", com PDF em outro host. ⚠️ E **"Sentença" aqui não é 1º grau do
+  Judiciário** — é decisão singular de Conselheiro. **Não anuncie 1º grau no TCE-SP.**
+  ✅ **As datas são o filtro mais bem-comportado do repo**: dois eixos reais
+  (`-dpi/-dpf` publicação, `-di/-df` autuação), **as duas metades funcionam sozinhas**,
+  a janela no-op não altera nada e a aritmetica fecha. ⚠️ Só DD/MM/YYYY — ISO dá 400.
+  ✅ **Três permalinks públicos**, caso raro: a **URL da busca** (que de fato executa a
+  busca em aba limpa, ao contrário do TJPE e do TJTO), o `exibir?proc=` e o PDF.
+  🔴 **Relator e data de publicação NÃO vêm na busca** — só no `exibir?proc=`; use
+  `--detalhes` (1 GET por processo). ⚠️ E **não há citação oficial pronta**.
+  ⚠️ **Página fixa em 10** (`size`/`limit` ignorados): varredura funda é cara.
+  ⚠️ **Não há CNJ nem DataJud**, e — diferente do TCE-RS — **não há Dados Abertos**:
+  não existe plano B. A verificação é `./bin/jur tcesp -n "1681/989/20"`, e o número
+  **exige a máscara** (sem ela o zero é silencioso)
 - **Contencioso administrativo PREVIDENCIÁRIO** ("o que o CRPS decidiu", recurso contra
   indeferimento do INSS, Junta de Recursos, Câmara de Julgamento) → 🔴 **não há busca**:
   o portal exige login Gov.br e o contorno por perfil de Chrome dedicado **já foi tentado

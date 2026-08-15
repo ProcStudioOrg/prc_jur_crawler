@@ -1,0 +1,250 @@
+# TCE-SP — Tribunal de Contas do Estado de São Paulo
+# Módulo 01 — Pesquisa de Jurisprudência
+# Mapeado em 15/08/2026 (slot 2000). Status: OK — crawler fechado no mesmo dia.
+
+## 1. Identificação
+
+Alvo        : TCE-SP (controle externo — Estado de SP + 644 municípios paulistas,
+              EXCETO a capital, que é do TCM-SP)
+Portal      : https://www.tce.sp.gov.br/jurisprudencia/
+Endpoint    : GET https://www.tce.sp.gov.br/jurisprudencia/pesquisar
+Descoberto  : NÃO chutado. Link `/jurisprudencia` na home institucional
+              (`www.tce.sp.gov.br`), lido do HTML da própria home.
+Tecnologia  : **Tomcat 8.0.43 + Spring MVC, renderizado no SERVIDOR.** Não é SPA,
+              não tem API JSON, não tem XHR nenhum (medido: 0 requisições
+              xhr/fetch na carga da tela e na busca).
+Acesso do crawler: **http** (GET com querystring, sem browser, sem cookie,
+              sem token, sem captcha em etapa nenhuma)
+
+## 2. Passo 0 — o que existe e o que NÃO existe de API pública
+
+NÃO EXISTE (medido em 15/08/2026, não é "não procurei"):
+  dadosabertos.tce.sp.gov.br  -> **NXDOMAIN**
+  api.tce.sp.gov.br           -> **NXDOMAIN**
+  /dados-abertos              -> 404 real
+  /dadosabertos               -> 404 real
+  /transparencia/dados-abertos-> 404 real
+  /swagger, /v3/api-docs      -> 404 real
+  /api, /api/, /rest/         -> 404 real
+
+✅ **SEM vhost curinga e SEM casca de HTTP 200.** `/path-inventado-9z` devolve
+   404 com os MESMOS 9.236 bytes e o mesmo md5 dos demais 404 — ou seja, é a
+   página de erro honesta do Tomcat, não a home servida com status 200.
+   Não foi preciso o truque do md5 (TJAC/TJAL/TCE-PR) nem o do tamanho (TCE-SC),
+   mas os dois foram aplicados e absolvem o portal.
+
+✅ O SEGUNDO HOST também é honesto: `jurisprudencia.tce.sp.gov.br`
+   (onde moram os PDFs) devolve 404 de 196 bytes para `/swagger`, `/api`,
+   `/v3/api-docs` e `/path-inventado-9z`. Sem casca.
+
+🔴 **NÃO HÁ DataJud e NÃO HÁ número CNJ** — contas não é Judiciário. O processo é
+   `NNNN/NNN/AA` (ex.: `1681/989/20`) na numeração própria do TCE-SP, e
+   `src/cnj.js` reprovaria todo processo válido. Vale a lição do TCE-PR: no
+   Bloco 5 não há plano B para o `Checker`, salvo Dados Abertos — que aqui,
+   ao contrário do TCE-RS, **não existem**.
+
+## 3. Escopo — a armadilha declarada do Bloco 5 é VERDADEIRA aqui
+
+A fila avisa: "onde existe TCM, buscar contas municipais no TCE devolve zero que
+se lê como não há julgado". **Em São Paulo isso é verdade**, e é a ressalva mais
+importante do tribunal:
+
+  - O TCE-SP fiscaliza o Estado e os **644 municípios paulistas**.
+  - A **capital (São Paulo)** é do **TCM-SP**, órgão separado, com portal próprio
+    que NÃO está mapeado neste repo.
+  - Logo: pedido sobre contas da Prefeitura de São Paulo **não tem resposta aqui**,
+    e o número baixo não é ausência de julgado.
+
+⚠️ Ao contrário do TCE-PR, **não há combo de município para contar** — o portal
+não expõe filtro de município. A prova é por contagem no acervo (o campo
+"Parte 1"/"Parte 2" traz "PREFEITURA MUNICIPAL DE <X>"), não por combo.
+
+## 4. A tela — formulário `name="filtro"`, `action="pesquisar"`
+
+⚠️ **O endpoint é GET. POST devolve HTTP 405** (Tomcat "Method Not Allowed").
+Foi o primeiro erro do mapeamento: presumi POST por ser formulário clássico.
+**Mande o método que o servidor aceita, não o que o formulário sugere.**
+
+Campos, na ordem da tela (HTML integral em `01-form.html`):
+
+  ── Bloco de texto (o modelo de 4 CAIXAS, estilo Google) ──
+  txtTdPalvs      text  "Todas estas Palavras"          -> AND
+  txtExp          text  "Esta expressão ou frase exata" -> frase exata
+  txtQqUma        text  "Qualquer uma dessas palavras"  -> OR
+  txtNenhPalvs    text  "Nenhuma destas palavras"       -> NOT
+  txtNumIni       text  "Números que variam" (de)       -> faixa numérica
+  txtNumFim       text  "Números que variam" (até)      -> faixa numérica
+
+  ── Escopo do texto (checkbox múltiplo) ──
+  tipoBuscaTxt    checkbox  Documento | Partes | Objeto   (default: Documento)
+  _tipoBuscaTxt   hidden    "on"   (marcador Spring de checkbox vazio)
+
+  ── Quantidade de trechos ──
+  quantTrechos    select  0..6   (print 01.01)
+
+  ── Filtros (select2 multi-seleção; print 01.03 a 01.06) ──
+  tipoDocumento   select multiple  14 opções   (+ hidden `_tipoDocumento=1`)
+  processo        text   máscara ######/###/##
+  exercicio       text   ex.: "2015,2016,2017"
+  dataAutuacaoInicio / dataAutuacaoFim   date DD/MM/YYYY
+  dataPubInicio      / dataPubFim        date DD/MM/YYYY
+  relator         select multiple  24 opções   (+ hidden `_relator=1`)
+  auditor         select multiple   9 opções   (+ hidden `_auditor=1`)
+  materia         select multiple 164 opções   (+ hidden `_materia=1`)
+  acao            submit  "Executa"
+
+✅ **OS COMBOS VÊM POPULADOS NO HTML ESTÁTICO — não há AJAX.** Medido no
+   Playwright: 0 XHR na carga, e o `combos.json` extraído do DOM tem exatamente
+   os mesmos valores do HTML servido por curl. A pendência que se repetiu em
+   quatro tribunais do Bloco 1 (combos-árvore do SAJ, que exigem popup) **não
+   existe aqui**. Enumeração completa em `combos.json`.
+
+⚠️ Os `<select>` são **select2** (`class="select2-hidden-accessible"`), então o
+   controle clicável é o `<span class="select2">` IRMÃO, não o `<select>`.
+   Clicar no `<select>` dá timeout. Isso derrubou a primeira rodada de prints.
+
+### tipoDocumento — as 14 opções (valor = id)
+
+    3 = Acórdão                        0 = Boletim de Jurisprudência
+   12 = Decreto legislativo            1 = Despacho
+    9 = Despacho de conhecimento       6 = Nota Taquigráfica
+   13 = Outras decisões                4 = Parecer
+   10 = Provisão de quitação           2 = Relatório / Voto
+    5 = Sentença (extrato)             8 = Sentença (não publicável)
+    7 = Sentença (publicação na íntegra)  1000 = Súmula
+
+⚠️ **"Sentença" aqui NÃO é sentença de 1º grau do Judiciário** — é a decisão
+   singular de um Conselheiro. Não anuncie "o TCE-SP tem 1º grau".
+
+## 5. Contagens medidas (15/08/2026)
+
+  ACERVO TOTAL (janela de data ampla, sem termo) : **1.317.838** documentos
+  só Acórdão                                     :   **168.766**
+  Base começa em                                 : **2008** (2008 = 8.604;
+                                                    2005, 2000 e 1995 = 0)
+  ✅ Base CORRENTE: ago/2026 = 160 publicações de `licitacao` em acórdão;
+     2026 = 1.346, 2025 = 2.945, 2015 = 3.092.
+
+## 6. O modelo de operadores — QUATRO CAIXAS, e a aritmética FECHA EXATA
+
+Este é o **primeiro portal do repo cujo modelo de operadores não é inline**: em
+vez de escrever `A AND B` num campo, preenche-se uma caixa por operador. Medido:
+
+  merenda                     (caixa 1)  17.806
+  escolar                     (caixa 1)  89.312
+  merenda escolar             (caixa 1)  16.707   <- ESPAÇO = E (AND)
+  merenda escolar             (caixa 3)  90.411   <- OR
+  "merenda escolar"           (caixa 2)  13.927   <- frase exata
+  merenda / NENHUMA: escolar  (1 + 4)     1.099   <- NOT
+
+  ✅ A + B − AND = 17.806 + 89.312 − 16.707 = **90.411 = OR**   ✓ EXATO
+  ✅ A − AND     = 17.806 − 16.707          = **1.099 = NOT**   ✓ EXATO
+  ✅ frase exata 13.927 ≤ AND 16.707                            ✓ coerente
+
+**É o conjunto de operadores mais bem-comportado já medido no repo** — décimo
+primeiro tribunal, e o primeiro em que a aritmética fecha nos dois sentidos sem
+nenhuma exceção.
+
+### 🔴 Mas os operadores INLINE dentro da caixa 1 são uma armadilha
+
+  merenda E escolar     16.707   🔴 `E`  é DESCARTADO  (= o AND do espaço)
+  merenda OU escolar    16.707   🔴 `OU` é DESCARTADO  (= o AND do espaço)
+  merenda AND escolar        0   🔴 vira palavra literal e ZERA
+  merenda OR  escolar        0   🔴 vira palavra literal e ZERA
+  merenda NAO escolar      320   🔴 vira palavra literal
+  "merenda escolar"     13.927   ✅ ASPAS FUNCIONAM dentro da caixa 1
+  merend*               20.814   ✅ curinga `*` funciona e expande
+  merend$               17.806   ⚠️ `$` inerte (= `merenda`)
+
+🔴 **O `OU` inline é o pior caso: você pede união e recebe INTERSEÇÃO** (16.707
+   em vez de 90.411), com número plausível e **sem sintoma nenhum**. É a
+   armadilha do TJMT repetida noutro fornecedor. O crawler avisa quando detecta
+   operador inline e recomenda a caixa correspondente.
+
+✅ **NÃO avise sobre acento**: `licitacao` = `licitação` = **352.861**. O índice
+   normaliza.
+✅ **Termo curto NÃO é descartado** — a armadilha do TCE-SC não se repete:
+   `ab` = 9.243 (contagem real, não o acervo). ⚠️ Mas `de` = 1.317.838 = o
+   acervo inteiro, porque "de" está mesmo em todo documento — é resultado
+   legítimo, não filtro ignorado. Distinga os dois casos pela contagem de OUTRO
+   termo curto.
+
+## 7. Filtros — provados por contagem, com valor inventado de controle
+
+  base: merenda escolar                    16.707
+    + tipoDocumento=3   (Acórdão)           1.699   ✅ filtra
+    + tipoDocumento=1   (Despacho)          4.542   ✅ filtra
+    + tipoDocumento=999 (INVENTADO)             0   ✅ honesto
+    + materia=ADITAMENTO                      861   ✅ filtra
+    + materia=MATERIAXYZ9 (INVENTADO)           0   ✅ honesto
+    + relator=RENATO MARTINS COSTA          2.483   ✅ filtra
+    + relator=FULANO INVENTADO 9Z               0   ✅ honesto
+
+  escopo tipoBuscaTxt (termo `tatui`):
+    Documento (default)  4.529 | Partes 2.643 | Objeto 635
+    Documento+Partes     4.639   ✅ multi-valor funciona (união com sobreposição)
+    valor INVENTADO          0   ✅ honesto
+
+  txtNumIni/txtNumFim = 2010..2017 sobre acórdão   1.148 de 1.699   ✅ filtra
+
+### 🔴 A ARMADILHA DO RELATOR — testar UM valor teria gravado a ressalva errada
+
+  relator = ANTONIO ROQUE CITADINI  + `merenda escolar`  ->  **0**
+  relator = FULANO INVENTADO 9Z     + `merenda escolar`  ->  **0**
+
+Dois zeros idênticos: parece filtro quebrado. **Não é.** Medindo sem termo:
+
+  relator = ANTONIO ROQUE CITADINI  (sem termo)  ->  **1**
+  relator = RENATO MARTINS COSTA    (sem termo)  ->  **162.137**
+
+Citadini é ex-conselheiro cujo nome aparece no TEXTO de milhares de acórdãos
+(o cabeçalho "GABINETE DO CONSELHEIRO ANTONIO ROQUE CITADINI") mas que tem
+**1 processo** como relator indexado. O zero era real.
+**Prove um filtro com MAIS DE UM valor, e sempre contra o valor inventado** —
+é a lição do TJPI (`-r` provado num nome só) fechada aqui por medição.
+
+## 8. Datas — o filtro mais bem-comportado do repo
+
+Dois eixos REAIS e distintos: **publicação** (`dataPubInicio/Fim`) e
+**autuação** (`dataAutuacaoInicio/Fim`).
+
+  base (merenda escolar, acórdão)                       1.699
+  publicação 01/01/2023..31/12/2023                        92
+  publicação SÓ início 01/01/2023                         227   ✅ meia janela FUNCIONA
+  publicação SÓ fim    31/12/2023                       1.564   ✅ meia janela FUNCIONA
+  publicação NO-OP 01/01/1900..31/12/2100                1.699  ✅ não altera nada
+  autuação   01/01/2023..31/12/2023                        34   ✅ eixo distinto
+  autuação   NO-OP                                      1.699  ✅ não altera nada
+
+  ✅ ARITMÉTICA FECHA: 227 + 1.564 − 92 = **1.699 = total**   ✓ EXATO
+
+✅ Passa nos três testes que outros tribunais reprovaram:
+   - TJPI/TJRR/TCE-PR: uma ponta ignorada ou zerando  -> **aqui as duas funcionam**
+   - TJES: janela no-op derruba 42% da contagem       -> **aqui não muda nada**
+   - TCE-PR: pontas falham para lados opostos         -> **aqui são simétricas**
+
+⚠️ **Só aceita DD/MM/YYYY.** Data em ISO (`2023-01-01`) devolve **HTTP 400**
+   — erro honesto, não zero silencioso. O crawler converte sozinho.
+
+## 9. Consulta por número de processo — EXIGE a máscara
+
+  processo = 1681/989/20   ->  **3 documentos**   ✅
+  processo = 168198920     ->  **0**  (silencioso)
+  processo = 9999/999/99   ->  **0**  (silencioso)
+
+O campo tem `.mask('######/###/##', {reverse: true})` no próprio JS da página.
+Some à coleção do repo: TJPE só dígitos, TJES só máscara, TJPI derruba com 500,
+TJMT aceita as duas, TCE-PR quer partido em dois campos, **TCE-SP só máscara**.
+
+## 10. Pendências declaradas
+
+- `auditor` (9 opções) está exposto como flag mas **não foi provado por contagem**
+  — só `relator`, `materia` e `tipoDocumento` foram.
+- `txtNumIni/txtNumFim` ("Números que variam") **filtra** (1.148 de 1.699) mas o
+  que exatamente ele casa (ano? valor monetário? qualquer número no texto?)
+  **não foi isolado**.
+- **Rate limit não medido.**
+- Ordenação (`campoPulsaOrdem`, 8 colunas) **não foi medida** — só o default.
+- O acervo total (1.317.838) foi obtido por janela de data ampla; **não foi
+  conferido contra a soma dos 14 tipos de documento**.
+- Não foi medido se o combo `materia` compõe multi-valor (só valor único).

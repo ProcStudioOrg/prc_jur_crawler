@@ -1,0 +1,884 @@
+{
+ "quantTrechos": [
+  {
+   "value": "0",
+   "texto": "0"
+  },
+  {
+   "value": "1",
+   "texto": "1"
+  },
+  {
+   "value": "2",
+   "texto": "2"
+  },
+  {
+   "value": "3",
+   "texto": "3"
+  },
+  {
+   "value": "4",
+   "texto": "4"
+  },
+  {
+   "value": "5",
+   "texto": "5"
+  },
+  {
+   "value": "6",
+   "texto": "6"
+  }
+ ],
+ "tipoDocumento": [
+  {
+   "value": "3",
+   "texto": "Acórdão"
+  },
+  {
+   "value": "0",
+   "texto": "Boletim de Jurisprudência"
+  },
+  {
+   "value": "12",
+   "texto": "Decreto legislativo"
+  },
+  {
+   "value": "1",
+   "texto": "Despacho"
+  },
+  {
+   "value": "9",
+   "texto": "Despacho de conhecimento"
+  },
+  {
+   "value": "6",
+   "texto": "Nota Taquigráfica"
+  },
+  {
+   "value": "13",
+   "texto": "Outras decisões"
+  },
+  {
+   "value": "4",
+   "texto": "Parecer"
+  },
+  {
+   "value": "10",
+   "texto": "Provisão de quitação"
+  },
+  {
+   "value": "2",
+   "texto": "Relatório / Voto"
+  },
+  {
+   "value": "5",
+   "texto": "Sentença (extrato)"
+  },
+  {
+   "value": "8",
+   "texto": "Sentença (não publicável)"
+  },
+  {
+   "value": "7",
+   "texto": "Sentença (publicação na íntegra)"
+  },
+  {
+   "value": "1000",
+   "texto": "Súmula"
+  }
+ ],
+ "relator": [
+  {
+   "value": "AECIO MENNUCCI",
+   "texto": "AECIO MENNUCCI"
+  },
+  {
+   "value": "ANTONIO CARLOS MESQUITA",
+   "texto": "ANTONIO CARLOS MESQUITA"
+  },
+  {
+   "value": "ANTONIO ROQUE CITADINI",
+   "texto": "ANTONIO ROQUE CITADINI"
+  },
+  {
+   "value": "CARLOS CEZAR",
+   "texto": "CARLOS CEZAR"
+  },
+  {
+   "value": "CLAUDIO FERRAZ DE ALVARENGA",
+   "texto": "CLAUDIO FERRAZ DE ALVARENGA"
+  },
+  {
+   "value": "CRISTIANA DE CASTRO MORAES",
+   "texto": "CRISTIANA DE CASTRO MORAES"
+  },
+  {
+   "value": "DIMAS RAMALHO",
+   "texto": "DIMAS RAMALHO"
+  },
+  {
+   "value": "DR. MARCELO PEREIRA",
+   "texto": "DR. MARCELO PEREIRA"
+  },
+  {
+   "value": "EDGARD CAMARGO RODRIGUES",
+   "texto": "EDGARD CAMARGO RODRIGUES"
+  },
+  {
+   "value": "FULVIO JULIAO BIAZZI",
+   "texto": "FULVIO JULIAO BIAZZI"
+  },
+  {
+   "value": "GEORGE OSWALDO NOGUEIRA",
+   "texto": "GEORGE OSWALDO NOGUEIRA"
+  },
+  {
+   "value": "JOSE LUIZ DE ANHAIA MELLO",
+   "texto": "JOSE LUIZ DE ANHAIA MELLO"
+  },
+  {
+   "value": "MARCO AURELIO BERTAIOLLI",
+   "texto": "MARCO AURELIO BERTAIOLLI"
+  },
+  {
+   "value": "MAXWELL BORGES DE MOURA VIEIRA",
+   "texto": "MAXWELL BORGES DE MOURA VIEIRA"
+  },
+  {
+   "value": "NIVALDO CAMPOS CAMARGO",
+   "texto": "NIVALDO CAMPOS CAMARGO"
+  },
+  {
+   "value": "OLAVO DRUMMOND",
+   "texto": "OLAVO DRUMMOND"
+  },
+  {
+   "value": "ORLANDO GABRIEL ZANCANER",
+   "texto": "ORLANDO GABRIEL ZANCANER"
+  },
+  {
+   "value": "PAULO DE TARSO SANTOS",
+   "texto": "PAULO DE TARSO SANTOS"
+  },
+  {
+   "value": "RENATO MARTINS COSTA",
+   "texto": "RENATO MARTINS COSTA"
+  },
+  {
+   "value": "ROBSON MARINHO",
+   "texto": "ROBSON MARINHO"
+  },
+  {
+   "value": "SERGIO CIQUERA ROSSI",
+   "texto": "SERGIO CIQUERA ROSSI"
+  },
+  {
+   "value": "SIDNEY ESTANISLAU BERALDO",
+   "texto": "SIDNEY ESTANISLAU BERALDO"
+  },
+  {
+   "value": "VALDENIR ANTONIO POLIZELI",
+   "texto": "VALDENIR ANTONIO POLIZELI"
+  },
+  {
+   "value": "WAGNER DE CAMPOS ROSARIO",
+   "texto": "WAGNER DE CAMPOS ROSARIO"
+  }
+ ],
+ "auditor": [
+  {
+   "value": "ALEXANDRE MANIR FIGUEIREDO SARQUIS",
+   "texto": "ALEXANDRE MANIR FIGUEIREDO SARQUIS"
+  },
+  {
+   "value": "ANTONIO CARLOS DOS SANTOS",
+   "texto": "ANTONIO CARLOS DOS SANTOS"
+  },
+  {
+   "value": "CRISTIANA DE CASTRO MORAES",
+   "texto": "CRISTIANA DE CASTRO MORAES"
+  },
+  {
+   "value": "JOSUE ROMERO",
+   "texto": "JOSUE ROMERO"
+  },
+  {
+   "value": "MARCIO MARTINS DE CAMARGO",
+   "texto": "MARCIO MARTINS DE CAMARGO"
+  },
+  {
+   "value": "SAMY WURMAN",
+   "texto": "SAMY WURMAN"
+  },
+  {
+   "value": "SILVIA CRISTINA MONTEIRO MORAES",
+   "texto": "SILVIA CRISTINA MONTEIRO MORAES"
+  },
+  {
+   "value": "SILVIA MONTEIRO",
+   "texto": "SILVIA MONTEIRO"
+  },
+  {
+   "value": "VALDENIR ANTONIO POLIZELI",
+   "texto": "VALDENIR ANTONIO POLIZELI"
+  }
+ ],
+ "materia": [
+  {
+   "value": "ACAO ELETRONICA",
+   "texto": "ACAO ELETRONICA"
+  },
+  {
+   "value": "ACESSORIO - 1  ORDEM CRONOLOGICA",
+   "texto": "ACESSORIO - 1  ORDEM CRONOLOGICA"
+  },
+  {
+   "value": "ACESSORIO - 1 ACOMPANHAMENTO DA GESTAO FISCAL",
+   "texto": "ACESSORIO - 1 ACOMPANHAMENTO DA GESTAO FISCAL"
+  },
+  {
+   "value": "ACESSORIO - 2 APLICACAO NO ENSINO",
+   "texto": "ACESSORIO - 2 APLICACAO NO ENSINO"
+  },
+  {
+   "value": "ACESSORIO - 3 LEI DE RESPONSABILIDADE FISCAL",
+   "texto": "ACESSORIO - 3 LEI DE RESPONSABILIDADE FISCAL"
+  },
+  {
+   "value": "ACOMPANHAMENTO DE CONCESSOES E PERMISSOES",
+   "texto": "ACOMPANHAMENTO DE CONCESSOES E PERMISSOES"
+  },
+  {
+   "value": "ACOMPANHAMENTO EXECUCAO CONTRATUAL",
+   "texto": "ACOMPANHAMENTO EXECUCAO CONTRATUAL"
+  },
+  {
+   "value": "ADICIONAL DE INSALUBRIDADE",
+   "texto": "ADICIONAL DE INSALUBRIDADE"
+  },
+  {
+   "value": "ADITAMENTO",
+   "texto": "ADITAMENTO"
+  },
+  {
+   "value": "ADMISSAO DE PESSOAL",
+   "texto": "ADMISSAO DE PESSOAL"
+  },
+  {
+   "value": "ADMISSAO DE PESSOAL - CONCURSO  PROCESSO SELETIVO",
+   "texto": "ADMISSAO DE PESSOAL - CONCURSO  PROCESSO SELETIVO"
+  },
+  {
+   "value": "ADMISSAO DE PESSOAL - TEMPO DETERMINADO",
+   "texto": "ADMISSAO DE PESSOAL - TEMPO DETERMINADO"
+  },
+  {
+   "value": "ADMISSAO PESSOAL - CONCURSO",
+   "texto": "ADMISSAO PESSOAL - CONCURSO"
+  },
+  {
+   "value": "AFASTAMENTO/COMISSIONAMENTO/REQUISICAO TRE",
+   "texto": "AFASTAMENTO/COMISSIONAMENTO/REQUISICAO TRE"
+  },
+  {
+   "value": "AGRAVO",
+   "texto": "AGRAVO"
+  },
+  {
+   "value": "APARTADO DE CAMARA MUNICIPAL",
+   "texto": "APARTADO DE CAMARA MUNICIPAL"
+  },
+  {
+   "value": "APARTADO DE PREFEITURA MUNICIPAL",
+   "texto": "APARTADO DE PREFEITURA MUNICIPAL"
+  },
+  {
+   "value": "APLICACAO NO ENSINO",
+   "texto": "APLICACAO NO ENSINO"
+  },
+  {
+   "value": "APOSENTADORIA",
+   "texto": "APOSENTADORIA"
+  },
+  {
+   "value": "APOSENTADORIA - EC-70",
+   "texto": "APOSENTADORIA - EC-70"
+  },
+  {
+   "value": "APOSENTADORIA - EMENDA CONSTITUCIONAL 70/2012",
+   "texto": "APOSENTADORIA - EMENDA CONSTITUCIONAL 70/2012"
+  },
+  {
+   "value": "APOSENTADORIA / PENSAO",
+   "texto": "APOSENTADORIA / PENSAO"
+  },
+  {
+   "value": "APOSENTADORIA COMPREV - ESTADUAL",
+   "texto": "APOSENTADORIA COMPREV - ESTADUAL"
+  },
+  {
+   "value": "AQUISICAO",
+   "texto": "AQUISICAO"
+  },
+  {
+   "value": "ARTIGO 133 C.E",
+   "texto": "ARTIGO 133 C.E"
+  },
+  {
+   "value": "ATENDE INSTRUCAO 1/90",
+   "texto": "ATENDE INSTRUCAO 1/90"
+  },
+  {
+   "value": "ATENDENDO REQUISICAO/OFICIO",
+   "texto": "ATENDENDO REQUISICAO/OFICIO"
+  },
+  {
+   "value": "ATENDENDO REQUISICãO/OFICIO",
+   "texto": "ATENDENDO REQUISICãO/OFICIO"
+  },
+  {
+   "value": "ATENDIMENTO OFICIO JUSTIFICATIVA (RES. 01/2012",
+   "texto": "ATENDIMENTO OFICIO JUSTIFICATIVA (RES. 01/2012"
+  },
+  {
+   "value": "AUDITORIA ESPECIAL",
+   "texto": "AUDITORIA ESPECIAL"
+  },
+  {
+   "value": "AUXILIOS/SUBVENCOES/CONTRIBUICOES",
+   "texto": "AUXILIOS/SUBVENCOES/CONTRIBUICOES"
+  },
+  {
+   "value": "BALANCO GERAL DO EXERCICIO",
+   "texto": "BALANCO GERAL DO EXERCICIO"
+  },
+  {
+   "value": "CAUTELAR DE SUSPENSÃO DE PAGAMENTOS (23)",
+   "texto": "CAUTELAR DE SUSPENSÃO DE PAGAMENTOS (23)"
+  },
+  {
+   "value": "CAUTELAR EM PROCEDIMENTO DE CONTRATAÇÃO (22)",
+   "texto": "CAUTELAR EM PROCEDIMENTO DE CONTRATAÇÃO (22)"
+  },
+  {
+   "value": "COMISSIONAMENTO",
+   "texto": "COMISSIONAMENTO"
+  },
+  {
+   "value": "COMPLEMENTACAO DE PROVENTOS - VALOR DA PENSAO",
+   "texto": "COMPLEMENTACAO DE PROVENTOS - VALOR DA PENSAO"
+  },
+  {
+   "value": "COMUNICACAO DE FURTO",
+   "texto": "COMUNICACAO DE FURTO"
+  },
+  {
+   "value": "COMUNICADO AUTOS PROPRIOS",
+   "texto": "COMUNICADO AUTOS PROPRIOS"
+  },
+  {
+   "value": "CONCURSO",
+   "texto": "CONCURSO"
+  },
+  {
+   "value": "CONFLITO DE COMPETENCIA",
+   "texto": "CONFLITO DE COMPETENCIA"
+  },
+  {
+   "value": "CONSULTA",
+   "texto": "CONSULTA"
+  },
+  {
+   "value": "CONTAGEM DE TEMPO",
+   "texto": "CONTAGEM DE TEMPO"
+  },
+  {
+   "value": "CONTAS DE CAMARA MUNICIPAL",
+   "texto": "CONTAS DE CAMARA MUNICIPAL"
+  },
+  {
+   "value": "CONTAS MUNICIPAIS",
+   "texto": "CONTAS MUNICIPAIS"
+  },
+  {
+   "value": "CONTRATACAO DE SERVICOS",
+   "texto": "CONTRATACAO DE SERVICOS"
+  },
+  {
+   "value": "CONTRATO",
+   "texto": "CONTRATO"
+  },
+  {
+   "value": "CONTRATO DE GESTAO",
+   "texto": "CONTRATO DE GESTAO"
+  },
+  {
+   "value": "CONTROLE DE PRAZOS DAS RESOLUCOES E INSTRUCOES",
+   "texto": "CONTROLE DE PRAZOS DAS RESOLUCOES E INSTRUCOES"
+  },
+  {
+   "value": "CONV.-REPASSES PUBL.TERC.SETOR/ENTIDADE PRIVADA",
+   "texto": "CONV.-REPASSES PUBL.TERC.SETOR/ENTIDADE PRIVADA"
+  },
+  {
+   "value": "CONVENIO-REPASSES A ORGAOS PUBLICO",
+   "texto": "CONVENIO-REPASSES A ORGAOS PUBLICO"
+  },
+  {
+   "value": "CONVOCACAO",
+   "texto": "CONVOCACAO"
+  },
+  {
+   "value": "COPIA DIGITAL",
+   "texto": "COPIA DIGITAL"
+  },
+  {
+   "value": "COPIAS XEROGRAFICAS",
+   "texto": "COPIAS XEROGRAFICAS"
+  },
+  {
+   "value": "DECISAO DE PRIMEIRA CAMARA",
+   "texto": "DECISAO DE PRIMEIRA CAMARA"
+  },
+  {
+   "value": "DECISAO DE SEGUNDA CAMARA",
+   "texto": "DECISAO DE SEGUNDA CAMARA"
+  },
+  {
+   "value": "DECISAO DE TRIBUNAL PLENO",
+   "texto": "DECISAO DE TRIBUNAL PLENO"
+  },
+  {
+   "value": "DEFESA",
+   "texto": "DEFESA"
+  },
+  {
+   "value": "DEVOLUCAO DE CAUCAO",
+   "texto": "DEVOLUCAO DE CAUCAO"
+  },
+  {
+   "value": "DOACAO",
+   "texto": "DOACAO"
+  },
+  {
+   "value": "EDITAL PRÉVIO DE CONCURSO PÚBLICO",
+   "texto": "EDITAL PRÉVIO DE CONCURSO PÚBLICO"
+  },
+  {
+   "value": "EMBARGOS DE DECLARACAO",
+   "texto": "EMBARGOS DE DECLARACAO"
+  },
+  {
+   "value": "EMBARGOS INFRINGENTE",
+   "texto": "EMBARGOS INFRINGENTE"
+  },
+  {
+   "value": "ENCAMINHA DOCUMENTO",
+   "texto": "ENCAMINHA DOCUMENTO"
+  },
+  {
+   "value": "ESPORADICO",
+   "texto": "ESPORADICO"
+  },
+  {
+   "value": "EXAME PREVIO DE EDITAIS DE LICITACAO",
+   "texto": "EXAME PREVIO DE EDITAIS DE LICITACAO"
+  },
+  {
+   "value": "EXCESSO DE FALTAS",
+   "texto": "EXCESSO DE FALTAS"
+  },
+  {
+   "value": "EXECUCAO DE OBRAS E SERVICOS INST. 2/96",
+   "texto": "EXECUCAO DE OBRAS E SERVICOS INST. 2/96"
+  },
+  {
+   "value": "EXONERACAO",
+   "texto": "EXONERACAO"
+  },
+  {
+   "value": "EXPEDIENTE EM APARTADO",
+   "texto": "EXPEDIENTE EM APARTADO"
+  },
+  {
+   "value": "FALTA E COMUNICACAO DE FREQUENCIA",
+   "texto": "FALTA E COMUNICACAO DE FREQUENCIA"
+  },
+  {
+   "value": "FERIAS/DIAS COMPENSACAO",
+   "texto": "FERIAS/DIAS COMPENSACAO"
+  },
+  {
+   "value": "FINANCIAMENTOS E EMPRESTIMOS",
+   "texto": "FINANCIAMENTOS E EMPRESTIMOS"
+  },
+  {
+   "value": "FISCALIZACAO ESPECIAL",
+   "texto": "FISCALIZACAO ESPECIAL"
+  },
+  {
+   "value": "FISCALIZACAO EXTRAORDINARIA",
+   "texto": "FISCALIZACAO EXTRAORDINARIA"
+  },
+  {
+   "value": "FISCALIZAÇÃO OPERACIONAL - CONTAS DO GOVERNADOR",
+   "texto": "FISCALIZAÇÃO OPERACIONAL - CONTAS DO GOVERNADOR"
+  },
+  {
+   "value": "FISCALIZAÇÃO ORDENADA - BALANÇO GERAL DO EXERCÍCIO",
+   "texto": "FISCALIZAÇÃO ORDENADA - BALANÇO GERAL DO EXERCÍCIO"
+  },
+  {
+   "value": "FISCALIZAÇÃO ORDENADA - CONTAS DE PREFEITURA",
+   "texto": "FISCALIZAÇÃO ORDENADA - CONTAS DE PREFEITURA"
+  },
+  {
+   "value": "FISCALIZAÇÃO ORDENADA - RELATÓRIO DE FISCALIZAÇÃO",
+   "texto": "FISCALIZAÇÃO ORDENADA - RELATÓRIO DE FISCALIZAÇÃO"
+  },
+  {
+   "value": "IMPUGNACAO",
+   "texto": "IMPUGNACAO"
+  },
+  {
+   "value": "INCORPORACAO",
+   "texto": "INCORPORACAO"
+  },
+  {
+   "value": "IRREGULARIDADES",
+   "texto": "IRREGULARIDADES"
+  },
+  {
+   "value": "LEI DE RESPONSABILIDADE FISCAL",
+   "texto": "LEI DE RESPONSABILIDADE FISCAL"
+  },
+  {
+   "value": "LICENCA DE INTERESSE PARTICULAR",
+   "texto": "LICENCA DE INTERESSE PARTICULAR"
+  },
+  {
+   "value": "LICENCA GESTANTE",
+   "texto": "LICENCA GESTANTE"
+  },
+  {
+   "value": "LICENCA PREMIO",
+   "texto": "LICENCA PREMIO"
+  },
+  {
+   "value": "ORDEM CRONOLOGICA",
+   "texto": "ORDEM CRONOLOGICA"
+  },
+  {
+   "value": "PAGAMENTO",
+   "texto": "PAGAMENTO"
+  },
+  {
+   "value": "PEDIDO DE CERTIDAO",
+   "texto": "PEDIDO DE CERTIDAO"
+  },
+  {
+   "value": "PEDIDO DE FISCALIZACAO",
+   "texto": "PEDIDO DE FISCALIZACAO"
+  },
+  {
+   "value": "PEDIDO DE RECONSIDERACAO",
+   "texto": "PEDIDO DE RECONSIDERACAO"
+  },
+  {
+   "value": "PEDIDO DE VISTA",
+   "texto": "PEDIDO DE VISTA"
+  },
+  {
+   "value": "PEDIDO DE VISTA E COPIAS XEROGRAFICAS",
+   "texto": "PEDIDO DE VISTA E COPIAS XEROGRAFICAS"
+  },
+  {
+   "value": "PEDIDO INTERESSE COLETIVO",
+   "texto": "PEDIDO INTERESSE COLETIVO"
+  },
+  {
+   "value": "PENSAO - EC-70",
+   "texto": "PENSAO - EC-70"
+  },
+  {
+   "value": "PENSAO MENSAL",
+   "texto": "PENSAO MENSAL"
+  },
+  {
+   "value": "PREST.CONTAS-AUX/SUB/CONTR-TERC.SETOR",
+   "texto": "PREST.CONTAS-AUX/SUB/CONTR-TERC.SETOR"
+  },
+  {
+   "value": "PREST.CONTAS-AUX/SUBV/CONTR-ORGAOS PUBLICO",
+   "texto": "PREST.CONTAS-AUX/SUBV/CONTR-ORGAOS PUBLICO"
+  },
+  {
+   "value": "PREST.CONTAS-CONV.TERC.SETOR/ENTIDADE PRIVADA",
+   "texto": "PREST.CONTAS-CONV.TERC.SETOR/ENTIDADE PRIVADA"
+  },
+  {
+   "value": "PREST.CONTAS-CONVENIO REP.PUBL.TERCEIRO SETOR",
+   "texto": "PREST.CONTAS-CONVENIO REP.PUBL.TERCEIRO SETOR"
+  },
+  {
+   "value": "PREST.CONTAS-CONVENIO REPASSES ORGAOS PUBL.VLR INF",
+   "texto": "PREST.CONTAS-CONVENIO REPASSES ORGAOS PUBL.VLR INF"
+  },
+  {
+   "value": "PREST.CONTAS-CONVENIO REPASSES ORGAOS PUBL.VLR.SUP",
+   "texto": "PREST.CONTAS-CONVENIO REPASSES ORGAOS PUBL.VLR.SUP"
+  },
+  {
+   "value": "PREST.CONTAS-REP.PUBL.TERC.SETOR CG/TP/CV/VIR.INF",
+   "texto": "PREST.CONTAS-REP.PUBL.TERC.SETOR CG/TP/CV/VIR.INF"
+  },
+  {
+   "value": "PREST.CONTAS-REP.TERC.SETOR-CG/TP/CV/TC/TF-VLR.INF",
+   "texto": "PREST.CONTAS-REP.TERC.SETOR-CG/TP/CV/TC/TF-VLR.INF"
+  },
+  {
+   "value": "PREST.CONTAS-REP.TERC.SETOR/ENTIDADE PRIV-CONVENIO",
+   "texto": "PREST.CONTAS-REP.TERC.SETOR/ENTIDADE PRIV-CONVENIO"
+  },
+  {
+   "value": "PREST.CONTAS-REPASSES ORGAOS PUBL-AUX/SUB/CONTR",
+   "texto": "PREST.CONTAS-REPASSES ORGAOS PUBL-AUX/SUB/CONTR"
+  },
+  {
+   "value": "PREST.CONTAS-REPASSES ORGAOS PUBL-CONVENIO VLR.INF",
+   "texto": "PREST.CONTAS-REPASSES ORGAOS PUBL-CONVENIO VLR.INF"
+  },
+  {
+   "value": "PREST.CONTAS-REPASSES ORGAOS PUBL-CONVENIO-VLR.SUP",
+   "texto": "PREST.CONTAS-REPASSES ORGAOS PUBL-CONVENIO-VLR.SUP"
+  },
+  {
+   "value": "PREST.CONTAS-REPASSES TERC.SETOR-AUX/SUB/CONTR",
+   "texto": "PREST.CONTAS-REPASSES TERC.SETOR-AUX/SUB/CONTR"
+  },
+  {
+   "value": "PREST.CONTAS-REPASSES TERC.SETOR-CG/TP/CV-VLR.INF",
+   "texto": "PREST.CONTAS-REPASSES TERC.SETOR-CG/TP/CV-VLR.INF"
+  },
+  {
+   "value": "PREST.CONTAS-REPASSES TERC.SETOR-CONTRATO GESTAO",
+   "texto": "PREST.CONTAS-REPASSES TERC.SETOR-CONTRATO GESTAO"
+  },
+  {
+   "value": "PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE COLABORA",
+   "texto": "PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE COLABORA"
+  },
+  {
+   "value": "PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE FOMENTO",
+   "texto": "PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE FOMENTO"
+  },
+  {
+   "value": "PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE PARCERIA",
+   "texto": "PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE PARCERIA"
+  },
+  {
+   "value": "PRESTA ESCLARECIMENTOS",
+   "texto": "PRESTA ESCLARECIMENTOS"
+  },
+  {
+   "value": "PRESTACAO DE CONTAS - CONTRATO DE GESTAO",
+   "texto": "PRESTACAO DE CONTAS - CONTRATO DE GESTAO"
+  },
+  {
+   "value": "PRESTACAO DE CONTAS - TERMO DE PARCERIA",
+   "texto": "PRESTACAO DE CONTAS - TERMO DE PARCERIA"
+  },
+  {
+   "value": "PRESTACAO DE CONTAS DE ADIANTAMENTO",
+   "texto": "PRESTACAO DE CONTAS DE ADIANTAMENTO"
+  },
+  {
+   "value": "PRESTACAO DE CONTAS DO(S)GESTOR(ES)PREV.MUNICIPAL",
+   "texto": "PRESTACAO DE CONTAS DO(S)GESTOR(ES)PREV.MUNICIPAL"
+  },
+  {
+   "value": "PROCESSO ADMINISTRATIVO",
+   "texto": "PROCESSO ADMINISTRATIVO"
+  },
+  {
+   "value": "PROCESSO PREFERENCIAL",
+   "texto": "PROCESSO PREFERENCIAL"
+  },
+  {
+   "value": "PRORROGACAO DE POSSE",
+   "texto": "PRORROGACAO DE POSSE"
+  },
+  {
+   "value": "PRORROGACAO DE PRAZO",
+   "texto": "PRORROGACAO DE PRAZO"
+  },
+  {
+   "value": "PRORROGACAO PARA ENTRAR EM EXERCICIO",
+   "texto": "PRORROGACAO PARA ENTRAR EM EXERCICIO"
+  },
+  {
+   "value": "PRORROGACAO PARA RESPOSTA DE OFICIO",
+   "texto": "PRORROGACAO PARA RESPOSTA DE OFICIO"
+  },
+  {
+   "value": "QUEBRA DE ORDEM CRONOLOGICA",
+   "texto": "QUEBRA DE ORDEM CRONOLOGICA"
+  },
+  {
+   "value": "READMISSAO",
+   "texto": "READMISSAO"
+  },
+  {
+   "value": "RECONSIDERACAO",
+   "texto": "RECONSIDERACAO"
+  },
+  {
+   "value": "RECURSO ELETRONICO",
+   "texto": "RECURSO ELETRONICO"
+  },
+  {
+   "value": "RECURSO ORDINARIO",
+   "texto": "RECURSO ORDINARIO"
+  },
+  {
+   "value": "REENQUADRAMENTO",
+   "texto": "REENQUADRAMENTO"
+  },
+  {
+   "value": "REEXAME",
+   "texto": "REEXAME"
+  },
+  {
+   "value": "REFORMA - TRANSFERENCIA PARA A RESERVA",
+   "texto": "REFORMA - TRANSFERENCIA PARA A RESERVA"
+  },
+  {
+   "value": "REINTEGRA$@O",
+   "texto": "REINTEGRA$@O"
+  },
+  {
+   "value": "REINTEGRAÇÃO",
+   "texto": "REINTEGRAÇÃO"
+  },
+  {
+   "value": "REITERACAO",
+   "texto": "REITERACAO"
+  },
+  {
+   "value": "RELATORIO DE FISCALIZACAO",
+   "texto": "RELATORIO DE FISCALIZACAO"
+  },
+  {
+   "value": "RELATORIOS DE ATIVIDADES",
+   "texto": "RELATORIOS DE ATIVIDADES"
+  },
+  {
+   "value": "REPASSES PUBL.TERC.SETOR/C.GESTAO/T.PARCERIA/CONV.",
+   "texto": "REPASSES PUBL.TERC.SETOR/C.GESTAO/T.PARCERIA/CONV."
+  },
+  {
+   "value": "REPASSES PUBLICOS AO TERCEIRO SETOR",
+   "texto": "REPASSES PUBLICOS AO TERCEIRO SETOR"
+  },
+  {
+   "value": "REPRESENTACAO",
+   "texto": "REPRESENTACAO"
+  },
+  {
+   "value": "REPRESENTACAO CONTRA EDITAL",
+   "texto": "REPRESENTACAO CONTRA EDITAL"
+  },
+  {
+   "value": "REPRESENTAÇÃO - MEDIDA CAUTELAR - CONTRATAÇÃO",
+   "texto": "REPRESENTAÇÃO - MEDIDA CAUTELAR - CONTRATAÇÃO"
+  },
+  {
+   "value": "REPRESENTAÇÃO - MEDIDA CAUTELAR - PAGAMENTOS",
+   "texto": "REPRESENTAÇÃO - MEDIDA CAUTELAR - PAGAMENTOS"
+  },
+  {
+   "value": "REPRESENTAÇÃO CONTRA EDITAL DE CONCURSO",
+   "texto": "REPRESENTAÇÃO CONTRA EDITAL DE CONCURSO"
+  },
+  {
+   "value": "REQUERIMENTO PESSOAL",
+   "texto": "REQUERIMENTO PESSOAL"
+  },
+  {
+   "value": "RESCISAO DE JULGADO",
+   "texto": "RESCISAO DE JULGADO"
+  },
+  {
+   "value": "RESPOSTA DE OFICIO",
+   "texto": "RESPOSTA DE OFICIO"
+  },
+  {
+   "value": "RETI-RATIFICACAO",
+   "texto": "RETI-RATIFICACAO"
+  },
+  {
+   "value": "RETIRRATIFICACAO",
+   "texto": "RETIRRATIFICACAO"
+  },
+  {
+   "value": "REVISAO DE JULGADO",
+   "texto": "REVISAO DE JULGADO"
+  },
+  {
+   "value": "SALARIO FAMILIA",
+   "texto": "SALARIO FAMILIA"
+  },
+  {
+   "value": "SANCAO ADMINISTRATIVA",
+   "texto": "SANCAO ADMINISTRATIVA"
+  },
+  {
+   "value": "SIC - LEI-12527/2011",
+   "texto": "SIC - LEI-12527/2011"
+  },
+  {
+   "value": "SOLICITA DOCUMENTO",
+   "texto": "SOLICITA DOCUMENTO"
+  },
+  {
+   "value": "SOLICITA INFORMACOES",
+   "texto": "SOLICITA INFORMACOES"
+  },
+  {
+   "value": "SUSTENTACAO ORAL",
+   "texto": "SUSTENTACAO ORAL"
+  },
+  {
+   "value": "TERMO DE ADESAO",
+   "texto": "TERMO DE ADESAO"
+  },
+  {
+   "value": "TERMO DE COLABORACAO-REPASSES PUBL.TERCEIRO SETOR",
+   "texto": "TERMO DE COLABORACAO-REPASSES PUBL.TERCEIRO SETOR"
+  },
+  {
+   "value": "TERMO DE FOMENTO-REPASSES PUBL.TERCEIRO SETOR",
+   "texto": "TERMO DE FOMENTO-REPASSES PUBL.TERCEIRO SETOR"
+  },
+  {
+   "value": "TERMO DE PARCERIA",
+   "texto": "TERMO DE PARCERIA"
+  },
+  {
+   "value": "TERMO DE RESCISAO",
+   "texto": "TERMO DE RESCISAO"
+  },
+  {
+   "value": "TRANSFORMACAO DE CARGO",
+   "texto": "TRANSFORMACAO DE CARGO"
+  },
+  {
+   "value": "UNIDADE ADMINISTRATIVA",
+   "texto": "UNIDADE ADMINISTRATIVA"
+  },
+  {
+   "value": "UR - ALMOXARIFADO",
+   "texto": "UR - ALMOXARIFADO"
+  }
+ ]
+}

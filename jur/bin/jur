@@ -65,6 +65,8 @@ const TCESCChecker = require('../src/TCESCChecker');
 const TCESCCojur = require('../src/TCESCCojur');
 const TCERSCrawler = require('../src/TCERSCrawler');
 const TCERSChecker = require('../src/TCERSChecker');
+const TCESPCrawler = require('../src/TCESPCrawler');
+const TCESPChecker = require('../src/TCESPChecker');
 const TJRRCrawler = require('../src/TJRRCrawler');
 const TJRRChecker = require('../src/TJRRChecker');
 const TJESCrawler = require('../src/TJESCrawler');
@@ -5761,6 +5763,158 @@ program
         if (jsonMode) {
           process.stdout.write(JSON.stringify({ success: true, count: results.length, output: outputPath, ...resumo }) + '\n');
         }
+      }
+    } catch (error) {
+      if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+      else console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tcesp')
+  .description('Search TCE-SP (Tribunal de Contas do Estado de Sao Paulo) — HTTP direto, sem browser')
+  .option('-q, --query <text>', 'Termos que devem TODOS aparecer (caixa "Todas estas Palavras" = AND)')
+  .option('--frase <texto>', 'Expressao ou frase EXATA (caixa 2)')
+  .option('--qualquer <texto>', 'Qualquer uma dessas palavras (caixa 3 = OU). NAO use "OU" dentro de -q')
+  .option('--excluir <texto>', 'Nenhuma destas palavras (caixa 4 = NAO). NAO use "NAO" dentro de -q')
+  .option('-n, --numero <numero>', 'Consulta por numero de processo (aceita "1681/989/20" ou "168198920"); dispensa -q')
+  .option('-t, --tipo <tipos>', 'Tipo(s) de documento, separados por virgula: acordao, sumula, parecer, despacho, relatorio-voto...')
+  .option('--escopo <e>', 'Onde buscar o texto: documento (default), partes, objeto — separados por virgula', 'documento')
+  .option('-r, --relator <nome>', 'Nome do Conselheiro relator (use --listar-filtros)')
+  .option('--auditor <nome>', 'Nome do Auditor (use --listar-filtros). NAO provado por contagem')
+  .option('--materia <nome>', 'Materia exata (164 opcoes; use --listar-filtros)')
+  .option('--exercicio <anos>', 'Exercicio, ex.: "2015,2016,2017"')
+  .option('-dpi, --data-pub-inicio <date>', 'Data inicial de PUBLICACAO (DD/MM/YYYY)')
+  .option('-dpf, --data-pub-fim <date>', 'Data final de PUBLICACAO (DD/MM/YYYY)')
+  .option('-di, --data-inicio <date>', 'Data inicial de AUTUACAO (DD/MM/YYYY) — eixo distinto da publicacao')
+  .option('-df, --data-fim <date>', 'Data final de AUTUACAO (DD/MM/YYYY)')
+  .option('--num-ini <n>', 'Faixa "Numeros que variam" — inicio (ex.: 2010)')
+  .option('--num-fim <n>', 'Faixa "Numeros que variam" — fim (ex.: 2017)')
+  .option('--trechos <n>', 'Quantidade de trechos por documento, 0..6 (0 devolve NENHUM texto)', 3)
+  .option('--detalhes', 'Faz 1 GET por processo para trazer RELATOR e data de publicacao (a busca nao tem)')
+  .option('--listar-filtros', 'Lista tipos de documento, relatores, auditores e materias e sai')
+  .option('--verificar [amostra]', 'Audita N resultados por reconsulta pelo numero (default 3)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (pagina FIXA em 10 documentos)', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tcesp.json')
+  .option('--fetch-inteiro-teor', 'Baixa o PDF do inteiro teor (1 GET por documento; o texto NAO vem na busca)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tcesp')
+  .option('-v, --visible', 'Ignored (TCE-SP usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TCE-SP usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    try {
+      if (opts.numero) {
+        const res = await new TCESPChecker({ quiet: jsonMode }).porNumero(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (opts.listarFiltros) {
+        const combos = require('../human-codegen/TCESP/01-jurisprudencia/combos.json');
+        const saida = {
+          tipoDocumento: Object.entries(require('../src/TCESPNavigator').TIPOS_DOCUMENTO).map(
+            ([k, v]) => `${k} (${v.rotulo})`,
+          ),
+          relator: combos.relator.map((o) => o.value),
+          auditor: combos.auditor.map((o) => o.value),
+          materia: combos.materia.map((o) => o.value),
+        };
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, combos: saida }) + '\n');
+        else console.log(JSON.stringify(saida, null, 2));
+        process.exit(0);
+      }
+
+      const temFiltro =
+        opts.query || opts.frase || opts.qualquer || opts.relator || opts.materia ||
+        opts.tipo || opts.dataPubInicio || opts.dataInicio || opts.exercicio;
+      if (!temFiltro) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero>, ou um filtro como -t/-r/--materia/-dpi)');
+      }
+
+      log('='.repeat(60));
+      log('TCE-SP Jurisprudencia Crawler (HTTP direto, sem browser, sem captcha)');
+      log('ESCOPO: CONTROLE EXTERNO, nao Judiciario — contas, licitacao, contrato e');
+      log('        pessoal do Estado de SP e dos 644 municipios paulistas.');
+      log('🔴 A CAPITAL NAO ESTA NESTA BASE: Sao Paulo capital e do TCM-SP, orgao');
+      log('   separado que este repo nao cobre. Contas da Prefeitura de SP nao tem');
+      log('   resposta aqui, e o numero baixo NAO e ausencia de julgado.');
+      log('ATENCAO: o modelo de operadores e de QUATRO CAIXAS, nao inline. Dentro de');
+      log('         -q, "OU" e DESCARTADO e a busca continua AND (voce pede uniao e');
+      log('         recebe intersecao). Use --qualquer para OU e --excluir para NAO.');
+      log('ATENCAO: nao existe EMENTA no TCE-SP — o texto e um TRECHO com highlight.');
+      log('ATENCAO: um julgado decide varios processos; o total conta pares');
+      log('         processo x documento (fator medido ~2,9x). Veja totalDeduplicadoEstimado.');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '(sem termo — so filtros)'}`);
+      log(`Publicacao: ${opts.dataPubInicio || '-'} a ${opts.dataPubFim || '-'} | Autuacao: ${opts.dataInicio || '-'} a ${opts.dataFim || '-'}`);
+      log('='.repeat(60));
+
+      const crawler = new TCESPCrawler({
+        quiet: jsonMode,
+        quantTrechos: parseInt(opts.trechos, 10),
+        includeFullText: !!opts.fetchInteiroTeor,
+        outputDir: opts.outputDir,
+      });
+
+      const filters = {
+        frase: opts.frase || '',
+        qualquer: opts.qualquer || '',
+        excluir: opts.excluir || '',
+        numIni: opts.numIni || '',
+        numFim: opts.numFim || '',
+        escopos: String(opts.escopo).split(',').map((s) => s.trim()).filter(Boolean),
+        tipoDocumento: opts.tipo ? String(opts.tipo).split(',').map((s) => s.trim()) : null,
+        relator: opts.relator || null,
+        auditor: opts.auditor || null,
+        materia: opts.materia || null,
+        exercicio: opts.exercicio || '',
+        dataPubInicio: opts.dataPubInicio || null,
+        dataPubFim: opts.dataPubFim || null,
+        dataAutuacaoInicio: opts.dataInicio || null,
+        dataAutuacaoFim: opts.dataFim || null,
+      };
+
+      const res = await crawler.search(opts.query || '', filters, { maxPages: parseInt(opts.maxPages, 10) });
+      if (opts.detalhes) {
+        log('\nCompletando relator e data de publicacao pelo detalhe do processo...');
+        await crawler.completarDetalhes(res.resultados);
+      }
+
+      log('='.repeat(60));
+      log(`Total no servidor: ${res.total} (exato) | documentos distintos coletados: ${res.resultados.length}`);
+      log(`Estimativa deduplicada do acervo: ${res.totalDeduplicadoEstimado}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 3 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} por reconsulta pelo numero...`);
+        verificacao = await new TCESPChecker({ quiet: jsonMode }).verificar(res.resultados, amostra);
+      }
+
+      const resumo = {
+        totalResults: res.total,
+        totalDeduplicadoEstimado: res.totalDeduplicadoEstimado,
+        totalSaturado: false,
+        semEmenta: res.resultados.length,
+        semInteiroTeor: res.resultados.filter((r) => r.semInteiroTeor).length,
+        urlBusca: res.urlBusca,
+        avisos: res.avisos,
+        ...(verificacao ? { verificacao } : {}),
+      };
+
+      const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+      fs.writeFileSync(outputPath, JSON.stringify(res.resultados, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+      if (opts.fetchInteiroTeor) log(`Files saved to: ${path.resolve(opts.outputDir)}`);
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({ success: true, count: res.resultados.length, output: outputPath, ...resumo }) + '\n',
+        );
       }
     } catch (error) {
       if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');

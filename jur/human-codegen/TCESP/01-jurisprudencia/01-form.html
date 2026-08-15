@@ -1,0 +1,213 @@
+<form name="filtro" action="pesquisar" class="form-horizontal largura">
+
+            <div class="center-block nopadding largura">
+
+                
+
+                <div class="page-header nopadding largura">
+                    <h3 class="nopadding">Pesquisa de Jurisprudência</h3>
+                </div>
+                
+                
+                <div style="padding:15px 15px 0 15px;">
+                	<p>O <a href="https://www.tce.sp.gov.br/boletim-de-jurisprudencia" target="_blank">Boletim de Jurisprudência TCESP</a>, criado no início de 2021, é uma publicação mensal que reúne as principais decisões proferidas nas Câmaras e no Plenário do Tribunal de Contas do Estado de São Paulo.
+O objetivo é divulgar a servidores, jurisdicionados e sociedade em geral os julgados mais significativos do Tribunal, propiciando maior transparência e segurança jurídica.</p>
+
+					<p>A seção de Súmulas do Tribunal de Contas do Estado de São Paulo, disponível em <a href="https://www.tce.sp.gov.br/boletim-de-jurisprudencia/sumulas" target="_blank">https://www.tce.sp.gov.br/boletim-de-jurisprudencia/sumulas</a>, apresenta o enunciado de entendimentos consolidados da jurisprudência da Corte sobre matérias recorrentes em sua atuação, com o objetivo de uniformizar interpretações e orientar a conduta dos jurisdicionados.</p> 
+
+                </div>
+
+                <br>
+
+                <div class="panel panel-default largura">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Parâmetros de Pesquisa</h3>
+                    </div>
+
+                    <h4 class="ml-1 col-md-12">Localizar com:</h4>
+
+                    <div class="panel-body">
+                        <!-- Grupo Todas Palavras -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Todas estas Palavras:</label>
+                            <div class="col-md-10">
+                                <input type="text" name="txtTdPalvs" value="" class="form-control" maxlength="1024" placeholder="Exemplo: Merenda Escolar fraude" style="">
+                            </div>
+                        </div>
+
+                        <!-- Grupo Esta Expressão ou frase exata -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Esta expressão ou frase exata:</label>
+                            <div class="col-md-10">
+                                <input type="text" name="txtExp" value="" class="form-control" maxlength="1024" placeholder="Exemplo: Transporte Escolar Municipal" style="">
+                            </div>
+                        </div>
+
+                        <!-- Grupo Qualquer uma destas palavras -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Qualquer uma dessas palavras:</label>
+                            <div class="col-md-10">
+                                <input type="text" name="txtQqUma" value="" class="form-control" maxlength="1024" placeholder="Exemplo: Improbidade Nepotismo" style="">
+                            </div>
+                        </div>
+
+                        <!-- Grupo Nenhuma destas palavras -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Nenhuma destas palavras:</label>
+                            <div class="col-md-10">
+                                <input type="text" name="txtNenhPalvs" value="" class="form-control" maxlength="1024" placeholder="Exemplo: avaliação positiva" style="">
+                            </div>
+                        </div>
+
+                        <!-- Grupo Numeros que variam de X a Y -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Números que variam: </label>
+                            <div class="col-md-3">
+                                <input type="text" name="txtNumIni" value="" class="form-control" maxlength="7" placeholder="de - Exemplo: 2010" style="">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" name="txtNumFim" value="" class="form-control" maxlength="7" placeholder="até - Exemplo: 2017" style="">
+                            </div>
+                        </div>
+
+                        <!-- Tipo de Busca Utilizada -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Tipo de Busca:</label>
+                            <div class="col-md-10 checkbox-ajuste-horizontal">
+                                <span><input id="tipoBuscaTxt1" name="tipoBuscaTxt" class="margemCheckbox" type="checkbox" value="Documento" checked="checked" style=""><label for="tipoBuscaTxt1">Documento</label></span><span><input id="tipoBuscaTxt2" name="tipoBuscaTxt" class="margemCheckbox" type="checkbox" value="Partes" style=""><label for="tipoBuscaTxt2">Partes</label></span><span><input id="tipoBuscaTxt3" name="tipoBuscaTxt" class="margemCheckbox" type="checkbox" value="Objeto" style=""><label for="tipoBuscaTxt3">Objeto</label></span><input type="hidden" name="_tipoBuscaTxt" value="on" style="">
+                            </div>
+                        </div>
+
+
+
+                        <!-- Grupo da quantidade de trechos -->
+                        <div class="form-group">
+                            <label class="control-label col-md-5" for="quantTrechos">Quantidade de trechos de textos de registros identificados:</label>
+                            <div class="col-md-1">
+                                <select class="form-control select2-hidden-accessible" name="quantTrechos" id="quantTrechos" data-live-search="true" tabindex="-1" aria-hidden="true">
+                                    
+                                        <option value="0">
+                                            0
+                                        </option>
+                                    
+                                        <option value="1" selected="selected">
+                                            1
+                                        </option>
+                                    
+                                        <option value="2">
+                                            2
+                                        </option>
+                                    
+                                        <option value="3">
+                                            3
+                                        </option>
+                                    
+                                        <option value="4">
+                                            4
+                                        </option>
+                                    
+                                        <option value="5">
+                                            5
+                                        </option>
+                                    
+                                        <option value="6">
+                                            6
+                                        </option>
+                                    
+                                </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 86.5px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-quantTrechos-container"><span class="select2-selection__rendered" id="select2-quantTrechos-container" title="
+                                            1
+                                        ">
+                                            1
+                                        </span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="ml-1 col-md-12">Em seguida, limite o resultado por:</h4>
+                    <div style="padding-right: 15px;padding-left: 15px;">Se você quiser pesquisar também os Boletins de Jurisprudência ou as Súmulas no campo "Tipo Documento", os demais campos abaixo não devem ser preenchidos.</div>
+
+                    <div class="panel-body">
+
+						<!-- Grupo de tipo de documento -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="tipoDocumento">Tipo Documento:</label>
+                            <div class="col-md-10">
+                                <select id="tipoDocumento" name="tipoDocumento" class="form-control select2-hidden-accessible" multiple="" tabindex="-1" aria-hidden="true"><option value="3">Acórdão</option><option value="0">Boletim de Jurisprudência</option><option value="12">Decreto legislativo</option><option value="1">Despacho</option><option value="9">Despacho de conhecimento</option><option value="6">Nota Taquigráfica</option><option value="13">Outras decisões</option><option value="4">Parecer</option><option value="10">Provisão de quitação</option><option value="2">Relatório / Voto</option><option value="5">Sentença (extrato)</option><option value="8">Sentença (não publicável)</option><option value="7">Sentença (publicação na íntegra)</option><option value="1000">Súmula</option></select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 1135px;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span><input type="hidden" name="_tipoDocumento" value="1" style="">
+                            </div>
+                        </div>
+
+                        <!-- Grupo Numero do processo -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2">N° Processo:</label>
+                            <div class="col-md-10">
+                                <input type="text" name="processo" id="processo" value="" class="form-control" maxlength="13" placeholder="Exemplo: 1023/026/17 " autocomplete="off" style="">
+                            </div>
+                        </div>
+
+                        <!-- Grupo exercício -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="exercicio">Exercício:</label>
+                            <div class="col-md-10">
+                                <input type="text" id="exercicio" name="exercicio" value="" class="form-control" maxlength="1024" placeholder="Exemplo: 2015,2016,2017" style="">
+                             </div>
+                        </div>
+
+                        <!--  Grupo data de Autuacao -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Autuação:</label>
+                            <div class="col-md-10">
+                                <input type="text" name="dataAutuacaoInicio" id="dataAutuacaoInicio" class="date hasDatepicker" placeholder="de" value="" maxlength="10" style="">
+                                <input type="text" name="dataAutuacaoFim" id="dataAutuacaoFim" class="date hasDatepicker" placeholder="ate" value="" maxlength="10" style="">
+                            </div>
+                        </div>
+
+                        <!--  Grupo data de Publicacao -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Publicação:</label>
+                            <div class="col-md-10">
+                                <input type="text" name="dataPubInicio" id="dataPubInicio" class="date hasDatepicker" placeholder="de" value="" maxlength="10" style="">
+                                <input type="text" name="dataPubFim" id="dataPubFim" class="date hasDatepicker" placeholder="ate" value="" maxlength="10" style="">
+                            </div>
+                        </div>
+
+                        <!-- Grupo dos relatores -->
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="relator">Relator:</label>
+                            <div class="col-md-10">
+                                <select id="relator" name="relator" class="form-control select2-hidden-accessible" multiple="" tabindex="-1" aria-hidden="true"><option value="AECIO MENNUCCI">AECIO MENNUCCI</option><option value="ANTONIO CARLOS MESQUITA">ANTONIO CARLOS MESQUITA</option><option value="ANTONIO ROQUE CITADINI">ANTONIO ROQUE CITADINI</option><option value="CARLOS CEZAR">CARLOS CEZAR</option><option value="CLAUDIO FERRAZ DE ALVARENGA">CLAUDIO FERRAZ DE ALVARENGA</option><option value="CRISTIANA DE CASTRO MORAES">CRISTIANA DE CASTRO MORAES</option><option value="DIMAS RAMALHO">DIMAS RAMALHO</option><option value="DR. MARCELO PEREIRA">DR. MARCELO PEREIRA</option><option value="EDGARD CAMARGO RODRIGUES">EDGARD CAMARGO RODRIGUES</option><option value="FULVIO JULIAO BIAZZI">FULVIO JULIAO BIAZZI</option><option value="GEORGE OSWALDO NOGUEIRA">GEORGE OSWALDO NOGUEIRA</option><option value="JOSE LUIZ DE ANHAIA MELLO">JOSE LUIZ DE ANHAIA MELLO</option><option value="MARCO AURELIO BERTAIOLLI">MARCO AURELIO BERTAIOLLI</option><option value="MAXWELL BORGES DE MOURA VIEIRA">MAXWELL BORGES DE MOURA VIEIRA</option><option value="NIVALDO CAMPOS CAMARGO">NIVALDO CAMPOS CAMARGO</option><option value="OLAVO DRUMMOND">OLAVO DRUMMOND</option><option value="ORLANDO GABRIEL ZANCANER">ORLANDO GABRIEL ZANCANER</option><option value="PAULO DE TARSO SANTOS">PAULO DE TARSO SANTOS</option><option value="RENATO MARTINS COSTA">RENATO MARTINS COSTA</option><option value="ROBSON MARINHO">ROBSON MARINHO</option><option value="SERGIO CIQUERA ROSSI">SERGIO CIQUERA ROSSI</option><option value="SIDNEY ESTANISLAU BERALDO">SIDNEY ESTANISLAU BERALDO</option><option value="VALDENIR ANTONIO POLIZELI">VALDENIR ANTONIO POLIZELI</option><option value="WAGNER DE CAMPOS ROSARIO">WAGNER DE CAMPOS ROSARIO</option></select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 1135px;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span><input type="hidden" name="_relator" value="1" style="">
+                            </div>
+                        </div>
+
+                        
+                            <!-- Grupo dos auditores -->
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="auditor">Auditor:</label>
+                                <div class="col-md-10">
+                                    <select id="auditor" name="auditor" class="form-control select2-hidden-accessible" multiple="" tabindex="-1" aria-hidden="true"><option value="ALEXANDRE MANIR FIGUEIREDO SARQUIS">ALEXANDRE MANIR FIGUEIREDO SARQUIS</option><option value="ANTONIO CARLOS DOS SANTOS">ANTONIO CARLOS DOS SANTOS</option><option value="CRISTIANA DE CASTRO MORAES">CRISTIANA DE CASTRO MORAES</option><option value="JOSUE ROMERO">JOSUE ROMERO</option><option value="MARCIO MARTINS DE CAMARGO">MARCIO MARTINS DE CAMARGO</option><option value="SAMY WURMAN">SAMY WURMAN</option><option value="SILVIA CRISTINA MONTEIRO MORAES">SILVIA CRISTINA MONTEIRO MORAES</option><option value="SILVIA MONTEIRO">SILVIA MONTEIRO</option><option value="VALDENIR ANTONIO POLIZELI">VALDENIR ANTONIO POLIZELI</option></select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 1135px;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span><input type="hidden" name="_auditor" value="1" style="">
+                                </div>
+                            </div>
+                        
+
+                        <!-- Grupo de Materia-->
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="materia">Matéria:</label>
+                            <div class="col-md-10">
+                                <select id="materia" name="materia" class="form-control select2-hidden-accessible" multiple="" tabindex="-1" aria-hidden="true"><option value="ACAO ELETRONICA">ACAO ELETRONICA</option><option value="ACESSORIO - 1  ORDEM CRONOLOGICA">ACESSORIO - 1  ORDEM CRONOLOGICA</option><option value="ACESSORIO - 1 ACOMPANHAMENTO DA GESTAO FISCAL">ACESSORIO - 1 ACOMPANHAMENTO DA GESTAO FISCAL</option><option value="ACESSORIO - 2 APLICACAO NO ENSINO">ACESSORIO - 2 APLICACAO NO ENSINO</option><option value="ACESSORIO - 3 LEI DE RESPONSABILIDADE FISCAL">ACESSORIO - 3 LEI DE RESPONSABILIDADE FISCAL</option><option value="ACOMPANHAMENTO DE CONCESSOES E PERMISSOES">ACOMPANHAMENTO DE CONCESSOES E PERMISSOES</option><option value="ACOMPANHAMENTO EXECUCAO CONTRATUAL">ACOMPANHAMENTO EXECUCAO CONTRATUAL</option><option value="ADICIONAL DE INSALUBRIDADE">ADICIONAL DE INSALUBRIDADE</option><option value="ADITAMENTO">ADITAMENTO</option><option value="ADMISSAO DE PESSOAL">ADMISSAO DE PESSOAL</option><option value="ADMISSAO DE PESSOAL - CONCURSO  PROCESSO SELETIVO">ADMISSAO DE PESSOAL - CONCURSO  PROCESSO SELETIVO</option><option value="ADMISSAO DE PESSOAL - TEMPO DETERMINADO">ADMISSAO DE PESSOAL - TEMPO DETERMINADO</option><option value="ADMISSAO PESSOAL - CONCURSO">ADMISSAO PESSOAL - CONCURSO</option><option value="AFASTAMENTO/COMISSIONAMENTO/REQUISICAO TRE">AFASTAMENTO/COMISSIONAMENTO/REQUISICAO TRE</option><option value="AGRAVO">AGRAVO</option><option value="APARTADO DE CAMARA MUNICIPAL">APARTADO DE CAMARA MUNICIPAL</option><option value="APARTADO DE PREFEITURA MUNICIPAL">APARTADO DE PREFEITURA MUNICIPAL</option><option value="APLICACAO NO ENSINO">APLICACAO NO ENSINO</option><option value="APOSENTADORIA">APOSENTADORIA</option><option value="APOSENTADORIA - EC-70">APOSENTADORIA - EC-70</option><option value="APOSENTADORIA - EMENDA CONSTITUCIONAL 70/2012">APOSENTADORIA - EMENDA CONSTITUCIONAL 70/2012</option><option value="APOSENTADORIA / PENSAO">APOSENTADORIA / PENSAO</option><option value="APOSENTADORIA COMPREV - ESTADUAL">APOSENTADORIA COMPREV - ESTADUAL</option><option value="AQUISICAO">AQUISICAO</option><option value="ARTIGO 133 C.E">ARTIGO 133 C.E</option><option value="ATENDE INSTRUCAO 1/90">ATENDE INSTRUCAO 1/90</option><option value="ATENDENDO REQUISICAO/OFICIO">ATENDENDO REQUISICAO/OFICIO</option><option value="ATENDENDO REQUISICãO/OFICIO">ATENDENDO REQUISICãO/OFICIO</option><option value="ATENDIMENTO OFICIO JUSTIFICATIVA (RES. 01/2012">ATENDIMENTO OFICIO JUSTIFICATIVA (RES. 01/2012</option><option value="AUDITORIA ESPECIAL">AUDITORIA ESPECIAL</option><option value="AUXILIOS/SUBVENCOES/CONTRIBUICOES">AUXILIOS/SUBVENCOES/CONTRIBUICOES</option><option value="BALANCO GERAL DO EXERCICIO">BALANCO GERAL DO EXERCICIO</option><option value="CAUTELAR DE SUSPENSÃO DE PAGAMENTOS (23)">CAUTELAR DE SUSPENSÃO DE PAGAMENTOS (23)</option><option value="CAUTELAR EM PROCEDIMENTO DE CONTRATAÇÃO (22)">CAUTELAR EM PROCEDIMENTO DE CONTRATAÇÃO (22)</option><option value="COMISSIONAMENTO">COMISSIONAMENTO</option><option value="COMPLEMENTACAO DE PROVENTOS - VALOR DA PENSAO">COMPLEMENTACAO DE PROVENTOS - VALOR DA PENSAO</option><option value="COMUNICACAO DE FURTO">COMUNICACAO DE FURTO</option><option value="COMUNICADO AUTOS PROPRIOS">COMUNICADO AUTOS PROPRIOS</option><option value="CONCURSO">CONCURSO</option><option value="CONFLITO DE COMPETENCIA">CONFLITO DE COMPETENCIA</option><option value="CONSULTA">CONSULTA</option><option value="CONTAGEM DE TEMPO">CONTAGEM DE TEMPO</option><option value="CONTAS DE CAMARA MUNICIPAL">CONTAS DE CAMARA MUNICIPAL</option><option value="CONTAS MUNICIPAIS">CONTAS MUNICIPAIS</option><option value="CONTRATACAO DE SERVICOS">CONTRATACAO DE SERVICOS</option><option value="CONTRATO">CONTRATO</option><option value="CONTRATO DE GESTAO">CONTRATO DE GESTAO</option><option value="CONTROLE DE PRAZOS DAS RESOLUCOES E INSTRUCOES">CONTROLE DE PRAZOS DAS RESOLUCOES E INSTRUCOES</option><option value="CONV.-REPASSES PUBL.TERC.SETOR/ENTIDADE PRIVADA">CONV.-REPASSES PUBL.TERC.SETOR/ENTIDADE PRIVADA</option><option value="CONVENIO-REPASSES A ORGAOS PUBLICO">CONVENIO-REPASSES A ORGAOS PUBLICO</option><option value="CONVOCACAO">CONVOCACAO</option><option value="COPIA DIGITAL">COPIA DIGITAL</option><option value="COPIAS XEROGRAFICAS">COPIAS XEROGRAFICAS</option><option value="DECISAO DE PRIMEIRA CAMARA">DECISAO DE PRIMEIRA CAMARA</option><option value="DECISAO DE SEGUNDA CAMARA">DECISAO DE SEGUNDA CAMARA</option><option value="DECISAO DE TRIBUNAL PLENO">DECISAO DE TRIBUNAL PLENO</option><option value="DEFESA">DEFESA</option><option value="DEVOLUCAO DE CAUCAO">DEVOLUCAO DE CAUCAO</option><option value="DOACAO">DOACAO</option><option value="EDITAL PRÉVIO DE CONCURSO PÚBLICO">EDITAL PRÉVIO DE CONCURSO PÚBLICO</option><option value="EMBARGOS DE DECLARACAO">EMBARGOS DE DECLARACAO</option><option value="EMBARGOS INFRINGENTE">EMBARGOS INFRINGENTE</option><option value="ENCAMINHA DOCUMENTO">ENCAMINHA DOCUMENTO</option><option value="ESPORADICO">ESPORADICO</option><option value="EXAME PREVIO DE EDITAIS DE LICITACAO">EXAME PREVIO DE EDITAIS DE LICITACAO</option><option value="EXCESSO DE FALTAS">EXCESSO DE FALTAS</option><option value="EXECUCAO DE OBRAS E SERVICOS INST. 2/96">EXECUCAO DE OBRAS E SERVICOS INST. 2/96</option><option value="EXONERACAO">EXONERACAO</option><option value="EXPEDIENTE EM APARTADO">EXPEDIENTE EM APARTADO</option><option value="FALTA E COMUNICACAO DE FREQUENCIA">FALTA E COMUNICACAO DE FREQUENCIA</option><option value="FERIAS/DIAS COMPENSACAO">FERIAS/DIAS COMPENSACAO</option><option value="FINANCIAMENTOS E EMPRESTIMOS">FINANCIAMENTOS E EMPRESTIMOS</option><option value="FISCALIZACAO ESPECIAL">FISCALIZACAO ESPECIAL</option><option value="FISCALIZACAO EXTRAORDINARIA">FISCALIZACAO EXTRAORDINARIA</option><option value="FISCALIZAÇÃO OPERACIONAL - CONTAS DO GOVERNADOR">FISCALIZAÇÃO OPERACIONAL - CONTAS DO GOVERNADOR</option><option value="FISCALIZAÇÃO ORDENADA - BALANÇO GERAL DO EXERCÍCIO">FISCALIZAÇÃO ORDENADA - BALANÇO GERAL DO EXERCÍCIO</option><option value="FISCALIZAÇÃO ORDENADA - CONTAS DE PREFEITURA">FISCALIZAÇÃO ORDENADA - CONTAS DE PREFEITURA</option><option value="FISCALIZAÇÃO ORDENADA - RELATÓRIO DE FISCALIZAÇÃO">FISCALIZAÇÃO ORDENADA - RELATÓRIO DE FISCALIZAÇÃO</option><option value="IMPUGNACAO">IMPUGNACAO</option><option value="INCORPORACAO">INCORPORACAO</option><option value="IRREGULARIDADES">IRREGULARIDADES</option><option value="LEI DE RESPONSABILIDADE FISCAL">LEI DE RESPONSABILIDADE FISCAL</option><option value="LICENCA DE INTERESSE PARTICULAR">LICENCA DE INTERESSE PARTICULAR</option><option value="LICENCA GESTANTE">LICENCA GESTANTE</option><option value="LICENCA PREMIO">LICENCA PREMIO</option><option value="ORDEM CRONOLOGICA">ORDEM CRONOLOGICA</option><option value="PAGAMENTO">PAGAMENTO</option><option value="PEDIDO DE CERTIDAO">PEDIDO DE CERTIDAO</option><option value="PEDIDO DE FISCALIZACAO">PEDIDO DE FISCALIZACAO</option><option value="PEDIDO DE RECONSIDERACAO">PEDIDO DE RECONSIDERACAO</option><option value="PEDIDO DE VISTA">PEDIDO DE VISTA</option><option value="PEDIDO DE VISTA E COPIAS XEROGRAFICAS">PEDIDO DE VISTA E COPIAS XEROGRAFICAS</option><option value="PEDIDO INTERESSE COLETIVO">PEDIDO INTERESSE COLETIVO</option><option value="PENSAO - EC-70">PENSAO - EC-70</option><option value="PENSAO MENSAL">PENSAO MENSAL</option><option value="PREST.CONTAS-AUX/SUB/CONTR-TERC.SETOR">PREST.CONTAS-AUX/SUB/CONTR-TERC.SETOR</option><option value="PREST.CONTAS-AUX/SUBV/CONTR-ORGAOS PUBLICO">PREST.CONTAS-AUX/SUBV/CONTR-ORGAOS PUBLICO</option><option value="PREST.CONTAS-CONV.TERC.SETOR/ENTIDADE PRIVADA">PREST.CONTAS-CONV.TERC.SETOR/ENTIDADE PRIVADA</option><option value="PREST.CONTAS-CONVENIO REP.PUBL.TERCEIRO SETOR">PREST.CONTAS-CONVENIO REP.PUBL.TERCEIRO SETOR</option><option value="PREST.CONTAS-CONVENIO REPASSES ORGAOS PUBL.VLR INF">PREST.CONTAS-CONVENIO REPASSES ORGAOS PUBL.VLR INF</option><option value="PREST.CONTAS-CONVENIO REPASSES ORGAOS PUBL.VLR.SUP">PREST.CONTAS-CONVENIO REPASSES ORGAOS PUBL.VLR.SUP</option><option value="PREST.CONTAS-REP.PUBL.TERC.SETOR CG/TP/CV/VIR.INF">PREST.CONTAS-REP.PUBL.TERC.SETOR CG/TP/CV/VIR.INF</option><option value="PREST.CONTAS-REP.TERC.SETOR-CG/TP/CV/TC/TF-VLR.INF">PREST.CONTAS-REP.TERC.SETOR-CG/TP/CV/TC/TF-VLR.INF</option><option value="PREST.CONTAS-REP.TERC.SETOR/ENTIDADE PRIV-CONVENIO">PREST.CONTAS-REP.TERC.SETOR/ENTIDADE PRIV-CONVENIO</option><option value="PREST.CONTAS-REPASSES ORGAOS PUBL-AUX/SUB/CONTR">PREST.CONTAS-REPASSES ORGAOS PUBL-AUX/SUB/CONTR</option><option value="PREST.CONTAS-REPASSES ORGAOS PUBL-CONVENIO VLR.INF">PREST.CONTAS-REPASSES ORGAOS PUBL-CONVENIO VLR.INF</option><option value="PREST.CONTAS-REPASSES ORGAOS PUBL-CONVENIO-VLR.SUP">PREST.CONTAS-REPASSES ORGAOS PUBL-CONVENIO-VLR.SUP</option><option value="PREST.CONTAS-REPASSES TERC.SETOR-AUX/SUB/CONTR">PREST.CONTAS-REPASSES TERC.SETOR-AUX/SUB/CONTR</option><option value="PREST.CONTAS-REPASSES TERC.SETOR-CG/TP/CV-VLR.INF">PREST.CONTAS-REPASSES TERC.SETOR-CG/TP/CV-VLR.INF</option><option value="PREST.CONTAS-REPASSES TERC.SETOR-CONTRATO GESTAO">PREST.CONTAS-REPASSES TERC.SETOR-CONTRATO GESTAO</option><option value="PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE COLABORA">PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE COLABORA</option><option value="PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE FOMENTO">PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE FOMENTO</option><option value="PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE PARCERIA">PREST.CONTAS-REPASSES TERC.SETOR-TERMO DE PARCERIA</option><option value="PRESTA ESCLARECIMENTOS">PRESTA ESCLARECIMENTOS</option><option value="PRESTACAO DE CONTAS - CONTRATO DE GESTAO">PRESTACAO DE CONTAS - CONTRATO DE GESTAO</option><option value="PRESTACAO DE CONTAS - TERMO DE PARCERIA">PRESTACAO DE CONTAS - TERMO DE PARCERIA</option><option value="PRESTACAO DE CONTAS DE ADIANTAMENTO">PRESTACAO DE CONTAS DE ADIANTAMENTO</option><option value="PRESTACAO DE CONTAS DO(S)GESTOR(ES)PREV.MUNICIPAL">PRESTACAO DE CONTAS DO(S)GESTOR(ES)PREV.MUNICIPAL</option><option value="PROCESSO ADMINISTRATIVO">PROCESSO ADMINISTRATIVO</option><option value="PROCESSO PREFERENCIAL">PROCESSO PREFERENCIAL</option><option value="PRORROGACAO DE POSSE">PRORROGACAO DE POSSE</option><option value="PRORROGACAO DE PRAZO">PRORROGACAO DE PRAZO</option><option value="PRORROGACAO PARA ENTRAR EM EXERCICIO">PRORROGACAO PARA ENTRAR EM EXERCICIO</option><option value="PRORROGACAO PARA RESPOSTA DE OFICIO">PRORROGACAO PARA RESPOSTA DE OFICIO</option><option value="QUEBRA DE ORDEM CRONOLOGICA">QUEBRA DE ORDEM CRONOLOGICA</option><option value="READMISSAO">READMISSAO</option><option value="RECONSIDERACAO">RECONSIDERACAO</option><option value="RECURSO ELETRONICO">RECURSO ELETRONICO</option><option value="RECURSO ORDINARIO">RECURSO ORDINARIO</option><option value="REENQUADRAMENTO">REENQUADRAMENTO</option><option value="REEXAME">REEXAME</option><option value="REFORMA - TRANSFERENCIA PARA A RESERVA">REFORMA - TRANSFERENCIA PARA A RESERVA</option><option value="REINTEGRA$@O">REINTEGRA$@O</option><option value="REINTEGRAÇÃO">REINTEGRAÇÃO</option><option value="REITERACAO">REITERACAO</option><option value="RELATORIO DE FISCALIZACAO">RELATORIO DE FISCALIZACAO</option><option value="RELATORIOS DE ATIVIDADES">RELATORIOS DE ATIVIDADES</option><option value="REPASSES PUBL.TERC.SETOR/C.GESTAO/T.PARCERIA/CONV.">REPASSES PUBL.TERC.SETOR/C.GESTAO/T.PARCERIA/CONV.</option><option value="REPASSES PUBLICOS AO TERCEIRO SETOR">REPASSES PUBLICOS AO TERCEIRO SETOR</option><option value="REPRESENTACAO">REPRESENTACAO</option><option value="REPRESENTACAO CONTRA EDITAL">REPRESENTACAO CONTRA EDITAL</option><option value="REPRESENTAÇÃO - MEDIDA CAUTELAR - CONTRATAÇÃO">REPRESENTAÇÃO - MEDIDA CAUTELAR - CONTRATAÇÃO</option><option value="REPRESENTAÇÃO - MEDIDA CAUTELAR - PAGAMENTOS">REPRESENTAÇÃO - MEDIDA CAUTELAR - PAGAMENTOS</option><option value="REPRESENTAÇÃO CONTRA EDITAL DE CONCURSO">REPRESENTAÇÃO CONTRA EDITAL DE CONCURSO</option><option value="REQUERIMENTO PESSOAL">REQUERIMENTO PESSOAL</option><option value="RESCISAO DE JULGADO">RESCISAO DE JULGADO</option><option value="RESPOSTA DE OFICIO">RESPOSTA DE OFICIO</option><option value="RETI-RATIFICACAO">RETI-RATIFICACAO</option><option value="RETIRRATIFICACAO">RETIRRATIFICACAO</option><option value="REVISAO DE JULGADO">REVISAO DE JULGADO</option><option value="SALARIO FAMILIA">SALARIO FAMILIA</option><option value="SANCAO ADMINISTRATIVA">SANCAO ADMINISTRATIVA</option><option value="SIC - LEI-12527/2011">SIC - LEI-12527/2011</option><option value="SOLICITA DOCUMENTO">SOLICITA DOCUMENTO</option><option value="SOLICITA INFORMACOES">SOLICITA INFORMACOES</option><option value="SUSTENTACAO ORAL">SUSTENTACAO ORAL</option><option value="TERMO DE ADESAO">TERMO DE ADESAO</option><option value="TERMO DE COLABORACAO-REPASSES PUBL.TERCEIRO SETOR">TERMO DE COLABORACAO-REPASSES PUBL.TERCEIRO SETOR</option><option value="TERMO DE FOMENTO-REPASSES PUBL.TERCEIRO SETOR">TERMO DE FOMENTO-REPASSES PUBL.TERCEIRO SETOR</option><option value="TERMO DE PARCERIA">TERMO DE PARCERIA</option><option value="TERMO DE RESCISAO">TERMO DE RESCISAO</option><option value="TRANSFORMACAO DE CARGO">TRANSFORMACAO DE CARGO</option><option value="UNIDADE ADMINISTRATIVA">UNIDADE ADMINISTRATIVA</option><option value="UR - ALMOXARIFADO">UR - ALMOXARIFADO</option></select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 1135px;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span><input type="hidden" name="_materia" value="1" style="">
+                            </div>
+                        </div>
+
+<div id="alertaBoletimJurisprudencia" class="alert alert-warning" style="display:none;">
+    Em função dos parâmetros utilizados, a pesquisa não retornará os Boletins de Jurisprudência nem as Súmulas.
+</div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <input type="submit" name="acao" value="Executa" class="btn btn-default" style=""> &nbsp; &nbsp;
+                                <input type="submit" name="acao" value="Limpar" class="btn btn-default" style="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
