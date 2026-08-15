@@ -1,0 +1,1963 @@
+{
+  "nome": "pesquisa_jurisprudencia",
+  "nomeDescritivo": "Pesquisa de Jurisprudência",
+  "titulo": "Tribunal de Contas do Estado do Rio Grande do Sul",
+  "logo": "assets/images/logo_tce.svg",
+  "versaoAlternativaTexto": "Versão anterior",
+  "versaoAlternativaURL": "http://srv00.tce.rs.gov.br:8081/tcrsnet/lpext.dll?f=templates&fn=main-j.htm&2.0",
+  "mensagens": {
+    "semTermos": "(sem termos)"
+  },
+  "possibilitarPesquisarTodasBases": true,
+  "exibirLogin": false,
+  "exibirHistorico": true,
+  "exibirReportarProblema": true,
+  "exibirAjuda": true,
+  "tamanhoFonteTituloPaginaPrincipal": 34,
+  "estilizarTitulo": true,
+  "tamanhoFonteAbasPaginaPrincipal": 16,
+  "estilizarAbas": true,
+  "tamanhoFontePesquisaInput": 24,
+  "tamanhoFontePesquisaHint": 18,
+  "tamanhoFonteNovaPesquisaInput": 14,
+  "tamanhoFonteNovaPesquisaHint": 12,
+  "urlLogoPaginaInicial": {
+    "src": "https://tcers.tc.br/",
+    "external": true
+  },
+  "destacaOperadoresTermos": true,
+  "bases": [
+    {
+      "nome": "*",
+      "nomeDescritivo": "Todas as bases",
+      "placeholderTermos": "Pesquisar por",
+      "hintTermos": "Ex.: processo E gestão NÃO \"Primeira Câmara\"",
+      "operadoresTermos": [
+        {
+          "operador": "E",
+          "codigo": "&",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que contenham TODOS os termos informados. O operador deve ser escrito em letra maiúscula \"E\"."
+        },
+        {
+          "operador": "OU",
+          "codigo": "|",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que contenham QUALQUER UM dos termos informados. O operador deve ser escrito em letra maiúscula \"OU\"."
+        },
+        {
+          "operador": "NÃO",
+          "codigo": "!",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que NÃO contenham os termos informados. O operador deve ser escrito em letra maiúscula \"NÃO\"."
+        },
+        {
+          "operador": "~",
+          "codigo": "~",
+          "ativo": true,
+          "visivel": true,
+          "espacadoAntes": false,
+          "espacadoDepois": false,
+          "descricao": "Busca palavras que estejam a uma certa distância máxima informada. As palavras devem ser informadas entre aspas. (O número após o operador indica delimitação de distância máxima entre palavras, p. ex. \"contas gestão\"~4)."
+        },
+        {
+          "operador": "PROX",
+          "codigo": ">",
+          "ativo": false,
+          "visivel": false,
+          "descricao": "Procura palavras aproximadas em qualquer ordem. (O número após o 'PROX' indica delimitação de distância entre palavras, podendo ser escolhido livremente)."
+        },
+        {
+          "operador": "MESMO",
+          "codigo": "=",
+          "ativo": false,
+          "visivel": false,
+          "descricao": "Operador utilizado para pesquisar no mesmo parágrafo; sua utilização principal é para pesquisa no campo legislação."
+        },
+        {
+          "operador": "$",
+          "codigo": "$",
+          "ativo": true,
+          "visivel": true,
+          "espacadoAntes": false,
+          "espacadoDepois": true,
+          "unario": true,
+          "descricao": "Este operador substitui qualquer parte da palavra desejada, ou seja, prefixo, radical ou sufixo."
+        }
+      ],
+      "posicao": "fim"
+    },
+    {
+      "nome": "decisoes",
+      "nomeDescritivo": "Decisões",
+      "tipoServicoIndexacao": "elasticsearch",
+      "configuracaoServicoIndexacao": {
+        "urlMiddleware": "/api/pesquisa/v2",
+        "indice": "jurisprudencia-decisoes"
+      },
+      "ordem": "10",
+      "ordenacao": {
+        "ordenacaoPadraoCampo": "dt_sessao",
+        "ordenacaoPadraoDirecao": "desc",
+        "campoRelevanciaNome": "Relevância",
+        "campoRelevanciaCampo": "_score"
+      },
+      "placeholderTermos": "Pesquisar por",
+      "hintTermos": "Ex.: processo E gestão NÃO \"Primeira Câmara\"",
+      "operadoresTermos": [
+        {
+          "operador": "E",
+          "codigo": "&",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que contenham TODOS os termos informados. O operador deve ser escrito em letra maiúscula \"E\"."
+        },
+        {
+          "operador": "OU",
+          "codigo": "|",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que contenham QUALQUER UM dos termos informados. O operador deve ser escrito em letra maiúscula \"OU\"."
+        },
+        {
+          "operador": "NÃO",
+          "codigo": "!",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que NÃO contenham os termos informados. O operador deve ser escrito em letra maiúscula \"NÃO\"."
+        },
+        {
+          "operador": "~",
+          "codigo": "~",
+          "ativo": true,
+          "visivel": true,
+          "espacadoAntes": false,
+          "espacadoDepois": false,
+          "descricao": "Busca palavras que estejam a uma certa distância máxima informada. As palavras devem ser informadas entre aspas. (O número após o operador indica delimitação de distância máxima entre palavras, p. ex. \"contas gestão\"~4)."
+        },
+        {
+          "operador": "PROX",
+          "codigo": ">",
+          "ativo": false,
+          "visivel": false,
+          "descricao": "Procura palavras aproximadas em qualquer ordem. (O número após o 'PROX' indica delimitação de distância entre palavras, podendo ser escolhido livremente)."
+        },
+        {
+          "operador": "MESMO",
+          "codigo": "=",
+          "ativo": false,
+          "visivel": false,
+          "descricao": "Operador utilizado para pesquisar no mesmo parágrafo; sua utilização principal é para pesquisa no campo legislação."
+        },
+        {
+          "operador": "$",
+          "codigo": "$",
+          "ativo": true,
+          "visivel": true,
+          "espacadoAntes": false,
+          "espacadoDepois": true,
+          "unario": true,
+          "descricao": "Este operador substitui qualquer parte da palavra desejada, ou seja, prefixo, radical ou sufixo."
+        }
+      ],
+      "filtros": true,
+      "tituloFiltros": "Pesquisa avançada",
+      "campos": [
+        {
+          "nome": "nrProcesso",
+          "nomeOriginal": "nr_processo",
+          "nomeDescritivo": "Nº do processo",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "nrProcessoFormatado",
+          "nomeOriginal": "nr_processo_fmt",
+          "nomeDescritivo": "Nº do processo",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "nrProcessoFormatado2",
+          "nomeOriginal": "nr_processo_fmt_2",
+          "nomeDescritivo": "Nº do processo",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "nrProcessoReferido",
+          "nomeOriginal": "nr_processo_referido",
+          "nomeDescritivo": "Nº do processo referido",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "nrProcessoReferidoFormatado",
+          "nomeOriginal": "nr_processo_referido_fmt",
+          "nomeDescritivo": "Nº do processo referido",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "nrProcessoReferidoFormatado2",
+          "nomeOriginal": "nr_processo_referido_fmt_2",
+          "nomeDescritivo": "Nº do processo referido",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "codigoTipoProcesso",
+          "nomeOriginal": "tp_processo",
+          "nomeDescritivo": "Cód. tipo do processo",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "tipoProcesso",
+          "nomeOriginal": "ds_tp_processo",
+          "nomeDescritivo": "Tipo do processo",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "orgao",
+          "nomeOriginal": "orgao",
+          "nomeDescritivo": "Órgão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "precede",
+          "nomeOriginal": "precede",
+          "nomeDescritivo": "Precede",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "sucede",
+          "nomeOriginal": "sucede",
+          "nomeDescritivo": "Sucede",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "codigoOrgaoJulgador",
+          "nomeOriginal": "cd_orgao_julgador",
+          "nomeDescritivo": "Cód. órgão julgador",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "orgaoJulgador",
+          "nomeOriginal": "nm_orgao_julgador",
+          "nomeDescritivo": "Órgão julgador",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "codigoGabinete",
+          "nomeOriginal": "cd_gabinete",
+          "nomeDescritivo": "Cód. gabinete",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "gabinete",
+          "nomeOriginal": "nm_gabinete",
+          "nomeDescritivo": "Gabinete",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "codigoCargo",
+          "nomeOriginal": "cd_cargo",
+          "nomeDescritivo": "Cód. cargo magistrado",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "codigoMagistrado",
+          "nomeOriginal": "cd_magistrado",
+          "nomeDescritivo": "Cargo magistrado",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "relator",
+          "nomeOriginal": "nm_magistrado",
+          "nomeDescritivo": "Relator",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "origem",
+          "nomeOriginal": "nm_orgao.keyword",
+          "nomeDescritivo": "Órgão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "exercicio",
+          "nomeOriginal": "dt_inicio_exercicio",
+          "nomeDescritivo": "Exercício",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "data",
+          "nomeOriginal": "dt_sessao",
+          "nomeDescritivo": "Data da sessão",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "dataSessao",
+          "nomeOriginal": "dt_sessao",
+          "nomeDescritivo": "Data da sessão",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": true,
+          "ordenavel": true
+        },
+        {
+          "nome": "numeroSessao",
+          "nomeOriginal": "nr_sessao",
+          "nomeDescritivo": "Nº da sessão",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "anoSessao",
+          "nomeOriginal": "ano_sessao",
+          "nomeDescritivo": "Ano da sessão",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "dataPublicacao",
+          "nomeOriginal": "publicacao_dt_publicacao",
+          "nomeDescritivo": "Data de publicação",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": true,
+          "ordenavel": true
+        },
+        {
+          "nome": "numeroBoletimPublicacao",
+          "nomeOriginal": "publicacao_nr_boletim",
+          "nomeDescritivo": "Nº do boletim",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "anoBoletimPublicacao",
+          "nomeOriginal": "publicacao_ano_boletim",
+          "nomeDescritivo": "Ano do boletim",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "dataPublicacaoSessao",
+          "nomeOriginal": "sessao_dt_publicacao",
+          "nomeDescritivo": "Data da sessão",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "numeroBoletimSessao",
+          "nomeOriginal": "sessao_nr_boletim",
+          "nomeDescritivo": "Nº do boletim",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "anoBoletimSessao",
+          "nomeOriginal": "sessao_ano_boletim",
+          "nomeDescritivo": "Ano do boletim",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": true
+        },
+        {
+          "nome": "ementa",
+          "nomeOriginal": "texto_ementa",
+          "nomeDescritivo": "Ementa",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "refLeg",
+          "nomeOriginal": "refleg",
+          "nomeDescritivo": "Ref. leg.",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "novaRef",
+          "nomeOriginal": "novaref",
+          "nomeDescritivo": "Nova ref.",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "relatorio",
+          "nomeOriginal": "relatorio",
+          "nomeDescritivo": "Relatório",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "tipoDecisao",
+          "nomeOriginal": "dec_descricao",
+          "nomeDescritivo": "Tipo de decisão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "decisao",
+          "nomeOriginal": "texto",
+          "nomeDescritivo": "Decisão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": true
+        },
+        {
+          "nome": "link_visualizador_decisao",
+          "nomeOriginal": "link_visualizador_decisao",
+          "nomeDescritivo": "URL visualizador",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "link_visualizador_relatorio_voto",
+          "nomeOriginal": "link_visualizador_relatorio_voto",
+          "nomeDescritivo": "URL visualizador Relatório e Voto",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        }
+      ],
+      "quantidadeResultadosPorPagina": 10,
+      "fragmentosCampos": [
+        "relatorio",
+        "texto"
+      ],
+      "quantidadeFragmentosPorCampo": 3,
+      "totalizadoresCampos": [
+        {
+          "nome": "Órgão Julgador",
+          "campo": "nm_orgao_julgador.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 10,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Gabinete",
+          "campo": "nm_gabinete.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 20,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Órgão fiscalizado",
+          "campo": "orgao.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 30,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Tipo de Processo",
+          "campo": "ds_tp_processo.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 40,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Ano decisão",
+          "campo": "dt_sessao",
+          "tipo": "data-ano",
+          "labelValorNulo": "desconhecido",
+          "ordem": 50,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        }
+      ],
+      "filtrosTemplateComponent": "FiltrosDecisoesComponent",
+      "resultadoTemplateComponent": "ResultadoDecisoesComponent"
+    },
+    {
+      "nome": "sumulas",
+      "nomeDescritivo": "Súmulas",
+      "tipoServicoIndexacao": "elasticsearch",
+      "configuracaoServicoIndexacao": {
+        "urlMiddleware": "/api/pesquisa/v2",
+        "indice": "jurisprudencia-sumulas"
+      },
+      "ordem": "20",
+      "ordenacao": {
+        "ordenacaoPadraoCampo": "dt_publicacao",
+        "ordenacaoPadraoDirecao": "desc",
+        "campoRelevanciaNome": "Relevância",
+        "campoRelevanciaCampo": "_score"
+      },
+      "placeholderTermos": "Pesquisar por",
+      "hintTermos": "Ex.: processo E gestão NÃO \"Primeira Câmara\"",
+      "operadoresTermos": [
+        {
+          "operador": "E",
+          "codigo": "&",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que contenham TODOS os termos informados. O operador deve ser escrito em letra maiúscula \"E\"."
+        },
+        {
+          "operador": "OU",
+          "codigo": "|",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que contenham QUALQUER UM dos termos informados. O operador deve ser escrito em letra maiúscula \"OU\"."
+        },
+        {
+          "operador": "NÃO",
+          "codigo": "!",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que NÃO contenham os termos informados. O operador deve ser escrito em letra maiúscula \"NÃO\"."
+        },
+        {
+          "operador": "~",
+          "codigo": "~",
+          "ativo": true,
+          "visivel": true,
+          "espacadoAntes": false,
+          "espacadoDepois": false,
+          "descricao": "Busca palavras que estejam a uma certa distância máxima informada. As palavras devem ser informadas entre aspas. (O número após o operador indica delimitação de distância máxima entre palavras, p. ex. \"contas gestão\"~4)."
+        },
+        {
+          "operador": "PROX",
+          "codigo": ">",
+          "ativo": false,
+          "visivel": false,
+          "descricao": "Procura palavras aproximadas em qualquer ordem. (O número após o 'PROX' indica delimitação de distância entre palavras, podendo ser escolhido livremente)."
+        },
+        {
+          "operador": "MESMO",
+          "codigo": "=",
+          "ativo": false,
+          "visivel": false,
+          "descricao": "Operador utilizado para pesquisar no mesmo parágrafo; sua utilização principal é para pesquisa no campo legislação."
+        },
+        {
+          "operador": "$",
+          "codigo": "$",
+          "ativo": true,
+          "visivel": true,
+          "espacadoAntes": false,
+          "espacadoDepois": true,
+          "unario": true,
+          "descricao": "Este operador substitui qualquer parte da palavra desejada, ou seja, prefixo, radical ou sufixo."
+        }
+      ],
+      "campos": [
+        {
+          "nome": "codigoLegislacao",
+          "nomeOriginal": "cd_legislacao",
+          "nomeDescritivo": "Cód. legislação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "legislacao",
+          "nomeOriginal": "ds_legislacao",
+          "nomeDescritivo": "Legislação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "nrLegislacao",
+          "nomeOriginal": "nr_legislacao",
+          "nomeDescritivo": "Nº da legislação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "anoLegislacao",
+          "nomeOriginal": "ano_legislacao",
+          "nomeDescritivo": "Ano da legislação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "nrAnolegislacao",
+          "nomeOriginal": "nr_ano_legislacao",
+          "nomeDescritivo": "Nº e ano da legislação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "orgaoProcesso",
+          "nomeOriginal": "nm_orgao_processo",
+          "nomeDescritivo": "Órgão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "ementa",
+          "nomeOriginal": "ementa",
+          "nomeDescritivo": "Ementa",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "situacao",
+          "nomeOriginal": "situacao",
+          "nomeDescritivo": "Situação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "edicao",
+          "nomeOriginal": "edicao",
+          "nomeDescritivo": "Edição",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "edicaoDisponibilizacao",
+          "nomeOriginal": "ed_disponibilizacao",
+          "nomeDescritivo": "Edição disponibilização",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "edicaoRedisponibilizacao",
+          "nomeOriginal": "ed_redisponibilizacao",
+          "nomeDescritivo": "Edição redisponibilização",
+          "tipo": "string",
+          "destacado": false
+        },
+        {
+          "nome": "dataPublicacao",
+          "nomeOriginal": "dt_publicacao",
+          "nomeDescritivo": "Data de publicação",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false,
+          "ordenavel": true
+        },
+        {
+          "nome": "nomeArquivo",
+          "nomeOriginal": "nome_arquivo",
+          "nomeDescritivo": "Nome do arquivo",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "dataAto",
+          "nomeOriginal": "dt_ato",
+          "nomeDescritivo": "Data do ato",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "dataRepublicacao",
+          "nomeOriginal": "dt_republicacao",
+          "nomeDescritivo": "Data de republicação",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "dataRetificacao",
+          "nomeOriginal": "dt_retificacao",
+          "nomeDescritivo": "Data de retificação",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaRepublicacao",
+          "nomeOriginal": "pg_republicacao",
+          "nomeDescritivo": "Pág. da republicação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaRetificacao",
+          "nomeOriginal": "pg_retificacao",
+          "nomeDescritivo": "Pág. da retificação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "dataDisponibilizacao",
+          "nomeOriginal": "dt_disponibilizacao",
+          "nomeDescritivo": "Data de disponibilização",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaDisponibilizacao",
+          "nomeOriginal": "pg_disponibilizacao",
+          "nomeDescritivo": "Pág. da disponibilização",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "dataRedisponibilizacao",
+          "nomeOriginal": "dt_redisponibilizacao",
+          "nomeDescritivo": "Data de redisponibilização",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "tipoFonte",
+          "nomeOriginal": "tp_fonte",
+          "nomeDescritivo": "Tipo da fonte",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "paginaRedisponibilizacao",
+          "nomeOriginal": "pg_redisponibilizacao",
+          "nomeDescritivo": "Pág. da redisponibilização",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaFonte",
+          "nomeOriginal": "pg_fonte",
+          "nomeDescritivo": "Pág. fonte",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "urlFonte",
+          "nomeOriginal": "url_fonte",
+          "nomeDescritivo": "URL fonte",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "nrProcesso",
+          "nomeOriginal": "nr_processo",
+          "nomeDescritivo": "Nº do processo",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "nrProcessoFormatado",
+          "nomeOriginal": "nr_processo_fmt",
+          "nomeDescritivo": "Nº do processo",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "ultimaDecisao",
+          "nomeOriginal": "ultima_decisao",
+          "nomeDescritivo": "Última decisão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "publicidade",
+          "nomeOriginal": "publicidade",
+          "nomeDescritivo": "Publicidade",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "codigoTipoLegislacao",
+          "nomeOriginal": "cd_tipo_legislacao",
+          "nomeDescritivo": "Cód. do tipo de legislação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "tipoLegislacao",
+          "nomeOriginal": "ds_tipo_legislacao",
+          "nomeDescritivo": "Tipo de legislação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "naturezaLegislacao",
+          "nomeOriginal": "natureza_legislacao",
+          "nomeDescritivo": "Natureza da legislação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "codigoOrgao",
+          "nomeOriginal": "cd_orgao",
+          "nomeDescritivo": "Cód. órgão",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "orgao",
+          "nomeOriginal": "nm_orgao.keyword",
+          "nomeDescritivo": "Órgão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "magistrado",
+          "nomeOriginal": "nm_magistrado",
+          "nomeDescritivo": "",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "nrSessao",
+          "nomeOriginal": "nr_sessao",
+          "nomeDescritivo": "Nº da sessão",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "anoSessao",
+          "nomeOriginal": "ano_sessao",
+          "nomeDescritivo": "Ano da sessão",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "orgaoJulgador",
+          "nomeOriginal": "orgao_julgador",
+          "nomeDescritivo": "Órgão julgador",
+          "tipo": "string",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "nrBoletim",
+          "nomeOriginal": "nr_boletim",
+          "nomeDescritivo": "Nº do boletim",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "anoBoletim",
+          "nomeOriginal": "ano_boletim",
+          "nomeDescritivo": "Ano do boletim",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "mes",
+          "nomeOriginal": "desc_mes",
+          "nomeDescritivo": "Mês",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "situacaoLegislacao",
+          "nomeOriginal": "sit_leg",
+          "nomeDescritivo": "Situação da legislação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "notas",
+          "nomeOriginal": "notas",
+          "nomeDescritivo": "Notas",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "statusNorma",
+          "nomeOriginal": "status_norma",
+          "nomeDescritivo": "Status da norma",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "descritores",
+          "nomeOriginal": "descritores",
+          "nomeDescritivo": "Descritores",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        }
+      ],
+      "quantidadeResultadosPorPagina": 10,
+      "totalizadoresCampos": [
+        {
+          "nome": "Órgão Julgador",
+          "campo": "orgao_julgador.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 10,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Magistrado",
+          "campo": "nm_magistrado.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 20,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Órgão fiscalizado",
+          "campo": "nm_orgao_processo.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 30,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        }
+      ],
+      "resultadoTemplateComponent": "ResultadoBlgComponent"
+    },
+    {
+      "nome": "pareceres",
+      "nomeDescritivo": "Pareceres da Auditoria/Consultoria",
+      "tipoServicoIndexacao": "elasticsearch",
+      "configuracaoServicoIndexacao": {
+        "urlMiddleware": "/api/pesquisa/v2",
+        "indice": "jurisprudencia-pareceres"
+      },
+      "ordem": "30",
+      "ordenacao": {
+        "ordenacaoPadraoCampo": "ano_legislacao.keyword",
+        "ordenacaoPadraoDirecao": "desc",
+        "campoRelevanciaNome": "Relevância",
+        "campoRelevanciaCampo": "_score"
+      },
+      "placeholderTermos": "Pesquisar por",
+      "hintTermos": "Ex.: processo E gestão NÃO \"Primeira Câmara\"",
+      "operadoresTermos": [
+        {
+          "operador": "E",
+          "codigo": "&",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que contenham TODOS os termos informados. O operador deve ser escrito em letra maiúscula \"E\"."
+        },
+        {
+          "operador": "OU",
+          "codigo": "|",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que contenham QUALQUER UM dos termos informados. O operador deve ser escrito em letra maiúscula \"OU\"."
+        },
+        {
+          "operador": "NÃO",
+          "codigo": "!",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que NÃO contenham os termos informados. O operador deve ser escrito em letra maiúscula \"NÃO\"."
+        },
+        {
+          "operador": "~",
+          "codigo": "~",
+          "ativo": true,
+          "visivel": true,
+          "espacadoAntes": false,
+          "espacadoDepois": false,
+          "descricao": "Busca palavras que estejam a uma certa distância máxima informada. As palavras devem ser informadas entre aspas. (O número após o operador indica delimitação de distância máxima entre palavras, p. ex. \"contas gestão\"~4)."
+        },
+        {
+          "operador": "PROX",
+          "codigo": ">",
+          "ativo": false,
+          "visivel": false,
+          "descricao": "Procura palavras aproximadas em qualquer ordem. (O número após o 'PROX' indica delimitação de distância entre palavras, podendo ser escolhido livremente)."
+        },
+        {
+          "operador": "MESMO",
+          "codigo": "=",
+          "ativo": false,
+          "visivel": false,
+          "descricao": "Operador utilizado para pesquisar no mesmo parágrafo; sua utilização principal é para pesquisa no campo legislação."
+        },
+        {
+          "operador": "$",
+          "codigo": "$",
+          "ativo": true,
+          "visivel": true,
+          "espacadoAntes": false,
+          "espacadoDepois": true,
+          "unario": true,
+          "descricao": "Este operador substitui qualquer parte da palavra desejada, ou seja, prefixo, radical ou sufixo."
+        }
+      ],
+      "campos": [
+        {
+          "nome": "codigoLegislacao",
+          "nomeOriginal": "cd_legislacao",
+          "nomeDescritivo": "Cód. parecer",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "legislacao",
+          "nomeOriginal": "ds_legislacao",
+          "nomeDescritivo": "Parecer",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "nrLegislacao",
+          "nomeOriginal": "nr_legislacao",
+          "nomeDescritivo": "Nº do parecer",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "anoLegislacao",
+          "nomeOriginal": "ano_legislacao.keyword",
+          "nomeDescritivo": "Ano do parecer",
+          "tipo": "number",
+          "pesquisavel": true,
+          "destacado": false,
+          "ordenavel": true
+        },
+        {
+          "nome": "nrAnolegislacao",
+          "nomeOriginal": "nr_ano_legislacao",
+          "nomeDescritivo": "Nº e ano do parecer",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "orgaoProcesso",
+          "nomeOriginal": "nm_orgao_processo",
+          "nomeDescritivo": "Órgão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "ementa",
+          "nomeOriginal": "ementa",
+          "nomeDescritivo": "Ementa",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "situacao",
+          "nomeOriginal": "situacao",
+          "nomeDescritivo": "Situação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "edicao",
+          "nomeOriginal": "edicao",
+          "nomeDescritivo": "Edição",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "edicaoDisponibilizacao",
+          "nomeOriginal": "ed_disponibilizacao",
+          "nomeDescritivo": "Edição disponibilização",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "edicaoRedisponibilizacao",
+          "nomeOriginal": "ed_redisponibilizacao",
+          "nomeDescritivo": "Edição redisponibilização",
+          "tipo": "string",
+          "destacado": false
+        },
+        {
+          "nome": "dataPublicacao",
+          "nomeOriginal": "dt_publicacao",
+          "nomeDescritivo": "Data de publicação",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "nomeArquivo",
+          "nomeOriginal": "nome_arquivo",
+          "nomeDescritivo": "Nome do arquivo",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "dataAto",
+          "nomeOriginal": "dt_ato",
+          "nomeDescritivo": "Data do ato",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false,
+          "ordenavel": true
+        },
+        {
+          "nome": "dataRepublicacao",
+          "nomeOriginal": "dt_republicacao",
+          "nomeDescritivo": "Data de republicação",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "dataRetificacao",
+          "nomeOriginal": "dt_retificacao",
+          "nomeDescritivo": "Data de retificação",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaRepublicacao",
+          "nomeOriginal": "pg_republicacao",
+          "nomeDescritivo": "Pág. da republicação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaRetificacao",
+          "nomeOriginal": "pg_retificacao",
+          "nomeDescritivo": "Pág. da retificação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "dataDisponibilizacao",
+          "nomeOriginal": "dt_disponibilizacao",
+          "nomeDescritivo": "Data de disponibilização",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaDisponibilizacao",
+          "nomeOriginal": "pg_disponibilizacao",
+          "nomeDescritivo": "Pág. da disponibilização",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "dataRedisponibilizacao",
+          "nomeOriginal": "dt_redisponibilizacao",
+          "nomeDescritivo": "Data de redisponibilização",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "tipoFonte",
+          "nomeOriginal": "tp_fonte",
+          "nomeDescritivo": "Tipo da fonte",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "paginaRedisponibilizacao",
+          "nomeOriginal": "pg_redisponibilizacao",
+          "nomeDescritivo": "Pág. da redisponibilização",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaFonte",
+          "nomeOriginal": "pg_fonte",
+          "nomeDescritivo": "Pág. fonte",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "urlFonte",
+          "nomeOriginal": "url_fonte",
+          "nomeDescritivo": "URL fonte",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "nrProcesso",
+          "nomeOriginal": "nr_processo",
+          "nomeDescritivo": "Nº do processo",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "nrProcessoFormatado",
+          "nomeOriginal": "nr_processo_fmt",
+          "nomeDescritivo": "Nº do processo",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "ultimaDecisao",
+          "nomeOriginal": "ultima_decisao",
+          "nomeDescritivo": "Última decisão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "publicidade",
+          "nomeOriginal": "publicidade",
+          "nomeDescritivo": "Publicidade",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "codigoTipoLegislacao",
+          "nomeOriginal": "cd_tipo_legislacao",
+          "nomeDescritivo": "Cód. do tipo do parecer",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "tipoLegislacao",
+          "nomeOriginal": "ds_tipo_legislacao",
+          "nomeDescritivo": "Tipo do parecer",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "naturezaLegislacao",
+          "nomeOriginal": "natureza_legislacao",
+          "nomeDescritivo": "Natureza do parecer",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "codigoOrgao",
+          "nomeOriginal": "cd_orgao",
+          "nomeDescritivo": "Cód. órgão",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "orgao",
+          "nomeOriginal": "nm_orgao.keyword",
+          "nomeDescritivo": "Órgão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "magistrado",
+          "nomeOriginal": "nm_magistrado",
+          "nomeDescritivo": "",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "nrSessao",
+          "nomeOriginal": "nr_sessao",
+          "nomeDescritivo": "Nº da sessão",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "anoSessao",
+          "nomeOriginal": "ano_sessao",
+          "nomeDescritivo": "Ano da sessão",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "orgaoJulgador",
+          "nomeOriginal": "orgao_julgador",
+          "nomeDescritivo": "Órgão julgador",
+          "tipo": "string",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "nrBoletim",
+          "nomeOriginal": "nr_boletim",
+          "nomeDescritivo": "Nº do boletim",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "anoBoletim",
+          "nomeOriginal": "ano_boletim",
+          "nomeDescritivo": "Ano do boletim",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "mes",
+          "nomeOriginal": "desc_mes",
+          "nomeDescritivo": "Mês",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "situacaoLegislacao",
+          "nomeOriginal": "sit_leg",
+          "nomeDescritivo": "Situação do parecer",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "notas",
+          "nomeOriginal": "notas",
+          "nomeDescritivo": "Notas",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "statusNorma",
+          "nomeOriginal": "status_norma",
+          "nomeDescritivo": "Status da norma",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "descritores",
+          "nomeOriginal": "descritores",
+          "nomeDescritivo": "Descritores",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        }
+      ],
+      "quantidadeResultadosPorPagina": 10,
+      "totalizadoresCampos": [
+        {
+          "nome": "Órgão Julgador",
+          "campo": "orgao_julgador.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 10,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Magistrado",
+          "campo": "nm_magistrado.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 20,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Órgão fiscalizado",
+          "campo": "nm_orgao_processo.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 30,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Ano do parecer",
+          "campo": "ano_legislacao",
+          "tipo": "numero",
+          "labelValorNulo": "desconhecido",
+          "ordem": 40,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Tipo do parecer",
+          "campo": "ds_tipo_legislacao.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 50,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        }
+      ],
+      "resultadoTemplateComponent": "ResultadoBlgComponent"
+    },
+    {
+      "nome": "informacoes_ct",
+      "nomeDescritivo": "Informações da Consultoria Técnica",
+      "tipoServicoIndexacao": "elasticsearch",
+      "configuracaoServicoIndexacao": {
+        "urlMiddleware": "/api/pesquisa/v2",
+        "indice": "jurisprudencia-informacoes_ct"
+      },
+      "ordem": "40",
+      "ordenacao": {
+        "ordenacaoPadraoCampo": "ano_legislacao.keyword",
+        "ordenacaoPadraoDirecao": "desc",
+        "campoRelevanciaNome": "Relevância",
+        "campoRelevanciaCampo": "_score"
+      },
+      "placeholderTermos": "Pesquisar por",
+      "hintTermos": "Ex.: processo E gestão NÃO \"Primeira Câmara\"",
+      "operadoresTermos": [
+        {
+          "operador": "E",
+          "codigo": "&",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que contenham TODOS os termos informados. O operador deve ser escrito em letra maiúscula \"E\"."
+        },
+        {
+          "operador": "OU",
+          "codigo": "|",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que contenham QUALQUER UM dos termos informados. O operador deve ser escrito em letra maiúscula \"OU\"."
+        },
+        {
+          "operador": "NÃO",
+          "codigo": "!",
+          "ativo": true,
+          "visivel": true,
+          "descricao": "Busca por resultados que NÃO contenham os termos informados. O operador deve ser escrito em letra maiúscula \"NÃO\"."
+        },
+        {
+          "operador": "~",
+          "codigo": "~",
+          "ativo": true,
+          "visivel": true,
+          "espacadoAntes": false,
+          "espacadoDepois": false,
+          "descricao": "Busca palavras que estejam a uma certa distância máxima informada. As palavras devem ser informadas entre aspas. (O número após o operador indica delimitação de distância máxima entre palavras, p. ex. \"contas gestão\"~4)."
+        },
+        {
+          "operador": "PROX",
+          "codigo": ">",
+          "ativo": false,
+          "visivel": false,
+          "descricao": "Procura palavras aproximadas em qualquer ordem. (O número após o 'PROX' indica delimitação de distância entre palavras, podendo ser escolhido livremente)."
+        },
+        {
+          "operador": "MESMO",
+          "codigo": "=",
+          "ativo": false,
+          "visivel": false,
+          "descricao": "Operador utilizado para pesquisar no mesmo parágrafo; sua utilização principal é para pesquisa no campo legislação."
+        },
+        {
+          "operador": "$",
+          "codigo": "$",
+          "ativo": true,
+          "visivel": true,
+          "espacadoAntes": false,
+          "espacadoDepois": true,
+          "unario": true,
+          "descricao": "Este operador substitui qualquer parte da palavra desejada, ou seja, prefixo, radical ou sufixo."
+        }
+      ],
+      "campos": [
+        {
+          "nome": "codigoLegislacao",
+          "nomeOriginal": "cd_legislacao",
+          "nomeDescritivo": "Cód. informação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "legislacao",
+          "nomeOriginal": "ds_legislacao",
+          "nomeDescritivo": "Legislação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "nrLegislacao",
+          "nomeOriginal": "nr_legislacao",
+          "nomeDescritivo": "Nº da informação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "anoLegislacao",
+          "nomeOriginal": "ano_legislacao.keyword",
+          "nomeDescritivo": "Ano da informação",
+          "tipo": "number",
+          "pesquisavel": true,
+          "destacado": false,
+          "ordenavel": true
+        },
+        {
+          "nome": "nrAnolegislacao",
+          "nomeOriginal": "nr_ano_legislacao",
+          "nomeDescritivo": "Nº e ano da informação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "orgaoProcesso",
+          "nomeOriginal": "nm_orgao_processo",
+          "nomeDescritivo": "Órgão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "ementa",
+          "nomeOriginal": "ementa",
+          "nomeDescritivo": "Ementa",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "situacao",
+          "nomeOriginal": "situacao",
+          "nomeDescritivo": "Situação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "edicao",
+          "nomeOriginal": "edicao",
+          "nomeDescritivo": "Edição",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "edicaoDisponibilizacao",
+          "nomeOriginal": "ed_disponibilizacao",
+          "nomeDescritivo": "Edição disponibilização",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "edicaoRedisponibilizacao",
+          "nomeOriginal": "ed_redisponibilizacao",
+          "nomeDescritivo": "Edição redisponibilização",
+          "tipo": "string",
+          "destacado": false
+        },
+        {
+          "nome": "dataPublicacao",
+          "nomeOriginal": "dt_publicacao",
+          "nomeDescritivo": "Data de publicação",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "nomeArquivo",
+          "nomeOriginal": "nome_arquivo",
+          "nomeDescritivo": "Nome do arquivo",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "dataAto",
+          "nomeOriginal": "dt_ato",
+          "nomeDescritivo": "Data do ato",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false,
+          "ordenavel": true
+        },
+        {
+          "nome": "dataRepublicacao",
+          "nomeOriginal": "dt_republicacao",
+          "nomeDescritivo": "Data de republicação",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "dataRetificacao",
+          "nomeOriginal": "dt_retificacao",
+          "nomeDescritivo": "Data de retificação",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaRepublicacao",
+          "nomeOriginal": "pg_republicacao",
+          "nomeDescritivo": "Pág. da republicação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaRetificacao",
+          "nomeOriginal": "pg_retificacao",
+          "nomeDescritivo": "Pág. da retificação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "dataDisponibilizacao",
+          "nomeOriginal": "dt_disponibilizacao",
+          "nomeDescritivo": "Data de disponibilização",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaDisponibilizacao",
+          "nomeOriginal": "pg_disponibilizacao",
+          "nomeDescritivo": "Pág. da disponibilização",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "dataRedisponibilizacao",
+          "nomeOriginal": "dt_redisponibilizacao",
+          "nomeDescritivo": "Data de redisponibilização",
+          "tipo": "date",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "tipoFonte",
+          "nomeOriginal": "tp_fonte",
+          "nomeDescritivo": "Tipo da fonte",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "paginaRedisponibilizacao",
+          "nomeOriginal": "pg_redisponibilizacao",
+          "nomeDescritivo": "Pág. da redisponibilização",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "paginaFonte",
+          "nomeOriginal": "pg_fonte",
+          "nomeDescritivo": "Pág. fonte",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "urlFonte",
+          "nomeOriginal": "url_fonte",
+          "nomeDescritivo": "URL fonte",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "nrProcesso",
+          "nomeOriginal": "nr_processo",
+          "nomeDescritivo": "Nº do processo",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "nrProcessoFormatado",
+          "nomeOriginal": "nr_processo_fmt",
+          "nomeDescritivo": "Nº do processo",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "ultimaDecisao",
+          "nomeOriginal": "ultima_decisao",
+          "nomeDescritivo": "Última decisão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "publicidade",
+          "nomeOriginal": "publicidade",
+          "nomeDescritivo": "Publicidade",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "codigoTipoLegislacao",
+          "nomeOriginal": "cd_tipo_legislacao",
+          "nomeDescritivo": "Cód. do tipo da informação",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "tipoLegislacao",
+          "nomeOriginal": "ds_tipo_legislacao",
+          "nomeDescritivo": "Tipo da informação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "naturezaLegislacao",
+          "nomeOriginal": "natureza_legislacao",
+          "nomeDescritivo": "Natureza da informação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "codigoOrgao",
+          "nomeOriginal": "cd_orgao",
+          "nomeDescritivo": "Cód. órgão",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "orgao",
+          "nomeOriginal": "nm_orgao.keyword",
+          "nomeDescritivo": "Órgão",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "magistrado",
+          "nomeOriginal": "nm_magistrado",
+          "nomeDescritivo": "",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "nrSessao",
+          "nomeOriginal": "nr_sessao",
+          "nomeDescritivo": "Nº da sessão",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "anoSessao",
+          "nomeOriginal": "ano_sessao",
+          "nomeDescritivo": "Ano da sessão",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "orgaoJulgador",
+          "nomeOriginal": "orgao_julgador",
+          "nomeDescritivo": "Órgão julgador",
+          "tipo": "string",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "nrBoletim",
+          "nomeOriginal": "nr_boletim",
+          "nomeDescritivo": "Nº do boletim",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "anoBoletim",
+          "nomeOriginal": "ano_boletim",
+          "nomeDescritivo": "Ano do boletim",
+          "tipo": "number",
+          "pesquisavel": false,
+          "destacado": false
+        },
+        {
+          "nome": "mes",
+          "nomeOriginal": "desc_mes",
+          "nomeDescritivo": "Mês",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "situacaoLegislacao",
+          "nomeOriginal": "sit_leg",
+          "nomeDescritivo": "Situação da informação",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "notas",
+          "nomeOriginal": "notas",
+          "nomeDescritivo": "Notas",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "statusNorma",
+          "nomeOriginal": "status_norma",
+          "nomeDescritivo": "Status da norma",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        },
+        {
+          "nome": "descritores",
+          "nomeOriginal": "descritores",
+          "nomeDescritivo": "Descritores",
+          "tipo": "string",
+          "pesquisavel": true,
+          "destacado": false
+        }
+      ],
+      "quantidadeResultadosPorPagina": 10,
+      "totalizadoresCampos": [
+        {
+          "nome": "Órgão Julgador",
+          "campo": "orgao_julgador.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 10,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Magistrado",
+          "campo": "nm_magistrado.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 20,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Órgão fiscalizado",
+          "campo": "nm_orgao_processo.keyword",
+          "tipo": "palavra-chave",
+          "labelValorNulo": "desconhecido",
+          "ordem": 30,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        },
+        {
+          "nome": "Ano da informação",
+          "campo": "ano_legislacao",
+          "tipo": "numero",
+          "labelValorNulo": "desconhecido",
+          "ordem": 40,
+          "quantidade": 15,
+          "quantidadeMinimaDocumentos": 1
+        }
+      ],
+      "resultadoTemplateComponent": "ResultadoBlgComponent"
+    }
+  ]
+}

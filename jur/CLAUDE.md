@@ -61,6 +61,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tcu`  | Tribunal de Contas da União | Federal (acórdãos) | `CLAUDE-TCU.md` | 🟢 OK |
 | `tcepr` | **TCE-PR** (Tribunal de Contas do Estado do Paraná — controle externo) | PR (Estado + **os 399 municípios**) | `CLAUDE-TCEPR.md` | 🟢 OK (portal ViaJuris, HTTP direto, sem browser — **sem captcha**; ementa, **tema**, inteiro teor, **citação oficial** e **permalink público** já vêm na busca). Base corrente, 1998–2026 |
 | `tcesc` | **TCE-SC** (Tribunal de Contas do Estado de Santa Catarina — controle externo) | SC (Estado + **os 295 municípios**) | `CLAUDE-TCESC.md` | 🟢 OK (GraphQL público, HTTP direto, sem browser — **sem captcha**; citação oficial e **PDF público de inteiro teor** já vêm na busca). Base corrente, **5 bases via `--base`** (deliberações, enunciados, informativos, súmulas). 🔴 **O espaço entre termos é OR e não existe AND**; a maioria dos documentos vem **sem ementa** |
+| `tcers` | **TCE-RS** (Tribunal de Contas do Estado do Rio Grande do Sul — controle externo) | RS (Estado + **os municípios gaúchos**) | `CLAUDE-TCERS.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; o **inteiro teor já vem na busca**, conferido contra o PDF). Base corrente, **4 bases via `--base`**. 🔴 **O espaço entre termos é OR** e os operadores que a tela anuncia (`E`/`OU`/`NÃO`/`PROX`/`MESMO`/`$`) **inflam até saturar ou zeram** — use `AND`/`OR`/`NOT`. 🔴 **A ementa desaparece a partir de 2020** |
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
@@ -682,6 +683,45 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   não o número do processo.
   ⚠️ **Não há número CNJ nem DataJud** (contas não é Judiciário): a verificação é
   `./bin/jur tcesc -n "REP 26/00137305"` (aceita também `2600137305`)
+- **Contas públicas do RIO GRANDE DO SUL** ("o que o Tribunal de Contas do RS decidiu",
+  licitação e contrato administrativo, ato de pessoal estadual ou municipal, contas de
+  prefeito, tomada de contas, recurso de embargos) → `tcers` → leia `CLAUDE-TCERS.md`. É
+  instância de **controle externo**, não Judiciário: para a mesma matéria judicializada,
+  o caminho é `tjrs` (estadual) ou `trf4` (federal).
+  🔴 **Não ofereça o `tcers` para matéria cível, penal, trabalhista ou previdenciária** —
+  ele não tem esse acervo, e o zero seria o tribunal errado, não ausência de julgado.
+  ✅ **O RS não tem TCM**: conta de prefeitura, câmara e autarquia municipal está aqui
+  (provado por contagem no acervo). A armadilha "procure o TCM" vale para SP, RJ, BA, GO
+  e PA — não para o Rio Grande do Sul.
+  🔴 **O ESPAÇO ENTRE TERMOS É OR** (provado: 730 + 5.007 − 5.036 = 701 = `AND`). Query
+  de duas palavras devolve a UNIÃO. **Use `AND`.**
+  🔴 **Os operadores que a própria tela anuncia estão TODOS quebrados**: `E`, `OU`,
+  `NÃO`, `NAO` e `MESMO` **inflam até saturar em 10.000+** (que se lê como "tema
+  vastíssimo"), `PROX` é ignorado e o curinga `$` **zera**. Os que funcionam são os
+  **ingleses** — `AND`, `OR`, `NOT`, `"frase exata"`. O crawler avisa; repasse.
+  ⚠️ **NÃO avise sobre acento** (o índice normaliza) e termo curto **não** é descartado.
+  🔴 **O total SATURA em 10.000 — mas o servidor declara isso** (`total.relacao`). É o
+  primeiro tribunal do repo em que a saturação vem no payload. **Não relate 10.000 como
+  contagem**; refine com `-di/-df` ou `--ano`.
+  🔴 **A EMENTA DESAPARECE A PARTIR DE 2020**: 2019 = 20/20 com ementa, 2020 em diante
+  = 0/20. Pedido de jurisprudência **recente** do TCE-RS volta **sem ementa**, e isso não
+  é defeito do crawler. ✅ O que existe no lugar é o **texto integral**, que já vem na
+  busca (campo `relatorio`, ~12,7 mil chars, conferido contra o PDF).
+  🔴 **O campo `texto` degenera para um rótulo de uma palavra em 11%** ("Multa",
+  "Provimento") — **nunca o apresente como ementa**. O crawler marca `dispositivoDegenerado`.
+  🔴 **NÃO EXISTE DATA DE PUBLICAÇÃO** — o único eixo é a data da **sessão**. `-dpi/-dpf`
+  são alias que avisam. Nunca apresente a data do TCE-RS como publicação.
+  ✅ As **duas pontas** da janela funcionam sozinhas, e a janela no-op não altera a
+  contagem. ⚠️ Só ISO na API — o crawler converte DD/MM/YYYY sozinho.
+  🔴 **Número de processo: só dígitos.** A máscara **derruba com HTTP 500**, não devolve
+  zero. O `-n` normaliza (`./bin/jur tcers -n "013714-0200/25-3"`).
+  ⚠️ **Não há CNJ nem DataJud** (contas não é Judiciário), e quem identifica o julgado é
+  o `id`, não o número do processo.
+  🟢 **Os autos INTEIROS são públicos** (índice de peças por processo) — nenhum outro
+  tribunal do repo expõe isso; ⚠️ mas parte das peças vem `publico: false`.
+  ⚠️ **Não existe URL de busca** — nunca mande "o link da busca" do TCE-RS como prova.
+  ⚠️ **Quatro bases** (`--base decisoes|sumulas|pareceres|informacoes`): a errada devolve
+  zero que não é ausência de julgado
 - **Contencioso administrativo PREVIDENCIÁRIO** ("o que o CRPS decidiu", recurso contra
   indeferimento do INSS, Junta de Recursos, Câmara de Julgamento) → 🔴 **não há busca**:
   o portal exige login Gov.br e o contorno por perfil de Chrome dedicado **já foi tentado

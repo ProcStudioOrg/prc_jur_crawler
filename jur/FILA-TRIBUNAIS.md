@@ -1180,7 +1180,7 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 |---|---|---|---|---|
 | 18 | **TCE-PR** | PR | ✅ o PR **não tem TCM** — os 399 municípios estão na base do próprio TCE | ok 14/08 |
 | 19 | **TCE-SC** | SC | ✅ SC **não tem TCM** — os 295 municípios estão na base do próprio TCE | ok 14/08 |
-| 20 | **TCE-RS** | RS | | pendente |
+| 20 | **TCE-RS** | RS | ✅ o RS **não tem TCM** — os municípios gaúchos estão na base do próprio TCE | ok 15/08 |
 | 21 | **TCE-SP** | SP | ⚠️ **não** cobre a capital — SP capital é do **TCM-SP** | pendente |
 | 22 | **TCE-RJ** | RJ | ⚠️ capital carioca é do **TCM-RJ** | pendente |
 | 23 | **TCE-MG** | MG | | pendente |
@@ -1423,6 +1423,124 @@ contagem**; `numerosProcessoHibrido`, `identificadorDocumento`, `numeroDecisao` 
 medidos**; **não se isolou qual parte do acervo tem ementa indexada** (a
 abrangência EMENTA acha 874 em `licitação`, logo existe); e a **ordenação** não
 foi comparada entre os três valores.
+
+📌 **O que o TCE-RS (feito em 15/08/2026, slot 1600) ensinou — leia
+[`CLAUDE-TCERS.md`](CLAUDE-TCERS.md).** Terceiro alvo do Bloco 5, fechado 🟢 em
+**~29 min** (16:00 → 16:29). A lição de abertura é que **o terceiro TCE não se
+parece com nenhum dos dois anteriores** — TCE-PR era formulário ASP.NET, TCE-SC
+era GraphQL, e o TCE-RS é uma **API REST sobre Elasticsearch** atrás de uma SPA
+Angular. As lições valem para os 10 restantes:
+
+- 🔴 **HTTP 000 GANHOU UMA TERCEIRA CAUSA, E ELA É DO CERTIFICADO.** O ápice
+  `tce.rs.gov.br` devolve 000 e **não está fora do ar**: TCP abre, o **TLS
+  completa** (`Verify return code: 0 ok`) e o certificado é `CN =
+  *.tce.rs.gov.br` — curinga que cobre `www.` e `portal.` mas **não o ápice**,
+  porque curinga casa um rótulo só. TJBA era o servidor derrubando o handshake
+  (errno 104); TJPE era o intermediário omitido; aqui é **certificado válido que
+  não cobre o host pedido**. **Leia a mensagem de erro do TLS — é ela que separa
+  os três casos**, e as três exigem correções diferentes.
+  ⚠️ E `www.tce.rs.gov.br` responde 200 com **80 bytes**: um meta-refresh de
+  **2010** para a intranet. Quem parar aí conclui que o portal morreu.
+- 🔴 **DOIS DOMÍNIOS OFICIAIS, MAS DESTA VEZ O PROTEGIDO É O INSTITUCIONAL.** No
+  TCE-SC o institucional era aberto e os sistemas estavam noutro domínio; aqui
+  `tcers.tc.br` está atrás de **Cloudflare** (`cf-mitigated: challenge`) e os
+  sistemas em `*.tce.rs.gov.br` estão **abertos, sem captcha**. A regra que
+  sobrevive aos dois não é "o portal está no domínio X", é **ache o domínio dos
+  sistemas antes de declarar ausência**. ✅ E o desafio do Cloudflare **cai
+  sozinho no Playwright** (diferente do STJ, que trava no desafio interativo) —
+  foi de lá que saiu o link do portal, não de chute.
+- 🔴 **A CONFIG DO PRÓPRIO PORTAL DECLARA OS OPERADORES E ERRA EM 100% DELES.** O
+  `app.config.json` lista `E OU NÃO ~ PROX MESMO $`. Medido: os cinco em
+  português **INFLAM até saturar** (10.000+), `PROX` é ignorado e `$` **zera**;
+  quem funciona são os **ingleses**, com aritmética exata (730 + 5.007 − 5.036 =
+  **701** = `AND`; 730 − 701 = **29** = `NOT`). Quarta vez que a documentação do
+  portal mente (TJPI, TJBA, TCE-PR, TCE-RS) — e a **primeira em que ela erra em
+  todos os itens que declara**. ⚠️ Pior: o erro **não zera, infla até o teto**, e
+  "10.000+" se lê como tema vastíssimo, não como operador quebrado.
+- 🔴 **O TOTAL SE AUTODECLARA EXATO OU SATURADO — inédito no repo.**
+  `total.relacao` vem `EQUAL_TO` ou `GREATER_THAN_OR_EQUAL_TO`. TJPE e TJPB
+  saturam no mesmo 10.000 **calados**, e em todo alvo anterior a classificação
+  "exato × saturado" teve de ser **inferida por medição**. Aqui ela vem no
+  payload. **Procure esse campo antes de bisectar o teto na mão.**
+- 🔴 **A EMENTA PODE SUMIR A PARTIR DE UM ANO — e é a ressalva mais cara daqui.**
+  Medido por ano: 2018 = 99/100 e 2019 = 20/20 **com** ementa; **2020 em diante =
+  0/20**. O acervo antigo tem ementa e o recente **não tem nenhuma**, então
+  pedido de jurisprudência recente do TCE-RS volta sem ementa e isso **não é
+  defeito do crawler**. O TJAM ensinou a medir a **vigência** da base e o TCE-SC
+  a medir a **cobertura de cada eixo de data**; aqui a novidade é medir a
+  **cobertura da ementa ao longo do tempo** — uma base corrente pode ter parado
+  de indexar ementa. ✅ Em compensação o **inteiro teor já vem na busca**
+  (`relatorio`, ~12,7 mil chars), **conferido contra o PDF** por `pdftotext`
+  (razão 0,94) — é o texto mesmo, não o snippet do TCE-SC nem o texto remontado
+  fora de ordem do TCE-PR.
+- 🔴 **UM CAMPO CHAMADO `texto` PODE DEGENERAR PARA UMA PALAVRA.** Ele é o
+  dispositivo (média 1.139 chars), mas em **11%** vem como "Multa",
+  "Provimento", "Conhece". Um crawler que o mapeasse como ementa publicaria
+  **"Multa" como ementa do julgado**. Some à coleção de campos que mentem no
+  nome (TJBA: `ementa` era o inteiro teor; TJES: "Julg:" era juntada).
+- 🔴 **O PLANO B DO BLOCO 5 EXISTE — o TCE-PR estava errado sobre isso.** A
+  lição gravada em 14/08 diz que "contas não tem DataJud, logo se o portal cair
+  não há para onde apelar". O TCE-RS publica **Dados Abertos em CKAN com API
+  funcional** (`dados.tce.rs.gov.br/api/3/action/package_search`), com os
+  datasets `decisoes-2022`…`2026`. São metadados (sem ementa), logo não
+  substituem o crawler — **mas bastam para o `Checker`**, que é exatamente o
+  papel do DataJud nos TJs. **Sonde o CKAN nos 10 TCEs restantes antes de
+  declarar que não há plano B.** (Medido, **não implementado**.)
+- 🔴 **A JANELA DE DATA QUERIA CHAVES, NÃO O ARRAY `valores` — e a forma errada é
+  IGNORADA EM SILÊNCIO.** `{tipo:'data', valores:[de,ate]}` devolve o total sem
+  filtro com HTTP 200; a forma certa (`inicio`/`fim`) saiu do `ngModelGroup
+  filtros.dt_sessao` **do bundle**, não de tentativa. ✅ E aqui as **duas pontas
+  funcionam sozinhas** (o TCE-PR tinha uma zerando e a outra ignorada) e a
+  **janela no-op não muda a contagem** (o TJES reprovou nesse teste). ⚠️ Só ISO:
+  data brasileira devolve 500, e o crawler converte sozinho.
+- 🔴 **O NÚMERO COM MÁSCARA DERRUBA COM HTTP 500, NÃO DEVOLVE ZERO** — a
+  armadilha do TJPI repetida noutro portal, porque a barra quebra o parser do
+  Elasticsearch. Some à coleção: TJPE só dígitos, TJES só máscara, TJPI derruba,
+  TJMT aceita as duas, TCE-PR partido em dois campos, **TCE-RS só dígitos**.
+- 🟢 **OS AUTOS INTEIROS SÃO PÚBLICOS — nenhum outro tribunal do repo tem isso.**
+  O índice devolve **47 peças** do processo (Capa, Relatório de Auditoria,
+  Parecer do MPC, Relatório e Voto, Decisão…), ⚠️ com **19 marcadas
+  `publico: false`**. **Pergunte pelo índice de peças nos TCEs restantes** — é
+  uma dimensão que os TJs não oferecem.
+  ⚠️ O download usa **chave composta e a ordem dos segmentos engana**: o
+  `#id_arquivo=` do link é **fragmento** (o servidor nem o vê) e é preciso o
+  `idObjetoArquivo` do índice; a ordem invertida devolve 404 — foi o erro
+  cometido na primeira tentativa. ✅ O PDF **começa com `%PDF`** (o magic number
+  vale aqui, ao contrário do TCE-PR).
+- ⚠️ **O ELASTICSEARCH DO TRIBUNAL ESTOURA O CIRCUIT BREAKER SOB CARGA**, com
+  HTTP 500 `circuit_breaking_exception: Data too large` — porque cada
+  `relatorio` tem ~12 mil chars e a página de 100 os carrega todos. É
+  **transitório**. ⚠️ E isso expôs um defeito no meu próprio Navigator: como
+  `requisitar()` **resolve** em vez de lançar para status ≠ 200, a retentativa
+  nunca disparava; foi preciso tratar 5xx explicitamente. **Retentativa que só
+  pega exceção não cobre erro transitório de API que resolve.**
+- ⚠️ **O SMOKE PEGOU O QUE OS MEUS TESTES NÃO PEGARAM:** ele manda data em
+  **DD/MM/YYYY** (a convenção do repo) e a API só aceita ISO, então o comando
+  quebrava com 500 no uso normal enquanto todos os meus testes ISO passavam.
+  **Rode o smoke antes de declarar verde** — ele exercita a convenção do repo,
+  não a da API.
+- ⚠️ **Tropeço de processo, o mesmo de 13/08:** por ~1h eu estimei o relógio em
+  vez de consultá-lo e me dei por quase fora do timebox aos **14 minutos**
+  reais, chegando a decidir marcar `parcial`. Um `date` desfez. **A duração é
+  medição como qualquer outra** — e desta vez o palpite quase custou o crawler,
+  não só um parágrafo errado.
+- ✅ O RS **não tem TCM** e os municípios estão nesta base — ⚠️ mas aqui **não há
+  combo de município** para contar (o campo é texto livre), então a prova foi
+  **por contagem no acervo**, não por enumeração como no TCE-PR. **O método de
+  provar a cobertura municipal muda conforme o portal.**
+
+⚠️ **Pendências declaradas do TCE-RS:** `-r`, `-t` e `--orgao` estão expostos mas
+**não provados por contagem** (só `-oj` foi); a base `*` ("Todas as bases") não
+foi testada; `sumulas`/`pareceres`/`informacoes` tiveram só a **contagem**
+medida, sem dissecar campos nem card; **não há permalink de busca**, e o de
+documento **não foi confirmado em aba limpa de navegador** (só a API por trás);
+**falta o print do visualizador aberto** (o Playwright estoura o `networkidle`,
+porque o viewer de PDF nunca estabiliza a rede); o teto de página não foi
+bisectado entre 500 e 1.000; **rate limit não medido**; a ordenação só foi
+testada no default; o card foi dissecado em **um tipo de documento só**, contra
+os 2+ que a `browser-post-search` exige; e a lista
+`decisoes-temas-area-de-exame` volta **vazia** no servidor, causa não
+investigada. ⏱️ Timebox **não estourado**: 16:00 → 16:29, ~29 min.
 
 **Armadilha do bloco 5:** onde existe TCM, buscar "contas municipais" no TCE devolve zero
 que se lê como "não há julgado". Ao documentar o TCE, escreva explicitamente o que ele

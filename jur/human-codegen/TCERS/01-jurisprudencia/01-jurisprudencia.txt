@@ -1,0 +1,329 @@
+# TCE-RS — Tribunal de Contas do Estado do Rio Grande do Sul
+# Módulo 01 — Pesquisa de Jurisprudência
+# Mapeado em 15/08/2026 (slot 1600). Status: PARCIAL — mapeamento completo, crawler não escrito.
+
+## 1. Identificação
+
+Alvo        : TCE-RS (controle externo — Estado do RS + municípios gaúchos)
+Portal      : https://portal.tce.rs.gov.br/app/pesquisa/jurisprudencia/pesquisa
+Descoberto  : NÃO chutado. Link "Jurisprudência" na home institucional (tcers.tc.br),
+              lido no Playwright depois que o Cloudflare liberou.
+Tecnologia  : Angular 9 SPA + API REST própria por trás de Elasticsearch
+Acesso do crawler: **api** (POST JSON, sem browser, sem token, sem captcha)
+
+## 2. Os dois domínios — e por que o ápice engana
+
+O TCE-RS tem DOIS domínios oficiais, e os dois enganam de maneiras diferentes:
+
+  tcers.tc.br            -> site institucional. Cloudflare com `cf-mitigated: challenge`.
+                            curl leva 403; o Playwright resolve o desafio sozinho
+                            (ao contrário do STJ, que trava no desafio interativo).
+  *.tce.rs.gov.br        -> os SISTEMAS. Apache, sem Cloudflare, sem captcha.
+
+🔴 **O ápice `tce.rs.gov.br` devolve HTTP 000 — e NÃO está fora do ar.**
+Medido em camadas (lição do TJPE):
+  - TCP 443            : ABRE
+  - TLS handshake      : COMPLETA (TLSv1.2, "Verify return code: 0 (ok)")
+  - o certificado é    : CN = *.tce.rs.gov.br  (Let's Encrypt R13)
+  - curl aborta com    : "no alternative certificate subject name matches target host
+                          name 'tce.rs.gov.br'"
+  - com `-k`           : HTTP 403
+
+Ou seja: **o curinga `*.tce.rs.gov.br` cobre `www.` e `portal.` mas NÃO cobre o ápice**
+(curinga casa um rótulo só). É uma TERCEIRA variante de HTTP 000 no repo:
+  TJBA -> servidor derruba o handshake TLS (errno 104)
+  TJPE -> servidor omite o certificado intermediário
+  TCE-RS -> certificado válido que não cobre o host pedido
+**Separe TCP de TLS de HTTP, e leia a mensagem de erro do TLS: ela diz qual das três é.**
+
+⚠️ `www.tce.rs.gov.br` responde 200 com 80 bytes: um meta-refresh de 2010 para
+`/portal/page/portal/intranet`. Quem parar aí conclui que o portal é uma intranet morta.
+
+## 3. Passo 0 — o que existe e o que NÃO existe de API pública
+
+ACHADO:
+  dados.tce.rs.gov.br    -> **CKAN de Dados Abertos, com API pública funcional**
+                            /api/3/action/package_list, package_search, package_show
+                            Datasets `decisoes-2022` … `decisoes-2026`
+                            (CSV + XML + JSON em https://dados.tce.rs.gov.br/dados/decisoes/<ano>.json)
+                            Atualizado 09/08/2026.
+                            ⚠️ São **metadados em lote**: sessão, órgão julgador, nº do
+                            processo, tipo, gabinete, magistrado. **NÃO tem ementa nem
+                            inteiro teor.** Não substitui o crawler — igual ao TCE-PR.
+                            ✅ MAS serve de plano B para o `Checker` (confirmar que a
+                            decisão existe), papel que o DataJud faz nos TJs.
+                            🔴 Isso é um CONTRAEXEMPLO à lição do TCE-PR ("no Bloco 5
+                            não existe plano B"): aqui existe, e é oficial.
+
+  ws.tce.rs.gov.br       -> existe (187.44.87.186), responde **403 Forbidden** em `/`.
+                            Não investigado além disso.
+
+NÃO EXISTE (medido, não presumido):
+  dadosabertos.tce.rs.gov.br  -> NXDOMAIN
+  api.tce.rs.gov.br           -> NXDOMAIN
+  jurisprudencia.tce.rs.gov.br-> NXDOMAIN
+  /swagger, /v1/api-docs      -> 404 REAL (196 bytes, ISO-8859-1)
+
+✅ **SEM vhost curinga e SEM casca de HTTP 200.** `/app/path-inventado-9z` devolve
+404 de verdade, com md5 idêntico ao do `/swagger` e DIFERENTE do das telas reais.
+Não foi preciso o truque do md5 do TJAC/TJAL nem o do tamanho do TCE-SC.
+
+## 4. O contrato da API (o entregável principal)
+
+### 4.1 Busca
+
+  POST https://portal.tce.rs.gov.br/api/pesquisa/v2/<indice>/<pagina>
+  Content-Type: application/json
+  Sem cookie, sem token, sem Referer obrigatório. Resposta ~200-400 ms.
+
+  Corpo mínimo que funciona:
+  {
+    "termos": {
+      "original":   "licitação",
+      "transformados": "licitação",
+      "estruturados":  ["licitação"],
+      "operandos":     ["licitação"],
+      "operandosExpandidos": ["licitação"]
+    },
+    "opcoes": [
+      {"opcao":"quantidadeResultadosPorPagina","tipo":"number","valor":10},
+      {"opcao":"ordenacaoCampo","tipo":"string","valor":"dt_sessao"},
+      {"opcao":"ordenacaoDirecao","tipo":"string","valor":"desc"}
+    ]
+  }
+
+  ⚠️ `<pagina>` é 1-based e vai no PATH, não no corpo.
+  ⚠️ Busca sem termo funciona (termo vazio devolve o acervo).
+
+### 4.2 Os quatro índices (as 4 bases) — medidos em 15/08/2026
+
+  jurisprudencia-decisoes        10.000+ (SATURADO)  <- base principal
+  jurisprudencia-sumulas              27  exato
+  jurisprudencia-pareceres         1.195  exato       (Pareceres da Auditoria/Consultoria)
+  jurisprudencia-informacoes_ct      303  exato       (Informações da Consultoria Técnica)
+
+  A config declara ainda a base `*` ("Todas as bases") com
+  `possibilitarPesquisarTodasBases: true` — NÃO testada.
+
+### 4.3 Combos — de graça pelo servidor
+
+  POST /api/pesquisa/v2/listas/1
+  {"filtros":[{"campo":"nome.keyword","valores":["<lista>"],"tipo":"palavra-chave",
+               "nome":"...","isRemovivel":false}],
+   "opcoes":[{"opcao":"quantidadeResultadosPorPagina","tipo":"number","valor":500}]}
+
+  Listas medidas (gravadas em combos-servidor.json):
+    decisoes-tipos-processos     -> 42 opções
+    decisoes-relatores           -> 31 opções
+    decisoes-orgaos-julgadores   ->  7 opções
+    decisoes-temas-area-de-exame ->  0 opções  ⚠️ lista VAZIA no servidor
+
+  ✅ A pendência de combo-árvore que se repetiu em quatro instalações do e-SAJ não
+  existe aqui — igual a JSF (TJSE) e GraphQL (TCE-SC).
+
+## 5. 🔴 OPERADORES — a config do próprio portal está ERRADA em TODOS os itens
+
+O `app.config.json` declara, para as quatro bases, `operadoresTermos`:
+    E   OU   NÃO   ~   PROX   MESMO   $
+e o hint impresso na tela é `Ex.: processo E gestão NÃO "Primeira Câmara"`.
+
+**Medido por contagem (base decisoes):**
+
+    merenda                      730   exato
+    escolar                    5.007   exato
+    merenda escolar            5.036   exato      <- ESPAÇO = OR (união)
+    merenda AND escolar          701   exato      <- interseção
+    merenda OR escolar         5.036   exato      <- = espaço
+    merenda NOT escolar           29   exato      <- 730 − 701 = 29 ✓
+    "merenda escolar"            673   exato      <- ≤ 701 ✓ coerente
+
+    merenda E escolar         10.000+  SATURADO   🔴 INFLA
+    merenda OU escolar        10.000+  SATURADO   🔴 INFLA
+    merenda NÃO escolar       10.000+  SATURADO   🔴 INFLA
+    merenda NAO escolar       10.000+  SATURADO   🔴 INFLA
+    merenda MESMO escolar     10.000+  SATURADO   🔴 INFLA
+    merenda PROX escolar       5.037   exato      🔴 ignorado (= união + 1)
+    meren$                         0   exato      🔴 curinga ZERA
+
+Aritmética exata: 730 + 5.007 − 5.036 = **701** = a contagem de `AND`. Prova que o
+espaço é OR e que `AND` é a interseção de verdade.
+
+🔴 **CONCLUSÃO: os operadores são os INGLESES** (`AND`, `OR`, `NOT`, `"frase exata"`),
+o **espaço é OR**, e **todo operador que a config declara está quebrado** — os cinco
+em português INFLAM até saturar e o curinga `$` zera.
+É a QUARTA vez que a documentação do próprio portal mente (TJPI, TJBA, TCE-PR, TCE-RS)
+— e a primeira em que ela erra em 100% dos itens que declara.
+Décimo primeiro tribunal, décimo primeiro conjunto de operadores. Continua sem herdar.
+
+⚠️ E aqui o erro **infla até o teto**, que é o pior sintoma possível: `E`/`OU`/`NÃO`
+devolvem "10.000+", que se lê como "tema vastíssimo" e não como "operador quebrado".
+
+✅ **NÃO se repete a armadilha do TCE-SC**: termo curto NÃO é descartado.
+`ab` devolve 138 exato, não o acervo inteiro.
+
+## 6. 🔴 O TOTAL SE AUTODECLARA EXATO OU SATURADO — inédito no repo
+
+    "total": {"valor": 10000, "relacao": "GREATER_THAN_OR_EQUAL_TO"}   <- saturado
+    "total": {"valor":   106, "relacao": "EQUAL_TO"}                   <- exato
+
+O teto é 10.000 (`track_total_hits` default do Elasticsearch), igual ao TJPE e ao TJPB —
+**mas aqui o servidor DIZ quando bateu no teto.** Em todo tribunal anterior essa
+classificação foi inferida por medição; aqui ela vem no payload.
+**O crawler deve propagar `relacao` e nunca relatar 10.000 como contagem.**
+
+## 7. Campos do documento (base decisoes) — 41 campos
+
+  id / id_elasticsearch      : identifica o DOCUMENTO. 🔴 NÃO é o nº do processo.
+  nr_processo                : 137140200253      (só dígitos)
+  nr_processo_fmt            : 013714-0200/25-3  (máscara própria do TCE, não CNJ)
+  nr_processo_fmt_2          : 13714-0200/25-3   (sem o zero à esquerda)
+  dt_sessao                  : 2026-05-13T03:00:00.000Z   <- data da SESSÃO
+  ano_sessao / nr_sessao     : 2026 / 16
+  nm_magistrado              : "Marco Peixoto"   <- o relator (Conselheiro)
+  nm_orgao_julgador          : "SEGUNDA CÂMARA"
+  nm_gabinete                : "Gab. Marco Peixoto"
+  orgao                      : "EXECUTIVO MUNICIPAL DE NOVO BARREIRO"  <- o FISCALIZADO
+  ds_tp_processo             : "PROCESSO DE CONTAS ESPECIAIS"
+  texto_ementa               : a ementa. 🔴 null em 19% da amostra (81/100 têm).
+                               média 615 chars quando existe.
+  texto                      : o DISPOSITIVO da decisão. média 1.139 chars.
+                               🔴 mas DEGENERA para um rótulo de uma palavra em 11%
+                               ("Multa", "Provimento", "Conhece"). Um crawler que
+                               mapeasse `texto` -> ementa publicaria "Multa" como ementa.
+  relatorio                  : 🟢 O TEXTO INTEGRAL do Relatório e Voto.
+                               presente em 40/40. média 12.733 chars.
+                               ✅ CONFERIDO CONTRA O PDF por pdftotext: 12.937 (payload)
+                               contra 12.204 (PDF) = razão 0,94. É o inteiro teor mesmo.
+  link_visualizador_decisao        : URL do visualizador, fragmento #id_arquivo=<idArquivo>
+  link_visualizador_relatorio_voto : idem, outro id_arquivo
+                               ⚠️ os DOIS são IDÊNTICOS em 31/40 documentos.
+  publicacao_dt_publicacao   : 🔴 null em toda a amostra
+  attachment                 : {} vazio
+  dec_descricao              : null na amostra
+
+🔴 **NÃO HÁ DATA DE PUBLICAÇÃO utilizável** — `publicacao_dt_publicacao`,
+`sessao_dt_publicacao`, `publicacao_nr_boletim` vieram null em 100% da amostra.
+O único eixo de data real é **dt_sessao** (data da sessão de julgamento).
+Nunca apresentar a data do TCE-RS como publicação.
+
+✅ **O inteiro teor JÁ VEM NO PAYLOAD DA BUSCA** (campo `relatorio`). Um downloader
+por documento é desnecessário para o texto — só o PDF exige request extra.
+
+## 8. A escada até o documento — visualizador `visdoc-angular`
+
+O link do card é
+  https://portal.tce.rs.gov.br/app/visdoc-angular/anonimo/open/PRE/<idProcesso>#id_arquivo=<idArquivo>
+
+⚠️ `#id_arquivo=` é FRAGMENTO — client-side. O servidor não o vê. Quem baixa o
+arquivo certo é a API abaixo, e ela quer OUTRO id.
+
+Contrato extraído do bundle do visualizador (MODE=`anonimo`, SYSTEM_NAME=`PRE`):
+
+  GET /api/visdoc/anonimo/objeto/PRE/<idProcesso>
+      -> metadados do processo (numeroFormatado, orgao, tipo, sigiloso)
+  GET /api/visdoc/anonimo/indice/PRE/<idProcesso>
+      -> o ÍNDICE DAS PEÇAS DOS AUTOS (47 peças no exemplo), cada uma com
+         idObjetoArquivo, idArquivo, tipo, mime, publico, numeroPaginas
+  GET /api/visdoc/anonimo/conteudo/paginavel/PRE/<idProcesso>/<idObjetoArquivo>/inline
+      -> **o PDF**. HTTP 200, application/pdf, começa com `%PDF-`.
+
+🔴 **CHAVE COMPOSTA, e a ordem dos segmentos engana.** O `idArquivo` que vem no
+fragmento do link (7617853) **não** serve para baixar; é preciso ler o índice e achar
+o `idObjetoArquivo` correspondente (10012142950). E na URL o id da peça vem **depois**
+do id do processo — montar `paginavel/<idObjetoArquivo>/PRE/<idProcesso>/...` devolve
+**HTTP 404 com JSON de erro**. Foi o erro que cometi na primeira tentativa.
+
+✅ Tudo isso **sem sessão, sem cookie, sem captcha** — testado em contexto limpo.
+✅ O PDF **começa com `%PDF`** — o magic number vale aqui, ao contrário do TCE-PR
+(que servia envelope PKCS#7 em DER).
+
+🟢 **OS AUTOS INTEIROS SÃO PÚBLICOS, não só a decisão.** O índice traz 47 peças:
+Capa, Distribuição, Relatório de Auditoria, Pronunciamentos, Parecer do MPC,
+Relatório e Voto, Decisão, etc. ⚠️ **19 das 47 têm `publico: false`** (documentação
+comprobatória, procurações) — o crawler deve respeitar essa flag.
+Nenhum outro tribunal do repo expõe os autos completos assim.
+
+## 9. Paginação e tetos — medidos
+
+  Página                    : 1-based, no PATH
+  Default por página        : 10
+  quantidadeResultadosPorPagina = 100  -> OK (100 devolvidos)
+  quantidadeResultadosPorPagina = 500  -> OK (devolveu os 106 existentes)
+  quantidadeResultadosPorPagina = 1000 -> FALHA
+  Teto de página            : entre 500 e 1000 (não bisectado)
+  Offset máximo             : página 1000 com qtd=10 (offset 10.000) FALHA
+                              -> teto de 10.000, igual TJPE/TJPB.
+                              Varredura funda exige recorte por data.
+  ✅ Estabilidade           : mesma página 3× = ids IDÊNTICOS (3/3)
+  ✅ pg1 ∩ pg2 = 0           : sem sobreposição
+  Ordenação                 : ordenacaoCampo=dt_sessao, ordenacaoDirecao=desc (o default
+                              da tela). Outros campos não testados.
+
+## 10. Vigência da base — o passo que o TJAM impôs
+
+  Sessão mais recente na base: **27/07/2026** (medido ordenando por dt_sessao desc).
+  Base **CORRENTE** — sem o congelamento do TJAM, sem a defasagem de ponta do TJPI.
+
+## 11. Cobertura municipal — o RS não tem TCM
+
+A ressalva do Bloco 5 ("onde existe TCM, contas municipais no TCE devolvem zero")
+**é FALSA no Rio Grande do Sul**, e a prova saiu dos próprios dados:
+
+    "EXECUTIVO MUNICIPAL"    -> 10.000+ documentos
+    "LEGISLATIVO MUNICIPAL"  -> 10.000+ documentos
+    prefeitura               ->  7.376
+
+⚠️ Diferente do TCE-PR, **não há combo de município** para contar as opções — o campo
+"Órgão fiscalizado" é texto livre com autocomplete. A prova aqui é por contagem no
+acervo, não por enumeração de combo.
+
+## 12. Prints gravados
+
+  01.01-tela-inicial.png        tela de busca, fullPage
+  01.02-form-preenchido.png     formulário com termo preenchido
+  02.01-resultados.png          listagem (fullPage)
+  02.01-resultados-topo.png     cabeçalho da listagem
+  02.02-resultados-rodape.png   rodapé / paginação
+  02-card-resultado.html        outerHTML de um card (5.681 chars)
+  combos-servidor.json          as 4 listas do endpoint /listas/1
+
+  ⚠️ FALTA: print do visualizador de documento aberto. O Playwright estourou o
+  `networkidle` — o viewer de PDF nunca estabiliza a rede. Refazer com
+  `waitUntil:'domcontentloaded'` + espera fixa.
+
+## 13. O QUE FALTA para o crawler ficar 🟢 (para o próximo slot)
+
+  1. src/TCERSNavigator.js  — POST da busca + GET do índice + GET do PDF (3 endpoints,
+                              todos já medidos e reproduzidos fora do browser)
+  2. src/TCERSCrawler.js    — mapear os 41 campos; marcar `semEmenta` (19%) e o
+                              `texto` degenerado (11%); propagar `relacao` do total
+  3. src/TCERSChecker.js    — consulta por nº: **NÃO testada ainda**. O campo
+                              `valor`/"Número do processo" existe no formulário e a
+                              config lista `nrProcesso`,`nrProcessoFormatado`,
+                              `nrProcessoFormatado2` como campos pesquisáveis, mas
+                              nenhuma das três formas foi provada por contagem.
+                              Plano B medido: o CKAN de dados abertos.
+  4. src/TCERSTestes.js, registro em bin/jur, CLAUDE-TCERS.md, roteamento em
+     jur/CLAUDE.md e skills/browser/SKILL.md, cobertura/build.js, smoke.
+
+## 14. Pendências declaradas (não medido ≠ inexistente)
+
+  - **Consulta por número de processo NÃO foi testada em nenhuma das 3 formas.**
+  - Filtro de data (`dt_sessao`) **não foi provado por contagem** — a estrutura
+    `filtros` existe e foi vista nos combos, mas nenhuma janela foi medida, nem as
+    pontas em separado (armadilha do TCE-PR: as duas pontas falham para lados opostos).
+  - Filtro por relator / órgão julgador / tipo de processo: os combos estão
+    enumerados, **nenhum provado por contagem**.
+  - A base `*` ("Todas as bases") não foi testada.
+  - As bases sumulas/pareceres/informacoes_ct tiveram só a CONTAGEM medida — os campos
+    delas (a config lista `ementa`, `situacao`, `dataPublicacao`, `nomeArquivo`…) não
+    foram dissecados, e o card delas não foi visto.
+  - `ws.tce.rs.gov.br` (403) não investigado.
+  - Teto de página não bisectado entre 500 e 1000.
+  - Rate limit **não medido**.
+  - Ordenação testada só no default (`dt_sessao desc`).
+  - `decisoes-temas-area-de-exame` volta lista vazia — causa não investigada.
+  - Card dissecado em **um tipo de documento só** (decisão de contas) — a skill
+    browser-post-search exige 2+. As súmulas e pareceres têm card próprio, não visto.
+
+⏱️ Timebox: 16:00 -> 17:30 (90 min), estourado no mapeamento. Sem crawler = `parcial`.

@@ -63,6 +63,8 @@ const TCEPRChecker = require('../src/TCEPRChecker');
 const TCESCCrawler = require('../src/TCESCCrawler');
 const TCESCChecker = require('../src/TCESCChecker');
 const TCESCCojur = require('../src/TCESCCojur');
+const TCERSCrawler = require('../src/TCERSCrawler');
+const TCERSChecker = require('../src/TCERSChecker');
 const TJRRCrawler = require('../src/TJRRCrawler');
 const TJRRChecker = require('../src/TJRRChecker');
 const TJESCrawler = require('../src/TJESCrawler');
@@ -5610,6 +5612,154 @@ program
           process.stdout.write(JSON.stringify({
             success: true, count: results.length, output: outputPath, ...resumo,
           }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+      else console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tcers')
+  .description('Search TCE-RS (Tribunal de Contas do Estado do Rio Grande do Sul) — API REST publica, sem browser')
+  .option('-q, --query <text>', 'Termo livre. ATENCAO: o ESPACO e OR (uniao); use AND para exigir os dois termos')
+  .option('-n, --numero <numero>', 'Consulta por numero de processo (aceita "013714-0200/25-3" ou "137140200253"); dispensa -q')
+  .option('--base <b>', 'decisoes (default) | sumulas | pareceres | informacoes', 'decisoes')
+  .option('--ano <ano>', 'Filtra pelo ANO da sessao (filtro proprio da tela)')
+  .option('-oj, --orgao-julgador <nome>', 'Orgao julgador exato (use --listar-filtros)')
+  .option('-r, --relator <nome>', 'Nome do relator/Conselheiro (use --listar-filtros)')
+  .option('-t, --tipo-processo <nome>', 'Tipo de processo exato (use --listar-filtros)')
+  .option('--orgao <nome>', 'Orgao FISCALIZADO exato (ex.: "EXECUTIVO MUNICIPAL DE NOVO BARREIRO")')
+  .option('-di, --data-inicio <date>', 'Data inicial da SESSAO (YYYY-MM-DD; formato BR derruba a API com 500)')
+  .option('-df, --data-fim <date>', 'Data final da SESSAO (YYYY-MM-DD)')
+  .option('-dpi, --data-pub-inicio <date>', 'Alias de -di: NAO existe data de publicacao nesta base')
+  .option('-dpf, --data-pub-fim <date>', 'Alias de -df: NAO existe data de publicacao nesta base')
+  .option('--listar-filtros', 'Lista tipos de processo, relatores e orgaos julgadores (direto do servidor) e sai')
+  .option('--verificar [amostra]', 'Audita N resultados por reconsulta pelo numero (default 3)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('--page-size <n>', 'Resultados por pagina (default 20; 500 aceito, 1000 recusado)', 20)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tcers.json')
+  .option('--fetch-inteiro-teor', 'Baixa o PDF da peca (o TEXTO ja vem na busca; isto grava o arquivo)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tcers')
+  .option('-v, --visible', 'Ignored (TCE-RS usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TCE-RS usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    try {
+      if (opts.numero) {
+        const res = await new TCERSChecker({ quiet: jsonMode }).consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (opts.listarFiltros) {
+        const TCERSNavigator = require('../src/TCERSNavigator');
+        const nav = new TCERSNavigator();
+        const { LISTAS } = TCERSNavigator;
+        const combos = {};
+        for (const [chave, nome] of Object.entries(LISTAS)) combos[chave] = await nav.lista(nome);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, combos }) + '\n');
+        else console.log(JSON.stringify(combos, null, 2));
+        process.exit(0);
+      }
+
+      const dataInicio = opts.dataInicio || opts.dataPubInicio || null;
+      const dataFim = opts.dataFim || opts.dataPubFim || null;
+      if ((opts.dataPubInicio || opts.dataPubFim) && !(opts.dataInicio || opts.dataFim)) {
+        log('[aviso] O TCE-RS NAO tem data de publicacao (o campo vem null em 100% da amostra).');
+        log('        -dpi/-dpf foram tratados como data da SESSAO. Nunca apresente essa data como publicacao.');
+      }
+
+      if (!opts.query && !opts.relator && !opts.tipoProcesso && !opts.orgaoJulgador && !dataInicio && !opts.ano) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero>, ou um filtro como -r/-t/-oj/-di/--ano)');
+      }
+
+      log('='.repeat(60));
+      log('TCE-RS Jurisprudencia Crawler (API REST publica, sem browser)');
+      log('ESCOPO: CONTROLE EXTERNO, nao Judiciario — contas, licitacao, contrato e');
+      log('        pessoal do Estado do RS e dos municipios (o RS NAO tem TCM).');
+      log('ATENCAO: o ESPACO entre termos e OR (UNIAO). Os operadores que funcionam');
+      log('         sao os INGLESES (AND, OR, NOT, "frase exata"). Os que a tela');
+      log('         anuncia — E, OU, NAO, PROX, MESMO, $ — INFLAM ate o teto ou zeram.');
+      log('ATENCAO: o total SATURA em 10.000, e o servidor declara isso em total.relacao.');
+      log('ATENCAO: nao existe data de publicacao — o unico eixo e a data da SESSAO.');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '(sem termo — so filtros)'} | base: ${opts.base}`);
+      log(`Data da sessao: ${dataInicio || '-'} a ${dataFim || '-'}${opts.ano ? ` | ano: ${opts.ano}` : ''}`);
+      log('='.repeat(60));
+
+      const crawler = new TCERSCrawler({
+        quiet: jsonMode,
+        base: opts.base,
+        porPagina: parseInt(opts.pageSize, 10),
+        includeFullText: !!opts.fetchInteiroTeor,
+      });
+      const filters = {
+        ano: opts.ano || null,
+        orgaoJulgador: opts.orgaoJulgador || null,
+        relator: opts.relator || null,
+        tipoProcesso: opts.tipoProcesso || null,
+        orgao: opts.orgao || null,
+        dataInicio,
+        dataFim,
+      };
+
+      const results = await crawler.search(opts.query || '', filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+      });
+
+      log('='.repeat(60));
+      log(
+        `Total no servidor: ${results.totalResults}${results.totalSaturado ? '+ (SATURADO)' : ' (exato)'} | coletados: ${results.length}`,
+      );
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 3 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} por reconsulta pelo numero...`);
+        verificacao = await new TCERSChecker({ quiet: jsonMode }).auditar(results, amostra);
+      }
+
+      const resumo = {
+        totalResults: results.totalResults,
+        totalSaturado: results.totalSaturado,
+        semEmenta: results.filter((r) => r.semEmenta).length,
+        dispositivoDegenerado: results.filter((r) => r.dispositivoDegenerado).length,
+        avisos: results.avisos,
+        ...(verificacao ? { verificacao } : {}),
+      };
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        fs.mkdirSync(outputDir, { recursive: true });
+        let okC = 0;
+        let failC = 0;
+        for (const r of results) {
+          if (r.inteiroTeorPdfBuffer && r.inteiroTeorPdfBuffer.length > 0) {
+            fs.writeFileSync(path.join(outputDir, `${r.id}.pdf`), r.inteiroTeorPdfBuffer);
+            okC++;
+          } else failC++;
+        }
+        for (const r of results) delete r.inteiroTeorPdfBuffer;
+        log(`\nGravacao concluida: ${okC} arquivo(s), ${failC} falha(s)`);
+        log(`Files saved to: ${outputDir}`);
+        if (jsonMode) {
+          process.stdout.write(
+            JSON.stringify({ success: true, count: results.length, downloaded: okC, failed: failC, outputDir, ...resumo }) + '\n',
+          );
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({ success: true, count: results.length, output: outputPath, ...resumo }) + '\n');
         }
       }
     } catch (error) {
