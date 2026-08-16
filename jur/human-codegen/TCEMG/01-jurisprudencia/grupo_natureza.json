@@ -1,0 +1,894 @@
+[
+ {
+  "value": "ACOMPANHAMENTO",
+  "texto": "ACOMPANHAMENTO"
+ },
+ {
+  "value": "ACOMPANHAMENTO DA GESTÃO FISCAL",
+  "texto": "ACOMPANHAMENTO DA GESTÃO FISCAL"
+ },
+ {
+  "value": "ACORDO",
+  "texto": "ACORDO"
+ },
+ {
+  "value": "ACORDO DE COOPERAÇÃO",
+  "texto": "ACORDO DE COOPERAÇÃO"
+ },
+ {
+  "value": "ADENDO A TERMO ADITIVO",
+  "texto": "ADENDO A TERMO ADITIVO"
+ },
+ {
+  "value": "ADENDO AO ACORDO",
+  "texto": "ADENDO AO ACORDO"
+ },
+ {
+  "value": "ADENDO AO CONTRATO",
+  "texto": "ADENDO AO CONTRATO"
+ },
+ {
+  "value": "AGRAVO",
+  "texto": "AGRAVO"
+ },
+ {
+  "value": "AGRAVO DE INSTRUMENTO",
+  "texto": "AGRAVO DE INSTRUMENTO"
+ },
+ {
+  "value": "AJUSTE",
+  "texto": "AJUSTE"
+ },
+ {
+  "value": "AJUSTE DE IMPLEMENTAÇÃO",
+  "texto": "AJUSTE DE IMPLEMENTAÇÃO"
+ },
+ {
+  "value": "ALIENAÇÃO",
+  "texto": "ALIENAÇÃO"
+ },
+ {
+  "value": "APOSENTADORIA",
+  "texto": "APOSENTADORIA"
+ },
+ {
+  "value": "APOSTILA",
+  "texto": "APOSTILA"
+ },
+ {
+  "value": "APOSTILA RETIFICATÓRIA DE PROVENTOS",
+  "texto": "APOSTILA RETIFICATÓRIA DE PROVENTOS"
+ },
+ {
+  "value": "APOSTILA RETIFICATÓRIA DE TAXAÇÃO",
+  "texto": "APOSTILA RETIFICATÓRIA DE TAXAÇÃO"
+ },
+ {
+  "value": "ASS. ADM.-ATO NORMATIVO REV. EN.SÚMULAS ",
+  "texto": "ASS. ADM.-ATO NORMATIVO REV. EN.SÚMULAS"
+ },
+ {
+  "value": "ASSUNTO ADMINISTRATIVO",
+  "texto": "ASSUNTO ADMINISTRATIVO"
+ },
+ {
+  "value": "ASSUNTO ADMINISTRATIVO - ATO NORMATIVO",
+  "texto": "ASSUNTO ADMINISTRATIVO - ATO NORMATIVO"
+ },
+ {
+  "value": "ASSUNTO ADMINISTRATIVO - CÂMARAS",
+  "texto": "ASSUNTO ADMINISTRATIVO - CÂMARAS"
+ },
+ {
+  "value": "ASSUNTO ADMINISTRATIVO - MULTA/APARTADO",
+  "texto": "ASSUNTO ADMINISTRATIVO - MULTA/APARTADO"
+ },
+ {
+  "value": "ASSUNTO ADMINISTRATIVO - PLENO",
+  "texto": "ASSUNTO ADMINISTRATIVO - PLENO"
+ },
+ {
+  "value": "ATO RETIF. CANC./ATOS CONCESSÓRIOS",
+  "texto": "ATO RETIF. CANC./ATOS CONCESSÓRIOS"
+ },
+ {
+  "value": "ATO RETIFICADOR DE APOSENTADORIA",
+  "texto": "ATO RETIFICADOR DE APOSENTADORIA"
+ },
+ {
+  "value": "ATO RETIFICADOR DE APOSENTADORIA",
+  "texto": "ATO RETIFICADOR DE APOSENTADORIA"
+ },
+ {
+  "value": "ATO RETIFICADOR DE PENSÃO",
+  "texto": "ATO RETIFICADOR DE PENSÃO"
+ },
+ {
+  "value": "ATO RETIFICATÓRIO DE APOSENTADORIA",
+  "texto": "ATO RETIFICATÓRIO DE APOSENTADORIA"
+ },
+ {
+  "value": "ATO REVISIONAL APOSENTADORIA EC 70/2012",
+  "texto": "ATO REVISIONAL APOSENTADORIA EC 70/2012"
+ },
+ {
+  "value": "ATO REVISIONAL PENSÃO EC 70/2012",
+  "texto": "ATO REVISIONAL PENSÃO EC 70/2012"
+ },
+ {
+  "value": "ATOS DE ADMISSÃO MOVIMENTAÇÃO DE PESSOAL",
+  "texto": "ATOS DE ADMISSÃO MOVIMENTAÇÃO DE PESSOAL"
+ },
+ {
+  "value": "ATOS DE GESTÃO",
+  "texto": "ATOS DE GESTÃO"
+ },
+ {
+  "value": "ATOS DE IMPROBIDADE ADMINISTRATIVA",
+  "texto": "ATOS DE IMPROBIDADE ADMINISTRATIVA"
+ },
+ {
+  "value": "ATOS DECLARATÓRIOS",
+  "texto": "ATOS DECLARATÓRIOS"
+ },
+ {
+  "value": "ATOS FORMAIS DISPENSA",
+  "texto": "ATOS FORMAIS DISPENSA"
+ },
+ {
+  "value": "AUDITORIA",
+  "texto": "AUDITORIA"
+ },
+ {
+  "value": "AUDITORIA - ATOS DE PESSOAL",
+  "texto": "AUDITORIA - ATOS DE PESSOAL"
+ },
+ {
+  "value": "AUDITORIA FINANCEIRA",
+  "texto": "AUDITORIA FINANCEIRA"
+ },
+ {
+  "value": "AUDITORIA OPERACIONAL",
+  "texto": "AUDITORIA OPERACIONAL"
+ },
+ {
+  "value": "AUTOS SUPLEMENTARES DE APOSENTADORIA",
+  "texto": "AUTOS SUPLEMENTARES DE APOSENTADORIA"
+ },
+ {
+  "value": "BALANCETE MENSAL",
+  "texto": "BALANCETE MENSAL"
+ },
+ {
+  "value": "BALANÇO",
+  "texto": "BALANÇO"
+ },
+ {
+  "value": "BALANÇO GERAL",
+  "texto": "BALANÇO GERAL"
+ },
+ {
+  "value": "BALANÇO GERAL DO ESTADO",
+  "texto": "BALANÇO GERAL DO ESTADO"
+ },
+ {
+  "value": "CANCELAMENTO/ATOS CONCESSÓRIOS",
+  "texto": "CANCELAMENTO/ATOS CONCESSÓRIOS"
+ },
+ {
+  "value": "CANCELAMENTO/ATOS DE PESSOAL",
+  "texto": "CANCELAMENTO/ATOS DE PESSOAL"
+ },
+ {
+  "value": "COMPL. DE BENEFÍCIOS DE PENSÃO",
+  "texto": "COMPL. DE BENEFÍCIOS DE PENSÃO"
+ },
+ {
+  "value": "COMPL. DE PROVENTOS DE APOSENTADORIA",
+  "texto": "COMPL. DE PROVENTOS DE APOSENTADORIA"
+ },
+ {
+  "value": "CONSULTA",
+  "texto": "CONSULTA"
+ },
+ {
+  "value": "CONTRATO",
+  "texto": "CONTRATO"
+ },
+ {
+  "value": "CONTRATO DE OPERAÇÃO DE CRÉDITO",
+  "texto": "CONTRATO DE OPERAÇÃO DE CRÉDITO"
+ },
+ {
+  "value": "CONVÊNIO",
+  "texto": "CONVÊNIO"
+ },
+ {
+  "value": "CONVÊNIO GERAL DE INTENÇÕES",
+  "texto": "CONVÊNIO GERAL DE INTENÇÕES"
+ },
+ {
+  "value": "CRÉDITOS COMPLEMENTARES/SUPLEMENTARES",
+  "texto": "CRÉDITOS COMPLEMENTARES/SUPLEMENTARES"
+ },
+ {
+  "value": "DENÚNCIA",
+  "texto": "DENÚNCIA"
+ },
+ {
+  "value": "DENÚNCIA - ATOS DE ADMISSÃO",
+  "texto": "DENÚNCIA - ATOS DE ADMISSÃO"
+ },
+ {
+  "value": "DEVOLUÇÃO DE CAUÇÃO",
+  "texto": "DEVOLUÇÃO DE CAUÇÃO"
+ },
+ {
+  "value": "DISPENSA DE LICITAÇÃO",
+  "texto": "DISPENSA DE LICITAÇÃO"
+ },
+ {
+  "value": "DISTRATO",
+  "texto": "DISTRATO"
+ },
+ {
+  "value": "DOCUMENTO REVIG  RATIFICAÇÃO DE CONVÊNIO",
+  "texto": "DOCUMENTO REVIG  RATIFICAÇÃO DE CONVÊNIO"
+ },
+ {
+  "value": "EDITAL DE CONCURSO PÚBLICO",
+  "texto": "EDITAL DE CONCURSO PÚBLICO"
+ },
+ {
+  "value": "EDITAL DE CREDENCIAMENTO",
+  "texto": "EDITAL DE CREDENCIAMENTO"
+ },
+ {
+  "value": "EDITAL DE LICITAÇÃO",
+  "texto": "EDITAL DE LICITAÇÃO"
+ },
+ {
+  "value": "EMBARGOS DE DECLARAÇÃO",
+  "texto": "EMBARGOS DE DECLARAÇÃO"
+ },
+ {
+  "value": "EMBARGOS DE DECLARAÇÃO",
+  "texto": "EMBARGOS DE DECLARAÇÃO"
+ },
+ {
+  "value": "EMBARGOS DECLARATÓRIOS",
+  "texto": "EMBARGOS DECLARATÓRIOS"
+ },
+ {
+  "value": "EMBARGOS INFRINGENTES",
+  "texto": "EMBARGOS INFRINGENTES"
+ },
+ {
+  "value": "INCIDENTE DE IMPEDIMENTO/SUSPEIÇÃO",
+  "texto": "INCIDENTE DE IMPEDIMENTO/SUSPEIÇÃO"
+ },
+ {
+  "value": "INCIDENTE DE INCONSTITUCIONALIDADE",
+  "texto": "INCIDENTE DE INCONSTITUCIONALIDADE"
+ },
+ {
+  "value": "INCIDENTE PROCESSUAL",
+  "texto": "INCIDENTE PROCESSUAL"
+ },
+ {
+  "value": "INCIDENTE UNIFORMIZAÇÃO JURISPRUDÊNCIA",
+  "texto": "INCIDENTE UNIFORMIZAÇÃO JURISPRUDÊNCIA"
+ },
+ {
+  "value": "INEXIGIBILIDADE DE LICITAÇÃO",
+  "texto": "INEXIGIBILIDADE DE LICITAÇÃO"
+ },
+ {
+  "value": "INSPEÇÃO ESPECIAL",
+  "texto": "INSPEÇÃO ESPECIAL"
+ },
+ {
+  "value": "INSPEÇÃO EXTRAORDINÁRIA",
+  "texto": "INSPEÇÃO EXTRAORDINÁRIA"
+ },
+ {
+  "value": "INSPEÇÃO EXTRAORDINÁRIA - LICITAÇÃO",
+  "texto": "INSPEÇÃO EXTRAORDINÁRIA - LICITAÇÃO"
+ },
+ {
+  "value": "INSPEÇÃO EXTRAORDINÁRIA-ATOS DE ADMISSÃO",
+  "texto": "INSPEÇÃO EXTRAORDINÁRIA-ATOS DE ADMISSÃO"
+ },
+ {
+  "value": "INSPEÇÃO ORDINÁRIA",
+  "texto": "INSPEÇÃO ORDINÁRIA"
+ },
+ {
+  "value": "INSPEÇÃO ORDINÁRIA - ATOS DE ADMISSÃO",
+  "texto": "INSPEÇÃO ORDINÁRIA - ATOS DE ADMISSÃO"
+ },
+ {
+  "value": "INSPEÇÃO ORDINÁRIA - LICITAÇÃO",
+  "texto": "INSPEÇÃO ORDINÁRIA - LICITAÇÃO"
+ },
+ {
+  "value": "INSPEÇÃO ORDINÁRIA - PARECER COLETIVO",
+  "texto": "INSPEÇÃO ORDINÁRIA - PARECER COLETIVO"
+ },
+ {
+  "value": "INSTRUMENTO PARTICULAR CONFISSÃO DÍVIDA",
+  "texto": "INSTRUMENTO PARTICULAR CONFISSÃO DÍVIDA"
+ },
+ {
+  "value": "INVENTÁRIO",
+  "texto": "INVENTÁRIO"
+ },
+ {
+  "value": "JULG DOS ATOS LEGAIS DESPESAS MUNICIPAIS",
+  "texto": "JULG DOS ATOS LEGAIS DESPESAS MUNICIPAIS"
+ },
+ {
+  "value": "JULGAMENTO DA LEGALIDADE DAS DESPESAS",
+  "texto": "JULGAMENTO DA LEGALIDADE DAS DESPESAS"
+ },
+ {
+  "value": "JULGAMENTO DOS ATOS DE LEGALIDADE",
+  "texto": "JULGAMENTO DOS ATOS DE LEGALIDADE"
+ },
+ {
+  "value": "JULGAMENTO LEGALIDADE  ATOS DESP MUNIC",
+  "texto": "JULGAMENTO LEGALIDADE  ATOS DESP MUNIC"
+ },
+ {
+  "value": "LEILÃO PÚBLICO",
+  "texto": "LEILÃO PÚBLICO"
+ },
+ {
+  "value": "LEVANTAMENTO",
+  "texto": "LEVANTAMENTO"
+ },
+ {
+  "value": "LEVANTAMENTO DE FIANÇA",
+  "texto": "LEVANTAMENTO DE FIANÇA"
+ },
+ {
+  "value": "LICITAÇÃO",
+  "texto": "LICITAÇÃO"
+ },
+ {
+  "value": "MESA DE CONCILIAÇÃO E PREVENÇÃO DE CONFLITOS",
+  "texto": "MESA DE CONCILIAÇÃO E PREVENÇÃO DE CONFLITOS"
+ },
+ {
+  "value": "MONITORAMENTO",
+  "texto": "MONITORAMENTO"
+ },
+ {
+  "value": "MONITORAMENTO DE AUDITORIA OPERACIONAL",
+  "texto": "MONITORAMENTO DE AUDITORIA OPERACIONAL"
+ },
+ {
+  "value": "PARECER PRÉVIO S/ OPERAÇÃO DE CRÉDITO",
+  "texto": "PARECER PRÉVIO S/ OPERAÇÃO DE CRÉDITO"
+ },
+ {
+  "value": "PCTAS ADM. IND. MUN. AUTARQUIAS",
+  "texto": "PCTAS ADM. IND. MUN. AUTARQUIAS"
+ },
+ {
+  "value": "PCTAS ADM. IND. MUN. EMPR. PÚBLICA",
+  "texto": "PCTAS ADM. IND. MUN. EMPR. PÚBLICA"
+ },
+ {
+  "value": "PCTAS ADM. IND. MUN. FUND. PÚBLICA",
+  "texto": "PCTAS ADM. IND. MUN. FUND. PÚBLICA"
+ },
+ {
+  "value": "PCTAS ADM. IND. MUN. INST. PREV. SERV.",
+  "texto": "PCTAS ADM. IND. MUN. INST. PREV. SERV."
+ },
+ {
+  "value": "PCTAS ADM. IND. MUN. SOC. ECON. MISTA",
+  "texto": "PCTAS ADM. IND. MUN. SOC. ECON. MISTA"
+ },
+ {
+  "value": "PCTAS EXECUTIVO MUNICIPAL",
+  "texto": "PCTAS EXECUTIVO MUNICIPAL"
+ },
+ {
+  "value": "PCTAS LEGISLATIVO MUNICIPAL",
+  "texto": "PCTAS LEGISLATIVO MUNICIPAL"
+ },
+ {
+  "value": "PEDIDO DE AUDITORIA",
+  "texto": "PEDIDO DE AUDITORIA"
+ },
+ {
+  "value": "PEDIDO DE INSPEÇÃO",
+  "texto": "PEDIDO DE INSPEÇÃO"
+ },
+ {
+  "value": "PEDIDO DE RECONSIDERAÇÃO",
+  "texto": "PEDIDO DE RECONSIDERAÇÃO"
+ },
+ {
+  "value": "PEDIDO DE REEXAME",
+  "texto": "PEDIDO DE REEXAME"
+ },
+ {
+  "value": "PEDIDO DE RESCISÃO",
+  "texto": "PEDIDO DE RESCISÃO"
+ },
+ {
+  "value": "PENSÃO",
+  "texto": "PENSÃO"
+ },
+ {
+  "value": "PREST. DE CONTAS DO TERMO DE COOPERAÇÃO",
+  "texto": "PREST. DE CONTAS DO TERMO DE COOPERAÇÃO"
+ },
+ {
+  "value": "PREST DE CTAS DE TERMO ADITIVO  CONVÊNIO",
+  "texto": "PREST DE CTAS DE TERMO ADITIVO  CONVÊNIO"
+ },
+ {
+  "value": "PREST DE CTAS DESP VIAGEM  VEIC PRÓPRIO",
+  "texto": "PREST DE CTAS DESP VIAGEM  VEIC PRÓPRIO"
+ },
+ {
+  "value": "PRESTAÇÃO  DE CTAS DESP CARÁTER SECRETO",
+  "texto": "PRESTAÇÃO  DE CTAS DESP CARÁTER SECRETO"
+ },
+ {
+  "value": "PRESTAÇÃO DE CONTAS",
+  "texto": "PRESTAÇÃO DE CONTAS"
+ },
+ {
+  "value": "PRESTAÇÃO DE CONTAS DE ADIANTAMENTO",
+  "texto": "PRESTAÇÃO DE CONTAS DE ADIANTAMENTO"
+ },
+ {
+  "value": "PRESTAÇÃO DE CONTAS DE ALMOXARIFADO",
+  "texto": "PRESTAÇÃO DE CONTAS DE ALMOXARIFADO"
+ },
+ {
+  "value": "PRESTAÇÃO DE CONTAS DE CONTRATO",
+  "texto": "PRESTAÇÃO DE CONTAS DE CONTRATO"
+ },
+ {
+  "value": "PRESTAÇÃO DE CONTAS DE CONVÊNIO",
+  "texto": "PRESTAÇÃO DE CONTAS DE CONVÊNIO"
+ },
+ {
+  "value": "PRESTAÇÃO DE CONTAS DE EXERCÍCIO",
+  "texto": "PRESTAÇÃO DE CONTAS DE EXERCÍCIO"
+ },
+ {
+  "value": "PRESTAÇÃO DE CONTAS DE ORDENADORES",
+  "texto": "PRESTAÇÃO DE CONTAS DE ORDENADORES"
+ },
+ {
+  "value": "PRESTAÇÃO DE CONTAS DIÁRIA DE VIAGEM",
+  "texto": "PRESTAÇÃO DE CONTAS DIÁRIA DE VIAGEM"
+ },
+ {
+  "value": "PRESTAÇÃO DE CONTAS MUNICIPAL",
+  "texto": "PRESTAÇÃO DE CONTAS MUNICIPAL"
+ },
+ {
+  "value": "PRESTAÇÃO DE CTAS  TERMO DE COMPROMISSO",
+  "texto": "PRESTAÇÃO DE CTAS  TERMO DE COMPROMISSO"
+ },
+ {
+  "value": "PRESTAÇÃO DE CTAS AUXÍLIO E SUBVENÇÃO",
+  "texto": "PRESTAÇÃO DE CTAS AUXÍLIO E SUBVENÇÃO"
+ },
+ {
+  "value": "PRESTAÇÃO DE CTAS DE TERMO ADITIVO",
+  "texto": "PRESTAÇÃO DE CTAS DE TERMO ADITIVO"
+ },
+ {
+  "value": "PROCESSO ADMINISTRATIVO",
+  "texto": "PROCESSO ADMINISTRATIVO"
+ },
+ {
+  "value": "PROCESSO ADMINISTRATIVO - TCE",
+  "texto": "PROCESSO ADMINISTRATIVO - TCE"
+ },
+ {
+  "value": "PROCESSO DE LIQUIDAÇÃO",
+  "texto": "PROCESSO DE LIQUIDAÇÃO"
+ },
+ {
+  "value": "PROCESSO LICITATÓRIO INTERNO",
+  "texto": "PROCESSO LICITATÓRIO INTERNO"
+ },
+ {
+  "value": "PROJETO DE ENUNCIADO DE SÚMULA",
+  "texto": "PROJETO DE ENUNCIADO DE SÚMULA"
+ },
+ {
+  "value": "PROJETO DE REVISÃO DE ENUNCIADO SÚMULA",
+  "texto": "PROJETO DE REVISÃO DE ENUNCIADO SÚMULA"
+ },
+ {
+  "value": "PROTOCOLO DE INTENÇÕES",
+  "texto": "PROTOCOLO DE INTENÇÕES"
+ },
+ {
+  "value": "RATIFICAÇÃO DE DISPENSA DE LICITAÇÃO",
+  "texto": "RATIFICAÇÃO DE DISPENSA DE LICITAÇÃO"
+ },
+ {
+  "value": "RECURSO DE RECONSIDERAÇÃO",
+  "texto": "RECURSO DE RECONSIDERAÇÃO"
+ },
+ {
+  "value": "RECURSO DE RESCISÃO",
+  "texto": "RECURSO DE RESCISÃO"
+ },
+ {
+  "value": "RECURSO DE REVISÃO",
+  "texto": "RECURSO DE REVISÃO"
+ },
+ {
+  "value": "RECURSO INOMINADO",
+  "texto": "RECURSO INOMINADO"
+ },
+ {
+  "value": "RECURSO ORDINÁRIO",
+  "texto": "RECURSO ORDINÁRIO"
+ },
+ {
+  "value": "RECURSO ORDINÁRIO - Conf. Art.401 § único",
+  "texto": "RECURSO ORDINÁRIO - Conf. Art.401 § único"
+ },
+ {
+  "value": "REFORMA",
+  "texto": "REFORMA"
+ },
+ {
+  "value": "RELATÓRIO DE AQUISIÇÃO DE VEÍCULOS",
+  "texto": "RELATÓRIO DE AQUISIÇÃO DE VEÍCULOS"
+ },
+ {
+  "value": "RELATÓRIO DE AUDITORIA",
+  "texto": "RELATÓRIO DE AUDITORIA"
+ },
+ {
+  "value": "RELATÓRIO DE AVALIAÇÃO ATUARIAL",
+  "texto": "RELATÓRIO DE AVALIAÇÃO ATUARIAL"
+ },
+ {
+  "value": "RELATORIO DE CPI",
+  "texto": "RELATORIO DE CPI"
+ },
+ {
+  "value": "RELATÓRIO DE INSPEÇÃO",
+  "texto": "RELATÓRIO DE INSPEÇÃO"
+ },
+ {
+  "value": "RELATÓRIO DE INSPEÇÃO - LICITAÇÃO",
+  "texto": "RELATÓRIO DE INSPEÇÃO - LICITAÇÃO"
+ },
+ {
+  "value": "RELATÓRIO DE INSPEÇÃO EXTRAORDINÁRIA",
+  "texto": "RELATÓRIO DE INSPEÇÃO EXTRAORDINÁRIA"
+ },
+ {
+  "value": "RELATÓRIO DE SINDICÂNCIA",
+  "texto": "RELATÓRIO DE SINDICÂNCIA"
+ },
+ {
+  "value": "RENUNCIA DE APOSENTADORIA",
+  "texto": "RENUNCIA DE APOSENTADORIA"
+ },
+ {
+  "value": "REPRESENTAÇÃO",
+  "texto": "REPRESENTAÇÃO"
+ },
+ {
+  "value": "REQUERIMENTO",
+  "texto": "REQUERIMENTO"
+ },
+ {
+  "value": "RESTITUIÇÃO DE CAUÇÃO",
+  "texto": "RESTITUIÇÃO DE CAUÇÃO"
+ },
+ {
+  "value": "RETIFICAÇÃO TERMO ADITIVO  A CONTRATO",
+  "texto": "RETIFICAÇÃO TERMO ADITIVO  A CONTRATO"
+ },
+ {
+  "value": "RETIFICAÇÃO TERMO ADITIVO  A CONVÊNIO",
+  "texto": "RETIFICAÇÃO TERMO ADITIVO  A CONVÊNIO"
+ },
+ {
+  "value": "REVERSÃO DE APOSENTADORIA",
+  "texto": "REVERSÃO DE APOSENTADORIA"
+ },
+ {
+  "value": "REVISÃO DE JULGADO",
+  "texto": "REVISÃO DE JULGADO"
+ },
+ {
+  "value": "REVISÃO DE PROVENTOS",
+  "texto": "REVISÃO DE PROVENTOS"
+ },
+ {
+  "value": "TERMO ADITIVO A CONTRATO",
+  "texto": "TERMO ADITIVO A CONTRATO"
+ },
+ {
+  "value": "TERMO ADITIVO A CONTRATO DE LOCAÇÃO",
+  "texto": "TERMO ADITIVO A CONTRATO DE LOCAÇÃO"
+ },
+ {
+  "value": "TERMO ADITIVO A CONVÊNIO",
+  "texto": "TERMO ADITIVO A CONVÊNIO"
+ },
+ {
+  "value": "TERMO ADITIVO A TERMO DE CESSÃO",
+  "texto": "TERMO ADITIVO A TERMO DE CESSÃO"
+ },
+ {
+  "value": "TERMO ADITIVO A TERMO DE COMPROMISSO",
+  "texto": "TERMO ADITIVO A TERMO DE COMPROMISSO"
+ },
+ {
+  "value": "TERMO ADITIVO A TERMO DE COOPERAÇÃO",
+  "texto": "TERMO ADITIVO A TERMO DE COOPERAÇÃO"
+ },
+ {
+  "value": "TERMO ADITIVO A TERMO DE DISPOSIÇÃO",
+  "texto": "TERMO ADITIVO A TERMO DE DISPOSIÇÃO"
+ },
+ {
+  "value": "TERMO ADITIVO A TERMO DE OUTORGA",
+  "texto": "TERMO ADITIVO A TERMO DE OUTORGA"
+ },
+ {
+  "value": "TERMO ADITIVO AO CONTRATO COMODATO",
+  "texto": "TERMO ADITIVO AO CONTRATO COMODATO"
+ },
+ {
+  "value": "TERMO ADITIVO AO CONVÊNIO SUBSIDIÁRIO",
+  "texto": "TERMO ADITIVO AO CONVÊNIO SUBSIDIÁRIO"
+ },
+ {
+  "value": "TERMO ADITIVO AO TERMO DE ACORDO",
+  "texto": "TERMO ADITIVO AO TERMO DE ACORDO"
+ },
+ {
+  "value": "TERMO ADITIVO AO TERMO DE ADESÃO",
+  "texto": "TERMO ADITIVO AO TERMO DE ADESÃO"
+ },
+ {
+  "value": "TERMO ADITIVO AO TERMO DE AJUSTE",
+  "texto": "TERMO ADITIVO AO TERMO DE AJUSTE"
+ },
+ {
+  "value": "TERMO ADITIVO AO TERMO DE CONCESSÃO",
+  "texto": "TERMO ADITIVO AO TERMO DE CONCESSÃO"
+ },
+ {
+  "value": "TERMO ADITIVO AO TERMO DE CONSÓRCIO",
+  "texto": "TERMO ADITIVO AO TERMO DE CONSÓRCIO"
+ },
+ {
+  "value": "TERMO ADITIVO INST.PART.CONF. DÍVIDA",
+  "texto": "TERMO ADITIVO INST.PART.CONF. DÍVIDA"
+ },
+ {
+  "value": "TERMO DE ACEITE E RATIFICAÇÃO CONTRATO",
+  "texto": "TERMO DE ACEITE E RATIFICAÇÃO CONTRATO"
+ },
+ {
+  "value": "TERMO DE ACORDO",
+  "texto": "TERMO DE ACORDO"
+ },
+ {
+  "value": "TERMO DE ADEQUAÇÃO DE CONDUTA",
+  "texto": "TERMO DE ADEQUAÇÃO DE CONDUTA"
+ },
+ {
+  "value": "TERMO DE ADESÃO",
+  "texto": "TERMO DE ADESÃO"
+ },
+ {
+  "value": "TERMO DE ADITAMENTO",
+  "texto": "TERMO DE ADITAMENTO"
+ },
+ {
+  "value": "TERMO DE AJUDA FINANCEIRA",
+  "texto": "TERMO DE AJUDA FINANCEIRA"
+ },
+ {
+  "value": "TERMO DE AJUSTAMENTO DE GESTÃO",
+  "texto": "TERMO DE AJUSTAMENTO DE GESTÃO"
+ },
+ {
+  "value": "TERMO DE AJUSTE",
+  "texto": "TERMO DE AJUSTE"
+ },
+ {
+  "value": "TERMO DE AJUSTE A CONVÊNIO",
+  "texto": "TERMO DE AJUSTE A CONVÊNIO"
+ },
+ {
+  "value": "TERMO DE APOSTILA A CONTRATO",
+  "texto": "TERMO DE APOSTILA A CONTRATO"
+ },
+ {
+  "value": "TERMO DE AUTORIZAÇÃO",
+  "texto": "TERMO DE AUTORIZAÇÃO"
+ },
+ {
+  "value": "TERMO DE CESSÃO",
+  "texto": "TERMO DE CESSÃO"
+ },
+ {
+  "value": "TERMO DE COMODATO",
+  "texto": "TERMO DE COMODATO"
+ },
+ {
+  "value": "TERMO DE COMPROMISSO",
+  "texto": "TERMO DE COMPROMISSO"
+ },
+ {
+  "value": "TERMO DE CONCESSÃO DIREITO REAL",
+  "texto": "TERMO DE CONCESSÃO DIREITO REAL"
+ },
+ {
+  "value": "TERMO DE CONFISSÃO DE DIVIDA  COMPR",
+  "texto": "TERMO DE CONFISSÃO DE DIVIDA  COMPR"
+ },
+ {
+  "value": "TERMO DE CONSÓRCIO",
+  "texto": "TERMO DE CONSÓRCIO"
+ },
+ {
+  "value": "TERMO DE COOPERAÇÃO",
+  "texto": "TERMO DE COOPERAÇÃO"
+ },
+ {
+  "value": "TERMO DE DISPOSIÇÃO",
+  "texto": "TERMO DE DISPOSIÇÃO"
+ },
+ {
+  "value": "TERMO DE DISTRATO",
+  "texto": "TERMO DE DISTRATO"
+ },
+ {
+  "value": "TERMO DE DOAÇÃO",
+  "texto": "TERMO DE DOAÇÃO"
+ },
+ {
+  "value": "TERMO DE DOAÇÃO E RECEBIMENTO",
+  "texto": "TERMO DE DOAÇÃO E RECEBIMENTO"
+ },
+ {
+  "value": "TERMO DE ENTREGA",
+  "texto": "TERMO DE ENTREGA"
+ },
+ {
+  "value": "TERMO DE IMPLEMENTAÇÃO  A CONVÊNIO",
+  "texto": "TERMO DE IMPLEMENTAÇÃO  A CONVÊNIO"
+ },
+ {
+  "value": "TERMO DE OUTORGA",
+  "texto": "TERMO DE OUTORGA"
+ },
+ {
+  "value": "TERMO DE OUTORGA E ACEITAÇÃO DE AUXÍLLIO",
+  "texto": "TERMO DE OUTORGA E ACEITAÇÃO DE AUXÍLLIO"
+ },
+ {
+  "value": "TERMO DE PARCERIA",
+  "texto": "TERMO DE PARCERIA"
+ },
+ {
+  "value": "TERMO DE PERMISSÃO",
+  "texto": "TERMO DE PERMISSÃO"
+ },
+ {
+  "value": "TERMO DE PERMUTA",
+  "texto": "TERMO DE PERMUTA"
+ },
+ {
+  "value": "TERMO DE PRORROGAÇÃO DE CONTRATO",
+  "texto": "TERMO DE PRORROGAÇÃO DE CONTRATO"
+ },
+ {
+  "value": "TERMO DE QUITAÇÃO FINANC DE CONTRATO",
+  "texto": "TERMO DE QUITAÇÃO FINANC DE CONTRATO"
+ },
+ {
+  "value": "TERMO DE RATEIO DE DESPESA",
+  "texto": "TERMO DE RATEIO DE DESPESA"
+ },
+ {
+  "value": "TERMO DE RENOVAÇÃO",
+  "texto": "TERMO DE RENOVAÇÃO"
+ },
+ {
+  "value": "TERMO DE RENOVAÇÃO E AJUSTE",
+  "texto": "TERMO DE RENOVAÇÃO E AJUSTE"
+ },
+ {
+  "value": "TERMO DE RE_RATIFICAÇÃO",
+  "texto": "TERMO DE RE_RATIFICAÇÃO"
+ },
+ {
+  "value": "TERMO DE RESCISÃO",
+  "texto": "TERMO DE RESCISÃO"
+ },
+ {
+  "value": "TERMO DE RESCISÃO DE CONTRATO",
+  "texto": "TERMO DE RESCISÃO DE CONTRATO"
+ },
+ {
+  "value": "TERMO DE RESCISÃO DE CONVÊNIO",
+  "texto": "TERMO DE RESCISÃO DE CONVÊNIO"
+ },
+ {
+  "value": "TERMO DE RESCISÃO DE TERMO DE CESSÃO",
+  "texto": "TERMO DE RESCISÃO DE TERMO DE CESSÃO"
+ },
+ {
+  "value": "TERMO DE RESCISÃO DO T. DE COMPROMISSO",
+  "texto": "TERMO DE RESCISÃO DO T. DE COMPROMISSO"
+ },
+ {
+  "value": "TERMO DE RESCISÃO DO TERMO DE COOPERAÇÃO",
+  "texto": "TERMO DE RESCISÃO DO TERMO DE COOPERAÇÃO"
+ },
+ {
+  "value": "TERMO DE RESILIÇÃO",
+  "texto": "TERMO DE RESILIÇÃO"
+ },
+ {
+  "value": "TERMO DE RESPONSABILIDADE",
+  "texto": "TERMO DE RESPONSABILIDADE"
+ },
+ {
+  "value": "TERMO DE RETIFICAÇÃO DE CONTRATO",
+  "texto": "TERMO DE RETIFICAÇÃO DE CONTRATO"
+ },
+ {
+  "value": "TERMO DE SUB-ROGAÇÃO",
+  "texto": "TERMO DE SUB-ROGAÇÃO"
+ },
+ {
+  "value": "TERMO DE SUSPENSÃO DE CONTRATO",
+  "texto": "TERMO DE SUSPENSÃO DE CONTRATO"
+ },
+ {
+  "value": "TERMO DE TRANSFERÊNCIA",
+  "texto": "TERMO DE TRANSFERÊNCIA"
+ },
+ {
+  "value": "TÍTULO RETIFICADOR",
+  "texto": "TÍTULO RETIFICADOR"
+ },
+ {
+  "value": "TITULO RETIFICATÓRIO DE REFORMA",
+  "texto": "TITULO RETIFICATÓRIO DE REFORMA"
+ },
+ {
+  "value": "TOMADA DE CONTAS",
+  "texto": "TOMADA DE CONTAS"
+ },
+ {
+  "value": "TOMADA DE CONTAS ESPECIAL",
+  "texto": "TOMADA DE CONTAS ESPECIAL"
+ },
+ {
+  "value": "TOMADA DE CONTAS EXTRAORDINARIA",
+  "texto": "TOMADA DE CONTAS EXTRAORDINARIA"
+ },
+ {
+  "value": "TOMADA DE PREÇOS",
+  "texto": "TOMADA DE PREÇOS"
+ }
+]

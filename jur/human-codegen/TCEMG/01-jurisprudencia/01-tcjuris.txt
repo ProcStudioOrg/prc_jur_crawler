@@ -1,0 +1,313 @@
+# TCE-MG — módulo 01: TCJuris (portal principal de jurisprudência) — BLOQUEADO POR CAPTCHA
+
+## Identificação
+
+```
+Tribunal:               TCE-MG — Tribunal de Contas do Estado de Minas Gerais
+Estado(s):              MG
+Módulo:                 TCJuris — "Jurisprudência do TCE" (versão 3.0)
+Link principal:         https://tcjuris.tce.mg.gov.br/
+Sistema judicial:       Próprio — ASP.NET MVC renderizado no servidor + jQuery 1.8.3
+                        (NÃO é SPA; não há API JSON de resultados)
+Sistema irmão mapeado:  TCE-PR (ASP.NET MVC, ViaJuris) — CLAUDE-TCEPR.md
+Abrangência da base:    deliberações do Pleno, 1ª e 2ª Câmara (controle externo estadual
+                        + municipal). NÃO MEDIDA — a busca nunca respondeu.
+Data do mapeamento:     16/08/2026 (slot 20:00)
+Resultado:              🔴 BLOQUEADO — reCAPTCHA v2 obrigatório e verificado NO SERVIDOR
+```
+
+---
+
+## 0. Passo 0 — o que existe e o que NÃO existe (medido, não presumido)
+
+### Não existe API pública de jurisprudência
+
+| Alvo | Medição |
+|---|---|
+| `api.tce.mg.gov.br` | **NXDOMAIN** |
+| `jurisprudencia.tce.mg.gov.br` | **NXDOMAIN** |
+| `consulta.tce.mg.gov.br` | **NXDOMAIN** |
+| `dadosabertos.tce.mg.gov.br` | **EXISTE** — SPA Angular "DADOS ABERTOS" (ver abaixo) |
+| `/dados-abertos`, `/dadosabertos`, `/api`, `/swagger`, `/v3/api-docs`, `/rest/` em `dadosabertos` | **404 real** (1.000–1.020 bytes, corpo ecoa o path) |
+| `/path-inventado-9z` (controle) | **404 real** — ✅ **sem casca de HTTP 200, sem vhost curinga** |
+
+### O Dados Abertos existe, mas é um portão WSO2 com 401 em tudo
+
+O bundle `main.*.js` do `dadosabertos.tce.mg.gov.br` (942 KB) revela o backend:
+
+```
+https://arabiasaudita.tce.mg.gov.br:8443/TCEMG-proxy-web/publico/wso2amgw/dados-abertos/
+https://arabiasaudita.tce.mg.gov.br:8443/TCEMG-proxy-web/login/captcha.jsf
+```
+
+Medido: `/`, `/api`, `/swagger` **e `/path-inventado-9z`** devolvem **todos HTTP 401 com corpo
+vazio**. 🔴 **O valor inventado responde igual ao válido** — logo o 401 é negação uniforme do
+gateway, e **não se pode concluir dali se existe dataset de jurisprudência**. É a armadilha do
+`api.tjba.jus.br` e do `/api` do TCE-PR (401 `Token inválido`) repetida pela terceira vez.
+⚠️ E o próprio caminho de login do gateway é `captcha.jsf` — há captcha também ali.
+
+### Não há DataJud nem número CNJ
+
+Contas não é Judiciário: não existe alias `api_publica_*` no DataJud e o processo do TCE-MG
+não é CNJ. **Não há plano B** se o portal cair — como em todo o Bloco 5 menos o TCE-RS.
+
+---
+
+## 0b. 🔴 HTTP 000 NÃO É PORTAL FORA DO AR — E AQUI ELE VARIA POR HOST NO MESMO TRIBUNAL
+
+`curl https://tcjuris.tce.mg.gov.br/` devolve **000**, exatamente como o e-SAJ morto do TJBA.
+**Não é queda.** Medindo em camadas (a lição do TJPE):
+
+| Camada | tcjuris / mapjuris / dadosabertos | www.tce.mg.gov.br |
+|---|---|---|
+| DNS | resolve (177.125.90.199 / .206) | resolve |
+| TCP 443 | **abre** | abre |
+| TLS | handshake completa, **cadeia INCOMPLETA** | handshake completa, cadeia **completa** |
+| `openssl` | `Verify return code: 21 (unable to verify the first certificate)` | `Verify return code: 0 (ok)` |
+| HTTP com verificação | **000** | **200** |
+| HTTP com `-k` | **200** (84.655 bytes) | 200 |
+
+🔴 **A NOVIDADE EM RELAÇÃO AO TJPE: o defeito é POR HOST, dentro do MESMO tribunal e com o
+MESMO certificado curinga.** É o mesmo `*.tce.mg.gov.br` (Sectigo, emitido 22/06/2026) nos
+quatro hosts; `www` manda o intermediário e `tcjuris`/`mapjuris`/`dadosabertos` **não mandam**.
+Quem medisse só o `www` concluiria "o TLS do TCE-MG está bom" e o crawler quebraria só no host
+que importa. **Meça o TLS do host do módulo, não o do institucional.**
+
+✅ **A correção é fornecer o intermediário, NÃO desligar a verificação** (a receita do TJPE):
+
+```
+AIA do certificado folha:
+  http://crt.sectigo.com/SectigoPublicServerAuthenticationCAOVR36.crt
+  (CN = Sectigo Public Server Authentication CA OV R36)
+
+Provado:  curl --cacert <raízes + intermediário>  →  HTTP 200
+          curl com as raízes do sistema sozinhas  →  HTTP 000
+```
+
+O navegador não sofre porque busca o intermediário sozinho pelo AIA; `curl` e Node não.
+
+---
+
+## 1. Busca principal (query) — `txtAssunto`
+
+Campo de texto livre, com autocomplete de tesauro (`POST /Home/BuscarTesauro`, a cada tecla).
+
+```html
+<input type="hidden" id="txtAssuntoOriginal" name="txtAssuntoOriginal" />
+<input tabindex="14" type="text" id="txtAssunto" autocomplete="off"
+       onkeyup="ShowHideRestricoes(this.value);" onblur="ShowHideRestricoes(this.value);"
+       name="txtAssunto" />
+```
+
+🔴 **O TERMO SOZINHO NÃO BUSCA — é preciso marcar ao menos uma "restrição".** Se `txtAssunto`
+está preenchido e nenhum `chxRestricoes` está marcado, `BuscaRegistros()` mostra
+*"Favor informar no mínimo uma restrição de pesquisa."* e **retorna sem emitir requisição
+nenhuma**. Foi o que aconteceu na primeira tentativa deste mapeamento: a busca "rodou" e não
+houve XHR. ⚠️ E os três checkboxes nascem `disabled`: só habilitam no **`keyup`** do campo —
+`page.fill()` do Playwright não os habilita, `page.type()` sim.
+
+🔴 **O PORTAL TRANSLITERA CARACTERES ANTES DE ENVIAR — contrato inédito no repo.** Em
+`Decisoes.js`, antes do POST:
+
+| Caractere digitado | Vai no fio como |
+|---|---|
+| `"` (aspas) | `◕` (U+25D5) |
+| `%` | `☻` (U+263B) |
+| `(` | `↑` (U+2191) |
+| `)` | `↓` (U+2193) |
+
+Um crawler que mandasse aspas ou parênteses crus **não estaria falando a mesma língua que o
+formulário**. Nenhum outro tribunal do repo faz isso.
+
+⚠️ Há ainda um validador próprio de stemming: `POST /Home/VerificaStem` com `assunto=<termo>`
+→ `{"sucesso":false}` quando o termo é aceitável (`sucesso:true` traz mensagem de recusa).
+
+### Operadores anunciados (NÃO TESTADOS — a busca nunca respondeu)
+
+A tela imprime a legenda: **`E`   `Ou`   `%`   `Não`   `(`   `)`**. ⚠️ O `%` aparecer na
+legenda combina com a transliteração `%` → `☻`, sugerindo que ele é o **curinga** do portal.
+**Nada disso foi medido** — o repo já pegou legenda mentirosa em TJPI, TJBA e TCE-PR.
+
+---
+
+## 2. Restrições de pesquisa — `chxRestricoes` (obrigatório ≥ 1)
+
+```html
+<input tabindex="19" id="chkEmenta"    name="chxRestricoes" type="checkbox" value="DSC_EMENTA" />
+<input tabindex="20" id="chkNotaTaq"   name="chxRestricoes" type="checkbox" value="NT" />
+<input tabindex="21" id="chkIndexacao" name="chxRestricoes" type="checkbox" value="DSC_INDEX_BIBLI" />
+```
+
+Rótulos na tela: **Ementa** / **Inteiro teor** / **Indexação**. ✅ Bom sinal: existe campo de
+**ementa** (`DSC_EMENTA`) e de **inteiro teor** (`NT` = nota taquigráfica) — mas nada foi
+conferido, porque nenhum resultado voltou.
+
+---
+
+## 3. Tipo de decisão — `chxResDecisao` (obrigatório ≥ 1) — a desambiguação do tribunal
+
+```html
+<input tabindex="34" id="chkColegiado"   name="chxResDecisao" type="checkbox" value="COL" />
+<input tabindex="35" id="chkMonocratico" name="chxResDecisao" type="checkbox" value="MONO" />
+```
+
+`chkColegiado` já vem **marcado** por default. Sem nenhum dos dois: *"Informe a decisão."*
+⚠️ **Este é o eixo de desambiguação do TCE-MG** (colegiado × monocrática), não Juizado ×
+Justiça Comum — que não existe em tribunal de contas. **Não foi provado por contagem.**
+
+---
+
+## 4. Combos — enumerados no browser (AJAX: `POST /Home/BuscaDadosDropDowns`)
+
+Todos vinham vazios no HTML estático; foram capturados já populados no Playwright e salvos:
+
+| Combo | `name` | Opções | Arquivo |
+|---|---|---|---|
+| Colegiado | `cbxColegiado` | 4 (Selecione + **PLENO 939**, **PRIMEIRA CÂMARA 937**, **SEGUNDA CÂMARA 938**) | `cbxColegiado.json` |
+| Relator | `cbxRelator` | 55 | `cbxRelator.json` |
+| Natureza | `grupo_natureza` (multi) | 223 | `grupo_natureza.json` |
+| Registros por página | `cbxRegsPaginasTc` | 4 | `cbxRegsPaginasTc.json` |
+
+🔴 **A ARMADILHA DO SELECT DECORATIVO PODE ESTAR AQUI — e não foi possível decidir.** O
+`cbxRelator` aparece **DUAS VEZES no mesmo HTML com o mesmo `id`**: uma como `<input>`
+typeahead e outra como `<select>` de 55 opções. Em eJURIS/TJRJ e TCE-PR o `<select>` era
+decorativo e quem filtrava era o hidden. **Qual dos dois o servidor lê não foi medido** —
+exige busca respondendo. Registre como não decidido.
+
+⚠️ Os combos `cbxProcurador`, `cbxMunicipio` e `cbxAuditor` são referenciados por
+`BuscaRegistros()` mas **não existem** no DOM da aba Decisões — provavelmente são de outra
+aba. **Existe `cbxMunicipio` no código**, o que importa para a ressalva do Bloco 5 (ver §8).
+
+---
+
+## 5. Datas — dois eixos reais
+
+```html
+<input id="dp11"     name="dp11"     data-date-format="dd/mm/yyyy" />  <!-- sessão, início -->
+<input id="dp22"     name="dp22"     data-date-format="dd/mm/yyyy" />  <!-- sessão, fim -->
+<input id="dpPub11"  name="dpPub11"  data-date-format="dd/mm/yyyy" />  <!-- publicação, início -->
+<input id="dpPub22"  name="dpPub22"  data-date-format="dd/mm/yyyy" />  <!-- publicação, fim -->
+```
+
+✅ **Dois eixos distintos: data da SESSÃO e data da PUBLICAÇÃO** — como TCE-SP, e diferente
+de TCE-RS (só sessão) e TCE-RJ (só voto). Formato **DD/MM/YYYY**.
+
+⚠️ **Meia janela é recusada no CLIENTE**: preencher só uma ponta dá *"Favor preencher a data
+inicial e a data final…"* e a busca não sai. Isso é validação de tela — **não prova nada
+sobre o servidor**, que é onde TJPI/TJRR/TCE-PR falharam. Não medido.
+Validadores próprios: `POST /Home/ValidarData/` e `POST /Home/DataMaior/`.
+
+---
+
+## 6. Número do processo — `txtNumero` (maxlength 10)
+
+```html
+<input tabindex="24" type="text" id="txtNumero" name="txtNumero"
+       placeholder="Número do processo" maxlength="10" />
+```
+
+🔴 **PREENCHER O NÚMERO APAGA TODOS OS OUTROS FILTROS — e força monocrática.** Primeira linha
+de `BuscaRegistros()`:
+
+```js
+if (txtNumeroProcessoCompare != '') {
+    LimparFormulario();                          // limpa TUDO
+    $('#txtNumero').val(txtNumeroProcessoCompare);
+    $('#chkMonocratico').attr('checked', true);  // e marca monocrática
+}
+```
+
+⚠️ Consequência para o futuro `Checker`: consulta por número **não compõe com filtro nenhum**,
+e o resultado vem enviesado para monocrática. `maxlength=10` também diz que o número **não é
+CNJ** (que tem 20 dígitos) — é a numeração própria do Tribunal.
+
+---
+
+## 7. 🔴 O BLOQUEIO — reCAPTCHA v2, e ele é VERIFICADO NO SERVIDOR
+
+```
+sitekey: 6Lf11kAUAAAAAPYx2uvLlBtMuTXz7JD5ovQYOeSg   (reCAPTCHA v2 "checkbox", size=normal)
+```
+
+Fluxo real, lido em `Decisoes.js` e confirmado ao vivo: antes de montar o grid,
+`BuscaRegistros()` chama `POST /Home/VerificarCaptchaPreenchido`; se a resposta for falsy,
+abre o modal e **não busca**.
+
+### A prova de que o portão é do SERVIDOR, não da tela
+
+A lição do TJBA é que captcha protege a tela e não o endpoint, e a do TJSE é que
+`grep turnstile` não prova nada — **o que prova é mandar a requisição e ler a resposta**.
+Foi o que se fez, em três medições:
+
+| Teste | Resultado |
+|---|---|
+| `POST /Home/Busca` cru (sem sessão), com todos os campos do formulário | HTTP **200** com **5.399 bytes** = página *"Ocorreu um erro..."*, **não** o grid |
+| `POST /Home/Busca` com **sessão viva do Playwright** (`ASP.NET_SessionId` real), captcha **não** resolvido, disparado de dentro da própria página | HTTP **200**, **5.392 bytes**, mesma página de erro |
+| `POST /Home/VerificarCaptchaPreenchido` com a mesma sessão viva | HTTP 200 com **corpo vazio** (falsy) |
+| Busca no navegador, com termo e restrição corretos | modal **"Favor Informar o captcha"**, `grid1` com **0 bytes** |
+
+🔴 **Ou seja: sessão válida não destrava.** O flag de captcha é de servidor, e sem ele
+`/Home/Busca` devolve página de erro **com HTTP 200** — mais uma casca de 200, e das ruins,
+porque um crawler que só olhasse `res.ok` gravaria "busca respondeu".
+
+⚠️ **E há um WAF F5 BIG-IP por cima**: `POST /Home/VerificarCaptchaPreenchido` **de fora do
+navegador** devolve **HTTP 403 "Request Rejected — Your Support ID is 14225693770523235543"**,
+enquanto de dentro da página devolve 200. Cookies `BIGipServer*` e `TS*` confirmam o F5.
+São **dois** mecanismos distintos: o WAF (que reage ao cliente) e o captcha (que reage à
+ausência de token). Não confunda um com o outro ao diagnosticar.
+
+### Qual dos quatro tipos de bloqueio é este
+
+O repo já catalogou: script bloqueado (TJPB), negação na borda sem challenge (TJRN), desafio
+interativo visível (STJ), widget que roda e não emite token (TJSE). **Este é um quinto caso
+diferente: reCAPTCHA v2 de checkbox que carrega normalmente e é conferido por FLAG DE SESSÃO
+no servidor.** Não foi testado se ele passaria com IP residencial — mas, ao contrário do
+Turnstile do TJSE, aqui **nem se chega a pedir token**: o servidor simplesmente nega a busca
+enquanto a sessão não estiver marcada como aprovada. Este repo não resolve captcha.
+
+---
+
+## 8. Ressalva de escopo do Bloco 5 — NÃO DECIDIDA
+
+Minas Gerais **não tem TCM** (o TCM-MG nunca existiu; os municípios mineiros são fiscalizados
+pelo próprio TCE-MG). A prova barata do TCE-PR/TCE-RJ é **contar o combo de município** —
+`cbxMunicipio` é referenciado em `BuscaRegistros()` mas **não está no DOM da aba Decisões**,
+então **a contagem não foi feita**. Registrado como **não medido**, não como confirmado.
+
+---
+
+## 9. Contrato do POST (capturado, inútil sem captcha)
+
+```
+POST https://tcjuris.tce.mg.gov.br/Home/Busca
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+txtAssunto=<termo, com " % ( ) transliterados>
+&txtAssuntoOriginal=<idem>
+&chxRestricoes=DSC_EMENTA|NT|DSC_INDEX_BIBLI     (≥1, repetível)
+&chxResDecisao=COL|MONO                          (≥1, repetível)
+&dp11=&dp22=&dpPub11=&dpPub22=                   (DD/MM/YYYY, aos pares)
+&cbxColegiado=&cbxRelator=&txtPartes=&grupo_natureza=
+&txtNumero=
+&cbxRegsPaginasTc=10
+&paginaAtual=1&qtdPorPagina=10&campoOrdenar=DATA_SESSAO&sorter=asc
+&contadorSubmits=<n>
+```
+
+Colunas que o grid pediria (de `Decisoes.js`) — é o schema esperado do card:
+`NUMERO_PROCESSO`, `DATA_SESSAO`, `DATA_PUBLICACAO`, `NATUREZA`, `COLEGIADO`, `RELATOR`,
+`DSC_EMENTA`. ✅ Sugere ementa no próprio resultado — **não confirmado**.
+
+⚠️ Curiosidade com custo de privacidade: `SalvarTermos()` manda o termo pesquisado **e o IP
+do usuário** (obtido em `https://ipinfo.io`) para `POST /Home/AdicionarTermoPesquisa`.
+
+---
+
+## 10. Prints
+
+| Arquivo | O que mostra |
+|---|---|
+| `01.01-tela-inicial.png` | TCJuris, aba Decisões, formulário inteiro |
+| `01.02-form-preenchido.png` | termo digitado + restrição Ementa marcada |
+| `02.01-resultados.png` | **o modal "Favor Informar o captcha"** — o bloqueio, não resultados |
+| `00.01-home-institucional.png` | `www.tce.mg.gov.br`, de onde saiu o link (não foi chutado) |

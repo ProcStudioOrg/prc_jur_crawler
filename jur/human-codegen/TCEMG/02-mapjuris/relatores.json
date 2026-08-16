@@ -1,0 +1,387 @@
+[
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": true,
+  "Text": "<Selecione>",
+  "Value": ""
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ALOYZIO ALVES DA COSTA",
+  "Value": "16"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AUDITOR EDSON ARGER",
+  "Value": "48"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AUDITOR GILBERTO DINIZ",
+  "Value": "75"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CLAUDIO SALLES",
+  "Value": "10"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. ADRIENE ANDRADE",
+  "Value": "77"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. AGOSTINHO PATRUS",
+  "Value": "65"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. ALENCAR DA SILVEIRA JR",
+  "Value": "101"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. ANTÔNIO CARLOS ANDRADA",
+  "Value": "72"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. CLÁUDIO TERRÃO",
+  "Value": "87"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. DURVAL ANGELO",
+  "Value": "44"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. EDUARDO CARONE COSTA",
+  "Value": "52"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. ELMO BRAZ SOARES",
+  "Value": "53"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. EM EXERC. ADONIAS MONTEIRO",
+  "Value": "64"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. EM EXERC. GILBERTO DINIZ",
+  "Value": "83"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. EM EXERC. HAMILTON COELHO",
+  "Value": "98"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. EM EXERC. HAMILTON COELHO",
+  "Value": "43"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. EM EXERC. LICURGO MOURÃO",
+  "Value": "84"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. EM EXERC. TELMO PASSARELI",
+  "Value": "100"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. EM SUBSTITUIÇÃO LICURGO MOURÃO",
+  "Value": "38"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. GILBERTO DINIZ",
+  "Value": "69"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. JOSÉ ALVES VIANA",
+  "Value": "99"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. MAURI TORRES",
+  "Value": "89"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. MOURA E CASTRO",
+  "Value": "5"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. SEBASTIÃO HELVECIO",
+  "Value": "85"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. SIMÃO PEDRO TOLEDO",
+  "Value": "49"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. SUBST. ADONIAS MONTEIRO",
+  "Value": "60"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. SUBST. HAMILTON COELHO",
+  "Value": "79"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. SUBST. LICURGO MOURÃO",
+  "Value": "76"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. SUBST. TELMO PASSARELI",
+  "Value": "42"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. SUBST. VICTOR MEYER",
+  "Value": "61"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONS. WANDERLEY ÁVILA",
+  "Value": "71"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "DARIO FARIA TAVARES",
+  "Value": "18"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "EXPEDITO DE FARIA TAVARES",
+  "Value": "14"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "FABIO COSTA",
+  "Value": "19"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "FARIA TAVARES",
+  "Value": "45"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "FREDERICO PARDINI",
+  "Value": "54"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "FUED DIB",
+  "Value": "4"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "HELVECIO TAMM DE LIMA",
+  "Value": "41"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "HÉRCULES VENTURA",
+  "Value": "8"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "JOSE FERRAZ",
+  "Value": "20"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "LAURO GUERRA",
+  "Value": "47"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "LOURIVAL BRASIL FILHO",
+  "Value": "15"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "LUIZ BACCARINI",
+  "Value": "3"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "LUIZ DOMINGOS DA SILVA",
+  "Value": "46"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "MANOEL TAVEIRA DE SOUZA",
+  "Value": "12"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "MAURICIO ALEIXO",
+  "Value": "1"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "MURTA LAGES",
+  "Value": "6"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "NELSON BOECHAT CUNHA",
+  "Value": "40"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "NILSON GONTIJO",
+  "Value": "2"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "OTELINO FERREIRA SOL",
+  "Value": "11"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PAULO ABERCIO B OLIVEIRA",
+  "Value": "13"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESIDENTE",
+  "Value": "59"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "SYLO COSTA",
+  "Value": "7"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "VIVALDI W MOREIRA",
+  "Value": "17"
+ }
+]

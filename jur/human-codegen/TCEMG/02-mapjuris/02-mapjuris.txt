@@ -1,0 +1,181 @@
+# TCE-MG — módulo 02: MapJuris (Consultas ao TCE) — A PORTA ABERTA, sem captcha
+
+## Identificação
+
+```
+Tribunal:               TCE-MG — Tribunal de Contas do Estado de Minas Gerais
+Estado(s):              MG
+Módulo:                 MapJuris Consultas (versão 3.1) — seção "Textual / Dados do Processo"
+Link principal:         https://mapjuris.tce.mg.gov.br/TextualDadosProcesso
+Sistema judicial:       Próprio — ASP.NET MVC + jQuery 3.6 (tema Metronic); resultado é
+                        PARTIAL HTML, não JSON
+Módulo irmão:           TCJuris (01-jurisprudencia) — MESMO tribunal, MAS COM CAPTCHA
+Abrangência da base:    excertos/íntegras de deliberações + teses/súmulas. NÃO MEDIDA.
+Data do mapeamento:     16/08/2026 (slot 20:00)
+Resultado:              🟡 PARCIAL — busca responde sem captcha; falta o crawler
+```
+
+---
+
+## 0. 🔴 A LIÇÃO DO DIA: O PORTAL DE JURISPRUDÊNCIA BLOQUEADO NÃO ERA A ÚNICA PORTA
+
+O alvo óbvio — e o que a home institucional rotula **"Jurisprudência do TCE"** — é o TCJuris,
+e ele está atrás de reCAPTCHA v2 conferido no servidor (ver `01-tcjuris.txt`). Marcar o
+TCE-MG como `bloqueado` ali seria **errado**: o mesmo tribunal publica um segundo portal,
+linkado da mesma home como **"Consultas ao TCE - MapJuris"**, que responde busca textual
+**sem captcha nenhum**.
+
+```
+grep -ci "recaptcha|sitekey|captcha"  →  TCJuris: presente e obrigatório
+                                          MapJuris: 0 ocorrências
+```
+
+É a lição do TJBA ("o e-SAJ morto não era a porta") repetida com uma variação nova: aqui a
+porta fechada e a porta aberta são **dois portais do mesmo órgão, ambos oficiais, ambos
+linkados na mesma home** — e o que carrega o nome "Jurisprudência" é justamente o fechado.
+**Enumere TODOS os módulos antes de declarar bloqueado.**
+
+⚠️ Mesmo defeito de TLS do TCJuris: `mapjuris.tce.mg.gov.br` **omite o intermediário** e dá
+HTTP 000 com verificação ligada. Mesma correção (ver `01-tcjuris.txt` §0b).
+
+---
+
+## 1. Sessão obrigatória — e o 302 que separa rota real de rota inexistente
+
+🔴 **Ir direto em `/TextualDadosProcesso` sem sessão NÃO funciona:**
+
+| Path | Resposta |
+|---|---|
+| `/TextualDadosProcesso` (sem cookie) | **302 → `/Login/LogOff`** e, seguindo, cai na home |
+| `/TesesSumulas` (rota que não existe) | 302 → `/Home/ErrorStatus/404?aspxerrorpath=…` |
+| `/path-inventado-9z` (controle) | 302 → `/Home/ErrorStatus/404?aspxerrorpath=…` |
+
+✅ O controle do valor inventado **funciona aqui** e é o que dá sentido ao 302: rota real sem
+sessão vai para `LogOff`, rota inexistente vai para `ErrorStatus/404`. **Os dois são 302 — só
+o `Location` distingue.** Quem olhasse só o status classificaria as duas como a mesma coisa.
+
+**Receita medida:** `GET /` (pega `ASP.NET_SessionId`) → `GET /TextualDadosProcesso` → daí as
+requisições de busca funcionam. Confirmado fora do browser, com cookie jar do `curl`.
+
+---
+
+## 2. Formulário — `TextualDadosProcesso`
+
+```html
+<input type="checkbox" id="excerto"       name="criterioPesquisa" />  <!-- "Consulta"     -->
+<input type="checkbox" id="tituloResenha" name="criterioPesquisa" />  <!-- "Tese/Súmula"  -->
+<input type="checkbox" id="indexacao"     name="criterioPesquisa" />  <!-- "Indexação"    -->
+<input type="text"     id="txtNumeroProcesso"  name="txtNumeroProcesso" />
+<select                id="ddRelator" />                              <!-- 55 opções      -->
+<input type="text"     id="txtDataSessaoInicio" name="txtDataSessaoInicio" />
+<input type="text"     id="txtDataSessaoFim"    name="txtDataSessaoFim" />
+<textarea              id="txtaTermosPesquisa"  name="txtaTermosPesquisa"></textarea>
+<input type="button" value="Pesquisar" onclick="Pesquisar();" />
+```
+
+⚠️ **`page.fill()` do Playwright falha no `txtaTermosPesquisa` se a página for aberta
+diretamente** — sem sessão o elemento nem existe. Passe pela home primeiro.
+
+Combos vêm por AJAX, já enumerados e salvos:
+
+| Combo | Endpoint | Opções | Arquivo |
+|---|---|---|---|
+| Relator | `POST /TextualDadosProcesso/RetornarRelatores` | 55 (com **id numérico**: `ALOYZIO ALVES DA COSTA` = 16) | `relatores.json` |
+| Natureza | `POST /TextualDadosProcesso/RetornarNaturezas` | 223 | `naturezas.json` |
+
+⚠️ Note a diferença com o TCJuris: lá `cbxRelator` usa o **nome** como `value`; aqui
+`ddRelator` usa **id numérico** e o contrato manda **os dois** (`codRelator` + `nomeRelator`).
+
+---
+
+## 3. Contrato da busca — MEDIDO FORA DO BROWSER, funciona
+
+```
+POST https://mapjuris.tce.mg.gov.br/TextualDadosProcesso/_ListarExcertoIntegra
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Cookie: ASP.NET_SessionId=<da home>
+
+tipoPesquisa=IndexExcerto|EXCERTO|INDEXACAO
+&termosPesquisa=<termo>
+&numeroProcesso=
+&codRelator=            (id numérico do combo)
+&dataSessaoInicio=DD/MM/YYYY
+&dataSessaoFim=DD/MM/YYYY
+&nomeRelator=           (texto do option selecionado)
+```
+
+Segunda busca, para teses/súmulas:
+
+```
+POST /TextualDadosProcesso/_ListarTituloResenha     com apenas  termosPesquisa=<termo>
+```
+
+**A resposta é HTML parcial**, não JSON — e vem **sem as linhas**: o `<div
+id="gridContainerExcertoIntegra">` chega vazio e as linhas são carregadas por um segundo
+salto, `TextualDadosProcesso/ConsultarInformacaoExcertoIntegra` (via `GridHelper.GerarGrid`).
+🔴 **Esse segundo salto NÃO foi mapeado** — é a primeira coisa a fazer no próximo slot.
+
+---
+
+## 4. Medições feitas
+
+### ✅ A busca responde sem captcha, e o zero tem sintoma visível
+
+| Requisição | HTTP | Bytes | Tempo |
+|---|---|---|---|
+| `licitação`, sessão 01/06/2026–30/06/2026, `tipoPesquisa=IndexExcerto` | 200 | **9.035** | 1,7 s |
+| idem, `tipoPesquisa=EXCERTO` | 200 | **9.035** | 1,4 s |
+| idem, `tipoPesquisa=INDEXACAO` | 200 | **9.035** | 1,1 s |
+| idem, `tipoPesquisa=INVENTADO9Z` (controle) | 200 | **1.656** | — |
+| `nepotismo`, 01/01/2026–30/06/2026 | 200 | 1.656 | 8,8 s |
+
+O corpo de 1.656 bytes contém literalmente **"Nenhum registro encontrado."** — ✅ zero é
+**explícito**, não formulário vazio. E o valor inventado cai nesse zero, o que dá sintoma
+visível em vez de silêncio.
+
+### 🔴 OS TRÊS `tipoPesquisa` VÁLIDOS DEVOLVEM RESPOSTA BYTE A BYTE IDÊNTICA
+
+`md5` igual (`0a2438aa5c47…`) nos três. A tela oferece três checkboxes — **Consulta**,
+**Tese/Súmula**, **Indexação** — e entre os valores **válidos** o resultado não muda; só o
+valor **inventado** muda (para zero). É a invariante do repo ("contagem igual = filtro
+ignorado") disparando. ⚠️ **Não está decidido** se o controlador ignora o parâmetro ou se
+esta janela de datas é pequena demais para diferenciar — falta repetir com janela maior e com
+o segundo salto do grid, que é quem traz as linhas.
+
+### 🔴 TERMO COMUM SEM JANELA DE DATA NÃO RESPONDE EM 3 MINUTOS
+
+`licitação` **sem filtro de data** foi abortado em **180 s sem resposta**; o mesmo termo com
+janela de um mês responde em **1,7 s**. Não é erro — é custo. **O crawler vai precisar fatiar
+por data obrigatoriamente**, e um `-m` ingênuo sem recorte trava. Isso também explica por que
+a busca no browser parecia "não responder": ela estava só lenta.
+
+### Não medido (o timebox acabou)
+
+Paginação, total (exato × saturado), anatomia do card, ementa × excerto, inteiro teor,
+permalink, operadores, filtro de relator por contagem, distribuição por ano, `_ListarTituloResenha`.
+
+---
+
+## 5. Prints
+
+| Arquivo | O que mostra |
+|---|---|
+| `01.01-mapjuris-home.png` | home do MapJuris, com as 5 seções |
+| `01.02-textual-dados-processo.png` | formulário Textual / Dados do Processo |
+| `01.03-form-preenchido.png` | termo + critério marcados |
+| `02.01-resultados.png` | estado da tela após `Pesquisar()` |
+
+---
+
+## 6. O que o próximo slot deve fazer (retomar daqui, não remapear)
+
+1. Mapear `ConsultarInformacaoExcertoIntegra` (o GridHelper) — é ele que traz as linhas.
+   Sem isso não há card, nem total, nem paginação.
+2. Decidir o `tipoPesquisa`: repetir os três com janela grande, comparando **contagem de
+   linhas**, não bytes da casca.
+3. Rodar a skill `browser-post-search` (Fase 3b) — não foi executada.
+4. Só então escrever `src/TCEMG{Navigator,Crawler,Checker,Testes}.js`. O Navigator já nasce
+   com duas obrigações medidas: **embutir o intermediário Sectigo** (senão HTTP 000) e
+   **abrir sessão pela home** (senão 302 → LogOff).
+5. Conferir a ressalva do Bloco 5: MG **não tem TCM**, mas isso ainda **não foi provado por
+   medição** neste portal (não há combo de município na tela mapeada).

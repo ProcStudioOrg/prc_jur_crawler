@@ -1,0 +1,1577 @@
+[
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": true,
+  "Text": "<Selecione>",
+  "Value": ""
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ACOMPANHAMENTO",
+  "Value": "1076"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ACOMPANHAMENTO DA GESTÃO FISCAL",
+  "Value": "1196"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ACORDO",
+  "Value": "1"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ACORDO DE COOPERAÇÃO",
+  "Value": "295"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ADENDO A TERMO ADITIVO",
+  "Value": "116"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ADENDO AO ACORDO",
+  "Value": "117"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ADENDO AO CONTRATO",
+  "Value": "2"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AGRAVO",
+  "Value": "119"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AGRAVO DE INSTRUMENTO",
+  "Value": "3"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AJUSTE",
+  "Value": "357"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AJUSTE DE IMPLEMENTAÇÃO",
+  "Value": "120"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ALIENAÇÃO",
+  "Value": "4"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "APOSENTADORIA",
+  "Value": "123"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "APOSTILA",
+  "Value": "10"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "APOSTILA RETIFICATÓRIA DE PROVENTOS",
+  "Value": "761"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "APOSTILA RETIFICATÓRIA DE TAXAÇÃO",
+  "Value": "861"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AQUISIÇÃO DE VEÍCULOS",
+  "Value": "272"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ASS. ADM.-ATO NORMATIVO REV. EN.SÚMULAS ",
+  "Value": "1116"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ASSUNTO ADMINISTRATIVO",
+  "Value": "982"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ASSUNTO ADMINISTRATIVO - ATO NORMATIVO",
+  "Value": "955"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ASSUNTO ADMINISTRATIVO - CÂMARAS",
+  "Value": "941"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ASSUNTO ADMINISTRATIVO - MULTA/APARTADO",
+  "Value": "7"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ASSUNTO ADMINISTRATIVO - PLENO",
+  "Value": "11"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATO RETIF. CANC./ATOS CONCESSÓRIOS",
+  "Value": "1198"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATO RETIFICADOR DE APOSENTADORIA",
+  "Value": "500"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATO RETIFICADOR DE APOSENTADORIA",
+  "Value": "503"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATO RETIFICADOR DE PENSÃO",
+  "Value": "502"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATO RETIFICATÓRIO DE APOSENTADORIA",
+  "Value": "271"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATO REVISIONAL APOSENTADORIA EC 70/2012",
+  "Value": "956"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATO REVISIONAL PENSÃO EC 70/2012",
+  "Value": "957"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATOS DE ADMISSÃO MOVIMENTAÇÃO DE PESSOAL",
+  "Value": "12"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATOS DE GESTÃO",
+  "Value": "460"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATOS DE IMPROBIDADE ADMINISTRATIVA",
+  "Value": "420"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATOS DECLARATÓRIOS",
+  "Value": "245"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "ATOS FORMAIS DISPENSA",
+  "Value": "124"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AUDITORIA",
+  "Value": "270"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AUDITORIA - ATOS DE PESSOAL",
+  "Value": "918"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AUDITORIA FINANCEIRA",
+  "Value": "1197"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AUDITORIA OPERACIONAL",
+  "Value": "1075"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "AUTOS SUPLEMENTARES DE APOSENTADORIA",
+  "Value": "915"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "BALANCETE MENSAL",
+  "Value": "14"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "BALANÇO",
+  "Value": "583"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "BALANÇO GERAL",
+  "Value": "15"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "BALANÇO GERAL DO ESTADO",
+  "Value": "16"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CANCELAMENTO/ATOS CONCESSÓRIOS",
+  "Value": "1137"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CANCELAMENTO/ATOS DE PESSOAL",
+  "Value": "981"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "COMPL. DE BENEFÍCIOS DE PENSÃO",
+  "Value": "1017"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "COMPL. DE PROVENTOS DE APOSENTADORIA",
+  "Value": "916"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONSULTA",
+  "Value": "17"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONTRATO",
+  "Value": "18"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONTRATO DE OPERAÇÃO DE CRÉDITO",
+  "Value": "233"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONVÊNIO",
+  "Value": "19"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CONVÊNIO GERAL DE INTENÇÕES",
+  "Value": "316"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "CRÉDITOS COMPLEMENTARES/SUPLEMENTARES",
+  "Value": "125"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "DENÚNCIA",
+  "Value": "20"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "DENÚNCIA - ATOS DE ADMISSÃO",
+  "Value": "943"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "DEVOLUÇÃO DE CAUÇÃO",
+  "Value": "21"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "DISPENSA DE LICITAÇÃO",
+  "Value": "22"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "DISTRATO",
+  "Value": "23"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "DOCUMENTO REVIG  RATIFICAÇÃO DE CONVÊNIO",
+  "Value": "335"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "EDITAL DE CONCURSO PÚBLICO",
+  "Value": "949"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "EDITAL DE CREDENCIAMENTO",
+  "Value": "921"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "EDITAL DE LICITAÇÃO",
+  "Value": "127"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "EMBARGOS DE DECLARAÇÃO",
+  "Value": "924"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "EMBARGOS DE DECLARAÇÃO",
+  "Value": "24"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "EMBARGOS DECLARATÓRIOS",
+  "Value": "953"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "EMBARGOS INFRINGENTES",
+  "Value": "128"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INCIDENTE DE IMPEDIMENTO/SUSPEIÇÃO",
+  "Value": "6"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INCIDENTE DE INCONSTITUCIONALIDADE",
+  "Value": "995"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INCIDENTE PROCESSUAL",
+  "Value": "901"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INCIDENTE UNIFORMIZAÇÃO JURISPRUDÊNCIA",
+  "Value": "721"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INEXIGIBILIDADE DE LICITAÇÃO",
+  "Value": "25"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INSPEÇÃO ESPECIAL",
+  "Value": "801"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INSPEÇÃO EXTRAORDINÁRIA",
+  "Value": "582"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INSPEÇÃO EXTRAORDINÁRIA - LICITAÇÃO",
+  "Value": "681"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INSPEÇÃO EXTRAORDINÁRIA-ATOS DE ADMISSÃO",
+  "Value": "946"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INSPEÇÃO ORDINÁRIA",
+  "Value": "269"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INSPEÇÃO ORDINÁRIA - ATOS DE ADMISSÃO",
+  "Value": "942"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INSPEÇÃO ORDINÁRIA - LICITAÇÃO",
+  "Value": "581"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INSPEÇÃO ORDINÁRIA - PARECER COLETIVO",
+  "Value": "947"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INSTRUMENTO PARTICULAR CONFISSÃO DÍVIDA",
+  "Value": "129"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "INVENTÁRIO",
+  "Value": "26"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "JULG DOS ATOS LEGAIS DESPESAS MUNICIPAIS",
+  "Value": "188"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "JULGAMENTO DA LEGALIDADE DAS DESPESAS",
+  "Value": "923"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "JULGAMENTO DOS ATOS DE LEGALIDADE",
+  "Value": "27"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "JULGAMENTO LEGALIDADE  ATOS DESP MUNIC",
+  "Value": "375"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "LEILÃO PÚBLICO",
+  "Value": "28"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "LEVANTAMENTO",
+  "Value": "1136"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "LEVANTAMENTO DE FIANÇA",
+  "Value": "130"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "LICITAÇÃO",
+  "Value": "29"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "MESA DE CONCILIAÇÃO E PREVENÇÃO DE CONFLITOS",
+  "Value": "1219"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "MONITORAMENTO",
+  "Value": "980"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "MONITORAMENTO DE AUDITORIA OPERACIONAL",
+  "Value": "984"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PARECER PRÉVIO S/ OPERAÇÃO DE CRÉDITO",
+  "Value": "359"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PCTAS ADM. IND. MUN. AUTARQUIAS",
+  "Value": "382"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PCTAS ADM. IND. MUN. EMPR. PÚBLICA",
+  "Value": "384"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PCTAS ADM. IND. MUN. FUND. PÚBLICA",
+  "Value": "383"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PCTAS ADM. IND. MUN. INST. PREV. SERV.",
+  "Value": "386"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PCTAS ADM. IND. MUN. SOC. ECON. MISTA",
+  "Value": "385"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PCTAS EXECUTIVO MUNICIPAL",
+  "Value": "380"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PCTAS LEGISLATIVO MUNICIPAL",
+  "Value": "381"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PEDIDO DE AUDITORIA",
+  "Value": "32"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PEDIDO DE INSPEÇÃO",
+  "Value": "33"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PEDIDO DE RECONSIDERAÇÃO",
+  "Value": "34"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PEDIDO DE REEXAME",
+  "Value": "951"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PEDIDO DE RESCISÃO",
+  "Value": "952"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PENSÃO",
+  "Value": "35"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PREST DE CTAS DE TERMO ADITIVO  CONVÊNIO",
+  "Value": "275"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PREST DE CTAS DESP VIAGEM  VEIC PRÓPRIO",
+  "Value": "131"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PREST. DE CONTAS DO TERMO DE COOPERAÇÃO",
+  "Value": "701"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO  DE CTAS DESP CARÁTER SECRETO",
+  "Value": "135"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CONTAS",
+  "Value": "36"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CONTAS DE ADIANTAMENTO",
+  "Value": "133"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CONTAS DE ALMOXARIFADO",
+  "Value": "132"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CONTAS DE CONTRATO",
+  "Value": "114"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CONTAS DE CONVÊNIO",
+  "Value": "115"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CONTAS DE EXERCÍCIO",
+  "Value": "37"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CONTAS DE ORDENADORES",
+  "Value": "186"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CONTAS DIÁRIA DE VIAGEM",
+  "Value": "193"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CONTAS MUNICIPAL",
+  "Value": "38"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CTAS  TERMO DE COMPROMISSO",
+  "Value": "315"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CTAS AUXÍLIO E SUBVENÇÃO",
+  "Value": "134"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PRESTAÇÃO DE CTAS DE TERMO ADITIVO",
+  "Value": "397"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PROCESSO ADMINISTRATIVO",
+  "Value": "40"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PROCESSO ADMINISTRATIVO - TCE",
+  "Value": "983"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PROCESSO DE LIQUIDAÇÃO",
+  "Value": "274"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PROCESSO LICITATÓRIO INTERNO",
+  "Value": "41"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PROJETO DE ENUNCIADO DE SÚMULA",
+  "Value": "975"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PROJETO DE REVISÃO DE ENUNCIADO SÚMULA",
+  "Value": "976"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "PROTOCOLO DE INTENÇÕES",
+  "Value": "42"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RATIFICAÇÃO DE DISPENSA DE LICITAÇÃO",
+  "Value": "43"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RECURSO DE RECONSIDERAÇÃO",
+  "Value": "139"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RECURSO DE RESCISÃO",
+  "Value": "358"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RECURSO DE REVISÃO",
+  "Value": "140"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RECURSO INOMINADO",
+  "Value": "138"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RECURSO ORDINÁRIO",
+  "Value": "948"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RECURSO ORDINÁRIO - Conf. Art.401 § único",
+  "Value": "1216"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "REFORMA",
+  "Value": "46"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RELATÓRIO DE AQUISIÇÃO DE VEÍCULOS",
+  "Value": "47"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RELATÓRIO DE AUDITORIA",
+  "Value": "48"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RELATÓRIO DE AVALIAÇÃO ATUARIAL",
+  "Value": "954"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RELATORIO DE CPI",
+  "Value": "501"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RELATÓRIO DE INSPEÇÃO",
+  "Value": "49"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RELATÓRIO DE INSPEÇÃO - LICITAÇÃO",
+  "Value": "398"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RELATÓRIO DE INSPEÇÃO EXTRAORDINÁRIA",
+  "Value": "399"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RELATÓRIO DE SINDICÂNCIA",
+  "Value": "396"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RENUNCIA DE APOSENTADORIA",
+  "Value": "950"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "REPRESENTAÇÃO",
+  "Value": "141"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "REQUERIMENTO",
+  "Value": "142"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RESTITUIÇÃO DE CAUÇÃO",
+  "Value": "356"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RETIFICAÇÃO TERMO ADITIVO  A CONTRATO",
+  "Value": "145"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "RETIFICAÇÃO TERMO ADITIVO  A CONVÊNIO",
+  "Value": "146"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "REVERSÃO DE APOSENTADORIA",
+  "Value": "917"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "REVISÃO DE JULGADO",
+  "Value": "147"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "REVISÃO DE PROVENTOS",
+  "Value": "69"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO A CONTRATO",
+  "Value": "70"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO A CONTRATO DE LOCAÇÃO",
+  "Value": "320"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO A CONVÊNIO",
+  "Value": "71"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO A TERMO DE CESSÃO",
+  "Value": "154"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO A TERMO DE COMPROMISSO",
+  "Value": "155"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO A TERMO DE COOPERAÇÃO",
+  "Value": "157"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO A TERMO DE DISPOSIÇÃO",
+  "Value": "158"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO A TERMO DE OUTORGA",
+  "Value": "159"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO AO CONTRATO COMODATO",
+  "Value": "323"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO AO CONVÊNIO SUBSIDIÁRIO",
+  "Value": "318"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO AO TERMO DE ACORDO",
+  "Value": "151"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO AO TERMO DE ADESÃO",
+  "Value": "153"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO AO TERMO DE AJUSTE",
+  "Value": "621"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO AO TERMO DE CONCESSÃO",
+  "Value": "641"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO AO TERMO DE CONSÓRCIO",
+  "Value": "156"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO ADITIVO INST.PART.CONF. DÍVIDA",
+  "Value": "661"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE ACEITE E RATIFICAÇÃO CONTRATO",
+  "Value": "190"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE ACORDO",
+  "Value": "160"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE ADEQUAÇÃO DE CONDUTA",
+  "Value": "243"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE ADESÃO",
+  "Value": "72"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE ADITAMENTO",
+  "Value": "249"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE AJUDA FINANCEIRA",
+  "Value": "73"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE AJUSTAMENTO DE GESTÃO",
+  "Value": "1115"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE AJUSTE",
+  "Value": "74"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE AJUSTE A CONVÊNIO",
+  "Value": "317"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE APOSTILA A CONTRATO",
+  "Value": "521"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE AUTORIZAÇÃO",
+  "Value": "741"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE CESSÃO",
+  "Value": "75"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE COMODATO",
+  "Value": "161"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE COMPROMISSO",
+  "Value": "76"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE CONCESSÃO DIREITO REAL",
+  "Value": "77"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE CONFISSÃO DE DIVIDA  COMPR",
+  "Value": "163"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE CONSÓRCIO",
+  "Value": "78"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE COOPERAÇÃO",
+  "Value": "164"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE DISPOSIÇÃO",
+  "Value": "166"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE DISTRATO",
+  "Value": "250"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE DOAÇÃO",
+  "Value": "541"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE DOAÇÃO E RECEBIMENTO",
+  "Value": "79"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE ENTREGA",
+  "Value": "168"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE IMPLEMENTAÇÃO  A CONVÊNIO",
+  "Value": "169"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE OUTORGA",
+  "Value": "322"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE OUTORGA E ACEITAÇÃO DE AUXÍLLIO",
+  "Value": "170"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE PARCERIA",
+  "Value": "882"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE PERMISSÃO",
+  "Value": "171"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE PERMUTA",
+  "Value": "172"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE PRORROGAÇÃO DE CONTRATO",
+  "Value": "173"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE QUITAÇÃO FINANC DE CONTRATO",
+  "Value": "242"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RATEIO DE DESPESA",
+  "Value": "174"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RE_RATIFICAÇÃO",
+  "Value": "175"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RENOVAÇÃO",
+  "Value": "176"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RENOVAÇÃO E AJUSTE",
+  "Value": "324"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RESCISÃO",
+  "Value": "177"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RESCISÃO DE CONTRATO",
+  "Value": "325"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RESCISÃO DE CONVÊNIO",
+  "Value": "319"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RESCISÃO DE TERMO DE CESSÃO",
+  "Value": "603"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RESCISÃO DO T. DE COMPROMISSO",
+  "Value": "602"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RESCISÃO DO TERMO DE COOPERAÇÃO",
+  "Value": "601"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RESILIÇÃO",
+  "Value": "248"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RESPONSABILIDADE",
+  "Value": "178"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE RETIFICAÇÃO DE CONTRATO",
+  "Value": "179"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE SUB-ROGAÇÃO",
+  "Value": "273"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE SUSPENSÃO DE CONTRATO",
+  "Value": "181"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TERMO DE TRANSFERÊNCIA",
+  "Value": "182"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TÍTULO RETIFICADOR",
+  "Value": "561"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TITULO RETIFICATÓRIO DE REFORMA",
+  "Value": "1201"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TOMADA DE CONTAS",
+  "Value": "183"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TOMADA DE CONTAS ESPECIAL",
+  "Value": "522"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TOMADA DE CONTAS EXTRAORDINARIA",
+  "Value": "1095"
+ },
+ {
+  "Disabled": false,
+  "Group": null,
+  "Selected": false,
+  "Text": "TOMADA DE PREÇOS",
+  "Value": "240"
+ }
+]

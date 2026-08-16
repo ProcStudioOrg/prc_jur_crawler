@@ -1183,14 +1183,14 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 20 | **TCE-RS** | RS | ✅ o RS **não tem TCM** — os municípios gaúchos estão na base do próprio TCE | ok 15/08 |
 | 21 | **TCE-SP** | SP | ⚠️ **não** cobre a capital — SP capital é do **TCM-SP** (**confirmado por medição**) | ok 15/08 |
 | 22 | **TCE-RJ** | RJ | ⚠️ capital carioca é do **TCM-RJ** — **confirmado por medição** (o combo traz 91 dos 92 municípios) | ok 16/08 |
-| 23 | **TCE-MG** | MG | | pendente |
-| 24 | **TCE-BA** | BA | ⚠️ **todos** os municípios baianos são do **TCM-BA** | pendente |
-| 25 | **TCE-PE** | PE | | pendente |
-| 26 | **TCE-CE** | CE | TCM-CE extinto em 2017 — o TCE absorveu os municípios | pendente |
-| 27 | **TCE-GO** | GO | ⚠️ municípios goianos são do **TCM-GO** | pendente |
-| 28 | **TCDF** | DF | | pendente |
-| 29 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** | pendente |
-| 30 | **TCE-ES** | ES | | pendente |
+| 23 | **TCE-BA** | BA | ⚠️ **todos** os municípios baianos são do **TCM-BA** | pendente |
+| 24 | **TCE-PE** | PE | | pendente |
+| 25 | **TCE-CE** | CE | TCM-CE extinto em 2017 — o TCE absorveu os municípios | pendente |
+| 26 | **TCE-GO** | GO | ⚠️ municípios goianos são do **TCM-GO** | pendente |
+| 27 | **TCDF** | DF | | pendente |
+| 28 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** | pendente |
+| 29 | **TCE-ES** | ES | | pendente |
+| 30 | **TCE-MG** | MG | 🔴 o portal que se chama "Jurisprudência" (**TCJuris**) está atrás de **reCAPTCHA v2 conferido no servidor**; a porta aberta é o **MapJuris** (`/TextualDadosProcesso`, sem captcha) — **busca medida, falta o segundo salto do grid e o crawler** | parcial 16/08 |
 
 📌 **O que o TCE-PR (feito em 14/08/2026) ensinou — leia
 [`CLAUDE-TCEPR.md`](CLAUDE-TCEPR.md).** Primeiro alvo do Bloco 5 e **primeiro
@@ -1752,3 +1752,70 @@ a declara.
 | **TJSP / TJMA** | 🔴 captcha | ver docs |
 | **TRF1 / TRF3** | 🟡 já têm crawler, instáveis | manutenção, não mapeamento |
 | Súmulas/Enunciados CRPS | Público, mas é **PDF único** (nº 1 a 19, atualizado 23/07/2026) no gov.br — não é base pesquisável | Vira crawler só se o usuário pedir |
+
+---
+
+📌 **O que o TCE-MG (16/08/2026, slot 20:00) ensinou — `parcial`, leia
+[`human-codegen/TCEMG/`](human-codegen/TCEMG/).** Sexto alvo do Bloco 5, e a lição é que
+**o portal que se chama "Jurisprudência" pode ser o bloqueado enquanto o aberto tem outro
+nome — e os dois são oficiais, do mesmo órgão, linkados na mesma home**:
+
+- 🔴 **O TCJuris (`tcjuris.tce.mg.gov.br`), rotulado "Jurisprudência do TCE", está atrás de
+  reCAPTCHA v2 CONFERIDO NO SERVIDOR.** Não é gate de tela: com **sessão ASP.NET viva** e o
+  POST disparado **de dentro da própria página**, `/Home/Busca` devolve **HTTP 200 com a
+  página "Ocorreu um erro..."** (5.392 bytes) em vez do grid, e
+  `VerificarCaptchaPreenchido` responde corpo **vazio**. A lição do TJSE (mandar a
+  requisição, não fazer `grep`) foi aplicada e **condenou** o módulo. Quinto tipo de
+  bloqueio do repo: não é script barrado (TJPB), nem negação de borda (TJRN), nem desafio
+  visível (STJ), nem widget que não emite token (TJSE) — é **flag de captcha em sessão de
+  servidor**.
+- 🔴 **MAS O TRIBUNAL NÃO É `bloqueado`: o MapJuris (`mapjuris.tce.mg.gov.br`) responde
+  busca textual com ZERO ocorrências de captcha no HTML**, e o contrato foi reproduzido
+  **fora do browser** com cookie jar (`POST /TextualDadosProcesso/_ListarExcertoIntegra`).
+  É o TJBA ("o e-SAJ morto não era a porta") com variação nova — aqui as duas portas são
+  oficiais e vizinhas. **Enumere TODOS os módulos antes de declarar bloqueado.**
+- 🔴 **HTTP 000 POR CADEIA TLS INCOMPLETA, E AGORA VARIANDO POR HOST DENTRO DO MESMO
+  TRIBUNAL.** `tcjuris`, `mapjuris` e `dadosabertos` dão **000** com verificação ligada e
+  **200** com `-k`; o `www.tce.mg.gov.br` dá **200** normalmente — **mesmo certificado
+  curinga `*.tce.mg.gov.br`**, só que o `www` manda o intermediário Sectigo e os outros
+  três **não mandam**. Quem medisse o institucional concluiria que o TLS do tribunal está
+  bom. ✅ A correção é a do TJPE: **fornecer o intermediário** (AIA
+  `crt.sectigo.com/SectigoPublicServerAuthenticationCAOVR36.crt`), **não** desligar a
+  verificação — provado, 000 → 200.
+- 🔴 **O FORMULÁRIO TRANSLITERA CARACTERES ANTES DE ENVIAR — contrato inédito no repo.** No
+  TCJuris, `"` vira `◕`, `%` vira `☻`, `(` vira `↑` e `)` vira `↓` (em `Decisoes.js`, antes
+  do POST). Um crawler que mandasse aspas cruas não estaria falando a língua do portal.
+- 🔴 **O TERMO SOZINHO NÃO BUSCA, E O SINTOMA É NENHUM:** sem marcar ao menos uma
+  "restrição" (Ementa / Inteiro teor / Indexação), `BuscaRegistros()` retorna **sem emitir
+  requisição**. A primeira tentativa deste mapeamento "buscou" e não gerou XHR nenhum.
+  ⚠️ E os checkboxes nascem `disabled`, habilitando só no **`keyup`** — `page.fill()` não
+  os destrava, `page.type()` sim.
+- 🔴 **PREENCHER O NÚMERO DO PROCESSO APAGA TODOS OS OUTROS FILTROS** (`LimparFormulario()`)
+  **e força monocrática**. Some à coleção de contratos de consulta por número; e o
+  `maxlength=10` confirma que não é CNJ.
+- 🔴 **NO MAPJURIS OS TRÊS `tipoPesquisa` VÁLIDOS DEVOLVEM RESPOSTA BYTE A BYTE IDÊNTICA**
+  (mesmo md5), enquanto o valor **inventado** devolve "Nenhum registro encontrado". A
+  invariante do repo disparou: entre valores válidos o filtro **não muda nada**. ⚠️ Não foi
+  decidido se é parâmetro ignorado ou janela pequena demais — falta o segundo salto do grid.
+- ⚠️ **TERMO COMUM SEM JANELA DE DATA NÃO RESPONDE EM 180 s** (`licitação` abortado), e o
+  mesmo termo com janela de um mês responde em **1,7 s**. O crawler terá de fatiar por data
+  obrigatoriamente. Isso também explica busca que "trava" e não é bloqueio.
+- ⚠️ **O WAF F5 BIG-IP responde diferente conforme o cliente:**
+  `VerificarCaptchaPreenchido` e `RetornarRelatores` dão **403 "Request Rejected — Support
+  ID"** no `curl` e **200** dentro do navegador, enquanto `_ListarExcertoIntegra` passa nos
+  dois. **São dois mecanismos distintos (WAF × captcha) — não confunda um com o outro.**
+- ✅ **Passo 0 medido, e o Dados Abertos NÃO serve:** `api`/`jurisprudencia`/`consulta` são
+  NXDOMAIN; `dadosabertos.tce.mg.gov.br` existe (SPA Angular) mas seu backend é um
+  **gateway WSO2** que devolve **401 em tudo, inclusive no path inventado** — negação
+  uniforme, de onde não se conclui nem se há dataset de jurisprudência (a armadilha do
+  `api.tjba`, terceira vez). Sem DataJud e sem CNJ, **não há plano B**.
+
+⚠️ **Pendências declaradas do TCE-MG** (o próximo slot retoma daqui, **sem remapear**): o
+segundo salto do grid — `TextualDadosProcesso/ConsultarInformacaoExcertoIntegra` — **não foi
+mapeado**, e é ele que traz as linhas; a **Fase 3b (`browser-post-search`) não foi executada**
+(não há anatomia de card, paginação, total, permalink nem inteiro teor); **nenhum operador foi
+testado** em nenhum dos dois módulos; `_ListarTituloResenha` (teses/súmulas) está com contrato
+capturado e **não medido**; o filtro de relator **não foi provado por contagem**; a
+distribuição por ano **não foi medida**; e a ressalva do Bloco 5 — MG **não tem TCM** — segue
+**não confirmada por medição** (não há combo de município na tela mapeada). ⏱️ Timebox
+estourado: 20:00 → 21:20 com a busca respondendo e nenhum crawler escrito.
