@@ -1,0 +1,374 @@
+[
+ {
+  "v": "",
+  "t": "Selecione"
+ },
+ {
+  "v": "1",
+  "t": "ANGRA DOS REIS"
+ },
+ {
+  "v": "79",
+  "t": "APERIBÉ"
+ },
+ {
+  "v": "2",
+  "t": "ARARUAMA"
+ },
+ {
+  "v": "82",
+  "t": "AREAL"
+ },
+ {
+  "v": "91",
+  "t": "ARMACAO DE BUZIOS"
+ },
+ {
+  "v": "3",
+  "t": "ARRAIAL DO CABO"
+ },
+ {
+  "v": "4",
+  "t": "BARRA DO PIRAÍ"
+ },
+ {
+  "v": "5",
+  "t": "BARRA MANSA"
+ },
+ {
+  "v": "80",
+  "t": "BELFORD ROXO"
+ },
+ {
+  "v": "6",
+  "t": "BOM JARDIM"
+ },
+ {
+  "v": "7",
+  "t": "BOM JESUS DO ITABAPOANA"
+ },
+ {
+  "v": "8",
+  "t": "CABO FRIO"
+ },
+ {
+  "v": "9",
+  "t": "CACHOEIRAS DE MACACU"
+ },
+ {
+  "v": "10",
+  "t": "CAMBUCI"
+ },
+ {
+  "v": "11",
+  "t": "CAMPOS DOS GOYTACAZES"
+ },
+ {
+  "v": "12",
+  "t": "CANTAGALO"
+ },
+ {
+  "v": "86",
+  "t": "CARAPEBUS"
+ },
+ {
+  "v": "70",
+  "t": "CARDOSO MOREIRA"
+ },
+ {
+  "v": "13",
+  "t": "CARMO"
+ },
+ {
+  "v": "14",
+  "t": "CASIMIRO DE ABREU"
+ },
+ {
+  "v": "71",
+  "t": "COMENDADOR LEVY GASPARIAN"
+ },
+ {
+  "v": "15",
+  "t": "CONCEIÇÃO DE MACABU"
+ },
+ {
+  "v": "16",
+  "t": "CORDEIRO"
+ },
+ {
+  "v": "17",
+  "t": "DUAS BARRAS"
+ },
+ {
+  "v": "18",
+  "t": "DUQUE DE CAXIAS"
+ },
+ {
+  "v": "19",
+  "t": "ENGENHEIRO PAULO DE FRONTIN"
+ },
+ {
+  "v": "0",
+  "t": "ESTADO DO RIO DE JANEIRO"
+ },
+ {
+  "v": "72",
+  "t": "GUAPIMIRIM"
+ },
+ {
+  "v": "84",
+  "t": "IGUABA GRANDE"
+ },
+ {
+  "v": "20",
+  "t": "ITABORAÍ"
+ },
+ {
+  "v": "21",
+  "t": "ITAGUAI"
+ },
+ {
+  "v": "22",
+  "t": "ITALVA"
+ },
+ {
+  "v": "23",
+  "t": "ITAOCARA"
+ },
+ {
+  "v": "24",
+  "t": "ITAPERUNA"
+ },
+ {
+  "v": "67",
+  "t": "ITATIAIA"
+ },
+ {
+  "v": "73",
+  "t": "JAPERI"
+ },
+ {
+  "v": "25",
+  "t": "LAJE DO MURIAÉ"
+ },
+ {
+  "v": "26",
+  "t": "MACAÉ"
+ },
+ {
+  "v": "89",
+  "t": "MACUCO"
+ },
+ {
+  "v": "27",
+  "t": "MAGÉ"
+ },
+ {
+  "v": "28",
+  "t": "MANGARATIBA"
+ },
+ {
+  "v": "29",
+  "t": "MARICÁ"
+ },
+ {
+  "v": "30",
+  "t": "MENDES"
+ },
+ {
+  "v": "93",
+  "t": "MESQUITA"
+ },
+ {
+  "v": "31",
+  "t": "MIGUEL PEREIRA"
+ },
+ {
+  "v": "32",
+  "t": "MIRACEMA"
+ },
+ {
+  "v": "33",
+  "t": "NATIVIDADE"
+ },
+ {
+  "v": "34",
+  "t": "NILÓPOLIS"
+ },
+ {
+  "v": "35",
+  "t": "NITERÓI"
+ },
+ {
+  "v": "37",
+  "t": "NOVA FRIBURGO"
+ },
+ {
+  "v": "36",
+  "t": "NOVA IGUAÇU"
+ },
+ {
+  "v": "38",
+  "t": "PARACAMBI"
+ },
+ {
+  "v": "40",
+  "t": "PARAÍBA DO SUL"
+ },
+ {
+  "v": "39",
+  "t": "PARATY"
+ },
+ {
+  "v": "68",
+  "t": "PATY DO ALFERES"
+ },
+ {
+  "v": "41",
+  "t": "PETRÓPOLIS"
+ },
+ {
+  "v": "85",
+  "t": "PINHEIRAL"
+ },
+ {
+  "v": "42",
+  "t": "PIRAÍ"
+ },
+ {
+  "v": "43",
+  "t": "PORCIÚNCULA"
+ },
+ {
+  "v": "88",
+  "t": "PORTO REAL"
+ },
+ {
+  "v": "74",
+  "t": "QUATIS"
+ },
+ {
+  "v": "75",
+  "t": "QUEIMADOS"
+ },
+ {
+  "v": "77",
+  "t": "QUISSAMÃ"
+ },
+ {
+  "v": "44",
+  "t": "RESENDE"
+ },
+ {
+  "v": "45",
+  "t": "RIO BONITO"
+ },
+ {
+  "v": "46",
+  "t": "RIO CLARO"
+ },
+ {
+  "v": "47",
+  "t": "RIO DAS FLORES"
+ },
+ {
+  "v": "81",
+  "t": "RIO DAS OSTRAS"
+ },
+ {
+  "v": "48",
+  "t": "SANTA MARIA MADALENA"
+ },
+ {
+  "v": "49",
+  "t": "SANTO ANTÔNIO DE PÁDUA"
+ },
+ {
+  "v": "50",
+  "t": "SÃO FIDELIS"
+ },
+ {
+  "v": "87",
+  "t": "SÃO FRANCISCO DO ITABAPOANA"
+ },
+ {
+  "v": "51",
+  "t": "SÃO GONÇALO"
+ },
+ {
+  "v": "52",
+  "t": "SÃO JOAO DA BARRA"
+ },
+ {
+  "v": "53",
+  "t": "SÃO JOÃO DE MERITI"
+ },
+ {
+  "v": "90",
+  "t": "SÃO JOSE DE UBÁ"
+ },
+ {
+  "v": "69",
+  "t": "SÃO JOSÉ DO VALE DO RIO PRETO"
+ },
+ {
+  "v": "54",
+  "t": "SÃO PEDRO DA ALDEIA"
+ },
+ {
+  "v": "55",
+  "t": "SÃO SEBASTIÃO DO ALTO"
+ },
+ {
+  "v": "56",
+  "t": "SAPUCAIA"
+ },
+ {
+  "v": "57",
+  "t": "SAQUAREMA"
+ },
+ {
+  "v": "83",
+  "t": "SEROPÉDICA"
+ },
+ {
+  "v": "58",
+  "t": "SILVA JARDIM"
+ },
+ {
+  "v": "59",
+  "t": "SUMIDOURO"
+ },
+ {
+  "v": "92",
+  "t": "TANGUÁ"
+ },
+ {
+  "v": "60",
+  "t": "TERESÓPOLIS"
+ },
+ {
+  "v": "61",
+  "t": "TRAJANO DE MORAIS"
+ },
+ {
+  "v": "62",
+  "t": "TRÊS RIOS"
+ },
+ {
+  "v": "63",
+  "t": "VALENÇA"
+ },
+ {
+  "v": "78",
+  "t": "VARRE-SAI"
+ },
+ {
+  "v": "64",
+  "t": "VASSOURAS"
+ },
+ {
+  "v": "65",
+  "t": "VOLTA REDONDA"
+ }
+]

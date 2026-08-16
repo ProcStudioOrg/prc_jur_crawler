@@ -63,6 +63,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tcesc` | **TCE-SC** (Tribunal de Contas do Estado de Santa Catarina — controle externo) | SC (Estado + **os 295 municípios**) | `CLAUDE-TCESC.md` | 🟢 OK (GraphQL público, HTTP direto, sem browser — **sem captcha**; citação oficial e **PDF público de inteiro teor** já vêm na busca). Base corrente, **5 bases via `--base`** (deliberações, enunciados, informativos, súmulas). 🔴 **O espaço entre termos é OR e não existe AND**; a maioria dos documentos vem **sem ementa** |
 | `tcers` | **TCE-RS** (Tribunal de Contas do Estado do Rio Grande do Sul — controle externo) | RS (Estado + **os municípios gaúchos**) | `CLAUDE-TCERS.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; o **inteiro teor já vem na busca**, conferido contra o PDF). Base corrente, **4 bases via `--base`**. 🔴 **O espaço entre termos é OR** e os operadores que a tela anuncia (`E`/`OU`/`NÃO`/`PROX`/`MESMO`/`$`) **inflam até saturar ou zeram** — use `AND`/`OR`/`NOT`. 🔴 **A ementa desaparece a partir de 2020** |
 | `tcesp` | **TCE-SP** (Tribunal de Contas do Estado de São Paulo — controle externo) | SP (Estado + **644 municípios**; 🔴 **NÃO a capital**, que é do TCM-SP) | `CLAUDE-TCESP.md` | 🟢 OK (HTTP direto, sem browser — **sem captcha**; **três permalinks públicos**, inclusive a **URL da busca**). Base corrente, 1.317.838 documentos, de 2008 em diante. 🔴 **Não existe ementa** — o texto é trecho com highlight. 🔴 **Os operadores são QUATRO CAIXAS, não inline**: `OU` dentro de `-q` é descartado e a busca continua AND. 🔴 **Um julgado decide vários processos** (fator ~2,9×): o total não é o nº de decisões |
+| `tcerj` | **TCE-RJ** (Tribunal de Contas do Estado do Rio de Janeiro — controle externo) | RJ (Estado + **os municípios fluminenses**; 🔴 **NÃO a capital**, que é do TCM-RJ) | `CLAUDE-TCERJ.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa íntegra na busca e **PDF público de inteiro teor com permalink**). 🔴 **Base CURADA e pequena** (1.089 documentos, 2021–2026): é a seleção do Serviço de Jurisprudência, **não o acervo de decisões**. 🔴 **Acento é obrigatório**; o `NÃO` **não exclui, deflaciona**, e `AND`/`OR` derrubam com HTTP 500. 🔴 O filtro de relator chama-se `--conselheiro` |
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
@@ -768,6 +769,46 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   ⚠️ **Não há CNJ nem DataJud**, e — diferente do TCE-RS — **não há Dados Abertos**:
   não existe plano B. A verificação é `./bin/jur tcesp -n "1681/989/20"`, e o número
   **exige a máscara** (sem ela o zero é silencioso)
+- **Contas públicas do RIO DE JANEIRO** ("o que o Tribunal de Contas do RJ decidiu",
+  licitação e contrato administrativo, ato de pessoal estadual ou municipal, contas de
+  prefeito, representação) → `tcerj` → leia [`CLAUDE-TCERJ.md`](CLAUDE-TCERJ.md). É
+  instância de **controle externo**, não Judiciário: para a mesma matéria judicializada,
+  o caminho é `tjrj`/`tjrj-ejuris` (estadual) ou `trf2` (federal).
+  🔴 **Não ofereça o `tcerj` para matéria cível, penal, trabalhista ou previdenciária** —
+  ele não tem esse acervo, e o zero seria o tribunal errado, não ausência de julgado.
+  🔴 **A CAPITAL NÃO ESTÁ NESTA BASE, e isso foi medido**: o Município do Rio de Janeiro é
+  do **TCM-RJ**, órgão separado que este repo **não cobre**. O combo de município traz
+  **91 dos 92 municípios** fluminenses — falta exatamente a capital. Pedido sobre contas
+  da Prefeitura do Rio **não tem resposta aqui**; diga isso em vez de entregar o número
+  baixo como se fosse o acervo. (A armadilha do TCM é falsa em PR, SC e RS; aqui, como em
+  SP, é **verdadeira**.)
+  🔴 **A BASE É CURADA E PEQUENA: 1.089 documentos.** É a seleção do Serviço de
+  Jurisprudência (SJU) a partir das decisões plenárias — **não é o acervo de decisões do
+  TCE-RJ**. Nunca relate 1.089 como "a jurisprudência do Tribunal de Contas do RJ". ✅ Em
+  compensação **100% têm ementa**, e ela vem **íntegra na busca**.
+  ⚠️ **A base começa em jul/2021** (mais recente: voto de 22/06/2026): pedido histórico
+  anterior a 2021 não tem resposta aqui, e o zero é a base, não o tribunal.
+  🔴 **ACENTO É OBRIGATÓRIO e o índice NÃO normaliza** (`licitacao` = 0 contra
+  `licitação` = 267) — padrão TJMS/TJBA/TJPB. Número zero é quase sempre acento faltando.
+  🔴 **O `NÃO` NÃO EXCLUI — ele DEFLACIONA**: vira palavra e entra no AND
+  (`licitação NÃO pessoal` = 5 contra 260 da exclusão correta; sem acento zera). **Não
+  existe operador de exclusão neste portal.** ✅ `E` e `OU` funcionam com aritmética
+  exata (267 + 180 − 7 = 440) e o espaço é `E` (AND). 🔴 `AND` e `OR` **derrubam a busca
+  com HTTP 500** — sintoma visível. Curinga não existe. O crawler avisa; repasse.
+  🔴 **O filtro de relator chama-se `--conselheiro`**: o campo `relator` da API é
+  **ignorado em silêncio** (devolve o acervo inteiro, inclusive com nome inventado) —
+  apesar de `relator` existir no payload de resposta.
+  ✅ **Permalink público em PDF** por acórdão, confirmado em requisição limpa, sem
+  captcha em etapa nenhuma. 🔴 Mas **não existe URL de busca** — nunca mande "o link da
+  busca" do TCE-RJ como prova — e **não há citação oficial pronta**.
+  🔴 **Quem identifica o julgado é o `id` (jurisprudenciaId), não o processo** (1.089
+  registros em 998 processos), e **dois registros podem ser teses distintas do MESMO
+  acórdão**, logo do mesmo PDF. Não conte PDFs como julgados.
+  ⚠️ **Não há data de publicação** — o eixo é a data do **voto** (`-dpi/-dpf` são alias).
+  ⚠️ **Não há CNJ nem DataJud** (contas não é Judiciário) e **não existe filtro por
+  número na API**: `./bin/jur tcerj -n "103.885-0/2026"` recorta no cliente, e a resposta
+  negativa **não prova que o processo não existe** — prova que não há julgado
+  *selecionado* para ele. Repasse essa ressalva
 - **Contencioso administrativo PREVIDENCIÁRIO** ("o que o CRPS decidiu", recurso contra
   indeferimento do INSS, Junta de Recursos, Câmara de Julgamento) → 🔴 **não há busca**:
   o portal exige login Gov.br e o contorno por perfil de Chrome dedicado **já foi tentado

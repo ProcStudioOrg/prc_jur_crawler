@@ -1,0 +1,100 @@
+# TCE-RJ — Pesquisa Textual (base "Decisões" e outras 12)
+
+Mapeado em 16/08/2026. Status: **CONTRATO CAPTURADO, NÃO IMPLEMENTADO.**
+
+## 1. O que é
+
+É a busca grande do TCE-RJ — a que o próprio portal indica para "Decisões Plenárias":
+
+> "As consultas de Decisões Plenárias mudaram! Para um retorno de busca mais completo e
+>  fácil de utilizar, centralizamos esta opção na página de pesquisa textual. Para ver
+>  somente os votos, basta deixar selecionada a base de Decisões."
+
+## 2. 🔴 A TELA DE ENTRADA É UM INVÓLUCRO COM IFRAME — quem raspar ela não acha busca nenhuma
+
+- O link do portal é `https://www.tcerj.tc.br/consulta-processo/PesquisaTextual?baseVoto=True`.
+- Essa página é o **menu de serviços** do TCE-RJ (ASP.NET MVC, jQuery). Ela **não tem
+  `<form>`**: `p.locator('form')` estoura timeout, e o texto visível é só a árvore de menus.
+- A busca real está num **`<iframe>`** cujo `src` é
+  **`https://www.tcerj.tc.br/pesquisa-textual/app?baseVoto=True`** — outra aplicação,
+  Angular. É a mesma armadilha do TJSE (portal dentro de iframe), e aqui ela custa a
+  descoberta inteira: sem abrir o iframe, a conclusão seria "o TCE-RJ não tem busca textual".
+- ⚠️ O parâmetro `?baseVoto=True` **é descartado da URL** ao carregar (a URL final é
+  `/consulta-processo/PesquisaTextual`), mas chega ao iframe.
+- ⚠️ A página-invólucro **carrega o script do reCAPTCHA** (`gstatic.com/recaptcha/…`).
+  A SPA do iframe **não** tem `grecaptcha` e a API responde a POST cru. Bloqueio: nenhum.
+
+## 3. Contrato da busca (capturado na Network, reproduzido fora do browser)
+
+```
+POST https://www.tcerj.tc.br/liana-pesquisa-externo/api/pesquisatextual/pagina/{p}/tamanhoPagina/{n}
+Content-Type: application/json
+
+{"comTodasAsPalavras":"LICITAÇÃO","interessado":"","dataCadIni":"","dataCadFim":"",
+ "dataSessaoIni":"","dataSessaoFim":"","naturezas":[],"naturezasExcluidas":null,
+ "bases":{"dadosCadastrais":false,"infobase":false,"votos":true,"eTCERJ":false,
+          "oficios":false,"registros":false,"acordaos":false,"anexos":false,
+          "certidoes":false,"diariosOficiais":false,"digitalizacoes":false,
+          "termos":false,"transformados":false,"condenacoes":false,"atas":false},
+ "baseComplementar":1,"retornaTextoDocumento":false,"pagina":1,"quantidadePorPagina":20}
+```
+⚠️ **O termo é enviado em CAIXA ALTA pela própria tela** (`LICITAÇÃO`).
+
+Resposta: `{quantidadeTotal, quantidadePaginas, paginaAtual, mensagemRetorno, resultados:[…]}`,
+cada resultado com `numero, dv, ano, interessado, observacao, orgao, titulo, numeroAcordao,
+anoAcordao, idRelatorSessao, natureza` e um **`resultados[]` aninhado** com os documentos
+(cada um com `idDocumento`, ex. `234529-4%2F2026-4a215154-0c8b-4ff4-b188-bcb1fced3…`).
+
+## 4. As 15 bases (checkbox "Bases de pesquisa")
+
+`dadosCadastrais`, `infobase` (Informações), **`votos` (Decisões)**, `eTCERJ` (Via TCEract),
+`oficios`, `registros` (Registro/Certificado de Processo), **`acordaos`**, `anexos`,
+`condenacoes`, `certidoes`, `diariosOficiais`, `termos`, `transformados`,
+`digitalizacoes`, `atas`.
+⚠️ A tela mostra 13; o payload tem **15 flags**. `digitalizacoes` e `atas` **não aparecem
+na tela** — são parâmetros aceitos que o formulário não oferece (é a lição do TJAL:
+**teste o parâmetro, não o controle**; não foram medidos).
+
+## 5. Contagens medidas (termo `LICITAÇÃO`)
+
+| Base | quantidadeTotal |
+|---|---|
+| `votos` (Decisões) | **10.000** 🔴 |
+| `acordaos` | 2.532 |
+
+🔴 **O total de `votos` SATURA em 10.000** — número redondo, cheiro de teto (padrão
+TJPE/TCE-RS). ⚠️ E **`quantidadePaginas` volta `1`** mesmo com 10.000 resultados e
+`tamanhoPagina=3`: o campo **não é confiável** para saber quando parar.
+
+## 6. Filtros disponíveis (combos enumerados no browser)
+
+| Combo | Valores |
+|---|---|
+| Esfera | Estadual(3), Municipal(2), Interno(1) |
+| Município | **93 opções** — 91 municípios + "ESTADO DO RIO DE JANEIRO"(0). 🔴 **a capital NÃO está** (TCM-RJ) |
+| Tipo | DOCUMENTO(1), PROCESSO(2), PROCESSO INTERNO(3), PROCESSO EXTINTO(4) |
+| Conselheiro (2 combos: relator e relator de sessão) | 9 opções, por id (ex. 2510 = Andrea Siqueira Martins) |
+| Datas | `dataCadIni/Fim` (cadastro) e `dataSessaoIni/Fim` (sessão) — **dois eixos** |
+
+Combos vêm de `GET /scap-webapi-externo/api/municipio`, `/orgao/ativos`,
+`/usuario/conselheiro/ativos` — todos públicos.
+
+## 7. Por que NÃO virou o crawler hoje
+
+O resultado desta busca é **processual, não jurisprudencial**: cada item é um processo
+(`titulo` = "234529-4/2026 - REPRESENTAÇÃO EM FACE DE &lt;mark&gt;LICITAÇÃO&lt;/mark&gt;"),
+com `numeroAcordao: null` e **sem ementa**. O texto do documento exige um **segundo salto**
+pelo `idDocumento` aninhado, que **não foi mapeado**. `retornaTextoDocumento: true` foi
+testado e **não trouxe texto no nível superior**.
+
+➡️ Por isso o crawler do TCE-RJ deve nascer sobre a **Jurisprudência Selecionada**
+(ementa pronta, permalink em PDF, total exato) e só depois, se valer, cobrir esta base
+como `--base decisoes`.
+
+## 8. Pendências declaradas desta seção
+
+- O **segundo salto** (`idDocumento` → texto do documento) **não foi mapeado**.
+- A saturação em 10.000 **não foi confirmada** com termo raro (o teste que decide se é teto).
+- `digitalizacoes` e `atas` **não foram medidas**.
+- Nenhum filtro foi provado por contagem aqui (só a busca por termo).
+- Não há print da tela de resultados desta base — só da inicial (`02.02-app-inicial.png`).

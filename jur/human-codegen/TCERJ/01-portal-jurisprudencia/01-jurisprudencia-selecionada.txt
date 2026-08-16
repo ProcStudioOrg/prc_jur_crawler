@@ -1,0 +1,198 @@
+# TCE-RJ — Portal de Jurisprudência → Jurisprudência Selecionada
+
+Mapeado em 16/08/2026 (slot 1600). Status: PARCIAL — mapeamento medido, crawler não escrito.
+
+## 1. Identificação
+
+- Tribunal: **TCE-RJ** — Tribunal de Contas do Estado do Rio de Janeiro
+- Natureza: **CONTROLE EXTERNO**, não Judiciário. Não há número CNJ nem DataJud.
+- Domínio oficial: **`www.tcerj.tc.br`** (`.tc.br`, não `.gov.br` nem `.jus.br`).
+  ⚠️ `www.tce.rj.gov.br` responde **200 e redireciona (301/L) para `www.tcerj.tc.br/portalnovo/`** —
+  é alias, não host próprio. `tce.rj.gov.br` **sem `www` resolve para outro IP (189.84.30.213)
+  e dá HTTP 000 (timeout de 25 s)**. Some à coleção de "000 não é fora do ar" (TJPE):
+  aqui o 000 é de um host irmão, enquanto o oficial responde normalmente.
+- Módulo principal: `https://www.tcerj.tc.br/cadastro-publicacoes/public/jurisprudencia-selecionada`
+- Acesso do crawler: **`api`** — REST JSON público, sem auth, sem cookie, **sem captcha**.
+
+## 2. Passo 0 — o que EXISTE e o que NÃO existe de API pública
+
+✅ **EXISTE, e é a porta:** três APIs REST abertas, achadas na aba Network do Playwright
+(não chutadas):
+  - Busca:   `POST /liana-processo-webapi/consulta/pagina/{pagina}/tamanhoPagina/{tam}`
+  - Detalhe: `GET  /cadastro-publicacoes-webapi/api/JurisprudenciaSelecionada/{id}`
+  - PDF:     `GET  /documento-webapi-externo/api/documento/acordao/{numero}/{ano}`
+  - Combos:  `GET  /cadastro-publicacoes-webapi/api/JurisprudenciaSelecionada/MacroTema`
+             `GET  /cadastro-publicacoes-webapi/api/JurisprudenciaSelecionada/Relatores`
+             `GET  /cadastro-publicacoes-webapi/api/JurisprudenciaSelecionada/RelatoresVencedores`
+
+🔴 **NÃO existe** (procurado, não presumido):
+  - `dadosabertos.tcerj.tc.br`, `api.tcerj.tc.br`, `jurisprudencia.tcerj.tc.br` → **NXDOMAIN**
+    (não há vhost curinga de subdomínio, ao contrário de TJAC/TJAL).
+  - `/dados-abertos`, `/dadosabertos`, `/swagger`, `/api`, `/v1/api-docs` → **404 de verdade**
+    (196 bytes, charset iso-8859-1, md5 idêntico entre si).
+  - **DataJud não se aplica**: contas não é Judiciário, não há alias `api_publica_*`.
+    Como no TCE-PR/SC/RS/SP, **não há plano B** se o portal cair.
+
+⚠️ **CASCA DE HTTP 200 — VARIANTE NOVA NO REPO: página de erro 404 servida com status 200.**
+`/swagger/index.html` responde **HTTP 200 com 571 bytes** cujo corpo é literalmente
+`<title>Erro HTTP - TCERJ</title> … <h1>Erro HTTP 404</h1>`. Não é vhost curinga
+(TJAC/TJAL), nem `index.html` de SPA (TJES/TJRR), nem tela de login (TCE-PR): é uma
+**página de erro que mente no status**. Quem checasse só `resp.ok` registraria
+"o TCE-RJ tem Swagger". **Leia o corpo antes de acreditar no 200.**
+
+⚠️ **Fallback de SPA presente também aqui:** `/cadastro-publicacoes/public/path-inventado-9z`
+devolve **200 com 6.181 bytes e md5 idêntico** ao da rota real (Angular). O md5 desfaz,
+como em TJAC/TJAL/TCE-PR. Já `/consulta-processo/PathInventado9z/` dá **404 real**.
+
+## 3. Escopo — a armadilha do TCM-RJ é **VERDADEIRA**, e foi confirmada por contagem
+
+A fila avisava "capital carioca é do TCM-RJ". **Confirmado sem sair do portal**, pelo combo
+de município da Pesquisa Textual (`scap-webapi-externo/api/municipio`):
+
+- O combo tem **93 opções** = "Selecione" + "ESTADO DO RIO DE JANEIRO" (value `0`) + **91 municípios**.
+- O Rio de Janeiro tem **92 municípios**. A única ausente é a **capital**.
+- Busca por "RIO DE JANEIRO" no combo devolve **só** `ESTADO DO RIO DE JANEIRO` — o
+  município Rio de Janeiro **não está lá**.
+
+➡️ **Contas do Município do Rio de Janeiro não têm resposta nesta base** (são do TCM-RJ,
+órgão separado que este repo não cobre). Mesmo caso do TCE-SP × TCM-SP, e oposto de
+PR/SC/RS, onde o combo trazia os municípios todos.
+
+## 4. A tela e o contrato da busca
+
+Formulário SPA Angular (sem `<form>` clássico). Controles:
+
+| Controle | id / campo da API | Observação |
+|---|---|---|
+| Palavra-chave | `#palavrasPesquisa` → `texto` | input único |
+| Operadores | botões `#botaoE`, `#botaoNao`, `#botaoOu`, `#botaoExpressaoExata`, `#botaoComecaCom` | inserem o token **no próprio input** (não são caixas separadas como no TCE-SP) |
+| Macro-Tema | `<select>` 8 opções → `macroTemaId` | Auditoria(1), Contas(2), Licitações e Contratos(3), Pessoal, Recurso, Representação, Direito Processual(7) |
+| Temas | `<select>` (AJAX, depende do macro-tema) → `temaId` | |
+| Conselheiro(a) | `<select>` 12 opções → **`conselheiro`** | ⚠️ ver §6 |
+| Data início/fim | `#input-date-0/1` → `dataInicio` / `dataFim` | ISO com `Z` |
+| Linhas por página | `<select>` 10/20/30/40/50 | o servidor aceita muito mais — §22 |
+
+**Contrato medido:**
+```
+POST https://www.tcerj.tc.br/liana-processo-webapi/consulta/pagina/1/tamanhoPagina/20
+Content-Type: application/json
+{"macroTemaId":"1","dataInicio":"2025-01-01T03:00:00.000Z","dataFim":"2025-12-31T03:00:00.000Z","texto":"licitação"}
+```
+Resposta: `{totalResults, currentPage, pageSize, totalPages, list:[…]}`.
+Corpo `{}` (vazio) é válido e devolve o acervo inteiro.
+
+✅ **Sem captcha em etapa nenhuma** — provado mandando o POST cru fora do browser
+(`curl`, sem cookie e sem Referer), não com `grep turnstile` (lição do TJSE).
+Não há `grecaptcha`/`turnstile`/`hcaptcha` na página do módulo.
+⚠️ **Mas a página-invólucro `consulta-processo/PesquisaTextual` carrega o script do
+reCAPTCHA** (`gstatic.com/recaptcha/...`) — outro módulo, outra história. Não confunda
+os dois: o de jurisprudência não pede nada.
+
+## 5. Contagens medidas (16/08/2026)
+
+| Busca | Total |
+|---|---|
+| sem filtro (acervo inteiro) | **1.089** |
+| `licitação` | 267 |
+| `pessoal` | 180 |
+| `licitacao` (sem acento) | **0** |
+| macroTemaId=1 (Auditoria) | 88 |
+| macroTemaId=3 (Licitações e Contratos) | 246 |
+| macroTemaId=999 (inventado) | 0 |
+| `conselheiro` = Marianna Montebello Willeman | 342 |
+| janela 01/01/2025–31/12/2025 | 235 |
+
+🔴 **A base é PEQUENA e CURADA: 1.089 documentos.** Não é o acervo de decisões do TCE-RJ —
+é a seleção de ementas/teses feita pelo Serviço de Jurisprudência (SJU). O acervo grande
+está na Pesquisa Textual (§ arquivo `02-pesquisa-textual.txt`). **Não relate 1.089 como
+"a jurisprudência do TCE-RJ".**
+
+## 6. 🔴 O CAMPO DE RELATOR SE CHAMA `conselheiro`, E OS NOMES PLAUSÍVEIS SÃO IGNORADOS EM SILÊNCIO
+
+Medido com o **mesmo** nome válido (`Marianna Montebello Willeman`), contra o acervo de 1.089:
+
+| Campo enviado | Total |
+|---|---|
+| `conselheiro` | **342** ✅ filtra |
+| `relator` | 1.089 ❌ = sem filtro |
+| `relatorNome` | 1.089 ❌ |
+| `relatorId` | 1.089 ❌ |
+| `nomeRelator` | 1.089 ❌ |
+| `relatores` | 1.089 ❌ |
+| `relatorVencedor` | 1.089 ❌ |
+| `relator` = "ZZZ INEXISTENTE" | 1.089 ❌ |
+
+O campo **`relator` existe no payload de resposta** de cada documento — o que torna o
+engano completo: o nome óbvio está lá, é o nome do dado, e como **filtro** ele é
+descartado sem erro. O controle é a linha do **valor inventado**: `relator` inventado
+também devolve 1.089, provando ignorado (e não "campo certo, valor errado"). É a
+invariante do repo ("contagem igual = filtro ignorado") pegando um campo cujo nome
+o próprio payload sugere. **Nome de campo na resposta ≠ nome de campo no filtro.**
+
+## 7. Operadores — os PORTUGUESES funcionam, os INGLESES derrubam com HTTP 500,
+##    e o `NÃO` **não exclui: ele deflaciona**
+
+| Query | Total | Leitura |
+|---|---|---|
+| `licitação` | 267 | |
+| `pessoal` | 180 | |
+| `licitação pessoal` (espaço) | **7** | espaço = **E (AND)** |
+| `licitação E pessoal` | **7** | ✅ `E` funciona, idêntico ao espaço |
+| `licitação OU pessoal` | **440** | ✅ `OU` funciona — **aritmética exata**: 267+180−7 = 440 |
+| `licitação NÃO pessoal` | **5** | 🔴 **NÃO exclui** — exclusão daria 260 |
+| `licitação NÃO zzzinexistente` | **0** | 🔴 prova: exclusão daria 267 |
+| `licitação NAO pessoal` (sem acento) | **0** | 🔴 zera |
+| `licitação AND pessoal` | **HTTP 500** | 🔴 derruba a busca |
+| `licitação OR pessoal` | **HTTP 500** | 🔴 derruba a busca |
+| `"licitação"` (aspas) | 267 | igual ao termo solto |
+| `licita*` | **0** | curinga não existe |
+| `licita` | **0** | sem stemming/prefixo |
+
+🔴 **A DESCOBERTA DO DIA: `NÃO` é palavra literal AND-ada, e isso DEFLACIONA.**
+O botão `NÃO` existe na tela e insere o token. Mas `licitação NÃO zzzinexistente` = **0**:
+se fosse exclusão, seria 267 (nada a excluir). O que acontece é `licitação` E `não` E
+`zzzinexistente`. Com `pessoal` dá 5 em vez dos 260 da exclusão correta.
+**O repo já catalogou operador que zera (TJMS), que infla (TJBA/TJES/TJTO) e que é
+ignorado (TJMT).** Este é o quarto modo: **deflaciona para um número pequeno e plausível**
+— 5 resultados se leem como "busca muito específica", não como operador quebrado.
+Décimo primeiro conjunto de operadores do repo; continua sem herdar nada.
+
+✅ **`AND`/`OR` dando HTTP 500 é a boa notícia**: é sintoma visível (como no eJURIS/TJRJ),
+não zero calado.
+
+🔴 **ACENTO É OBRIGATÓRIO e o índice NÃO normaliza**: `licitacao` = **0** contra
+`licitação` = 267. Padrão TJMS/TJBA/TJPB. Número zero aqui é quase sempre acento faltando.
+
+## 8. Datas — o filtro é bem-comportado (raro)
+
+| Janela | Total |
+|---|---|
+| `dataInicio`=2025-01-01 + `dataFim`=2025-12-31 | 235 |
+| só `dataInicio`=2025-01-01 | **346** ✅ funciona sozinha |
+| só `dataFim`=2025-12-31 | **978** ✅ funciona sozinha |
+| no-op 1900-01-01 → 2100-12-31 | **1.089** ✅ = acervo inteiro |
+
+✅ **As duas pontas funcionam em separado** (diferente do TCE-PR, onde `-di` zerava e
+`-df` era ignorado) e **a janela no-op não altera a contagem** (diferente do TJES, onde
+um filtro que não excluía nada derrubava 42%). Formato: ISO com `Z`.
+O eixo é a **data do voto** (`dataDoVoto`) — não há data de publicação nesta base.
+
+## 9. Consulta por número — NÃO MEDIDA (pendência)
+
+O payload traz `numeroProcesso` cru (`10388502026`) e `numeroDoProcessoFormatado`
+(`103.885-0/2026`) — duas formas, como TJMT. **Não foi testado** se algum campo de filtro
+aceita número de processo; o formulário não expõe o campo. Isto alimenta o `Checker` e
+está por fazer.
+
+## 10. Pendências declaradas
+
+- **O crawler não foi escrito** (timebox de 90 min estourou no mapeamento).
+- **Consulta por número de processo não medida** (§9) — o `Checker` depende dela.
+- O combo **Temas** (`temaId`) é AJAX dependente do macro-tema e **não foi enumerado**;
+  `temaId=1` devolve 1 documento, então o campo filtra, mas os valores não foram listados.
+- `RelatoresVencedores` (relator vencedor ≠ relator) existe como endpoint e **não foi
+  medido como filtro**.
+- Não se mediu **rate limit**.
+- A distribuição **por ano** da base não foi medida — o passo obrigatório desde o TJAM
+  (base congelada × corrente) **está por fazer**. Sabe-se apenas que há documento com
+  `dataDoVoto = 22/06/2026`, e que a janela de 2025 devolve 235.

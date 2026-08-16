@@ -1182,7 +1182,7 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 19 | **TCE-SC** | SC | ✅ SC **não tem TCM** — os 295 municípios estão na base do próprio TCE | ok 14/08 |
 | 20 | **TCE-RS** | RS | ✅ o RS **não tem TCM** — os municípios gaúchos estão na base do próprio TCE | ok 15/08 |
 | 21 | **TCE-SP** | SP | ⚠️ **não** cobre a capital — SP capital é do **TCM-SP** (**confirmado por medição**) | ok 15/08 |
-| 22 | **TCE-RJ** | RJ | ⚠️ capital carioca é do **TCM-RJ** | pendente |
+| 22 | **TCE-RJ** | RJ | ⚠️ capital carioca é do **TCM-RJ** — **confirmado por medição** (o combo traz 91 dos 92 municípios) | ok 16/08 |
 | 23 | **TCE-MG** | MG | | pendente |
 | 24 | **TCE-BA** | BA | ⚠️ **todos** os municípios baianos são do **TCM-BA** | pendente |
 | 25 | **TCE-PE** | PE | | pendente |
@@ -1641,11 +1641,105 @@ fragmentado do PDF foi **inferida de um exemplo só** (por isso o crawler segue 
 redirect em vez de reconstruí-la). ⏱️ Timebox **não estourado**: 20:00 → 20:29,
 ~29 min.
 
+📌 **O que o TCE-RJ (feito em 16/08/2026, slot 1600) ensinou — leia
+[`CLAUDE-TCERJ.md`](CLAUDE-TCERJ.md).** Quinto alvo do Bloco 5, fechado 🟢 em ~25 min. A
+porta é uma **API REST pública** (`liana-processo-webapi`) achada na Network, sem auth e
+sem captcha em etapa nenhuma. As lições valem para os 8 TCEs restantes:
+
+- 🔴 **NOME DE CAMPO NA RESPOSTA NÃO É NOME DE CAMPO NO FILTRO — regra nova, e a
+  descoberta mais transferível do dia.** O filtro de relator do TCE-RJ chama-se
+  **`conselheiro`** (342 de 1.089). Mandar **`relator`** devolve **1.089** — a contagem
+  sem filtro — e o mesmo acontece com `relatorNome`, `relatorId`, `nomeRelator`,
+  `relatores` e `relatorVencedor`. O engano é completo porque **`relator` EXISTE no
+  payload de resposta de cada documento**: o nome óbvio está lá, e como *filtro* é
+  descartado sem erro. Quem lesse o JSON de saída para descobrir o nome do parâmetro
+  erraria com confiança. **O controle é o valor inventado** (`relator` inventado também
+  devolve 1.089), que separa "ignorado" de "campo certo, valor errado".
+- 🔴 **QUARTO MODO DE OPERADOR QUEBRADO: O QUE DEFLACIONA.** O botão `NÃO` existe na tela,
+  insere o token — e **não exclui**: vira palavra e entra no AND.
+  `licitação NÃO <termo inexistente>` = **0** (a exclusão daria 267 — é a prova), e
+  `licitação NÃO pessoal` = **5** contra os 260 da exclusão correta. O repo já catalogara
+  operador que **zera** (TJMS), que **infla** (TJBA/TJES/TJTO) e que é **ignorado**
+  (TJMT); este deflaciona para um número **pequeno e plausível**, e 5 resultados se leem
+  como "busca específica", não como defeito. ✅ Em compensação `E` e `OU` funcionam com
+  aritmética **exata** (267 + 180 − 7 = 440) e `AND`/`OR` devolvem **HTTP 500** — erro
+  visível, que é a melhor forma de um operador falhar.
+- 🔴 **QUINTA CASCA DE HTTP 200: PÁGINA DE ERRO 404 SERVIDA COM STATUS 200.**
+  `/swagger/index.html` responde **200 com 571 bytes** cujo corpo é literalmente
+  `<h1>Erro HTTP 404</h1>`. Não é vhost curinga (TJAC/TJAL), nem `index.html` de SPA
+  (TJES/TJRR), nem tela de login (TCE-PR): é uma página de erro que **mente no status**.
+  Conferir `resp.ok` registraria "o TCE-RJ tem Swagger". **Leia o corpo antes do 200.**
+- 🔴 **A ARMADILHA DO TCM É VERDADEIRA AQUI — e a prova saiu do próprio portal.** O combo
+  de município traz **93 opções** = "Selecione" + "ESTADO DO RIO DE JANEIRO" + **91
+  municípios**, e o RJ tem **92**: a única ausente é a **capital**, que é do TCM-RJ.
+  Diferente do TCE-SP, onde não havia combo e a prova teve de sair da contagem no acervo,
+  aqui bastou **contar o combo**, como no TCE-PR. **Conte o combo antes de escrever a
+  ressalva** — nos dois sentidos.
+- 🔴 **UM PORTAL DE TCE PODE TER UMA BASE CURADA DISFARÇADA DE ACERVO.** A "Jurisprudência
+  Selecionada" tem **1.089 documentos** — é a seleção do Serviço de Jurisprudência, não o
+  acervo de decisões do tribunal. O acervo grande é a **Pesquisa Textual**, que é busca
+  **processual sem ementa** (item = processo, `numeroAcordao` null, texto atrás de um
+  segundo salto não mapeado). **Meça o tamanho e a natureza da base antes de anunciá-la**:
+  relatar 1.089 como "a jurisprudência do TCE-RJ" seria falso, e mapear só a base grande
+  teria entregado contagem sem ementa.
+- ⚠️ **E ELA ESTAVA DENTRO DE UM IFRAME**: `/consulta-processo/PesquisaTextual` é
+  invólucro sem `<form>` nenhum, e a busca real mora em `/pesquisa-textual/app`. Quem
+  raspasse a página de entrada concluiria que o TCE-RJ não tem busca textual — a armadilha
+  do TJSE, repetida noutro fornecedor.
+- ⚠️ **O DOMÍNIO OFICIAL É `.tc.br`, NÃO `.gov.br`**: `www.tce.rj.gov.br` **redireciona**
+  para `www.tcerj.tc.br`, e `tce.rj.gov.br` **sem `www`** resolve para outro IP e dá
+  **HTTP 000 por timeout**. Some à coleção "000 não é portal fora do ar" (TJPE) — aqui o
+  000 é de um **host irmão** enquanto o oficial responde normalmente.
+- 🔴 **NÃO EXISTE FILTRO POR NÚMERO DE PROCESSO**, e todos os campos plausíveis são
+  ignorados (1.089 nas duas formas do número e com valor inventado). ✅ O contorno é
+  recortar no **cliente**, e só é barato por causa de **outra** medição: **não há teto de
+  `tamanhoPagina`** — o acervo inteiro vem numa requisição. **Duas medições que sozinhas
+  não valeriam nada se combinam num contorno.**
+  ⚠️ E a negativa do `-n` **não prova que o processo não existe**: em base curada ela
+  prova só que não há julgado *selecionado*. O Checker devolve essa ressalva junto.
+- ⚠️ **O SMOKE PRECISOU DE TERMO PRÓPRIO, e isso é achado, não gambiarra:** `dano moral`
+  é **0** em toda a base (`moral` = 0), porque controle externo não tem essa matéria —
+  enquanto `licitação` = 267. Sem override, o smoke marcaria **regressão num crawler
+  saudável**, que é o pior defeito possível num teste de fumaça: ensinar a ignorá-lo.
+  Ficou um `TERMO_POR_COMANDO` em `tests/smoke.js` com a regra de entrada explícita
+  (só com o zero **provado**). ⚠️ TCE-PR e TCE-SP passam com o termo padrão e **não**
+  entraram na lista.
+- ✅ **Muita coisa está bem, e medir isso também é o trabalho:** ementa **íntegra na
+  busca** em **100%** dos documentos (1.089/1.089, medido no acervo inteiro); total
+  **exato**; paginação **estável 3/3**; as **duas pontas** da data funcionam sozinhas e a
+  janela **no-op** não altera a contagem (nem o `-di` que zera do TCE-PR, nem o no-op que
+  derruba 42% do TJES); **permalink público em PDF** por acórdão, com **`%PDF` de
+  verdade** (não se repetiu o envelope PKCS#7 do TCE-PR) e **404 real** para número
+  inventado; base **corrente** (2021 → 22/06/2026).
+- ⚠️ **Duas granularidades para o mesmo julgado:** 1.089 registros em **998 processos**, e
+  os ids **1162 e 1163 são teses distintas do MESMO acórdão** — logo do mesmo PDF. O
+  permalink é por **acórdão**, o registro é por **tese**. Não conte PDFs como julgados.
+
+⚠️ **Pendências declaradas do TCE-RJ:** a **Pesquisa Textual não foi implementada** (o
+segundo salto `idDocumento` → texto não foi mapeado, e a saturação em 10.000 não foi
+confirmada com termo raro); o combo **Temas** filtra mas não foi enumerado;
+`RelatoresVencedores` não foi medido como filtro; o PDF **não foi conferido** contra a
+ementa por `pdftotext`; rate limit não medido. ⏱️ Timebox **não estourado**: 16:00 →
+16:26, ~26 min. ⚠️ **Dois tropeços de processo valem registro.** (1) Perdi tempo achando
+que estava em 17:12 quando eram 16:15, porque **estimei o relógio em vez de consultá-lo** —
+exatamente o erro que o TJRJ/eJURIS já havia registrado em 13/08, e que quase me fez
+marcar `parcial` com 75 minutos de sobra. `date` custa o mesmo que um palpite; **rode-o**.
+(2) Um `cd` que falhou fez um heredoc não executar, e copiei um `/tmp/map1.js` **antigo do
+TCE-PR**, que sobrescreveu `human-codegen/TCEPR/01-viajuris/01-xhr-carga.json` — restaurado
+com `git checkout` do arquivo. **Scratch em `/tmp` com nome genérico é reincidência
+esperando acontecer**: use `/tmp/<tribunal>/`.
+
+⚠️ **Achado fora do alvo, para o próximo slot:** o **TCE-RS está com o smoke VERMELHO** —
+`node tests/smoke.js tcers` devolve `HTTP 500 na busca (jurisprudencia-decisoes)`. Não foi
+tocado (não era o alvo do dia); é candidato a `fixer`.
+
 **Armadilha do bloco 5:** onde existe TCM, buscar "contas municipais" no TCE devolve zero
 que se lê como "não há julgado". Ao documentar o TCE, escreva explicitamente o que ele
 **não** cobre e aponte o TCM correspondente.
 ✅ **Medida até agora:** falsa em **PR, SC e RS** (não têm TCM), **verdadeira em SP**
-(a capital é do TCM-SP). Faltam medir RJ, BA, GO e PA, onde a fila também a declara.
+(a capital é do TCM-SP) e **verdadeira no RJ** (a capital é do TCM-RJ, provado por
+contagem no combo: 91 dos 92 municípios). Faltam medir BA, GO e PA, onde a fila também
+a declara.
 
 ---
 

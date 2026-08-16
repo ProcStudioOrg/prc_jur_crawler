@@ -1,0 +1,154 @@
+# TCE-RJ — o que vem DEPOIS da busca (skill browser-post-search)
+
+Medido em 16/08/2026, sobre `jurisprudencia-selecionada`, termo `licitação` (267 resultados).
+
+## 18. Onde o resultado aparece
+
+- **Mesma rota, mesma URL.** Antes e depois do clique em Buscar a URL é
+  `…/cadastro-publicacoes/public/jurisprudencia-selecionada`. 🔴 **NÃO EXISTE PERMALINK
+  DE BUSCA** — nunca mande "o link da busca" do TCE-RJ como prova.
+- **Os controles permanecem** (o formulário fica acima da tabela): refinar é incremental.
+- **Não abre popup nem nova aba** na busca.
+- **O total aparece na tela**, com este texto exato:
+  `Exibindo de 1 até 10, de 267 registros encontrados.`
+  e bate com `totalResults` do JSON. **Total EXATO, não saturado** — a aritmética da
+  última página fecha: 26 páginas de 10 + 7 = 267 (§22).
+- Prints: `02.01-resultados-topo.png` (topo) e `02.02-resultados-rodape.png` (rodapé).
+
+## 19. Anatomia do card — é uma `<tr>` de tabela, e o texto É A EMENTA (não trecho)
+
+`outerHTML` gravado em `01-card-resultado.html` (1.343 bytes).
+
+Colunas: **Ações | Macro-tema | Conselheiro(a) | Processo | Data | Jurisprudência Selecionada | Acórdão**
+
+Exemplo medido:
+```
+Licitações e Contratos | Marianna Montebello Willeman | 103.885-0/2026 | 22/06/2026 |
+LICITAÇÃO. CONTRATOS. AÇÃO CAUTELAR. REVOGAÇÃO. INTERESSE NO MÉRITO. CONTRATAÇÃO.
+Embora o pedido cautelar tenha perdido o objeto, face a revogação superveniente do
+certame, subsiste interesse no exame de mérito da representação, sobretudo porque a
+matéria envolve cláusulas editalícias que poderão ser reproduzidas em eventual nova
+licitação para a contratação do mesmo objeto. | 20582/2026
+```
+
+✅ **O texto do card É a ementa/tese, íntegra e já no payload da busca** — não é trecho e
+não é highlight:
+- **469 caracteres** no card contra **469** em `dispositivoCompleto` do JSON: idênticos.
+- **Não há `<mark>`/`<b>`** no card da Jurisprudência Selecionada (o highlight
+  `<mark class="highlight">` existe **na outra base**, a Pesquisa Textual — não confunda).
+- A estrutura é a do CNJ: **linha de verbetação em CAIXA ALTA** (`LICITAÇÃO. CONTRATOS. …`)
+  + **a tese** em texto corrido. São dois campos distintos no JSON:
+  - `dispositivo` → só a tese (sem a linha de verbetação)
+  - `dispositivoCompleto` → verbetação + tese (é o que a tela mostra)
+  **Use `dispositivoCompleto` como ementa**; `dispositivo` sozinho perde os descritores.
+
+⚠️ **Dois tipos dissecados.** Além do acórdão comum acima, a base marca **Temas
+Repetitivos** (botão próprio na tela). Os campos são os mesmos; o que muda é o conjunto.
+🔴 **Um tipo NÃO foi dissecado**: documentos com `numeroAcordao: null` — não se mediu
+quantos são nem como o card deles se comporta (pendência: sem acórdão não há PDF, §21).
+
+### Campo da API → o que significa
+
+| Campo | Significado | Vira no repo |
+|---|---|---|
+| `jurisprudenciaId` | **identifica o DOCUMENTO** | `id` |
+| `numeroProcesso` | número cru, 11 díg. (`10388502026`) | `processo` |
+| `numeroDoProcessoFormatado` (detalhe) | `103.885-0/2026` | `processoFormatado` |
+| `acordaoFormatado` / `numeroAcordao`+`anoAcordao` | `20582/2026` | `numeroAcordao` |
+| `dispositivoCompleto` | verbetação + tese | **`ementa`** |
+| `dispositivo` | só a tese | `tese` |
+| `relator` | nome do conselheiro | `relator` (⚠️ filtra por `conselheiro`, §6) |
+| `dataDoVoto` | data do voto | `dataJulgamento` |
+| `macroTemaNome` | Licitações e Contratos, Pessoal… | `macroTema` |
+| `statusNome` | "Publicado" | `status` |
+| `boletim` | nº do Boletim de Jurisprudência (pode ser null) | `boletim` |
+
+## 20. A escada até o documento — dois degraus, os dois com contrato reproduzido fora do browser
+
+**Degrau 1 — botão de detalhes (ícone `fa-edit` na coluna Ações)**
+`GET /cadastro-publicacoes-webapi/api/JurisprudenciaSelecionada/{jurisprudenciaId}`
+→ **HTTP 200, JSON, 2.434 bytes**, sem cookie. Abre **modal sem URL própria**
+(print `02.03-degrau-detalhes.png`). Acrescenta ao que já veio na busca:
+`verbetacoesDispositivo`, `verbetacoes`, `comentarios`, `leis` (referência legislativa),
+`relatorVencedor`, `numeroDoProcessoFormatado`, `dataBoletimFormatada`.
+
+**Degrau 2 — link do número do acórdão (`<a target="_blank">`)**
+`GET /documento-webapi-externo/api/documento/acordao/{numeroAcordao}/{anoAcordao}`
+→ **HTTP 200, `application/pdf`, 1.324.308 bytes, PDF 1.7 de 10 páginas.**
+
+✅ **É PERMALINK PÚBLICO DE VERDADE**, confirmado em requisição limpa (curl, sem cookie,
+sem Referer, sem sessão do browser). Exemplo:
+`https://www.tcerj.tc.br/documento-webapi-externo/api/documento/acordao/20582/2026`
+✅ **É PDF de verdade** (`%PDF`, `file` confirma "PDF document, version 1.7") — **aqui o
+magic number VALE**, ao contrário do TCE-PR, cujo `application/pdf` era um envelope
+PKCS#7 com o PDF no offset 57.
+✅ **Número inventado devolve 404 com corpo vazio** (`/acordao/999999/2026`) — sem casca
+de 200, sem PDF falso.
+
+🔴 **Não há degrau "copiar citação"**: a citação oficial **não vem pronta** (diferente de
+TCE-PR e TCE-SC). Ela precisa ser montada dos campos do card.
+
+## 21. O documento na íntegra
+
+```
+Formato:           PDF (application/pdf), PDF 1.7, zip deflate
+Tamanho típico:    ~1,3 MB / 10 páginas (uma amostra)
+Vem completo?      é o acórdão publicado inteiro (não conferido contra pdftotext — pendência)
+Precisa de sessão? NÃO — 200 em contexto limpo
+Precisa de captcha?NÃO — nem na busca, nem no download. Bloqueio ZERO nos dois lados.
+Já veio na busca?  A EMENTA sim (dispositivoCompleto, íntegra). O PDF não.
+```
+⚠️ **Assimetria de bloqueio: não há.** Busca livre **e** download livre — diferente de
+TJAC/TJAM/TJAL (reCAPTCHA só no download).
+🔴 **PENDÊNCIA**: o texto do PDF **não foi conferido contra o card** por `pdftotext`
+(lição do TCE-PR). E documentos com `numeroAcordao: null` **não têm como montar a URL do
+PDF** — não se mediu quantos são.
+
+## 22. Paginação e profundidade
+
+```
+Parâmetro:      na URL — /consulta/pagina/{pagina}/tamanhoPagina/{tamanho}, 1-BASED
+Default tela:   10 (combo oferece 10/20/30/40/50)
+Máximo aceito:  🔴 NÃO HÁ TETO MEDIDO — tamanhoPagina=1089 devolve os 1.089 numa página só,
+                e pedir 2000 devolve 1.089 (trunca no acervo, sem erro, sem 400)
+Total:          EXATO. 26 páginas de 10 + 7 na 27ª = 267 ✅
+Além do fim:    página 28 devolve list:[] com HTTP 200 e totalResults correto (sem erro)
+Estabilidade:   ✅ 3/3 IDÊNTICAS — mesma página 2, três vezes, mesmos 10 ids na mesma ordem
+                (1167,1140,1136,1134,1133,1135,1125,1126,1097,1100)
+```
+✅ Sem o problema de paginação instável do TJDFT/TJRJ/TJMT.
+✅ Como não há teto de `tamanhoPagina`, **a base inteira cabe em uma requisição** — o
+crawler não precisa paginar para varredura completa.
+
+## 23. Identidade do documento
+
+- **Quem identifica o julgado é `jurisprudenciaId`**, não o número do processo.
+- 🔴 **Um processo RENDE VÁRIOS registros — medido no acervo inteiro: 1.089 registros em
+  998 processos distintos.** O número do processo não identifica o julgado.
+- 🔴 **E dois registros podem ser TESES DISTINTAS DO MESMO ACÓRDÃO.** Medido: os ids
+  **1162 e 1163** apontam ambos para o acórdão **20582/2026** — logo para o **mesmo PDF**.
+  O permalink é por **acórdão**; o registro é por **tese**. São granularidades diferentes:
+  **não conte PDFs como julgados, nem julgados como PDFs.**
+- **O identificador do permalink NÃO é o `jurisprudenciaId`**: o PDF é endereçado por
+  `numeroAcordao/anoAcordao`.
+- ✅ **Medido no acervo inteiro (1.089):** 100% com `dispositivoCompleto` (ementa), 100%
+  com status "Publicado", e **apenas 2 registros sem `numeroAcordao`** — esses são os que
+  ficam sem PDF e sem permalink (o crawler marca `semInteiroTeor`).
+
+## 24. Critério de aceite desta skill
+
+- [x] Print da listagem no topo e no rodapé
+- [x] `outerHTML` de um card gravado (`01-card-resultado.html`)
+- [ ] Card dissecado em 2+ tipos — **parcial**: acórdão comum sim; o tipo com
+      `numeroAcordao: null` **não** foi dissecado
+- [x] Escrito se o texto do card é ementa/trecho/nada, com tamanhos (469 = 469, é ementa)
+- [x] Cada botão do card clicado, com print (detalhes e acórdão)
+- [x] Contrato do inteiro teor registrado **e reproduzido fora do browser** (curl limpo)
+- [x] Formato do documento identificado (PDF 1.7, ~1,3 MB)
+- [x] Respondido: a ementa já vinha no payload da busca (sim); o PDF não
+- [x] Bloqueio registrado em separado para busca e download (não há em nenhum dos dois)
+- [x] `size` máximo medido (sem teto; 2000 trunca em 1.089 sem erro)
+- [x] Total classificado — **EXATO**
+- [x] Paginação testada 3× — **estável**
+- [x] Permalink por documento confirmado em requisição limpa
+- [x] Registrado qual campo identifica o documento (`jurisprudenciaId`; PDF por acórdão/ano)

@@ -67,6 +67,8 @@ const TCERSCrawler = require('../src/TCERSCrawler');
 const TCERSChecker = require('../src/TCERSChecker');
 const TCESPCrawler = require('../src/TCESPCrawler');
 const TCESPChecker = require('../src/TCESPChecker');
+const TCERJCrawler = require('../src/TCERJCrawler');
+const TCERJChecker = require('../src/TCERJChecker');
 const TJRRCrawler = require('../src/TJRRCrawler');
 const TJRRChecker = require('../src/TJRRChecker');
 const TJESCrawler = require('../src/TJESCrawler');
@@ -5914,6 +5916,137 @@ program
       if (jsonMode) {
         process.stdout.write(
           JSON.stringify({ success: true, count: res.resultados.length, output: outputPath, ...resumo }) + '\n',
+        );
+      }
+    } catch (error) {
+      if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+      else console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tcerj')
+  .description('Search TCE-RJ (Tribunal de Contas do Estado do Rio de Janeiro) — API REST, sem browser')
+  .option('-q, --query <text>', 'Termos de busca. ACENTO E OBRIGATORIO (o indice nao normaliza)')
+  .option('-n, --numero <numero>', 'Consulta por numero de processo (aceita "103.885-0/2026" ou "10388502026"); dispensa -q')
+  .option('--macro-tema <id>', 'Macro-tema: 1=Auditoria, 2=Contas, 3=Licitacoes e Contratos, 7=Direito Processual... (--listar-filtros)')
+  .option('--tema <id>', 'Tema (subordinado ao macro-tema)')
+  .option('--conselheiro <nome>', 'Nome do Conselheiro. ATENCAO: o campo "relator" da API e IGNORADO — use este')
+  .option('-r, --relator <nome>', 'Alias de --conselheiro (avisa: o campo relator da API nao filtra)')
+  .option('-di, --data-inicio <date>', 'Data inicial do VOTO (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Data final do VOTO (DD/MM/YYYY)')
+  .option('-dpi, --data-pub-inicio <date>', 'Alias de -di (NAO existe data de publicacao nesta base)')
+  .option('-dpf, --data-pub-fim <date>', 'Alias de -df (NAO existe data de publicacao nesta base)')
+  .option('--listar-filtros', 'Lista macro-temas e conselheiros e sai')
+  .option('--verificar [amostra]', 'Audita N resultados baixando o PDF do acordao (default 3)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
+  .option('--page-size <n>', 'Resultados por pagina (sem teto medido; 1089 traz o acervo inteiro)', 20)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tcerj.json')
+  .option('--fetch-inteiro-teor', 'Baixa o PDF publico do acordao (1 GET por documento)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tcerj')
+  .option('-v, --visible', 'Ignored (TCE-RJ usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TCE-RJ usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    try {
+      if (opts.numero) {
+        const res = await new TCERJChecker({ log }).consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (opts.listarFiltros) {
+        const nav = new (require('../src/TCERJNavigator'))({ log });
+        const saida = { macroTemas: await nav.macroTemas(), conselheiros: await nav.relatores() };
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, combos: saida }) + '\n');
+        else console.log(JSON.stringify(saida, null, 2));
+        process.exit(0);
+      }
+
+      if (!opts.query && !opts.macroTema && !opts.tema && !opts.conselheiro && !opts.dataInicio && !opts.dataPubInicio) {
+        throw new Error('Informe -q "<termos>" (ou -n <numero>, ou um filtro como --macro-tema/--conselheiro/-di)');
+      }
+
+      log('='.repeat(60));
+      log('TCE-RJ Jurisprudencia Crawler (API REST, sem browser, sem captcha)');
+      log('ESCOPO: CONTROLE EXTERNO, nao Judiciario — contas, licitacao, contrato e');
+      log('        pessoal do Estado do RJ e dos municipios fluminenses.');
+      log('🔴 A CAPITAL NAO ESTA NESTA BASE: o Municipio do Rio de Janeiro e do');
+      log('   TCM-RJ, orgao separado que este repo nao cobre (confirmado por medicao:');
+      log('   o combo traz 91 municipios dos 92 do estado, e falta a capital).');
+      log('🔴 BASE CURADA E PEQUENA: 1.089 documentos selecionados pelo Servico de');
+      log('   Jurisprudencia. NAO e o acervo de decisoes do TCE-RJ.');
+      log('ATENCAO: ACENTO E OBRIGATORIO ("licitacao" = 0 x "licitação" = 267).');
+      log('ATENCAO: "NAO"/"NÃO" nao exclui — vira palavra e DEFLACIONA. "AND"/"OR"');
+      log('         derrubam a busca com HTTP 500. Use E e OU.');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '(sem termo — so filtros)'}`);
+      log(`Voto: ${opts.dataInicio || opts.dataPubInicio || '-'} a ${opts.dataFim || opts.dataPubFim || '-'}`);
+      log('='.repeat(60));
+
+      const crawler = new TCERJCrawler({
+        log,
+        porPagina: parseInt(opts.pageSize, 10),
+        includeFullText: !!opts.fetchInteiroTeor,
+      });
+
+      const filters = {
+        macroTema: opts.macroTema || null,
+        tema: opts.tema || null,
+        conselheiro: opts.conselheiro || null,
+        relator: opts.relator || null,
+        dataInicio: opts.dataInicio || opts.dataPubInicio || null,
+        dataFim: opts.dataFim || opts.dataPubFim || null,
+      };
+      if ((opts.dataPubInicio || opts.dataPubFim) && !opts.dataInicio && !opts.dataFim) {
+        log('  [aviso] -dpi/-dpf sao alias de -di/-df: NAO existe data de publicacao nesta base, so a data do VOTO.');
+      }
+
+      const res = await crawler.search(opts.query || '', filters, { maxPages: parseInt(opts.maxPages, 10) });
+
+      log('='.repeat(60));
+      log(`Total no servidor: ${res.totalResults} (exato) | coletados: ${res.length}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 3 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} baixando o PDF do acordao...`);
+        verificacao = await new TCERJChecker({ log }).verificar(res, amostra);
+      }
+
+      const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+      if (opts.fetchInteiroTeor) {
+        const dir = path.resolve(opts.outputDir);
+        fs.mkdirSync(dir, { recursive: true });
+        for (const r of res) {
+          if (r.inteiroTeorPdfBuffer) {
+            fs.writeFileSync(path.join(dir, `acordao-${String(r.numeroAcordao).replace('/', '-')}.pdf`), r.inteiroTeorPdfBuffer);
+            delete r.inteiroTeorPdfBuffer;
+          }
+        }
+        log(`Files saved to: ${dir}`);
+      }
+      fs.writeFileSync(outputPath, JSON.stringify(res, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({
+            success: true,
+            count: res.length,
+            output: outputPath,
+            totalResults: res.totalResults,
+            totalSaturado: false,
+            semEmenta: res.filter((r) => r.semEmenta).length,
+            semInteiroTeor: res.filter((r) => r.semInteiroTeor).length,
+            avisos: res.avisos,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n',
         );
       }
     } catch (error) {

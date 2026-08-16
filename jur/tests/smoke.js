@@ -44,6 +44,24 @@ const pedidos = argv.filter((a, i) => !a.startsWith('--') && !(tIdx >= 0 && i ==
 /** Termo neutro e período recente: precisa devolver resultado em qualquer tribunal ativo. */
 const CONSULTA = { termo: 'dano moral', meses: 12 };
 
+/**
+ * Termo alternativo por comando — para bases em que "dano moral" é ZERO LEGÍTIMO.
+ *
+ * "dano moral" não é neutro fora do Judiciário. Medido no TCE-RJ em 16/08/2026:
+ * `moral` = 0 e `dano moral` = 0 em toda a base, enquanto `dano` = 85 e
+ * `licitação` = 267 — a base de controle externo simplesmente não tem essa
+ * matéria. Sem este override o smoke marcaria REGRESSÃO num crawler saudável,
+ * que é o pior defeito possível num teste de fumaça: ensinar a ignorá-lo.
+ *
+ * ⚠️ Só entre aqui com o zero PROVADO (contagem do termo alternativo > 0 e do
+ * termo padrão = 0 na base inteira, sem janela de data). Zero por filtro,
+ * encoding ou captcha continua sendo regressão — não o esconda aqui.
+ * TCE-PR e TCE-SP passam com o termo padrão e por isso NÃO estão nesta lista.
+ */
+const TERMO_POR_COMANDO = {
+  tcerj: 'licitação', // base curada de 1.089 docs; ver CLAUDE-TCERJ.md
+};
+
 const ddmmyyyy = (d) => `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
 
 function periodo() {
@@ -99,7 +117,8 @@ function classificar({ code, stdout, stderr, timedOut }) {
 
 function rodar(cmd) {
   const [di, df] = periodo();
-  const args = [cmd, '-q', CONSULTA.termo, '-di', di, '-df', df, '-m', '1', '--json'];
+  const termo = TERMO_POR_COMANDO[cmd] || CONSULTA.termo;
+  const args = [cmd, '-q', termo, '-di', di, '-df', df, '-m', '1', '--json'];
   return new Promise((resolve) => {
     const t0 = Date.now();
     const p = spawn(JUR, args, { cwd: ROOT });
