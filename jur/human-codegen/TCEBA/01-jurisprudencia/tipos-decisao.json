@@ -1,0 +1,30 @@
+[
+  {
+    "v": "",
+    "t": "Todos"
+  },
+  {
+    "v": "ACRDO",
+    "t": "Acórdão"
+  },
+  {
+    "v": "DMNCR",
+    "t": "Decisão monocrática"
+  },
+  {
+    "v": "RSLÃO",
+    "t": "Resolução"
+  },
+  {
+    "v": "VOTO",
+    "t": "Voto"
+  },
+  {
+    "v": "R1CMR",
+    "t": "Resolução 1ª Camara"
+  },
+  {
+    "v": "R2CMR",
+    "t": "Resolução 2ª Camara"
+  }
+]

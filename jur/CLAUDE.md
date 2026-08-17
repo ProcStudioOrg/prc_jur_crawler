@@ -64,6 +64,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tcers` | **TCE-RS** (Tribunal de Contas do Estado do Rio Grande do Sul — controle externo) | RS (Estado + **os municípios gaúchos**) | `CLAUDE-TCERS.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; o **inteiro teor já vem na busca**, conferido contra o PDF). Base corrente, **4 bases via `--base`**. 🔴 **O espaço entre termos é OR** e os operadores que a tela anuncia (`E`/`OU`/`NÃO`/`PROX`/`MESMO`/`$`) **inflam até saturar ou zeram** — use `AND`/`OR`/`NOT`. 🔴 **A ementa desaparece a partir de 2020** |
 | `tcesp` | **TCE-SP** (Tribunal de Contas do Estado de São Paulo — controle externo) | SP (Estado + **644 municípios**; 🔴 **NÃO a capital**, que é do TCM-SP) | `CLAUDE-TCESP.md` | 🟢 OK (HTTP direto, sem browser — **sem captcha**; **três permalinks públicos**, inclusive a **URL da busca**). Base corrente, 1.317.838 documentos, de 2008 em diante. 🔴 **Não existe ementa** — o texto é trecho com highlight. 🔴 **Os operadores são QUATRO CAIXAS, não inline**: `OU` dentro de `-q` é descartado e a busca continua AND. 🔴 **Um julgado decide vários processos** (fator ~2,9×): o total não é o nº de decisões |
 | `tcerj` | **TCE-RJ** (Tribunal de Contas do Estado do Rio de Janeiro — controle externo) | RJ (Estado + **os municípios fluminenses**; 🔴 **NÃO a capital**, que é do TCM-RJ) | `CLAUDE-TCERJ.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa íntegra na busca e **PDF público de inteiro teor com permalink**). 🔴 **Base CURADA e pequena** (1.089 documentos, 2021–2026): é a seleção do Serviço de Jurisprudência, **não o acervo de decisões**. 🔴 **Acento é obrigatório**; o `NÃO` **não exclui, deflaciona**, e `AND`/`OR` derrubam com HTTP 500. 🔴 O filtro de relator chama-se `--conselheiro` |
+| `tceba` | **TCE-BA** (Tribunal de Contas do Estado da Bahia — controle externo) | BA (**só o Estado**; 🔴 **NÃO os municípios**, que são do TCM-BA) | `CLAUDE-TCEBA.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; o **texto integral já vem na busca** e o **PDF é público**). Base corrente, 2002–2026. 🔴 **O termo é FRASE LITERAL**: não há operador booleano e o espaço não é conectivo (`nepotismo súmula` = 0, `de nepotismo` = 4); aspas dão **HTTP 500**. 🔴 **Não existe paginação** — `qtRegistros` é limiar que **recusa com HTTP 400 e zero documento**. 🔴 **Voto (66% do acervo) vem sem ementa** |
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
@@ -809,6 +810,49 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   número na API**: `./bin/jur tcerj -n "103.885-0/2026"` recorta no cliente, e a resposta
   negativa **não prova que o processo não existe** — prova que não há julgado
   *selecionado* para ele. Repasse essa ressalva
+- **Contas públicas da BAHIA** ("o que o Tribunal de Contas da BA decidiu", licitação e
+  contrato administrativo, ato de pessoal **estadual**, contas de governo, denúncia,
+  auditoria) → `tceba` → leia [`CLAUDE-TCEBA.md`](CLAUDE-TCEBA.md). É instância de
+  **controle externo**, não Judiciário: para a mesma matéria judicializada, o caminho é
+  `tjba` (estadual) ou `trf1` (federal).
+  🔴 **Não ofereça o `tceba` para matéria cível, penal, trabalhista ou previdenciária** —
+  ele não tem esse acervo, e o zero seria o tribunal errado, não ausência de julgado.
+  🔴 **OS MUNICÍPIOS NÃO ESTÃO NESTA BASE — nem Salvador.** Todos os 417 municípios
+  baianos são do **TCM-BA**, órgão separado que este repo **não cobre**. Pedido sobre
+  contas de prefeitura baiana **não tem resposta aqui**; diga isso em vez de entregar o
+  número baixo como se fosse o acervo. (A armadilha do TCM é verdadeira em BA, SP, RJ,
+  GO e PA; é falsa em PR, SC e RS.) ⚠️ O que foi medido é que **não há combo de
+  município** — consistente com a competência, mas é a ausência do filtro que está
+  medida, não a do acervo.
+  🔴 **O TERMO É UMA FRASE LITERAL — não existe operador booleano E O ESPAÇO NÃO É
+  CONECTIVO.** `E`, `AND`, `OU`, `OR`, `NAO`, `NOT` e o espaço puro **zeram todos**
+  (`nepotismo súmula` = 0), e **as aspas derrubam a busca com HTTP 500**. ✅ Mas duas
+  palavras funcionam quando são frase real do texto (`de nepotismo` = 4, `prática de
+  nepotismo` = 2). **Esse zero não é ausência de jurisprudência sobre os dois temas** —
+  é a ausência daquela sequência. Para cruzar dois conceitos, rode duas buscas e cruze.
+  ✅ O casamento é por **palavra inteira** e `*` é curinga de verdade (`nepotism` = 0 ×
+  `nepotism*` = 7); o `$` zera. ⚠️ **NÃO avise sobre acento** — o índice normaliza.
+  🔴 **NÃO EXISTE PAGINAÇÃO, e `qtRegistros` é um limiar que RECUSA**: acima dele o
+  servidor devolve **HTTP 400 e ZERO documento**, não uma primeira página — e o número
+  da mensagem ecoa o valor pedido. O crawler manda 5.000 e, se estourar, **fatia por
+  ano** e avisa quais ficaram de fora. ✅ O total é **exato**, não saturado.
+  ⚠️ **A API é lenta** (38–110 s numa busca larga); isso não é bloqueio.
+  🔴 **A EMENTA DEPENDE DO TIPO, e o tipo dominante é o que não tem**: **Voto é 66% do
+  acervo e tem ementa em 0%**; Acórdão 92%, resoluções de Câmara 100%, total 28%. O
+  crawler marca `semEmenta` — **não apresente o texto desses documentos como ementa**.
+  ✅ Para ementa, peça `-t ACRDO`.
+  ✅ **O texto integral já vem na busca** (conferido contra o PDF): `--fetch-inteiro-teor`
+  só grava o PDF em disco.
+  🔴 **NÃO EXISTE PERMALINK por documento** — o acesso é POST, não há URL colável. Nunca
+  invente link de decisão do TCE-BA. ⚠️ E o permalink de **busca** existe pela metade
+  (`?termo=` funciona, mas **nenhum outro filtro entra pela URL**): mandá-lo como prova
+  omite o recorte em silêncio. Quem identifica o julgado é o **`id`**, não o processo
+  (1.879 documentos em 1.348 processos).
+  🔴 **Não existe filtro de data nem data de publicação** — só combos de **ano**
+  (`--ano-decisao`, 2001–2026). Nunca apresente a data do TCE-BA como publicação.
+  🔴 **A consulta por número casa por SUBSTRING** (`405` arrasta `003405` e `004050`):
+  informe sempre o ano — `./bin/jur tceba -n "TCE/000405/2025"`. ⚠️ Não há CNJ nem
+  DataJud, e a negativa não prova que o processo não existe
 - **Contencioso administrativo PREVIDENCIÁRIO** ("o que o CRPS decidiu", recurso contra
   indeferimento do INSS, Junta de Recursos, Câmara de Julgamento) → 🔴 **não há busca**:
   o portal exige login Gov.br e o contorno por perfil de Chrome dedicado **já foi tentado

@@ -1,0 +1,404 @@
+TCE-BA — Consulta de Jurisprudência
+====================================
+Mapeado em 17/08/2026 (slot 16:00). Alvo #23 da FILA, primeiro `pendente` do Bloco 5.
+
+## Identificação
+
+Tribunal:        Tribunal de Contas do Estado da Bahia (TCE-BA)
+Segmento:        controle externo (NÃO é Judiciário)
+UF:              BA
+Portal:          https://www.tce.ba.gov.br/jurisprudencia/consulta
+Backend:         https://proinfo.tce.ba.gov.br/rest3/api/portaltce   (API REST pública)
+Módulo:          "Pesquisa de Decisões" (menu lateral Jurisprudência)
+Comando:         jur tceba
+Forma de acesso: `api` — HTTP direto, sem browser, SEM CAPTCHA em etapa nenhuma
+
+⚠️ ESCOPO — a ressalva declarada da fila:
+   Todos os municípios baianos são do **TCM-BA** (Tribunal de Contas dos Municípios
+   da Bahia), órgão SEPARADO que este repo NÃO cobre. Coerente com isso, o formulário
+   do TCE-BA **não tem combo de município** — ao contrário do TCE-PR (400 opções) e do
+   TCE-RJ (91 de 92). ⚠️ A ausência do combo é CONSISTENTE com a ressalva mas NÃO a
+   prova sozinha; o que se mediu foi a ausência do filtro, não a ausência do acervo.
+
+## Passo 0 — API pública: o que EXISTE e o que NÃO existe
+
+✅ EXISTE, e não foi chutada. O endpoint saiu do próprio HTML do portal:
+      <input type="hidden" value="https://proinfo.tce.ba.gov.br/rest3" id="servidorRest">
+   e os clientes JS montam a URL:
+      templates/tce2018/js/ProInfo/ProInfoJulgamento.js   (obterDecisoes, obterConselheiros…)
+      templates/tce2018/js/ProInfo/ProInfoProtocolo.js    (downloadComposicao, obterNaturezas)
+      templates/tce2018/js/ProInfo/ProInfoClient.js       (o wrapper jQuery.ajax)
+      components/com_cdsjurisprudencia/js/jurisprudencias.js  (a renderização)
+
+   Busca:   GET  /api/portaltce/julgamento/obterDecisoes?termo=&qtRegistros=&…
+   PDF:     POST /api/portaltce/protocolo/downloadComposicao?idProtocolo=&idDocumento=
+   Combos:  GET  /api/portaltce/julgamento/obterConselheiros?
+            GET  /api/portaltce/julgamento/obterColegiados
+            GET  /api/portaltce/protocolo/obterNaturezas?stNaturezaSuperior=1&listaSiglaTipoDocumento=TCE
+
+   Header que o próprio portal manda, literal:  `Authorization: No Authorization`
+
+🔴 NÃO EXISTE (medido, não presumido):
+   - dadosabertos.tce.ba.gov.br  → NXDOMAIN
+   - api.tce.ba.gov.br           → NXDOMAIN
+   - jurisprudencia.tce.ba.gov.br→ NXDOMAIN
+   - consulta.tce.ba.gov.br      → NXDOMAIN
+   - portal.tce.ba.gov.br        → NXDOMAIN
+   ✅ Logo NÃO HÁ VHOST CURINGA aqui (a armadilha TJAC/TJAL não se repetiu).
+   - www.tce.ba.gov.br/dados-abertos → 200 (56 KB), mas é página institucional de
+     dados administrativos; não há dataset de jurisprudência.
+   - /swagger, /v3/api-docs, /api → 302, IGUAL a /path-inventado-9z (302). O controle
+     do path inventado desfaz qualquer leitura de "tem Swagger".
+   - DataJud: NÃO se aplica. Contas não é Judiciário e não há alias `api_publica_*`.
+     Como em TCE-PR/SC/RS/SP/RJ, **NÃO HÁ PLANO B** se o portal cair.
+
+## 🔴 Cadeia TLS incompleta — HTTP 000 que NÃO é "fora do ar"
+
+`proinfo.tce.ba.gov.br` (e `sistemas.`) apresentam SÓ o certificado folha
+(`CN=*.tce.ba.gov.br`, emitido por `Sectigo Public Server Authentication CA OV R36`)
+e OMITEM o intermediário. Medido em camadas:
+
+   DNS      → 187.44.199.52 e 189.112.186.52 (dois nós)
+   TCP 443  → ABRE
+   TLS      → "TLS alert, unknown CA (560) / unable to get local issuer certificate"
+   curl     → HTTP 000
+
+⚠️ E o `www.tce.ba.gov.br` — MESMO certificado curinga — responde 200 normalmente,
+porque o `www` MANDA o intermediário e o `proinfo` não. Quem medisse só o
+institucional concluiria que o TLS do tribunal está bom. **É o TCE-MG de novo, com a
+mesma CA (Sectigo OV R36) e o mesmo desfecho.**
+
+✅ Correção: fornecer o intermediário pelo AIA do próprio certificado
+   (http://crt.sectigo.com/SectigoPublicServerAuthenticationCAOVR36.crt),
+   **NÃO** desligar a verificação. Provado: 000 → 400/200 com `rejectUnauthorized`
+   ainda ligado. O PEM está embutido em `src/TCEBANavigator.js`.
+
+## 1. Busca principal (query)
+
+Campo: `<input type="text" name="termo" id="termo">`   → API: `termo`
+Rótulo da tela: "Pesquisa textual"
+Texto do portal: "A pesquisa identifica as ocorrências no conteúdo das ementas, das
+                  decisões e dos votos dos relatores".
+
+🔴 NÃO HÁ PAGINAÇÃO, E `qtRegistros` É UM LIMIAR QUE RECUSA — achado central.
+   O portal manda `qtRegistros=200`. Quando a busca casa mais que isso o servidor
+   devolve **HTTP 400** com corpo
+
+     {"negocioException":"br.gov.ba.cedasc.api.exception.NegocioException",
+      "message":"A sua pesquisa retornou mais de 200 ocorrências. Por favor, refine
+                 o seu critério de pesquisa utilizando outros campos de filtro
+                 disponíveis."}
+
+   e **ZERO documento** — não uma primeira página. E o número da mensagem **ECOA o
+   valor pedido**: com `qtRegistros=1000` ele diz "mais de 1000 ocorrências". Ou seja
+   **o teto é escolha do cliente, não limite do servidor**. Medido:
+
+     termo=licitação  qtRegistros=200    → HTTP 400, 0 documentos
+     termo=licitação  qtRegistros=2000   → HTTP 200, 1879 documentos (88 s)
+     termo=licitação  qtRegistros=5000   → HTTP 200, 1879 documentos (107 s)
+     termo=licitação  qtRegistros=20000  → HTTP 200, 1879 documentos (83 s)
+
+   ✅ O total é **EXATO**, não saturado: 1879 nas três medições.
+   O crawler manda 5000 por default e, se ainda assim estourar, FATIA POR ANO.
+
+⚠️ A API é LENTA: 38–110 s por busca larga. Não é bloqueio.
+
+## 2. Operadores — 🔴 NÃO EXISTE NENHUM, e o termo é casado como FRASE
+
+Base de comparação: `nepotismo` = 7, `súmula` = 975.
+
+     nepotismo E súmula      → 0
+     nepotismo AND súmula    → 0
+     nepotismo súmula (espaço)→ 0        🔴 o espaço NÃO é AND nem OR
+     nepotismo OU súmula     → 0
+     nepotismo OR súmula     → 0
+     nepotismo NAO súmula    → 0
+     nepotismo NOT súmula    → 0
+     "frase exata" (aspas)   → **HTTP 500**  🔴 as aspas DERRUBAM a busca
+
+✅ MAS O TERMO DE DUAS PALAVRAS FUNCIONA — quando é uma FRASE REAL do texto:
+     de nepotismo            → 4
+     prática de nepotismo    → 2
+     nepotismo cruzado       → 0   (frase que não ocorre)
+
+🔴 A LIÇÃO — O `termo` É UMA FRASE LITERAL, NÃO UMA LISTA DE PALAVRAS. Este é o
+   primeiro portal do repo em que **todo operador zera E o espaço também não é
+   conectivo**. Não é "os ingleses funcionam e os portugueses não" (TJBA/TJES) nem o
+   inverso (TJPE): **não há conectivo nenhum**, porque a string inteira é casada como
+   sequência contígua. Por isso `nepotismo súmula` = 0 e `de nepotismo` = 4 — a
+   diferença não é o número de palavras, é se aquela sequência EXISTE no texto.
+   **Esse zero NÃO é ausência de jurisprudência sobre os dois temas**: quem quiser
+   cruzar dois conceitos tem de rodar duas buscas e interseccionar no cliente.
+   ⚠️ E as aspas, que em todo outro tribunal do repo são o recurso que sobra quando os
+   operadores falham, aqui são a única coisa que produz **HTTP 500** — apesar de a
+   busca já ser por frase, o que tornaria as aspas redundantes de qualquer modo.
+
+✅ O CASAMENTO É POR PALAVRA INTEIRA, E O `*` É CURINGA DE VERDADE — provado pelo par:
+     nepotism    → 0     (prefixo truncado não casa: não é substring)
+     nepotismo   → 7
+     nepotism*   → 7     (o curinga recupera exatamente o que o truncamento perdeu)
+   ⚠️ Já o `$` **zera**: `nepotism$` → 0. Não é curinga aqui.
+
+✅ ACENTO É NORMALIZADO — não avise sobre acento:
+     termo=licitacao  anoDecisao=2024 → 125
+     termo=licitação  anoDecisao=2024 → 125
+
+## 3. Máximo de resultados
+
+Não há `page`/`offset`/`size`. Ver §1: `qtRegistros` é limiar, não page size.
+A paginação que o usuário vê é **jPages no CLIENTE** (`perPage: 20`), sobre o array
+inteiro já baixado. Nenhuma requisição é emitida ao trocar de página.
+
+## 4. Filtro de data — julgamento
+
+🔴 NÃO EXISTE FILTRO DE DATA. Os únicos eixos temporais são combos de ANO:
+   `anoDecisao`, `anoProtocolo` (ano do processo) e `anoExercicio` — 2001 a 2026.
+   Não há intervalo, não há DD/MM/YYYY.
+   O documento traz `dataSessaoJulgamento` (real, ex. "2025-09-30 14:30:00.0"), mas
+   ela **não é filtrável**.
+
+     nepotismo anoDecisao=2025  → 2
+     nepotismo anoDecisao=1500  → 0   (valor inventado: o campo É honrado)
+
+## 5. Filtro de data — publicação
+
+🔴 NÃO EXISTE data de publicação nesta base, nem como campo do documento.
+   O par que existe é `dataSessaoJulgamento` / `dataConferenciaDecisao` — e nos
+   documentos medidos os dois são o MESMO instante.
+   **Nunca apresente a data do TCE-BA como publicação.**
+
+## 6–8. Instância / Juizado × Comum / Cível × Criminal
+
+Não se aplicam: controle externo não tem instância, Juizado nem matéria criminal.
+
+## 9. Filtro de órgão — Colegiado  ✅ PARTIÇÃO FECHA EXATA
+
+`<select id="idColegiado" name="idColegiado">` → API `idColegiado`
+   1 = 1ª Câmara · 2 = 2ª Câmara · 3 = Plenário
+
+     nepotismo sem filtro   → 7
+     nepotismo idColegiado=1 → 2
+     nepotismo idColegiado=2 → 0
+     nepotismo idColegiado=3 → 5
+     2 + 0 + 5 = 7 ✅ fecha exata
+     idColegiado=99 (inventado) → 0  (honrado, não ignorado)
+
+## 10. Unidade específica (município / comarca)
+
+🔴 NÃO EXISTE. Não há combo de município — ver ESCOPO no topo (TCM-BA).
+   A API aceita `nomeOrgaoUnidade`, exposto pelo cliente JS mas **não usado pela tela**
+   e **NÃO MEDIDO** aqui.
+
+## 11. Magistrada ou magistrado — Conselheiro relator
+
+`<select id="conselheiros" name="conselheiros">` (criado por AJAX) → API `idRelator`
+⚠️ O nome do campo do FORM (`conselheiros`) é diferente do nome do parâmetro da API
+   (`idRelator`) — some à coleção TCE-RJ (`--conselheiro`).
+São apenas **7 conselheiros** (combo-conselheiros.json):
+   10137 Inaldo da Paixão Santos Araújo · 11932 Carolina Matos
+   93315 Joao Evilasio Vasconcelos Bonfim · 10477 Marcus Vinícius de Barros Presídio
+   101522 Otto Roberto Mendonça de Alencar Filho · 98145 JOSIAS GOMES DA SILVA
+   11923 Gildasio Penedo Filho
+
+     nepotismo idRelator=11923  → 1
+     nepotismo idRelator=999999 → 0   (honrado, não ignorado)
+⚠️ O filtro quer **id**, não nome (oposto do TJBA, cujo `relatores` queria nome).
+
+## 12. Tipo de ato — `listaIdTipoDecisao`
+
+`<select id="tipoDecisao">`, valores do portal:
+   ACRDO Acórdão · DMNCR Decisão monocrática · RSLÃO Resolução · VOTO Voto
+   R1CMR Resolução 1ª Câmara · R2CMR Resolução 2ª Câmara
+
+⚠️ O value `RSLÃO` tem um **Ã** — mojibake no HTML do próprio portal. Medido: tanto
+   `RSLÃO` quanto `RSLAO` devolvem **1** (o servidor tolera as duas formas).
+✅ Multivalor por vírgula funciona: `ACRDO,VOTO` = 6 (= VOTO sozinho, pois ACRDO = 0).
+⚠️ ARMADILHA: `XXINVENTADOXX` também devolve **0** — igual a um tipo válido porém
+   ausente. Aqui o teste do valor inventado **NÃO distingue** "parâmetro ignorado" de
+   "valor certo, acervo vazio" (a lição do TJMT, ao contrário: lá ele decidia).
+
+## 13. Natureza do processo — `idNatureza`
+
+34 naturezas (combo-natureza.json), enumeradas por AJAX: ADMISSÃO DE PESSOAL,
+APOSENTADORIA, AUDITORIA, DENÚNCIA, EMBARGOS DE DECLARAÇÃO, PRESTAÇÃO DE CONTAS DE
+ORDENADOR DE DESPESA, REFORMA, RESCISÃO DE JULGADO, REVISÃO ADMINISTRATIVA…
+⚠️ NÃO PROVADO POR CONTAGEM — pendência declarada.
+
+## 14. Número do processo  🔴 CASA POR SUBSTRING
+
+Formato: `TCE/<sequencial 6 dígitos>/<ano>` — ex. `TCE/000405/2025`.
+🔴 NÃO há número CNJ (contas não é Judiciário): `src/cnj.js` reprovaria todo processo
+   válido, e o DataJud não cobre.
+
+Parâmetros: `numeroProtocolo` + `anoProtocolo`. Medido:
+
+     numeroProtocolo=000405 & anoProtocolo=2025  → 2, todos de TCE/000405/2025    ✅
+     numeroProtocolo=TCE/000405/2025 (máscara)   → 2, idem (a máscara é aceita)   ✅
+     numeroProtocolo=405    & anoProtocolo=2025  → 6, de TCE/000405/2025,
+                                                    TCE/003405/2025,
+                                                    TCE/004050/2025              🔴
+     numeroProtocolo=000405 SEM ano              → 13, de 2001, 2002, 2004…      🔴
+     numeroProtocolo=999999 & anoProtocolo=2025  → 0   (honrado, não ignorado)    ✅
+
+🔴 A LIÇÃO: o campo casa por **substring**, e o sintoma é um número PLAUSÍVEL, não um
+   erro. Mandar o sequencial sem os zeros à esquerda arrasta processo alheio com HTTP
+   200 e cards válidos. O `TCEBAChecker` (a) normaliza para 6 dígitos e (b) **confere
+   no cliente** que o `numeroProtocolo` devolvido é exatamente o pedido, descartando o
+   resto e avisando quanto caiu.
+
+## 15. Bloqueios
+
+✅ NENHUM. Sem captcha, sem reCAPTCHA, sem Turnstile, sem login, sem Cloudflare —
+   **nem na busca nem no download**. Medido em separado: a busca responde por HTTP
+   direto e o PDF também, sem cookie e sem sessão.
+   O único obstáculo é o TLS incompleto (§ acima), que é defeito de configuração e não
+   bloqueio.
+
+## 16. Forma de acesso
+
+`api` — HTTP direto. O mapeamento foi feito no Playwright (prints nesta pasta), mas o
+crawler final não usa browser.
+
+## 17. Sessão e estado
+
+Nenhum. Sem cookie, sem token, sem CSRF. O header `Authorization: No Authorization` é
+literal e é o que o próprio portal manda.
+
+## 18. Tela de resultados
+
+Rota:      **NÃO MUDA** — https://www.tce.ba.gov.br/jurisprudencia/consulta
+XHR:       um único `GET …/obterDecisoes?termo=nepotismo&qtRegistros=200`
+Controles: PERMANECEM na tela (o formulário não some)
+Nova aba:  não
+Total:     🔴 **NÃO É EXIBIDO.** O cabeçalho diz apenas "Resultado da pesquisa", sem
+           contagem. Quem conta é o cliente, pelo tamanho do array.
+Render:    uma `<table class="table">` POR DOCUMENTO (7 documentos = 7 tabelas), cada
+           uma precedida de dois `<p>`: "Trecho do texto" e "Ementa".
+
+⚠️ PERMALINK DE BUSCA: existe **parcialmente**. A página aceita `?termo=<x>` na URL e
+   dispara a busca sozinha no `load` (`consultaDeJurisprudenciasViaModulo`). Mas só o
+   `termo` sobrevive — **nenhum outro filtro entra pela URL**. Some à armadilha do
+   TJTO: mandar a URL da busca como prova omite o recorte em silêncio.
+
+## 19. Do card ao documento — a escada
+
+O "card" são três elementos irmãos:
+
+  1. `<p>` **"Trecho do texto:"** — 🔴 NÃO É EMENTA E NÃO VEM DO SERVIDOR.
+     É recortado no CLIENTE por `extract2Around()`: uma janela de **600 caracteres**
+     em volta da PRIMEIRA ocorrência do termo, dentro de `resumoExibicao`, com o termo
+     embrulhado em `<span class='textodestacado'>`. Highlight ⇒ trecho, não ementa.
+  2. `<p>` **"Ementa:"** — vem do campo `resumoDocumento`, e na maioria dos documentos
+     esse campo **não existe no payload**; a tela imprime "Ementa não encontrada."
+  3. `<table>` com 4 colunas: Colegiado · Processo · Peça · Relator
+     - Processo → `<a href="https://www.tce.ba.gov.br/servicos/processo/TCE-000405-2025">`
+       (link do PROCESSO, não do documento; troca `/` por `-`)
+     - Peça → `<button onclick="downloadComposicaoProcesso(3414683, 3585730)">`
+
+🔴 CONTRATO DO INTEIRO TEOR — CHAVE COMPOSTA, reproduzido fora do browser:
+
+     POST https://proinfo.tce.ba.gov.br/rest3/api/portaltce/protocolo/downloadComposicao
+          ?idProtocolo=3414683&idDocumento=3585730
+     headers: Authorization: No Authorization | Content-Type: application/json
+     body:    (vazio)
+     →  HTTP 200
+        content-type: application/pdf;charset=UTF-8
+        content-disposition: attachment;filename=TCE_000405_2025 (VOTO).pdf
+        110.231 bytes, PDF 1.4, 6 páginas, corpo começa em %PDF ✅
+
+   Só o `idDocumento` NÃO basta — precisa do `idProtocolo` junto.
+   ✅ PÚBLICO de verdade: 200 sem cookie, sem sessão, sem captcha.
+
+## 19b. Ementa × texto integral — MEDIDO POR TIPO (a lição do TJMG)
+
+Amostra: os 1.879 documentos de `licitação`.
+
+  tipo                        n   c/ementa    %    média chars de resumoExibicao
+  Voto                     1248          4    0%          18.321
+  Resolução                 371        289   77%           8.262
+  Acórdão                   215        198   92%           4.755
+  Resolução da 2ª Câmara     29         29  100%           2.314
+  Decisão Monocrática        12          6   50%           8.725
+  Resolução da 1ª Câmara      4          4  100%           3.167
+  TOTAL                    1879        530   28%          14.442 (máx 1.170.847; 6 vazios)
+
+🔴 A EMENTA DEPENDE DO TIPO, E O TIPO DOMINANTE É O QUE NÃO TEM: **Voto é 66% do
+   acervo e tem ementa em 0%**. Quem dissecasse só um documento (ou só o default)
+   registraria "o TCE-BA não tem ementa" — e erraria em Acórdão (92%) e nas Resoluções
+   de Câmara (100%). ✅ Para ementa, peça `-t ACRDO` ou as resoluções.
+
+✅ `resumoExibicao` É O TEXTO INTEGRAL, e já vem NA BUSCA. Conferido contra o PDF do
+   documento 3585730: a API traz 13.972 chars, do cabeçalho ("TCE Gabinete do
+   Conselheiro…") ao fecho ("É como voto. Cons. Gildásio Penedo Filho Relator"); o PDF
+   extraído tem 15.001 e só acrescenta mobília de página (número de Ref., rodapé,
+   código de autenticação). **Não é ementa — não o apresente como tal.**
+   Logo `--fetch-inteiro-teor` só grava o PDF em disco; o texto não custa request.
+
+## 20. Paginação e profundidade
+
+Servidor:   🔴 NÃO PAGINA. Ver §1.
+Cliente:    jPages, `perPage: 20`, sem requisição nova.
+Total:      **EXATO** (1879 em três tetos diferentes), não saturado.
+Estabilidade: ✅ mesma busca 2×: `run1: 7  run2: 7 · mesma ordem? True · mesmo
+              conjunto? True`. Sem o problema de TJDFT/TJRJ, apesar dos dois IPs.
+
+## 20b. Permalink e identidade do documento
+
+🔴 NÃO EXISTE PERMALINK POR DOCUMENTO. O acesso ao documento é **POST**, logo não há
+   URL colável. Nunca invente link de decisão do TCE-BA.
+✅ O que existe é o link do **PROCESSO**:
+   `https://www.tce.ba.gov.br/servicos/processo/TCE-000405-2025` — mas ele leva à
+   consulta processual, não ao julgado, e um processo tem várias peças.
+🔴 QUEM IDENTIFICA O DOCUMENTO É `idDocumentoDecisao`, NÃO o número do processo:
+   medido, 1.879 documentos em **1.348 processos**; o processo TCE/005881/2016 aparece
+   duas vezes, como Voto e como Resolução.
+   A verificação é por reconsulta: `./bin/jur tceba -n "TCE/000405/2025"`.
+
+## Campo a campo — API → repo
+
+  idDocumentoDecisao  → id                  🔴 identifica o DOCUMENTO
+  idProtocolo         → idProtocolo         (metade da chave composta do PDF)
+  numeroProtocolo     → processo            "TCE/000405/2025"
+  nomeColegiado       → orgaoJulgador       Plenário | 1ª Câmara | 2ª Câmara
+  nomeRelator         → relator
+  nomeTipoDecisao     → tipoDocumento       Voto | Acórdão | Resolução | …
+  tituloDocumentoDecisao → (redundante, caixa alta)
+  dataSessaoJulgamento→ dataJulgamento      DD/MM/YYYY
+  dataConferenciaDecisao → (mesmo instante nos medidos)
+  resumoDocumento     → ementa              ⚠️ AUSENTE em 72% dos documentos
+  resumoExibicao      → inteiroTeor         🔴 texto integral, NÃO ementa
+  numeroDocumento/anoDocumento → numeroDecisao/anoDecisao  ⚠️ só em ALGUNS registros
+  idColegiado/idTipoDecisao → (ids internos)
+
+⚠️ O SCHEMA É HETEROGÊNEO: a união das chaves nos 7 documentos de `nepotismo` dá 15
+   campos, mas nenhum registro tem os 15 — `resumoDocumento`, `numeroDocumento` e
+   `anoDocumento` aparecem só em parte deles. Um mapeador que lesse o primeiro registro
+   e fixasse o schema perderia campos.
+
+## Vigência da base  ✅ CORRENTE
+
+Distribuição de `licitação` (1.879) por ano da sessão:
+  2026 26 · 2025 108 · 2024 132 · 2023 101 · 2022 84 · 2021 67 · 2020 108 · 2019 135
+  2018 148 · 2017 167 · 2016 155 · 2015 206 · 2014 136 · 2013 62 · 2012 51 · 2011 6
+  2010 3 · 2009 27 · 2008 38 · 2007 13 · 2006 26 · 2005 22 · 2004 4 · 2003 3 · 2002 4
+  sem data: 47
+Documento mais recente da amostra: **06/08/2026** (11 dias antes da medição).
+⚠️ Isto é a série de UM TERMO, não o denominador da base inteira — a ressalva do TJBA.
+   O que se pode afirmar é que a base **não está congelada**.
+
+## PENDÊNCIAS DECLARADAS
+
+- `idNatureza` **não foi provado por contagem** (as 34 naturezas estão enumeradas, mas
+  nenhuma partição foi medida).
+- `anoExercicio` e `anoProtocolo` **não foram provados por contagem**.
+- `nomeOrgaoUnidade` e `resumoDocumento` (como FILTRO de entrada) existem no cliente JS
+  e **não foram testados**.
+- `numeroDecisao` **não foi testado**.
+- O curinga `*` foi provado em UM par (`nepotism` 0 × `nepotism*` 7); não se testou
+  curinga no meio da palavra nem em frase de duas palavras.
+- A ressalva TCM-BA está **apoiada na ausência do combo de município**, não numa
+  medição do acervo municipal.
+- Não se mediu **rate limit**, nem se os dois IPs (187.44.199.52 / 189.112.186.52)
+  dessincronizam.
+- Os 47 documentos **sem data** de `licitação` não foram investigados.
+- Não se mediu se `resumoExibicao` vazio (6 casos) tem PDF mesmo assim.

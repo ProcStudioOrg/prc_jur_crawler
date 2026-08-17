@@ -1183,7 +1183,7 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 20 | **TCE-RS** | RS | ✅ o RS **não tem TCM** — os municípios gaúchos estão na base do próprio TCE | ok 15/08 |
 | 21 | **TCE-SP** | SP | ⚠️ **não** cobre a capital — SP capital é do **TCM-SP** (**confirmado por medição**) | ok 15/08 |
 | 22 | **TCE-RJ** | RJ | ⚠️ capital carioca é do **TCM-RJ** — **confirmado por medição** (o combo traz 91 dos 92 municípios) | ok 16/08 |
-| 23 | **TCE-BA** | BA | ⚠️ **todos** os municípios baianos são do **TCM-BA** | pendente |
+| 23 | **TCE-BA** | BA | ⚠️ **todos** os municípios baianos são do **TCM-BA** — **confirmado por ausência de combo de município** (não há filtro por município na tela) | ok 17/08 |
 | 24 | **TCE-PE** | PE | | pendente |
 | 25 | **TCE-CE** | CE | TCM-CE extinto em 2017 — o TCE absorveu os municípios | pendente |
 | 26 | **TCE-GO** | GO | ⚠️ municípios goianos são do **TCM-GO** | pendente |
@@ -1819,3 +1819,87 @@ capturado e **não medido**; o filtro de relator **não foi provado por contagem
 distribuição por ano **não foi medida**; e a ressalva do Bloco 5 — MG **não tem TCM** — segue
 **não confirmada por medição** (não há combo de município na tela mapeada). ⏱️ Timebox
 estourado: 20:00 → 21:20 com a busca respondendo e nenhum crawler escrito.
+
+📌 **O que o TCE-BA (17/08/2026, slot 16:00) ensinou — 🟢 fechado, leia
+[`CLAUDE-TCEBA.md`](CLAUDE-TCEBA.md).** Sétimo alvo do Bloco 5, fechado em ~35 min, e a
+lição de abertura é que **o endpoint pode estar escrito no HTML da própria página** — o
+Passo 0 mais barato do repo até agora. As lições valem para os 6 TCEs restantes:
+
+- 🔴 **O BACKEND ESTAVA NUM `<input type="hidden">` DA PÁGINA.** `/jurisprudencia/consulta`
+  traz `<input id="servidorRest" value="https://proinfo.tce.ba.gov.br/rest3">`, e quatro
+  arquivos JS do portal (`ProInfoJulgamento.js`, `ProInfoProtocolo.js`, `ProInfoClient.js`,
+  `jurisprudencias.js`) montam a URL inteira — **inclusive o header literal
+  `Authorization: No Authorization`** e a lista ordenada dos 13 parâmetros. Não foi preciso
+  abrir o DevTools para achar a API, só **ler o HTML e os `<script src>`**. Some ao TJBA
+  (endpoint no bundle webpack): **antes de farejar a Network, leia o fonte da tela.**
+- 🔴 **`qtRegistros` NÃO É TAMANHO DE PÁGINA — É UM LIMIAR QUE RECUSA. Contrato inédito no
+  repo, e o modo de falhar é o pior possível: HTTP 400 com ZERO documento.** O portal manda
+  200; acima disso o servidor responde `NegocioException: "A sua pesquisa retornou mais de
+  200 ocorrências"` e **não devolve nada** — não uma primeira página, não um truncamento.
+  **E o número da mensagem ECOA o valor pedido** (`qtRegistros=1000` → "mais de 1000"), o
+  que prova que o teto é escolha do CLIENTE: `licitação` dá 400 com 200 e devolve **1.879**
+  com 2000, 5000 e 20000. ✅ Total **exato**, não saturado. **Não existe paginação nenhuma**
+  (a que o usuário vê é jPages no cliente). O crawler levanta o teto e, se ainda estourar,
+  **fatia por ano** — e avisa quais anos ficaram de fora, porque aí a contagem é incompleta.
+- 🔴 **O TERMO É UMA FRASE LITERAL: NÃO HÁ OPERADOR E O ESPAÇO NÃO É CONECTIVO.** Décimo
+  segundo conjunto de operadores do repo, e o **primeiro sem conectivo nenhum**: `E`, `AND`,
+  `OU`, `OR`, `NAO`, `NOT` e o espaço puro **zeram todos** (`nepotismo súmula` = 0). ✅ Mas
+  `de nepotismo` = 4 e `prática de nepotismo` = 2 — **duas palavras funcionam quando são
+  sequência real do texto**. A diferença não é o número de palavras, é se aquela sequência
+  existe. **O zero de `nepotismo súmula` não é ausência de jurisprudência sobre os dois
+  temas.** ⚠️ E as **aspas**, que em todo outro tribunal são o recurso que sobra quando os
+  operadores falham, aqui são a única coisa que produz **HTTP 500**.
+- ✅ **UM PAR DE MEDIÇÕES DECIDIU O CURINGA, onde uma sozinha teria mentido.** `nepotism*`
+  = 7 é idêntico a `nepotismo` = 7 — lido sozinho, isso se lê como "`*` é ignorado". O que
+  decide é a terceira medição: **`nepotism` = 0**. Prefixo truncado não casa (logo não é
+  substring, é palavra inteira) e o `*` recupera exatamente o que o truncamento perdeu.
+  **Quando duas hipóteses dão o mesmo número, meça a terceira.** ⚠️ O `$` zera.
+- 🔴 **A EMENTA DEPENDE DO TIPO, E O TIPO DOMINANTE É O QUE NÃO TEM** — a lição do TJMG,
+  medida em 1.879 documentos: **Voto é 66% do acervo e tem ementa em 0%** (4 de 1.248),
+  contra Acórdão 92%, Resolução 77% e resoluções de Câmara 100%; total 28%. Quem dissecasse
+  só o default registraria "o TCE-BA não tem ementa" e erraria em três tipos. **Para ementa,
+  peça `-t ACRDO`.** ✅ O `resumoExibicao` é o **texto integral** e já vem na busca —
+  conferido contra o PDF por `pdftotext` (13.972 chars × 15.001; a diferença é mobília de
+  página). Não é ementa e não pode ser apresentado como tal.
+- 🔴 **A CONSULTA POR NÚMERO CASA POR SUBSTRING, com sintoma plausível.** `numeroProtocolo=405`
+  + ano devolve **6** documentos, arrastando `TCE/003405/2025` e `TCE/004050/2025`; sem ano,
+  `000405` casa **13** processos de 2001, 2002, 2004… Tudo HTTP 200 com cards válidos. ✅ O
+  valor inventado (999999 → 0) é o controle que prova que o campo é honrado e não ignorado.
+  O Checker normaliza para 6 dígitos **e confere no cliente**, avisando quanto descartou.
+- ⚠️ **AQUI O TESTE DO VALOR INVENTADO NÃO DECIDE — ao contrário do TJMT.** Em
+  `listaIdTipoDecisao`, `XXINVENTADOXX` devolve **0**, exatamente como um tipo **válido
+  porém ausente** (`ACRDO` = 0 em `nepotismo`). O controle que separa "ignorado" de "certo
+  mas vazio" **falha neste parâmetro**; funcionou em `idColegiado`, `idRelator` e `anoDecisao`.
+  **O controle é bom, mas não é universal — confira se ele discrimina antes de confiar nele.**
+- 🔴 **CADEIA TLS INCOMPLETA DE NOVO, MESMA CA DO TCE-MG, UM DIA DEPOIS.** `proinfo` manda
+  só a folha (`*.tce.ba.gov.br`, Sectigo OV R36) e omite o intermediário → HTTP 000, que se
+  lê como portal fora do ar. ⚠️ E o `www.tce.ba.gov.br`, **com o mesmo certificado curinga**,
+  responde 200 porque manda o intermediário. Medido em camadas (DNS 2 IPs → TCP abre → TLS
+  quebra). ✅ Correção do TJPE: **fornecer o intermediário pelo AIA**, `rejectUnauthorized`
+  ligado. **Dois tribunais seguidos com o mesmo defeito e a mesma CA — vale checar o AIA
+  antes de medir qualquer TCE.**
+- ⚠️ **O NOME DE ARQUIVO DO SERVIDOR NÃO IDENTIFICA O DOCUMENTO, e isso quase virou bug.**
+  Numa única busca o `content-disposition` devolveu `VOTO - Copia.pdf`, `resolucao 021.pdf`,
+  `TCE0048742016_VOTO.pdf` e `TCE_000405_2025 (VOTO).pdf`. Gravar por esse nome faz dois
+  documentos colidirem e um **sobrescrever o outro em silêncio** — o crawler prefixa com o
+  `idDocumentoDecisao`. **Nome que o servidor sugere não é chave.**
+- ⚠️ **O SCHEMA É HETEROGÊNEO:** a união das chaves em 7 documentos dá 15 campos e **nenhum
+  registro tem os 15** (`resumoDocumento`, `numeroDocumento` e `anoDocumento` só em parte).
+  Quem lesse o primeiro registro e fixasse o schema perderia campos.
+- 🔴 **Sem permalink de documento** (o acesso é **POST**, não há URL colável) e o permalink
+  de **busca existe pela metade**: `?termo=` dispara a busca, mas **nenhum outro filtro entra
+  pela URL** — mandá-lo como prova omite o recorte em silêncio (armadilha do TJTO).
+  Quem identifica o julgado é o `id`: **1.879 documentos em 1.348 processos**.
+- 🔴 **Não existe filtro de data, nem data de publicação** — só combos de **ano** (2001–2026).
+  A data da sessão é real e **não é filtrável**. ✅ Base **corrente** (documento de 06/08/2026).
+- ✅ **Sem captcha em etapa nenhuma** (busca e download medidos em separado), **sem vhost
+  curinga** (todos os subdomínios NXDOMAIN) e ✅ **paginação estável** apesar dos dois IPs.
+  🔴 Mas **sem CNJ e sem DataJud**: não há plano B, como em todo o Bloco 5 menos o TCE-RS.
+
+⚠️ **Pendências declaradas do TCE-BA:** `idNatureza` (34 opções enumeradas), `anoProtocolo`
+e `anoExercicio` **não foram provados por contagem**; `nomeOrgaoUnidade`, `numeroDecisao` e
+`resumoDocumento` **como filtro de entrada** existem no cliente JS e não foram testados; o
+curinga foi provado em **um par** e não se testou curinga no meio da palavra; a ressalva
+TCM-BA apoia-se na **ausência do combo de município**, não numa medição do acervo municipal;
+**rate limit não medido** e não se sabe se os dois IPs dessincronizam; os **47 documentos sem
+data** da amostra não foram investigados. ⏱️ Timebox **não estourado**: 16:00 → 16:36, ~36 min.

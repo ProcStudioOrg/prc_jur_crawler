@@ -1,0 +1,174 @@
+<form id="jurisprudencia" name="jurisprudencia" method="post" onsubmit="consultaDeJurisprudencias(this)">
+    <div class="sr-only alert alert-warning" id="mensagemDiv">
+        <p id="mensagemUsuario"></p>
+    </div>
+    <p>
+        Consulte a base de jurisprudência do Tribunal de Contas do Estado através da pesquisa textual.
+        <br>
+        A pesquisa identifica as ocorrências no conteúdo das ementas, das decisões e dos votos dos relatores, retornando as peças processuais onde o texto foi encontrado.
+    </p>
+    <div class="row form-group">
+        <div class="col-md-8">
+            <label for="termo">Pesquisa textual</label>
+            <input type="text" name="termo" id="termo" class="form-control" value="" style="">
+        </div>
+    </div>
+    <br>
+    <p>
+        Caso precise refinar a sua pesquisa você poderá utilizar as outras opções de filtro disponíveis.
+    </p>
+    <div class="row form-group">
+        <div class="col-md-4">
+            <label for="numDecisao">Nº de decisão</label>
+            <input id="numDecisao" name="numDecisao" type="number" class="form-control" style="">
+        </div>
+        <div class="visible-xs-block"><br></div>
+        <div class="col-md-4">
+            <label for="anoDecisao">Ano da decisão</label>
+            <select id="anoDecisao" name="anoDecisao" class="form-control">
+	<option value="" selected="selected">Todos</option>
+	<option value="2026">2026</option>
+	<option value="2025">2025</option>
+	<option value="2024">2024</option>
+	<option value="2023">2023</option>
+	<option value="2022">2022</option>
+	<option value="2021">2021</option>
+	<option value="2020">2020</option>
+	<option value="2019">2019</option>
+	<option value="2018">2018</option>
+	<option value="2017">2017</option>
+	<option value="2016">2016</option>
+	<option value="2015">2015</option>
+	<option value="2014">2014</option>
+	<option value="2013">2013</option>
+	<option value="2012">2012</option>
+	<option value="2011">2011</option>
+	<option value="2010">2010</option>
+	<option value="2009">2009</option>
+	<option value="2008">2008</option>
+	<option value="2007">2007</option>
+	<option value="2006">2006</option>
+	<option value="2005">2005</option>
+	<option value="2004">2004</option>
+	<option value="2003">2003</option>
+	<option value="2002">2002</option>
+	<option value="2001">2001</option>
+</select>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-4">
+            <label for="idColegiado">Colegiado</label>
+            <select id="idColegiado" name="idColegiado" class="form-control">
+                <option value="" selected="selected">Todos</option>
+                <option value="1">1ª Câmara</option>
+                <option value="2">2ª Câmara</option>
+                <option value="3">Plenário</option>
+            </select>
+        </div>
+        <div class="visible-xs-block"><br></div>
+        <div class="col-md-4">
+            <label for="tipoDecisao">Tipo de decisão</label>
+            <select id="tipoDecisao" name="tipoDecisao" class="form-control">
+                <option value="" selected="selected">Todos</option>
+                <option value="ACRDO">Acórdão</option>
+                <option value="DMNCR">Decisão monocrática</option>
+                <option value="RSLÃO">Resolução</option>
+                <option value="VOTO">Voto</option>
+                <option value="R1CMR">Resolução 1ª Camara</option>
+                <option value="R2CMR">Resolução 2ª Camara</option>
+            </select>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-4">
+            <label for="numProtocolo">Nº do processo</label>
+            <input type="text" id="numProtocolo" name="numProtocolo" class="form-control mProcesso" style="">
+        </div>
+        <div class="visible-xs-block"><br></div>
+        <div class="col-md-4">
+            <label for="anoProtocolo">Ano do processo</label>
+            <select id="anoProtocolo" name="anoProtocolo" class="form-control">
+	<option value="" selected="selected">Todos</option>
+	<option value="2026">2026</option>
+	<option value="2025">2025</option>
+	<option value="2024">2024</option>
+	<option value="2023">2023</option>
+	<option value="2022">2022</option>
+	<option value="2021">2021</option>
+	<option value="2020">2020</option>
+	<option value="2019">2019</option>
+	<option value="2018">2018</option>
+	<option value="2017">2017</option>
+	<option value="2016">2016</option>
+	<option value="2015">2015</option>
+	<option value="2014">2014</option>
+	<option value="2013">2013</option>
+	<option value="2012">2012</option>
+	<option value="2011">2011</option>
+	<option value="2010">2010</option>
+	<option value="2009">2009</option>
+	<option value="2008">2008</option>
+	<option value="2007">2007</option>
+	<option value="2006">2006</option>
+	<option value="2005">2005</option>
+	<option value="2004">2004</option>
+	<option value="2003">2003</option>
+	<option value="2002">2002</option>
+	<option value="2001">2001</option>
+</select>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-4">
+            <label for="anoExercicio">Exercício</label>
+            <select id="anoExercicio" name="anoExercicio" class="form-control">
+	<option value="" selected="selected">Todos</option>
+	<option value="2026">2026</option>
+	<option value="2025">2025</option>
+	<option value="2024">2024</option>
+	<option value="2023">2023</option>
+	<option value="2022">2022</option>
+	<option value="2021">2021</option>
+	<option value="2020">2020</option>
+	<option value="2019">2019</option>
+	<option value="2018">2018</option>
+	<option value="2017">2017</option>
+	<option value="2016">2016</option>
+	<option value="2015">2015</option>
+	<option value="2014">2014</option>
+	<option value="2013">2013</option>
+	<option value="2012">2012</option>
+	<option value="2011">2011</option>
+	<option value="2010">2010</option>
+	<option value="2009">2009</option>
+	<option value="2008">2008</option>
+	<option value="2007">2007</option>
+	<option value="2006">2006</option>
+	<option value="2005">2005</option>
+	<option value="2004">2004</option>
+	<option value="2003">2003</option>
+	<option value="2002">2002</option>
+	<option value="2001">2001</option>
+</select>
+        </div>
+        <div class="visible-xs-block"><br></div>
+        <div class="col-md-4">
+            <div data-selectnaturezas="">
+                <label for="natureza">Natureza</label>
+            <select id="natureza" name="natureza" class="form-control"><option value="">Todas</option><option value="29">ADMISSÃO DE PESSOAL</option><option value="21">APOSENTADORIA</option><option value="2">AUDITORIA</option><option value="4">COMPROVAÇÃO, PRESTAÇÃO E TOMADA DE CONTAS</option><option value="31">CONSULTA</option><option value="11">CONTRATO</option><option value="10">CONVÊNIO</option><option value="7">DENÚNCIA</option><option value="12">EMBARGOS DE DECLARAÇÃO</option><option value="135">EXCEÇÃO DE IMPEDIMENTO E SUSPEIÇÃO</option><option value="30">INCIDENTE DE INCONSTITUCIONALIDADE</option><option value="124">INCIDENTE DE PREJULGADO</option><option value="9">LICITAÇÃO</option><option value="1">MATÉRIA ADMINISTRATIVA</option><option value="140">MEDIDA CAUTELAR</option><option value="212">PARCERIA</option><option value="19">PENSÃO</option><option value="208">PREPARATÓRIO DAS CONTAS DO GOVERNO</option><option value="133">PRESTAÇÃO DE CONTAS</option><option value="27">PRESTAÇÃO DE CONTAS DA ASSEMBLÉIA LEGISLATIVA</option><option value="33">PRESTAÇÃO DE CONTAS DE ADMINISTRADOR</option><option value="20">PRESTAÇÃO DE CONTAS DE ORDENADOR DE DESPESA</option><option value="290">PROCESSO DE RESPONSABILIZAÇÃO</option><option value="25">RECLAMAÇÃO</option><option value="3">RECURSO</option><option value="6">REFORMA</option><option value="32">RELATÓRIO DE ATIVIDADES</option><option value="23">RESCISÃO DE JULGADO</option><option value="22">REVISÃO ADMINISTRATIVA</option><option value="28">REVISÃO DE APOSENTADORIA</option><option value="345">SOLUÇÃO CONSENSUAL DE CONTROVÉRSIAS E PREVENÇÃO DE CONFLITOS</option><option value="308">TERMO DE AJUSTAMENTO DE GESTÃO</option><option value="244">TOMADA DE CONTAS</option><option value="35">TRANSFERÊNCIA PARA RESERVA</option></select></div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-4">
+            <div data-selectconselheiros="">
+                <label for="relator">Conselheiro relator</label>
+            <select id="conselheiros" name="conselheiros" class="form-control"><option value="">Todas</option><option value="10137">Inaldo da Paixão Santos Araújo</option><option value="11932">Carolina Matos</option><option value="93315">Joao Evilasio Vasconcelos Bonfim</option><option value="10477">Marcus Vinícius de Barros Presídio</option><option value="101522">Otto Roberto Mendonça de Alencar Filho</option><option value="98145">JOSIAS GOMES DA SILVA</option><option value="11923">Gildasio Penedo Filho</option></select></div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-6">
+            <button class="btn btn-primary" value="pesquisar" name="pesq" type="submit">Pesquisar</button>
+        </div>
+    </div>
+</form>

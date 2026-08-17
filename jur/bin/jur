@@ -69,6 +69,8 @@ const TCESPCrawler = require('../src/TCESPCrawler');
 const TCESPChecker = require('../src/TCESPChecker');
 const TCERJCrawler = require('../src/TCERJCrawler');
 const TCERJChecker = require('../src/TCERJChecker');
+const TCEBACrawler = require('../src/TCEBACrawler');
+const TCEBAChecker = require('../src/TCEBAChecker');
 const TJRRCrawler = require('../src/TJRRCrawler');
 const TJRRChecker = require('../src/TJRRChecker');
 const TJESCrawler = require('../src/TJESCrawler');
@@ -6045,6 +6047,160 @@ program
             semEmenta: res.filter((r) => r.semEmenta).length,
             semInteiroTeor: res.filter((r) => r.semInteiroTeor).length,
             avisos: res.avisos,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n',
+        );
+      }
+    } catch (error) {
+      if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+      else console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tceba')
+  .description('Search TCE-BA (Tribunal de Contas do Estado da Bahia) — API REST, sem browser')
+  .option('-q, --query <text>', 'Termo de busca. ATENCAO: e FRASE LITERAL, nao ha operador booleano')
+  .option('-n, --numero <numero>', 'Consulta por numero ("TCE/000405/2025"); dispensa -q')
+  .option('--colegiado <id>', 'Colegiado: 1=1a Camara, 2=2a Camara, 3=Plenario')
+  .option('-t, --tipo <sigla>', 'Tipo de decisao: ACRDO, DMNCR, VOTO, R1CMR, R2CMR (--listar-filtros)')
+  .option('--natureza <id>', 'Natureza do processo (--listar-filtros)')
+  .option('-r, --relator <id>', 'ID do Conselheiro relator (--listar-filtros). Sao apenas 7')
+  .option('--ano-decisao <ano>', 'Ano da decisao (2001-2026)')
+  .option('--ano-processo <ano>', 'Ano do processo')
+  .option('--ano-exercicio <ano>', 'Exercicio')
+  .option('-di, --data-inicio <date>', 'NAO existe filtro de data no TCE-BA; so ANO. Ver aviso')
+  .option('-df, --data-fim <date>', 'NAO existe filtro de data no TCE-BA; so ANO. Ver aviso')
+  .option('-dpi, --data-pub-inicio <date>', 'NAO existe data de publicacao nesta base')
+  .option('-dpf, --data-pub-fim <date>', 'NAO existe data de publicacao nesta base')
+  .option('--qt-registros <n>', 'Limiar de recusa do servidor (o portal usa 200)', String(TCEBACrawler.QT_DEFAULT))
+  .option('--listar-filtros', 'Lista conselheiros, colegiados e naturezas e sai')
+  .option('--verificar [amostra]', 'Audita N resultados baixando o PDF publico (default 3)')
+  .option('-m, --max-pages <number>', 'Ignorado (a API do TCE-BA nao pagina)', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tceba.json')
+  .option('--fetch-inteiro-teor', 'Baixa o PDF publico (o TEXTO ja vem na busca)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tceba')
+  .option('-v, --visible', 'Ignored (TCE-BA usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TCE-BA usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    try {
+      if (opts.numero) {
+        const res = await new TCEBAChecker({ log }).consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (opts.listarFiltros) {
+        const nav = new (require('../src/TCEBANavigator'))({ log });
+        const saida = {
+          conselheiros: await nav.conselheiros(),
+          colegiados: await nav.colegiados(),
+          naturezas: await nav.naturezas(),
+        };
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, combos: saida }) + '\n');
+        else console.log(JSON.stringify(saida, null, 2));
+        process.exit(0);
+      }
+
+      if (!opts.query && !opts.colegiado && !opts.tipo && !opts.natureza && !opts.relator && !opts.anoDecisao) {
+        throw new Error('Informe -q "<termo>" (ou -n <numero>, ou um filtro como --colegiado/--tipo/-r)');
+      }
+
+      // 🔴 NAO EXISTE filtro de data no TCE-BA — so combos de ANO. As flags de data
+      // sao aceitas para nao quebrar a convencao do repo, mas NAO podem ser aplicadas
+      // em silencio: quando as duas pontas caem no mesmo ano civil, viram --ano-decisao
+      // (e o crawler diz isso); quando nao cabem, o recorte NAO acontece e o aviso
+      // precisa chegar ao usuario. Filtro ignorado calado e a falha nº 1 do repo.
+      const avisosData = [];
+      const anoDe = (d) => (String(d || '').match(/\/(\d{4})$/) || [])[1] || null;
+      const di = opts.dataInicio || opts.dataPubInicio;
+      const df = opts.dataFim || opts.dataPubFim;
+      if (opts.dataPubInicio || opts.dataPubFim) {
+        avisosData.push(
+          'NAO EXISTE data de publicacao no TCE-BA, nem como campo do documento: o unico ' +
+            'eixo e a data da SESSAO, e ela nao e filtravel. Nunca apresente a data do ' +
+            'TCE-BA como publicacao.',
+        );
+      }
+      if (di || df) {
+        const a1 = anoDe(di);
+        const a2 = anoDe(df);
+        if (a1 && a2 && a1 === a2 && !opts.anoDecisao) {
+          opts.anoDecisao = a1;
+          avisosData.push(
+            `NAO existe filtro de data no TCE-BA, so combos de ANO. As duas pontas caem ` +
+              `em ${a1}, entao o recorte virou --ano-decisao ${a1} — o intervalo DENTRO ` +
+              `do ano NAO foi aplicado.`,
+          );
+        } else {
+          avisosData.push(
+            'NAO existe filtro de data no TCE-BA, so combos de ANO (2001-2026), e o ' +
+              'intervalo pedido nao cabe num ano civil: O RECORTE DE DATA NAO FOI ' +
+              'APLICADO. Use --ano-decisao. A contagem abaixo e SEM recorte temporal.',
+          );
+        }
+      }
+      for (const a of avisosData) log(`  [aviso] ${a}`);
+
+      log('='.repeat(60));
+      log('TCE-BA — Consulta de Jurisprudencia (controle externo)');
+      log('  [escopo] SO O ESTADO: todos os municipios baianos sao do TCM-BA,');
+      log('           orgao separado que este repo NAO cobre.');
+      log('  [aviso] NAO ha operador booleano, e o espaco NAO e conectivo: o termo e');
+      log('          casado como FRASE LITERAL contigua. "nepotismo sumula" da 0, mas');
+      log('          "de nepotismo" da 4 — o zero NAO e ausencia de jurisprudencia.');
+      log('          Para cruzar dois conceitos, rode duas buscas. Aspas dao HTTP 500;');
+      log('          o curinga e * (nepotism* = nepotismo), nunca $.');
+      log('  [aviso] A maior parte do acervo vem SEM EMENTA; o que ha e o texto integral.');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '(sem termo — so filtros)'}`);
+      log('='.repeat(60));
+
+      const crawler = new TCEBACrawler({ log });
+      const res = await crawler.buscar({
+        query: opts.query,
+        idColegiado: opts.colegiado,
+        tipo: opts.tipo,
+        idNatureza: opts.natureza,
+        idRelator: opts.relator,
+        anoDecisao: opts.anoDecisao,
+        anoProtocolo: opts.anoProcesso,
+        anoExercicio: opts.anoExercicio,
+        qtRegistros: parseInt(opts.qtRegistros, 10),
+        fetchInteiroTeor: !!opts.fetchInteiroTeor,
+        outputDir: opts.outputDir,
+      });
+
+      log('='.repeat(60));
+      log(`Total: ${res.total} documentos (${res.totalExato ? 'exato' : 'INCOMPLETO — ver avisos'})`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 3 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} baixando o PDF publico...`);
+        verificacao = await new TCEBAChecker({ log }).verificar(res.resultados, amostra);
+      }
+
+      const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+      fs.writeFileSync(outputPath, JSON.stringify(res.resultados, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({
+            success: true,
+            count: res.total,
+            output: outputPath,
+            totalExato: res.totalExato,
+            fatiadoPorAno: res.fatiadoPorAno,
+            semEmenta: res.resultados.filter((r) => r.semEmenta).length,
+            avisos: [...avisosData, ...res.avisos],
             ...(verificacao ? { verificacao } : {}),
           }) + '\n',
         );
