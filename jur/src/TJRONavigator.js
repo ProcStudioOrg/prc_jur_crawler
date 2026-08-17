@@ -45,17 +45,55 @@ const THROTTLE_MS = 1200;
  * SPA mede 347.938 achando que mediu 4 milhões.
  */
 const TIPOS = {
-  sentenca: { valor: 'SENTENÇA', total: 1926426 },
-  acordao: { valor: 'ACÓRDÃO', total: 592386 },
-  decisao: { valor: 'DECISÃO', total: 454728 },
-  voto: { valor: 'VOTO', total: 352641 },
-  ementa: { valor: 'EMENTA', total: 347938 },
-  relatorio: { valor: 'RELATÓRIO', total: 347129 },
-  'decisao-presidencia': { valor: 'DECISÃO DA PRESIDÊNCIA', total: 56676 },
+  sentenca: { valor: 'SENTENÇA', total: 1928898 },
+  acordao: { valor: 'ACÓRDÃO', total: 592893 },
+  decisao: { valor: 'DECISÃO', total: 455176 },
+  voto: { valor: 'VOTO', total: 353157 },
+  ementa: { valor: 'EMENTA', total: 348459 },
+  relatorio: { valor: 'RELATÓRIO', total: 347644 },
   'voto-vencedor': { valor: 'VOTO VENCEDOR', total: 1471 },
+  // ⚠️ Os dois abaixo NÃO aparecem na tela e foram achados no facet
+  // `tipos_documentos` em 17/08/2026 — são os "3 documentos com tipo
+  // desconhecido" que o mapeamento de 09/08 deixou em aberto. Pendência fechada.
+  despacho: { valor: 'DESPACHO', total: 2 },
+  'embargos-declaracao': { valor: 'EMBARGOS DE DECLARAÇÃO', total: 1 },
+  // 🔴 `DECISÃO DA PRESIDÊNCIA` tinha 56.676 documentos em 09/08/2026 e devolve
+  // **0** em 17/08/2026 — sumiu do facet `tipos_documentos` e da base. No mesmo
+  // intervalo o acervo total ENCOLHEU 51.697 (4.079.398 → 4.027.701), em vez de
+  // crescer. Fica mapeado para não sumir do vocabulário, mas o zero dele é a
+  // reclassificação do tribunal, NÃO ausência de jurisprudência.
+  'decisao-presidencia': { valor: 'DECISÃO DA PRESIDÊNCIA', total: 0, extinto: true },
 };
 
-const TOTAL_BASE = 4079398;
+/** Base inteira (`tipo.raw: []`), medida em 17/08/2026. Era 4.079.398 em 09/08. */
+const TOTAL_BASE = 4027701;
+
+/**
+ * 🔴 A PARTIÇÃO JUIZADO × JUSTIÇA COMUM NÃO SE FAZ PELO FILTRO DE GRAU.
+ *
+ * A tela tem três botões (Primeiro grau / Segundo grau / **Turma recursal**) e os
+ * dois últimos mandam o MESMO payload (`grau_jurisdicao: "2"`) — três botões, dois
+ * valores. Pior: `grau_jurisdicao: "2"` **exclui** as Turmas Recursais, mesmo com o
+ * documento trazendo `grau_jurisdicao: 2` no seu próprio `_source` (provado num
+ * documento só, ver human-codegen §4). Clicar em "Turma recursal" no portal oficial
+ * devolve Justiça Comum: não zera, não infla, **troca o acervo**.
+ *
+ * Por isso o recorte de Juizado é feito por ÓRGÃO COLEGIADO. Os cinco nomes abaixo
+ * saíram do facet `orgaos_julgadores_colegiados` em 17/08/2026 — o mapeamento de
+ * 09/08 conhecia só os dois primeiros.
+ */
+const TURMAS_RECURSAIS = [
+  '1ª Turma Recursal',
+  '2ª Turma Recursal',
+  'Turma Recursal',
+  'Turma Recursal Presidência',
+  'Turma de Uniformização de Jurisprudência e das Turmas Recursais do Poder Judiciário do Estado de Rondônia',
+];
+
+/** `from` máximo: 9.990 responde, 10.000 devolve HTTP 500 (max_result_window do ES). */
+const OFFSET_MAX = 10000;
+/** `size`: 500 medido OK; não há teto conhecido, mas payload grande é caro. */
+const SIZE_MAX = 500;
 
 class BloqueioTJROError extends Error {
   constructor(msg) {
@@ -153,8 +191,39 @@ class TJRONavigator {
     });
   }
 
-  /** Monta o bloco `fields` no formato que a SPA envia. */
-  static _fields({ query = '', nrProcesso = '', tipos = [], grau = '', magistrados = [], orgaos = [], colegiados = [], classes = [] } = {}) {
+  /**
+   * Monta o bloco `fields` no formato que a SPA envia.
+   *
+   * 🔴 **CHAVE DESCONHECIDA AQUI ZERA A BUSCA EM SILÊNCIO, COM HTTP 200.** Medido
+   * em 17/08/2026: `{query:"usucapião", xx_inventado_9z:"posse"}` devolve **0**,
+   * enquanto `{query:"usucapião"}` devolve 676. Não é 400, não é campo ignorado —
+   * é zero. Por isso este método é a ÚNICA porta de entrada do bloco `fields`: nome
+   * de campo não passa por aqui sem ter sido medido.
+   *
+   * Os quatro campos da "Pesquisa avançada" foram capturados do POST real da tela em
+   * 17/08/2026 (o mapeamento de 09/08 os deixou em aberto porque o backend entrou em
+   * rate limit) e **provados por contagem**, com aritmética fechando em EMENTA:
+   *
+   * ```
+   * query "usucapião"                    =   676
+   * query "posse"                        = 9.660
+   * query "usucapião posse" (espaço=OR)  = 9.881   <- 676 + 9.660 − 455 ✓ exato
+   * todas_palavras     "usucapião posse" =   455   (AND)
+   * quaisquer_palavras "usucapião posse" = 9.881   (OR)
+   * query "usucapião" + sem_palavras "posse" = 221 <- 676 − 455 ✓ exato
+   * trecho_exato "usucapião extraordinária"  = 197 (frase)
+   * ```
+   *
+   * São eles — não os operadores textuais — o caminho correto para AND/OR/NOT no
+   * TJRO: na `query` livre o espaço é OR, `E`/`OU`/`NAO` são ignorados e `NÃO`
+   * acentuado **infla 24×**.
+   */
+  static _fields({
+    query = '', nrProcesso = '', tipos = [], grau = '',
+    magistrados = [], orgaos = [], colegiados = [], classes = [],
+    todas = '', quaisquer = '', sem = '', frase = '',
+    dataInicio = '', dataFim = '',
+  } = {}) {
     const f = {
       nr_processo: nrProcesso,
       query,
@@ -165,6 +234,16 @@ class TJRONavigator {
       'ds_classe_judicial.raw': classes,
     };
     if (grau) f.grau_jurisdicao = grau;
+    // Os campos estruturados só entram quando preenchidos: mandá-los vazios é
+    // inofensivo (a tela faz isso), mas manter o payload mínimo facilita depurar.
+    if (todas) f.todas_palavras = todas;
+    if (quaisquer) f.quaisquer_palavras = quaisquer;
+    if (sem) f.sem_palavras = sem;
+    if (frase) f.trecho_exato = frase;
+    // ⚠️ `YYYY-MM-DD`, capturado do POST da tela. `DD/MM/YYYY` devolve HTTP 500 —
+    // erro honesto, diferente do parse MM/DD silencioso do TJMT.
+    if (dataInicio) f.dtjulgamento_inicio = dataInicio;
+    if (dataFim) f.dtjulgamento_fim = dataFim;
     return f;
   }
 
@@ -200,4 +279,7 @@ class TJRONavigator {
   }
 }
 
-module.exports = { TJRONavigator, BloqueioTJROError, TIPOS, TOTAL_BASE, HOST, ORIGIN, THROTTLE_MS };
+module.exports = {
+  TJRONavigator, BloqueioTJROError, TIPOS, TOTAL_BASE,
+  TURMAS_RECURSAIS, OFFSET_MAX, SIZE_MAX, HOST, ORIGIN, THROTTLE_MS,
+};

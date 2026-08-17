@@ -87,6 +87,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjrj` | TJ do Rio de Janeiro | RJ | `CLAUDE-TJRJ.md` | 🟢 OK (HTTP direto, sem browser — só e-Proc/Justiça Comum 2º grau) |
 | `tjrj-ejuris` | TJ do Rio de Janeiro — **módulo legado** | RJ | `CLAUDE-TJRJ-EJURIS.md` | 🟢 OK (HTTP direto, sem browser — **sem captcha efetivo**; ementa e decisão na busca, **inteiro teor em PDF público com permalink**). Cobre o **acervo histórico desde ~1995** e as **Turmas Recursais**, que o `tjrj` não tem |
 | `tjrn` | TJ do Rio Grande do Norte | RN | `CLAUDE-TJRN.md` | 🔴 **sem busca** — o domínio **inteiro** do TJRN responde 403 (Akamai); só `-n` (nº do processo, via DataJud) |
+| `tjro` | TJ de Rondônia | RO | `CLAUDE-TJRO.md` | 🟢 OK (portal JURIS, HTTP direto, sem browser — **sem captcha**; o **texto do documento já vem na busca**). **O maior acervo do repo** (4,0 mi) e **tem 1º grau** (1.928.898 sentenças). 🔴 **O botão "Turma recursal" do portal devolve Justiça Comum** — o Juizado é `--origem turmas`. 🔴 **O espaço entre termos é OR** e o `NÃO` acentuado **infla 24×** |
 | `tjrr` | TJ de Roraima | RR | `CLAUDE-TJRR.md` | 🟢 OK (portal Juris/JSF, HTTP direto, sem browser — **sem captcha**; ementa íntegra na busca e **PDF de inteiro teor público**). Base corrente; ⚠️ **monocrática vem sem ementa** |
 | `tjrs` | TJ do Rio Grande do Sul | RS | `CLAUDE-TJRS.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjsc` | TJ de Santa Catarina | SC | `CLAUDE-TJSC.md` | 🟢 OK (browser — portal atrás de verificação de segurança) |
@@ -101,15 +102,15 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 de uma base nacional única, o FALCÃO — leia [`CLAUDE-FALCAO.md`](CLAUDE-FALCAO.md) para
 escolher o comando. `CLAUDE-TRT9.md` é o mergulho técnico do sistema.
 
-Dois tribunais catalogados estão **mapeados à espera de crawler** — **TJRO** e **TJAP**
-(medição inteira em `human-codegen/`, e o TJRO já tem `src/TJRONavigator.js`). Não há
-comando `jur` para eles ainda: não os ofereça ao usuário. O **TJPB**, que era o terceiro,
-fechou 🟢 em 13/08/2026. O módulo **eJURIS** do TJRJ (legado, com Turmas Recursais e acervo
+Um tribunal catalogado está **mapeado à espera de crawler** — o **TJAP** (medição inteira
+em `human-codegen/`). Não há comando `jur` para ele ainda: não o ofereça ao usuário. O
+**TJPB** fechou 🟢 em 13/08/2026 e o **TJRO** em 17/08/2026, os dois pelo slot da dívida
+de crawler. O módulo **eJURIS** do TJRJ (legado, com Turmas Recursais e acervo
 histórico) passou a ter comando próprio, `jur tjrj-ejuris` — o `jur tjrj` continua cobrindo
 só o e-Proc.
-Dos 27 TJs, **20 têm comando 🟢**, 4 estão
+Dos 27 TJs, **21 têm comando 🟢**, 4 estão
 bloqueados com o motivo medido (TJMA, TJRN, TJSE, TJSP), 1 é instável (TJAM, base
-congelada) e 2 são os `parcial` acima. Veja `cobertura/CLAUDE-COBERTURA.md` e use a
+congelada) e 1 é o `parcial` acima. Veja `cobertura/CLAUDE-COBERTURA.md` e use a
 skill [`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**
@@ -164,6 +165,45 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   em 2019 é de subseções mineiras). Um pedido histórico exige os dois comandos.
   ⚠️ Ao contrário do TRF2, aqui o espaço entre termos funciona e os operadores são em
   português (`e`, `ou`, `não`, `prox`) — **nunca hifenize a query do TRF6**
+- "TJRO" / "Rondônia estadual" / "Porto Velho" / "Ji-Paraná" → `tjro` → leia `CLAUDE-TJRO.md`.
+  ✅ **É o MAIOR acervo do repo** (4.027.701 documentos) e **tem 1º GRAU**:
+  `tjro --origem primeiro -t sentenca` (1.928.898 sentenças, 48% da base — o maior 1º grau
+  catalogado). Sentença de 1º grau rondoniense é um pedido que só TJRO, TJPB, TJES e TJTO
+  atendem.
+  🔴 **NÃO use `--instancia 2` para pedir Turma Recursal — no TJRO o filtro de grau EXCLUI
+  o Juizado.** O portal oficial tem três botões e os dois últimos mandam o mesmo payload;
+  clicar em "Turma recursal" devolve **Justiça Comum**, com HTTP 200 e resultados
+  plausíveis. Não zera nem infla: **troca o acervo**. O Juizado é `tjro --origem turmas`
+  (recorte por órgão colegiado, com 5 nomes) e a Justiça Comum é `--origem comum`.
+  ✅ A partição **fecha exata**. ⚠️ **O peso do Juizado varia 164× conforme o tema**:
+  `dano moral` = **65,6%** (55.674 de 84.840) e `usucapião` = **0,4%** (3 de 676). Em
+  consumo, ofereça as duas; em direito real a Turma Recursal é ruído.
+  🔴 **O ESPAÇO ENTRE TERMOS É OR** (provado: 676 + 9.660 − 455 = 9.881). Query de duas
+  palavras devolve a UNIÃO. Use `--todas "<termos>"` (campo estruturado, AND) ou `AND`.
+  🔴 **`NÃO` acentuado NÃO exclui — INFLA 24×** (237.098 contra 221 da exclusão correta),
+  porque o espaço é OR e "não" é palavra comum em ementa. **Inflar não dá sintoma.** Para
+  excluir, use `--excluir "<termo>"`. Os operadores que funcionam são os **ingleses**
+  (`AND`, `OR`, `NOT`, `"frase exata"`, `*`); `E`/`OU`/`NAO`/`ADJ`/`PROX` são **ignorados**
+  e o `$` **degenera** (`usucapi$` = 22, não zera).
+  ✅ **Os quatro campos estruturados são o caminho certo** e dispensam operador:
+  `--todas` (AND), `--qualquer` (OR), `--excluir` (NOT), `--frase` (frase exata).
+  ⚠️ **NÃO avise sobre acento na query** — o índice normaliza; o acento só importa no `NÃO`.
+  🔴 **O mesmo documento é indexado várias vezes** (100 `_id` para 96 documentos reais, com
+  casos de 4 cópias). O total do servidor conta as cópias — **relate o
+  `totalDeduplicadoEstimado`**, que o crawler publica.
+  🔴 **O tipo do documento É a natureza do texto**: `-t ementa` é ementa; `acordao`,
+  `sentenca`, `voto`, `relatorio` e `decisao` trazem a **peça inteira**. O crawler marca
+  `semEmenta` — não apresente esse texto como ementa.
+  🔴 **A base só tem data de JULGAMENTO** (`dtpublicacao` null em 20/20): `-dpi/-dpf` são
+  alias que avisam. **Nunca apresente a data do TJRO como publicação.** ✅ Mas a janela é
+  bem-comportada: as duas meias janelas funcionam sozinhas e a aritmética fecha.
+  🔴 **NÃO EXISTE PERMALINK** — nem por documento, nem de busca (o link pós-busca restaura
+  o formulário e **não executa a busca**). Nunca mande esse link como prova; a verificação
+  é por reconsulta: `./bin/jur tjro -n "<nº>"`.
+  ⚠️ **O tipo `DECISÃO DA PRESIDÊNCIA` sumiu** (56.676 em 09/08 → 0 em 17/08): esse zero é
+  reclassificação, não ausência de julgado.
+  ✅ Base **corrente** (documento do próprio dia) e **sem captcha em etapa nenhuma**.
+  Matéria federal com origem em RO → `trf1`
 - "TJRR" / "Roraima estadual" / "Boa Vista" → `tjrr` → leia `CLAUDE-TJRR.md`.
   ⚠️ **O peso do Juizado varia 94× conforme o tema**: Turma Recursal é **37,5%**
   em `dano moral` (5.965 de 15.907) e **0,4%** em `usucapião` (4 de 991). Em

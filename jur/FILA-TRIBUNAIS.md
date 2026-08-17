@@ -329,7 +329,7 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 | 12 | **TJRR** | RR | ⚠️ a pista estava errada: o DataJud mostra o acervo **99,96% Eproc**, não PJe/Projudi — e a jurisprudência é uma app JSF à parte | ok 12/08 |
 | 13 | **TJMT** | MT | PJe, Projudi | ok 10/08 |
 | 14 | **TJPB** | PB | PJe, Projudi — API mapeada em 08/08, **crawler fechado em 13/08** | ok 13/08 |
-| 15 | **TJRO** | RO | PJe, Projudi — **API mapeada + Navigator escrito**, falta o crawler | parcial 09/08 |
+| 15 | **TJRO** | RO | PJe, Projudi — API mapeada em 09/08, **crawler fechado em 17/08** | ok 17/08 |
 | 16 | **TJAP** | AP | ⚠️ a jurisprudência mora **dentro** do Tucujuris e está atrás de **Turnstile**; a porta aberta é o **Banco de Sentenças** (host à parte, 1º grau, sem captcha) — falta o crawler | parcial 11/08 |
 
 📌 **O que o TJPE (feito em 07/08/2026) ensinou — leia
@@ -963,6 +963,59 @@ mapeamento de 08/08 dava por medidas**. As lições valem para os dois `parcial`
 - ⚠️ **Teto de offset de 10.000** (`max_result_window` do Elasticsearch, HTTP 404), como no
   TJRO. ✅ Paginação estável, total exato, `size` máx. 50 com 400 honesto, base corrente
   (documento do próprio dia), sem vhost curinga e **DataJud respondendo**.
+
+
+📌 **O que o TJRO (crawler fechado em 17/08/2026) ensinou — leia
+[`CLAUDE-TJRO.md`](CLAUDE-TJRO.md).** Terceiro alvo da regra da dívida, depois de TJMT e
+TJPB, e o terceiro seguido em que **o crawler desmentiu o mapeamento**. Sai daqui com o
+**maior acervo do repo** (4.027.701 documentos) e o **maior 1º grau** (1.928.898
+sentenças). As lições valem para o `parcial` restante:
+
+- 🔴 **UM BOTÃO DA TELA PODE DEVOLVER O ACERVO OPOSTO AO QUE PROMETE.** O portal do TJRO
+  tem três botões de instância e os dois últimos mandam o mesmo payload
+  (`grau_jurisdicao: "2"`); pior, esse filtro **exclui** as Turmas Recursais, mesmo com os
+  documentos delas trazendo `grau 2` no próprio `_source`. Clicar em "Turma recursal"
+  devolve **Justiça Comum**. Não zera (TJAC), não infla (TJBA), não é ignorado (TJPB):
+  **troca o acervo**, com HTTP 200 e resultados plausíveis. É a armadilha mais silenciosa
+  já medida no repo — e o contorno é recortar por **órgão colegiado**, não por grau.
+- 🔴 **A LISTA DE VALORES DE UM FACET NÃO É O QUE COUBE NO TOP-N.** O mapeamento de 09/08
+  montou a partição de Juizado com duas Turmas Recursais, que eram as visíveis; o facet
+  completo tem **cinco**. Com duas a soma não fechava e o gap virava "TRs menores"; com as
+  cinco ela **fecha exata**. **Enumere o facet inteiro antes de declarar uma partição.**
+- 🔴 **PARTIÇÃO MEDIDA NUM TERMO SÓ NÃO É PARTIÇÃO.** O peso do Juizado no TJRO varia
+  **164×** conforme o tema: `dano moral` = 65,6% e `usucapião` = 0,4%. O doc de 09/08
+  concluiu "em Rondônia o Juizado é maior que a Justiça Comum" de um termo só — vale para o
+  total da base, e **não para uma busca qualquer**. Meça dois temas opostos.
+- 🔴 **A DUPLICAÇÃO DO TJBA EXISTE AQUI E NINGUÉM TINHA PROCURADO** — apesar de o próprio
+  doc do TJBA mandar procurar. Numa página de 100: **100 `_id` distintos para 96 documentos
+  reais**, com um caso de **4 cópias** (mesmo md5, mesma data, mesmo texto). O total do
+  servidor conta as cópias. ⚠️ E o campo md5 **falta em 40% dos ACÓRDÃOs** (acervo legado),
+  então dedup por md5 puro não serve: precisa de fallback.
+- 🔴 **UMA RESSALVA GRAVADA PODE SER ARTEFATO DO PRÓPRIO LEITOR.** Ficou registrado que "o
+  corpo do documento já perdeu os acentos na origem (`Apelao`, `sentena`) e não há como
+  recuperar". **Falso:** o HTML cru é `Apela&ccedil;&atilde;o` e **não tem um único byte
+  não-ASCII**. O `Apelao` saiu de um strip que apagou as entidades em vez de decodificá-las.
+  **Antes de gravar "o tribunal corrompe o dado", confira o byte cru** — a acusação ficou
+  em quatro arquivos e teria virado aviso permanente ao usuário.
+- ⚠️ **UM TIPO DE DOCUMENTO INTEIRO PODE DESAPARECER ENTRE DUAS MEDIÇÕES.** `DECISÃO DA
+  PRESIDÊNCIA` tinha 56.676 documentos em 09/08 e devolve **0** em 17/08 — e no mesmo
+  intervalo a base **encolheu** 51.697 (4.079.398 → 4.027.701), em vez de crescer. Base
+  corrente que diminui é sinal, não ruído. **Causa não isolada** (56.676 ≠ 51.697).
+- 🔴 **RATE LIMIT PODE CHEGAR COMO ERRO DE REDE, NÃO COMO 429.** O WAF do TJRO responde com
+  HTTP **malformado** (byte `\x00` antes dos headers) e o que chega ao código é
+  `HPE_INVALID_HEADER_TOKEN`. Um crawler ingênuo lê "instabilidade" e retenta em loop,
+  prolongando um bloqueio de ~12 min por IP. **Throttle não é otimização aqui**, e o
+  Navigator traduz o erro na causa real para parar em vez de insistir.
+- ⚠️ **CHAVE DESCONHECIDA NO PAYLOAD ZERA A BUSCA EM SILÊNCIO** (HTTP 200): `xx_inventado_9z`
+  junto de uma query boa devolve 0 contra 676. Por isso o crawler tem **uma única porta de
+  entrada** para o bloco de campos — nome de campo não medido não passa.
+- ✅ **A pendência que o rate limit deixou em aberto caiu em minutos.** Os 4 campos da
+  pesquisa avançada (`todas_palavras`/`quaisquer_palavras`/`sem_palavras`/`trecho_exato`)
+  foram capturados do POST real e **provados por contagem**, com aritmética exata. São eles
+  — e não operador textual — o caminho para AND/OR/NOT neste tribunal, onde o espaço é OR e
+  o `NÃO` acentuado **infla 24×**.
+- ✅ **Nono tribunal do bloco, nono conjunto de operadores.** Ingleses funcionam, portugueses
+  são ignorados, `$` degenera. Continua sem herdar nada.
 
 
 📌 **O que o TJRR (feito em 12/08/2026) ensinou — leia

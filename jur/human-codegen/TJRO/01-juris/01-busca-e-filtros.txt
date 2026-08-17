@@ -595,3 +595,123 @@ depois o tempo foi para as medições de filtro.
 
 ⚠️ **Módulos irmãos não mapeados** (todos linkados no mapa do site oficial):
 súmulas, caderno de ementas, repositório de jurisprudência, precedentes/NUGEPNAC.
+
+---
+
+## 13. FECHAMENTO DO `parcial` — 17/08/2026
+
+O crawler ficou 🟢 no slot da dívida (o terceiro alvo da regra, depois de TJMT e TJPB).
+Nada abaixo foi remapeado do zero: partiu-se do contrato do §1 e do `TJRONavigator`.
+
+### 13.1 🔴 O que este documento registrou ERRADO, e a medição que desmente
+
+**A afirmação do §7 de que "o corpo já perdeu os acentos NA ORIGEM (`Apelao`, `sentena`,
+`usucapio`)" e que "não há como recuperar" é FALSA.** Medido no HTML cru de uma ementa:
+
+```
+trecho do corpo: "Apela&ccedil;&atilde;o interposta contra senten&ccedil;a que julgou
+                  liminarmente improcedente a a&ccedil;&atilde;o de usucapi&atilde;o"
+bytes não-ASCII no documento inteiro: NENHUM
+entidades presentes: &Ccedil; &Atilde; &Oacute; &Uacute; &ccedil; &atilde; &eacute;
+                     &uacute; &iacute; &oacute; &Otilde; &sect; &ordm; &aacute; &otilde; &ecirc;
+```
+
+O `Apelao` que ficou gravado era **artefato de um strip ingênuo** — quem apagou as
+entidades em vez de decodificá-las foi o leitor, não o tribunal. O texto é **integralmente
+recuperável**. É a lição do TJMT outra vez: **mapeamento que não vira crawler é trabalho
+não verificado**.
+
+⚠️ E a decodificação é **sensível à caixa**: o cabeçalho usa `&Ccedil;&Atilde;` e o corpo
+`&ccedil;&atilde;`. Tratar as duas como iguais produz `AçãO DE USUCAPIãO` — foi o primeiro
+bug do crawler, e há teste para ele.
+
+### 13.2 ✅ Pendências fechadas
+
+**Os 4 campos da pesquisa avançada** (a pendência nº 1, que o rate limit impediu em 09/08).
+Capturados do POST real da tela e **provados por contagem**, em tipo EMENTA:
+
+```
+{"fields":{ ..., "todas_palavras":"usucapiao posse", "quaisquer_palavras":"...",
+            "sem_palavras":"penal", "trecho_exato":"boa-fe",
+            "dtjulgamento_inicio":"2024-01-01", "dtjulgamento_fim":"2024-12-31" }}
+
+query "usucapião"                        =   676
+query "posse"                            = 9.660
+query "usucapião posse" (espaço = OR)    = 9.881   <- 676 + 9.660 − 455 ✓ exato
+todas_palavras     "usucapião posse"     =   455   (AND)
+quaisquer_palavras "usucapião posse"     = 9.881   (OR)
+query "usucapião" + sem_palavras "posse" =   221   <- 676 − 455 ✓ exato
+trecho_exato "usucapião extraordinária"  =   197   (frase)
+CONTROLE: chave `xx_inventado_9z`        =     0   <- zera em silêncio, HTTP 200
+```
+
+**Os 3 documentos de tipo desconhecido** (§2) agora têm nome: o facet `tipos_documentos`
+traz **DESPACHO (2)** e **EMBARGOS DE DECLARAÇÃO (1)**, além dos da tela.
+
+**A Fase 3b** foi executada: a lista de resultados **renderizou** (o F5 liberou na 1ª
+tentativa desta vez) e está em `01.03-resultados.png`. Anatomia do card, do print:
+cabeçalho `CLASSE · nº do processo · Desembargador(a): NOME`, linha `TIPO · DD/MM/YYYY`,
+linha `Órgão julgador colegiado: …`, e **o texto inteiro do documento inline**, com o termo
+destacado — coerente com `ds_modelo_documento` vir no payload. Rodapé: "10 itens por
+página" e paginação numérica. ✅ Confirma que **não há escada de cliques até o documento**:
+não existe segundo salto a reproduzir.
+
+**Os facets** foram enumerados e salvos em `facetas.json` (9 agregações: 300 classes
+judiciais, 260 juízes, 187 órgãos julgadores, 25 colegiados, graus e tipos).
+
+### 13.3 🔴 Descobertas novas do dia
+
+**1. As Turmas Recursais são CINCO, não duas.** O §4 montou a partição com `1ª Turma
+Recursal` + `2ª Turma Recursal`; o facet completo traz também `Turma Recursal` (28.017),
+`Turma Recursal Presidência` (1.303) e `Turma de Uniformização … das Turmas Recursais`
+(206). Com os cinco a partição **fecha exata**, medida em dois temas:
+
+```
+--todas "dano moral" (EMENTA): ambas 84.840 = comum 29.166 + turmas 55.674  ✓  (Juizado 65,6%)
+--todas "usucapião"  (EMENTA): ambas    676 = comum    673 + turmas      3  ✓  (Juizado  0,4%)
+```
+
+⚠️ **O peso do Juizado varia 164× conforme o tema.** O §4 media só `usucapião` e concluiu
+"em Rondônia o Juizado é MAIOR que a Justiça Comum" a partir do total de EMENTA — a
+conclusão vale para a base, mas **não para uma busca qualquer**.
+
+**2. 🔴 O MESMO DOCUMENTO É INDEXADO VÁRIAS VEZES — defeito não visto em 09/08.** Numa
+página de 100 (`usucapião`, EMENTA): **100 `_id` distintos para 96 documentos reais**.
+
+```
+md5 c1b0cb177c60 x2: _id 27340520-PJESG e 27340374-PJESG
+                     mesmo processo 70098291520248220014, mesma data, mesmo len (3.218)
+md5 45b30f0c0db1 x4: _id 32009426/32009091/32009092/32009607-PJESG
+                     mesmo processo 70037882220218220019, mesma data, mesmo len (6.477)
+```
+
+O total do servidor conta as cópias. ⚠️ E `ds_md5_documento` **falta em 40% dos ACÓRDÃOs**
+(legado `SAPSG_ACORDAO`/`SDSG_ACORDAO`), então o dedup precisa de fallback. É a armadilha
+do TJBA — que o próprio doc do TJBA mandou procurar e que ninguém tinha procurado aqui.
+
+**3. 🔴 O tipo `DECISÃO DA PRESIDÊNCIA` SUMIU, e a base ENCOLHEU.**
+
+```
+                       09/08/2026     17/08/2026
+DECISÃO DA PRESIDÊNCIA     56.676              0     <- fora do facet tipos_documentos
+base inteira            4.079.398      4.027.701     <- ENCOLHEU 51.697
+```
+
+Uma base corrente cresce. Esta diminuiu, e o tipo desapareceu. **Causa não isolada** — e
+56.676 ≠ 51.697, então a saída do tipo não explica sozinha o encolhimento.
+
+**4. ✅ A meia janela de data funciona nas DUAS pontas, com aritmética exata** — o §5.1 já
+media isso, e o fechamento confirmou com os números de hoje: `só início 318 + só fim 439 −
+janela 81 = 676` ✓. Não é o defeito do TJPI (meia janela ignorada) nem o do TJRR.
+
+### 13.4 O que o crawler entrega
+
+`src/TJROCrawler.js` + `src/TJROChecker.js` + `src/TJROTestes.js` + subcomando `tjro` em
+`bin/jur`. **14 testes de integração, 14 verdes** contra a API real, cobrindo cada ressalva
+acima. Doc do usuário em `CLAUDE-TJRO.md`.
+
+⚠️ **Pendências que continuam abertas:** combo de **Ordenação** não enumerado (e não se
+mediu se `sort` muda o total); **por que o acervo encolheu** 51.697; se o rate limit é cota
+fixa ou janela deslizante; os **módulos irmãos** (súmulas, caderno de ementas, repositório
+de jurisprudência, precedentes/NUGEPNAC) seguem não mapeados; e `-r`/`-c` foram provados
+por contagem **num valor só** cada.

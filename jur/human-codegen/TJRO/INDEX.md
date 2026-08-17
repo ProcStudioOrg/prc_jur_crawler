@@ -8,3 +8,8 @@
 | # | Seção | Descrição | Prints |
 |---|---|---|---|
 | 01 | Busca e filtros | [`01-busca-e-filtros.txt`](01-juris/01-busca-e-filtros.txt) | [`01.01-tela-inicial.png`](01-juris/01.01-tela-inicial.png)<br>[`01.02-pesquisa-avancada.png`](01-juris/01.02-pesquisa-avancada.png)<br>[`01.03-resultados.png`](01-juris/01.03-resultados.png)<br>[`01.04-busca-com-data.png`](01-juris/01.04-busca-com-data.png)<br>[`01.05-permalink-aba-limpa.png`](01-juris/01.05-permalink-aba-limpa.png) |
+| — | Facetas | ⚠️ faltando | ⚠️ faltando |
+
+Pendências deste módulo:
+- seções sem descrição em texto: —
+- seções sem print: —

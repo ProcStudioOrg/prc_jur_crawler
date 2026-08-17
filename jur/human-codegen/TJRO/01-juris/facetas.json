@@ -1,0 +1,5632 @@
+{
+  "capturadoEm": "2026-08-17",
+  "fonte": "POST https://juris-back.tjro.jus.br/search/agregacoes  {\"fields\":{\"tipo.raw\":[],...}}",
+  "classes_judiciais": [
+    {
+      "key": "RECURSO INOMINADO CÍVEL",
+      "doc_count": 748266
+    },
+    {
+      "key": "CUMPRIMENTO DE SENTENÇA",
+      "doc_count": 527698
+    },
+    {
+      "key": "APELAÇÃO CÍVEL",
+      "doc_count": 489942
+    },
+    {
+      "key": "PROCEDIMENTO DO JUIZADO ESPECIAL CÍVEL",
+      "doc_count": 480438
+    },
+    {
+      "key": "AGRAVO DE INSTRUMENTO",
+      "doc_count": 248869
+    },
+    {
+      "key": "PROCEDIMENTO COMUM CÍVEL",
+      "doc_count": 196536
+    },
+    {
+      "key": "APELAÇÃO",
+      "doc_count": 151529
+    },
+    {
+      "key": "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL",
+      "doc_count": 145147
+    },
+    {
+      "key": "CUMPRIMENTO DE SENTENÇA CONTRA A FAZENDA PÚBLICA",
+      "doc_count": 139817
+    },
+    {
+      "key": "EXECUÇÃO FISCAL",
+      "doc_count": 106596
+    },
+    {
+      "key": "APELAÇÃO CRIMINAL",
+      "doc_count": 80623
+    },
+    {
+      "key": "TERMO CIRCUNSTANCIADO",
+      "doc_count": 52232
+    },
+    {
+      "key": "AGRAVO DE EXECUÇÃO PENAL",
+      "doc_count": 46571
+    },
+    {
+      "key": "HABEAS CORPUS",
+      "doc_count": 45058
+    },
+    {
+      "key": "MANDADO DE SEGURANÇA CÍVEL",
+      "doc_count": 38964
+    },
+    {
+      "key": "PROCEDIMENTO DO JUIZADO ESPECIAL DA FAZENDA PÚBLICA",
+      "doc_count": 37733
+    },
+    {
+      "key": "HABEAS CORPUS CRIMINAL",
+      "doc_count": 31693
+    },
+    {
+      "key": "RECURSO INOMINADO",
+      "doc_count": 30818
+    },
+    {
+      "key": "MANDADO DE SEGURANÇA",
+      "doc_count": 30093
+    },
+    {
+      "key": "EMBARGOS DE DECLARAÇÃO CÍVEL",
+      "doc_count": 29060
+    },
+    {
+      "key": "BUSCA E APREENSÃO EM ALIENAÇÃO FIDUCIÁRIA",
+      "doc_count": 28034
+    },
+    {
+      "key": "EMBARGOS DE DECLARAÇÃO",
+      "doc_count": 22871
+    },
+    {
+      "key": "MONITÓRIA",
+      "doc_count": 19876
+    },
+    {
+      "key": "AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO",
+      "doc_count": 16479
+    },
+    {
+      "key": "PETIÇÃO CÍVEL",
+      "doc_count": 14550
+    },
+    {
+      "key": "RECLAMAÇÃO PRÉ-PROCESSUAL",
+      "doc_count": 13423
+    },
+    {
+      "key": "EMBARGOS À EXECUÇÃO",
+      "doc_count": 10489
+    },
+    {
+      "key": "AGRAVO",
+      "doc_count": 10284
+    },
+    {
+      "key": "AGRAVO REGIMENTAL",
+      "doc_count": 10121
+    },
+    {
+      "key": "RECURSO EM SENTIDO ESTRITO",
+      "doc_count": 9152
+    },
+    {
+      "key": "HOMOLOGAÇÃO DA TRANSAÇÃO EXTRAJUDICIAL",
+      "doc_count": 8810
+    },
+    {
+      "key": "RETIFICAÇÃO OU SUPRIMENTO OU RESTAURAÇÃO DE REGISTRO CIVIL",
+      "doc_count": 8078
+    },
+    {
+      "key": "REEXAME NECESSÁRIO",
+      "doc_count": 7729
+    },
+    {
+      "key": "ALVARÁ JUDICIAL - LEI 6858/80",
+      "doc_count": 7275
+    },
+    {
+      "key": "AÇÃO PENAL - PROCEDIMENTO SUMARÍSSIMO",
+      "doc_count": 7061
+    },
+    {
+      "key": "PROCESSO ADMINISTRATIVO",
+      "doc_count": 6321
+    },
+    {
+      "key": "AÇÃO PENAL - PROCEDIMENTO SUMÁRIO",
+      "doc_count": 6125
+    },
+    {
+      "key": "REMESSA NECESSÁRIA CÍVEL",
+      "doc_count": 5510
+    },
+    {
+      "key": "AÇÃO RESCISÓRIA",
+      "doc_count": 5454
+    },
+    {
+      "key": "HOMOLOGAÇÃO DE TRANSAÇÃO EXTRAJUDICIAL",
+      "doc_count": 5439
+    },
+    {
+      "key": "INVENTÁRIO",
+      "doc_count": 5426
+    },
+    {
+      "key": "APELAÇÃO / REMESSA NECESSÁRIA",
+      "doc_count": 5276
+    },
+    {
+      "key": "CONFLITO DE COMPETÊNCIA CÍVEL",
+      "doc_count": 5156
+    },
+    {
+      "key": "REVISÃO CRIMINAL",
+      "doc_count": 4956
+    },
+    {
+      "key": "INQUÉRITO POLICIAL",
+      "doc_count": 4776
+    },
+    {
+      "key": "MANDADO DE SEGURANÇA CRIMINAL",
+      "doc_count": 4125
+    },
+    {
+      "key": "EMBARGOS DE TERCEIRO CÍVEL",
+      "doc_count": 3867
+    },
+    {
+      "key": "BUSCA E APREENSÃO",
+      "doc_count": 3849
+    },
+    {
+      "key": "PROCEDIMENTO SUMÁRIO",
+      "doc_count": 3817
+    },
+    {
+      "key": "INTERDIÇÃO/CURATELA",
+      "doc_count": 3702
+    },
+    {
+      "key": "ACORDO DE NÃO PERSECUÇÃO PENAL",
+      "doc_count": 3664
+    },
+    {
+      "key": "RECURSO EXTRAORDINARIO",
+      "doc_count": 3554
+    },
+    {
+      "key": "EXECUÇÃO DE ALIMENTOS",
+      "doc_count": 3518
+    },
+    {
+      "key": "AÇÃO DIRETA DE INCONSTITUCIONALIDADE",
+      "doc_count": 3486
+    },
+    {
+      "key": "EXECUÇÃO CONTRA A FAZENDA PÚBLICA",
+      "doc_count": 3162
+    },
+    {
+      "key": "AÇÃO CIVIL PÚBLICA",
+      "doc_count": 3155
+    },
+    {
+      "key": "REINTEGRAÇÃO / MANUTENÇÃO DE POSSE",
+      "doc_count": 2744
+    },
+    {
+      "key": "PROCEDIMENTO ESPECIAL DA LEI ANTITÓXICOS",
+      "doc_count": 2641
+    },
+    {
+      "key": "EXECUÇÃO DE TÍTULO JUDICIAL - CEJUSC",
+      "doc_count": 2570
+    },
+    {
+      "key": "RECURSO CÍVEL ",
+      "doc_count": 2383
+    },
+    {
+      "key": "USUCAPIÃO",
+      "doc_count": 2355
+    },
+    {
+      "key": "RECLAMAÇÃO",
+      "doc_count": 2324
+    },
+    {
+      "key": "APELAÇÃO CÍVEL - RITO SUMÁRIO",
+      "doc_count": 2280
+    },
+    {
+      "key": "AÇÃO PENAL DE COMPETÊNCIA DO JÚRI",
+      "doc_count": 2239
+    },
+    {
+      "key": "EXECUÇÃO DA PENA",
+      "doc_count": 2182
+    },
+    {
+      "key": "PROCEDIMENTO DO JUIZADO ESPECIAL CRIMINAL - SUMARIÍSSIMO",
+      "doc_count": 1999
+    },
+    {
+      "key": "PROCEDIMENTO COMUM INFÂNCIA E JUVENTUDE",
+      "doc_count": 1929
+    },
+    {
+      "key": "CUMPRIMENTO PROVISÓRIO DE SENTENÇA",
+      "doc_count": 1843
+    },
+    {
+      "key": "ALVARÁ JUDICIAL",
+      "doc_count": 1805
+    },
+    {
+      "key": "CAUTELAR INOMINADA",
+      "doc_count": 1547
+    },
+    {
+      "key": "EMBARGOS INFRINGENTES E DE NULIDADE",
+      "doc_count": 1381
+    },
+    {
+      "key": "EMBARGOS À EXECUÇÃO FISCAL",
+      "doc_count": 1247
+    },
+    {
+      "key": "CONFLITO DE JURISDIÇÃO",
+      "doc_count": 1083
+    },
+    {
+      "key": "PETIÇÃO CRIMINAL",
+      "doc_count": 1067
+    },
+    {
+      "key": "AGRAVO EM RECURSO EXTRAORDINÁRIO",
+      "doc_count": 1005
+    },
+    {
+      "key": "APRECIAÇÃO EM DUPLO GRAU DE JURISDIÇÃO",
+      "doc_count": 974
+    },
+    {
+      "key": "ARROLAMENTO SUMÁRIO",
+      "doc_count": 963
+    },
+    {
+      "key": "INCIDENTE DE DESCONSIDERAÇÃO DE PERSONALIDADE JURÍDICA",
+      "doc_count": 959
+    },
+    {
+      "key": "CONFLITO DE COMPETÊNCIA",
+      "doc_count": 934
+    },
+    {
+      "key": "PROCEDIMENTO RELATIVO À POSSE DE MACONHA PARA CONSUMO PESSOAL",
+      "doc_count": 930
+    },
+    {
+      "key": "PROCESSO DE APURAÇÃO DE ATO INFRACIONAL",
+      "doc_count": 909
+    },
+    {
+      "key": "CONSIGNAÇÃO EM PAGAMENTO",
+      "doc_count": 880
+    },
+    {
+      "key": "DESPEJO POR FALTA DE PAGAMENTO CUMULADO COM COBRANÇA",
+      "doc_count": 859
+    },
+    {
+      "key": "RECURSO ADMINISTRATIVO",
+      "doc_count": 821
+    },
+    {
+      "key": "AUTO DE PRISÃO EM FLAGRANTE",
+      "doc_count": 799
+    },
+    {
+      "key": "CORREIÇÃO PARCIAL",
+      "doc_count": 780
+    },
+    {
+      "key": "AÇÃO CIVIL PÚBLICA INFÂNCIA E JUVENTUDE",
+      "doc_count": 764
+    },
+    {
+      "key": "DÚVIDA",
+      "doc_count": 764
+    },
+    {
+      "key": "EMBARGOS INFRINGENTES",
+      "doc_count": 734
+    },
+    {
+      "key": "EXIBIÇÃO DE DOCUMENTO OU COISA CÍVEL",
+      "doc_count": 724
+    },
+    {
+      "key": "APELAÇÃO CÍVEL EM EXECUÇÃO FISCAL",
+      "doc_count": 699
+    },
+    {
+      "key": "RECLAMAÇÃO CRIMINAL",
+      "doc_count": 662
+    },
+    {
+      "key": "TUTELA ANTECIPADA ANTECEDENTE",
+      "doc_count": 660
+    },
+    {
+      "key": "OUTROS PROCEDIMENTOS DE JURISDIÇÃO VOLUNTÁRIA",
+      "doc_count": 640
+    },
+    {
+      "key": "CONFLITO NEGATIVO DE COMPETÊNCIA",
+      "doc_count": 608
+    },
+    {
+      "key": "RECURSO EM SENTIDO ESTRITO (EM PROC. DE 1O. GRAU)",
+      "doc_count": 599
+    },
+    {
+      "key": "DESAPROPRIAÇÃO",
+      "doc_count": 589
+    },
+    {
+      "key": "ARROLAMENTO COMUM",
+      "doc_count": 586
+    },
+    {
+      "key": "AÇÃO CIVIL DE IMPROBIDADE ADMINISTRATIVA",
+      "doc_count": 568
+    },
+    {
+      "key": "MANDADO DE SEGURANÇA INFÂNCIA E JUVENTUDE CÍVEL",
+      "doc_count": 541
+    },
+    {
+      "key": "AUTORIZAÇÃO JUDICIAL",
+      "doc_count": 529
+    },
+    {
+      "key": "CURATELA",
+      "doc_count": 528
+    },
+    {
+      "key": "PETIÇÃO",
+      "doc_count": 526
+    },
+    {
+      "key": "HABILITAÇÃO DE CRÉDITO",
+      "doc_count": 516
+    },
+    {
+      "key": "AGRAVO EM EXECUÇÃO DE PENA",
+      "doc_count": 505
+    },
+    {
+      "key": "CRIMES DE CALÚNIA, INJÚRIA E DIFAMAÇÃO DE COMPETÊNCIA DO JUIZ SINGULAR",
+      "doc_count": 504
+    },
+    {
+      "key": "TUTELA E CURATELA -  NOMEAÇÃO",
+      "doc_count": 488
+    },
+    {
+      "key": "RESTITUIÇÃO DE COISAS APREENDIDAS",
+      "doc_count": 479
+    },
+    {
+      "key": "DUPLO GRAU DE JURISDIÇÃO(ESPECIAL)",
+      "doc_count": 470
+    },
+    {
+      "key": "TUTELA CAUTELAR ANTECEDENTE",
+      "doc_count": 464
+    },
+    {
+      "key": "CARTA PRECATÓRIA CÍVEL",
+      "doc_count": 433
+    },
+    {
+      "key": "DIRETA DE INCONSTITUCIONALIDADE",
+      "doc_count": 414
+    },
+    {
+      "key": "AÇÃO DE EXIGIR CONTAS",
+      "doc_count": 400
+    },
+    {
+      "key": "PROCEDIMENTO INVESTIGATÓRIO CRIMINAL (PIC-MP)",
+      "doc_count": 398
+    },
+    {
+      "key": "CARTA PRECATÓRIA CRIMINAL",
+      "doc_count": 396
+    },
+    {
+      "key": "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO",
+      "doc_count": 372
+    },
+    {
+      "key": "EXECUÇÃO DE MEDIDAS SOCIOEDUCATIVAS",
+      "doc_count": 370
+    },
+    {
+      "key": "REMESSA NECESSÁRIA CRIMINAL",
+      "doc_count": 368
+    },
+    {
+      "key": "AÇÃO PENAL",
+      "doc_count": 367
+    },
+    {
+      "key": "INTERDITO PROIBITÓRIO",
+      "doc_count": 346
+    },
+    {
+      "key": "REGULAMENTAÇÃO DE VISITAS",
+      "doc_count": 343
+    },
+    {
+      "key": "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS",
+      "doc_count": 340
+    },
+    {
+      "key": "CORREIÇÃO PARCIAL CÍVEL",
+      "doc_count": 337
+    },
+    {
+      "key": "PEDIDO DE PROVIDÊNCIAS",
+      "doc_count": 334
+    },
+    {
+      "key": "EMBARGOS DE DECLARAÇÃO CRIMINAL",
+      "doc_count": 330
+    },
+    {
+      "key": "REGULARIZAÇÃO DE REGISTRO CIVIL",
+      "doc_count": 326
+    },
+    {
+      "key": "DESPEJO",
+      "doc_count": 322
+    },
+    {
+      "key": "EXCEÇÃO DE SUSPEIÇÃO",
+      "doc_count": 319
+    },
+    {
+      "key": "HABEAS CORPUS CÍVEL",
+      "doc_count": 309
+    },
+    {
+      "key": "IMISSÃO NA POSSE",
+      "doc_count": 305
+    },
+    {
+      "key": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI - CIVEL",
+      "doc_count": 303
+    },
+    {
+      "key": "AÇÃO PENAL MILITAR - PROCEDIMENTO ORDINÁRIO",
+      "doc_count": 276
+    },
+    {
+      "key": "PROCEDIMENTO INVESTIGATÓRIO DO MP (PEÇAS DE INFORMAÇÃO)",
+      "doc_count": 267
+    },
+    {
+      "key": "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL CONTRA A FAZENDA PÚBLICA",
+      "doc_count": 256
+    },
+    {
+      "key": "CRIMES AMBIENTAIS",
+      "doc_count": 255
+    },
+    {
+      "key": "RECURSO CRIMINAL",
+      "doc_count": 240
+    },
+    {
+      "key": "PRODUÇÃO ANTECIPADA DA PROVA",
+      "doc_count": 231
+    },
+    {
+      "key": "DEMARCAÇÃO / DIVISÃO",
+      "doc_count": 229
+    },
+    {
+      "key": "PEDIDO DE PROVIDÊNCIA - CGJ",
+      "doc_count": 225
+    },
+    {
+      "key": "QUEIXA CRIME",
+      "doc_count": 225
+    },
+    {
+      "key": "LIQUIDAÇÃO DE SENTENÇA PELO PROCEDIMENTO COMUM",
+      "doc_count": 224
+    },
+    {
+      "key": "RECURSO DE OFICIO",
+      "doc_count": 218
+    },
+    {
+      "key": "MANDADO DE SEGURANÇA COLETIVO",
+      "doc_count": 214
+    },
+    {
+      "key": "DESPEJO POR FALTA DE PAGAMENTO",
+      "doc_count": 207
+    },
+    {
+      "key": "INSANIDADE MENTAL DO ACUSADO",
+      "doc_count": 201
+    },
+    {
+      "key": "CUMPRIMENTO DE SENTENÇA - RECLAMAÇÃO PRÉ-PROCESSUAL",
+      "doc_count": 199
+    },
+    {
+      "key": "CORREIÇÃO PARCIAL CRIMINAL",
+      "doc_count": 198
+    },
+    {
+      "key": "DISSÍDIO COLETIVO DE GREVE",
+      "doc_count": 197
+    },
+    {
+      "key": "IMPUGNAÇÃO DE CRÉDITO",
+      "doc_count": 191
+    },
+    {
+      "key": "CUMPRIMENTO PROVISÓRIO DE DECISÃO",
+      "doc_count": 190
+    },
+    {
+      "key": "HABILITAÇÃO",
+      "doc_count": 190
+    },
+    {
+      "key": "PROVIDÊNCIA",
+      "doc_count": 190
+    },
+    {
+      "key": "CARTA TESTEMUNHÁVEL",
+      "doc_count": 185
+    },
+    {
+      "key": "SOBREPARTILHA",
+      "doc_count": 185
+    },
+    {
+      "key": "RESTITUIÇÃO DE COISAS APREENDIDAS INFRACIONAL",
+      "doc_count": 184
+    },
+    {
+      "key": "COBRANÇA DE CÉDULA DE CRÉDITO INDUSTRIAL",
+      "doc_count": 181
+    },
+    {
+      "key": "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CÍVEL",
+      "doc_count": 177
+    },
+    {
+      "key": "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL",
+      "doc_count": 166
+    },
+    {
+      "key": "ARROLAMENTO DE BENS",
+      "doc_count": 161
+    },
+    {
+      "key": "LIBERDADE PROVISÓRIA COM OU SEM FIANÇA",
+      "doc_count": 139
+    },
+    {
+      "key": "INCIDENTE DE SUSPEIÇÃO CÍVEL",
+      "doc_count": 137
+    },
+    {
+      "key": "INQUERITO POLICIAL",
+      "doc_count": 135
+    },
+    {
+      "key": "REPRESENTAÇÃO CRIMINAL/NOTÍCIA DE CRIME",
+      "doc_count": 134
+    },
+    {
+      "key": "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO",
+      "doc_count": 131
+    },
+    {
+      "key": "REQUERIMENTO DE APREENSÃO DE VEÍCULO",
+      "doc_count": 127
+    },
+    {
+      "key": "ARGUIÇÃO DE INCONSTITUCIONALIDADE",
+      "doc_count": 122
+    },
+    {
+      "key": "RELAXAMENTO DE PRISÃO",
+      "doc_count": 122
+    },
+    {
+      "key": "RENOVATÓRIA DE LOCAÇÃO",
+      "doc_count": 122
+    },
+    {
+      "key": "AÇÃO DE PARTILHA",
+      "doc_count": 118
+    },
+    {
+      "key": "ABERTURA, REGISTRO E CUMPRIMENTO DE TESTAMENTO",
+      "doc_count": 113
+    },
+    {
+      "key": "DESAFORAMENTO DE JULGAMENTO",
+      "doc_count": 112
+    },
+    {
+      "key": "MEDIDA CAUTELAR INOMINADA",
+      "doc_count": 112
+    },
+    {
+      "key": "ALIENAÇÃO DE BENS DO ACUSADO",
+      "doc_count": 107
+    },
+    {
+      "key": "EXCEÇÃO DE IMPEDIMENTO",
+      "doc_count": 105
+    },
+    {
+      "key": "DISSOLUÇÃO E LIQUIDAÇÃO DE SOCIEDADE",
+      "doc_count": 100
+    },
+    {
+      "key": "MANDADO DE INJUNÇÃO",
+      "doc_count": 97
+    },
+    {
+      "key": "AÇÃO POPULAR",
+      "doc_count": 94
+    },
+    {
+      "key": "LIQUIDAÇÃO POR ARBITRAMENTO",
+      "doc_count": 93
+    },
+    {
+      "key": "RECURSO ADESIVO",
+      "doc_count": 93
+    },
+    {
+      "key": "CONFLITO DE COMPETÊNCIA INFÂNCIA E JUVENTUDE",
+      "doc_count": 92
+    },
+    {
+      "key": "COMUNICADO DE MANDADO DE PRISÃO",
+      "doc_count": 82
+    },
+    {
+      "key": "TUTELA CÍVEL",
+      "doc_count": 82
+    },
+    {
+      "key": "TUTELA E CURATELA - REMOÇÃO E DISPENSA",
+      "doc_count": 82
+    },
+    {
+      "key": "ALIENAÇÃO JUDICIAL DE BENS",
+      "doc_count": 81
+    },
+    {
+      "key": "PETIÇÃO INFÂNCIA E JUVENTUDE CÍVEL",
+      "doc_count": 77
+    },
+    {
+      "key": "APELAÇÃO CÍVEL (EM MANDADO DE SEGURANÇA)",
+      "doc_count": 76
+    },
+    {
+      "key": "ARGÜIÇÃO DE INCONSTITUCIONALIDADE",
+      "doc_count": 71
+    },
+    {
+      "key": "DECLARAÇÃO DE AUSÊNCIA",
+      "doc_count": 71
+    },
+    {
+      "key": "FALÊNCIA DE EMPRESÁRIOS, SOCIEDADES EMPRESÁRIAIS, MICROEMPRESAS E EMPRESAS DE PEQUENO PORTE",
+      "doc_count": 70
+    },
+    {
+      "key": "MEDIDAS INVESTIGATÓRIAS SOBRE ORGANIZAÇÕES CRIMINOSAS",
+      "doc_count": 69
+    },
+    {
+      "key": "RECURSO ESPECIAL",
+      "doc_count": 68
+    },
+    {
+      "key": "PEDIDO DE QUEBRA DE SIGILO DE DADOS E/OU TELEFÔNICO",
+      "doc_count": 67
+    },
+    {
+      "key": "APURAÇÃO DE INFRAÇÃO ADMINISTRATIVA ÀS NORMAS DE PROTEÇÃO À CRIANÇA OU ADOLESCENTE",
+      "doc_count": 66
+    },
+    {
+      "key": "RESTAURAÇÃO DE AUTOS CÍVEL",
+      "doc_count": 66
+    },
+    {
+      "key": "ALTERAÇÃO DE REGIME DE BENS",
+      "doc_count": 65
+    },
+    {
+      "key": "REPRESENTAÇÃO P/ PERDA DA GRADUAÇÃO",
+      "doc_count": 63
+    },
+    {
+      "key": "AGRAVO INTERNO CÍVEL",
+      "doc_count": 62
+    },
+    {
+      "key": "DEPÓSITO DA LEI 8. 866/94",
+      "doc_count": 62
+    },
+    {
+      "key": "HABEAS DATA CÍVEL",
+      "doc_count": 61
+    },
+    {
+      "key": "AÇÃO CIVIL COLETIVA",
+      "doc_count": 60
+    },
+    {
+      "key": "CAUTELAR INOMINADA CRIMINAL",
+      "doc_count": 60
+    },
+    {
+      "key": "GUARDA DE FAMÍLIA",
+      "doc_count": 58
+    },
+    {
+      "key": "INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+      "doc_count": 58
+    },
+    {
+      "key": "TUTELA INFÂNCIA E JUVENTUDE",
+      "doc_count": 58
+    },
+    {
+      "key": "EXECUÇÃO DE MEDIDA DE PROTEÇÃO À CRIANÇA E ADOLESCENTE",
+      "doc_count": 57
+    },
+    {
+      "key": "AVARIAS",
+      "doc_count": 56
+    },
+    {
+      "key": "NOTIFICAÇÃO",
+      "doc_count": 56
+    },
+    {
+      "key": "PEDIDO DE BUSCA E APREENSÃO CRIMINAL",
+      "doc_count": 56
+    },
+    {
+      "key": "MEDIDA CAUTELAR INCIDENTAL",
+      "doc_count": 55
+    },
+    {
+      "key": "INSOLVÊNCIA REQUERIDA PELO CREDOR",
+      "doc_count": 54
+    },
+    {
+      "key": "IMPUGNAÇÃO AO VALOR DA CAUSA",
+      "doc_count": 53
+    },
+    {
+      "key": "RECUPERAÇÃO JUDICIAL",
+      "doc_count": 51
+    },
+    {
+      "key": "REQUERIMENTO DE REINTEGRAÇÃO DE POSSE",
+      "doc_count": 51
+    },
+    {
+      "key": "HABILITAÇÃO PARA ADOÇÃO",
+      "doc_count": 50
+    },
+    {
+      "key": "REPRESENTAÇÃO CRIMINAL",
+      "doc_count": 49
+    },
+    {
+      "key": "PROCESSO ADMINISTRATIVO - CGJ",
+      "doc_count": 48
+    },
+    {
+      "key": "REPRESENTAÇÃO P/PERDA DA GRADUAÇÃO",
+      "doc_count": 48
+    },
+    {
+      "key": "ADOÇÃO",
+      "doc_count": 47
+    },
+    {
+      "key": "INTERPELAÇÃO",
+      "doc_count": 47
+    },
+    {
+      "key": "PEDIDO DE PRISÃO PREVENTIVA",
+      "doc_count": 46
+    },
+    {
+      "key": "PEDIDO DE PROVIDÊNCIA",
+      "doc_count": 46
+    },
+    {
+      "key": "RECURSO ORDINARIO",
+      "doc_count": 46
+    },
+    {
+      "key": "APELAÇÃO CÍVEL/ECA",
+      "doc_count": 45
+    },
+    {
+      "key": "PEDIDO DE PROVIDÊNCIA - CGJ - CONFIDENCIAL",
+      "doc_count": 45
+    },
+    {
+      "key": "AGRAVO RETIDO",
+      "doc_count": 44
+    },
+    {
+      "key": "EMBARGOS DE TERCEIRO CRIMINAL",
+      "doc_count": 44
+    },
+    {
+      "key": "AGRAVO REGIMENTAL CÍVEL",
+      "doc_count": 43
+    },
+    {
+      "key": "REABILITAÇÃO",
+      "doc_count": 43
+    },
+    {
+      "key": "EXECUÇÃO DE MULTA",
+      "doc_count": 42
+    },
+    {
+      "key": "NOMEAÇÃO DE ADVOGADO",
+      "doc_count": 42
+    },
+    {
+      "key": "REVOGAÇÃO DE PRISÃO",
+      "doc_count": 42
+    },
+    {
+      "key": "SUSPENSÃO DE LIMINAR E DE SENTENÇA",
+      "doc_count": 42
+    },
+    {
+      "key": "BUSCA E APREENSÃO INFÂNCIA E JUVENTUDE",
+      "doc_count": 41
+    },
+    {
+      "key": "PEDIDO DE MEDIDA DE PROTEÇÃO",
+      "doc_count": 40
+    },
+    {
+      "key": "AGRAVO EM RECURSO ESPECIAL",
+      "doc_count": 39
+    },
+    {
+      "key": "DISCRIMINATÓRIA",
+      "doc_count": 39
+    },
+    {
+      "key": "EXCEÇÃO DE INCOMPETÊNCIA",
+      "doc_count": 39
+    },
+    {
+      "key": "PRODUÇÃO ANTECIPADA DE PROVAS",
+      "doc_count": 39
+    },
+    {
+      "key": "PROTESTO",
+      "doc_count": 39
+    },
+    {
+      "key": "SUSPENSÃO DE LIMINAR OU ANTECIPAÇÃO DE TUTELA",
+      "doc_count": 38
+    },
+    {
+      "key": "EXIBIÇÃO",
+      "doc_count": 37
+    },
+    {
+      "key": "APELAÇÃO CRIMINAL/ECA",
+      "doc_count": 36
+    },
+    {
+      "key": "INCIDENTE DE FALSIDADE",
+      "doc_count": 36
+    },
+    {
+      "key": "RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO",
+      "doc_count": 36
+    },
+    {
+      "key": "CUMPRIMENTO DE SENTENÇA DE OBRIGAÇÃO DE PRESTAR ALIMENTOS",
+      "doc_count": 35
+    },
+    {
+      "key": "EMBARGOS INFRINGENTES NA EXECUÇÃO FISCAL",
+      "doc_count": 35
+    },
+    {
+      "key": "SUSPENSÃO DE SEGURANÇA CÍVEL",
+      "doc_count": 35
+    },
+    {
+      "key": "IMPUGNAÇÃO AO VALOR DA CAUSA CÍVEL",
+      "doc_count": 34
+    },
+    {
+      "key": "OPOSIÇÃO",
+      "doc_count": 33
+    },
+    {
+      "key": "PERDA DE GRADUAÇÃO DE PRAÇA",
+      "doc_count": 33
+    },
+    {
+      "key": "EXCEÇÃO DA VERDADE",
+      "doc_count": 32
+    },
+    {
+      "key": "HABEAS DATA",
+      "doc_count": 32
+    },
+    {
+      "key": "DIVÓRCIO CONSENSUAL",
+      "doc_count": 31
+    },
+    {
+      "key": "INCIDENTE DE IMPEDIMENTO CÍVEL",
+      "doc_count": 31
+    },
+    {
+      "key": "PEDIDO DE DESAFORAMENTO",
+      "doc_count": 31
+    },
+    {
+      "key": "CONSIGNATÓRIA DE ALUGUÉIS",
+      "doc_count": 30
+    },
+    {
+      "key": "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA",
+      "doc_count": 30
+    },
+    {
+      "key": "REVISIONAL DE ALUGUEL",
+      "doc_count": 30
+    },
+    {
+      "key": "APREENSÃO E DEPÓSITO DE COISA VENDIDA COM RESERVA DE DOMÍNIO",
+      "doc_count": 28
+    },
+    {
+      "key": "SUPRIMENTO DE IDADE E/OU CONSENTIMENTO",
+      "doc_count": 28
+    },
+    {
+      "key": "ALIMENTOS - LEI ESPECIAL Nº 5.478/68",
+      "doc_count": 27
+    },
+    {
+      "key": "REMOÇÃO DE INVENTARIANTE",
+      "doc_count": 27
+    },
+    {
+      "key": "AUTO DE APREENSÃO EM FLAGRANTE",
+      "doc_count": 26
+    },
+    {
+      "key": "CARTA DE ORDEM CÍVEL",
+      "doc_count": 26
+    },
+    {
+      "key": "HERANÇA JACENTE",
+      "doc_count": 26
+    },
+    {
+      "key": "IMPUGNAÇÃO AO CUMPRIMENTO DE SENTENÇA",
+      "doc_count": 26
+    },
+    {
+      "key": "PETIÇÃO INFRACIONAL",
+      "doc_count": 26
+    },
+    {
+      "key": "SUSPENSÃO DE EXECUÇÃO DE SENTENÇA",
+      "doc_count": 26
+    },
+    {
+      "key": "TERMO CIRCUNSTANCIADO (CRIME DETENCAO)",
+      "doc_count": 26
+    },
+    {
+      "key": "RECONHECIMENTO E EXTINÇÃO DE UNIÃO ESTÁVEL",
+      "doc_count": 25
+    },
+    {
+      "key": "PROTESTO FORMADO A BORDO",
+      "doc_count": 24
+    },
+    {
+      "key": "INCIDENTE DE SANIDADE MENTAL",
+      "doc_count": 23
+    },
+    {
+      "key": "PROCESSO ADMINISTRATIVO DISCIPLINAR EM FACE DE MAGISTRADO",
+      "doc_count": 23
+    },
+    {
+      "key": "ADOÇÃO C/C DESTITUIÇÃO DO PODER FAMILIAR",
+      "doc_count": 22
+    },
+    {
+      "key": "EMBARGOS INFRIGENTE (EM APELAÇÃO CÍVEL)",
+      "doc_count": 21
+    },
+    {
+      "key": "EXCEÇÃO DE INCOMPETÊNCIA DE JUÍZO",
+      "doc_count": 21
+    },
+    {
+      "key": "EXECUÇÃO DE TÍTULO JUDICIAL",
+      "doc_count": 21
+    },
+    {
+      "key": "IMPUGNAÇÃO DE ASSISTÊNCIA JUDICIÁRIA",
+      "doc_count": 21
+    },
+    {
+      "key": "JUSTIFICAÇÃO",
+      "doc_count": 21
+    },
+    {
+      "key": "ANULAÇÃO E SUBSTITUIÇÃO DE TÍTULOS AO PORTADOR",
+      "doc_count": 18
+    },
+    {
+      "key": "RECUPERAÇÃO EXTRAJUDICIAL",
+      "doc_count": 18
+    },
+    {
+      "key": "ALTERAÇÃO DO REGIME DE BENS",
+      "doc_count": 17
+    },
+    {
+      "key": "APELAÇÃO CÍVEL (2 RECURSOS)",
+      "doc_count": 17
+    },
+    {
+      "key": "CARTA TESTEMUNHAVEL",
+      "doc_count": 17
+    },
+    {
+      "key": "RESTITUIÇÃO DE COISA APREENDIDA",
+      "doc_count": 17
+    },
+    {
+      "key": "ASSISTÊNCIA JUDICIÁRIA",
+      "doc_count": 16
+    },
+    {
+      "key": "CARTA DE ORDEM INFÂNCIA E JUVENTUDE",
+      "doc_count": 16
+    },
+    {
+      "key": "CRIMES DE RESPONSABILIDADE DOS FUNCIONÁRIOS PÚBLICOS",
+      "doc_count": 16
+    },
+    {
+      "key": "NOTÍCIA CRIME",
+      "doc_count": 14
+    },
+    {
+      "key": "OUTROS FEITOS",
+      "doc_count": 14
+    },
+    {
+      "key": "PERDA OU SUSPENSÃO DO PODER FAMILIAR",
+      "doc_count": 14
+    },
+    {
+      "key": "RESTAURAÇÃO DE AUTOS",
+      "doc_count": 14
+    },
+    {
+      "key": "SUPRIMENTO DE CAPACIDADE OU DE CONSENTIMENTO PARA CASAR",
+      "doc_count": 14
+    },
+    {
+      "key": "NOTIFICAÇÃO PARA EXPLICAÇÕES",
+      "doc_count": 13
+    },
+    {
+      "key": "NOTÍCIA-CRIME",
+      "doc_count": 12
+    },
+    {
+      "key": "AGRAVO DE INSTRUMENTO EM RECURSO ESPECIAL",
+      "doc_count": 11
+    },
+    {
+      "key": "APELAÇÃO CÍVEL (2 RECURSO EM PROC. 1O. GRAU)",
+      "doc_count": 11
+    },
+    {
+      "key": "DISSÍDIO COLETIVO",
+      "doc_count": 11
+    },
+    {
+      "key": "EXECUÇÃO HIPOTECÁRIA DO SISTEMA FINANCEIRO DA HABITAÇÃO",
+      "doc_count": 11
+    },
+    {
+      "key": "INVESTIGAÇÃO CRIMINAL",
+      "doc_count": 11
+    }
+  ],
+  "classes_judiciais_com_codigo": [
+    {
+      "key": [
+        "460",
+        "RECURSO INOMINADO CÍVEL"
+      ],
+      "key_as_string": "460|RECURSO INOMINADO CÍVEL",
+      "doc_count": 740152
+    },
+    {
+      "key": [
+        "156",
+        "CUMPRIMENTO DE SENTENÇA"
+      ],
+      "key_as_string": "156|CUMPRIMENTO DE SENTENÇA",
+      "doc_count": 527679
+    },
+    {
+      "key": [
+        "436",
+        "PROCEDIMENTO DO JUIZADO ESPECIAL CÍVEL"
+      ],
+      "key_as_string": "436|PROCEDIMENTO DO JUIZADO ESPECIAL CÍVEL",
+      "doc_count": 480423
+    },
+    {
+      "key": [
+        "198",
+        "APELAÇÃO CÍVEL"
+      ],
+      "key_as_string": "198|APELAÇÃO CÍVEL",
+      "doc_count": 424856
+    },
+    {
+      "key": [
+        "7",
+        "PROCEDIMENTO COMUM CÍVEL"
+      ],
+      "key_as_string": "7|PROCEDIMENTO COMUM CÍVEL",
+      "doc_count": 196524
+    },
+    {
+      "key": [
+        "202",
+        "AGRAVO DE INSTRUMENTO"
+      ],
+      "key_as_string": "202|AGRAVO DE INSTRUMENTO",
+      "doc_count": 190242
+    },
+    {
+      "key": [
+        "",
+        "APELAÇÃO"
+      ],
+      "key_as_string": "|APELAÇÃO",
+      "doc_count": 151529
+    },
+    {
+      "key": [
+        "12154",
+        "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL"
+      ],
+      "key_as_string": "12154|EXECUÇÃO DE TÍTULO EXTRAJUDICIAL",
+      "doc_count": 144284
+    },
+    {
+      "key": [
+        "12078",
+        "CUMPRIMENTO DE SENTENÇA CONTRA A FAZENDA PÚBLICA"
+      ],
+      "key_as_string": "12078|CUMPRIMENTO DE SENTENÇA CONTRA A FAZENDA PÚBLICA",
+      "doc_count": 139817
+    },
+    {
+      "key": [
+        "1116",
+        "EXECUÇÃO FISCAL"
+      ],
+      "key_as_string": "1116|EXECUÇÃO FISCAL",
+      "doc_count": 106596
+    },
+    {
+      "key": [
+        "",
+        "APELAÇÃO CÍVEL"
+      ],
+      "key_as_string": "|APELAÇÃO CÍVEL",
+      "doc_count": 65086
+    },
+    {
+      "key": [
+        "417",
+        "APELAÇÃO CRIMINAL"
+      ],
+      "key_as_string": "417|APELAÇÃO CRIMINAL",
+      "doc_count": 64610
+    },
+    {
+      "key": [
+        "",
+        "AGRAVO DE INSTRUMENTO"
+      ],
+      "key_as_string": "|AGRAVO DE INSTRUMENTO",
+      "doc_count": 58627
+    },
+    {
+      "key": [
+        "278",
+        "TERMO CIRCUNSTANCIADO"
+      ],
+      "key_as_string": "278|TERMO CIRCUNSTANCIADO",
+      "doc_count": 52176
+    },
+    {
+      "key": [
+        "",
+        "HABEAS CORPUS"
+      ],
+      "key_as_string": "|HABEAS CORPUS",
+      "doc_count": 45058
+    },
+    {
+      "key": [
+        "413",
+        "AGRAVO DE EXECUÇÃO PENAL"
+      ],
+      "key_as_string": "413|AGRAVO DE EXECUÇÃO PENAL",
+      "doc_count": 38985
+    },
+    {
+      "key": [
+        "120",
+        "MANDADO DE SEGURANÇA CÍVEL"
+      ],
+      "key_as_string": "120|MANDADO DE SEGURANÇA CÍVEL",
+      "doc_count": 38365
+    },
+    {
+      "key": [
+        "14695",
+        "PROCEDIMENTO DO JUIZADO ESPECIAL DA FAZENDA PÚBLICA"
+      ],
+      "key_as_string": "14695|PROCEDIMENTO DO JUIZADO ESPECIAL DA FAZENDA PÚBLICA",
+      "doc_count": 37732
+    },
+    {
+      "key": [
+        "307",
+        "HABEAS CORPUS CRIMINAL"
+      ],
+      "key_as_string": "307|HABEAS CORPUS CRIMINAL",
+      "doc_count": 30897
+    },
+    {
+      "key": [
+        "",
+        "RECURSO INOMINADO"
+      ],
+      "key_as_string": "|RECURSO INOMINADO",
+      "doc_count": 30818
+    },
+    {
+      "key": [
+        "",
+        "MANDADO DE SEGURANÇA"
+      ],
+      "key_as_string": "|MANDADO DE SEGURANÇA",
+      "doc_count": 30093
+    },
+    {
+      "key": [
+        "81",
+        "BUSCA E APREENSÃO EM ALIENAÇÃO FIDUCIÁRIA"
+      ],
+      "key_as_string": "81|BUSCA E APREENSÃO EM ALIENAÇÃO FIDUCIÁRIA",
+      "doc_count": 28034
+    },
+    {
+      "key": [
+        "1689",
+        "EMBARGOS DE DECLARAÇÃO CÍVEL"
+      ],
+      "key_as_string": "1689|EMBARGOS DE DECLARAÇÃO CÍVEL",
+      "doc_count": 27681
+    },
+    {
+      "key": [
+        "",
+        "EMBARGOS DE DECLARAÇÃO"
+      ],
+      "key_as_string": "|EMBARGOS DE DECLARAÇÃO",
+      "doc_count": 22871
+    },
+    {
+      "key": [
+        "40",
+        "MONITÓRIA"
+      ],
+      "key_as_string": "40|MONITÓRIA",
+      "doc_count": 19876
+    },
+    {
+      "key": [
+        "",
+        "APELAÇÃO CRIMINAL"
+      ],
+      "key_as_string": "|APELAÇÃO CRIMINAL",
+      "doc_count": 16011
+    },
+    {
+      "key": [
+        "283",
+        "AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO"
+      ],
+      "key_as_string": "283|AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO",
+      "doc_count": 15872
+    },
+    {
+      "key": [
+        "241",
+        "PETIÇÃO CÍVEL"
+      ],
+      "key_as_string": "241|PETIÇÃO CÍVEL",
+      "doc_count": 14507
+    },
+    {
+      "key": [
+        "11875",
+        "RECLAMAÇÃO PRÉ-PROCESSUAL"
+      ],
+      "key_as_string": "11875|RECLAMAÇÃO PRÉ-PROCESSUAL",
+      "doc_count": 13423
+    },
+    {
+      "key": [
+        "172",
+        "EMBARGOS À EXECUÇÃO"
+      ],
+      "key_as_string": "172|EMBARGOS À EXECUÇÃO",
+      "doc_count": 10429
+    },
+    {
+      "key": [
+        "",
+        "AGRAVO"
+      ],
+      "key_as_string": "|AGRAVO",
+      "doc_count": 10284
+    },
+    {
+      "key": [
+        "",
+        "AGRAVO REGIMENTAL"
+      ],
+      "key_as_string": "|AGRAVO REGIMENTAL",
+      "doc_count": 10121
+    },
+    {
+      "key": [
+        "12374",
+        "HOMOLOGAÇÃO DA TRANSAÇÃO EXTRAJUDICIAL"
+      ],
+      "key_as_string": "12374|HOMOLOGAÇÃO DA TRANSAÇÃO EXTRAJUDICIAL",
+      "doc_count": 8810
+    },
+    {
+      "key": [
+        "",
+        "RECURSO INOMINADO CÍVEL"
+      ],
+      "key_as_string": "|RECURSO INOMINADO CÍVEL",
+      "doc_count": 8114
+    },
+    {
+      "key": [
+        "1682",
+        "RETIFICAÇÃO OU SUPRIMENTO OU RESTAURAÇÃO DE REGISTRO CIVIL"
+      ],
+      "key_as_string": "1682|RETIFICAÇÃO OU SUPRIMENTO OU RESTAURAÇÃO DE REGISTRO CIVIL",
+      "doc_count": 8078
+    },
+    {
+      "key": [
+        "",
+        "REEXAME NECESSÁRIO"
+      ],
+      "key_as_string": "|REEXAME NECESSÁRIO",
+      "doc_count": 7729
+    },
+    {
+      "key": [
+        "",
+        "AGRAVO DE EXECUÇÃO PENAL"
+      ],
+      "key_as_string": "|AGRAVO DE EXECUÇÃO PENAL",
+      "doc_count": 7586
+    },
+    {
+      "key": [
+        "74",
+        "ALVARÁ JUDICIAL - LEI 6858/80"
+      ],
+      "key_as_string": "74|ALVARÁ JUDICIAL - LEI 6858/80",
+      "doc_count": 7275
+    },
+    {
+      "key": [
+        "10944",
+        "AÇÃO PENAL - PROCEDIMENTO SUMARÍSSIMO"
+      ],
+      "key_as_string": "10944|AÇÃO PENAL - PROCEDIMENTO SUMARÍSSIMO",
+      "doc_count": 7027
+    },
+    {
+      "key": [
+        "10943",
+        "AÇÃO PENAL - PROCEDIMENTO SUMÁRIO"
+      ],
+      "key_as_string": "10943|AÇÃO PENAL - PROCEDIMENTO SUMÁRIO",
+      "doc_count": 6012
+    },
+    {
+      "key": [
+        "199",
+        "REMESSA NECESSÁRIA CÍVEL"
+      ],
+      "key_as_string": "199|REMESSA NECESSÁRIA CÍVEL",
+      "doc_count": 5453
+    },
+    {
+      "key": [
+        "112",
+        "HOMOLOGAÇÃO DE TRANSAÇÃO EXTRAJUDICIAL"
+      ],
+      "key_as_string": "112|HOMOLOGAÇÃO DE TRANSAÇÃO EXTRAJUDICIAL",
+      "doc_count": 5439
+    },
+    {
+      "key": [
+        "39",
+        "INVENTÁRIO"
+      ],
+      "key_as_string": "39|INVENTÁRIO",
+      "doc_count": 5426
+    },
+    {
+      "key": [
+        "1728",
+        "APELAÇÃO / REMESSA NECESSÁRIA"
+      ],
+      "key_as_string": "1728|APELAÇÃO / REMESSA NECESSÁRIA",
+      "doc_count": 5147
+    },
+    {
+      "key": [
+        "221",
+        "CONFLITO DE COMPETÊNCIA CÍVEL"
+      ],
+      "key_as_string": "221|CONFLITO DE COMPETÊNCIA CÍVEL",
+      "doc_count": 4929
+    },
+    {
+      "key": [
+        "",
+        "RECURSO EM SENTIDO ESTRITO"
+      ],
+      "key_as_string": "|RECURSO EM SENTIDO ESTRITO",
+      "doc_count": 4579
+    },
+    {
+      "key": [
+        "426",
+        "RECURSO EM SENTIDO ESTRITO"
+      ],
+      "key_as_string": "426|RECURSO EM SENTIDO ESTRITO",
+      "doc_count": 4572
+    },
+    {
+      "key": [
+        "279",
+        "INQUÉRITO POLICIAL"
+      ],
+      "key_as_string": "279|INQUÉRITO POLICIAL",
+      "doc_count": 4513
+    },
+    {
+      "key": [
+        "1710",
+        "MANDADO DE SEGURANÇA CRIMINAL"
+      ],
+      "key_as_string": "1710|MANDADO DE SEGURANÇA CRIMINAL",
+      "doc_count": 4095
+    },
+    {
+      "key": [
+        "37",
+        "EMBARGOS DE TERCEIRO CÍVEL"
+      ],
+      "key_as_string": "37|EMBARGOS DE TERCEIRO CÍVEL",
+      "doc_count": 3867
+    },
+    {
+      "key": [
+        "181",
+        "BUSCA E APREENSÃO"
+      ],
+      "key_as_string": "181|BUSCA E APREENSÃO",
+      "doc_count": 3846
+    },
+    {
+      "key": [
+        "22",
+        "PROCEDIMENTO SUMÁRIO"
+      ],
+      "key_as_string": "22|PROCEDIMENTO SUMÁRIO",
+      "doc_count": 3817
+    },
+    {
+      "key": [
+        "",
+        "PROCESSO ADMINISTRATIVO"
+      ],
+      "key_as_string": "|PROCESSO ADMINISTRATIVO",
+      "doc_count": 3750
+    },
+    {
+      "key": [
+        "58",
+        "INTERDIÇÃO/CURATELA"
+      ],
+      "key_as_string": "58|INTERDIÇÃO/CURATELA",
+      "doc_count": 3702
+    },
+    {
+      "key": [
+        "14678",
+        "ACORDO DE NÃO PERSECUÇÃO PENAL"
+      ],
+      "key_as_string": "14678|ACORDO DE NÃO PERSECUÇÃO PENAL",
+      "doc_count": 3664
+    },
+    {
+      "key": [
+        "",
+        "RECURSO EXTRAORDINARIO"
+      ],
+      "key_as_string": "|RECURSO EXTRAORDINARIO",
+      "doc_count": 3554
+    },
+    {
+      "key": [
+        "1112",
+        "EXECUÇÃO DE ALIMENTOS"
+      ],
+      "key_as_string": "1112|EXECUÇÃO DE ALIMENTOS",
+      "doc_count": 3515
+    },
+    {
+      "key": [
+        "95",
+        "AÇÃO DIRETA DE INCONSTITUCIONALIDADE"
+      ],
+      "key_as_string": "95|AÇÃO DIRETA DE INCONSTITUCIONALIDADE",
+      "doc_count": 3339
+    },
+    {
+      "key": [
+        "65",
+        "AÇÃO CIVIL PÚBLICA"
+      ],
+      "key_as_string": "65|AÇÃO CIVIL PÚBLICA",
+      "doc_count": 3137
+    },
+    {
+      "key": [
+        "1114",
+        "EXECUÇÃO CONTRA A FAZENDA PÚBLICA"
+      ],
+      "key_as_string": "1114|EXECUÇÃO CONTRA A FAZENDA PÚBLICA",
+      "doc_count": 3122
+    },
+    {
+      "key": [
+        "47",
+        "AÇÃO RESCISÓRIA"
+      ],
+      "key_as_string": "47|AÇÃO RESCISÓRIA",
+      "doc_count": 2837
+    },
+    {
+      "key": [
+        "1707",
+        "REINTEGRAÇÃO / MANUTENÇÃO DE POSSE"
+      ],
+      "key_as_string": "1707|REINTEGRAÇÃO / MANUTENÇÃO DE POSSE",
+      "doc_count": 2744
+    },
+    {
+      "key": [
+        "",
+        "REVISÃO CRIMINAL"
+      ],
+      "key_as_string": "|REVISÃO CRIMINAL",
+      "doc_count": 2661
+    },
+    {
+      "key": [
+        "300",
+        "PROCEDIMENTO ESPECIAL DA LEI ANTITÓXICOS"
+      ],
+      "key_as_string": "300|PROCEDIMENTO ESPECIAL DA LEI ANTITÓXICOS",
+      "doc_count": 2641
+    },
+    {
+      "key": [
+        "",
+        "AÇÃO RESCISÓRIA"
+      ],
+      "key_as_string": "|AÇÃO RESCISÓRIA",
+      "doc_count": 2617
+    },
+    {
+      "key": [
+        "1298",
+        "PROCESSO ADMINISTRATIVO"
+      ],
+      "key_as_string": "1298|PROCESSO ADMINISTRATIVO",
+      "doc_count": 2571
+    },
+    {
+      "key": [
+        "12251",
+        "EXECUÇÃO DE TÍTULO JUDICIAL - CEJUSC"
+      ],
+      "key_as_string": "12251|EXECUÇÃO DE TÍTULO JUDICIAL - CEJUSC",
+      "doc_count": 2570
+    },
+    {
+      "key": [
+        "",
+        "RECURSO CÍVEL "
+      ],
+      "key_as_string": "|RECURSO CÍVEL ",
+      "doc_count": 2383
+    },
+    {
+      "key": [
+        "49",
+        "USUCAPIÃO"
+      ],
+      "key_as_string": "49|USUCAPIÃO",
+      "doc_count": 2355
+    },
+    {
+      "key": [
+        "12394",
+        "REVISÃO CRIMINAL"
+      ],
+      "key_as_string": "12394|REVISÃO CRIMINAL",
+      "doc_count": 2295
+    },
+    {
+      "key": [
+        "",
+        "APELAÇÃO CÍVEL - RITO SUMÁRIO"
+      ],
+      "key_as_string": "|APELAÇÃO CÍVEL - RITO SUMÁRIO",
+      "doc_count": 2280
+    },
+    {
+      "key": [
+        "282",
+        "AÇÃO PENAL DE COMPETÊNCIA DO JÚRI"
+      ],
+      "key_as_string": "282|AÇÃO PENAL DE COMPETÊNCIA DO JÚRI",
+      "doc_count": 2239
+    },
+    {
+      "key": [
+        "386",
+        "EXECUÇÃO DA PENA"
+      ],
+      "key_as_string": "386|EXECUÇÃO DA PENA",
+      "doc_count": 2151
+    },
+    {
+      "key": [
+        "299",
+        "PROCEDIMENTO DO JUIZADO ESPECIAL CRIMINAL - SUMARIÍSSIMO"
+      ],
+      "key_as_string": "299|PROCEDIMENTO DO JUIZADO ESPECIAL CRIMINAL - SUMARIÍSSIMO",
+      "doc_count": 1999
+    },
+    {
+      "key": [
+        "1706",
+        "PROCEDIMENTO COMUM INFÂNCIA E JUVENTUDE"
+      ],
+      "key_as_string": "1706|PROCEDIMENTO COMUM INFÂNCIA E JUVENTUDE",
+      "doc_count": 1928
+    },
+    {
+      "key": [
+        "157",
+        "CUMPRIMENTO PROVISÓRIO DE SENTENÇA"
+      ],
+      "key_as_string": "157|CUMPRIMENTO PROVISÓRIO DE SENTENÇA",
+      "doc_count": 1836
+    },
+    {
+      "key": [
+        "1295",
+        "ALVARÁ JUDICIAL"
+      ],
+      "key_as_string": "1295|ALVARÁ JUDICIAL",
+      "doc_count": 1804
+    },
+    {
+      "key": [
+        "",
+        "EMBARGOS DE DECLARAÇÃO CÍVEL"
+      ],
+      "key_as_string": "|EMBARGOS DE DECLARAÇÃO CÍVEL",
+      "doc_count": 1379
+    },
+    {
+      "key": [
+        "12375",
+        "RECLAMAÇÃO"
+      ],
+      "key_as_string": "12375|RECLAMAÇÃO",
+      "doc_count": 1319
+    },
+    {
+      "key": [
+        "1118",
+        "EMBARGOS À EXECUÇÃO FISCAL"
+      ],
+      "key_as_string": "1118|EMBARGOS À EXECUÇÃO FISCAL",
+      "doc_count": 1247
+    },
+    {
+      "key": [
+        "183",
+        "CAUTELAR INOMINADA"
+      ],
+      "key_as_string": "183|CAUTELAR INOMINADA",
+      "doc_count": 1151
+    },
+    {
+      "key": [
+        "1727",
+        "PETIÇÃO CRIMINAL"
+      ],
+      "key_as_string": "1727|PETIÇÃO CRIMINAL",
+      "doc_count": 1063
+    },
+    {
+      "key": [
+        "",
+        "AGRAVO EM RECURSO EXTRAORDINÁRIO"
+      ],
+      "key_as_string": "|AGRAVO EM RECURSO EXTRAORDINÁRIO",
+      "doc_count": 1005
+    },
+    {
+      "key": [
+        "",
+        "EMBARGOS INFRINGENTES E DE NULIDADE"
+      ],
+      "key_as_string": "|EMBARGOS INFRINGENTES E DE NULIDADE",
+      "doc_count": 979
+    },
+    {
+      "key": [
+        "",
+        "APRECIAÇÃO EM DUPLO GRAU DE JURISDIÇÃO"
+      ],
+      "key_as_string": "|APRECIAÇÃO EM DUPLO GRAU DE JURISDIÇÃO",
+      "doc_count": 974
+    },
+    {
+      "key": [
+        "31",
+        "ARROLAMENTO SUMÁRIO"
+      ],
+      "key_as_string": "31|ARROLAMENTO SUMÁRIO",
+      "doc_count": 963
+    },
+    {
+      "key": [
+        "12119",
+        "INCIDENTE DE DESCONSIDERAÇÃO DE PERSONALIDADE JURÍDICA"
+      ],
+      "key_as_string": "12119|INCIDENTE DE DESCONSIDERAÇÃO DE PERSONALIDADE JURÍDICA",
+      "doc_count": 959
+    },
+    {
+      "key": [
+        "",
+        "CONFLITO DE COMPETÊNCIA"
+      ],
+      "key_as_string": "|CONFLITO DE COMPETÊNCIA",
+      "doc_count": 934
+    },
+    {
+      "key": [
+        "15545",
+        "PROCEDIMENTO RELATIVO À POSSE DE MACONHA PARA CONSUMO PESSOAL"
+      ],
+      "key_as_string": "15545|PROCEDIMENTO RELATIVO À POSSE DE MACONHA PARA CONSUMO PESSOAL",
+      "doc_count": 930
+    },
+    {
+      "key": [
+        "1464",
+        "PROCESSO DE APURAÇÃO DE ATO INFRACIONAL"
+      ],
+      "key_as_string": "1464|PROCESSO DE APURAÇÃO DE ATO INFRACIONAL",
+      "doc_count": 909
+    },
+    {
+      "key": [
+        "32",
+        "CONSIGNAÇÃO EM PAGAMENTO"
+      ],
+      "key_as_string": "32|CONSIGNAÇÃO EM PAGAMENTO",
+      "doc_count": 880
+    },
+    {
+      "key": [
+        "159",
+        "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL"
+      ],
+      "key_as_string": "159|EXECUÇÃO DE TÍTULO EXTRAJUDICIAL",
+      "doc_count": 862
+    },
+    {
+      "key": [
+        "94",
+        "DESPEJO POR FALTA DE PAGAMENTO CUMULADO COM COBRANÇA"
+      ],
+      "key_as_string": "94|DESPEJO POR FALTA DE PAGAMENTO CUMULADO COM COBRANÇA",
+      "doc_count": 859
+    },
+    {
+      "key": [
+        "280",
+        "AUTO DE PRISÃO EM FLAGRANTE"
+      ],
+      "key_as_string": "280|AUTO DE PRISÃO EM FLAGRANTE",
+      "doc_count": 799
+    },
+    {
+      "key": [
+        "",
+        "HABEAS CORPUS CRIMINAL"
+      ],
+      "key_as_string": "|HABEAS CORPUS CRIMINAL",
+      "doc_count": 796
+    },
+    {
+      "key": [
+        "",
+        "CORREIÇÃO PARCIAL"
+      ],
+      "key_as_string": "|CORREIÇÃO PARCIAL",
+      "doc_count": 780
+    },
+    {
+      "key": [
+        "100",
+        "DÚVIDA"
+      ],
+      "key_as_string": "100|DÚVIDA",
+      "doc_count": 764
+    },
+    {
+      "key": [
+        "1690",
+        "AÇÃO CIVIL PÚBLICA INFÂNCIA E JUVENTUDE"
+      ],
+      "key_as_string": "1690|AÇÃO CIVIL PÚBLICA INFÂNCIA E JUVENTUDE",
+      "doc_count": 764
+    },
+    {
+      "key": [
+        "",
+        "EMBARGOS INFRINGENTES"
+      ],
+      "key_as_string": "|EMBARGOS INFRINGENTES",
+      "doc_count": 732
+    },
+    {
+      "key": [
+        "228",
+        "EXIBIÇÃO DE DOCUMENTO OU COISA CÍVEL"
+      ],
+      "key_as_string": "228|EXIBIÇÃO DE DOCUMENTO OU COISA CÍVEL",
+      "doc_count": 724
+    },
+    {
+      "key": [
+        "",
+        "APELAÇÃO CÍVEL EM EXECUÇÃO FISCAL"
+      ],
+      "key_as_string": "|APELAÇÃO CÍVEL EM EXECUÇÃO FISCAL",
+      "doc_count": 699
+    },
+    {
+      "key": [
+        "",
+        "RECURSO ADMINISTRATIVO"
+      ],
+      "key_as_string": "|RECURSO ADMINISTRATIVO",
+      "doc_count": 687
+    },
+    {
+      "key": [
+        "12122",
+        "RECLAMAÇÃO CRIMINAL"
+      ],
+      "key_as_string": "12122|RECLAMAÇÃO CRIMINAL",
+      "doc_count": 662
+    },
+    {
+      "key": [
+        "12135",
+        "TUTELA ANTECIPADA ANTECEDENTE"
+      ],
+      "key_as_string": "12135|TUTELA ANTECIPADA ANTECEDENTE",
+      "doc_count": 654
+    },
+    {
+      "key": [
+        "1294",
+        "OUTROS PROCEDIMENTOS DE JURISDIÇÃO VOLUNTÁRIA"
+      ],
+      "key_as_string": "1294|OUTROS PROCEDIMENTOS DE JURISDIÇÃO VOLUNTÁRIA",
+      "doc_count": 640
+    },
+    {
+      "key": [
+        "",
+        "CONFLITO NEGATIVO DE COMPETÊNCIA"
+      ],
+      "key_as_string": "|CONFLITO NEGATIVO DE COMPETÊNCIA",
+      "doc_count": 608
+    },
+    {
+      "key": [
+        "",
+        "AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO"
+      ],
+      "key_as_string": "|AÇÃO PENAL - PROCEDIMENTO ORDINÁRIO",
+      "doc_count": 607
+    },
+    {
+      "key": [
+        "",
+        "MANDADO DE SEGURANÇA CÍVEL"
+      ],
+      "key_as_string": "|MANDADO DE SEGURANÇA CÍVEL",
+      "doc_count": 599
+    },
+    {
+      "key": [
+        "",
+        "RECURSO EM SENTIDO ESTRITO (EM PROC. DE 1O. GRAU)"
+      ],
+      "key_as_string": "|RECURSO EM SENTIDO ESTRITO (EM PROC. DE 1O. GRAU)",
+      "doc_count": 599
+    },
+    {
+      "key": [
+        "",
+        "RECLAMAÇÃO"
+      ],
+      "key_as_string": "|RECLAMAÇÃO",
+      "doc_count": 597
+    },
+    {
+      "key": [
+        "90",
+        "DESAPROPRIAÇÃO"
+      ],
+      "key_as_string": "90|DESAPROPRIAÇÃO",
+      "doc_count": 589
+    },
+    {
+      "key": [
+        "30",
+        "ARROLAMENTO COMUM"
+      ],
+      "key_as_string": "30|ARROLAMENTO COMUM",
+      "doc_count": 586
+    },
+    {
+      "key": [
+        "325",
+        "CONFLITO DE JURISDIÇÃO"
+      ],
+      "key_as_string": "325|CONFLITO DE JURISDIÇÃO",
+      "doc_count": 572
+    },
+    {
+      "key": [
+        "64",
+        "AÇÃO CIVIL DE IMPROBIDADE ADMINISTRATIVA"
+      ],
+      "key_as_string": "64|AÇÃO CIVIL DE IMPROBIDADE ADMINISTRATIVA",
+      "doc_count": 565
+    },
+    {
+      "key": [
+        "1691",
+        "MANDADO DE SEGURANÇA INFÂNCIA E JUVENTUDE CÍVEL"
+      ],
+      "key_as_string": "1691|MANDADO DE SEGURANÇA INFÂNCIA E JUVENTUDE CÍVEL",
+      "doc_count": 539
+    },
+    {
+      "key": [
+        "1703",
+        "AUTORIZAÇÃO JUDICIAL"
+      ],
+      "key_as_string": "1703|AUTORIZAÇÃO JUDICIAL",
+      "doc_count": 529
+    },
+    {
+      "key": [
+        "12234",
+        "CURATELA"
+      ],
+      "key_as_string": "12234|CURATELA",
+      "doc_count": 528
+    },
+    {
+      "key": [
+        "",
+        "PETIÇÃO"
+      ],
+      "key_as_string": "|PETIÇÃO",
+      "doc_count": 526
+    },
+    {
+      "key": [
+        "111",
+        "HABILITAÇÃO DE CRÉDITO"
+      ],
+      "key_as_string": "111|HABILITAÇÃO DE CRÉDITO",
+      "doc_count": 516
+    },
+    {
+      "key": [
+        "",
+        "CONFLITO DE JURISDIÇÃO"
+      ],
+      "key_as_string": "|CONFLITO DE JURISDIÇÃO",
+      "doc_count": 511
+    },
+    {
+      "key": [
+        "",
+        "AGRAVO EM EXECUÇÃO DE PENA"
+      ],
+      "key_as_string": "|AGRAVO EM EXECUÇÃO DE PENA",
+      "doc_count": 505
+    },
+    {
+      "key": [
+        "61",
+        "TUTELA E CURATELA -  NOMEAÇÃO"
+      ],
+      "key_as_string": "61|TUTELA E CURATELA -  NOMEAÇÃO",
+      "doc_count": 488
+    },
+    {
+      "key": [
+        "",
+        "DUPLO GRAU DE JURISDIÇÃO(ESPECIAL)"
+      ],
+      "key_as_string": "|DUPLO GRAU DE JURISDIÇÃO(ESPECIAL)",
+      "doc_count": 470
+    },
+    {
+      "key": [
+        "12134",
+        "TUTELA CAUTELAR ANTECEDENTE"
+      ],
+      "key_as_string": "12134|TUTELA CAUTELAR ANTECEDENTE",
+      "doc_count": 462
+    },
+    {
+      "key": [
+        "288",
+        "CRIMES DE CALÚNIA, INJÚRIA E DIFAMAÇÃO DE COMPETÊNCIA DO JUIZ SINGULAR"
+      ],
+      "key_as_string": "288|CRIMES DE CALÚNIA, INJÚRIA E DIFAMAÇÃO DE COMPETÊNCIA DO JUIZ SINGULAR",
+      "doc_count": 438
+    },
+    {
+      "key": [
+        "261",
+        "CARTA PRECATÓRIA CÍVEL"
+      ],
+      "key_as_string": "261|CARTA PRECATÓRIA CÍVEL",
+      "doc_count": 432
+    },
+    {
+      "key": [
+        "",
+        "DIRETA DE INCONSTITUCIONALIDADE"
+      ],
+      "key_as_string": "|DIRETA DE INCONSTITUCIONALIDADE",
+      "doc_count": 414
+    },
+    {
+      "key": [
+        "326",
+        "RESTITUIÇÃO DE COISAS APREENDIDAS"
+      ],
+      "key_as_string": "326|RESTITUIÇÃO DE COISAS APREENDIDAS",
+      "doc_count": 412
+    },
+    {
+      "key": [
+        "244",
+        "RECLAMAÇÃO"
+      ],
+      "key_as_string": "244|RECLAMAÇÃO",
+      "doc_count": 408
+    },
+    {
+      "key": [
+        "421",
+        "EMBARGOS INFRINGENTES E DE NULIDADE"
+      ],
+      "key_as_string": "421|EMBARGOS INFRINGENTES E DE NULIDADE",
+      "doc_count": 402
+    },
+    {
+      "key": [
+        "45",
+        "AÇÃO DE EXIGIR CONTAS"
+      ],
+      "key_as_string": "45|AÇÃO DE EXIGIR CONTAS",
+      "doc_count": 400
+    },
+    {
+      "key": [
+        "1733",
+        "PROCEDIMENTO INVESTIGATÓRIO CRIMINAL (PIC-MP)"
+      ],
+      "key_as_string": "1733|PROCEDIMENTO INVESTIGATÓRIO CRIMINAL (PIC-MP)",
+      "doc_count": 398
+    },
+    {
+      "key": [
+        "",
+        "CAUTELAR INOMINADA"
+      ],
+      "key_as_string": "|CAUTELAR INOMINADA",
+      "doc_count": 396
+    },
+    {
+      "key": [
+        "355",
+        "CARTA PRECATÓRIA CRIMINAL"
+      ],
+      "key_as_string": "355|CARTA PRECATÓRIA CRIMINAL",
+      "doc_count": 396
+    },
+    {
+      "key": [
+        "1465",
+        "EXECUÇÃO DE MEDIDAS SOCIOEDUCATIVAS"
+      ],
+      "key_as_string": "1465|EXECUÇÃO DE MEDIDAS SOCIOEDUCATIVAS",
+      "doc_count": 370
+    },
+    {
+      "key": [
+        "",
+        "AÇÃO PENAL"
+      ],
+      "key_as_string": "|AÇÃO PENAL",
+      "doc_count": 367
+    },
+    {
+      "key": [
+        "427",
+        "REMESSA NECESSÁRIA CRIMINAL"
+      ],
+      "key_as_string": "427|REMESSA NECESSÁRIA CRIMINAL",
+      "doc_count": 351
+    },
+    {
+      "key": [
+        "1709",
+        "INTERDITO PROIBITÓRIO"
+      ],
+      "key_as_string": "1709|INTERDITO PROIBITÓRIO",
+      "doc_count": 346
+    },
+    {
+      "key": [
+        "194",
+        "REGULAMENTAÇÃO DE VISITAS"
+      ],
+      "key_as_string": "194|REGULAMENTAÇÃO DE VISITAS",
+      "doc_count": 343
+    },
+    {
+      "key": [
+        "12357",
+        "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO"
+      ],
+      "key_as_string": "12357|PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO",
+      "doc_count": 332
+    },
+    {
+      "key": [
+        "1417",
+        "REGULARIZAÇÃO DE REGISTRO CIVIL"
+      ],
+      "key_as_string": "1417|REGULARIZAÇÃO DE REGISTRO CIVIL",
+      "doc_count": 326
+    },
+    {
+      "key": [
+        "92",
+        "DESPEJO"
+      ],
+      "key_as_string": "92|DESPEJO",
+      "doc_count": 322
+    },
+    {
+      "key": [
+        "10942",
+        "CORREIÇÃO PARCIAL CÍVEL"
+      ],
+      "key_as_string": "10942|CORREIÇÃO PARCIAL CÍVEL",
+      "doc_count": 320
+    },
+    {
+      "key": [
+        "12085",
+        "INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS"
+      ],
+      "key_as_string": "12085|INCIDENTE DE RESOLUÇÃO DE DEMANDAS REPETITIVAS",
+      "doc_count": 317
+    },
+    {
+      "key": [
+        "113",
+        "IMISSÃO NA POSSE"
+      ],
+      "key_as_string": "113|IMISSÃO NA POSSE",
+      "doc_count": 305
+    },
+    {
+      "key": [
+        "",
+        "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI - CIVEL"
+      ],
+      "key_as_string": "|PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI - CIVEL",
+      "doc_count": 303
+    },
+    {
+      "key": [
+        "420",
+        "EMBARGOS DE DECLARAÇÃO CRIMINAL"
+      ],
+      "key_as_string": "420|EMBARGOS DE DECLARAÇÃO CRIMINAL",
+      "doc_count": 302
+    },
+    {
+      "key": [
+        "1269",
+        "HABEAS CORPUS CÍVEL"
+      ],
+      "key_as_string": "1269|HABEAS CORPUS CÍVEL",
+      "doc_count": 291
+    },
+    {
+      "key": [
+        "11037",
+        "AÇÃO PENAL MILITAR - PROCEDIMENTO ORDINÁRIO"
+      ],
+      "key_as_string": "11037|AÇÃO PENAL MILITAR - PROCEDIMENTO ORDINÁRIO",
+      "doc_count": 276
+    },
+    {
+      "key": [
+        "",
+        "PROCEDIMENTO INVESTIGATÓRIO DO MP (PEÇAS DE INFORMAÇÃO)"
+      ],
+      "key_as_string": "|PROCEDIMENTO INVESTIGATÓRIO DO MP (PEÇAS DE INFORMAÇÃO)",
+      "doc_count": 267
+    },
+    {
+      "key": [
+        "",
+        "INQUÉRITO POLICIAL"
+      ],
+      "key_as_string": "|INQUÉRITO POLICIAL",
+      "doc_count": 263
+    },
+    {
+      "key": [
+        "12079",
+        "EXECUÇÃO DE TÍTULO EXTRAJUDICIAL CONTRA A FAZENDA PÚBLICA"
+      ],
+      "key_as_string": "12079|EXECUÇÃO DE TÍTULO EXTRAJUDICIAL CONTRA A FAZENDA PÚBLICA",
+      "doc_count": 256
+    },
+    {
+      "key": [
+        "293",
+        "CRIMES AMBIENTAIS"
+      ],
+      "key_as_string": "293|CRIMES AMBIENTAIS",
+      "doc_count": 255
+    },
+    {
+      "key": [
+        "",
+        "RECURSO CRIMINAL"
+      ],
+      "key_as_string": "|RECURSO CRIMINAL",
+      "doc_count": 240
+    },
+    {
+      "key": [
+        "1199",
+        "PEDIDO DE PROVIDÊNCIAS"
+      ],
+      "key_as_string": "1199|PEDIDO DE PROVIDÊNCIAS",
+      "doc_count": 233
+    },
+    {
+      "key": [
+        "193",
+        "PRODUÇÃO ANTECIPADA DA PROVA"
+      ],
+      "key_as_string": "193|PRODUÇÃO ANTECIPADA DA PROVA",
+      "doc_count": 231
+    },
+    {
+      "key": [
+        "34",
+        "DEMARCAÇÃO / DIVISÃO"
+      ],
+      "key_as_string": "34|DEMARCAÇÃO / DIVISÃO",
+      "doc_count": 229
+    },
+    {
+      "key": [
+        "",
+        "PEDIDO DE PROVIDÊNCIA - CGJ"
+      ],
+      "key_as_string": "|PEDIDO DE PROVIDÊNCIA - CGJ",
+      "doc_count": 225
+    },
+    {
+      "key": [
+        "152",
+        "LIQUIDAÇÃO DE SENTENÇA PELO PROCEDIMENTO COMUM"
+      ],
+      "key_as_string": "152|LIQUIDAÇÃO DE SENTENÇA PELO PROCEDIMENTO COMUM",
+      "doc_count": 224
+    },
+    {
+      "key": [
+        "",
+        "CONFLITO DE COMPETÊNCIA CÍVEL"
+      ],
+      "key_as_string": "|CONFLITO DE COMPETÊNCIA CÍVEL",
+      "doc_count": 222
+    },
+    {
+      "key": [
+        "",
+        "RECURSO DE OFICIO"
+      ],
+      "key_as_string": "|RECURSO DE OFICIO",
+      "doc_count": 218
+    },
+    {
+      "key": [
+        "",
+        "EXCEÇÃO DE SUSPEIÇÃO"
+      ],
+      "key_as_string": "|EXCEÇÃO DE SUSPEIÇÃO",
+      "doc_count": 216
+    },
+    {
+      "key": [
+        "119",
+        "MANDADO DE SEGURANÇA COLETIVO"
+      ],
+      "key_as_string": "119|MANDADO DE SEGURANÇA COLETIVO",
+      "doc_count": 208
+    },
+    {
+      "key": [
+        "93",
+        "DESPEJO POR FALTA DE PAGAMENTO"
+      ],
+      "key_as_string": "93|DESPEJO POR FALTA DE PAGAMENTO",
+      "doc_count": 207
+    },
+    {
+      "key": [
+        "333",
+        "INSANIDADE MENTAL DO ACUSADO"
+      ],
+      "key_as_string": "333|INSANIDADE MENTAL DO ACUSADO",
+      "doc_count": 201
+    },
+    {
+      "key": [
+        "15430",
+        "CUMPRIMENTO DE SENTENÇA - RECLAMAÇÃO PRÉ-PROCESSUAL"
+      ],
+      "key_as_string": "15430|CUMPRIMENTO DE SENTENÇA - RECLAMAÇÃO PRÉ-PROCESSUAL",
+      "doc_count": 199
+    },
+    {
+      "key": [
+        "419",
+        "CORREIÇÃO PARCIAL CRIMINAL"
+      ],
+      "key_as_string": "419|CORREIÇÃO PARCIAL CRIMINAL",
+      "doc_count": 196
+    },
+    {
+      "key": [
+        "114",
+        "IMPUGNAÇÃO DE CRÉDITO"
+      ],
+      "key_as_string": "114|IMPUGNAÇÃO DE CRÉDITO",
+      "doc_count": 191
+    },
+    {
+      "key": [
+        "10980",
+        "CUMPRIMENTO PROVISÓRIO DE DECISÃO"
+      ],
+      "key_as_string": "10980|CUMPRIMENTO PROVISÓRIO DE DECISÃO",
+      "doc_count": 190
+    },
+    {
+      "key": [
+        "1424",
+        "PROVIDÊNCIA"
+      ],
+      "key_as_string": "1424|PROVIDÊNCIA",
+      "doc_count": 190
+    },
+    {
+      "key": [
+        "38",
+        "HABILITAÇÃO"
+      ],
+      "key_as_string": "38|HABILITAÇÃO",
+      "doc_count": 190
+    },
+    {
+      "key": [
+        "1377",
+        "QUEIXA CRIME"
+      ],
+      "key_as_string": "1377|QUEIXA CRIME",
+      "doc_count": 185
+    },
+    {
+      "key": [
+        "48",
+        "SOBREPARTILHA"
+      ],
+      "key_as_string": "48|SOBREPARTILHA",
+      "doc_count": 185
+    },
+    {
+      "key": [
+        "11794",
+        "RESTITUIÇÃO DE COISAS APREENDIDAS INFRACIONAL"
+      ],
+      "key_as_string": "11794|RESTITUIÇÃO DE COISAS APREENDIDAS INFRACIONAL",
+      "doc_count": 184
+    },
+    {
+      "key": [
+        "84",
+        "COBRANÇA DE CÉDULA DE CRÉDITO INDUSTRIAL"
+      ],
+      "key_as_string": "84|COBRANÇA DE CÉDULA DE CRÉDITO INDUSTRIAL",
+      "doc_count": 181
+    },
+    {
+      "key": [
+        "457",
+        "PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CÍVEL"
+      ],
+      "key_as_string": "457|PEDIDO DE UNIFORMIZAÇÃO DE INTERPRETAÇÃO DE LEI CÍVEL",
+      "doc_count": 175
+    },
+    {
+      "key": [
+        "179",
+        "ARROLAMENTO DE BENS"
+      ],
+      "key_as_string": "179|ARROLAMENTO DE BENS",
+      "doc_count": 161
+    },
+    {
+      "key": [
+        "216",
+        "INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL"
+      ],
+      "key_as_string": "216|INCIDENTE DE ARGUIÇÃO DE INCONSTITUCIONALIDADE CÍVEL",
+      "doc_count": 151
+    },
+    {
+      "key": [
+        "",
+        "AÇÃO DIRETA DE INCONSTITUCIONALIDADE"
+      ],
+      "key_as_string": "|AÇÃO DIRETA DE INCONSTITUCIONALIDADE",
+      "doc_count": 147
+    },
+    {
+      "key": [
+        "",
+        "INQUERITO POLICIAL"
+      ],
+      "key_as_string": "|INQUERITO POLICIAL",
+      "doc_count": 135
+    },
+    {
+      "key": [
+        "12081",
+        "INCIDENTE DE SUSPEIÇÃO CÍVEL"
+      ],
+      "key_as_string": "12081|INCIDENTE DE SUSPEIÇÃO CÍVEL",
+      "doc_count": 134
+    },
+    {
+      "key": [
+        "1299",
+        "RECURSO ADMINISTRATIVO"
+      ],
+      "key_as_string": "1299|RECURSO ADMINISTRATIVO",
+      "doc_count": 134
+    },
+    {
+      "key": [
+        "272",
+        "REPRESENTAÇÃO CRIMINAL/NOTÍCIA DE CRIME"
+      ],
+      "key_as_string": "272|REPRESENTAÇÃO CRIMINAL/NOTÍCIA DE CRIME",
+      "doc_count": 134
+    },
+    {
+      "key": [
+        "",
+        "APELAÇÃO / REMESSA NECESSÁRIA"
+      ],
+      "key_as_string": "|APELAÇÃO / REMESSA NECESSÁRIA",
+      "doc_count": 129
+    },
+    {
+      "key": [
+        "12137",
+        "REQUERIMENTO DE APREENSÃO DE VEÍCULO"
+      ],
+      "key_as_string": "12137|REQUERIMENTO DE APREENSÃO DE VEÍCULO",
+      "doc_count": 127
+    },
+    {
+      "key": [
+        "",
+        "ARGUIÇÃO DE INCONSTITUCIONALIDADE"
+      ],
+      "key_as_string": "|ARGUIÇÃO DE INCONSTITUCIONALIDADE",
+      "doc_count": 122
+    },
+    {
+      "key": [
+        "137",
+        "RENOVATÓRIA DE LOCAÇÃO"
+      ],
+      "key_as_string": "137|RENOVATÓRIA DE LOCAÇÃO",
+      "doc_count": 122
+    },
+    {
+      "key": [
+        "12389",
+        "AÇÃO DE PARTILHA"
+      ],
+      "key_as_string": "12389|AÇÃO DE PARTILHA",
+      "doc_count": 118
+    },
+    {
+      "key": [
+        "",
+        "AÇÃO PENAL - PROCEDIMENTO SUMÁRIO"
+      ],
+      "key_as_string": "|AÇÃO PENAL - PROCEDIMENTO SUMÁRIO",
+      "doc_count": 113
+    },
+    {
+      "key": [
+        "51",
+        "ABERTURA, REGISTRO E CUMPRIMENTO DE TESTAMENTO"
+      ],
+      "key_as_string": "51|ABERTURA, REGISTRO E CUMPRIMENTO DE TESTAMENTO",
+      "doc_count": 113
+    },
+    {
+      "key": [
+        "",
+        "MEDIDA CAUTELAR INOMINADA"
+      ],
+      "key_as_string": "|MEDIDA CAUTELAR INOMINADA",
+      "doc_count": 112
+    },
+    {
+      "key": [
+        "1717",
+        "ALIENAÇÃO DE BENS DO ACUSADO"
+      ],
+      "key_as_string": "1717|ALIENAÇÃO DE BENS DO ACUSADO",
+      "doc_count": 107
+    },
+    {
+      "key": [
+        "988",
+        "DISSÍDIO COLETIVO DE GREVE"
+      ],
+      "key_as_string": "988|DISSÍDIO COLETIVO DE GREVE",
+      "doc_count": 105
+    },
+    {
+      "key": [
+        "",
+        "PEDIDO DE PROVIDÊNCIAS"
+      ],
+      "key_as_string": "|PEDIDO DE PROVIDÊNCIAS",
+      "doc_count": 101
+    },
+    {
+      "key": [
+        "305",
+        "LIBERDADE PROVISÓRIA COM OU SEM FIANÇA"
+      ],
+      "key_as_string": "305|LIBERDADE PROVISÓRIA COM OU SEM FIANÇA",
+      "doc_count": 100
+    },
+    {
+      "key": [
+        "97",
+        "DISSOLUÇÃO E LIQUIDAÇÃO DE SOCIEDADE"
+      ],
+      "key_as_string": "97|DISSOLUÇÃO E LIQUIDAÇÃO DE SOCIEDADE",
+      "doc_count": 99
+    },
+    {
+      "key": [
+        "418",
+        "CARTA TESTEMUNHÁVEL"
+      ],
+      "key_as_string": "418|CARTA TESTEMUNHÁVEL",
+      "doc_count": 98
+    },
+    {
+      "key": [
+        "",
+        "DESAFORAMENTO DE JULGAMENTO"
+      ],
+      "key_as_string": "|DESAFORAMENTO DE JULGAMENTO",
+      "doc_count": 96
+    },
+    {
+      "key": [
+        "",
+        "RECURSO ADESIVO"
+      ],
+      "key_as_string": "|RECURSO ADESIVO",
+      "doc_count": 93
+    },
+    {
+      "key": [
+        "151",
+        "LIQUIDAÇÃO POR ARBITRAMENTO"
+      ],
+      "key_as_string": "151|LIQUIDAÇÃO POR ARBITRAMENTO",
+      "doc_count": 93
+    },
+    {
+      "key": [
+        "66",
+        "AÇÃO POPULAR"
+      ],
+      "key_as_string": "66|AÇÃO POPULAR",
+      "doc_count": 93
+    },
+    {
+      "key": [
+        "",
+        "DISSÍDIO COLETIVO DE GREVE"
+      ],
+      "key_as_string": "|DISSÍDIO COLETIVO DE GREVE",
+      "doc_count": 92
+    },
+    {
+      "key": [
+        "",
+        "CARTA TESTEMUNHÁVEL"
+      ],
+      "key_as_string": "|CARTA TESTEMUNHÁVEL",
+      "doc_count": 87
+    },
+    {
+      "key": [
+        "1122",
+        "TUTELA E CURATELA - REMOÇÃO E DISPENSA"
+      ],
+      "key_as_string": "1122|TUTELA E CURATELA - REMOÇÃO E DISPENSA",
+      "doc_count": 82
+    },
+    {
+      "key": [
+        "12121",
+        "COMUNICADO DE MANDADO DE PRISÃO"
+      ],
+      "key_as_string": "12121|COMUNICADO DE MANDADO DE PRISÃO",
+      "doc_count": 82
+    },
+    {
+      "key": [
+        "12233",
+        "TUTELA CÍVEL"
+      ],
+      "key_as_string": "12233|TUTELA CÍVEL",
+      "doc_count": 82
+    },
+    {
+      "key": [
+        "10970",
+        "CONFLITO DE COMPETÊNCIA INFÂNCIA E JUVENTUDE"
+      ],
+      "key_as_string": "10970|CONFLITO DE COMPETÊNCIA INFÂNCIA E JUVENTUDE",
+      "doc_count": 81
+    },
+    {
+      "key": [
+        "52",
+        "ALIENAÇÃO JUDICIAL DE BENS"
+      ],
+      "key_as_string": "52|ALIENAÇÃO JUDICIAL DE BENS",
+      "doc_count": 81
+    },
+    {
+      "key": [
+        "",
+        "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO"
+      ],
+      "key_as_string": "|AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO",
+      "doc_count": 79
+    },
+    {
+      "key": [
+        "",
+        "APELAÇÃO CÍVEL (EM MANDADO DE SEGURANÇA)"
+      ],
+      "key_as_string": "|APELAÇÃO CÍVEL (EM MANDADO DE SEGURANÇA)",
+      "doc_count": 76
+    },
+    {
+      "key": [
+        "11026",
+        "PETIÇÃO INFÂNCIA E JUVENTUDE CÍVEL"
+      ],
+      "key_as_string": "11026|PETIÇÃO INFÂNCIA E JUVENTUDE CÍVEL",
+      "doc_count": 75
+    },
+    {
+      "key": [
+        "",
+        "RELAXAMENTO DE PRISÃO"
+      ],
+      "key_as_string": "|RELAXAMENTO DE PRISÃO",
+      "doc_count": 74
+    },
+    {
+      "key": [
+        "",
+        "ARGÜIÇÃO DE INCONSTITUCIONALIDADE"
+      ],
+      "key_as_string": "|ARGÜIÇÃO DE INCONSTITUCIONALIDADE",
+      "doc_count": 71
+    },
+    {
+      "key": [
+        "55",
+        "DECLARAÇÃO DE AUSÊNCIA"
+      ],
+      "key_as_string": "55|DECLARAÇÃO DE AUSÊNCIA",
+      "doc_count": 71
+    },
+    {
+      "key": [
+        "108",
+        "FALÊNCIA DE EMPRESÁRIOS, SOCIEDADES EMPRESÁRIAIS, MICROEMPRESAS E EMPRESAS DE PEQUENO PORTE"
+      ],
+      "key_as_string": "108|FALÊNCIA DE EMPRESÁRIOS, SOCIEDADES EMPRESÁRIAIS, MICROEMPRESAS E EMPRESAS DE PEQUENO PORTE",
+      "doc_count": 70
+    },
+    {
+      "key": [
+        "",
+        "RESTITUIÇÃO DE COISAS APREENDIDAS"
+      ],
+      "key_as_string": "|RESTITUIÇÃO DE COISAS APREENDIDAS",
+      "doc_count": 67
+    },
+    {
+      "key": [
+        "",
+        "CRIMES DE CALÚNIA, INJÚRIA E DIFAMAÇÃO DE COMPETÊNCIA DO JUIZ SINGULAR"
+      ],
+      "key_as_string": "|CRIMES DE CALÚNIA, INJÚRIA E DIFAMAÇÃO DE COMPETÊNCIA DO JUIZ SINGULAR",
+      "doc_count": 66
+    },
+    {
+      "key": [
+        "1392",
+        "APURAÇÃO DE INFRAÇÃO ADMINISTRATIVA ÀS NORMAS DE PROTEÇÃO À CRIANÇA OU ADOLESCENTE"
+      ],
+      "key_as_string": "1392|APURAÇÃO DE INFRAÇÃO ADMINISTRATIVA ÀS NORMAS DE PROTEÇÃO À CRIANÇA OU ADOLESCENTE",
+      "doc_count": 66
+    },
+    {
+      "key": [
+        "46",
+        "RESTAURAÇÃO DE AUTOS CÍVEL"
+      ],
+      "key_as_string": "46|RESTAURAÇÃO DE AUTOS CÍVEL",
+      "doc_count": 66
+    },
+    {
+      "key": [
+        "12371",
+        "ALTERAÇÃO DE REGIME DE BENS"
+      ],
+      "key_as_string": "12371|ALTERAÇÃO DE REGIME DE BENS",
+      "doc_count": 65
+    },
+    {
+      "key": [
+        "",
+        "PEDIDO DE QUEBRA DE SIGILO DE DADOS E/OU TELEFÔNICO"
+      ],
+      "key_as_string": "|PEDIDO DE QUEBRA DE SIGILO DE DADOS E/OU TELEFÔNICO",
+      "doc_count": 63
+    },
+    {
+      "key": [
+        "11036",
+        "REPRESENTAÇÃO P/ PERDA DA GRADUAÇÃO"
+      ],
+      "key_as_string": "11036|REPRESENTAÇÃO P/ PERDA DA GRADUAÇÃO",
+      "doc_count": 63
+    },
+    {
+      "key": [
+        "89",
+        "DEPÓSITO DA LEI 8. 866/94"
+      ],
+      "key_as_string": "89|DEPÓSITO DA LEI 8. 866/94",
+      "doc_count": 62
+    },
+    {
+      "key": [
+        "",
+        "RECURSO ESPECIAL"
+      ],
+      "key_as_string": "|RECURSO ESPECIAL",
+      "doc_count": 61
+    },
+    {
+      "key": [
+        "110",
+        "HABEAS DATA CÍVEL"
+      ],
+      "key_as_string": "110|HABEAS DATA CÍVEL",
+      "doc_count": 61
+    },
+    {
+      "key": [
+        "",
+        "EMBARGOS À EXECUÇÃO"
+      ],
+      "key_as_string": "|EMBARGOS À EXECUÇÃO",
+      "doc_count": 60
+    },
+    {
+      "key": [
+        "11955",
+        "CAUTELAR INOMINADA CRIMINAL"
+      ],
+      "key_as_string": "11955|CAUTELAR INOMINADA CRIMINAL",
+      "doc_count": 60
+    },
+    {
+      "key": [
+        "1208",
+        "AGRAVO INTERNO CÍVEL"
+      ],
+      "key_as_string": "1208|AGRAVO INTERNO CÍVEL",
+      "doc_count": 60
+    },
+    {
+      "key": [
+        "63",
+        "AÇÃO CIVIL COLETIVA"
+      ],
+      "key_as_string": "63|AÇÃO CIVIL COLETIVA",
+      "doc_count": 60
+    },
+    {
+      "key": [
+        "118",
+        "MANDADO DE INJUNÇÃO"
+      ],
+      "key_as_string": "118|MANDADO DE INJUNÇÃO",
+      "doc_count": 58
+    },
+    {
+      "key": [
+        "1396",
+        "TUTELA INFÂNCIA E JUVENTUDE"
+      ],
+      "key_as_string": "1396|TUTELA INFÂNCIA E JUVENTUDE",
+      "doc_count": 58
+    },
+    {
+      "key": [
+        "14671",
+        "GUARDA DE FAMÍLIA"
+      ],
+      "key_as_string": "14671|GUARDA DE FAMÍLIA",
+      "doc_count": 58
+    },
+    {
+      "key": [
+        "",
+        "REMESSA NECESSÁRIA CÍVEL"
+      ],
+      "key_as_string": "|REMESSA NECESSÁRIA CÍVEL",
+      "doc_count": 57
+    },
+    {
+      "key": [
+        "1434",
+        "EXECUÇÃO DE MEDIDA DE PROTEÇÃO À CRIANÇA E ADOLESCENTE"
+      ],
+      "key_as_string": "1434|EXECUÇÃO DE MEDIDA DE PROTEÇÃO À CRIANÇA E ADOLESCENTE",
+      "doc_count": 57
+    },
+    {
+      "key": [
+        "",
+        "TERMO CIRCUNSTANCIADO"
+      ],
+      "key_as_string": "|TERMO CIRCUNSTANCIADO",
+      "doc_count": 56
+    },
+    {
+      "key": [
+        "318",
+        "EXCEÇÃO DE SUSPEIÇÃO"
+      ],
+      "key_as_string": "318|EXCEÇÃO DE SUSPEIÇÃO",
+      "doc_count": 56
+    },
+    {
+      "key": [
+        "80",
+        "AVARIAS"
+      ],
+      "key_as_string": "80|AVARIAS",
+      "doc_count": 56
+    },
+    {
+      "key": [
+        "",
+        "INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA"
+      ],
+      "key_as_string": "|INCIDENTE DE UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+      "doc_count": 55
+    },
+    {
+      "key": [
+        "",
+        "MEDIDA CAUTELAR INCIDENTAL"
+      ],
+      "key_as_string": "|MEDIDA CAUTELAR INCIDENTAL",
+      "doc_count": 55
+    },
+    {
+      "key": [
+        "12226",
+        "NOTIFICAÇÃO"
+      ],
+      "key_as_string": "12226|NOTIFICAÇÃO",
+      "doc_count": 54
+    },
+    {
+      "key": [
+        "166",
+        "INSOLVÊNCIA REQUERIDA PELO CREDOR"
+      ],
+      "key_as_string": "166|INSOLVÊNCIA REQUERIDA PELO CREDOR",
+      "doc_count": 54
+    },
+    {
+      "key": [
+        "",
+        "IMPUGNAÇÃO AO VALOR DA CAUSA"
+      ],
+      "key_as_string": "|IMPUGNAÇÃO AO VALOR DA CAUSA",
+      "doc_count": 53
+    },
+    {
+      "key": [
+        "204",
+        "AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO"
+      ],
+      "key_as_string": "204|AGRAVO DE INSTRUMENTO EM RECURSO EXTRAORDINÁRIO",
+      "doc_count": 52
+    },
+    {
+      "key": [
+        "12138",
+        "REQUERIMENTO DE REINTEGRAÇÃO DE POSSE"
+      ],
+      "key_as_string": "12138|REQUERIMENTO DE REINTEGRAÇÃO DE POSSE",
+      "doc_count": 51
+    },
+    {
+      "key": [
+        "129",
+        "RECUPERAÇÃO JUDICIAL"
+      ],
+      "key_as_string": "129|RECUPERAÇÃO JUDICIAL",
+      "doc_count": 51
+    },
+    {
+      "key": [
+        "10933",
+        "HABILITAÇÃO PARA ADOÇÃO"
+      ],
+      "key_as_string": "10933|HABILITAÇÃO PARA ADOÇÃO",
+      "doc_count": 50
+    },
+    {
+      "key": [
+        "",
+        "REPRESENTAÇÃO CRIMINAL"
+      ],
+      "key_as_string": "|REPRESENTAÇÃO CRIMINAL",
+      "doc_count": 49
+    },
+    {
+      "key": [
+        "",
+        "PROCESSO ADMINISTRATIVO - CGJ"
+      ],
+      "key_as_string": "|PROCESSO ADMINISTRATIVO - CGJ",
+      "doc_count": 48
+    },
+    {
+      "key": [
+        "",
+        "REPRESENTAÇÃO P/PERDA DA GRADUAÇÃO"
+      ],
+      "key_as_string": "|REPRESENTAÇÃO P/PERDA DA GRADUAÇÃO",
+      "doc_count": 48
+    },
+    {
+      "key": [
+        "306",
+        "RELAXAMENTO DE PRISÃO"
+      ],
+      "key_as_string": "306|RELAXAMENTO DE PRISÃO",
+      "doc_count": 48
+    },
+    {
+      "key": [
+        "1230",
+        "EXCEÇÃO DE IMPEDIMENTO"
+      ],
+      "key_as_string": "1230|EXCEÇÃO DE IMPEDIMENTO",
+      "doc_count": 47
+    },
+    {
+      "key": [
+        "1231",
+        "EXCEÇÃO DE SUSPEIÇÃO"
+      ],
+      "key_as_string": "1231|EXCEÇÃO DE SUSPEIÇÃO",
+      "doc_count": 47
+    },
+    {
+      "key": [
+        "1401",
+        "ADOÇÃO"
+      ],
+      "key_as_string": "1401|ADOÇÃO",
+      "doc_count": 47
+    },
+    {
+      "key": [
+        "",
+        "MEDIDAS INVESTIGATÓRIAS SOBRE ORGANIZAÇÕES CRIMINOSAS"
+      ],
+      "key_as_string": "|MEDIDAS INVESTIGATÓRIAS SOBRE ORGANIZAÇÕES CRIMINOSAS",
+      "doc_count": 46
+    },
+    {
+      "key": [
+        "",
+        "PEDIDO DE PROVIDÊNCIA"
+      ],
+      "key_as_string": "|PEDIDO DE PROVIDÊNCIA",
+      "doc_count": 46
+    },
+    {
+      "key": [
+        "",
+        "RECURSO ORDINARIO"
+      ],
+      "key_as_string": "|RECURSO ORDINARIO",
+      "doc_count": 46
+    },
+    {
+      "key": [
+        "",
+        "APELAÇÃO CÍVEL/ECA"
+      ],
+      "key_as_string": "|APELAÇÃO CÍVEL/ECA",
+      "doc_count": 45
+    },
+    {
+      "key": [
+        "",
+        "PEDIDO DE BUSCA E APREENSÃO CRIMINAL"
+      ],
+      "key_as_string": "|PEDIDO DE BUSCA E APREENSÃO CRIMINAL",
+      "doc_count": 45
+    },
+    {
+      "key": [
+        "",
+        "PEDIDO DE PROVIDÊNCIA - CGJ - CONFIDENCIAL"
+      ],
+      "key_as_string": "|PEDIDO DE PROVIDÊNCIA - CGJ - CONFIDENCIAL",
+      "doc_count": 45
+    },
+    {
+      "key": [
+        "",
+        "AGRAVO RETIDO"
+      ],
+      "key_as_string": "|AGRAVO RETIDO",
+      "doc_count": 44
+    },
+    {
+      "key": [
+        "327",
+        "EMBARGOS DE TERCEIRO CRIMINAL"
+      ],
+      "key_as_string": "327|EMBARGOS DE TERCEIRO CRIMINAL",
+      "doc_count": 44
+    },
+    {
+      "key": [
+        "",
+        "PETIÇÃO CÍVEL"
+      ],
+      "key_as_string": "|PETIÇÃO CÍVEL",
+      "doc_count": 43
+    },
+    {
+      "key": [
+        "1291",
+        "REABILITAÇÃO"
+      ],
+      "key_as_string": "1291|REABILITAÇÃO",
+      "doc_count": 43
+    },
+    {
+      "key": [
+        "",
+        "REVOGAÇÃO DE PRISÃO"
+      ],
+      "key_as_string": "|REVOGAÇÃO DE PRISÃO",
+      "doc_count": 42
+    },
+    {
+      "key": [
+        "1435",
+        "EXECUÇÃO DE MULTA"
+      ],
+      "key_as_string": "1435|EXECUÇÃO DE MULTA",
+      "doc_count": 42
+    },
+    {
+      "key": [
+        "1701",
+        "NOMEAÇÃO DE ADVOGADO"
+      ],
+      "key_as_string": "1701|NOMEAÇÃO DE ADVOGADO",
+      "doc_count": 42
+    },
+    {
+      "key": [
+        "1438",
+        "BUSCA E APREENSÃO INFÂNCIA E JUVENTUDE"
+      ],
+      "key_as_string": "1438|BUSCA E APREENSÃO INFÂNCIA E JUVENTUDE",
+      "doc_count": 41
+    },
+    {
+      "key": [
+        "323",
+        "EXCEÇÃO DE IMPEDIMENTO"
+      ],
+      "key_as_string": "323|EXCEÇÃO DE IMPEDIMENTO",
+      "doc_count": 41
+    },
+    {
+      "key": [
+        "",
+        "EXECUÇÃO CONTRA A FAZENDA PÚBLICA"
+      ],
+      "key_as_string": "|EXECUÇÃO CONTRA A FAZENDA PÚBLICA",
+      "doc_count": 40
+    },
+    {
+      "key": [
+        "",
+        "PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO"
+      ],
+      "key_as_string": "|PEDIDO DE EFEITO SUSPENSIVO À APELAÇÃO",
+      "doc_count": 40
+    },
+    {
+      "key": [
+        "",
+        "QUEIXA CRIME"
+      ],
+      "key_as_string": "|QUEIXA CRIME",
+      "doc_count": 40
+    },
+    {
+      "key": [
+        "12070",
+        "PEDIDO DE MEDIDA DE PROTEÇÃO"
+      ],
+      "key_as_string": "12070|PEDIDO DE MEDIDA DE PROTEÇÃO",
+      "doc_count": 40
+    },
+    {
+      "key": [
+        "206",
+        "AGRAVO REGIMENTAL CÍVEL"
+      ],
+      "key_as_string": "206|AGRAVO REGIMENTAL CÍVEL",
+      "doc_count": 40
+    },
+    {
+      "key": [
+        "",
+        "AGRAVO EM RECURSO ESPECIAL"
+      ],
+      "key_as_string": "|AGRAVO EM RECURSO ESPECIAL",
+      "doc_count": 39
+    },
+    {
+      "key": [
+        "",
+        "LIBERDADE PROVISÓRIA COM OU SEM FIANÇA"
+      ],
+      "key_as_string": "|LIBERDADE PROVISÓRIA COM OU SEM FIANÇA",
+      "doc_count": 39
+    },
+    {
+      "key": [
+        "",
+        "MANDADO DE INJUNÇÃO"
+      ],
+      "key_as_string": "|MANDADO DE INJUNÇÃO",
+      "doc_count": 39
+    },
+    {
+      "key": [
+        "96",
+        "DISCRIMINATÓRIA"
+      ],
+      "key_as_string": "96|DISCRIMINATÓRIA",
+      "doc_count": 39
+    },
+    {
+      "key": [
+        "11555",
+        "SUSPENSÃO DE LIMINAR E DE SENTENÇA"
+      ],
+      "key_as_string": "11555|SUSPENSÃO DE LIMINAR E DE SENTENÇA",
+      "doc_count": 38
+    },
+    {
+      "key": [
+        "15620",
+        "PRODUÇÃO ANTECIPADA DE PROVAS"
+      ],
+      "key_as_string": "15620|PRODUÇÃO ANTECIPADA DE PROVAS",
+      "doc_count": 38
+    },
+    {
+      "key": [
+        "186",
+        "EXIBIÇÃO"
+      ],
+      "key_as_string": "186|EXIBIÇÃO",
+      "doc_count": 37
+    },
+    {
+      "key": [
+        "",
+        "APELAÇÃO CRIMINAL/ECA"
+      ],
+      "key_as_string": "|APELAÇÃO CRIMINAL/ECA",
+      "doc_count": 36
+    },
+    {
+      "key": [
+        "11398",
+        "RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO"
+      ],
+      "key_as_string": "11398|RECURSO EM SENTIDO ESTRITO/RECURSO EX OFFICIO",
+      "doc_count": 36
+    },
+    {
+      "key": [
+        "12228",
+        "PROTESTO"
+      ],
+      "key_as_string": "12228|PROTESTO",
+      "doc_count": 36
+    },
+    {
+      "key": [
+        "12246",
+        "CUMPRIMENTO DE SENTENÇA DE OBRIGAÇÃO DE PRESTAR ALIMENTOS"
+      ],
+      "key_as_string": "12246|CUMPRIMENTO DE SENTENÇA DE OBRIGAÇÃO DE PRESTAR ALIMENTOS",
+      "doc_count": 35
+    },
+    {
+      "key": [
+        "1232",
+        "EXCEÇÃO DE INCOMPETÊNCIA"
+      ],
+      "key_as_string": "1232|EXCEÇÃO DE INCOMPETÊNCIA",
+      "doc_count": 35
+    },
+    {
+      "key": [
+        "210",
+        "EMBARGOS INFRINGENTES NA EXECUÇÃO FISCAL"
+      ],
+      "key_as_string": "210|EMBARGOS INFRINGENTES NA EXECUÇÃO FISCAL",
+      "doc_count": 35
+    },
+    {
+      "key": [
+        "",
+        "AÇÃO PENAL - PROCEDIMENTO SUMARÍSSIMO"
+      ],
+      "key_as_string": "|AÇÃO PENAL - PROCEDIMENTO SUMARÍSSIMO",
+      "doc_count": 34
+    },
+    {
+      "key": [
+        "144",
+        "SUSPENSÃO DE LIMINAR OU ANTECIPAÇÃO DE TUTELA"
+      ],
+      "key_as_string": "144|SUSPENSÃO DE LIMINAR OU ANTECIPAÇÃO DE TUTELA",
+      "doc_count": 34
+    },
+    {
+      "key": [
+        "231",
+        "IMPUGNAÇÃO AO VALOR DA CAUSA CÍVEL"
+      ],
+      "key_as_string": "231|IMPUGNAÇÃO AO VALOR DA CAUSA CÍVEL",
+      "doc_count": 34
+    },
+    {
+      "key": [
+        "",
+        "PERDA DE GRADUAÇÃO DE PRAÇA"
+      ],
+      "key_as_string": "|PERDA DE GRADUAÇÃO DE PRAÇA",
+      "doc_count": 33
+    },
+    {
+      "key": [
+        "236",
+        "OPOSIÇÃO"
+      ],
+      "key_as_string": "236|OPOSIÇÃO",
+      "doc_count": 33
+    },
+    {
+      "key": [
+        "332",
+        "INCIDENTE DE FALSIDADE"
+      ],
+      "key_as_string": "332|INCIDENTE DE FALSIDADE",
+      "doc_count": 33
+    },
+    {
+      "key": [
+        "",
+        "HABEAS DATA"
+      ],
+      "key_as_string": "|HABEAS DATA",
+      "doc_count": 32
+    },
+    {
+      "key": [
+        "",
+        "EXECUÇÃO DA PENA"
+      ],
+      "key_as_string": "|EXECUÇÃO DA PENA",
+      "doc_count": 31
+    },
+    {
+      "key": [
+        "",
+        "PEDIDO DE DESAFORAMENTO"
+      ],
+      "key_as_string": "|PEDIDO DE DESAFORAMENTO",
+      "doc_count": 31
+    },
+    {
+      "key": [
+        "",
+        "MANDADO DE SEGURANÇA CRIMINAL"
+      ],
+      "key_as_string": "|MANDADO DE SEGURANÇA CRIMINAL",
+      "doc_count": 30
+    },
+    {
+      "key": [
+        "12087",
+        "INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA"
+      ],
+      "key_as_string": "12087|INCIDENTE DE ASSUNÇÃO DE COMPETÊNCIA",
+      "doc_count": 30
+    },
+    {
+      "key": [
+        "140",
+        "REVISIONAL DE ALUGUEL"
+      ],
+      "key_as_string": "140|REVISIONAL DE ALUGUEL",
+      "doc_count": 30
+    },
+    {
+      "key": [
+        "86",
+        "CONSIGNATÓRIA DE ALUGUÉIS"
+      ],
+      "key_as_string": "86|CONSIGNATÓRIA DE ALUGUÉIS",
+      "doc_count": 30
+    },
+    {
+      "key": [
+        "12372",
+        "DIVÓRCIO CONSENSUAL"
+      ],
+      "key_as_string": "12372|DIVÓRCIO CONSENSUAL",
+      "doc_count": 29
+    }
+  ],
+  "tipos_documentos": [
+    {
+      "key": "SENTENÇA",
+      "doc_count": 1928898
+    },
+    {
+      "key": "ACÓRDÃO",
+      "doc_count": 592893
+    },
+    {
+      "key": "DECISÃO",
+      "doc_count": 455176
+    },
+    {
+      "key": "VOTO",
+      "doc_count": 353157
+    },
+    {
+      "key": "EMENTA",
+      "doc_count": 348459
+    },
+    {
+      "key": "RELATÓRIO",
+      "doc_count": 347644
+    },
+    {
+      "key": "VOTO VENCEDOR",
+      "doc_count": 1471
+    },
+    {
+      "key": "DESPACHO",
+      "doc_count": 2
+    },
+    {
+      "key": "EMBARGOS DE DECLARAÇÃO",
+      "doc_count": 1
+    }
+  ],
+  "tipos_documentos_e_grau": [
+    {
+      "key": [
+        "SENTENÇA",
+        1
+      ],
+      "key_as_string": "SENTENÇA|1",
+      "doc_count": 1928898
+    },
+    {
+      "key": [
+        "ACÓRDÃO",
+        2
+      ],
+      "key_as_string": "ACÓRDÃO|2",
+      "doc_count": 592893
+    },
+    {
+      "key": [
+        "DECISÃO",
+        2
+      ],
+      "key_as_string": "DECISÃO|2",
+      "doc_count": 455176
+    },
+    {
+      "key": [
+        "VOTO",
+        2
+      ],
+      "key_as_string": "VOTO|2",
+      "doc_count": 353157
+    },
+    {
+      "key": [
+        "EMENTA",
+        2
+      ],
+      "key_as_string": "EMENTA|2",
+      "doc_count": 348459
+    },
+    {
+      "key": [
+        "RELATÓRIO",
+        2
+      ],
+      "key_as_string": "RELATÓRIO|2",
+      "doc_count": 347644
+    },
+    {
+      "key": [
+        "VOTO VENCEDOR",
+        2
+      ],
+      "key_as_string": "VOTO VENCEDOR|2",
+      "doc_count": 1471
+    },
+    {
+      "key": [
+        "DESPACHO",
+        1
+      ],
+      "key_as_string": "DESPACHO|1",
+      "doc_count": 1
+    },
+    {
+      "key": [
+        "DESPACHO",
+        2
+      ],
+      "key_as_string": "DESPACHO|2",
+      "doc_count": 1
+    },
+    {
+      "key": [
+        "EMBARGOS DE DECLARAÇÃO",
+        2
+      ],
+      "key_as_string": "EMBARGOS DE DECLARAÇÃO|2",
+      "doc_count": 1
+    }
+  ],
+  "graus_jurisdicao": [
+    {
+      "key": 2,
+      "doc_count": 2098802
+    },
+    {
+      "key": 1,
+      "doc_count": 1928899
+    }
+  ],
+  "orgaos_julgadores": [
+    {
+      "key": "",
+      "doc_count": 439680
+    },
+    {
+      "key": "1ª Turma Recursal - Gabinete 01",
+      "doc_count": 230972
+    },
+    {
+      "key": "1ª Turma Recursal - Gabinete 02",
+      "doc_count": 229697
+    },
+    {
+      "key": "1ª Turma Recursal - Gabinete 03",
+      "doc_count": 222110
+    },
+    {
+      "key": "Gabinete Des. Raduan Miguel",
+      "doc_count": 68655
+    },
+    {
+      "key": "Gabinete Des. Isaias Fonseca Moraes",
+      "doc_count": 66944
+    },
+    {
+      "key": "Porto Velho - 3º Juizado Especial Cível",
+      "doc_count": 65707
+    },
+    {
+      "key": "Porto Velho - 1º Juizado Especial Cível",
+      "doc_count": 65521
+    },
+    {
+      "key": "Porto Velho - 4º Juizado Especial Cível",
+      "doc_count": 65472
+    },
+    {
+      "key": "Gabinete Des. Rowilson Teixeira",
+      "doc_count": 65302
+    },
+    {
+      "key": "Gabinete Des. Kiyochi Mori",
+      "doc_count": 64825
+    },
+    {
+      "key": "Gabinete Desa. Inês Moreira",
+      "doc_count": 62385
+    },
+    {
+      "key": "Porto Velho - 2º Juizado Especial Cível",
+      "doc_count": 61662
+    },
+    {
+      "key": "Rolim de Moura - Juizado Especial",
+      "doc_count": 61122
+    },
+    {
+      "key": "Ariquemes - 1º Juizado Especial",
+      "doc_count": 61042
+    },
+    {
+      "key": "Gabinete Des. Torres Ferreira",
+      "doc_count": 60761
+    },
+    {
+      "key": "Gabinete Des. Alexandre Miguel",
+      "doc_count": 58967
+    },
+    {
+      "key": "Porto Velho - 1º Juizado Especial da Fazenda Pública",
+      "doc_count": 57981
+    },
+    {
+      "key": "Cacoal - 1º Juizado Especial",
+      "doc_count": 56950
+    },
+    {
+      "key": "2ª Turma Recursal - Gabinete 02",
+      "doc_count": 50179
+    },
+    {
+      "key": "Ji-Paraná - 1º Juizado Especial",
+      "doc_count": 49330
+    },
+    {
+      "key": "2ª Turma Recursal - Gabinete 01",
+      "doc_count": 47060
+    },
+    {
+      "key": "2ª Turma Recursal - Gabinete 03",
+      "doc_count": 46115
+    },
+    {
+      "key": "Ouro Preto do Oeste - Juizado Especial",
+      "doc_count": 43302
+    },
+    {
+      "key": "Vilhena - Juizado Especial",
+      "doc_count": 42137
+    },
+    {
+      "key": "Porto Velho - Vara de Execuções Fiscais",
+      "doc_count": 38410
+    },
+    {
+      "key": "São Miguel do Guaporé - 1ª Vara Genérica",
+      "doc_count": 37028
+    },
+    {
+      "key": "Gabinete Des. Alexandre Corbacho",
+      "doc_count": 34957
+    },
+    {
+      "key": "Gabinete Des. Daniel Ribeiro Lagos",
+      "doc_count": 34432
+    },
+    {
+      "key": "Gabinete Des. Jorge Leal",
+      "doc_count": 34232
+    },
+    {
+      "key": "Gabinete Des. Hiram Souza Marques",
+      "doc_count": 33746
+    },
+    {
+      "key": "Santa Luzia do Oeste - Vara Única",
+      "doc_count": 33504
+    },
+    {
+      "key": "Gabinete Des. Gilberto Barbosa",
+      "doc_count": 33139
+    },
+    {
+      "key": "Gabinete Des. Glodner Pauletto",
+      "doc_count": 30873
+    },
+    {
+      "key": "Buritis - 1ª Vara Genérica",
+      "doc_count": 29986
+    },
+    {
+      "key": "Pimenta Bueno - Juizado Especial",
+      "doc_count": 29531
+    },
+    {
+      "key": "Jaru - 1ª Vara Cível",
+      "doc_count": 29233
+    },
+    {
+      "key": "Nova Brasilândia do Oeste - Vara Única",
+      "doc_count": 29122
+    },
+    {
+      "key": "Buritis - 2ª Vara Genérica",
+      "doc_count": 27579
+    },
+    {
+      "key": "Alta Floresta do Oeste - Vara Única",
+      "doc_count": 26977
+    },
+    {
+      "key": "Gabinete Des. Francisco Borges",
+      "doc_count": 25178
+    },
+    {
+      "key": "Ariquemes - 4ª Vara Cível",
+      "doc_count": 24598
+    },
+    {
+      "key": "Gabinete Des. Álvaro Kalix Ferro",
+      "doc_count": 24506
+    },
+    {
+      "key": "Machadinho do Oeste - 1ª Vara Genérica",
+      "doc_count": 24315
+    },
+    {
+      "key": "Gabinete Des. Aldemir de Oliveira",
+      "doc_count": 24280
+    },
+    {
+      "key": "Gabinete Des. José Jorge Ribeiro da Luz",
+      "doc_count": 23829
+    },
+    {
+      "key": "Gabinete Des. Osny Claro de Oliveira",
+      "doc_count": 23630
+    },
+    {
+      "key": "Ariquemes - 3ª Vara Cível",
+      "doc_count": 23343
+    },
+    {
+      "key": "Ariquemes - 1ª Vara Cível",
+      "doc_count": 23312
+    },
+    {
+      "key": "Presidente Médici - Vara Única",
+      "doc_count": 23252
+    },
+    {
+      "key": "Alvorada do Oeste - Vara Única",
+      "doc_count": 22723
+    },
+    {
+      "key": "Gabinete Des. Adolfo Theodoro Naujorks Neto",
+      "doc_count": 22304
+    },
+    {
+      "key": "Espigão do Oeste - 2ª Vara Genérica",
+      "doc_count": 21463
+    },
+    {
+      "key": "Colorado do Oeste - 1ª Vara",
+      "doc_count": 21270
+    },
+    {
+      "key": "Rolim de Moura - 1ª Vara Cível",
+      "doc_count": 20898
+    },
+    {
+      "key": "São Francisco do Guaporé - Vara Única",
+      "doc_count": 20460
+    },
+    {
+      "key": "Cacoal - 3ª Vara Cível",
+      "doc_count": 20213
+    },
+    {
+      "key": "Jaru - 2ª Vara Cível",
+      "doc_count": 19753
+    },
+    {
+      "key": "Espigão do Oeste - 1ª Vara Genérica",
+      "doc_count": 19646
+    },
+    {
+      "key": "Porto Velho - 3ª Vara Cível",
+      "doc_count": 19618
+    },
+    {
+      "key": "Guajará-Mirim - 1ª Vara Cível",
+      "doc_count": 19228
+    },
+    {
+      "key": "Cacoal - 4ª Vara Cível",
+      "doc_count": 19153
+    },
+    {
+      "key": "Porto Velho - 8ª Vara Cível",
+      "doc_count": 19129
+    },
+    {
+      "key": "Cacoal - 1ª Vara Cível",
+      "doc_count": 19072
+    },
+    {
+      "key": "Gabinete Des. José Antonio Robles",
+      "doc_count": 19051
+    },
+    {
+      "key": "Porto Velho - 6ª Vara Cível",
+      "doc_count": 19040
+    },
+    {
+      "key": "Porto Velho - 7ª Vara Cível",
+      "doc_count": 18805
+    },
+    {
+      "key": "Porto Velho - 1ª Vara Cível",
+      "doc_count": 18682
+    },
+    {
+      "key": "Porto Velho - 10ª Vara Cível",
+      "doc_count": 18618
+    },
+    {
+      "key": "Porto Velho - 2ª Vara Cível",
+      "doc_count": 18574
+    },
+    {
+      "key": "Porto Velho - 4ª Vara Cível",
+      "doc_count": 18524
+    },
+    {
+      "key": "Ariquemes - 2ª Vara Cível",
+      "doc_count": 18489
+    },
+    {
+      "key": "Porto Velho - 5º Juizado Especial Cível",
+      "doc_count": 18157
+    },
+    {
+      "key": "Porto Velho - 5ª Vara Cível",
+      "doc_count": 17810
+    },
+    {
+      "key": "Rolim de Moura - 2ª Vara Cível",
+      "doc_count": 17697
+    },
+    {
+      "key": "Machadinho do Oeste - 2ª Vara Genérica",
+      "doc_count": 17691
+    },
+    {
+      "key": "Costa Marques - Vara Única",
+      "doc_count": 17655
+    },
+    {
+      "key": "Porto Velho - 9ª Vara Cível",
+      "doc_count": 17382
+    },
+    {
+      "key": "Ji-Paraná - 2º Juizado Especial",
+      "doc_count": 16110
+    },
+    {
+      "key": "Gabinete Des. Marcos Alaor Diniz Grangeia",
+      "doc_count": 15688
+    },
+    {
+      "key": "Cacoal - 2º Juizado Especial",
+      "doc_count": 15071
+    },
+    {
+      "key": "Cacoal - 2ª Vara Cível",
+      "doc_count": 14722
+    },
+    {
+      "key": "Vilhena - 3ª Vara Cível",
+      "doc_count": 14173
+    },
+    {
+      "key": "Pimenta Bueno - 1ª Vara Cível",
+      "doc_count": 13933
+    },
+    {
+      "key": "Pimenta Bueno - 2ª Vara Cível",
+      "doc_count": 13127
+    },
+    {
+      "key": "Vilhena - 1ª Vara Cível",
+      "doc_count": 13055
+    },
+    {
+      "key": "Vilhena - 4ª Vara Cível",
+      "doc_count": 13006
+    },
+    {
+      "key": "Ariquemes - 2º Juizado Especial",
+      "doc_count": 12653
+    },
+    {
+      "key": "Cerejeiras - 2ª Vara Genérica",
+      "doc_count": 12645
+    },
+    {
+      "key": "Cerejeiras - 1ª Vara Genérica",
+      "doc_count": 11845
+    },
+    {
+      "key": "Ji-Paraná - 1ª Vara Cível",
+      "doc_count": 11749
+    },
+    {
+      "key": "Ji-Paraná - 3ª Vara Cível",
+      "doc_count": 11436
+    },
+    {
+      "key": "Ouro Preto do Oeste - 1ª Vara Cível",
+      "doc_count": 11426
+    },
+    {
+      "key": "Ouro Preto do Oeste - 2ª Vara Cível",
+      "doc_count": 11089
+    },
+    {
+      "key": "Ji-Paraná - 4ª Vara Cível",
+      "doc_count": 10902
+    },
+    {
+      "key": "Ji-Paraná - 5ª Vara Cível",
+      "doc_count": 10535
+    },
+    {
+      "key": "Vilhena - 2ª Vara Cível",
+      "doc_count": 10382
+    },
+    {
+      "key": "Guajará-Mirim - 2ª Vara Cível",
+      "doc_count": 9945
+    },
+    {
+      "key": "Colorado do Oeste - 2ª Vara",
+      "doc_count": 9893
+    },
+    {
+      "key": "Porto Velho - 1ª Vara de Fazenda e Saúde Pública",
+      "doc_count": 9338
+    },
+    {
+      "key": "Porto Velho - 2ª Vara de Fazenda e Saúde Pública",
+      "doc_count": 9111
+    },
+    {
+      "key": "Porto Velho - CEJUSC",
+      "doc_count": 8564
+    },
+    {
+      "key": "Ji-Paraná - 2ª Vara Cível",
+      "doc_count": 8136
+    },
+    {
+      "key": "Porto Velho - 1º Juizado Especial Criminal",
+      "doc_count": 7849
+    },
+    {
+      "key": "Núcleo de Justiça 4.0 - Execução Fiscal - Gabinete 01",
+      "doc_count": 6144
+    },
+    {
+      "key": "Núcleo de Justiça 4.0 - Execução Fiscal - Gabinete 03",
+      "doc_count": 5993
+    },
+    {
+      "key": "Núcleo de Justiça 4.0 - Energia - Gabinete 03",
+      "doc_count": 5897
+    },
+    {
+      "key": "São Miguel do Guaporé - 2ª Vara Genérica",
+      "doc_count": 5870
+    },
+    {
+      "key": "Núcleo de Justiça 4.0 - Energia - Gabinete 01",
+      "doc_count": 5621
+    },
+    {
+      "key": "Núcleo de Justiça 4.0 - Execução Fiscal - Gabinete 02",
+      "doc_count": 5293
+    },
+    {
+      "key": "Jaru - 1ª Vara Criminal",
+      "doc_count": 5173
+    },
+    {
+      "key": "Núcleo de Justiça 4.0 - Energia - Gabinete 02",
+      "doc_count": 5111
+    },
+    {
+      "key": "Núcleo de Justiça 4.0 - Execução de Título Extrajudicial - Gabinete 02",
+      "doc_count": 4014
+    },
+    {
+      "key": "Porto Velho - 2ª Vara de Família e Sucessões",
+      "doc_count": 3888
+    },
+    {
+      "key": "Núcleo de Justiça 4.0 - Execução de Título Extrajudicial - Gabinete 01",
+      "doc_count": 3811
+    },
+    {
+      "key": "Núcleo de Justiça 4.0 - Execução de Título Extrajudicial - Gabinete 03",
+      "doc_count": 3726
+    },
+    {
+      "key": "Porto Velho - 1ª Vara de Família e Sucessões",
+      "doc_count": 3552
+    },
+    {
+      "key": "Porto Velho - 4ª Vara de Família e Sucessões",
+      "doc_count": 3357
+    },
+    {
+      "key": "Rolim de Moura - 1ª Vara Criminal",
+      "doc_count": 2789
+    },
+    {
+      "key": "Ji-Paraná - 3ª Vara Criminal",
+      "doc_count": 2288
+    },
+    {
+      "key": "Porto Velho - 3ª Vara de Família e Sucessões",
+      "doc_count": 2185
+    },
+    {
+      "key": "Guajará-Mirim - 1ª Vara Criminal",
+      "doc_count": 2103
+    },
+    {
+      "key": "Porto Velho - 1ª Vara Criminal",
+      "doc_count": 2059
+    },
+    {
+      "key": "Pimenta Bueno - 1ª Vara Criminal",
+      "doc_count": 1769
+    },
+    {
+      "key": "Vilhena - 1ª Vara Criminal",
+      "doc_count": 1761
+    },
+    {
+      "key": "Ariquemes - 1ª Vara Criminal",
+      "doc_count": 1504
+    },
+    {
+      "key": "Ariquemes - 3ª Vara Criminal",
+      "doc_count": 1448
+    },
+    {
+      "key": "Vilhena - 2ª Vara Criminal",
+      "doc_count": 1300
+    },
+    {
+      "key": "Porto Velho - Vara de Proteção à Infância e Juventude",
+      "doc_count": 1203
+    },
+    {
+      "key": "Ji-Paraná - CEJUSC",
+      "doc_count": 1181
+    },
+    {
+      "key": "Ji-Paraná - 1ª Vara Criminal",
+      "doc_count": 1162
+    },
+    {
+      "key": "Nova Mamoré - Vara Única",
+      "doc_count": 1150
+    },
+    {
+      "key": "Cacoal - 2ª Vara Criminal",
+      "doc_count": 1072
+    },
+    {
+      "key": "Gabinete Corregedor do TJRO",
+      "doc_count": 1040
+    },
+    {
+      "key": "Porto Velho - 1ª Vara de Delitos de Tóxicos",
+      "doc_count": 1036
+    },
+    {
+      "key": "Guajará-Mirim - CEJUSC",
+      "doc_count": 1023
+    },
+    {
+      "key": "Gabinete Vice Presidência do TJRO",
+      "doc_count": 1011
+    },
+    {
+      "key": "Cacoal - CEJUSC",
+      "doc_count": 976
+    },
+    {
+      "key": "São Miguel do Guaporé - CEJUSC",
+      "doc_count": 975
+    },
+    {
+      "key": "Gabinete Titularidade Vaga. Ocupado por Juiz Convocado José Augusto Alves Martins",
+      "doc_count": 740
+    },
+    {
+      "key": "Porto Velho - 4ª Vara Criminal",
+      "doc_count": 702
+    },
+    {
+      "key": "Gabinete Presidência do TJRO",
+      "doc_count": 677
+    },
+    {
+      "key": "São Francisco do Guaporé - CEJUSC",
+      "doc_count": 662
+    },
+    {
+      "key": "Cerejeiras - CEJUSC",
+      "doc_count": 594
+    },
+    {
+      "key": "Porto Velho - 2ª Vara de Garantias",
+      "doc_count": 590
+    },
+    {
+      "key": "Porto Velho - 2ª Vara Criminal",
+      "doc_count": 581
+    },
+    {
+      "key": "Gabinete Des. Sansão Saldanha",
+      "doc_count": 579
+    },
+    {
+      "key": "Ouro Preto do Oeste - 1ª Vara Criminal",
+      "doc_count": 570
+    },
+    {
+      "key": "Gabinete Des. Roosevelt Queiroz",
+      "doc_count": 563
+    },
+    {
+      "key": "Porto Velho - 1ª Vara de Garantias",
+      "doc_count": 506
+    },
+    {
+      "key": "Costa Marques - CEJUSC",
+      "doc_count": 503
+    },
+    {
+      "key": "Ji-Paraná - 2ª Vara Criminal",
+      "doc_count": 500
+    },
+    {
+      "key": "Ouro Preto do Oeste - CEJUSC",
+      "doc_count": 498
+    },
+    {
+      "key": "Alvorada do Oeste - CEJUSC",
+      "doc_count": 482
+    },
+    {
+      "key": "Porto Velho - 3ª Vara Criminal",
+      "doc_count": 471
+    },
+    {
+      "key": "Ariquemes - CEJUSC",
+      "doc_count": 446
+    },
+    {
+      "key": "Porto Velho - 1ª Vara da Auditoria Militar",
+      "doc_count": 405
+    },
+    {
+      "key": "Alta Floresta do Oeste - CEJUSC",
+      "doc_count": 391
+    },
+    {
+      "key": "Gabinete Des. Miguel Monico",
+      "doc_count": 368
+    },
+    {
+      "key": "Machadinho do Oeste - CEJUSC",
+      "doc_count": 365
+    },
+    {
+      "key": "Cacoal - 1ª Vara Criminal",
+      "doc_count": 359
+    },
+    {
+      "key": "Porto Velho - 1ª Vara do Tribunal do Júri",
+      "doc_count": 341
+    },
+    {
+      "key": "Porto Velho - 2ª Vara do Tribunal do Júri",
+      "doc_count": 330
+    },
+    {
+      "key": "Santa Luzia do Oeste - CEJUSC",
+      "doc_count": 280
+    },
+    {
+      "key": "Vilhena - CEJUSC",
+      "doc_count": 279
+    },
+    {
+      "key": "Pimenta Bueno - CEJUSC",
+      "doc_count": 269
+    },
+    {
+      "key": "Jaru - CEJUSC",
+      "doc_count": 267
+    },
+    {
+      "key": "Presidente Médici - CEJUSC",
+      "doc_count": 223
+    },
+    {
+      "key": "Colorado do Oeste - CEJUSC",
+      "doc_count": 206
+    },
+    {
+      "key": "Buritis - CEJUSC",
+      "doc_count": 200
+    },
+    {
+      "key": "Rolim de Moura - CEJUSC",
+      "doc_count": 185
+    },
+    {
+      "key": "Gabinete Titularidade Vaga. Ocupado por Juíza Convocada Úrsula Gonçalves Theodoro de Faria Souza",
+      "doc_count": 149
+    },
+    {
+      "key": "Nova Brasilândia do Oeste - CEJUSC",
+      "doc_count": 132
+    },
+    {
+      "key": "Ariquemes - 2ª Vara Criminal",
+      "doc_count": 92
+    },
+    {
+      "key": "Espigão do Oeste - CEJUSC",
+      "doc_count": 82
+    },
+    {
+      "key": "1ª Turma Recursal - Gabinete da Presidência",
+      "doc_count": 65
+    },
+    {
+      "key": "2ª Turma Recursal - Gabinete da Presidência",
+      "doc_count": 57
+    },
+    {
+      "key": "Gabinete Titularidade Vaga. Ocupado por Juiz Convocado Flávio Henrique de Melo",
+      "doc_count": 56
+    },
+    {
+      "key": "Nova Mamoré - CEJUSC",
+      "doc_count": 54
+    },
+    {
+      "key": "Porto Velho - Vara Infracional e de Execução de Medidas Socioeducativas",
+      "doc_count": 16
+    },
+    {
+      "key": "Porto Velho - 2º Juizado da Violência Doméstica e Familiar Contra a Mulher",
+      "doc_count": 9
+    },
+    {
+      "key": "Porto Velho - 1ª Unidade de Conflitos Agrários",
+      "doc_count": 3
+    },
+    {
+      "key": "Porto Velho - 1º Juizado da Violência Doméstica e Familiar Contra a Mulher",
+      "doc_count": 3
+    },
+    {
+      "key": "Porto Velho - 2ª Unidade de Conflitos Agrários",
+      "doc_count": 3
+    },
+    {
+      "key": "Porto Velho - Vara de Execuções e Contravenções Penais",
+      "doc_count": 3
+    },
+    {
+      "key": "Porto Velho - 1ª Vara de Fazenda Pública",
+      "doc_count": 1
+    },
+    {
+      "key": "Porto Velho - Vara de Crimes Contra Crianças e Adolescentes",
+      "doc_count": 1
+    }
+  ],
+  "orgaos_julgadores_colegiados": [
+    {
+      "key": "",
+      "doc_count": 1952128
+    },
+    {
+      "key": "1ª Turma Recursal",
+      "doc_count": 682708
+    },
+    {
+      "key": "1ª Câmara Cível",
+      "doc_count": 219184
+    },
+    {
+      "key": "2ª Câmara Cível",
+      "doc_count": 201919
+    },
+    {
+      "key": "3ª Câmara Cível",
+      "doc_count": 188031
+    },
+    {
+      "key": "1ª Câmara Criminal",
+      "doc_count": 160874
+    },
+    {
+      "key": "1ª Câmara Especial",
+      "doc_count": 143768
+    },
+    {
+      "key": "2ª Turma Recursal",
+      "doc_count": 143341
+    },
+    {
+      "key": "2ª Câmara Especial",
+      "doc_count": 138023
+    },
+    {
+      "key": "2ª Câmara Criminal",
+      "doc_count": 106551
+    },
+    {
+      "key": "Turma Recursal",
+      "doc_count": 28017
+    },
+    {
+      "key": "Câmaras Especiais Reunidas",
+      "doc_count": 20106
+    },
+    {
+      "key": "Tribunal Pleno",
+      "doc_count": 10548
+    },
+    {
+      "key": "Tribunal Pleno Judiciário",
+      "doc_count": 9732
+    },
+    {
+      "key": "Câmaras Cíveis Reunidas",
+      "doc_count": 6390
+    },
+    {
+      "key": "Câmaras Criminais Reunidas",
+      "doc_count": 6154
+    },
+    {
+      "key": "Conselho da Magistratura",
+      "doc_count": 3020
+    },
+    {
+      "key": "Tribunal Pleno Administrativo",
+      "doc_count": 2341
+    },
+    {
+      "key": "Conselho da Magistratura e de Gestão de Desenvolvimento Institucional",
+      "doc_count": 2026
+    },
+    {
+      "key": "Turma Recursal Presidência",
+      "doc_count": 1303
+    },
+    {
+      "key": "Vice Presidência do TJRO",
+      "doc_count": 1011
+    },
+    {
+      "key": "Presidência do TJRO",
+      "doc_count": 261
+    },
+    {
+      "key": "Turma de Uniformização de Jurisprudência e das Turmas Recursais do Poder Judiciário do Estado de Rondônia",
+      "doc_count": 206
+    },
+    {
+      "key": "Câmaras Reunidas Cíveis",
+      "doc_count": 43
+    },
+    {
+      "key": "Presidência",
+      "doc_count": 16
+    }
+  ],
+  "juizes": [
+    {
+      "key": "JOSE AUGUSTO ALVES MARTINS",
+      "doc_count": 140746
+    },
+    {
+      "key": "ARLEN JOSE SILVA DE SOUZA",
+      "doc_count": 125188
+    },
+    {
+      "key": "GLODNER LUIZ PAULETTO",
+      "doc_count": 106101
+    },
+    {
+      "key": "JOAO LUIZ ROLIM SAMPAIO",
+      "doc_count": 99745
+    },
+    {
+      "key": "USUÁRIO DO SISTEMA",
+      "doc_count": 92416
+    },
+    {
+      "key": "ENIO SALVADOR VAZ",
+      "doc_count": 91991
+    },
+    {
+      "key": "CRISTIANO GOMES MAZZINI",
+      "doc_count": 74160
+    },
+    {
+      "key": "ISAIAS FONSECA MORAES",
+      "doc_count": 72459
+    },
+    {
+      "key": "MARCOS ALAOR DINIZ GRANGEIA",
+      "doc_count": 72277
+    },
+    {
+      "key": "ROWILSON TEIXEIRA",
+      "doc_count": 71794
+    },
+    {
+      "key": "RADUAN MIGUEL FILHO",
+      "doc_count": 69819
+    },
+    {
+      "key": "JOSE TORRES FERREIRA",
+      "doc_count": 68882
+    },
+    {
+      "key": "PAULO KIYOCHI MORI",
+      "doc_count": 59254
+    },
+    {
+      "key": "SANSÃO SALDANHA",
+      "doc_count": 59005
+    },
+    {
+      "key": "ALEXANDRE MIGUEL",
+      "doc_count": 58290
+    },
+    {
+      "key": "ANITA MAGDELAINE PEREZ BELEM",
+      "doc_count": 56574
+    },
+    {
+      "key": "JORGE LUIZ DE MOURA GURGEL DO AMARAL",
+      "doc_count": 55717
+    },
+    {
+      "key": "JORGE LUIZ DOS SANTOS LEAL",
+      "doc_count": 55098
+    },
+    {
+      "key": "AUDARZEAN SANTANA DA SILVA",
+      "doc_count": 53454
+    },
+    {
+      "key": "URSULA GONCALVES THEODORO DE FARIA SOUZA",
+      "doc_count": 52325
+    },
+    {
+      "key": "ACIR TEIXEIRA GRECIA",
+      "doc_count": 51068
+    },
+    {
+      "key": "MAXIMILIANO DARCY DAVID DEITOS",
+      "doc_count": 45375
+    },
+    {
+      "key": "EDUARDO FERNANDES RODOVALHO DE OLIVEIRA",
+      "doc_count": 44352
+    },
+    {
+      "key": "ILISIR BUENO RODRIGUES",
+      "doc_count": 42090
+    },
+    {
+      "key": "ROOSEVELT QUEIROZ COSTA",
+      "doc_count": 41681
+    },
+    {
+      "key": "JOSE JORGE RIBEIRO DA LUZ",
+      "doc_count": 41336
+    },
+    {
+      "key": "HIRAM SOUZA MARQUES",
+      "doc_count": 41231
+    },
+    {
+      "key": "DANIEL RIBEIRO LAGOS",
+      "doc_count": 40256
+    },
+    {
+      "key": "AMAURI LEMES",
+      "doc_count": 39742
+    },
+    {
+      "key": "OSNY CLARO DE OLIVEIRA JUNIOR",
+      "doc_count": 39704
+    },
+    {
+      "key": "GUILHERME RIBEIRO BALDAN",
+      "doc_count": 37868
+    },
+    {
+      "key": "MIGUEL MONICO NETO",
+      "doc_count": 37732
+    },
+    {
+      "key": "JOHNNY GUSTAVO CLEMES",
+      "doc_count": 35361
+    },
+    {
+      "key": "DANILO AUGUSTO KANTHACK PACCINI",
+      "doc_count": 35211
+    },
+    {
+      "key": "MARCIA CRISTINA RODRIGUES MASIOLI MORAIS",
+      "doc_count": 35061
+    },
+    {
+      "key": "GLAUCO ANTONIO ALVES",
+      "doc_count": 32386
+    },
+    {
+      "key": "JOSE ANTONIO ROBLES",
+      "doc_count": 31317
+    },
+    {
+      "key": "DALMO ANTONIO DE CASTRO BEZERRA",
+      "doc_count": 30219
+    },
+    {
+      "key": "GILBERTO BARBOSA",
+      "doc_count": 29623
+    },
+    {
+      "key": "WANDERLEY JOSE CARDOSO",
+      "doc_count": 28736
+    },
+    {
+      "key": "WILSON SOARES GAMA",
+      "doc_count": 27551
+    },
+    {
+      "key": "EURICO MONTENEGRO JUNIOR",
+      "doc_count": 26681
+    },
+    {
+      "key": "DENISE PIPINO FIGUEIREDO",
+      "doc_count": 25441
+    },
+    {
+      "key": "VALDIRENE ALVES DA FONSECA CLEMENTELE",
+      "doc_count": 25370
+    },
+    {
+      "key": "VALTER DE OLIVEIRA",
+      "doc_count": 25155
+    },
+    {
+      "key": "RENATO MARTINS MIMESSI",
+      "doc_count": 25008
+    },
+    {
+      "key": "EUMA MENDONCA TOURINHO",
+      "doc_count": 24957
+    },
+    {
+      "key": "VINICIUS BOVO DE ALBUQUERQUE CABRAL",
+      "doc_count": 24737
+    },
+    {
+      "key": "FABIO BATISTA DA SILVA",
+      "doc_count": 23753
+    },
+    {
+      "key": "LEONEL PEREIRA DA ROCHA",
+      "doc_count": 23730
+    },
+    {
+      "key": "MARCUS VINICIUS DOS SANTOS DE OLIVEIRA",
+      "doc_count": 23129
+    },
+    {
+      "key": "MAXULENE DE SOUSA FREITAS",
+      "doc_count": 23055
+    },
+    {
+      "key": "PEDRO SILLAS CARVALHO",
+      "doc_count": 22936
+    },
+    {
+      "key": "",
+      "doc_count": 22488
+    },
+    {
+      "key": "DEISY CRISTHIAN LORENA DE OLIVEIRA FERRAZ",
+      "doc_count": 21948
+    },
+    {
+      "key": "ELI DA COSTA JUNIOR",
+      "doc_count": 21843
+    },
+    {
+      "key": "SILVANA MARIA DE FREITAS",
+      "doc_count": 21418
+    },
+    {
+      "key": "ROBERTO GIL DE OLIVEIRA",
+      "doc_count": 21215
+    },
+    {
+      "key": "JOSE DE OLIVEIRA BARROS FILHO",
+      "doc_count": 20966
+    },
+    {
+      "key": "MUHAMMAD HIJAZI ZAGLOUT",
+      "doc_count": 20924
+    },
+    {
+      "key": "MARISA DE ALMEIDA",
+      "doc_count": 20145
+    },
+    {
+      "key": "ALVARO KALIX FERRO",
+      "doc_count": 20100
+    },
+    {
+      "key": "FRANCISCO BORGES FERREIRA NETO",
+      "doc_count": 19972
+    },
+    {
+      "key": "INES MOREIRA DA COSTA",
+      "doc_count": 19318
+    },
+    {
+      "key": "ELSON PEREIRA DE OLIVEIRA BASTOS",
+      "doc_count": 18741
+    },
+    {
+      "key": "LUCAS NIERO FLORES",
+      "doc_count": 18467
+    },
+    {
+      "key": "LUIS MARCELO BATISTA DA SILVA",
+      "doc_count": 18311
+    },
+    {
+      "key": "ALEX BALMANT",
+      "doc_count": 18270
+    },
+    {
+      "key": "JEFERSON CRISTI TESSILA DE MELO",
+      "doc_count": 18226
+    },
+    {
+      "key": "REJANE DE SOUSA GONCALVES FRACCARO",
+      "doc_count": 18146
+    },
+    {
+      "key": "MARIO JOSE MILANI E SILVA",
+      "doc_count": 17931
+    },
+    {
+      "key": "ARTUR AUGUSTO LEITE JUNIOR",
+      "doc_count": 17892
+    },
+    {
+      "key": "IVANIRA FEITOSA BORGES",
+      "doc_count": 17744
+    },
+    {
+      "key": "EMY KARLA YAMAMOTO",
+      "doc_count": 17586
+    },
+    {
+      "key": "VALDECI CASTELLAR CITON",
+      "doc_count": 17576
+    },
+    {
+      "key": "WALTER WALTENBERG SILVA JUNIOR",
+      "doc_count": 17283
+    },
+    {
+      "key": "MARIALVA HENRIQUES DALDEGAN BUENO",
+      "doc_count": 16690
+    },
+    {
+      "key": "LUIS DELFINO CESAR JUNIOR",
+      "doc_count": 16671
+    },
+    {
+      "key": "ANA VALERIA DE QUEIROZ SANTIAGO ZIPPARRO",
+      "doc_count": 16438
+    },
+    {
+      "key": "KATYANE VIANA LIMA MEIRA",
+      "doc_count": 16012
+    },
+    {
+      "key": "PERICLES MOREIRA CHAGAS",
+      "doc_count": 15878
+    },
+    {
+      "key": "ANE BRUINJE",
+      "doc_count": 15858
+    },
+    {
+      "key": "ELISANGELA NOGUEIRA",
+      "doc_count": 15598
+    },
+    {
+      "key": "HEDY CARLOS SOARES",
+      "doc_count": 15574
+    },
+    {
+      "key": "MIRIA DO NASCIMENTO DE SOUZA",
+      "doc_count": 15260
+    },
+    {
+      "key": "ALDEMIR DE OLIVEIRA",
+      "doc_count": 15182
+    },
+    {
+      "key": "MICHIELY APARECIDA CABRERA VALEZI BENEDETI",
+      "doc_count": 14902
+    },
+    {
+      "key": "OUDIVANIL DE MARINS",
+      "doc_count": 14884
+    },
+    {
+      "key": "KARINA MIGUEL SOBRAL",
+      "doc_count": 14787
+    },
+    {
+      "key": "BRUNO MAGALHAES RIBEIRO DOS SANTOS",
+      "doc_count": 14453
+    },
+    {
+      "key": "DUILIA SGROTT REIS",
+      "doc_count": 14273
+    },
+    {
+      "key": "EDENIR SEBASTIAO ALBUQUERQUE DA ROSA",
+      "doc_count": 14187
+    },
+    {
+      "key": "ANDRESSON CAVALCANTE FECURY",
+      "doc_count": 13829
+    },
+    {
+      "key": "LUCIANE SANCHES",
+      "doc_count": 13759
+    },
+    {
+      "key": "ADOLFO THEODORO NAUJORKS NETO",
+      "doc_count": 13695
+    },
+    {
+      "key": "MARCIA ADRIANA ARAUJO FREITAS",
+      "doc_count": 13318
+    },
+    {
+      "key": "HARUO MIZUSAKI",
+      "doc_count": 13273
+    },
+    {
+      "key": "LARISSA CAMARGO PINHO DE ALENCAR",
+      "doc_count": 13122
+    },
+    {
+      "key": "CHRISTIAN CARLA DE ALMEIDA FREITAS",
+      "doc_count": 12645
+    },
+    {
+      "key": "JOAO VALERIO SILVA NETO",
+      "doc_count": 12581
+    },
+    {
+      "key": "FABRIZIO AMORIM DE MENEZES",
+      "doc_count": 12554
+    },
+    {
+      "key": "ELISANGELA FROTA ARAUJO REIS",
+      "doc_count": 12508
+    },
+    {
+      "key": "KELMA VILELA DE OLIVEIRA",
+      "doc_count": 12454
+    },
+    {
+      "key": "GLEUCIVAL ZEED ESTEVAO",
+      "doc_count": 11112
+    },
+    {
+      "key": "SIMONE DE MELO",
+      "doc_count": 11083
+    },
+    {
+      "key": "THIAGO GOMES DE ANICETO",
+      "doc_count": 11023
+    },
+    {
+      "key": "JOSE GONCALVES DA SILVA FILHO",
+      "doc_count": 11001
+    },
+    {
+      "key": "IVENS DOS REIS FERNANDES",
+      "doc_count": 10870
+    },
+    {
+      "key": "ADRIANO LIMA TOLDO",
+      "doc_count": 10773
+    },
+    {
+      "key": "ALENCAR DAS NEVES BRILHANTE",
+      "doc_count": 10556
+    },
+    {
+      "key": "LEONARDO LEITE MATTOS E SOUZA",
+      "doc_count": 10532
+    },
+    {
+      "key": "CLAUDIA MARA DA SILVA FALEIROS FERNANDES",
+      "doc_count": 10510
+    },
+    {
+      "key": "JOSE ANTONIO BARRETTO",
+      "doc_count": 10437
+    },
+    {
+      "key": "ELISEU FERNANDES DE SOUZA",
+      "doc_count": 10238
+    },
+    {
+      "key": "HAROLDO DE ARAUJO ABREU NETO",
+      "doc_count": 10010
+    },
+    {
+      "key": "ADIP CHAIM ELIAS HOMSI NETO",
+      "doc_count": 9993
+    },
+    {
+      "key": "JULIANA COUTO MATHEUS",
+      "doc_count": 9791
+    },
+    {
+      "key": "MARCOS ALBERTO OLDAKOWSKI",
+      "doc_count": 9477
+    },
+    {
+      "key": "SILVIO VIANA",
+      "doc_count": 9353
+    },
+    {
+      "key": "ELOISE MOREIRA CAMPOS MONTEIRO BARRETO",
+      "doc_count": 9119
+    },
+    {
+      "key": "GILBERTO JOSE GIANNASI",
+      "doc_count": 9061
+    },
+    {
+      "key": "SOPHIA VEIGA DE ASSUNCAO",
+      "doc_count": 8895
+    },
+    {
+      "key": "LIGIANE ZIGIOTTO BENDER",
+      "doc_count": 8816
+    },
+    {
+      "key": "JAIRES TAVES BARRETO",
+      "doc_count": 8773
+    },
+    {
+      "key": "CASSIO RODOLFO SBARZI GUEDES",
+      "doc_count": 8650
+    },
+    {
+      "key": "EDERSON PIRES DA CRUZ",
+      "doc_count": 8449
+    },
+    {
+      "key": "JULIANA PAULA SILVA DA COSTA",
+      "doc_count": 8368
+    },
+    {
+      "key": "ZELITE ANDRADE CARNEIRO",
+      "doc_count": 8246
+    },
+    {
+      "key": "SANDRA APARECIDA SILVESTRE",
+      "doc_count": 8214
+    },
+    {
+      "key": "BRENNO ROBERTO AMORIM BARCELOS",
+      "doc_count": 8195
+    },
+    {
+      "key": "MARCIA REGINA GOMES SERAFIM",
+      "doc_count": 8192
+    },
+    {
+      "key": "EDUARDO ABILIO KERBER DINIZ",
+      "doc_count": 7716
+    },
+    {
+      "key": "GUSTAVO NEHLS PINHEIRO",
+      "doc_count": 7675
+    },
+    {
+      "key": "ANGELICA FERREIRA DE OLIVEIRA FREIRE",
+      "doc_count": 7612
+    },
+    {
+      "key": "FABIOLA CRISTINA INOCENCIO",
+      "doc_count": 7586
+    },
+    {
+      "key": "ELIEZER NUNES BARROS",
+      "doc_count": 7457
+    },
+    {
+      "key": "RINALDO FORTI DA SILVA",
+      "doc_count": 7350
+    },
+    {
+      "key": "FLAVIO HENRIQUE DE MELO",
+      "doc_count": 7312
+    },
+    {
+      "key": "ANGELA MARIA DA SILVA",
+      "doc_count": 7302
+    },
+    {
+      "key": "MATHEUS BRITO NUNES DINIZ",
+      "doc_count": 7059
+    },
+    {
+      "key": "GUSTAVO LINDNER",
+      "doc_count": 6606
+    },
+    {
+      "key": "MÁRCIA CRISTINA RODRIGUES MASIOLI MORAIS",
+      "doc_count": 6524
+    },
+    {
+      "key": "ROSIANE PEREIRA DE SOUZA FREIRE",
+      "doc_count": 6437
+    },
+    {
+      "key": "GABRIEL MARQUES DE CARVALHO",
+      "doc_count": 6402
+    },
+    {
+      "key": "PAULA CARINE MATOS DE SOUZA",
+      "doc_count": 6354
+    },
+    {
+      "key": "JOAO ADALBERTO CASTRO ALVES",
+      "doc_count": 6197
+    },
+    {
+      "key": "PAULO JOSE DO NASCIMENTO FABRICIO",
+      "doc_count": 6125
+    },
+    {
+      "key": "PAULO JULIANO ROSO TEIXEIRA",
+      "doc_count": 5364
+    },
+    {
+      "key": "SERGIO WILLIAM DOMINGUES TEIXEIRA",
+      "doc_count": 5321
+    },
+    {
+      "key": "FRANCISCO PRESTELLO DE VASCONCELLOS",
+      "doc_count": 5226
+    },
+    {
+      "key": "KEILA ALESSANDRA ROEDER ROCHA DE ALMEIDA",
+      "doc_count": 5203
+    },
+    {
+      "key": "CLAUDIA VIEIRA MACIEL DE SOUSA",
+      "doc_count": 5128
+    },
+    {
+      "key": "PAULIANE MEZABARBA",
+      "doc_count": 5118
+    },
+    {
+      "key": "ROBSON JOSE DOS SANTOS",
+      "doc_count": 4940
+    },
+    {
+      "key": "ROSEMEIRE C SANTOS P DE SOUZA",
+      "doc_count": 4851
+    },
+    {
+      "key": "EDILSON NEUHAUS",
+      "doc_count": 4829
+    },
+    {
+      "key": "VINICIUS DE ALMEIDA FERREIRA",
+      "doc_count": 4773
+    },
+    {
+      "key": "JORDANA MARIA MATHIAS DOS REIS ONUCHIC",
+      "doc_count": 4764
+    },
+    {
+      "key": "KALLEB GROSSKLAUSS BARBATO",
+      "doc_count": 4698
+    },
+    {
+      "key": "EDSON YUKISHIGUE SASSAMOTO",
+      "doc_count": 4668
+    },
+    {
+      "key": "ELSI ANTONIO DALLA RIVA",
+      "doc_count": 4267
+    },
+    {
+      "key": "SEBASTIAO TEIXEIRA CHAVES",
+      "doc_count": 4201
+    },
+    {
+      "key": "SANDRA BEATRIZ MERENDA",
+      "doc_count": 4197
+    },
+    {
+      "key": "GIOVANNA DE MORAES",
+      "doc_count": 4115
+    },
+    {
+      "key": "DECYO ALLYSON SARMENTO FERREIRA",
+      "doc_count": 4000
+    },
+    {
+      "key": "ELAINE CRISTINA PEREIRA",
+      "doc_count": 3995
+    },
+    {
+      "key": "FERNANDA PEREIRA RIBEIRO PARADELA",
+      "doc_count": 3938
+    },
+    {
+      "key": "OSCAR FRANCISCO ALVES JUNIOR",
+      "doc_count": 3903
+    },
+    {
+      "key": "HUGO SOARES BERTUCCINI",
+      "doc_count": 3805
+    },
+    {
+      "key": "MÁRCIA ADRIANA ARAÚJO FREITAS",
+      "doc_count": 3756
+    },
+    {
+      "key": "GUILHERME FERREIRA",
+      "doc_count": 3754
+    },
+    {
+      "key": "MARIANA LEITE DA SILVA MITRE",
+      "doc_count": 3705
+    },
+    {
+      "key": "DANILO SANTIM BOER",
+      "doc_count": 3690
+    },
+    {
+      "key": "RENAN KIRIHATA",
+      "doc_count": 3582
+    },
+    {
+      "key": "BRUNA BORROMEU TEIXEIRA PIRACIABA DE CARVALHO",
+      "doc_count": 3504
+    },
+    {
+      "key": "ANA LUCIA MORTARI",
+      "doc_count": 3312
+    },
+    {
+      "key": "ROGERIO MONTAI DE LIMA",
+      "doc_count": 3247
+    },
+    {
+      "key": "HUGO HOLLANDA SOARES",
+      "doc_count": 2919
+    },
+    {
+      "key": "CARLOS ROBERTO ROSA BURCK",
+      "doc_count": 2886
+    },
+    {
+      "key": "MARCELO TRAMONTINI",
+      "doc_count": 2882
+    },
+    {
+      "key": "CARLOS AUGUSTO TELES DE NEGREIROS",
+      "doc_count": 2659
+    },
+    {
+      "key": "ANA CAROLINA FERREIRA MARQUES DOS PRAZERES",
+      "doc_count": 2657
+    },
+    {
+      "key": "JULIANA RAPHAEL ESCOBAR GIMENES",
+      "doc_count": 2656
+    },
+    {
+      "key": "VALDECIR RAMOS DE SOUZA",
+      "doc_count": 2641
+    },
+    {
+      "key": "FANI ANGELINA DE LIMA",
+      "doc_count": 2624
+    },
+    {
+      "key": "ROBERTA CRISTINA GARCIA MACEDO",
+      "doc_count": 2486
+    },
+    {
+      "key": "TANIA MARA GUIRRO",
+      "doc_count": 2373
+    },
+    {
+      "key": "LILIANE PEGORARO BILHARVA",
+      "doc_count": 2260
+    },
+    {
+      "key": "VITOR MARCELLINO TAVARES DA SILVA",
+      "doc_count": 2183
+    },
+    {
+      "key": "FRANKLIN VIEIRA DOS SANTOS",
+      "doc_count": 2165
+    },
+    {
+      "key": "CARLOS GUILHERME CAVALCANTI DE ALBUQUERQUE",
+      "doc_count": 1933
+    },
+    {
+      "key": "MARIANA PINHEIRO DE MACEDO CORREA",
+      "doc_count": 1893
+    },
+    {
+      "key": "ALLE SANDRA ADORNO DOS SANTOS FERREIRA",
+      "doc_count": 1842
+    },
+    {
+      "key": "LEONARDO MEIRA COUTO",
+      "doc_count": 1730
+    },
+    {
+      "key": "SERGIO ALBERTO NOGUEIRA DE LIMA",
+      "doc_count": 1666
+    },
+    {
+      "key": "MURIEL CLEVE NICOLODI",
+      "doc_count": 1605
+    },
+    {
+      "key": "MARINA MURUCCI MONTEIRO",
+      "doc_count": 1506
+    },
+    {
+      "key": "GUILHERME SOARES SCHULZ DE CARVALHO",
+      "doc_count": 1419
+    },
+    {
+      "key": "MARIA ABADIA DE CASTRO MARIANO SOARES LIMA",
+      "doc_count": 1402
+    },
+    {
+      "key": "BRENDA AGUIAR VASCONCELOS",
+      "doc_count": 1126
+    },
+    {
+      "key": "ADILSON FLORENCIO DE ALENCAR",
+      "doc_count": 1040
+    },
+    {
+      "key": "JOSE PEDRO DO COUTO",
+      "doc_count": 1018
+    },
+    {
+      "key": "ALEXANDRE AUGUSTO CORBACHO MARTINS",
+      "doc_count": 986
+    },
+    {
+      "key": "KERLEY REGINA FERREIRA DE ARRUDA ALCANTARA",
+      "doc_count": 905
+    },
+    {
+      "key": "DIMAS RIBEIRO DA FONSECA",
+      "doc_count": 867
+    },
+    {
+      "key": "LEO ANTONIO FACHIN",
+      "doc_count": 763
+    },
+    {
+      "key": "LUIS ANTONIO SANADA ROCHA",
+      "doc_count": 724
+    },
+    {
+      "key": "VICTOR DE SANTANA MENEZES",
+      "doc_count": 691
+    },
+    {
+      "key": "FABIANO PEGORARO FRANCO",
+      "doc_count": 641
+    },
+    {
+      "key": "EDEWALDO FANTINI JUNIOR",
+      "doc_count": 601
+    },
+    {
+      "key": "THIAGO MILHOMEM DE SOUZA BATISTA",
+      "doc_count": 598
+    },
+    {
+      "key": "ANTONIO CANDIDO DE OLIVEIRA",
+      "doc_count": 510
+    },
+    {
+      "key": "EDVINO PRECZEVSKI",
+      "doc_count": 502
+    },
+    {
+      "key": "AMAURI FUKUDA",
+      "doc_count": 460
+    },
+    {
+      "key": "GUILHERME REGUEIRA PITTA",
+      "doc_count": 456
+    },
+    {
+      "key": "TULIO AUGUSTO GERALDO PARREIRAS",
+      "doc_count": 372
+    },
+    {
+      "key": "AUREO VIRGILIO QUEIROZ",
+      "doc_count": 371
+    },
+    {
+      "key": "SANDRA MARIA NASCIMENTO DE SOUZA",
+      "doc_count": 261
+    },
+    {
+      "key": "LAIO PORTES STHEL",
+      "doc_count": 158
+    },
+    {
+      "key": "MARCELA ROSA DA SILVA",
+      "doc_count": 116
+    },
+    {
+      "key": "RENATO BONIFACIO DE MELO DIAS",
+      "doc_count": 115
+    },
+    {
+      "key": "Presidente do Tribunal de Justiça",
+      "doc_count": 101
+    },
+    {
+      "key": "MARCO ANTONIO PRADO NOGUEIRA PERRONI",
+      "doc_count": 85
+    },
+    {
+      "key": "ANTONIO FELICIANO POLI",
+      "doc_count": 81
+    },
+    {
+      "key": "VIRGINIA MARIA DE ABREU E LIMA GUIMARAES",
+      "doc_count": 79
+    },
+    {
+      "key": "TRIBUNAL DE JUSTICA DO ESTADO DE RONDONIA",
+      "doc_count": 75
+    },
+    {
+      "key": "MARCELO PIMENTA CAVALCANTI",
+      "doc_count": 44
+    },
+    {
+      "key": "JOSÉ JORGE RIBEIRO DA LUZ",
+      "doc_count": 43
+    },
+    {
+      "key": "SANDRA MARTINS LOPES",
+      "doc_count": 35
+    },
+    {
+      "key": "ÁLVARO KALIX FERRO",
+      "doc_count": 34
+    },
+    {
+      "key": "JEFERSON ANTONIO ZAMPIER",
+      "doc_count": 18
+    },
+    {
+      "key": "JOAO FELIPE TOMAZINI ASSIS CARVALHO",
+      "doc_count": 17
+    },
+    {
+      "key": "ROGERIO EDUARDO WERNECK JUNIOR",
+      "doc_count": 13
+    },
+    {
+      "key": "BRUNO SERGIO DE MENEZES DARWICH",
+      "doc_count": 12
+    },
+    {
+      "key": "CESAR RUBENS DE SOUSA LIMA",
+      "doc_count": 9
+    },
+    {
+      "key": "LUCIANO DE SOUZA CORTES",
+      "doc_count": 4
+    },
+    {
+      "key": "ANDRE CARVALHO TONON",
+      "doc_count": 3
+    },
+    {
+      "key": "FELIPE ROCHA SILVEIRA",
+      "doc_count": 3
+    },
+    {
+      "key": "GEAN CARLOS ARRUDA LEMOS",
+      "doc_count": 3
+    },
+    {
+      "key": "PJe - Usuário de Remessa",
+      "doc_count": 3
+    },
+    {
+      "key": "TJRO - TRIBUNAL DE JUSTICA DO ESTADO DE RONDONIA",
+      "doc_count": 3
+    },
+    {
+      "key": "ESTHER FANARA GUEDES DA SILVA",
+      "doc_count": 2
+    },
+    {
+      "key": "MARCIO GREY LEAL NEVES",
+      "doc_count": 2
+    },
+    {
+      "key": "ANDRE APARECIDO SINFRONIO ALVES",
+      "doc_count": 1
+    },
+    {
+      "key": "ANTONIO PAULO DOS SANTOS FILHO",
+      "doc_count": 1
+    },
+    {
+      "key": "BRUNA DE SOUSA LIRA",
+      "doc_count": 1
+    },
+    {
+      "key": "CESAR DOS SANTOS FERREIRA",
+      "doc_count": 1
+    },
+    {
+      "key": "CINTIA CRISTINA RODRIGUES FERREIRA",
+      "doc_count": 1
+    },
+    {
+      "key": "DENISE CAMPELO LOPES FERNANDES",
+      "doc_count": 1
+    },
+    {
+      "key": "EDSEIA PIRES DE SOUZA",
+      "doc_count": 1
+    },
+    {
+      "key": "FERNANDO CESAR GOMES DE SOUZA",
+      "doc_count": 1
+    },
+    {
+      "key": "ISAMARA COSTA",
+      "doc_count": 1
+    },
+    {
+      "key": "JESSICA ARIADNA SILVA RODRIGUES",
+      "doc_count": 1
+    },
+    {
+      "key": "JOAO BAPTISTA VENDRAMINI FLEURY",
+      "doc_count": 1
+    },
+    {
+      "key": "LUCAS OLIVEIRA RODRIGUES",
+      "doc_count": 1
+    },
+    {
+      "key": "MARIA DAS DORES PEREIRA",
+      "doc_count": 1
+    },
+    {
+      "key": "MARIA SARALINA DA COSTA OLIVEIRA",
+      "doc_count": 1
+    },
+    {
+      "key": "MARIANA CONSTANTINO DE OLIVEIRA",
+      "doc_count": 1
+    },
+    {
+      "key": "NILDA VALENTE DE ARAUJO",
+      "doc_count": 1
+    },
+    {
+      "key": "SOLANGE APARECIDA DA SILVA",
+      "doc_count": 1
+    }
+  ]
+}
