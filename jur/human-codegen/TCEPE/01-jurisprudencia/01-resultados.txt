@@ -1,0 +1,198 @@
+# TCE-PE — §18–20 do MODELO: o que vem DEPOIS da busca
+# (skill browser-post-search, medido em 18/08/2026)
+
+================================================================================
+§18 — ONDE O RESULTADO APARECE
+================================================================================
+
+Rota MUDA:
+  antes:  https://portal.tcepe.tc.br/jurisprudencia/consulta/deliberacoes
+  depois: https://portal.tcepe.tc.br/jurisprudencia/consulta/resultado-busca/deliberacoes
+
+⚠️ A rota de resultado NÃO é reutilizável: é uma rota Angular sem parâmetro de
+   busca. Colada em aba limpa, carrega a tela vazia — o estado da busca vive no
+   serviço do cliente, não na URL. **NÃO existe permalink de BUSCA neste portal**
+   (nem o meio-permalink `?termo=` que o TCE-BA tinha).
+
+Sem popup e sem nova aba (o listener `ctx.on('page')` não disparou).
+Os controles de busca PERMANECEM no topo, com um bloco "FILTROS APLICADOS" que
+diz "Nenhum filtro selecionado" quando só houve termo — refinamento é incremental.
+
+TOTAL NA TELA: não há texto "Encontrados N resultados". A contagem autoritativa é
+o header HTTP **`X-Total-Count`**, e é o que o crawler lê.
+
+================================================================================
+§19 — ANATOMIA DO CARD
+================================================================================
+
+Seletor: `li.list-group-item`  (10 por página no default da tela)
+outerHTML gravado em `01-card-resultado.html`.
+
+Card medido (`nepotismo`, 4 primeiros):
+  1.130 / 1.130 / 1.131 / 1.130 caracteres — todos ~1.130
+
+Campos visíveis sem clicar nada:
+  título        "Acórdão 1450/2026"        ← tipo + nº/ano da DELIBERAÇÃO
+  "Processo:"   26100740-3AR001
+  "Data da Sessão:" 22/07/2026
+  "Órgão Julgador:" Pleno
+  "Relator:"    MARCOS LORETO
+  trecho de texto com `...` no começo e no fim
+  link          "Inteiro Teor da Deliberação"
+
+🔴 O TEXTO DO CARD NÃO É EMENTA — É TRECHO, e há highlight.
+   Card: ~1.130 chars.  Documento: 39.284 chars (mesmo acórdão 1450/2026).
+   Razão: **2,9%**. E há 6–8 elementos `<b>` por card destacando o termo, o que
+   confirma highlight. Chamar isso de ementa seria citar recorte como se fosse
+   o todo (a lição TJMG).
+
+🔴 E NÃO EXISTE EMENTA COMO CAMPO EM LUGAR NENHUM desta base. Não é que o card
+   não a traga: o payload da API não tem campo de ementa. O que existe é o texto
+   integral. O crawler devolve `ementa: null` e `semEmenta: true` em 100%.
+
+DISSECADO EM TRÊS TIPOS DE DOCUMENTO (não um só):
+
+  tipo      | n (nepotismo) | exemplo                | nº processo   | chars do texto
+  ----------|---------------|------------------------|---------------|----------------
+  ACORDAO   | 241           | ACORDAO 1450/2026      | 26100740-3AR001 | 39.284
+  ACORDAO   |               | ACORDAO 1395/2026      | 24101017-2      | 84.894
+  DECISAO   |  22           | DECISAO 1100635/2011   | 10004750        |  6.196
+  DECISAO   |               | DECISAO 1100256/2011   | 10025686        |  3.540
+  PARECER   |   9           | PARECER 0155613/2013   | 10500637        | 94.336
+  PARECER   |               | PARECER 0144612/2012   | 07400731        | 30.825
+
+🔴 O NÚMERO DO PROCESSO TEM DUAS ERAS, e um mapeamento de uma amostra só não
+   veria a segunda: os documentos recentes são `AAMMNNNN-D[sufixo]`
+   (`26100740-3AR001`) e os antigos são 8 dígitos sem hífen (`10500637`).
+   O `TCEPEChecker.normalizar()` aceita as duas.
+
+================================================================================
+§19.1 — TABELA CAMPO A CAMPO (API → repo)
+================================================================================
+
+  codigoDeliberacaoProcesso                → id                (IDENTIFICA A PEÇA)
+  nomeTipoDocumento                        → tipoDocumento     ACORDAO|DECISAO|PARECER
+  numeroProcessoProcesso                   → processo
+  anoProcessoProcesso                      → anoProcesso
+  numeroDeliberacaoProcesso / anoDeliberacaoProcesso → numeroDecisao/anoDecisao/titulo
+  detalheProcessoNomeOrgaoJulgador         → orgaoJulgador
+  detalheProcessoNomeServidor              → relator
+  detalheProcessoNomeUnidadeJurisdicionada → unidadeGestora
+  modalidadeProcesso                       → modalidade
+  descricaoTipoProcessoProcesso            → tipoProcesso
+  dataJulgamentoProcessoFormatada          → dataJulgamento (DD/MM/YYYY)
+  (nada)                                   → dataPublicacao = null  🔴 não existe
+  (nada)                                   → ementa = null, semEmenta = true 🔴
+  descricaoParecerProcesso                 → inteiroTeor  ← TEXTO INTEGRAL, com <br/>
+  descricaoParecerProcessoSimplificada     → (descartado: é o mesmo texto em ~100 chars)
+  linkDocumentoDeliberacao                 → url  (+ urlPublica, ver §20)
+  linkDocumentoITD                         → inteiroTeorLink
+  linkConsultaProcesso                     → processoUrl (leva ao e-TCE, tramitação)
+  areaId / temaId / subtemaId              → (null em 100% da amostra)
+
+🔴 QUEM IDENTIFICA O JULGADO É `codigoDeliberacaoProcesso`, NÃO O PROCESSO.
+   Provado: o processo `10500637` devolve DOIS documentos — um PARECER e um
+   ACORDAO, ambos com a mesma numeração de deliberação `0155613/2013`.
+
+⚠️ `descricaoParecerProcesso` pode vir com a string literal
+   `"Não foi possível obter o texto."` (visto na base sem termo). Isso é
+   AUSÊNCIA DE TEXTO, não texto: o crawler marca `semTexto: true` em vez de
+   gravar a mensagem como se fosse o inteiro teor. Na amostra de 272 documentos
+   de `nepotismo` isso não ocorreu (0/272).
+
+================================================================================
+§20 — A ESCADA ATÉ O DOCUMENTO, PAGINAÇÃO E PERMALINK
+================================================================================
+
+--- ESCADA -------------------------------------------------------------------
+
+Só há UM botão no card além do título: "Inteiro Teor da Deliberação".
+Clicando nele, o XHR capturado (é o contrato):
+
+  GET /jurisprudencia/services/jurisprudencia/api/publico
+      /conteudo-documento/26100740-3AR001/processo-numero
+      /ETCE/origem-processo/ITD/tipo-documento
+
+🔴 CHAVE COMPOSTA DE TRÊS, e os rótulos da rota vêm DEPOIS do valor
+   (`<numeroProcesso>/processo-numero/<origem>/origem-processo/<tipo>/tipo-documento`).
+   Medido: só o número → HTTP 404. `tipo-documento=DEL` → HTTP 400.
+   Só `ITD` respondeu 200.
+
+✅ REPRODUZIDO FORA DO BROWSER, sem cookie e sem sessão.
+
+FORMATO: JSON com o PDF em base64.
+  { id, numeroProcesso, documentoByte: "JVBERi0x…" (= %PDF-1.), descricao, extensao: "PDF" }
+  Tamanhos medidos: 94.551 B e 176.561 B de JSON → 132.348 B e 49.xxx B de PDF.
+
+✅ **O TEXTO JÁ VEIO NO PAYLOAD DA BUSCA** (`descricaoParecerProcesso`), então
+   `--fetch-inteiro-teor` NÃO faz segundo salto — só grava. O PDF original é
+   opcional, por `--fetch-pdf`.
+
+--- ASSIMETRIA DE BLOQUEIO (medida em separado) -------------------------------
+
+  BUSCA:    livre. Sem captcha, sem cookie, sem sessão, sem User-Agent especial.
+  DOWNLOAD: livre. Idem.
+
+⚠️ UM HTTP 400 TRANSITÓRIO QUE SE LÊ COMO BLOQUEIO PERMANENTE.
+   A PRIMEIRA chamada ao acórdão 1450/2026 devolveu HTTP 400 com
+     {"message":"O documento é muito recente e ainda não está disponível
+                 publicamente. Por favor, tente novamente mais tarde."}
+   A MESMA chave, minutos depois, devolveu HTTP 200 com 94.551 B em **três
+   tentativas seguidas**. A mensagem não descreve embargo de publicação —
+   descreve documento ainda não materializado no cache do backend. Quem medisse
+   uma vez registraria "documento recente é bloqueado" e estaria errado.
+   O Navigator retenta antes de reportar indisponibilidade.
+
+--- PAGINAÇÃO ----------------------------------------------------------------
+
+  Parâmetros:  `page` (base 0) e `size`, querystring.
+  Default da tela: size=10.
+  `size` testado: 100, 500, 2000 — todos HTTP 200, total sempre 263. Não se
+     encontrou teto que recuse; o crawler usa 100 por default.
+  Total exposto: header `X-Total-Count`.
+  ✅ TOTAL **EXATO**, não saturado: 263 (default) e 272 (com parecer prévio),
+     números não-redondos e reprodutíveis, e a partição por órgão e por tipo
+     FECHA exata (99+86+78 = 263; 241+22+9 = 272). Contador saturado não fecha
+     partição.
+
+  ✅ PAGINAÇÃO ESTÁVEL. `nepotismo`, 3 páginas × size 5, duas rodadas
+     independentes: os 15 ids vieram **idênticos e na mesma ordem**. O `sort` é
+     `dataJulgamentoProcesso,desc` e não houve deslizamento de fronteira
+     (ao contrário do e-Proc do TJRJ). Também estável apesar dos dois IPs de DNS.
+
+  ⚠️ Lentidão que NÃO é bloqueio: uma busca larga leva 8–14 s (a base inteira,
+     54.970 documentos, levou 12 s). Igual ao TCE-BA.
+
+--- PERMALINK ----------------------------------------------------------------
+
+🔴 O PERMALINK SÓ É PÚBLICO NA METADE RECENTE DO ACERVO — e o portal entrega o
+   link de INTRANET no payload público, sem marcar diferença.
+
+   Distribuição medida nos 272 documentos de `nepotismo`:
+     etce.tce.pe.gov.br      → 138  (51%)  ✅ público
+     portalintranet.tce.pe   → 134  (49%)  🔴 **NXDOMAIN**
+
+   ✅ O público: `http://etce.tce.pe.gov.br/epp/validaDoc.seam?cod=<GUID>`
+      Confirmado em aba/contexto limpo, sem cookie: HTTP 200, ~13,4 KB de HTML
+      (página de validação do documento). Redireciona http → https.
+      3/3 conferidos pelo `--verificar`.
+
+   🔴 O de intranet: `https://portalintranet.tce.pe/siga/downloadAPAction.do?codigo=…`
+      `portalintranet.tce.pe` é **NXDOMAIN** (curl: HTTP 000). É host interno do
+      tribunal vazado no payload público. São os documentos da era SIGA (os
+      antigos, incluindo TODOS os PARECER e DECISAO da amostra).
+      ⚠️ E para esses o PDF também não vem pela API: `/conteudo-documento/10500637/…`
+         responde HTTP 400 `"Não foi possivel localizar inteiro teor da deliberação
+         para o processo"` — testado com origem `ETCE` e `SIGA`.
+      ✅ O que existe para eles é o TEXTO INTEGRAL, que veio na busca (94.336
+         chars naquele PARECER). A verificação desses julgados é por RECONSULTA
+         (`jur tcepe -n 10500637`), não por link.
+
+   O crawler marca `urlPublica: true|false` e avisa quantos caíram na intranet.
+   O `--verificar` audita os públicos por HTTP e os de intranet por reconsulta.
+
+--- IDENTIDADE ---------------------------------------------------------------
+
+  Identifica o DOCUMENTO: `codigoDeliberacaoProcesso` (negativo, ex.: -3305609)
+  Identifica o PROCESSO:  `numeroProcessoProcesso` — e um processo rende várias peças
+  O `numeroProcesso.equals` da busca aceita o mesmo valor que a lista devolve. ✅

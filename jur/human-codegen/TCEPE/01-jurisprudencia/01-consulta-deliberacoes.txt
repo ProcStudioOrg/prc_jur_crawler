@@ -1,0 +1,306 @@
+# TCE-PE — Consulta de Deliberações (jurisprudência)
+
+Módulo:   01-jurisprudencia
+Medido:   18/08/2026, 16:00–18:40 BRT
+Entrada:  https://portal.tcepe.tc.br/jurisprudencia/consulta/deliberacoes
+Porta:    API REST pública (gateway JHipster), HTTP direto, sem browser
+Acesso:   `api` — sem cookie, sem sessão, sem captcha em etapa nenhuma
+
+================================================================================
+§0 — PASSO 0: o que EXISTE e o que NÃO existe
+================================================================================
+
+🔴 O DOMÍNIO OFICIAL MUDA NO MEIO DO CAMINHO — e a entrada `.gov.br` da fila
+   NÃO responde a curl.
+   `https://www.tce.pe.gov.br/` → HTTP 000 medido. Não é site fora do ar:
+     DNS resolve (179.189.252.138 / 45.165.55.57 — dois IPs)
+     TCP 443 ABRE, TCP 80 ABRE
+     o TLS é que quebra: `TLS alert, unknown CA (560)`,
+     `unable to get local issuer certificate`
+   Causa: o host apresenta SÓ o certificado folha
+     subject C=BR, ST=Pernambuco, L=Recife,
+             O=TRIBUNAL DE CONTAS DO ESTADO DE PERNAMBUCO, CN=*.tce.pe.gov.br
+     issuer  C=US, O=DigiCert Inc, CN=Thawte TLS RSA CA G1
+   e OMITE o intermediário. O AIA do próprio certificado aponta a correção:
+     CA Issuers - URI:http://cacerts.thawte.com/ThawteTLSRSACAG1.crt
+   Fornecendo esse intermediário, 000 vira 302 → 200. **Provado.**
+   ✅ Já `portal.tcepe.tc.br` — o host que serve ESTA API — manda a cadeia
+      completa (folha + Thawte G1 + DigiCert Global Root G2,
+      `Verify return code: 0`). Por isso o crawler NÃO embute PEM nenhum.
+      É o inverso do TCE-BA, onde o institucional estava bom e o da API quebrado.
+   ⚠️ Seguindo o 302, `www.tce.pe.gov.br` leva a `https://www.tcepe.tc.br/internet/`,
+      e o link "Jurisprudência" do próprio portal aponta para
+      `https://portal.tcepe.tc.br/jurisprudencia/consulta/deliberacoes`.
+      `tc.br` é o domínio oficial dos Tribunais de Contas — o salto foi MEDIDO a
+      partir do domínio institucional, não inventado.
+
+🔴 NÃO HÁ Dados Abertos de jurisprudência, e NÃO há vhost curinga.
+   NXDOMAIN: dadosabertos. / api. / consulta. / jurisprudencia.tce.pe.gov.br,
+             dadosabertos. / api. / servicos.tcepe.tc.br, proinfo.tce.pe.gov.br
+   Controle que desfaz leitura de "tem Swagger":
+             portal.tcepe.tc.br/path-inventado-9z → HTTP 404 real, 196 B.
+   ⚠️ portal.tce.pe.gov.br e sistemas.tce.pe.gov.br existem e devolvem 403 (199 B)
+      — são outros sistemas do tribunal, não a jurisprudência.
+
+🔴 NÃO HÁ DataJud e NÃO HÁ número CNJ.
+   Contas não é Judiciário: não existe alias `api_publica_*` no CNJ, e o processo
+   é `AAMMNNNN-D[sufixo]` (ex.: `26100740-3AR001`) ou, no acervo antigo, 8 dígitos
+   sem hífen (`10500637`). `src/cnj.js` reprovaria todo processo válido.
+   **Não há plano B se o portal cair** — como em todo o Bloco 5 menos o TCE-RS.
+
+🔴 NÃO HÁ reCAPTCHA na busca. `window.grecaptcha` é `undefined` na tela de
+   consulta, medido no Playwright. O bundle referencia `recaptcha/api.js`, mas ele
+   pertence a outro módulo (assinatura de boletim) e não carrega aqui.
+
+================================================================================
+§1 — COMO O ENDPOINT FOI ENCONTRADO (não foi chutado)
+================================================================================
+
+A tela é SPA Angular; `<base href="/jurisprudencia/">` e os scripts são
+`app/main.ffa2731353365bce9a5e.bundle.js` (3,6 MB) e `app/global...`.
+⚠️ O `src=` é RELATIVO à `<base>`: baixar de
+`/jurisprudencia/consulta/app/main...` dá 404; o caminho certo é
+`/jurisprudencia/app/main...`.
+
+No bundle, literalmente:
+  resourceUrl = o.d + "services/jurisprudencia/api/publico"
+  getDeliberacoes(e){ ... this.http.get(this.resourceUrl+"/deliberacoes",
+                                        {params:t, observe:"response"}) }
+
+O conjunto EXATO de parâmetros foi capturado na aba Network do Playwright,
+fazendo a busca de verdade (o bundle monta os params genericamente, então lê-lo
+não bastava):
+
+  GET https://portal.tcepe.tc.br/jurisprudencia/services/jurisprudencia/api/publico/deliberacoes
+      ?page=0
+      &size=10
+      &todasBaseDescricao.equals=nepotismo
+      &todasBaseExprExata.equals=false
+      &modalidade.in=
+      &tipoProcesso.in=
+      &relator.contains=
+      &unidadeGestora.equals=
+      &orgaoJulgador.equals=
+      &numeroProcesso.equals=
+      &acordao.equals=true
+      &decisao.equals=true
+      &parecerPrevio.equals=false
+      &inteiroTeor.equals=false
+      &dataJulgamentoInicio.equals=
+      &dataJulgamentoFim.equals=
+      &numeroDeliberacao.equals=
+      &anoDeliberacao.in=
+      &sort=dataJulgamentoProcesso,desc
+  → HTTP 200, header `X-Total-Count: 263`
+
+Outros módulos públicos do MESMO gateway, NÃO mapeados aqui (ficam para depois):
+  /deliberacoes-selecionadas  (aba "Jurisprudência Selecionada")
+  /sumulas
+  /respostas-consulta         (aba "Enunciados de Prejulgados")
+  /boletins-jurisprudencia
+  /export/deliberacoes        (exportação)
+
+================================================================================
+§2 — CAMPO DE BUSCA
+================================================================================
+
+Descrição humana: caixa única "Pesquisar por...", que pesquisa em toda a base
+textual da deliberação. Exemplo real: `nepotismo` → 272 documentos.
+
+HTML (DOM depois do AJAX):
+  <input type="text" id="termo-busca" name="termo" placeholder="Pesquisar por...">
+  <button type="submit" id="button-addon2">  (lupa)
+  <input type="checkbox" name="expressaoExata">
+  três botões de texto: "E" | "OU" | "NAO"  (rótulos da tela)
+
+Parâmetros correspondentes:
+  todasBaseDescricao.equals   ← o termo
+  todasBaseExprExata.equals   ← o checkbox "expressão exata"
+
+🔴 `todasBaseExprExata.equals` É OBRIGATÓRIO sempre que há termo.
+   Omitir devolve **HTTP 400 com corpo `{"message":null}`** — erro MUDO, sem
+   nenhuma pista. Foi a primeira parede desta medição.
+
+================================================================================
+§3 — 🔴 OS OPERADORES: A TELA OFERECE TRÊS BOTÕES E NENHUM DELES É OPERADOR
+================================================================================
+
+Medido com nepotismo = 263 e licitação = 13.636 (recorte default da tela):
+
+  nepotismo licitação (espaço)   = 139   ← espaço é "E" implícito
+  nepotismo ZZQQINVENTADO        =   0   ← o CONTROLE que prova o AND
+  nepotismo E licitação          = 139   ← idêntico ao espaço
+  nepotismo NAO licitação        = 139
+  nepotismo NÃO licitação        = 139
+  nepotismo OU licitação         = 137   🔴 MENOS que o AND, não mais
+  nepotismo E                    = 263   ← = termo sozinho
+  nepotismo OU                   = 263   ← = termo sozinho
+  nepotismo AND licitação        =   1
+  nepotismo OR licitação         =   3
+  nepotismo NOT licitação        =   2
+
+Leitura: E, OU e NAO **não são operadores** — são palavras comuns do português
+que aparecem em quase todo documento, então "E" some no ruído (139 = todos os
+139 contêm "e") e "OU" chega a RESTRINGIR (os 2 de 139 que não contêm "ou").
+AND/OR/NOT em inglês são termos literais raros, daí 1/3/2.
+
+⚠️ CONSEQUÊNCIA PRÁTICA: escrever `A OU B` esperando união devolve a INTERSEÇÃO.
+   Para unir dois conceitos é preciso rodar duas buscas e unir no cliente.
+   Décimo terceiro conjunto de operadores do repo; o segundo (depois do TCE-BA)
+   sem conectivo nenhum — mas aqui, ao contrário do TCE-BA, o espaço FUNCIONA
+   como AND em vez de exigir frase contígua.
+
+================================================================================
+§4 — 🔴 O ACENTO NÃO É NORMALIZADO, E O ERRO NÃO APARECE COMO ZERO
+================================================================================
+
+  licitação  = 13.636
+  licitacao  =     40
+
+Não há o zero que denunciaria o problema. Quem buscar sem acento recebe 40
+resultados de verdade, com data, relator e texto integral, e conclui que o
+acervo do TCE-PE sobre licitação é pequeno. **É a falha mais cara desta base**,
+e é o oposto de TCE-BA e TJAC, onde o índice normalizava.
+O crawler avisa sempre que o termo tiver palavra acentuável escrita sem acento.
+
+================================================================================
+§5 — CURINGA E FRASE
+================================================================================
+
+  nepotism    = 0     ← prefixo truncado não casa: é por PALAVRA INTEIRA
+  nepotism*   = 0     🔴 NÃO HÁ CURINGA (o TCE-BA tinha `*`)
+  nepotism$   = 0
+  "nepotismo cruzado"                     = 14
+  nepotismo cruzado (expressaoExata=true) = 14
+  ✅ as aspas funcionam como frase e NÃO derrubam a busca
+     (no TCE-BA as aspas davam HTTP 500)
+
+================================================================================
+§6 — 🔴 OS TIPOS DE DOCUMENTO, E O QUE O DEFAULT DA TELA ESCONDE
+================================================================================
+
+Quatro checkboxes viram quatro parâmetros. Só TRÊS são tipo de documento:
+
+  acordao.equals        = true   (default da tela)
+  decisao.equals        = true   (default da tela)
+  parecerPrevio.equals  = FALSE  (default da tela)  ← 🔴
+  inteiroTeor.equals    = false
+
+Medido em `nepotismo`:
+  acordao só        = 241
+  decisao só        =  22
+  parecerPrevio só  =   9
+  soma              = 272  ← PARTIÇÃO EXATA
+  default da tela   = 263  ← 3,3% a menos
+
+🔴 O default do portal OMITE os PARECERES PRÉVIOS — que são justamente a peça
+   das contas anuais de prefeito, o documento mais consultado de um TCE.
+   Este crawler manda os TRÊS por default e expõe `--sem-parecer-previo` para
+   quem quiser reproduzir a tela.
+
+⚠️ `inteiroTeor.equals` NÃO é um quarto tipo: ligado sozinho (com os outros
+   três desligados) devolve 272 = a base sem restrição. Ou seja **não restringe
+   nada**. Ligá-lo junto com o default também devolve 263, inalterado. Pela
+   invariante do repo — contagem igual = filtro ignorado — ele está fora da
+   partição, e o crawler o manda sempre `false`.
+
+================================================================================
+§7 — FILTROS, TODOS PROVADOS POR CONTAGEM
+================================================================================
+
+ÓRGÃO JULGADOR  (`orgaoJulgador.equals`) — combo `/publico/orgaos-julgadores`, 13 opções
+  Pleno        = 99
+  1a. Câmara   = 86
+  2a. Câmara   = 78
+  soma         = 263 = baseline  ✅ PARTIÇÃO EXATA
+  ZZINVENTADO  = 0                ✅ controle
+  🔴 MAS O COMBO OFICIAL TEM OPÇÕES MORTAS, e elas devolvem 0 sem erro:
+       "1ª Câmara" (com ª)  = 0     contra  "1a. Câmara" (com a.) = 86
+       "2ª Câmara" (com ª)  = 0
+       "Tribunal Pleno"     = 0     contra  "Pleno"               = 99
+     São 13 opções no combo e só 3 têm acervo. Um usuário que escolhe
+     "1ª Câmara" na tela recebe zero e lê como ausência de jurisprudência.
+     Lista completa em `orgaos-julgadores.json`.
+
+RELATOR (`relator.contains`) — combo `/publico/relatores`, 28 nomes
+  MARCOS LORETO = 28   |   ZZINVENTADO = 0   ✅
+  Casamento por SUBSTRING (`.contains`), e o combo entrega NOME, não id
+  (oposto do TCE-BA, que queria id).
+
+UNIDADE JURISDICIONADA (`unidadeGestora.equals`) — `/publico/unidades-gestoras`, 1.262
+  "Prefeitura da Cidade do Recife" = 2.072   |   ZZINVENTADA = 0   ✅
+  Nome EXATO, sem substring.
+
+TIPO DE PROCESSO (`tipoProcesso.in`) — `/publico/tipos-processo`, 68
+  Agravo = 170 (sem termo)   |   ZZINVENTADO = 0   ✅
+
+MODALIDADE (`modalidade.in`) — `/publico/modalidades-processo-externo`, 15
+  "Auditoria Especial" + nepotismo = 56  (contra 263)  → filtra ✅
+  🔴 MAS valor inválido é IGNORADO EM SILÊNCIO: `modalidade.in=ZZINVENTADA`
+     devolve **54.970 = a base inteira**, não zero. Um erro de digitação aqui
+     devolve TUDO em vez de nada — a direção perigosa, porque parece que deu
+     certo. `tipoProcesso.in`, com a mesma sintaxe `.in`, zera. Os dois
+     parâmetros irmãos se comportam de forma OPOSTA para valor inválido.
+
+DATA DE JULGAMENTO (`dataJulgamentoInicio.equals` / `dataJulgamentoFim.equals`)
+  2026-01-01..2026-12-31 + nepotismo = 28   (contra 272)  ✅ restringe
+  🔴 SÓ ACEITA ISO `YYYY-MM-DD`. `01/01/2026` devolve HTTP 400 mudo.
+     O crawler converte DD/MM/YYYY (convenção do repo) para ISO.
+
+ANO DA DELIBERAÇÃO (`anoDeliberacao.in`) — `/publico/deliberacao/search/ano-deliberacao`, 36 anos
+  2026 = 28   |   2025,2026 = 72   ✅ multivalor por vírgula funciona
+
+NÚMERO DO PROCESSO (`numeroProcesso.equals`)
+  26100740-3AR001 = 1   |   99999999-9 = 0   ✅
+  🔴 É EXATO, não substring — oposto do TCE-BA, onde `405` arrastava `003405`.
+     Consequência: a raiz `26100740-3` NÃO encontra a peça do incidente
+     `26100740-3AR001`; são chaves diferentes.
+
+🔴 NÃO EXISTE FILTRO DE DATA DE PUBLICAÇÃO, nem o campo. O único eixo temporal
+   é a data da SESSÃO DE JULGAMENTO. Nunca apresente a data do TCE-PE como
+   publicação.
+
+================================================================================
+§8 — 🔴 ESCOPO: PERNAMBUCO NÃO TEM TCM
+================================================================================
+
+A armadilha declarada do Bloco 5 é FALSA aqui, e a prova saiu do próprio
+formulário, sem pesquisar fora do portal (método do TCE-PR):
+
+  `/publico/unidades-gestoras` → 1.262 unidades, das quais
+     184 "Prefeitura ..."        (PE tem 184 municípios)
+     183 "Câmara Municipal ..."
+  e a capital está lá: **"Prefeitura da Cidade do Recife"**, com 2.072
+  deliberações medidas.
+
+Contas municipais pernambucanas — inclusive as do Recife — ESTÃO nesta base.
+(A armadilha do TCM é verdadeira em BA, SP, RJ, GO e PA; falsa em PR, SC, RS
+e agora PE.)
+
+================================================================================
+§9 — COMBOS SALVOS AO LADO
+================================================================================
+
+  relatores.json                       28 conselheiros/auditores
+  unidades-gestoras.json            1.262 unidades jurisdicionadas
+  tipos-processo.json                  68 tipos
+  modalidades-processo-externo.json    15 modalidades
+  orgaos-julgadores.json               13 (só 3 com acervo — ver §7)
+  areas-ativas.json                    10 áreas temáticas
+  deliberacao-search-ano-deliberacao.json  36 anos (1991–2026)
+
+⚠️ `areaId`, `temaId` e `subtemaId` vêm `null` em 100% da amostra medida, e o
+   endpoint `/areas-ativas` existe: a classificação temática é do módulo
+   "Jurisprudência Selecionada", NÃO das Deliberações. Não foi mapeada.
+
+================================================================================
+§10 — PRINTS
+================================================================================
+
+  01.01-tela-inicial.png        tela de consulta, filtros fechados
+  01.02-termo-preenchido.png    termo digitado, antes do submit
+  01.03-resultados.png          página de resultado, inteira
+  01.04-resultados-topo.png     cabeçalho da listagem
+  01.05-resultados-rodape.png   rodapé (onde vive a paginação)
+  01.06-clique-inteiro-teor.png depois do clique em "Inteiro Teor da Deliberação"
+  01.07-card-dissecado.png      um card isolado

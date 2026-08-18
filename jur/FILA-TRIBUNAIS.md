@@ -1237,7 +1237,7 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 21 | **TCE-SP** | SP | ⚠️ **não** cobre a capital — SP capital é do **TCM-SP** (**confirmado por medição**) | ok 15/08 |
 | 22 | **TCE-RJ** | RJ | ⚠️ capital carioca é do **TCM-RJ** — **confirmado por medição** (o combo traz 91 dos 92 municípios) | ok 16/08 |
 | 23 | **TCE-BA** | BA | ⚠️ **todos** os municípios baianos são do **TCM-BA** — **confirmado por ausência de combo de município** (não há filtro por município na tela) | ok 17/08 |
-| 24 | **TCE-PE** | PE | | pendente |
+| 24 | **TCE-PE** | PE | ✅ **PE não tem TCM** — os 184 municípios, **inclusive o Recife**, estão na base do próprio TCE (medido: 184 "Prefeitura" no combo de unidades) | ok 18/08 |
 | 25 | **TCE-CE** | CE | TCM-CE extinto em 2017 — o TCE absorveu os municípios | pendente |
 | 26 | **TCE-GO** | GO | ⚠️ municípios goianos são do **TCM-GO** | pendente |
 | 27 | **TCDF** | DF | | pendente |
@@ -1807,6 +1807,96 @@ a declara.
 | Súmulas/Enunciados CRPS | Público, mas é **PDF único** (nº 1 a 19, atualizado 23/07/2026) no gov.br — não é base pesquisável | Vira crawler só se o usuário pedir |
 
 ---
+
+📌 **O que o TCE-PE (18/08/2026, slot 16:00) ensinou — 🟢, leia
+[`CLAUDE-TCEPE.md`](CLAUDE-TCEPE.md) e `human-codegen/TCEPE/01-jurisprudencia/`.**
+Sétimo TCE do repo, oitavo alvo do Bloco 5, fechado 🟢 pela **API REST pública de um
+gateway JHipster** (`portal.tcepe.tc.br/jurisprudencia/services/jurisprudencia/api/publico`),
+sem captcha em etapa nenhuma. As lições valem para os cinco TCEs que faltam:
+
+- 🔴 **MEÇA O HOST QUE VOCÊ VAI USAR, NÃO O VIZINHO — e o TCE-PE inverteu o TCE-BA.**
+  A entrada `.gov.br` da fila (`www.tce.pe.gov.br`) devolve **HTTP 000**: apresenta só
+  o certificado folha (`CN=*.tce.pe.gov.br`, `Thawte TLS RSA CA G1`) e **omite o
+  intermediário**. Medido em camadas — DNS resolve (dois IPs), **TCP 443 abre**, o TLS
+  é que quebra (`unknown CA (560)`); com o intermediário do AIA, 000 vira 302 → 200.
+  ✅ **Mas `portal.tcepe.tc.br`, que serve a API, manda a cadeia completa** — e por isso
+  o Navigator **não** embute PEM nenhum, ao contrário de TCE-BA e TCE-MG. No TCE-BA o
+  institucional estava bom e a API quebrada; aqui é o oposto. **Separe TCP de TLS de
+  HTTP, e meça o host certo.**
+- 🔴 **O DOMÍNIO OFICIAL PODE MUDAR NO MEIO DO CAMINHO.** `www.tce.pe.gov.br`
+  redireciona (medido) para `www.tcepe.tc.br/internet/`, e a jurisprudência mora em
+  `portal.tcepe.tc.br`. `tc.br` é o domínio oficial dos Tribunais de Contas — não é
+  espelho nem agregador, e o salto foi **medido a partir do institucional**, não
+  inventado. Nos TCEs restantes, siga o redirect antes de concluir que o portal caiu.
+- 🔴 **A TELA PODE OFERECER TRÊS BOTÕES DE OPERADOR E NENHUM SER OPERADOR — E O `OU`
+  RESTRINGIR.** Com `nepotismo` = 263 e `licitação` = 13.636: espaço = **139** (AND
+  implícito, provado pelo controle `nepotismo ZZQQINVENTADO` = 0), `E` = 139 (idêntico
+  ao espaço), `NAO` = 139, e **`OU` = 137 — menos que o AND**. E `nepotismo E` = 263, o
+  termo sozinho. São palavras comuns do português presentes em quase todo documento:
+  o `E` some no ruído e o `OU` exclui os 2 que não o contêm. **`A OU B` devolve a
+  interseção.** Décimo terceiro conjunto de operadores do repo; o segundo sem conectivo,
+  mas aqui o **espaço funciona como AND**, ao contrário do TCE-BA que exigia frase
+  contígua. ⚠️ E não há curinga (`nepotism*` = 0), ao contrário do TCE-BA.
+- 🔴 **ACENTO NÃO NORMALIZADO CUJO ERRO NÃO É ZERO, É UM SUBCONJUNTO PLAUSÍVEL:**
+  `licitacao` = **40** contra `licitação` = **13.636**. Não há o zero que denunciaria o
+  problema — quem busca sem acento recebe 40 julgados de verdade, com data, relator e
+  texto integral, e conclui que o acervo é pequeno. **É pior que o zero**, e é o oposto
+  de TCE-BA e TJAC, onde o índice normalizava. **Meça o par acentuado/sem acento em
+  todo alvo novo; a resposta muda por instalação.**
+- 🔴 **O DEFAULT DA TELA PODE SUBCONTAR EM SILÊNCIO.** Os três tipos particionam exato
+  (acórdão 241 + decisão 22 + parecer prévio 9 = **272**), mas a tela manda
+  `parecerPrevio=false` e devolve **263** — e o que fica de fora é justamente a peça das
+  **contas anuais de prefeito**. Reproduzir o default do portal teria custado 3,3% do
+  acervo, na parte que mais importa num TCE. ⚠️ E o quarto checkbox (`inteiroTeor`)
+  **não restringe nada** (272 sozinho, 263 junto com o default): contagem igual = filtro
+  ignorado, e ele ficou fora da partição.
+- 🔴 **METADE DOS PERMALINKS APONTA PARA UM HOST DE INTRANET QUE É NXDOMAIN.** Nos 272
+  documentos de `nepotismo`, 138 (51%) usam `etce.tce.pe.gov.br/epp/validaDoc.seam`
+  (público, 200 em contexto limpo) e **134 (49%) usam `portalintranet.tce.pe`**, host
+  interno **vazado no payload público** — `curl` dá 000, DNS NXDOMAIN. São os da era
+  SIGA (todos os `PARECER` e `DECISAO` da amostra), e para eles o PDF também não vem
+  pela API. ✅ O texto integral, esse, veio na busca, e a verificação é por **reconsulta**.
+  **Confira o HOST do link antes de entregá-lo como citação verificável** — uma amostra
+  só de documentos recentes não veria isso.
+- 🔴 **O COMBO OFICIAL PODE TER OPÇÕES MORTAS QUE DEVOLVEM 0 SEM ERRO.** São 13 órgãos
+  julgadores e só 3 têm acervo: `Pleno` = 99, `1a. Câmara` = 86, `2a. Câmara` = 78
+  (soma **263 = baseline**, partição exata), enquanto **`1ª Câmara` com `ª` = 0**,
+  `2ª Câmara` = 0 e `Tribunal Pleno` = 0. Quem escolhe "1ª Câmara" na tela oficial
+  recebe zero e lê como ausência de jurisprudência. **Conte quantas opções do combo
+  têm acervo, não quantas o combo tem.**
+- ⚠️ **DOIS PARÂMETROS IRMÃOS, COMPORTAMENTO OPOSTO PARA VALOR INVÁLIDO:**
+  `modalidade.in=ZZINVENTADA` devolve **54.970 — a base inteira**, enquanto
+  `tipoProcesso.in=ZZINVENTADO` **zera**. Um erro de digitação em `modalidade` devolve
+  tudo em vez de nada, que é a direção perigosa porque parece que deu certo. **O teste
+  do valor inventado precisa ser feito parâmetro a parâmetro.**
+- 🔴 **DUAS ERAS DE NUMERAÇÃO NO MESMO ACERVO:** `AAMMNNNN-D[sufixo]`
+  (`26100740-3AR001`) nos recentes e **8 dígitos sem hífen** (`10500637`) nos antigos —
+  e a segunda só aparece se a amostra sair do tipo dominante. ⚠️ E a consulta por número
+  é **EXATA**, não substring (oposto do TCE-BA): a raiz `26100740-3` não encontra a peça
+  do incidente. 🔴 Quem identifica o julgado é o **código do documento**: `10500637`
+  devolve um `PARECER` e um `ACORDAO` com a mesma deliberação `0155613/2013`.
+- ⚠️ **UM HTTP 400 TRANSITÓRIO QUE SE LÊ COMO BLOQUEIO PERMANENTE.** A primeira chamada
+  ao PDF do acórdão 1450/2026 devolveu `"O documento é muito recente e ainda não está
+  disponível publicamente"`; a mesma chave, minutos depois, devolveu 200 em **três
+  tentativas seguidas**. Não é embargo — é cache frio. **Quem medisse uma vez teria
+  registrado uma ressalva falsa no repo.** Idem o smoke, que falhou uma vez e passou
+  três: repita antes de escrever a ressalva.
+- ✅ **A ARMADILHA DO TCM É FALSA EM PE, e a prova saiu do próprio formulário** (método
+  do TCE-PR, que continua valendo): o combo de unidades traz **1.262 opções**, das quais
+  **184 "Prefeitura ..."** (PE tem 184 municípios) e 183 "Câmara Municipal ...", e a
+  capital está lá — **Prefeitura da Cidade do Recife, com 2.072 deliberações**. Verdadeira
+  em BA, SP, RJ, GO e PA; falsa em PR, SC, RS e PE.
+- ⚠️ **Nem CNJ nem DataJud** (contas não é Judiciário) — **não há plano B** se o portal
+  cair, como em todo o Bloco 5 menos o TCE-RS.
+- ⏱️ **O timebox ESTOUROU: 16:00 → 19:40, ~3 h 40 min contra os 90 min.** Não foi
+  bloqueio nem beco: o mapeamento fechou 🟢 inteiro, e o tempo foi para medições que
+  só apareceram *depois* do crawler pronto — a divisão dos permalinks por host (49%
+  intranet), as duas eras de numeração e o 400 transitório do PDF. **A decisão de
+  seguir em vez de marcar `parcial` foi tomada com o crawler já verde e só a
+  documentação faltando**; num alvo ainda sem busca funcionando, a regra dos 90 min
+  deve valer. ⚠️ E a API é lenta (8–14 s por busca larga), o que torna cada teste
+  exploratório caro — nos TCEs restantes, **rode os testes de contagem em paralelo
+  desde o início**, não em série.
 
 📌 **O que o TCE-MG (16/08/2026, slot 20:00) ensinou — `parcial`, leia
 [`human-codegen/TCEMG/`](human-codegen/TCEMG/).** Sexto alvo do Bloco 5, e a lição é que

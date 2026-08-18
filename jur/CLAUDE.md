@@ -65,6 +65,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tcesp` | **TCE-SP** (Tribunal de Contas do Estado de São Paulo — controle externo) | SP (Estado + **644 municípios**; 🔴 **NÃO a capital**, que é do TCM-SP) | `CLAUDE-TCESP.md` | 🟢 OK (HTTP direto, sem browser — **sem captcha**; **três permalinks públicos**, inclusive a **URL da busca**). Base corrente, 1.317.838 documentos, de 2008 em diante. 🔴 **Não existe ementa** — o texto é trecho com highlight. 🔴 **Os operadores são QUATRO CAIXAS, não inline**: `OU` dentro de `-q` é descartado e a busca continua AND. 🔴 **Um julgado decide vários processos** (fator ~2,9×): o total não é o nº de decisões |
 | `tcerj` | **TCE-RJ** (Tribunal de Contas do Estado do Rio de Janeiro — controle externo) | RJ (Estado + **os municípios fluminenses**; 🔴 **NÃO a capital**, que é do TCM-RJ) | `CLAUDE-TCERJ.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa íntegra na busca e **PDF público de inteiro teor com permalink**). 🔴 **Base CURADA e pequena** (1.089 documentos, 2021–2026): é a seleção do Serviço de Jurisprudência, **não o acervo de decisões**. 🔴 **Acento é obrigatório**; o `NÃO` **não exclui, deflaciona**, e `AND`/`OR` derrubam com HTTP 500. 🔴 O filtro de relator chama-se `--conselheiro` |
 | `tceba` | **TCE-BA** (Tribunal de Contas do Estado da Bahia — controle externo) | BA (**só o Estado**; 🔴 **NÃO os municípios**, que são do TCM-BA) | `CLAUDE-TCEBA.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; o **texto integral já vem na busca** e o **PDF é público**). Base corrente, 2002–2026. 🔴 **O termo é FRASE LITERAL**: não há operador booleano e o espaço não é conectivo (`nepotismo súmula` = 0, `de nepotismo` = 4); aspas dão **HTTP 500**. 🔴 **Não existe paginação** — `qtRegistros` é limiar que **recusa com HTTP 400 e zero documento**. 🔴 **Voto (66% do acervo) vem sem ementa** |
+| `tcepe` | **TCE-PE** (Tribunal de Contas do Estado de Pernambuco — controle externo) | PE (**Estado E municípios**; ✅ **PE não tem TCM** — 184 Prefeituras no combo, **inclusive o Recife**) | `CLAUDE-TCEPE.md` | 🟢 OK (API REST pública JHipster, HTTP direto, sem browser — **sem captcha**; o **texto integral já vem na busca**). Total **exato** (`X-Total-Count`), paginação **estável**. 🔴 **Não há operador booleano e o `OU` da tela RESTRINGE**: o espaço já é `E` implícito e E/OU/NAO são palavras comuns (`A OU B` = interseção). 🔴 **Acento não normalizado**: `licitacao` = 40 contra `licitação` = 13.636 — sem acento vem um **subconjunto plausível**, não zero. 🔴 **O default da tela omite os pareceres prévios** (263 de 272). 🔴 **Não há ementa** — só texto integral. 🔴 **49% dos permalinks apontam para `portalintranet.tce.pe`, que é NXDOMAIN** |
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
@@ -893,6 +894,22 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   🔴 **A consulta por número casa por SUBSTRING** (`405` arrasta `003405` e `004050`):
   informe sempre o ano — `./bin/jur tceba -n "TCE/000405/2025"`. ⚠️ Não há CNJ nem
   DataJud, e a negativa não prova que o processo não existe
+- **Contas públicas estaduais de PERNAMBUCO** (licitação e contrato administrativo,
+  ato de pessoal, contas de governo e de gestão, denúncia, auditoria) → `tcepe` → leia
+  [`CLAUDE-TCEPE.md`](CLAUDE-TCEPE.md). É instância de **controle externo**, não Judiciário.
+  ✅ **Pernambuco NÃO tem TCM**: as contas dos 184 municípios — inclusive as do **Recife** —
+  estão nesta base (medido: 184 "Prefeitura ..." no combo de unidades, e a Prefeitura da
+  Cidade do Recife tem 2.072 deliberações). É o oposto de BA, SP, RJ, GO e PA.
+  🔴 **Não ofereça o `tcepe` para matéria cível, penal, trabalhista ou previdenciária** —
+  ele não tem esse acervo, e o zero seria o tribunal errado.
+  🔴 **Nunca escreva `A OU B`**: não há operador booleano, o espaço já é `E` implícito e
+  `OU` é palavra comum que RESTRINGE (137 contra 139 do AND). Para unir, rode duas buscas.
+  🔴 **Escreva o termo ACENTUADO**: `licitacao` = 40 contra `licitação` = 13.636 — e o erro
+  não aparece como zero, aparece como um acervo pequeno e plausível.
+  🔴 **Não há ementa nesta base**: o que vem é o texto integral, e ele já chega na busca.
+  ⚠️ Ao citar, confira o host do link: 49% dos julgados (era SIGA) só expõem
+  `portalintranet.tce.pe`, que é **NXDOMAIN** — esses se verificam por `jur tcepe -n <processo>`.
+
 - **Contencioso administrativo PREVIDENCIÁRIO** ("o que o CRPS decidiu", recurso contra
   indeferimento do INSS, Junta de Recursos, Câmara de Julgamento) → 🔴 **não há busca**:
   o portal exige login Gov.br e o contorno por perfil de Chrome dedicado **já foi tentado
