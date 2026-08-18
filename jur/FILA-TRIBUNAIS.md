@@ -1238,12 +1238,12 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 22 | **TCE-RJ** | RJ | ⚠️ capital carioca é do **TCM-RJ** — **confirmado por medição** (o combo traz 91 dos 92 municípios) | ok 16/08 |
 | 23 | **TCE-BA** | BA | ⚠️ **todos** os municípios baianos são do **TCM-BA** — **confirmado por ausência de combo de município** (não há filtro por município na tela) | ok 17/08 |
 | 24 | **TCE-PE** | PE | ✅ **PE não tem TCM** — os 184 municípios, **inclusive o Recife**, estão na base do próprio TCE (medido: 184 "Prefeitura" no combo de unidades) | ok 18/08 |
-| 25 | **TCE-CE** | CE | TCM-CE extinto em 2017 — o TCE absorveu os municípios | pendente |
-| 26 | **TCE-GO** | GO | ⚠️ municípios goianos são do **TCM-GO** | pendente |
-| 27 | **TCDF** | DF | | pendente |
-| 28 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** | pendente |
-| 29 | **TCE-ES** | ES | | pendente |
-| 30 | **TCE-MG** | MG | 🔴 o portal que se chama "Jurisprudência" (**TCJuris**) está atrás de **reCAPTCHA v2 conferido no servidor**; a porta aberta é o **MapJuris** (`/TextualDadosProcesso`, sem captcha) — **busca medida, falta o segundo salto do grid e o crawler** | parcial 16/08 |
+| 25 | **TCE-GO** | GO | ⚠️ municípios goianos são do **TCM-GO** | pendente |
+| 26 | **TCDF** | DF | | pendente |
+| 27 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** | pendente |
+| 28 | **TCE-ES** | ES | | pendente |
+| 29 | **TCE-MG** | MG | 🔴 o portal que se chama "Jurisprudência" (**TCJuris**) está atrás de **reCAPTCHA v2 conferido no servidor**; a porta aberta é o **MapJuris** (`/TextualDadosProcesso`, sem captcha) — **busca medida, falta o segundo salto do grid e o crawler** | parcial 16/08 |
+| 30 | **TCE-CE** | CE | ✅ TCM-CE extinto em 2017 e o acervo **migrou** — confirmado por medição (186 localidades no combo, **inclusive FORTALEZA**; processos trazem "PROCESSO MIGRADO DO TCM (SGP)"). A porta é a **API REST do SPA Contexto** (`contexto-api…/documentos/buscar`, Elasticsearch, sem captcha) — **busca, filtros, paginação e download do PDF medidos; falta a lista de tipos "Documentos de Decisão" e o crawler** | parcial 18/08 |
 
 📌 **O que o TCE-PR (feito em 14/08/2026) ensinou — leia
 [`CLAUDE-TCEPR.md`](CLAUDE-TCEPR.md).** Primeiro alvo do Bloco 5 e **primeiro
@@ -2046,3 +2046,85 @@ curinga foi provado em **um par** e não se testou curinga no meio da palavra; a
 TCM-BA apoia-se na **ausência do combo de município**, não numa medição do acervo municipal;
 **rate limit não medido** e não se sabe se os dois IPs dessincronizam; os **47 documentos sem
 data** da amostra não foram investigados. ⏱️ Timebox **não estourado**: 16:00 → 16:36, ~36 min.
+
+📌 **O que o TCE-CE (18/08/2026, slot 20:00) ensinou — `parcial`, leia
+[`human-codegen/TCECE/`](human-codegen/TCECE/).** Oitavo alvo do Bloco 5. A lição central é
+que **o endpoint que se chama "jurisprudência" pode ser o subconjunto, e a base completa
+mora no endpoint chamado "documentos"** — o inverso do reflexo natural. As lições valem para
+os 5 alvos restantes:
+
+- 🔴 **O ENDPOINT `/documentos/buscar-jurisprudencia` NÃO É A BASE DE JURISPRUDÊNCIA.** Ele
+  existe, responde 200 e devolve ACÓRDÃO de verdade — mas **não tem campo `texto`**: só
+  aceita `filtros` no formato `{"term":{"tesauro_termo_nome": …}}`, isto é, termos do
+  Tesauro de Contas Nacional. **Não faz busca livre.** E o próprio app declara, no texto de
+  ajuda, que a Busca Sistematizada "ainda está em processo de atualização" e manda usar
+  "o módulo de Documentos para acessar a base completa". **Ler a tela de ajuda do portal
+  custou 30 segundos e mudou a arquitetura do crawler.**
+- 🔴 **E `/documentos/buscar`, que é a base completa, devolve 97% de NÃO-JULGADO.** A
+  agregação `group_by_idtipodocumento` de `nepotismo` (2127 docs, 82 tipos, **somando exato**)
+  dá **ANEXO 284, CERTIFICADO 240, ESCLARECIMENTO 194, PETIÇÃO 131… e ACÓRDÃO 64**. O
+  primeiro resultado por data é um "ANEXOS AOS ESCLARECIMENTOS". Um crawler apontado para a
+  busca livre **cita papelada de processo como julgado** — quebra direta da invariante nº 1.
+  O filtro por `idtipodocumento` é obrigatório, não opcional.
+- 🔴 **UM WAF QUE BLOQUEIA PELA STRING `HeadlessChrome` NO USER-AGENT — E RESPONDE HTTP 500.**
+  Não é 403, não é captcha, não é Cloudflare: é uma página "Web Page Blocked! Attack ID:
+  20000051" servida com **status 500**, que se lê como *servidor com defeito* ou *portal fora
+  do ar*. Isolado por bissecção: `curl/8.5.0` → 200, `Chrome/126` → 200, qualquer UA contendo
+  `HeadlessChrome` → **500**. ⚠️ **E vale para a API também**, não só para a tela. O
+  Playwright default é bloqueado; basta `userAgent` real no contexto. **Sexto tipo de bloqueio
+  do repo, e o primeiro que se disfarça de erro 5xx.**
+- 🔴 **O HOST DO DOWNLOAD NÃO É O HOST DA BUSCA, E O ERRO MENTE.** `/arquivos/documento?documento_id=`
+  em `contexto-api` devolve **HTTP 406** (`HttpMediaTypeNotAcceptableException`) para *todo*
+  `Accept` e *toda* variante de parâmetro testada — o que se lê como "falta header" ou "exige
+  autenticação". Não é: o host certo é **`api-add.tce.ce.gov.br`** (o bundle separa
+  `url_api_download_documentos` de `url_servidor_externo`), e lá o mesmo path devolve **200
+  `application/pdf`**, 406 KB, texto extraível, sem cookie. **Antes de debugar um 406, confira
+  se o host é o mesmo.**
+- 🔴 **ACENTO É REMOVIDO, NÃO NORMALIZADO — E ACENTO ERRADO DÁ O MESMO RESULTADO QUE O CERTO.**
+  `nepotismo` = `nepotísmo` = 2127; `inelegibilidade` = `inelegibilidádé` = 8949;
+  `servidão` = `servidao` = 1476. ✅ O crawler **não** precisa normalizar. **É o inverso exato
+  do TCE-PE de hoje de manhã** (`licitacao` 40 × `licitação` 13.636) — a ressalva mais cara de
+  um TCE foi falsa no TCE vizinho, medido no mesmo dia. **Meça o par; não herde.**
+- 🔴 **NENHUM DOS TRÊS OPERADORES DA TELA FUNCIONA, E `$`/`*` NÃO ZERAM — DEVOLVEM POUCO.**
+  `E`/`OU`/`NÃO`/`NAO` dão todos **1217**, igual ao espaço puro: são stopwords, o AND é
+  implícito, e **`A OU B` devolve a interseção** (terceira vez no repo, depois de TCE-PE).
+  Já `nepotism$` = **14** e `nepotism*` = **31** contra 2127 — o curinga inexistente **não
+  avisa com zero**, devolve julgados de verdade e o usuário conclui que o acervo é pequeno.
+  ⚠️ E **palavra curta comum zera**: `texto:"a"` = 0, `texto:"de"` = 0 (stopword, não ausência).
+- ⚠️ **TOTAL SATURA EM 10.000** (teto do Elasticsearch): `texto:""`, `contrato`, `licitacao` e
+  `prescrição` dão todos exatamente 10000 — **o tamanho real da base é desconhecido**. ✅ Abaixo
+  disso é exato, e a prova é a partição: os 82 buckets de `nepotismo` somam 2127 = `tamanho`.
+  Paginação por `search_after`: `searchAfterSort` = o campo `sort` do último item
+  (`[epochMs, iddocumento]`); aceita também `["2026-06-26","9535433"]`, mas **array de um
+  elemento só devolve 0 em silêncio**.
+- ✅ **A armadilha do TCM é FALSA no Ceará, e desta vez o TCE absorveu até o passado.** Método
+  do TCE-PR aplicado: `tabelas-auxiliares/localidade` traz **186 opções, inclusive FORTALEZA**
+  (a capital). Melhor ainda, a consulta por processo devolve no assunto **"PROCESSO MIGRADO DO
+  TCM (SGP). N° DO PROCESSO TCM: 2064013"** — o acervo do TCM extinto em 2017 **está dentro**.
+- ✅ **Passo 0 achou uma API pública que NÃO serve, e isso também é resultado:**
+  `api-dados-abertos.tce.ce.gov.br/sim/` tem Swagger e **105 endpoints** — todos do Sistema de
+  Informações Municipais (orçamento, balancetes, obras, folha). **Zero jurisprudência.** Quem
+  visse "TCE com dados abertos e Swagger" e parasse ali teria concluído errado nos dois
+  sentidos. ⚠️ O host `tcewsapi.tce.ce.gov.br` também engana: o nome promete REST e só serve
+  um **JSF/PrimeFaces de 3,1 MB** (`/api`, `/rest`, `/ws`, `/services`, swagger → todos 404).
+- ⚠️ **Há um `sydle.one` no meio do caminho** (`tcece.sydle.one/api/1/services/jurisprudencia/
+  Termo/…`, tesauro TCN) chamado pelo próprio SPA. **É domínio de terceiro, fora da cerca, e
+  só alimenta sugestão de termo** — não é acervo. Registrado para o próximo slot não o tratar
+  como descoberta.
+- 🔴 **Sem CNJ e sem DataJud** (Tribunal de Contas não é Judiciário) — não há plano B. ✅ Mas
+  há `api-processos.tce.ce.gov.br/processos/porNumero`, que responde metadados por número:
+  **é a porta do `Checker`**.
+
+⚠️ **Pendências declaradas do TCE-CE** (o próximo slot retoma daqui, **sem remapear**): a
+**lista de `idtipodocumento` por trás do botão "Documentos de Decisão" não foi capturada** — o
+botão `FILTROS` não casou por texto no Playwright depois da busca; tentar `ion-fab`/ícone ou ler
+o chunk lazy `filtros-documentos.module.*.js` em `contexto/build/`. É a pendência nº 1, sem ela
+o crawler não sabe o que é decisão. Faltam ainda: **estabilidade da paginação** (mesma página
+duas vezes); **`buscaPalavraExata`/`buscaPesquisaExata` parecem inertes** (3 combinações, todas
+10000 — testar em termo estreito); **tamanho de página** (o SPA fixa 10, não se testou `size`);
+os filtros `esfera-julgamento` (7), `membro-relator` (32), `localidade` (186), `entidade`
+(11.519) e `especie` (210) **enumerados mas não provados por contagem**; `dssumula` não medido
+em documento tipo SÚMULA; **rate limit não medido**; e o **JSF `jurisdicionadoJurisprudenciaPortal.xhtml`
+— que é o que o menu oficial chama de "Jurisprudência → Consulta" — não foi mapeado**, então não
+se sabe se há julgado nele que não esteja no Contexto. ⏱️ Timebox estourado: 20:00 → 21:32,
+~92 min, com a busca medida de ponta a ponta e **nenhum crawler escrito**.

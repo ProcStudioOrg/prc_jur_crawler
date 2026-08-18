@@ -1,0 +1,260 @@
+# TCE-CE — Contexto / módulo Documentos (Elasticsearch)
+
+## Identificação
+
+```
+Tribunal:               TCE-CE — Tribunal de Contas do Estado do Ceará
+Estado(s):              CE
+Módulo:                 Contexto — módulo "Documentos" (busca textual Elasticsearch)
+Link principal:         https://www.tce.ce.gov.br/contexto/#/home
+API do módulo:          https://contexto-api.tce.ce.gov.br/documentos/buscar   (POST JSON)
+Sistema judicial:       Próprio (SPA Ionic/Angular "Contexto", motor Elasticsearch — o
+                        próprio texto de ajuda do app declara o Elasticsearch)
+Sistema irmão mapeado:  TJRO (Elasticsearch cru) para paginação/saturação;
+                        TCE-PE para a forma "API REST descoberta no bundle"
+Abrangência da base:    TODOS os documentos processuais do TCE-CE, não só decisões
+                        (ver ressalva 🔴 nº 1). Inclui o acervo do TCM-CE extinto,
+                        migrado ("PROCESSO MIGRADO DO TCM (SGP)" aparece no assunto).
+Data do mapeamento:     18/08/2026, slot 20:00
+Status:                 PARCIAL — busca, filtros, paginação e download medidos;
+                        falta o Crawler/Navigator/Checker/Testes.
+```
+
+---
+
+## Passo 0 — o que existe e o que NÃO existe de API pública
+
+| Fonte procurada | Resultado |
+|---|---|
+| `api-dados-abertos.tce.ce.gov.br/sim/` (linkada na home) | ✅ **existe**, Swagger UI + `openapi_prod.yaml` (426 KB, **105 endpoints**) — mas é o **SIM (Sistema de Informações Municipais)**: orçamento, balancetes, contratos, obras, folha. **Nenhum endpoint de jurisprudência** (conferido: zero paths com juris/acórdão/deliberação/ementa/julgado). **Não serve ao crawler.** |
+| `dadosabertos.tce.ce.gov.br` | ❌ NXDOMAIN |
+| `tcece.tc.br`, `www.tcece.tc.br`, `portal.tcece.tc.br` | ❌ NXDOMAIN (ao contrário do TCE-PE, o TCE-CE **não** usa o domínio `tc.br`) |
+| `tcewsapi.tce.ce.gov.br/{api,rest,ws,services,webresources,swagger-ui.html,v2/api-docs,v3/api-docs,openapi.json}` | ❌ todos 404/500. O nome "wsapi" do host **não** entrega REST: ali só mora o JSF. |
+| DataJud / CNJ | ❌ **não se aplica** — Tribunal de Contas não é Judiciário, não tem numeração CNJ. Não há plano B externo. |
+| **`contexto-api.tce.ce.gov.br`** | ✅ **É A PORTA.** REST/JSON, descoberta lendo o bundle do SPA (ver abaixo). |
+| **`api-processos.tce.ce.gov.br/processos/porNumero`** | ✅ existe e responde — **é a porta do `Checker`** (metadados por nº de processo). |
+| **`api-add.tce.ce.gov.br/arquivos/documento`** | ✅ existe — **é a porta do inteiro teor** (PDF). |
+
+⚠️ Há também `https://tcece.sydle.one/api/1/services/jurisprudencia/Termo/...` (tesauro TCN),
+chamado pelo SPA. **É domínio de terceiro (SaaS `sydle.one`), fora da cerca** — só alimenta
+sugestão de termos, não o acervo. **Não usar.** Registrado aqui para o próximo slot não achar
+que é descoberta nova.
+
+### Como a API foi descoberta (não foi chutada)
+
+1. `www.tce.ce.gov.br` → menu **Jurisdicionado → Jurisprudência → Consulta**
+   (`/jurisdicionado/jurisprudencia/consulta`).
+2. Essa página é só uma casca: embute `<iframe src="https://tcewsapi.tce.ce.gov.br/paginas/
+   jurisdicionadoJurisprudenciaPortal.xhtml">` — um **JSF/PrimeFaces 6.1** de 3,1 MB, com IDs
+   autogerados (`form:j_idt13:j_idt49:j_idt79_input`). Sem captcha, mas frágil por natureza.
+3. A home linka também o **Contexto** (`/contexto/#/home`), SPA Ionic/Angular.
+   O bundle `contexto/build/main.03360a1865.js` traz a config crua:
+   `url_servidor_externo = "https://contexto-api.tce.ce.gov.br"` e
+   `endpoints.documentos = {url_base:"/documentos", url_acoes:{url_buscar:"/buscar"}}`.
+4. O contrato foi **confirmado no Playwright pela aba Network**, fazendo a busca de verdade:
+   o POST que o browser emite é byte a byte igual ao que o crawler vai emitir
+   (ver `xhr-busca.json`).
+
+---
+
+## Forma de acesso escolhida: `api` (HTTP direto, sem browser, sem cookie, sem sessão)
+
+```
+POST https://contexto-api.tce.ce.gov.br/documentos/buscar
+Content-Type: application/json
+User-Agent: <OBRIGATÓRIO — ver ressalva 🔴 nº 2>
+
+{
+  "texto": "nepotismo",
+  "filtros": null,             // array de cláusulas Elasticsearch cruas, ou null
+  "searchAfterSort": null,     // cursor: o campo `sort` do último doc da página anterior
+  "buscaPalavraExata": false,
+  "buscaPesquisaExata": false,
+  "sort": "desc"
+}
+```
+
+Resposta:
+
+```json
+{ "erros": [],
+  "data": { "tempo": 57, "tamanho": 2127, "lista": [ {...10 docs...} ],
+            "agregacao": { "group_by_idtipodocumento": {"buckets":[...]},
+                           "group_by_nrprocesso": {"buckets":[...]},
+                           "sample": {...} } } }
+```
+
+Sem cookie, sem CSRF, sem ViewState, sem captcha (`window.grecaptcha` e `window.turnstile`
+são `undefined` na tela — medido no Playwright). Latência 0,4–3 s.
+
+---
+
+# Ferramentas Comuns
+
+## 1. Busca principal (query)
+
+Campo único `input[type=search]`, placeholder **"O que você está procurando?"** → vira o
+campo `texto` do JSON. Espaço = **E implícito** (provado: `nepotismo` 2127 →
+`nepotismo licitacao` 1217; e `nepotismo ZZQQINVENTADO` = **0**, o que prova que é AND e
+que não há normalização mágica engolindo termo desconhecido).
+
+```html
+<!-- ver 01-barra-busca.html -->
+<input type="search" class="searchbar-input" placeholder="O que você está procurando?">
+```
+
+Prints: `01.01-tela-inicial.png`, `01.02-termo-preenchido.png`
+
+## 2. Operadores — **nenhum funciona** (medido termo a termo)
+
+A tela exibe os botões `E`  `OU`  `NÃO`  `" "` sob o rótulo **"OPERADORES LÓGICOS"**.
+Todos são inertes: viram palavra comum e o Elasticsearch as descarta como stopword.
+
+| Termo enviado | `tamanho` |
+|---|---|
+| `nepotismo` | 2127 |
+| `nepotismo licitacao` | **1217** |
+| `nepotismo E licitacao` | **1217** |
+| `nepotismo OU licitacao` | **1217** |
+| `nepotismo NÃO licitacao` | **1217** |
+| `nepotismo NAO licitacao` | **1217** |
+| `nepotismo ZZQQINVENTADO` | 0 |
+
+| Operador | Funciona? | Observação |
+|---|---|---|
+| `E` | ❌ | idêntico ao espaço (1217) — o AND já é implícito |
+| `OU` | ❌ | **devolve a interseção (1217), não a união.** `A OU B` *restringe* |
+| `NÃO` / `NAO` | ❌ | idêntico ao AND — **não exclui nada** |
+| `ADJ` / `PROX` | ❌ | não existem (não oferecidos e não testados como sintaxe própria) |
+| `$` | ❌ **não é curinga** | `nepotism$` = **14** (contra 2127 de `nepotismo`) |
+| `*` | ❌ **não é curinga** | `nepotism*` = **31** |
+| `"frase exata"` | ⚠️ **não provado** | ver ressalva 🔴 nº 4 |
+
+🔴 O `$`/`*` são o caso perigoso: **não zeram**, devolvem 14 e 31 julgados de verdade. Quem
+usar lê "o curinga funcionou, o acervo é pequeno" — e perde 98% da base.
+
+## 3. Acento e caixa — **normalizados de forma agressiva** (oposto do TCE-PE)
+
+| Par | Contagem |
+|---|---|
+| `nepotismo` / `nepotísmo` (acento **errado**) | 2127 / **2127** |
+| `servidão` / `servidao` | 1476 / **1476** |
+| `inelegibilidade` / `inelegibilidádé` (acentos inventados) | 8949 / **8949** |
+
+✅ O acento é **removido**, não só normalizado — acento errado dá o mesmo resultado que o
+certo. O crawler **não precisa** normalizar a query. **É o inverso exato do TCE-PE**, onde
+`licitacao`=40 contra `licitação`=13.636.
+
+⚠️ Mas **palavra curta e comum devolve 0**: `texto:"a"` = **0**, `texto:"de"` = **0**.
+Zero aqui é stopword, não ausência de acervo.
+
+## 4. Filtros — cláusulas Elasticsearch cruas no array `filtros`
+
+O SPA monta `filtros` como **query DSL literal** (no módulo sistematizado ele empurra
+`{term:{tesauro_termo_nome: X}}`). Ou seja: o campo aceita `term`, `match`, `range`…
+Medidos e **provados por contagem**:
+
+| Filtro | Efeito medido |
+|---|---|
+| `{"term":{"idtipodocumento":"4"}}` (ACÓRDÃO) | `nepotismo` 2127 → **64** ✅ |
+| `{"term":{"idtipodocumento":"999999"}}` | **0** ✅ (id inválido **não** é ignorado — bom) |
+| `{"range":{"dtfinalizado":{"gte":"2024-01-01","lte":"2024-12-31"}}}` | 2127 → **169** ✅ |
+| idem 2025 | 2127 → **139** ✅ |
+| `{"term":{"nrprocesso":"40717/2019-6"}}` | **100** documentos daquele processo ✅ |
+| `{"match":{"nrprocesso":"..."}}` | idêntico ao `term` (100) |
+
+Tanto `"4"` (string) quanto `4` (número) funcionam em `idtipodocumento`.
+
+## 5. Combos — enumerados pela API de tabelas auxiliares
+
+`GET https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/<tabela>` → `{data:{lista:[{id,descricao}]}}`
+
+| Tabela | n | Arquivo |
+|---|---|---|
+| `tipo-documento` | **569** | `aux-tipo-documento.json` |
+| `especie` | 210 | `aux-especie.json` |
+| `subespecie` | 365 | `aux-subespecie.json` |
+| `categoria-especie` | 4 | `aux-categoria-especie.json` |
+| `esfera-julgamento` | 7 | `aux-esfera-julgamento.json` |
+| `situacao` | 144 | `aux-situacao.json` |
+| `tipo-julgamento` | 153 | `aux-tipo-julgamento.json` |
+| `membro-relator` | **32** | `aux-membro-relator.json` |
+| `tipo-sessao` | 19 | `aux-tipo-sessao.json` |
+| `localidade` | **186** | `aux-localidade.json` |
+| `setor` | 374 | `aux-setor.json` |
+| `entidade` | **11.519** | `aux-entidade.json` (897 KB) |
+
+### ✅ A armadilha do TCM é FALSA no Ceará — provado pelo combo (método do TCE-PR)
+
+`aux-localidade.json` traz **186 localidades**, entre elas **`{"id":"60","descricao":"FORTALEZA"}`**
+— a capital. O Ceará tem 184 municípios; a lista soma os 184 + `CEARÁ` (esfera estadual) + 1.
+O **TCM-CE foi extinto em 2017 e o acervo migrou**: a consulta por processo devolve, no campo
+assunto, `"PROCESSO MIGRADO DO TCM (SGP). N° DO PROCESSO TCM: 2064013"`. Ou seja, o TCE-CE
+cobre **estado + todos os municípios, inclusive a capital**, e **inclusive o acervo histórico
+do TCM extinto**. A ressalva da fila (`TCM-CE extinto em 2017 — o TCE absorveu os municípios`)
+está **confirmada por medição**.
+
+Tipos de documento que interessam a jurisprudência (de 569):
+`4 ACÓRDÃO` · `687 ACÓRDÃO RETIFICADOR` · `633 DECISÃO` · `124 DECISÃO JUDICIAL` ·
+`653 DESPACHO DECISÓRIO` · `5 DESPACHO SINGULAR` · `25 PARECER PRÉVIO` · `172 VOTO` ·
+`98 VOTO VISTA` · `12 DECLARACAO DE VOTO` · `13 RELATÓRIO VOTO` · `160 SÚMULA` ·
+`3 RESOLUÇÃO` · `17 RESOLUÇÃO ADMINISTRATIVA` · `643 PARECER DA COMISSÃO DE JURISPRUDÊNCIA`
+
+## 6. Paginação — `searchAfterSort` (Elasticsearch `search_after`)
+
+Página fixa de **10** documentos (não há parâmetro de tamanho no contrato do SPA — **não
+testado se a API aceita um; pendência**). Cada documento traz o campo `sort`:
+
+```
+"sort": [1782432000000, "9535433"]     // [epoch ms de dtfinalizado, iddocumento]
+```
+
+Para a página seguinte, envie esse array em `searchAfterSort`. **Medido:**
+
+| `searchAfterSort` enviado | resultado |
+|---|---|
+| `[1782432000000,"9535433"]` (o `sort` cru) | ✅ 10 novos ids, sem repetir a página 1 |
+| `["2026-06-26","9535433"]` (data ISO no lugar do epoch) | ✅ **mesmos 10 ids** — aceita as duas formas |
+| `["9535433"]` (só o id) | ❌ **0 resultados** — array de 1 elemento zera silenciosamente |
+
+Página 1: `9694404,9589249,9578621,9584614,9579759,9573133,9573725,9570260,9552320,9535433`
+Página 2: `9544029,9541298,9536973,9539228,9486351,9525486,9525971,9528390,9493503,9507328`
+
+⚠️ **Estabilidade entre rodadas ainda NÃO medida** (rodar a mesma página duas vezes e comparar
+a ordem) — pendência do checklist.
+
+## 7. Total: **exato até 10.000, saturado a partir daí**
+
+`tamanho` trava em **10000** — teto clássico do Elasticsearch (`track_total_hits`).
+
+| Termo | `tamanho` |
+|---|---|
+| `""` (vazio, base inteira) | **10000** ← saturado |
+| `contrato`, `licitacao`, `prescrição` | **10000** ← saturado |
+| `inelegibilidade` | 8949 (exato) |
+| `nepotismo` | 2127 (exato) |
+| `a`, `de`, `ZZQQINVENTADO` | 0 |
+
+✅ **Prova de que abaixo de 10.000 é exato:** os 82 buckets de
+`agregacao.group_by_idtipodocumento` de `nepotismo` **somam exatamente 2127**, o mesmo
+`tamanho`. A partição fecha.
+
+🔴 Consequência: **o tamanho real da base é desconhecido** — `texto:""` satura. O crawler
+tem de classificar todo total ≥ 10000 como *saturado*, nunca como exato.
+
+---
+
+## Testes exploratórios (Fase 4) — o que foi e o que não foi rodado
+
+| # | Teste | Situação |
+|---|---|---|
+| 1 | Busca simples sem filtro | ✅ 2127 para `nepotismo` |
+| 2 | Juizados × Justiça Comum | ➖ **não se aplica** (Tribunal de Contas não tem juizado) |
+| 3 | Cível × Criminal | ➖ **não se aplica** |
+| 4 | Órgão julgador (`esfera-julgamento`, 7 opções) | ⚠️ **combo listado, contagem NÃO comparada** — pendência |
+| 5 | Unidade (`localidade` 186 / `entidade` 11.519) | ⚠️ **listado, contagem NÃO comparada** — pendência |
+| 6 | Relator (`membro-relator`, 32) | ⚠️ **listado, contagem NÃO comparada** — pendência |
+| 7 | Tipo de ato (`idtipodocumento`) | ✅ 2127 → 64 (ACÓRDÃO) |
+| 8 | Número do processo | ✅ `term nrprocesso` → 100 docs; e `api-processos/porNumero` responde |
+| 9 | Data | ✅ `range dtfinalizado` restringe (169 / 139) |
+| 9b | Operadores booleanos | ✅ todos testados — **nenhum funciona** |

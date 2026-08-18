@@ -1,0 +1,173 @@
+# TCE-CE — Contexto/Documentos — o que vem DEPOIS da busca
+
+> ⚠️ **Esta seção está incompleta.** A skill `browser-post-search` **não foi rodada até o
+> fim** — o timebox de 90 min estourou. O que está abaixo foi medido; o que falta está
+> listado em "Pendências" e é o primeiro trabalho do próximo slot.
+
+## 1. Onde o resultado aparece
+
+Mesma rota (`#/home`), sem recarregar: o SPA troca a lista abaixo da barra de busca.
+Os controles **não somem** — a barra e os botões continuam visíveis.
+Prints: `01.03-resultados.png` (viewport), `01.05-resultados-inteiro.png` (fullPage).
+
+## 2. Anatomia do card — `ion-card`, 10 por página
+
+HTML completo em `01-card-resultado.html`; print em `01.06-card-dissecado.png`.
+
+| Elemento no card | Campo no JSON |
+|---|---|
+| Título `<h3>` "Anexos aos esclarecimentos - nº 43873/2026" | `nmtipodocumento` + `nrdocumento`/`nranodocumento` |
+| "Disponibilizado em 13/08/2026" | `dtfinalizado` |
+| "Contido no processo 19473/2026-7" | `nrprocesso` |
+| botão **"Visualizar completo"** | → download do PDF (§4) |
+| "Espécie do processo" | `dsespecie` |
+| "Localidade" | `dslocalidade` |
+| "Setor" | `nmsetor` |
+| "Entidade" | `dsentidade` |
+| "Conteúdo encontrado" (trecho com `<mark>`) | `highlight.conteudo[]` |
+
+🔴 **O card NÃO tem `<a href>`.** "Visualizar completo" é um `<button>` que dispara download
+via JS. **Não existe permalink na interface.** O identificador estável é `iddocumento`
+(§5).
+
+## 3. O texto: **a ementa/inteiro teor já vem no payload da busca**
+
+O campo **`conteudo`** de cada item da `lista` traz o **texto integral do documento**
+(extraído do PDF), não um trecho. Não é preciso um segundo salto para ler a decisão.
+O `highlight.conteudo[]` traz o mesmo texto recortado em volta do termo, com `<mark>`.
+
+Medido em 2 tipos de documento:
+- `ANEXOS AOS ESCLARECIMENTOS` (id 9694404) — `conteudo` com o relatório inteiro
+- `ACÓRDÃO` (id 9398249, via `buscar-jurisprudencia`) — `conteudo` com cabeçalho,
+  `EMENTA:` e a fundamentação. A ementa é **um trecho dentro de `conteudo`**, não um
+  campo próprio: começa em `EMENTA:` e vai até a numeração da fundamentação.
+
+⚠️ Existe o campo `dssumula`, mas veio **`null`** nos documentos medidos — **não foi
+medido em documento do tipo SÚMULA (id 160)**. Pendência.
+
+## 4. Inteiro teor (PDF) — **host diferente do da busca**
+
+```
+GET https://api-add.tce.ce.gov.br/arquivos/documento?documento_id=<iddocumento>
+→ HTTP 200, application/pdf
+```
+
+Medido: `documento_id=9694404` → **405.970 B, `%PDF-` v1.6, 6 páginas**, `pdftotext`
+extrai texto útil ("PROGRAMA DE INTEGRIDADE DO PODER EXECUTIVO DO ESTADO DO CEARÁ…").
+Sem cookie, sem sessão, sem referer — reproduzido fora do browser com `curl`.
+
+🔴 **A armadilha do host.** O mesmo path em `contexto-api` devolve **HTTP 406**
+(`org.springframework.web.HttpMediaTypeNotAcceptableException`) para **todo** `Accept`
+testado (`*/*`, `application/json`, `application/pdf`, `application/octet-stream`) e para
+toda variante de parâmetro (`documento_id`, `id`, `iddocumento`, `+tipo=documento`).
+O 406 **não é falta de header** — é o host errado. O bundle separa:
+`url_api_download_documentos = "https://api-add.tce.ce.gov.br"` ≠
+`url_servidor_externo = "https://contexto-api.tce.ce.gov.br"`.
+Quem só ler o path do endpoint e reaproveitar o host da busca gasta a sessão inteira
+achando que o download exige autenticação.
+
+⚠️ O campo `dsdocumento` (`//2026/08/0/273/89/13082026_153727_838C….pdf`) é o caminho
+interno no GED. **Não foi preciso** — o `documento_id` basta. Não testado se
+`dscaminhoarquivo=` funciona em `api-add` (funciona nesse formato para o DOE, segundo o
+bundle). Pendência.
+
+## 5. Permalink e identidade do documento
+
+- **Não há permalink de interface** (o card não tem `<a href>`; a rota do SPA não muda).
+- O que existe e **foi confirmado em sessão limpa** (curl sem cookie) é a URL do PDF:
+  `https://api-add.tce.ce.gov.br/arquivos/documento?documento_id=9694404` → 200 PDF.
+  **É esse o `urlPublica` que o crawler deve gravar.**
+- Quem identifica o documento é **`iddocumento`** (não `nrdocumento`, que se repete entre
+  tipos, nem `nrprocesso`, que agrupa ~100 documentos).
+- Para reconsulta/verificação há duas vias:
+  `{"term":{"nrprocesso":"40717/2019-6"}}` na busca, e
+  `POST https://api-processos.tce.ce.gov.br/processos/porNumero`
+  `{"numero":"40717/2019-6","pagina":0,"qtd":5}` → 200 com `dtAutuacao`, `assunto`,
+  `entidade` — **é a porta do `Checker`**.
+
+## 6. Paginação
+
+Ver §6 do `01-contexto-documentos.txt`: `searchAfterSort` = campo `sort` do último item.
+10 por página. Página 2 medida e sem sobreposição com a página 1.
+⚠️ **Estabilidade (mesma página duas vezes) NÃO medida** — pendência do checklist.
+
+---
+
+## 🔴 A ressalva que decide o crawler: `/documentos/buscar` NÃO é base de jurisprudência
+
+A agregação `group_by_idtipodocumento` de `nepotismo` (2127 docs, 82 tipos, soma exata)
+mostra o que a busca livre realmente devolve:
+
+| id | n | tipo |
+|---|---|---|
+| 135 | 284 | ANEXO |
+| 1 | 240 | CERTIFICADO |
+| 24 | 194 | ESCLARECIMENTO |
+| 23 | 131 | PETIÇÃO |
+| 8 | 115 | PARECER |
+| 438 | 96 | DOCUMENTO RELACIONADO |
+| 2 | 95 | INFORMAÇÃO |
+| 510 | 94 | RELATÓRIO DE INSTRUÇÃO |
+| 172 | 81 | VOTO |
+| … | … | … |
+| **4** | **64** | **ACÓRDÃO** |
+
+**Só 64 de 2127 (3%) são acórdão.** O primeiro resultado de "nepotismo", ordenado por data,
+é um `ANEXOS AOS ESCLARECIMENTOS` — papelada de processo, não julgado. Um crawler que
+aponte para `/documentos/buscar` sem filtro de tipo devolve 97% de lixo e **quebra a
+invariante nº 1 do repo** (citar como julgado o que não é julgado).
+
+**O próprio app confirma**, no texto de ajuda do módulo "Busca sistematizada":
+> "Caso não encontre o que procura, você pode realizar uma busca livre no módulo de
+> Documentos para acessar a base completa. No módulo de Documentos, **selecione a opção
+> 'Documentos de Decisão' nos filtros**"
+
+⚠️ **A lista exata de `idtipodocumento` por trás do botão "Documentos de Decisão" NÃO foi
+capturada** — o botão `FILTROS` não foi clicável no Playwright depois da busca (o seletor
+por texto não casou; ver `_map3-tcece.js`). É a **pendência nº 1**.
+
+### O outro endpoint: `/documentos/buscar-jurisprudencia`
+
+```
+POST https://contexto-api.tce.ce.gov.br/documentos/buscar-jurisprudencia
+{"filtros":[],"searchAfterSort":null,"buscaPalavraExata":false,"buscaPesquisaExata":false,"sort":"desc"}
+```
+
+- ✅ Responde 200; `filtros:[]` devolve `tamanho:10000` e a `lista` traz **ACÓRDÃO** de
+  verdade (medido: id 9398249, ACÓRDÃO 2517/2026, com `EMENTA:` no `conteudo`).
+- 🔴 **Não tem campo `texto`** — o contrato só aceita `filtros`, e o SPA os monta como
+  `{"term":{"tesauro_termo_nome": <termo do Tesauro de Contas Nacional>}}`. **Não é busca
+  livre.**
+- 🔴 E é **subconjunto declarado**: a ajuda do app diz que a busca sistematizada "ainda está
+  em processo de atualização, já que foi recentemente implantado" e manda usar Documentos
+  "para acessar a base completa".
+
+**Portanto**: nem um nem outro serve puro. O caminho é `/documentos/buscar` (busca livre)
+**+ filtro `idtipodocumento` restrito aos tipos de decisão**. Falta fechar essa lista.
+
+---
+
+## Pendências — o que o próximo slot pega primeiro
+
+1. 🔴 **A lista de `idtipodocumento` do "Documentos de Decisão"** — abrir o painel FILTROS
+   no browser (o botão não casou por texto; tentar `ion-fab`, ícone, ou ler o chunk
+   lazy-loaded `filtros-documentos.module.*.js` em `contexto/build/`) e capturar o XHR.
+   Sem isso o crawler não sabe o que é decisão. Fallback aceitável enquanto isso: usar a
+   lista de tipos de decisão já identificada em `01-contexto-documentos.txt` §5.
+2. **Estabilidade da paginação** — mesma página duas vezes, comparar ids e ordem.
+3. **`buscaPalavraExata` / `buscaPesquisaExata` não fazem diferença** em nenhuma das 3
+   combinações testadas (todas 10000 numa frase de 4 palavras — o que é suspeito demais
+   para ser coincidência). Testar em termo estreito e provar se são inertes ou se exigem
+   aspas dentro de `texto`.
+4. **Tamanho de página** — o SPA fixa 10; testar se a API aceita `size`/`qtd`/`from`.
+5. **Filtros não provados por contagem**: `esfera-julgamento` (7), `membro-relator` (32),
+   `localidade` (186), `entidade` (11.519), `especie` (210).
+6. **`dssumula`** em documento do tipo SÚMULA (id 160).
+7. **Rate limit não medido**; os dois IPs de DNS de `tcewsapi` (189.90.160.53 /
+   189.90.161.131) não foram testados quanto a dessincronia.
+8. **O JSF `tcewsapi.tce.ce.gov.br/paginas/jurisdicionadoJurisprudenciaPortal.xhtml`** —
+   é o que o menu oficial chama de "Jurisprudência → Consulta" e **não foi mapeado**
+   (3,1 MB, PrimeFaces 6.1, sem captcha, IDs `j_idt` autogerados). Falta comparar o
+   acervo dele com o do Contexto: pode haver julgado num que não está no outro.
+9. Módulos irmãos não mapeados: `/sumulas` do portal, `/normativos`, `/boletim`
+   (Informativos de Jurisprudência), `/sessao`.

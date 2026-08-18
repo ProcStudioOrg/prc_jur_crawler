@@ -1,0 +1,107 @@
+[
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/especie",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/subespecie",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/entidade",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/interessado",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/setor",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/membro-relator",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/categoria-especie",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/tipo-documento",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/esfera-julgamento",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/situacao",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/tipo-julgamento",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/localidade",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/tipo-sessao",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/palavrachave/listar",
+  "body": null
+ },
+ {
+  "m": "POST",
+  "u": "https://tcece.sydle.one/api/1/services/jurisprudencia/Termo/consumirTermoTCNSimplificado",
+  "body": "{}"
+ },
+ {
+  "m": "POST",
+  "u": "https://tcece.sydle.one/api/1/services/jurisprudencia/Termo/consumirTermoNaoPreferencialTCN",
+  "body": "{}"
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/documentos/total-documentos",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/documentos/data-carga",
+  "body": null
+ },
+ {
+  "m": "GET",
+  "u": "https://contexto-api.tce.ce.gov.br/tabelas-auxiliares/tipo-documento",
+  "body": null
+ },
+ {
+  "m": "POST",
+  "u": "https://contexto-api.tce.ce.gov.br/documentos/buscar",
+  "body": "{\"texto\":\"nepotismo\",\"filtros\":null,\"searchAfterSort\":null,\"buscaPalavraExata\":false,\"buscaPesquisaExata\":false,\"sort\":\"desc\"}"
+ },
+ {
+  "m": "POST",
+  "u": "https://contexto-api.tce.ce.gov.br/logs-es/salvar-log-busca-app",
+  "body": "{\"tempo_processamento\":0.048,\"termos\":\"nepotismo\",\"filtros\":[],\"timestamp\":\"2026-08-18T23:11:55.048Z\",\"origem\":\"[Documentos]: 186.224.78.221\"}"
+ }
+]
