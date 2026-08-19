@@ -1,0 +1,160 @@
+# TJAP — 02 Banco de Decisões e Sentenças — DEPOIS da busca (Fase 3b)
+
+Mapeado em 19/08/2026, slot 2000 (regra da dívida de crawler — retomada do `parcial`
+de 11/08). Status do módulo: 🟢 CRAWLER FECHADO (`./bin/jur tjap`).
+
+Prints: 03.01-filtros-avancados.png · 03.02-resultados-topo.png ·
+03.03-resultados-rodape-paginacao.png · 03.04-card-teor-expandido.png ·
+03.05-permalink-reader-aba-limpa.png · 03.06-reader-id-inexistente-http200.png
+Arquivos: 03-card-resultado.html · 03-contrato-livewire.json ·
+03-orgaos.json (120) · 03-classes.json (281) · 03-assuntos.json (1532) ·
+03-magistrados.json (130) · 03-anos.json (113)
+
+## 🔴 A PENDÊNCIA Nº 1 DE 11/08 FECHOU: A BUSCA RODA POR HTTP PURO
+
+O mapeamento de 11/08 gravou "Livewire é server-driven, NÃO há endpoint REST limpo —
+se a busca roda por http puro é a primeira coisa a medir". Medido: **RODA**, e sem
+browser em nenhum ponto. O contrato tem três peças, todas lidas do HTML da home:
+
+  GET  https://bancosentencas.tjap.jus.br/
+       -> Set-Cookie: XSRF-TOKEN, laravel_session   (2h de validade)
+       -> <script data-csrf="…" data-update-uri="…/livewire-53cc04b2/update">
+       -> wire:snapshot="…"  (293 KB, escapado em entidades HTML)
+
+  POST <data-update-uri>          Content-Type: application/json, Cookie: <os dois>
+  {"_token":"<data-csrf>","components":[{
+     "snapshot":"<o snapshot VERBATIM>","updates":{},
+     "calls":[{"method":"__dispatch","params":["update-filters",{"filters":{
+        "array":{"classes":[],"assuntos":[],"orgaos":[],"magistrados":[],"order":[]},
+        "anos":[],"search":"usucapião","tipo":"ambos","sistema":"",
+        "match_phrase":"","date":{"startDate":"","endDate":""}}}],"metadata":{}}
+       ,{"method":"setPage","params":[<pagina>],"metadata":{}}   <- só da 2ª em diante
+     ]}]}
+  -> 200 {"components":[{"snapshot":…,"effects":{"html":"<a lista já renderizada>"}}]}
+
+⚠️ O snapshot é assinado (campo `checksum`): não dá para editar o JSON e reenviar. Os
+   filtros viajam na chamada `update-filters`, nunca dentro do snapshot.
+⚠️ O prefixo `livewire-53cc04b2` é config do app e muda quando ele é republicado.
+   Ler `data-update-uri` do HTML, nunca embutir a URL.
+⚠️ `x-ratelimit-limit: 60` (por minuto) — o único tribunal do repo que **declara** a
+   cota no protocolo. O crawler usa 1.100 ms entre requisições.
+
+## Onde o resultado aparece
+
+Mesma rota (`/`), sem troca de URL, sem nova aba, sem modal. Os controles de busca
+PERMANECEM. 🔴 **A URL nunca muda**: não há `?search=` — testados `?search=`, `?termo=`,
+`?q=` e a home volta sem resultado nenhum. Refinar é reenviar o snapshot inteiro.
+Total no texto: "N resultados encontrados" + "Exibindo A até B de N".
+
+## Anatomia do card — 10 por página, `<dt>rótulo</dt><dd>valor</dd>`
+
+  Órgão · Nº Processo · Classe · Assunto · Juntada · Magistrado
+  Ações: [Visualizar] [Download] [Copiar]   (+ [Exportar] na lista)
+  E o bloco "Teor do Ato" com um [Expandir] (accordion Alpine — o texto JÁ está no DOM).
+
+🔴 **NÃO EXISTE EMENTA NESTA BASE — em nenhum tipo de documento.** O que o card mostra
+   é o ATO INTEIRO. Medido em 80 documentos de `usucapião`:
+   texto mínimo 164 · **mediana 5.759** · máximo 26.027 caracteres, começando em
+   "I - RELATÓRIO" e indo até o dispositivo. Não é ementa, não é trecho, não é
+   highlight (não há `<b>`/`<mark>` no termo buscado).
+
+✅ **O INTEIRO TEOR JÁ VEM NO PAYLOAD DA BUSCA** (melhor caso da skill, padrão TJDFT).
+   O botão Download é `wire:click="download(\`<html do ato>\`, \`<nº processo>\`)"` — o
+   texto viaja como ARGUMENTO do handler, ou seja o servidor já mandou tudo na busca.
+   Não há request por documento. `--fetch-inteiro-teor` só grava em disco.
+
+🔴 **15% DO ACERVO É SIGILOSO E VEM COM METADADOS COMPLETOS.** 12 em 80 documentos
+   trazem, no lugar do ato, uma frase de ~145 caracteres: "O processo N possui caráter
+   sigiloso. As informações e documentos estão restritos às partes…". O card parece
+   normal — órgão, classe, assunto, magistrado, tudo lá. Só o texto é que não existe.
+   Um crawler que não olhe o conteúdo entrega isso como julgado. Marcado `sigiloso:true`.
+
+## A escada até o documento — e o permalink que quase não foi achado
+
+🔴 **TODO LINK É `onclick="window.open(...)"`, NENHUM É `<a href>`.** Varrer `href` na
+   página inteira de resultados devolve **só `"#"`** — 100% dos hrefs. Foi assim que o
+   mapeamento de 11/08 chegou perto de concluir que não havia permalink. Há:
+
+   [Visualizar] -> window.open('https://bancosentencas.tjap.jus.br/reader/<SISTEMA>/<id>?tipo=banco-<decisao|sentenca>')
+   [Download]   -> wire:click, client-side, sem rede (ver acima)
+   [Copiar]     -> @click="copyToClipboard()", client-side
+   [Expandir]   -> accordion Alpine, sem rede
+
+✅ **PERMALINK CONFIRMADO EM CONTEXTO LIMPO** (curl sem cookie nenhum): HTTP 200 com o
+   ato inteiro (~15.836 caracteres para TUCUJURIS/711202, contra 14.611 do payload da
+   busca — mesma peça, a diferença é ruído de CSS na extração).
+
+🔴 **A CHAVE É COMPOSTA: (sistema, id, tipo). O `?tipo=` NÃO É DECORATIVO.**
+   /reader/TUCUJURIS/711202?tipo=banco-sentenca -> 200, 19.823 bytes, o ato ✓
+   /reader/TUCUJURIS/711202                     -> 200, 4.472 bytes, PÁGINA VAZIA
+   /reader/TUCUJURIS/999999999?tipo=…           -> 200, 4.472 bytes, PÁGINA VAZIA
+
+🔴 **ID INEXISTENTE DEVOLVE HTTP 200**, com "Sentença não encontrada" no corpo. Conferir
+   por status code dá o documento inventado por existente. É o mesmo vício do portal
+   principal do tribunal: `www.tjap.jus.br/dados-abertos` responde **200** com o texto
+   "Erro: 404 Página não encontrada". **No TJAP, status code não é evidência.**
+
+⚠️ **O QUE IDENTIFICA O DOCUMENTO NÃO É O Nº DO PROCESSO** — é a trinca
+   (sistema, id, tipo). Um processo tem vários atos (0001783-98.2002.8.03.0001 tem uma
+   sentença de 14.611 chars e uma decisão de 637), e pior, o mesmo ato tem DOIS ids.
+
+## 🔴 A DUPLICAÇÃO PJe × TUCUJURIS — 16% de inflação, e ela NÃO é byte-a-byte
+
+Medido em 80 documentos de `usucapião` (8 páginas):
+  80 ids distintos · 59 processos distintos · **67 atos distintos** · 13 grupos duplicados
+  Todos no padrão   PJE/<a>?tipo=X  ↔  TUCUJURIS/<b>?tipo=X   (mesmo tipo, sempre)
+
+É a duplicação do TJBA/TJRO num terceiro tribunal — mas aqui a causa é explícita e a
+própria tela a documenta: o filtro "Sistema" existe porque o acervo veio de dois
+sistemas, e a migração deixou o mesmo ato nos dois.
+
+🔴 **E O TEXTO DAS DUAS CÓPIAS DIFERE.** Medido no 0001543-83.2019.8.03.0011:
+     PJE/207701        5.423 bytes  "…CELULOSE S.A. - AMCEL"   "Sítio BATALHENSE"
+     TUCUJURIS/6239801 5.429 bytes  "…CELULOSE S.A. – AMCEL"   “Sítio BATALHENSE”
+   Um sistema guardou a pontuação ASCII e o outro a TIPOGRÁFICA. Seis bytes de
+   diferença em 5 KB — invisível a olho, e suficiente para uma chave de deduplicação
+   ingênua tratar como dois documentos e devolver o julgado duas vezes. Foi exatamente
+   o que aconteceu na primeira versão do crawler, hoje. A chave dobra travessão, aspas
+   curvas, NBSP, caixa e espaço antes de comparar (`_normalizarParaDedup`).
+
+⚠️ Consequência para a contagem: **a partição `sistema` que "fecha exata"
+   (PJE 310 + TUCUJURIS 1.691 = 2.001) fecha porque conta as duas cópias.** Fechar
+   exato não prova ausência de duplicata — prova só que a partição é completa.
+
+## Paginação — medida, não presumida
+
+  Por página:      10, FIXO. `updates: {perPage: 50}` devolve HTTP 500. Sem combo.
+  Parâmetro:       call `setPage(<n>)`, 1-based, junto do `update-filters`
+  Total exposto:   "N resultados encontrados" — EXATO até 10.000, saturado nele
+  Última página:   201 para 2.001 -> "Exibindo 2001 até 2001 de 2001" ✓ fecha exato
+  Além do fim:     página 202 e 500 -> HTTP 200 com lista VAZIA (não é erro)
+  Teto:            página 1000 responde ("Exibindo 9991 até 10000 de 10000");
+                   **1001 devolve HTTP 500** — o universo por consulta é 10.000, ponto.
+
+✅ **ESTABILIDADE PERFEITA**: página 3 pedida 3× na mesma sessão devolveu os mesmos 10
+   ids na mesma ordem; e uma **sessão nova** (outro cookie, outro snapshot, outro CSRF)
+   devolveu exatamente a mesma página. Não há o problema TJDFT/TJRJ aqui.
+
+## 🔴 O TETO DE 10.000 — e a prova de que é teto
+
+  usucapião  = 2.001   (exato: a página 201 fecha em 2001)
+  dano moral = 10.000 · "a" = 10.000 · busca vazia = 10.000 · ano=2023 = 10.000
+  **dano moral + tipo=sentenca = 10.000  E  dano moral + tipo=decisao = 10.000**
+  ↑ a partição NÃO fecha porque as duas metades batem no teto. É a prova.
+  Comparar com `usucapião`, onde ela fecha: 487 + 1.514 = 2.001 ✓
+
+Contorno: recortar por ano ou por data até a contagem cair abaixo de 10.000.
+
+## Tabela campo-a-campo — DOM → formato do repo
+
+  <dd> de "Nº Processo"  -> processo / numeroProcesso
+  <dd> de "Órgão"        -> orgaoJulgador     (é a Vara — 1º grau)
+  <dd> de "Classe"       -> classe
+  <dd> de "Assunto"      -> assunto           ("<codigo>-<nome>", vários por vírgula)
+  <dd> de "Juntada"      -> dataJuntada       ⚠️ NÃO é julgamento nem publicação
+  <dd> de "Magistrado"   -> relator
+  window.open(...)       -> processoUrl / inteiroTeorLink  (permalink)
+  <SISTEMA> do permalink -> sistemaOrigem     (PJE | TUCUJURIS)
+  ?tipo= do permalink    -> tipoDocumento     (SENTENÇA | DECISÃO)
+  arg 1 do download()    -> inteiroTeor       (o ato inteiro, em HTML)
+  (constante)            -> grau: 1, uf: 'AP', ementa: '', semEmenta: true

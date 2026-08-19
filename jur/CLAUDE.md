@@ -38,7 +38,7 @@ Nunca cite um julgado sem a skill [`verificador`](skills/verificador/SKILL.md).
 | **este arquivo** | Roteamento: qual tribunal, qual doc, quais flags comuns |
 | [`CLAUDE-CJF.md`](CLAUDE-CJF.md) | Os portais do CJF (TRF1, TNU, Unificada) e **por que a Unificada não salva o STJ bloqueado** |
 | [`CLAUDE-CODEGEN.md`](CLAUDE-CODEGEN.md) | Como mapear um tribunal **novo** (processo completo) |
-| [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md) | Os 67 tribunais catalogados e o status de cada um |
+| [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md) | Os 70 tribunais catalogados e o status de cada um |
 | [`TODO.md`](TODO.md) | Próximos alvos: TJs restantes + **instâncias administrativas** (CARF, CRPS, TCEs) |
 | `CLAUDE-<TRIBUNAL>.md` | Flags específicas e **ressalvas** de um tribunal |
 | [`skills/README.md`](skills/README.md) | As 6 skills e quando usar cada uma |
@@ -85,6 +85,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjes` | TJ do Espírito Santo | ES | `CLAUDE-TJES.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa e inteiro teor já vêm na busca). Base corrente, e **o único do repo com 1º grau** (1,5 mi de sentenças) |
 | `tjpi` | TJ do Piauí | PI | `CLAUDE-TJPI.md` | 🟢 OK (portal JusPI, HTTP direto, sem browser — **sem captcha**; ementa íntegra e **citação oficial** já vêm na busca, e **há permalink público**). Base corrente; inclui **súmulas do próprio TJ** |
 | `tjpr` | TJ do Paraná | PR | `CLAUDE-TJPR.md` | 🟢 OK (HTTP direto, sem browser) |
+| `tjap` | TJ do Amapá — **Banco de Decisões e Sentenças** | AP | `CLAUDE-TJAP.md` | 🟢 OK (Laravel+Livewire, HTTP direto, sem browser — **sem captcha**; o **ato inteiro já vem na busca** e há **permalink**). 🔴 **É 1º GRAU**: acórdão do TJAP fica no Tucujuris, **atrás de Turnstile**. 🔴 **Esta base NÃO TEM EMENTA** em nenhum tipo. 🔴 **O espaço entre termos é OR** e **não existe operador booleano** (use `--frase`); acento obrigatório (`usucapiao`=1, `usucapião`=2.001). ⚠️ Total **satura em 10.000** e a paginação para junto; **16% de cópias PJe×Tucujuris** do mesmo ato; **15% sigiloso, sem texto** |
 | `tjrj` | TJ do Rio de Janeiro | RJ | `CLAUDE-TJRJ.md` | 🟢 OK (HTTP direto, sem browser — só e-Proc/Justiça Comum 2º grau) |
 | `tjrj-ejuris` | TJ do Rio de Janeiro — **módulo legado** | RJ | `CLAUDE-TJRJ-EJURIS.md` | 🟢 OK (HTTP direto, sem browser — **sem captcha efetivo**; ementa e decisão na busca, **inteiro teor em PDF público com permalink**). Cobre o **acervo histórico desde ~1995** e as **Turmas Recursais**, que o `tjrj` não tem |
 | `tjrn` | TJ do Rio Grande do Norte | RN | `CLAUDE-TJRN.md` | 🔴 **sem busca** — o domínio **inteiro** do TJRN responde 403 (Akamai); só `-n` (nº do processo, via DataJud) |
@@ -103,15 +104,16 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 de uma base nacional única, o FALCÃO — leia [`CLAUDE-FALCAO.md`](CLAUDE-FALCAO.md) para
 escolher o comando. `CLAUDE-TRT9.md` é o mergulho técnico do sistema.
 
-Um tribunal catalogado está **mapeado à espera de crawler** — o **TJAP** (medição inteira
-em `human-codegen/`). Não há comando `jur` para ele ainda: não o ofereça ao usuário. O
-**TJPB** fechou 🟢 em 13/08/2026 e o **TJRO** em 17/08/2026, os dois pelo slot da dívida
-de crawler. O módulo **eJURIS** do TJRJ (legado, com Turmas Recursais e acervo
-histórico) passou a ter comando próprio, `jur tjrj-ejuris` — o `jur tjrj` continua cobrindo
-só o e-Proc.
-Dos 27 TJs, **21 têm comando 🟢**, 4 estão
-bloqueados com o motivo medido (TJMA, TJRN, TJSE, TJSP), 1 é instável (TJAM, base
-congelada) e 1 é o `parcial` acima. Veja `cobertura/CLAUDE-COBERTURA.md` e use a
+**Nenhum TJ está mais à espera de crawler.** O **TJPB** fechou 🟢 em 13/08/2026, o
+**TJRO** em 17/08/2026 e o **TJAP** em 19/08/2026 — os três pelo slot da dívida de
+crawler. ⚠️ Mas o `jur tjap` cobre **só o 1º grau** (Banco de Decisões e Sentenças): o
+acervo de **acórdãos** do TJAP continua atrás de Turnstile e **não tem via aberta** —
+leia `CLAUDE-TJAP.md` antes de prometer acórdão amapaense. O módulo **eJURIS** do TJRJ
+(legado, com Turmas Recursais e acervo histórico) tem comando próprio,
+`jur tjrj-ejuris` — o `jur tjrj` continua cobrindo só o e-Proc.
+Dos 27 TJs, **22 têm comando 🟢**, 4 estão
+bloqueados com o motivo medido (TJMA, TJRN, TJSE, TJSP) e 1 é instável (TJAM, base
+congelada). Veja `cobertura/CLAUDE-COBERTURA.md` e use a
 skill [`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**
@@ -166,6 +168,15 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   em 2019 é de subseções mineiras). Um pedido histórico exige os dois comandos.
   ⚠️ Ao contrário do TRF2, aqui o espaço entre termos funciona e os operadores são em
   português (`e`, `ou`, `não`, `prox`) — **nunca hifenize a query do TRF6**
+- "TJAP" / "Amapá" / "Macapá" / "Oiapoque" → `tjap` → leia `CLAUDE-TJAP.md`.
+  🔴 **É 1º grau (sentença e decisão de Vara), não acórdão.** O acervo de acórdãos do TJAP
+  mora dentro do Tucujuris e está atrás de Turnstile — se o pedido for de acórdão amapaense,
+  diga que não há via oficial aberta em vez de entregar sentença como se fosse.
+  🔴 **Esta base não tem ementa**: todo resultado sai com `semEmenta: true` e o texto é o ato inteiro.
+  🔴 **O espaço entre termos é OR e nenhum operador booleano funciona** — `AND`/`ADJ`/`NAO` viram
+  palavra e INFLAM a busca. Para exigir os termos juntos use `--frase` (frase ordenada).
+  ⚠️ Acento é obrigatório e `usucapiao` devolve **1** (não zero) — nunca leia isso como escassez.
+  ⚠️ 10.000 é TETO, não contagem; ~15% dos documentos são **sigilosos** e vêm sem texto.
 - "TJRO" / "Rondônia estadual" / "Porto Velho" / "Ji-Paraná" → `tjro` → leia `CLAUDE-TJRO.md`.
   ✅ **É o MAIOR acervo do repo** (4.027.701 documentos) e **tem 1º GRAU**:
   `tjro --origem primeiro -t sentenca` (1.928.898 sentenças, 48% da base — o maior 1º grau

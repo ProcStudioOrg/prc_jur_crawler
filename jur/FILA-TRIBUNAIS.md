@@ -330,7 +330,7 @@ Nenhum tem URL de jurisprudência na base — o campo `portal` do `tribunais.jso
 | 13 | **TJMT** | MT | PJe, Projudi | ok 10/08 |
 | 14 | **TJPB** | PB | PJe, Projudi — API mapeada em 08/08, **crawler fechado em 13/08** | ok 13/08 |
 | 15 | **TJRO** | RO | PJe, Projudi — API mapeada em 09/08, **crawler fechado em 17/08** | ok 17/08 |
-| 16 | **TJAP** | AP | ⚠️ a jurisprudência mora **dentro** do Tucujuris e está atrás de **Turnstile**; a porta aberta é o **Banco de Sentenças** (host à parte, 1º grau, sem captcha) — falta o crawler | parcial 11/08 |
+| 16 | **TJAP** | AP | ⚠️ a jurisprudência mora **dentro** do Tucujuris e está atrás de **Turnstile**; a porta aberta é o **Banco de Sentenças** (host à parte, 1º grau, sem captcha) — API mapeada em 11/08, **crawler fechado em 19/08** | ok 19/08 |
 
 📌 **O que o TJPE (feito em 07/08/2026) ensinou — leia
 [`CLAUDE-TJPE.md`](CLAUDE-TJPE.md).** Primeiro alvo do Bloco 3 e o tribunal mais
@@ -1897,6 +1897,80 @@ sem captcha em etapa nenhuma. As lições valem para os cinco TCEs que faltam:
   deve valer. ⚠️ E a API é lenta (8–14 s por busca larga), o que torna cada teste
   exploratório caro — nos TCEs restantes, **rode os testes de contagem em paralelo
   desde o início**, não em série.
+
+📌 **O que o TJAP (crawler fechado em 19/08/2026, slot 20:00) ensinou — leia
+[`CLAUDE-TJAP.md`](CLAUDE-TJAP.md).** Quarto alvo da regra da dívida, depois de TJMT,
+TJPB e TJRO, e o quarto seguido em que **o crawler mexeu no que o mapeamento dava por
+fechado**. A pendência nº 1 de 11/08 ("provar se a busca roda por http puro") fechou
+com um SIM. As lições valem para os três `parcial` restantes (TCE-MG, TCE-CE, TCE-GO):
+
+- 🔴 **SERVER-DRIVEN NÃO QUER DIZER "PRECISA DE BROWSER".** O mapeamento de 11/08
+  registrou, corretamente, que Livewire manda o estado num snapshot assinado por
+  checksum e que **não há endpoint REST**. A conclusão natural — "então o crawler é
+  `browser`" — está errada: o snapshot, o CSRF e a rota de update estão **no HTML da
+  home**, e um GET + um POST bastam. O crawler é `http` puro. **"Não tem REST" não é o
+  fim da pergunta do Passo 0; é o começo dela.**
+- 🔴 **UM PERMALINK PODE NÃO ESTAR EM NENHUM `href`.** Varrer `href` na página de
+  resultados do TJAP devolve **só `"#"`** — 100% dos links. Ele está em
+  `onclick="window.open('/reader/<SISTEMA>/<id>?tipo=…')"`. Foi assim que eu quase
+  gravei "não há permalink" pela segunda vez no mesmo tribunal. **Procure `window.open`
+  e `wire:click` antes de declarar ausência de link.** É a lição do TJBA ("o endpoint
+  estava no bundle") aplicada ao **atributo**, depois de já ter sido aplicada à rota e
+  ao host.
+- 🔴 **DUAS CÓPIAS DO MESMO ATO PODEM DIFERIR EM SEIS BYTES.** A duplicação
+  PJe × Tucujuris (16%, medida) parecia o caso TJBA/TJRO de sempre — mas as cópias
+  **não são byte-a-byte iguais**: um sistema guardou a pontuação ASCII (`-`, `"`) e o
+  outro a tipográfica (`–`, `""`). 5.423 contra 5.429 bytes num texto de 5 KB. A
+  primeira versão do crawler deduplicava por texto cru e **devolveu o julgado duas
+  vezes**; só apareceu porque eu abri os arquivos gravados. **Normalize pontuação,
+  caixa e espaço na chave de dedup — comparar texto cru não basta.**
+- 🔴 **A PARTIÇÃO QUE "FECHA EXATA" PODE ESTAR CONTANDO AS CÓPIAS.** `--sistema` fecha
+  redondo (PJE 310 + TUCUJURIS 1.691 = 2.001) **porque** o mesmo ato está nos dois
+  lados. Fechar exato prova que a partição é **completa**, não que é **limpa**. Some à
+  lição do TJRO ("enumere o facet inteiro antes de declarar uma partição").
+- 🔴 **A MELHOR PROVA DE QUE UM CONTADOR SATUROU É UMA PARTIÇÃO QUE NÃO FECHA.**
+  `dano moral` com `-t sentenca` **e** com `-t decisao` dá 10.000 nos dois — impossível,
+  logo é teto. O mesmo par fecha exato (487 + 1.514 = 2.001) num termo abaixo do teto.
+  É um teste mais barato e mais conclusivo que bisectar a paginação.
+- 🔴 **NÃO EXISTE OPERADOR BOOLEANO, E O ESPAÇO É OR** (`usucapião enfiteuse` = 2.013 =
+  2.001 + 12, e `usucapião zzqxwj` = 2.001, sem zerar). `AND`/`ADJ`/`NAO` viram palavra
+  e **INFLAM** — 6.478 se lê como "tema vasto". Décimo-segundo tribunal, décimo-segundo
+  conjunto de operadores. ✅ `match_phrase` (`--frase`) é ordenada (invertida = 0) e é o
+  único AND que existe.
+- 🔴 **ACENTO OBRIGATÓRIO, E O ZERO SILENCIOSO AQUI VALE 1** (`usucapiao` = 1 contra
+  2.001). Confirmado. Não é zero, então não levanta suspeita — segue sendo a forma mais
+  convincente de zero silencioso já medida.
+- 🔴 **STATUS CODE NÃO É EVIDÊNCIA NO TJAP.** `/reader/<id inexistente>?tipo=` devolve
+  **HTTP 200** com "Sentença não encontrada" no corpo, e `www.tjap.jus.br/dados-abertos`
+  devolve **200** com o texto "Erro: 404". E o `?tipo=` faz parte da chave: sem ele o
+  documento **válido** cai na mesma página vazia. Confira o corpo, sempre.
+- 🔴 **15% DO ACERVO É SIGILOSO — COM O CARD COMPLETO.** Órgão, classe, assunto e
+  magistrado normais; no lugar do ato, 145 caracteres dizendo que corre em segredo. Um
+  crawler que não olhe o conteúdo entrega isso como julgado.
+- ✅ **O ato inteiro já vem no payload da busca** (mediana 5.759 caracteres) — mas
+  ⚠️ **esta base não tem ementa em nenhum tipo**. Toda saída é `semEmenta: true`.
+- ✅ **DataJud sondado** (pendência de 11/08): `api_publica_tjap` responde. ⚠️ Cobertura
+  parcial — um processo de 2002 que **está** no Banco de Sentenças **não está** no
+  DataJud. As duas fontes não se substituem.
+- ⚠️ **A falha de processo do dia foi minha e o `tests/smoke.js` a pegou:** meus próprios
+  avisos de **escopo** citavam "Turnstile" (falando do *outro* módulo), e o classificador
+  do smoke leu isso no stdout e marcou o TJAP como **bloqueado** — 🔴 regressão num
+  crawler verde. O nome do fornecedor saiu da saída de runtime e ficou nos docs.
+  **Aviso em texto livre é dado que outra ferramenta lê: escreva pensando em quem parseia.**
+- ⚠️ **Único tribunal do repo que declara a cota no protocolo** (`x-ratelimit-limit: 60`).
+  E ⚠️ o endpoint `/livewire-<hash>/update` muda de hash a cada republicação do app —
+  o Navigator lê `data-update-uri` do HTML em vez de embutir a URL.
+
+⚠️ **Pendências declaradas do TJAP:** o módulo de **acórdãos** (`tucujuris`) **não foi
+tocado** neste slot e segue bloqueado por Turnstile — a Fase 3b dele nunca foi executada
+e **o teste em Chrome real continua NÃO MEDIDO** (a falha de processo de 11/08 permanece
+de pé). Os **dois selects de `classe`** (31 e 113 opções) daquele módulo continuam sem
+distinção. O botão **"Exportar"** da lista não foi mapeado. E o **rate limit real** não
+foi estourado de propósito: só o declarado foi lido.
+
+🔴 **Com o TJAP fechado sobram TRÊS `parcial` (TCE-MG 16/08, TCE-CE 18/08, TCE-GO 19/08)
+— o gatilho da regra da dívida continua armado.** O próximo slot das 20:00 deve pegar o
+**TCE-MG**, o mais antigo, em vez de abrir tribunal novo.
 
 📌 **O que o TCE-MG (16/08/2026, slot 20:00) ensinou — `parcial`, leia
 [`human-codegen/TCEMG/`](human-codegen/TCEMG/).** Sexto alvo do Bloco 5, e a lição é que

@@ -1,0 +1,124 @@
+# TJAP — 02 Banco de Sentenças — filtros e operadores PROVADOS POR CONTAGEM
+
+Medido em 19/08/2026. O mapeamento de 11/08 dizia "NENHUM filtro foi provado por
+contagem"; esta seção fecha essa pendência. Print: 03.01-filtros-avancados.png
+
+## Os filtros avançados, enfim enumerados — e eles não vêm de um endpoint de facets
+
+Estavam o tempo todo **dentro do snapshot Livewire da home** (`data.filters`), os
+mesmos 293 KB que o POST precisa devolver. Um GET na home basta:
+
+  orgaos       120 opções   03-orgaos.json       (Varas e Juizados — 1º grau)
+  classes      281 opções   03-classes.json
+  assuntos   1.532 opções   03-assuntos.json     (formato "<codigo>-<nome>")
+  magistrados  130 opções   03-magistrados.json
+  anos         113 opções   03-anos.json
+
+⚠️ **O combo "Anos" NÃO é faceta — é uma faixa GERADA de 1914 a 2026.** As 113 opções
+   são simplesmente todos os anos do intervalo. Medido: 1914, 1990 e 2005 devolvem 0
+   para qualquer termo; o acervo começa por volta de 2009. **Ano vazio aqui é ano fora
+   da base, não ausência de jurisprudência sobre o tema.** Lição do TJRO ("a lista de
+   valores de um facet não é o que coube no top-N") na forma oposta: aqui a lista nem
+   é facet.
+
+## Cada filtro provado por contagem, com o termo `usucapião` (2.001) como base
+
+  tipo=sentenca                487  ┐
+  tipo=decisao               1.514  ┘ = 2.001 ✓ FECHA EXATO
+  sistema=PJE                  310  ┐
+  sistema=TUCUJURIS          1.691  ┘ = 2.001 ✓ FECHA EXATO  (⚠️ conta as duplicatas)
+  anos=[2020]                  163  ┐
+  anos=[2021]                  274  ┘ e anos=[2020,2021] = 437 ✓ FECHA EXATO
+  date 2020-01-01..2020-12-31  163  ✓ bate com anos=[2020] — data e ano são o mesmo campo
+  orgaos=["4ª VARA CÍVEL DE MACAPÁ"]         101
+  classes=["Usucapião"]                    1.207
+  magistrados=["ALAIDE MARIA DE PAULA"]      109
+
+Valores inventados (o teste que separa "filtra" de "é ignorado"):
+  sistema="ZZZ"          -> 0   (honesto)
+  orgaos=["VARA 9Z"]     -> 0   (honesto)
+  anos=[1900]            -> 0   (honesto)
+  tipo="zzz"             -> HTTP 500  (honesto e barulhento)
+
+🔴 **`sistema` EXIGE MAIÚSCULA.** "pje"/"tucujuris" minúsculos devolvem **0 com HTTP
+   200**, indistinguível de valor inventado. Os valores certos são `PJE` e `TUCUJURIS`
+   e saíram do store Alpine (`$store.filtersManager.state.sistema` depois de clicar no
+   botão "PJe"), não do HTML. Foi a única medição do dia que zerou por engano meu.
+
+## 🔴 NÃO EXISTE OPERADOR BOOLEANO. E O ESPAÇO É **OR**.
+
+A aritmética, com `usucapião` = 2.001 e `enfiteuse` = 12:
+
+  usucapião enfiteuse       2.013   = 2.001 + 12  ✓ união exata
+  usucapião zzqxwj          2.001   <- termo inexistente NÃO zera (se fosse AND, daria 0)
+  enfiteuse usucapião       2.013   <- ordem não importa
+  usucapião AND enfiteuse   2.315   <- "and" virou mais um termo do OR
+  usucapião ADJ enfiteuse   2.082   <- idem
+  usucapião NAO enfiteuse   6.478   <- idem, e INFLA 3×
+  usucapião -enfiteuse      2.013   <- o hífen é ignorado
+  usucapião E/OU/OR/NOT …  10.000   <- saturam: são palavras comuníssimas
+  "dano moral" (com aspas) 10.000   <- = sem aspas; aspas não delimitam frase
+  usucapi*                  1.727   = usucapi (1.727) <- o `*` é ignorado, e nenhum dos
+                                       dois alcança `usucapião` — não há busca por prefixo
+
+🔴 **Todos os "operadores" INFLAM em vez de restringir**, e inflar não dá sintoma:
+   6.478 se lê como "tema vasto". É o oposto do zero silencioso e igualmente caro.
+
+✅ **`match_phrase` é a única forma de exigir os termos juntos — e é frase ORDENADA:**
+     search       "usucapião extraordinária"  = 6.679  (OR)
+     match_phrase "usucapião extraordinária"  =    77  (frase)
+     match_phrase "extraordinária usucapião"  =     0  (a ordem importa ⇒ é frase mesmo)
+⚠️ `search` e `match_phrase` **se INTERSECTAM**, não se somam:
+     search="enfiteuse" + match_phrase="usucapião" = 0
+
+## 🔴 ACENTO OBRIGATÓRIO — e o zero silencioso aqui é um "1"
+
+  usucapiao      1        <- não é zero. Por isso não levanta suspeita.
+  usucapião  2.001
+Padrão TJMS/TJBA/TJPB; oposto de TJAC/TJAM/TJAL/TJPE/TJPI/TJTO. Confirmado 19/08.
+
+## Busca por número de processo — os DOIS formatos funcionam
+
+  "0001783-98.2002.8.03.0001"  -> 2 documentos  (uma sentença + uma decisão)
+  "00017839820028030001"       -> 2 documentos
+  número inventado             -> 0
+Raro no repo: no TJRO e no TJPE a máscara devolve 0 calado; aqui os dois passam.
+
+🔴 **MAS NÃO É UM CAMPO — É A BUSCA LIVRE, QUE É OR.** Não existe filtro
+   `numeroProcesso` nesta base: o número cai no mesmo `search` das palavras. Logo um
+   documento que apenas CITA o número entra no resultado (o problema do TJES/TJPI). O
+   `TJAPChecker` confere o `Nº Processo` de cada documento devolvido e reporta quantos
+   vieram por citação em `deOutroProcesso`.
+
+## Distribuição por ano (lição do TJAM) — termo `usucapião`
+
+  ≤2005: 0 · 2009: 13 · 2015: 13 · 2018: 92 · 2022: 389 · 2023: 481 · 2024: 260
+  2025: 12 · 2026: 1
+
+⚠️ A queda de 2024 para cá **não é base parada**: com busca vazia, 2024, 2025 e 2026
+   saturam em 10.000 cada, e a janela 01/07/2026–19/08/2026 também satura. O documento
+   mais recente visível é de **04/08/2026** (15 dias de defasagem). O acervo está vivo;
+   `usucapião` é que é raro.
+
+## DataJud — sondado (pendência de 11/08 fechada)
+
+`api_publica_tjap` RESPONDE. `0001041-58.2016.8.03.0009` volta com grau G1, classe
+"Reintegração / Manutenção de Posse" e órgão "1ª VARA DA COMARCA DE OIAPOQUE" — batendo
+com o card do Banco de Sentenças.
+⚠️ **Cobertura parcial:** `0001783-98.2002.8.03.0001` (processo de 2002, que ESTÁ no
+   Banco de Sentenças) **não está no DataJud**. As duas fontes não se substituem:
+   o DataJud cobre o TJAP inteiro mas só metadados e só o período recente; o Banco de
+   Sentenças tem o texto mas só 1º grau publicado. Use `--datajud` como segunda fonte.
+
+## O que continua NÃO medido (dívida honesta)
+
+- O módulo de acórdãos (`tucujuris.tjap.jus.br`) segue **bloqueado por Turnstile** e
+  nada mudou nele hoje — não foi tocado neste slot. A Fase 3b dele continua NÃO
+  executada, e o teste em Chrome real continua NÃO medido (a falha de processo de
+  11/08 permanece de pé).
+- Os **dois selects de `classe`** (31 e 113 opções) do módulo de acórdãos não foram
+  distinguidos — pendência do outro módulo, não deste.
+- O botão **"Exportar"** da lista não foi mapeado (pode ser uma via de exportação em
+  massa que dispensaria paginar).
+- **Rate limit real**: só o declarado (`x-ratelimit-limit: 60`/min) foi lido; não foi
+  provado o que acontece ao estourá-lo.

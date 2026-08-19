@@ -1,0 +1,6130 @@
+[
+ {
+  "value": "5779-Alimentos",
+  "label": "Alimentos"
+ },
+ {
+  "value": "6239-Fixação",
+  "label": "Fixação"
+ },
+ {
+  "value": "10313-Reajustes de Remuneração, Proventos ou Pensão",
+  "label": "Reajustes de Remuneração, Proventos ou Pensão"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios",
+  "label": "Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "4980-Nota Promissória",
+  "label": "Nota Promissória"
+ },
+ {
+  "value": "3402-Ameaça",
+  "label": "Ameaça"
+ },
+ {
+  "value": "7752-Bancários",
+  "label": "Bancários"
+ },
+ {
+  "value": "7703-Pagamento",
+  "label": "Pagamento"
+ },
+ {
+  "value": "3632-Crimes de Trânsito",
+  "label": "Crimes de Trânsito"
+ },
+ {
+  "value": "7791-Pena Privativa de Liberdade",
+  "label": "Pena Privativa de Liberdade"
+ },
+ {
+  "value": "10949-Violência Doméstica Contra a Mulher",
+  "label": "Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "9587-Compra e Venda",
+  "label": "Compra e Venda"
+ },
+ {
+  "value": "9596-Prestação de Serviços",
+  "label": "Prestação de Serviços"
+ },
+ {
+  "value": "5802-Guarda",
+  "label": "Guarda"
+ },
+ {
+  "value": "10296-Descontos Indevidos",
+  "label": "Descontos Indevidos"
+ },
+ {
+  "value": "7664-Dissolução",
+  "label": "Dissolução"
+ },
+ {
+  "value": "7691-Inadimplemento",
+  "label": "Inadimplemento"
+ },
+ {
+  "value": "9196-Liminar ,9582-Alienação Fiduciária",
+  "label": "Liminar ,9582-Alienação Fiduciária"
+ },
+ {
+  "value": "3386-Leve",
+  "label": "Leve"
+ },
+ {
+  "value": "10236-Promoção / Ascensão",
+  "label": "Promoção / Ascensão"
+ },
+ {
+  "value": "10223-Enquadramento",
+  "label": "Enquadramento"
+ },
+ {
+  "value": "7677-Reconhecimento / Dissolução",
+  "label": "Reconhecimento / Dissolução"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais",
+  "label": "Competência dos Juizados Especiais"
+ },
+ {
+  "value": "7687-Inventário e Partilha",
+  "label": "Inventário e Partilha"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica",
+  "label": "Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "9582-Alienação Fiduciária",
+  "label": "Alienação Fiduciária"
+ },
+ {
+  "value": "5788-Revisão",
+  "label": "Revisão"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral",
+  "label": "Indenização por Dano Moral"
+ },
+ {
+  "value": "9517-Causas Supervenientes à Sentença",
+  "label": "Causas Supervenientes à Sentença"
+ },
+ {
+  "value": "5560-Decorrente de Violência Doméstica",
+  "label": "Decorrente de Violência Doméstica"
+ },
+ {
+  "value": "9580-Espécies de Contratos",
+  "label": "Espécies de Contratos"
+ },
+ {
+  "value": "10859-Alimentos",
+  "label": "Alimentos"
+ },
+ {
+  "value": "7752-Bancários,7773-Financiamento de Produto",
+  "label": "Bancários,7773-Financiamento de Produto"
+ },
+ {
+  "value": "3692-Contravenções Penais",
+  "label": "Contravenções Penais"
+ },
+ {
+  "value": "3397-Injúria",
+  "label": "Injúria"
+ },
+ {
+  "value": "7773-Financiamento de Produto",
+  "label": "Financiamento de Produto"
+ },
+ {
+  "value": "9196-Liminar",
+  "label": "Liminar"
+ },
+ {
+  "value": "5804-Investigação de Paternidade",
+  "label": "Investigação de Paternidade"
+ },
+ {
+  "value": "10422-Pagamento Atrasado / Correção Monetária",
+  "label": "Pagamento Atrasado / Correção Monetária"
+ },
+ {
+  "value": "6239-Fixação,5779-Alimentos",
+  "label": "Fixação,5779-Alimentos"
+ },
+ {
+  "value": "7698-Perdas e Danos",
+  "label": "Perdas e Danos"
+ },
+ {
+  "value": "3417-Furto Qualificado",
+  "label": "Furto Qualificado"
+ },
+ {
+  "value": "10312-Piso Salarial",
+  "label": "Piso Salarial"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral",
+  "label": "Indenização por Dano Moral"
+ },
+ {
+  "value": "5787-Exoneração",
+  "label": "Exoneração"
+ },
+ {
+  "value": "5566-Roubo Majorado",
+  "label": "Roubo Majorado"
+ },
+ {
+  "value": "3435-Receptação",
+  "label": "Receptação"
+ },
+ {
+  "value": "3372-Homicídio Qualificado",
+  "label": "Homicídio Qualificado"
+ },
+ {
+  "value": "3416-Furto",
+  "label": "Furto"
+ },
+ {
+  "value": "7732-Registro de nascimento após prazo legal",
+  "label": "Registro de nascimento após prazo legal"
+ },
+ {
+  "value": "9160-Levantamento de Valor",
+  "label": "Levantamento de Valor"
+ },
+ {
+  "value": "5779-Alimentos,5804-Investigação de Paternidade",
+  "label": "Alimentos,5804-Investigação de Paternidade"
+ },
+ {
+  "value": "7657-Tutela e Curatela",
+  "label": "Tutela e Curatela"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro",
+  "label": "Rescisão do contrato e devolução do dinheiro"
+ },
+ {
+  "value": "9607-Contratos Bancários",
+  "label": "Contratos Bancários"
+ },
+ {
+  "value": "10439-Indenização por Dano Material",
+  "label": "Indenização por Dano Material"
+ },
+ {
+  "value": "10671-Obrigação de Fazer / Não Fazer",
+  "label": "Obrigação de Fazer / Não Fazer"
+ },
+ {
+  "value": "9699-Roubo Majorado",
+  "label": "Roubo Majorado"
+ },
+ {
+  "value": "7735-Retificação de Nome",
+  "label": "Retificação de Nome"
+ },
+ {
+  "value": "3402-Ameaça ,10949-Violência Doméstica Contra a Mulher",
+  "label": "Ameaça ,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "3608-Tráfico de Drogas e Condutas Afins",
+  "label": "Tráfico de Drogas e Condutas Afins"
+ },
+ {
+  "value": "9163-Penhora / Depósito/ Avaliação",
+  "label": "Penhora / Depósito/ Avaliação"
+ },
+ {
+  "value": "10439-Indenização por Dano Material,10433-Indenização por Dano Moral",
+  "label": "Indenização por Dano Material,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "3396-Difamação",
+  "label": "Difamação"
+ },
+ {
+  "value": "3633-Crimes do Sistema Nacional de Armas",
+  "label": "Crimes do Sistema Nacional de Armas"
+ },
+ {
+  "value": "9518-Efeito Suspensivo / Impugnação / Embargos à Execução",
+  "label": "Efeito Suspensivo / Impugnação / Embargos à Execução"
+ },
+ {
+  "value": "12963-Condições da Ação",
+  "label": "Condições da Ação"
+ },
+ {
+  "value": "11391-Prestação de serviços à comunidade",
+  "label": "Prestação de serviços à comunidade"
+ },
+ {
+  "value": "5952-IPTU/ Imposto Predial e Territorial Urbano",
+  "label": "IPTU/ Imposto Predial e Territorial Urbano"
+ },
+ {
+  "value": "3402-Ameaça ,3397-Injúria",
+  "label": "Ameaça ,3397-Injúria"
+ },
+ {
+  "value": "9606-Compromisso",
+  "label": "Compromisso"
+ },
+ {
+  "value": "7617-Telefonia",
+  "label": "Telefonia"
+ },
+ {
+  "value": "10445-Esbulho / Turbação / Ameaça",
+  "label": "Esbulho / Turbação / Ameaça"
+ },
+ {
+  "value": "4980-Nota Promissória,7717-Espécies de Títulos de Crédito",
+  "label": "Nota Promissória,7717-Espécies de Títulos de Crédito"
+ },
+ {
+  "value": "10298-Diárias e Outras Indenizações",
+  "label": "Diárias e Outras Indenizações"
+ },
+ {
+  "value": "4960-Cédula de Crédito Bancário",
+  "label": "Cédula de Crédito Bancário"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato",
+  "label": "Interpretação / Revisão de Contrato"
+ },
+ {
+  "value": "9593-Locação de Imóvel",
+  "label": "Locação de Imóvel"
+ },
+ {
+  "value": "9196-Liminar ,9584-Arrendamento Mercantil",
+  "label": "Liminar ,9584-Arrendamento Mercantil"
+ },
+ {
+  "value": "7780-Indenização por Dano Material",
+  "label": "Indenização por Dano Material"
+ },
+ {
+  "value": "899-DIREITO CIVIL",
+  "label": "DIREITO CIVIL"
+ },
+ {
+  "value": "7752-Bancários,7779-Indenização por Dano Moral",
+  "label": "Bancários,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7787-Prestação de Serviços à Comunidade",
+  "label": "Prestação de Serviços à Comunidade"
+ },
+ {
+  "value": "4862-Transporte Aéreo",
+  "label": "Transporte Aéreo"
+ },
+ {
+  "value": "7942-Execução Penal e de Medidas Alternativas",
+  "label": "Execução Penal e de Medidas Alternativas"
+ },
+ {
+  "value": "3395-Calúnia",
+  "label": "Calúnia"
+ },
+ {
+  "value": "10688-Medidas Socioeducativas",
+  "label": "Medidas Socioeducativas"
+ },
+ {
+  "value": "4970-Cheque",
+  "label": "Cheque"
+ },
+ {
+  "value": "3431-Estelionato",
+  "label": "Estelionato"
+ },
+ {
+  "value": "10673-Requisição de Pequeno Valor - RPV",
+  "label": "Requisição de Pequeno Valor - RPV"
+ },
+ {
+  "value": "10291-Adicional de Insalubridade",
+  "label": "Adicional de Insalubridade"
+ },
+ {
+  "value": "10441-Acidente de Trânsito",
+  "label": "Acidente de Trânsito"
+ },
+ {
+  "value": "7717-Espécies de Títulos de Crédito",
+  "label": "Espécies de Títulos de Crédito"
+ },
+ {
+  "value": "3397-Injúria,3402-Ameaça",
+  "label": "Injúria,3402-Ameaça"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10439-Indenização por Dano Material",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material"
+ },
+ {
+  "value": "10859-Alimentos,10573-Prisão Civil",
+  "label": "Alimentos,10573-Prisão Civil"
+ },
+ {
+  "value": "10308-Adicional de Serviço Noturno",
+  "label": "Adicional de Serviço Noturno"
+ },
+ {
+  "value": "9676-Furto Qualificado (Art. 155, § 4o.)",
+  "label": "Furto Qualificado (Art. 155, § 4o.)"
+ },
+ {
+  "value": "3419-Roubo",
+  "label": "Roubo"
+ },
+ {
+  "value": "7620-Estabelecimentos de Ensino",
+  "label": "Estabelecimentos de Ensino"
+ },
+ {
+  "value": "7621-Seguro",
+  "label": "Seguro"
+ },
+ {
+  "value": "10290-Gratificação de Incentivo",
+  "label": "Gratificação de Incentivo"
+ },
+ {
+  "value": "11818-Medidas de proteção",
+  "label": "Medidas de proteção"
+ },
+ {
+  "value": "3573-Desacato",
+  "label": "Desacato"
+ },
+ {
+  "value": "10696-Professor,10313-Reajustes de Remuneração, Proventos ou Pensão",
+  "label": "Professor,10313-Reajustes de Remuneração, Proventos ou Pensão"
+ },
+ {
+  "value": "9678-Roubo (art. 157)",
+  "label": "Roubo (art. 157)"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material"
+ },
+ {
+  "value": "12005-Outras medidas de proteção",
+  "label": "Outras medidas de proteção"
+ },
+ {
+  "value": "9977-Entrada e Permanência de Menores",
+  "label": "Entrada e Permanência de Menores"
+ },
+ {
+  "value": "9675-Furto (art. 155)",
+  "label": "Furto (art. 155)"
+ },
+ {
+  "value": "10425-Rescisão",
+  "label": "Rescisão"
+ },
+ {
+  "value": "5560-Decorrente de Violência Doméstica,10949-Violência Doméstica Contra a Mulher",
+  "label": "Decorrente de Violência Doméstica,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "10949-Violência Doméstica Contra a Mulher,3402-Ameaça",
+  "label": "Violência Doméstica Contra a Mulher,3402-Ameaça"
+ },
+ {
+  "value": "5885-Posse de Drogas para Consumo Pessoal",
+  "label": "Posse de Drogas para Consumo Pessoal"
+ },
+ {
+  "value": "9582-Alienação Fiduciária,10481-Propriedade Fiduciária",
+  "label": "Alienação Fiduciária,10481-Propriedade Fiduciária"
+ },
+ {
+  "value": "10496-Promessa de Compra e Venda",
+  "label": "Promessa de Compra e Venda"
+ },
+ {
+  "value": "3402-Ameaça ,5560-Decorrente de Violência Doméstica",
+  "label": "Ameaça ,5560-Decorrente de Violência Doméstica"
+ },
+ {
+  "value": "7772-Cartão de Crédito",
+  "label": "Cartão de Crédito"
+ },
+ {
+  "value": "7752-Bancários,7772-Cartão de Crédito",
+  "label": "Bancários,7772-Cartão de Crédito"
+ },
+ {
+  "value": "7780-Indenização por Dano Material,7779-Indenização por Dano Moral",
+  "label": "Indenização por Dano Material,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7664-Dissolução,5808-Casamento",
+  "label": "Dissolução,5808-Casamento"
+ },
+ {
+  "value": "6017-Dívida Ativa Execução Fiscal",
+  "label": "Dívida Ativa Execução Fiscal"
+ },
+ {
+  "value": "7752-Bancários,7772-Cartão de Crédito,7779-Indenização por Dano Moral",
+  "label": "Bancários,7772-Cartão de Crédito,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "9974-Adoção de Criança",
+  "label": "Adoção de Criança"
+ },
+ {
+  "value": "11417-Estupro de vulnerável",
+  "label": "Estupro de vulnerável"
+ },
+ {
+  "value": "6238-Oferta",
+  "label": "Oferta"
+ },
+ {
+  "value": "5555-Crime Tentado,3372-Homicídio Qualificado",
+  "label": "Crime Tentado,3372-Homicídio Qualificado"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,7779-Indenização por Dano Moral",
+  "label": "Fornecimento de Energia Elétrica,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "10439-Indenização por Dano Material,10441-Acidente de Trânsito",
+  "label": "Indenização por Dano Material,10441-Acidente de Trânsito"
+ },
+ {
+  "value": "9149-Valor da Execução / Cálculo / Atualização",
+  "label": "Valor da Execução / Cálculo / Atualização"
+ },
+ {
+  "value": "3426-Dano",
+  "label": "Dano"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7768-Rescisão do contrato e devolução do dinheiro",
+  "label": "Indenização por Dano Moral,7768-Rescisão do contrato e devolução do dinheiro"
+ },
+ {
+  "value": "9992-Indenização por Dano Moral",
+  "label": "Indenização por Dano Moral"
+ },
+ {
+  "value": "4949-Títulos de Crédito",
+  "label": "Títulos de Crédito"
+ },
+ {
+  "value": "10630-Transação",
+  "label": "Transação"
+ },
+ {
+  "value": "5788-Revisão,5779-Alimentos",
+  "label": "Revisão,5779-Alimentos"
+ },
+ {
+  "value": "9597-Seguro",
+  "label": "Seguro"
+ },
+ {
+  "value": "9584-Arrendamento Mercantil",
+  "label": "Arrendamento Mercantil"
+ },
+ {
+  "value": "9196-Liminar ,10445-Esbulho / Turbação / Ameaça",
+  "label": "Liminar ,10445-Esbulho / Turbação / Ameaça"
+ },
+ {
+  "value": "10340-Indenizações Regulares",
+  "label": "Indenizações Regulares"
+ },
+ {
+  "value": "7752-Bancários,7770-Interpretação / Revisão de Contrato",
+  "label": "Bancários,7770-Interpretação / Revisão de Contrato"
+ },
+ {
+  "value": "10342-Reajuste de Remuneração, Soldo, Proventos ou Pensão",
+  "label": "Reajuste de Remuneração, Soldo, Proventos ou Pensão"
+ },
+ {
+  "value": "6226-Inclusão Indevida em Cadastro de Inadimplentes",
+  "label": "Inclusão Indevida em Cadastro de Inadimplentes"
+ },
+ {
+  "value": "5946-ICMS/ Imposto sobre Circulação de Mercadorias",
+  "label": "ICMS/ Imposto sobre Circulação de Mercadorias"
+ },
+ {
+  "value": "9914-Contravenções Penais",
+  "label": "Contravenções Penais"
+ },
+ {
+  "value": "10706-Gratificações Municipais Específicas",
+  "label": "Gratificações Municipais Específicas"
+ },
+ {
+  "value": "4972-Duplicata",
+  "label": "Duplicata"
+ },
+ {
+  "value": "5779-Alimentos,6239-Fixação",
+  "label": "Alimentos,6239-Fixação"
+ },
+ {
+  "value": "1156-DIREITO DO CONSUMIDOR",
+  "label": "DIREITO DO CONSUMIDOR"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral",
+  "label": "Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7925-Registro de Óbito após prazo legal",
+  "label": "Registro de Óbito após prazo legal"
+ },
+ {
+  "value": "10444-Posse",
+  "label": "Posse"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7752-Bancários",
+  "label": "Indenização por Dano Moral,7752-Bancários"
+ },
+ {
+  "value": "11389-Liberdade assistida",
+  "label": "Liberdade assistida"
+ },
+ {
+  "value": "6233-Planos de Saúde",
+  "label": "Planos de Saúde"
+ },
+ {
+  "value": "3608-Tráfico de Drogas e Condutas Afins,7941-Denegação",
+  "label": "Tráfico de Drogas e Condutas Afins,7941-Denegação"
+ },
+ {
+  "value": "9661-Ameaça (art. 147)",
+  "label": "Ameaça (art. 147)"
+ },
+ {
+  "value": "9642-Leve",
+  "label": "Leve"
+ },
+ {
+  "value": "10573-Prisão Civil,10859-Alimentos",
+  "label": "Prisão Civil,10859-Alimentos"
+ },
+ {
+  "value": "12194-Contra a Mulher",
+  "label": "Contra a Mulher"
+ },
+ {
+  "value": "10667-Gratificações Estaduais Específicas",
+  "label": "Gratificações Estaduais Específicas"
+ },
+ {
+  "value": "12612-COVID-19",
+  "label": "COVID-19"
+ },
+ {
+  "value": "10654-Competência da Justiça Estadual",
+  "label": "Competência da Justiça Estadual"
+ },
+ {
+  "value": "5805-Regulamentação de Visitas,5802-Guarda",
+  "label": "Regulamentação de Visitas,5802-Guarda"
+ },
+ {
+  "value": "9580-Espécies de Contratos,9587-Compra e Venda",
+  "label": "Espécies de Contratos,9587-Compra e Venda"
+ },
+ {
+  "value": "9985-DIREITO ADMINISTRATIVO E OUTRAS MATÉRIAS DE DIREITO PÚBLICO",
+  "label": "DIREITO ADMINISTRATIVO E OUTRAS MATÉRIAS DE DIREITO PÚBLICO"
+ },
+ {
+  "value": "10666-Regularidade Formal",
+  "label": "Regularidade Formal"
+ },
+ {
+  "value": "6239-Fixação,5804-Investigação de Paternidade",
+  "label": "Fixação,5804-Investigação de Paternidade"
+ },
+ {
+  "value": "11388-Internação sem atividades externas",
+  "label": "Internação sem atividades externas"
+ },
+ {
+  "value": "6226-Inclusão Indevida em Cadastro de Inadimplentes,7779-Indenização por Dano Moral",
+  "label": "Inclusão Indevida em Cadastro de Inadimplentes,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "9859-Tráfico de Drogas e Condutas Afins",
+  "label": "Tráfico de Drogas e Condutas Afins"
+ },
+ {
+  "value": "9196-Liminar ,5802-Guarda",
+  "label": "Liminar ,5802-Guarda"
+ },
+ {
+  "value": "11392-Semiliberdade",
+  "label": "Semiliberdade"
+ },
+ {
+  "value": "7949-Direitos da Personalidade",
+  "label": "Direitos da Personalidade"
+ },
+ {
+  "value": "5556-Grave",
+  "label": "Grave"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7760-Fornecimento de Energia Elétrica",
+  "label": "Indenização por Dano Moral,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "7787-Prestação de Serviços à Comunidade,7790-Pena Restritiva de Direitos",
+  "label": "Prestação de Serviços à Comunidade,7790-Pena Restritiva de Direitos"
+ },
+ {
+  "value": "3621-Poluição",
+  "label": "Poluição"
+ },
+ {
+  "value": "5952-IPTU/ Imposto Predial e Territorial Urbano,7708-Novação",
+  "label": "IPTU/ Imposto Predial e Territorial Urbano,7708-Novação"
+ },
+ {
+  "value": "10287-Jornada de Trabalho",
+  "label": "Jornada de Trabalho"
+ },
+ {
+  "value": "3620-Crimes contra a Flora",
+  "label": "Crimes contra a Flora"
+ },
+ {
+  "value": "7619-Consórcio",
+  "label": "Consórcio"
+ },
+ {
+  "value": "10630-Transação,3632-Crimes de Trânsito",
+  "label": "Transação,3632-Crimes de Trânsito"
+ },
+ {
+  "value": "12978-Desistência da Ação",
+  "label": "Desistência da Ação"
+ },
+ {
+  "value": "10303-Adicional de Horas Extras",
+  "label": "Adicional de Horas Extras"
+ },
+ {
+  "value": "10305-Gratificações de Atividade",
+  "label": "Gratificações de Atividade"
+ },
+ {
+  "value": "7752-Bancários,9196-Liminar",
+  "label": "Bancários,9196-Liminar"
+ },
+ {
+  "value": "9965-Abandono Material",
+  "label": "Abandono Material"
+ },
+ {
+  "value": "3618-Crimes contra o Meio Ambiente e o Patrimônio Genético",
+  "label": "Crimes contra o Meio Ambiente e o Patrimônio Genético"
+ },
+ {
+  "value": "7617-Telefonia,7779-Indenização por Dano Moral",
+  "label": "Telefonia,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "5779-Alimentos,5802-Guarda",
+  "label": "Alimentos,5802-Guarda"
+ },
+ {
+  "value": "4980-Nota Promissória,7703-Pagamento",
+  "label": "Nota Promissória,7703-Pagamento"
+ },
+ {
+  "value": "5779-Alimentos,5802-Guarda,7677-Reconhecimento / Dissolução",
+  "label": "Alimentos,5802-Guarda,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "10337-Sistema Remuneratório e Benefícios",
+  "label": "Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "3397-Injúria,3396-Difamação",
+  "label": "Injúria,3396-Difamação"
+ },
+ {
+  "value": "9598-Transação",
+  "label": "Transação"
+ },
+ {
+  "value": "10064-Saúde",
+  "label": "Saúde"
+ },
+ {
+  "value": "5626-Família",
+  "label": "Família"
+ },
+ {
+  "value": "7774-Serviços Profissionais",
+  "label": "Serviços Profissionais"
+ },
+ {
+  "value": "3372-Homicídio Qualificado,7941-Denegação",
+  "label": "Homicídio Qualificado,7941-Denegação"
+ },
+ {
+  "value": "10338-Gratificações e Adicionais",
+  "label": "Gratificações e Adicionais"
+ },
+ {
+  "value": "10431-Responsabilidade Civil",
+  "label": "Responsabilidade Civil"
+ },
+ {
+  "value": "7773-Financiamento de Produto,7752-Bancários",
+  "label": "Financiamento de Produto,7752-Bancários"
+ },
+ {
+  "value": "6239-Fixação,5802-Guarda",
+  "label": "Fixação,5802-Guarda"
+ },
+ {
+  "value": "5787-Exoneração,5802-Guarda",
+  "label": "Exoneração,5802-Guarda"
+ },
+ {
+  "value": "9580-Espécies de Contratos,9606-Compromisso",
+  "label": "Espécies de Contratos,9606-Compromisso"
+ },
+ {
+  "value": "7725-Registro Civil das Pessoas Naturais",
+  "label": "Registro Civil das Pessoas Naturais"
+ },
+ {
+  "value": "9973-Adoção Nacional",
+  "label": "Adoção Nacional"
+ },
+ {
+  "value": "3436-Apropriação indébita",
+  "label": "Apropriação indébita"
+ },
+ {
+  "value": "9967-Maus Tratos",
+  "label": "Maus Tratos"
+ },
+ {
+  "value": "9580-Espécies de Contratos,899-DIREITO CIVIL",
+  "label": "Espécies de Contratos,899-DIREITO CIVIL"
+ },
+ {
+  "value": "4980-Nota Promissória,7691-Inadimplemento",
+  "label": "Nota Promissória,7691-Inadimplemento"
+ },
+ {
+  "value": "5787-Exoneração,5779-Alimentos",
+  "label": "Exoneração,5779-Alimentos"
+ },
+ {
+  "value": "10304-Auxílio-Alimentação",
+  "label": "Auxílio-Alimentação"
+ },
+ {
+  "value": "9196-Liminar ,5787-Exoneração",
+  "label": "Liminar ,5787-Exoneração"
+ },
+ {
+  "value": "10437-Direito de Imagem",
+  "label": "Direito de Imagem"
+ },
+ {
+  "value": "7703-Pagamento,10666-Regularidade Formal",
+  "label": "Pagamento,10666-Regularidade Formal"
+ },
+ {
+  "value": "3370-Homicídio Simples",
+  "label": "Homicídio Simples"
+ },
+ {
+  "value": "3465-Estupro",
+  "label": "Estupro"
+ },
+ {
+  "value": "5805-Regulamentação de Visitas",
+  "label": "Regulamentação de Visitas"
+ },
+ {
+  "value": "3402-Ameaça ,3386-Leve",
+  "label": "Ameaça ,3386-Leve"
+ },
+ {
+  "value": "12544-Simples",
+  "label": "Simples"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10313-Reajustes de Remuneração, Proventos ou Pensão",
+  "label": "Sistema Remuneratório e Benefícios,10313-Reajustes de Remuneração, Proventos ou Pensão"
+ },
+ {
+  "value": "10481-Propriedade Fiduciária",
+  "label": "Propriedade Fiduciária"
+ },
+ {
+  "value": "14201-Progressão Funcional com Interstício de Doze Meses",
+  "label": "Progressão Funcional com Interstício de Doze Meses"
+ },
+ {
+  "value": "12491-Tratamento médico-hospitalar",
+  "label": "Tratamento médico-hospitalar"
+ },
+ {
+  "value": "5802-Guarda,10577-Relações de Parentesco",
+  "label": "Guarda,10577-Relações de Parentesco"
+ },
+ {
+  "value": "7677-Reconhecimento / Dissolução,7656-União Estável ou Concubinato",
+  "label": "Reconhecimento / Dissolução,7656-União Estável ou Concubinato"
+ },
+ {
+  "value": "10602-Condicional do processo",
+  "label": "Condicional do processo"
+ },
+ {
+  "value": "7772-Cartão de Crédito,7752-Bancários",
+  "label": "Cartão de Crédito,7752-Bancários"
+ },
+ {
+  "value": "3406-Violação de domicílio",
+  "label": "Violação de domicílio"
+ },
+ {
+  "value": "10441-Acidente de Trânsito,10439-Indenização por Dano Material",
+  "label": "Acidente de Trânsito,10439-Indenização por Dano Material"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10223-Enquadramento",
+  "label": "Sistema Remuneratório e Benefícios,10223-Enquadramento"
+ },
+ {
+  "value": "10438-Dano Ambiental,10439-Indenização por Dano Material",
+  "label": "Dano Ambiental,10439-Indenização por Dano Material"
+ },
+ {
+  "value": "3572-Desobediência",
+  "label": "Desobediência"
+ },
+ {
+  "value": "10662-Abono de Permanência",
+  "label": "Abono de Permanência"
+ },
+ {
+  "value": "10573-Prisão Civil",
+  "label": "Prisão Civil"
+ },
+ {
+  "value": "9970-Pobreza",
+  "label": "Pobreza"
+ },
+ {
+  "value": "5808-Casamento",
+  "label": "Casamento"
+ },
+ {
+  "value": "4703-Defeito, nulidade ou anulação",
+  "label": "Defeito, nulidade ou anulação"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7752-Bancários",
+  "label": "Interpretação / Revisão de Contrato,7752-Bancários"
+ },
+ {
+  "value": "10605-Competência do MP",
+  "label": "Competência do MP"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7617-Telefonia",
+  "label": "Indenização por Dano Moral,7617-Telefonia"
+ },
+ {
+  "value": "10435-Acidente de Trânsito",
+  "label": "Acidente de Trânsito"
+ },
+ {
+  "value": "10573-Prisão Civil,5779-Alimentos",
+  "label": "Prisão Civil,5779-Alimentos"
+ },
+ {
+  "value": "6238-Oferta,5779-Alimentos",
+  "label": "Oferta,5779-Alimentos"
+ },
+ {
+  "value": "12245-Nomeação",
+  "label": "Nomeação"
+ },
+ {
+  "value": "7690-Adimplemento e Extinção,7703-Pagamento",
+  "label": "Adimplemento e Extinção,7703-Pagamento"
+ },
+ {
+  "value": "5566-Roubo Majorado,7941-Denegação",
+  "label": "Roubo Majorado,7941-Denegação"
+ },
+ {
+  "value": "7752-Bancários,10433-Indenização por Dano Moral",
+  "label": "Bancários,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "3402-Ameaça ,5560-Decorrente de Violência Doméstica,10949-Violência Doméstica Contra a Mulher",
+  "label": "Ameaça ,5560-Decorrente de Violência Doméstica,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "3664-Crimes Militares",
+  "label": "Crimes Militares"
+ },
+ {
+  "value": "10301-Férias",
+  "label": "Férias"
+ },
+ {
+  "value": "9860-Posse de Drogas para Consumo Pessoal",
+  "label": "Posse de Drogas para Consumo Pessoal"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10290-Gratificação de Incentivo",
+  "label": "Sistema Remuneratório e Benefícios,10290-Gratificação de Incentivo"
+ },
+ {
+  "value": "10220-Regime Estatutário",
+  "label": "Regime Estatutário"
+ },
+ {
+  "value": "11959-Receptação culposa",
+  "label": "Receptação culposa"
+ },
+ {
+  "value": "3607-Crimes de Tráfico Ilícito e Uso Indevido de Drogas",
+  "label": "Crimes de Tráfico Ilícito e Uso Indevido de Drogas"
+ },
+ {
+  "value": "9966-Abandono Intelectual",
+  "label": "Abandono Intelectual"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10236-Promoção / Ascensão",
+  "label": "Sistema Remuneratório e Benefícios,10236-Promoção / Ascensão"
+ },
+ {
+  "value": "3402-Ameaça ,3396-Difamação",
+  "label": "Ameaça ,3396-Difamação"
+ },
+ {
+  "value": "9609-Locação de Móvel",
+  "label": "Locação de Móvel"
+ },
+ {
+  "value": "3397-Injúria,3402-Ameaça ,10949-Violência Doméstica Contra a Mulher",
+  "label": "Injúria,3402-Ameaça ,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "12347-Perturbação do trabalho ou do sossego alheios",
+  "label": "Perturbação do trabalho ou do sossego alheios"
+ },
+ {
+  "value": "11818-Medidas de proteção,9633-DIREITO DA CRIANÇA E DO ADOLESCENTE",
+  "label": "Medidas de proteção,9633-DIREITO DA CRIANÇA E DO ADOLESCENTE"
+ },
+ {
+  "value": "10302-Adicional por Tempo de Serviço",
+  "label": "Adicional por Tempo de Serviço"
+ },
+ {
+  "value": "5808-Casamento,7664-Dissolução",
+  "label": "Casamento,7664-Dissolução"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral,7780-Indenização por Dano Material,7752-Bancários",
+  "label": "Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral,7780-Indenização por Dano Material,7752-Bancários"
+ },
+ {
+  "value": "7661-Bem de Família Voluntário",
+  "label": "Bem de Família Voluntário"
+ },
+ {
+  "value": "10244-Assistência à Saúde",
+  "label": "Assistência à Saúde"
+ },
+ {
+  "value": "5802-Guarda,6239-Fixação",
+  "label": "Guarda,6239-Fixação"
+ },
+ {
+  "value": "7752-Bancários,9607-Contratos Bancários",
+  "label": "Bancários,9607-Contratos Bancários"
+ },
+ {
+  "value": "10310-Gratificação Natalina/13º salário",
+  "label": "Gratificação Natalina/13º salário"
+ },
+ {
+  "value": "10249-Salário-Família",
+  "label": "Salário-Família"
+ },
+ {
+  "value": "5779-Alimentos,7677-Reconhecimento / Dissolução",
+  "label": "Alimentos,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "10236-Promoção / Ascensão,10288-Sistema Remuneratório e Benefícios",
+  "label": "Promoção / Ascensão,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10884-Indenização / Terço Constitucional",
+  "label": "Indenização / Terço Constitucional"
+ },
+ {
+  "value": "10313-Reajustes de Remuneração, Proventos ou Pensão,10288-Sistema Remuneratório e Benefícios",
+  "label": "Reajustes de Remuneração, Proventos ou Pensão,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "9580-Espécies de Contratos,9596-Prestação de Serviços",
+  "label": "Espécies de Contratos,9596-Prestação de Serviços"
+ },
+ {
+  "value": "9603-Mútuo",
+  "label": "Mútuo"
+ },
+ {
+  "value": "7771-Contratos de Consumo,1156-DIREITO DO CONSUMIDOR",
+  "label": "Contratos de Consumo,1156-DIREITO DO CONSUMIDOR"
+ },
+ {
+  "value": "10292-Adicional de Periculosidade",
+  "label": "Adicional de Periculosidade"
+ },
+ {
+  "value": "7785-Prestação Pecuniária",
+  "label": "Prestação Pecuniária"
+ },
+ {
+  "value": "10295-Gratificação Incorporada / Quintos e Décimos / VPNI",
+  "label": "Gratificação Incorporada / Quintos e Décimos / VPNI"
+ },
+ {
+  "value": "9633-DIREITO DA CRIANÇA E DO ADOLESCENTE",
+  "label": "DIREITO DA CRIANÇA E DO ADOLESCENTE"
+ },
+ {
+  "value": "9992-Indenização por Dano Moral,10502-Indenização por Dano Material",
+  "label": "Indenização por Dano Moral,10502-Indenização por Dano Material"
+ },
+ {
+  "value": "7941-Denegação,11417-Estupro de vulnerável",
+  "label": "Denegação,11417-Estupro de vulnerável"
+ },
+ {
+  "value": "12345-Vias de fato",
+  "label": "Vias de fato"
+ },
+ {
+  "value": "9196-Liminar ,7657-Tutela e Curatela",
+  "label": "Liminar ,7657-Tutela e Curatela"
+ },
+ {
+  "value": "8826-DIREITO PROCESSUAL CIVIL E DO TRABALHO",
+  "label": "DIREITO PROCESSUAL CIVIL E DO TRABALHO"
+ },
+ {
+  "value": "7704-Pagamento em Consignação",
+  "label": "Pagamento em Consignação"
+ },
+ {
+  "value": "7691-Inadimplemento,4980-Nota Promissória",
+  "label": "Inadimplemento,4980-Nota Promissória"
+ },
+ {
+  "value": "7767-Substituição do Produto",
+  "label": "Substituição do Produto"
+ },
+ {
+  "value": "10299-Plano de Classificação de Cargos",
+  "label": "Plano de Classificação de Cargos"
+ },
+ {
+  "value": "9582-Alienação Fiduciária,9196-Liminar",
+  "label": "Alienação Fiduciária,9196-Liminar"
+ },
+ {
+  "value": "9541-Capacidade",
+  "label": "Capacidade"
+ },
+ {
+  "value": "10531-ICMS / Incidência Sobre o Ativo Fixo",
+  "label": "ICMS / Incidência Sobre o Ativo Fixo"
+ },
+ {
+  "value": "3386-Leve,10949-Violência Doméstica Contra a Mulher",
+  "label": "Leve,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,10666-Regularidade Formal",
+  "label": "Fornecimento de Energia Elétrica,10666-Regularidade Formal"
+ },
+ {
+  "value": "10577-Relações de Parentesco",
+  "label": "Relações de Parentesco"
+ },
+ {
+  "value": "10582-Rescisão / Resolução",
+  "label": "Rescisão / Resolução"
+ },
+ {
+  "value": "10630-Transação,3386-Leve",
+  "label": "Transação,3386-Leve"
+ },
+ {
+  "value": "7691-Inadimplemento,9593-Locação de Imóvel",
+  "label": "Inadimplemento,9593-Locação de Imóvel"
+ },
+ {
+  "value": "9638-Homicídio Qualificado",
+  "label": "Homicídio Qualificado"
+ },
+ {
+  "value": "9968-Abuso Sexual",
+  "label": "Abuso Sexual"
+ },
+ {
+  "value": "10411-Admissão / Permanência / Despedida",
+  "label": "Admissão / Permanência / Despedida"
+ },
+ {
+  "value": "3426-Dano,3402-Ameaça",
+  "label": "Dano,3402-Ameaça"
+ },
+ {
+  "value": "10429-Execução Contratual",
+  "label": "Execução Contratual"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,7752-Bancários",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,7752-Bancários"
+ },
+ {
+  "value": "7790-Pena Restritiva de Direitos",
+  "label": "Pena Restritiva de Direitos"
+ },
+ {
+  "value": "3396-Difamação,3395-Calúnia",
+  "label": "Difamação,3395-Calúnia"
+ },
+ {
+  "value": "9580-Espécies de Contratos,7691-Inadimplemento",
+  "label": "Espécies de Contratos,7691-Inadimplemento"
+ },
+ {
+  "value": "9196-Liminar ,10666-Regularidade Formal",
+  "label": "Liminar ,10666-Regularidade Formal"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10305-Gratificações de Atividade",
+  "label": "Sistema Remuneratório e Benefícios,10305-Gratificações de Atividade"
+ },
+ {
+  "value": "7691-Inadimplemento,9587-Compra e Venda",
+  "label": "Inadimplemento,9587-Compra e Venda"
+ },
+ {
+  "value": "5801-Busca e Apreensão de Menores",
+  "label": "Busca e Apreensão de Menores"
+ },
+ {
+  "value": "7752-Bancários,7779-Indenização por Dano Moral,9196-Liminar",
+  "label": "Bancários,7779-Indenização por Dano Moral,9196-Liminar"
+ },
+ {
+  "value": "9587-Compra e Venda,7691-Inadimplemento",
+  "label": "Compra e Venda,7691-Inadimplemento"
+ },
+ {
+  "value": "5555-Crime Tentado,3416-Furto",
+  "label": "Crime Tentado,3416-Furto"
+ },
+ {
+  "value": "5897-Associação para a Produção e Tráfico e Condutas Afins,3608-Tráfico de Drogas e Condutas Afins",
+  "label": "Associação para a Produção e Tráfico e Condutas Afins,3608-Tráfico de Drogas e Condutas Afins"
+ },
+ {
+  "value": "5805-Regulamentação de Visitas,6239-Fixação,5802-Guarda",
+  "label": "Regulamentação de Visitas,6239-Fixação,5802-Guarda"
+ },
+ {
+  "value": "9580-Espécies de Contratos,9593-Locação de Imóvel",
+  "label": "Espécies de Contratos,9593-Locação de Imóvel"
+ },
+ {
+  "value": "9587-Compra e Venda,9580-Espécies de Contratos",
+  "label": "Compra e Venda,9580-Espécies de Contratos"
+ },
+ {
+  "value": "9971-Uso ou Tráfico de Drogas",
+  "label": "Uso ou Tráfico de Drogas"
+ },
+ {
+  "value": "10502-Indenização por Dano Material",
+  "label": "Indenização por Dano Material"
+ },
+ {
+  "value": "5833-Petição de Herança",
+  "label": "Petição de Herança"
+ },
+ {
+  "value": "3397-Injúria,3386-Leve",
+  "label": "Injúria,3386-Leve"
+ },
+ {
+  "value": "10710-Adicional de Etapa Alimentar",
+  "label": "Adicional de Etapa Alimentar"
+ },
+ {
+  "value": "5802-Guarda,5805-Regulamentação de Visitas,6239-Fixação",
+  "label": "Guarda,5805-Regulamentação de Visitas,6239-Fixação"
+ },
+ {
+  "value": "9098- Cabimento",
+  "label": "Cabimento"
+ },
+ {
+  "value": "10223-Enquadramento,10288-Sistema Remuneratório e Benefícios",
+  "label": "Enquadramento,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10508-Maus Tratos",
+  "label": "Maus Tratos"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10706-Gratificações Municipais Específicas",
+  "label": "Sistema Remuneratório e Benefícios,10706-Gratificações Municipais Específicas"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10439-Indenização por Dano Material,10441-Acidente de Trânsito",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material,10441-Acidente de Trânsito"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,9196-Liminar",
+  "label": "Fornecimento de Energia Elétrica,9196-Liminar"
+ },
+ {
+  "value": "5779-Alimentos,5788-Revisão",
+  "label": "Alimentos,5788-Revisão"
+ },
+ {
+  "value": "3417-Furto Qualificado ,7941-Denegação",
+  "label": "Furto Qualificado ,7941-Denegação"
+ },
+ {
+  "value": "7834-Retificação de Data de Nascimento",
+  "label": "Retificação de Data de Nascimento"
+ },
+ {
+  "value": "3637-Crimes Previstos no Estatuto da criança e do adolescente",
+  "label": "Crimes Previstos no Estatuto da criança e do adolescente"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,7752-Bancários",
+  "label": "Indenização por Dano Moral,7752-Bancários"
+ },
+ {
+  "value": "7752-Bancários,7768-Rescisão do contrato e devolução do dinheiro",
+  "label": "Bancários,7768-Rescisão do contrato e devolução do dinheiro"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7780-Indenização por Dano Material,7752-Bancários",
+  "label": "Interpretação / Revisão de Contrato,7780-Indenização por Dano Material,7752-Bancários"
+ },
+ {
+  "value": "9518-Efeito Suspensivo / Impugnação / Embargos à Execução,10666-Regularidade Formal",
+  "label": "Efeito Suspensivo / Impugnação / Embargos à Execução,10666-Regularidade Formal"
+ },
+ {
+  "value": "10300-Data Base",
+  "label": "Data Base"
+ },
+ {
+  "value": "10461-Direito de Vizinhança",
+  "label": "Direito de Vizinhança"
+ },
+ {
+  "value": "3437-Apropriação de Coisa Havida por Erro, Caso Fortuito ou Força da Natureza",
+  "label": "Apropriação de Coisa Havida por Erro, Caso Fortuito ou Força da Natureza"
+ },
+ {
+  "value": "10219-Servidor Público Civil",
+  "label": "Servidor Público Civil"
+ },
+ {
+  "value": "5802-Guarda,7677-Reconhecimento / Dissolução",
+  "label": "Guarda,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "7691-Inadimplemento,10439-Indenização por Dano Material,4980-Nota Promissória",
+  "label": "Inadimplemento,10439-Indenização por Dano Material,4980-Nota Promissória"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10666-Regularidade Formal",
+  "label": "Indenização por Dano Moral,10666-Regularidade Formal"
+ },
+ {
+  "value": "3386-Leve,3402-Ameaça",
+  "label": "Leve,3402-Ameaça"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,6226-Inclusão Indevida em Cadastro de Inadimplentes",
+  "label": "Indenização por Dano Moral,6226-Inclusão Indevida em Cadastro de Inadimplentes"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10312-Piso Salarial",
+  "label": "Sistema Remuneratório e Benefícios,10312-Piso Salarial"
+ },
+ {
+  "value": "5804-Investigação de Paternidade,10577-Relações de Parentesco",
+  "label": "Investigação de Paternidade,10577-Relações de Parentesco"
+ },
+ {
+  "value": "7752-Bancários,7779-Indenização por Dano Moral,7780-Indenização por Dano Material",
+  "label": "Bancários,7779-Indenização por Dano Moral,7780-Indenização por Dano Material"
+ },
+ {
+  "value": "9180-Expropriação de Bens",
+  "label": "Expropriação de Bens"
+ },
+ {
+  "value": "3435-Receptação,3417-Furto Qualificado",
+  "label": "Receptação,3417-Furto Qualificado"
+ },
+ {
+  "value": "10395-Multas e demais Sanções",
+  "label": "Multas e demais Sanções"
+ },
+ {
+  "value": "3632-Crimes de Trânsito,7941-Denegação",
+  "label": "Crimes de Trânsito,7941-Denegação"
+ },
+ {
+  "value": "7690-Adimplemento e Extinção",
+  "label": "Adimplemento e Extinção"
+ },
+ {
+  "value": "10419-Liberação de Veículo Apreendido",
+  "label": "Liberação de Veículo Apreendido"
+ },
+ {
+  "value": "7789-Limitação de Fim de Semana",
+  "label": "Limitação de Fim de Semana"
+ },
+ {
+  "value": "9893-Do Sistema Nacional de Armas",
+  "label": "Do Sistema Nacional de Armas"
+ },
+ {
+  "value": "10291-Adicional de Insalubridade,10288-Sistema Remuneratório e Benefícios",
+  "label": "Adicional de Insalubridade,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10630-Transação,3402-Ameaça",
+  "label": "Transação,3402-Ameaça"
+ },
+ {
+  "value": "10445-Esbulho / Turbação / Ameaça,10444-Posse",
+  "label": "Esbulho / Turbação / Ameaça,10444-Posse"
+ },
+ {
+  "value": "3431-Estelionato,7941-Denegação",
+  "label": "Estelionato,7941-Denegação"
+ },
+ {
+  "value": "9978-Viagem ao Exterior",
+  "label": "Viagem ao Exterior"
+ },
+ {
+  "value": "12354-Perturbação da tranquilidade",
+  "label": "Perturbação da tranquilidade"
+ },
+ {
+  "value": "10444-Posse,10445-Esbulho / Turbação / Ameaça",
+  "label": "Posse,10445-Esbulho / Turbação / Ameaça"
+ },
+ {
+  "value": "9582-Alienação Fiduciária,10666-Regularidade Formal",
+  "label": "Alienação Fiduciária,10666-Regularidade Formal"
+ },
+ {
+  "value": "5952-IPTU/ Imposto Predial e Territorial Urbano,7703-Pagamento",
+  "label": "IPTU/ Imposto Predial e Territorial Urbano,7703-Pagamento"
+ },
+ {
+  "value": "3637-Crimes Previstos no Estatuto da criança e do adolescente,5566-Roubo Majorado",
+  "label": "Crimes Previstos no Estatuto da criança e do adolescente,5566-Roubo Majorado"
+ },
+ {
+  "value": "3619-Crimes contra a Fauna",
+  "label": "Crimes contra a Fauna"
+ },
+ {
+  "value": "10337-Sistema Remuneratório e Benefícios,10342-Reajuste de Remuneração, Soldo, Proventos ou Pensão",
+  "label": "Sistema Remuneratório e Benefícios,10342-Reajuste de Remuneração, Soldo, Proventos ou Pensão"
+ },
+ {
+  "value": "3396-Difamação,3402-Ameaça",
+  "label": "Difamação,3402-Ameaça"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10437-Direito de Imagem",
+  "label": "Indenização por Dano Moral,10437-Direito de Imagem"
+ },
+ {
+  "value": "5779-Alimentos,5802-Guarda,5805-Regulamentação de Visitas,7677-Reconhecimento / Dissolução",
+  "label": "Alimentos,5802-Guarda,5805-Regulamentação de Visitas,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "7691-Inadimplemento,9596-Prestação de Serviços",
+  "label": "Inadimplemento,9596-Prestação de Serviços"
+ },
+ {
+  "value": "7785-Prestação Pecuniária,7787-Prestação de Serviços à Comunidade",
+  "label": "Prestação Pecuniária,7787-Prestação de Serviços à Comunidade"
+ },
+ {
+  "value": "10421-Contratos Administrativos",
+  "label": "Contratos Administrativos"
+ },
+ {
+  "value": "8990-Provas",
+  "label": "Provas"
+ },
+ {
+  "value": "7785-Prestação Pecuniária,10602-Condicional do processo",
+  "label": "Prestação Pecuniária,10602-Condicional do processo"
+ },
+ {
+  "value": "5555-Crime Tentado,3417-Furto Qualificado",
+  "label": "Crime Tentado,3417-Furto Qualificado"
+ },
+ {
+  "value": "7656-União Estável ou Concubinato,7677-Reconhecimento / Dissolução",
+  "label": "União Estável ou Concubinato,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "7620-Estabelecimentos de Ensino,7779-Indenização por Dano Moral",
+  "label": "Estabelecimentos de Ensino,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10303-Adicional de Horas Extras",
+  "label": "Sistema Remuneratório e Benefícios,10303-Adicional de Horas Extras"
+ },
+ {
+  "value": "3397-Injúria,10949-Violência Doméstica Contra a Mulher",
+  "label": "Injúria,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "10410-Contrato Temporário de Mão de Obra L 8.745/1993",
+  "label": "Contrato Temporário de Mão de Obra L 8.745/1993"
+ },
+ {
+  "value": "5802-Guarda,6239-Fixação,7677-Reconhecimento / Dissolução",
+  "label": "Guarda,6239-Fixação,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "9582-Alienação Fiduciária,10481-Propriedade Fiduciária,9196-Liminar",
+  "label": "Alienação Fiduciária,10481-Propriedade Fiduciária,9196-Liminar"
+ },
+ {
+  "value": "10452-Reivindicação",
+  "label": "Reivindicação"
+ },
+ {
+  "value": "10880-Cumprimento Provisório de Sentença",
+  "label": "Cumprimento Provisório de Sentença"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10308-Adicional de Serviço Noturno",
+  "label": "Sistema Remuneratório e Benefícios,10308-Adicional de Serviço Noturno"
+ },
+ {
+  "value": "10440-Serviços de Saúde",
+  "label": "Serviços de Saúde"
+ },
+ {
+  "value": "10897-Competência dos Juizados Especiais",
+  "label": "Competência dos Juizados Especiais"
+ },
+ {
+  "value": "10949-Violência Doméstica Contra a Mulher,5560-Decorrente de Violência Doméstica",
+  "label": "Violência Doméstica Contra a Mulher,5560-Decorrente de Violência Doméstica"
+ },
+ {
+  "value": "3566-Resistência",
+  "label": "Resistência"
+ },
+ {
+  "value": "7771-Contratos de Consumo",
+  "label": "Contratos de Consumo"
+ },
+ {
+  "value": "10630-Transação,3573-Desacato",
+  "label": "Transação,3573-Desacato"
+ },
+ {
+  "value": "12501-Cirurgia",
+  "label": "Cirurgia"
+ },
+ {
+  "value": "7775-Serviços Hospitalares",
+  "label": "Serviços Hospitalares"
+ },
+ {
+  "value": "10630-Transação,5885-Posse de Drogas para Consumo Pessoal",
+  "label": "Transação,5885-Posse de Drogas para Consumo Pessoal"
+ },
+ {
+  "value": "5779-Alimentos,6239-Fixação,5804-Investigação de Paternidade",
+  "label": "Alimentos,6239-Fixação,5804-Investigação de Paternidade"
+ },
+ {
+  "value": "9742-Estupro",
+  "label": "Estupro"
+ },
+ {
+  "value": "5779-Alimentos,5805-Regulamentação de Visitas,5802-Guarda",
+  "label": "Alimentos,5805-Regulamentação de Visitas,5802-Guarda"
+ },
+ {
+  "value": "10220-Regime Estatutário,10236-Promoção / Ascensão",
+  "label": "Regime Estatutário,10236-Promoção / Ascensão"
+ },
+ {
+  "value": "3416-Furto ,7941-Denegação",
+  "label": "Furto ,7941-Denegação"
+ },
+ {
+  "value": "5971-Estaduais",
+  "label": "Estaduais"
+ },
+ {
+  "value": "14070-Fazenda Pública",
+  "label": "Fazenda Pública"
+ },
+ {
+  "value": "9596-Prestação de Serviços,7691-Inadimplemento",
+  "label": "Prestação de Serviços,7691-Inadimplemento"
+ },
+ {
+  "value": "10655-Honorários Advocatícios",
+  "label": "Honorários Advocatícios"
+ },
+ {
+  "value": "3372-Homicídio Qualificado,10890-Vício Formal do Julgamento",
+  "label": "Homicídio Qualificado,10890-Vício Formal do Julgamento"
+ },
+ {
+  "value": "9892-De Trânsito",
+  "label": "De Trânsito"
+ },
+ {
+  "value": "8934-Valor da Causa",
+  "label": "Valor da Causa"
+ },
+ {
+  "value": "9607-Contratos Bancários,4980-Nota Promissória",
+  "label": "Contratos Bancários,4980-Nota Promissória"
+ },
+ {
+  "value": "5805-Regulamentação de Visitas,6238-Oferta",
+  "label": "Regulamentação de Visitas,6238-Oferta"
+ },
+ {
+  "value": "4862-Transporte Aéreo,7779-Indenização por Dano Moral",
+  "label": "Transporte Aéreo,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "9694-Receptação",
+  "label": "Receptação"
+ },
+ {
+  "value": "10633-Regime inicial",
+  "label": "Regime inicial"
+ },
+ {
+  "value": "3581-Exercício arbitrário das próprias razões",
+  "label": "Exercício arbitrário das próprias razões"
+ },
+ {
+  "value": "7769-Abatimento proporcional do preço",
+  "label": "Abatimento proporcional do preço"
+ },
+ {
+  "value": "4701-Ato / Negócio Jurídico",
+  "label": "Ato / Negócio Jurídico"
+ },
+ {
+  "value": "3406-Violação de domicílio ,3402-Ameaça",
+  "label": "Violação de domicílio ,3402-Ameaça"
+ },
+ {
+  "value": "10894-Abuso de Poder",
+  "label": "Abuso de Poder"
+ },
+ {
+  "value": "3542-Falsa identidade",
+  "label": "Falsa identidade"
+ },
+ {
+  "value": "7789-Limitação de Fim de Semana,7790-Pena Restritiva de Direitos",
+  "label": "Limitação de Fim de Semana,7790-Pena Restritiva de Direitos"
+ },
+ {
+  "value": "3515-Infração de Medida Sanitária Preventiva",
+  "label": "Infração de Medida Sanitária Preventiva"
+ },
+ {
+  "value": "9166-Multa de 10%",
+  "label": "Multa de 10%"
+ },
+ {
+  "value": "3548-Peculato",
+  "label": "Peculato"
+ },
+ {
+  "value": "3419-Roubo ,7941-Denegação",
+  "label": "Roubo ,7941-Denegação"
+ },
+ {
+  "value": "3435-Receptação,3416-Furto",
+  "label": "Receptação,3416-Furto"
+ },
+ {
+  "value": "9160-Levantamento de Valor,7760-Fornecimento de Energia Elétrica",
+  "label": "Levantamento de Valor,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "9610-Despejo para Uso Próprio",
+  "label": "Despejo para Uso Próprio"
+ },
+ {
+  "value": "10010-Ato Lesivo ao Patrimônio Artístico, Estético, Histórico ou Turístico",
+  "label": "Ato Lesivo ao Patrimônio Artístico, Estético, Histórico ou Turístico"
+ },
+ {
+  "value": "10441-Acidente de Trânsito,10435-Acidente de Trânsito",
+  "label": "Acidente de Trânsito,10435-Acidente de Trânsito"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10291-Adicional de Insalubridade",
+  "label": "Sistema Remuneratório e Benefícios,10291-Adicional de Insalubridade"
+ },
+ {
+  "value": "7703-Pagamento,4980-Nota Promissória",
+  "label": "Pagamento,4980-Nota Promissória"
+ },
+ {
+  "value": "7752-Bancários,7780-Indenização por Dano Material",
+  "label": "Bancários,7780-Indenização por Dano Material"
+ },
+ {
+  "value": "3397-Injúria,3402-Ameaça ,3386-Leve",
+  "label": "Injúria,3402-Ameaça ,3386-Leve"
+ },
+ {
+  "value": "10418-CNH - Carteira Nacional de Habilitação",
+  "label": "CNH - Carteira Nacional de Habilitação"
+ },
+ {
+  "value": "10945-Expurgos Inflacionários / Planos Econômicos",
+  "label": "Expurgos Inflacionários / Planos Econômicos"
+ },
+ {
+  "value": "7703-Pagamento,7690-Adimplemento e Extinção",
+  "label": "Pagamento,7690-Adimplemento e Extinção"
+ },
+ {
+  "value": "7792-Pena de Multa,7787-Prestação de Serviços à Comunidade",
+  "label": "Pena de Multa,7787-Prestação de Serviços à Comunidade"
+ },
+ {
+  "value": "3608-Tráfico de Drogas e Condutas Afins,10890-Vício Formal do Julgamento",
+  "label": "Tráfico de Drogas e Condutas Afins,10890-Vício Formal do Julgamento"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7760-Fornecimento de Energia Elétrica",
+  "label": "Interpretação / Revisão de Contrato,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "10630-Transação,3621-Poluição",
+  "label": "Transação,3621-Poluição"
+ },
+ {
+  "value": "5557-Gravíssima",
+  "label": "Gravíssima"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7770-Interpretação / Revisão de Contrato",
+  "label": "Indenização por Dano Moral,7770-Interpretação / Revisão de Contrato"
+ },
+ {
+  "value": "10306-Auxílio-transporte",
+  "label": "Auxílio-transporte"
+ },
+ {
+  "value": "3397-Injúria,3402-Ameaça ,5560-Decorrente de Violência Doméstica",
+  "label": "Injúria,3402-Ameaça ,5560-Decorrente de Violência Doméstica"
+ },
+ {
+  "value": "5555-Crime Tentado,3370-Homicídio Simples",
+  "label": "Crime Tentado,3370-Homicídio Simples"
+ },
+ {
+  "value": "4980-Nota Promissória,4949-Títulos de Crédito",
+  "label": "Nota Promissória,4949-Títulos de Crédito"
+ },
+ {
+  "value": "10291-Adicional de Insalubridade,10666-Regularidade Formal",
+  "label": "Adicional de Insalubridade,10666-Regularidade Formal"
+ },
+ {
+  "value": "9196-Liminar ,10445-Esbulho / Turbação / Ameaça,9584-Arrendamento Mercantil",
+  "label": "Liminar ,10445-Esbulho / Turbação / Ameaça,9584-Arrendamento Mercantil"
+ },
+ {
+  "value": "9636-Homicídio Simples",
+  "label": "Homicídio Simples"
+ },
+ {
+  "value": "10110-DIREITO AMBIENTAL",
+  "label": "DIREITO AMBIENTAL"
+ },
+ {
+  "value": "7696-Preferências e Privilégios Creditórios",
+  "label": "Preferências e Privilégios Creditórios"
+ },
+ {
+  "value": "5779-Alimentos,6239-Fixação,5802-Guarda",
+  "label": "Alimentos,6239-Fixação,5802-Guarda"
+ },
+ {
+  "value": "3396-Difamação,3397-Injúria,3395-Calúnia",
+  "label": "Difamação,3397-Injúria,3395-Calúnia"
+ },
+ {
+  "value": "9196-Liminar ,10671-Obrigação de Fazer / Não Fazer",
+  "label": "Liminar ,10671-Obrigação de Fazer / Não Fazer"
+ },
+ {
+  "value": "9196-Liminar ,5788-Revisão",
+  "label": "Liminar ,5788-Revisão"
+ },
+ {
+  "value": "287-DIREITO PENAL",
+  "label": "DIREITO PENAL"
+ },
+ {
+  "value": "3397-Injúria,3402-Ameaça ,5560-Decorrente de Violência Doméstica,3386-Leve",
+  "label": "Injúria,3402-Ameaça ,5560-Decorrente de Violência Doméstica,3386-Leve"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,4862-Transporte Aéreo",
+  "label": "Indenização por Dano Moral,4862-Transporte Aéreo"
+ },
+ {
+  "value": "10220-Regime Estatutário,10313-Reajustes de Remuneração, Proventos ou Pensão",
+  "label": "Regime Estatutário,10313-Reajustes de Remuneração, Proventos ou Pensão"
+ },
+ {
+  "value": "10538-Taxa de Licenciamento de Estabelecimento",
+  "label": "Taxa de Licenciamento de Estabelecimento"
+ },
+ {
+  "value": "3435-Receptação,7941-Denegação",
+  "label": "Receptação,7941-Denegação"
+ },
+ {
+  "value": "7703-Pagamento,9596-Prestação de Serviços",
+  "label": "Pagamento,9596-Prestação de Serviços"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,7768-Rescisão do contrato e devolução do dinheiro",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,7768-Rescisão do contrato e devolução do dinheiro"
+ },
+ {
+  "value": "7785-Prestação Pecuniária,7787-Prestação de Serviços à Comunidade,7790-Pena Restritiva de Direitos",
+  "label": "Prestação Pecuniária,7787-Prestação de Serviços à Comunidade,7790-Pena Restritiva de Direitos"
+ },
+ {
+  "value": "6056-Gratificação Natalina/13º Salário",
+  "label": "Gratificação Natalina/13º Salário"
+ },
+ {
+  "value": "6062-1/3 de férias",
+  "label": "1/3 de férias"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral,7752-Bancários",
+  "label": "Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral,7752-Bancários"
+ },
+ {
+  "value": "3533-Falsidade ideológica",
+  "label": "Falsidade ideológica"
+ },
+ {
+  "value": "5566-Roubo Majorado,10890-Vício Formal do Julgamento",
+  "label": "Roubo Majorado,10890-Vício Formal do Julgamento"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,4862-Transporte Aéreo",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,4862-Transporte Aéreo"
+ },
+ {
+  "value": "7752-Bancários,7768-Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral",
+  "label": "Bancários,7768-Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7676-Administração de herança",
+  "label": "Administração de herança"
+ },
+ {
+  "value": "7752-Bancários,7770-Interpretação / Revisão de Contrato,7773-Financiamento de Produto",
+  "label": "Bancários,7770-Interpretação / Revisão de Contrato,7773-Financiamento de Produto"
+ },
+ {
+  "value": "7752-Bancários,7772-Cartão de Crédito,9196-Liminar",
+  "label": "Bancários,7772-Cartão de Crédito,9196-Liminar"
+ },
+ {
+  "value": "4939-Desconsideração da Personalidade Jurídica",
+  "label": "Desconsideração da Personalidade Jurídica"
+ },
+ {
+  "value": "6226-Inclusão Indevida em Cadastro de Inadimplentes,7752-Bancários,7779-Indenização por Dano Moral",
+  "label": "Inclusão Indevida em Cadastro de Inadimplentes,7752-Bancários,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "5779-Alimentos,5787-Exoneração",
+  "label": "Alimentos,5787-Exoneração"
+ },
+ {
+  "value": "6226-Inclusão Indevida em Cadastro de Inadimplentes,7779-Indenização por Dano Moral,7752-Bancários",
+  "label": "Inclusão Indevida em Cadastro de Inadimplentes,7779-Indenização por Dano Moral,7752-Bancários"
+ },
+ {
+  "value": "7792-Pena de Multa",
+  "label": "Pena de Multa"
+ },
+ {
+  "value": "4830-Cancelamento de vôo",
+  "label": "Cancelamento de vôo"
+ },
+ {
+  "value": "7698-Perdas e Danos,9587-Compra e Venda",
+  "label": "Perdas e Danos,9587-Compra e Venda"
+ },
+ {
+  "value": "5555-Crime Tentado,5566-Roubo Majorado",
+  "label": "Crime Tentado,5566-Roubo Majorado"
+ },
+ {
+  "value": "10448-Propriedade",
+  "label": "Propriedade"
+ },
+ {
+  "value": "5802-Guarda,6239-Fixação,7664-Dissolução",
+  "label": "Guarda,6239-Fixação,7664-Dissolução"
+ },
+ {
+  "value": "10305-Gratificações de Atividade,10288-Sistema Remuneratório e Benefícios",
+  "label": "Gratificações de Atividade,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10435-Acidente de Trânsito,10441-Acidente de Trânsito",
+  "label": "Acidente de Trânsito,10441-Acidente de Trânsito"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,10433-Indenização por Dano Moral",
+  "label": "Fornecimento de Energia Elétrica,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "9685-Dano (art. 163)",
+  "label": "Dano (art. 163)"
+ },
+ {
+  "value": "10308-Adicional de Serviço Noturno,10288-Sistema Remuneratório e Benefícios",
+  "label": "Adicional de Serviço Noturno,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "3402-Ameaça ,5560-Decorrente de Violência Doméstica,3386-Leve",
+  "label": "Ameaça ,5560-Decorrente de Violência Doméstica,3386-Leve"
+ },
+ {
+  "value": "6220-Responsabilidade do Fornecedor",
+  "label": "Responsabilidade do Fornecedor"
+ },
+ {
+  "value": "7709-Compensação",
+  "label": "Compensação"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10439-Indenização por Dano Material,10435-Acidente de Trânsito",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material,10435-Acidente de Trânsito"
+ },
+ {
+  "value": "3397-Injúria,3395-Calúnia",
+  "label": "Injúria,3395-Calúnia"
+ },
+ {
+  "value": "5802-Guarda,5805-Regulamentação de Visitas,6239-Fixação,7677-Reconhecimento / Dissolução",
+  "label": "Guarda,5805-Regulamentação de Visitas,6239-Fixação,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "10334-Promoção",
+  "label": "Promoção"
+ },
+ {
+  "value": "10381-Classificação e/ou Preterição",
+  "label": "Classificação e/ou Preterição"
+ },
+ {
+  "value": "10446-Imissão",
+  "label": "Imissão"
+ },
+ {
+  "value": "5951-ISS/ Imposto sobre Serviços",
+  "label": "ISS/ Imposto sobre Serviços"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,7752-Bancários",
+  "label": "Rescisão do contrato e devolução do dinheiro,7752-Bancários"
+ },
+ {
+  "value": "9596-Prestação de Serviços,9580-Espécies de Contratos",
+  "label": "Prestação de Serviços,9580-Espécies de Contratos"
+ },
+ {
+  "value": "9587-Compra e Venda,4980-Nota Promissória",
+  "label": "Compra e Venda,4980-Nota Promissória"
+ },
+ {
+  "value": "10598-Cobrança indevida de ligações",
+  "label": "Cobrança indevida de ligações"
+ },
+ {
+  "value": "9196-Liminar ,10308-Adicional de Serviço Noturno",
+  "label": "Liminar ,10308-Adicional de Serviço Noturno"
+ },
+ {
+  "value": "7691-Inadimplemento,10439-Indenização por Dano Material,9587-Compra e Venda",
+  "label": "Inadimplemento,10439-Indenização por Dano Material,9587-Compra e Venda"
+ },
+ {
+  "value": "7941-Denegação,10949-Violência Doméstica Contra a Mulher",
+  "label": "Denegação,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10293-Adicional de Fronteira",
+  "label": "Sistema Remuneratório e Benefícios,10293-Adicional de Fronteira"
+ },
+ {
+  "value": "9196-Liminar ,9582-Alienação Fiduciária,10481-Propriedade Fiduciária",
+  "label": "Liminar ,9582-Alienação Fiduciária,10481-Propriedade Fiduciária"
+ },
+ {
+  "value": "11806-Empréstimo consignado",
+  "label": "Empréstimo consignado"
+ },
+ {
+  "value": "11883-Tratamento Médico-Hospitalar",
+  "label": "Tratamento Médico-Hospitalar"
+ },
+ {
+  "value": "3397-Injúria,3402-Ameaça ,3396-Difamação",
+  "label": "Injúria,3402-Ameaça ,3396-Difamação"
+ },
+ {
+  "value": "10223-Enquadramento,10236-Promoção / Ascensão",
+  "label": "Enquadramento,10236-Promoção / Ascensão"
+ },
+ {
+  "value": "3397-Injúria,5560-Decorrente de Violência Doméstica",
+  "label": "Injúria,5560-Decorrente de Violência Doméstica"
+ },
+ {
+  "value": "7621-Seguro,7752-Bancários",
+  "label": "Seguro,7752-Bancários"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral",
+  "label": "Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7941-Denegação,12194-Contra a Mulher",
+  "label": "Denegação,12194-Contra a Mulher"
+ },
+ {
+  "value": "9149-Valor da Execução / Cálculo / Atualização,9163-Penhora / Depósito/ Avaliação",
+  "label": "Valor da Execução / Cálculo / Atualização,9163-Penhora / Depósito/ Avaliação"
+ },
+ {
+  "value": "3401-Constrangimento ilegal",
+  "label": "Constrangimento ilegal"
+ },
+ {
+  "value": "3396-Difamação,3397-Injúria",
+  "label": "Difamação,3397-Injúria"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7620-Estabelecimentos de Ensino",
+  "label": "Indenização por Dano Moral,7620-Estabelecimentos de Ensino"
+ },
+ {
+  "value": "10672-Precatório",
+  "label": "Precatório"
+ },
+ {
+  "value": "12503-Urgência",
+  "label": "Urgência"
+ },
+ {
+  "value": "3386-Leve,3397-Injúria",
+  "label": "Leve,3397-Injúria"
+ },
+ {
+  "value": "3632-Crimes de Trânsito,10890-Vício Formal do Julgamento",
+  "label": "Crimes de Trânsito,10890-Vício Formal do Julgamento"
+ },
+ {
+  "value": "10313-Reajustes de Remuneração, Proventos ou Pensão,10666-Regularidade Formal",
+  "label": "Reajustes de Remuneração, Proventos ou Pensão,10666-Regularidade Formal"
+ },
+ {
+  "value": "8829-Competência",
+  "label": "Competência"
+ },
+ {
+  "value": "9196-Liminar ,10894-Abuso de Poder",
+  "label": "Liminar ,10894-Abuso de Poder"
+ },
+ {
+  "value": "10313-Reajustes de Remuneração, Proventos ou Pensão,10696-Professor",
+  "label": "Reajustes de Remuneração, Proventos ou Pensão,10696-Professor"
+ },
+ {
+  "value": "3402-Ameaça ,3395-Calúnia",
+  "label": "Ameaça ,3395-Calúnia"
+ },
+ {
+  "value": "6226-Inclusão Indevida em Cadastro de Inadimplentes,7752-Bancários",
+  "label": "Inclusão Indevida em Cadastro de Inadimplentes,7752-Bancários"
+ },
+ {
+  "value": "7691-Inadimplemento,9598-Transação",
+  "label": "Inadimplemento,9598-Transação"
+ },
+ {
+  "value": "11816-Infrações administrativas",
+  "label": "Infrações administrativas"
+ },
+ {
+  "value": "5560-Decorrente de Violência Doméstica,3402-Ameaça",
+  "label": "Decorrente de Violência Doméstica,3402-Ameaça"
+ },
+ {
+  "value": "10301-Férias,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios,10308-Adicional de Serviço Noturno",
+  "label": "Férias,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios,10308-Adicional de Serviço Noturno"
+ },
+ {
+  "value": "10877-Policiais Civis,10306-Auxílio-transporte",
+  "label": "Policiais Civis,10306-Auxílio-transporte"
+ },
+ {
+  "value": "3692-Contravenções Penais,10949-Violência Doméstica Contra a Mulher",
+  "label": "Contravenções Penais,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "10023-Multas e demais Sanções",
+  "label": "Multas e demais Sanções"
+ },
+ {
+  "value": "10445-Esbulho / Turbação / Ameaça,9196-Liminar",
+  "label": "Esbulho / Turbação / Ameaça,9196-Liminar"
+ },
+ {
+  "value": "3397-Injúria,10949-Violência Doméstica Contra a Mulher,3402-Ameaça",
+  "label": "Injúria,10949-Violência Doméstica Contra a Mulher,3402-Ameaça"
+ },
+ {
+  "value": "9196-Liminar ,12491-Tratamento médico-hospitalar",
+  "label": "Liminar ,12491-Tratamento médico-hospitalar"
+ },
+ {
+  "value": "10422-Pagamento Atrasado / Correção Monetária,10425-Rescisão",
+  "label": "Pagamento Atrasado / Correção Monetária,10425-Rescisão"
+ },
+ {
+  "value": "10941-Viagem Nacional",
+  "label": "Viagem Nacional"
+ },
+ {
+  "value": "3539-Uso de documento falso",
+  "label": "Uso de documento falso"
+ },
+ {
+  "value": "5802-Guarda,5779-Alimentos",
+  "label": "Guarda,5779-Alimentos"
+ },
+ {
+  "value": "7656-União Estável ou Concubinato",
+  "label": "União Estável ou Concubinato"
+ },
+ {
+  "value": "9585-Cartão de Crédito",
+  "label": "Cartão de Crédito"
+ },
+ {
+  "value": "3474-Abandono Material",
+  "label": "Abandono Material"
+ },
+ {
+  "value": "9966-Abandono Intelectual,9965-Abandono Material",
+  "label": "Abandono Intelectual,9965-Abandono Material"
+ },
+ {
+  "value": "10949-Violência Doméstica Contra a Mulher,3397-Injúria",
+  "label": "Violência Doméstica Contra a Mulher,3397-Injúria"
+ },
+ {
+  "value": "9641-Lesões Corporais",
+  "label": "Lesões Corporais"
+ },
+ {
+  "value": "7673-Sucessões",
+  "label": "Sucessões"
+ },
+ {
+  "value": "3443-Violação de direito autoral",
+  "label": "Violação de direito autoral"
+ },
+ {
+  "value": "10070-Ressarcimento ao SUS",
+  "label": "Ressarcimento ao SUS"
+ },
+ {
+  "value": "9196-Liminar ,10481-Propriedade Fiduciária,9582-Alienação Fiduciária",
+  "label": "Liminar ,10481-Propriedade Fiduciária,9582-Alienação Fiduciária"
+ },
+ {
+  "value": "9414-Extinção da Execução",
+  "label": "Extinção da Execução"
+ },
+ {
+  "value": "3435-Receptação,5566-Roubo Majorado",
+  "label": "Receptação,5566-Roubo Majorado"
+ },
+ {
+  "value": "10324-Militar",
+  "label": "Militar"
+ },
+ {
+  "value": "10701-Pagamento em Pecúnia",
+  "label": "Pagamento em Pecúnia"
+ },
+ {
+  "value": "5802-Guarda,5805-Regulamentação de Visitas,7677-Reconhecimento / Dissolução",
+  "label": "Guarda,5805-Regulamentação de Visitas,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "7761-Fornecimento de Água",
+  "label": "Fornecimento de Água"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,9587-Compra e Venda",
+  "label": "Rescisão do contrato e devolução do dinheiro,9587-Compra e Venda"
+ },
+ {
+  "value": "10439-Indenização por Dano Material,10433-Indenização por Dano Moral,10666-Regularidade Formal",
+  "label": "Indenização por Dano Material,10433-Indenização por Dano Moral,10666-Regularidade Formal"
+ },
+ {
+  "value": "5972-Municipais",
+  "label": "Municipais"
+ },
+ {
+  "value": "11000-Cobrança de Aluguéis - Sem despejo",
+  "label": "Cobrança de Aluguéis - Sem despejo"
+ },
+ {
+  "value": "3606-Crimes de Abuso de Autoridade Lei 4.898/1965",
+  "label": "Crimes de Abuso de Autoridade Lei 4.898/1965"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7780-Indenização por Dano Material,7773-Financiamento de Produto",
+  "label": "Interpretação / Revisão de Contrato,7780-Indenização por Dano Material,7773-Financiamento de Produto"
+ },
+ {
+  "value": "9196-Liminar ,10433-Indenização por Dano Moral",
+  "label": "Liminar ,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "10445-Esbulho / Turbação / Ameaça,10666-Regularidade Formal",
+  "label": "Esbulho / Turbação / Ameaça,10666-Regularidade Formal"
+ },
+ {
+  "value": "6239-Fixação,7677-Reconhecimento / Dissolução",
+  "label": "Fixação,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7773-Financiamento de Produto",
+  "label": "Interpretação / Revisão de Contrato,7773-Financiamento de Produto"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10667-Gratificações Estaduais Específicas",
+  "label": "Sistema Remuneratório e Benefícios,10667-Gratificações Estaduais Específicas"
+ },
+ {
+  "value": "4949-Títulos de Crédito,4980-Nota Promissória",
+  "label": "Títulos de Crédito,4980-Nota Promissória"
+ },
+ {
+  "value": "5813-Nulidade / Anulação",
+  "label": "Nulidade / Anulação"
+ },
+ {
+  "value": "6189-Certidão de Tempo de Serviço",
+  "label": "Certidão de Tempo de Serviço"
+ },
+ {
+  "value": "9593-Locação de Imóvel,7691-Inadimplemento",
+  "label": "Locação de Imóvel,7691-Inadimplemento"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10435-Acidente de Trânsito,10439-Indenização por Dano Material",
+  "label": "Indenização por Dano Moral,10435-Acidente de Trânsito,10439-Indenização por Dano Material"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10422-Pagamento Atrasado / Correção Monetária",
+  "label": "Sistema Remuneratório e Benefícios,10422-Pagamento Atrasado / Correção Monetária"
+ },
+ {
+  "value": "10592-Desconto em Folha de Pagamento/Benefício Previdenciário",
+  "label": "Desconto em Folha de Pagamento/Benefício Previdenciário"
+ },
+ {
+  "value": "7698-Perdas e Danos,9606-Compromisso",
+  "label": "Perdas e Danos,9606-Compromisso"
+ },
+ {
+  "value": "7717-Espécies de Títulos de Crédito,7691-Inadimplemento",
+  "label": "Espécies de Títulos de Crédito,7691-Inadimplemento"
+ },
+ {
+  "value": "15069-Requisição de Registro de Nascimento",
+  "label": "Requisição de Registro de Nascimento"
+ },
+ {
+  "value": "7772-Cartão de Crédito,7779-Indenização por Dano Moral",
+  "label": "Cartão de Crédito,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7767-Substituição do Produto",
+  "label": "Indenização por Dano Moral,7767-Substituição do Produto"
+ },
+ {
+  "value": "5555-Crime Tentado",
+  "label": "Crime Tentado"
+ },
+ {
+  "value": "9584-Arrendamento Mercantil,9196-Liminar",
+  "label": "Arrendamento Mercantil,9196-Liminar"
+ },
+ {
+  "value": "10223-Enquadramento,10305-Gratificações de Atividade",
+  "label": "Enquadramento,10305-Gratificações de Atividade"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10298-Diárias e Outras Indenizações",
+  "label": "Sistema Remuneratório e Benefícios,10298-Diárias e Outras Indenizações"
+ },
+ {
+  "value": "12000-Requisição de tratamento médico, psicológico ou psiquiátrico, em regime hospitalar ou ambulatorial",
+  "label": "Requisição de tratamento médico, psicológico ou psiquiátrico, em regime hospitalar ou ambulatorial"
+ },
+ {
+  "value": "3466-Atentado Violento ao Pudor",
+  "label": "Atentado Violento ao Pudor"
+ },
+ {
+  "value": "9196-Liminar ,10419-Liberação de Veículo Apreendido",
+  "label": "Liminar ,10419-Liberação de Veículo Apreendido"
+ },
+ {
+  "value": "10666-Regularidade Formal,10671-Obrigação de Fazer / Não Fazer",
+  "label": "Regularidade Formal,10671-Obrigação de Fazer / Não Fazer"
+ },
+ {
+  "value": "10630-Transação,3620-Crimes contra a Flora",
+  "label": "Transação,3620-Crimes contra a Flora"
+ },
+ {
+  "value": "5779-Alimentos,5787-Exoneração,5802-Guarda",
+  "label": "Alimentos,5787-Exoneração,5802-Guarda"
+ },
+ {
+  "value": "7776-Transporte Terrestre",
+  "label": "Transporte Terrestre"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,10433-Indenização por Dano Moral",
+  "label": "Indenização por Dano Moral,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "10277-Averbação / Contagem de Tempo Especial",
+  "label": "Averbação / Contagem de Tempo Especial"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,7760-Fornecimento de Energia Elétrica",
+  "label": "Indenização por Dano Moral,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "11998-Matrícula e frequência obrigatória em escola oficial de ensino fundamental",
+  "label": "Matrícula e frequência obrigatória em escola oficial de ensino fundamental"
+ },
+ {
+  "value": "9596-Prestação de Serviços,10666-Regularidade Formal",
+  "label": "Prestação de Serviços,10666-Regularidade Formal"
+ },
+ {
+  "value": "10220-Regime Estatutário,10288-Sistema Remuneratório e Benefícios",
+  "label": "Regime Estatutário,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "7732-Registro de nascimento após prazo legal,7949-Direitos da Personalidade",
+  "label": "Registro de nascimento após prazo legal,7949-Direitos da Personalidade"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10435-Acidente de Trânsito,10439-Indenização por Dano Material,10441-Acidente de Trânsito",
+  "label": "Indenização por Dano Moral,10435-Acidente de Trânsito,10439-Indenização por Dano Material,10441-Acidente de Trânsito"
+ },
+ {
+  "value": "10437-Direito de Imagem,10433-Indenização por Dano Moral",
+  "label": "Direito de Imagem,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "7697-Correção Monetária",
+  "label": "Correção Monetária"
+ },
+ {
+  "value": "9858-De Tráfico Ilícito e Uso Indevido de Drogas",
+  "label": "De Tráfico Ilícito e Uso Indevido de Drogas"
+ },
+ {
+  "value": "10195-Remuneração",
+  "label": "Remuneração"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,7619-Consórcio",
+  "label": "Rescisão do contrato e devolução do dinheiro,7619-Consórcio"
+ },
+ {
+  "value": "9658-Injúria",
+  "label": "Injúria"
+ },
+ {
+  "value": "12500-Consulta",
+  "label": "Consulta"
+ },
+ {
+  "value": "3633-Crimes do Sistema Nacional de Armas,7941-Denegação",
+  "label": "Crimes do Sistema Nacional de Armas,7941-Denegação"
+ },
+ {
+  "value": "4970-Cheque,7717-Espécies de Títulos de Crédito",
+  "label": "Cheque,7717-Espécies de Títulos de Crédito"
+ },
+ {
+  "value": "6113-Abono de Permanência em Serviço (Art. 87)",
+  "label": "Abono de Permanência em Serviço (Art. 87)"
+ },
+ {
+  "value": "7703-Pagamento,9587-Compra e Venda",
+  "label": "Pagamento,9587-Compra e Venda"
+ },
+ {
+  "value": "10502-Indenização por Dano Material,9992-Indenização por Dano Moral",
+  "label": "Indenização por Dano Material,9992-Indenização por Dano Moral"
+ },
+ {
+  "value": "14923-Partilha",
+  "label": "Partilha"
+ },
+ {
+  "value": "9603-Mútuo,4960-Cédula de Crédito Bancário",
+  "label": "Mútuo,4960-Cédula de Crédito Bancário"
+ },
+ {
+  "value": "10083-Tabelionatos, Registros, Cartórios",
+  "label": "Tabelionatos, Registros, Cartórios"
+ },
+ {
+  "value": "10622-Extinção da Punibilidade",
+  "label": "Extinção da Punibilidade"
+ },
+ {
+  "value": "3576-Denunciação caluniosa",
+  "label": "Denunciação caluniosa"
+ },
+ {
+  "value": "3637-Crimes Previstos no Estatuto da criança e do adolescente,3417-Furto Qualificado",
+  "label": "Crimes Previstos no Estatuto da criança e do adolescente,3417-Furto Qualificado"
+ },
+ {
+  "value": "10481-Propriedade Fiduciária,9582-Alienação Fiduciária",
+  "label": "Propriedade Fiduciária,9582-Alienação Fiduciária"
+ },
+ {
+  "value": "10634-Suspensão condicional da pena",
+  "label": "Suspensão condicional da pena"
+ },
+ {
+  "value": "10949-Violência Doméstica Contra a Mulher,3692-Contravenções Penais",
+  "label": "Violência Doméstica Contra a Mulher,3692-Contravenções Penais"
+ },
+ {
+  "value": "3402-Ameaça ,7941-Denegação",
+  "label": "Ameaça ,7941-Denegação"
+ },
+ {
+  "value": "9915-Análogo a Crime Tentado,9638-Homicídio Qualificado",
+  "label": "Análogo a Crime Tentado,9638-Homicídio Qualificado"
+ },
+ {
+  "value": "10064-Saúde,12491-Tratamento médico-hospitalar",
+  "label": "Saúde,12491-Tratamento médico-hospitalar"
+ },
+ {
+  "value": "9589-Depósito",
+  "label": "Depósito"
+ },
+ {
+  "value": "10307-Revisão Geral Anual (Mora do Executivo - inciso X, art. 37, CF 1988)",
+  "label": "Revisão Geral Anual (Mora do Executivo - inciso X, art. 37, CF 1988)"
+ },
+ {
+  "value": "11846-Moradia",
+  "label": "Moradia"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10435-Acidente de Trânsito",
+  "label": "Indenização por Dano Moral,10435-Acidente de Trânsito"
+ },
+ {
+  "value": "10630-Transação,3397-Injúria",
+  "label": "Transação,3397-Injúria"
+ },
+ {
+  "value": "3402-Ameaça ,10949-Violência Doméstica Contra a Mulher,3397-Injúria",
+  "label": "Ameaça ,10949-Violência Doméstica Contra a Mulher,3397-Injúria"
+ },
+ {
+  "value": "3579-Falso testemunho ou falsa perícia",
+  "label": "Falso testemunho ou falsa perícia"
+ },
+ {
+  "value": "10628-Substituição da Pena",
+  "label": "Substituição da Pena"
+ },
+ {
+  "value": "7691-Inadimplemento,10439-Indenização por Dano Material,9596-Prestação de Serviços",
+  "label": "Inadimplemento,10439-Indenização por Dano Material,9596-Prestação de Serviços"
+ },
+ {
+  "value": "10312-Piso Salarial,10288-Sistema Remuneratório e Benefícios",
+  "label": "Piso Salarial,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral,7752-Bancários",
+  "label": "Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral,7752-Bancários"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,6233-Planos de Saúde",
+  "label": "Indenização por Dano Moral,6233-Planos de Saúde"
+ },
+ {
+  "value": "9607-Contratos Bancários,10666-Regularidade Formal",
+  "label": "Contratos Bancários,10666-Regularidade Formal"
+ },
+ {
+  "value": "10012-Dano ao Erário",
+  "label": "Dano ao Erário"
+ },
+ {
+  "value": "7620-Estabelecimentos de Ensino,10433-Indenização por Dano Moral",
+  "label": "Estabelecimentos de Ensino,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "7703-Pagamento,7698-Perdas e Danos",
+  "label": "Pagamento,7698-Perdas e Danos"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10651-Competência dos Juizados Especiais",
+  "label": "Sistema Remuneratório e Benefícios,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "11924-Pagamento",
+  "label": "Pagamento"
+ },
+ {
+  "value": "12002-Acolhimento institucional",
+  "label": "Acolhimento institucional"
+ },
+ {
+  "value": "5802-Guarda,7664-Dissolução",
+  "label": "Guarda,7664-Dissolução"
+ },
+ {
+  "value": "9196-Liminar ,9582-Alienação Fiduciária,9580-Espécies de Contratos",
+  "label": "Liminar ,9582-Alienação Fiduciária,9580-Espécies de Contratos"
+ },
+ {
+  "value": "10435-Acidente de Trânsito,7621-Seguro",
+  "label": "Acidente de Trânsito,7621-Seguro"
+ },
+ {
+  "value": "5567-Latrocínio",
+  "label": "Latrocínio"
+ },
+ {
+  "value": "7767-Substituição do Produto,7779-Indenização por Dano Moral",
+  "label": "Substituição do Produto,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,7767-Substituição do Produto",
+  "label": "Rescisão do contrato e devolução do dinheiro,7767-Substituição do Produto"
+ },
+ {
+  "value": "6226-Inclusão Indevida em Cadastro de Inadimplentes,7779-Indenização por Dano Moral,7617-Telefonia",
+  "label": "Inclusão Indevida em Cadastro de Inadimplentes,7779-Indenização por Dano Moral,7617-Telefonia"
+ },
+ {
+  "value": "9196-Liminar ,5805-Regulamentação de Visitas",
+  "label": "Liminar ,5805-Regulamentação de Visitas"
+ },
+ {
+  "value": "9196-Liminar ,7752-Bancários",
+  "label": "Liminar ,7752-Bancários"
+ },
+ {
+  "value": "10028-Serviços",
+  "label": "Serviços"
+ },
+ {
+  "value": "10610-Trancamento",
+  "label": "Trancamento"
+ },
+ {
+  "value": "10011-Improbidade Administrativa",
+  "label": "Improbidade Administrativa"
+ },
+ {
+  "value": "5779-Alimentos,5804-Investigação de Paternidade,10577-Relações de Parentesco",
+  "label": "Alimentos,5804-Investigação de Paternidade,10577-Relações de Parentesco"
+ },
+ {
+  "value": "7691-Inadimplemento,7698-Perdas e Danos",
+  "label": "Inadimplemento,7698-Perdas e Danos"
+ },
+ {
+  "value": "7752-Bancários,7780-Indenização por Dano Material,7779-Indenização por Dano Moral",
+  "label": "Bancários,7780-Indenização por Dano Material,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "9991-Responsabilidade da Administração",
+  "label": "Responsabilidade da Administração"
+ },
+ {
+  "value": "10435-Acidente de Trânsito,10433-Indenização por Dano Moral",
+  "label": "Acidente de Trânsito,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "9196-Liminar ,6239-Fixação",
+  "label": "Liminar ,6239-Fixação"
+ },
+ {
+  "value": "10236-Promoção / Ascensão,10220-Regime Estatutário",
+  "label": "Promoção / Ascensão,10220-Regime Estatutário"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10666-Regularidade Formal",
+  "label": "Sistema Remuneratório e Benefícios,10666-Regularidade Formal"
+ },
+ {
+  "value": "10301-Férias,10288-Sistema Remuneratório e Benefícios",
+  "label": "Férias,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "9642-Leve,9641-Lesões Corporais",
+  "label": "Leve,9641-Lesões Corporais"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,7703-Pagamento",
+  "label": "Indenização por Dano Moral,7703-Pagamento"
+ },
+ {
+  "value": "7677-Reconhecimento / Dissolução,10666-Regularidade Formal",
+  "label": "Reconhecimento / Dissolução,10666-Regularidade Formal"
+ },
+ {
+  "value": "10630-Transação,3435-Receptação",
+  "label": "Transação,3435-Receptação"
+ },
+ {
+  "value": "10246-Auxílio-Natalidade",
+  "label": "Auxílio-Natalidade"
+ },
+ {
+  "value": "10441-Acidente de Trânsito,9597-Seguro",
+  "label": "Acidente de Trânsito,9597-Seguro"
+ },
+ {
+  "value": "12489-Tratamento médico-hospitalar",
+  "label": "Tratamento médico-hospitalar"
+ },
+ {
+  "value": "7691-Inadimplemento,10439-Indenização por Dano Material,9593-Locação de Imóvel",
+  "label": "Inadimplemento,10439-Indenização por Dano Material,9593-Locação de Imóvel"
+ },
+ {
+  "value": "9580-Espécies de Contratos,9582-Alienação Fiduciária",
+  "label": "Espécies de Contratos,9582-Alienação Fiduciária"
+ },
+ {
+  "value": "9591-Empreitada",
+  "label": "Empreitada"
+ },
+ {
+  "value": "10223-Enquadramento,10236-Promoção / Ascensão,10288-Sistema Remuneratório e Benefícios",
+  "label": "Enquadramento,10236-Promoção / Ascensão,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10425-Rescisão",
+  "label": "Sistema Remuneratório e Benefícios,10425-Rescisão"
+ },
+ {
+  "value": "4980-Nota Promissória,9587-Compra e Venda",
+  "label": "Nota Promissória,9587-Compra e Venda"
+ },
+ {
+  "value": "5946-ICMS/ Imposto sobre Circulação de Mercadorias,10666-Regularidade Formal",
+  "label": "ICMS/ Imposto sobre Circulação de Mercadorias,10666-Regularidade Formal"
+ },
+ {
+  "value": "7752-Bancários,11806-Empréstimo consignado",
+  "label": "Bancários,11806-Empréstimo consignado"
+ },
+ {
+  "value": "7899-Bloqueio de Matrícula",
+  "label": "Bloqueio de Matrícula"
+ },
+ {
+  "value": "9580-Espécies de Contratos,9598-Transação",
+  "label": "Espécies de Contratos,9598-Transação"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10439-Indenização por Dano Material,7752-Bancários",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material,7752-Bancários"
+ },
+ {
+  "value": "11884-Fornecimento de Medicamentos",
+  "label": "Fornecimento de Medicamentos"
+ },
+ {
+  "value": "3417-Furto Qualificado ,10890-Vício Formal do Julgamento",
+  "label": "Furto Qualificado ,10890-Vício Formal do Julgamento"
+ },
+ {
+  "value": "5571-Dano Qualificado",
+  "label": "Dano Qualificado"
+ },
+ {
+  "value": "7617-Telefonia,10433-Indenização por Dano Moral",
+  "label": "Telefonia,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "9596-Prestação de Serviços,7703-Pagamento",
+  "label": "Prestação de Serviços,7703-Pagamento"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,9587-Compra e Venda",
+  "label": "Indenização por Dano Moral,9587-Compra e Venda"
+ },
+ {
+  "value": "10677-Busca e Apreensão",
+  "label": "Busca e Apreensão"
+ },
+ {
+  "value": "3419-Roubo ,10890-Vício Formal do Julgamento",
+  "label": "Roubo ,10890-Vício Formal do Julgamento"
+ },
+ {
+  "value": "4829-Atraso de vôo",
+  "label": "Atraso de vôo"
+ },
+ {
+  "value": "5847-Receptação Qualificada",
+  "label": "Receptação Qualificada"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,7617-Telefonia",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,7617-Telefonia"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,9196-Liminar ,7752-Bancários",
+  "label": "Indenização por Dano Moral,9196-Liminar ,7752-Bancários"
+ },
+ {
+  "value": "7785-Prestação Pecuniária,7790-Pena Restritiva de Direitos",
+  "label": "Prestação Pecuniária,7790-Pena Restritiva de Direitos"
+ },
+ {
+  "value": "9149-Valor da Execução / Cálculo / Atualização,10673-Requisição de Pequeno Valor - RPV",
+  "label": "Valor da Execução / Cálculo / Atualização,10673-Requisição de Pequeno Valor - RPV"
+ },
+ {
+  "value": "9580-Espécies de Contratos,10433-Indenização por Dano Moral",
+  "label": "Espécies de Contratos,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "9647-Decorrente de Violência Doméstica",
+  "label": "Decorrente de Violência Doméstica"
+ },
+ {
+  "value": "10261-Licença-Prêmio",
+  "label": "Licença-Prêmio"
+ },
+ {
+  "value": "11811-Práticas Abusivas",
+  "label": "Práticas Abusivas"
+ },
+ {
+  "value": "10890-Vício Formal do Julgamento,11417-Estupro de vulnerável",
+  "label": "Vício Formal do Julgamento,11417-Estupro de vulnerável"
+ },
+ {
+  "value": "5560-Decorrente de Violência Doméstica,3386-Leve",
+  "label": "Decorrente de Violência Doméstica,3386-Leve"
+ },
+ {
+  "value": "5802-Guarda,5805-Regulamentação de Visitas,5779-Alimentos",
+  "label": "Guarda,5805-Regulamentação de Visitas,5779-Alimentos"
+ },
+ {
+  "value": "9196-Liminar ,9593-Locação de Imóvel",
+  "label": "Liminar ,9593-Locação de Imóvel"
+ },
+ {
+  "value": "10635-Progressão de Regime",
+  "label": "Progressão de Regime"
+ },
+ {
+  "value": "7698-Perdas e Danos,7691-Inadimplemento",
+  "label": "Perdas e Danos,7691-Inadimplemento"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral,7780-Indenização por Dano Material",
+  "label": "Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral,7780-Indenização por Dano Material"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7752-Bancários,9584-Arrendamento Mercantil",
+  "label": "Interpretação / Revisão de Contrato,7752-Bancários,9584-Arrendamento Mercantil"
+ },
+ {
+  "value": "9196-Liminar ,6226-Inclusão Indevida em Cadastro de Inadimplentes",
+  "label": "Liminar ,6226-Inclusão Indevida em Cadastro de Inadimplentes"
+ },
+ {
+  "value": "9587-Compra e Venda,7703-Pagamento",
+  "label": "Compra e Venda,7703-Pagamento"
+ },
+ {
+  "value": "9634-Ato Infracional",
+  "label": "Ato Infracional"
+ },
+ {
+  "value": "10327-Curso de Formação",
+  "label": "Curso de Formação"
+ },
+ {
+  "value": "10950-Crime / Contravenção contra Criança / Adolescente",
+  "label": "Crime / Contravenção contra Criança / Adolescente"
+ },
+ {
+  "value": "7659-Regime de Bens Entre os Cônjuges",
+  "label": "Regime de Bens Entre os Cônjuges"
+ },
+ {
+  "value": "9926-Desacato (art. 331)",
+  "label": "Desacato (art. 331)"
+ },
+ {
+  "value": "6239-Fixação,7664-Dissolução",
+  "label": "Fixação,7664-Dissolução"
+ },
+ {
+  "value": "7774-Serviços Profissionais,7779-Indenização por Dano Moral",
+  "label": "Serviços Profissionais,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "9915-Análogo a Crime Tentado,9699-Roubo Majorado",
+  "label": "Análogo a Crime Tentado,9699-Roubo Majorado"
+ },
+ {
+  "value": "11807-Tarifas,7752-Bancários,9607-Contratos Bancários",
+  "label": "Tarifas,7752-Bancários,9607-Contratos Bancários"
+ },
+ {
+  "value": "5560-Decorrente de Violência Doméstica,7941-Denegação",
+  "label": "Decorrente de Violência Doméstica,7941-Denegação"
+ },
+ {
+  "value": "9580-Espécies de Contratos,10666-Regularidade Formal",
+  "label": "Espécies de Contratos,10666-Regularidade Formal"
+ },
+ {
+  "value": "10073-Concessão / Permissão / Autorização",
+  "label": "Concessão / Permissão / Autorização"
+ },
+ {
+  "value": "10221-Isonomia/Equivalência Salarial",
+  "label": "Isonomia/Equivalência Salarial"
+ },
+ {
+  "value": "3395-Calúnia,3396-Difamação",
+  "label": "Calúnia,3396-Difamação"
+ },
+ {
+  "value": "4862-Transporte Aéreo,7779-Indenização por Dano Moral,7780-Indenização por Dano Material",
+  "label": "Transporte Aéreo,7779-Indenização por Dano Moral,7780-Indenização por Dano Material"
+ },
+ {
+  "value": "10425-Rescisão,10422-Pagamento Atrasado / Correção Monetária",
+  "label": "Rescisão,10422-Pagamento Atrasado / Correção Monetária"
+ },
+ {
+  "value": "10439-Indenização por Dano Material,10435-Acidente de Trânsito",
+  "label": "Indenização por Dano Material,10435-Acidente de Trânsito"
+ },
+ {
+  "value": "7714-Pagamento Indevido",
+  "label": "Pagamento Indevido"
+ },
+ {
+  "value": "7715-Enriquecimento sem Causa",
+  "label": "Enriquecimento sem Causa"
+ },
+ {
+  "value": "7752-Bancários,9584-Arrendamento Mercantil",
+  "label": "Bancários,9584-Arrendamento Mercantil"
+ },
+ {
+  "value": "9160-Levantamento de Valor,10666-Regularidade Formal",
+  "label": "Levantamento de Valor,10666-Regularidade Formal"
+ },
+ {
+  "value": "11842-Pessoa Idosa",
+  "label": "Pessoa Idosa"
+ },
+ {
+  "value": "12236-Nomeação",
+  "label": "Nomeação"
+ },
+ {
+  "value": "3492-Incêndio",
+  "label": "Incêndio"
+ },
+ {
+  "value": "3531-Falsificação de documento público",
+  "label": "Falsificação de documento público"
+ },
+ {
+  "value": "4703-Defeito, nulidade ou anulação,5804-Investigação de Paternidade",
+  "label": "Defeito, nulidade ou anulação,5804-Investigação de Paternidade"
+ },
+ {
+  "value": "7667-Investigação de Maternidade",
+  "label": "Investigação de Maternidade"
+ },
+ {
+  "value": "3372-Homicídio Qualificado,5555-Crime Tentado",
+  "label": "Homicídio Qualificado,5555-Crime Tentado"
+ },
+ {
+  "value": "3426-Dano,3386-Leve",
+  "label": "Dano,3386-Leve"
+ },
+ {
+  "value": "7621-Seguro,9597-Seguro",
+  "label": "Seguro,9597-Seguro"
+ },
+ {
+  "value": "9606-Compromisso,9587-Compra e Venda",
+  "label": "Compromisso,9587-Compra e Venda"
+ },
+ {
+  "value": "10429-Execução Contratual,10288-Sistema Remuneratório e Benefícios",
+  "label": "Execução Contratual,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "12241-Curatela",
+  "label": "Curatela"
+ },
+ {
+  "value": "4974-Nota de Crédito Comercial",
+  "label": "Nota de Crédito Comercial"
+ },
+ {
+  "value": "5779-Alimentos,6238-Oferta",
+  "label": "Alimentos,6238-Oferta"
+ },
+ {
+  "value": "6233-Planos de Saúde,7779-Indenização por Dano Moral",
+  "label": "Planos de Saúde,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7703-Pagamento,7770-Interpretação / Revisão de Contrato",
+  "label": "Pagamento,7770-Interpretação / Revisão de Contrato"
+ },
+ {
+  "value": "4980-Nota Promissória,10433-Indenização por Dano Moral",
+  "label": "Nota Promissória,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "5865-Crime Culposo",
+  "label": "Crime Culposo"
+ },
+ {
+  "value": "10431-Responsabilidade Civil,899-DIREITO CIVIL",
+  "label": "Responsabilidade Civil,899-DIREITO CIVIL"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10439-Indenização por Dano Material,10666-Regularidade Formal",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material,10666-Regularidade Formal"
+ },
+ {
+  "value": "13221-Litispendência",
+  "label": "Litispendência"
+ },
+ {
+  "value": "3607-Crimes de Tráfico Ilícito e Uso Indevido de Drogas,7941-Denegação",
+  "label": "Crimes de Tráfico Ilícito e Uso Indevido de Drogas,7941-Denegação"
+ },
+ {
+  "value": "3631-Crimes de Tortura",
+  "label": "Crimes de Tortura"
+ },
+ {
+  "value": "7767-Substituição do Produto,7768-Rescisão do contrato e devolução do dinheiro",
+  "label": "Substituição do Produto,7768-Rescisão do contrato e devolução do dinheiro"
+ },
+ {
+  "value": "10192-Promoção",
+  "label": "Promoção"
+ },
+ {
+  "value": "7691-Inadimplemento,10439-Indenização por Dano Material",
+  "label": "Inadimplemento,10439-Indenização por Dano Material"
+ },
+ {
+  "value": "10276-Tempo de Serviço",
+  "label": "Tempo de Serviço"
+ },
+ {
+  "value": "9196-Liminar ,10444-Posse",
+  "label": "Liminar ,10444-Posse"
+ },
+ {
+  "value": "6104-Pensão por Morte (Art. 74/9)",
+  "label": "Pensão por Morte (Art. 74/9)"
+ },
+ {
+  "value": "10236-Promoção / Ascensão,10305-Gratificações de Atividade",
+  "label": "Promoção / Ascensão,10305-Gratificações de Atividade"
+ },
+ {
+  "value": "3624-Caça",
+  "label": "Caça"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,7779-Indenização por Dano Moral,10666-Regularidade Formal",
+  "label": "Fornecimento de Energia Elétrica,7779-Indenização por Dano Moral,10666-Regularidade Formal"
+ },
+ {
+  "value": "9196-Liminar ,4703-Defeito, nulidade ou anulação",
+  "label": "Liminar ,4703-Defeito, nulidade ou anulação"
+ },
+ {
+  "value": "3391-Abandono de incapaz",
+  "label": "Abandono de incapaz"
+ },
+ {
+  "value": "5779-Alimentos,5804-Investigação de Paternidade,6239-Fixação,10577-Relações de Parentesco",
+  "label": "Alimentos,5804-Investigação de Paternidade,6239-Fixação,10577-Relações de Parentesco"
+ },
+ {
+  "value": "7717-Espécies de Títulos de Crédito,4980-Nota Promissória",
+  "label": "Espécies de Títulos de Crédito,4980-Nota Promissória"
+ },
+ {
+  "value": "9196-Liminar ,7760-Fornecimento de Energia Elétrica",
+  "label": "Liminar ,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,13149-Efeito Suspensivo a Recurso",
+  "label": "Competência dos Juizados Especiais,13149-Efeito Suspensivo a Recurso"
+ },
+ {
+  "value": "11825-Poluição",
+  "label": "Poluição"
+ },
+ {
+  "value": "12090-Perda ou Modificação de Guarda",
+  "label": "Perda ou Modificação de Guarda"
+ },
+ {
+  "value": "7703-Pagamento,9597-Seguro",
+  "label": "Pagamento,9597-Seguro"
+ },
+ {
+  "value": "9196-Liminar ,7677-Reconhecimento / Dissolução",
+  "label": "Liminar ,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "9196-Liminar ,9582-Alienação Fiduciária,10666-Regularidade Formal",
+  "label": "Liminar ,9582-Alienação Fiduciária,10666-Regularidade Formal"
+ },
+ {
+  "value": "7697-Correção Monetária,7698-Perdas e Danos",
+  "label": "Correção Monetária,7698-Perdas e Danos"
+ },
+ {
+  "value": "8859-Intervenção de Terceiros",
+  "label": "Intervenção de Terceiros"
+ },
+ {
+  "value": "9674-Contra o Patrimônio,9676-Furto Qualificado (Art. 155, § 4o.)",
+  "label": "Contra o Patrimônio,9676-Furto Qualificado (Art. 155, § 4o.)"
+ },
+ {
+  "value": "9915-Análogo a Crime Tentado,9636-Homicídio Simples",
+  "label": "Análogo a Crime Tentado,9636-Homicídio Simples"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,9596-Prestação de Serviços",
+  "label": "Indenização por Dano Moral,9596-Prestação de Serviços"
+ },
+ {
+  "value": "10486-Uso",
+  "label": "Uso"
+ },
+ {
+  "value": "10656-Honorários Advocatícios em Execução Contra a Fazenda Pública",
+  "label": "Honorários Advocatícios em Execução Contra a Fazenda Pública"
+ },
+ {
+  "value": "5555-Crime Tentado,3372-Homicídio Qualificado,10890-Vício Formal do Julgamento",
+  "label": "Crime Tentado,3372-Homicídio Qualificado,10890-Vício Formal do Julgamento"
+ },
+ {
+  "value": "7703-Pagamento,10433-Indenização por Dano Moral",
+  "label": "Pagamento,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "10630-Transação,3396-Difamação",
+  "label": "Transação,3396-Difamação"
+ },
+ {
+  "value": "12491-Tratamento médico-hospitalar,10064-Saúde",
+  "label": "Tratamento médico-hospitalar,10064-Saúde"
+ },
+ {
+  "value": "7703-Pagamento,10287-Jornada de Trabalho",
+  "label": "Pagamento,10287-Jornada de Trabalho"
+ },
+ {
+  "value": "7752-Bancários,7772-Cartão de Crédito,10433-Indenização por Dano Moral",
+  "label": "Bancários,7772-Cartão de Crédito,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "9196-Liminar ,7779-Indenização por Dano Moral",
+  "label": "Liminar ,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "10075-Energia Elétrica",
+  "label": "Energia Elétrica"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10439-Indenização por Dano Material,9596-Prestação de Serviços",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material,9596-Prestação de Serviços"
+ },
+ {
+  "value": "10949-Violência Doméstica Contra a Mulher,3386-Leve",
+  "label": "Violência Doméstica Contra a Mulher,3386-Leve"
+ },
+ {
+  "value": "3396-Difamação,3397-Injúria,3402-Ameaça",
+  "label": "Difamação,3397-Injúria,3402-Ameaça"
+ },
+ {
+  "value": "5802-Guarda,6239-Fixação,5779-Alimentos",
+  "label": "Guarda,6239-Fixação,5779-Alimentos"
+ },
+ {
+  "value": "6239-Fixação,10666-Regularidade Formal",
+  "label": "Fixação,10666-Regularidade Formal"
+ },
+ {
+  "value": "7691-Inadimplemento,10433-Indenização por Dano Moral",
+  "label": "Inadimplemento,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "7691-Inadimplemento,10439-Indenização por Dano Material,9598-Transação",
+  "label": "Inadimplemento,10439-Indenização por Dano Material,9598-Transação"
+ },
+ {
+  "value": "7703-Pagamento,7752-Bancários",
+  "label": "Pagamento,7752-Bancários"
+ },
+ {
+  "value": "7703-Pagamento,9593-Locação de Imóvel",
+  "label": "Pagamento,9593-Locação de Imóvel"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral,7760-Fornecimento de Energia Elétrica",
+  "label": "Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7772-Cartão de Crédito",
+  "label": "Indenização por Dano Moral,7772-Cartão de Crédito"
+ },
+ {
+  "value": "9606-Compromisso,7703-Pagamento",
+  "label": "Compromisso,7703-Pagamento"
+ },
+ {
+  "value": "9612-Despejo por Denúncia Vazia",
+  "label": "Despejo por Denúncia Vazia"
+ },
+ {
+  "value": "10305-Gratificações de Atividade,10288-Sistema Remuneratório e Benefícios,10292-Adicional de Periculosidade",
+  "label": "Gratificações de Atividade,10288-Sistema Remuneratório e Benefícios,10292-Adicional de Periculosidade"
+ },
+ {
+  "value": "10313-Reajustes de Remuneração, Proventos ou Pensão,10696-Professor,10288-Sistema Remuneratório e Benefícios",
+  "label": "Reajustes de Remuneração, Proventos ou Pensão,10696-Professor,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10673-Requisição de Pequeno Valor - RPV,9149-Valor da Execução / Cálculo / Atualização",
+  "label": "Requisição de Pequeno Valor - RPV,9149-Valor da Execução / Cálculo / Atualização"
+ },
+ {
+  "value": "3397-Injúria,3402-Ameaça ,5560-Decorrente de Violência Doméstica,10949-Violência Doméstica Contra a Mulher",
+  "label": "Injúria,3402-Ameaça ,5560-Decorrente de Violência Doméstica,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "3432-Estelionato Majorado",
+  "label": "Estelionato Majorado"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,10666-Regularidade Formal",
+  "label": "Indenização por Dano Moral,10666-Regularidade Formal"
+ },
+ {
+  "value": "10439-Indenização por Dano Material,10441-Acidente de Trânsito,10433-Indenização por Dano Moral",
+  "label": "Indenização por Dano Material,10441-Acidente de Trânsito,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "3395-Calúnia,3402-Ameaça",
+  "label": "Calúnia,3402-Ameaça"
+ },
+ {
+  "value": "3396-Difamação,3386-Leve",
+  "label": "Difamação,3386-Leve"
+ },
+ {
+  "value": "4949-Títulos de Crédito,7691-Inadimplemento",
+  "label": "Títulos de Crédito,7691-Inadimplemento"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7772-Cartão de Crédito",
+  "label": "Interpretação / Revisão de Contrato,7772-Cartão de Crédito"
+ },
+ {
+  "value": "7787-Prestação de Serviços à Comunidade,7785-Prestação Pecuniária",
+  "label": "Prestação de Serviços à Comunidade,7785-Prestação Pecuniária"
+ },
+ {
+  "value": "9700-Latrocínio",
+  "label": "Latrocínio"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10304-Auxílio-Alimentação",
+  "label": "Sistema Remuneratório e Benefícios,10304-Auxílio-Alimentação"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,9196-Liminar",
+  "label": "Indenização por Dano Moral,9196-Liminar"
+ },
+ {
+  "value": "4949-Títulos de Crédito,4980-Nota Promissória,7717-Espécies de Títulos de Crédito",
+  "label": "Títulos de Crédito,4980-Nota Promissória,7717-Espécies de Títulos de Crédito"
+ },
+ {
+  "value": "5779-Alimentos,5802-Guarda,7664-Dissolução",
+  "label": "Alimentos,5802-Guarda,7664-Dissolução"
+ },
+ {
+  "value": "5851-Assédio Sexual",
+  "label": "Assédio Sexual"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7780-Indenização por Dano Material,7752-Bancários,7773-Financiamento de Produto",
+  "label": "Interpretação / Revisão de Contrato,7780-Indenização por Dano Material,7752-Bancários,7773-Financiamento de Produto"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,9196-Liminar",
+  "label": "Indenização por Dano Moral,9196-Liminar"
+ },
+ {
+  "value": "9596-Prestação de Serviços,4980-Nota Promissória",
+  "label": "Prestação de Serviços,4980-Nota Promissória"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10671-Obrigação de Fazer / Não Fazer",
+  "label": "Indenização por Dano Moral,10671-Obrigação de Fazer / Não Fazer"
+ },
+ {
+  "value": "3465-Estupro ,7941-Denegação",
+  "label": "Estupro ,7941-Denegação"
+ },
+ {
+  "value": "4370-Recebimento",
+  "label": "Recebimento"
+ },
+ {
+  "value": "5555-Crime Tentado,3419-Roubo",
+  "label": "Crime Tentado,3419-Roubo"
+ },
+ {
+  "value": "7752-Bancários,7770-Interpretação / Revisão de Contrato,7772-Cartão de Crédito",
+  "label": "Bancários,7770-Interpretação / Revisão de Contrato,7772-Cartão de Crédito"
+ },
+ {
+  "value": "10311-Irredutibilidade de Vencimentos",
+  "label": "Irredutibilidade de Vencimentos"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10441-Acidente de Trânsito,10439-Indenização por Dano Material",
+  "label": "Indenização por Dano Moral,10441-Acidente de Trânsito,10439-Indenização por Dano Material"
+ },
+ {
+  "value": "10696-Professor",
+  "label": "Professor"
+ },
+ {
+  "value": "10893-Base de Cálculo,10302-Adicional por Tempo de Serviço",
+  "label": "Base de Cálculo,10302-Adicional por Tempo de Serviço"
+ },
+ {
+  "value": "12542-Real",
+  "label": "Real"
+ },
+ {
+  "value": "4830-Cancelamento de vôo,7779-Indenização por Dano Moral,7780-Indenização por Dano Material,4862-Transporte Aéreo",
+  "label": "Cancelamento de vôo,7779-Indenização por Dano Moral,7780-Indenização por Dano Material,4862-Transporte Aéreo"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral,9587-Compra e Venda",
+  "label": "Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral,9587-Compra e Venda"
+ },
+ {
+  "value": "7773-Financiamento de Produto,7779-Indenização por Dano Moral",
+  "label": "Financiamento de Produto,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "9196-Liminar ,10445-Esbulho / Turbação / Ameaça,10666-Regularidade Formal",
+  "label": "Liminar ,10445-Esbulho / Turbação / Ameaça,10666-Regularidade Formal"
+ },
+ {
+  "value": "9593-Locação de Imóvel,7703-Pagamento",
+  "label": "Locação de Imóvel,7703-Pagamento"
+ },
+ {
+  "value": "10435-Acidente de Trânsito,10439-Indenização por Dano Material,10433-Indenização por Dano Moral",
+  "label": "Acidente de Trânsito,10439-Indenização por Dano Material,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "11806-Empréstimo consignado,7752-Bancários",
+  "label": "Empréstimo consignado,7752-Bancários"
+ },
+ {
+  "value": "3415-Crimes contra o Patrimônio",
+  "label": "Crimes contra o Patrimônio"
+ },
+ {
+  "value": "4960-Cédula de Crédito Bancário,10666-Regularidade Formal",
+  "label": "Cédula de Crédito Bancário,10666-Regularidade Formal"
+ },
+ {
+  "value": "5787-Exoneração,5804-Investigação de Paternidade",
+  "label": "Exoneração,5804-Investigação de Paternidade"
+ },
+ {
+  "value": "5917-IRPF/Imposto de Renda de Pessoa Física",
+  "label": "IRPF/Imposto de Renda de Pessoa Física"
+ },
+ {
+  "value": "9047-Efeitos,10651-Competência dos Juizados Especiais",
+  "label": "Efeitos,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "9582-Alienação Fiduciária,9580-Espécies de Contratos",
+  "label": "Alienação Fiduciária,9580-Espécies de Contratos"
+ },
+ {
+  "value": "9641-Lesões Corporais,9642-Leve",
+  "label": "Lesões Corporais,9642-Leve"
+ },
+ {
+  "value": "9915-Análogo a Crime Tentado,9676-Furto Qualificado (Art. 155, § 4o.)",
+  "label": "Análogo a Crime Tentado,9676-Furto Qualificado (Art. 155, § 4o.)"
+ },
+ {
+  "value": "10337-Sistema Remuneratório e Benefícios,10340-Indenizações Regulares",
+  "label": "Sistema Remuneratório e Benefícios,10340-Indenizações Regulares"
+ },
+ {
+  "value": "12241-Curatela,12245-Nomeação",
+  "label": "Curatela,12245-Nomeação"
+ },
+ {
+  "value": "12893-Ausência de Vaga",
+  "label": "Ausência de Vaga"
+ },
+ {
+  "value": "5788-Revisão,10666-Regularidade Formal",
+  "label": "Revisão,10666-Regularidade Formal"
+ },
+ {
+  "value": "6226-Inclusão Indevida em Cadastro de Inadimplentes,9196-Liminar ,7779-Indenização por Dano Moral",
+  "label": "Inclusão Indevida em Cadastro de Inadimplentes,9196-Liminar ,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "3425-Esbulho possessório",
+  "label": "Esbulho possessório"
+ },
+ {
+  "value": "6226-Inclusão Indevida em Cadastro de Inadimplentes,7617-Telefonia",
+  "label": "Inclusão Indevida em Cadastro de Inadimplentes,7617-Telefonia"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral,7617-Telefonia",
+  "label": "Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral,7617-Telefonia"
+ },
+ {
+  "value": "7780-Indenização por Dano Material,7752-Bancários",
+  "label": "Indenização por Dano Material,7752-Bancários"
+ },
+ {
+  "value": "10296-Descontos Indevidos,10288-Sistema Remuneratório e Benefícios",
+  "label": "Descontos Indevidos,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10950-Crime / Contravenção contra Criança / Adolescente,5566-Roubo Majorado",
+  "label": "Crime / Contravenção contra Criança / Adolescente,5566-Roubo Majorado"
+ },
+ {
+  "value": "3402-Ameaça ,10630-Transação,3397-Injúria",
+  "label": "Ameaça ,10630-Transação,3397-Injúria"
+ },
+ {
+  "value": "3608-Tráfico de Drogas e Condutas Afins,3607-Crimes de Tráfico Ilícito e Uso Indevido de Drogas",
+  "label": "Tráfico de Drogas e Condutas Afins,3607-Crimes de Tráfico Ilícito e Uso Indevido de Drogas"
+ },
+ {
+  "value": "7703-Pagamento,7779-Indenização por Dano Moral",
+  "label": "Pagamento,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,7760-Fornecimento de Energia Elétrica",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "7781-Protesto Indevido de Título",
+  "label": "Protesto Indevido de Título"
+ },
+ {
+  "value": "9584-Arrendamento Mercantil,10445-Esbulho / Turbação / Ameaça",
+  "label": "Arrendamento Mercantil,10445-Esbulho / Turbação / Ameaça"
+ },
+ {
+  "value": "9596-Prestação de Serviços,10433-Indenização por Dano Moral",
+  "label": "Prestação de Serviços,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "7769-Abatimento proporcional do preço ,7760-Fornecimento de Energia Elétrica",
+  "label": "Abatimento proporcional do preço ,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,9607-Contratos Bancários",
+  "label": "Indenização por Dano Moral,9607-Contratos Bancários"
+ },
+ {
+  "value": "10439-Indenização por Dano Material,10651-Competência dos Juizados Especiais",
+  "label": "Indenização por Dano Material,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "10497-Subsídios",
+  "label": "Subsídios"
+ },
+ {
+  "value": "3393-Rixa",
+  "label": "Rixa"
+ },
+ {
+  "value": "3402-Ameaça ,10949-Violência Doméstica Contra a Mulher,5560-Decorrente de Violência Doméstica",
+  "label": "Ameaça ,10949-Violência Doméstica Contra a Mulher,5560-Decorrente de Violência Doméstica"
+ },
+ {
+  "value": "3577-Comunicação falsa de crime ou de contravenção",
+  "label": "Comunicação falsa de crime ou de contravenção"
+ },
+ {
+  "value": "5555-Crime Tentado,3372-Homicídio Qualificado,7941-Denegação",
+  "label": "Crime Tentado,3372-Homicídio Qualificado,7941-Denegação"
+ },
+ {
+  "value": "7752-Bancários,9196-Liminar ,7779-Indenização por Dano Moral",
+  "label": "Bancários,9196-Liminar ,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "10420-Licenciamento de Veículo",
+  "label": "Licenciamento de Veículo"
+ },
+ {
+  "value": "10422-Pagamento Atrasado / Correção Monetária,10288-Sistema Remuneratório e Benefícios",
+  "label": "Pagamento Atrasado / Correção Monetária,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "11847-Assistência Social",
+  "label": "Assistência Social"
+ },
+ {
+  "value": "5779-Alimentos,6238-Oferta,5802-Guarda",
+  "label": "Alimentos,6238-Oferta,5802-Guarda"
+ },
+ {
+  "value": "5804-Investigação de Paternidade,6239-Fixação",
+  "label": "Investigação de Paternidade,6239-Fixação"
+ },
+ {
+  "value": "7752-Bancários,7770-Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral",
+  "label": "Bancários,7770-Interpretação / Revisão de Contrato,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10299-Plano de Classificação de Cargos",
+  "label": "Sistema Remuneratório e Benefícios,10299-Plano de Classificação de Cargos"
+ },
+ {
+  "value": "10892-Medicamento / Tratamento / Cirurgia de Eficácia não comprovada",
+  "label": "Medicamento / Tratamento / Cirurgia de Eficácia não comprovada"
+ },
+ {
+  "value": "4830-Cancelamento de vôo,4862-Transporte Aéreo",
+  "label": "Cancelamento de vôo,4862-Transporte Aéreo"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,7779-Indenização por Dano Moral,7780-Indenização por Dano Material",
+  "label": "Fornecimento de Energia Elétrica,7779-Indenização por Dano Moral,7780-Indenização por Dano Material"
+ },
+ {
+  "value": "10254-Aposentadoria",
+  "label": "Aposentadoria"
+ },
+ {
+  "value": "10296-Descontos Indevidos,10230-Regime Previdenciário",
+  "label": "Descontos Indevidos,10230-Regime Previdenciário"
+ },
+ {
+  "value": "10445-Esbulho / Turbação / Ameaça,9584-Arrendamento Mercantil",
+  "label": "Esbulho / Turbação / Ameaça,9584-Arrendamento Mercantil"
+ },
+ {
+  "value": "10877-Policiais Civis,10288-Sistema Remuneratório e Benefícios",
+  "label": "Policiais Civis,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "12506-Unidade de terapia intensiva UTI / unidade de cuidados intensivos UCI",
+  "label": "Unidade de terapia intensiva UTI / unidade de cuidados intensivos UCI"
+ },
+ {
+  "value": "5573-Apropriação de Coisa Achada",
+  "label": "Apropriação de Coisa Achada"
+ },
+ {
+  "value": "5779-Alimentos,6239-Fixação,9196-Liminar",
+  "label": "Alimentos,6239-Fixação,9196-Liminar"
+ },
+ {
+  "value": "7929-Prisão em flagrante",
+  "label": "Prisão em flagrante"
+ },
+ {
+  "value": "10009-Inquérito / Processo / Recurso Administrativo",
+  "label": "Inquérito / Processo / Recurso Administrativo"
+ },
+ {
+  "value": "10439-Indenização por Dano Material,10666-Regularidade Formal",
+  "label": "Indenização por Dano Material,10666-Regularidade Formal"
+ },
+ {
+  "value": "3402-Ameaça ,3426-Dano,10949-Violência Doméstica Contra a Mulher",
+  "label": "Ameaça ,3426-Dano,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "3586-Fuga de pessoa presa ou submetida a medida de segurança",
+  "label": "Fuga de pessoa presa ou submetida a medida de segurança"
+ },
+ {
+  "value": "3632-Crimes de Trânsito,10630-Transação",
+  "label": "Crimes de Trânsito,10630-Transação"
+ },
+ {
+  "value": "3633-Crimes do Sistema Nacional de Armas,10890-Vício Formal do Julgamento",
+  "label": "Crimes do Sistema Nacional de Armas,10890-Vício Formal do Julgamento"
+ },
+ {
+  "value": "4862-Transporte Aéreo,7780-Indenização por Dano Material,7779-Indenização por Dano Moral",
+  "label": "Transporte Aéreo,7780-Indenização por Dano Material,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "5805-Regulamentação de Visitas,6239-Fixação",
+  "label": "Regulamentação de Visitas,6239-Fixação"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,7773-Financiamento de Produto",
+  "label": "Rescisão do contrato e devolução do dinheiro,7773-Financiamento de Produto"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7773-Financiamento de Produto,7752-Bancários",
+  "label": "Interpretação / Revisão de Contrato,7773-Financiamento de Produto,7752-Bancários"
+ },
+ {
+  "value": "9196-Liminar ,9163-Penhora / Depósito/ Avaliação",
+  "label": "Liminar ,9163-Penhora / Depósito/ Avaliação"
+ },
+ {
+  "value": "9597-Seguro,10666-Regularidade Formal",
+  "label": "Seguro,10666-Regularidade Formal"
+ },
+ {
+  "value": "10891-Habeas Corpus - Cabimento",
+  "label": "Habeas Corpus - Cabimento"
+ },
+ {
+  "value": "6094-Benefícios em Espécie",
+  "label": "Benefícios em Espécie"
+ },
+ {
+  "value": "7698-Perdas e Danos,9593-Locação de Imóvel",
+  "label": "Perdas e Danos,9593-Locação de Imóvel"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7774-Serviços Profissionais",
+  "label": "Indenização por Dano Moral,7774-Serviços Profissionais"
+ },
+ {
+  "value": "9196-Liminar ,10287-Jornada de Trabalho",
+  "label": "Liminar ,10287-Jornada de Trabalho"
+ },
+ {
+  "value": "9587-Compra e Venda,10433-Indenização por Dano Moral",
+  "label": "Compra e Venda,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "9606-Compromisso,9580-Espécies de Contratos",
+  "label": "Compromisso,9580-Espécies de Contratos"
+ },
+ {
+  "value": "10014-Violação dos Princípios Administrativos",
+  "label": "Violação dos Princípios Administrativos"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10296-Descontos Indevidos",
+  "label": "Sistema Remuneratório e Benefícios,10296-Descontos Indevidos"
+ },
+ {
+  "value": "12484-Fornecimento de medicamentos",
+  "label": "Fornecimento de medicamentos"
+ },
+ {
+  "value": "3397-Injúria,5560-Decorrente de Violência Doméstica,10949-Violência Doméstica Contra a Mulher",
+  "label": "Injúria,5560-Decorrente de Violência Doméstica,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "3521-Quadrilha ou Bando,5566-Roubo Majorado",
+  "label": "Quadrilha ou Bando,5566-Roubo Majorado"
+ },
+ {
+  "value": "7732-Registro de nascimento após prazo legal,7735-Retificação de Nome",
+  "label": "Registro de nascimento após prazo legal,7735-Retificação de Nome"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral,7617-Telefonia",
+  "label": "Rescisão do contrato e devolução do dinheiro,7779-Indenização por Dano Moral,7617-Telefonia"
+ },
+ {
+  "value": "7772-Cartão de Crédito,7779-Indenização por Dano Moral,7752-Bancários",
+  "label": "Cartão de Crédito,7779-Indenização por Dano Moral,7752-Bancários"
+ },
+ {
+  "value": "7780-Indenização por Dano Material,7768-Rescisão do contrato e devolução do dinheiro",
+  "label": "Indenização por Dano Material,7768-Rescisão do contrato e devolução do dinheiro"
+ },
+ {
+  "value": "9915-Análogo a Crime Tentado,9675-Furto (art. 155)",
+  "label": "Análogo a Crime Tentado,9675-Furto (art. 155)"
+ },
+ {
+  "value": "10422-Pagamento Atrasado / Correção Monetária,10429-Execução Contratual",
+  "label": "Pagamento Atrasado / Correção Monetária,10429-Execução Contratual"
+ },
+ {
+  "value": "14227-Crime de Descumprimento de Medida Protetiva  de Urgência",
+  "label": "Crime de Descumprimento de Medida Protetiva  de Urgência"
+ },
+ {
+  "value": "3386-Leve,3402-Ameaça ,10949-Violência Doméstica Contra a Mulher",
+  "label": "Leve,3402-Ameaça ,10949-Violência Doméstica Contra a Mulher"
+ },
+ {
+  "value": "3607-Crimes de Tráfico Ilícito e Uso Indevido de Drogas,3608-Tráfico de Drogas e Condutas Afins",
+  "label": "Crimes de Tráfico Ilícito e Uso Indevido de Drogas,3608-Tráfico de Drogas e Condutas Afins"
+ },
+ {
+  "value": "6063-Auxílio-Alimentação,10304-Auxílio-Alimentação",
+  "label": "Auxílio-Alimentação,10304-Auxílio-Alimentação"
+ },
+ {
+  "value": "7619-Consórcio,7779-Indenização por Dano Moral",
+  "label": "Consórcio,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,7769-Abatimento proporcional do preço",
+  "label": "Fornecimento de Energia Elétrica,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "7787-Prestação de Serviços à Comunidade,7788-Interdição Temporária de Direitos,7790-Pena Restritiva de Direitos",
+  "label": "Prestação de Serviços à Comunidade,7788-Interdição Temporária de Direitos,7790-Pena Restritiva de Direitos"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10439-Indenização por Dano Material,9587-Compra e Venda",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material,9587-Compra e Venda"
+ },
+ {
+  "value": "10671-Obrigação de Fazer / Não Fazer,10313-Reajustes de Remuneração, Proventos ou Pensão",
+  "label": "Obrigação de Fazer / Não Fazer,10313-Reajustes de Remuneração, Proventos ou Pensão"
+ },
+ {
+  "value": "12544-Simples,3402-Ameaça",
+  "label": "Simples,3402-Ameaça"
+ },
+ {
+  "value": "7617-Telefonia,7779-Indenização por Dano Moral,7780-Indenização por Dano Material",
+  "label": "Telefonia,7779-Indenização por Dano Moral,7780-Indenização por Dano Material"
+ },
+ {
+  "value": "7772-Cartão de Crédito,9607-Contratos Bancários",
+  "label": "Cartão de Crédito,9607-Contratos Bancários"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,9196-Liminar ,7752-Bancários",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,9196-Liminar ,7752-Bancários"
+ },
+ {
+  "value": "7788-Interdição Temporária de Direitos,7785-Prestação Pecuniária",
+  "label": "Interdição Temporária de Direitos,7785-Prestação Pecuniária"
+ },
+ {
+  "value": "7788-Interdição Temporária de Direitos,7787-Prestação de Serviços à Comunidade",
+  "label": "Interdição Temporária de Direitos,7787-Prestação de Serviços à Comunidade"
+ },
+ {
+  "value": "9196-Liminar ,10439-Indenização por Dano Material,10433-Indenização por Dano Moral",
+  "label": "Liminar ,10439-Indenização por Dano Material,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "9593-Locação de Imóvel,10582-Rescisão / Resolução",
+  "label": "Locação de Imóvel,10582-Rescisão / Resolução"
+ },
+ {
+  "value": "10423-Anulação",
+  "label": "Anulação"
+ },
+ {
+  "value": "10678-Sequestro de Verbas Públicas",
+  "label": "Sequestro de Verbas Públicas"
+ },
+ {
+  "value": "11807-Tarifas,7752-Bancários",
+  "label": "Tarifas,7752-Bancários"
+ },
+ {
+  "value": "4830-Cancelamento de vôo,7779-Indenização por Dano Moral,4862-Transporte Aéreo",
+  "label": "Cancelamento de vôo,7779-Indenização por Dano Moral,4862-Transporte Aéreo"
+ },
+ {
+  "value": "6095-Aposentadoria por Incapacidade Permanente",
+  "label": "Aposentadoria por Incapacidade Permanente"
+ },
+ {
+  "value": "7752-Bancários,7770-Interpretação / Revisão de Contrato,7780-Indenização por Dano Material,7773-Financiamento de Produto",
+  "label": "Bancários,7770-Interpretação / Revisão de Contrato,7780-Indenização por Dano Material,7773-Financiamento de Produto"
+ },
+ {
+  "value": "7949-Direitos da Personalidade ,7732-Registro de nascimento após prazo legal",
+  "label": "Direitos da Personalidade ,7732-Registro de nascimento após prazo legal"
+ },
+ {
+  "value": "8919-Nulidade",
+  "label": "Nulidade"
+ },
+ {
+  "value": "8960-Processo e Procedimento",
+  "label": "Processo e Procedimento"
+ },
+ {
+  "value": "9196-Liminar ,7770-Interpretação / Revisão de Contrato",
+  "label": "Liminar ,7770-Interpretação / Revisão de Contrato"
+ },
+ {
+  "value": "9644-Grave",
+  "label": "Grave"
+ },
+ {
+  "value": "9965-Abandono Material,9966-Abandono Intelectual",
+  "label": "Abandono Material,9966-Abandono Intelectual"
+ },
+ {
+  "value": "10432-Coisas",
+  "label": "Coisas"
+ },
+ {
+  "value": "15068-Retificação de Outros Dados",
+  "label": "Retificação de Outros Dados"
+ },
+ {
+  "value": "3402-Ameaça ,3426-Dano",
+  "label": "Ameaça ,3426-Dano"
+ },
+ {
+  "value": "3417-Furto Qualificado ,3416-Furto",
+  "label": "Furto Qualificado ,3416-Furto"
+ },
+ {
+  "value": "5566-Roubo Majorado,11392-Semiliberdade",
+  "label": "Roubo Majorado,11392-Semiliberdade"
+ },
+ {
+  "value": "5917-IRPF/Imposto de Renda de Pessoa Física,10296-Descontos Indevidos",
+  "label": "IRPF/Imposto de Renda de Pessoa Física,10296-Descontos Indevidos"
+ },
+ {
+  "value": "7618-Turismo",
+  "label": "Turismo"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,7774-Serviços Profissionais",
+  "label": "Rescisão do contrato e devolução do dinheiro,7774-Serviços Profissionais"
+ },
+ {
+  "value": "9599-Transporte de Coisas",
+  "label": "Transporte de Coisas"
+ },
+ {
+  "value": "9674-Contra o Patrimônio,9675-Furto (art. 155)",
+  "label": "Contra o Patrimônio,9675-Furto (art. 155)"
+ },
+ {
+  "value": "10261-Licença-Prêmio,10701-Pagamento em Pecúnia",
+  "label": "Licença-Prêmio,10701-Pagamento em Pecúnia"
+ },
+ {
+  "value": "10293-Adicional de Fronteira",
+  "label": "Adicional de Fronteira"
+ },
+ {
+  "value": "10447-Aquisição",
+  "label": "Aquisição"
+ },
+ {
+  "value": "3416-Furto ,10890-Vício Formal do Julgamento",
+  "label": "Furto ,10890-Vício Formal do Julgamento"
+ },
+ {
+  "value": "6226-Inclusão Indevida em Cadastro de Inadimplentes,7617-Telefonia,7779-Indenização por Dano Moral",
+  "label": "Inclusão Indevida em Cadastro de Inadimplentes,7617-Telefonia,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,4830-Cancelamento de vôo",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,4830-Cancelamento de vôo"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,7620-Estabelecimentos de Ensino",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,7620-Estabelecimentos de Ensino"
+ },
+ {
+  "value": "7789-Limitação de Fim de Semana,7787-Prestação de Serviços à Comunidade",
+  "label": "Limitação de Fim de Semana,7787-Prestação de Serviços à Comunidade"
+ },
+ {
+  "value": "9196-Liminar ,9607-Contratos Bancários",
+  "label": "Liminar ,9607-Contratos Bancários"
+ },
+ {
+  "value": "9594-Mandato",
+  "label": "Mandato"
+ },
+ {
+  "value": "9607-Contratos Bancários,9580-Espécies de Contratos",
+  "label": "Contratos Bancários,9580-Espécies de Contratos"
+ },
+ {
+  "value": "10305-Gratificações de Atividade,6189-Certidão de Tempo de Serviço,10288-Sistema Remuneratório e Benefícios",
+  "label": "Gratificações de Atividade,6189-Certidão de Tempo de Serviço,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10685-Correção Monetária",
+  "label": "Correção Monetária"
+ },
+ {
+  "value": "3433-Outras fraudes",
+  "label": "Outras fraudes"
+ },
+ {
+  "value": "3469-Ultraje Público ao Pudor (Ato/Escrito Obsceno)",
+  "label": "Ultraje Público ao Pudor (Ato/Escrito Obsceno)"
+ },
+ {
+  "value": "4980-Nota Promissória,9163-Penhora / Depósito/ Avaliação",
+  "label": "Nota Promissória,9163-Penhora / Depósito/ Avaliação"
+ },
+ {
+  "value": "5804-Investigação de Paternidade,5779-Alimentos",
+  "label": "Investigação de Paternidade,5779-Alimentos"
+ },
+ {
+  "value": "6220-Responsabilidade do Fornecedor,1156-DIREITO DO CONSUMIDOR",
+  "label": "Responsabilidade do Fornecedor,1156-DIREITO DO CONSUMIDOR"
+ },
+ {
+  "value": "7671-Adoção de Maior",
+  "label": "Adoção de Maior"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,9160-Levantamento de Valor",
+  "label": "Fornecimento de Energia Elétrica,9160-Levantamento de Valor"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,6233-Planos de Saúde",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,6233-Planos de Saúde"
+ },
+ {
+  "value": "10313-Reajustes de Remuneração, Proventos ou Pensão,10291-Adicional de Insalubridade",
+  "label": "Reajustes de Remuneração, Proventos ou Pensão,10291-Adicional de Insalubridade"
+ },
+ {
+  "value": "10313-Reajustes de Remuneração, Proventos ou Pensão,10318-Índice da URV Lei 8.880/1994",
+  "label": "Reajustes de Remuneração, Proventos ou Pensão,10318-Índice da URV Lei 8.880/1994"
+ },
+ {
+  "value": "10884-Indenização / Terço Constitucional,10301-Férias",
+  "label": "Indenização / Terço Constitucional,10301-Férias"
+ },
+ {
+  "value": "11391-Prestação de serviços à comunidade,11389-Liberdade assistida",
+  "label": "Prestação de serviços à comunidade,11389-Liberdade assistida"
+ },
+ {
+  "value": "13201-Inépcia da Inicial",
+  "label": "Inépcia da Inicial"
+ },
+ {
+  "value": "7752-Bancários,7772-Cartão de Crédito,7773-Financiamento de Produto",
+  "label": "Bancários,7772-Cartão de Crédito,7773-Financiamento de Produto"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,7752-Bancários,7773-Financiamento de Produto",
+  "label": "Interpretação / Revisão de Contrato,7752-Bancários,7773-Financiamento de Produto"
+ },
+ {
+  "value": "9196-Liminar ,10327-Curso de Formação",
+  "label": "Liminar ,10327-Curso de Formação"
+ },
+ {
+  "value": "11807-Tarifas",
+  "label": "Tarifas"
+ },
+ {
+  "value": "15071-Restauração de Registro de Nascimento",
+  "label": "Restauração de Registro de Nascimento"
+ },
+ {
+  "value": "10893-Base de Cálculo",
+  "label": "Base de Cálculo"
+ },
+ {
+  "value": "12887-Piso Salarial",
+  "label": "Piso Salarial"
+ },
+ {
+  "value": "11865-Vendas casadas",
+  "label": "Vendas casadas"
+ },
+ {
+  "value": "15048-Superendividamento",
+  "label": "Superendividamento"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,10651-Competência dos Juizados Especiais",
+  "label": "Fornecimento de Energia Elétrica,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "14925-Repetição do Indébito",
+  "label": "Repetição do Indébito"
+ },
+ {
+  "value": "10666-Regularidade Formal,7760-Fornecimento de Energia Elétrica",
+  "label": "Regularidade Formal,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "11937-Desvio de Função",
+  "label": "Desvio de Função"
+ },
+ {
+  "value": "12931-Cobrança",
+  "label": "Cobrança"
+ },
+ {
+  "value": "7941-Denegação,3608-Tráfico de Drogas e Condutas Afins",
+  "label": "Denegação,3608-Tráfico de Drogas e Condutas Afins"
+ },
+ {
+  "value": "7688-Transmissão",
+  "label": "Transmissão"
+ },
+ {
+  "value": "12042-Análise de Crédito",
+  "label": "Análise de Crédito"
+ },
+ {
+  "value": "6060-Contribuição sobre a folha de salários",
+  "label": "Contribuição sobre a folha de salários"
+ },
+ {
+  "value": "7780-Indenização por Dano Material,7760-Fornecimento de Energia Elétrica,7779-Indenização por Dano Moral",
+  "label": "Indenização por Dano Material,7760-Fornecimento de Energia Elétrica,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "10357-Licença Prêmio",
+  "label": "Licença Prêmio"
+ },
+ {
+  "value": "5779-Alimentos,9180-Expropriação de Bens",
+  "label": "Alimentos,9180-Expropriação de Bens"
+ },
+ {
+  "value": "6063-Auxílio-Alimentação",
+  "label": "Auxílio-Alimentação"
+ },
+ {
+  "value": "5779-Alimentos,10859-Alimentos",
+  "label": "Alimentos,10859-Alimentos"
+ },
+ {
+  "value": "14712-Conversão em Pecúnia",
+  "label": "Conversão em Pecúnia"
+ },
+ {
+  "value": "14926-Revisão de Juros Remuneratórios, Capitalização/Anatocismo",
+  "label": "Revisão de Juros Remuneratórios, Capitalização/Anatocismo"
+ },
+ {
+  "value": "10666-Regularidade Formal,7703-Pagamento",
+  "label": "Regularidade Formal,7703-Pagamento"
+ },
+ {
+  "value": "14757-Crédito Direto ao Consumidor - CDC",
+  "label": "Crédito Direto ao Consumidor - CDC"
+ },
+ {
+  "value": "6077-FUNDEB/FUNDEF/Fundo de Manutenção e Desenvolvimento do Ensino Fundamental e de Valorização do Magistério",
+  "label": "FUNDEB/FUNDEF/Fundo de Manutenção e Desenvolvimento do Ensino Fundamental e de Valorização do Magistério"
+ },
+ {
+  "value": "13385-Contratuais",
+  "label": "Contratuais"
+ },
+ {
+  "value": "11974-Cláusulas Abusivas",
+  "label": "Cláusulas Abusivas"
+ },
+ {
+  "value": "7941-Denegação,5566-Roubo Majorado",
+  "label": "Denegação,5566-Roubo Majorado"
+ },
+ {
+  "value": "4951-Anulação",
+  "label": "Anulação"
+ },
+ {
+  "value": "11417-Estupro de vulnerável,7941-Denegação",
+  "label": "Estupro de vulnerável,7941-Denegação"
+ },
+ {
+  "value": "15074-Restauração de Registro Público",
+  "label": "Restauração de Registro Público"
+ },
+ {
+  "value": "14141-Descontos Indevidos",
+  "label": "Descontos Indevidos"
+ },
+ {
+  "value": "10297-Teto Salarial",
+  "label": "Teto Salarial"
+ },
+ {
+  "value": "10684-Juros",
+  "label": "Juros"
+ },
+ {
+  "value": "9581-Agência e Distribuição",
+  "label": "Agência e Distribuição"
+ },
+ {
+  "value": "7941-Denegação,3431-Estelionato",
+  "label": "Denegação,3431-Estelionato"
+ },
+ {
+  "value": "10294-Abono Pecuniário (Art. 78 Lei 8.112/1990)",
+  "label": "Abono Pecuniário (Art. 78 Lei 8.112/1990)"
+ },
+ {
+  "value": "14918-Confissão/Composição de Dívida",
+  "label": "Confissão/Composição de Dívida"
+ },
+ {
+  "value": "10638-Acumulação de Proventos",
+  "label": "Acumulação de Proventos"
+ },
+ {
+  "value": "7699-Juros de Mora - Legais / Contratuais",
+  "label": "Juros de Mora - Legais / Contratuais"
+ },
+ {
+  "value": "10467-Despesas Condominiais",
+  "label": "Despesas Condominiais"
+ },
+ {
+  "value": "10439-Indenização por Dano Material,7760-Fornecimento de Energia Elétrica,10433-Indenização por Dano Moral",
+  "label": "Indenização por Dano Material,7760-Fornecimento de Energia Elétrica,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "10301-Férias,10308-Adicional de Serviço Noturno,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios",
+  "label": "Férias,10308-Adicional de Serviço Noturno,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10382-Anulação",
+  "label": "Anulação"
+ },
+ {
+  "value": "4832-Extravio de bagagem",
+  "label": "Extravio de bagagem"
+ },
+ {
+  "value": "14915-Despejo por Inadimplemento",
+  "label": "Despejo por Inadimplemento"
+ },
+ {
+  "value": "10666-Regularidade Formal,9196-Liminar",
+  "label": "Regularidade Formal,9196-Liminar"
+ },
+ {
+  "value": "14943-Lesão Cometida em Razão da Condição de Mulher",
+  "label": "Lesão Cometida em Razão da Condição de Mulher"
+ },
+ {
+  "value": "10666-Regularidade Formal,10291-Adicional de Insalubridade",
+  "label": "Regularidade Formal,10291-Adicional de Insalubridade"
+ },
+ {
+  "value": "14924-Partilha,7677-Reconhecimento / Dissolução",
+  "label": "Partilha,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "7941-Denegação,3417-Furto Qualificado",
+  "label": "Denegação,3417-Furto Qualificado"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,10666-Regularidade Formal,7779-Indenização por Dano Moral",
+  "label": "Fornecimento de Energia Elétrica,10666-Regularidade Formal,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,4830-Cancelamento de vôo",
+  "label": "Indenização por Dano Moral,4830-Cancelamento de vôo"
+ },
+ {
+  "value": "11810-Dever de Informação",
+  "label": "Dever de Informação"
+ },
+ {
+  "value": "14199-Regime de Dedicação Exclusiva",
+  "label": "Regime de Dedicação Exclusiva"
+ },
+ {
+  "value": "9524-Indenização do Prejuízo",
+  "label": "Indenização do Prejuízo"
+ },
+ {
+  "value": "9587-Compra e Venda,7769-Abatimento proporcional do preço",
+  "label": "Compra e Venda,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "10666-Regularidade Formal,9518-Efeito Suspensivo / Impugnação / Embargos à Execução",
+  "label": "Regularidade Formal,9518-Efeito Suspensivo / Impugnação / Embargos à Execução"
+ },
+ {
+  "value": "15031-Jornada Especial",
+  "label": "Jornada Especial"
+ },
+ {
+  "value": "13186-Horas Extras",
+  "label": "Horas Extras"
+ },
+ {
+  "value": "7661-Bem de Família (Voluntário)",
+  "label": "Bem de Família (Voluntário)"
+ },
+ {
+  "value": "14855-Parte Incontroversa",
+  "label": "Parte Incontroversa"
+ },
+ {
+  "value": "6042-PASEP",
+  "label": "PASEP"
+ },
+ {
+  "value": "12160-Requerimento de Reintegração de Posse",
+  "label": "Requerimento de Reintegração de Posse"
+ },
+ {
+  "value": "7941-Denegação,3632-Crimes de Trânsito",
+  "label": "Denegação,3632-Crimes de Trânsito"
+ },
+ {
+  "value": "7941-Denegação,3372-Homicídio Qualificado",
+  "label": "Denegação,3372-Homicídio Qualificado"
+ },
+ {
+  "value": "6058-Indenização Trabalhista",
+  "label": "Indenização Trabalhista"
+ },
+ {
+  "value": "10456-Acessão",
+  "label": "Acessão"
+ },
+ {
+  "value": "13004-Legitimidade - Autoridade Coatora",
+  "label": "Legitimidade - Autoridade Coatora"
+ },
+ {
+  "value": "7941-Denegação,3419-Roubo",
+  "label": "Denegação,3419-Roubo"
+ },
+ {
+  "value": "10376-Exame de Saúde e/ou Aptidão Física",
+  "label": "Exame de Saúde e/ou Aptidão Física"
+ },
+ {
+  "value": "12245-Nomeação,12241-Curatela",
+  "label": "Nomeação,12241-Curatela"
+ },
+ {
+  "value": "12486-Planos de saúde",
+  "label": "Planos de saúde"
+ },
+ {
+  "value": "7772-Cartão de Crédito,11806-Empréstimo consignado",
+  "label": "Cartão de Crédito,11806-Empréstimo consignado"
+ },
+ {
+  "value": "10666-Regularidade Formal,9582-Alienação Fiduciária",
+  "label": "Regularidade Formal,9582-Alienação Fiduciária"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,7760-Fornecimento de Energia Elétrica",
+  "label": "Competência dos Juizados Especiais,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "4829-Atraso de vôo,4830-Cancelamento de vôo",
+  "label": "Atraso de vôo,4830-Cancelamento de vôo"
+ },
+ {
+  "value": "7941-Denegação,3435-Receptação",
+  "label": "Denegação,3435-Receptação"
+ },
+ {
+  "value": "14126-Alimentos Gravídicos",
+  "label": "Alimentos Gravídicos"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,4980-Nota Promissória",
+  "label": "Competência dos Juizados Especiais,4980-Nota Promissória"
+ },
+ {
+  "value": "10666-Regularidade Formal,10433-Indenização por Dano Moral",
+  "label": "Regularidade Formal,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "4829-Atraso de vôo,10433-Indenização por Dano Moral",
+  "label": "Atraso de vôo,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "14923-Partilha,7664-Dissolução",
+  "label": "Partilha,7664-Dissolução"
+ },
+ {
+  "value": "12771-Reconhecimento de Paternidade/Maternidade Socioafetiva",
+  "label": "Reconhecimento de Paternidade/Maternidade Socioafetiva"
+ },
+ {
+  "value": "7748-Acidente Aéreo,7769-Abatimento proporcional do preço",
+  "label": "Acidente Aéreo,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "14144-Ajuda de Custo",
+  "label": "Ajuda de Custo"
+ },
+ {
+  "value": "7941-Denegação,3416-Furto",
+  "label": "Denegação,3416-Furto"
+ },
+ {
+  "value": "10706-Gratificações Municipais Específicas,10893-Base de Cálculo",
+  "label": "Gratificações Municipais Específicas,10893-Base de Cálculo"
+ },
+ {
+  "value": "12416-Tutela de Urgência",
+  "label": "Tutela de Urgência"
+ },
+ {
+  "value": "6107-Auxílio-Acidente (Art. 86)",
+  "label": "Auxílio-Acidente (Art. 86)"
+ },
+ {
+  "value": "10236-Promoção / Ascensão,10223-Enquadramento",
+  "label": "Promoção / Ascensão,10223-Enquadramento"
+ },
+ {
+  "value": "10309-Adicional de Produtividade",
+  "label": "Adicional de Produtividade"
+ },
+ {
+  "value": "10379-Anulação e Correção de Provas / Questões",
+  "label": "Anulação e Correção de Provas / Questões"
+ },
+ {
+  "value": "14226-Crimes Previstos na Lei Maria da Penha",
+  "label": "Crimes Previstos na Lei Maria da Penha"
+ },
+ {
+  "value": "4830-Cancelamento de vôo,10433-Indenização por Dano Moral",
+  "label": "Cancelamento de vôo,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "4831-Overbooking",
+  "label": "Overbooking"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,14925-Repetição do Indébito",
+  "label": "Indenização por Dano Moral,14925-Repetição do Indébito"
+ },
+ {
+  "value": "12194-Contra a Mulher,7941-Denegação",
+  "label": "Contra a Mulher,7941-Denegação"
+ },
+ {
+  "value": "13150-Embargos de Terceiro",
+  "label": "Embargos de Terceiro"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7761-Fornecimento de Água",
+  "label": "Indenização por Dano Moral,7761-Fornecimento de Água"
+ },
+ {
+  "value": "14708-Ajuda de Custo",
+  "label": "Ajuda de Custo"
+ },
+ {
+  "value": "14201-Progressão Funcional com Interstício de Doze Meses,10223-Enquadramento",
+  "label": "Progressão Funcional com Interstício de Doze Meses,10223-Enquadramento"
+ },
+ {
+  "value": "6065-Hora Extra",
+  "label": "Hora Extra"
+ },
+ {
+  "value": "10434-Serviços de Saúde",
+  "label": "Serviços de Saúde"
+ },
+ {
+  "value": "10666-Regularidade Formal,9160-Levantamento de Valor",
+  "label": "Regularidade Formal,9160-Levantamento de Valor"
+ },
+ {
+  "value": "7711-Remissão das Dívidas",
+  "label": "Remissão das Dívidas"
+ },
+ {
+  "value": "7752-Bancários,11974-Cláusulas Abusivas",
+  "label": "Bancários,11974-Cláusulas Abusivas"
+ },
+ {
+  "value": "10666-Regularidade Formal,10445-Esbulho / Turbação / Ameaça",
+  "label": "Regularidade Formal,10445-Esbulho / Turbação / Ameaça"
+ },
+ {
+  "value": "13053-Adjudicação",
+  "label": "Adjudicação"
+ },
+ {
+  "value": "4847-Seguro",
+  "label": "Seguro"
+ },
+ {
+  "value": "10292-Adicional de Periculosidade,10305-Gratificações de Atividade,10288-Sistema Remuneratório e Benefícios",
+  "label": "Adicional de Periculosidade,10305-Gratificações de Atividade,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,11865-Vendas casadas",
+  "label": "Competência dos Juizados Especiais,11865-Vendas casadas"
+ },
+ {
+  "value": "7748-Acidente Aéreo",
+  "label": "Acidente Aéreo"
+ },
+ {
+  "value": "14912-Cessão de Créditos",
+  "label": "Cessão de Créditos"
+ },
+ {
+  "value": "6239-Fixação,5802-Guarda,7664-Dissolução",
+  "label": "Fixação,5802-Guarda,7664-Dissolução"
+ },
+ {
+  "value": "10225-Acumulação de Cargos",
+  "label": "Acumulação de Cargos"
+ },
+ {
+  "value": "10671-Obrigação de Fazer / Não Fazer,10666-Regularidade Formal",
+  "label": "Obrigação de Fazer / Não Fazer,10666-Regularidade Formal"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,10075-Energia Elétrica",
+  "label": "Fornecimento de Energia Elétrica,10075-Energia Elétrica"
+ },
+ {
+  "value": "9602-Comodato",
+  "label": "Comodato"
+ },
+ {
+  "value": "10666-Regularidade Formal,7779-Indenização por Dano Moral",
+  "label": "Regularidade Formal,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "10893-Base de Cálculo,10706-Gratificações Municipais Específicas",
+  "label": "Base de Cálculo,10706-Gratificações Municipais Específicas"
+ },
+ {
+  "value": "14175-Assédio Moral",
+  "label": "Assédio Moral"
+ },
+ {
+  "value": "9614-Benfeitorias",
+  "label": "Benfeitorias"
+ },
+ {
+  "value": "10496-Promessa de Compra e Venda,9587-Compra e Venda",
+  "label": "Promessa de Compra e Venda,9587-Compra e Venda"
+ },
+ {
+  "value": "14684-Perseguição",
+  "label": "Perseguição"
+ },
+ {
+  "value": "10230-Regime Previdenciário",
+  "label": "Regime Previdenciário"
+ },
+ {
+  "value": "11806-Empréstimo consignado,7772-Cartão de Crédito,7752-Bancários",
+  "label": "Empréstimo consignado,7772-Cartão de Crédito,7752-Bancários"
+ },
+ {
+  "value": "7619-Consórcio,7768-Rescisão do contrato e devolução do dinheiro",
+  "label": "Consórcio,7768-Rescisão do contrato e devolução do dinheiro"
+ },
+ {
+  "value": "8843-Assistência Judiciária Gratuita",
+  "label": "Assistência Judiciária Gratuita"
+ },
+ {
+  "value": "10305-Gratificações de Atividade,10223-Enquadramento",
+  "label": "Gratificações de Atividade,10223-Enquadramento"
+ },
+ {
+  "value": "10671-Obrigação de Fazer / Não Fazer,10651-Competência dos Juizados Especiais",
+  "label": "Obrigação de Fazer / Não Fazer,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "12827-Profissionais de Apoio",
+  "label": "Profissionais de Apoio"
+ },
+ {
+  "value": "7941-Denegação,3633-Crimes do Sistema Nacional de Armas",
+  "label": "Denegação,3633-Crimes do Sistema Nacional de Armas"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,11807-Tarifas",
+  "label": "Competência dos Juizados Especiais,11807-Tarifas"
+ },
+ {
+  "value": "7780-Indenização por Dano Material,10433-Indenização por Dano Moral",
+  "label": "Indenização por Dano Material,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "10677-Busca e Apreensão,9582-Alienação Fiduciária",
+  "label": "Busca e Apreensão,9582-Alienação Fiduciária"
+ },
+ {
+  "value": "7752-Bancários,10651-Competência dos Juizados Especiais",
+  "label": "Bancários,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "10318-Índice da URV Lei 8.880/1994,10313-Reajustes de Remuneração, Proventos ou Pensão",
+  "label": "Índice da URV Lei 8.880/1994,10313-Reajustes de Remuneração, Proventos ou Pensão"
+ },
+ {
+  "value": "10439-Indenização por Dano Material,10666-Regularidade Formal,10433-Indenização por Dano Moral",
+  "label": "Indenização por Dano Material,10666-Regularidade Formal,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "10666-Regularidade Formal,9596-Prestação de Serviços",
+  "label": "Regularidade Formal,9596-Prestação de Serviços"
+ },
+ {
+  "value": "4830-Cancelamento de vôo,4829-Atraso de vôo",
+  "label": "Cancelamento de vôo,4829-Atraso de vôo"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7752-Bancários,7768-Rescisão do contrato e devolução do dinheiro",
+  "label": "Indenização por Dano Moral,7752-Bancários,7768-Rescisão do contrato e devolução do dinheiro"
+ },
+ {
+  "value": "10288-Sistema Remuneratório e Benefícios,10305-Gratificações de Atividade,6189-Certidão de Tempo de Serviço",
+  "label": "Sistema Remuneratório e Benefícios,10305-Gratificações de Atividade,6189-Certidão de Tempo de Serviço"
+ },
+ {
+  "value": "10462-Condomínio",
+  "label": "Condomínio"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,7621-Seguro",
+  "label": "Competência dos Juizados Especiais,7621-Seguro"
+ },
+ {
+  "value": "10666-Regularidade Formal,9607-Contratos Bancários",
+  "label": "Regularidade Formal,9607-Contratos Bancários"
+ },
+ {
+  "value": "11806-Empréstimo consignado,9597-Seguro",
+  "label": "Empréstimo consignado,9597-Seguro"
+ },
+ {
+  "value": "13537-Sucumbenciais",
+  "label": "Sucumbenciais"
+ },
+ {
+  "value": "14924-Partilha",
+  "label": "Partilha"
+ },
+ {
+  "value": "7772-Cartão de Crédito,10651-Competência dos Juizados Especiais",
+  "label": "Cartão de Crédito,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "10305-Gratificações de Atividade,10292-Adicional de Periculosidade",
+  "label": "Gratificações de Atividade,10292-Adicional de Periculosidade"
+ },
+ {
+  "value": "4957-Requisitos",
+  "label": "Requisitos"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,6226-Inclusão Indevida em Cadastro de Inadimplentes",
+  "label": "Fornecimento de Energia Elétrica,6226-Inclusão Indevida em Cadastro de Inadimplentes"
+ },
+ {
+  "value": "12161-Requerimento de Apreensão de Veículo",
+  "label": "Requerimento de Apreensão de Veículo"
+ },
+ {
+  "value": "9178-Inexequibilidade do Título / Inexigibilidade da Obrigação",
+  "label": "Inexequibilidade do Título / Inexigibilidade da Obrigação"
+ },
+ {
+  "value": "10435-Acidente de Trânsito,7769-Abatimento proporcional do preço",
+  "label": "Acidente de Trânsito,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "10468-Direitos / Deveres do Condômino",
+  "label": "Direitos / Deveres do Condômino"
+ },
+ {
+  "value": "10496-Promessa de Compra e Venda,7769-Abatimento proporcional do preço",
+  "label": "Promessa de Compra e Venda,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "10666-Regularidade Formal,10313-Reajustes de Remuneração, Proventos ou Pensão",
+  "label": "Regularidade Formal,10313-Reajustes de Remuneração, Proventos ou Pensão"
+ },
+ {
+  "value": "11864-Irregularidade no atendimento",
+  "label": "Irregularidade no atendimento"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,10439-Indenização por Dano Material",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,11806-Empréstimo consignado",
+  "label": "Indenização por Dano Moral,11806-Empréstimo consignado"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,4829-Atraso de vôo",
+  "label": "Indenização por Dano Moral,4829-Atraso de vôo"
+ },
+ {
+  "value": "12487-Fornecimento de medicamentos",
+  "label": "Fornecimento de medicamentos"
+ },
+ {
+  "value": "4935-Dissolução",
+  "label": "Dissolução"
+ },
+ {
+  "value": "10304-Auxílio-Alimentação,10288-Sistema Remuneratório e Benefícios",
+  "label": "Auxílio-Alimentação,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "15046-Investigação de Paternidade Pós Morte",
+  "label": "Investigação de Paternidade Pós Morte"
+ },
+ {
+  "value": "7621-Seguro,11865-Vendas casadas",
+  "label": "Seguro,11865-Vendas casadas"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10439-Indenização por Dano Material,6042-PASEP",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material,6042-PASEP"
+ },
+ {
+  "value": "4830-Cancelamento de vôo,10651-Competência dos Juizados Especiais",
+  "label": "Cancelamento de vôo,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "4962-Cédula de Crédito Comercial",
+  "label": "Cédula de Crédito Comercial"
+ },
+ {
+  "value": "5897-Associação para a Produção e Tráfico e Condutas Afins",
+  "label": "Associação para a Produção e Tráfico e Condutas Afins"
+ },
+ {
+  "value": "6239-Fixação,5802-Guarda,5779-Alimentos",
+  "label": "Fixação,5802-Guarda,5779-Alimentos"
+ },
+ {
+  "value": "7941-Denegação,3402-Ameaça",
+  "label": "Denegação,3402-Ameaça"
+ },
+ {
+  "value": "13319-Tutela Inibitória (Obrigação de Fazer e Não Fazer)",
+  "label": "Tutela Inibitória (Obrigação de Fazer e Não Fazer)"
+ },
+ {
+  "value": "10339-Férias",
+  "label": "Férias"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,11806-Empréstimo consignado",
+  "label": "Competência dos Juizados Especiais,11806-Empréstimo consignado"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,4830-Cancelamento de vôo",
+  "label": "Competência dos Juizados Especiais,4830-Cancelamento de vôo"
+ },
+ {
+  "value": "12502-Eletiva",
+  "label": "Eletiva"
+ },
+ {
+  "value": "11456-Estupro de Vulnerável",
+  "label": "Estupro de Vulnerável"
+ },
+ {
+  "value": "12397-Importunação Sexual",
+  "label": "Importunação Sexual"
+ },
+ {
+  "value": "7752-Bancários,7769-Abatimento proporcional do preço",
+  "label": "Bancários,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "7761-Fornecimento de Água,7769-Abatimento proporcional do preço",
+  "label": "Fornecimento de Água,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "10223-Enquadramento,14201-Progressão Funcional com Interstício de Doze Meses",
+  "label": "Enquadramento,14201-Progressão Funcional com Interstício de Doze Meses"
+ },
+ {
+  "value": "10308-Adicional de Serviço Noturno,10305-Gratificações de Atividade",
+  "label": "Adicional de Serviço Noturno,10305-Gratificações de Atividade"
+ },
+ {
+  "value": "10938-Citação",
+  "label": "Citação"
+ },
+ {
+  "value": "14927-Retificação",
+  "label": "Retificação"
+ },
+ {
+  "value": "5779-Alimentos,6239-Fixação,5805-Regulamentação de Visitas,5802-Guarda",
+  "label": "Alimentos,6239-Fixação,5805-Regulamentação de Visitas,5802-Guarda"
+ },
+ {
+  "value": "7694-Atos Unilaterais",
+  "label": "Atos Unilaterais"
+ },
+ {
+  "value": "10223-Enquadramento,10288-Sistema Remuneratório e Benefícios,10236-Promoção / Ascensão",
+  "label": "Enquadramento,10288-Sistema Remuneratório e Benefícios,10236-Promoção / Ascensão"
+ },
+ {
+  "value": "7701-Arras ou Sinal",
+  "label": "Arras ou Sinal"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,10075-Energia Elétrica,5977-Energia Elétrica",
+  "label": "Fornecimento de Energia Elétrica,10075-Energia Elétrica,5977-Energia Elétrica"
+ },
+ {
+  "value": "7780-Indenização por Dano Material,10651-Competência dos Juizados Especiais",
+  "label": "Indenização por Dano Material,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "10226-Reintegração ou Readmissão",
+  "label": "Reintegração ou Readmissão"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,9587-Compra e Venda",
+  "label": "Competência dos Juizados Especiais,9587-Compra e Venda"
+ },
+ {
+  "value": "10666-Regularidade Formal,6239-Fixação",
+  "label": "Regularidade Formal,6239-Fixação"
+ },
+ {
+  "value": "12416-Tutela de Urgência,7760-Fornecimento de Energia Elétrica",
+  "label": "Tutela de Urgência,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,11811-Práticas Abusivas",
+  "label": "Fornecimento de Energia Elétrica,11811-Práticas Abusivas"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,9587-Compra e Venda",
+  "label": "Indenização por Dano Moral,9587-Compra e Venda"
+ },
+ {
+  "value": "7941-Denegação,3465-Estupro",
+  "label": "Denegação,3465-Estupro"
+ },
+ {
+  "value": "8961-Antecipação de Tutela / Tutela Específica",
+  "label": "Antecipação de Tutela / Tutela Específica"
+ },
+ {
+  "value": "10260-Licença Capacitação (Aperfeiçoamento Profissional)",
+  "label": "Licença Capacitação (Aperfeiçoamento Profissional)"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,4830-Cancelamento de vôo",
+  "label": "Indenização por Dano Moral,4830-Cancelamento de vôo"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,7768-Rescisão do contrato e devolução do dinheiro",
+  "label": "Competência dos Juizados Especiais,7768-Rescisão do contrato e devolução do dinheiro"
+ },
+ {
+  "value": "10666-Regularidade Formal,9580-Espécies de Contratos",
+  "label": "Regularidade Formal,9580-Espécies de Contratos"
+ },
+ {
+  "value": "12882-Progressão",
+  "label": "Progressão"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10439-Indenização por Dano Material,7760-Fornecimento de Energia Elétrica",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "10706-Gratificações Municipais Específicas,10651-Competência dos Juizados Especiais",
+  "label": "Gratificações Municipais Específicas,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "7780-Indenização por Dano Material,7752-Bancários,7779-Indenização por Dano Moral",
+  "label": "Indenização por Dano Material,7752-Bancários,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "9607-Contratos Bancários,7752-Bancários",
+  "label": "Contratos Bancários,7752-Bancários"
+ },
+ {
+  "value": "14916-Fornecimento",
+  "label": "Fornecimento"
+ },
+ {
+  "value": "5779-Alimentos,9163-Penhora / Depósito/ Avaliação",
+  "label": "Alimentos,9163-Penhora / Depósito/ Avaliação"
+ },
+ {
+  "value": "7717-Espécies de Títulos de Crédito,4972-Duplicata,4949-Títulos de Crédito",
+  "label": "Espécies de Títulos de Crédito,4972-Duplicata,4949-Títulos de Crédito"
+ },
+ {
+  "value": "10085-Água e/ou Esgoto",
+  "label": "Água e/ou Esgoto"
+ },
+ {
+  "value": "6108-Incapacidade Laborativa Parcial",
+  "label": "Incapacidade Laborativa Parcial"
+ },
+ {
+  "value": "6239-Fixação,5802-Guarda,7677-Reconhecimento / Dissolução",
+  "label": "Fixação,5802-Guarda,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "6239-Fixação,5805-Regulamentação de Visitas,5802-Guarda",
+  "label": "Fixação,5805-Regulamentação de Visitas,5802-Guarda"
+ },
+ {
+  "value": "7772-Cartão de Crédito,9585-Cartão de Crédito",
+  "label": "Cartão de Crédito,9585-Cartão de Crédito"
+ },
+ {
+  "value": "9994- Dano Ambiental",
+  "label": "Dano Ambiental"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,9580-Espécies de Contratos",
+  "label": "Indenização por Dano Moral,9580-Espécies de Contratos"
+ },
+ {
+  "value": "10468-Direitos / Deveres do Condômino,10467-Despesas Condominiais",
+  "label": "Direitos / Deveres do Condômino,10467-Despesas Condominiais"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,7769-Abatimento proporcional do preço",
+  "label": "Competência dos Juizados Especiais,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "14694-DPVAT",
+  "label": "DPVAT"
+ },
+ {
+  "value": "4832-Extravio de bagagem,10433-Indenização por Dano Moral",
+  "label": "Extravio de bagagem,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "10458-Usucapião Extraordinária",
+  "label": "Usucapião Extraordinária"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,7780-Indenização por Dano Material",
+  "label": "Competência dos Juizados Especiais,7780-Indenização por Dano Material"
+ },
+ {
+  "value": "10666-Regularidade Formal,10288-Sistema Remuneratório e Benefícios",
+  "label": "Regularidade Formal,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10666-Regularidade Formal,4703-Defeito, nulidade ou anulação",
+  "label": "Regularidade Formal,4703-Defeito, nulidade ou anulação"
+ },
+ {
+  "value": "11806-Empréstimo consignado,7772-Cartão de Crédito",
+  "label": "Empréstimo consignado,7772-Cartão de Crédito"
+ },
+ {
+  "value": "11811-Práticas Abusivas,7760-Fornecimento de Energia Elétrica",
+  "label": "Práticas Abusivas,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "12005-Outras medidas de proteção,12000-Requisição de tratamento médico, psicológico ou psiquiátrico, em regime hospitalar ou ambulatorial",
+  "label": "Outras medidas de proteção,12000-Requisição de tratamento médico, psicológico ou psiquiátrico, em regime hospitalar ou ambulatorial"
+ },
+ {
+  "value": "5779-Alimentos,5802-Guarda,14924-Partilha,7677-Reconhecimento / Dissolução",
+  "label": "Alimentos,5802-Guarda,14924-Partilha,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "9587-Compra e Venda,9149-Valor da Execução / Cálculo / Atualização,10684-Juros,10685-Correção Monetária,4972-Duplicata",
+  "label": "Compra e Venda,9149-Valor da Execução / Cálculo / Atualização,10684-Juros,10685-Correção Monetária,4972-Duplicata"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,10441-Acidente de Trânsito",
+  "label": "Competência dos Juizados Especiais,10441-Acidente de Trânsito"
+ },
+ {
+  "value": "10687-Taxa SELIC",
+  "label": "Taxa SELIC"
+ },
+ {
+  "value": "11806-Empréstimo consignado,15048-Superendividamento",
+  "label": "Empréstimo consignado,15048-Superendividamento"
+ },
+ {
+  "value": "11865-Vendas casadas,7621-Seguro",
+  "label": "Vendas casadas,7621-Seguro"
+ },
+ {
+  "value": "5802-Guarda,5805-Regulamentação de Visitas,6238-Oferta",
+  "label": "Guarda,5805-Regulamentação de Visitas,6238-Oferta"
+ },
+ {
+  "value": "10338-Gratificações e Adicionais,10673-Requisição de Pequeno Valor - RPV",
+  "label": "Gratificações e Adicionais,10673-Requisição de Pequeno Valor - RPV"
+ },
+ {
+  "value": "10585-Capitalização / Anatocismo",
+  "label": "Capitalização / Anatocismo"
+ },
+ {
+  "value": "10666-Regularidade Formal,7677-Reconhecimento / Dissolução",
+  "label": "Regularidade Formal,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "14744-Paridade Salarial",
+  "label": "Paridade Salarial"
+ },
+ {
+  "value": "15219-Prestação de Contas",
+  "label": "Prestação de Contas"
+ },
+ {
+  "value": "7620-Estabelecimentos de Ensino,9596-Prestação de Serviços",
+  "label": "Estabelecimentos de Ensino,9596-Prestação de Serviços"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,4829-Atraso de vôo,4830-Cancelamento de vôo",
+  "label": "Indenização por Dano Moral,4829-Atraso de vôo,4830-Cancelamento de vôo"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7769-Abatimento proporcional do preço",
+  "label": "Indenização por Dano Moral,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "7941-Denegação,3436-Apropriação indébita",
+  "label": "Denegação,3436-Apropriação indébita"
+ },
+ {
+  "value": "10377-Curso de Formação",
+  "label": "Curso de Formação"
+ },
+ {
+  "value": "10949-Violência Doméstica Contra a Mulher,7941-Denegação",
+  "label": "Violência Doméstica Contra a Mulher,7941-Denegação"
+ },
+ {
+  "value": "11865-Vendas casadas,11974-Cláusulas Abusivas",
+  "label": "Vendas casadas,11974-Cláusulas Abusivas"
+ },
+ {
+  "value": "14070-Fazenda Pública,10673-Requisição de Pequeno Valor - RPV",
+  "label": "Fazenda Pública,10673-Requisição de Pequeno Valor - RPV"
+ },
+ {
+  "value": "15047-Reconhecimento/Dissolução Sócio Afetivo Pós Morte",
+  "label": "Reconhecimento/Dissolução Sócio Afetivo Pós Morte"
+ },
+ {
+  "value": "9519-Benefício de Ordem",
+  "label": "Benefício de Ordem"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,4703-Defeito, nulidade ou anulação",
+  "label": "Indenização por Dano Moral,4703-Defeito, nulidade ou anulação"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,7768-Rescisão do contrato e devolução do dinheiro",
+  "label": "Indenização por Dano Moral,7768-Rescisão do contrato e devolução do dinheiro"
+ },
+ {
+  "value": "13045-Ação Anulatória",
+  "label": "Ação Anulatória"
+ },
+ {
+  "value": "5779-Alimentos,7664-Dissolução",
+  "label": "Alimentos,7664-Dissolução"
+ },
+ {
+  "value": "7757-Auxílio-Doença Acidentário",
+  "label": "Auxílio-Doença Acidentário"
+ },
+ {
+  "value": "7770-Interpretação / Revisão de Contrato,9607-Contratos Bancários",
+  "label": "Interpretação / Revisão de Contrato,9607-Contratos Bancários"
+ },
+ {
+  "value": "7780-Indenização por Dano Material,10439-Indenização por Dano Material",
+  "label": "Indenização por Dano Material,10439-Indenização por Dano Material"
+ },
+ {
+  "value": "9520-Ato Atentatório à Dignidade da Justiça",
+  "label": "Ato Atentatório à Dignidade da Justiça"
+ },
+ {
+  "value": "9996-Acidente de Trânsito",
+  "label": "Acidente de Trânsito"
+ },
+ {
+  "value": "10318-Índice da URV Lei 8.880/1994",
+  "label": "Índice da URV Lei 8.880/1994"
+ },
+ {
+  "value": "10441-Acidente de Trânsito,7769-Abatimento proporcional do preço",
+  "label": "Acidente de Trânsito,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "10666-Regularidade Formal,5788-Revisão",
+  "label": "Regularidade Formal,5788-Revisão"
+ },
+ {
+  "value": "10671-Obrigação de Fazer / Não Fazer,10304-Auxílio-Alimentação,10288-Sistema Remuneratório e Benefícios",
+  "label": "Obrigação de Fazer / Não Fazer,10304-Auxílio-Alimentação,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "11806-Empréstimo consignado,9607-Contratos Bancários",
+  "label": "Empréstimo consignado,9607-Contratos Bancários"
+ },
+ {
+  "value": "12419-Provas em geral",
+  "label": "Provas em geral"
+ },
+ {
+  "value": "12937-Direitos da Personalidade",
+  "label": "Direitos da Personalidade"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,9596-Prestação de Serviços",
+  "label": "Fornecimento de Energia Elétrica,9596-Prestação de Serviços"
+ },
+ {
+  "value": "7761-Fornecimento de Água,10085-Água e/ou Esgoto",
+  "label": "Fornecimento de Água,10085-Água e/ou Esgoto"
+ },
+ {
+  "value": "10257-Voluntária",
+  "label": "Voluntária"
+ },
+ {
+  "value": "10662-Abono de Permanência,10673-Requisição de Pequeno Valor - RPV",
+  "label": "Abono de Permanência,10673-Requisição de Pequeno Valor - RPV"
+ },
+ {
+  "value": "10676-Imissão na Posse",
+  "label": "Imissão na Posse"
+ },
+ {
+  "value": "12516-Ressarcimento do SUS",
+  "label": "Ressarcimento do SUS"
+ },
+ {
+  "value": "7626-Assinatura Básica Mensal",
+  "label": "Assinatura Básica Mensal"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,12416-Tutela de Urgência",
+  "label": "Fornecimento de Energia Elétrica,12416-Tutela de Urgência"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,9580-Espécies de Contratos",
+  "label": "Fornecimento de Energia Elétrica,9580-Espécies de Contratos"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,9607-Contratos Bancários",
+  "label": "Rescisão do contrato e devolução do dinheiro,9607-Contratos Bancários"
+ },
+ {
+  "value": "7780-Indenização por Dano Material,4862-Transporte Aéreo,7779-Indenização por Dano Moral",
+  "label": "Indenização por Dano Material,4862-Transporte Aéreo,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "10310-Gratificação Natalina/13º salário,10884-Indenização / Terço Constitucional",
+  "label": "Gratificação Natalina/13º salário,10884-Indenização / Terço Constitucional"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,7780-Indenização por Dano Material",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material"
+ },
+ {
+  "value": "10443-Direito de Imagem",
+  "label": "Direito de Imagem"
+ },
+ {
+  "value": "13019-Penhora de Salário / Proventos",
+  "label": "Penhora de Salário / Proventos"
+ },
+ {
+  "value": "14200-Limite de Carga Horária - Jornada Semanal",
+  "label": "Limite de Carga Horária - Jornada Semanal"
+ },
+ {
+  "value": "14201-Progressão Funcional com Interstício de Doze Meses,10651-Competência dos Juizados Especiais",
+  "label": "Progressão Funcional com Interstício de Doze Meses,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "14942-Violência Psicológica contra a Mulher",
+  "label": "Violência Psicológica contra a Mulher"
+ },
+ {
+  "value": "10301-Férias,10884-Indenização / Terço Constitucional,10310-Gratificação Natalina/13º salário,10425-Rescisão,10288-Sistema Remuneratório e Benefícios",
+  "label": "Férias,10884-Indenização / Terço Constitucional,10310-Gratificação Natalina/13º salário,10425-Rescisão,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,9607-Contratos Bancários",
+  "label": "Competência dos Juizados Especiais,9607-Contratos Bancários"
+ },
+ {
+  "value": "10666-Regularidade Formal,4960-Cédula de Crédito Bancário",
+  "label": "Regularidade Formal,4960-Cédula de Crédito Bancário"
+ },
+ {
+  "value": "11807-Tarifas,9597-Seguro",
+  "label": "Tarifas,9597-Seguro"
+ },
+ {
+  "value": "11867-Produto Impróprio",
+  "label": "Produto Impróprio"
+ },
+ {
+  "value": "11954-Acidente de Trabalho - Ressarcimento ao Erário",
+  "label": "Acidente de Trabalho - Ressarcimento ao Erário"
+ },
+ {
+  "value": "3402-Ameaça ,12194-Contra a Mulher",
+  "label": "Ameaça ,12194-Contra a Mulher"
+ },
+ {
+  "value": "4829-Atraso de vôo,10651-Competência dos Juizados Especiais",
+  "label": "Atraso de vôo,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "4829-Atraso de vôo,7779-Indenização por Dano Moral",
+  "label": "Atraso de vôo,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "5802-Guarda,6238-Oferta",
+  "label": "Guarda,6238-Oferta"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,11864-Irregularidade no atendimento",
+  "label": "Indenização por Dano Moral,11864-Irregularidade no atendimento"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,11864-Irregularidade no atendimento",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,11864-Irregularidade no atendimento"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,9596-Prestação de Serviços",
+  "label": "Indenização por Dano Moral,9596-Prestação de Serviços"
+ },
+ {
+  "value": "7780-Indenização por Dano Material,7760-Fornecimento de Energia Elétrica",
+  "label": "Indenização por Dano Material,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "10504-Acidente de Trânsito",
+  "label": "Acidente de Trânsito"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,4829-Atraso de vôo",
+  "label": "Competência dos Juizados Especiais,4829-Atraso de vôo"
+ },
+ {
+  "value": "11974-Cláusulas Abusivas,11865-Vendas casadas",
+  "label": "Cláusulas Abusivas,11865-Vendas casadas"
+ },
+ {
+  "value": "12042-Análise de Crédito,7769-Abatimento proporcional do preço",
+  "label": "Análise de Crédito,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "12418-Revisão de Tutela Antecipada Antecedente",
+  "label": "Revisão de Tutela Antecipada Antecedente"
+ },
+ {
+  "value": "7619-Consórcio,10651-Competência dos Juizados Especiais",
+  "label": "Consórcio,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,10651-Competência dos Juizados Especiais",
+  "label": "Indenização por Dano Moral,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,10666-Regularidade Formal,7760-Fornecimento de Energia Elétrica",
+  "label": "Indenização por Dano Moral,10666-Regularidade Formal,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,12489-Tratamento médico-hospitalar",
+  "label": "Indenização por Dano Moral,12489-Tratamento médico-hospitalar"
+ },
+ {
+  "value": "7926-Registro de Nascimento de Filho de Brasileiro Nascido no Exterior",
+  "label": "Registro de Nascimento de Filho de Brasileiro Nascido no Exterior"
+ },
+ {
+  "value": "9600-Transporte de Pessoas",
+  "label": "Transporte de Pessoas"
+ },
+ {
+  "value": "10372-Inscrição / Documentação",
+  "label": "Inscrição / Documentação"
+ },
+ {
+  "value": "10666-Regularidade Formal,5971-Estaduais",
+  "label": "Regularidade Formal,5971-Estaduais"
+ },
+ {
+  "value": "10894-Abuso de Poder,10666-Regularidade Formal",
+  "label": "Abuso de Poder,10666-Regularidade Formal"
+ },
+ {
+  "value": "5779-Alimentos,5802-Guarda,14923-Partilha",
+  "label": "Alimentos,5802-Guarda,14923-Partilha"
+ },
+ {
+  "value": "7697-Correção Monetária,7699-Juros de Mora - Legais / Contratuais,7691-Inadimplemento",
+  "label": "Correção Monetária,7699-Juros de Mora - Legais / Contratuais,7691-Inadimplemento"
+ },
+ {
+  "value": "7752-Bancários,11807-Tarifas",
+  "label": "Bancários,11807-Tarifas"
+ },
+ {
+  "value": "7752-Bancários,12042-Análise de Crédito",
+  "label": "Bancários,12042-Análise de Crédito"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,11974-Cláusulas Abusivas",
+  "label": "Fornecimento de Energia Elétrica,11974-Cláusulas Abusivas"
+ },
+ {
+  "value": "7774-Serviços Profissionais,9596-Prestação de Serviços",
+  "label": "Serviços Profissionais,9596-Prestação de Serviços"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,11811-Práticas Abusivas",
+  "label": "Indenização por Dano Moral,11811-Práticas Abusivas"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,10671-Obrigação de Fazer / Não Fazer",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,10671-Obrigação de Fazer / Não Fazer"
+ },
+ {
+  "value": "10113-Flora",
+  "label": "Flora"
+ },
+ {
+  "value": "10278-Averbação / Contagem Recíproca",
+  "label": "Averbação / Contagem Recíproca"
+ },
+ {
+  "value": "10305-Gratificações de Atividade,10236-Promoção / Ascensão",
+  "label": "Gratificações de Atividade,10236-Promoção / Ascensão"
+ },
+ {
+  "value": "10439-Indenização por Dano Material,6042-PASEP",
+  "label": "Indenização por Dano Material,6042-PASEP"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,14925-Repetição do Indébito",
+  "label": "Competência dos Juizados Especiais,14925-Repetição do Indébito"
+ },
+ {
+  "value": "10671-Obrigação de Fazer / Não Fazer,10433-Indenização por Dano Moral",
+  "label": "Obrigação de Fazer / Não Fazer,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "10701-Pagamento em Pecúnia,10261-Licença-Prêmio",
+  "label": "Pagamento em Pecúnia,10261-Licença-Prêmio"
+ },
+ {
+  "value": "10750-Injúria",
+  "label": "Injúria"
+ },
+ {
+  "value": "11807-Tarifas,10651-Competência dos Juizados Especiais",
+  "label": "Tarifas,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "11807-Tarifas,9607-Contratos Bancários",
+  "label": "Tarifas,9607-Contratos Bancários"
+ },
+ {
+  "value": "11974-Cláusulas Abusivas,11807-Tarifas",
+  "label": "Cláusulas Abusivas,11807-Tarifas"
+ },
+ {
+  "value": "6226-Inclusão Indevida em Cadastro de Inadimplentes,7760-Fornecimento de Energia Elétrica",
+  "label": "Inclusão Indevida em Cadastro de Inadimplentes,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "6238-Oferta,5802-Guarda",
+  "label": "Oferta,5802-Guarda"
+ },
+ {
+  "value": "7752-Bancários,7772-Cartão de Crédito,11806-Empréstimo consignado",
+  "label": "Bancários,7772-Cartão de Crédito,11806-Empréstimo consignado"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7760-Fornecimento de Energia Elétrica,7780-Indenização por Dano Material",
+  "label": "Indenização por Dano Moral,7760-Fornecimento de Energia Elétrica,7780-Indenização por Dano Material"
+ },
+ {
+  "value": "10248-Auxílio-Funeral",
+  "label": "Auxílio-Funeral"
+ },
+ {
+  "value": "10310-Gratificação Natalina/13º salário,10301-Férias",
+  "label": "Gratificação Natalina/13º salário,10301-Férias"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,7760-Fornecimento de Energia Elétrica,9580-Espécies de Contratos",
+  "label": "Indenização por Dano Moral,7760-Fornecimento de Energia Elétrica,9580-Espécies de Contratos"
+ },
+ {
+  "value": "10666-Regularidade Formal,10439-Indenização por Dano Material",
+  "label": "Regularidade Formal,10439-Indenização por Dano Material"
+ },
+ {
+  "value": "10666-Regularidade Formal,9196-Liminar ,10445-Esbulho / Turbação / Ameaça",
+  "label": "Regularidade Formal,9196-Liminar ,10445-Esbulho / Turbação / Ameaça"
+ },
+ {
+  "value": "10670-Obrigação de Entregar",
+  "label": "Obrigação de Entregar"
+ },
+ {
+  "value": "12416-Tutela de Urgência,10671-Obrigação de Fazer / Não Fazer",
+  "label": "Tutela de Urgência,10671-Obrigação de Fazer / Não Fazer"
+ },
+ {
+  "value": "12494-Padronizado",
+  "label": "Padronizado"
+ },
+ {
+  "value": "13077-Autoridade Coatora",
+  "label": "Autoridade Coatora"
+ },
+ {
+  "value": "14922-Direito Autoral",
+  "label": "Direito Autoral"
+ },
+ {
+  "value": "14925-Repetição do Indébito,11806-Empréstimo consignado",
+  "label": "Repetição do Indébito,11806-Empréstimo consignado"
+ },
+ {
+  "value": "5779-Alimentos,10859-Alimentos,10573-Prisão Civil",
+  "label": "Alimentos,10859-Alimentos,10573-Prisão Civil"
+ },
+ {
+  "value": "6109-Incapacidade Laborativa Permanente",
+  "label": "Incapacidade Laborativa Permanente"
+ },
+ {
+  "value": "7689-Assunção de Dívida",
+  "label": "Assunção de Dívida"
+ },
+ {
+  "value": "7707-Dação em Pagamento",
+  "label": "Dação em Pagamento"
+ },
+ {
+  "value": "7752-Bancários,7621-Seguro",
+  "label": "Bancários,7621-Seguro"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,11811-Práticas Abusivas,7760-Fornecimento de Energia Elétrica",
+  "label": "Indenização por Dano Moral,11811-Práticas Abusivas,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,11867-Produto Impróprio,7752-Bancários,10465-Alteração de Coisa Comum",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,11867-Produto Impróprio,7752-Bancários,10465-Alteração de Coisa Comum"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,7769-Abatimento proporcional do preço",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "10303-Adicional de Horas Extras,10305-Gratificações de Atividade,10288-Sistema Remuneratório e Benefícios",
+  "label": "Adicional de Horas Extras,10305-Gratificações de Atividade,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,10433-Indenização por Dano Moral",
+  "label": "Competência dos Juizados Especiais,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,6226-Inclusão Indevida em Cadastro de Inadimplentes",
+  "label": "Competência dos Juizados Especiais,6226-Inclusão Indevida em Cadastro de Inadimplentes"
+ },
+ {
+  "value": "10666-Regularidade Formal,9160-Levantamento de Valor,7760-Fornecimento de Energia Elétrica",
+  "label": "Regularidade Formal,9160-Levantamento de Valor,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "10883-Fruição / Gozo",
+  "label": "Fruição / Gozo"
+ },
+ {
+  "value": "10884-Indenização / Terço Constitucional,10425-Rescisão",
+  "label": "Indenização / Terço Constitucional,10425-Rescisão"
+ },
+ {
+  "value": "12235-Tutela",
+  "label": "Tutela"
+ },
+ {
+  "value": "12334-Promoção, constituição, financiamento ou integração de Organização Criminosa",
+  "label": "Promoção, constituição, financiamento ou integração de Organização Criminosa"
+ },
+ {
+  "value": "12506-Unidade de terapia intensiva (UTI) / unidade de cuidados intensivos (UCI)",
+  "label": "Unidade de terapia intensiva (UTI) / unidade de cuidados intensivos (UCI)"
+ },
+ {
+  "value": "13085-Bloqueio / Desbloqueio de Valores",
+  "label": "Bloqueio / Desbloqueio de Valores"
+ },
+ {
+  "value": "13541-Suspensão da Cobrança - Devedor Beneficiário de Assistência Judiciária Gratuita",
+  "label": "Suspensão da Cobrança - Devedor Beneficiário de Assistência Judiciária Gratuita"
+ },
+ {
+  "value": "14758-Crédito Rotativo",
+  "label": "Crédito Rotativo"
+ },
+ {
+  "value": "14920-Atraso na Entrega do Imóvel",
+  "label": "Atraso na Entrega do Imóvel"
+ },
+ {
+  "value": "4831-Overbooking,10433-Indenização por Dano Moral",
+  "label": "Overbooking,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "5779-Alimentos,5802-Guarda,14923-Partilha,7664-Dissolução",
+  "label": "Alimentos,5802-Guarda,14923-Partilha,7664-Dissolução"
+ },
+ {
+  "value": "9517-Causas Supervenientes à Sentença,10673-Requisição de Pequeno Valor - RPV",
+  "label": "Causas Supervenientes à Sentença,10673-Requisição de Pequeno Valor - RPV"
+ },
+ {
+  "value": "10301-Férias,10884-Indenização / Terço Constitucional,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios",
+  "label": "Férias,10884-Indenização / Terço Constitucional,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10459-Usucapião Ordinária",
+  "label": "Usucapião Ordinária"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,9596-Prestação de Serviços",
+  "label": "Competência dos Juizados Especiais,9596-Prestação de Serviços"
+ },
+ {
+  "value": "10662-Abono de Permanência,10651-Competência dos Juizados Especiais",
+  "label": "Abono de Permanência,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "10662-Abono de Permanência,6062-1/3 de férias",
+  "label": "Abono de Permanência,6062-1/3 de férias"
+ },
+ {
+  "value": "10687-Taxa SELIC,9596-Prestação de Serviços",
+  "label": "Taxa SELIC,9596-Prestação de Serviços"
+ },
+ {
+  "value": "10936-Guarda com genitor ou responsável no exterior",
+  "label": "Guarda com genitor ou responsável no exterior"
+ },
+ {
+  "value": "15546-Fraude Bancária",
+  "label": "Fraude Bancária"
+ },
+ {
+  "value": "5555-Crime Tentado,7941-Denegação,3372-Homicídio Qualificado",
+  "label": "Crime Tentado,7941-Denegação,3372-Homicídio Qualificado"
+ },
+ {
+  "value": "6238-Oferta,5805-Regulamentação de Visitas,5802-Guarda",
+  "label": "Oferta,5805-Regulamentação de Visitas,5802-Guarda"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,10437-Direito de Imagem",
+  "label": "Fornecimento de Energia Elétrica,10437-Direito de Imagem"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,12042-Análise de Crédito",
+  "label": "Indenização por Dano Moral,12042-Análise de Crédito"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,9587-Compra e Venda",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,9587-Compra e Venda"
+ },
+ {
+  "value": "7941-Denegação,5560-Decorrente de Violência Doméstica",
+  "label": "Denegação,5560-Decorrente de Violência Doméstica"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10441-Acidente de Trânsito",
+  "label": "Indenização por Dano Moral,10441-Acidente de Trânsito"
+ },
+ {
+  "value": "10440-Serviços de Saúde,10434-Serviços de Saúde",
+  "label": "Serviços de Saúde,10434-Serviços de Saúde"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,10468-Direitos / Deveres do Condômino",
+  "label": "Competência dos Juizados Especiais,10468-Direitos / Deveres do Condômino"
+ },
+ {
+  "value": "10662-Abono de Permanência,10288-Sistema Remuneratório e Benefícios",
+  "label": "Abono de Permanência,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10666-Regularidade Formal,10444-Posse",
+  "label": "Regularidade Formal,10444-Posse"
+ },
+ {
+  "value": "10671-Obrigação de Fazer / Não Fazer,10673-Requisição de Pequeno Valor - RPV",
+  "label": "Obrigação de Fazer / Não Fazer,10673-Requisição de Pequeno Valor - RPV"
+ },
+ {
+  "value": "10859-Alimentos,5779-Alimentos",
+  "label": "Alimentos,5779-Alimentos"
+ },
+ {
+  "value": "11785-Diligências",
+  "label": "Diligências"
+ },
+ {
+  "value": "11807-Tarifas,7621-Seguro",
+  "label": "Tarifas,7621-Seguro"
+ },
+ {
+  "value": "11865-Vendas casadas,9597-Seguro",
+  "label": "Vendas casadas,9597-Seguro"
+ },
+ {
+  "value": "11947-Idoso",
+  "label": "Idoso"
+ },
+ {
+  "value": "13097-Compensação de Reajustes Concedidos",
+  "label": "Compensação de Reajustes Concedidos"
+ },
+ {
+  "value": "4862-Transporte Aéreo,4830-Cancelamento de vôo",
+  "label": "Transporte Aéreo,4830-Cancelamento de vôo"
+ },
+ {
+  "value": "5947-ICMS/Importação",
+  "label": "ICMS/Importação"
+ },
+ {
+  "value": "5953-IPVA - Imposto Sobre Propriedade de Veículos Automotores",
+  "label": "IPVA - Imposto Sobre Propriedade de Veículos Automotores"
+ },
+ {
+  "value": "7774-Serviços Profissionais,7769-Abatimento proporcional do preço",
+  "label": "Serviços Profissionais,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,6042-PASEP",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,6042-PASEP"
+ },
+ {
+  "value": "9582-Alienação Fiduciária,10666-Regularidade Formal,10481-Propriedade Fiduciária",
+  "label": "Alienação Fiduciária,10666-Regularidade Formal,10481-Propriedade Fiduciária"
+ },
+ {
+  "value": "9596-Prestação de Serviços,10651-Competência dos Juizados Especiais",
+  "label": "Prestação de Serviços,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "10301-Férias,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios",
+  "label": "Férias,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10305-Gratificações de Atividade,10308-Adicional de Serviço Noturno,10288-Sistema Remuneratório e Benefícios",
+  "label": "Gratificações de Atividade,10308-Adicional de Serviço Noturno,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10450-Adjudicação Compulsória",
+  "label": "Adjudicação Compulsória"
+ },
+ {
+  "value": "10455-Aquisição",
+  "label": "Aquisição"
+ },
+ {
+  "value": "10880-Cumprimento Provisório de Sentença,10666-Regularidade Formal",
+  "label": "Cumprimento Provisório de Sentença,10666-Regularidade Formal"
+ },
+ {
+  "value": "11806-Empréstimo consignado,10651-Competência dos Juizados Especiais",
+  "label": "Empréstimo consignado,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "12511-Sistema Único de Saúde (SUS)",
+  "label": "Sistema Único de Saúde (SUS)"
+ },
+ {
+  "value": "12935-Bem de Família Legal",
+  "label": "Bem de Família Legal"
+ },
+ {
+  "value": "15184-Direito de Acesso à Informação",
+  "label": "Direito de Acesso à Informação"
+ },
+ {
+  "value": "4829-Atraso de vôo,7769-Abatimento proporcional do preço",
+  "label": "Atraso de vôo,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "4830-Cancelamento de vôo,7769-Abatimento proporcional do preço",
+  "label": "Cancelamento de vôo,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "6239-Fixação,5802-Guarda,14924-Partilha,7677-Reconhecimento / Dissolução",
+  "label": "Fixação,5802-Guarda,14924-Partilha,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "6239-Fixação,5802-Guarda,5805-Regulamentação de Visitas,7664-Dissolução",
+  "label": "Fixação,5802-Guarda,5805-Regulamentação de Visitas,7664-Dissolução"
+ },
+ {
+  "value": "7619-Consórcio,11974-Cláusulas Abusivas",
+  "label": "Consórcio,11974-Cláusulas Abusivas"
+ },
+ {
+  "value": "7706-Imputação do Pagamento",
+  "label": "Imputação do Pagamento"
+ },
+ {
+  "value": "7714-Pagamento Indevido,7760-Fornecimento de Energia Elétrica",
+  "label": "Pagamento Indevido,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7703-Pagamento",
+  "label": "Indenização por Dano Moral,7703-Pagamento"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,11806-Empréstimo consignado",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,11806-Empréstimo consignado"
+ },
+ {
+  "value": "9160-Levantamento de Valor,9166-Multa de 10%",
+  "label": "Levantamento de Valor,9166-Multa de 10%"
+ },
+ {
+  "value": "10013-Enriquecimento ilícito,10014-Violação dos Princípios Administrativos,10012-Dano ao Erário",
+  "label": "Enriquecimento ilícito,10014-Violação dos Princípios Administrativos,10012-Dano ao Erário"
+ },
+ {
+  "value": "10301-Férias,10305-Gratificações de Atividade,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios",
+  "label": "Férias,10305-Gratificações de Atividade,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10304-Auxílio-Alimentação,10651-Competência dos Juizados Especiais",
+  "label": "Auxílio-Alimentação,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,11806-Empréstimo consignado",
+  "label": "Indenização por Dano Moral,11806-Empréstimo consignado"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,14926-Revisão de Juros Remuneratórios, Capitalização/Anatocismo",
+  "label": "Competência dos Juizados Especiais,14926-Revisão de Juros Remuneratórios, Capitalização/Anatocismo"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,7761-Fornecimento de Água",
+  "label": "Competência dos Juizados Especiais,7761-Fornecimento de Água"
+ },
+ {
+  "value": "10666-Regularidade Formal,5802-Guarda",
+  "label": "Regularidade Formal,5802-Guarda"
+ },
+ {
+  "value": "11839-Posturas Municipais",
+  "label": "Posturas Municipais"
+ },
+ {
+  "value": "12091-Feminicídio",
+  "label": "Feminicídio"
+ },
+ {
+  "value": "12887-Piso Salarial,10312-Piso Salarial",
+  "label": "Piso Salarial,10312-Piso Salarial"
+ },
+ {
+  "value": "14710-Diárias",
+  "label": "Diárias"
+ },
+ {
+  "value": "15056-Acordo de Não Persecução Penal",
+  "label": "Acordo de Não Persecução Penal"
+ },
+ {
+  "value": "4829-Atraso de vôo,4830-Cancelamento de vôo,10433-Indenização por Dano Moral",
+  "label": "Atraso de vôo,4830-Cancelamento de vôo,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "4829-Atraso de vôo,9600-Transporte de Pessoas",
+  "label": "Atraso de vôo,9600-Transporte de Pessoas"
+ },
+ {
+  "value": "4830-Cancelamento de vôo,7779-Indenização por Dano Moral",
+  "label": "Cancelamento de vôo,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "6239-Fixação,5802-Guarda,14923-Partilha",
+  "label": "Fixação,5802-Guarda,14923-Partilha"
+ },
+ {
+  "value": "7664-Dissolução,14923-Partilha",
+  "label": "Dissolução,14923-Partilha"
+ },
+ {
+  "value": "7703-Pagamento,10313-Reajustes de Remuneração, Proventos ou Pensão",
+  "label": "Pagamento,10313-Reajustes de Remuneração, Proventos ou Pensão"
+ },
+ {
+  "value": "7941-Denegação,3607-Crimes de Tráfico Ilícito e Uso Indevido de Drogas",
+  "label": "Denegação,3607-Crimes de Tráfico Ilícito e Uso Indevido de Drogas"
+ },
+ {
+  "value": "9047-Efeitos",
+  "label": "Efeitos"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10439-Indenização por Dano Material,9593-Locação de Imóvel",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material,9593-Locação de Imóvel"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,4829-Atraso de vôo",
+  "label": "Indenização por Dano Moral,4829-Atraso de vôo"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,7779-Indenização por Dano Moral",
+  "label": "Indenização por Dano Moral,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "10441-Acidente de Trânsito,10651-Competência dos Juizados Especiais",
+  "label": "Acidente de Trânsito,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "11811-Práticas Abusivas,9196-Liminar ,7760-Fornecimento de Energia Elétrica",
+  "label": "Práticas Abusivas,9196-Liminar ,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "12042-Análise de Crédito,11806-Empréstimo consignado",
+  "label": "Análise de Crédito,11806-Empréstimo consignado"
+ },
+ {
+  "value": "14919-Atraso na Entrega do Imóvel",
+  "label": "Atraso na Entrega do Imóvel"
+ },
+ {
+  "value": "6050-Servidores Inativos",
+  "label": "Servidores Inativos"
+ },
+ {
+  "value": "7690-Adimplemento e Extinção,7769-Abatimento proporcional do preço",
+  "label": "Adimplemento e Extinção,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "7752-Bancários,11807-Tarifas,9607-Contratos Bancários",
+  "label": "Bancários,11807-Tarifas,9607-Contratos Bancários"
+ },
+ {
+  "value": "7760-Fornecimento de Energia Elétrica,12042-Análise de Crédito",
+  "label": "Fornecimento de Energia Elétrica,12042-Análise de Crédito"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,9596-Prestação de Serviços",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,9596-Prestação de Serviços"
+ },
+ {
+  "value": "7780-Indenização por Dano Material,10666-Regularidade Formal,7779-Indenização por Dano Moral",
+  "label": "Indenização por Dano Material,10666-Regularidade Formal,7779-Indenização por Dano Moral"
+ },
+ {
+  "value": "9607-Contratos Bancários,11807-Tarifas,7752-Bancários",
+  "label": "Contratos Bancários,11807-Tarifas,7752-Bancários"
+ },
+ {
+  "value": "9657-Difamação",
+  "label": "Difamação"
+ },
+ {
+  "value": "10294-Abono Pecuniário (Art. 78 Lei 8.112/1990),10662-Abono de Permanência",
+  "label": "Abono Pecuniário (Art. 78 Lei 8.112/1990),10662-Abono de Permanência"
+ },
+ {
+  "value": "10301-Férias,10884-Indenização / Terço Constitucional,10308-Adicional de Serviço Noturno,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios",
+  "label": "Férias,10884-Indenização / Terço Constitucional,10308-Adicional de Serviço Noturno,10310-Gratificação Natalina/13º salário,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10303-Adicional de Horas Extras,10288-Sistema Remuneratório e Benefícios",
+  "label": "Adicional de Horas Extras,10288-Sistema Remuneratório e Benefícios"
+ },
+ {
+  "value": "10425-Rescisão,10301-Férias",
+  "label": "Rescisão,10301-Férias"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,14925-Repetição do Indébito",
+  "label": "Indenização por Dano Moral,14925-Repetição do Indébito"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,7698-Perdas e Danos",
+  "label": "Competência dos Juizados Especiais,7698-Perdas e Danos"
+ },
+ {
+  "value": "10651-Competência dos Juizados Especiais,9597-Seguro",
+  "label": "Competência dos Juizados Especiais,9597-Seguro"
+ },
+ {
+  "value": "10666-Regularidade Formal,10531-ICMS / Incidência Sobre o Ativo Fixo",
+  "label": "Regularidade Formal,10531-ICMS / Incidência Sobre o Ativo Fixo"
+ },
+ {
+  "value": "10666-Regularidade Formal,7704-Pagamento em Consignação",
+  "label": "Regularidade Formal,7704-Pagamento em Consignação"
+ },
+ {
+  "value": "10666-Regularidade Formal,7780-Indenização por Dano Material",
+  "label": "Regularidade Formal,7780-Indenização por Dano Material"
+ },
+ {
+  "value": "10666-Regularidade Formal,9587-Compra e Venda",
+  "label": "Regularidade Formal,9587-Compra e Venda"
+ },
+ {
+  "value": "10677-Busca e Apreensão,4980-Nota Promissória",
+  "label": "Busca e Apreensão,4980-Nota Promissória"
+ },
+ {
+  "value": "11806-Empréstimo consignado,7769-Abatimento proporcional do preço",
+  "label": "Empréstimo consignado,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "11982-Separação de Corpos",
+  "label": "Separação de Corpos"
+ },
+ {
+  "value": "12243-Remoção",
+  "label": "Remoção"
+ },
+ {
+  "value": "12612-COVID-19,10666-Regularidade Formal",
+  "label": "COVID-19,10666-Regularidade Formal"
+ },
+ {
+  "value": "3555-Corrupção passiva",
+  "label": "Corrupção passiva"
+ },
+ {
+  "value": "4980-Nota Promissória,10651-Competência dos Juizados Especiais",
+  "label": "Nota Promissória,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "5897-Associação para a Produção e Tráfico e Condutas Afins,7941-Denegação,3608-Tráfico de Drogas e Condutas Afins",
+  "label": "Associação para a Produção e Tráfico e Condutas Afins,7941-Denegação,3608-Tráfico de Drogas e Condutas Afins"
+ },
+ {
+  "value": "6098-Aposentadoria Rural (Art. 48/51)",
+  "label": "Aposentadoria Rural (Art. 48/51)"
+ },
+ {
+  "value": "6239-Fixação,14923-Partilha",
+  "label": "Fixação,14923-Partilha"
+ },
+ {
+  "value": "6239-Fixação,5802-Guarda,14924-Partilha",
+  "label": "Fixação,5802-Guarda,14924-Partilha"
+ },
+ {
+  "value": "7703-Pagamento,10671-Obrigação de Fazer / Não Fazer",
+  "label": "Pagamento,10671-Obrigação de Fazer / Não Fazer"
+ },
+ {
+  "value": "7768-Rescisão do contrato e devolução do dinheiro,10651-Competência dos Juizados Especiais",
+  "label": "Rescisão do contrato e devolução do dinheiro,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,4832-Extravio de bagagem",
+  "label": "Indenização por Dano Moral,4832-Extravio de bagagem"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,10433-Indenização por Dano Moral",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,10433-Indenização por Dano Moral"
+ },
+ {
+  "value": "9180-Expropriação de Bens,5779-Alimentos",
+  "label": "Expropriação de Bens,5779-Alimentos"
+ },
+ {
+  "value": "10013-Enriquecimento ilícito",
+  "label": "Enriquecimento ilícito"
+ },
+ {
+  "value": "10075-Energia Elétrica,7760-Fornecimento de Energia Elétrica",
+  "label": "Energia Elétrica,7760-Fornecimento de Energia Elétrica"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10439-Indenização por Dano Material,12416-Tutela de Urgência",
+  "label": "Indenização por Dano Moral,10439-Indenização por Dano Material,12416-Tutela de Urgência"
+ },
+ {
+  "value": "10577-Relações de Parentesco,5802-Guarda",
+  "label": "Relações de Parentesco,5802-Guarda"
+ },
+ {
+  "value": "10666-Regularidade Formal,10011-Improbidade Administrativa",
+  "label": "Regularidade Formal,10011-Improbidade Administrativa"
+ },
+ {
+  "value": "10666-Regularidade Formal,10582-Rescisão / Resolução",
+  "label": "Regularidade Formal,10582-Rescisão / Resolução"
+ },
+ {
+  "value": "10666-Regularidade Formal,7775-Serviços Hospitalares",
+  "label": "Regularidade Formal,7775-Serviços Hospitalares"
+ },
+ {
+  "value": "10666-Regularidade Formal,9597-Seguro",
+  "label": "Regularidade Formal,9597-Seguro"
+ },
+ {
+  "value": "10671-Obrigação de Fazer / Não Fazer,9992-Indenização por Dano Moral",
+  "label": "Obrigação de Fazer / Não Fazer,9992-Indenização por Dano Moral"
+ },
+ {
+  "value": "10861-Alienação Fiduciária",
+  "label": "Alienação Fiduciária"
+ },
+ {
+  "value": "12489-Tratamento médico-hospitalar,10666-Regularidade Formal",
+  "label": "Tratamento médico-hospitalar,10666-Regularidade Formal"
+ },
+ {
+  "value": "12756-Interesses ou Direitos Difusos",
+  "label": "Interesses ou Direitos Difusos"
+ },
+ {
+  "value": "15070-Duplicidade de Assentos de Nascimento",
+  "label": "Duplicidade de Assentos de Nascimento"
+ },
+ {
+  "value": "5779-Alimentos,14126-Alimentos Gravídicos",
+  "label": "Alimentos,14126-Alimentos Gravídicos"
+ },
+ {
+  "value": "6101-Auxílio por Incapacidade Temporária",
+  "label": "Auxílio por Incapacidade Temporária"
+ },
+ {
+  "value": "7619-Consórcio,11810-Dever de Informação",
+  "label": "Consórcio,11810-Dever de Informação"
+ },
+ {
+  "value": "7619-Consórcio,8866-Litisconsórcio",
+  "label": "Consórcio,8866-Litisconsórcio"
+ },
+ {
+  "value": "7621-Seguro,7752-Bancários,9597-Seguro",
+  "label": "Seguro,7752-Bancários,9597-Seguro"
+ },
+ {
+  "value": "7690-Adimplemento e Extinção,10651-Competência dos Juizados Especiais",
+  "label": "Adimplemento e Extinção,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,7780-Indenização por Dano Material,4829-Atraso de vôo",
+  "label": "Indenização por Dano Moral,7780-Indenização por Dano Material,4829-Atraso de vôo"
+ },
+ {
+  "value": "7835-Retificação de Sexo,7735-Retificação de Nome",
+  "label": "Retificação de Sexo,7735-Retificação de Nome"
+ },
+ {
+  "value": "7941-Denegação,3432-Estelionato Majorado",
+  "label": "Denegação,3432-Estelionato Majorado"
+ },
+ {
+  "value": "7941-Denegação,3531-Falsificação de documento público",
+  "label": "Denegação,3531-Falsificação de documento público"
+ },
+ {
+  "value": "9596-Prestação de Serviços,10687-Taxa SELIC",
+  "label": "Prestação de Serviços,10687-Taxa SELIC"
+ },
+ {
+  "value": "9606-Compromisso,4980-Nota Promissória",
+  "label": "Compromisso,4980-Nota Promissória"
+ },
+ {
+  "value": "10236-Promoção / Ascensão,10305-Gratificações de Atividade,10223-Enquadramento",
+  "label": "Promoção / Ascensão,10305-Gratificações de Atividade,10223-Enquadramento"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,10651-Competência dos Juizados Especiais",
+  "label": "Indenização por Dano Moral,10651-Competência dos Juizados Especiais"
+ },
+ {
+  "value": "10433-Indenização por Dano Moral,7698-Perdas e Danos",
+  "label": "Indenização por Dano Moral,7698-Perdas e Danos"
+ },
+ {
+  "value": "10884-Indenização / Terço Constitucional,10310-Gratificação Natalina/13º salário",
+  "label": "Indenização / Terço Constitucional,10310-Gratificação Natalina/13º salário"
+ },
+ {
+  "value": "12397-Importunação Sexual,7941-Denegação",
+  "label": "Importunação Sexual,7941-Denegação"
+ },
+ {
+  "value": "12489-Tratamento médico-hospitalar,12486-Planos de saúde",
+  "label": "Tratamento médico-hospitalar,12486-Planos de saúde"
+ },
+ {
+  "value": "14782-Maus Tratos",
+  "label": "Maus Tratos"
+ },
+ {
+  "value": "14917-Cessão de Direitos",
+  "label": "Cessão de Direitos"
+ },
+ {
+  "value": "4831-Overbooking,4830-Cancelamento de vôo",
+  "label": "Overbooking,4830-Cancelamento de vôo"
+ },
+ {
+  "value": "7619-Consórcio,7769-Abatimento proporcional do preço",
+  "label": "Consórcio,7769-Abatimento proporcional do preço"
+ },
+ {
+  "value": "7656-União Estável ou Concubinato,14924-Partilha,7677-Reconhecimento / Dissolução",
+  "label": "União Estável ou Concubinato,14924-Partilha,7677-Reconhecimento / Dissolução"
+ },
+ {
+  "value": "7677-Reconhecimento / Dissolução,14924-Partilha,7656-União Estável ou Concubinato",
+  "label": "Reconhecimento / Dissolução,14924-Partilha,7656-União Estável ou Concubinato"
+ },
+ {
+  "value": "7752-Bancários,11806-Empréstimo consignado,9607-Contratos Bancários",
+  "label": "Bancários,11806-Empréstimo consignado,9607-Contratos Bancários"
+ },
+ {
+  "value": "7752-Bancários,7772-Cartão de Crédito,11974-Cláusulas Abusivas",
+  "label": "Bancários,7772-Cartão de Crédito,11974-Cláusulas Abusivas"
+ },
+ {
+  "value": "7772-Cartão de Crédito,11810-Dever de Informação",
+  "label": "Cartão de Crédito,11810-Dever de Informação"
+ },
+ {
+  "value": "7779-Indenização por Dano Moral,11811-Práticas Abusivas,14925-Repetição do Indébito",
+  "label": "Indenização por Dano Moral,11811-Práticas Abusivas,14925-Repetição do Indébito"
+ },
+ {
+  "value": "9517-Causas Supervenientes à Sentença,7703-Pagamento",
+  "label": "Causas Supervenientes à Sentença,7703-Pagamento"
+ },
+ {
+  "value": "10301-Férias,6056-Gratificação Natalina/13º Salário",
+  "label": "Férias,6056-Gratificação Natalina/13º Salário"
+ },
+ {
+  "value": "10342-Reajuste de Remuneração, Soldo, Proventos ou Pensão,10673-Requisição de Pequeno Valor - RPV",
+  "label": "Reajuste de Remuneração, Soldo, Proventos ou Pensão,10673-Requisição de Pequeno Valor - RPV"
+ },
+ {
+  "value": "10349-Reforma",
+  "label": "Reforma"
+ }
+]

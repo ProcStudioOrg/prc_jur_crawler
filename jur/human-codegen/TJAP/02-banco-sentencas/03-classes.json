@@ -1,0 +1,1126 @@
+[
+ {
+  "value": "Procedimento do Juizado Especial Cível",
+  "label": "Procedimento do Juizado Especial Cível"
+ },
+ {
+  "value": "Procedimento Comum Cível",
+  "label": "Procedimento Comum Cível"
+ },
+ {
+  "value": "Ação Penal - Procedimento Ordinário",
+  "label": "Ação Penal - Procedimento Ordinário"
+ },
+ {
+  "value": "Cumprimento de sentença",
+  "label": "Cumprimento de sentença"
+ },
+ {
+  "value": "Termo Circunstanciado",
+  "label": "Termo Circunstanciado"
+ },
+ {
+  "value": "Execução de Título Extrajudicial",
+  "label": "Execução de Título Extrajudicial"
+ },
+ {
+  "value": "Alimentos - Lei Especial Nº 5.478/68",
+  "label": "Alimentos - Lei Especial Nº 5.478/68"
+ },
+ {
+  "value": "Cumprimento de Sentença contra a Fazenda Pública",
+  "label": "Cumprimento de Sentença contra a Fazenda Pública"
+ },
+ {
+  "value": "Medidas Protetivas de Urgência Lei Maria da Penha  - Criminal",
+  "label": "Medidas Protetivas de Urgência Lei Maria da Penha  - Criminal"
+ },
+ {
+  "value": "Execução da Pena",
+  "label": "Execução da Pena"
+ },
+ {
+  "value": "Cumprimento de Sentença de Obrigação de Prestar Alimentos",
+  "label": "Cumprimento de Sentença de Obrigação de Prestar Alimentos"
+ },
+ {
+  "value": "Outros procedimentos de jurisdição voluntária",
+  "label": "Outros procedimentos de jurisdição voluntária"
+ },
+ {
+  "value": "Busca e Apreensão em Alienação Fiduciária",
+  "label": "Busca e Apreensão em Alienação Fiduciária"
+ },
+ {
+  "value": "Processo de Apuração de Ato Infracional",
+  "label": "Processo de Apuração de Ato Infracional"
+ },
+ {
+  "value": "Reclamação Pré-processual",
+  "label": "Reclamação Pré-processual"
+ },
+ {
+  "value": "Ação Penal - Procedimento Sumaríssimo",
+  "label": "Ação Penal - Procedimento Sumaríssimo"
+ },
+ {
+  "value": "Ação Penal - Procedimento Sumário",
+  "label": "Ação Penal - Procedimento Sumário"
+ },
+ {
+  "value": "Ação Penal de Competência do Júri",
+  "label": "Ação Penal de Competência do Júri"
+ },
+ {
+  "value": "Reintegração / Manutenção de Posse",
+  "label": "Reintegração / Manutenção de Posse"
+ },
+ {
+  "value": "Execução Contra a Fazenda Pública",
+  "label": "Execução Contra a Fazenda Pública"
+ },
+ {
+  "value": "Monitória",
+  "label": "Monitória"
+ },
+ {
+  "value": "Procedimento do Juizado Especial da Fazenda Pública",
+  "label": "Procedimento do Juizado Especial da Fazenda Pública"
+ },
+ {
+  "value": "Execução Fiscal",
+  "label": "Execução Fiscal"
+ },
+ {
+  "value": "Cumprimento de Sentença de Ações Coletivas",
+  "label": "Cumprimento de Sentença de Ações Coletivas"
+ },
+ {
+  "value": "Procedimento Especial da Lei Antitóxicos",
+  "label": "Procedimento Especial da Lei Antitóxicos"
+ },
+ {
+  "value": "Divórcio Litigioso",
+  "label": "Divórcio Litigioso"
+ },
+ {
+  "value": "Retificação ou Suprimento ou Restauração de Registro Civil",
+  "label": "Retificação ou Suprimento ou Restauração de Registro Civil"
+ },
+ {
+  "value": "Mandado de Segurança Cível",
+  "label": "Mandado de Segurança Cível"
+ },
+ {
+  "value": "Alvará Judicial",
+  "label": "Alvará Judicial"
+ },
+ {
+  "value": "Procedimento Sumário",
+  "label": "Procedimento Sumário"
+ },
+ {
+  "value": "Providência ",
+  "label": "Providência "
+ },
+ {
+  "value": "Execução de Título Extrajudicial contra a Fazenda Pública",
+  "label": "Execução de Título Extrajudicial contra a Fazenda Pública"
+ },
+ {
+  "value": "Execução de Medidas Socioeducativas",
+  "label": "Execução de Medidas Socioeducativas"
+ },
+ {
+  "value": "Procedimento do Juizado Especial Criminal - Sumariíssimo",
+  "label": "Procedimento do Juizado Especial Criminal - Sumariíssimo"
+ },
+ {
+  "value": "Divórcio Consensual",
+  "label": "Divórcio Consensual"
+ },
+ {
+  "value": "Prestação de Serviços a Comunidade",
+  "label": "Prestação de Serviços a Comunidade"
+ },
+ {
+  "value": "Inquérito Policial",
+  "label": "Inquérito Policial"
+ },
+ {
+  "value": "Embargos à Execução",
+  "label": "Embargos à Execução"
+ },
+ {
+  "value": "Interdição/Curatela",
+  "label": "Interdição/Curatela"
+ },
+ {
+  "value": "Tutela e Curatela -  Nomeação",
+  "label": "Tutela e Curatela -  Nomeação"
+ },
+ {
+  "value": "Separação Consensual",
+  "label": "Separação Consensual"
+ },
+ {
+  "value": "Ação Civil Pública",
+  "label": "Ação Civil Pública"
+ },
+ {
+  "value": "Inventário",
+  "label": "Inventário"
+ },
+ {
+  "value": "Embargos de Terceiro Cível",
+  "label": "Embargos de Terceiro Cível"
+ },
+ {
+  "value": "Execução de Medida de Proteção à Criança e Adolescente",
+  "label": "Execução de Medida de Proteção à Criança e Adolescente"
+ },
+ {
+  "value": "Procedimento Comum Infância e Juventude",
+  "label": "Procedimento Comum Infância e Juventude"
+ },
+ {
+  "value": "Apuração de Infração Administrativa às Normas de Proteção à Criança ou Adolescente",
+  "label": "Apuração de Infração Administrativa às Normas de Proteção à Criança ou Adolescente"
+ },
+ {
+  "value": "Petição Cível",
+  "label": "Petição Cível"
+ },
+ {
+  "value": "Execução Provisória",
+  "label": "Execução Provisória"
+ },
+ {
+  "value": "Crimes Ambientais",
+  "label": "Crimes Ambientais"
+ },
+ {
+  "value": "Embargos à Execução Fiscal",
+  "label": "Embargos à Execução Fiscal"
+ },
+ {
+  "value": "Alvará Judicial - Lei 6858/80",
+  "label": "Alvará Judicial - Lei 6858/80"
+ },
+ {
+  "value": "Petição Infracional",
+  "label": "Petição Infracional"
+ },
+ {
+  "value": "Despejo por Falta de Pagamento Cumulado Com Cobrança",
+  "label": "Despejo por Falta de Pagamento Cumulado Com Cobrança"
+ },
+ {
+  "value": "Ação Civil de Improbidade Administrativa",
+  "label": "Ação Civil de Improbidade Administrativa"
+ },
+ {
+  "value": "Cautelar Inominada",
+  "label": "Cautelar Inominada"
+ },
+ {
+  "value": "Habilitação para Adoção",
+  "label": "Habilitação para Adoção"
+ },
+ {
+  "value": "Averiguação de Paternidade",
+  "label": "Averiguação de Paternidade"
+ },
+ {
+  "value": "Autorização judicial",
+  "label": "Autorização judicial"
+ },
+ {
+  "value": "Ação Civil Pública Infância e Juventude",
+  "label": "Ação Civil Pública Infância e Juventude"
+ },
+ {
+  "value": "Internação sem Atividades Externas",
+  "label": "Internação sem Atividades Externas"
+ },
+ {
+  "value": "Adoção c/c Destituição do Poder Familiar",
+  "label": "Adoção c/c Destituição do Poder Familiar"
+ },
+ {
+  "value": "Liberdade Assistida",
+  "label": "Liberdade Assistida"
+ },
+ {
+  "value": "Cumprimento Provisório de Sentença",
+  "label": "Cumprimento Provisório de Sentença"
+ },
+ {
+  "value": "Guarda de Infância e Juventude",
+  "label": "Guarda de Infância e Juventude"
+ },
+ {
+  "value": "Carta de Ordem Cível",
+  "label": "Carta de Ordem Cível"
+ },
+ {
+  "value": "Petição Criminal",
+  "label": "Petição Criminal"
+ },
+ {
+  "value": "Homologação de Transação Extrajudicial",
+  "label": "Homologação de Transação Extrajudicial"
+ },
+ {
+  "value": "Semiliberdade",
+  "label": "Semiliberdade"
+ },
+ {
+  "value": "Busca e Apreensão",
+  "label": "Busca e Apreensão"
+ },
+ {
+  "value": "Regularização de Registro Civil",
+  "label": "Regularização de Registro Civil"
+ },
+ {
+  "value": "Consignação em Pagamento",
+  "label": "Consignação em Pagamento"
+ },
+ {
+  "value": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular",
+  "label": "Crimes de Calúnia, Injúria e Difamação de Competência do Juiz Singular"
+ },
+ {
+  "value": "Exibição",
+  "label": "Exibição"
+ },
+ {
+  "value": "Conversão de Separação Judicial em Divórcio",
+  "label": "Conversão de Separação Judicial em Divórcio"
+ },
+ {
+  "value": "Interdito Proibitório",
+  "label": "Interdito Proibitório"
+ },
+ {
+  "value": "Depósito",
+  "label": "Depósito"
+ },
+ {
+  "value": "Adoção",
+  "label": "Adoção"
+ },
+ {
+  "value": "Processo Cautelar",
+  "label": "Processo Cautelar"
+ },
+ {
+  "value": "Auto de Apreensão em Flagrante",
+  "label": "Auto de Apreensão em Flagrante"
+ },
+ {
+  "value": "Dúvida",
+  "label": "Dúvida"
+ },
+ {
+  "value": "Pedido de Medida de Proteção",
+  "label": "Pedido de Medida de Proteção"
+ },
+ {
+  "value": "Ação de Exigir Contas",
+  "label": "Ação de Exigir Contas"
+ },
+ {
+  "value": "Representação Criminal/Notícia de Crime",
+  "label": "Representação Criminal/Notícia de Crime"
+ },
+ {
+  "value": "Tutela e Curatela - Remoção e Dispensa",
+  "label": "Tutela e Curatela - Remoção e Dispensa"
+ },
+ {
+  "value": "Separação Litigiosa",
+  "label": "Separação Litigiosa"
+ },
+ {
+  "value": "Auto de Prisão em Flagrante",
+  "label": "Auto de Prisão em Flagrante"
+ },
+ {
+  "value": "Outras medidas provisionais",
+  "label": "Outras medidas provisionais"
+ },
+ {
+  "value": "Correição Parcial ou Reclamação Correicional",
+  "label": "Correição Parcial ou Reclamação Correicional"
+ },
+ {
+  "value": "Ação de Alimentos de Infância e Juventude",
+  "label": "Ação de Alimentos de Infância e Juventude"
+ },
+ {
+  "value": "Ação Penal Militar - Procedimento Ordinário",
+  "label": "Ação Penal Militar - Procedimento Ordinário"
+ },
+ {
+  "value": "Petição Infância e Juventude Cível",
+  "label": "Petição Infância e Juventude Cível"
+ },
+ {
+  "value": "Relatório de Investigações",
+  "label": "Relatório de Investigações"
+ },
+ {
+  "value": "Busca e Apreensão Infância e Juventude",
+  "label": "Busca e Apreensão Infância e Juventude"
+ },
+ {
+  "value": "Tutela Antecipada Antecedente",
+  "label": "Tutela Antecipada Antecedente"
+ },
+ {
+  "value": "Perda ou Suspensão do Poder Familiar",
+  "label": "Perda ou Suspensão do Poder Familiar"
+ },
+ {
+  "value": "Carta Precatória Criminal",
+  "label": "Carta Precatória Criminal"
+ },
+ {
+  "value": "Despejo",
+  "label": "Despejo"
+ },
+ {
+  "value": "Ação Popular",
+  "label": "Ação Popular"
+ },
+ {
+  "value": "Crimes de Responsabilidade dos Funcionários Públicos",
+  "label": "Crimes de Responsabilidade dos Funcionários Públicos"
+ },
+ {
+  "value": "Alimentos - Provisionais",
+  "label": "Alimentos - Provisionais"
+ },
+ {
+  "value": "Usucapião",
+  "label": "Usucapião"
+ },
+ {
+  "value": "Arrolamento Sumário",
+  "label": "Arrolamento Sumário"
+ },
+ {
+  "value": "Despejo por Falta de Pagamento",
+  "label": "Despejo por Falta de Pagamento"
+ },
+ {
+  "value": "Produção Antecipada da Prova",
+  "label": "Produção Antecipada da Prova"
+ },
+ {
+  "value": "Habeas Corpus Criminal",
+  "label": "Habeas Corpus Criminal"
+ },
+ {
+  "value": "Adoção Fora do Cadastro c/c Destituição do Poder Familiar",
+  "label": "Adoção Fora do Cadastro c/c Destituição do Poder Familiar"
+ },
+ {
+  "value": "Tutela Cautelar Antecedente",
+  "label": "Tutela Cautelar Antecedente"
+ },
+ {
+  "value": "Cumprimento de Sentença contra a Fazenda Pública Mediante Execução Invertida",
+  "label": "Cumprimento de Sentença contra a Fazenda Pública Mediante Execução Invertida"
+ },
+ {
+  "value": "Destituição do Poder Familiar",
+  "label": "Destituição do Poder Familiar"
+ },
+ {
+  "value": "Tutela Infância e Juventude",
+  "label": "Tutela Infância e Juventude"
+ },
+ {
+  "value": "Cautelar Inominada Infância e Juventude",
+  "label": "Cautelar Inominada Infância e Juventude"
+ },
+ {
+  "value": "Desapropriação",
+  "label": "Desapropriação"
+ },
+ {
+  "value": "Nunciação de Obra Nova",
+  "label": "Nunciação de Obra Nova"
+ },
+ {
+  "value": "Separação de Corpos",
+  "label": "Separação de Corpos"
+ },
+ {
+  "value": "Boletim de Ocorrência Circunstanciada",
+  "label": "Boletim de Ocorrência Circunstanciada"
+ },
+ {
+  "value": "Mandado de Segurança Coletivo",
+  "label": "Mandado de Segurança Coletivo"
+ },
+ {
+  "value": "Carta de Ordem Criminal",
+  "label": "Carta de Ordem Criminal"
+ },
+ {
+  "value": "Procedimento Investigatório Criminal PIC-MP ",
+  "label": "Procedimento Investigatório Criminal PIC-MP "
+ },
+ {
+  "value": "Acordo de Não Persecução Penal",
+  "label": "Acordo de Não Persecução Penal"
+ },
+ {
+  "value": "Arresto ",
+  "label": "Arresto "
+ },
+ {
+  "value": "Arrolamento Comum",
+  "label": "Arrolamento Comum"
+ },
+ {
+  "value": "Abertura, Registro e Cumprimento de Testamento",
+  "label": "Abertura, Registro e Cumprimento de Testamento"
+ },
+ {
+  "value": "Liquidação de Sentença pelo Procedimento Comum",
+  "label": "Liquidação de Sentença pelo Procedimento Comum"
+ },
+ {
+  "value": "Execução Extrajudicial de Alimentos",
+  "label": "Execução Extrajudicial de Alimentos"
+ },
+ {
+  "value": "Insanidade Mental do Acusado",
+  "label": "Insanidade Mental do Acusado"
+ },
+ {
+  "value": "Nomeação de Advogado",
+  "label": "Nomeação de Advogado"
+ },
+ {
+  "value": "Demarcação / Divisão",
+  "label": "Demarcação / Divisão"
+ },
+ {
+  "value": "Remoção de Inventariante",
+  "label": "Remoção de Inventariante"
+ },
+ {
+  "value": "Execução de Multa",
+  "label": "Execução de Multa"
+ },
+ {
+  "value": "Restauração de Autos Cível",
+  "label": "Restauração de Autos Cível"
+ },
+ {
+  "value": "Tutela Cível",
+  "label": "Tutela Cível"
+ },
+ {
+  "value": "Advertência ",
+  "label": "Advertência "
+ },
+ {
+  "value": "Adoção pelo Cadastro",
+  "label": "Adoção pelo Cadastro"
+ },
+ {
+  "value": "Interpelação",
+  "label": "Interpelação"
+ },
+ {
+  "value": "Habeas Data Cível",
+  "label": "Habeas Data Cível"
+ },
+ {
+  "value": "Anulação e Substituição de Títulos ao Portador",
+  "label": "Anulação e Substituição de Títulos ao Portador"
+ },
+ {
+  "value": "Ação Civil Coletiva",
+  "label": "Ação Civil Coletiva"
+ },
+ {
+  "value": "Separação Contenciosa",
+  "label": "Separação Contenciosa"
+ },
+ {
+  "value": "Apuração de Irregularidades em Entidades de Atendimento",
+  "label": "Apuração de Irregularidades em Entidades de Atendimento"
+ },
+ {
+  "value": "Carta Precatória Cível",
+  "label": "Carta Precatória Cível"
+ },
+ {
+  "value": "Crimes Contra a Propriedade Imaterial",
+  "label": "Crimes Contra a Propriedade Imaterial"
+ },
+ {
+  "value": "Medidas de Proteção à Pessoa Idosa - Criminal",
+  "label": "Medidas de Proteção à Pessoa Idosa - Criminal"
+ },
+ {
+  "value": "Carta Arbitral",
+  "label": "Carta Arbitral"
+ },
+ {
+  "value": "Procedimento Especial dos Crimes de Abuso de Autoridade",
+  "label": "Procedimento Especial dos Crimes de Abuso de Autoridade"
+ },
+ {
+  "value": "Processo de Conhecimento",
+  "label": "Processo de Conhecimento"
+ },
+ {
+  "value": "Regulamentação de Visitas",
+  "label": "Regulamentação de Visitas"
+ },
+ {
+  "value": "Restituição de Coisas Apreendidas",
+  "label": "Restituição de Coisas Apreendidas"
+ },
+ {
+  "value": "Sobrepartilha",
+  "label": "Sobrepartilha"
+ },
+ {
+  "value": "Execução Hipotecária do Sistema Financeiro da Habitação",
+  "label": "Execução Hipotecária do Sistema Financeiro da Habitação"
+ },
+ {
+  "value": "Registro de Casamento Nuncupativo",
+  "label": "Registro de Casamento Nuncupativo"
+ },
+ {
+  "value": "Cautelar Fiscal",
+  "label": "Cautelar Fiscal"
+ },
+ {
+  "value": "Notificação",
+  "label": "Notificação"
+ },
+ {
+  "value": "Contraprotesto Judicial",
+  "label": "Contraprotesto Judicial"
+ },
+ {
+  "value": "Impugnação de Assistência Judiciária",
+  "label": "Impugnação de Assistência Judiciária"
+ },
+ {
+  "value": "Processo Sumário (Detenção)",
+  "label": "Processo Sumário (Detenção)"
+ },
+ {
+  "value": "Execução de Alimentos Infância e Juventude",
+  "label": "Execução de Alimentos Infância e Juventude"
+ },
+ {
+  "value": "Pedido de Prisão Preventiva",
+  "label": "Pedido de Prisão Preventiva"
+ },
+ {
+  "value": "Cumprimento Provisório de Decisão",
+  "label": "Cumprimento Provisório de Decisão"
+ },
+ {
+  "value": "Falência de Empresários; Sociedades Empresáriais; Microempresas e Empresas de Pequeno Porte",
+  "label": "Falência de Empresários; Sociedades Empresáriais; Microempresas e Empresas de Pequeno Porte"
+ },
+ {
+  "value": "Habilitação",
+  "label": "Habilitação"
+ },
+ {
+  "value": "Efeito Suspensivo em Dissídio Coletivo",
+  "label": "Efeito Suspensivo em Dissídio Coletivo"
+ },
+ {
+  "value": "Procedimento de Repactuação de Dívidas Superendividamento",
+  "label": "Procedimento de Repactuação de Dívidas Superendividamento"
+ },
+ {
+  "value": "Tutela c/c Destituição do Poder Familiar",
+  "label": "Tutela c/c Destituição do Poder Familiar"
+ },
+ {
+  "value": "Apreensão e Depósito de Coisa Vendida com Reserva de Domínio",
+  "label": "Apreensão e Depósito de Coisa Vendida com Reserva de Domínio"
+ },
+ {
+  "value": "Assistência Judiciária",
+  "label": "Assistência Judiciária"
+ },
+ {
+  "value": "Impugnação ao Valor da Causa Cível",
+  "label": "Impugnação ao Valor da Causa Cível"
+ },
+ {
+  "value": "Exibição de Documento ou Coisa Cível",
+  "label": "Exibição de Documento ou Coisa Cível"
+ },
+ {
+  "value": "Atentado",
+  "label": "Atentado"
+ },
+ {
+  "value": "Compromisso Arbitral",
+  "label": "Compromisso Arbitral"
+ },
+ {
+  "value": "Habilitação de Crédito",
+  "label": "Habilitação de Crédito"
+ },
+ {
+  "value": "Homologação da Transação Extrajudicial",
+  "label": "Homologação da Transação Extrajudicial"
+ },
+ {
+  "value": "Carta Precatória Infracional",
+  "label": "Carta Precatória Infracional"
+ },
+ {
+  "value": "Mandado de Segurança Infância e Juventude Cível",
+  "label": "Mandado de Segurança Infância e Juventude Cível"
+ },
+ {
+  "value": "Suspensão do Poder Familiar",
+  "label": "Suspensão do Poder Familiar"
+ },
+ {
+  "value": "Pedido de Busca e Apreensão Criminal",
+  "label": "Pedido de Busca e Apreensão Criminal"
+ },
+ {
+  "value": "Alienação Judicial de Bens",
+  "label": "Alienação Judicial de Bens"
+ },
+ {
+  "value": "Justificação",
+  "label": "Justificação"
+ },
+ {
+  "value": "Reabilitação",
+  "label": "Reabilitação"
+ },
+ {
+  "value": "Declaração de Ausência",
+  "label": "Declaração de Ausência"
+ },
+ {
+  "value": "Liberdade Provisória com ou sem fiança",
+  "label": "Liberdade Provisória com ou sem fiança"
+ },
+ {
+  "value": "Prestação de Contas - Oferecidas",
+  "label": "Prestação de Contas - Oferecidas"
+ },
+ {
+  "value": "Seqüestro",
+  "label": "Seqüestro"
+ },
+ {
+  "value": "Incidente de Falsidade",
+  "label": "Incidente de Falsidade"
+ },
+ {
+  "value": "PROCEDIMENTOS DE INFÂNCIA E JUVENTUDE",
+  "label": "PROCEDIMENTOS DE INFÂNCIA E JUVENTUDE"
+ },
+ {
+  "value": "Processo Administrativo",
+  "label": "Processo Administrativo"
+ },
+ {
+  "value": "Remoção; modificação  e dispensa de tutor ou curador",
+  "label": "Remoção; modificação  e dispensa de tutor ou curador"
+ },
+ {
+  "value": "Suprimento de Capacidade ou de Consentimento para Casar",
+  "label": "Suprimento de Capacidade ou de Consentimento para Casar"
+ },
+ {
+  "value": "Internação com Atividades Externas",
+  "label": "Internação com Atividades Externas"
+ },
+ {
+  "value": "Comunicado de Mandado de Prisão",
+  "label": "Comunicado de Mandado de Prisão"
+ },
+ {
+  "value": "Oposição",
+  "label": "Oposição"
+ },
+ {
+  "value": "Restauração de Autos Criminal",
+  "label": "Restauração de Autos Criminal"
+ },
+ {
+  "value": "Ação de Cumprimento",
+  "label": "Ação de Cumprimento"
+ },
+ {
+  "value": "Cautelar Inominada Criminal",
+  "label": "Cautelar Inominada Criminal"
+ },
+ {
+  "value": "Produção Antecipada de Provas Criminal",
+  "label": "Produção Antecipada de Provas Criminal"
+ },
+ {
+  "value": "Regulamentação da Convivência Familiar",
+  "label": "Regulamentação da Convivência Familiar"
+ },
+ {
+  "value": "Crimes de Imprensa",
+  "label": "Crimes de Imprensa"
+ },
+ {
+  "value": "Embargos de Declaração Cível",
+  "label": "Embargos de Declaração Cível"
+ },
+ {
+  "value": "Exceção de Incompetência de Juízo",
+  "label": "Exceção de Incompetência de Juízo"
+ },
+ {
+  "value": "Medidas Protetivas de Urgência Lei Maria da Penha - Infracional",
+  "label": "Medidas Protetivas de Urgência Lei Maria da Penha - Infracional"
+ },
+ {
+  "value": "Protesto",
+  "label": "Protesto"
+ },
+ {
+  "value": "Recuperação Judicial",
+  "label": "Recuperação Judicial"
+ },
+ {
+  "value": "Adoção Fora do Cadastro",
+  "label": "Adoção Fora do Cadastro"
+ },
+ {
+  "value": "Carta de Ordem Infância e Juventude",
+  "label": "Carta de Ordem Infância e Juventude"
+ },
+ {
+  "value": "Exceção da Verdade",
+  "label": "Exceção da Verdade"
+ },
+ {
+  "value": "Carta Rogatória Cível",
+  "label": "Carta Rogatória Cível"
+ },
+ {
+  "value": "Exceção de Suspeição",
+  "label": "Exceção de Suspeição"
+ },
+ {
+  "value": "Internação Provisória",
+  "label": "Internação Provisória"
+ },
+ {
+  "value": "Liquidação por Arbitramento",
+  "label": "Liquidação por Arbitramento"
+ },
+ {
+  "value": "Notificação para Explicações",
+  "label": "Notificação para Explicações"
+ },
+ {
+  "value": "Procedimentos Especiais de Jurisdição Contenciosa",
+  "label": "Procedimentos Especiais de Jurisdição Contenciosa"
+ },
+ {
+  "value": "Cumprimento de sentença - Lei Arbitral (Lei 9.307/1996)",
+  "label": "Cumprimento de sentença - Lei Arbitral (Lei 9.307/1996)"
+ },
+ {
+  "value": "Desapropriação Imóvel Rural por Interesse Social",
+  "label": "Desapropriação Imóvel Rural por Interesse Social"
+ },
+ {
+  "value": "Embargos de Retenção por Benfeitorias",
+  "label": "Embargos de Retenção por Benfeitorias"
+ },
+ {
+  "value": "Embargos de Terceiro Criminal",
+  "label": "Embargos de Terceiro Criminal"
+ },
+ {
+  "value": "Imissão na Posse",
+  "label": "Imissão na Posse"
+ },
+ {
+  "value": "Incidente de Desconsideração de Personalidade Jurídica",
+  "label": "Incidente de Desconsideração de Personalidade Jurídica"
+ },
+ {
+  "value": "Medidas Protetivas de Urgência - Crianças e Adolescentes Lei Henry Borel - Lei 14.344/2022 Infracionais",
+  "label": "Medidas Protetivas de Urgência - Crianças e Adolescentes Lei Henry Borel - Lei 14.344/2022 Infracionais"
+ },
+ {
+  "value": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico",
+  "label": "Pedido de Quebra de Sigilo de Dados e/ou Telefônico"
+ },
+ {
+  "value": "Apelação Cível",
+  "label": "Apelação Cível"
+ },
+ {
+  "value": "Carta Precatória Infância e Juventude",
+  "label": "Carta Precatória Infância e Juventude"
+ },
+ {
+  "value": "Conselho de Justificação ",
+  "label": "Conselho de Justificação "
+ },
+ {
+  "value": "Herança Jacente",
+  "label": "Herança Jacente"
+ },
+ {
+  "value": "Impugnação ao Cumprimento de Sentença",
+  "label": "Impugnação ao Cumprimento de Sentença"
+ },
+ {
+  "value": "Inspeção",
+  "label": "Inspeção"
+ },
+ {
+  "value": "Mandado de Segurança Criminal",
+  "label": "Mandado de Segurança Criminal"
+ },
+ {
+  "value": "Processo de Execução",
+  "label": "Processo de Execução"
+ },
+ {
+  "value": "Superveniência de doença mental",
+  "label": "Superveniência de doença mental"
+ },
+ {
+  "value": "Avocatória",
+  "label": "Avocatória"
+ },
+ {
+  "value": "Conversão de Pena",
+  "label": "Conversão de Pena"
+ },
+ {
+  "value": "Emancipação",
+  "label": "Emancipação"
+ },
+ {
+  "value": "Embargos de Terceiro Infância e Juventude",
+  "label": "Embargos de Terceiro Infância e Juventude"
+ },
+ {
+  "value": "Embargos à Arrematação",
+  "label": "Embargos à Arrematação"
+ },
+ {
+  "value": "Exceção de Coisa Julgada",
+  "label": "Exceção de Coisa Julgada"
+ },
+ {
+  "value": "Apreensão de  Títulos",
+  "label": "Apreensão de  Títulos"
+ },
+ {
+  "value": "Deserção de Praça",
+  "label": "Deserção de Praça"
+ },
+ {
+  "value": "Destinação de Bens Apreendidos",
+  "label": "Destinação de Bens Apreendidos"
+ },
+ {
+  "value": "Entrega Voluntária",
+  "label": "Entrega Voluntária"
+ },
+ {
+  "value": "Exceção de Ilegitimidade de Parte",
+  "label": "Exceção de Ilegitimidade de Parte"
+ },
+ {
+  "value": "Exceção de Litispendência",
+  "label": "Exceção de Litispendência"
+ },
+ {
+  "value": "Guarda c/c destituição do poder familiar",
+  "label": "Guarda c/c destituição do poder familiar"
+ },
+ {
+  "value": "Instrução de Rescisória",
+  "label": "Instrução de Rescisória"
+ },
+ {
+  "value": "Liquidação Provisória de Sentença pelo Procedimento Comum",
+  "label": "Liquidação Provisória de Sentença pelo Procedimento Comum"
+ },
+ {
+  "value": "Mandado de Injunção",
+  "label": "Mandado de Injunção"
+ },
+ {
+  "value": "Medidas Investigatórias Sobre Organizações Criminosas",
+  "label": "Medidas Investigatórias Sobre Organizações Criminosas"
+ },
+ {
+  "value": "Organização e Fiscalização de Fundação",
+  "label": "Organização e Fiscalização de Fundação"
+ },
+ {
+  "value": "Pedido De Desinternação/Reavaliação/Substituição/Suspensão da Medida",
+  "label": "Pedido De Desinternação/Reavaliação/Substituição/Suspensão da Medida"
+ },
+ {
+  "value": "Procedimentos Especiais de Jurisdição Voluntária",
+  "label": "Procedimentos Especiais de Jurisdição Voluntária"
+ },
+ {
+  "value": "Restabelecimento do Poder Familiar",
+  "label": "Restabelecimento do Poder Familiar"
+ },
+ {
+  "value": "Sonegados",
+  "label": "Sonegados"
+ },
+ {
+  "value": "Alteração do Regime de Bens",
+  "label": "Alteração do Regime de Bens"
+ },
+ {
+  "value": "Apelação / Remessa Necessária",
+  "label": "Apelação / Remessa Necessária"
+ },
+ {
+  "value": "Apelação Criminal",
+  "label": "Apelação Criminal"
+ },
+ {
+  "value": "Arrecadação das Coisas Vagas",
+  "label": "Arrecadação das Coisas Vagas"
+ },
+ {
+  "value": "Arresto / Hipoteca Legal",
+  "label": "Arresto / Hipoteca Legal"
+ },
+ {
+  "value": "Busca e Apreensão Infracional",
+  "label": "Busca e Apreensão Infracional"
+ },
+ {
+  "value": "Carta Rogatória Criminal",
+  "label": "Carta Rogatória Criminal"
+ },
+ {
+  "value": "Caução",
+  "label": "Caução"
+ },
+ {
+  "value": "Conflito de competência cível",
+  "label": "Conflito de competência cível"
+ },
+ {
+  "value": "Curatela",
+  "label": "Curatela"
+ },
+ {
+  "value": "Embargos de Declaração Criminal",
+  "label": "Embargos de Declaração Criminal"
+ },
+ {
+  "value": "Exceção de Incompetência",
+  "label": "Exceção de Incompetência"
+ },
+ {
+  "value": "Exceção de Suspeição Infância e Juventude",
+  "label": "Exceção de Suspeição Infância e Juventude"
+ },
+ {
+  "value": "Execução de Alimentos",
+  "label": "Execução de Alimentos"
+ },
+ {
+  "value": "Exibição de Documento ou Coisa Criminal",
+  "label": "Exibição de Documento ou Coisa Criminal"
+ },
+ {
+  "value": "Exibição de Documento ou Coisa Infância e Juventude",
+  "label": "Exibição de Documento ou Coisa Infância e Juventude"
+ },
+ {
+  "value": "Homologação do Penhor Legal",
+  "label": "Homologação do Penhor Legal"
+ },
+ {
+  "value": "Incidente de Sanidade Mental",
+  "label": "Incidente de Sanidade Mental"
+ },
+ {
+  "value": "Inquérito Policial Militar",
+  "label": "Inquérito Policial Militar"
+ },
+ {
+  "value": "Investigação contra magistrado",
+  "label": "Investigação contra magistrado"
+ },
+ {
+  "value": "Liquidação Provisória por Arbitramento",
+  "label": "Liquidação Provisória por Arbitramento"
+ },
+ {
+  "value": "Obrigação de Reparar o Dano",
+  "label": "Obrigação de Reparar o Dano"
+ },
+ {
+  "value": "Pedido de Efeito Suspensivo à Apelação",
+  "label": "Pedido de Efeito Suspensivo à Apelação"
+ },
+ {
+  "value": "Pedido de Prisão Temporária",
+  "label": "Pedido de Prisão Temporária"
+ },
+ {
+  "value": "Posse em Nome do Nascituro",
+  "label": "Posse em Nome do Nascituro"
+ },
+ {
+  "value": "Procedimento Comum",
+  "label": "Procedimento Comum"
+ },
+ {
+  "value": "Procedimentos Regidos por Outros Códigos, Leis Esparsas e Regimentos",
+  "label": "Procedimentos Regidos por Outros Códigos, Leis Esparsas e Regimentos"
+ },
+ {
+  "value": "Relaxamento de Prisão",
+  "label": "Relaxamento de Prisão"
+ },
+ {
+  "value": "Renovatória de Locação",
+  "label": "Renovatória de Locação"
+ },
+ {
+  "value": "Revisão Judicial de Decisão do Conselho Tutelar",
+  "label": "Revisão Judicial de Decisão do Conselho Tutelar"
+ },
+ {
+  "value": "Transferência entre estabelecimentos penais",
+  "label": "Transferência entre estabelecimentos penais"
+ }
+]
