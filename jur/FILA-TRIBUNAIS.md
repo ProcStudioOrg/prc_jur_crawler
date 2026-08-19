@@ -1238,12 +1238,12 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 22 | **TCE-RJ** | RJ | ⚠️ capital carioca é do **TCM-RJ** — **confirmado por medição** (o combo traz 91 dos 92 municípios) | ok 16/08 |
 | 23 | **TCE-BA** | BA | ⚠️ **todos** os municípios baianos são do **TCM-BA** — **confirmado por ausência de combo de município** (não há filtro por município na tela) | ok 17/08 |
 | 24 | **TCE-PE** | PE | ✅ **PE não tem TCM** — os 184 municípios, **inclusive o Recife**, estão na base do próprio TCE (medido: 184 "Prefeitura" no combo de unidades) | ok 18/08 |
-| 25 | **TCE-GO** | GO | ⚠️ municípios goianos são do **TCM-GO** | pendente |
-| 26 | **TCDF** | DF | | pendente |
-| 27 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** | pendente |
-| 28 | **TCE-ES** | ES | | pendente |
-| 29 | **TCE-MG** | MG | 🔴 o portal que se chama "Jurisprudência" (**TCJuris**) está atrás de **reCAPTCHA v2 conferido no servidor**; a porta aberta é o **MapJuris** (`/TextualDadosProcesso`, sem captcha) — **busca medida, falta o segundo salto do grid e o crawler** | parcial 16/08 |
-| 30 | **TCE-CE** | CE | ✅ TCM-CE extinto em 2017 e o acervo **migrou** — confirmado por medição (186 localidades no combo, **inclusive FORTALEZA**; processos trazem "PROCESSO MIGRADO DO TCM (SGP)"). A porta é a **API REST do SPA Contexto** (`contexto-api…/documentos/buscar`, Elasticsearch, sem captcha) — **busca, filtros, paginação e download do PDF medidos; falta a lista de tipos "Documentos de Decisão" e o crawler** | parcial 18/08 |
+| 25 | **TCDF** | DF | | pendente |
+| 26 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** | pendente |
+| 27 | **TCE-ES** | ES | | pendente |
+| 28 | **TCE-MG** | MG | 🔴 o portal que se chama "Jurisprudência" (**TCJuris**) está atrás de **reCAPTCHA v2 conferido no servidor**; a porta aberta é o **MapJuris** (`/TextualDadosProcesso`, sem captcha) — **busca medida, falta o segundo salto do grid e o crawler** | parcial 16/08 |
+| 29 | **TCE-CE** | CE | ✅ TCM-CE extinto em 2017 e o acervo **migrou** — confirmado por medição (186 localidades no combo, **inclusive FORTALEZA**; processos trazem "PROCESSO MIGRADO DO TCM (SGP)"). A porta é a **API REST do SPA Contexto** (`contexto-api…/documentos/buscar`, Elasticsearch, sem captcha) — **busca, filtros, paginação e download do PDF medidos; falta a lista de tipos "Documentos de Decisão" e o crawler** | parcial 18/08 |
+| 30 | **TCE-GO** | GO | ⚠️ municípios goianos são do **TCM-GO** — **NÃO confirmado por medição** (o formulário não tem combo de município). A porta é a **API REST do SPA Iago** (`iago-search-api…/decisions/search`, Elasticsearch, sem captcha) — **busca, 13 filtros, agregações, paginação até o fim do acervo (383.075) e inteiro teor em texto medidos; falta operadores booleanos, `number=`/`process=` isolados e o crawler** | parcial 19/08 |
 
 📌 **O que o TCE-PR (feito em 14/08/2026) ensinou — leia
 [`CLAUDE-TCEPR.md`](CLAUDE-TCEPR.md).** Primeiro alvo do Bloco 5 e **primeiro

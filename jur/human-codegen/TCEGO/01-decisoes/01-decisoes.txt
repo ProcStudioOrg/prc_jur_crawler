@@ -1,0 +1,340 @@
+# TCE-GO — Consulta Ampla de Decisões (SPA "Decisões TCE-GO" / ecossistema Iago)
+
+## Identificação
+
+```
+Tribunal:               TCE-GO — Tribunal de Contas do Estado de Goiás
+Estado(s):              GO
+Módulo:                 Consulta Ampla de Decisões ("Decisões TCE-GO", ecossistema Iago)
+Link principal:         https://decisoes.tce.go.gov.br/
+API do módulo:          https://iago-search-api.tce.go.gov.br
+Hub de jurisprudência:  https://portal.tce.go.gov.br/tce-juris  (Liferay; só linka)
+Sistema judicial:       Próprio — SPA Next.js (App Router) + Ant Design, backend Spring Boot
+                        sobre Elasticsearch (campo `model` do resultado devolve "BM25")
+Sistema irmão mapeado:  TCE-CE (contexto-api, Elasticsearch, SPA) e TCE-PE (JHipster)
+Abrangência da base:    383.075 documentos, anos 1976–2026 (51 valores no agregado `ano`)
+                        Acórdão 207.927 · Resolução 174.728 · Res. Administrativa 208 ·
+                        Res. Normativa 212
+Data do mapeamento:     19/08/2026 (slot 1600)
+```
+
+---
+
+## PASSO 0 — o que existe e o que NÃO existe de API pública
+
+| Fonte procurada | Resultado medido |
+|---|---|
+| `dadosabertos.tce.go.gov.br` | ✅ **EXISTE** — CKAN 2.9.10, 200. Mas **63 datasets e ZERO de jurisprudência**: só indicadores de saúde/educação/segurança (`package_list` filtrado por `jurisp\|acord\|decis\|process\|julg\|sumul\|voto\|relat` → 0 hits). **Não serve ao crawler.** |
+| `iago-search-api.tce.go.gov.br/swagger`, `/swagger-ui.html`, `/api-docs`, `/openapi.json` | ❌ **401**; `/v3/api-docs` → **500**. Sem contrato publicado. |
+| `iago-search-api.tce.go.gov.br/` | 200, `text/plain`, corpo literal `It's Working` — 12 bytes. |
+| DataJud / CNJ | ❌ **Não se aplica** — TCE não é Judiciário, não há alias `api_publica_*`. Igual ao resto do Bloco 5 (ver `CLAUDE-TCEPR.md`). |
+| Numeração CNJ | ❌ **Não existe.** Processo é `AAAANNNNNNNNNNN` (15 dígitos, ex. `201700010015938`); decisão é `NNNNN/AAAA` (ex. `04119/2024`). `src/cnj.js` reprovaria todo processo válido. |
+| `antigo-decisoes.tce.go.gov.br` (link "Acessar a versão antiga!" do próprio SPA) | ❌ **SEM DNS** — `Could not resolve host`. O portal linka um host morto. |
+
+⚠️ **Não é vhost curinga:** `host-inventado-9z.tce.go.gov.br` **não resolve DNS**, então os
+200 de `dadosabertos`/`portal`/`decisoes` são aplicações de verdade, não casca.
+`decisoes.tce.go.gov.br/rota-inventada-9z` → **404 (12.784 bytes)**, distinto do shell 200.
+
+**A porta escolhida é `api`** — a API REST interna do SPA, sem captcha, sem login, sem cookie
+obrigatório. Descoberta lendo `_next/static/chunks/670-*.js` (o cliente axios está literal lá).
+
+---
+
+## 1. Busca principal (query)
+
+Campo único, `placeholder="Pesquisa"`, **sem `name` e sem `id`** (Ant Design `Sender` +
+react-hook-form). Não há `<form>` na página (`form count = 0`).
+
+```html
+<input placeholder="Pesquisa" class="ant-input css-142senq" type="text" value="">
+```
+
+Botão de disparo: `button.ant-sender-actions-btn.ant-btn-primary` (circular, sem texto).
+
+⚠️ **`Enter` NÃO dispara a busca** e `page.fill()` não alimenta o estado do react-hook-form —
+o POST sai com corpo `{}` (termo perdido) mesmo com o valor visível no input. Isto é
+armadilha de mapeamento, não do crawler: o crawler fala com a API.
+
+Contrato real (medido no Network e reproduzido fora do browser):
+
+```
+POST https://iago-search-api.tce.go.gov.br/decisions/search?<filtros>
+Content-Type: application/json
+Body: {"term":"<termo>"}
+```
+
+Termo vazio (`{"term":""}`) é aceito e devolve o acervo. Prints: `01.01`, `01.02`, `01.03`.
+
+## 2. Operadores
+
+⚠️ **NÃO HÁ SINTAXE DE OPERADOR EXPOSTA.** O portal se anuncia como *"Pesquise semântica /
+Pesquise pelos documentos ao estilo google!"* e o texto de boas-vindas diz **"O Iago agora
+resume cada decisão em uma ementa artificial, além disso a pesquisa foi aprimorada usando a
+IA do Iago"**. O campo `model` de cada resultado devolveu **`BM25`** nas amostras — ranking
+lexical, não vetorial.
+
+| Operador | Funciona? | Observação |
+|---|---|---|
+| palavras soltas | ✅ | ranking BM25; **não** é AND estrito — `aposentadoria` em 2024 casa 3.112 de 4.987 |
+| `E` / `OU` / `NÃO` / `AND` / `OR` / `NOT` | ⚠️ **não medido** — ficou fora do timebox |
+| `"frase exata"`, `$`, `?`, `ADJ`, `PROX` | ⚠️ **não medido** |
+
+🔴 **Pendência declarada.** Nenhum operador booleano foi testado. Não presuma que funciona
+nem que não funciona: **meça antes de expor flag**. (Lição TCE-PR: a legenda do portal mente,
+e nono conjunto de operadores seguido sem herdar.)
+
+## 3. Filtros — todos por **querystring**, todos medidos
+
+`POST /decisions/search?<param>=<valor>` com corpo `{"term":...}`.
+
+| Param | Vem do campo | Formato | Medido |
+|---|---|---|---|
+| `page` | paginação | inteiro **0-based** | ✅ |
+| `size` | — | inteiro, **máximo 2000** (silenciosamente truncado acima) | ✅ |
+| `order` | Ordernar | `RELEVANCE` \| `RECENT` \| `OLD` | ✅ valor inválido → **HTTP 500** |
+| `year` | Ano | `2024` | ✅ |
+| `number` | Número da Decisão | `04119` | ⚠️ não medido isolado |
+| `process` | Número do Processo | `201700010015938` | ⚠️ não medido isolado |
+| `type` | tipo de documento | `Acórdão` \| `Resolução` \| `Resolução Administrativa` \| `Resolução Normativa` | ✅ |
+| `session` | Tipo da Sessão | `Ordinaria` \| `Extraordinária` \| `Extraordinária Administrativa` | ✅ |
+| `collegiate` | Colegiado | `Primeira Camara` \| `Segunda Camara` \| `Tribunal Pleno` | ✅ |
+| `reporter` | Relator(a) da Decisão | nome em CAIXA ALTA | ✅ |
+| `rapporteur` | Relator(a) do Processo | nome em CAIXA ALTA | ✅ |
+| `interested` | Interessado(s) | texto livre | ✅ |
+| `start` / `end` | Data Início / Data Fim | **`YYYY-MM-DD`** | ✅ |
+| `cookie` | — | id aleatório de 10 chars do `localStorage` (telemetria/rating) | opcional |
+
+### Provas por contagem (base: `year=2024`, termo vazio = **4.987**, valor exato)
+
+| Filtro | Contagem | Veredito |
+|---|---|---|
+| `type=Acórdão` | 4.938 | ✅ filtra |
+| `type=Resolução` | 11 | ✅ filtra |
+| `type=Bananas` (inventado) | **0** | ✅ rejeita inventado |
+| `collegiate=Primeira Camara` | 2.601 | ✅ |
+| `collegiate=Segunda Camara` | 1.910 | ✅ |
+| `collegiate=Tribunal Pleno` | 476 | ✅ |
+| `collegiate=Quinta Camara` (inventado) | **0** | ✅ |
+| `session=Ordinaria` | 4.935 | ✅ |
+| `reporter=CELMAR RECH` | 727 | ✅ |
+| `reporter=FULANO DE TAL` (inventado) | **0** | ✅ |
+| `rapporteur=CARLA CINTIA SANTILLO` | 814 | ✅ |
+| `interested=GOIANIA` | 2 | ✅ |
+| `interested=ZZQQ NAO EXISTE` (inventado) | **0** | ✅ |
+| termo `usucapiao` (matéria alheia a TCE) | **0** | ✅ termo filtra |
+
+✅ **A partição de colegiado FECHA EXATA:** 2.601 + 1.910 + 476 = **4.987** = total do ano.
+Nenhum filtro é decorativo — todos mudam a contagem e todos rejeitam valor inventado.
+
+### 🔴 Ressalvas medidas nos filtros
+
+- 🔴 **`session` exige o ACENTO, e sem ele zera em silêncio.**
+  `session=Extraordinária` → **29**; `session=Extraordinaria` → **0** (HTTP 200).
+  São filtros de *keyword* exato do Elasticsearch, sem normalização. Vale para
+  `type`, `collegiate`, `reporter`, `rapporteur` também: `Resolução`, `Primeira Camara`
+  (esta **sem** acento em "Camara", como está na base), `CARLA CINTIA SANTILLO`.
+  **Use sempre o rótulo literal devolvido por `/decisions/aggregations`.**
+- 🔴 **A janela de data só funciona FECHADA — cada ponta sozinha é IGNORADA.**
+  `start=2024-01-01&end=2024-01-31` → **287**. `start=2024-01-01` sozinho → 10.000
+  (= acervo saturado). `end=2024-01-31` sozinho → 10.000. `start=2024-01-01&end=2024-12-31`
+  → **4.987** (= o ano inteiro, confere com `year=2024`).
+  É o par assimétrico do TCE-PR de novo, agora com **as duas** pontas ignoradas.
+- 🔴 **Data de filtro é ISO, data de resultado é BR.** O filtro exige `YYYY-MM-DD`
+  (`01/01/2024` → **HTTP 500**), mas o campo `date` do card volta `28/10/2024 08:00`.
+- ⚠️ **83% do acervo não tem colegiado nem tipo de sessão.** Somando os agregados:
+  `ano` = 383.075 e `tipo_documento` = 383.075, mas `colegiado` = **64.797** e
+  `tipo_sessao` = **64.797**. Filtrar por colegiado **exclui 318.278 documentos em
+  silêncio** — não é "não há julgado", é campo vazio.
+
+## 4. Enumeração dos combos — `/decisions/aggregations`
+
+Não há um único `<select>` na página (`select count = 0`); os combos são `div` do Ant
+Design populados pelo endpoint de agregação:
+
+```
+POST /decisions/aggregations?<mesmos filtros>&model=<model do 1º resultado>
+Body: {"term":"<termo>"}
+```
+
+Devolve um array `[{key, agg:[{label, value}]}]` com as chaves
+`area`, `tema`, `subtema`, `ano` (51), `tipo_documento` (4), `colegiado` (3),
+`tipo_sessao` (3), `relator_decisao` (13), `relator_processo` (23).
+
+📌 Enumeração completa gravada em **`aggregations-acervo-completo.json`** (ao lado deste
+arquivo). É a lista de valores aceitos pelos filtros — e o `value` é a contagem.
+
+## 5. Desambiguação Juizado × Justiça Comum
+
+❌ **Não se aplica.** TCE não é Judiciário: não há juizado, turma recursal nem
+cível/criminal. O eixo de desambiguação equivalente é **`collegiate`** (Primeira Câmara ×
+Segunda Câmara × Tribunal Pleno), provado acima com partição exata.
+
+## 6. Ressalva de escopo — municípios goianos
+
+⚠️ A fila anota "municípios goianos são do **TCM-GO**". **NÃO CONFIRMADO NEM REFUTADO
+por medição neste slot** — o formulário do TCE-GO **não tem combo de município**
+(diferente do TCE-PR, onde os 399 municípios estavam no `<select>`, e igual ao TCE-BA,
+onde a ausência do combo foi o próprio indício). O agregado não expõe jurisdicionado.
+🔴 **Pendência: medir.** O caminho barato é `interested=<município>` — `GOIANIA` devolveu
+**2** em 2024, número baixo demais para ser a capital, o que é *compatível* com a
+existência do TCM-GO mas **não é prova**.
+
+---
+
+# Depois da busca (skill `browser-post-search`)
+
+## 18. Onde o resultado aparece
+
+- **Mesma página, mesma rota.** A URL é `https://decisoes.tce.go.gov.br/` **antes e
+  depois** da busca. 🔴 **Não existe URL de resultado compartilhável** — nenhum estado de
+  busca vai para a querystring. Prints `01.02` (topo) e `01.04` (rodapé/paginação).
+- **Os controles permanecem** (o input de Pesquisa continua na tela): refinamento é
+  incremental, não recomeça do zero.
+- **Não abre modal.** Cada botão do card abre **nova aba** (`window.open`).
+- **O total na tela** aparece só como numeração da paginação (`1 2 3 4 5 ••• 400`);
+  o número autoritativo é o `totalElements` do JSON — **e ele mente, ver §21**.
+
+## 19. Anatomia do card
+
+`outerHTML` gravado em **`01-card-resultado.html`**. Seletor: `.ant-card`.
+Campos do payload da busca (todos já vêm na resposta, sem clique nenhum):
+
+| Campo da API | O que é | Tamanho medido |
+|---|---|---|
+| `id` | 🔑 **identifica o DOCUMENTO** (ex. `123938`). É a chave de todos os endpoints seguintes. | 6 |
+| `process` | nº do processo (`201700010015938`) — **NÃO identifica o julgado**: um processo tem vários | 15 |
+| `number` + `year` | nº da decisão (`04119` / `2024`) | |
+| `title` | linha de cabeçalho já montada: `Acórdão 04119/2024 - Processo: … - 34ª Sessão Ordinaria Primeira Camara - 28/10/2024 08:00` | 104 |
+| `ementa` | **a ementa de verdade** — campo próprio, texto corrido | **268–593** |
+| `summary` | 🔴 **"Ementa Artificial" — RESUMO GERADO POR IA**, não é ato do tribunal | **128–267** |
+| `highlights` | trechos com o termo em `<em>` — **é highlight, não ementa** | 618–1005 |
+| `type` / `indicator` | `Acórdão` / `AC` | |
+| `collegiate`, `date`, `subject` | colegiado, data BR, assunto (`204 - 01 - APOSENTADORIA - CONCESSÃO`) | |
+| `rapporteur` / `decision_rapporteur` | relator do processo / da decisão (podem divergir) | |
+| `interested`, `procurator`, `auditor` | interessados, procurador, auditor | |
+| `confidential` | `False` / `True` — sigilo | |
+| `score`, `model`, `track` | ranking (`353.01`), modelo (`BM25`), id de telemetria | |
+
+🔴 **A RESSALVA MAIS CARA DESTE TRIBUNAL: `summary` É EMENTA GERADA POR IA.**
+O rótulo do próprio portal é `ia_ementa: "Ementa Artificial"` e o texto de boas-vindas
+diz *"O Iago agora resume cada decisão em uma ementa artificial"*. É o campo que a tela
+mostra em destaque, em CAIXA ALTA, com cara de ementa oficial
+(`PREGÃO ELETRÔNICO Nº 116/2025. CONTRATAÇÃO DE SERVIÇOS…`). **Publicar `summary` como
+ementa do TCE-GO é citar resumo de máquina como ato do tribunal** — quebra a invariante
+nº 1 do repo. O crawler **deve** mapear `ementa` → ementa e **rotular `summary`
+explicitamente como artificial**, ou não expô-lo.
+
+⚠️ Card dissecado em **1 tipo só (Acórdão)**. 🔴 **Pendência:** dissecar `Resolução`,
+`Resolução Administrativa` e `Resolução Normativa` — a lição TJMG é que campos que existem
+num tipo faltam noutro.
+
+## 20. A escada até o documento — medida clicando, botão a botão
+
+Cada botão do card e o XHR exato que ele dispara (capturado no Network, prints `01.05-*`):
+
+| Botão (texto literal) | XHR | Resultado |
+|---|---|---|
+| **Detalhes do Processo** | `GET /decisions/url/{id}?type=WEBSITE` | `text/plain` com a URL → nova aba em `https://www.tce.go.gov.br/ConsultaProcesso?proc=357826` |
+| **Acórdão** | `GET /decisions/url/{id}?type=DOCUMENT` | `text/plain` com URL de PDF assinado |
+| **Relatório/Voto** | `GET /decisions/url/{id}?type=VOTE` | mesma URL, `tipoDecisao` diferente |
+| **Texto dos Documentos** | `GET /decisions/{id}` | 🟢 **JSON `{id, text}` com o INTEIRO TEOR em texto puro** |
+| **Exportar Excel** | — | planilha só da página atual (tooltip: *"Download dos Documentos da Página Atual"*) |
+
+✅ **Reproduzido fora do browser**: os quatro respondem por `curl` sem cookie, sem sessão,
+sem `Referer`. **Chave simples — só o `id`**, sem chave composta (diferente do TJMG).
+
+### 🔴 O PDF original está QUEBRADO
+
+`GET /decisions/url/{id}?type=DOCUMENT` devolve
+`https://decisoes.tce.go.gov.br/ConsultaDecisoes/CarregaDocumentoAssinadoPDF?idDocumento=…&tipoDecisao=…`
+— e essa URL **não serve PDF**. Medido nas duas pontas:
+- `curl` → **HTTP 200, `text/html`, 14.270 bytes** = o app shell do Next.js;
+- **aba limpa no Playwright** → HTTP 200 e **corpo com 0 caractere de texto** (print `01.06-permalink-document-pdf.png`).
+
+O host que serviria esse caminho (`antigo-decisoes.tce.go.gov.br`) **não tem DNS**. Ou seja:
+o SPA novo herdou as URLs do portal velho e o portal velho foi desligado. **Não é captcha,
+não é sessão — é link pendurado.**
+
+E `GET /decisions/download?id={id}&type=DOCUMENT` (o endpoint de blob do próprio cliente
+axios) responde **HTTP 500** com e sem `Origin`/`Referer` de browser.
+
+### Assimetria de bloqueio — registrada em separado
+
+| Etapa | Bloqueio |
+|---|---|
+| Busca | 🟢 **livre** — sem captcha, sem login, sem cookie |
+| Agregações | 🟢 livre |
+| Inteiro teor em texto (`/decisions/{id}`) | 🟢 **livre** |
+| PDF original (`type=DOCUMENT` / `type=VOTE`) | 🔴 **indisponível — URL morta**, não bloqueio |
+| `/decisions/download` | 🔴 **HTTP 500** |
+
+## 21. 🔴 O `totalElements` É FABRICADO — a ressalva nº 1 do crawler
+
+`totalElements` **não é a contagem de resultados**. Medido paginando o acervo inteiro
+(`term:""`, `size=2000`):
+
+| Requisição | `totalElements` | itens |
+|---|---|---|
+| `page=0&size=25` | **10.000** | 25 |
+| `page=399&size=25` | **10.000** | 25 |
+| `page=400&size=25` | **10.025** | 25 |
+| `page=401&size=25` | **10.050** | 25 |
+| `page=5&size=2000` | **12.000** | 2.000 |
+| `page=50&size=2000` | **102.000** | 2.000 |
+| `page=190&size=2000` | **382.000** | 2.000 |
+| **`page=191&size=2000`** | **383.075** ← o número verdadeiro | **1.075** (última página com dados) |
+| `page=200&size=2000` | **10.000** de novo | **0** |
+
+Ou seja `totalElements ≈ max(10.000, min(383.075, (page+1) × size))`. É o
+`track_total_hits: 10000` do Elasticsearch vazando como se fosse total.
+
+**Regras que saem daí, e o crawler tem de obedecer:**
+1. `totalElements < 10.000` → **valor exato** (confere com o agregado: `year=2024` → 4.987
+   na busca **e** 4.987 no agregado `ano`).
+2. `totalElements == 10.000` → **saturado**: significa "≥ 10.000, quantidade desconhecida".
+   Reportar "10.000 resultados" é afirmação falsa.
+3. `totalElements > 10.000` → **artefato do próprio offset**, não é contagem de nada.
+4. 🟢 **A saída existe:** `/decisions/aggregations` devolve contagens **exatas** mesmo
+   acima do teto (soma de `ano` = soma de `tipo_documento` = 383.075). Quando saturar,
+   **conte pelo agregado.**
+
+✅ **Não há teto de profundidade.** Diferente do `index.max_result_window` clássico, a API
+paginou até o fim do acervo (383.075 documentos em 192 páginas de 2.000) sem erro.
+
+## 22. Paginação
+
+```
+Parâmetro:            ?page= (0-based) & size=
+Default:              size=25   (o SPA usa 25)
+Máximo aceito:        size=2000 — pedir 5000 ou 10000 devolve size=2000, SEM erro (trunca em silêncio)
+Ao estourar a última: HTTP 200, content=[], numberOfElements=0
+Profundidade:         sem teto — page=191&size=2000 chega ao fim do acervo
+Total exposto:        SATURADO em 10.000, ver §21
+```
+
+✅ **Estabilidade medida:** `page=3&size=25` rodada **3 vezes** devolveu a **mesma
+sequência de ids** (`set` de tamanho 1); interseção `page=0 ∩ page=1` = **0 documentos**.
+Não há o defeito de ordenação sem desempate do TJRJ/TJMG.
+
+## 23. Permalink e identidade do documento
+
+| | |
+|---|---|
+| **Campo que identifica o documento** | `id` (ex. `123938`) — **não** `process` |
+| **Permalink do documento** | 🔴 **NÃO EXISTE.** O SPA nunca põe o documento na URL; o PDF que a API aponta está morto (§20) |
+| **Permalink do PROCESSO** | 🟢 **EXISTE e funciona em aba limpa**: `https://www.tce.go.gov.br/ConsultaProcesso?proc=<idInterno>` — HTTP 200, 5.213 caracteres de texto real (print `01.06-permalink-website.png`) |
+| ⚠️ ressalva | O `proc=357826` da URL **não é** o `process` do card (`201700010015938`) nem o `id` (`132133`): é um terceiro identificador interno, obtido **só** via `GET /decisions/url/{id}?type=WEBSITE` |
+| **Verificação possível** | por reconsulta (`process=` + `number=` + `year=`) e pelo permalink do processo |
+
+---
+
+## Pendências declaradas deste mapeamento (timebox 1600, 90 min)
+
+1. 🔴 Operadores booleanos — **nenhum** testado.
+2. 🔴 `number=` e `process=` não medidos isoladamente (o `Checker` depende deles).
+3. 🔴 Card dissecado só em `Acórdão`; faltam os três tipos de Resolução.
+4. 🔴 Ressalva TCM-GO não confirmada por medição.
+5. 🔴 Rate limit não medido.
+6. ⚠️ Os prints `01.02`/`01.03` mostram o **feed** (Resultados Recentes), não a busca
+   filtrada: o botão do Ant `Sender` não recebeu o termo via Playwright (§1). O contrato
+   foi medido direto na API, que é a fonte autoritativa do crawler.
