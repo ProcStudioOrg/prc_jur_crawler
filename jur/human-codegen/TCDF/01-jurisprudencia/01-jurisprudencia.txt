@@ -1,0 +1,461 @@
+# TCDF — Tribunal de Contas do Distrito Federal — modulo 01: Jurisprudencia (Busca TCDF)
+
+STATUS: OK. Mapeamento medido em 20/08/2026, slot 1600, e crawler FECHADO no mesmo slot.
+Busca, filtros, operadores, paginacao, card, inteiro teor e permalink MEDIDOS; os 4
+arquivos src/TCDF{Navigator,Crawler,Checker,Testes}.js existem, o subcomando `tcdf` esta
+em bin/jur, a cobertura foi regerada e `node tests/smoke.js tcdf` esta verde (18/18 nos
+testes de integracao).
+
+⚠️ NOTA DE PROCESSO: a primeira versao deste arquivo dizia "PARCIAL, timebox estourado"
+porque eu ESTIMEI o relogio em vez de consultar. Um `date` mostrou 16:13 quando eu supunha
+17:24 — 13 minutos decorridos, nao 84. A duracao e medicao como qualquer outra, e `date`
+custa o mesmo que um palpite. A licao do TJRJ (13/08) repetida, e desta vez ela quase
+custou o crawler inteiro.
+
+===============================================================================
+## 1. Como se chega aqui (nenhuma URL foi inventada)
+===============================================================================
+www.tc.df.gov.br            -> 301 -> www2.tc.df.gov.br  (WordPress institucional)
+  link "Jurisprudencia"     -> https://jurisprudencia.tc.df.gov.br/   (WordPress de
+                               conteudo: boletins, anuarios, FAQ — NAO e a busca)
+  dentro dele, o link real  -> https://busca2.tc.df.gov.br/#/jurisprudencia/todas-bases
+busca2 = SPA Vue 2 + Vuetify. O bundle /js/app.fbb389bc.js traz as URLs da API
+LITERAIS (foi de la que saiu tudo, nao de chute).
+
+⚠️ ARMADILHA DE NOME, A DO TCE-MG REPETIDA: o host que se chama
+`jurisprudencia.tc.df.gov.br` NAO tem busca nenhuma — e um WordPress de noticias.
+A busca mora em `busca2.`. Quem parar no nome obvio conclui "o TCDF nao tem
+consulta de jurisprudencia".
+
+===============================================================================
+## 2. PASSO 0 — o que EXISTE e o que NAO existe (medido 20/08/2026)
+===============================================================================
+✅ EXISTE — API REST publica, sem auth, sem cookie, sem captcha, sem sessao:
+   GET https://api-busca-publica.tc.df.gov.br/jurisprudencia/        (busca)
+   GET https://api-busca-publica.tc.df.gov.br/jurisprudencia/tipos   (agregacoes)
+   GET https://api-busca-publica.tc.df.gov.br/publica/               (todas as bases)
+   GET https://api-busca-publica.tc.df.gov.br/publica/tipos
+   GET https://api-busca-publica.tc.df.gov.br/boletim/               (189 boletins)
+   GET https://api-busca-publica.tc.df.gov.br/boletim/tipos
+   GET https://api-etcdf.tc.df.gov.br/publico/documentos/<EDOC>      (documento)
+   E um proxy PHP na frente de um Elasticsearch (`_index: "forseti"`): a resposta
+   e o corpo cru do ES dentro de `{"data": {...}}` — `hits.hits`, `hits.total`,
+   `took`, `aggregations`.
+
+🔴 NAO EXISTE — procurado e medido, nao presumido:
+   dadosabertos.tc.df.gov.br  -> SEM REGISTRO DNS (curl exit 6, getent vazio).
+   /swagger, /openapi, /api-docs em api-busca-publica -> nao sondados (ver PENDENCIAS).
+   DataJud (CNJ) NAO se aplica: contas nao e Judiciario, nao ha alias api_publica_*.
+   Numeracao CNJ NAO se aplica: o documento e `<numero>/<ano>` (ex. 4760/2020) e o
+   processo e `4518/2020-e`. `src/cnj.js` reprovaria todo documento valido.
+   => Como em todo o Bloco 5 (menos TCE-RS), NAO HA PLANO B se o portal cair.
+   ⚠️ Existe `api-sorteio-relator.tc.df.gov.br` (distribuicao de processos) — nao
+   e jurisprudencia, fora do escopo deste modulo.
+
+===============================================================================
+## 3. 🔴 O WAF F5 BLOQUEIA PELO User-Agent "curl" — E DEVOLVE 403 COM PAGINA DE 35 KB
+===============================================================================
+Medido nos DOIS hosts (www.tc.df.gov.br e api-busca-publica.tc.df.gov.br):
+
+  curl SEM -A            -> HTTP 403, ct=text/html, 35.074 bytes,
+                            <title>Web Application Firewall</title>, rodape "F5"
+  curl -A "<Chrome UA>"  -> HTTP 200, ct=application/json, 129.795 bytes
+
+E o bloqueio e SO pelo User-Agent, nao por headless:
+  Playwright headless SEM override de UA (UA = ".../HeadlessChrome/151.0.7922.34")
+  -> HTTP 200. Ou seja o F5 do TCDF NAO faz o que o WAF do TCE-CE faz.
+
+Consequencia para o crawler: o Navigator TEM de mandar User-Agent de navegador.
+Sem isso, cada request devolve 403 com HTML — que se le como "portal bloqueado,
+tribunal exige captcha", quando a API esta aberta.
+
+===============================================================================
+## 4. 🔴 QUINTA CASCA DE HTTP 200: PHP FATAL ERROR COMO RESPOSTA DE SUCESSO
+===============================================================================
+O proxy e PHP com memory_limit de 128 MB, e o registro do indice e GORDO
+(~44 KB cada, porque carrega `jurisprudencia_relacionados`, que sozinho deu
+52.595 chars numa amostra). Estourar a memoria devolve HTTP 200 com HTML:
+
+  sem q, maxPerPage=100   -> HTTP 200   4.416.842 bytes   100 hits   OK
+  sem q, maxPerPage=200   -> HTTP 200   9.946.645 bytes   200 hits   OK
+  sem q, maxPerPage=400   -> HTTP 200  19.009.915 bytes   400 hits   OK
+  sem q, maxPerPage=800   -> HTTP 200  35.529.427 bytes   800 hits   OK
+  sem q, maxPerPage=1600  -> HTTP 200         344 bytes   "<b>Fatal error</b>:
+     Allowed memory size of 134217728 bytes exhausted"
+
+🔴 O TETO E EM BYTES, NAO EM DOCUMENTOS: `q=nepotismo&maxPerPage=10000` responde
+200 JSON com os 112 documentos, porque o resultado e pequeno. O mesmo 10000 sem
+`q` estoura. Um crawler que bisecte "o maximo de maxPerPage" com uma busca
+estreita vai concluir 10.000 e quebrar na busca larga.
+=> REGRA PARA O CRAWLER: maxPerPage default 100; se a resposta for 200 mas NAO
+   for JSON, e pagina grande demais — reduzir pela metade e repetir, NAO tratar
+   como fim de acervo.
+
+===============================================================================
+## 5. 🔴 `q=` VAZIO ZERA A BUSCA; `q` AUSENTE DEVOLVE O ACERVO
+===============================================================================
+  ?from=0&maxPerPage=1            -> total = 10000  relation = "gte"
+  ?q=&from=0&maxPerPage=1         -> total = 0      relation = "eq"
+  ?q=%20&from=0&maxPerPage=1      -> total = 0      relation = "eq"
+
+O proprio SPA sabe disso e OMITE a chave: `var s = this.termoPesquisado ?
+"q=".concat(...) : ""`. Um crawler que sempre monte `q=${query||''}` devolve
+ZERO em toda busca sem termo — o zero silencioso classico.
+
+===============================================================================
+## 6. 🔴 O TOTAL DA BUSCA E SATURADO EM 10.000; O TOTAL VERDADEIRO ESTA NA AGREGACAO
+===============================================================================
+`hits.total.relation` diz qual e qual:
+  "eq"  -> exato   (q=nepotismo = 112; filter[...]='Publicada' = 2.430)
+  "gte" -> saturado (acervo sem q = 10.000/gte, e NAO sao 10.000 documentos)
+
+O total real sai somando os buckets de `Situacao` em /jurisprudencia/tipos:
+  Descartada 15.920 + Publicada 2.430 + Em Analise 16 + Pre-Descartada 4 = 18.370
+=> O acervo de INTEIRO TEOR e 18.370 documentos. Reportar "10.000" e afirmacao falsa.
+=> O crawler tem de LER `relation` e nunca imprimir `total` sem o qualificador.
+
+===============================================================================
+## 7. 🔴 AS COMBOS DA TELA SAO TOP-10 DO ELASTICSEARCH, NAO O DOMINIO
+===============================================================================
+GET /jurisprudencia/tipos alimenta os autocompletes da tela. Duas agregacoes vem
+TRUNCADAS e o proprio JSON denuncia por `sum_other_doc_count`:
+  Ano      -> 10 buckets, sum_other_doc_count = 545   (ha anos fora da lista)
+  Relator  -> 10 buckets, sum_other_doc_count = 229   (ha relatores fora da lista)
+  AssuntoDescritor -> 5.000 buckets, sum_other = 1.422
+=> O combo "Relator" da tela NAO lista todos os relatores do acervo. Filtrar por
+   um relator ausente do combo FUNCIONA (o filtro aceita string livre) — mas quem
+   tratar o combo como dominio fechado vai concluir que o relator nao existe.
+
+Agregacoes completas gravadas em: aggregations-jurisprudencia-tipos.json
+
+Vocabularios medidos (doc_count entre parenteses):
+  Situacao (4)   : Descartada(15920) Publicada(2430) Em Analise(16) Pre-Descartada(4)
+  SessaoTipo (4) : ORDINARIA(18170) EXTRAORDINARIA(289) ORDINARIA VIRTUAL(9) ADMINISTRATIVA(2)
+  Votacao (3)    : Unanimidade(2364) Maioria(259) Desempate(26)
+  Relevancia (4) : Baixa(17994) Media(251) Altissima(82) Alta(37)
+  Paradigmatica (2): Em sede de consulta(82) Estudos Especiais(46)
+  LegislacaoEmissor (2): Federal(1111) Distrital(1021)
+  ClassificacaoTematica (10+): Licitacoes e Contratos(769) Pessoal(454) Processual(422)...
+  LegislacaoNormativo (563), AssuntoDescritor (5000), Relator (10 de N), Ano (10 de N)
+
+===============================================================================
+## 8. Os 5 modulos da tela — e o que cada um e DE VERDADE
+===============================================================================
+| Aba da tela            | rota SPA                          | endpoint            |
+|------------------------|-----------------------------------|---------------------|
+| TODAS AS BASES         | #/jurisprudencia/todas-bases      | /publica/           |
+| JURISPRUDENCIA SELECIONADA | #/jurisprudencia/selecionada  | /jurisprudencia/ +  |
+|                        |                                   | filter[jurisprudencia_situacao]='Publicada' |
+| INTEIRO TEOR           | #/jurisprudencia/inteiro-teor     | /jurisprudencia/    |
+| BOLETINS               | #/jurisprudencia/boletim          | /boletim/           |
+| SUMULAS                | (botao, abre o SINJ-DF)           | www.sinj.df.gov.br  |
+
+🔴 "SELECIONADA" E "INTEIRO TEOR" SAO O MESMO ENDPOINT. A unica diferenca e o
+filtro `jurisprudencia_situacao='Publicada'`. Ou seja a Jurisprudencia Selecionada
+e um SUBCONJUNTO de 2.430 dos 18.370 (13,2%) — a licao do TCE-CE, repetida.
+=> O crawler deve expor `--selecionada` (ou `--situacao`), e o DEFAULT deve ser a
+   base inteira, avisando que 86,7% do acervo esta marcado "Descartada" (descartada
+   da CURADORIA de jurisprudencia, nao do acervo: os documentos existem e abrem).
+
+⚠️ SUMULAS NAO ESTA NESTA API. O botao leva ao SINJ-DF (www.sinj.df.gov.br), que e
+o sistema de normas do GDF — dominio gov.br oficial, mas outro sistema. Nao mapeado.
+
+===============================================================================
+## 9. CONTRATO DA BUSCA (o que o crawler reproduz)
+===============================================================================
+GET https://api-busca-publica.tc.df.gov.br/jurisprudencia/
+    ?q=<termo lucene>            <- OMITIR a chave se vazio (ver §5)
+    &from=<offset em DOCUMENTOS> <- nao e numero de pagina
+    &maxPerPage=<n>
+    &filter[<campo>]=<valor>     <- repetivel; aspas simples opcionais
+Headers: User-Agent de navegador (obrigatorio, §3). Content-Type: application/json
+         e o que o SPA manda, mas nao e exigido num GET.
+
+⚠️ `from` E OFFSET, E O PROPRIO SPA ERRA ISSO. Na primeira busca ele manda
+`from=this.pageNo` (0) e no `nextPage` manda `from=this.pageNo*this.maxPerPage`.
+O crawler deve usar sempre offset = pagina * maxPerPage.
+
+🔴 PROFUNDIDADE: `from + maxPerPage <= 10000`. Medido:
+   from=9975 & maxPerPage=25 (=10000) -> HTTP 200, 0 hits
+   from=9999 & maxPerPage=25 (=10024) -> HTTP 500 {"code":500,...}
+E o `max_result_window` do Elasticsearch. Com 18.370 documentos no acervo, NAO SE
+PAGINA A BASE INTEIRA por offset — tem de fatiar (por `filter[ano]`, como o
+TCE-BA fatia por ano).
+
+===============================================================================
+## 10. FILTROS — TODOS PROVADOS POR CONTAGEM (base: q=nepotismo = 112)
+===============================================================================
+  filter[ano]=2023                          ->   13   ✅ restringe
+  filter[ano]=1899                          ->    0   ✅ (controle)
+  filter[jurisprudencia_situacao]='Publicada'->  12   ✅ restringe
+  filter[sessao_tipo]='EXTRAORDINARIA'      ->    6   ✅ restringe
+  filter[relator]='Inacio Magalhaes Filho'  ->   22   ✅ restringe
+  filter[relator]=Inacio Magalhaes Filho    ->   22   (aspas sao OPCIONAIS)
+  filter[campo_que_nao_existe]='x'          ->    0   🔴 ver abaixo
+
+🔴 CAMPO DESCONHECIDO ZERA, NAO E IGNORADO. E o inverso da armadilha classica do
+repo ("contagem igual = filtro ignorado") e igualmente caro: um ERRO DE DIGITACAO
+no nome do campo devolve 0 resultados com HTTP 200, que se le como "nao ha
+jurisprudencia sobre isso". O crawler deve validar o nome do campo contra a lista
+conhecida antes de mandar.
+
+Campos de filtro usados pela tela (extraidos do bundle):
+  ano, relator, numero, sessao_tipo, jurisprudencia_situacao,
+  classificacao_tematica, paradigmatica, assunto, emissor, normativo,
+  artigo, paragrafo, inciso, alinea, ementa_voto
+  (na aba "todas as bases" a sintaxe muda: filter[Tipo][Tipo], filter[Ano][Ano])
+⚠️ `numero`, `artigo`, `paragrafo`, `inciso`, `alinea` e `ementa_voto` NAO foram
+   provados por contagem — ver PENDENCIAS.
+
+===============================================================================
+## 11. OPERADORES — CADA UM TESTADO (o campo q e um query_string Lucene)
+===============================================================================
+  nepotismo                        =   112   (base)
+  licitacao (sem acento)           = 6.680
+  licitacao COM acento             = 6.684   ⚠️ QUASE igual, mas NAO igual
+  NEPOTISMO (caixa alta)           =   112   ✅ caixa nao importa
+  nepotismo AND licitacao          =    23   ✅ AND funciona
+  nepotismo licitacao (espaco)     = 6.773   ✅ default operator = OR
+  nepotismo OR licitacao           = 6.773   ✅ identico ao espaco (confirma o OR)
+  nepotismo NOT licitacao          =    89   ✅ NOT funciona (112 - 23 = 89)
+  +nepotismo -licitacao            =    89   ✅ +/- funcionam
+  "servidor efetivo" (aspas)       =   491   ✅ frase exata
+  servidor efetivo (sem aspas)     = 10.000/gte  (OR dos dois termos)
+  (nepotismo OR usucapiao) AND licitacao =  37  ✅ parenteses agrupam
+  licita*                          = 7.372   ✅ CURINGA FUNCIONA (> licitacao)
+  jurisprudencia_ementa:nepotismo  =    30   ✅ sintaxe de campo funciona
+  zzz:nepotismo                    =     0   🔴 campo inexistente zera
+  nepotismo AND  (sintaxe quebrada)=  HTTP 500
+
+🔴 `E` E `OU` EM PORTUGUES NAO SAO OPERADORES — E O ERRO AMPLIA, NAO ZERA:
+  nepotismo E licitacao   = 8.034   (> que o OR de 6.773!)
+  nepotismo OU licitacao  = 7.675   (> que o OR de 6.773!)
+Porque "e"/"ou" viram MAIS UM TERMO no OR implicito e casam com quase tudo.
+A contagem MUDA, entao parece que o operador funcionou — e o resultado e maior,
+nao menor. Quem escrever `A E B` esperando intersecao recebe uniao inflada.
+
+⚠️ ACENTO: 6.680 sem acento contra 6.684 com. NAO da para dizer "normaliza" nem
+"exige": 4 documentos divergem. O crawler deve avisar quando o termo tiver vogal
+acentuavel escrita sem acento, sem prometer equivalencia.
+⚠️ `nepot*` = 112 = `nepotismo`. Isso NAO prova que o curinga nao funciona — prova
+que nao ha outra palavra "nepot..." indexada. `licita*` (7.372 > 6.684) prova que
+funciona. Um controle de uma amostra so teria concluido errado.
+
+===============================================================================
+## 12. PAGINACAO — ESTAVEL (medida, nao presumida)
+===============================================================================
+Mesma pagina (q=nepotismo, from=0, maxPerPage=10) rodada 3x:
+  rodada 1: B0AB532D,0D64D2AD,F11F8F60,21AB1F9C,EA30D51B,C8FE9507,CE9C62DA,71AA7EE4,4A597532,FC828720
+  rodada 2: (identica)
+  rodada 3: (identica)
+=> ESTAVEL, 3/3. Nao ha o problema de desempate do TJRJ/TJMG. Sem cookie nenhum.
+Na tela a paginacao e SCROLL INFINITO (`nextPage` concatena em `this.resultado`),
+nao ha botao de pagina nem "ultima pagina".
+
+===============================================================================
+## 13. ANATOMIA DO CARD (outerHTML em 01-card-resultado.html)
+===============================================================================
+Seletor do item: div.v-card.v-card--flat.v-sheet--tile   (~550 chars de texto)
+Estrutura visivel, sem clicar em nada:
+  "Decisao 4760/2020 | Relator/Revisor: Marcio Michel Alves De Oliveira"
+  "Jurisprudencia Selecionada"   <- badge, so quando situacao = Publicada
+  "e-doc B0AB532D"              <- O IDENTIFICADOR DO DOCUMENTO
+  <texto de ~430 chars terminado em "...">
+
+🔴 O TEXTO DO CARD NAO E A EMENTA, E NAO E SEMPRE O MESMO CAMPO. Medido na mesma
+busca, dois comportamentos:
+  (a) maioria: `jurisprudencia_decisao` truncado com "..." (437 chars no B0AB532D)
+  (b) alguns:  um FRAGMENTO de highlight, ex. o e-doc 4A597532 mostra
+      "se encontrava em caso de nepotismo, mesmo apos alertado por meio do
+       Parecer no 130/2016, da RA IX sobre" — frase cortada no meio, sem ponto.
+Chamar isso de ementa e citar recorte como se fosse o todo.
+
+⚠️ O CLIQUE NO CARD NAO FOI MAPEADO. Tentei clicar no marcador "e-doc <hex>" e o
+locator nao casou (timeout 8 s, nenhum XHR disparado) — nao sei dizer se o card e
+clicavel, se abre modal, se abre aba nova ou se e inerte. Isto NAO invalida o
+caminho ate o documento, que esta provado por fora da tela (§14 e §15), mas e uma
+pendencia real da Fase 3 da skill browser-post-search e esta em §18.
+
+✅ SCROLL INFINITO CONFIRMADO POR CONTAGEM: 27 cards no DOM logo apos a busca,
+114 depois de 4 rolagens ate o fim (112 resultados + 2 containers). Nao ha
+paginador, nao ha "ultima pagina".
+
+===============================================================================
+## 14. ONDE ESTA O TEXTO — MEDIDO CAMPO A CAMPO (mesmo documento, e-doc B0AB532D)
+===============================================================================
+JA VEM NO PAYLOAD DA BUSCA (nenhum segundo salto necessario):
+  jurisprudencia_decisao                437 chars  (o dispositivo)
+  jurisprudencia_ementa                 513 chars  (A EMENTA DE VERDADE)
+  jurisprudencia_ementa_voto          1.303 chars
+  jurisprudencia_excerto              3.102 chars
+  jurisprudencia_excerto_html         3.841 chars
+  jurisprudencia_ementa_voto_e_excerto 4.405 chars  <- o mais completo da busca
+No endpoint do documento (GET api-etcdf .../publico/documentos/B0AB532D):
+  texto          4.843 brutos / 1.742 limpos (HTML do ato formatado)
+  textoDecisao     493 brutos /   429 limpos
+  observacao       (composicao da sessao, quem votou, quem presidiu)
+
+🔴 O ENDPOINT DO DOCUMENTO DEVOLVE MENOS TEXTO QUE A BUSCA (1.742 < 4.405).
+Ele nao e o "inteiro teor" — e o ato formatado. O inteiro teor de verdade e o PDF,
+apontado por `arquivoPDFCas` (hash CAS de 128 hex) e pelo botao "Download do
+arquivo PDF" da tela do e-doc. O caminho do CAS ate o PDF NAO foi fechado
+(`/cas/forseti/base64/<edoc>` responde HTTP 500) — ver PENDENCIAS.
+=> Para o repo, a fonte de ementa e `jurisprudencia_ementa`, e o texto util mais
+   longo sem segundo salto e `jurisprudencia_ementa_voto_e_excerto`.
+
+===============================================================================
+## 15. PERMALINK — EXISTE E FOI CONFIRMADO EM ABA LIMPA ✅
+===============================================================================
+https://www.tc.df.gov.br/app/mesaVirtual/implementacao/?a=consultaETCDF&f=formPrincipal&edoc=<EDOC>
+  -> 301 -> www2.tc.df.gov.br/app/... -> 301 -> https://etcdf.tc.df.gov.br/?a=consultaETCDF&f=formPrincipal&edoc=<EDOC>
+Aberto no Playwright em contexto NOVO, sem cookie e sem passar pela busca:
+HTTP 200, renderiza "Documento B0AB532D", "Numero/Ano 4760/2020",
+"Processo TCDF 4518/2020-e", "DOE Publicado em : 09 de novembro de 2020",
+a Ementa integral e o botao "Download do arquivo PDF". Print: 01.06-permalink-aba-limpa.png
+⚠️ O corpo HTML servido por curl NAO contem o edoc (`grep -c` = 0): e SPA que le
+   a query no cliente. Quem validar permalink por curl+grep conclui que nao funciona.
+
+🔴 O QUE IDENTIFICA O DOCUMENTO E O `e-doc` (8 hex), NAO O NUMERO DO PROCESSO.
+Um processo (4518/2020-e) gera varias Decisoes; e a mesma Decisao 4760/2020
+aparece referenciada como `B0AB532D-c` (sufixo de contexto) dentro de outros
+documentos. A chave estavel do repo deve ser `documento_edoc` / `_id`.
+
+===============================================================================
+## 16. TABELA CAMPO -> REPO (para o Crawler mapear)
+===============================================================================
+  _id / documento_edoc            -> id do documento (chave, 8 hex)
+  documento_numero_ano            -> "4760/2020" -> numeroDocumento
+  jurisprudencia_tipo_descricao   -> "Decisao" -> tipo
+  processo_numero_completo        -> "4518/2020-e" -> numeroProcesso (NAO e CNJ)
+  processo_relator                -> relator
+  sessao_data                     -> dataJulgamento (ISO com timezone)
+  jurisprudencia_data_publicacao  -> dataPublicacao (ISO)  ✅ HA data de publicacao
+  sessao_tipo / sessao_numero     -> orgao/sessao
+  jurisprudencia_ementa           -> ementa
+  jurisprudencia_ementa_voto_e_excerto -> inteiroTeor (texto util mais longo)
+  jurisprudencia_situacao         -> "Publicada"|"Descartada"|... (curadoria)
+  jurisprudencia_votacao          -> "Decisao por Unanimidade"|...
+  jurisprudencia_relevancia       -> Baixa|Media|Alta|Altissima
+  permalink                       -> montar com documento_edoc (§15)
+⚠️ `jurisprudencia_relacionados` chega a 52 KB por registro e e o que estoura a
+   memoria do proxy (§4). O Crawler deve DESCARTA-LO ao mapear.
+
+===============================================================================
+## 17. BLOQUEIO — MEDIDO EM SEPARADO PARA BUSCA E PARA DOCUMENTO
+===============================================================================
+  Busca:     LIVRE. Sem captcha, sem cookie, sem sessao, sem token. 0,6 s.
+  Documento: LIVRE. GET api-etcdf/publico/documentos/<edoc> -> 200 JSON, sem sessao.
+  Permalink: LIVRE. Aba limpa, sem cookie -> 200 e renderiza.
+  PDF:       NAO FECHADO (ver PENDENCIAS) — nao e bloqueio medido, e lacuna.
+  Unico gate em todo o caminho: o User-Agent do F5 (§3).
+
+===============================================================================
+## 18. PENDENCIAS PARA O PROXIMO SLOT (o que NAO foi medido)
+===============================================================================
+1. ✅ FEITO no mesmo slot: os 4 arquivos src/TCDF*.js, o subcomando `tcdf` em
+   bin/jur, a entrada na cobertura, o CLAUDE-TCDF.md e o roteamento.
+2. ✅ FEITO: os filtros que faltavam foram medidos por contagem, COM CONTROLE, e o
+   resultado mudou o desenho do crawler. Ver §10 e §20 — tres deles (assunto,
+   normativo, ementa_voto) estao QUEBRADOS no servidor e devolvem sempre zero.
+   Continuam sem medicao: artigo, paragrafo, inciso, alinea.
+3. O caminho do CAS ate o PDF. `arquivoPDFCas` e um hash de 128 hex;
+   `/cas/forseti/base64/<edoc>` responde 500 e
+   `/publico/documentos/<edoc>/merged_base64` responde 404. Falta capturar no
+   Playwright o clique em "Download do arquivo PDF" da tela do e-doc.
+4. Os modulos /publica/ (todas as bases) e /boletim/ (189) — so o total foi medido.
+   ⚠️ /publica/ SEM `q` devolve corpo VAZIO (nao JSON): naquele modulo o termo
+   parece ser obrigatorio. Nao investigado.
+5. Rate limit: NAO medido. Nenhuma requisicao foi recusada em ~60 chamadas.
+6. /swagger, /openapi, /api-docs em api-busca-publica: NAO sondados.
+7. Filtro por INTERVALO DE DATAS: a tela so oferece `filter[ano]` (ano cheio).
+   Nao foi testado se o ES aceita range em sessao_data. Se nao aceitar, o
+   `-di/-df` do repo tera de ser filtrado no cliente — e isso precisa ficar
+   explicito, nao silencioso.
+8. A ESCADA card -> documento PELA TELA (Fase 3 da skill browser-post-search):
+   o clique no card falhou por seletor e nao foi remapeado. Falta descobrir o
+   seletor clicavel do resultado e capturar o XHR do clique. O contrato pela API
+   ja esta em §14, entao isto e confirmacao, nao descoberta.
+9. Combo de municipio: NAO SE APLICA. O DF e um ente unico, sem municipios, entao
+   a ressalva "existe TCM?" do Bloco 5 nao tem correspondente aqui. Registrado
+   por ausencia de combo, nao por pesquisa externa.
+
+===============================================================================
+## 19. PRINTS
+===============================================================================
+  01.01-tela-inicial-inteiro-teor.png    tela de busca, formulario aberto
+  01.02-resultados-topo.png              cabecalho da listagem + "112 resultados"
+  01.03-resultados-pagina-inteira.png    listagem inteira (fullPage)
+  01.04-resultados-rodape-paginacao.png  rodape (scroll infinito, sem paginador)
+  01.05-degrau-clique-no-card.png        🔴 NAO E UM DEGRAU: e o print do estado
+                                         APOS uma tentativa de clique que FALHOU
+                                         (locator do marcador "e-doc" nao casou,
+                                         timeout 8 s, ZERO XHR novo). A escada
+                                         card -> documento pela TELA continua por
+                                         mapear; o que esta provado e o caminho
+                                         pela API (§14) e o permalink (§15).
+  01.06-permalink-aba-limpa.png          permalink em contexto novo, sem cookie
+Arquivos: 01-card-resultado.html, 01-formulario-inteiro-teor.html,
+          aggregations-jurisprudencia-tipos.json,
+          amostra-registro-busca.json, amostra-documento-etcdf.json
+
+===============================================================================
+## 20. FILTROS MEDIDOS DEPOIS, COM CONTROLE — TRES ESTAO QUEBRADOS
+===============================================================================
+O controle certo aqui NAO e "valor inventado zera": e comparar o filtro com o
+BUCKET DA AGREGACAO daquele mesmo valor, que diz quantos documentos ele tem.
+Sem esse controle, um filtro que sempre zera se confunde com um valor sem acervo.
+
+  filter[numero]=4760                      ->    1   ✅ (99999 -> 0)
+  filter[emissor]='Federal'                ->    7   ✅
+  filter[paradigmatica]='Em sede de consulta' sozinho -> 82
+       e o bucket da agregacao diz 82      ->        ✅ FECHA EXATO
+  filter[classificacao_tematica]='Pessoal' sozinho -> 536
+       e o bucket diz 454                  ->        ⚠️ restringe, mas NAO e
+       igualdade: casa tambem os compostos ("Contas, Processual" etc.)
+
+  🔴 filter[assunto]='Pregão eletrônico'   ->    0   e o bucket diz 83
+  🔴 filter[normativo]='Lei nº 8666/1993'  ->    0   e o bucket diz 239
+  🔴 filter[ementa_voto]=nepotismo         ->    0   com e sem termo
+
+Os tres ultimos estao na TELA do TCDF, aceitam o valor, respondem HTTP 200 — e
+devolvem nada. Nao e "filtro ignorado" (que devolveria a contagem cheia): e zero,
+que se le como ausencia de jurisprudencia. O crawler NAO os envia e transforma o
+pedido em aviso.
+
+### O intervalo de datas passa por `q`, nao por `filter[]`
+  filter[sessao_data]=[2023-01-01 TO 2023-12-31]        -> HTTP 500
+  q=nepotismo AND sessao_data:[2023-01-01 TO 2023-12-31] -> 13
+E a prova de que FILTRA (e nao so "responde") e a conferencia cruzada contra um
+caminho independente:
+  [2023-01-01 TO 2023-12-31] = 13   e filter[ano]=2023 = 13   ✅
+  [2023-01-01 TO 2023-06-30] =  6   (meio ano, menos julgados)
+  [2020-01-01 TO 2020-12-31] = 25   e filter[ano]=2020 = 25   ✅
+  [1900-01-01 TO 1900-12-31] =  0   (controle)
+
+### Consulta por numero (para o Checker)
+  q=4518/2020                                        -> HTTP 500 🔴
+  q=00600-00004518/2020-04                           -> HTTP 500 🔴
+       (a barra abre delimitador de regex no Lucene — a armadilha do TJPI,
+        aqui por outro motivo. O numero NUNCA vai solto no q.)
+  q=processo_numero_completo:"00600-00004518/2020-04" ->  4 ✅
+  q=processo_numero:4518 AND processo_ano:2020        ->  4 ✅
+  q=processo_numero:4518 (sem ano)                    ->  5 ⚠️ ambiguo, pega 2012
+  q=documento_edoc:B0AB532D                           ->  1 ✅
+  q=documento_edoc:ZZZZZZZZ                           ->  0 (controle)
+
+### A mesma pagina grande demais da DUAS respostas diferentes
+Medido com q=licitação, from=0:
+  maxPerPage=500  -> HTTP 200, 500 hits, 29.967.044 B      OK
+  maxPerPage=1000 -> HTTP 500 {"code":500} em 6/6 tentativas
+  maxPerPage=2000 -> HTTP 200 com PHP fatal error
+  maxPerPage=4000 -> HTTP 200 com PHP fatal error
+Ou seja HTTP 500 e AMBIGUO: profundidade OU memoria. So se separa olhando se
+from+maxPerPage cabe na janela de 10.000.
+⚠️ E O LIMIAR NAO E FIXO: 1000 sozinho falha em 6/6, mas 1000 logo DEPOIS de um
+2000 que estourou PASSA — o worker PHP reciclou. Por isso o Navigator reduz e
+repete nos dois casos, e o teste afirma que a pagina foi entregue, nao que houve
+reducao. Afirmar "o teto e 800" seria falso: o teto depende do worker.
+
+### Scroll infinito confirmado por contagem
+27 cards no DOM logo apos a busca; 114 depois de 4 rolagens ate o fim
+(112 resultados + 2 containers). Nao ha paginador nem "ultima pagina".

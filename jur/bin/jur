@@ -73,6 +73,8 @@ const TCEBACrawler = require('../src/TCEBACrawler');
 const TCEBAChecker = require('../src/TCEBAChecker');
 const TCEPECrawler = require('../src/TCEPECrawler');
 const TCEPEChecker = require('../src/TCEPEChecker');
+const TCDFCrawler = require('../src/TCDFCrawler');
+const TCDFChecker = require('../src/TCDFChecker');
 const TJRRCrawler = require('../src/TJRRCrawler');
 const TJRRChecker = require('../src/TJRRChecker');
 const TJESCrawler = require('../src/TJESCrawler');
@@ -6685,6 +6687,182 @@ program
             output: outputPath,
             totalExato: res.totalExato,
             semTexto: res.resultados.filter((r) => r.semTexto).length,
+            avisos: [...avisosData, ...res.avisos],
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n',
+        );
+      }
+    } catch (error) {
+      if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+      else console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tcdf')
+  .description('Search TCDF (Tribunal de Contas do Distrito Federal) — API REST publica, sem browser')
+  .option('-q, --query <text>', 'Termo. E query_string Lucene: AND/OR/NOT, "frase", curinga*, campo:valor')
+  .option('-n, --numero <numero>', 'Consulta por e-doc ("B0AB532D") ou processo ("4518/2020"); dispensa -q')
+  .option('--selecionada', 'So a Jurisprudencia Selecionada (2.430 de 18.370 — a curadoria do TCDF)')
+  .option('--situacao <valor>', "Publicada | Descartada | Em Análise | Pré-Descartada")
+  .option('--ano <ano>', 'Ano da decisao (filtro proprio, independente de -di/-df)')
+  .option('-r, --relator <nome>', 'Relator (--listar-filtros; o combo da tela so mostra os 10 maiores)')
+  .option('--numero-documento <n>', 'Numero do DOCUMENTO (ex.: 4760), nao do processo')
+  .option('--sessao-tipo <tipo>', 'ORDINÁRIA | EXTRAORDINÁRIA | ORDINÁRIA VIRTUAL | ADMINISTRATIVA')
+  .option('--tematica <valor>', 'Classificacao tematica (--listar-filtros)')
+  .option('--paradigmatica <valor>', '"Em sede de consulta" | "Estudos Especiais"')
+  .option('--emissor <valor>', 'Federal | Distrital (emissor da legislacao citada)')
+  .option('--assunto <valor>', 'FILTRO QUEBRADO no servidor (sempre zero) — vira aviso, nao e enviado')
+  .option('--normativo <valor>', 'FILTRO QUEBRADO no servidor (sempre zero) — vira aviso, nao e enviado')
+  .option('-di, --data-inicio <date>', 'Data da SESSAO de julgamento inicial (DD/MM/YYYY)')
+  .option('-df, --data-fim <date>', 'Data da SESSAO de julgamento final (DD/MM/YYYY)')
+  .option('-dpi, --data-pub-inicio <date>', 'NAO medido: o recorte por data e por SESSAO, nao por publicacao')
+  .option('-dpf, --data-pub-fim <date>', 'NAO medido: o recorte por data e por SESSAO, nao por publicacao')
+  .option('--size <n>', 'Documentos por pagina (o teto do proxy e em BYTES, nao em documentos)', String(TCDFCrawler.SIZE_DEFAULT))
+  .option('--listar-filtros', 'Lista as agregacoes (relatores, anos, tematicas, situacoes) e sai')
+  .option('--verificar [amostra]', 'Audita N julgados por reconsulta do e-doc (default 3)')
+  .option('-m, --max-pages <number>', 'Numero de paginas', 1)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tcdf.json')
+  .option('--fetch-inteiro-teor', 'Grava o texto em disco (ele JA vem na busca — nao ha segundo salto)')
+  .option('--fetch-documento', 'Busca tambem o ato formatado no e-TCDF (devolve MENOS texto que a busca)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tcdf')
+  .option('-v, --visible', 'Ignored (TCDF usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TCDF usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    try {
+      if (opts.numero) {
+        const res = await new TCDFChecker({ log }).consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrados > 0 ? 0 : 1);
+      }
+
+      if (opts.listarFiltros) {
+        const nav = new (require('../src/TCDFNavigator'))({ log });
+        const aggs = await nav.agregacoes();
+        const saida = {};
+        for (const [k, v] of Object.entries(aggs)) {
+          saida[k] = {
+            buckets: (v.buckets || []).map((b) => ({ valor: b.key, documentos: b.doc_count })),
+            foraDaLista: v.sum_other_doc_count ?? 0,
+          };
+        }
+        saida['⚠️ leia'] =
+          'Ano e Relator vem TRUNCADOS em 10 buckets — `foraDaLista` diz quantos documentos ' +
+          'ficaram de fora. O combo da tela NAO e o dominio: filtrar por um relator ausente ' +
+          'da lista funciona.';
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, combos: saida }) + '\n');
+        else console.log(JSON.stringify(saida, null, 2));
+        process.exit(0);
+      }
+
+      if (!opts.query && !opts.ano && !opts.relator && !opts.numeroDocumento
+          && !opts.sessaoTipo && !opts.tematica && !opts.dataInicio && !opts.selecionada) {
+        throw new Error('Informe -q "<termo>" (ou -n <numero>, ou um filtro como --ano/--relator/--selecionada)');
+      }
+
+      const avisosData = [];
+      if (opts.dataPubInicio || opts.dataPubFim) {
+        avisosData.push(
+          'O recorte temporal medido e por `sessao_data` (data da SESSAO de julgamento). ' +
+            'Existe `jurisprudencia_data_publicacao` no documento, mas filtrar POR ela NAO foi ' +
+            'medido — as flags -dpi/-dpf foram tratadas como -di/-df. Nao apresente o recorte ' +
+            'como se fosse por publicacao.',
+        );
+      }
+
+      log('='.repeat(60));
+      log('TCDF — Busca de Jurisprudencia (controle externo, Bloco 5)');
+      log('  [escopo] O DF e ente unico: NAO ha TCM nem combo de municipio. A ressalva');
+      log('           "onde existe TCM o TCE nao cobre os municipios" nao tem par aqui.');
+      log('  [aviso] "E" e "OU" em portugues NAO sao operadores, e o erro AMPLIA:');
+      log('          "nepotismo E licitação" = 8.034 contra 6.773 do OR real. Use AND/OR/NOT.');
+      log('  [aviso] O total vem SATURADO em 10.000 quando a busca e larga. O acervo de');
+      log('          inteiro teor e 18.370 documentos (soma das agregacoes).');
+      log('  [aviso] "Jurisprudencia Selecionada" e SUBCONJUNTO (2.430 de 18.370), nao');
+      log('          outra base: e o mesmo endpoint com situacao=Publicada.');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '(sem termo — so filtros)'}`);
+      log('='.repeat(60));
+
+      const crawler = new TCDFCrawler({ log });
+      const res = await crawler.buscar({
+        query: opts.query,
+        selecionada: !!opts.selecionada,
+        situacao: opts.situacao,
+        ano: opts.ano,
+        relator: opts.relator,
+        numero: opts.numeroDocumento,
+        sessaoTipo: opts.sessaoTipo,
+        classificacaoTematica: opts.tematica,
+        paradigmatica: opts.paradigmatica,
+        emissor: opts.emissor,
+        assunto: opts.assunto,
+        normativo: opts.normativo,
+        dataInicio: opts.dataInicio || opts.dataPubInicio,
+        dataFim: opts.dataFim || opts.dataPubFim,
+        size: opts.size,
+        maxPages: opts.maxPages,
+      });
+
+      log('='.repeat(60));
+      log(
+        `Total: ${res.total} documentos ${res.totalExato ? '(exato)' : '(SATURADO — o acervo real e 18.370)'}` +
+          ` — ${res.retornados} baixados em ${res.paginas} pagina(s)`,
+      );
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 3 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} por reconsulta do e-doc...`);
+        verificacao = await new TCDFChecker({ log }).verificar(res.resultados, amostra);
+      }
+
+      const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+      fs.writeFileSync(outputPath, JSON.stringify(res.resultados, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (opts.fetchInteiroTeor || opts.fetchDocumento) {
+        const dir = path.resolve(opts.outputDir);
+        fs.mkdirSync(dir, { recursive: true });
+        const nav = new (require('../src/TCDFNavigator'))({ log });
+        let n = 0;
+        let docs = 0;
+        for (const r of res.resultados) {
+          const base = `${(r.numeroDocumento || 'sem-numero').replace(/[^\w.-]/g, '_')}_${r.id}`;
+          if (opts.fetchInteiroTeor && r.inteiroTeor) {
+            fs.writeFileSync(path.join(dir, base + '.txt'), r.inteiroTeor, 'utf-8');
+            n++;
+          }
+          if (opts.fetchDocumento && r.id) {
+            const d = await nav.documento(r.id);
+            if (d) { fs.writeFileSync(path.join(dir, base + '.etcdf.json'), JSON.stringify(d, null, 2), 'utf-8'); docs++; }
+            else log(`   [e-TCDF] ${r.id}: HTTP 404`);
+          }
+        }
+        log(`Inteiro teor gravado: ${n} arquivo(s)${opts.fetchDocumento ? ` e ${docs} ato(s) do e-TCDF` : ''} em ${dir}`);
+        if (opts.fetchInteiroTeor) log('   (o TEXTO ja vinha na busca — nao houve segundo salto para ele)');
+        if (opts.fetchDocumento) {
+          log('   ⚠️ o ato do e-TCDF tem MENOS texto que a busca (1.742 contra 4.405 chars');
+          log('      medidos no e-doc B0AB532D). Ele nao e o inteiro teor — esse e o PDF,');
+          log('      e o caminho do CAS ate o PDF NAO foi fechado.');
+        }
+      }
+
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({
+            success: true,
+            count: res.total,
+            retornados: res.retornados,
+            output: outputPath,
+            totalExato: res.totalExato,
+            acervoTotalConhecido: res.acervoTotalConhecido,
             avisos: [...avisosData, ...res.avisos],
             ...(verificacao ? { verificacao } : {}),
           }) + '\n',

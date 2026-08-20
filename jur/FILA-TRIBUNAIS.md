@@ -1238,7 +1238,7 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 22 | **TCE-RJ** | RJ | ⚠️ capital carioca é do **TCM-RJ** — **confirmado por medição** (o combo traz 91 dos 92 municípios) | ok 16/08 |
 | 23 | **TCE-BA** | BA | ⚠️ **todos** os municípios baianos são do **TCM-BA** — **confirmado por ausência de combo de município** (não há filtro por município na tela) | ok 17/08 |
 | 24 | **TCE-PE** | PE | ✅ **PE não tem TCM** — os 184 municípios, **inclusive o Recife**, estão na base do próprio TCE (medido: 184 "Prefeitura" no combo de unidades) | ok 18/08 |
-| 25 | **TCDF** | DF | | pendente |
+| 25 | **TCDF** | DF | ✅ **o DF é ente único — não há municípios nem TCM-DF**, e isso foi provado por **ausência de combo de município** no formulário (método do TCE-PR), não por pesquisa fora do portal. A porta é a **API REST pública sobre Elasticsearch** (`api-busca-publica.tc.df.gov.br/jurisprudencia/`, extraída do bundle Vue, sem captcha) | ok 20/08 |
 | 26 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** | pendente |
 | 27 | **TCE-ES** | ES | | pendente |
 | 28 | **TCE-MG** | MG | 🔴 o portal que se chama "Jurisprudência" (**TCJuris**) está atrás de **reCAPTCHA v2 conferido no servidor**; a porta aberta é o **MapJuris** (`/TextualDadosProcesso`, sem captcha) — **busca medida, falta o segundo salto do grid e o crawler** | parcial 16/08 |
@@ -2202,3 +2202,135 @@ em documento tipo SÚMULA; **rate limit não medido**; e o **JSF `jurisdicionado
 — que é o que o menu oficial chama de "Jurisprudência → Consulta" — não foi mapeado**, então não
 se sabe se há julgado nele que não esteja no Contexto. ⏱️ Timebox estourado: 20:00 → 21:32,
 ~92 min, com a busca medida de ponta a ponta e **nenhum crawler escrito**.
+
+📌 **O que o TCDF (20/08/2026, slot 16:00) ensinou — 🟢, leia
+[`CLAUDE-TCDF.md`](CLAUDE-TCDF.md) e `human-codegen/TCDF/01-jurisprudencia/`.**
+Oitavo tribunal de contas do repo, **fechado 🟢 no mesmo slot em que foi mapeado**
+(16:00 → 16:34, ~34 min). É o **único ente do Bloco 5 sem municípios**: o DF é ente
+único, não há TCM-DF, e isso se mede por **ausência de combo de município** — método
+do TCE-PR, sem sair do portal. As lições valem para os 3 alvos restantes do bloco:
+
+- 🔴 **A LIÇÃO MAIS CARA DO DIA NÃO FOI DO TRIBUNAL, FOI DO RELÓGIO — E JÁ TINHA
+  SIDO ESCRITA EM 13/08.** Às 16:12 eu estimei que eram "17:12", declarei o
+  timebox estourado, gravei o human-codegen como `parcial` e escrevi no doc "não
+  fecho crawler verde nesse tempo". Um `date` mostrou **16:13**: 13 minutos
+  decorridos, não 84. O crawler fechou 21 minutos depois. **A duração é medição
+  como qualquer outra, e `date` custa o mesmo que um palpite** — a nota do TJRJ
+  dizia exatamente isso, e eu a repeti mesmo assim. Quem estimar relógio vai
+  marcar `parcial` num tribunal que estava a meia hora do verde. **Rode `date`
+  antes de declarar timebox, sempre.**
+- 🔴 **O WAF F5 BLOQUEIA PELO `User-Agent` "curl" E DEVOLVE 403 COM UMA PÁGINA DE
+  35 KB.** `curl` sem `-A` → **HTTP 403**, `text/html`, 35.074 B,
+  `<title>Web Application Firewall</title>`; o **mesmo** request com UA de Chrome
+  → **HTTP 200** `application/json` de 129.795 B. ✅ E o gate é **só o UA, não
+  headless**: o Playwright headless *sem* override (UA `.../HeadlessChrome/151...`)
+  também recebe 200 — ou seja **o F5 do TCDF NÃO faz o que o WAF do TCE-CE faz**,
+  e as duas medições tinham de ser separadas em vez de herdadas. Um 403 grande e
+  bem formatado é fácil de ler como "o tribunal exige captcha"; aqui a API estava
+  escancarada o tempo todo.
+- 🔴 **QUINTA CASCA DE HTTP 200 CATALOGADA: PHP FATAL ERROR COMO RESPOSTA DE
+  SUCESSO.** O proxy é PHP com `memory_limit` de 128 MB e cada registro pesa
+  ~44 KB. Sem termo: `maxPerPage=800` devolve 200 com 35,5 MB e 800 hits;
+  `maxPerPage=1600` devolve **200 com 344 B** de
+  `<b>Fatal error</b>: Allowed memory size... exhausted`. 🔴 **O teto é em BYTES,
+  não em documentos** — `q=nepotismo&maxPerPage=10000` responde 200 JSON com os
+  112 documentos, então **quem bisectar o teto com uma busca estreita conclui
+  10.000 e quebra na busca larga**.
+- 🔴 **E O MESMO DEFEITO DÁ DUAS RESPOSTAS DIFERENTES, CONFORME ONDE A MEMÓRIA
+  ACABA — logo HTTP 500 aqui é AMBÍGUO.** Com `q=licitação`, `from=0`:
+  `maxPerPage=500` → 200 com 500 hits; **`1000` → HTTP 500 limpo** (6/6);
+  `2000` e `4000` → 200 com o fatal error. O 500 pode ser profundidade
+  (`max_result_window`) **ou** memória, e só se separa olhando se
+  `from+maxPerPage` cabe na janela de 10.000. ⚠️ **E o limiar não é fixo**: 1000
+  sozinho falha em 6/6, mas 1000 logo **depois** de um 2000 que estourou **passa**
+  — o worker PHP reciclou. Afirmar "o teto é 800" seria falso: **o teto depende do
+  worker**. O teste, por isso, afirma que a página foi entregue, não que houve
+  redução — **quando o limiar é não determinístico, o teste tem de testar a
+  recuperação, não o limiar.**
+- 🔴 **`q=` VAZIO ZERA A BUSCA; `q` AUSENTE DEVOLVE O ACERVO.** `?from=0` →
+  10.000/gte, `?q=&from=0` → **0**, `?q=%20&from=0` → **0**. O próprio SPA sabe e
+  **omite a chave**. Um crawler que sempre monte `q=${query||''}` devolve zero em
+  toda busca sem termo — o zero silencioso clássico, agora na forma "a chave
+  presente e vazia é pior que a chave ausente".
+- 🔴 **TRÊS FILTROS DA PRÓPRIA TELA ESTÃO QUEBRADOS E DEVOLVEM SEMPRE ZERO — e o
+  controle que prova é a AGREGAÇÃO, não um valor inventado.** `filter[assunto]=
+  'Pregão eletrônico'` → **0**, enquanto o bucket `AssuntoDescritor` desse mesmo
+  valor diz **83**; `filter[normativo]='Lei nº 8666/1993'` → **0** contra **239**;
+  `filter[ementa_voto]` → 0 sempre. **Não é "filtro ignorado"** (que devolveria a
+  contagem cheia, o sintoma que o repo já cataloga desde o TJRJ) — **é zero, que
+  se lê como ausência de jurisprudência**. ⚠️ E o controle habitual não pegaria:
+  um filtro que sempre zera é indistinguível de um valor sem acervo. **Onde houver
+  agregação, compare o filtro com o bucket** — é o único controle que separa os
+  dois casos. O crawler não os envia e transforma o pedido em aviso.
+- 🔴 **CAMPO DESCONHECIDO ZERA EM VEZ DE SER IGNORADO** — o inverso da armadilha
+  clássica e igualmente caro: `filter[campo_que_nao_existe]='x'` → 0 com HTTP 200,
+  e `zzz:nepotismo` no `q` → 0. **Um erro de digitação no nome do campo vira "não
+  há jurisprudência".**
+- 🔴 **O TOTAL SATURA EM 10.000 E O TOTAL VERDADEIRO ESTÁ NA AGREGAÇÃO.** O ES
+  declara qual é qual em `hits.total.relation` (`eq` × `gte`) — como o TCE-RS. Mas
+  aqui há um passo a mais: somando os buckets de `Situacao` sai **18.370**
+  (Descartada 15.920 + Publicada 2.430 + Em Análise 16 + Pré-Descartada 4).
+  **Quando o contador satura, procure a agregação antes de dizer que o total é
+  desconhecido.**
+- 🔴 **"JURISPRUDÊNCIA SELECIONADA" E "INTEIRO TEOR" SÃO O MESMO ENDPOINT** — a
+  lição do TCE-CE repetida. A única diferença é
+  `filter[jurisprudencia_situacao]='Publicada'`, e a Selecionada é **13,2% do
+  acervo**. ⚠️ E "Descartada" é descarte da **curadoria**, não do acervo: os
+  15.920 existem, abrem pelo permalink e têm texto. **Duas abas com nomes de bases
+  diferentes podem ser um `WHERE` de diferença.**
+- 🔴 **AS COMBOS DA TELA SÃO TOP-10 DO ELASTICSEARCH, NÃO O DOMÍNIO — e o próprio
+  JSON denuncia.** `Ano` traz 10 buckets com `sum_other_doc_count = 545`;
+  `Relator`, 10 com 229. Filtrar por um relator **ausente do combo funciona** (o
+  filtro aceita string livre). **Combo de tela não é domínio fechado; leia
+  `sum_other_doc_count` antes de escrever "são N relatores".**
+- ✅ **O `q` É UM `query_string` LUCENE DE VERDADE — o conjunto mais rico do Bloco
+  5**, e o primeiro do repo em que **tudo** funciona: `AND` (23 de 112), espaço =
+  `OR` implícito (6.773, idêntico ao `OR` explícito), `NOT` (89 = 112−23),
+  `+`/`-` (89), `"frase exata"` (491 × 10.000/gte), parênteses (37), curinga
+  (`licita*` = 7.372 > 6.684) e `campo:valor` (30).
+- 🔴 **MAS `E`/`OU` EM PORTUGUÊS NÃO SÃO OPERADORES E O ERRO *AMPLIA* — o primeiro
+  falso operador do repo que INFLA sobre o `OR` real.** `nepotismo E licitação` =
+  **8.034** e `nepotismo OU licitação` = **7.675**, os dois **maiores** que o `OR`
+  verdadeiro (6.773), porque "e"/"ou" viram mais um termo no `OR` implícito. **A
+  contagem muda, então parece ter funcionado** — e o resultado é maior, não menor.
+  Décimo quarto conjunto de operadores do repo; continua sem herdar.
+- 🔴 **`nepot*` = 112 = `nepotismo` NÃO prova que o curinga não funciona** — prova
+  que não há outra palavra "nepot…" indexada. Foi `licita*` (7.372 > 6.684) que
+  provou. **Um controle de uma amostra só teria registrado "não há curinga", e
+  estaria errado.** Teste o operador com um termo que tenha família.
+- 🔴 **O INTERVALO DE DATAS NÃO PASSA POR `filter[]` E SIM POR `q`.**
+  `filter[sessao_data]=[A TO B]` → **HTTP 500**; `q=... AND sessao_data:[A TO B]`
+  → funciona. ✅ E a prova de que **filtra** (não só "responde") foi a **conferência
+  cruzada contra um caminho independente**: o ano cheio de 2023 dá 13 e
+  `filter[ano]=2023` também dá 13; 2020 dá 25 e `filter[ano]=2020` também dá 25;
+  meio ano dá 6; 1900 dá 0. **Quando existem dois caminhos para o mesmo recorte,
+  cruze-os — é mais forte que contar com e sem filtro.**
+- 🔴 **O NÚMERO CRU DERRUBA A BUSCA COM HTTP 500** (a armadilha do TJPI, aqui por
+  outro motivo): `q=4518/2020` → `{code:500}`, porque **a barra abre delimitador
+  de regex** no Lucene. Tem de ir entre aspas ou escopado em campo.
+  🔴 **E o TCDF usa DOIS números de processo, só um indexado**: `00600-00004518/2020-04`
+  (SEI-GDF, o do índice) e `4518/2020-e` (o que a tela mostra). Quem copiar da
+  tela e procurar pelo texto exato não acha.
+- ✅ **O TEXTO JÁ VEM NA BUSCA** (`jurisprudencia_ementa` 513 chars,
+  `ementa_voto_e_excerto` 4.405) — 🔴 **e o endpoint do documento devolve MENOS**
+  (1.742 limpos), não mais. Ele não é o inteiro teor, é o ato formatado. **Não
+  presuma que o segundo salto é mais completo que o primeiro: meça os dois.**
+- 🔴 **O TEXTO DO CARD NÃO É A EMENTA E NEM SEMPRE É O MESMO CAMPO**: na mesma
+  busca, a maioria mostra `jurisprudencia_decisao` truncado e **alguns mostram um
+  fragmento de highlight cortado no meio da frase**. Dois comportamentos no mesmo
+  resultado — o que a skill `browser-post-search` manda medir em mais de um tipo,
+  aqui aparece dentro de **um** tipo só.
+- ✅ **Permalink por `e-doc` confirmado em ABA LIMPA**; ⚠️ mas o HTML servido por
+  `curl` **não contém o edoc** (`grep -c` = 0) porque é SPA que lê a query no
+  cliente. **Validar permalink por `curl`+`grep` dá falso negativo** — tem de
+  abrir no browser.
+
+⚠️ **Pendências declaradas do TCDF:** o caminho do **CAS até o PDF** não foi fechado
+(`/cas/forseti/base64/<edoc>` → 500, `/publico/documentos/<edoc>/merged_base64` → 404);
+os módulos `/publica/` (todas as bases — que **sem `q` devolve corpo vazio**, não JSON)
+e `/boletim/` (189) só tiveram o total medido; `filter[artigo|paragrafo|inciso|alinea]`
+**não medidos**; filtrar por data de **publicação** não medido; **rate limit não medido**
+(nenhuma recusa em ~80 chamadas); `/swagger` e `/openapi` **não sondados**; e a escada
+**card → documento pela TELA** não foi mapeada (o clique no marcador `e-doc` não casou o
+seletor: timeout de 8 s, zero XHR) — o caminho até o documento está provado **pela API e
+pelo permalink**, não pelo clique. ⏱️ Timebox **não estourado**: 16:00 → 16:34, ~34 min.

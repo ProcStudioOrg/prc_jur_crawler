@@ -66,6 +66,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tcerj` | **TCE-RJ** (Tribunal de Contas do Estado do Rio de Janeiro — controle externo) | RJ (Estado + **os municípios fluminenses**; 🔴 **NÃO a capital**, que é do TCM-RJ) | `CLAUDE-TCERJ.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; ementa íntegra na busca e **PDF público de inteiro teor com permalink**). 🔴 **Base CURADA e pequena** (1.089 documentos, 2021–2026): é a seleção do Serviço de Jurisprudência, **não o acervo de decisões**. 🔴 **Acento é obrigatório**; o `NÃO` **não exclui, deflaciona**, e `AND`/`OR` derrubam com HTTP 500. 🔴 O filtro de relator chama-se `--conselheiro` |
 | `tceba` | **TCE-BA** (Tribunal de Contas do Estado da Bahia — controle externo) | BA (**só o Estado**; 🔴 **NÃO os municípios**, que são do TCM-BA) | `CLAUDE-TCEBA.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; o **texto integral já vem na busca** e o **PDF é público**). Base corrente, 2002–2026. 🔴 **O termo é FRASE LITERAL**: não há operador booleano e o espaço não é conectivo (`nepotismo súmula` = 0, `de nepotismo` = 4); aspas dão **HTTP 500**. 🔴 **Não existe paginação** — `qtRegistros` é limiar que **recusa com HTTP 400 e zero documento**. 🔴 **Voto (66% do acervo) vem sem ementa** |
 | `tcepe` | **TCE-PE** (Tribunal de Contas do Estado de Pernambuco — controle externo) | PE (**Estado E municípios**; ✅ **PE não tem TCM** — 184 Prefeituras no combo, **inclusive o Recife**) | `CLAUDE-TCEPE.md` | 🟢 OK (API REST pública JHipster, HTTP direto, sem browser — **sem captcha**; o **texto integral já vem na busca**). Total **exato** (`X-Total-Count`), paginação **estável**. 🔴 **Não há operador booleano e o `OU` da tela RESTRINGE**: o espaço já é `E` implícito e E/OU/NAO são palavras comuns (`A OU B` = interseção). 🔴 **Acento não normalizado**: `licitacao` = 40 contra `licitação` = 13.636 — sem acento vem um **subconjunto plausível**, não zero. 🔴 **O default da tela omite os pareceres prévios** (263 de 272). 🔴 **Não há ementa** — só texto integral. 🔴 **49% dos permalinks apontam para `portalintranet.tce.pe`, que é NXDOMAIN** |
+| `tcdf` | **TCDF** (Tribunal de Contas do Distrito Federal — controle externo) | DF (**o DF é ente único: não há municípios nem TCM-DF** — provado por **ausência de combo de município**) | `CLAUDE-TCDF.md` | 🟢 OK (API REST pública sobre Elasticsearch, HTTP direto, sem browser — **sem captcha em etapa nenhuma**; a **ementa e o texto já vêm na busca**). ✅ **`q` é query_string Lucene de verdade**: `AND`/`OR`/`NOT`, `+`/`-`, `"frase"`, `curinga*`, `campo:valor` — o mais rico do Bloco 5. Paginação **estável** (3/3), permalink por e-doc **confirmado em aba limpa**. 🔴 **Mande User-Agent de navegador**: o WAF F5 bloqueia pelo UA `curl` e devolve **403 com página de 35 KB** (mas **não** bloqueia headless). 🔴 **`E`/`OU` em português não são operadores e o erro AMPLIA** (`nepotismo E licitação` = 8.034 contra 6.773 do `OR` real). 🔴 **O total vem SATURADO em 10.000** — o acervo real é **18.370** (soma das agregações). 🔴 **"Jurisprudência Selecionada" é SUBCONJUNTO** (2.430 de 18.370), não outra base. 🔴 **Três filtros da tela estão quebrados e devolvem sempre zero** (`assunto`, `normativo`, `ementa_voto`) — o crawler não os envia. 🔴 **Campo desconhecido ZERA** em vez de ser ignorado |
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
@@ -920,6 +921,33 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   🔴 **Não há ementa nesta base**: o que vem é o texto integral, e ele já chega na busca.
   ⚠️ Ao citar, confira o host do link: 49% dos julgados (era SIGA) só expõem
   `portalintranet.tce.pe`, que é **NXDOMAIN** — esses se verificam por `jur tcepe -n <processo>`.
+- **Contas públicas do DISTRITO FEDERAL** (licitação e contrato administrativo, ato de
+  pessoal, contas de governo e de gestão, denúncia, auditoria) → `tcdf` → leia
+  [`CLAUDE-TCDF.md`](CLAUDE-TCDF.md). É instância de **controle externo**, não Judiciário.
+  ✅ **O DF é ente único**: não há municípios, não há TCM-DF, e a ressalva do Bloco 5
+  ("onde existe TCM o TCE não cobre as contas municipais") **não tem par aqui** — provado
+  por **ausência de combo de município** no formulário, não por pesquisa fora do portal.
+  🔴 **Não ofereça o `tcdf` para matéria cível, penal, trabalhista ou previdenciária** —
+  ele não tem esse acervo, e o zero seria o tribunal errado.
+  ✅ **Aqui os operadores funcionam de verdade** (é `query_string` Lucene): `AND`, `OR`,
+  `NOT`, `+termo`/`-termo`, `"frase exata"`, `curinga*` e `campo:valor`. É o conjunto mais
+  rico do Bloco 5 — use-o.
+  🔴 **Mas nunca escreva `E` ou `OU` em português**: não são operadores, viram mais um
+  termo no `OR` implícito, e o erro **AMPLIA** (`nepotismo E licitação` = 8.034 contra
+  6.773 do `OR` real). A contagem muda, então parece ter funcionado.
+  🔴 **Nunca reporte o total quando ele vier saturado**: busca larga devolve `10.000` com
+  `relation: "gte"`, e o acervo real é **18.370** (soma das agregações). O `--json` traz
+  `totalExato`; se for `false`, o número não é o total.
+  🔴 **"Jurisprudência Selecionada" é SUBCONJUNTO, não outra base**: 2.430 dos 18.370
+  (13,2%). O default do `jur tcdf` é a base inteira; `--selecionada` reproduz a curadoria.
+  E "Descartada" é descarte da **curadoria**, não do acervo — esses documentos existem,
+  abrem pelo permalink e têm texto.
+  🔴 **Três filtros da própria tela do TCDF devolvem SEMPRE zero** (`assunto`, `normativo`,
+  `ementa_voto`) — o crawler não os envia e avisa. Se alguém pedir por eles, não leia o
+  zero como ausência de jurisprudência.
+  ⚠️ Ao citar, o identificador é o **e-doc** (8 hex), não o processo: um processo rende
+  vários julgados. O permalink foi confirmado em aba limpa, mas é **SPA** — conferi-lo por
+  `curl`+`grep` dá falso negativo.
 
 - **Contencioso administrativo PREVIDENCIÁRIO** ("o que o CRPS decidiu", recurso contra
   indeferimento do INSS, Junta de Recursos, Câmara de Julgamento) → 🔴 **não há busca**:
