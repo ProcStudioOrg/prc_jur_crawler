@@ -60,6 +60,14 @@ const CONSULTA = { termo: 'dano moral', meses: 12 };
  */
 const TERMO_POR_COMANDO = {
   tcerj: 'licitação', // base curada de 1.089 docs; ver CLAUDE-TCERJ.md
+  // TCE-MG: base de excertos de CONSULTA (controle externo), 9 a 98 docs/ano.
+  // Zero PROVADO na mesma janela do smoke (20/08/2025–20/08/2026):
+  //   "dano moral" = 0 · '"dano moral"' entre aspas = 0 · `dano E moral` = 0
+  //   `dano` = 3 · `moral` = 2 · `licitação` = 12
+  // Ou seja: os dois termos existem separados e a INTERSECAO e vazia — nao e
+  // filtro, encoding nem captcha. (Aqui o espaco tambem nao e conectivo, entao
+  // "dano moral" seria zero de sintaxe de qualquer jeito.) Ver CLAUDE-TCEMG.md.
+  tcemg: 'licitação',
 };
 
 const ddmmyyyy = (d) => `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;

@@ -38,7 +38,7 @@ Nunca cite um julgado sem a skill [`verificador`](skills/verificador/SKILL.md).
 | **este arquivo** | Roteamento: qual tribunal, qual doc, quais flags comuns |
 | [`CLAUDE-CJF.md`](CLAUDE-CJF.md) | Os portais do CJF (TRF1, TNU, Unificada) e **por que a Unificada não salva o STJ bloqueado** |
 | [`CLAUDE-CODEGEN.md`](CLAUDE-CODEGEN.md) | Como mapear um tribunal **novo** (processo completo) |
-| [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md) | Os 70 tribunais catalogados e o status de cada um |
+| [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md) | Os 72 tribunais catalogados e o status de cada um |
 | [`TODO.md`](TODO.md) | Próximos alvos: TJs restantes + **instâncias administrativas** (CARF, CRPS, TCEs) |
 | `CLAUDE-<TRIBUNAL>.md` | Flags específicas e **ressalvas** de um tribunal |
 | [`skills/README.md`](skills/README.md) | As 6 skills e quando usar cada uma |
@@ -67,6 +67,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tceba` | **TCE-BA** (Tribunal de Contas do Estado da Bahia — controle externo) | BA (**só o Estado**; 🔴 **NÃO os municípios**, que são do TCM-BA) | `CLAUDE-TCEBA.md` | 🟢 OK (API REST pública, HTTP direto, sem browser — **sem captcha**; o **texto integral já vem na busca** e o **PDF é público**). Base corrente, 2002–2026. 🔴 **O termo é FRASE LITERAL**: não há operador booleano e o espaço não é conectivo (`nepotismo súmula` = 0, `de nepotismo` = 4); aspas dão **HTTP 500**. 🔴 **Não existe paginação** — `qtRegistros` é limiar que **recusa com HTTP 400 e zero documento**. 🔴 **Voto (66% do acervo) vem sem ementa** |
 | `tcepe` | **TCE-PE** (Tribunal de Contas do Estado de Pernambuco — controle externo) | PE (**Estado E municípios**; ✅ **PE não tem TCM** — 184 Prefeituras no combo, **inclusive o Recife**) | `CLAUDE-TCEPE.md` | 🟢 OK (API REST pública JHipster, HTTP direto, sem browser — **sem captcha**; o **texto integral já vem na busca**). Total **exato** (`X-Total-Count`), paginação **estável**. 🔴 **Não há operador booleano e o `OU` da tela RESTRINGE**: o espaço já é `E` implícito e E/OU/NAO são palavras comuns (`A OU B` = interseção). 🔴 **Acento não normalizado**: `licitacao` = 40 contra `licitação` = 13.636 — sem acento vem um **subconjunto plausível**, não zero. 🔴 **O default da tela omite os pareceres prévios** (263 de 272). 🔴 **Não há ementa** — só texto integral. 🔴 **49% dos permalinks apontam para `portalintranet.tce.pe`, que é NXDOMAIN** |
 | `tcdf` | **TCDF** (Tribunal de Contas do Distrito Federal — controle externo) | DF (**o DF é ente único: não há municípios nem TCM-DF** — provado por **ausência de combo de município**) | `CLAUDE-TCDF.md` | 🟢 OK (API REST pública sobre Elasticsearch, HTTP direto, sem browser — **sem captcha em etapa nenhuma**; a **ementa e o texto já vêm na busca**). ✅ **`q` é query_string Lucene de verdade**: `AND`/`OR`/`NOT`, `+`/`-`, `"frase"`, `curinga*`, `campo:valor` — o mais rico do Bloco 5. Paginação **estável** (3/3), permalink por e-doc **confirmado em aba limpa**. 🔴 **Mande User-Agent de navegador**: o WAF F5 bloqueia pelo UA `curl` e devolve **403 com página de 35 KB** (mas **não** bloqueia headless). 🔴 **`E`/`OU` em português não são operadores e o erro AMPLIA** (`nepotismo E licitação` = 8.034 contra 6.773 do `OR` real). 🔴 **O total vem SATURADO em 10.000** — o acervo real é **18.370** (soma das agregações). 🔴 **"Jurisprudência Selecionada" é SUBCONJUNTO** (2.430 de 18.370), não outra base. 🔴 **Três filtros da tela estão quebrados e devolvem sempre zero** (`assunto`, `normativo`, `ementa_voto`) — o crawler não os envia. 🔴 **Campo desconhecido ZERA** em vez de ser ignorado |
+| `tcemg` | **TCE-MG** (Tribunal de Contas do Estado de Minas Gerais — controle externo) | MG (**Estado E municípios**; ✅ **MG não tem TCM** — e aqui isso foi provado **pelo acervo**, não pela ausência de combo) | `CLAUDE-TCEMG.md` | 🟢 OK (MapJuris, HTTP direto, sem browser — **sem captcha**; **ementa em 21/21** e o texto integral já vêm na busca). 🔴 **O portal que se chama "Jurisprudência" é o BLOQUEADO** (TCJuris, reCAPTCHA v2 conferido no servidor); esta é a porta aberta, do mesmo tribunal. 🔴 **A base é só de excertos de CONSULTA** — contas julgadas, denúncias e representações **não estão aqui** (medido em duas janelas). Acervo pequeno: **9 a 98 documentos por ano**, 2008–2026. 🔴 **A busca sem janela de data não responde** (abortada em 240 s) — o crawler fatia por ano. ✅ Conectores `E`/`OU`/`"frase"`/`%` conferidos **por conjunto de ids**; 🔴 mas **`NÃO` perde resultado** (6 quando a diferença real é 14) e **`NAO` sem til zera**. 🔴 **`nomeRelator` é decorativo** — quem filtra é o código. 🔴 **Rate limit por criação de SESSÃO** (HTTP 429 que ainda manda cookie) |
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
@@ -948,6 +949,59 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   ⚠️ Ao citar, o identificador é o **e-doc** (8 hex), não o processo: um processo rende
   vários julgados. O permalink foi confirmado em aba limpa, mas é **SPA** — conferi-lo por
   `curl`+`grep` dá falso negativo.
+
+- **Contas públicas de MINAS GERAIS** (licitação e contrato administrativo, ato de pessoal,
+  consulta de prefeitura ou câmara municipal, aplicação da Lei 14.133/2021) → `tcemg` → leia
+  [`CLAUDE-TCEMG.md`](CLAUDE-TCEMG.md). É instância de **controle externo**, não Judiciário:
+  para a mesma matéria judicializada, o caminho é `tjmg` (estadual), `trf6` (federal em MG,
+  2023+) ou `trf1` (federal em MG, até 2022).
+  ✅ **Minas Gerais não tem TCM, e aqui isso foi provado PELO ACERVO**: as ementas trazem
+  `MUNICÍPIO`, `CÂMARA MUNICIPAL`, `PREFEITURA`, `INSTITUTO DE PREVIDÊNCIA [municipal]`.
+  Em `tceba`, `tcesp`, `tcerj` e `tcego` a mesma ressalva se apoia só na **ausência de um
+  combo de município** — evidência indireta. Aqui está medida.
+  🔴 **O portal que se chama "Jurisprudência do TCE" é o BLOQUEADO.** O TCJuris está atrás
+  de reCAPTCHA v2 **conferido no servidor**; o MapJuris, linkado na mesma home como
+  "Consultas ao TCE", responde sem captcha nenhum. **Enumere todos os módulos antes de
+  declarar um tribunal bloqueado.**
+  🔴 **ESTA BASE É SÓ DE EXCERTOS DE CONSULTA — não é o acervo do TCE-MG.** Medido em duas
+  janelas distantes: `natureza=17` (CONSULTA) devolve **exatamente** o total do sem-filtro
+  em 2025 (21 = 21) e em 2013 (84 = 84), enquanto DENÚNCIA, REPRESENTAÇÃO e ACOMPANHAMENTO
+  devolvem **0** nas duas. **Contas julgadas, denúncias e representações não estão aqui**, e
+  pedir por elas devolve zero que é da base, não do tribunal. É o equivalente da
+  "Jurisprudência Selecionada" do TCDF — só que aqui **não existe a base larga por trás**.
+  ⚠️ **Acervo pequeno: 9 a 98 documentos por ano** (2008–2026). Base **corrente**, mas
+  2018 com 9 contra 2012 com 98 é ritmo de **curadoria**, não atividade do tribunal — não
+  leia a série como produção do TCE-MG.
+  🔴 **A busca sem janela de data NÃO RESPONDE** (abortada em 240 s; um mês = 1,7 s, um ano
+  = 12–25 s). Não é bloqueio, é custo — e explica a busca que "trava" no navegador. Sem
+  `-di/-df` o crawler **fatia por ano** e avisa que o total é a soma das fatias percorridas,
+  **não o acervo**.
+  ✅ **Os conectores oficiais funcionam e foram conferidos POR CONJUNTO DE IDs**: `E` e `OU`
+  batem exatamente com A∩B e A∪B; `"frase exata"` e o curinga **`%`** funcionam
+  (`licita%` = 25 contra `licitação` = 21).
+  🔴 **Mas o `NÃO` responde, restringe e mesmo assim está ERRADO — ele PERDE resultado**:
+  `licitação NÃO pregão` = **6** quando a diferença real, calculada id a id, é **14**. Os 6
+  são legítimos; **8 documentos válidos ficam de fora em silêncio**. Pior que operador
+  quebrado, que zera e dá sintoma. Para exaustividade, **busque A e B em separado e subtraia**.
+  🔴 **`NAO` sem til ZERA**, o **espaço não é conectivo** (`licitação pregão` = 0) e o
+  curinga **não é `*` nem `$`**. ⚠️ É o **espelho do TJAC**, onde é o `NÃO` acentuado que não
+  vale — **não herde operador de tribunal nenhum**.
+  🔴 **`nomeRelator` é decorativo**: mandar só o nome devolve o total sem filtro, com HTTP
+  200 e resultados plausíveis. Use `--listar-filtros` e passe o **código**.
+  🔴 **Em `natureza` o controle do valor inventado FALHA para o lado pior**:
+  `XXINVENTADOXX` devolve o total **sem filtro** (o servidor não converte para inteiro e
+  ignora em silêncio) — lido sozinho, isso se lê como sucesso.
+  ✅ **Ementa em 21/21 e o texto integral já vêm na busca** (5 KB a 213 KB por documento).
+  ✅ **Permalink confirmado em aba limpa** — 🔴 mas **validá-lo por `curl`+`grep` dá falso
+  negativo**: o GET cru devolve 28,8 KB de casca porque o conteúdo entra por AJAX.
+  ✅ **Consulta por número é exata e dispensa data** (`./bin/jur tcemg -n 1188139`); o
+  número do processo **é** o id do documento. 🔴 **Não há CNJ nem DataJud** — não existe
+  plano B, e a negativa só prova que não há *excerto* com esse número.
+  🔴 **Rate limit por criação de SESSÃO**: ~20 sessões novas em poucos minutos e a home passa
+  a responder **HTTP 429 — ainda mandando `set-cookie`**, só que sem o `ASP.NET_SessionId`.
+  O crawler reusa uma sessão só; não rode várias instâncias em paralelo contra o TCE-MG.
+  ⚠️ **`--teses` está incompleto**: diz se há tese/súmula sobre o tema, mas o grid dela não
+  foi mapeado — **não cite súmula do TCE-MG a partir dele**.
 
 - **Contencioso administrativo PREVIDENCIÁRIO** ("o que o CRPS decidiu", recurso contra
   indeferimento do INSS, Junta de Recursos, Câmara de Julgamento) → 🔴 **não há busca**:

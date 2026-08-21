@@ -75,6 +75,8 @@ const TCEPECrawler = require('../src/TCEPECrawler');
 const TCEPEChecker = require('../src/TCEPEChecker');
 const TCDFCrawler = require('../src/TCDFCrawler');
 const TCDFChecker = require('../src/TCDFChecker');
+const TCEMGCrawler = require('../src/TCEMGCrawler');
+const TCEMGChecker = require('../src/TCEMGChecker');
 const TJRRCrawler = require('../src/TJRRCrawler');
 const TJRRChecker = require('../src/TJRRChecker');
 const TJESCrawler = require('../src/TJESCrawler');
@@ -6874,5 +6876,178 @@ program
       process.exit(1);
     }
   });
+
+program
+  .command('tcemg')
+  .description('Search TCE-MG (Tribunal de Contas do Estado de Minas Gerais) — MapJuris, HTTP direto, sem browser')
+  .option('-q, --query <text>', 'Termo. Conectores: E / OU / NÃO (acentuado), "frase exata", curinga %')
+  .option('-n, --numero <numero>', 'Consulta por nº do processo do TCE-MG (6-8 digitos, ex.: 1188139); dispensa -q e datas')
+  .option('-r, --relator <codigo>', 'CODIGO do relator (--listar-filtros). O NOME sozinho nao filtra')
+  .option('--natureza <codigo>', 'Codigo numerico da natureza (--listar-filtros). Na pratica a base toda e 17 (CONSULTA)')
+  .option('--tipo-pesquisa <t>', 'IndexExcerto (default) | EXCERTO | INDEXACAO — INDEXACAO e subconjunto', 'IndexExcerto')
+  .option('-di, --data-inicio <date>', 'Data da SESSAO inicial (DD/MM/YYYY). Sem ela o crawler fatia por ano')
+  .option('-df, --data-fim <date>', 'Data da SESSAO final (DD/MM/YYYY)')
+  .option('-m, --max-pages <number>', 'Numero de FATIAS DE ANO percorridas quando nao ha -di/-df', 3)
+  .option('--teses <termo>', 'Busca separada de Teses/Sumulas (_ListarTituloResenha) e sai')
+  .option('--listar-filtros', 'Lista os combos (relatores, naturezas) com os codigos e sai')
+  .option('--verificar [amostra]', 'Audita N julgados por reconsulta do numero (default 3)')
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tcemg.json')
+  .option('--fetch-inteiro-teor', 'Grava o texto em disco (ele JA vem na busca — nao ha segundo salto para texto)')
+  .option('--fetch-pdf', 'Baixa tambem o PDF do excerto (exige sessao; o href do card e quebrado)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tcemg')
+  .option('-v, --visible', 'Ignored (TCE-MG usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TCE-MG usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    try {
+      if (opts.listarFiltros) {
+        const nav = new (require('../src/TCEMGNavigator'))({ log });
+        const c = await nav.combos();
+        const saida = {};
+        for (const [k, v] of Object.entries(c)) {
+          saida[k] = Array.isArray(v)
+            ? v.filter((o) => o.Value !== '').map((o) => ({ codigo: o.Value, nome: o.Text }))
+            : v;
+        }
+        saida['⚠️ leia'] =
+          'O que filtra e o CODIGO. Mandar so o nome do relator devolve o total sem filtro ' +
+          '(medido). E natureza nao-numerica e IGNORADA em silencio pelo servidor.';
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, combos: saida }) + '\n');
+        else console.log(JSON.stringify(saida, null, 2));
+        process.exit(0);
+      }
+
+      if (opts.teses) {
+        const nav = new (require('../src/TCEMGNavigator'))({ log });
+        const r = await nav.tituloResenha(opts.teses);
+        const out = {
+          tribunal: 'TCE-MG',
+          busca: 'Teses/Sumulas (_ListarTituloResenha)',
+          termo: opts.teses,
+          status: r.status,
+          bytes: r.bytes,
+          vazio: r.vazio,
+          ressalva:
+            'Busca SEPARADA da de excertos: so aceita termo (sem data, sem relator) e devolve ' +
+            'outro grid (ConsultarInformacaoResenha). O contrato foi medido; o parser de ' +
+            'resenha NAO foi escrito — use isto para saber se ha tese sobre o tema, nao para citar.',
+        };
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...out }) + '\n');
+        else console.log(JSON.stringify(out, null, 2));
+        process.exit(r.vazio ? 1 : 0);
+      }
+
+      if (opts.numero) {
+        const res = await new TCEMGChecker({ log }).consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrados > 0 ? 0 : 1);
+      }
+
+      if (!opts.query && !opts.dataInicio && !opts.relator && !opts.natureza) {
+        throw new Error(
+          'Informe -q "<termo>" (ou -n <numero>, ou -di/-df, ou --relator). Busca sem termo ' +
+            'E sem janela de data nao responde nem em 240 s — nao e bloqueio, e custo.',
+        );
+      }
+
+      log('='.repeat(60));
+      log('TCE-MG — MapJuris, Textual/Dados do Processo (controle externo, Bloco 5)');
+      log('  [escopo] 🔴 A base e de EXCERTOS DE CONSULTA, nao do acervo inteiro do TCE-MG:');
+      log('           natureza=17 (CONSULTA) devolve o mesmo total do sem-filtro, em 2013 e');
+      log('           em 2025. Contas julgadas, denuncias e representacoes NAO estao aqui.');
+      log('  [escopo] ✅ MG nao tem TCM, e as consultas municipais estao mesmo no TCE — as');
+      log('           ementas trazem MUNICIPIO, CAMARA MUNICIPAL, PREFEITURA. Medido no acervo.');
+      log('  [porta]  O portal rotulado "Jurisprudencia" (TCJuris) esta atras de reCAPTCHA v2');
+      log('           conferido no servidor. Esta e a porta ABERTA, do mesmo tribunal.');
+      log('  [aviso]  Conectores: E / OU / NÃO acentuado, "frase", curinga %. Espaco NAO une');
+      log('           termos ("licitação pregão" = 0) e "NAO" sem til ZERA.');
+      log('  [aviso]  🔴 O operador NÃO PERDE RESULTADO: "licitação NÃO pregão" = 6 quando a');
+      log('           diferenca real e 14. Restringe demais, em silencio.');
+      log('='.repeat(60));
+      log(`Query: ${opts.query || '(sem termo — so filtros/janela)'}`);
+      log('='.repeat(60));
+
+      // Uma sessao para tudo: busca, --verificar e --fetch-*. Ver o 429 no Navigator.
+      const nav = new (require('../src/TCEMGNavigator'))({ log });
+      const crawler = new TCEMGCrawler({ log, nav });
+      const res = await crawler.buscar({
+        query: opts.query,
+        tipoPesquisa: opts.tipoPesquisa,
+        codRelator: opts.relator,
+        natureza: opts.natureza,
+        dataInicio: opts.dataInicio,
+        dataFim: opts.dataFim,
+        maxPages: opts.maxPages,
+      });
+
+      log('='.repeat(60));
+      log(
+        `Total: ${res.total} documento(s) (exato)` +
+          (res.totalEhSomaDeFatias ? ' — SOMA das fatias de ano percorridas, nao o acervo' : '') +
+          ` — ${res.retornados} baixados em ${(res.duracaoMs / 1000).toFixed(1)} s`,
+      );
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 3 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} por reconsulta do numero...`);
+        verificacao = await new TCEMGChecker({ log, nav }).verificar(res.resultados, amostra);
+      }
+
+      const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+      fs.writeFileSync(outputPath, JSON.stringify(res.resultados, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (opts.fetchInteiroTeor || opts.fetchPdf) {
+        const dir = path.resolve(opts.outputDir);
+        fs.mkdirSync(dir, { recursive: true });
+        let n = 0;
+        let pdfs = 0;
+        for (const r of res.resultados) {
+          const base = String(r.id || 'sem-id').replace(/[^\w.-]/g, '_');
+          if (opts.fetchInteiroTeor && r.inteiroTeor) {
+            fs.writeFileSync(path.join(dir, base + '.txt'), r.inteiroTeor, 'utf-8');
+            n++;
+          }
+          if (opts.fetchPdf && r.id) {
+            const p = await nav.pdf(r.id);
+            if (p.ok) {
+              fs.writeFileSync(path.join(dir, base + '.pdf'), p.buffer);
+              pdfs++;
+            } else {
+              log(`   [pdf] ${r.id}: HTTP ${p.status} (${p.contentType})`);
+            }
+          }
+        }
+        log(`Inteiro teor gravado: ${n} arquivo(s)${opts.fetchPdf ? ` e ${pdfs} PDF(s)` : ''} em ${dir}`);
+        if (opts.fetchInteiroTeor) log('   (o TEXTO ja vinha na busca — nao houve segundo salto para ele)');
+      }
+
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({
+            success: true,
+            count: res.total,
+            retornados: res.retornados,
+            output: outputPath,
+            totalExato: res.totalExato,
+            totalEhSomaDeFatias: res.totalEhSomaDeFatias,
+            fatias: res.fatias,
+            avisos: res.avisos,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n',
+        );
+      }
+    } catch (error) {
+      if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+      else console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
 
 program.parse();

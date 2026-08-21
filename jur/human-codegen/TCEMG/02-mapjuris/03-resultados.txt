@@ -1,0 +1,392 @@
+# TCE-MG — MapJuris, seção 03: O QUE VEM DEPOIS DA BUSCA (Fase 3b, browser-post-search)
+
+## Identificação
+
+```
+Tribunal:               TCE-MG — Tribunal de Contas do Estado de Minas Gerais
+Módulo:                 MapJuris Consultas 3.1 — "Textual / Dados do Processo"
+Data do mapeamento:     20/08/2026 (slot 20:00) — retomada do `parcial` de 16/08
+Resultado:              🟢 crawler fechado (`jur tcemg`)
+Escopo desta seção:     tudo DEPOIS de `Pesquisar()`: grid, card, documento,
+                        paginação, total, permalink, PDF
+```
+
+⚠️ **Esta seção existe porque o mapeamento de 16/08 parou na busca.** O que estava
+gravado era a casca; as linhas, o total e o documento não tinham sido medidos.
+
+---
+
+## 0. 🔴 A LIÇÃO DO DIA: A CASCA DA BUSCA NÃO CARREGA INFORMAÇÃO NENHUMA
+
+O `_ListarExcertoIntegra` devolve **sempre 9.035 bytes** quando há resultado, e
+**sempre 1.656** quando não há — para qualquer termo, qualquer janela e qualquer
+`tipoPesquisa`. É por isso que a medição de 16/08 concluiu, comparando md5 de casca,
+que "os três `tipoPesquisa` devolvem resposta byte a byte idêntica, logo o filtro é
+ignorado". **A conclusão estava errada, e a medição estava certa:** a casca é
+literalmente a mesma página, e quem separa os filtros é o segundo salto.
+
+Medido em 20/08, mesma janela (01/01–30/06/2025, termo `licitação`):
+
+| `tipoPesquisa` | bytes da casca | md5 da casca | **linhas do grid** |
+|---|---|---|---|
+| `IndexExcerto` | 9.035 | idêntico | **11** |
+| `EXCERTO` | 9.035 | idêntico | **11** |
+| `INDEXACAO` | 9.035 | idêntico | **6** ← subconjunto |
+| `INVENTADO9Z` | 1.656 | — | 0 ("Nenhum registro encontrado") |
+
+**Nunca decida sobre um filtro pelo tamanho da resposta que vem antes das linhas.**
+
+---
+
+## 1. Onde o resultado aparece — dois saltos, e o segundo precisa do template
+
+Mesma página, sem troca de rota e sem nova aba. Os controles de busca **continuam
+visíveis** (print `03.03`). A sequência de XHR capturada no Playwright
+(`03-xhr-da-busca.txt`) é exatamente:
+
+```
+POST /TextualDadosProcesso/_ListarExcertoIntegra              ← casca, sem linhas
+GET  /Scripts/ScriptGrid/Excertos.js                          ← só o expandir/recolher
+POST /TextualDadosProcesso/ConsultarInformacaoExcertoIntegra  ← ⭐ as linhas
+```
+
+### 🔴 O contrato do segundo salto, e o campo que ninguém adivinha
+
+```
+POST https://mapjuris.tce.mg.gov.br/TextualDadosProcesso/ConsultarInformacaoExcertoIntegra
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Cookie: ASP.NET_SessionId=<o mesmo da busca>
+
+strIrParaPagina=1            (página, 1-based)
+&strQuantidadeRegistros=0    (0 = TODOS; o cliente traduz o option "Todos" para 0)
+&strFiltro=
+&PrimeiraRequisicao=true
+&IdTabela=gridExcertoIntegra
+&strNomeCampoOrdenar=
+&tipoOrdenacao=0
+&strNomeColunaFiltrar=
+&GerarExcel=false
+&primeiraRequisicao=true
+&gridHelper=<JSON INTEIRO do <input id='hidden_gridExcertoIntegra'> da casca>
+```
+
+🔴 **`gridHelper` é o template de colunas, e sem ele a resposta é HTTP 200 com
+`<tr></tr>` vazio** — `totalRegistros` vem certo, `htmlGrid` vem sem uma célula
+sequer. É a **sexta casca de HTTP 200** do repo, e a mais silenciosa: não há erro,
+não há zero, há uma tabela de uma coluna sem conteúdo. Medido:
+
+| `gridHelper` | HTTP | `totalRegistros` | células `<td>` |
+|---|---|---|---|
+| JSON do hidden (6.580 bytes) | 200 | 21 | **21 cards completos** |
+| string vazia | 200 | 21 | **nenhuma** |
+
+O JSON traz os placeholders que o servidor substitui:
+`{IdDivExcerto} {LinkIntegra} {LinkViewExcerto} {LinkEditar} {HtmlTableProcesso}
+{DSC_EXCERTO} {DSC_COMENTARIO} {HtmlTableClassificacao} {HtmlTableReferenciaLegal}
+{ResenhasVinculadas}` — ou seja, **o cliente diz ao servidor como montar o HTML**.
+
+### Resposta
+
+JSON com `{ htmlGrid, htmlCabecalhoCorpo, totalRegistros, registroInicial,
+registroFinal, idTabela, GerarExcel, idTBody }`.
+⚠️ `registroFinal` **mente na primeira requisição** (veio `5` para um total de `1`);
+use `totalRegistros` e conte as linhas.
+
+---
+
+## 2. 🔴 A GRID SEGUE A ÚLTIMA BUSCA DA SESSÃO — o `trocaDePagina.do` do TJAC em ASP.NET
+
+Medido, na mesma sessão:
+
+```
+busca "pregão" (2025)      → grid → total 7   ids 1184889,1192181,1088802,…
+busca "nepotismo" (2020-26)          (sem paginar)
+grid com o MESMO gridHelper de "pregão" → total 2   ids 1098636,1040717
+```
+
+O `gridHelper` carrega o **template de colunas**, não a consulta. Quem guarda a
+consulta é a **sessão do servidor**. Intercalar buscas e paginar devolve a página
+da busca errada com **HTTP 200 e cards válidos** — sem sintoma nenhum.
+✅ O crawler serializa busca→grid dentro de `buscar()` e reusa uma sessão só.
+
+---
+
+## 3. Anatomia do card — seis seções, e o texto integral já vem aqui
+
+Print `03.05` (card) e `03.06` (legendas abertas); HTML em `03-card-resultado.html`.
+Cada `<tr>` do grid é **um documento**, e dentro dele há uma `table.detail-view` com
+seis seções rotuladas por `<th class='legenda th<ID>'>`:
+
+| Seção | Conteúdo | Tamanho medido (n=21) |
+|---|---|---|
+| **Dados do processo** | Nº processo · Data da sessão · Data da Publicação · Vigência · Relator | 2,5 KB |
+| **Parecer** | **EMENTA + PARECER + NOTA DE TRANSCRIÇÃO da sessão** | 5.098 a 212.976 chars (mediana ~33 KB) |
+| **Indexação** | descritores separados por vírgula | 0,2 KB |
+| **Classificação** | tabela Área / Tema / Subtema | 1,5 KB |
+| **Referência Legal** | tabela Órgão · Tipo · Nº · Ano · Artigo · § · Inciso · Alínea | 2,8 KB |
+| **Títulos vinculados** | teses/súmulas ligadas, ou "Não possui" | 0,2 KB |
+
+⚠️ **As seções contêm TABELAS ANINHADAS.** Delimitar a seção pelo primeiro
+`</td></tr>` corta o conteúdo no meio — o sintoma foi `relator: null` num card que
+tinha relator. O corte seguro é o **próximo cabeçalho de seção**.
+
+### ✅ Ementa em 21/21 (100%) — e por quê
+
+O Parecer começa sempre com o título `EMENTA` centralizado, e o corpo da ementa vai
+até `PARECER` / `NOTA DE TRANSCRIÇÃO`. Aqui **não existe o problema do TCE-BA** (onde
+Voto, 66% do acervo, tem ementa em 0%) por um motivo simples: **só há um tipo de
+documento nesta base** (ver §7).
+
+### ⚠️ As entidades HTML não são uniformes
+
+O mesmo campo vem em UTF-8 cru num documento (`EXIGÊNCIA`) e em entidade nomeada no
+outro (`EXIG&Ecirc;NCIA`) — depende de como o excerto foi cadastrado. Decodificar só
+`&amp;/&lt;/&gt;/&quot;` (o reflexo) deixa acento cru na ementa de parte do acervo.
+
+### Destaque do termo
+
+`<span style='color:#D14E4E;font-weight:bold;'>licitação</span>` — o highlight é
+inline no texto; o crawler o remove junto com as demais tags.
+
+---
+
+## 4. A escada até o documento — e ela é curta
+
+| Passo | Como | Resultado |
+|---|---|---|
+| Ementa | **já veio** na busca | — |
+| Inteiro teor (texto) | **já veio** na busca (seção Parecer) | 5 KB a 213 KB |
+| Inteiro teor (PDF) | `GET /TextualDadosProcesso/ExportPdf/<id>` **com sessão** | 48.440 B, `application/pdf`, `filename=Excerto_1188139.pdf` |
+| Permalink | `GET /TextualDadosProcesso/DetalhesExcerto/<id>` | ver §6 |
+
+🔴 **O href do PDF no card é RELATIVO E QUEBRADO.** O card traz
+`href="Excerto/ExportPdf/1188139"`; resolvido a partir de `/TextualDadosProcesso`,
+isso vira `/TextualDadosProcesso/Excerto/ExportPdf/1188139` → **HTTP 404**. As rotas
+que servem são `/TextualDadosProcesso/ExportPdf/<id>` e `/Excerto/ExportPdf/<id>`.
+(O portal disfarça: `DetalhesExcerto.js` reescreve o href para `../ExportPdf/<id>`
+depois que o grid carrega — quem copiar o href cru do HTML pega o 404.)
+⚠️ O PDF **exige sessão**: sem cookie devolve 302.
+✅ O nome sugerido pelo servidor (`Excerto_<id>.pdf`) **é** chave aqui — ao contrário
+do TCE-BA, onde nomes distintos colidiam.
+
+---
+
+## 5. Paginação, total e tamanho de página — todos medidos
+
+Base: `contrat%`, janela 2025, **total 34**.
+
+| Requisição | HTTP | linhas | observação |
+|---|---|---|---|
+| `strQuantidadeRegistros=10`, página 1 | 200 | 10 | |
+| página 2 | 200 | 10 | ✅ **zero sobreposição** com a p.1 |
+| página 2, **segunda execução** | 200 | 10 | ✅ **byte a byte idêntica** |
+| página 4 | 200 | **4** | última página parcial |
+| página 99 | 200 | **0** | não erra, não embrulha, não repete |
+| `=0` (TODOS) | 200 | **34** | |
+| `=100` | 200 | 34 | |
+| `=1000` | 200 | 34 | **não há recusa por tamanho** |
+
+✅ **Total EXATO**, não saturado: 10 + 10 + 10 + 4 = 34, conferido linha a linha.
+✅ **Não há teto de página** — o oposto do TCE-BA (onde `qtRegistros` é um limiar que
+**recusa** com HTTP 400) e do TCDF (onde o teto é em bytes). O crawler usa `0`.
+
+🔴 **O teto real é o CUSTO DA BUSCA, no primeiro salto, e ele é enorme:**
+
+| Janela de data | tempo do `_ListarExcertoIntegra` |
+|---|---|
+| um mês | **1,7 s** |
+| seis meses | ~9 s |
+| um ano | 12 a 25 s |
+| **sem janela** | **abortado em 240 s sem resposta** |
+
+Por isso o crawler **fatia por ano obrigatoriamente** quando não há `-di/-df`.
+Isso também explica a busca que "trava" no navegador: ela está só lenta.
+
+---
+
+## 6. Permalink — ✅ existe e é bom, 🔴 mas `curl` reprova por engano
+
+```
+https://mapjuris.tce.mg.gov.br/TextualDadosProcesso/DetalhesExcerto/<id>
+```
+
+| Como foi aberto | Resultado |
+|---|---|
+| **Playwright, contexto novo, sem cookie** (print `03.08`) | ✅ **54.707 chars, EMENTA visível** |
+| `GET` cru, sem executar JavaScript | ⚠️ HTTP 200, **28.859 B de CASCA** — sem ementa, sem tabela do processo, sem link de PDF |
+
+O conteúdo entra por um AJAX que **refaz `_ListarExcertoIntegra` com
+`numeroProcesso=<id>`** (`DetalhesExcerto.js`). É a lição do TJRJ-eJURIS e do TCDF:
+**página que monta por AJAX não se valida por `curl`+`grep`** — e aqui o falso
+negativo é especialmente convincente, porque a casca tem 28 KB e parece completa.
+
+🔴 **Não existe permalink de BUSCA.** A busca é POST; a URL nunca muda.
+
+---
+
+## 7. 🔴 O QUE ESTA BASE É — e o que ela NÃO é
+
+**São excertos de jurisprudência de CONSULTA, não o acervo de decisões do TCE-MG.**
+Medido de duas formas independentes:
+
+1. As 21 ementas de `licitação`/2025 começam **todas** com `CONSULTA.`
+2. `natureza=17` (CONSULTA) devolve **exatamente** o total do sem-filtro, em duas
+   janelas distantes: 2025 (21 = 21) e 2013 (84 = 84). E `natureza=20` (DENÚNCIA),
+   `141` (REPRESENTAÇÃO) e `1076` (ACOMPANHAMENTO) devolvem **0** nas duas.
+
+Contas julgadas, denúncias, representações e acompanhamentos **não estão aqui**.
+É o equivalente da "Jurisprudência Selecionada" do TCDF — só que aqui **não existe a
+base larga por trás** (ela está no TCJuris, atrás de reCAPTCHA).
+
+### ✅ E isso fecha a ressalva do Bloco 5 por MEDIÇÃO: MG não tem TCM
+
+As ementas de 2025 trazem `MUNICÍPIO`, `CÂMARA MUNICIPAL`, `PREFEITURA`,
+`INSTITUTO DE PREVIDÊNCIA [municipal]`, `SECRETARIA MUNICIPAL`. As consultas
+municipais estão mesmo no TCE-MG. **Não é a ausência de um combo de município que
+prova — é o acervo.** (Em TCE-BA e TCE-GO a ressalva ficou apoiada só na ausência do
+combo; aqui ela está medida.)
+
+### Distribuição por ano (termo vazio, por data da sessão)
+
+```
+2026  13 · 2025  49 · 2024  72 · 2023  43 · 2022  46 · 2021  46 · 2020  45
+2019  30 · 2018   9 · 2017  14 · 2016  25 · 2015  21 · 2014  43 · 2013  84
+2012  98 · 2011  77 · 2010  71 · 2009  74 · 2008  84
+```
+
+✅ Base **corrente** (documento de 10/06/2026 na amostra) — não congelou como a do
+TJAM. ⚠️ Mas **2018 com 9 contra 2012 com 98 é ritmo de CURADORIA, não atividade do
+tribunal**. Não leia a série como produção do TCE-MG.
+
+---
+
+## 8. Operadores — conferidos por CONJUNTO DE IDs, não só por contagem
+
+O modal "Como pesquisar" (print `03.07`, obtido por `POST /TextualDadosProcesso/ComoPesquisar`)
+anuncia `E`, `OU`, `NÃO`, `""` e `%`. Medido na janela 2025
+(`licitação` = 21, `pregão` = 7):
+
+| Query | Total | Veredito |
+|---|---|---|
+| `licitação E pregão` | 7 | ✅ **interseção — o conjunto BATE com A∩B** |
+| `licitação AND pregão` | 7 | ✅ o inglês também funciona |
+| `licitação OU pregão` | 21 | ✅ **união — BATE com A∪B** |
+| `licitação OR pregão` | 21 | ✅ |
+| `"pregão eletrônico"` | 1 | ✅ frase exata |
+| `licita%` | **25** | ✅ truncamento (> 21 do termo inteiro) |
+| `contrat%` | 34 | ✅ |
+| `licitação NÃO pregão` | **6** | 🔴 ver abaixo |
+| `licitação NAO pregão` | **0** | 🔴 sem til **não é operador** |
+| `licitação pregão` (espaço) | **0** | 🔴 espaço **não é conectivo** |
+| `licita*` | 0 | ⚠️ o curinga **não** é `*` |
+| `licita` (radical cru) | 0 | ⚠️ não há prefixo implícito |
+| `licitação$` | 0 | ⚠️ `$` não é curinga |
+| `licitação%` | 21 | (igual ao termo inteiro — `%` no fim de palavra completa não amplia) |
+| `licitação ADJ pregão` | 0 | não existe |
+
+### 🔴 `NÃO` RESPONDE, RESTRINGE, E MESMO ASSIM ESTÁ ERRADO — ELE PERDE RESULTADO
+
+`A \ B` calculado no cliente, id a id, dá **14**. O servidor devolve **6**.
+Os 6 são **todos legítimos** (⊆ A\B, conferido um a um) — mas **8 documentos que
+contêm "licitação" e não contêm "pregão" ficam de fora**.
+
+Isso é pior que um operador quebrado: um operador quebrado **zera** e dá sintoma.
+Este devolve um número plausível e menor, e quem usar `A NÃO B` recebe em silêncio
+**43% do recorte que pediu**. O crawler avisa e **não reescreve a query**.
+
+⚠️ Note o espelho: no TJAC é o `NÃO` **acentuado** que não vale e o `NAO` que
+funciona. Aqui é o contrário. **Não herde operador de tribunal nenhum.**
+
+---
+
+## 9. Filtros — veredito por contagem
+
+Base: `licitação`, 2025 = **21**.
+
+| Filtro | Veredito | Medição |
+|---|---|---|
+| data da sessão (`-di/-df`) | ✅ filtra | jun/2026 = 1 · 2026 = 6 · 2025 = 21 |
+| `codRelator` | ✅ filtra | 44 = 7 · 100 = 6 · 71 = 1 · inventado = 0 |
+| `nomeRelator` | 🔴 **DECORATIVO** | só o nome, sem código = **21** (= sem filtro) |
+| `numeroProcesso` | ✅ filtra, **exato** | 1188139 = 1 · **1188138 = 0** · 999999999 = 0 |
+| `natureza` | ✅ filtra, ⚠️ com armadilha | 17 = 21 · 20 = 0 · 141 = 0 · **`XXINVENTADOXX` = 21** |
+| `tipoPesquisa` | ✅ filtra | ver §0 |
+
+### 🔴 AQUI O CONTROLE DO VALOR INVENTADO FALHA — E FALHA PARA O LADO PIOR
+
+Em `natureza`, o valor não-numérico `XXINVENTADOXX` devolve **os 21 do sem-filtro**:
+o servidor não consegue converter para inteiro e **ignora o parâmetro em silêncio**.
+Lido isoladamente, isso se lê como "o filtro aceitou e não restringiu porque não
+havia o que restringir" — ou seja, **como sucesso**.
+
+O que salva é a terceira medição: `natureza=20` devolve 0. Só o par
+(*válido que zera* + *válido que não zera*) prova que o parâmetro é honrado.
+⚠️ No TCE-BA o mesmo controle falhou na direção oposta (inventado = 0, igual a um
+tipo válido porém ausente). **O controle do valor inventado é bom, mas não é
+universal — confira se ele discrimina antes de confiar nele.**
+
+### ⚠️ `natureza` e `tempDataLista` não estão na tela
+
+Os dois são parâmetros válidos de `_ListarExcertoIntegra` e só aparecem em
+`DetalhesExcerto.js`. A tela principal **não os envia** — o combo `ddNatureza`
+existe no formulário, é populado por AJAX (225 opções) e **seu valor é descartado
+antes do POST** (ver `PesquisarExcertoIntegra` em `TextualDadosProcesso.js`).
+Ou seja: **há um filtro na tela do TCE-MG que a própria tela não usa.**
+
+---
+
+## 10. 🔴 RATE LIMIT — MEDIDO, E É POR CRIAÇÃO DE SESSÃO
+
+Descoberto derrubando o portal para a própria suíte de testes: depois de ~20 sessões
+abertas em poucos minutos, `GET /` passa a responder
+
+```
+HTTP 429  ·  54 bytes  ·  "The custom error module does not recognize this error."
+sem Retry-After
+```
+
+🔴 **E ele continua mandando `set-cookie`** — `BIGipServerOCI-…` e `TS01bf607f` (os
+dois do F5). O que some é só o `ASP.NET_SessionId`. Quem checar "recebi cookie?" em
+vez de "recebi *o* cookie?" segue adiante e colhe 302 → `LogOff` em toda requisição.
+
+⚠️ Persistiu por **mais de 60 s** em teste direto; recuperou sozinho depois.
+✅ A correção é **reusar a sessão**: uma serve para muitas buscas. O `TCEMGNavigator`
+guarda o cookie, tenta 4 vezes com espera crescente, e `TCEMGChecker`/`bin/jur`
+recebem a mesma instância por injeção.
+
+---
+
+## 11. Prints desta seção
+
+| Arquivo | O que mostra |
+|---|---|
+| `03.00-home-mapjuris.png` | home (é por ela que a sessão nasce) |
+| `03.01-form-antes-da-busca.png` | formulário limpo, combos já populados |
+| `03.02-form-preenchido-2025.png` | termo + janela + restrição marcada |
+| `03.03-resultados-grid.png` | grid montado, **controles de busca ainda visíveis** |
+| `03.04-rodape-total-e-paginacao.png` | total, "registros por página" e a paginação |
+| `03.05-card-primeiro-resultado.png` | um card inteiro |
+| `03.06-card-legendas-abertas.png` | as seis seções com as legendas expandidas |
+| `03.07-modal-como-pesquisar.png` | a sintaxe oficial dos conectores |
+| `03.08-permalink-aba-limpa.png` | ✅ permalink em contexto novo, com ementa |
+| `03-card-resultado.html` | HTML cru do card (para o `jur-fixer`) |
+| `03-xhr-da-busca.txt` | os XHR do clique em Pesquisar até o grid montar |
+
+---
+
+## 12. Pendências declaradas (o que este slot NÃO fechou)
+
+- **`_ListarTituloResenha` (Teses/Súmulas)**: o contrato responde e está exposto em
+  `jur tcemg --teses "<termo>"`, mas o **grid dele
+  (`ConsultarInformacaoResenha`) não foi mapeado** e não há parser — o comando diz
+  se há tese sobre o tema, não serve para citar.
+- **`_DetalhesResenhaExcerto` e `ConsultarInformacaoExcertoVinculoResenha`**
+  (excertos ligados a uma tese) não foram tocados.
+- **`GerarExcel=true`** existe no contrato do grid e **não foi testado** — pode ser
+  uma via de exportação em lote.
+- **Ordenação** (`strNomeCampoOrdenar` / `tipoOrdenacao`) não foi provada; a ordem
+  default parece ser por data de publicação decrescente, **não medida**.
+- **`tempDataLista`** (parâmetro visto em `DetalhesExcerto.js`) não foi testado.
+- **`strFiltro`** (a busca por coluna do GridHelper) não foi testada.
+- **O acervo anterior a 2008** não foi medido (o crawler assume 2008 como piso).
+- **O TCJuris continua bloqueado** e não foi retestado hoje.

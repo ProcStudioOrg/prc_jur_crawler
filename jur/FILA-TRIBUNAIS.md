@@ -1241,7 +1241,7 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 25 | **TCDF** | DF | ✅ **o DF é ente único — não há municípios nem TCM-DF**, e isso foi provado por **ausência de combo de município** no formulário (método do TCE-PR), não por pesquisa fora do portal. A porta é a **API REST pública sobre Elasticsearch** (`api-busca-publica.tc.df.gov.br/jurisprudencia/`, extraída do bundle Vue, sem captcha) | ok 20/08 |
 | 26 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** | pendente |
 | 27 | **TCE-ES** | ES | | pendente |
-| 28 | **TCE-MG** | MG | 🔴 o portal que se chama "Jurisprudência" (**TCJuris**) está atrás de **reCAPTCHA v2 conferido no servidor**; a porta aberta é o **MapJuris** (`/TextualDadosProcesso`, sem captcha) — **busca medida, falta o segundo salto do grid e o crawler** | parcial 16/08 |
+| 28 | **TCE-MG** | MG | 🔴 o portal que se chama "Jurisprudência" (**TCJuris**) está atrás de **reCAPTCHA v2 conferido no servidor**; a porta aberta é o **MapJuris** (`/TextualDadosProcesso`, sem captcha) — busca mapeada em 16/08, **crawler fechado em 20/08** (2º salto do grid, Fase 3b, operadores, filtros e rate limit medidos) | ok 20/08 |
 | 29 | **TCE-CE** | CE | ✅ TCM-CE extinto em 2017 e o acervo **migrou** — confirmado por medição (186 localidades no combo, **inclusive FORTALEZA**; processos trazem "PROCESSO MIGRADO DO TCM (SGP)"). A porta é a **API REST do SPA Contexto** (`contexto-api…/documentos/buscar`, Elasticsearch, sem captcha) — **busca, filtros, paginação e download do PDF medidos; falta a lista de tipos "Documentos de Decisão" e o crawler** | parcial 18/08 |
 | 30 | **TCE-GO** | GO | ⚠️ municípios goianos são do **TCM-GO** — **NÃO confirmado por medição** (o formulário não tem combo de município). A porta é a **API REST do SPA Iago** (`iago-search-api…/decisions/search`, Elasticsearch, sem captcha) — **busca, 13 filtros, agregações, paginação até o fim do acervo (383.075) e inteiro teor em texto medidos; falta operadores booleanos, `number=`/`process=` isolados e o crawler** | parcial 19/08 |
 
@@ -1972,6 +1972,11 @@ foi estourado de propósito: só o declarado foi lido.
 — o gatilho da regra da dívida continua armado.** O próximo slot das 20:00 deve pegar o
 **TCE-MG**, o mais antigo, em vez de abrir tribunal novo.
 
+✅ **Foi o que aconteceu em 20/08/2026** — o TCE-MG fechou 🟢 e sobraram **dois** `parcial`
+(TCE-CE 18/08, TCE-GO 19/08). **Abaixo de 3, o gatilho desarma**: o próximo slot das 20:00
+volta a pegar o primeiro `pendente`, como o das 16:00. Se um novo `parcial` aparecer, o
+gatilho rearma e o alvo passa a ser o **TCE-CE**, que é o mais antigo da fila.
+
 📌 **O que o TCE-MG (16/08/2026, slot 20:00) ensinou — `parcial`, leia
 [`human-codegen/TCEMG/`](human-codegen/TCEMG/).** Sexto alvo do Bloco 5, e a lição é que
 **o portal que se chama "Jurisprudência" pode ser o bloqueado enquanto o aberto tem outro
@@ -2334,3 +2339,104 @@ e `/boletim/` (189) só tiveram o total medido; `filter[artigo|paragrafo|inciso|
 **card → documento pela TELA** não foi mapeada (o clique no marcador `e-doc` não casou o
 seletor: timeout de 8 s, zero XHR) — o caminho até o documento está provado **pela API e
 pelo permalink**, não pelo clique. ⏱️ Timebox **não estourado**: 16:00 → 16:34, ~34 min.
+
+
+📌 **O que o TCE-MG (20/08/2026, slot 20:00) ensinou ao FECHAR o `parcial` de 16/08 —
+🟢, leia [`CLAUDE-TCEMG.md`](CLAUDE-TCEMG.md).** Segunda vez que o slot da dívida paga
+uma dívida de crawler, e a lição de abertura é a mais desconfortável do repo até agora:
+**uma medição correta pode sustentar uma conclusão errada, e o `parcial` foi gravado com
+essa conclusão dentro.** As lições valem para os 2 `parcial` restantes e para os demais TCEs:
+
+- 🔴 **O `parcial` de 16/08 afirmava: "os três `tipoPesquisa` devolvem resposta byte a
+  byte idêntica (mesmo md5), logo o filtro é ignorado". A MEDIÇÃO ESTAVA CERTA E A
+  CONCLUSÃO ESTAVA ERRADA.** O que se comparou foi a **casca** — e a casca do MapJuris é
+  **sempre 9.035 bytes** quando há resultado e **sempre 1.656** quando não há, para
+  qualquer termo, qualquer janela e qualquer parâmetro. Ela não carrega informação nenhuma
+  sobre o filtro. Contando **linhas** no segundo salto: `IndexExcerto` = 11, `EXCERTO` =
+  11, **`INDEXACAO` = 6** — subconjunto de verdade. ⚠️ **Quando duas respostas são
+  idênticas byte a byte, a primeira pergunta é "esta resposta contém o resultado?", não
+  "o filtro foi ignorado?".**
+- 🔴 **SEXTA CASCA DE HTTP 200 DO REPO, e é a mais silenciosa: `<tr></tr>` vazio com o
+  total certo.** O segundo salto (`ConsultarInformacaoExcertoIntegra`) só monta as linhas
+  se receber de volta, no campo `gridHelper`, **o JSON de colunas que veio no
+  `<input id='hidden_gridExcertoIntegra'>` da casca**. Sem ele: HTTP 200,
+  `totalRegistros` **correto**, `htmlGrid` sem uma célula. Não é erro, não é zero — é uma
+  tabela vazia. O cliente literalmente **diz ao servidor como montar o HTML** (placeholders
+  `{DSC_EXCERTO}`, `{HtmlTableProcesso}`…). **Contrato inédito: o template de renderização
+  faz round-trip.**
+- 🔴 **A GRID SEGUE A ÚLTIMA BUSCA DA SESSÃO — o `trocaDePagina.do` do TJAC em ASP.NET.**
+  Buscar `pregão` (7), disparar `nepotismo` e então paginar com o `gridHelper` de `pregão`
+  devolve **os 2 de nepotismo**, HTTP 200, cards válidos, **sem sintoma nenhum**. O
+  `gridHelper` carrega o template de colunas; quem guarda a consulta é a **sessão do
+  servidor**. Terceiro tribunal do repo com esse defeito.
+- 🔴 **RATE LIMIT POR CRIAÇÃO DE SESSÃO — e o 429 AINDA MANDA `set-cookie`.** Descoberto
+  derrubando o portal para a própria suíte de testes: depois de ~20 sessões em poucos
+  minutos, `GET /` responde **HTTP 429** com 54 bytes (`"The custom error module does not
+  recognize this error."`), **sem `Retry-After`** — e continuando a mandar os dois cookies
+  do F5. **O que some é só o `ASP.NET_SessionId`.** Quem checar "recebi cookie?" em vez de
+  "recebi **o** cookie?" segue adiante e colhe 302 → `/Login/LogOff` em toda requisição.
+  ✅ A correção é **reusar a sessão** (uma serve para muitas buscas) — não esperar.
+  ⚠️ **Não rode instâncias em paralelo contra o TCE-MG.**
+- 🔴 **A BASE É SÓ DE EXCERTOS DE CONSULTA, e isso só apareceu na Fase 3b.** Medido de
+  duas formas independentes: as 21 ementas de `licitação`/2025 começam **todas** com
+  `CONSULTA.`, e `natureza=17` devolve **exatamente** o total do sem-filtro em duas janelas
+  distantes (2025: 21 = 21; 2013: 84 = 84), enquanto DENÚNCIA, REPRESENTAÇÃO e
+  ACOMPANHAMENTO dão **0** nas duas. Contas julgadas, denúncias e representações **não
+  estão aqui**. É a "Jurisprudência Selecionada" do TCDF — só que **sem a base larga por
+  trás**, que ficou no TCJuris atrás do captcha. **O mapeamento de 16/08 media a busca e
+  não sabia o que a base continha.**
+- ✅ **E ISSO FECHOU A RESSALVA DO BLOCO 5 POR MEDIÇÃO DO ACERVO, não por ausência de
+  combo:** as ementas trazem `MUNICÍPIO`, `CÂMARA MUNICIPAL`, `PREFEITURA`,
+  `INSTITUTO DE PREVIDÊNCIA [municipal]` — MG não tem TCM e as consultas municipais estão
+  mesmo no TCE. **Em TCE-BA, TCE-SP, TCE-RJ e TCE-GO a mesma afirmação se apoia só na
+  ausência do filtro de município, que é evidência indireta.** O acervo é prova melhor —
+  procure-a nos próximos.
+- 🔴 **O OPERADOR `NÃO` RESPONDE, RESTRINGE E MESMO ASSIM ESTÁ ERRADO: ELE PERDE
+  RESULTADO.** `licitação NÃO pregão` = **6** quando `A \ B`, calculado **id a id**, é
+  **14** — e os 6 são **todos legítimos** (⊆ A\B). Não é operador quebrado (isso zeraria e
+  daria sintoma): é um operador que devolve **número plausível e menor**, entregando 43% do
+  recorte pedido. ⚠️ **Décimo quinto conjunto de operadores do repo, e o primeiro em que o
+  operador está PARCIALMENTE certo** — pior que estar todo errado.
+- ✅ **E foi o CONJUNTO DE IDs que provou, não a contagem.** `E` = 7 e `OU` = 21 batem
+  exatamente com A∩B e A∪B calculados no cliente; se o `NÃO` só tivesse sido conferido por
+  contagem, "6 é menor que 21, logo excluiu" passaria. **Quando der para comparar
+  conjuntos, compare conjuntos.**
+- 🔴 **`NAO` sem til ZERA e o espaço NÃO é conectivo** (`licitação pregão` = 0): aqui o
+  zero de sintaxe é **indistinguível** do zero de ausência. ⚠️ E é o **espelho do TJAC**,
+  onde é o `NÃO` acentuado que não vale. **Não herde operador de tribunal nenhum.**
+- 🔴 **EM `natureza` O CONTROLE DO VALOR INVENTADO FALHA PARA O LADO PIOR:**
+  `XXINVENTADOXX` devolve **o total do sem-filtro**, porque o servidor não converte para
+  inteiro e **ignora o parâmetro em silêncio** — o que se lê como sucesso. Só o par
+  (`17` = 21, `20` = 0) prova que o filtro é honrado. ⚠️ No TCE-BA o mesmo controle falhou
+  na direção **oposta** (inventado = 0, igual a um tipo válido porém ausente). **O
+  controle é bom, mas não é universal, e falha nas duas direções — confira se ele
+  discrimina antes de confiar nele.**
+- 🔴 **`nomeRelator` É DECORATIVO**: mandado sozinho devolve o total sem filtro, com HTTP
+  200 e resultados plausíveis. Quem filtra é o `codRelator` (44 = 7, 100 = 6, 71 = 1,
+  inventado = 0). ⚠️ **E há um filtro na tela que a própria tela não usa**: o combo
+  Natureza é populado por AJAX com 225 opções e **seu valor é descartado antes do POST** —
+  o parâmetro só existe em `DetalhesExcerto.js`.
+- ✅ **O PERMALINK É BOM, E O `curl` O REPROVA POR ENGANO.** Em aba limpa (Playwright,
+  contexto novo, sem cookie) `/DetalhesExcerto/<id>` renderiza **54.707 chars com a EMENTA
+  visível**. O `GET` cru devolve 200 com **28.859 B de casca**. ⚠️ **O falso negativo aqui
+  é especialmente convincente porque a casca tem 28 KB e parece completa** — a lição do
+  TJRJ-eJURIS e do TCDF, agora com um disfarce melhor.
+- ⚠️ **O href do PDF no card é relativo e QUEBRADO** (`Excerto/ExportPdf/<id>` resolve
+  para 404); o portal disfarça reescrevendo-o por JS **depois** que o grid carrega. Quem
+  copiar o href cru do HTML pega o 404.
+- ⚠️ **A busca sem janela de data NÃO RESPONDE** (abortada em 240 s; um mês = 1,7 s, um
+  ano = 12–25 s). Não é bloqueio, é **custo** — e explica a busca que "trava" no navegador.
+  O crawler fatia por ano obrigatoriamente. ⚠️ **Isso também custou um teste**: três buscas
+  de ano cheio em sequência bateram no timeout numa tarde ruim.
+- ⚠️ **O banner de cookies (`#cc--main`) fica por cima do formulário e intercepta o
+  clique** — sem tratá-lo, todo `click()` do Playwright estoura em timeout, o que se lê
+  como "o campo não existe".
+
+⚠️ **Pendências declaradas do TCE-MG:** `_ListarTituloResenha` (Teses/Súmulas) está exposto
+em `--teses`, mas o **grid dela (`ConsultarInformacaoResenha`) não foi mapeado** e não há
+parser — o comando diz **se há** tese, não serve para citar; `_DetalhesResenhaExcerto` e
+`ConsultarInformacaoExcertoVinculoResenha` **não tocados**; **`GerarExcel=true` existe no
+contrato do grid e NÃO foi testado** (pode ser exportação em lote); a **ordenação**
+(`strNomeCampoOrdenar`/`tipoOrdenacao`) **não provada**; `tempDataLista` e `strFiltro` não
+testados; o **acervo anterior a 2008 não foi medido**; e o **TCJuris não foi retestado**.
+⏱️ Timebox **não estourado**: 20:00 → 21:15, ~75 min (retomada, não mapeamento do zero).
