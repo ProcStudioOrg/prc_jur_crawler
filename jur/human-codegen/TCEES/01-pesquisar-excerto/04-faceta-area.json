@@ -1,0 +1,57 @@
+{
+ "campoFormulario": "AreaAssuntoExcertoMenuItem.IdArea",
+ "truncadaEm100": false,
+ "total": 10,
+ "itens": [
+  {
+   "valor": "6",
+   "rotulo": "Administração Pública",
+   "contador": 1172
+  },
+  {
+   "valor": "9",
+   "rotulo": "Contratação Direta",
+   "contador": 360
+  },
+  {
+   "valor": "4",
+   "rotulo": "Contratos e Convênios",
+   "contador": 847
+  },
+  {
+   "valor": "2",
+   "rotulo": "Finanças Públicas",
+   "contador": 1655
+  },
+  {
+   "valor": "1",
+   "rotulo": "Licitações",
+   "contador": 2378
+  },
+  {
+   "valor": "7",
+   "rotulo": "Outros",
+   "contador": 84
+  },
+  {
+   "valor": "3",
+   "rotulo": "Pessoal",
+   "contador": 1240
+  },
+  {
+   "valor": "8",
+   "rotulo": "Previdência",
+   "contador": 486
+  },
+  {
+   "valor": "10",
+   "rotulo": "Processual",
+   "contador": 2668
+  },
+  {
+   "valor": "5",
+   "rotulo": "Responsabilidade",
+   "contador": 1218
+  }
+ ]
+}

@@ -1,0 +1,122 @@
+{
+ "campoFormulario": "SubespecieProcessoMenuItem.IdSubespecie",
+ "truncadaEm100": false,
+ "total": 23,
+ "itens": [
+  {
+   "valor": "17",
+   "rotulo": "Admissão",
+   "contador": 17
+  },
+  {
+   "valor": "18",
+   "rotulo": "Aposentadoria",
+   "contador": 71
+  },
+  {
+   "valor": "261",
+   "rotulo": "Comissionados",
+   "contador": 1
+  },
+  {
+   "valor": "254",
+   "rotulo": "Convertida",
+   "contador": 623
+  },
+  {
+   "valor": "253",
+   "rotulo": "Determinada",
+   "contador": 109
+  },
+  {
+   "valor": "22",
+   "rotulo": "Edital de Concurso",
+   "contador": 57
+  },
+  {
+   "valor": "262",
+   "rotulo": "Efetivos",
+   "contador": 10
+  },
+  {
+   "valor": "7",
+   "rotulo": "Governador",
+   "contador": 5
+  },
+  {
+   "valor": "252",
+   "rotulo": "Instaurada",
+   "contador": 151
+  },
+  {
+   "valor": "296",
+   "rotulo": "Omissão de Contratação",
+   "contador": 6
+  },
+  {
+   "valor": "285",
+   "rotulo": "Omissão de Folha de Pagamento",
+   "contador": 5
+  },
+  {
+   "valor": "280",
+   "rotulo": "Omissão de Prestação de Contas de Ordenador",
+   "contador": 1
+  },
+  {
+   "valor": "282",
+   "rotulo": "Omissão de Prestação de Contas Mensal",
+   "contador": 16
+  },
+  {
+   "valor": "9",
+   "rotulo": "Ordenador",
+   "contador": 731
+  },
+  {
+   "valor": "256",
+   "rotulo": "Pensão",
+   "contador": 20
+  },
+  {
+   "valor": "257",
+   "rotulo": "Prefeito",
+   "contador": 402
+  },
+  {
+   "valor": "269",
+   "rotulo": "Prestação de Contas Extraordinária",
+   "contador": 1
+  },
+  {
+   "valor": "20",
+   "rotulo": "Reforma",
+   "contador": 5
+  },
+  {
+   "valor": "14",
+   "rotulo": "Relatório de Gestão Fiscal",
+   "contador": 1
+  },
+  {
+   "valor": "13",
+   "rotulo": "Relatório Resumido de Execução Orçamentária",
+   "contador": 1
+  },
+  {
+   "valor": "19",
+   "rotulo": "Reserva",
+   "contador": 3
+  },
+  {
+   "valor": "21",
+   "rotulo": "Revisão",
+   "contador": 3
+  },
+  {
+   "valor": "216",
+   "rotulo": "Solicitação de Auditoria/Inspeção",
+   "contador": 6
+  }
+ ]
+}

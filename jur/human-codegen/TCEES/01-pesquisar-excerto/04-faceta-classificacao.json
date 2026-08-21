@@ -1,0 +1,432 @@
+{
+ "campoFormulario": "ClassificacaoProcessoMenuItem.IdClassificacaoProcesso",
+ "truncadaEm100": false,
+ "total": 85,
+ "itens": [
+  {
+   "valor": "1357",
+   "rotulo": "Admissão de Servidores Comissionados",
+   "contador": 1
+  },
+  {
+   "valor": "1358",
+   "rotulo": "Admissão de Servidores Efetivos",
+   "contador": 10
+  },
+  {
+   "valor": "234,2053",
+   "rotulo": "Agravo",
+   "contador": 133
+  },
+  {
+   "valor": "170",
+   "rotulo": "Atos Sujeitos a Registro - Admissão",
+   "contador": 17
+  },
+  {
+   "valor": "171",
+   "rotulo": "Atos Sujeitos a Registro - Aposentadoria",
+   "contador": 71
+  },
+  {
+   "valor": "280",
+   "rotulo": "Atos Sujeitos a Registro - Pensão",
+   "contador": 20
+  },
+  {
+   "valor": "173",
+   "rotulo": "Atos Sujeitos a Registro - Reforma",
+   "contador": 5
+  },
+  {
+   "valor": "172",
+   "rotulo": "Atos Sujeitos a Registro - Reserva",
+   "contador": 3
+  },
+  {
+   "valor": "174",
+   "rotulo": "Atos Sujeitos a Registro - Revisão de Ato",
+   "contador": 3
+  },
+  {
+   "valor": "1795",
+   "rotulo": "Auditoria Diligência",
+   "contador": 1
+  },
+  {
+   "valor": "1787",
+   "rotulo": "Auditoria Edital de Licitação",
+   "contador": 1
+  },
+  {
+   "valor": "1789",
+   "rotulo": "Auditoria Especial",
+   "contador": 15
+  },
+  {
+   "valor": "1788",
+   "rotulo": "Auditoria Extraordinária",
+   "contador": 1
+  },
+  {
+   "valor": "1784",
+   "rotulo": "Auditoria Ordinária",
+   "contador": 118
+  },
+  {
+   "valor": "1792",
+   "rotulo": "Auditoria Ordinária Engenharia",
+   "contador": 3
+  },
+  {
+   "valor": "1783",
+   "rotulo": "Auditoria Solicitação",
+   "contador": 8
+  },
+  {
+   "valor": "2042",
+   "rotulo": "Auditoria Solicitação da Assembleia Legislativa",
+   "contador": 1
+  },
+  {
+   "valor": "2043",
+   "rotulo": "Auditoria Solicitação da Câmara Municipal",
+   "contador": 1
+  },
+  {
+   "valor": "1761",
+   "rotulo": "Comunicação Instauração Tomada Contas",
+   "contador": 6
+  },
+  {
+   "valor": "285",
+   "rotulo": "Conflito de Competência",
+   "contador": 1
+  },
+  {
+   "valor": "1803,195,2047",
+   "rotulo": "Consulta",
+   "contador": 917
+  },
+  {
+   "valor": "1733",
+   "rotulo": "Contas Recurso",
+   "contador": 1
+  },
+  {
+   "valor": "291",
+   "rotulo": "Controle Externo - Fiscalização - Acompanhamento",
+   "contador": 78
+  },
+  {
+   "valor": "186",
+   "rotulo": "Controle Externo - Fiscalização - Auditoria",
+   "contador": 883
+  },
+  {
+   "valor": "278",
+   "rotulo": "Controle Externo - Fiscalização - Denúncia",
+   "contador": 340
+  },
+  {
+   "valor": "289",
+   "rotulo": "Controle Externo - Fiscalização - Inspeção",
+   "contador": 43
+  },
+  {
+   "valor": "290",
+   "rotulo": "Controle Externo - Fiscalização - Levantamento",
+   "contador": 10
+  },
+  {
+   "valor": "292",
+   "rotulo": "Controle Externo - Fiscalização - Monitoramento",
+   "contador": 21
+  },
+  {
+   "valor": "279",
+   "rotulo": "Controle Externo - Fiscalização - Representação",
+   "contador": 2272
+  },
+  {
+   "valor": "2144",
+   "rotulo": "Convertido de Contas",
+   "contador": 2
+  },
+  {
+   "valor": "2080",
+   "rotulo": "Corregedoria - Investigação Preliminar",
+   "contador": 1
+  },
+  {
+   "valor": "1800,2027",
+   "rotulo": "Denúncia",
+   "contador": 199
+  },
+  {
+   "valor": "175",
+   "rotulo": "Edital de Concurso",
+   "contador": 57
+  },
+  {
+   "valor": "233,2052,1930",
+   "rotulo": "Embargos de Declaração",
+   "contador": 202
+  },
+  {
+   "valor": "1805",
+   "rotulo": "Estudos de Casos Especiais",
+   "contador": 1
+  },
+  {
+   "valor": "293",
+   "rotulo": "Exame de Instrumento Convocatório",
+   "contador": 4
+  },
+  {
+   "valor": "283",
+   "rotulo": "Exceção de Impedimento",
+   "contador": 1
+  },
+  {
+   "valor": "284",
+   "rotulo": "Exceção de Suspeição",
+   "contador": 9
+  },
+  {
+   "valor": "2036",
+   "rotulo": "Fiscalização Ordinária - Auditoria",
+   "contador": 11
+  },
+  {
+   "valor": "2038",
+   "rotulo": "Fiscalização Ordinária - Levantamento",
+   "contador": 3
+  },
+  {
+   "valor": "1811",
+   "rotulo": "Fornecimento Informações",
+   "contador": 5
+  },
+  {
+   "valor": "2061",
+   "rotulo": "Incidente de Suspeição",
+   "contador": 11
+  },
+  {
+   "valor": "1995",
+   "rotulo": "Instauração de Tomada de Contas Especial",
+   "contador": 5
+  },
+  {
+   "valor": "2162",
+   "rotulo": "Oitiva Sobre Apuração de Dano",
+   "contador": 5
+  },
+  {
+   "valor": "2121",
+   "rotulo": "Omissão",
+   "contador": 15
+  },
+  {
+   "valor": "2161",
+   "rotulo": "Omissão de Contratação",
+   "contador": 6
+  },
+  {
+   "valor": "2131",
+   "rotulo": "Omissão de Folha de Pagamento",
+   "contador": 5
+  },
+  {
+   "valor": "2126",
+   "rotulo": "Omissão de Prestação de Contas Anual de Ordenador",
+   "contador": 1
+  },
+  {
+   "valor": "2128",
+   "rotulo": "Omissão de Prestação de Contas Mensal",
+   "contador": 16
+  },
+  {
+   "valor": "2001",
+   "rotulo": "Omissão na Remessa - PCB",
+   "contador": 1
+  },
+  {
+   "valor": "232,2051,1925",
+   "rotulo": "Pedido de Reexame",
+   "contador": 433
+  },
+  {
+   "valor": "294,2054",
+   "rotulo": "Pedido de Revisão",
+   "contador": 105
+  },
+  {
+   "valor": "1842",
+   "rotulo": "Pessoal TCEES",
+   "contador": 2
+  },
+  {
+   "valor": "286,2063",
+   "rotulo": "Prejulgado",
+   "contador": 18
+  },
+  {
+   "valor": "1722",
+   "rotulo": "Prestação de Contas Anual",
+   "contador": 54
+  },
+  {
+   "valor": "1975",
+   "rotulo": "Prestação de Contas Anual - Ordenadores",
+   "contador": 4
+  },
+  {
+   "valor": "162",
+   "rotulo": "Prestação de Contas Anual de Governador",
+   "contador": 5
+  },
+  {
+   "valor": "163",
+   "rotulo": "Prestação de Contas Anual de Ordenador",
+   "contador": 731
+  },
+  {
+   "valor": "295",
+   "rotulo": "Prestação de Contas Anual de Prefeito",
+   "contador": 402
+  },
+  {
+   "valor": "1759",
+   "rotulo": "Prestação de Contas Bimestral",
+   "contador": 1
+  },
+  {
+   "valor": "1727",
+   "rotulo": "Prestação de Contas de Convênio",
+   "contador": 1
+  },
+  {
+   "valor": "1364",
+   "rotulo": "Prestação de Contas Extraordinária",
+   "contador": 1
+  },
+  {
+   "valor": "1723",
+   "rotulo": "Prestação de Contas Mensal",
+   "contador": 1
+  },
+  {
+   "valor": "54",
+   "rotulo": "Processo de Estabilidade",
+   "contador": 1
+  },
+  {
+   "valor": "2065",
+   "rotulo": "Questão de Ordem",
+   "contador": 2
+  },
+  {
+   "valor": "231,1928,2050",
+   "rotulo": "Recurso de Reconsideração",
+   "contador": 980
+  },
+  {
+   "valor": "1926",
+   "rotulo": "Recurso de Revisão",
+   "contador": 9
+  },
+  {
+   "valor": "1922",
+   "rotulo": "Recurso Inominado",
+   "contador": 1
+  },
+  {
+   "valor": "2076",
+   "rotulo": "Recursos Humanos > Recurso Inominado",
+   "contador": 4
+  },
+  {
+   "valor": "1735",
+   "rotulo": "Reexame de Decisão",
+   "contador": 12
+  },
+  {
+   "valor": "167",
+   "rotulo": "Relatório de Gestão Fiscal",
+   "contador": 1
+  },
+  {
+   "valor": "166",
+   "rotulo": "Relatório Resumido de Execução Orçamentária",
+   "contador": 1
+  },
+  {
+   "valor": "2034,1906",
+   "rotulo": "Representação",
+   "contador": 472
+  },
+  {
+   "valor": "1932",
+   "rotulo": "Requerimento",
+   "contador": 2
+  },
+  {
+   "valor": "178",
+   "rotulo": "Solicitação de Auditoria/Inspeção",
+   "contador": 6
+  },
+  {
+   "valor": "2160",
+   "rotulo": "Termo de Ajustamento de Gestão",
+   "contador": 7
+  },
+  {
+   "valor": "1731",
+   "rotulo": "Tomada de Contas",
+   "contador": 6
+  },
+  {
+   "valor": "1732",
+   "rotulo": "Tomada de Contas Especial",
+   "contador": 9
+  },
+  {
+   "valor": "1990",
+   "rotulo": "Tomada de Contas Especial - Auditoria",
+   "contador": 19
+  },
+  {
+   "valor": "1997",
+   "rotulo": "Tomada de Contas Especial - Denúncia",
+   "contador": 4
+  },
+  {
+   "valor": "1998",
+   "rotulo": "Tomada de Contas Especial - Representação",
+   "contador": 4
+  },
+  {
+   "valor": "276",
+   "rotulo": "Tomada de Contas Especial Convertida",
+   "contador": 623
+  },
+  {
+   "valor": "275",
+   "rotulo": "Tomada de Contas Especial Determinada",
+   "contador": 109
+  },
+  {
+   "valor": "274",
+   "rotulo": "Tomada de Contas Especial Instaurada",
+   "contador": 151
+  },
+  {
+   "valor": "287",
+   "rotulo": "Uniformização de Jurisprudência",
+   "contador": 5
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "campoFormulario": "AtividadeProcessoMenuItem.IdAtividade",
+ "truncadaEm100": false,
+ "total": 2,
+ "itens": [
+  {
+   "valor": "1",
+   "rotulo": "Administração Geral",
+   "contador": 27
+  },
+  {
+   "valor": "2",
+   "rotulo": "Controle Externo",
+   "contador": 9703
+  }
+ ]
+}

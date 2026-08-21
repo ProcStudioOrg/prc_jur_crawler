@@ -1,0 +1,22 @@
+{
+ "campoFormulario": "ColegiadoMenuItem.IdColegiado",
+ "truncadaEm100": false,
+ "total": 3,
+ "itens": [
+  {
+   "valor": "2",
+   "rotulo": "1ª Câmara",
+   "contador": 1817
+  },
+  {
+   "valor": "3",
+   "rotulo": "2ª Câmara",
+   "contador": 1690
+  },
+  {
+   "valor": "1",
+   "rotulo": "Plenário",
+   "contador": 6223
+  }
+ ]
+}

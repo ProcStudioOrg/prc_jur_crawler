@@ -1,0 +1,27 @@
+{
+ "campoFormulario": "PeriodoDataMenuItem.CriacaoData",
+ "truncadaEm100": false,
+ "total": 4,
+ "itens": [
+  {
+   "valor": "1",
+   "rotulo": "Último mês",
+   "contador": 16
+  },
+  {
+   "valor": "2",
+   "rotulo": "Último bimestre",
+   "contador": 82
+  },
+  {
+   "valor": "6",
+   "rotulo": "Último semestre",
+   "contador": 244
+  },
+  {
+   "valor": "-1",
+   "rotulo": "Data de disponibilização da deliberação",
+   "contador": null
+  }
+ ]
+}

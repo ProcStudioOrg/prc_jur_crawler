@@ -1,0 +1,72 @@
+[
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Área"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Tema"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Subtema"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Período"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Tipo de deliberação"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Colegiado"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Norma"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Palavra-chave"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Atividade"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Natureza"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Espécie"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Subespécie"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Classificação"
+  },
+  {
+    "tag": "H3",
+    "cls": "titulo-facet",
+    "texto": "Relator"
+  }
+]

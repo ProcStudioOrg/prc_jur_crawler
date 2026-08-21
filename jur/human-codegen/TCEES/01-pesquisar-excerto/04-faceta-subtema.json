@@ -1,0 +1,507 @@
+{
+ "campoFormulario": "SubtemaAssuntoExcertoMenuItem.IdSubtema",
+ "truncadaEm100": true,
+ "total": 100,
+ "itens": [
+  {
+   "valor": "409",
+   "rotulo": "Admissibilidade processual",
+   "contador": 283
+  },
+  {
+   "valor": "390",
+   "rotulo": "Admissibilidade recursal",
+   "contador": 130
+  },
+  {
+   "valor": "417",
+   "rotulo": "Aplicação de Multa",
+   "contador": 51
+  },
+  {
+   "valor": "178",
+   "rotulo": "Aplicação mínima em educação",
+   "contador": 76
+  },
+  {
+   "valor": "123",
+   "rotulo": "Atestado de capacidade técnica",
+   "contador": 91
+  },
+  {
+   "valor": "412",
+   "rotulo": "Ausência de Irregularidade",
+   "contador": 63
+  },
+  {
+   "valor": "450",
+   "rotulo": "Cláusulas editalícias",
+   "contador": 51
+  },
+  {
+   "valor": "382",
+   "rotulo": "Competência do TCEES",
+   "contador": 222
+  },
+  {
+   "valor": "234",
+   "rotulo": "Competências e Plano de Carreira",
+   "contador": 48
+  },
+  {
+   "valor": "131",
+   "rotulo": "Competitividade",
+   "contador": 214
+  },
+  {
+   "valor": "220",
+   "rotulo": "Concurso Público",
+   "contador": 211
+  },
+  {
+   "valor": "301",
+   "rotulo": "Consultoria terceirizada",
+   "contador": 123
+  },
+  {
+   "valor": "424",
+   "rotulo": "Contas de Governo",
+   "contador": 78
+  },
+  {
+   "valor": "388",
+   "rotulo": "Contraditório e Ampla Defesa",
+   "contador": 148
+  },
+  {
+   "valor": "222",
+   "rotulo": "Contratação de terceirizados",
+   "contador": 104
+  },
+  {
+   "valor": "221",
+   "rotulo": "Contratação temporária",
+   "contador": 161
+  },
+  {
+   "valor": "344",
+   "rotulo": "Contribuição Previdenciária",
+   "contador": 96
+  },
+  {
+   "valor": "312",
+   "rotulo": "Controle Interno",
+   "contador": 67
+  },
+  {
+   "valor": "101",
+   "rotulo": "Convite",
+   "contador": 47
+  },
+  {
+   "valor": "463",
+   "rotulo": "Covid-19 (Despesas com pessoal)",
+   "contador": 57
+  },
+  {
+   "valor": "169",
+   "rotulo": "Créditos Adicionais",
+   "contador": 71
+  },
+  {
+   "valor": "299",
+   "rotulo": "Culpabilidade",
+   "contador": 103
+  },
+  {
+   "valor": "425",
+   "rotulo": "Dano ao Erário",
+   "contador": 47
+  },
+  {
+   "valor": "190",
+   "rotulo": "Demonstrativo previdenciário",
+   "contador": 51
+  },
+  {
+   "valor": "160",
+   "rotulo": "Demonstrativos Contábeis",
+   "contador": 126
+  },
+  {
+   "valor": "91",
+   "rotulo": "Descrição do objeto licitado",
+   "contador": 138
+  },
+  {
+   "valor": "420",
+   "rotulo": "Determinações e Recomendações",
+   "contador": 47
+  },
+  {
+   "valor": "363",
+   "rotulo": "Dispensa emergencial",
+   "contador": 53
+  },
+  {
+   "valor": "269",
+   "rotulo": "Documentação para pagamento",
+   "contador": 74
+  },
+  {
+   "valor": "174",
+   "rotulo": "Duodécimos",
+   "contador": 68
+  },
+  {
+   "valor": "110",
+   "rotulo": "Edital licitatório",
+   "contador": 46
+  },
+  {
+   "valor": "392",
+   "rotulo": "Embargos de Declaração",
+   "contador": 110
+  },
+  {
+   "valor": "148",
+   "rotulo": "Engenharia (Licitações)",
+   "contador": 118
+  },
+  {
+   "valor": "300",
+   "rotulo": "Erro Grosseiro",
+   "contador": 85
+  },
+  {
+   "valor": "173",
+   "rotulo": "Execução Orçamentária",
+   "contador": 49
+  },
+  {
+   "valor": "253",
+   "rotulo": "Fiscal do contrato",
+   "contador": 123
+  },
+  {
+   "valor": "369",
+   "rotulo": "Fornecedor Exclusivo",
+   "contador": 50
+  },
+  {
+   "valor": "223",
+   "rotulo": "Função e Cargo de Confiança",
+   "contador": 109
+  },
+  {
+   "valor": "307",
+   "rotulo": "Gastos Com Combustível e Transporte",
+   "contador": 76
+  },
+  {
+   "valor": "311",
+   "rotulo": "Gastos Com Diárias",
+   "contador": 84
+  },
+  {
+   "valor": "310",
+   "rotulo": "Gastos com eventos e cursos",
+   "contador": 64
+  },
+  {
+   "valor": "306",
+   "rotulo": "Gastos Com Publicidade e Promoção Pessoal",
+   "contador": 63
+  },
+  {
+   "valor": "241",
+   "rotulo": "Gratificações",
+   "contador": 117
+  },
+  {
+   "valor": "404",
+   "rotulo": "Incidente de Inconstitucionalidade",
+   "contador": 154
+  },
+  {
+   "valor": "378",
+   "rotulo": "Independência das instâncias",
+   "contador": 52
+  },
+  {
+   "valor": "149",
+   "rotulo": "Informática (Licitações)",
+   "contador": 73
+  },
+  {
+   "valor": "428",
+   "rotulo": "Instauração de Tomada de Contas Especial",
+   "contador": 91
+  },
+  {
+   "valor": "413",
+   "rotulo": "Interesse privado (Processual)",
+   "contador": 68
+  },
+  {
+   "valor": "410",
+   "rotulo": "Interesse Processual",
+   "contador": 69
+  },
+  {
+   "valor": "113",
+   "rotulo": "Julgamento das propostas",
+   "contador": 74
+  },
+  {
+   "valor": "403",
+   "rotulo": "Legitimidade processual",
+   "contador": 178
+  },
+  {
+   "valor": "164",
+   "rotulo": "Limite de despesa com pessoal (LRF)",
+   "contador": 117
+  },
+  {
+   "valor": "147",
+   "rotulo": "Limpeza Pública (Licitações)",
+   "contador": 60
+  },
+  {
+   "valor": "193",
+   "rotulo": "Liquidação da despesa",
+   "contador": 189
+  },
+  {
+   "valor": "180",
+   "rotulo": "Manutenção e desenvolvimento do ensino (MDE)",
+   "contador": 68
+  },
+  {
+   "valor": "383",
+   "rotulo": "Medidas Cautelares",
+   "contador": 94
+  },
+  {
+   "valor": "292",
+   "rotulo": "Multa",
+   "contador": 141
+  },
+  {
+   "valor": "298",
+   "rotulo": "Nexo de Causalidade",
+   "contador": 111
+  },
+  {
+   "valor": "274",
+   "rotulo": "Objeto de convênio",
+   "contador": 51
+  },
+  {
+   "valor": "213",
+   "rotulo": "Obrigações contraídas em final de mandato (LRF)",
+   "contador": 54
+  },
+  {
+   "valor": "340",
+   "rotulo": "Outros",
+   "contador": 84
+  },
+  {
+   "valor": "246",
+   "rotulo": "Outros (Agentes Públicos)",
+   "contador": 50
+  },
+  {
+   "valor": "271",
+   "rotulo": "Outros (Contratos e Convênios)",
+   "contador": 83
+  },
+  {
+   "valor": "191",
+   "rotulo": "Outros (Finanças Públicas)",
+   "contador": 73
+  },
+  {
+   "valor": "141",
+   "rotulo": "Outros (Licitação)",
+   "contador": 159
+  },
+  {
+   "valor": "429",
+   "rotulo": "Outros (Processual)",
+   "contador": 103
+  },
+  {
+   "valor": "99",
+   "rotulo": "Parcelamento do objeto",
+   "contador": 82
+  },
+  {
+   "valor": "161",
+   "rotulo": "Patrimônio",
+   "contador": 83
+  },
+  {
+   "valor": "402",
+   "rotulo": "Perda do Objeto",
+   "contador": 202
+  },
+  {
+   "valor": "94",
+   "rotulo": "Pesquisa de preços",
+   "contador": 150
+  },
+  {
+   "valor": "473",
+   "rotulo": "Planilha de custos e formação de preços",
+   "contador": 54
+  },
+  {
+   "valor": "349",
+   "rotulo": "Plano de amortização previdenciário",
+   "contador": 49
+  },
+  {
+   "valor": "333",
+   "rotulo": "Poder Legislativo",
+   "contador": 185
+  },
+  {
+   "valor": "103",
+   "rotulo": "Pregão",
+   "contador": 80
+  },
+  {
+   "valor": "400",
+   "rotulo": "Prescrição e Decadência",
+   "contador": 179
+  },
+  {
+   "valor": "273",
+   "rotulo": "Prestação de contas de convênio",
+   "contador": 57
+  },
+  {
+   "valor": "127",
+   "rotulo": "Princípio da publicidade",
+   "contador": 51
+  },
+  {
+   "valor": "90",
+   "rotulo": "Projeto básico/Termo de referência",
+   "contador": 140
+  },
+  {
+   "valor": "120",
+   "rotulo": "Qualificação econômico-financeira",
+   "contador": 114
+  },
+  {
+   "valor": "119",
+   "rotulo": "Qualificação técnica",
+   "contador": 370
+  },
+  {
+   "valor": "323",
+   "rotulo": "Razoabilidade e Proporcionalidade",
+   "contador": 59
+  },
+  {
+   "valor": "201",
+   "rotulo": "Receitas",
+   "contador": 75
+  },
+  {
+   "valor": "189",
+   "rotulo": "Recolhimento de contribuições",
+   "contador": 91
+  },
+  {
+   "valor": "342",
+   "rotulo": "Regime Próprio de Previdência Social",
+   "contador": 108
+  },
+  {
+   "valor": "360",
+   "rotulo": "Registro de aposentadoria/pensão",
+   "contador": 124
+  },
+  {
+   "valor": "106",
+   "rotulo": "Registro de preços",
+   "contador": 66
+  },
+  {
+   "valor": "458",
+   "rotulo": "Representação/Denúncia",
+   "contador": 117
+  },
+  {
+   "valor": "281",
+   "rotulo": "Responsabilidade do gestor público",
+   "contador": 429
+  },
+  {
+   "valor": "282",
+   "rotulo": "Responsabilidade do ordenador de despesas",
+   "contador": 86
+  },
+  {
+   "valor": "283",
+   "rotulo": "Responsabilidade do parecerista",
+   "contador": 130
+  },
+  {
+   "valor": "240",
+   "rotulo": "Revisão Geral Anual",
+   "contador": 64
+  },
+  {
+   "valor": "408",
+   "rotulo": "Saneamento processual",
+   "contador": 69
+  },
+  {
+   "valor": "371",
+   "rotulo": "Setor Artístico",
+   "contador": 71
+  },
+  {
+   "valor": "116",
+   "rotulo": "Sobrepreço",
+   "contador": 53
+  },
+  {
+   "valor": "237",
+   "rotulo": "Subsídio",
+   "contador": 125
+  },
+  {
+   "valor": "144",
+   "rotulo": "Transporte escolar (Licitações)",
+   "contador": 61
+  },
+  {
+   "valor": "145",
+   "rotulo": "Vale refeição (Licitações)",
+   "contador": 70
+  },
+  {
+   "valor": "138",
+   "rotulo": "Vedação aos licitantes",
+   "contador": 93
+  },
+  {
+   "valor": "238",
+   "rotulo": "Vencimentos",
+   "contador": 48
+  },
+  {
+   "valor": "239",
+   "rotulo": "Verbas Indenizatórias",
+   "contador": 68
+  }
+ ]
+}

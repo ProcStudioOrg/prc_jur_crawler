@@ -69,6 +69,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tcepa` | **TCE-PA** (Tribunal de Contas do Estado do Pará — controle externo) | PA (**só o ESTADO**; os municípios paraenses são do **TCM-PA** — indício por **ausência de campo de município** na avançada) | `CLAUDE-TCEPA.md` | 🟢 OK (Pesquisa Integrada, ASP.NET WebForms, HTTP direto, sem browser; a **ementa inteira e o permalink já vêm na busca**, e o **PDF é público sem captcha**). ⚠️ **A entrada oficial redireciona**: `www.tce.pa.gov.br` → **302** → `www.tcepa.tc.br`. 🔴 **O WAF F5 Shape devolve CAPTCHA DE IMAGEM com HTTP 200 e o gatilho é RITMO, não User-Agent** — depois de bloqueado **nem o Playwright passa**; cooldown ~7 min de silêncio; o crawler **aborta com erro explícito** em vez de devolver lista vazia. 🔴 **`||` NÃO faz união: devolve o acervo inteiro** (51.621 em vez de 19.799) — use `&&` e `-`, que fecham aritmética exata. 🔴 **As contagens das facetas IGNORAM o termo buscado** (anunciam 1.619 onde o filtro real dá 504). 🔴 **`rpp` é limitado a 25 em silêncio** e o **export JSON tem teto rígido de 100** ignorando `p`/`rpp` (provado por md5). 🔴 **O card muda de anatomia e de chave por base**: `prejulgados` **não tem ementa nenhuma**. ✅ Total **exato** (última página fecha), paginação **estável**, faixa Lucene de data funciona |
 | `tcdf` | **TCDF** (Tribunal de Contas do Distrito Federal — controle externo) | DF (**o DF é ente único: não há municípios nem TCM-DF** — provado por **ausência de combo de município**) | `CLAUDE-TCDF.md` | 🟢 OK (API REST pública sobre Elasticsearch, HTTP direto, sem browser — **sem captcha em etapa nenhuma**; a **ementa e o texto já vêm na busca**). ✅ **`q` é query_string Lucene de verdade**: `AND`/`OR`/`NOT`, `+`/`-`, `"frase"`, `curinga*`, `campo:valor` — o mais rico do Bloco 5. Paginação **estável** (3/3), permalink por e-doc **confirmado em aba limpa**. 🔴 **Mande User-Agent de navegador**: o WAF F5 bloqueia pelo UA `curl` e devolve **403 com página de 35 KB** (mas **não** bloqueia headless). 🔴 **`E`/`OU` em português não são operadores e o erro AMPLIA** (`nepotismo E licitação` = 8.034 contra 6.773 do `OR` real). 🔴 **O total vem SATURADO em 10.000** — o acervo real é **18.370** (soma das agregações). 🔴 **"Jurisprudência Selecionada" é SUBCONJUNTO** (2.430 de 18.370), não outra base. 🔴 **Três filtros da tela estão quebrados e devolvem sempre zero** (`assunto`, `normativo`, `ementa_voto`) — o crawler não os envia. 🔴 **Campo desconhecido ZERA** em vez de ser ignorado |
 | `tcemg` | **TCE-MG** (Tribunal de Contas do Estado de Minas Gerais — controle externo) | MG (**Estado E municípios**; ✅ **MG não tem TCM** — e aqui isso foi provado **pelo acervo**, não pela ausência de combo) | `CLAUDE-TCEMG.md` | 🟢 OK (MapJuris, HTTP direto, sem browser — **sem captcha**; **ementa em 21/21** e o texto integral já vêm na busca). 🔴 **O portal que se chama "Jurisprudência" é o BLOQUEADO** (TCJuris, reCAPTCHA v2 conferido no servidor); esta é a porta aberta, do mesmo tribunal. 🔴 **A base é só de excertos de CONSULTA** — contas julgadas, denúncias e representações **não estão aqui** (medido em duas janelas). Acervo pequeno: **9 a 98 documentos por ano**, 2008–2026. 🔴 **A busca sem janela de data não responde** (abortada em 240 s) — o crawler fatia por ano. ✅ Conectores `E`/`OU`/`"frase"`/`%` conferidos **por conjunto de ids**; 🔴 mas **`NÃO` perde resultado** (6 quando a diferença real é 14) e **`NAO` sem til zera**. 🔴 **`nomeRelator` é decorativo** — quem filtra é o código. 🔴 **Rate limit por criação de SESSÃO** (HTTP 429 que ainda manda cookie) |
+| `tcees` | **TCE-ES** (Tribunal de Contas do Estado do Espírito Santo — controle externo) | ES (**Estado E municípios**; ✅ **o ES não tem TCM** — e aqui a prova saiu do **acervo**: Prefeitura de Serra, Câmara Municipal de Vitória, Câmara Municipal de Iúna) | `CLAUDE-TCEES.md` | 🟢 OK (app ASP.NET MVC sobre **Solr** dentro de um iframe, HTTP direto, sem browser — **sem captcha na busca nem no download**; **citação oficial pronta**, **permalink público** e **PDF de inteiro teor** já vêm na busca). 🔴 **É uma base CURADA de 9.730 EXCERTOS, não o acervo de deliberações** — o "enunciado" é redação do **NJS** e a própria tela diz que **não é resumo oficial da decisão**. 🔴 **Não existe operador booleano e o erro RESTRINGE**: `OU` devolve **5** onde o AND dá 6 e `AND` **zera** — a assinatura deste tribunal é errar para menos, sem sintoma. Use `--frase` e `--excluir` (que fecha aritmética exata). 🔴 **Aspas em `-q` não são frase exata** (70 contra 60 do campo próprio). 🔴 **O campo de data se chama `CriacaoData` mas filtra a DELIBERAÇÃO**, e **data inválida é ignorada em silêncio** (devolve o acervo inteiro). 🔴 **A consulta processual do próprio tribunal exige hCaptcha** e o **número do processo não é indexado** na jurisprudência — `-n` é recorte no cliente e a negativa não prova que o processo não existe. ✅ Total **exato**, paginação **estável** (2/2), e as **14 facetas provadas por contagem**, com a partição por Colegiado fechando exata |
 | `carf` | **CARF** (Receita Federal — contencioso administrativo tributário) | Federal (acórdãos e resoluções do PAF) | `CLAUDE-CARF.md` | 🟢 OK (API direta, sem browser — Solr público; **inteiro teor já vem na busca**) |
 | `crps` | **CRPS** (contencioso administrativo **previdenciário** — INSS) | Federal (Juntas de Recursos e Câmaras de Julgamento) | `CLAUDE-CRPS.md` | 🔴 **sem busca** — login Gov.br; contorno por perfil dedicado **tentado e falhou** (captcha + navegador não validado) |
 | `tjac` | TJ do Acre | AC | `CLAUDE-TJAC.md` | 🟡 **busca 🟢 OK** (HTTP direto, sem browser — e-SAJ cjsg); **inteiro teor 🔴 reCAPTCHA** e **sem permalink**. A ementa íntegra vem na busca |
@@ -1003,6 +1004,57 @@ skill [`codegen`](skills/codegen/SKILL.md) para mapear.
   O crawler reusa uma sessão só; não rode várias instâncias em paralelo contra o TCE-MG.
   ⚠️ **`--teses` está incompleto**: diz se há tese/súmula sobre o tema, mas o grid dela não
   foi mapeado — **não cite súmula do TCE-MG a partir dele**.
+
+- **Contas públicas do ESPÍRITO SANTO** ("o que o Tribunal de Contas do ES decidiu",
+  licitação e contrato administrativo, ato de pessoal estadual ou municipal, contas de
+  prefeito, consulta de prefeitura ou câmara municipal) → `tcees` → leia
+  [`CLAUDE-TCEES.md`](CLAUDE-TCEES.md). É instância de **controle externo**, não
+  Judiciário: para a mesma matéria judicializada, o caminho é `tjes` (estadual) ou
+  `trf2` (federal).
+  🔴 **Não ofereça o `tcees` para matéria cível, penal, trabalhista ou previdenciária** —
+  ele não tem esse acervo, e o zero seria o tribunal errado, não ausência de julgado.
+  ✅ **O Espírito Santo não tem TCM**, e aqui isso foi provado **pelo acervo**, não pela
+  ausência de um combo: os excertos trazem Prefeitura Municipal de Serra, Câmara
+  Municipal de Vitória e Câmara Municipal de Iúna. A armadilha do TCM é verdadeira em SP,
+  RJ, BA, GO e PA — não no ES.
+  🔴 **ESTA BASE SÃO 9.730 EXCERTOS CURADOS, NÃO O ACERVO DO TCE-ES.** A própria tela
+  avisa que o enunciado é redação do **Núcleo de Jurisprudência e Súmula (NJS)** e **não
+  constitui resumo oficial da decisão**. Nunca relate 9.730 como "as decisões do Tribunal
+  de Contas do ES" e **nunca apresente o enunciado como ementa**. O crawler marca
+  `semEmenta` em todos. É o equivalente da "Jurisprudência Selecionada" do TCDF.
+  ⚠️ O acervo largo fica no módulo vizinho `/Publica/DocumentoDisponibilizado`, que
+  **não foi mapeado** — se o pedido for exaustivo, diga isso.
+  🔴 **NÃO EXISTE OPERADOR BOOLEANO, E O ERRO RESTRINGE EM SILÊNCIO.** O espaço já é `E`
+  (AND). Medido: `licitação nepotismo` = 6; `licitação OU nepotismo` = **5** (menos que o
+  AND!); `licitação AND nepotismo` = **0**; `licitação NÃO publicidade` = 2.415 (não
+  exclui nada). **Em TJBA/TJES/TJTO o operador errado infla e o absurdo denuncia; aqui
+  ele restringe e o número pequeno se lê como escassez de jurisprudência.** Para excluir,
+  `--excluir` (3.344 − 2.584 = **760**, exato); para unir, rode duas buscas e some.
+  🔴 **Aspas em `-q` NÃO são frase exata** — as aspas são descartadas e vira AND (70
+  contra 60 do campo próprio). Use `--frase`, que é ordenada.
+  ⚠️ **NÃO avise sobre acento** — o índice normaliza e faz stemming (`licitação` =
+  `licitacao` = `licita` = `licitar` = 3.344). 🔴 Mas **não há curinga**: `*` é descartado
+  e `$` **zera** a busca.
+  🔴 **O filtro de data se chama `CriacaoData` e o tooltip diz "excertos criados", mas o
+  que ele filtra é a DATA DA DELIBERAÇÃO** (provado: a faceta "último mês" = 16 bate com
+  o intervalo 21/07–21/08/2026 = 16). E **data inválida é ignorada em silêncio**:
+  `99/99/9999` devolve os 9.730 do acervo com HTTP 200. O crawler recusa antes de enviar.
+  🔴 **O bloqueio é ASSIMÉTRICO**: busca 🟢 livre, download do PDF 🟢 livre, mas a
+  **consulta processual do próprio tribunal exige hCaptcha** (medido: `{"success":false,
+  "message":"O desafio captcha é obrigatório."}`). 🔴 E o **número do processo não é
+  indexado** na jurisprudência (`01522/2026` = 0; `01522` = 1, de outro processo):
+  `./bin/jur tcees -n "01522/2026"` recorta no cliente, e a **negativa não prova que o
+  processo não existe** — prova que não há *excerto* dele. Repasse essa ressalva.
+  ✅ **Citação oficial pronta** — e ela é a **única fonte** da data da sessão e da data de
+  publicação no DO-TCES, que não têm campo próprio. ✅ **Permalink público por excerto**
+  confirmado em aba limpa (mas conferi-lo por `curl`+`grep` dá falso negativo: é casca
+  WordPress com iframe). ✅ **PDF de inteiro teor público**, com **chave composta**
+  (`idDocumento`+`key`); sem a chave o download some com HTTP 302, não com erro.
+  🔴 Quem identifica o julgado é o **`idExcerto`**, não o processo nem a deliberação — uma
+  deliberação rende vários excertos (o Acórdão 00552/2026 ocupa 7 de 16 cards).
+  ✅ Total **exato** (fecha em 134 páginas), paginação **estável** (2/2), **base corrente**
+  (sessão de 30/07/2026), e as **14 facetas provadas por contagem** — cada uma devolveu
+  exatamente o número que anunciava, e a partição por Colegiado fecha exata.
 
 - **Contencioso administrativo PREVIDENCIÁRIO** ("o que o CRPS decidiu", recurso contra
   indeferimento do INSS, Junta de Recursos, Câmara de Julgamento) → 🔴 **não há busca**:

@@ -1,0 +1,62 @@
+{
+ "campoFormulario": "TipoDeliberacaoMenuItem.IdTipoDeliberacao",
+ "truncadaEm100": false,
+ "total": 11,
+ "itens": [
+  {
+   "valor": "21",
+   "rotulo": "Acórdão",
+   "contador": 6940
+  },
+  {
+   "valor": "30",
+   "rotulo": "Acórdão - 1ª Câmara",
+   "contador": 64
+  },
+  {
+   "valor": "31",
+   "rotulo": "Acórdão - 2ª Câmara",
+   "contador": 91
+  },
+  {
+   "valor": "36",
+   "rotulo": "Acórdão - Plenário",
+   "contador": 214
+  },
+  {
+   "valor": "27",
+   "rotulo": "Decisão",
+   "contador": 928
+  },
+  {
+   "valor": "33",
+   "rotulo": "Decisão - 2ª Câmara",
+   "contador": 2
+  },
+  {
+   "valor": "22",
+   "rotulo": "Parecer em Consulta",
+   "contador": 887
+  },
+  {
+   "valor": "26",
+   "rotulo": "Parecer Prévio",
+   "contador": 582
+  },
+  {
+   "valor": "34",
+   "rotulo": "Parecer Prévio - 1ª Câmara",
+   "contador": 13
+  },
+  {
+   "valor": "35",
+   "rotulo": "Parecer Prévio - 2ª Câmara",
+   "contador": 6
+  },
+  {
+   "valor": "37",
+   "rotulo": "Parecer Prévio - Plenário",
+   "contador": 3
+  }
+ ]
+}

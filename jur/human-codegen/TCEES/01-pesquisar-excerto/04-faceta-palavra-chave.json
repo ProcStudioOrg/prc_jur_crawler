@@ -1,0 +1,507 @@
+{
+ "campoFormulario": "PalavraChaveMenuItem.IdPalavraChave",
+ "truncadaEm100": true,
+ "total": 100,
+ "itens": [
+  {
+   "valor": "206",
+   "rotulo": "Administração Pública",
+   "contador": 71
+  },
+  {
+   "valor": "36",
+   "rotulo": "Admissão de pessoal",
+   "contador": 101
+  },
+  {
+   "valor": "226",
+   "rotulo": "Admissibilidade",
+   "contador": 193
+  },
+  {
+   "valor": "553",
+   "rotulo": "Aporte financeiro",
+   "contador": 35
+  },
+  {
+   "valor": "129",
+   "rotulo": "Aposentadoria",
+   "contador": 90
+  },
+  {
+   "valor": "34",
+   "rotulo": "Atestado de capacidade técnica",
+   "contador": 68
+  },
+  {
+   "valor": "127",
+   "rotulo": "Ato sujeito a registro",
+   "contador": 156
+  },
+  {
+   "valor": "83",
+   "rotulo": "Atraso",
+   "contador": 43
+  },
+  {
+   "valor": "902",
+   "rotulo": "Ausência",
+   "contador": 63
+  },
+  {
+   "valor": "189",
+   "rotulo": "Auxílio-alimentação",
+   "contador": 32
+  },
+  {
+   "valor": "10",
+   "rotulo": "Câmara municipal",
+   "contador": 70
+  },
+  {
+   "valor": "32",
+   "rotulo": "Capacidade técnico-operacional",
+   "contador": 40
+  },
+  {
+   "valor": "61",
+   "rotulo": "Cargo em comissão",
+   "contador": 61
+  },
+  {
+   "valor": "139",
+   "rotulo": "Citação",
+   "contador": 34
+  },
+  {
+   "valor": "449",
+   "rotulo": "Coleta de resíduo sólido",
+   "contador": 42
+  },
+  {
+   "valor": "69",
+   "rotulo": "Competência",
+   "contador": 122
+  },
+  {
+   "valor": "572",
+   "rotulo": "Concessão de serviço público",
+   "contador": 76
+  },
+  {
+   "valor": "62",
+   "rotulo": "Concurso público",
+   "contador": 70
+  },
+  {
+   "valor": "71",
+   "rotulo": "Consulta",
+   "contador": 40
+  },
+  {
+   "valor": "389",
+   "rotulo": "Contas regulares com ressalva",
+   "contador": 78
+  },
+  {
+   "valor": "293",
+   "rotulo": "Contratação",
+   "contador": 42
+  },
+  {
+   "valor": "14",
+   "rotulo": "Contratação direta",
+   "contador": 73
+  },
+  {
+   "valor": "3",
+   "rotulo": "Contrato administrativo",
+   "contador": 129
+  },
+  {
+   "valor": "78",
+   "rotulo": "Contribuição previdenciária",
+   "contador": 50
+  },
+  {
+   "valor": "156",
+   "rotulo": "Convênio",
+   "contador": 35
+  },
+  {
+   "valor": "77",
+   "rotulo": "Covid-19",
+   "contador": 94
+  },
+  {
+   "valor": "76",
+   "rotulo": "Culpabilidade",
+   "contador": 33
+  },
+  {
+   "valor": "285",
+   "rotulo": "Dano ao erário",
+   "contador": 95
+  },
+  {
+   "valor": "80",
+   "rotulo": "Demonstração contábil",
+   "contador": 33
+  },
+  {
+   "valor": "270",
+   "rotulo": "Denúncia",
+   "contador": 33
+  },
+  {
+   "valor": "41",
+   "rotulo": "Despesa com pessoal",
+   "contador": 99
+  },
+  {
+   "valor": "173",
+   "rotulo": "Despesa pública",
+   "contador": 38
+  },
+  {
+   "valor": "237",
+   "rotulo": "Determinação",
+   "contador": 50
+  },
+  {
+   "valor": "301",
+   "rotulo": "Diligência",
+   "contador": 46
+  },
+  {
+   "valor": "5",
+   "rotulo": "Direito processual",
+   "contador": 756
+  },
+  {
+   "valor": "347",
+   "rotulo": "Dispensa de licitação",
+   "contador": 45
+  },
+  {
+   "valor": "1306",
+   "rotulo": "Edital de concurso público",
+   "contador": 43
+  },
+  {
+   "valor": "440",
+   "rotulo": "Edital de licitação",
+   "contador": 111
+  },
+  {
+   "valor": "164",
+   "rotulo": "Educação",
+   "contador": 93
+  },
+  {
+   "valor": "268",
+   "rotulo": "Embargos de declaração",
+   "contador": 40
+  },
+  {
+   "valor": "46",
+   "rotulo": "Erro grosseiro",
+   "contador": 73
+  },
+  {
+   "valor": "364",
+   "rotulo": "Especificação técnica",
+   "contador": 46
+  },
+  {
+   "valor": "200",
+   "rotulo": "Extinção",
+   "contador": 62
+  },
+  {
+   "valor": "325",
+   "rotulo": "Final de mandato",
+   "contador": 33
+  },
+  {
+   "valor": "19",
+   "rotulo": "Finanças públicas",
+   "contador": 319
+  },
+  {
+   "valor": "462",
+   "rotulo": "Fiscalização",
+   "contador": 53
+  },
+  {
+   "valor": "162",
+   "rotulo": "Fundeb",
+   "contador": 46
+  },
+  {
+   "valor": "113",
+   "rotulo": "Gratificação",
+   "contador": 49
+  },
+  {
+   "valor": "8",
+   "rotulo": "Habilitação",
+   "contador": 118
+  },
+  {
+   "valor": "367",
+   "rotulo": "Incidente de inconstitucionalidade",
+   "contador": 65
+  },
+  {
+   "valor": "256",
+   "rotulo": "Inconstitucionalidade",
+   "contador": 89
+  },
+  {
+   "valor": "103",
+   "rotulo": "Justificativa",
+   "contador": 137
+  },
+  {
+   "valor": "115",
+   "rotulo": "Legislação",
+   "contador": 92
+  },
+  {
+   "valor": "86",
+   "rotulo": "Legitimidade passiva",
+   "contador": 34
+  },
+  {
+   "valor": "4",
+   "rotulo": "Licitação",
+   "contador": 937
+  },
+  {
+   "valor": "43",
+   "rotulo": "Limite",
+   "contador": 67
+  },
+  {
+   "valor": "118",
+   "rotulo": "Limite mínimo",
+   "contador": 51
+  },
+  {
+   "valor": "18",
+   "rotulo": "LRF",
+   "contador": 63
+  },
+  {
+   "valor": "234",
+   "rotulo": "Medida cautelar",
+   "contador": 129
+  },
+  {
+   "valor": "132",
+   "rotulo": "Multa",
+   "contador": 104
+  },
+  {
+   "valor": "1101",
+   "rotulo": "Nova Lei de Licitações e Contratos",
+   "contador": 47
+  },
+  {
+   "valor": "381",
+   "rotulo": "Objeto da licitação",
+   "contador": 41
+  },
+  {
+   "valor": "148",
+   "rotulo": "Obras e serviços de engenharia",
+   "contador": 96
+  },
+  {
+   "valor": "104",
+   "rotulo": "Omissão",
+   "contador": 64
+  },
+  {
+   "valor": "147",
+   "rotulo": "Pagamento",
+   "contador": 42
+  },
+  {
+   "valor": "25",
+   "rotulo": "Parcelamento do objeto",
+   "contador": 53
+  },
+  {
+   "valor": "109",
+   "rotulo": "Pessoal",
+   "contador": 203
+  },
+  {
+   "valor": "339",
+   "rotulo": "Planejamento",
+   "contador": 48
+  },
+  {
+   "valor": "296",
+   "rotulo": "Poder discricionário",
+   "contador": 53
+  },
+  {
+   "valor": "7",
+   "rotulo": "Poder Legislativo",
+   "contador": 40
+  },
+  {
+   "valor": "361",
+   "rotulo": "Prazo",
+   "contador": 84
+  },
+  {
+   "valor": "51",
+   "rotulo": "Prefeito",
+   "contador": 80
+  },
+  {
+   "valor": "331",
+   "rotulo": "Prescrição",
+   "contador": 61
+  },
+  {
+   "valor": "64",
+   "rotulo": "Prestação de contas",
+   "contador": 221
+  },
+  {
+   "valor": "111",
+   "rotulo": "Previdência",
+   "contador": 161
+  },
+  {
+   "valor": "142",
+   "rotulo": "Princípio da ampla defesa",
+   "contador": 38
+  },
+  {
+   "valor": "265",
+   "rotulo": "Princípio da motivação",
+   "contador": 52
+  },
+  {
+   "valor": "95",
+   "rotulo": "Princípio da razoabilidade",
+   "contador": 33
+  },
+  {
+   "valor": "91",
+   "rotulo": "Princípio da segurança jurídica",
+   "contador": 39
+  },
+  {
+   "valor": "141",
+   "rotulo": "Princípio do contraditório",
+   "contador": 43
+  },
+  {
+   "valor": "28",
+   "rotulo": "Qualificação econômico-financeira",
+   "contador": 34
+  },
+  {
+   "valor": "561",
+   "rotulo": "Qualificação técnica",
+   "contador": 116
+  },
+  {
+   "valor": "375",
+   "rotulo": "Quantidade",
+   "contador": 34
+  },
+  {
+   "valor": "123",
+   "rotulo": "Receita pública",
+   "contador": 36
+  },
+  {
+   "valor": "341",
+   "rotulo": "Recomendação",
+   "contador": 46
+  },
+  {
+   "valor": "70",
+   "rotulo": "Recurso",
+   "contador": 92
+  },
+  {
+   "valor": "110",
+   "rotulo": "Regime Próprio de Previdência Social",
+   "contador": 118
+  },
+  {
+   "valor": "60",
+   "rotulo": "Remuneração",
+   "contador": 107
+  },
+  {
+   "valor": "269",
+   "rotulo": "Representação",
+   "contador": 169
+  },
+  {
+   "valor": "44",
+   "rotulo": "Responsabilidade",
+   "contador": 347
+  },
+  {
+   "valor": "621",
+   "rotulo": "Restrição",
+   "contador": 33
+  },
+  {
+   "valor": "133",
+   "rotulo": "Sanção",
+   "contador": 89
+  },
+  {
+   "valor": "59",
+   "rotulo": "Servidor público",
+   "contador": 108
+  },
+  {
+   "valor": "264",
+   "rotulo": "Sistema de Registro de Preços",
+   "contador": 45
+  },
+  {
+   "valor": "9",
+   "rotulo": "TCEES",
+   "contador": 98
+  },
+  {
+   "valor": "6",
+   "rotulo": "Terceirização",
+   "contador": 42
+  },
+  {
+   "valor": "67",
+   "rotulo": "Tomada de contas especial",
+   "contador": 58
+  },
+  {
+   "valor": "261",
+   "rotulo": "Vale refeição",
+   "contador": 53
+  },
+  {
+   "valor": "42",
+   "rotulo": "Vedação",
+   "contador": 32
+  },
+  {
+   "valor": "57",
+   "rotulo": "Vereador",
+   "contador": 45
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+# TCE-ES — modulo 01 — secao 05: PERMALINK e pagina de detalhe
+
+Print: `05.01-permalink-detalhar-excerto.png` (aba limpa, contexto novo, sem cookie)
+
+✅ https://www.tcees.tc.br/jurisprudencia/detalhar-excerto/?id=<idExcerto>
+   HTTP 200 em sessao limpa. E o href que o proprio card publica (target=_blank).
+
+⚠️ MAS E A CASCA WORDPRESS: 1.293.623 bytes, com um iframe apontando para o app.
+   Validar esse permalink por `curl` + `grep` da FALSO NEGATIVO. Quem responde:
+     https://acessoidentificado.tcees.tc.br/Publica/DetalharExcerto/Index/?id=17365
+     -> HTTP 200, 300.104 bytes, com
+        "Excerto: 00381/2026 | Deliberacao: Decisao 03140/2026 |
+         Processo: 01522/2026 - Controle Externo - Fiscalizacao - Representacao |
+         Conteudo | Classificacoes | Palavras-chave | Enunciado | Corpo do documento"
+   E esse que o `TCEESChecker.verificar()` audita — e ele confere o NUMERO DO
+   PROCESSO da pagina contra o do card, nao so o HTTP 200.
+
+A pagina de detalhe republica o MESMO link de PDF com a MESMA chave composta
+(idDocumento + key), o que prova que a chave nao e de sessao.
+
+🔴 NAO EXISTE PERMALINK DE BUSCA. O app inteiro vive em
+   `/Publica/PesquisarExcerto/Index` e a busca e POST. Nunca mande "o link da
+   busca do TCE-ES" como prova de um recorte.

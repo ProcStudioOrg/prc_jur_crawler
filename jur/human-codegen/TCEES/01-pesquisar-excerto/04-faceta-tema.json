@@ -1,0 +1,402 @@
+{
+ "campoFormulario": "TemaAssuntoExcertoMenuItem.IdTema",
+ "truncadaEm100": false,
+ "total": 79,
+ "itens": [
+  {
+   "valor": "37",
+   "rotulo": "Acumulação de cargos",
+   "contador": 65
+  },
+  {
+   "valor": "66",
+   "rotulo": "Administração Pública Direta",
+   "contador": 219
+  },
+  {
+   "valor": "64",
+   "rotulo": "Administração Pública Indireta",
+   "contador": 65
+  },
+  {
+   "valor": "38",
+   "rotulo": "Admissão e Desligamento",
+   "contador": 617
+  },
+  {
+   "valor": "43",
+   "rotulo": "Alteração de contrato",
+   "contador": 91
+  },
+  {
+   "valor": "72",
+   "rotulo": "Aposentadoria Especial",
+   "contador": 22
+  },
+  {
+   "valor": "86",
+   "rotulo": "Apreciação e Julgamento",
+   "contador": 520
+  },
+  {
+   "valor": "20",
+   "rotulo": "Aquisições, serviços e obras",
+   "contador": 512
+  },
+  {
+   "valor": "500",
+   "rotulo": "Auxílios (Pessoal)",
+   "contador": 27
+  },
+  {
+   "valor": "73",
+   "rotulo": "Benefícios previdenciários",
+   "contador": 160
+  },
+  {
+   "valor": "80",
+   "rotulo": "Competência do TCEES",
+   "contador": 405
+  },
+  {
+   "valor": "81",
+   "rotulo": "Comunicação Processual",
+   "contador": 60
+  },
+  {
+   "valor": "53",
+   "rotulo": "Concessões públicas",
+   "contador": 113
+  },
+  {
+   "valor": "28",
+   "rotulo": "Contabilidade previdenciária",
+   "contador": 154
+  },
+  {
+   "valor": "21",
+   "rotulo": "Contabilidade Pública",
+   "contador": 284
+  },
+  {
+   "valor": "82",
+   "rotulo": "Contraditório e Ampla Defesa",
+   "contador": 217
+  },
+  {
+   "valor": "60",
+   "rotulo": "Controle interno",
+   "contador": 67
+  },
+  {
+   "valor": "51",
+   "rotulo": "Convênios",
+   "contador": 113
+  },
+  {
+   "valor": "79",
+   "rotulo": "Credenciamento",
+   "contador": 14
+  },
+  {
+   "valor": "30",
+   "rotulo": "Despesa pública (Finanças)",
+   "contador": 319
+  },
+  {
+   "valor": "59",
+   "rotulo": "Despesas administrativas",
+   "contador": 321
+  },
+  {
+   "valor": "22",
+   "rotulo": "Despesas com pessoal",
+   "contador": 215
+  },
+  {
+   "valor": "61",
+   "rotulo": "Diário Oficial",
+   "contador": 4
+  },
+  {
+   "valor": "39",
+   "rotulo": "Direitos dos servidores",
+   "contador": 70
+  },
+  {
+   "valor": "75",
+   "rotulo": "Dispensa de Licitação",
+   "contador": 141
+  },
+  {
+   "valor": "32",
+   "rotulo": "Dívida pública",
+   "contador": 11
+  },
+  {
+   "valor": "475",
+   "rotulo": "Educação",
+   "contador": 4
+  },
+  {
+   "valor": "26",
+   "rotulo": "Educação (Finanças)",
+   "contador": 167
+  },
+  {
+   "valor": "44",
+   "rotulo": "Execução contratual",
+   "contador": 207
+  },
+  {
+   "valor": "77",
+   "rotulo": "Formalidades (Contratação direta)",
+   "contador": 80
+  },
+  {
+   "valor": "45",
+   "rotulo": "Formalidades contratuais",
+   "contador": 62
+  },
+  {
+   "valor": "25",
+   "rotulo": "Fundos públicos",
+   "contador": 17
+  },
+  {
+   "valor": "15",
+   "rotulo": "Habilitação de licitante",
+   "contador": 675
+  },
+  {
+   "valor": "506",
+   "rotulo": "Impedimentos (Pessoal)",
+   "contador": 2
+  },
+  {
+   "valor": "76",
+   "rotulo": "Inexigibilidade de licitação",
+   "contador": 164
+  },
+  {
+   "valor": "52",
+   "rotulo": "Locação de Ativos",
+   "contador": 1
+  },
+  {
+   "valor": "12",
+   "rotulo": "Modalidades de licitação",
+   "contador": 146
+  },
+  {
+   "valor": "46",
+   "rotulo": "Obrigações contratuais",
+   "contador": 25
+  },
+  {
+   "valor": "23",
+   "rotulo": "Orçamento público",
+   "contador": 138
+  },
+  {
+   "valor": "70",
+   "rotulo": "Outros",
+   "contador": 84
+  },
+  {
+   "valor": "63",
+   "rotulo": "Outros (Administração Pública)",
+   "contador": 36
+  },
+  {
+   "valor": "42",
+   "rotulo": "Outros (Agentes Públicos)",
+   "contador": 50
+  },
+  {
+   "valor": "78",
+   "rotulo": "Outros (Contratação direta)",
+   "contador": 8
+  },
+  {
+   "valor": "50",
+   "rotulo": "Outros (Contratos e Convênios)",
+   "contador": 83
+  },
+  {
+   "valor": "29",
+   "rotulo": "Outros (Finanças públicas)",
+   "contador": 73
+  },
+  {
+   "valor": "19",
+   "rotulo": "Outros (Licitação)",
+   "contador": 183
+  },
+  {
+   "valor": "74",
+   "rotulo": "Outros (Previdência)",
+   "contador": 16
+  },
+  {
+   "valor": "88",
+   "rotulo": "Outros (Processual)",
+   "contador": 103
+  },
+  {
+   "valor": "56",
+   "rotulo": "Outros (Responsabilidade)",
+   "contador": 30
+  },
+  {
+   "valor": "49",
+   "rotulo": "Pagamento e reajuste de contrato",
+   "contador": 155
+  },
+  {
+   "valor": "62",
+   "rotulo": "Patrimônio Público",
+   "contador": 70
+  },
+  {
+   "valor": "84",
+   "rotulo": "Pedido de Revisão",
+   "contador": 46
+  },
+  {
+   "valor": "11",
+   "rotulo": "Planejamento da licitação",
+   "contador": 702
+  },
+  {
+   "valor": "33",
+   "rotulo": "Poder Judiciário (Finanças)",
+   "contador": 5
+  },
+  {
+   "valor": "24",
+   "rotulo": "Poder Legislativo (Finanças)",
+   "contador": 111
+  },
+  {
+   "valor": "65",
+   "rotulo": "Princípios Administrativos",
+   "contador": 224
+  },
+  {
+   "valor": "16",
+   "rotulo": "Princípios licitatórios",
+   "contador": 359
+  },
+  {
+   "valor": "14",
+   "rotulo": "Procedimento e julgamento (Licitações)",
+   "contador": 272
+  },
+  {
+   "valor": "67",
+   "rotulo": "Procuradoria Jurídica",
+   "contador": 31
+  },
+  {
+   "valor": "85",
+   "rotulo": "Questão preliminar (Processual)",
+   "contador": 1392
+  },
+  {
+   "valor": "31",
+   "rotulo": "Receitas públicas",
+   "contador": 151
+  },
+  {
+   "valor": "83",
+   "rotulo": "Recursos (Processual)",
+   "contador": 336
+  },
+  {
+   "valor": "40",
+   "rotulo": "Regime jurídico dos servidores",
+   "contador": 85
+  },
+  {
+   "valor": "71",
+   "rotulo": "Regime Previdenciário",
+   "contador": 322
+  },
+  {
+   "valor": "41",
+   "rotulo": "Remuneração/Subsídio (Pessoal)",
+   "contador": 463
+  },
+  {
+   "valor": "57",
+   "rotulo": "Requisitos da responsabilização",
+   "contador": 388
+  },
+  {
+   "valor": "47",
+   "rotulo": "Rescisão contratual",
+   "contador": 1
+  },
+  {
+   "valor": "36",
+   "rotulo": "Responsabilidade fiscal",
+   "contador": 103
+  },
+  {
+   "valor": "54",
+   "rotulo": "Responsabilização Pessoal",
+   "contador": 831
+  },
+  {
+   "valor": "35",
+   "rotulo": "Restos a pagar",
+   "contador": 37
+  },
+  {
+   "valor": "18",
+   "rotulo": "Restrição de licitante",
+   "contador": 112
+  },
+  {
+   "valor": "55",
+   "rotulo": "Sanções",
+   "contador": 168
+  },
+  {
+   "valor": "27",
+   "rotulo": "Saúde (Finanças)",
+   "contador": 37
+  },
+  {
+   "valor": "13",
+   "rotulo": "Sistema de Registro de Preços",
+   "contador": 98
+  },
+  {
+   "valor": "58",
+   "rotulo": "Terceirização de serviços",
+   "contador": 224
+  },
+  {
+   "valor": "68",
+   "rotulo": "Terceiro Setor",
+   "contador": 82
+  },
+  {
+   "valor": "17",
+   "rotulo": "Tipos de licitação",
+   "contador": 27
+  },
+  {
+   "valor": "87",
+   "rotulo": "Tomada de Contas Especial",
+   "contador": 115
+  },
+  {
+   "valor": "48",
+   "rotulo": "Vigência contratual",
+   "contador": 68
+  }
+ ]
+}

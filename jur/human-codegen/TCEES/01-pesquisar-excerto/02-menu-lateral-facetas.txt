@@ -1,0 +1,30 @@
+# TCE-ES — modulo 01 — secao 02: o MENU LATERAL DE FACETAS
+
+Print: `02.01-menu-lateral-facetas.png`  (a coluna esquerda inteira, sem busca)
+HTML : as 14 facetas chegam como 14 blocos HTML separados no MESMO envelope JSON
+       da busca (`Dados.<Nome>Facet`) — nao ha request proprio para elas.
+JSON : `04-faceta-*.json` (uma por faceta, com valor / rotulo / contador)
+
+⚠️ ESTA TELA NAO TEM COMBO. `01-selects.json` prova: existe UM UNICO <select> na
+   pagina inteira, o `OrdenarPor`, com 2 opcoes. Todos os 14 filtros sao INPUTS
+   HIDDEN alimentados por cliques no menu lateral:
+
+   <a data-prop-val="6" data-prop-ref="IdArea" class="list-group-item-facet">
+     <span class="nobreak">Administracao Publica</span>
+     <span title="1172" class="contador-facet">1172</span>
+   </a>
+
+   `data-prop-ref` -> o id do hidden; o `name` do hidden e que vai no POST
+   (ex.: id="IdArea" name="AreaAssuntoExcertoMenuItem.IdArea").
+   🔴 Quem mapear so o `id` monta um POST que o ASP.NET MVC ignora em silencio.
+
+A tabela completa faceta -> campo -> teste de contagem esta em
+`01-pesquisar-excerto.txt` secao 6. As 14 foram provadas por contagem.
+
+Ordem em que a tela desenha as facetas (a mesma do print):
+  Area | Tema | Subtema | Periodo | Tipo de deliberacao | Colegiado | Norma |
+  Palavra-chave | Atividade | Natureza | Especie | Subespecie | Classificacao | Relator
+
+⚠️ "Referencia legal" tem hidden no formulario mas NAO tem faceta na tela
+   (ContadorReferenciasLegais = 0). Nao e defeito de mapeamento: a base nao tem
+   esse campo indexado. Ver secao 6.

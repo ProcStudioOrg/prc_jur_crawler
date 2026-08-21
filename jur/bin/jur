@@ -62,6 +62,8 @@ const TCEPRCrawler = require('../src/TCEPRCrawler');
 const TCEPRChecker = require('../src/TCEPRChecker');
 const TCEPACrawler = require('../src/TCEPACrawler');
 const TCEPAChecker = require('../src/TCEPAChecker');
+const TCEESCrawler = require('../src/TCEESCrawler');
+const TCEESChecker = require('../src/TCEESChecker');
 const TCESCCrawler = require('../src/TCESCCrawler');
 const TCESCChecker = require('../src/TCESCChecker');
 const TCESCCojur = require('../src/TCESCCojur');
@@ -7047,6 +7049,163 @@ program
     } catch (error) {
       if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
       else console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tcees')
+  .description('Search TCE-ES (Tribunal de Contas do Estado do Espirito Santo) — Pesquisa de Jurisprudencia (excertos), HTTP direto, sem browser')
+  .option('-q, --query <text>', 'Termo livre. ESPACO = E (AND). NAO existe operador booleano: E/OU/NAO/AND/OR/NOT viram termo e RESTRINGEM. Sem curinga (* e descartado, $ zera). Indice normaliza acento e faz stemming')
+  .option('--frase <text>', 'Frase exata (campo proprio BuscaExata) — aspas em -q NAO fazem isso')
+  .option('--excluir <text>', 'Excluir termo (campo proprio BuscaExcetuacao) — a aritmetica fecha exata')
+  .option('--enunciado', 'Restringe a busca ao ENUNCIADO do excerto')
+  .option('-n, --numero <numero>', 'Procura excertos de um processo NNNNN/AAAA (ex. 01522/2026). NAO e CNJ')
+  .option('--area <id>', 'Filtro Area (id da faceta — use --listar-filtros)')
+  .option('--tema <id>', 'Filtro Tema (id da faceta)')
+  .option('--subtema <id>', 'Filtro Subtema (id da faceta)')
+  .option('--tipo-deliberacao <id>', 'Filtro Tipo de deliberacao (id da faceta)')
+  .option('--colegiado <id>', 'Filtro Colegiado: 1 Plenario | 2 1a Camara | 3 2a Camara')
+  .option('--norma <id>', 'Filtro Norma (id da faceta)')
+  .option('--palavra-chave <id>', 'Filtro Palavra-chave (id da faceta)')
+  .option('--atividade <id>', 'Filtro Atividade (id da faceta)')
+  .option('--natureza <id>', 'Filtro Natureza (id da faceta)')
+  .option('--especie <id>', 'Filtro Especie (id da faceta)')
+  .option('--subespecie <id>', 'Filtro Subespecie (id da faceta)')
+  .option('--classificacao <id>', 'Filtro Classificacao do processo (id da faceta; aceita multi-valor com virgula)')
+  .option('-r, --relator <nome>', 'Relator — NOME exato da faceta (o campo e NomeRelator, nao id)')
+  .option('-di, --data-inicio <date>', 'Data inicial (DD/MM/YYYY) — e a data da DELIBERACAO, apesar de o campo se chamar CriacaoData')
+  .option('-df, --data-fim <date>', 'Data final (DD/MM/YYYY)')
+  .option('--ordem <o>', 'relevancia (default) | data', 'relevancia')
+  .option('--agrupar', 'Agrupa excertos da mesma deliberacao (muda os cards, NAO muda o total)')
+  .option('--listar-filtros', 'Lista as 14 facetas com contador e sai')
+  .option('--verificar [amostra]', 'Audita N excertos abrindo a pagina de detalhe (default 3)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (25 excertos por pagina, fixo no servidor)', 10)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tcees.json')
+  .option('--fetch-inteiro-teor', 'Baixa o PDF da deliberacao (1 GET por excerto; chave composta idDocumento+key)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tcees')
+  .option('-v, --visible', 'Ignored (TCE-ES usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TCE-ES usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    try {
+      const navOpts = { log };
+
+      if (opts.numero) {
+        const res = await new TCEESChecker({ ...navOpts, maxPages: parseInt(opts.maxPages, 10) || 40 })
+          .porNumero(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (opts.listarFiltros) {
+        const nav = new (require('../src/TCEESNavigator'))(navOpts);
+        const facetas = TCEESCrawler.facetas(await nav.buscar({}));
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, facetas }) + '\n');
+        else console.log(JSON.stringify(facetas, null, 2));
+        process.exit(0);
+      }
+
+      log('='.repeat(60));
+      log('TCE-ES Jurisprudencia Crawler (Pesquisa de Excertos, HTTP direto, sem browser)');
+      log('ESCOPO: CONTROLE EXTERNO, nao Judiciario. O ES NAO tem TCM — as contas');
+      log('        MUNICIPAIS estao nesta base (medido no acervo: Prefeitura de Serra,');
+      log('        Camara Municipal de Vitoria, Prefeitura de Vitoria).');
+      log('ATENCAO: esta base sao 9.730 EXCERTOS CURADOS pelo Nucleo de Jurisprudencia');
+      log('        e Sumula (NJS) — NAO e o acervo de deliberacoes do TCE-ES. O');
+      log('        "enunciado" e redacao do NJS e NAO e resumo oficial da decisao.');
+      log('ATENCAO: NAO ha operador booleano — E/OU/NAO/AND/OR/NOT viram termo e');
+      log('        RESTRINGEM em silencio. Use --frase e --excluir.');
+      log('OK: total EXATO, paginacao estavel, permalink publico e PDF sem captcha.');
+      log('='.repeat(60));
+
+      const crawler = new TCEESCrawler({
+        ...navOpts,
+        includeFullText: !!opts.fetchInteiroTeor,
+        agrupar: !!opts.agrupar,
+      });
+      const filters = {
+        frase: opts.frase || null,
+        excluir: opts.excluir || null,
+        enunciado: !!opts.enunciado,
+        area: opts.area || null,
+        tema: opts.tema || null,
+        subtema: opts.subtema || null,
+        tipoDeliberacao: opts.tipoDeliberacao || null,
+        colegiado: opts.colegiado || null,
+        norma: opts.norma || null,
+        palavraChave: opts.palavraChave || null,
+        atividade: opts.atividade || null,
+        natureza: opts.natureza || null,
+        especie: opts.especie || null,
+        subespecie: opts.subespecie || null,
+        classificacao: opts.classificacao || null,
+        relator: opts.relator || null,
+        dataInicio: opts.dataInicio || null,
+        dataFim: opts.dataFim || null,
+      };
+      const results = await crawler.search(opts.query || '', filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+        ordem: opts.ordem,
+        agrupar: !!opts.agrupar,
+      });
+
+      log('='.repeat(60));
+      log(`Total no servidor: ${results.totalResults} excertos (exato) | coletados: ${results.length}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 3 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} excertos na pagina de detalhe...`);
+        verificacao = await new TCEESChecker({ ...navOpts, crawler }).verificar(results, amostra);
+      }
+
+      const semEnunciado = results.filter((r) => !r.enunciado).length;
+      const resumo = {
+        totalResults: results.totalResults,
+        semEnunciado,
+        avisoBase: 'Base CURADA de excertos (9.730), nao o acervo de deliberacoes do TCE-ES. O enunciado e redacao do NJS, nao ementa oficial.',
+        ...(verificacao ? { verificacao } : {}),
+      };
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        fs.mkdirSync(outputDir, { recursive: true });
+        let ok = 0; let fail = 0;
+        for (const r of results) {
+          if (r.inteiroTeorPdfBuffer && r.inteiroTeorPdfBuffer.length > 0) {
+            fs.writeFileSync(path.join(outputDir, `excerto-${r.id}-doc-${r.idDocumento}.pdf`), r.inteiroTeorPdfBuffer);
+            ok++;
+          } else fail++;
+        }
+        for (const r of results) delete r.inteiroTeorPdfBuffer;
+        log(`\nGravacao concluida: ${ok} arquivo(s), ${fail} falha(s)`);
+        log(`Files saved to: ${outputDir}`);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, downloaded: ok, failed: fail, outputDir, ...resumo,
+          }) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, output: outputPath, ...resumo,
+          }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error(`Erro: ${error.message}`);
       process.exit(1);
     }
   });

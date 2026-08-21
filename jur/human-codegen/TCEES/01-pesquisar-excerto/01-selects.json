@@ -1,0 +1,16 @@
+[
+  {
+    "name": "OrdenarPor",
+    "id": "lbl-OrdenarPor",
+    "opcoes": [
+      {
+        "value": "score;1",
+        "texto": "Relevância"
+      },
+      {
+        "value": "dataDisponibilizacaoDeliberacao;1",
+        "texto": "Data"
+      }
+    ]
+  }
+]

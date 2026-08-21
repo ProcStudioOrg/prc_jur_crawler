@@ -1,0 +1,171 @@
+# TCE-ES — modulo 01 — POS-BUSCA (Fase 3b / skill browser-post-search)
+# Medido em 21/08/2026, slot 2000. Termo de referencia: `licitacao` (3.344 excertos).
+
+===============================================================================
+## 3.1 Onde o resultado aparece
+===============================================================================
+MESMA PAGINA. Nao ha rota nova, nao ha aba nova: a busca e um XHR
+(POST /Publica/PesquisarExcerto/Buscar) e o app troca o innerHTML de `#resultados`
+com o `Dados.ResultadosPesquisarExcerto` do envelope JSON.
+
+Os controles PERMANECEM: o campo de texto continua preenchido no topo e o menu
+lateral das 14 facetas e reescrito a cada busca (cada faceta vem como um bloco
+HTML proprio no mesmo JSON).
+
+🔴 A URL DE RESULTADO NAO EXISTE. A tela vive toda em
+   `/Publica/PesquisarExcerto/Index` (dentro do iframe de
+   `www.tcees.tc.br/jurisprudencia/`). NAO HA PERMALINK DE BUSCA — nunca mande
+   "o link da busca do TCE-ES" como prova.
+   ✅ Mas HA permalink POR DOCUMENTO (secao 3.6).
+
+Prints: `03.01-resultados-topo.png`  (topo: aviso do NJS + total + ordem + 1o card)
+        `03.02-resultados-rodape-paginacao.png` (rodape: a paginacao)
+
+===============================================================================
+## 3.2 Anatomia do card — E ELA MUDA COM A VINTAGE DO EXCERTO
+===============================================================================
+Bloco: `<div class="row-fluid"><div class="titulo-resultado-pesquisa" id="tituloResultadoPesquisa-<idDocumento>">`
+HTML cru gravado em DOIS tipos:
+  `03-card-resultado-decisao.html`                    (excerto novo, com enunciado)
+  `03-card-resultado-parecer-consulta-antigo.html`    (excerto antigo, SEM enunciado)
+
+Campos que vem SEM CLICAR:
+  idDocumento     id="tituloResultadoPesquisa-4947446"     -> id da DELIBERACAO
+  idExcerto       href=".../detalhar-excerto/?id=17365"    -> id do EXCERTO
+  numeroExcerto   texto do link: "Excerto 00381/2026"
+  tags            div.excerto-palavra-chave > b: "[Licitacao. Propaganda e publicidade...]"
+  deliberacao     a[title="Visualizar documento"]: "Decisao 03140/2026"
+  enunciado       <blockquote> depois de span.col-dce "Enunciado:"
+  teor            div.conteudo-excerto-texto  -> o TEXTO DO EXCERTO (grande)
+  citacao         span.span-anexo-excerto (o ULTIMO)      -> citacao oficial pronta
+  processo        table.dados-complementares-excerto "Processo:" -> "01522/2026 - Controle Externo - Fiscalizacao - Representacao"
+  relator         idem "Relator:"      -> "Davi Diniz de Carvalho"
+  classificacoes  idem "Classificacao:" -> uma <span> por classificacao
+
+🔴 A ANATOMIA MUDA COM A VINTAGE, E QUEM PRESUMIR O CARD NOVO PERDE 92% EM SILENCIO.
+   Medido na pagina 1 de `licitacao` (25 cards):
+     enunciado (<blockquote>)         2/25   <- so os excertos recentes, redigidos pelo NJS
+     tags em div.excerto-palavra-chave 8/25
+     tags em <strong>[...]</strong>   +13/25 <- os antigos, DENTRO do teor
+     citacao oficial                 25/25 ✅ (depois de corrigir o seletor, abaixo)
+     relator / processo / permalink  25/25 ✅
+     teor                            25/25 ✅
+   O excerto antigo (ex. Parecer em Consulta 00014/2003) NAO TEM blockquote e NAO
+   TEM div.excerto-palavra-chave. O crawler tem fallback para o <strong>[...]</strong>.
+
+⚠️ HA DOIS `span-anexo-excerto` POR CARD E SO O ULTIMO E A CITACAO. O primeiro e o
+   cabecalho oculto que o botao "Copiar" prefixa ao teor (so o numero da
+   deliberacao). Pegar o primeiro devolve "Parecer em Consulta 00014/2003" no
+   lugar da citacao — plausivel, e sem data nenhuma. Custou 25/25 -> 6/25.
+
+🔴 O TEXTO DO CARD **NAO E EMENTA**. Sao duas coisas, nenhuma delas ementa oficial:
+   - `enunciado`: redacao do NJS (ou extrato da ementa). A propria tela diz que
+     "NAO constitui um resumo oficial da decisao". So existe em 2/25.
+   - `teor`: o EXCERTO propriamente dito — o trecho relevante da deliberacao,
+     com relatorio, fundamentacao e dispositivo abreviados por "(...)". Medido no
+     excerto 17365: 5.847 chars contra 10 paginas de PDF.
+   O crawler marca `semEmenta: true` em TODOS e deixa `ementa: null`.
+
+⚠️ O `<b>` no meio do texto e HIGHLIGHT do termo buscado, aplicado pelo SERVIDOR
+   (nao pelo cliente, como no TCE-PA). O crawler remove as tags.
+
+Print do card: `03.03-card-excerto.png`
+
+===============================================================================
+## 3.3 A escada ate o documento — UM degrau so, e com CHAVE COMPOSTA
+===============================================================================
+Do card ao PDF nao ha XHR intermediario: o link ja esta no HTML da busca.
+
+  <a href="/DocumentoDisponibilizado/BaixarDocumentoDisponibilizado
+           ?idDocumento=4947446
+           &key=81c6c5a9...eb69">   (key = 128 hex)
+     Decisao 03140/2026</a>
+
+Reproduzido FORA DO BROWSER (curl, sessao limpa, sem cookie):
+  com idDocumento + key   -> HTTP 200, application/pdf, 718.027 bytes, 10 paginas
+                             content-disposition: attachment; filename=1549_0314020268.pdf
+  so idDocumento          -> HTTP 302 -> /DocumentoDisponibilizado   🔴 sem erro visivel
+
+🔴 A CHAVE E OBRIGATORIA E COMPOSTA (idDocumento + key). Mesma familia do TJMG
+   (documentoId + data de publicacao). ✅ Mas AQUI A CHAVE E ESTAVEL: a que veio
+   na busca continua funcionando depois, e e a MESMA que a pagina de detalhe
+   publica. Nao e token de sessao.
+
+O link "Processo:" tambem tem chave composta propria:
+  https://www.tcees.tc.br/consultas/processo/detalhar-processo-id?idProcesso=1640304&key=<128 hex>
+  (aponta para o modulo com hCaptcha — ver `01-pesquisar-excerto.txt` secao 9)
+
+===============================================================================
+## 3.4 O documento
+===============================================================================
+Formato: PDF. Medido em 25/25 downloads de `segregacao de funcoes`:
+  25 baixados, 0 falhas. Amostra: 32 paginas, 70.797 chars uteis por pdftotext.
+  Comeca em "ACORDAO TC-166/2013 / PROCESSO - TC-8045/2010 / INTERESSADA -
+  CAMARA MUNICIPAL DE IUNA / EMENTA ...".
+
+🔴 O TEXTO **NAO** VEM COMPLETO NO PAYLOAD DA BUSCA. O `teor` do card e o excerto
+   (o trecho selecionado, com "(...)" no lugar do que foi cortado); o PDF e a
+   deliberacao inteira. Sao ~5,8 mil chars contra ~70 mil. Quem quiser o
+   inteiro teor precisa do GET — 1 por documento.
+   ⚠️ Mas o teor do card JA E texto citavel: e o trecho que o NJS escolheu.
+   Nao e "trecho com highlight" no sentido do TCE-SP.
+
+Bloqueio: 🟢 nenhum no download (sessao limpa, sem cookie, sem captcha).
+
+===============================================================================
+## 3.5 Paginacao
+===============================================================================
+Tamanho de pagina: 25, FIXO. Nao ha parametro de tamanho no formulario.
+
+Profundidade (termo `licitacao`, 3.344 = 133x25 + 19):
+  PaginaAtual=1     25 cards
+  PaginaAtual=100   25 cards
+  PaginaAtual=134   19 cards   <- fecha EXATO
+  PaginaAtual=135   0 cards, HTTP 200, total ainda 3.344   (nao ha erro)
+  PaginaAtual=200   0 cards | PaginaAtual=1000  0 cards
+=> NAO ha teto de profundidade. O acervo inteiro e alcancavel.
+
+🔴 `PaginaNova` NAO PAGINA (ver `01-pesquisar-excerto.txt` secao 3). Testado 1..500:
+   sempre a pagina 1, com HTTP 200 e 25 cards validos.
+
+✅ TOTAL EXATO, NAO SATURADO. Provas: (a) a ultima pagina fecha na aritmetica
+   (133x25+19 = 3.344); (b) os numeros nao sao redondos (3.344, 9.730, 22, 27);
+   (c) o hidden do Solr `ResultadoPesquisaSolr_FilesCount` bate com o texto.
+   Termo inexistente (`xyzabcnaoexiste`) devolve 0, nao o acervo.
+
+✅ PAGINACAO ESTAVEL — TESTADA DUAS VEZES:
+   - pagina 5 pedida 2x por relevancia (score;1)         -> ids identicos
+   - pagina 5 pedida 2x por data                          -> ids identicos
+   - varredura de 3 paginas (75 excertos) rodada 2x       -> sequencia identica
+   Nao houve repeticao nem salto. (Contraste com TJRJ, TJMG e TJDFT.)
+
+===============================================================================
+## 3.6 Permalink e identidade
+===============================================================================
+✅ PERMALINK POR DOCUMENTO, CONFIRMADO EM ABA LIMPA:
+   https://www.tcees.tc.br/jurisprudencia/detalhar-excerto/?id=<idExcerto>
+   -> HTTP 200 sem cookie. Print: `05.01-permalink-detalhar-excerto.png`
+
+   ⚠️ MAS ELE E A CASCA WORDPRESS COM IFRAME. Validar por curl+grep no host do
+      portal da FALSO NEGATIVO (a resposta e 1,29 MB de casca). Quem responde de
+      verdade e o app:
+        https://acessoidentificado.tcees.tc.br/Publica/DetalharExcerto/Index/?id=17365
+        -> HTTP 200, 300.104 bytes, com "Excerto: 00381/2026 / Deliberacao: Decisao
+           03140/2026 / Processo: 01522/2026 / Enunciado / Corpo do documento"
+      E esse que o Checker audita. (Mesma armadilha do TCE-MG e do TCDF.)
+
+🔴 QUEM IDENTIFICA O DOCUMENTO E O `idExcerto`, E NAO O PROCESSO NEM A DELIBERACAO.
+   Medido: no recorte "ultimo mes" (16 excertos), o Acordao 00552/2026 aparece 7
+   vezes e a Decisao 03054/2026 duas — uma deliberacao rende varios excertos.
+   Contar processos ou PDFs subestima; a unidade desta base e o excerto.
+   ⚠️ E o `idDocumento` (id da deliberacao) NAO e o `idExcerto`: no excerto 17365
+      sao 4947446 e 17365. Trocar um pelo outro no permalink abre outro documento.
+
+✅ CITACAO OFICIAL PRONTA no card (span.span-anexo-excerto, o ultimo):
+   "(TCE-ES. Controle Externo > Fiscalizacao > Representacao. Decisao 03140/2026.
+     Processo TC 01522/2026. Relator: Davi Diniz de Carvalho. Orgao Julgador:
+     Ordinaria/Plenario. Data da sessao: 30/07/2026, Data da Publicacao no
+     DO-TCES: 04/08/2026)."
+   🔴 E ELA E A UNICA FONTE DE DUAS DATAS: `Data da sessao` e `Data da Publicacao
+      no DO-TCES` NAO tem campo proprio no card nem no formulario. Quem nao
+      parsear a citacao entrega julgado sem data nenhuma.

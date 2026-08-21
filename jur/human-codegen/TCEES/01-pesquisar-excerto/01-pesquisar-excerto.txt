@@ -1,0 +1,325 @@
+# TCE-ES — Tribunal de Contas do Estado do Espirito Santo — modulo 01: Pesquisa de Jurisprudencia (Excertos)
+
+STATUS: MAPEADO E CRAWLER FECHADO — 21/08/2026, slot 2000.
+        Timebox: 20:00:37 -> 20:33:18, ~33 min dos 90 previstos. (Nao estourou.)
+
+===============================================================================
+## 1. Como se chega aqui (nenhuma URL foi inventada)
+===============================================================================
+www.tce.es.gov.br            -> HTTP 301 -> https://www.tcees.tc.br/
+tce.es.gov.br / tcees.tc.br  -> mesmo IP 201.62.46.41 (medido por DNS)
+                                O host novo saiu do `Location`, nao de palpite.
+                                Mesmo movimento do TCE-PA (tce.pa.gov.br -> tcepa.tc.br):
+                                os tribunais de contas estao migrando para `.tc.br`.
+
+www.tcees.tc.br              -> HTTP 200, 1.380.905 bytes, WordPress
+  menu "Consultas" -> "Pesquisa de Jurisprudencia"
+                             -> https://www.tcees.tc.br/jurisprudencia/   (200, 1,29 MB)
+
+  ⚠️ ESSA PAGINA E SO A CASCA. O app real esta num IFRAME:
+     <iframe id="iframeServicos"
+             src="https://acessoidentificado.tcees.tc.br//Publica/PesquisarExcerto/Index">
+
+  O host se chama "acessoidentificado", mas o prefixo /Publica/ responde
+  HTTP 200 SEM LOGIN NENHUM. Quem parar no WordPress mapeia 1,3 MB de casca.
+
+Os TRES apps publicos do mesmo host (todos achados no `src` de um iframe):
+  /Publica/PesquisarExcerto/Index      -> ESTE modulo: jurisprudencia (excertos)   200
+  /Publica/DocumentoDisponibilizado    -> "Pesquisa de documentos textual"          200 (NAO mapeado)
+  /Publica/PesquisarProcesso           -> consulta processual                       200 (mas ver secao 9: hCAPTCHA)
+
+⚠️ PISTA REGISTRADA E DESCARTADA: a home linka "ChatTCEES - Jurisprudencia"
+   (https://chattcees.tcees.tc.br/jurisprudencia). Ele responde HTTP 302 para
+   `login.tcees.tc.br/connect/authorize` (OIDC) — exige login. E, mesmo se
+   abrisse, e um assistente de IA: nao e base oficial e nao serve para citar.
+
+===============================================================================
+## 2. PASSO 0 — o que EXISTE e o que NAO existe (medido 21/08/2026)
+===============================================================================
+NAO EXISTE (medido, nao presumido):
+  dadosabertos.tce.es.gov.br / api. / jurisprudencia. / consulta. / busca.   -> NXDOMAIN
+  dadosabertos.tcees.tc.br / api. / jurisprudencia. / consulta. / busca.     -> NXDOMAIN
+  www.tcees.tc.br/swagger|/openapi.json|/api|/api-docs|/v1/|/rest/           -> 404
+     (controle: /path-inventado-9z devolve 404 do MESMO tamanho, 1.279.581 bytes
+      — ou seja, e 404 de verdade, nao casca de 200 como no TCE-PR)
+
+EXISTE, MAS ESTA QUEBRADO:
+  www.tcees.tc.br/dados-abertos  -> HTTP 301 -> /noticias/dados-abertos/
+  /noticias/dados-abertos/       -> HTTP 301 PARA SI MESMO, em loop infinito
+                                    (curl estoura em 50 redirects; com cookie jar tambem).
+                                    A pagina de dados abertos do TCE-ES esta no ar
+                                    e inalcancavel. Nao ha CSV nem CKAN acessivel.
+
+NAO SE APLICA:
+  DataJud / CNJ — tribunal de CONTAS nao e Judiciario; nao ha alias no DataJud
+  e nao ha numero CNJ. Sem plano B para o Checker (ver secao 9).
+
+  servicos.tcees.tc.br -> HTTP 302 -> acessoidentificado.tcees.tc.br (area logada).
+
+CONCLUSAO DO PASSO 0: nao ha API oficial documentada. A porta e a API INTERNA
+do proprio app (secao 3), que responde a HTTP puro sem browser.
+
+===============================================================================
+## 3. O contrato da busca (api interna: JSON com HTML dentro)
+===============================================================================
+POST https://acessoidentificado.tcees.tc.br/Publica/PesquisarExcerto/Buscar
+  Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+  X-Requested-With: XMLHttpRequest
+  Referer: .../Publica/PesquisarExcerto/Index
+
+ASP.NET MVC. SEM __VIEWSTATE, SEM __RequestVerificationToken, SEM cookie
+obrigatorio, SEM captcha. Resposta: application/json, ~750 KB numa busca larga.
+
+Envelope:
+  { Sucesso, Dados: { ResultadosPesquisarExcerto: "<html>", <14 facetas>: "<html>" },
+    Validacoes, RedirecionarUrl, Mensagens, SessaoExpirada, LoginUrl }
+
+O backend e SOLR: o total autoritativo e o hidden
+  <input id="ResultadoPesquisaSolr_FilesCount" value="3344" />
+e nao o texto "3344 excertos" (que hoje coincide, mas e apresentacao).
+
+Corpo do formulario COMPLETO (capturado do postData do XHR no Playwright, nao do
+HTML estatico) — ver `01-form-busca.html` e `03-xhr-busca.json`:
+  PaginaAtual, PaginaNova, AgruparResultados, OrdenarPor, MenuLateralCarregado,
+  BuscaTextual, BuscaExata, BuscaExcetuacao, BuscarPorEnunciado,
+  AreaAssuntoExcertoMenuItem.IdArea, TemaAssuntoExcertoMenuItem.IdTema,
+  SubtemaAssuntoExcertoMenuItem.IdSubtema,
+  PeriodoDataMenuItem.CriacaoData / .CriacaoDataIntervaloInicio / .CriacaoDataIntervaloFim,
+  TipoDeliberacaoMenuItem.IdTipoDeliberacao, ColegiadoMenuItem.IdColegiado,
+  NormaExcertoMenuItem.IdNorma, ReferenciaLegalExcertoMenuItem.IdReferenciaLegal,
+  PalavraChaveMenuItem.IdPalavraChave, AtividadeProcessoMenuItem.IdAtividade,
+  NaturezaProcessoMenuItem.IdNatureza, EspecieProcessoMenuItem.IdEspecie,
+  SubespecieProcessoMenuItem.IdSubespecie,
+  ClassificacaoProcessoMenuItem.IdClassificacaoProcesso,
+  RelatorMenuItem.NomeRelator
+
+🔴 `PaginaNova` E DECORATIVO NO REQUEST — QUEM PAGINA E `PaginaAtual`.
+   O rodape faz: $('#PaginaNova').val(2); $('#PaginaAtual').trigger('change')
+   — o JS copia um no outro antes de submeter. Medido por HTTP:
+     PaginaNova=2   -> os MESMOS 25 ids da pagina 1, HTTP 200, sem sintoma
+     PaginaNova=134 -> idem
+     PaginaAtual=2  -> 25 ids DIFERENTES  ✅
+   Mesma familia de armadilha do TJRJ/eJURIS (o <select> decorativo).
+
+Prints: `01.01-portal-jurisprudencia.png` (a casca WordPress),
+        `01.02-tela-inicial.png` (o app dentro do iframe, aberto direto)
+HTML:   `01-form-busca.html` (o <form> inteiro, extraido do DOM depois do AJAX)
+Selects:`01-selects.json` — ha UM SO <select> na tela (OrdenarPor, 2 opcoes).
+        Todo o resto dos filtros e HIDDEN alimentado pelo menu lateral de facetas.
+
+===============================================================================
+## 4. Campos de texto — TRES caixas, e so elas funcionam
+===============================================================================
+BuscaTextual    (id=BuscaTextual,    maxlength=200)  termo livre, ESPACO = E (AND)
+BuscaExata      (id=BuscaExata,      maxlength=200)  FRASE EXATA de verdade
+BuscaExcetuacao (id=BuscaExcetuacao, maxlength=200)  EXCLUSAO de verdade
+BuscarPorEnunciado (checkbox)                        restringe ao enunciado
+
+Contagens medidas (acervo = 9.730):
+  licitacao                       3.344      nepotismo                    22
+  licitacao nepotismo                 6      <- AND implicito
+  BuscaExata="segregacao de funcoes"  60
+  -q '"segregacao de funcoes"'        70     🔴 aspas em -q NAO sao frase exata
+  BuscaExata="de funcoes segregacao"   0     <- a frase e ORDENADA
+  BuscaExata="segregacao de funcoes" sem acento = 60  <- normaliza acento
+  BuscaExcetuacao=publicidade sobre licitacao = 760
+     ✅ aritmetica exata: 3.344 (licitacao) - 2.584 (licitacao AND publicidade) = 760
+  BuscarPorEnunciado sobre licitacao = 1.103
+
+Prints: `03.01-resultados-topo.png`, `03.03-card-excerto.png`
+
+===============================================================================
+## 5. Operadores — TESTADOS UM A UM. NENHUM FUNCIONA.
+===============================================================================
+| Operador       | Funciona? | Medido                        | O que acontece de verdade |
+|----------------|-----------|-------------------------------|---------------------------|
+| espaco         | SIM (E)   | licitacao nepotismo = 6       | AND implicito             |
+| `E`            | NAO       | licitacao E nepotismo = 6     | "E" e TERMO e casa 9.670/9.730 -> quase no-op |
+| `OU`           | NAO 🔴    | licitacao OU nepotismo = 5    | "OU" e TERMO (6.251) -> RESTRINGE. Pede uniao, recebe MENOS que o AND |
+| `AND`          | NAO 🔴    | licitacao AND nepotismo = 0   | "AND" casa 9 documentos -> ZERA a busca |
+| `OR`           | NAO       | licitacao OR nepotismo = 0    | idem                      |
+| `NAO` / `NÃO`  | NAO 🔴    | licitacao NÃO publicidade = 2.415 | AND com "nao"(8.989) e "publicidade" — nao exclui NADA |
+| `NOT`          | NAO       | licitacao NOT publicidade = 231 | "NOT" e termo (922)      |
+| `ADJ` / `PROX` | NAO       | 0 nos dois                    | viram termo inexistente -> zeram |
+| `$`            | NAO 🔴    | licitac$ = 0                  | o `$` entra no token e ZERA |
+| `*`            | NAO       | licita* = 3.344               | o `*` e descartado; 3.344 e o STEM, nao curinga |
+| `"frase"`      | NAO em -q | 70 vs 60 do campo proprio     | as aspas sao descartadas -> vira AND |
+
+⚠️ A ASSINATURA DESTE TRIBUNAL E "ERRAR PARA MENOS, SEM SINTOMA". Em TJBA, TJES e
+   TJTO o operador errado INFLA; aqui ele RESTRINGE, e um numero pequeno se le
+   como "pouca jurisprudencia sobre o tema". Foi por isso que o crawler avisa.
+
+STEMMING E NORMALIZACAO (medido):
+  licitacao = licitação = LICITAÇÃO = licita = licitar = licit = 3.344
+  licitatorio = 1.672 | licitante = 1.040   (stems diferentes, contagens diferentes)
+  => o indice normaliza acento e caixa e faz stemming portugues.
+     NAO avise o usuario sobre acento neste tribunal.
+
+===============================================================================
+## 6. As 14 facetas do menu lateral — TODAS provadas por contagem
+===============================================================================
+A tela nao tem combo: cada filtro e um <a data-prop-val="X" data-prop-ref="Campo">
+com <span class="contador-facet">N</span>. O `data-prop-ref` mapeia para o hidden.
+
+Sem termo (acervo 9.730), aplicar o filtro devolveu EXATAMENTE o contador anunciado:
+
+| Faceta            | Campo do formulario                                   | itens | teste                        | contador | aplicado |
+|-------------------|-------------------------------------------------------|-------|------------------------------|----------|----------|
+| Area              | AreaAssuntoExcertoMenuItem.IdArea                     | 10    | 6 Administracao Publica      | 1.172    | 1.172 ✅ |
+| Tema              | TemaAssuntoExcertoMenuItem.IdTema                     | 79    | 37 Acumulacao de cargos      | 65       | 65 ✅    |
+| Subtema           | SubtemaAssuntoExcertoMenuItem.IdSubtema               | 100 ⚠️| 409 Admissibilidade proc.    | 283      | 283 ✅   |
+| Periodo           | PeriodoDataMenuItem.CriacaoData                       | 4     | 1 Ultimo mes                 | 16       | 16 ✅    |
+| Tipo deliberacao  | TipoDeliberacaoMenuItem.IdTipoDeliberacao             | 11    | 21 Acordao                   | 6.940    | 6.940 ✅ |
+| Colegiado         | ColegiadoMenuItem.IdColegiado                         | 3     | 1 Plenario                   | 6.223    | 6.223 ✅ |
+| Norma             | NormaExcertoMenuItem.IdNorma                          | 74    | 105 CF/1988                  | 1.198    | 1.198 ✅ |
+| Palavra-chave     | PalavraChaveMenuItem.IdPalavraChave                   | 100 ⚠️| 36 Admissao de pessoal       | 101      | 101 ✅   |
+| Atividade         | AtividadeProcessoMenuItem.IdAtividade                 | 2     | 2 Controle Externo           | 9.703    | 9.703 ✅ |
+| Natureza          | NaturezaProcessoMenuItem.IdNatureza                   | 10    | 2 Contas                     | 2.105    | 2.105 ✅ |
+| Especie           | EspecieProcessoMenuItem.IdEspecie                     | 30    | 156 Agravo                   | 123      | 123 ✅   |
+| Subespecie        | SubespecieProcessoMenuItem.IdSubespecie               | 23    | 18 Aposentadoria             | 71       | 71 ✅    |
+| Classificacao     | ClassificacaoProcessoMenuItem.IdClassificacaoProcesso | 85    | "234,2053" Agravo            | 133      | 133 ✅   |
+| Relator           | RelatorMenuItem.NomeRelator                           | 28    | "Davi Diniz de Carvalho"     | 163      | 163 ✅   |
+
+⚠️ A LISTA DA FACETA E TRUNCADA EM 100. `Subtema` e `Palavra-chave` batem exatamente
+   em 100 (e o hidden ContadorSubtemas/ContadorPalavrasChave confirma: 100). O que
+   sobra nao aparece e nao ha aviso na tela. Filtrar por um id fora da lista funciona
+   — o problema e descobri-lo.
+
+⚠️ `ReferenciaLegalExcertoMenuItem.IdReferenciaLegal` existe no formulario mas a
+   FACETA VEM VAZIA (ContadorReferenciasLegais = 0). Mandar valor 1 devolve 0.
+   O campo funciona; a base e que nao tem referencia legal indexada.
+
+✅ AQUI A FACETA RESPEITA O TERMO (ao contrario do TCE-PA, onde ela e global):
+   sem termo, Area "Administracao Publica" = 1.172; buscando `licitacao` a mesma
+   faceta anuncia 273. Print: `03.01-resultados-topo.png` (barra lateral).
+
+✅ A PARTICAO POR COLEGIADO FECHA EXATA: 6.223 + 1.817 + 1.690 = 9.730 (acervo),
+   e sobre `licitacao`: 2.068 + 676 + 600 = 3.344. Idem Atividade: 27 + 9.703 = 9.730.
+
+Prints: `02.01-menu-lateral-facetas.png`, `04.01-faceta-tipo-deliberacao.png`,
+        `04.02-faceta-relator.png`
+JSON:   `04-faceta-*.json` (as 14, com valor, rotulo e contador)
+
+===============================================================================
+## 7. Datas — o campo mente no nome, e data invalida NAO da erro
+===============================================================================
+Campos: PeriodoDataMenuItem.CriacaoDataIntervaloInicio / ...Fim   (DD/MM/YYYY)
+Faceta: PeriodoDataMenuItem.CriacaoData  = 1 mes | 2 bimestre | 6 semestre | (12)
+
+🔴 O NOME DIZ "CriacaoData" E O TOOLTIP DIZ "Excertos criados no ultimo mes",
+   MAS O QUE FILTRA E A DATA DA DELIBERACAO. Provas:
+   - faceta "Ultimo mes" = 16  ==  intervalo 21/07/2026-21/08/2026 = 16
+   - faceta "Ultimo bimestre" = 82  ==  intervalo 21/06/2026-21/08/2026 = 82
+   - filtrando 2012 (total 25), os 25 cards trazem 25 deliberacoes DE 2012
+   - o rotulo do eixo na propria tela e "Data de disponibilizacao da deliberacao"
+   - a ordenacao correspondente e OrdenarPor=dataDisponibilizacaoDeliberacao;1
+
+🔴 DATA INVALIDA E IGNORADA EM SILENCIO: 99/99/9999 devolve os 9.730 do acervo
+   inteiro com HTTP 200. Um erro de digitacao vira "busca sem filtro" com numero
+   plausivel. O crawler valida antes de enviar.
+
+✅ Meia janela funciona (so inicio = 295 em 2026; so fim 31/12/2015 = 3.036).
+✅ Formato ISO tambem e aceito (2026-01-01 = 01/01/2026 = 295).
+
+DISTRIBUICAO POR ANO (acervo inteiro, por data de deliberacao):
+  2012:    25 | 2013:   608 | 2014:   843 | 2015: 1.060 | 2016:   417
+  2017:   877 | 2018:   991 | 2019: 1.150 | 2020:   624 | 2021:   670
+  2022:   390 | 2023:   382 | 2024:   364 | 2025:   534 | 2026:   295 (ate 21/08)
+  Soma 2012-2026 = 9.230; ha 500 anteriores a 2012 (2000-2010 = 336).
+  ✅ BASE CORRENTE: o excerto mais novo e da Decisao 03140/2026, sessao de 30/07/2026,
+     publicada em 04/08/2026. Nao ha congelamento (contraste com o TJAM).
+
+===============================================================================
+## 8. Ordenacao e agrupamento
+===============================================================================
+<select name="OrdenarPor"> (o UNICO select da tela):
+  score;1                             -> Relevancia (default)
+  dataDisponibilizacaoDeliberacao;1   -> Data
+
+AgruparResultados (toggle "Agrupar resultados"):
+  ⚠️ NAO MUDA O TOTAL, MUDA OS CARDS. Medido em `licitacao`:
+     False -> total 3.344, e o documento 4937529 ocupa 6 dos 25 cards
+     True  -> total 3.344, e o documento 4937529 ocupa 1 card
+  Ele colapsa os varios excertos da mesma deliberacao. Como o total continua
+  contando EXCERTOS, a aritmetica da paginacao deixa de fechar. Default: False.
+
+===============================================================================
+## 9. Bloqueios — MEDIDOS EM SEPARADO, e sao ASSIMETRICOS
+===============================================================================
+BUSCA de jurisprudencia    -> 🟢 LIVRE. HTTP 200 com curl e User-Agent de navegador,
+                              sem cookie, sem captcha, sem token.
+DOWNLOAD do PDF            -> 🟢 LIVRE. HTTP 200 em sessao limpa, sem cookie.
+CONSULTA PROCESSUAL        -> 🔴 hCAPTCHA. Medido:
+   POST /Publica/PesquisarProcesso/Pesquisar  NumeroProcesso=01522&AnoProcesso=2026
+   -> HTTP 200  {"success":false,"message":"O desafio captcha e obrigatorio."}
+   (e o HTML do modulo carrega /Publica/Resources/Views/Shared/HCaptcha)
+
+=> Consequencia: NAO HA PLANO B para confirmar que um processo existe. O Checker
+   confere pelo campo `processo` dos proprios cards (recorte no cliente), e uma
+   negativa NAO prova que o processo nao existe — prova que nao ha EXCERTO dele.
+
+===============================================================================
+## 10. Escopo do acervo — a ressalva do TCM, e a ressalva maior
+===============================================================================
+✅ O ESPIRITO SANTO NAO TEM TCM, e as contas MUNICIPAIS estao nesta base.
+   A prova saiu do proprio ACERVO (como no TCE-MG), nao de ausencia de combo:
+   - excerto 17365: "Edital de Concorrencia n. 1/2025, promovido pela PREFEITURA
+     MUNICIPAL DE SERRA e da Secretaria Municipal de Comunicacao"
+   - excerto 11835: consulta do "Presidente da Comissao de Justica e Redacao da
+     CAMARA MUNICIPAL DE VITORIA", sobre portaria da "Prefeitura Municipal de
+     Vitoria/ES"
+   - PDF baixado (excerto 8216): "INTERESSADA - CAMARA MUNICIPAL DE IUNA"
+   A armadilha do Bloco 5 e VERDADEIRA em SP, RJ, BA, GO e PA; e FALSA aqui,
+   como em PR, SC, RS, PE e MG.
+   ⚠️ Nao ha combo de "municipio" nesta tela para contar (o modulo textual tem
+      `IdUnidadeGestoraFiltro`, mas nao foi enumerado — ver secao 12).
+
+🔴 A RESSALVA MAIOR: ESTA BASE SAO 9.730 EXCERTOS CURADOS, NAO O ACERVO DE
+   DELIBERACOES DO TCE-ES. A propria tela avisa, no topo (print 03.01):
+     "O enunciado do excerto, elaborado pelo Nucleo de Jurisprudencia e Sumula -
+      NJS ou extraido da ementa, procura retratar o entendimento contido na
+      deliberacao da qual foi extraido, NAO CONSTITUINDO, TODAVIA, UM RESUMO
+      OFICIAL DA DECISAO proferida pelo Tribunal."
+   E o equivalente da "Jurisprudencia Selecionada" do TCDF e da base curada do
+   TCE-RJ. Nunca relate 9.730 como "as decisoes do TCE-ES", e nunca cite o
+   enunciado como se fosse a ementa oficial.
+
+===============================================================================
+## 11. Testes exploratorios do §Fase 4 — o que existe e o que nao existe aqui
+===============================================================================
+1. Busca simples sem filtro                 -> OK, 3.344 para `licitacao`
+2. Juizado x Justica Comum                  -> NAO EXISTE (controle externo nao tem
+                                               juizado). O equivalente e Colegiado
+                                               (Plenario x 1a x 2a Camara), e ele
+                                               PARTICIONA EXATO — secao 6.
+3. Civel x Criminal                         -> NAO EXISTE. O eixo tematico e
+                                               Area/Tema/Subtema (10/79/100).
+4. Orgao/Materia                            -> Area (10 itens), enumerada em JSON
+5. Unidade especifica                       -> NAO EXISTE nesta tela (existe no modulo
+                                               textual, `IdUnidadeGestoraFiltro`)
+6. Magistrado/a                              -> Relator, 28 nomes, por NOME (nao id)
+7. Tipo de ato                               -> Tipo de deliberacao, 11 itens.
+                                               Acordao domina (6.940 de 9.730)
+8. Numero do processo                        -> 🔴 NAO INDEXADO — ver secao 9 e 13
+9. Datas + operadores                        -> secoes 5 e 7
+
+===============================================================================
+## 12. Modulos NAO mapeados (declarados, para o proximo slot)
+===============================================================================
+- `/Publica/DocumentoDisponibilizado` — "Pesquisa de documentos textual". E um
+  formulario GET (`/Publica/DocumentoDisponibilizado/Pesquisar`) com
+  TextoTodasPalavras / TextoExpressao / TextoNenhumaPalavra, DataInicioFiltro,
+  IdClassificacaoProcesso, IdAssunto, IdTipoDocumento, UnidadeGestoraTipo,
+  UnidadeGestora. E, muito provavelmente, o ACERVO LARGO de deliberacoes que
+  falta aqui — e o unico lugar com combo de UNIDADE GESTORA (que daria a prova
+  positiva por contagem de municipios, no metodo do TCE-PR).
+  ⚠️ Uma tentativa de GET com `TipoDePesquisa=1&TextoTodasPalavras=licitacao`
+     devolveu "Nenhum documento encontrado" — quase certamente parametro errado
+     meu (ha tres flags hidden PesquisaNumerica/Textual/Avancada). NAO leia esse
+     zero como base vazia; e busca mal montada, nao medicao.
+- `/Publica/PesquisarProcesso` — consulta processual. Mapeado o suficiente para
+  saber que exige hCaptcha (secao 9). Nao ha o que fazer sem resolver captcha.
+
+===============================================================================
+## 13. Anatomia do card e caminho ate o documento -> ver `03-resultados.txt`
+===============================================================================

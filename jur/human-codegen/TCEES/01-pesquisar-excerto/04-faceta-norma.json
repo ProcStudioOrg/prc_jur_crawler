@@ -1,0 +1,377 @@
+{
+ "campoFormulario": "NormaExcertoMenuItem.IdNorma",
+ "truncadaEm100": false,
+ "total": 74,
+ "itens": [
+  {
+   "valor": "104",
+   "rotulo": "Ato das Disposições Constitucionais Transitórias da Cr, 1988",
+   "contador": 32
+  },
+  {
+   "valor": "105",
+   "rotulo": "Constituição da República, 1988",
+   "contador": 1198
+  },
+  {
+   "valor": "107",
+   "rotulo": "Constituição do Estado, 1989",
+   "contador": 99
+  },
+  {
+   "valor": "2",
+   "rotulo": "Decreto Federal, Nº 3.555/2000",
+   "contador": 5
+  },
+  {
+   "valor": "3",
+   "rotulo": "Decreto Federal, Nº 6.017/2007",
+   "contador": 2
+  },
+  {
+   "valor": "4",
+   "rotulo": "Decreto Federal, Nº 6.253/2007",
+   "contador": 1
+  },
+  {
+   "valor": "5",
+   "rotulo": "Decreto Federal, Nº 7.581/2011",
+   "contador": 3
+  },
+  {
+   "valor": "6",
+   "rotulo": "Decreto Federal, Nº 7.892/2013",
+   "contador": 4
+  },
+  {
+   "valor": "7",
+   "rotulo": "Decreto Lei Federal, Nº 2.848/1940",
+   "contador": 6
+  },
+  {
+   "valor": "8",
+   "rotulo": "Decreto Lei Federal, Nº 200/1967",
+   "contador": 2
+  },
+  {
+   "valor": "10",
+   "rotulo": "Decreto Lei Federal, Nº 25/1937",
+   "contador": 1
+  },
+  {
+   "valor": "11",
+   "rotulo": "Decreto Lei Federal, Nº 3.365/1941",
+   "contador": 1
+  },
+  {
+   "valor": "13",
+   "rotulo": "Decreto Lei Federal, Nº 3.689/1941",
+   "contador": 6
+  },
+  {
+   "valor": "103",
+   "rotulo": "Decreto Lei Federal, Nº 4.657/1942",
+   "contador": 96
+  },
+  {
+   "valor": "123",
+   "rotulo": "Instrução Normativa, Nº 68/2020",
+   "contador": 3
+  },
+  {
+   "valor": "117",
+   "rotulo": "Lei Complementar Estadual, Nº 282/2004",
+   "contador": 4
+  },
+  {
+   "valor": "106",
+   "rotulo": "Lei Complementar Estadual, Nº 621/2012",
+   "contador": 564
+  },
+  {
+   "valor": "16",
+   "rotulo": "Lei Complementar Federal, Nº 101/2000",
+   "contador": 371
+  },
+  {
+   "valor": "19",
+   "rotulo": "Lei Complementar Federal, Nº 116/2003",
+   "contador": 2
+  },
+  {
+   "valor": "20",
+   "rotulo": "Lei Complementar Federal, Nº 123/2006",
+   "contador": 11
+  },
+  {
+   "valor": "23",
+   "rotulo": "Lei Complementar Federal, Nº 141/2012",
+   "contador": 8
+  },
+  {
+   "valor": "24",
+   "rotulo": "Lei Complementar Federal, Nº 142/2013",
+   "contador": 1
+  },
+  {
+   "valor": "111",
+   "rotulo": "Lei Complementar Federal, Nº 173/2020",
+   "contador": 58
+  },
+  {
+   "valor": "112",
+   "rotulo": "Lei Federal, Nº 10.028/2000",
+   "contador": 19
+  },
+  {
+   "valor": "33",
+   "rotulo": "Lei Federal, Nº 10.406/2002",
+   "contador": 20
+  },
+  {
+   "valor": "34",
+   "rotulo": "Lei Federal, Nº 10.520/2002",
+   "contador": 66
+  },
+  {
+   "valor": "38",
+   "rotulo": "Lei Federal, Nº 11.079/2004",
+   "contador": 15
+  },
+  {
+   "valor": "39",
+   "rotulo": "Lei Federal, Nº 11.101/2005",
+   "contador": 5
+  },
+  {
+   "valor": "40",
+   "rotulo": "Lei Federal, Nº 11.107/2005",
+   "contador": 4
+  },
+  {
+   "valor": "42",
+   "rotulo": "Lei Federal, Nº 11.350/2006",
+   "contador": 4
+  },
+  {
+   "valor": "46",
+   "rotulo": "Lei Federal, Nº 11.445/2007",
+   "contador": 10
+  },
+  {
+   "valor": "48",
+   "rotulo": "Lei Federal, Nº 11.494/2007",
+   "contador": 12
+  },
+  {
+   "valor": "50",
+   "rotulo": "Lei Federal, Nº 11.738/2008",
+   "contador": 2
+  },
+  {
+   "valor": "53",
+   "rotulo": "Lei Federal, Nº 12.232/2010",
+   "contador": 11
+  },
+  {
+   "valor": "54",
+   "rotulo": "Lei Federal, Nº 12.305/2010",
+   "contador": 4
+  },
+  {
+   "valor": "55",
+   "rotulo": "Lei Federal, Nº 12.462/2011",
+   "contador": 4
+  },
+  {
+   "valor": "56",
+   "rotulo": "Lei Federal, Nº 12.527/2011",
+   "contador": 14
+  },
+  {
+   "valor": "57",
+   "rotulo": "Lei Federal, Nº 13.019/2014",
+   "contador": 22
+  },
+  {
+   "valor": "58",
+   "rotulo": "Lei Federal, Nº 13.105/2015",
+   "contador": 118
+  },
+  {
+   "valor": "114",
+   "rotulo": "Lei Federal, Nº 13.303/2016",
+   "contador": 12
+  },
+  {
+   "valor": "110",
+   "rotulo": "Lei Federal, Nº 13.979/2020",
+   "contador": 4
+  },
+  {
+   "valor": "115",
+   "rotulo": "Lei Federal, Nº 14.133/2021",
+   "contador": 275
+  },
+  {
+   "valor": "126",
+   "rotulo": "Lei Federal, Nº 14.442/2022",
+   "contador": 7
+  },
+  {
+   "valor": "59",
+   "rotulo": "Lei Federal, Nº 4.320/1964",
+   "contador": 304
+  },
+  {
+   "valor": "61",
+   "rotulo": "Lei Federal, Nº 5.172/1966",
+   "contador": 16
+  },
+  {
+   "valor": "63",
+   "rotulo": "Lei Federal, Nº 5.869/1973",
+   "contador": 25
+  },
+  {
+   "valor": "64",
+   "rotulo": "Lei Federal, Nº 6.404/1976",
+   "contador": 6
+  },
+  {
+   "valor": "65",
+   "rotulo": "Lei Federal, Nº 6.435/1977",
+   "contador": 1
+  },
+  {
+   "valor": "66",
+   "rotulo": "Lei Federal, Nº 6.830/1980",
+   "contador": 1
+  },
+  {
+   "valor": "113",
+   "rotulo": "Lei Federal, Nº 7.990/1989",
+   "contador": 31
+  },
+  {
+   "valor": "68",
+   "rotulo": "Lei Federal, Nº 8.078/1990",
+   "contador": 1
+  },
+  {
+   "valor": "69",
+   "rotulo": "Lei Federal, Nº 8.080/1990",
+   "contador": 6
+  },
+  {
+   "valor": "71",
+   "rotulo": "Lei Federal, Nº 8.112/1990",
+   "contador": 9
+  },
+  {
+   "valor": "73",
+   "rotulo": "Lei Federal, Nº 8.212/1991",
+   "contador": 21
+  },
+  {
+   "valor": "74",
+   "rotulo": "Lei Federal, Nº 8.213/1991",
+   "contador": 3
+  },
+  {
+   "valor": "76",
+   "rotulo": "Lei Federal, Nº 8.429/1992",
+   "contador": 12
+  },
+  {
+   "valor": "77",
+   "rotulo": "Lei Federal, Nº 8.443/1992",
+   "contador": 1
+  },
+  {
+   "valor": "79",
+   "rotulo": "Lei Federal, Nº 8.662/1993",
+   "contador": 1
+  },
+  {
+   "valor": "80",
+   "rotulo": "Lei Federal, Nº 8.666/1993",
+   "contador": 1023
+  },
+  {
+   "valor": "83",
+   "rotulo": "Lei Federal, Nº 8.906/1994",
+   "contador": 6
+  },
+  {
+   "valor": "85",
+   "rotulo": "Lei Federal, Nº 8.935/1994",
+   "contador": 1
+  },
+  {
+   "valor": "86",
+   "rotulo": "Lei Federal, Nº 8.987/1995",
+   "contador": 53
+  },
+  {
+   "valor": "87",
+   "rotulo": "Lei Federal, Nº 9.394/1996",
+   "contador": 36
+  },
+  {
+   "valor": "88",
+   "rotulo": "Lei Federal, Nº 9.424/1996",
+   "contador": 7
+  },
+  {
+   "valor": "92",
+   "rotulo": "Lei Federal, Nº 9.478/1997",
+   "contador": 1
+  },
+  {
+   "valor": "93",
+   "rotulo": "Lei Federal, Nº 9.503/1997",
+   "contador": 2
+  },
+  {
+   "valor": "94",
+   "rotulo": "Lei Federal, Nº 9.504/1997",
+   "contador": 9
+  },
+  {
+   "valor": "97",
+   "rotulo": "Lei Federal, Nº 9.717/1998",
+   "contador": 75
+  },
+  {
+   "valor": "98",
+   "rotulo": "Lei Federal, Nº 9.784/1999",
+   "contador": 11
+  },
+  {
+   "valor": "99",
+   "rotulo": "Lei Federal, Nº 9.790/1999",
+   "contador": 2
+  },
+  {
+   "valor": "100",
+   "rotulo": "Lei Federal, Nº 9.796/1999",
+   "contador": 1
+  },
+  {
+   "valor": "101",
+   "rotulo": "Lei Federal, Nº 9.873/1999",
+   "contador": 1
+  },
+  {
+   "valor": "122",
+   "rotulo": "Portaria Federal, Nº 1.467/2022",
+   "contador": 1
+  },
+  {
+   "valor": "108",
+   "rotulo": "Resolução, Nº 261/2013",
+   "contador": 449
+  }
+ ]
+}

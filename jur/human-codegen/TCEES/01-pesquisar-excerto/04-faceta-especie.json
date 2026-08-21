@@ -1,0 +1,157 @@
+{
+ "campoFormulario": "EspecieProcessoMenuItem.IdEspecie",
+ "truncadaEm100": false,
+ "total": 30,
+ "itens": [
+  {
+   "valor": "175",
+   "rotulo": "Acompanhamento",
+   "contador": 78
+  },
+  {
+   "valor": "54",
+   "rotulo": "Admissão",
+   "contador": 11
+  },
+  {
+   "valor": "156",
+   "rotulo": "Agravo",
+   "contador": 123
+  },
+  {
+   "valor": "6",
+   "rotulo": "Atos Sujeitos a Registro",
+   "contador": 176
+  },
+  {
+   "valor": "4",
+   "rotulo": "Auditoria",
+   "contador": 1030
+  },
+  {
+   "valor": "170",
+   "rotulo": "Conflito de Competência",
+   "contador": 1
+  },
+  {
+   "valor": "234",
+   "rotulo": "Convertido de Contas",
+   "contador": 2
+  },
+  {
+   "valor": "165",
+   "rotulo": "Denúncia",
+   "contador": 449
+  },
+  {
+   "valor": "155",
+   "rotulo": "Embargos de Declaração",
+   "contador": 189
+  },
+  {
+   "valor": "60",
+   "rotulo": "Estabilidade",
+   "contador": 1
+  },
+  {
+   "valor": "177",
+   "rotulo": "Fiscalização de Instrumento Convocatório",
+   "contador": 4
+  },
+  {
+   "valor": "5",
+   "rotulo": "Gestão Fiscal",
+   "contador": 2
+  },
+  {
+   "valor": "168",
+   "rotulo": "Impedimento",
+   "contador": 1
+  },
+  {
+   "valor": "173",
+   "rotulo": "Inspeção",
+   "contador": 43
+  },
+  {
+   "valor": "185",
+   "rotulo": "Investigação Preliminar",
+   "contador": 1
+  },
+  {
+   "valor": "174",
+   "rotulo": "Levantamento",
+   "contador": 10
+  },
+  {
+   "valor": "176",
+   "rotulo": "Monitoramento",
+   "contador": 21
+  },
+  {
+   "valor": "222",
+   "rotulo": "Omissão",
+   "contador": 43
+  },
+  {
+   "valor": "154",
+   "rotulo": "Pedido de Reexame",
+   "contador": 413
+  },
+  {
+   "valor": "178",
+   "rotulo": "Pedido de Revisão",
+   "contador": 100
+  },
+  {
+   "valor": "171",
+   "rotulo": "Prejulgado",
+   "contador": 17
+  },
+  {
+   "valor": "2",
+   "rotulo": "Prestação de Contas",
+   "contador": 1193
+  },
+  {
+   "valor": "153",
+   "rotulo": "Recurso de Reconsideração",
+   "contador": 796
+  },
+  {
+   "valor": "182",
+   "rotulo": "Recurso Inominado",
+   "contador": 4
+  },
+  {
+   "valor": "166",
+   "rotulo": "Representação",
+   "contador": 2272
+  },
+  {
+   "valor": "141",
+   "rotulo": "Solicitação do Poder Legislativo",
+   "contador": 6
+  },
+  {
+   "valor": "169",
+   "rotulo": "Suspeição",
+   "contador": 9
+  },
+  {
+   "valor": "242",
+   "rotulo": "Termo de Ajustamento de Gestão",
+   "contador": 7
+  },
+  {
+   "valor": "3",
+   "rotulo": "Tomada de Contas Especial",
+   "contador": 898
+  },
+  {
+   "valor": "172",
+   "rotulo": "Uniformização de Jurisprudência",
+   "contador": 5
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "campoFormulario": "NaturezaProcessoMenuItem.IdNatureza",
+ "truncadaEm100": false,
+ "total": 10,
+ "itens": [
+  {
+   "valor": "1",
+   "rotulo": "Consulta",
+   "contador": 329
+  },
+  {
+   "valor": "2",
+   "rotulo": "Contas",
+   "contador": 2105
+  },
+  {
+   "valor": "47",
+   "rotulo": "Corregedoria",
+   "contador": 1
+  },
+  {
+   "valor": "3",
+   "rotulo": "Fiscalização",
+   "contador": 4719
+  },
+  {
+   "valor": "44",
+   "rotulo": "Incidentes",
+   "contador": 44
+  },
+  {
+   "valor": "23",
+   "rotulo": "Obrigações Tributárias e Contributivas",
+   "contador": 588
+  },
+  {
+   "valor": "77",
+   "rotulo": "Oitiva Sobre Apuração de Dano",
+   "contador": 5
+  },
+  {
+   "valor": "40",
+   "rotulo": "Recurso",
+   "contador": 1703
+  },
+  {
+   "valor": "21",
+   "rotulo": "Recursos Humanos",
+   "contador": 17
+  },
+  {
+   "valor": "45",
+   "rotulo": "Revisão",
+   "contador": 109
+  }
+ ]
+}

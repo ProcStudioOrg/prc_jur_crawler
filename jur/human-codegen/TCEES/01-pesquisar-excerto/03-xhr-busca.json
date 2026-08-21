@@ -1,0 +1,17 @@
+[
+  {
+    "m": "POST",
+    "u": "https://acessoidentificado.tcees.tc.br/PesquisarExcerto/_RecuperarTempoExecucao",
+    "body": ""
+  },
+  {
+    "m": "POST",
+    "u": "https://acessoidentificado.tcees.tc.br/Publica/PesquisarExcerto/Buscar",
+    "body": "PaginaAtual=0&PaginaNova=0&AgruparResultados=False&OrdenarPor=&MenuLateralCarregado=False&BuscaTextual=&BuscaExata=&BuscaExcetuacao=&AreaAssuntoExcertoMenuItem.IdArea=&TemaAssuntoExcertoMenuItem.IdTema=&SubtemaAssuntoExcertoMenuItem.IdSubtema=&PeriodoDataMenuItem.CriacaoData=0&PeriodoDataMenuItem.CriacaoDataIntervaloInicio=&PeriodoDataMenuItem.CriacaoDataIntervaloFim=&TipoDeliberacaoMenuItem.IdTipoDeliberacao=&ColegiadoMenuItem.IdColegiado=&NormaExcertoMenuItem.IdNorma=&ReferenciaLegalExcertoMenuItem.IdReferenciaLegal=&PalavraChaveMenuItem.IdPalavraChave=&AtividadeProcessoMenuItem.IdAtividade=&NaturezaProcessoMenuItem.IdNatureza=&EspecieProcessoMenuItem.IdEspecie=&SubespecieProcessoMenuItem.IdSubespecie=&ClassificacaoProcessoMenuItem.IdClassificacaoProcesso=&RelatorMenuItem.NomeRelator=&BuscarPorEnunciado=false"
+  },
+  {
+    "m": "POST",
+    "u": "https://acessoidentificado.tcees.tc.br/Publica/PesquisarExcerto/Buscar",
+    "body": "PaginaAtual=0&PaginaNova=0&AgruparResultados=False&OrdenarPor=&MenuLateralCarregado=true&BuscaTextual=licita%C3%A7%C3%A3o&BuscaExata=&BuscaExcetuacao=&AreaAssuntoExcertoMenuItem.IdArea=&TemaAssuntoExcertoMenuItem.IdTema=&SubtemaAssuntoExcertoMenuItem.IdSubtema=&PeriodoDataMenuItem.CriacaoData=0&PeriodoDataMenuItem.CriacaoDataIntervaloInicio=&PeriodoDataMenuItem.CriacaoDataIntervaloFim=&TipoDeliberacaoMenuItem.IdTipoDeliberacao=&ColegiadoMenuItem.IdColegiado=&NormaExcertoMenuItem.IdNorma=&ReferenciaLegalExcertoMenuItem.IdReferenciaLegal=&PalavraChaveMenuItem.IdPalavraChave=&AtividadeProcessoMenuItem.IdAtividade=&NaturezaProcessoMenuItem.IdNatureza=&EspecieProcessoMenuItem.IdEspecie=&SubespecieProcessoMenuItem.IdSubespecie=&ClassificacaoProcessoMenuItem.IdClassificacaoProcesso=&RelatorMenuItem.NomeRelator=&BuscarPorEnunciado=false"
+  }
+]

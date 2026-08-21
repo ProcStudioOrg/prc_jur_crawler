@@ -1,0 +1,26 @@
+# TCE-ES — modulo 01 — secao 04: as 14 facetas, enumeradas
+
+Prints: `04.01-faceta-tipo-deliberacao.png`, `04.02-faceta-relator.png`
+JSON  : `04-faceta-{area,tema,subtema,periodo,tipo-deliberacao,colegiado,norma,
+         palavra-chave,atividade,natureza,especie,subespecie,classificacao,relator}.json`
+        Cada arquivo traz `campoFormulario`, `truncadaEm100`, `total` e os `itens`
+        com `valor` / `rotulo` / `contador`, extraidos do DOM depois do AJAX.
+
+Contagens sobre o acervo (9.730, sem termo) e a prova de que o filtro funciona
+estao na tabela de `01-pesquisar-excerto.txt` secao 6 — todas as 14 devolveram
+EXATAMENTE o contador anunciado quando aplicadas.
+
+Valores que valem decorar:
+  Colegiado   1 = Plenario (6.223) | 2 = 1a Camara (1.817) | 3 = 2a Camara (1.690)
+              ✅ 6.223+1.817+1.690 = 9.730 — a particao fecha exata
+  Atividade   1 = Administracao Geral (27) | 2 = Controle Externo (9.703)
+              ✅ 27+9.703 = 9.730
+  Tipo delib. 21 = Acordao (6.940) — domina o acervo; ha 11 tipos
+  Relator     o valor E O NOME ("Davi Diniz de Carvalho"), nao um id. 28 nomes.
+  Classificacao  o valor pode ser MULTI ("234,2053" = Agravo) — virgula dentro
+                 do proprio valor. Nao quebre no `,`.
+
+⚠️ TRUNCAMENTO EM 100: `Subtema` e `Palavra-chave` vem com exatamente 100 itens,
+   e os hidden `ContadorSubtemas` / `ContadorPalavrasChave` confirmam 100. O que
+   passa disso NAO aparece e a tela nao avisa. `Tema` (79), `Classificacao` (85)
+   e `Norma` (74) estao abaixo do teto e portanto completos.
