@@ -1,0 +1,266 @@
+[
+ {
+  "valor": "ANEXAR A PRESTAÇÃO DE CONTAS P/ ANALISE EM CONJUNTO",
+  "registros": 971
+ },
+ {
+  "valor": "ANEXAR P/C C/MULTA",
+  "registros": 77
+ },
+ {
+  "valor": "APLICAR MULTA",
+  "registros": 219
+ },
+ {
+  "valor": "APROVAR",
+  "registros": 2
+ },
+ {
+  "valor": "APROVAR RELATÓRIO FINAL",
+  "registros": 2
+ },
+ {
+  "valor": "ARQUIVAR",
+  "registros": 748
+ },
+ {
+  "valor": "ARQUIVAR - PRESCRIÇÃO",
+  "registros": 1946
+ },
+ {
+  "valor": "ARQUIVAR COM MULTA",
+  "registros": 3
+ },
+ {
+  "valor": "AUDITORIA ESPECIAL",
+  "registros": 1
+ },
+ {
+  "valor": "AUSENCIA DE RELATORIO",
+  "registros": 258
+ },
+ {
+  "valor": "CANCELAR",
+  "registros": 26
+ },
+ {
+  "valor": "CONCEDER PRAZO",
+  "registros": 7
+ },
+ {
+  "valor": "CONCESSAO DE PRAZO E APL.MULTA",
+  "registros": 1
+ },
+ {
+  "valor": "CONHECIMENTO",
+  "registros": 8
+ },
+ {
+  "valor": "CONST. PREJULGADO",
+  "registros": 11
+ },
+ {
+  "valor": "CONTAS ILIQUIDAVEIS",
+  "registros": 30
+ },
+ {
+  "valor": "CONVERTER DILIGENCIA",
+  "registros": 3
+ },
+ {
+  "valor": "CONVERTER EM TCE",
+  "registros": 13
+ },
+ {
+  "valor": "DAR PROVIMEN.PARCIAL",
+  "registros": 746
+ },
+ {
+  "valor": "DAR PROVIMENTO",
+  "registros": 908
+ },
+ {
+  "valor": "DEFERIR",
+  "registros": 60
+ },
+ {
+  "valor": "DEFERIR O PEDIDO",
+  "registros": 600
+ },
+ {
+  "valor": "DEFERIR O PEDIDO PARCIALMENTE",
+  "registros": 10
+ },
+ {
+  "valor": "DENUNCIA/REPRESENTACAO-IMPROCEDENCIA",
+  "registros": 161
+ },
+ {
+  "valor": "DENUNCIA/REPRESENTACAO-PROCEDENCIA",
+  "registros": 76
+ },
+ {
+  "valor": "DENUNCIA/REPRESENTACAO-PROCEDENCIA PARCIAL",
+  "registros": 73
+ },
+ {
+  "valor": "DESARQUIVAR",
+  "registros": 1
+ },
+ {
+  "valor": "EXTINCAO SEM RESOLUCAO DE MERITO",
+  "registros": 8945
+ },
+ {
+  "valor": "IMPROCEDENCIA",
+  "registros": 1
+ },
+ {
+  "valor": "INCOMPETENCIA",
+  "registros": 5
+ },
+ {
+  "valor": "INDEFERIR C/ MULTA",
+  "registros": 38
+ },
+ {
+  "valor": "INDEFERIR O CADASTRO",
+  "registros": 48
+ },
+ {
+  "valor": "INDEFERIR O PEDIDO",
+  "registros": 203
+ },
+ {
+  "valor": "INSPECAO EXTRAORDINA-CONCLUSAO",
+  "registros": 6
+ },
+ {
+  "valor": "INSPECAO EXTRAORDINARIA",
+  "registros": 1
+ },
+ {
+  "valor": "INSPECAO IN-LOCO",
+  "registros": 1
+ },
+ {
+  "valor": "IRREGULAR C/DEVOLUCAO",
+  "registros": 681
+ },
+ {
+  "valor": "IRREGULARES",
+  "registros": 357
+ },
+ {
+  "valor": "IRREGULARES C/MULTA",
+  "registros": 1171
+ },
+ {
+  "valor": "IRREGULARIDADE COM DEVOLUCAO E MULTA",
+  "registros": 3617
+ },
+ {
+  "valor": "LAUDO IRREGULAR",
+  "registros": 24
+ },
+ {
+  "valor": "MEDIDA CAUTELAR-DEFERIR",
+  "registros": 3
+ },
+ {
+  "valor": "MEDIDA CAUTELAR-INDEFERIDO",
+  "registros": 3
+ },
+ {
+  "valor": "MEDIDA CAUTELAR-INDISPONIBILIDADE DE BENS",
+  "registros": 19
+ },
+ {
+  "valor": "MEDIDA CAUTELAR-REVOGACAO",
+  "registros": 2
+ },
+ {
+  "valor": "MONITORAR AÇÕES",
+  "registros": 3
+ },
+ {
+  "valor": "NAO ACOLHER",
+  "registros": 10
+ },
+ {
+  "valor": "NAO ATENDIMENTO A DILIGENCIA",
+  "registros": 231
+ },
+ {
+  "valor": "NÃO CONHECIMENTO DO RECURSO",
+  "registros": 22
+ },
+ {
+  "valor": "NEGAR",
+  "registros": 249
+ },
+ {
+  "valor": "NEGAR O REGISTRO",
+  "registros": 583
+ },
+ {
+  "valor": "NEGAR PROVIMENTO",
+  "registros": 1031
+ },
+ {
+  "valor": "OUTRAS MULTAS",
+  "registros": 29
+ },
+ {
+  "valor": "OUTROS",
+  "registros": 170
+ },
+ {
+  "valor": "PENDENTE DE CADASTRO",
+  "registros": 41
+ },
+ {
+  "valor": "REABRIR INSTRUCAO",
+  "registros": 17
+ },
+ {
+  "valor": "REGISTRAR",
+  "registros": 131796
+ },
+ {
+  "valor": "REGISTRAR COM MULTA",
+  "registros": 212
+ },
+ {
+  "valor": "REGISTRAR NOVO ATO",
+  "registros": 15
+ },
+ {
+  "valor": "REGISTRAR SOB PENA DE MULTA",
+  "registros": 18
+ },
+ {
+  "valor": "REGULARES",
+  "registros": 12833
+ },
+ {
+  "valor": "REGULARES C/ MULTA",
+  "registros": 4941
+ },
+ {
+  "valor": "REGULARES C/RESSALVA",
+  "registros": 1875
+ },
+ {
+  "valor": "REGULARIDADE COM RESSALVA E MULTA",
+  "registros": 921
+ },
+ {
+  "valor": "RESPONDER CONSULTA",
+  "registros": 18
+ },
+ {
+  "valor": "SUSTAR TRAMITACAO",
+  "registros": 2
+ }
+]

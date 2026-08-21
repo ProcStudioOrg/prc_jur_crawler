@@ -1,0 +1,65 @@
+# TCE-PA — modulo 01 — secao 03: PESQUISA AVANCADA e a sintaxe de CAMPO
+# Print: 03.01-pesquisa-avancada.png ; combos completos: 03-avancada-*.json
+
+===============================================================================
+## 0. Onde fica e o que ela e
+===============================================================================
+GET https://www.tcepa.tc.br/pesquisaintegrada/pesquisa/avancada?b=<base>
+Alcancada pelo botao "Pesquisa Avancada" do iframe do portal, que faz
+`window.open('/pesquisaintegrada/pesquisa/avancada?b=' + <valor do combo>)`.
+E um formulario ASP.NET WebForms com repeaters (`rptAbas/rptCampos/rptGrupoCampos`),
+botao `#btnPesquisar`, e um combo `#ddlBaseDados` que lista as **16 bases**
+(contra 7 do iframe do portal — ver secao 01 §3).
+
+🔴 PENDENCIA: A AVANCADA NAO FOI SUBMETIDA. Nas duas tentativas de clicar em
+   "Pesquisar" o WAF F5 devolveu o captcha (secao 01 §5). Portanto **a
+   querystring que ela gera (`qa=True` + o `q` montado) NAO foi medida**. O que
+   FOI medido e a sintaxe de campo, abaixo — e ela basta, porque as facetas da
+   tela de resultados ja montam `campo:"valor"` dentro do proprio `q` com
+   `qa=False`. O crawler monta o `q` por conta propria.
+
+===============================================================================
+## 7. Sintaxe de CAMPO (Lucene) — e de onde vieram os nomes dos campos
+===============================================================================
+Os 12 campos indexados da base `acordaos` NAO sao rotulos de tela: sao o atributo
+`id-atributo` de cada controle da PESQUISA AVANCADA
+(`/pesquisaintegrada/pesquisa/avancada?b=acordaos`), lido no DOM renderizado:
+
+  data-sessao-plenaria   (input type=date)   Quando a sessao plenaria ocorreu
+  ano-sessao-plenaria    (select, 37 anos: 1990..2026)
+  exercicios             (select, 42 anos: 1984..2026)
+  decisoes               (select, 66 valores)
+  unidades-jurisdicionadas (input text)
+  relatores              (select, 21 nomes)
+  interessados           (input text)
+  classes-subclasses     (select, 109 valores)
+  ementa                 (input text)
+  conteudo               (textarea)
+  numeroacordao          (input text)
+  data-publicacao-doe    (input type=date)
+
+As listas completas estao em `avancada-*.json` nesta pasta.
+
+MEDIDO, tres formas:
+  numeroacordao:24768                                  ->     1   (exata, nao "contem")
+  aposentadoria ano-sessao-plenaria:"2024"             ->   504
+  data-sessao-plenaria:[2024-01-01 TO 2024-12-31]      -> 1.619   ✅ FAIXA FUNCIONA
+
+🔴 **A FAIXA IMPORTA PORQUE A TELA NAO TEM INTERVALO.** Cada campo de data da
+   pesquisa avancada e UM UNICO `<input type="date">` — data exata, sem as duas
+   pontas. A faixa Lucene `[X TO Y]` (com `*` numa ponta) e o unico jeito de
+   filtrar periodo, e o crawler traduz `-di`/`-df` para ela.
+
+🔴 **AS FACETAS DA BARRA LATERAL IGNORAM O TERMO — armadilha nova no repo.**
+   Buscando `aposentadoria`, a faceta "Ano da sessao plenaria" anuncia **1.619**
+   para 2024. Mas:
+     - aplicar `aposentadoria ano-sessao-plenaria:"2024"` devolve  **504**
+     - a faixa de 2024 **sem termo nenhum** devolve                **1.619**
+     - a soma das 37 facetas de ano da **51.549**, que e o ACERVO (51.621),
+       nao os 19.718 da busca
+   Ou seja a faceta e contagem GLOBAL do valor, nao do recorte atual. Ler
+   "1.619 acordaos de 2024 sobre aposentadoria" e 3x o numero real.
+   ⚠️ As facetas de `exercicios` (82.037), `decisoes` (177.103) e
+   `classes-subclasses` (82.982) somam MUITO acima do acervo porque os campos sao
+   multivalorados (um acordao julga varios processos).
+

@@ -1239,7 +1239,7 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 23 | **TCE-BA** | BA | ⚠️ **todos** os municípios baianos são do **TCM-BA** — **confirmado por ausência de combo de município** (não há filtro por município na tela) | ok 17/08 |
 | 24 | **TCE-PE** | PE | ✅ **PE não tem TCM** — os 184 municípios, **inclusive o Recife**, estão na base do próprio TCE (medido: 184 "Prefeitura" no combo de unidades) | ok 18/08 |
 | 25 | **TCDF** | DF | ✅ **o DF é ente único — não há municípios nem TCM-DF**, e isso foi provado por **ausência de combo de município** no formulário (método do TCE-PR), não por pesquisa fora do portal. A porta é a **API REST pública sobre Elasticsearch** (`api-busca-publica.tc.df.gov.br/jurisprudencia/`, extraída do bundle Vue, sem captcha) | ok 20/08 |
-| 26 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** | pendente |
+| 26 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** — **confirmado por ausência de campo de município** na pesquisa avançada (12 campos, nenhum é município). ⚠️ **a entrada oficial redireciona**: `www.tce.pa.gov.br` → **302** → `www.tcepa.tc.br`. A porta é a **Pesquisa Integrada** (`/pesquisaintegrada/pesquisa/resultados`, ASP.NET WebForms, GET puro em querystring) — busca, 12 campos Lucene, faixa de data, paginação profunda, card em 3 bases, permalink e PDF medidos | ok 21/08 |
 | 27 | **TCE-ES** | ES | | pendente |
 | 28 | **TCE-MG** | MG | 🔴 o portal que se chama "Jurisprudência" (**TCJuris**) está atrás de **reCAPTCHA v2 conferido no servidor**; a porta aberta é o **MapJuris** (`/TextualDadosProcesso`, sem captcha) — busca mapeada em 16/08, **crawler fechado em 20/08** (2º salto do grid, Fase 3b, operadores, filtros e rate limit medidos) | ok 20/08 |
 | 29 | **TCE-CE** | CE | ✅ TCM-CE extinto em 2017 e o acervo **migrou** — confirmado por medição (186 localidades no combo, **inclusive FORTALEZA**; processos trazem "PROCESSO MIGRADO DO TCM (SGP)"). A porta é a **API REST do SPA Contexto** (`contexto-api…/documentos/buscar`, Elasticsearch, sem captcha) — **busca, filtros, paginação e download do PDF medidos; falta a lista de tipos "Documentos de Decisão" e o crawler** | parcial 18/08 |
@@ -2440,3 +2440,98 @@ contrato do grid e NÃO foi testado** (pode ser exportação em lote); a **orden
 (`strNomeCampoOrdenar`/`tipoOrdenacao`) **não provada**; `tempDataLista` e `strFiltro` não
 testados; o **acervo anterior a 2008 não foi medido**; e o **TCJuris não foi retestado**.
 ⏱️ Timebox **não estourado**: 20:00 → 21:15, ~75 min (retomada, não mapeamento do zero).
+
+
+📌 **O que o TCE-PA (21/08/2026, slot 16:00) ensinou — 🟢 fechado no mesmo slot, leia
+[`CLAUDE-TCEPA.md`](CLAUDE-TCEPA.md).** Nono tribunal de contas do repo. A lição de
+abertura é que **o WAF pode devolver um CAPTCHA com HTTP 200 e o gatilho não ser nada
+do que o repo já catalogou — nem o `User-Agent`, nem o headless, nem o path: é o
+RITMO.** As lições valem para os TCEs restantes:
+
+- 🔴 **SÉTIMA CASCA DE HTTP 200 DO REPO: CAPTCHA DE IMAGEM SERVIDO COMO SUCESSO.** O
+  host inteiro está atrás de um **F5 Shape** (`/TSPD/?type=17|18`, bloco
+  `<APM_DO_NOT_TOUCH>`, cookies `TS…`). Ele **não barra na primeira visita**. Medido: a
+  **mesma URL** de export que devolveu 573.798 bytes de JSON às 16:02 devolveu, às
+  16:06, HTTP **200** `text/html` de ~46 KB com `window["failureConfig"]`, uma imagem
+  base64 e o texto **"O que está escrito na imagem?"**. Um crawler que só cheque
+  `res.ok` grava 46 KB de captcha como jurisprudência; um parser tolerante devolve
+  **zero resultados**, que se lê como "não há julgado". **Se a resposta não for
+  parseável no formato esperado, aborte com erro explícito — nunca devolva lista vazia.**
+- 🔴 **E O GATILHO NÃO É O `User-Agent` — A LIÇÃO DO TCDF (20/08) NÃO SE REPETE.** Lá
+  bastava trocar `curl` por Chrome. Aqui o UA de Chrome **não adianta nada** depois da
+  cota estourada, e — o que mais surpreende — **nem o Playwright passa**: navegar com o
+  desafio JS resolvido e os cookies TSPD válidos devolve o mesmo captcha. **Resolver o
+  challenge não destrava.** Um dia de diferença entre dois WAFs F5 e dois
+  comportamentos opostos: **meça o gatilho, não herde o do vizinho.**
+- 🔴 **UMA NAVEGAÇÃO DE BROWSER CUSTA MUITO MAIS ORÇAMENTO QUE UM `curl` — a intuição
+  do repo se inverte aqui.** A tela de resultados puxa ~40 sub-recursos (bundles, 16
+  miniaturas de base, webfont, os próprios `/TSPD/`). Medido: **~14 requests de `curl`
+  espaçados passaram; 10 navegações de Playwright em ~4 min bloquearam.** O crawler
+  fala HTTP puro e o Playwright fica só para o mapeamento e os prints.
+  ⏱️ **Cooldown: ~6–7 min de silêncio** na primeira vez (16:09:08 → 16:15:53), mas
+  **mais de 9 min na quarta reincidência** — parece escalar. Sem `Retry-After`: só
+  sondando. E **cada sondagem reinicia a contagem** — sondar de minuto em minuto
+  *prolonga* o bloqueio. ⚠️ Isso muda o método: **planeje a medição em lotes**, gaste o
+  orçamento no que é caro de repetir e escreva o doc durante o cooldown.
+- 🔴 **O `||` NÃO FAZ UNIÃO — DEVOLVE O ACERVO INTEIRO.** A tela anuncia
+  `+ - && || "" ~ ? * ^`. Medido: sem termo = 51.621, `aposentadoria` = 19.718,
+  `pensao` = 19.447, `aposentadoria && pensao` = 19.366 (interseção correta),
+  `aposentadoria -pensao` = **352** (= 19.718 − 19.366, **exato**) e
+  `aposentadoria || pensao` = **51.621**, que é a busca **sem termo nenhum**. A união
+  seria 19.799. Some à coleção (`ou` ignorado no TCE-PR, `E`/`OU` inflando no TCDF,
+  `NÃO` perdendo resultado no TCE-MG): **é a quarta vez seguida no Bloco 5 que a
+  legenda do portal descreve um operador que não é o que o servidor faz.**
+- 🔴 **AS CONTAGENS DAS FACETAS IGNORAM O TERMO BUSCADO — armadilha nova.** Buscando
+  `aposentadoria`, a faceta "Ano da sessão plenária" anuncia **1.619** para 2024. Mas
+  aplicar `aposentadoria ano-sessao-plenaria:"2024"` devolve **504**, e a faixa de 2024
+  **sem termo nenhum** devolve exatamente **1.619**. A soma das 37 facetas de ano dá
+  **51.549** — o acervo (51.621), não os 19.718 da busca. **A faceta é contagem global
+  do valor.** Some a "contagem igual = filtro ignorado": aqui a contagem é *diferente* e
+  ainda assim mente. **Não relate número de faceta como resultado de busca.**
+- 🔴 **`rpp` É LIMITADO A 25 EM SILÊNCIO E O EXPORT TEM TETO RÍGIDO DE 100.** `rpp=100`
+  responde 200 com **25** cards (e o paginador se recalcula para 789 páginas). E o
+  exportador JSON (`…/exportacao?…&f=json`, achado no `href` do menu "Exportar", não
+  chutado) **ignora `p` e `rpp`** — provado por md5: três combinações diferentes
+  devolvem os mesmos 144.628 bytes. É o **top-100 da ordenação**, não uma página.
+  ⚠️ **A lição de método: um parâmetro aceito não é um parâmetro obedecido — compare o
+  md5, não o HTTP 200.**
+- 🔴 **O CARD MUDA DE ANATOMIA E DE CHAVE CONFORME A BASE.** `acordaos` tem ementa e
+  chave `numeroacordao/<n>`; **`prejulgados` não tem ementa nenhuma** (só extensão,
+  tamanho e páginas do arquivo) e a chave é `numero/<n>`; `informativos` tem `resumo` e
+  a chave é `codigo/<slug16>`. Um crawler que presuma `numeroacordao` + `ementa`
+  devolve vazio nas outras bases **sem erro nenhum**. É a lição do TJMG (dissecar mais
+  de um tipo) valendo agora para **bases**, não tipos.
+- 🔴 **NÃO SE SEPARA LISTA POR VÍRGULA QUANDO O VALOR TEM VÍRGULA.**
+  `ATOS DE APOSENTADORIA, REFORMA E PENSÃO - APOSENTADORIA-CONCESSÃO INICIAL` é **um**
+  item. Cada valor real é um `<a>` próprio. E a lista do card é **truncada em 10**, com
+  " e mais outros(as) N" colado no último item — a lista completa só existe no export
+  JSON ou no PDF.
+- ⚠️ **A ENTRADA OFICIAL MUDOU DE DOMÍNIO, E ISSO SE MEDE:** `www.tce.pa.gov.br`
+  responde **302** para `www.tcepa.tc.br` (o `.tc.br` novo dos tribunais de contas). O
+  host veio do `Location`, não de busca externa. **Nos TCEs restantes, siga o 302 antes
+  de concluir que o portal caiu.**
+- ⚠️ **A ressalva do TCM se confirmou por AUSÊNCIA DE CAMPO** (método do TCE-BA, não a
+  prova positiva do TCE-PR/TCE-PE): a avançada tem 12 campos e **nenhum é município**.
+  Registrado como indício forte, não como prova.
+- ✅ **O QUE FUNCIONA E É RARO NO BLOCO 5:** total **exato** (a última página fecha:
+  1.971×10 + 8 = 19.718), paginação profunda e **estável** (16:02 × 16:28 idênticas),
+  **ementa inteira no card** (1.144 chars contra 10.236 do PDF, sem `<mark>` — o
+  destaque é aplicado no cliente) e **permalink público em PDF**, byte a byte igual ao
+  botão Download, **sem captcha exclusivo do download** (a assimetria do TJAC não se
+  repete). E a **faixa Lucene de data funciona** — o que importa porque a tela só tem
+  `input type="date"` de **data exata**, sem as duas pontas.
+- ⚠️ **O SMOKE PRECISOU DE TERMO ALTERNATIVO, E O ZERO AQUI É DA JANELA, NÃO DA BASE.**
+  `dano moral` = **22** no acervo inteiro mas **0** na janela de 12 meses do smoke,
+  enquanto `licitação` na **mesma janela** = 109. Não encaixa na regra escrita em
+  `tests/smoke.js` ("zero na base inteira"), então a medição foi inteira para o
+  comentário em vez de forçar o caso na regra.
+
+⚠️ **Pendências declaradas do TCE-PA:** a **pesquisa avançada (`qa=True`) não foi
+submetida** — o WAF bloqueou nas duas tentativas —, então a querystring que ela gera
+não foi medida; os operadores `~N`, `?`, `*`, `^N` e `"frase"` **não foram medidos por
+contagem**; não se testou se o **slug** do permalink é decorativo; **não se mediu a
+distribuição por ano do acervo sem termo** (só a faceta, que é global); as bases `atos`,
+`resolucoes`, `portarias-tcepa`, `atas…` e `pautas…` **não tiveram card dissecado**; e o
+**rate limit exato do WAF não foi bisectado** (cada tentativa custa um cooldown).
+⏱️ Timebox **não estourado**: 16:00 → 17:09, ~69 min — dos quais **~25 minutos foram
+cooldown de WAF**, não trabalho.

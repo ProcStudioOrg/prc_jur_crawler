@@ -68,6 +68,18 @@ const TERMO_POR_COMANDO = {
   // filtro, encoding nem captcha. (Aqui o espaco tambem nao e conectivo, entao
   // "dano moral" seria zero de sintaxe de qualquer jeito.) Ver CLAUDE-TCEMG.md.
   tcemg: 'licitação',
+  // TCE-PA: controle externo do Estado do Pará (Pesquisa Integrada).
+  // ⚠️ AQUI O ZERO É DA JANELA, NÃO DA BASE — e por isso a medição vai inteira,
+  // em vez de encaixar o caso na regra acima. Medido em 21/08/2026:
+  //   `dano moral` na BASE inteira      =    22   (existe, mas é raro e antigo)
+  //   `dano moral` na janela do smoke   =     0   (21/08/2025–21/08/2026)
+  //   `dano`  na base = 5.414 · `moral` na base = 34
+  //   `licitação` NA MESMA JANELA       =   109   ← prova que a janela não zera
+  // Ou seja: a janela funciona (109 com outro termo), o termo funciona (22 na
+  // base), e a interseção dos dois é que é vazia. Não é filtro, não é encoding
+  // e não é captcha — se fosse WAF, o crawler teria abortado com erro explícito
+  // em vez de devolver success:true. Ver CLAUDE-TCEPA.md.
+  tcepa: 'licitação',
 };
 
 const ddmmyyyy = (d) => `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;

@@ -1,0 +1,227 @@
+# TCE-PA — Tribunal de Contas do Estado do Para — modulo 01: Pesquisa Integrada
+
+STATUS: em mapeamento — 21/08/2026, slot 1600. (o status final e escrito no fim do arquivo)
+
+===============================================================================
+## 1. Como se chega aqui (nenhuma URL foi inventada)
+===============================================================================
+www.tce.pa.gov.br            -> HTTP 302 -> https://www.tcepa.tc.br/   (dominio novo
+                                dos tribunais de contas; a entrada .gov.br REDIRECIONA,
+                                logo `tcepa.tc.br` E o dominio oficial, medido, nao chutado)
+www.tcepa.tc.br              -> HTTP 200, 90.581 bytes, <title>Portal do TCE-PA (Joomla)
+  link "Normas e Jurisprudencia" (aparece 5x na home)
+                             -> https://www.tcepa.tc.br/consulta-normas-e-jurisprudencias
+  essa pagina e uma casca Joomla com UM IFRAME:
+                             -> /modules/mod_consultas/consulta_normas_jurisprudencia.php
+  o iframe traz o FORMULARIO, cujo action e o app real:
+                             -> https://www.tcepa.tc.br/pesquisaintegrada/pesquisa/resultados
+
+O app se identifica como "Pesquisa Integrada v.20260819.2" (ASP.NET WebForms,
+__VIEWSTATE, DataTables, Bootstrap 4). Ele nao e so de jurisprudencia: indexa 16 bases
+do tribunal (video, biblioteca, noticias...). A parte juridica e a categoria
+"Portarias, Normas e Jurisprudencia".
+
+⚠️ PISTA MORTA REGISTRADA: dentro do PHP do iframe ha um bloco COMENTADO chamando
+`http://novohera.tce.pa/busca/default.aspx?busca=resultado&esfera=i&institucional=ti&indicepaginacao=2`
+— host INTERNO (`.tce.pa`, sem TLD publico), sistema antigo ("hera"). Nao resolve de fora
+e nao foi usado. Fica o registro para o `jur-fixer` nao persegui-lo.
+
+===============================================================================
+## 2. PASSO 0 — o que EXISTE e o que NAO existe (medido 21/08/2026)
+===============================================================================
+🔴 NAO EXISTE (medido, nao presumido) — todos NXDOMAIN em `getent hosts`:
+   dadosabertos.tce.pa.gov.br   api.tce.pa.gov.br   jurisprudencia.tce.pa.gov.br
+   busca.tce.pa.gov.br          consultas.tce.pa.gov.br
+   dadosabertos.tcepa.tc.br     api.tcepa.tc.br     jurisprudencia.tcepa.tc.br
+   busca.tcepa.tc.br
+🔴 NAO EXISTE — sem Swagger/OpenAPI: /swagger e /api em www.tcepa.tc.br respondem
+   HTTP 404 "Erro: 404 Artigo nao encontrado" (1.578 bytes). O path inventado de
+   controle `/path-inventado-9z` responde 404 "Categoria nao encontrada" (1.584 bytes)
+   — 404 DE VERDADE nos dois casos, nao casca de 200. (Contraste com o TCE-PR, onde
+   /swagger devolvia 200 porque tudo caia num SSO.)
+🔴 DataJud (CNJ) NAO se aplica: tribunal de contas nao e Judiciario, nao ha alias
+   `api_publica_*`. Numeracao CNJ NAO se aplica: o processo e `TC<8 digitos><ano>`
+   (ex. `TC5006241997`) e o ato e `<numero do acordao>` inteiro (ex. `24768`).
+   `src/cnj.js` reprovaria todo processo valido. => sem plano B se o portal cair,
+   como em todo o Bloco 5.
+
+✅ EXISTE — e nao e uma API REST, e um EXPORTADOR DA PROPRIA BUSCA, publico e sem auth:
+   GET /pesquisaintegrada/pesquisa/resultados/exportacao?b=&q=&o=&or=&f=json
+   Ele devolve `application/json`, `content-disposition: inline;
+   filename=resultados-pesquisa.json`, um ARRAY de objetos com a EMENTA INTEIRA
+   e 18 campos por registro. Sai do menu "Exportar" da propria tela de resultados
+   (os 4 formatos: xlsx, csv, xml, json) — nao foi chutado, saiu do href.
+
+===============================================================================
+## 3. As bases de dados (combo "Pesquisar em...", do form do iframe)
+===============================================================================
+O `<select name="b" id="b">` do iframe oferece 8 valores (7 bases + "todas"),
+agrupados por letra inicial:
+
+  <select class="filtrobases" id="b" name="b">
+    <option selected="selected" value="todas">Pesquisar em todas as bases</option>
+    <optgroup label="A">
+      <option value="acordaos">Acórdãos</option>
+      <option value="atas-extratos-sessoes-plenarias">Atas e extratos de sessões plenárias</option>
+      <option value="atos">Atos</option>
+    </optgroup>
+    <optgroup label="I">
+      <option value="informativos-jurisprudencia">Informativos de jurisprudência</option>
+    </optgroup>
+    <optgroup label="P">
+      <option value="pautas-sessoes-plenarias">Pautas de sessões plenárias</option>
+      <option value="prejulgados">Prejulgados</option>
+    </optgroup>
+    <optgroup label="R">
+      <option value="resolucoes">Resoluções</option>
+    </optgroup>
+  </select>
+
+⚠️ MAS A TELA DE RESULTADOS OFERECE MAIS BASES QUE O IFRAME. O dropdown
+"Pesquisar em..." da propria Pesquisa Integrada lista 16 bases (medido no DOM
+renderizado): todas-bases, banco-imagens, canal-youtube-tce-pa,
+noticias-portal-internet, acervo-bibliografico, acoes-educacionais, acordaos,
+acordaos-plenario-virtual, atos, informativos-jurisprudencia, portarias-tcepa,
+prejulgados, resolucoes, atas-extratos-sessoes-plenarias, pautas-sessoes-plenarias,
+sessoes-plenarias, videos-sessoes-plenarias.
+=> `acordaos-plenario-virtual` e `portarias-tcepa` EXISTEM e NAO estao no iframe.
+   Quem mapear so o iframe perde o acervo do Plenario Virtual.
+
+===============================================================================
+## 4. O contrato da busca (GET, tudo em querystring — sem POST, sem __VIEWSTATE)
+===============================================================================
+GET https://www.tcepa.tc.br/pesquisaintegrada/pesquisa/resultados
+      ?b=<base>            base de dados (ver §3)
+      &q=<termo>           consulta (sintaxe Lucene, ver §5)
+      &qa=False            pesquisa avancada (o form simples manda False)
+      &p=<n>               PAGINA, base 1
+      &rpp=<10|15|20|25>   resultados por pagina — o menu so oferece esses 4
+      &o=<ordenacao>       relevancia | titulo | data-sessao-plenaria |
+                           numeroacordao | data-publicacao-doe | data-conteudo
+      &or=<True|False>     ordem reversa (True = decrescente)
+
+E a MESMA querystring serve o exportador, trocando o path e somando &f=:
+GET .../pesquisa/resultados/exportacao?...&f=<json|csv|xml|xlsx>
+
+Cabecalhos de resposta da busca: X-Frame-Options: DENY, nosniff, Referrer-Policy:
+no-referrer, charset=utf-8 (NAO e ISO-8859-1).
+
+===============================================================================
+## 5. 🔴 O WAF F5 SHAPE DEVOLVE **CAPTCHA DE IMAGEM COM HTTP 200** — e por RITMO
+===============================================================================
+O host inteiro esta atras de um F5 Shape/BIG-IP (cookies `TS01d17900`,
+`TSb0611f0b029`, `TSe551aea7027`; scripts `/TSPD/?type=18`, `?type=17`, bloco
+`<APM_DO_NOT_TOUCH>` no HTML). Ele NAO barra na primeira visita — barra depois.
+
+MEDIDO em 21/08/2026 (relogio do agente):
+  16:01–16:05  ~14 requests de curl com UA de Chrome  -> TODOS HTTP 200 legitimos
+               (a busca 489.510 bytes; o export 573.798 bytes de JSON valido)
+  16:05–16:06  mais ~14 requests em dois lacos apertados (sem pausa)
+               -> a partir dai TODA resposta vira o desafio
+  o desafio:   HTTP **200**, `Content-Type: text/html`, ~40–48 KB,
+               corpo com `window["failureConfig"]`, uma imagem base64 e o texto
+               **"O que está escrito na imagem?"** + "Seu ID de suporte é: <n>"
+
+🔴 ISTO E UMA NOVA CASCA DE HTTP 200 PARA O CATALOGO DO REPO: **captcha de imagem
+   servido no lugar do JSON, com status 200 e sem nenhum header de erro.** Um crawler
+   que so cheque `res.ok` grava 46 KB de HTML de captcha achando que e a jurisprudencia,
+   e um parser tolerante devolve ZERO RESULTADOS — que se le como "nao ha julgado".
+   Regra do crawler: **se a resposta do export nao for JSON parseavel, ou se o HTML
+   contiver `failureConfig`/"O que está escrito", ABORTAR com erro explicito**, nunca
+   devolver lista vazia.
+
+🔴 O BLOQUEIO NAO E POR PATH, NEM POR PARAMETRO, NEM POR User-Agent — E POR IP/RITMO.
+   Prova: a URL de export EXATAMENTE IGUAL a que devolveu 573.798 bytes de JSON as
+   16:02 devolveu o captcha as 16:06. Nada mudou na URL. Depois de bloqueado, TAMBEM
+   a navegacao normal da tela de resultados (page.goto no Playwright, UA de Chrome,
+   com os cookies TSPD do proprio desafio JS resolvidos) devolve o captcha — ou seja
+   **resolver o desafio JS nao destrava**, e Playwright NAO e contorno.
+   ⚠️ Isso separa o TCE-PA do TCDF: la o gate era so o `User-Agent: curl` e bastava
+   trocar o UA. Aqui o UA de Chrome nao adianta nada depois da cota estourada.
+
+🔴 O ORCAMENTO DE REQUESTS E PEQUENO E **UMA NAVEGACAO DE PAGINA CUSTA MUITO MAIS QUE UM
+   `curl`**. A tela de resultados puxa ~40 sub-recursos (bundles, 16 miniaturas de base,
+   webfont, os proprios /TSPD/). Medido:
+     - ~14 requests de `curl` espacados  -> passou
+     - 10 navegacoes de Playwright em ~4 min -> BLOQUEOU
+   => o crawler deve falar por HTTP puro (curl/fetch), NAO por browser. Playwright serve
+   para o mapeamento e os prints, nao para producao. Isto inverte a intuicao: aqui o
+   browser e MAIS suspeito que o cliente HTTP, porque traz 40 requests junto.
+
+⏱️ COOLDOWN MEDIDO: silencio total de ~6-7 minutos destrava.
+   ultimo request 16:09:08 -> as 16:09:04 ainda CAPTCHA -> as 16:15:53 LIBEROU.
+   Nao ha header de Retry-After; a unica forma de saber e sondar.
+
+===============================================================================
+## 6. Sintaxe da consulta `q` — a legenda da tela e os OPERADORES MEDIDOS
+===============================================================================
+A tela (tooltips do iframe) anuncia sintaxe estilo Lucene:
+   +termo (obrigatorio) | -termo (excluir) | && (E) | || (OU) | "exato"
+   | ~N (proximidade) | ? (curinga 1 char) | * (curinga) | ^N (relevancia)
+
+MEDIDO em 21/08/2026 na base `acordaos` (contagens do bloco "Foram encontrados"):
+
+   (sem termo)              -> 51.621   <- ACERVO INTEIRO DE ACORDAOS
+   aposentadoria            -> 19.718
+   pensao                   -> 19.447
+   aposentadoria && pensao  -> 19.366   ✅ E de verdade: interseccao, menor que as duas
+   aposentadoria -pensao    ->    352   ✅ EXCLUSAO EXATA: 19.718 - 19.366 = 352 ✔
+   aposentadoria || pensao  -> 51.621   🔴 **NAO E UNIAO — E O ACERVO INTEIRO**
+
+🔴 O `||` MENTE, E MENTE PARA CIMA. A uniao correta seria 19.718 + 19.447 - 19.366
+   = 19.799. O que se recebe e 51.621, que e EXATAMENTE a contagem sem termo nenhum:
+   o `||` faz a busca casar TUDO. Um usuario que peca "aposentadoria OU pensao"
+   recebe o acervo completo achando que recebeu a uniao — e como a tela responde
+   HTTP 200 com resultados plausiveis, nada denuncia o defeito.
+   ✅ O substituto correto e `&&` + `-`, que fecham aritmetica exata.
+   => o crawler NAO deve expor `||`; se o usuario mandar `||` no termo, avisar.
+
+===============================================================================
+## 11. Acervos medidos por base (21/08/2026, busca sem termo)
+===============================================================================
+  acordaos                     51.621
+  acordaos-plenario-virtual     7.701   ⚠️ NAO esta no formulario do portal
+  prejulgados                      22
+  informativos-jurisprudencia      21
+  (atos, resolucoes, portarias-tcepa, atas, pautas: nao medidos — ver PENDENCIAS)
+
+⚠️ Base viva: a faceta de ano da sessao plenaria tem 2026 com 544 ocorrencias e o
+   rodape do sistema diz "Ultima atualizacao em 21/08/2026 as 11:00:05" — o
+   congelamento do TJAM nao se repete aqui.
+   🔴 MAS ISSO E FACETA, e faceta aqui e contagem global; a distribuicao por ano
+   do acervo **sem termo** NAO foi medida ponto a ponto. Ver PENDENCIAS.
+
+===============================================================================
+## 12. ESCOPO — municipios do Para NAO estao aqui
+===============================================================================
+Os municipios paraenses sao do **TCM-PA**, tribunal e base separados.
+A ressalva da fila se confirma **POR AUSENCIA DE COMBO** (metodo do TCE-BA, nao a
+prova positiva do TCE-PR/TCE-PE, que contaram municipios no combo): a pesquisa
+avancada de `acordaos` tem **12 campos e NENHUM e municipio** — nao ha `select`,
+nao ha `id-atributo` de municipio. O campo institucional e
+`unidades-jurisdicionadas`, e a amostra traz secretarias ESTADUAIS
+("SECRETARIA DE ESTADO DE ADMINISTRACAO - SEAD").
+=> Buscar conta de prefeitura paraense aqui devolve zero, e esse zero NAO e
+   ausencia de julgado. E indicio forte, nao prova positiva — registrado como tal.
+
+===============================================================================
+## 13. STATUS FINAL E PENDENCIAS DECLARADAS
+===============================================================================
+STATUS: 🟢 OK. Crawler fechado no mesmo slot (21/08/2026, 1600).
+Arquivos: src/TCEPA{Navigator,Crawler,Checker,Testes}.js, subcomando `tcepa` em
+bin/jur, cobertura regerada, CLAUDE-TCEPA.md e roteamento em CLAUDE.md e
+skills/browser/SKILL.md.
+
+PENDENCIAS (o que NAO foi medido — "nao medi" ≠ "nao existe"):
+  - A PESQUISA AVANCADA (`qa=True`) NAO FOI SUBMETIDA: o WAF bloqueou nas duas
+    tentativas de clicar em "Pesquisar". A querystring que ela gera nao foi
+    medida; o crawler monta o `q` por conta propria. A sintaxe de campo esta
+    provada; o modo `qa` nao.
+  - Os operadores `~N`, `?`, `*`, `^N` e `"frase exata"` NAO foram medidos por
+    contagem — so `&&`, `-` e `||` foram.
+  - Nao se testou se o SLUG do permalink e decorativo (no TCE-PR era).
+  - Nao se mediu a distribuicao por ano do acervo SEM termo.
+  - As bases `atos`, `resolucoes`, `portarias-tcepa`, `atas-extratos-sessoes-plenarias`
+    e `pautas-sessoes-plenarias` nao tiveram card dissecado.
+  - O rate limit exato do WAF (quantos requests, em que janela) foi ESTIMADO por
+    observacao, nao bisectado — bisectar custaria varios cooldowns de 7 min.

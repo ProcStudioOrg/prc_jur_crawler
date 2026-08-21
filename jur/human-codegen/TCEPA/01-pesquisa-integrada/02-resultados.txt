@@ -1,0 +1,119 @@
+# TCE-PA — modulo 01 — secao 02: O QUE VEM DEPOIS DA BUSCA
+# (entregavel da skill `browser-post-search`, medido em 21/08/2026)
+
+===============================================================================
+## 0. Onde o resultado aparece
+===============================================================================
+MESMA ROTA, GET novo:
+`/pesquisaintegrada/pesquisa/resultados?b=&q=&qa=&p=&rpp=&o=&or=`.
+A URL de resultado E REUTILIZAVEL — colada em cliente limpo (curl sem cookie)
+devolve a mesma pagina. Nao ha modal, nao ha nova aba, nao ha POST.
+Os controles de busca PERMANECEM (a barra do topo repete o termo), entao o
+refinamento e incremental: cada faceta clicada apenas ACRESCENTA `campo:"valor"`
+ao proprio `q` (e por isso que a sintaxe de campo pode ser montada pelo crawler
+sem passar pela pesquisa avancada).
+O TOTAL aparece no bloco "Resumo da pesquisa" como o texto literal
+`Foram encontrados <N> resultados` (mais `Resultados encontrados em <N>ms`).
+E ele que o crawler le (`TCEPANavigator.total`).
+
+Prints: `02.01-resultados-topo.png` (cabecalho da listagem) e
+`02.02-resultados-rodape-paginacao.png` (rodape — sao telas diferentes, e o
+rodape e onde vive a paginacao). O card isolado esta em `02.03-card-acordao.png`
+e o menu "Exportar" aberto (xlsx/csv/xml/json) em `02.04-menu-exportar.png`.
+O HTML cru de uma busca inteira esta em `02-resultados-bruto-acordaos.html`, e o
+outerHTML de um card por base em `02-card-resultado-{acordao,prejulgado,informativo}.html`.
+
+===============================================================================
+## 8. Paginacao, teto e estabilidade  (Fase 3b — pos-busca)
+===============================================================================
+Paginacao e SERVER-SIDE por URL, sem XHR: cada pagina e um GET novo. O rodape
+tem 1..6 + "Proxima" + "Ultima", e a "Ultima" ja traz o numero da ultima pagina.
+
+  rpp oferecido pelo menu:   10 | 15 | 20 | 25
+🔴 rpp=100                -> HTTP 200, mas a pagina traz **25 cards** e o proprio
+                             paginador se recalcula para 789 paginas (19.718/25).
+                             O teto e 25, aplicado EM SILENCIO.
+✅ TOTAL EXATO, NAO SATURADO: `aposentadoria`=19.718 e a ultima pagina
+   (`p=1972`, `rpp=10`) traz **8 cards** — 1.971x10 + 8 = 19.718 ✔
+✅ PROFUNDIDADE: `p=1972` responde normalmente. Nao ha teto de offset.
+✅ ESTABILIDADE: a pagina 1 as 16:02 e as 16:28 devolveu os MESMOS documentos na
+   MESMA ordem (`24768, 19180, 19670, 17539, 18288, 27288, 24064, 17811, 59173,
+   19733`). Mesmo assim o crawler deduplica por id — e barato.
+✅ Ordenacoes (`o=`): relevancia | titulo | data-sessao-plenaria | numeroacordao
+   | data-publicacao-doe | data-conteudo, com `or=True|False`.
+
+🔴 O EXPORTADOR TEM TETO RIGIDO DE 100 E IGNORA `p`/`rpp` — provado por md5:
+   `&p=1&rpp=25`, `&p=2&rpp=25` e `&p=1&rpp=100` devolvem os MESMOS 144.628
+   bytes (md5 `ad6cdc1a78...`), sempre 100 registros comecando no mesmo
+   documento. E o **top-100 da ordenacao**, nao uma pagina. Por isso o crawler
+   pagina a TELA, e o export fica como caminho rapido documentado.
+   ⚠️ E o export NAO traz total: quem sabe o total e a tela.
+
+===============================================================================
+## 9. Anatomia do card — E ELA MUDA CONFORME A BASE
+===============================================================================
+Container: `<div id="resultado-organico-N" class="card ... resultado-organico">`
+Titulo:    `<h2 class="... resultado-organico-titulo">` -> `<a class="titulo ...">`
+Campos:    `<span class='campo campo-text-plain campo-<NOME>'>` dentro de um
+           `<dfn title="NOME: descricao">` que documenta o campo na propria tela.
+Botao:     `<a class="... resultado-organico-btn-download">Download</a>`
+
+MEDIDO em TRES bases (o HTML de cada uma esta em `02-card-resultado-*.html`):
+
+  acordaos                    campos: data-sessao-plenaria, exercicios, ementa,
+                              decisoes, unidades-jurisdicionadas, relatores,
+                              data-publicacao-doe, interessados,
+                              classes-subclasses, fonte
+                              chave do permalink: `numeroacordao/<n>`
+  prejulgados       🔴 **SEM EMENTA NENHUMA** — so arquivo-extensao,
+                              arquivo-tamanho, arquivo-quantidade-paginas, fonte
+                              chave do permalink: `numero/<n>`
+  informativos-jurisprudencia campos: resumo (nao "ementa") + arquivo-*
+                              chave do permalink: `codigo/<slug de 16 chars>`
+
+🔴 Um crawler que presuma `numeroacordao` + `ementa` devolve VAZIO nas duas outras
+   bases sem erro nenhum. Por isso `fatiarCards` le a chave do PROPRIO href.
+
+✅ O TEXTO DO CARD E A EMENTA INTEIRA, NAO UM TRECHO. Medido no acordao 24.768:
+     ementa no card ...... 1.144 caracteres
+     PDF do inteiro teor . 10.236 caracteres (pdftotext)
+   ~9x maior, e o card nao tem reticencias nem `<mark>`. O destaque do termo e
+   aplicado NO CLIENTE (`$('.highlightable').highlighter({q: 'aposentadoria'})`),
+   entao o HTML do servidor vem com texto limpo — quem raspar por HTTP nao
+   precisa desfazer highlight.
+
+🔴 A LISTA DO CARD E TRUNCADA EM 10, com o sufixo " e mais outros(as) 31" COLADO
+   no ultimo item. E os valores TEM VIRGULA DENTRO: `ATOS DE APOSENTADORIA,
+   REFORMA E PENSAO - APOSENTADORIA-CONCESSAO INICIAL` e **UM** item, nao dois.
+   Quem quebrar no `,` inventa classes que nao existem. Cada valor real e um
+   `<a>` proprio — e de la que se extrai. A lista COMPLETA so existe no export
+   JSON (separada por `;`) ou no PDF.
+
+===============================================================================
+## 10. A escada ate o documento — e o permalink
+===============================================================================
+Do card saem DOIS links, e eles apontam para o MESMO arquivo:
+
+  .../bases-dados/<base>/<chave>/<valor>/<slug>/conteudo-original   (titulo + miniatura)
+  .../bases-dados/<base>/<chave>/<valor>/<slug>/download            (botao "Download")
+
+✅ MEDIDO NO ACORDAO 24.768, requisicao limpa (curl, sem cookie, sem sessao):
+     conteudo-original -> HTTP 200  application/pdf  31.200 bytes  md5 13b62cd949...
+     download          -> HTTP 200  application/pdf  31.200 bytes  md5 13b62cd949...
+   md5 IDENTICO. Comeca em `%PDF-1.5` — aqui NAO ha o envelope PKCS#7 do TCE-PR.
+✅ NAO HA CAPTCHA EXCLUSIVO DO DOWNLOAD (a assimetria do TJAC nao se repete): o
+   unico bloqueio e o WAF por ritmo, e ele vale para busca e download igualmente.
+✅ NAO HA MODAL: nao existe caminho sem URL. Todo documento tem permalink.
+
+🔴 QUEM IDENTIFICA O DOCUMENTO E O NUMERO DO ACORDAO, NAO O PROCESSO. O acordao
+   24.768 julga **41 processos** (campo `processos` do export:
+   `TC5006241997;TC5007711997;...`). Um numero de processo devolve o acordao que
+   o julgou junto com dezenas de outros.
+⚠️ E O PDF GRAFA O PROCESSO EM OUTRO FORMATO: no papel esta `96/55214-0`,
+   `97/50060-9`; no indice esta `TC5521401996`, `TC5006091997`. Mesma coisa,
+   duas grafias — nao case string entre as duas fontes sem normalizar.
+
+✅ O TEXTO **NAO** VEM TODO NA BUSCA: a busca traz a ementa (1.144 chars), o PDF
+   traz relatorio + voto + dispositivo (10.236 chars). Quem quiser o inteiro teor
+   precisa do GET do PDF. (Diferente do TJDFT, onde ja vinha no payload.)
+

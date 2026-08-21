@@ -1,0 +1,438 @@
+[
+ {
+  "valor": "ABERTURA DE CRÉDITO - SUPLEMENTAR",
+  "registros": 1
+ },
+ {
+  "valor": "ACOMPANHAMENTO GESTÃO PÚBLICA ESTADUAL - LEI DE DIRETRIZES ORÇAMENTÁRIAS - LDO",
+  "registros": 1
+ },
+ {
+  "valor": "ACOMPANHAMENTO GESTÃO PÚBLICA ESTADUAL - LEI ORÇAMENTÁRIA ANUAL-LOA",
+  "registros": 1
+ },
+ {
+  "valor": "ADMINISTRATIVO EXTERNO - CADASTROS DIVERSOS",
+  "registros": 6
+ },
+ {
+  "valor": "ADMINISTRATIVO EXTERNO - CONSULTAS PROCEDIMENTOS",
+  "registros": 1
+ },
+ {
+  "valor": "ADMINISTRATIVO EXTERNO - CONVITE",
+  "registros": 1
+ },
+ {
+  "valor": "ADMINISTRATIVO EXTERNO - DISPENSA DE LICITAÇÃO",
+  "registros": 1
+ },
+ {
+  "valor": "ADMINISTRATIVO EXTERNO - DIVERSOS",
+  "registros": 3
+ },
+ {
+  "valor": "ADMINISTRATIVO EXTERNO - INFORMAÇÃO",
+  "registros": 1
+ },
+ {
+  "valor": "ADMINISTRATIVO EXTERNO - RECURSO",
+  "registros": 4
+ },
+ {
+  "valor": "ADMINISTRATIVO EXTERNO - REGISTRO DE RES, ATOS ETC",
+  "registros": 1
+ },
+ {
+  "valor": "ADMINISTRATIVO EXTERNO - REMETE DOCUMENTAÇÃO",
+  "registros": 1
+ },
+ {
+  "valor": "ADMINISTRATIVO EXTERNO - REPRESENTAÇÃO",
+  "registros": 8
+ },
+ {
+  "valor": "ADMINISTRATIVO INTERNO - APROVAÇÃO NORMAS",
+  "registros": 14
+ },
+ {
+  "valor": "ADMINISTRATIVO INTERNO - DESLIGAMENTO",
+  "registros": 1
+ },
+ {
+  "valor": "ADMINISTRATIVO INTERNO - PEDIDO DE REVISÃO",
+  "registros": 1
+ },
+ {
+  "valor": "ADMINISTRATIVO INTERNO - PREJULGADO",
+  "registros": 20
+ },
+ {
+  "valor": "ADMINISTRATIVO INTERNO - PROPOSIÇÃO",
+  "registros": 1
+ },
+ {
+  "valor": "ADMINISTRATIVO INTERNO - PROVENTOS",
+  "registros": 3
+ },
+ {
+  "valor": "ADMINISTRATIVO INTERNO - RECURSO ADMINISTRATIVO",
+  "registros": 6
+ },
+ {
+  "valor": "ADMINISTRATIVO INTERNO - SOLICITAÇÃO",
+  "registros": 1
+ },
+ {
+  "valor": "ADMINISTRATIVO INTERNO - TRANSPOSIÇÃO DE CARGOS",
+  "registros": 1
+ },
+ {
+  "valor": "ADMISSÃO DE PESSOAL - ESTÁGIO",
+  "registros": 11
+ },
+ {
+  "valor": "ADMISSÃO DE PESSOAL - RESCISÃO",
+  "registros": 180
+ },
+ {
+  "valor": "ADMISSÃO DE PESSOAL - TERMO ADITIVO",
+  "registros": 524
+ },
+ {
+  "valor": "APOSENTADORIA - CANCELAMENTO",
+  "registros": 28
+ },
+ {
+  "valor": "APOSENTADORIA - DIVERSOS",
+  "registros": 14
+ },
+ {
+  "valor": "APOSENTADORIA - REVISÃO DE PROVENTOS",
+  "registros": 2
+ },
+ {
+  "valor": "ATO DE ADMISSÃO DE PESSOAL - CONCURSO PÚBLICO",
+  "registros": 101
+ },
+ {
+  "valor": "ATO DE ADMISSÃO DE PESSOAL - REGISTRO",
+  "registros": 7603
+ },
+ {
+  "valor": "ATO DE ADMISSÃO DE PESSOAL - REINTEGRAÇÃO",
+  "registros": 1
+ },
+ {
+  "valor": "ATO DE ADMISSÃO DE PESSOAL - TEMPORÁRIO",
+  "registros": 1126
+ },
+ {
+  "valor": "ATOS DE APOSENTADORIA, REFORMA E PENSÃO - APOSENTADORIA-CONCESSÃO INICIAL",
+  "registros": 30452
+ },
+ {
+  "valor": "ATOS DE APOSENTADORIA, REFORMA E PENSÃO - APOSENTADORIA-RETIFICAÇÃO",
+  "registros": 1269
+ },
+ {
+  "valor": "ATOS DE APOSENTADORIA, REFORMA E PENSÃO - APOSENTADORIA-REVERSÃO",
+  "registros": 41
+ },
+ {
+  "valor": "ATOS DE APOSENTADORIA, REFORMA E PENSÃO - APOSENTADORIA-REVISÃO",
+  "registros": 49
+ },
+ {
+  "valor": "ATOS DE APOSENTADORIA, REFORMA E PENSÃO - PENSÃO ESPECIAL-CONCESSÃO INICIAL",
+  "registros": 80
+ },
+ {
+  "valor": "ATOS DE APOSENTADORIA, REFORMA E PENSÃO - PENSÃO ESPECIAL-RETIFICAÇÃO",
+  "registros": 4
+ },
+ {
+  "valor": "ATOS DE APOSENTADORIA, REFORMA E PENSÃO - PENSÃO-CONCESSÃO INICIAL",
+  "registros": 7269
+ },
+ {
+  "valor": "ATOS DE APOSENTADORIA, REFORMA E PENSÃO - PENSÃO-RETIFICAÇÃO",
+  "registros": 135
+ },
+ {
+  "valor": "ATOS DE APOSENTADORIA, REFORMA E PENSÃO - REFORMA-CONCESSÃO INICIAL",
+  "registros": 2721
+ },
+ {
+  "valor": "ATOS DE APOSENTADORIA, REFORMA E PENSÃO - REFORMA-RETIFICAÇÃO",
+  "registros": 282
+ },
+ {
+  "valor": "ATOS DE APOSENTADORIA, REFORMA E PENSÃO - REFORMA-REVERSÃO",
+  "registros": 65
+ },
+ {
+  "valor": "AUDITORIA - DIVERSOS",
+  "registros": 5
+ },
+ {
+  "valor": "AUDITORIA - ESPECIAL",
+  "registros": 9
+ },
+ {
+  "valor": "CONSULTA - CONSULTA",
+  "registros": 14
+ },
+ {
+  "valor": "CONSULTA - REEXAME",
+  "registros": 2
+ },
+ {
+  "valor": "CONTRATO - CONFISSÃO DE DÍVIDA",
+  "registros": 1
+ },
+ {
+  "valor": "CONTRATO - DISTRATO",
+  "registros": 4
+ },
+ {
+  "valor": "CONTRATO - EMPREITADA",
+  "registros": 3
+ },
+ {
+  "valor": "CONTRATO - LOCAÇÃO DE BENS IMÓVEIS",
+  "registros": 4
+ },
+ {
+  "valor": "CONTRATO - PRESTAÇÃO DE SERVIÇOS",
+  "registros": 17
+ },
+ {
+  "valor": "CONTRATO - TERMO ADITIVO",
+  "registros": 5
+ },
+ {
+  "valor": "CONVENIO - INICIAL",
+  "registros": 13
+ },
+ {
+  "valor": "CONVENIO - TERMO ADITIVO",
+  "registros": 3
+ },
+ {
+  "valor": "DEMAIS PROCESSOS - AUDITORIA OPERACIONAL",
+  "registros": 6
+ },
+ {
+  "valor": "DEMAIS PROCESSOS - AUDITORIA OPERACIONAL MONITORAMENTO",
+  "registros": 2
+ },
+ {
+  "valor": "DEMAIS PROCESSOS - DEMAIS PROCESSOS",
+  "registros": 10
+ },
+ {
+  "valor": "DEMAIS PROCESSOS - INSPEÇÃO ORDINÁRIA",
+  "registros": 1
+ },
+ {
+  "valor": "DEMAIS PROCESSOS - PETIÇÃO CONSTITUCIONAL",
+  "registros": 30
+ },
+ {
+  "valor": "DEMAIS PROCESSOS - RECURSOS BID",
+  "registros": 2
+ },
+ {
+  "valor": "DEMAIS PROCESSOS - SOLICITAÇÕES DIVERSAS",
+  "registros": 1
+ },
+ {
+  "valor": "DEMAIS PROCESSOS - UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+  "registros": 2
+ },
+ {
+  "valor": "DENÚNCIA - DENÚNCIA",
+  "registros": 335
+ },
+ {
+  "valor": "DENUNCIA - DIVERSOS",
+  "registros": 2
+ },
+ {
+  "valor": "DENUNCIA - GERAL",
+  "registros": 1
+ },
+ {
+  "valor": "DIVERSOS - DIVERSOS",
+  "registros": 12
+ },
+ {
+  "valor": "INSPEÇÃO - ORDINÁRIA",
+  "registros": 6
+ },
+ {
+  "valor": "INSPEÇÃO EXTRAORDINÁRIA E AUDITORIA ESPECIAL - AUDITORIA ESPECIAL",
+  "registros": 2
+ },
+ {
+  "valor": "INSPEÇÃO EXTRAORDINÁRIA E AUDITORIA ESPECIAL - INSPEÇÃO EXTRAORDINÁRIA",
+  "registros": 48
+ },
+ {
+  "valor": "INSTRUMENTOS DE FISCALIZAÇÃO - MONITORAMENTO",
+  "registros": 2
+ },
+ {
+  "valor": "LICITAÇÃO - CONSULTA",
+  "registros": 2
+ },
+ {
+  "valor": "OBRIGAÇÕES COMUNS - ARREC. RECEITA",
+  "registros": 2
+ },
+ {
+  "valor": "OBRIGAÇÕES COMUNS - BALANCETES",
+  "registros": 11
+ },
+ {
+  "valor": "PEDIDO DE RESCISÃO - PEDIDO DE RESCISÃO",
+  "registros": 241
+ },
+ {
+  "valor": "PENSÃO - DIVERSOS",
+  "registros": 3
+ },
+ {
+  "valor": "PENSÃO - REVISAO",
+  "registros": 10
+ },
+ {
+  "valor": "PRESTAÇÃO DE CONTAS - AUXÍLIO",
+  "registros": 25
+ },
+ {
+  "valor": "PRESTAÇÃO DE CONTAS - DIVERSOS",
+  "registros": 54
+ },
+ {
+  "valor": "PRESTAÇÃO DE CONTAS - TERMO ADITIVO",
+  "registros": 22
+ },
+ {
+  "valor": "PRESTAÇÃO DE CONTAS DOS ADMINISTRADORES E RESPONSÁVEIS PELA GESTÃO DE RECURSOS PÚBLICOS ESTADUAIS - BALANCETES QUADRIMESTRAIS",
+  "registros": 177
+ },
+ {
+  "valor": "PRESTAÇÃO DE CONTAS DOS ADMINISTRADORES E RESPONSÁVEIS PELA GESTÃO DE RECURSOS PÚBLICOS ESTADUAIS - BALANCETES TRIMESTRAIS",
+  "registros": 884
+ },
+ {
+  "valor": "PRESTAÇÃO DE CONTAS DOS ADMINISTRADORES E RESPONSÁVEIS PELA GESTÃO DE RECURSOS PÚBLICOS ESTADUAIS - BALANÇO GERAL",
+  "registros": 846
+ },
+ {
+  "valor": "PRESTAÇÃO DE CONTAS DOS ADMINISTRADORES E RESPONSÁVEIS PELA GESTÃO DE RECURSOS PÚBLICOS ESTADUAIS - CONTAS DE EXERCÍCIO OU GESTÃO",
+  "registros": 741
+ },
+ {
+  "valor": "PRESTAÇÃO DE CONTAS DOS AUXÍLIOS, CONTRIBUIÇÕES OU SUBVENÇÕES CONCEDIDAS PELO ESTADO - CONVÊNIO",
+  "registros": 15402
+ },
+ {
+  "valor": "PRESTAÇÃO DE CONTAS DOS AUXÍLIOS, CONTRIBUIÇÕES OU SUBVENÇÕES CONCEDIDAS PELO ESTADO - TERMO DE COLABORAÇÃO OU DE FOMENTO",
+  "registros": 53
+ },
+ {
+  "valor": "PROPOSTA DE MEDIDA CAUTELAR - PROPOSTA DE MEDIDA CAUTELAR",
+  "registros": 3
+ },
+ {
+  "valor": "RECURSO - AGRAVO REGIMENTAL",
+  "registros": 84
+ },
+ {
+  "valor": "RECURSO - CONTRA ATOS DO PRESIDENTE",
+  "registros": 73
+ },
+ {
+  "valor": "RECURSO - EMBARGOS DE DECLARAÇÃO",
+  "registros": 265
+ },
+ {
+  "valor": "RECURSO - RECONSIDERAÇÃO",
+  "registros": 1411
+ },
+ {
+  "valor": "RECURSO - REEXAME",
+  "registros": 46
+ },
+ {
+  "valor": "RECURSO - REVISÃO",
+  "registros": 1072
+ },
+ {
+  "valor": "RECURSO - UNIFORMIZAÇÃO DE JURISPRUDÊNCIA",
+  "registros": 1
+ },
+ {
+  "valor": "REFORMA - CANCELAMENTO",
+  "registros": 2
+ },
+ {
+  "valor": "REFORMA - DIVERSOS",
+  "registros": 5
+ },
+ {
+  "valor": "REFORMA - REVISÃO",
+  "registros": 5
+ },
+ {
+  "valor": "REPRESENTAÇÃO - AUTORIDADE PÚBLICA FEDERAL, ESTADUAL OU MUNICIPAL",
+  "registros": 130
+ },
+ {
+  "valor": "REPRESENTAÇÃO - EQUIPES DE FISCALIZAÇÃO",
+  "registros": 34
+ },
+ {
+  "valor": "REPRESENTAÇÃO - OUTROS",
+  "registros": 191
+ },
+ {
+  "valor": "REPRESENTAÇÃO - TITULARES DAS UNIDADES TÉCNICAS DO TRIBUNAL",
+  "registros": 6
+ },
+ {
+  "valor": "TOMADA DE CONTAS - DIVERSOS",
+  "registros": 4
+ },
+ {
+  "valor": "TOMADA DE CONTAS DE EXERCÍCIO OU GESTÃO - BALANCETES",
+  "registros": 14
+ },
+ {
+  "valor": "TOMADA DE CONTAS DE EXERCÍCIO OU GESTÃO - BALANÇO GERAL",
+  "registros": 15
+ },
+ {
+  "valor": "TOMADA DE CONTAS DE EXERCÍCIO OU GESTÃO - CONTAS DE EXERCÍCIO OU GESTÃO",
+  "registros": 16
+ },
+ {
+  "valor": "TOMADA DE CONTAS ESPECIAL - CONVÊNIO",
+  "registros": 8437
+ },
+ {
+  "valor": "TOMADA DE CONTAS ESPECIAL - SUPRIMENTO DE FUNDOS",
+  "registros": 3
+ },
+ {
+  "valor": "TOMADA DE CONTAS ESPECIAL - TERMO DE COLABORAÇÃO OU DE FOMENTO",
+  "registros": 31
+ },
+ {
+  "valor": "TOMADA DE CONTAS ESPECIAL - TOMADA DE CONTAS ESPECIAL",
+  "registros": 84
+ }
+]

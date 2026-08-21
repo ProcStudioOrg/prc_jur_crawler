@@ -60,6 +60,8 @@ const TJTOCrawler = require('../src/TJTOCrawler');
 const TJTOChecker = require('../src/TJTOChecker');
 const TCEPRCrawler = require('../src/TCEPRCrawler');
 const TCEPRChecker = require('../src/TCEPRChecker');
+const TCEPACrawler = require('../src/TCEPACrawler');
+const TCEPAChecker = require('../src/TCEPAChecker');
 const TCESCCrawler = require('../src/TCESCCrawler');
 const TCESCChecker = require('../src/TCESCChecker');
 const TCESCCojur = require('../src/TCESCCojur');
@@ -7045,6 +7047,158 @@ program
     } catch (error) {
       if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
       else console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('tcepa')
+  .description('Search TCE-PA (Tribunal de Contas do Estado do Para) — Pesquisa Integrada, HTTP direto, sem browser')
+  .option('-q, --query <text>', 'Termo livre. ESPACO = E. Operadores MEDIDOS: && (E), -termo (excluir), "frase", *, ?. NAO use || (devolve o acervo inteiro)')
+  .option('-n, --numero <numero>', 'Consulta por numero de ACORDAO (ex. 24768); dispensa -q')
+  .option('-b, --base <base>', 'Base de dados: acordaos | acordaos-plenario-virtual | prejulgados | informativos-jurisprudencia | resolucoes | atos | portarias-tcepa', 'acordaos')
+  .option('-r, --relator <nome>', 'Relator(a) — nome EXATO do combo (use --listar-filtros)')
+  .option('--decisao <texto>', 'Decisao — valor EXATO do combo (use --listar-filtros)')
+  .option('--classe <texto>', 'Classe/subclasse — valor EXATO do combo (use --listar-filtros)')
+  .option('--unidade <texto>', 'Unidade jurisdicionada (texto)')
+  .option('--interessado <texto>', 'Interessado (texto)')
+  .option('--exercicio <ano>', 'Exercicio (AAAA)')
+  .option('--ano-sessao <ano>', 'Ano da sessao plenaria (AAAA)')
+  .option('--ementa <texto>', 'Busca restrita ao campo EMENTA')
+  .option('-di, --data-inicio <date>', 'Data inicial (DD/MM/YYYY) — vira faixa Lucene; uma ponta so tambem vale')
+  .option('-df, --data-fim <date>', 'Data final (DD/MM/YYYY)')
+  .option('--campo-data <c>', 'sessao (default) | publicacao', 'sessao')
+  .option('--ordem <o>', 'relevancia | titulo | data-sessao-plenaria | numeroacordao | data-publicacao-doe | data-conteudo', 'relevancia')
+  .option('--asc', 'Ordem crescente (default: decrescente)')
+  .option('--listar-filtros', 'Lista os combos capturados no mapeamento e sai')
+  .option('--verificar [amostra]', 'Audita N resultados abrindo o permalink em requisicao limpa (default 3)')
+  .option('-m, --max-pages <number>', 'Maximum pages to crawl (25 resultados por pagina)', 10)
+  .option('--page-size <n>', 'Resultados por pagina (TETO MEDIDO: 25; acima disso e silenciosamente limitado)', 25)
+  .option('--pausa <ms>', 'Pausa entre requisicoes (WAF F5 pune rajada)', 2000)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tcepa.json')
+  .option('--fetch-inteiro-teor', 'Baixa o PDF do inteiro teor (1 GET por documento)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tcepa')
+  .option('-v, --visible', 'Ignored (TCE-PA usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TCE-PA usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    try {
+      const navOpts = { log, pausaMs: parseInt(opts.pausa, 10) };
+
+      if (opts.numero) {
+        const res = await new TCEPAChecker(navOpts).consultarAcordao(opts.numero, opts.base);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrado ? 0 : 1);
+      }
+
+      if (opts.listarFiltros) {
+        const dir = '../human-codegen/TCEPA/01-pesquisa-integrada/';
+        const combos = {
+          bases: require('../src/TCEPANavigator').BASES_JURIDICAS,
+          relatores: require(dir + 'avancada-relatores.json'),
+          decisoes: require(dir + 'avancada-decisoes.json'),
+          classesSubclasses: require(dir + 'avancada-classes-subclasses.json'),
+          exercicios: require(dir + 'avancada-exercicios.json'),
+          anoSessaoPlenaria: require(dir + 'avancada-ano-sessao-plenaria.json'),
+        };
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, combos }) + '\n');
+        else console.log(JSON.stringify(combos, null, 2));
+        process.exit(0);
+      }
+
+      log('='.repeat(60));
+      log('TCE-PA Jurisprudencia Crawler (Pesquisa Integrada, HTTP direto, sem browser)');
+      log('ESCOPO: CONTROLE EXTERNO, nao Judiciario — contas, licitacoes, contratos,');
+      log('        pessoal e consultas do ESTADO do Para. Os MUNICIPIOS paraenses sao');
+      log('        do TCM-PA e NAO estao aqui (a tela nao tem filtro de municipio).');
+      log('ATENCAO: o operador || NAO faz uniao — devolve o acervo inteiro. Use && e -.');
+      log('ATENCAO: as contagens das facetas da tela IGNORAM o termo buscado (sao globais).');
+      log('ATENCAO: WAF F5 devolve CAPTCHA com HTTP 200 se apressar; cooldown ~7 min.');
+      log('OK: a EMENTA INTEIRA e o PERMALINK ja vem na busca; o PDF e publico, sem captcha.');
+      log('='.repeat(60));
+
+      const crawler = new TCEPACrawler({
+        ...navOpts,
+        base: opts.base,
+        porPagina: parseInt(opts.pageSize, 10),
+        includeFullText: !!opts.fetchInteiroTeor,
+      });
+      const filters = {
+        relator: opts.relator || null,
+        decisao: opts.decisao || null,
+        classe: opts.classe || null,
+        unidade: opts.unidade || null,
+        interessado: opts.interessado || null,
+        exercicio: opts.exercicio || null,
+        anoSessao: opts.anoSessao || null,
+        ementa: opts.ementa || null,
+        dataInicio: opts.dataInicio || null,
+        dataFim: opts.dataFim || null,
+        campoData: opts.campoData,
+      };
+      const results = await crawler.search(opts.query || '', filters, {
+        maxPages: parseInt(opts.maxPages, 10),
+        base: opts.base,
+        ordem: opts.ordem,
+        reversa: !opts.asc,
+      });
+
+      log('='.repeat(60));
+      log(`Total no servidor: ${results.totalResults} (exato) | coletados: ${results.length}`);
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 3 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} resultados pelo permalink publico...`);
+        verificacao = await new TCEPAChecker(navOpts).auditar(results, amostra);
+        log(`Verificacao: ${verificacao.confirmados}/${verificacao.amostra} confirmados`);
+      }
+
+      const resumo = {
+        totalResults: results.totalResults,
+        query: crawler.ultimaBusca ? crawler.ultimaBusca.q : null,
+        listasTruncadas: results.filter((r) => r.listaTruncada).length,
+        ...(verificacao ? { verificacao } : {}),
+      };
+
+      if (opts.fetchInteiroTeor) {
+        const outputDir = path.resolve(opts.outputDir);
+        fs.mkdirSync(outputDir, { recursive: true });
+        let ok = 0; let fail = 0;
+        for (const r of results) {
+          if (r.inteiroTeorPdfBuffer && r.inteiroTeorPdfBuffer.length > 0) {
+            fs.writeFileSync(path.join(outputDir, `${r.base}-${r.identificador}.pdf`), r.inteiroTeorPdfBuffer);
+            ok++;
+          } else fail++;
+        }
+        for (const r of results) delete r.inteiroTeorPdfBuffer;
+        log(`\nGravacao concluida: ${ok} arquivo(s), ${fail} falha(s)`);
+        log(`Files saved to: ${outputDir}`);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, downloaded: ok, failed: fail, outputDir, ...resumo,
+          }) + '\n');
+        }
+      } else {
+        const outputPath = path.resolve(opts.output);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+        log(`Results saved to: ${outputPath}`);
+        if (jsonMode) {
+          process.stdout.write(JSON.stringify({
+            success: true, count: results.length, output: outputPath, ...resumo,
+          }) + '\n');
+        }
+      }
+    } catch (error) {
+      if (jsonMode) {
+        process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        process.exit(1);
+      }
+      console.error('Error during crawling:', error.message);
       process.exit(1);
     }
   });
