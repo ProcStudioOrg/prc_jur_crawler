@@ -126,8 +126,14 @@ function clienteFalso(respostas) {
 /** Cliente falso cujo finalMessage() so resolve (rejeitando) quando o `signal` passado
  *  em .stream(params, {signal}) aborta — imita o comportamento real do SDK da Anthropic
  *  quando o AbortController do servidor dispara, e serve para testar o caminho de
- *  desconexao no meio da chamada ao LLM (antes de qualquer resposta chegar). */
-function clienteQueTravaAteAbortar() {
+ *  desconexao no meio da chamada ao LLM (antes de qualquer resposta chegar).
+ *
+ *  Recebe um `estado` (objeto mutavel) e marca `estado.abortou = true` quando — e so
+ *  quando — o `signal` de fato dispara o evento 'abort'. Sem essa instrumentacao, um
+ *  teste que so olha o banco depois de um tempo fixo aprova tanto "abortou certinho"
+ *  quanto "essa promise ficou pendurada para sempre e ninguem percebeu" — os dois
+ *  produzem o MESMO estado no banco dentro de qualquer janela de espera. */
+function clienteQueTravaAteAbortar(estado) {
   return {
     messages: {
       stream(params, opcoes) {
@@ -137,8 +143,9 @@ function clienteQueTravaAteAbortar() {
           finalMessage() {
             return new Promise((resolve, reject) => {
               if (!sinal) return; // nunca resolve — nao deveria acontecer neste teste
-              if (sinal.aborted) return rejeitarAbortado(reject);
-              sinal.addEventListener('abort', () => rejeitarAbortado(reject));
+              const disparar = () => { estado.abortou = true; rejeitarAbortado(reject); };
+              if (sinal.aborted) return disparar();
+              sinal.addEventListener('abort', disparar);
             });
           },
         };
@@ -204,6 +211,47 @@ describe('rotas HTTP de conversas (POST/GET/DELETE /api/v1/conversas)', () => {
     const r = await fetch(`http://127.0.0.1:${porta}/api/v1/conversas`);
     assert.strictEqual(r.status, 404);
     srv.close();
+  });
+
+  // Regressao alvo: uma versao anterior desta rota buscava com
+  // `repo.listar(1000).find((c) => c.id === id)` — funciona sempre que a conversa esta
+  // entre as 1000 mais recentemente atualizadas, e devolve 404 (silencioso, sem indicio
+  // de bug) para qualquer conversa mais antiga que isso. `repo.obter(id)` busca direto
+  // por chave primaria e nao tem esse limite. Este teste so falha sob a versao antiga.
+  it('GET por id encontra conversa fora das 1000 mais recentes (nao usa listar(1000).find)', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-conv-1000-'));
+    const conRaw = db.abrir(path.join(dir, 'jur.db'));
+    const repoGrande = conversas.criarRepositorio(conRaw);
+
+    const maisAntiga = repoGrande.criar();
+    // ATUALIZA a mais antiga direto no banco para um atualizado_em muito no passado —
+    // nao basta cria-la primeiro e seguir criando: `criar()` usa Date.now(), e Date.now()
+    // tem resolucao de 1ms, entao criar 1005 conversas em sequencia pode empatar varias
+    // no mesmo milissegundo. Num empate, ORDER BY atualizado_em DESC do SQLite e um sort
+    // ESTAVEL sobre a ordem de varredura (rowid ascendente = ordem de insercao), entao a
+    // "mais antiga" pode acabar bem NO TOPO do grupo empatado — o oposto do que o teste
+    // precisa, e de forma nao deterministica (medido: falhou em 2 de 3 execucoes locais
+    // sem este ajuste). Forcar o valor aqui elimina a corrida.
+    conRaw.prepare('UPDATE conversa SET atualizado_em = 0 WHERE id = ?').run(maisAntiga.id);
+    for (let i = 0; i < 1005; i++) repoGrande.criar();
+
+    // Pre-condicao do teste: confirma que o cenario realmente empurrou a mais antiga
+    // para fora do topo 1000 por recencia — sem isso o teste passaria por acidente,
+    // mesmo com o bug de volta.
+    assert.ok(
+      !repoGrande.listar(1000).some((c) => c.id === maisAntiga.id),
+      'pre-condicao do teste: a conversa mais antiga precisa estar fora das 1000 mais recentes',
+    );
+
+    const srv = http.createServer(criarApp({ conversas: repoGrande }).handler);
+    await new Promise((r) => srv.listen(0, r));
+    const porta = srv.address().port;
+    try {
+      const r = await fetch(`http://127.0.0.1:${porta}/api/v1/conversas/${maisAntiga.id}`);
+      assert.strictEqual(r.status, 200, 'a rota deveria achar a conversa por PK mesmo fora do topo 1000 por recencia');
+      const corpo = await r.json();
+      assert.strictEqual(corpo.id, maisAntiga.id);
+    } finally { srv.close(); }
   });
 });
 
@@ -282,11 +330,12 @@ describe('chat.js grava o turno na conversa quando conversaId vem no corpo', () 
     } finally { srv.close(); }
   });
 
-  it('desconexao no meio da chamada ao LLM: so a mensagem do usuario fica gravada', async () => {
+  it('desconexao no meio da chamada ao LLM: so a mensagem do usuario fica gravada, e o signal realmente disparou', async () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-conv-chat-abort-'));
     const repoChat = conversas.criarRepositorio(db.abrir(path.join(dir, 'jur.db')));
     const c = repoChat.criar();
-    const clienteLLM = clienteQueTravaAteAbortar();
+    const estado = { abortou: false };
+    const clienteLLM = clienteQueTravaAteAbortar(estado);
     const srv = await subir({ conversas: repoChat, clienteLLM });
     const porta = srv.address().port;
     try {
@@ -307,13 +356,22 @@ describe('chat.js grava o turno na conversa quando conversaId vem no corpo', () 
       }
       assert.ok(gravada, 'a mensagem do usuario deveria ter sido gravada antes da chamada ao LLM');
       assert.strictEqual(repoChat.mensagens(c.id).length, 1);
+      assert.strictEqual(estado.abortou, false, 'pre-condicao: o signal nao pode ter disparado antes do abort');
 
       controlador.abort();
       await chegou;
 
-      // Da um tempo para o 'close' do lado do servidor propagar e o catch de
-      // APIUserAbortError rodar — sem isso o teste poderia checar cedo demais.
-      await new Promise((r) => setTimeout(r, 100));
+      // Espera o SIGNAL de fato disparar no cliente falso — NAO um tempo fixo. Um tempo
+      // fixo aprova tanto "abortou certinho" quanto "essa chamada travou para sempre e
+      // ninguem percebeu": as duas deixam o banco com so a mensagem do usuario dentro de
+      // qualquer janela de espera. So `estado.abortou === true` prova que o
+      // AbortController do servidor de fato propagou ate o cliente do LLM.
+      for (let tentativa = 0; tentativa < 100 && !estado.abortou; tentativa++) {
+        await new Promise((r) => setTimeout(r, 10));
+      }
+      assert.strictEqual(estado.abortou, true,
+        'o signal deveria ter disparado abort no cliente do LLM — sem isso este teste so prova '
+        + 'que a chamada nunca terminou, nao que ela foi cancelada corretamente');
 
       const finais = repoChat.mensagens(c.id);
       assert.strictEqual(finais.length, 1, 'nenhuma mensagem nova deveria ter sido gravada apos o abort');
