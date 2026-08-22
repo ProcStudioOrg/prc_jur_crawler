@@ -621,7 +621,9 @@ describe('executor', () => {
     assert.ok(args.includes('-di') && args.includes('01/01/2024'));
     assert.ok(args.includes('-m') && args.includes('3'));
     assert.ok(!args.includes('--orgao'), 'orgao jamais pode ser repassado');
-    assert.ok(!args.some((a) => a.includes('rf')), 'chave desconhecida nao pode virar argumento');
+    assert.ok(!args.includes('PRIMEIRA TURMA'), 'o VALOR de orgao tambem nao pode vazar');
+    assert.ok(!args.includes('--extra') && !args.includes('--rm -rf'),
+      'chave fora da allowlist nao pode virar argumento');
   });
 
   it('informa o pid assim que o processo nasce', async () => {
@@ -2093,7 +2095,8 @@ describe('llm', () => {
     assert.strictEqual(capturado.model, 'claude-opus-5');
     assert.strictEqual(capturado.max_tokens, 64000);
     assert.ok(!('temperature' in capturado), 'temperature devolve 400 no Opus 5');
-    assert.ok(!('budget_tokens' in JSON.stringify(capturado)), 'budget_tokens foi removido da API');
+    assert.ok(!JSON.stringify(capturado).includes('budget_tokens'), 'budget_tokens foi removido da API');
+    assert.ok(!JSON.stringify(capturado).includes('"type":"disabled"'), 'nao desligue o thinking do Opus 5');
     assert.strictEqual(capturado.tools.length, 3);
   });
 
