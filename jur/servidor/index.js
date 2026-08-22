@@ -16,6 +16,7 @@ function criarApp(deps = {}) {
   require('./rotas/chaves').registrar(roteador, deps);
   require('./rotas/conversas').registrar(roteador, deps);
   require('./mcp').registrar(roteador, deps);
+  require('./rotas/docs').registrar(roteador, deps);
   roteador.estaticos(path.join(__dirname, '..', 'publico'), '/');
   return roteador;
 }
