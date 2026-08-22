@@ -35,6 +35,24 @@ aside > input { width: 100%; padding: 6px 10px; margin-bottom: 8px; border-radiu
 .bolinha[data-e="sem-acesso"] { background: var(--bloqueado); }
 .bolinha[data-e="exige-sessao"] { background: var(--sessao); }
 
+/* Ressalva sempre visivel (sem hover) para tribunal != ok — o title da linha
+   cobre hover em desktop, mas nao cobre touch/mobile nem quem nunca passou o
+   mouse, e e exatamente quem mais precisa ver que "0 resultados" pode ser base
+   parada (ex.: TRF1 congelado em 07/2025), nao ausencia de jurisprudencia. */
+.ressalva { margin: 0 4px 8px 24px; padding: 4px 8px; border-radius: 6px;
+            font-size: 11px; line-height: 1.4; color: var(--fraco);
+            background: var(--painel); border-left: 3px solid var(--borda);
+            word-wrap: break-word; }
+.ressalva[data-e="instavel"] { border-left-color: var(--instavel); }
+.ressalva[data-e="sem-acesso"] { border-left-color: var(--bloqueado); }
+.ressalva[data-e="exige-sessao"] { border-left-color: var(--sessao); }
+.ressalva.expansivel { cursor: pointer; }
+.ressalva.expansivel:hover { color: var(--texto); }
+/* Truncada (estado padrao) fica curta por natureza (~90 chars). Aberta pode
+   chegar a milhares de caracteres (a nota do stj tem ~2900) — max-height +
+   scroll interno evita que um unico tribunal domine a coluna inteira. */
+.ressalva.aberta { max-height: 220px; overflow-y: auto; }
+
 .conversa { display: flex; flex-direction: column; min-width: 0; }
 #mensagens { flex: 1; overflow-y: auto; padding: 16px; }
 .msg { max-width: 760px; margin: 0 0 14px; padding: 10px 14px; border-radius: 10px;
