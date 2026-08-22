@@ -47,9 +47,11 @@ function ultimoJson(texto) {
 }
 
 /**
- * Sempre passamos -o, entao o arquivo e a fonte primaria — o que contorna a
- * heterogeneidade do payload (45 subcomandos devolvem inline, 5 so o caminho).
- * O envelope so e consultado como plano B.
+ * Sempre passamos -o, entao o arquivo e a fonte primaria. Hoje TODO subcomando
+ * da CLI devolve o envelope no formato {success, count, output} — nenhum
+ * embute o array de resultados dentro do envelope (conferido em bin/jur
+ * inteiro). O scan do envelope abaixo e rede de seguranca para um formato
+ * futuro que ainda nao existe, nao o caminho normal de hoje.
  */
 function extrairResultados(envelope, arquivo) {
   if (arquivo && fs.existsSync(arquivo)) {
@@ -70,6 +72,14 @@ function extrairResultados(envelope, arquivo) {
   return [];
 }
 
+/**
+ * `Resultado.envelope` (o JSON cru que a CLI imprimiu em stdout) e
+ * DIAGNOSTICO/TESTE APENAS — nao e parte do contrato deste modulo. Existe so
+ * porque o teste `eco` precisa inspecionar os args que a CLI recebeu. Fila de
+ * jobs, API, MCP e chat NAO PODEM ler `r.envelope.*` (ex.: `r.envelope.output`)
+ * em vez de `r.arquivo`/`r.resultados` — isso reintroduziria o acoplamento com
+ * o formato de saida da CLI que este arquivo existe para isolar.
+ */
 async function executar(comando, params = {}, opcoes = {}) {
   const cliPath = opcoes.cliPath || CLI_PADRAO;
   const arquivoSaida = opcoes.arquivoSaida;
@@ -84,12 +94,13 @@ async function executar(comando, params = {}, opcoes = {}) {
     let saida = '';
     let erroPadrao = '';
     let expirou = false;
+    let cancelarSigkill = null;
 
     if (typeof opcoes.aoIniciar === 'function') opcoes.aoIniciar(filho.pid);
 
     const relogio = setTimeout(() => {
       expirou = true;
-      matarGrupo(filho.pid);
+      cancelarSigkill = matarGrupo(filho.pid);
     }, timeoutMs);
 
     filho.stdout.on('data', (d) => { saida += d.toString(); });
@@ -97,11 +108,16 @@ async function executar(comando, params = {}, opcoes = {}) {
 
     filho.on('error', (e) => {
       clearTimeout(relogio);
+      if (cancelarSigkill) cancelarSigkill();
       resolve({ ok: false, total: 0, resultados: [], arquivo: null, erro: e.message, codigoSaida: null, envelope: null });
     });
 
     filho.on('close', (codigo) => {
       clearTimeout(relogio);
+      // Se o grupo ja saiu (por SIGTERM ou sozinho) antes dos 5s, cancela o
+      // SIGKILL de garantia — senao, se o SO reciclar o PID nessa janela, o
+      // sinal atinge processo alheio em vez do grupo que morreu.
+      if (cancelarSigkill) cancelarSigkill();
 
       if (expirou) {
         return resolve({
@@ -130,17 +146,27 @@ async function executar(comando, params = {}, opcoes = {}) {
   });
 }
 
-/** Mata o grupo inteiro (node + Chromium filhos), com SIGKILL de garantia. */
+/**
+ * Mata o grupo inteiro (node + Chromium filhos), com SIGKILL de garantia 5s
+ * depois. Devolve uma funcao que cancela esse SIGKILL — o chamador usa isso
+ * quando o `close` chega antes dos 5s, para nao arriscar atingir um PID
+ * reciclado pelo SO depois que o grupo original ja morreu.
+ */
 function matarGrupo(pid) {
-  if (!pid) return;
+  if (!pid) return () => {};
   try {
     process.kill(-pid, 'SIGTERM');
   } catch {
     try { process.kill(pid, 'SIGTERM'); } catch { /* ja morreu */ }
   }
-  setTimeout(() => {
+  const sigkill = setTimeout(() => {
     try { process.kill(-pid, 'SIGKILL'); } catch { /* ja morreu */ }
-  }, 5000).unref();
+  }, 5000);
+  sigkill.unref();
+  return () => clearTimeout(sigkill);
 }
 
+// `Resultado.envelope` e diagnostico/teste apenas, NAO contratual — ver o
+// comentario acima de `executar`. Nenhum consumidor deste modulo pode
+// depender dele; use `arquivo`/`resultados`/`total`/`ok`/`erro`.
 module.exports = { executar, matarGrupo, PARAMS_ACEITOS };

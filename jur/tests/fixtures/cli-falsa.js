@@ -27,4 +27,10 @@ if (modo === 'inline') {
   setInterval(() => {}, 1000); // nunca termina: exercita o timeout
 } else if (modo === 'eco') {
   process.stdout.write(JSON.stringify({ success: true, args }) + '\n');
+} else if (modo === 'so-envelope') {
+  // Nao escreve arquivo nenhum: exercita o fallback de extrairResultados que
+  // varre o envelope atras do primeiro array. Nenhuma CLI real faz isso hoje
+  // (todas usam {success, count, output}), mas o executor precisa cobrir o caso.
+  const resultados = [{ processo: '7', ementa: 'y' }];
+  process.stdout.write(JSON.stringify({ success: true, count: 1, results: resultados }) + '\n');
 }

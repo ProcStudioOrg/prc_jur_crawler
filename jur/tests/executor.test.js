@@ -64,6 +64,14 @@ describe('executor', () => {
       'chave fora da allowlist nao pode virar argumento');
   });
 
+  it('cai no scan do envelope quando o arquivo nao existe', async () => {
+    const r = await executar_(tmp(), 'so-envelope');
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(r.total, 1);
+    assert.strictEqual(r.resultados.length, 1);
+    assert.strictEqual(r.resultados[0].processo, '7');
+  });
+
   it('informa o pid assim que o processo nasce', async () => {
     let visto = null;
     await executor.executar('inline', { query: 'x' },
