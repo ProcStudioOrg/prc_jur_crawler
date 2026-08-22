@@ -1,3 +1,4 @@
+const fs = require('node:fs');
 const path = require('node:path');
 
 const FONTE = path.join(__dirname, '..', 'cobertura', 'tribunais.json');
@@ -45,4 +46,17 @@ function obter(comando) {
   return todos().find((t) => t.comando === comando) || null;
 }
 
-module.exports = { listar, obter, ESTADOS };
+/**
+ * Comandos que a CLI realmente registra: os estaticos, declarados com
+ * .command('x'), mais os 26 do FALCAO, registrados em laco em bin/jur.
+ */
+function comandosDaCli() {
+  const fonte = fs.readFileSync(path.join(__dirname, '..', 'bin', 'jur'), 'utf8');
+  const estaticos = [...fonte.matchAll(/^\s*\.command\('([^']+)'/gm)].map((m) => m[1].split(' ')[0]);
+  const falcao = Object.values(require('../src/FalcaoTribunais').TRIBUNAIS)
+    .map((m) => String(m.sigla || m.codigo || '').toLowerCase())
+    .filter(Boolean);
+  return [...new Set([...estaticos, ...falcao])];
+}
+
+module.exports = { listar, obter, comandosDaCli, ESTADOS };

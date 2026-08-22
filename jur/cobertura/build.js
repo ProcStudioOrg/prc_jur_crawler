@@ -65,6 +65,8 @@ const NOME_TRIBUNAL = {
   TCEMG: 'Tribunal de Contas do Estado de Minas Gerais',
   TCEES: 'Tribunal de Contas do Estado do Espírito Santo',
   TJRJ_EJURIS: 'TJ do Rio de Janeiro — módulo eJURIS (legado)',
+  CSJT: 'Conselho Superior da Justiça do Trabalho',
+  CRPS: 'Conselho de Recursos da Previdência Social',
 };
 
 /**
@@ -159,6 +161,28 @@ const JURISPRUDENCIA = {
   // FALCAO: TST + TRT1..TRT24 (+ CSJT, fora do catalogo dos 61) entram logo abaixo,
   // GERADOS a partir de src/FalcaoTribunais.js — ver falcaoEntradas().
   ...falcaoEntradas(),
+  // CSJT entra de novo aqui, DEPOIS do spread de falcaoEntradas(), para
+  // sobrescrever a nota generica do FALCAO com a nota especifica do CSJT
+  // (orgao administrativo, nao julga reclamacao — ver nota abaixo). CRPS
+  // nao vem do FALCAO; entra pela primeira vez.
+  CSJT: {
+    url: 'https://jurisprudencia.jt.jus.br/',
+    comando: 'csjt',
+    acesso: 'api',
+    status: 'ok',
+    // familia/canario replicados de falcaoEntradas(): o CSJT bate no MESMO host
+    // do TST e dos 24 TRTs, e o smoke so roda o canario (TRT9) da familia.
+    familia: 'falcao',
+    canario: false,
+    nota: 'Conselho Superior da Justica do Trabalho — orgao ADMINISTRATIVO de supervisao da JT, NAO julga reclamacao trabalhista. Acervo pequeno: acordaos 1.429 e decisoesmonocraticas 629; sentencas, recursorevista e precedentes sao estruturalmente VAZIAS (nao ha 1o grau). Numeracao CNJ propria: codigo 90 (todo o acervo e ...5.90.0000, nao ...5.00.). Servido pelo FALCAO, o mesmo indice nacional do TST e dos 24 TRTs — ver CLAUDE-FALCAO.md.',
+  },
+  CRPS: {
+    url: 'https://jurisprudenciacrps.dataprev.gov.br/jurisprudencia',
+    comando: 'crps',
+    acesso: 'browser',
+    status: 'exige-sessao',
+    nota: 'Conselho de Recursos da Previdencia Social (contencioso administrativo do INSS). NAO ha busca funcionando: o portal exige login Gov.br, que apresenta captcha E valida o dispositivo — perfil de Chrome dedicado foi tentado em 31/07/2026 e foi RECUSADO por ser navegador desconhecido. HTTP 200 aqui e a TELA DE LOGIN, nao acesso. Os comandos existentes (--login, --status, --capturar) servem para destravar o mapeamento, nao para buscar. Ver CLAUDE-CRPS.md.',
+  },
 };
 
 /** Estado do repositorio, por tribunal. */
@@ -352,6 +376,12 @@ function build() {
   // TCU e CARF nao estao em nenhuma das fontes externas (nao sao Judiciario)
   upsert('TCU', 'contas');
   upsert('CARF', 'administrativo');
+  // CSJT e CRPS idem: nao sao Judiciario (orgaos administrativos), nao tem
+  // sistema processual de instancia e por isso nao aparecem em nenhuma das
+  // fontes externas. Sem este upsert, JURISPRUDENCIA[codigo] nunca e lido e
+  // o comando fica "invisivel" no catalogo mesmo com o crawler funcionando.
+  upsert('CSJT', 'administrativo');
+  upsert('CRPS', 'administrativo');
   // O TCE-PR tambem nao e Judiciario: nao esta no DataJud nem nas fontes
   // externas, e nao tem numeracao CNJ. Entra sintetico, como TCU e CARF.
   {

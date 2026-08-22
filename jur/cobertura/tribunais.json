@@ -3750,6 +3750,58 @@
         "skills": [],
         "working": true
       }
+    },
+    {
+      "codigo": "CRPS",
+      "nome": "Conselho de Recursos da Previdência Social",
+      "segmento": "administrativo",
+      "uf": [],
+      "sistemas_processuais": [],
+      "consulta_processual": [],
+      "jurisprudencia": {
+        "url": "https://jurisprudenciacrps.dataprev.gov.br/jurisprudencia",
+        "comando": "crps",
+        "acesso": "browser",
+        "status": "exige-sessao",
+        "nota": "Conselho de Recursos da Previdencia Social (contencioso administrativo do INSS). NAO ha busca funcionando: o portal exige login Gov.br, que apresenta captcha E valida o dispositivo — perfil de Chrome dedicado foi tentado em 31/07/2026 e foi RECUSADO por ser navegador desconhecido. HTTP 200 aqui e a TELA DE LOGIN, nao acesso. Os comandos existentes (--login, --status, --capturar) servem para destravar o mapeamento, nao para buscar. Ver CLAUDE-CRPS.md."
+      },
+      "repo": {
+        "crawler": null,
+        "extra": null,
+        "codegen": "nao",
+        "screenshots": 2,
+        "tests": false,
+        "skills": [],
+        "working": false
+      }
+    },
+    {
+      "codigo": "CSJT",
+      "nome": "Conselho Superior da Justiça do Trabalho",
+      "segmento": "administrativo",
+      "uf": [],
+      "sistemas_processuais": [],
+      "consulta_processual": [],
+      "jurisprudencia": {
+        "url": "https://jurisprudencia.jt.jus.br/",
+        "comando": "csjt",
+        "acesso": "api",
+        "status": "ok",
+        "familia": "falcao",
+        "canario": false,
+        "nota": "Conselho Superior da Justica do Trabalho — orgao ADMINISTRATIVO de supervisao da JT, NAO julga reclamacao trabalhista. Acervo pequeno: acordaos 1.429 e decisoesmonocraticas 629; sentencas, recursorevista e precedentes sao estruturalmente VAZIAS (nao ha 1o grau). Numeracao CNJ propria: codigo 90 (todo o acervo e ...5.90.0000, nao ...5.00.). Servido pelo FALCAO, o mesmo indice nacional do TST e dos 24 TRTs — ver CLAUDE-FALCAO.md."
+      },
+      "repo": {
+        "crawler": "src/FalcaoCrawler.js",
+        "extra": "src/Falcao{Navigator,Crawler,Checker}.js + src/FalcaoTribunais.js (fábrica: classes(sigla) — NÃO existe um Crawler por tribunal, de propósito). human-codegen/TRT9/ vale por todos — é literalmente a mesma tela",
+        "codegen": "nao",
+        "screenshots": 0,
+        "tests": "src/FalcaoTestes.js",
+        "skills": [
+          "verificador/falcao"
+        ],
+        "working": true
+      }
     }
   ]
 }

@@ -26,6 +26,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
+const catalogo = require('../servidor/catalogo');
 
 const ROOT = path.resolve(__dirname, '..');
 const JUR = path.join(ROOT, 'bin', 'jur');
@@ -164,6 +165,22 @@ async function main() {
     console.error('cobertura/tribunais.json não existe — rode `node cobertura/build.js` primeiro.');
     process.exit(2);
   }
+
+  // Reconciliação catalogo x CLI, primeiro de tudo: falha cedo e barata, antes
+  // de qualquer acesso de rede — ver tests/reconciliacao.test.js.
+  {
+    const FORA_DE_BUSCA = new Set(['crps']);
+    const noCatalogo = new Set(catalogo.listar().map((t) => t.comando));
+    const faltando = catalogo.comandosDaCli()
+      .filter((c) => !FORA_DE_BUSCA.has(c) && !noCatalogo.has(c));
+    if (faltando.length) {
+      console.error(`FALHA: comandos da CLI ausentes do catalogo: ${faltando.join(', ')}`);
+      process.exitCode = 1;
+    } else {
+      console.log('OK  reconciliacao catalogo x CLI');
+    }
+  }
+
   const { tribunais } = JSON.parse(fs.readFileSync(COBERTURA, 'utf8'));
 
   let alvos = tribunais.filter((t) => t.jurisprudencia.comando);
