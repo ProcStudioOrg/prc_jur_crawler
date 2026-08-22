@@ -5,25 +5,32 @@ const { json, bloquearOrigemHostil } = require('./http');
 const LIVRES = new Set(['/api/v1/saude']);
 
 /**
- * Local do proprio host. Isolada da regra de origemPermitida (http.js) porque a
- * Barreira 2 abaixo precisa SO disto — deliberadamente mais estrita que
- * origemPermitida, que tambem aceita "mesmo Host" numa LAN exposta via JUR_BIND. Ali a
- * intencao e nao quebrar quem expos o servico de proposito; aqui a intencao e dispensar
- * chave, e esse privilegio e so de quem roda o browser na propria maquina do servidor.
+ * O sinal de "isto e a nossa propria interface" NAO pode ser `Origin` — achado da
+ * revisao (bloqueante, confirmado com Chromium real): o browser SO manda `Origin` em
+ * POST/PUT/DELETE e em requisicao cross-origin. Um `GET /` de navegacao (a pagina
+ * carregando) e um `fetch('/api/v1/tribunais')` que a propria pagina dispara (GET,
+ * mesma origem) NUNCA levam `Origin` — usar `Origin` aqui trancava a interface do lado
+ * de fora dela mesma (401 na propria pagina, com exigirChave ligado, que e o padrao).
+ *
+ * O sinal certo e `Sec-Fetch-Site`, um Fetch Metadata Request Header que todo browser
+ * moderno manda em TODA requisicao que ele origina — navegacao GET incluida — e que
+ * cliente nao-browser (curl, script, cliente MCP nativo) nao manda:
+ *   - "none": navegacao digitada na barra de enderecos / favorito / primeira carga.
+ *   - "same-origin": e exatamente o que a propria pagina dispara (fetch, XHR) contra o
+ *     mesmo host — o caso que precisa passar sem chave.
+ *   - "same-site" / "cross-site": a requisicao partiu de outro lugar (outro site, ou
+ *     outro subdominio do mesmo site) — nao e a nossa interface, recusa.
+ *   - ausente: nenhum browser manda `Sec-Fetch-Site`; e um cliente que nao e browser,
+ *     entao a regra normal se aplica — exige `Authorization: Bearer`.
  */
-function ehLocal(hostname) {
-  if (!hostname) return false;
-  const h = hostname.toLowerCase();
-  return h === 'localhost' || h === '::1' || h === '[::1]' || /^127\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(h);
+function ehProprioFrontend(req) {
+  const sfs = req.headers['sec-fetch-site'];
+  return sfs === 'same-origin' || sfs === 'none';
 }
 
-/** A propria interface: mesma origem que serviu a pagina, rodando localmente. */
-function mesmaOrigem(req) {
-  const origem = req.headers.origin;
-  if (!origem) return false;
-  let u;
-  try { u = new URL(origem); } catch { return false; }
-  return u.host === req.headers.host && ehLocal(u.hostname);
+function ehOutroSite(req) {
+  const sfs = req.headers['sec-fetch-site'];
+  return sfs === 'same-site' || sfs === 'cross-site';
 }
 
 /**
@@ -37,11 +44,11 @@ function mesmaOrigem(req) {
  *
  * Bootstrap das chaves: /api/v1/chaves segue esta MESMA guarda, sem excecao (ruling do
  * coordenador — nao ha rota "so para emitir a primeira chave"). Isso resolve sozinho:
- * a interface local fala com o servidor por mesma-origem (Barreira 2 abaixo), entao a
- * primeira chave e emitida no browser em localhost sem precisar de chave nenhuma. Dai
- * em diante, qualquer chave valida tambem pode emitir outras chaves — aceitavel numa
- * ferramenta local de um usuario so; nao aceitavel se este servico um dia ganhar
- * usuarios multiplos ou sair de localhost.
+ * a interface local fala com o servidor como "propria interface" (Barreira 2 abaixo),
+ * entao a primeira chave e emitida no browser em localhost sem precisar de chave
+ * nenhuma. Dai em diante, qualquer chave valida tambem pode emitir outras chaves —
+ * aceitavel numa ferramenta local de um usuario so; nao aceitavel se este servico um
+ * dia ganhar usuarios multiplos ou sair de localhost.
  */
 function criarGuarda(opcoes = {}) {
   const gerenciador = opcoes.chaves;
@@ -58,7 +65,12 @@ function criarGuarda(opcoes = {}) {
     if (!exigir || !gerenciador) return false;
 
     // Barreira 2: a propria interface passa sem chave; qualquer outro cliente precisa.
-    if (mesmaOrigem(req)) return false;
+    // Ver ehProprioFrontend acima para o porque de usar Sec-Fetch-Site e nao Origin.
+    if (ehProprioFrontend(req)) return false;
+    if (ehOutroSite(req)) {
+      json(res, 403, { erro: 'origem nao permitida' });
+      return true;
+    }
 
     const cabecalho = req.headers.authorization || '';
     const valor = cabecalho.startsWith('Bearer ') ? cabecalho.slice(7).trim() : '';
@@ -69,4 +81,4 @@ function criarGuarda(opcoes = {}) {
   };
 }
 
-module.exports = { criarGuarda, ehLocal, mesmaOrigem, LIVRES };
+module.exports = { criarGuarda, ehProprioFrontend, ehOutroSite, LIVRES };

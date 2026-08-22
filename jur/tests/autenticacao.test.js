@@ -58,10 +58,36 @@ describe('autenticacao', () => {
     assert.strictEqual((await fetch(`${base}/api/v1/saude`)).status, 200);
   });
 
-  it('deixa passar sem chave quando a requisicao vem da propria interface', async () => {
-    // O frontend e servido pela mesma origem; nesse caso o Origin bate com o Host.
-    const r = await fetch(`${base}/api/v1/tribunais`, { headers: { origin: base } });
+  // C2 (revisao do fix): o browser NAO manda Origin em GET de mesma origem — nem na
+  // navegacao (GET /) nem no fetch que a propria pagina dispara. Usar Origin como sinal
+  // de "propria interface" trancava a UI do lado de fora dela mesma com exigirChave
+  // ligado (o padrao). O sinal certo e Sec-Fetch-Site, que todo browser manda em toda
+  // requisicao — inclusive navegacao GET — e que fetch/curl fora de browser nao manda.
+  // Ver servidor/autenticacao.js (ehProprioFrontend) para o raciocinio completo; o
+  // teste de browser real que pegou esse bug fica em tests/browser/interface-real.test.js.
+  it('deixa passar sem chave quando Sec-Fetch-Site diz que e a propria pagina (same-origin)', async () => {
+    const r = await fetch(`${base}/api/v1/tribunais`, { headers: { 'sec-fetch-site': 'same-origin' } });
     assert.strictEqual(r.status, 200);
+  });
+
+  it('deixa passar sem chave em navegacao direta (Sec-Fetch-Site: none)', async () => {
+    const r = await fetch(`${base}/api/v1/tribunais`, { headers: { 'sec-fetch-site': 'none' } });
+    assert.strictEqual(r.status, 200);
+  });
+
+  it('NAO deixa passar so por mandar Origin de mesma origem sem Sec-Fetch-Site — regressao do bug original', async () => {
+    // Este e o teste que "provava" o bootstrap antes do fix: um fetch de Node pode
+    // setar Origin manualmente (header proibido em qualquer browser de verdade), entao
+    // ele passava mesmo sem ser a interface. Sem Sec-Fetch-Site, tem que exigir chave.
+    const r = await fetch(`${base}/api/v1/tribunais`, { headers: { origin: base } });
+    assert.strictEqual(r.status, 401, 'Origin sozinho (sem Sec-Fetch-Site) nao pode dispensar chave');
+  });
+
+  it('recusa Sec-Fetch-Site: same-site e cross-site mesmo sem Origin hostil', async () => {
+    for (const sfs of ['same-site', 'cross-site']) {
+      const r = await fetch(`${base}/api/v1/tribunais`, { headers: { 'sec-fetch-site': sfs } });
+      assert.strictEqual(r.status, 403, `Sec-Fetch-Site: ${sfs} devia ser recusado`);
+    }
   });
 
   it('recusa origem hostil mesmo sem exigir chave para GET', async () => {
