@@ -1,0 +1,36 @@
+# infra/compose.yml
+services:
+  jur:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    image: jur:dev
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+      JUR_DADOS: /dados
+      TMPDIR: /cache
+      JUR_CONCORRENCIA: "3"
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+      # JUR_BROWSER_ARGS: "--no-sandbox --disable-dev-shm-usage"   # so no nivel 3 — nao foi preciso (ver infra/README.md)
+    volumes:
+      - jur-dados:/dados
+      - jur-cache:/cache
+    # security_opt:                                                # so no nivel 2 — nao foi preciso (ver infra/README.md)
+    #   - seccomp=./chrome-seccomp.json
+    # 3 Chromium simultaneos ~ 900 MB, mais o Node. Abaixo de 2g o OOM killer aparece.
+    mem_limit: 2g
+    # Chromium usa /dev/shm; o default de 64 MB do Docker faz a aba morrer sozinha.
+    shm_size: 1gb
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/v1/saude').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  jur-dados:
+  jur-cache:

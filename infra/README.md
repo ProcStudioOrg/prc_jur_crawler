@@ -14,11 +14,12 @@ confirma `"Architecture": "arm64"`. Não foi preciso cair para `--platform=linux
 
 Imagem final: **2.25 GB em disco** (`docker system df -v`, coluna SIZE/UNIQUE SIZE —
 esse é o número que importa, quanto a imagem ocupa de fato no host). `docker images`
-mostra a mesma coisa arredondada. Existe também um "content size" de ~700 MB que
+mostra a mesma coisa arredondada. Existe também um "content size" de **567 MB** que
 aparece em `docker image inspect`/`docker images` em algumas versões do Docker Desktop:
 esse número é a soma dos **blobs de camada comprimidos** (o que seria transferido num
 `push`/`pull`), não o espaço em disco depois de descompactado — **não usar esse valor
-para comparar com estimativas de tamanho de imagem**, que sempre se referem a disco.
+para comparar com estimativas de tamanho de imagem**: o custo real de disco é o de
+2.25 GB acima, não os 567 MB do content size.
 Medido em 22/08/2026, depois da exclusão de `jur/human-codegen/**/*.png` (ver abaixo).
 Antes dessa exclusão a imagem tinha 2.53 GB em disco.
 

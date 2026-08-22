@@ -44,6 +44,33 @@ federais `trf2` `trf4` `trf5` `trf6` · os estaduais `tjce` `tjdft` `tjgo` `tjmg
 Instáveis: `trf1` `trf3` · bloqueados por captcha: **`stj`** (desde 27/07/2026 — desafio
 interativo do Cloudflare; ver `jur/CLAUDE-STJ.md`) `tjma` (só consulta por nº) `tjsp`.
 
+## Rodar em container (com browser, API, MCP e interface)
+
+Ambiente fechado: Node 22, Chromium travado pelo `package-lock` e todas as dependências
+dentro da imagem. Funciona igual em macOS, Linux e Windows/WSL.
+
+    cd infra && docker compose up -d --build
+
+Abra `http://localhost:3000`. A interface tem o chat, a lista de tribunais com o estado de
+cada um (verde ok · amarelo instável · cinza bloqueado · azul exige sessão) e o campo da
+chave da Anthropic — que fica no seu browser, nunca no servidor.
+
+A mesma API serve três clientes:
+
+| Superfície | Endereço |
+|---|---|
+| REST | `http://localhost:3000/api/v1` |
+| MCP | `http://localhost:3000/mcp` (`claude mcp add --transport http jur http://localhost:3000/mcp`) |
+| Interface | `http://localhost:3000` |
+
+Exemplo de busca por REST:
+
+    curl -X POST localhost:3000/api/v1/buscas -H 'content-type: application/json' \
+      -d '{"tribunal":"trf4","query":"auxilio-acidente","dataInicio":"01/01/2024"}'
+
+Ressalvas do container estão em [`infra/README.md`](infra/README.md) — em especial `trf3`
+(exige Chrome proprietário) e `crps` (exige login Gov.br, que valida dispositivo).
+
 ## Sem Chrome? `jur-web/`
 
 Para Claude.ai, Claude Code na web e Windows sem dependências — onde não há shell,
