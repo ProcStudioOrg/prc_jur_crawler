@@ -1244,11 +1244,13 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 27 | **TCE-ES** | ES | ✅ **o ES não tem TCM** — e aqui a prova saiu do **acervo** (Prefeitura Municipal de Serra, Câmara Municipal de Vitória, Câmara Municipal de Iúna), não da ausência de combo. ⚠️ **a entrada oficial redireciona**: `www.tce.es.gov.br` → **301** → `www.tcees.tc.br`. A porta é a **Pesquisa de Jurisprudência** dentro de um **iframe** (`acessoidentificado.tcees.tc.br/Publica/PesquisarExcerto`, ASP.NET MVC sobre Solr, POST que devolve JSON com HTML dentro, sem captcha) — busca, 14 facetas provadas por contagem, janela de data, paginação profunda e estável, card em 2 vintages, citação oficial, permalink e PDF medidos | ok 21/08 |
 | 28 | **TCE-MG** | MG | 🔴 o portal que se chama "Jurisprudência" (**TCJuris**) está atrás de **reCAPTCHA v2 conferido no servidor**; a porta aberta é o **MapJuris** (`/TextualDadosProcesso`, sem captcha) — busca mapeada em 16/08, **crawler fechado em 20/08** (2º salto do grid, Fase 3b, operadores, filtros e rate limit medidos) | ok 20/08 |
 | 29 | **TCE-CE** | CE | ✅ TCM-CE extinto em 2017 e o acervo **migrou** — confirmado por medição **tripla** (186 localidades no combo, **inclusive FORTALEZA**; sessões `TCM - 1ª/2ª CÂMARA/PLENO ORDINÁRIA` no combo de tipo de sessão; processos com "PROCESSO MIGRADO DO TCM (SGP)"). A porta é a **API REST do SPA Contexto** (`contexto-api…/documentos/buscar`, Elasticsearch, sem captcha) — **crawler fechado em 22/08**: lista oficial do "Documentos de Decisão" capturada do XHR, 5 filtros mortos identificados, paginação estável, PDF público e 28/28 testes verdes | ok 22/08 |
-| 30 | **TCE-GO** | GO | ⚠️ municípios goianos são do **TCM-GO** — **NÃO confirmado por medição** (o formulário não tem combo de município). A porta é a **API REST do SPA Iago** (`iago-search-api…/decisions/search`, Elasticsearch, sem captcha) — **busca, 13 filtros, agregações, paginação até o fim do acervo (383.075) e inteiro teor em texto medidos; falta operadores booleanos, `number=`/`process=` isolados e o crawler** | parcial 19/08 |
+| 30 | **TCE-GO** | GO | ✅ **ressalva do TCM-GO CONFIRMADA POR MEDIÇÃO para a era moderna**: `interested=PREFEITURA` dá 4.227 documentos mas a curva desaba (1998=599, 2007=102, 2008=21, 2019=4, 2020=6) — o acervo municipal do TCE-GO para em ~2007. A porta é a **API REST do SPA Iago** (`iago-search-api…/decisions/search`, Elasticsearch, sem captcha, sem WAF, sem rate limit) — mapeado em 19/08 como `parcial`; **as 6 pendências medidas e o crawler fechado em 22/08 (slot 2000)**. 🔴 O servidor troca de `BM25` para `EMBEDDINGS` sozinho e no semântico o resultado não contém o termo; 🔴 `summary` é **ementa gerada por IA**; 🔴 nenhum operador booleano funciona e as medições se contradizem | ok 22/08 |
 
-🔴 **A FILA FICOU SEM NENHUM `pendente` EM 22/08/2026.** Com o TCE-CE fechado, sobra
-**um único `parcial`: o TCE-GO (19/08)**. Isso deixa a regra da dívida de crawler num
-ponto cego que vale registrar, porque ele quase custou um slot vazio:
+🔴 **A FILA ACABOU EM 22/08/2026 — zero `pendente` e zero `parcial`.** O slot 1600
+fechou o TCE-CE e o slot 2000 fechou o TCE-GO, o último `parcial` da fila.
+
+O ponto cego que quase custou um slot vale ficar registrado, porque ele volta na próxima
+vez que a fila esvaziar:
 
 - O slot **1600** manda "pegue o primeiro `pendente`". Não havia nenhum.
 - O gatilho da dívida (`≥ 3 parcial`) é do slot **2000**, e só valia com 2 parciais.
@@ -1256,9 +1258,14 @@ ponto cego que vale registrar, porque ele quase custou um slot vazio:
 
 Ou seja: pela letra, o slot 1600 de 22/08 não tinha alvo **e** não podia parar. O que se
 fez foi o que a regra da dívida existe para garantir: **com zero `pendente`, o alvo é o
-`parcial` mais antigo**, em qualquer slot. Foi assim que o TCE-CE (18/08) fechou.
-**Enquanto a fila não receber alvos novos, os dois slots pegam o `parcial` mais antigo**;
-quando não sobrar nem isso, aí sim a fila acabou.
+`parcial` mais antigo, em qualquer slot**. Foi assim que o TCE-CE (18/08) fechou às 16:00
+e o TCE-GO (19/08) fechou às 20:00.
+
+✅ **Agora a condição de parada está de fato satisfeita: não há `pendente` nem `parcial`.**
+Enquanto a tabela não receber alvos novos, os dois slots devem **reportar fila vazia e
+encerrar sem inventar trabalho**. Os `bloqueado` (TJRN 06/08, TJSE 10/08) saíram da fila e
+viraram linha no TODO — **não são alvo**, e retomá-los sem nova evidência é gastar slot em
+portal que já foi medido como fechado.
 
 📌 **O que o TCE-PR (feito em 14/08/2026) ensinou — leia
 [`CLAUDE-TCEPR.md`](CLAUDE-TCEPR.md).** Primeiro alvo do Bloco 5 e **primeiro

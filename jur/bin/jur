@@ -81,6 +81,8 @@ const TCDFCrawler = require('../src/TCDFCrawler');
 const TCDFChecker = require('../src/TCDFChecker');
 const TCECECrawler = require('../src/TCECECrawler');
 const TCECEChecker = require('../src/TCECEChecker');
+const TCEGOCrawler = require('../src/TCEGOCrawler');
+const TCEGOChecker = require('../src/TCEGOChecker');
 const TCEMGCrawler = require('../src/TCEMGCrawler');
 const TCEMGChecker = require('../src/TCEMGChecker');
 const TJRRCrawler = require('../src/TJRRCrawler');
@@ -7529,6 +7531,147 @@ program
             totalExato: res.totalExato,
             acervoTotalConhecido: res.acervoTotalConhecido,
             apenasDecisao: res.apenasDecisao,
+            avisos: res.avisos,
+            ...(verificacao ? { verificacao } : {}),
+          }) + '\n',
+        );
+      }
+    } catch (error) {
+      if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+      else console.error('Error during crawling:', error.message);
+      process.exit(1);
+    }
+  });
+
+
+program
+  .command('tcego')
+  .description('Search TCE-GO (Tribunal de Contas do Estado de Goias) — SPA Iago, API REST interna, sem browser')
+  .option('-q, --query <text>', 'Termo. NAO ha operador booleano nem curinga; 2+ palavras podem cair no modo SEMANTICO')
+  .option('-n, --numero <numero>', 'Consulta por nº do processo (15 digitos) ou da decisao ("04119/2024"); dispensa -q')
+  .option('--ano <ano>', 'Ano da decisao (year). Ex.: 2024')
+  .option('--tipo <tipo>', 'Tipo do documento, rotulo EXATO com acento: "Acórdão" | "Resolução" | "Resolução Administrativa" | "Resolução Normativa"')
+  .option('--colegiado <nome>', '"Primeira Camara" | "Segunda Camara" | "Tribunal Pleno" — ⚠️ falta em 83% do acervo')
+  .option('--sessao <tipo>', '"Ordinaria" | "Extraordinária" | "Extraordinária Administrativa" — 🔴 EXIGE o acento, sem ele ZERA')
+  .option('-r, --relator <nome>', 'Relator(a) do PROCESSO (rapporteur), em CAIXA ALTA')
+  .option('--relator-decisao <nome>', 'Relator(a) da DECISAO (reporter), em CAIXA ALTA — pode divergir do relator do processo')
+  .option('--interessado <texto>', 'Interessado(s), texto livre. Ex.: PREFEITURA')
+  .option('--processo <numero>', 'Nº do processo, casamento EXATO de 15 digitos (prefixo parcial devolve 0)')
+  .option('--decisao <numero>', 'Nº da decisao (number). ⚠️ se repete a cada ano — combine com --ano')
+  .option('-di, --data-inicio <date>', 'Data de julgamento inicial (DD/MM/YYYY). 🔴 SOZINHA E IGNORADA: precisa de -df')
+  .option('-df, --data-fim <date>', 'Data de julgamento final (DD/MM/YYYY). 🔴 SOZINHA E IGNORADA: precisa de -di')
+  .option('--ordem <ordem>', 'RELEVANCE | RECENT | OLD (🔴 valor invalido responde HTTP 500)')
+  .option('--size <n>', 'Itens por pagina (maximo 2000; acima disso trunca em silencio)', 25)
+  .option('--listar-filtros', 'Lista os valores aceitos pelos filtros (via /decisions/aggregations) e sai')
+  .option('--verificar [amostra]', 'Audita N julgados por reconsulta + inteiro teor (default 3)')
+  .option('-m, --max-pages <number>', 'Numero de paginas (page e 0-based; nao ha teto de profundidade)', 1)
+  .option('-o, --output <file>', 'Output JSON file', 'resultados/results-tcego.json')
+  .option('--fetch-inteiro-teor', 'Baixa o inteiro teor em TEXTO por GET /decisions/<id> (nao ha PDF: o link do PDF esta morto)')
+  .option('--output-dir <dir>', 'Directory for downloaded files', './resultados/tcego')
+  .option('-v, --visible', 'Ignored (TCE-GO usa HTTP direto, sem browser)')
+  .option('--headed', 'Ignored (TCE-GO usa HTTP direto, sem browser)')
+  .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
+  .action(async (opts) => {
+    const jsonMode = opts.json;
+    const log = jsonMode ? () => {} : console.log.bind(console);
+    try {
+      if (opts.numero) {
+        const res = await new TCEGOChecker({ log }).consultarProcesso(opts.numero);
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...res }) + '\n');
+        else console.log(JSON.stringify(res, null, 2));
+        process.exit(res.encontrados > 0 ? 0 : 1);
+      }
+
+      const nav = new (require('../src/TCEGONavigator'))({ log });
+
+      if (opts.listarFiltros) {
+        const agg = await nav.agregacoes({ term: '', params: {} });
+        const saida = {
+          fonte: 'POST /decisions/aggregations',
+          chaves: (agg || []).map((a) => ({
+            filtro: a.key,
+            opcoes: (a.agg || []).length,
+            valores: (a.agg || []).map((x) => ({ label: x.label, documentos: x.value })),
+          })),
+          '⚠️ leia':
+            'Os rotulos sao keyword EXATA do Elasticsearch, COM acento: session=Extraordinária ' +
+            'devolve 29 e session=Extraordinaria devolve 0 com HTTP 200. Use o label literal. ' +
+            'E `colegiado`/`tipo_sessao` somam 64.797 contra 383.075 de `ano`: filtrar por eles ' +
+            'exclui 83% do acervo em silencio.',
+        };
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...saida }) + '\n');
+        else console.log(JSON.stringify(saida, null, 2));
+        return;
+      }
+
+      const crawler = new TCEGOCrawler({ log, nav });
+      log(`Buscando no TCE-GO (Iago)${opts.query ? ` por "${opts.query}"` : ''}...`);
+      const res = await crawler.buscar({
+        query: opts.query,
+        ano: opts.ano,
+        tipo: opts.tipo,
+        colegiado: opts.colegiado,
+        sessao: opts.sessao,
+        relator: opts.relator,
+        relatorDecisao: opts.relatorDecisao,
+        interessado: opts.interessado,
+        processo: opts.processo,
+        numero: opts.decisao,
+        dataInicio: opts.dataInicio,
+        dataFim: opts.dataFim,
+        ordem: opts.ordem,
+        size: opts.size,
+        maxPages: opts.maxPages,
+      });
+
+      log(
+        `Total: ${res.total} decisoes [${res.totalNota}]` +
+          ` — ${res.retornados} baixadas em ${res.paginas} pagina(s)` +
+          (res.modelosDeBusca.length ? ` · modelo: ${res.modelosDeBusca.join(', ')}` : ''),
+      );
+
+      let verificacao = null;
+      if (opts.verificar) {
+        const amostra = opts.verificar === true ? 3 : parseInt(opts.verificar, 10);
+        log(`\nVerificando amostra de ${amostra} por reconsulta + inteiro teor...`);
+        verificacao = await new TCEGOChecker({ log }).verificar(res.resultados, amostra);
+      }
+
+      if (opts.fetchInteiroTeor) {
+        const dir = path.resolve(opts.outputDir);
+        fs.mkdirSync(dir, { recursive: true });
+        let txt = 0;
+        for (const r of res.resultados) {
+          const t = await nav.inteiroTeor(r.id);
+          if (!t) {
+            log(`   [inteiro teor] ${r.id}: sem texto`);
+            continue;
+          }
+          r.inteiroTeor = t;
+          const base = `${(r.numeroDecisao || 'sem-numero').replace(/[^\w.-]/g, '_')}_${r.id}`;
+          fs.writeFileSync(path.join(dir, base + '.txt'), t, 'utf-8');
+          txt++;
+        }
+        log(`Inteiro teor gravado: ${txt} texto(s) em ${dir}`);
+        log('   ⚠️ NAO ha PDF: o type=DOCUMENT do TCE-GO aponta para host sem DNS (link pendurado).');
+      }
+
+      const outputPath = path.resolve(opts.output);
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+      fs.writeFileSync(outputPath, JSON.stringify(res.resultados, null, 2), 'utf-8');
+      log(`Results saved to: ${outputPath}`);
+
+      if (jsonMode) {
+        process.stdout.write(
+          JSON.stringify({
+            success: true,
+            count: res.total,
+            retornados: res.retornados,
+            output: outputPath,
+            totalExato: res.totalExato,
+            totalNota: res.totalNota,
+            modelosDeBusca: res.modelosDeBusca,
+            acervoTotalConhecido: res.acervoTotalConhecido,
             avisos: res.avisos,
             ...(verificacao ? { verificacao } : {}),
           }) + '\n',

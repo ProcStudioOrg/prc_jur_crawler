@@ -68,7 +68,7 @@ Use `tst`, `trt1`…`trt24` ou `csjt`. Escolha o TRT pela UF do vínculo na tabe
 |---|---|---|
 | `tcu` | TCU | [`CLAUDE-TCU.md`](CLAUDE-TCU.md) |
 | `tcdf` | TCDF | [`CLAUDE-TCDF.md`](CLAUDE-TCDF.md) |
-| `tceba` · `tcece` · `tcees` · `tcemg` · `tcepa` · `tcepe` | TCEs BA, CE, ES, MG, PA, PE | [`TCEBA`](CLAUDE-TCEBA.md) · [`TCECE`](CLAUDE-TCECE.md) · [`TCEES`](CLAUDE-TCEES.md) · [`TCEMG`](CLAUDE-TCEMG.md) · [`TCEPA`](CLAUDE-TCEPA.md) · [`TCEPE`](CLAUDE-TCEPE.md) |
+| `tceba` · `tcece` · `tcees` · `tcego` · `tcemg` · `tcepa` · `tcepe` | TCEs BA, CE, ES, GO, MG, PA, PE | [`TCEBA`](CLAUDE-TCEBA.md) · [`TCECE`](CLAUDE-TCECE.md) · [`TCEES`](CLAUDE-TCEES.md) · [`TCEGO`](CLAUDE-TCEGO.md) · [`TCEMG`](CLAUDE-TCEMG.md) · [`TCEPA`](CLAUDE-TCEPA.md) · [`TCEPE`](CLAUDE-TCEPE.md) |
 | `tcepr` · `tcerj` · `tcers` · `tcesc` · `tcesp` | TCEs PR, RJ, RS, SC, SP | [`TCEPR`](CLAUDE-TCEPR.md) · [`TCERJ`](CLAUDE-TCERJ.md) · [`TCERS`](CLAUDE-TCERS.md) · [`TCESC`](CLAUDE-TCESC.md) · [`TCESP`](CLAUDE-TCESP.md) |
 | `carf` | contencioso tributário federal | [`CLAUDE-CARF.md`](CLAUDE-CARF.md) |
 | `crps` | contencioso previdenciário administrativo | [`CLAUDE-CRPS.md`](CLAUDE-CRPS.md) |

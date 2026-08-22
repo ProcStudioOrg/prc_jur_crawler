@@ -328,6 +328,166 @@ Não há o defeito de ordenação sem desempate do TJRJ/TJMG.
 
 ---
 
+---
+
+# FECHAMENTO — slot 2000 de 22/08/2026 (as 6 pendências, medidas)
+
+## P1 ✅ Operadores booleanos — MEDIDOS, e o achado é maior que a pendência
+
+🔴 **O SERVIDOR ESCOLHE O MODELO DE BUSCA SOZINHO.** O campo `model` do resultado
+não é decoração: ele muda conforme o termo. Base `year=2024` = 4.987:
+
+| termo | total | `model` | score do top-1 |
+|---|---|---|---|
+| `aposentadoria` | 3.112 | **BM25** | 179,95 |
+| `aposentadoria integral` | 1.709 | BM25 | 244,82 |
+| `contrato administrativo rescisao` | 47 | BM25 | — |
+| `aposentadoria pregao` | 1.623 | **EMBEDDINGS** | 8,13 |
+| `pregao aposentadoria` | 1.653 | EMBEDDINGS | 8,13 |
+| `licitacao deserta fracassada` | 3 | EMBEDDINGS | — |
+| `"pregao eletronico"` | 45 | **OPERATOR_QUERY** | — |
+
+🔴 **No modo EMBEDDINGS o resultado NÃO precisa conter o termo.** O top-1 de
+`aposentadoria pregao` (id 117805) é uma Representação sobre pregão eletrônico
+**sem uma linha sobre aposentadoria** — os `highlights` só marcam `<em>PREGÃO</em>`.
+Recall semântico não é recall lexical. É a ressalva nº 1 do crawler.
+
+🔴 **Nenhum operador funciona, e as medições se contradizem entre si** — que é a
+prova de que não há álgebra de conjunto por trás:
+
+| termo | total |
+|---|---|
+| `aposentadoria` | 3.112 |
+| `aposentadoria AND aposentadoria` | **1.926** ← o AND consigo mesmo perde 1.186 |
+| `aposentadoria OR aposentadoria` | 1.926 ← idêntico ao AND |
+| `aposentadoria AND pregao` | 0 |
+| `aposentadoria OU pregao` | 1.918 |
+| `aposentadoria OR pregao` | 44 |
+| `aposentadoria NOT pregao` / `NAO pregao` | 0 / 0 |
+| `aposentadoria NÃO pregao` | **1.749** ← só o acento |
+| `aposentadoria -pregao` | 1.849 |
+| `+aposentadoria +pregao` | 0 |
+| `AND` sozinho / `OR` sozinho | 0 / 2 ← são **tokens**, não operadores |
+| `aposentadoria zzqqxx` | 1.788 (score do top-1 cai para 5,45) |
+| `aposentadoria zzqqxx yywwvv` | **0** ← uma palavra a mais apaga a busca |
+| `aposent*` | **0** |
+| `aposentadori?` | **3.085** ← o `?` NÃO é curinga; devolve contagem plausível |
+
+Aspas (`OPERATOR_QUERY`), medidas em separado:
+
+| termo | total |
+|---|---|
+| `"aposentadoria"` | **0** ← a mesma palavra solta dá 3.112 |
+| `"pregao"` | 44 |
+| `"pregao eletronico"` | 45 · `"pregão eletrônico"` 46 |
+| `"tomada de precos"` | 3 |
+| `"pregao eletronico" OR "tomada de precos"` | 48 (união, e a ordem não muda) |
+| `"pregao eletronico" OU "tomada de precos"` | 52 ← `OU` **não** é `OR` |
+| `"pregao eletronico" E "tomada de precos"` | 48 (= o OR, não a interseção) |
+| `"pregao eletronico" NAO "tomada de precos"` | 48 (não exclui nada) |
+| `"pregao eletronico" AND "tomada de precos"` | **0** |
+| `"pregao eletronico" AND "pregao eletronico"` | 48 |
+| `"aposentadoria" OR "aposentadoria"` | **1.926** ← mas `"aposentadoria"` sozinha = 0 |
+
+**Conclusão para o crawler:** não expor flag de operador. O termo vai literal e o
+`model` volta exposto ao usuário. Flag que não filtra mente (lição TCE-PR).
+
+## P2 ✅ `number=` e `process=` medidos ISOLADAMENTE
+
+| requisição | total | topo |
+|---|---|---|
+| `number=04119` | **48** | `04119/2025` — o número se repete a cada ano |
+| `number=4119` | 48 | idêntico — **o zero à esquerda é opcional** |
+| `number=04119&year=2024` | **1** | `04119/2024`, proc. 201700010015938 |
+| `number=99999` | 0 | |
+| `process=201700010015938` | **1** | casamento **exato** |
+| `process=2017000100159` (prefixo) | **0** | **não há busca por prefixo** |
+| `process=00000000000000` | 0 | |
+
+⚠️ **`number` sozinho não identifica nada.** O `Checker` exige o par `number+year`
+e avisa em vez de deixar os 48 passarem por "encontrado".
+
+## P3 ✅ Card dissecado nos QUATRO tipos — não há buraco por tipo
+
+`Acórdão` (id 132669), `Resolução` (25219), `Resolução Administrativa` (25199) e
+`Resolução Normativa` (25208) têm o **mesmo esquema de 22 campos**, e os mesmos
+quatro vazios (`track`, `highlights`, `score`, `model` — que só se preenchem quando
+há termo de busca). Todos com `ementa`, `summary`, `subject`, `interested` e
+`collegiate` preenchidos. **A lição TJMG não se repete aqui.**
+
+⚠️ Mas **`session` NÃO é campo do card**, embora seja filtro: a sessão só aparece
+dentro do `title` ("34ª Sessão Ordinaria Primeira Camara").
+
+✅ E o inteiro teor (`GET /decisions/<id>`) responde nos quatro:
+Acórdão 39.055 · Resolução 2.272 · Res. Administrativa 2.869 · Res. Normativa 16.486 chars.
+
+## P4 ✅ TCM-GO — CONFIRMADO para a era moderna, por medição
+
+`interested=PREFEITURA` → **4.227** documentos. Mas a distribuição por ano (agregado
+`ano` com o filtro aplicado) desaba:
+
+```
+1988=8   1993=164  1996=346  1998=599  2000=284  2004=150  2006=239  2007=102
+2008=21  2010=48   2013=2    2016=12   2019=4    2020=6    2023=31   2024=83   2026=4
+```
+
+Contra a curva do acervo sem filtro, que é estável (2014=5.045 … 2024=4.987 … 2025=4.626).
+
+**Leitura:** o TCE-GO guarda um acervo municipal **histórico**, concentrado até ~2007,
+e praticamente não julga contas municipais hoje. 🔴 **Buscar município goiano recente
+aqui devolve quase-zero que NÃO é ausência de julgado** — é competência de outra Corte.
+A prova saiu do próprio agregado, sem sair do domínio oficial e sem afirmar história
+que não foi medida.
+
+## P5 ✅ Rate limit — não há teto observável
+
+30 requisições sequenciais em **6 s** (≈5 req/s): **0 não-200**.
+20 requisições em **paralelo**: **20× HTTP 200**. Sem 429, sem throttle.
+
+## P6 ⚠️ Prints da busca filtrada — CONTINUA PENDENTE
+
+Os prints `01.02`/`01.03` seguem mostrando o feed "Resultados Recentes". A causa é a
+mesma de §1: o `Sender` do Ant Design não recebe o termo por `page.fill()` (o
+react-hook-form não lê o valor e o POST sai com corpo vazio). O contrato foi medido
+direto na API, que é a fonte autoritativa do crawler — mas o print da busca filtrada
+não existe.
+
+---
+
+# 🔴 CORREÇÃO ao mapeamento de 19/08 — o escopo de `session=Extraordinária`
+
+O §3 registrou, **sob a base declarada `year=2024`**:
+
+> `session=Extraordinária` → **29**; `session=Extraordinaria` → **0**
+
+A parte do acento está certa e continua valendo. **O escopo está errado.** Medido hoje:
+
+| escopo | `Extraordinária` |
+|---|---|
+| acervo inteiro | **29** ← é daqui que vieram os 29 |
+| `year=2024` | **0** |
+| `year=2023` / `2025` / `2026` | 0 / 1 / 0 |
+
+A partição real de 2024 é `Ordinaria` **4.935** + `Extraordinária Administrativa`
+**52** = **4.987** — fecha exata, e não sobra espaço para os 29.
+
+**É a lição do TCE-MG de novo: uma medição correta sustentando uma conclusão errada,
+porque o escopo se perdeu entre a medição e a linha escrita.** Quem pegou foi o
+`TCEGOTestes` — o teste falhou na primeira rodada e a investigação achou o erro no doc,
+não no código.
+
+---
+
+## Pendências que ficam depois deste slot
+
+1. ⚠️ Print da busca filtrada (P6 acima) — o `Sender` do Ant não é dirigível por `page.fill()`.
+2. ⚠️ Os agregados `area` (1 opção), `tema` (1) e `subtema` (4) **não foram provados como
+   filtro** — não há parâmetro de querystring correspondente no bundle. Podem ser só
+   rótulos de exibição.
+3. ⚠️ O rate limit foi testado até 30 requisições sem bisecar o teto.
+
+---
+
 ## Pendências declaradas deste mapeamento (timebox 1600, 90 min)
 
 1. 🔴 Operadores booleanos — **nenhum** testado.
