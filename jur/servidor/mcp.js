@@ -1,6 +1,11 @@
 const ferramentas = require('./ferramentas');
 const { json, lerCorpo } = require('./http');
 
+// Fixo de proposito (decisao consciente, nao descuido): nao negociamos com o
+// protocolVersion que o cliente propoe em `initialize`. So os quatro metodos deste
+// arquivo sao suportados, entao nao ha comportamento condicional por versao para
+// negociar — anunciar sempre a mesma versao testada evita um cliente mais novo/velho
+// assumir uma capacidade que este servidor nao tem.
 const PROTOCOLO = '2025-06-18';
 
 function registrar(roteador, deps) {
@@ -49,11 +54,13 @@ function registrar(roteador, deps) {
 
     if (method === 'tools/call') {
       const nome = params && params.name;
-      const conhecidas = new Set(ferramentas.definicoes().map((d) => d.name));
-      const texto = await ferramentas.executar(nome, (params && params.arguments) || {}, deps);
+      // executarDetalhado (nao executar) porque isError precisa refletir se a
+      // ferramenta EXECUTOU, nao so se o nome bate com uma tool conhecida — ver o
+      // comentario da fronteira ok/isError em servidor/ferramentas.js.
+      const { texto, ok } = await ferramentas.executarDetalhado(nome, (params && params.arguments) || {}, deps);
       return responder({
         content: [{ type: 'text', text: texto }],
-        isError: !conhecidas.has(nome),
+        isError: !ok,
       });
     }
 

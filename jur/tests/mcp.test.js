@@ -69,4 +69,41 @@ describe('mcp', () => {
     });
     assert.strictEqual(r.status, 202);
   });
+
+  // Confirmado pelo revisor rodando um cliente MCP de verdade contra este servidor:
+  // id:0 e um id valido (JSON-RPC so trata id ausente/null como notificacao), e um
+  // `id === undefined || id === null` ingenuo cairia na armadilha do falsy de `!id`.
+  it('id:0 e tratado como id valido, nao como notificacao', async () => {
+    const r = await rpc('tools/list', {}, 0);
+    assert.strictEqual(r.id, 0);
+    assert.ok(r.result.tools);
+  });
+
+  // Revisao da Task 11 — isError precisa refletir se a ferramenta EXECUTOU, nao so se
+  // o nome bate com uma tool conhecida. Estes dois casos foram achados pelo revisor
+  // devolvendo isError:false com erro tecnico cru: ler_resultados sem job_id vazava a
+  // mensagem de bind do SQLite, e faltar deps.fila (dependencia ausente) vazava um
+  // TypeError puro. Os dois agora viram isError:true com mensagem legivel.
+  it('tools/call de ler_resultados sem job_id marca isError com mensagem legivel, nao o erro cru do SQLite', async () => {
+    const r = await rpc('tools/call', { name: 'ler_resultados', arguments: {} });
+    assert.strictEqual(r.result.isError, true);
+    assert.match(r.result.content[0].text, /job_id.*obrigat/i);
+    assert.ok(!/sqlite/i.test(r.result.content[0].text));
+  });
+
+  // Contraparte da fronteira: um tribunal que existe mas esta indisponivel, ou uma
+  // busca com zero resultados, sao RESULTADOS LEGITIMOS da ferramenta — nao falha de
+  // execucao. isError precisa ficar false nos dois, senao um cliente que decide
+  // "mostrar/logar/tentar de novo" pelo isError trataria uma resposta final como erro.
+  it('tools/call de tribunal indisponivel NAO marca isError — e resultado legitimo', async () => {
+    const r = await rpc('tools/call', { name: 'buscar_jurisprudencia', arguments: { tribunal: 'stj', query: 'x' } });
+    assert.strictEqual(r.result.isError, false);
+    assert.match(r.result.content[0].text, /indispon/i);
+  });
+
+  it('tools/call com zero resultados NAO marca isError — e resultado legitimo', async () => {
+    const r = await rpc('tools/call', { name: 'buscar_jurisprudencia', arguments: { tribunal: 'stf', query: 'x' } });
+    assert.strictEqual(r.result.isError, false);
+    assert.match(r.result.content[0].text, /0 resultados/);
+  });
 });

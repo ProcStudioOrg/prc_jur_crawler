@@ -104,4 +104,96 @@ describe('ferramentas', () => {
     const texto = await ferramentas.executar('nao_existe', {}, { fila });
     assert.match(texto, /desconhecida/i);
   });
+
+  // Revisao da Task 11: isError (mcp.js) e derivado do `ok` de executarDetalhado, que
+  // ate aqui nao existia — isError media so se o NOME da tool era conhecido, entao uma
+  // execucao que falhava por dentro (SQLite bind, dependencia ausente) voltava
+  // isError:false com um erro tecnico cru como se fosse conteudo normal. Estes testes
+  // fixam a fronteira: ok:false e falha de EXECUCAO (parametro obrigatorio ausente,
+  // referencia que nao existe, dependencia faltando); ok:true e resultado LEGITIMO do
+  // dominio, mesmo quando a noticia e ruim (tribunal indisponivel, zero resultados,
+  // crawler que falhou, job ainda rodando).
+  describe('executarDetalhado — fronteira ok (falha de execucao) x conteudo legitimo', () => {
+    function criarFilaTeste(executarFn) {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-ok-'));
+      return jobs.criarFila({
+        con: db.abrir(path.join(dir, 'jur.db')),
+        dirResultados: dir,
+        executarFn,
+      });
+    }
+
+    it('ler_resultados sem job_id falha com mensagem legivel, nao com o erro cru de bind do SQLite', async () => {
+      const { texto, ok } = await ferramentas.executarDetalhado('ler_resultados', {}, { fila });
+      assert.strictEqual(ok, false);
+      assert.match(texto, /job_id.*obrigat/i);
+      assert.ok(!/sqlite/i.test(texto), `nao pode vazar erro interno do SQLite: ${texto}`);
+    });
+
+    it('buscar_jurisprudencia sem a dependencia fila falha como erro de execucao (ok:false)', async () => {
+      const { texto, ok } = await ferramentas.executarDetalhado(
+        'buscar_jurisprudencia',
+        { tribunal: 'stf', query: 'x' },
+        {}, // sem deps.fila
+      );
+      assert.strictEqual(ok, false);
+      assert.match(texto, /erro ao executar/i);
+    });
+
+    it('buscar_jurisprudencia sem tribunal ou sem query falha com mensagem legivel (ok:false)', async () => {
+      const semTribunal = await ferramentas.executarDetalhado('buscar_jurisprudencia', { query: 'x' }, { fila });
+      assert.strictEqual(semTribunal.ok, false);
+      assert.match(semTribunal.texto, /tribunal.*obrigat/i);
+
+      const semQuery = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'stf' }, { fila });
+      assert.strictEqual(semQuery.ok, false);
+      assert.match(semQuery.texto, /query.*obrigat/i);
+    });
+
+    it('ler_resultados com job_id desconhecido falha como referencia invalida (ok:false)', async () => {
+      const { texto, ok } = await ferramentas.executarDetalhado('ler_resultados', { job_id: 'nao-existe' }, { fila });
+      assert.strictEqual(ok, false);
+      assert.match(texto, /desconhecido/i);
+    });
+
+    it('tool desconhecida e falha de execucao (ok:false)', async () => {
+      const { ok } = await ferramentas.executarDetalhado('nao_existe', {}, { fila });
+      assert.strictEqual(ok, false);
+    });
+
+    it('tribunal indisponivel e resultado legitimo da ferramenta, nao falha de execucao', async () => {
+      const { texto, ok } = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'stj', query: 'x' }, { fila });
+      assert.strictEqual(ok, true);
+      assert.match(texto, /indispon/i);
+    });
+
+    it('busca com zero resultados e resultado legitimo, nao falha de execucao', async () => {
+      const filaZero = criarFilaTeste(async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null }));
+      const { texto, ok } = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'stf', query: 'nada' }, { fila: filaZero });
+      assert.strictEqual(ok, true);
+      assert.match(texto, /0 resultados/);
+    });
+
+    it('busca cujo crawler falhou (job com status erro) e resultado legitimo, nao falha de execucao', async () => {
+      const filaComErro = criarFilaTeste(async () => ({ ok: false, total: 0, resultados: [], arquivo: null, erro: 'crawler morreu' }));
+      const { texto, ok } = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila: filaComErro });
+      assert.strictEqual(ok, true);
+      assert.match(texto, /FALHOU/);
+      assert.match(texto, /crawler morreu/);
+    });
+
+    it('job ainda rodando (nao concluido) e resultado legitimo, nao falha de execucao', async () => {
+      const filaLenta = criarFilaTeste(() => new Promise(() => {})); // nunca resolve
+      const { id } = filaLenta.enfileirar('stf', { query: 'x' });
+      const { texto, ok } = await ferramentas.executarDetalhado('ler_resultados', { job_id: id }, { fila: filaLenta });
+      assert.strictEqual(ok, true);
+      assert.match(texto, /enfileirado|rodando/);
+    });
+
+    it('executar() continua devolvendo so o texto — contrato do llm.js intacto', async () => {
+      const texto = await ferramentas.executar('ler_resultados', {}, { fila });
+      assert.strictEqual(typeof texto, 'string');
+      assert.match(texto, /job_id.*obrigat/i);
+    });
+  });
 });
