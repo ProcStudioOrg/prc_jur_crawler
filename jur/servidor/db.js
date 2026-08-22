@@ -3,10 +3,13 @@ const path = require('node:path');
 const { DatabaseSync } = require('node:sqlite');
 
 const SCHEMA = `
-/* user_version = 1: schema v1 sem migração. A coluna user_version fica registrada
-   para uma versão futura decidir o que fazer se o schema evoluir — mas hoje ninguém
-   tem banco em produção, então este é o momento barato de registrar. */
-PRAGMA user_version = 1;
+/* user_version = 2: v1 era o schema inicial sem migração. v2 acrescentou a tabela
+   chave_conexao (chaves de conexão emitidas para clientes externos). Continuamos
+   sem migração automática — a mudança foi aditiva, então CREATE TABLE IF NOT EXISTS
+   já cobre banco antigo que ainda não tinha essa tabela. A coluna user_version fica
+   registrada para uma versão futura decidir o que fazer se o schema evoluir de um
+   jeito que exija migração de verdade (renomear/remover coluna, por exemplo). */
+PRAGMA user_version = 2;
 
 CREATE TABLE IF NOT EXISTS job (
   id           TEXT PRIMARY KEY,
@@ -47,6 +50,16 @@ CREATE TABLE IF NOT EXISTS sessao (
   segredo_json TEXT NOT NULL,
   validado_em  INTEGER,
   expira_em    INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS chave_conexao (
+  id            TEXT PRIMARY KEY,
+  nome          TEXT NOT NULL,
+  hash          TEXT NOT NULL UNIQUE,
+  prefixo       TEXT NOT NULL,
+  criado_em     INTEGER NOT NULL,
+  ultimo_uso_em INTEGER,
+  revogado_em   INTEGER
 );
 `;
 
