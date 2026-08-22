@@ -141,6 +141,42 @@ describe('lerCorpo - limite de tamanho corta a conexao (Critical 2)', () => {
   });
 });
 
+describe('lerCorpo - corpo grande demais responde 400 limpo (Minor 4)', () => {
+  // Diferente do bloco anterior: aqui o handler ESCREVE a resposta no catch (como
+  // toda rota real faz), para provar que o reject() antes do destroy() (ver
+  // comentario em http.js) da tempo do 400 sair antes do socket cair — pelo menos
+  // no caso realista de uma requisicao normal via fetch, com o corpo mandado de
+  // uma vez. Isso NAO e garantido sob flood continuo (medido ~80% em raw socket
+  // saturando a conexao); o teste aqui cobre o caso comum, nao o pior caso.
+  let srv4;
+  let base4;
+
+  before(async () => {
+    const r = criarRoteador();
+    r.rota('POST', '/corpo', async (req, res) => {
+      try {
+        await lerCorpo(req);
+        json(res, 200, { ok: true });
+      } catch (e) {
+        json(res, 400, { erro: e.message });
+      }
+    });
+    srv4 = http.createServer(r.handler);
+    await new Promise((resolve) => srv4.listen(0, resolve));
+    base4 = `http://127.0.0.1:${srv4.address().port}`;
+  });
+
+  after(() => srv4.close());
+
+  it('corpo de 1.5MB mandado de uma vez recebe 400 com mensagem, nao ECONNRESET', async () => {
+    const corpo = 'a'.repeat(1_500_000);
+    const r = await fetch(`${base4}/corpo`, { method: 'POST', body: corpo });
+    assert.strictEqual(r.status, 400);
+    const j = await r.json();
+    assert.match(j.erro, /grande demais/);
+  });
+});
+
 describe('sse() - autolimpeza e idempotencia (Important 1)', () => {
   it('limpa o timer sozinho quando o socket fecha, mesmo sem fechar() explicito', () => {
     // Roda em processo filho: se o setInterval de ping nao for limpo, o processo nunca

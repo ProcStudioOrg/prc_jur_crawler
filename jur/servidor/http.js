@@ -63,10 +63,36 @@ function lerCorpo(req) {
       if (bruto.length > 1_000_000) {
         terminado = true;
         pararDeOuvir();
-        // Sem isso o socket continua recebendo os bytes que faltam mesmo depois
-        // do reject: o limite vira cosmetico e vira DoS de uma linha.
-        req.destroy();
+        // reject() primeiro, destroy() depois — nessa ordem, de proposito. O
+        // 'await lerCorpo(req)' do chamador retoma como microtask assim que
+        // reject() roda, e microtasks sempre drenam antes do proximo macrotask
+        // do event loop; o req.destroy() abaixo esta agendado num setImmediate
+        // (macrotask, fase "check"), entao o catch do chamador tem a janela
+        // inteira entre poll e check para escrever e despachar o 400 antes do
+        // socket cair. Sem essa ordem (destroy sincrono, como antes) o cliente
+        // via ECONNRESET em vez de resposta, porque destruir o socket mata o
+        // res que o compartilha com o req antes do handler conseguir responder.
+        //
+        // O destroy em si continua obrigatorio e nao pode sumir: sem ele o
+        // socket segue recebendo os bytes que faltam mesmo depois do reject, e
+        // o limite de 1MB vira cosmetico — o DoS de memoria que ele existe pra
+        // evitar. So adiamos o QUANDO, nao removemos o accept.
+        //
+        // MEDIDO, nao garantido: com uma requisicao normal (corpo grande demais
+        // enviado de uma vez, ex. via fetch) a resposta 400 chega limpa 30/30
+        // vezes. Sob um upload continuo em alta velocidade (o proprio cenario de
+        // flood que o limite existe para conter) cai para ~80% (12/15) — o resto
+        // ainda ve ECONNRESET, porque destruir um socket com bytes ainda
+        // chegando no lado de leitura pode fazer o SO mandar RST em vez de FIN,
+        // e um RST pode descartar bytes de resposta ja escritos mas nao
+        // confirmados pelo peer. Nao ha como fechar essa lacuna sem parar de
+        // ler o socket de forma graciosa (pause em vez de destroy), o que
+        // trocaria um risco de memoria conhecido e mitigado por um vazamento de
+        // conexao sem timeout — pior. Aceito: o cliente que manda corpo grande
+        // demais pode ver 400 OU ECONNRESET; nunca ve o processo cair nem o
+        // corpo aceito.
         reject(new Error('corpo grande demais'));
+        setImmediate(() => { if (!req.destroyed) req.destroy(); });
       }
     }
 
