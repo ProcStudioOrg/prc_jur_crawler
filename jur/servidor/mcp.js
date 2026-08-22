@@ -1,5 +1,5 @@
 const ferramentas = require('./ferramentas');
-const { json, lerCorpo, bloquearOrigemHostil } = require('./http');
+const { json, lerCorpo } = require('./http');
 
 // Fixo de proposito (decisao consciente, nao descuido): nao negociamos com o
 // protocolVersion que o cliente propoe em `initialize`. So os quatro metodos deste
@@ -10,10 +10,10 @@ const PROTOCOLO = '2025-06-18';
 
 function registrar(roteador, deps) {
   roteador.rota('POST', '/mcp', async (req, res) => {
-    // C2: antes de ler o corpo. Sem isto, uma pagina qualquer que o usuario visite
-    // dirige a superficie MCP inteira do browser dele (confirmado ao vivo: Origin
-    // https://evil.example + content-type text/plain devolvia o tools/list completo).
-    if (bloquearOrigemHostil(req, res)) return undefined;
+    // C2: a checagem de Origin que vivia aqui (antes de ler o corpo — sem ela uma
+    // pagina qualquer que o usuario visite dirigia a superficie MCP inteira do browser
+    // dele) agora e responsabilidade da guarda unica do roteador — ver
+    // servidor/autenticacao.js. Ela roda antes desta rota ser encontrada.
 
     let pedido;
     try {

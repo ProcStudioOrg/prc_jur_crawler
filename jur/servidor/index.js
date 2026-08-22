@@ -4,9 +4,11 @@ const { criarRoteador } = require('./http');
 const db = require('./db');
 const jobs = require('./jobs');
 const chaves = require('./chaves');
+const autenticacao = require('./autenticacao');
 
 function criarApp(deps = {}) {
-  const roteador = criarRoteador();
+  const guarda = autenticacao.criarGuarda({ chaves: deps.chaves, exigir: deps.exigirChave });
+  const roteador = criarRoteador({ guarda });
   require('./rotas/tribunais').registrar(roteador);
   require('./rotas/buscas').registrar(roteador, deps);
   require('./rotas/chat').registrar(roteador, deps);
@@ -21,13 +23,21 @@ function iniciar() {
   const fila = jobs.criarFila({ con });
   const gerenciadorChaves = chaves.criarGerenciador(con);
   const porta = Number(process.env.PORT || 3000);
-  // C2: default de loopback, NAO 0.0.0.0. Este servico nao tem autenticacao e leva a
-  // chave da Anthropic do operador atras dele (POST /api/v1/chat) — publicado na LAN,
-  // qualquer um da rede enfileira jobs contra tribunais com o IP do operador, le o
-  // acervo de resultados e gasta o dinheiro dele. Quem QUER expor declara JUR_BIND
-  // (ex.: JUR_BIND=0.0.0.0), e ai assume a decisao explicitamente. Ver infra/README.md.
+  // C2: default de loopback, NAO 0.0.0.0. A guarda (exigirChave abaixo) cobre quem nao
+  // tem chave, mas continua levando a chave da Anthropic do operador atras dela
+  // (POST /api/v1/chat) — publicado na LAN sem pensar, e mais uma superficie para
+  // alguem tentar. Quem QUER expor declara JUR_BIND (ex.: JUR_BIND=0.0.0.0), e ai
+  // assume a decisao explicitamente. Ver infra/README.md.
   const endereco = process.env.JUR_BIND || '127.0.0.1';
-  const servidor = http.createServer(criarApp({ fila, chaves: gerenciadorChaves }).handler);
+  // Ligado por padrao: sem isto, qualquer site cross-origin (achado da revisao final)
+  // enfileira busca real contra tribunal usando o IP do operador via POST /buscas, e
+  // /mcp e /api/v1/chat ficam abertos para qualquer cliente que saiba a porta. Desligar
+  // exige a variavel explicitamente — quem faz isso assume a decisao, como o JUR_BIND
+  // acima.
+  const exigirChave = process.env.JUR_EXIGIR_CHAVE !== '0';
+  const servidor = http.createServer(
+    criarApp({ fila, chaves: gerenciadorChaves, exigirChave }).handler,
+  );
   servidor.listen(porta, endereco, () => {
     console.log(`jur ouvindo em http://${endereco}:${porta} (concorrencia ${fila.concorrencia})`);
   });

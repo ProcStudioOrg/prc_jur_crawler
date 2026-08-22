@@ -191,7 +191,8 @@ function compilar(padrao) {
   return { re: new RegExp(`^${fonte}$`), nomes };
 }
 
-function criarRoteador() {
+function criarRoteador(opcoes = {}) {
+  const { guarda } = opcoes;
   const rotas = [];
   const estaticos = [];
 
@@ -203,6 +204,12 @@ function criarRoteador() {
     const url = new URL(req.url, 'http://local');
     const caminho = url.pathname;
     req.query = Object.fromEntries(url.searchParams);
+
+    // Guarda unica (servidor/autenticacao.js): Origin hostil e chave de conexao, para
+    // TODA rota, antes mesmo de procurar qual delas bate. Ver o cabecalho de
+    // autenticacao.js para o porque de centralizar aqui em vez de cada rota checar por
+    // conta propria.
+    if (guarda && guarda(req, res, caminho)) return undefined;
 
     for (const r of rotas) {
       if (r.metodo !== req.method) continue;
