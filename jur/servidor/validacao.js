@@ -138,4 +138,48 @@ function normalizarPaginacao(offsetBruto, limiteBruto, teto, defaultLimite) {
   return { offset, limite };
 }
 
-module.exports = { validarMaxPaginas, validarData, normalizarPaginacao };
+/**
+ * Modelos aceitos. Ids exatos, sem sufixo de data.
+ * `esforco: false` marca modelo que REJEITA output_config.effort na API —
+ * mandar esforco para ele devolve erro, entao barramos antes de sair daqui.
+ */
+const MODELOS = {
+  'claude-opus-5': { esforco: true },
+  'claude-sonnet-5': { esforco: true },
+  'claude-haiku-4-5': { esforco: false },
+};
+const MODELO_PADRAO = 'claude-opus-5';
+const ESFORCOS = ['low', 'medium', 'high'];
+const ESFORCO_PADRAO = 'high';
+
+function validarModelo(valor) {
+  if (valor === undefined || valor === null || valor === '') {
+    return { ok: true, valor: MODELO_PADRAO, erro: null };
+  }
+  if (typeof valor !== 'string') {
+    return { ok: false, valor: null, erro: `modelo invalido: use um de ${Object.keys(MODELOS).join(', ')}` };
+  }
+  if (!Object.prototype.hasOwnProperty.call(MODELOS, valor)) {
+    return { ok: false, valor: null, erro: `modelo invalido: "${valor}". Use um de ${Object.keys(MODELOS).join(', ')}` };
+  }
+  return { ok: true, valor, erro: null };
+}
+
+function validarEsforco(valor, modelo) {
+  const suporta = MODELOS[modelo] && MODELOS[modelo].esforco;
+  if (valor === undefined || valor === null || valor === '') {
+    return { ok: true, valor: suporta ? ESFORCO_PADRAO : null, erro: null };
+  }
+  if (!suporta) {
+    return { ok: false, valor: null, erro: `o modelo ${modelo} (haiku) nao aceita nivel de esforco — remova o campo` };
+  }
+  if (typeof valor !== 'string' || !ESFORCOS.includes(valor)) {
+    return { ok: false, valor: null, erro: `esforco invalido: use um de ${ESFORCOS.join(', ')}` };
+  }
+  return { ok: true, valor, erro: null };
+}
+
+module.exports = {
+  validarMaxPaginas, validarData, normalizarPaginacao,
+  validarModelo, validarEsforco, MODELOS, ESFORCOS,
+};

@@ -168,4 +168,27 @@ describe('llm', () => {
     assert.deepStrictEqual(turnoDeResultados.content.map((c) => c.tool_use_id), ['a-stf', 'b-trf2'],
       'a ordem do tool_result precisa bater com a ordem do tool_use, mesmo com trf2 terminando primeiro');
   });
+
+  it('manda output_config.effort no opus e sonnet', async () => {
+    for (const modelo of ['claude-opus-5', 'claude-sonnet-5']) {
+      let capturado = null;
+      const cliente = clienteFalso([{ stop_reason: 'end_turn', content: [{ type: 'text', text: 'ok' }] }]);
+      const original = cliente.messages.stream.bind(cliente.messages);
+      cliente.messages.stream = (p) => { capturado = p; return original(p); };
+      await llm.conversar({ mensagens: [{ role: 'user', content: 'x' }], cliente, deps: { fila }, modelo, esforco: 'low' });
+      assert.strictEqual(capturado.model, modelo);
+      assert.deepStrictEqual(capturado.output_config, { effort: 'low' });
+      assert.ok(!('effort' in capturado), 'effort nao pode ir no topo do payload');
+    }
+  });
+
+  it('NAO manda output_config no haiku, que rejeita o parametro', async () => {
+    let capturado = null;
+    const cliente = clienteFalso([{ stop_reason: 'end_turn', content: [{ type: 'text', text: 'ok' }] }]);
+    const original = cliente.messages.stream.bind(cliente.messages);
+    cliente.messages.stream = (p) => { capturado = p; return original(p); };
+    await llm.conversar({ mensagens: [{ role: 'user', content: 'x' }], cliente, deps: { fila }, modelo: 'claude-haiku-4-5' });
+    assert.strictEqual(capturado.model, 'claude-haiku-4-5');
+    assert.ok(!('output_config' in capturado), 'haiku nao aceita output_config');
+  });
 });

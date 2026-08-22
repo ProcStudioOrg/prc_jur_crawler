@@ -1,5 +1,6 @@
 const { sse, lerCorpo, json, bloquearOrigemHostil } = require('../http');
 const llm = require('../llm');
+const validacao = require('../validacao');
 
 const ROLES_VALIDOS = new Set(['user', 'assistant']);
 
@@ -33,6 +34,11 @@ function registrar(roteador, deps) {
     const motivoInvalido = validarMensagens(corpo.mensagens);
     if (motivoInvalido) return json(res, 400, { erro: motivoInvalido });
     const mensagens = corpo.mensagens;
+
+    const vModelo = validacao.validarModelo(corpo.modelo);
+    if (!vModelo.ok) return json(res, 400, { erro: vModelo.erro });
+    const vEsforco = validacao.validarEsforco(corpo.esforco, vModelo.valor);
+    if (!vEsforco.ok) return json(res, 400, { erro: vEsforco.erro });
 
     // A chave nunca e persistida: vem do header (localStorage do browser) ou do ambiente.
     // deps.clienteLLM (so em teste) dispensa a chave real.
@@ -82,6 +88,8 @@ function registrar(roteador, deps) {
         cliente: deps.clienteLLM,
         deps: filaRastreada ? { ...deps, fila: filaRastreada } : deps,
         sinal: controlador.signal,
+        modelo: vModelo.valor,
+        esforco: vEsforco.valor,
         aoTexto: (t) => canal.enviar('texto', { texto: t }),
         aoFerramenta: (nome, entrada) => canal.enviar('ferramenta', { nome, entrada }),
       });

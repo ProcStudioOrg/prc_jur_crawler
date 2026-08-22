@@ -30,7 +30,8 @@ function erroAbortado() {
   return erro;
 }
 
-async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramenta, sinal, maxIteracoes = MAX_ITERACOES }) {
+async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramenta, sinal,
+                          modelo = MODELO, esforco = null, maxIteracoes = MAX_ITERACOES }) {
   const anthropic = cliente || new Anthropic(apiKey ? { apiKey } : {});
   const historico = [...mensagens];
   let textoFinal = '';
@@ -42,13 +43,17 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
     // (cada rodada e uma chamada paga).
     if (sinal && sinal.aborted) throw erroAbortado();
 
-    const stream = anthropic.messages.stream({
-      model: MODELO,
+    const parametros = {
+      model: modelo,
       max_tokens: MAX_TOKENS,
       system: SISTEMA,
       tools: ferramentas.definicoes(),
       messages: historico,
-    }, { signal: sinal });
+    };
+    // O haiku rejeita output_config.effort; validacao.js devolve esforco null para ele.
+    if (esforco) parametros.output_config = { effort: esforco };
+
+    const stream = anthropic.messages.stream(parametros, { signal: sinal });
 
     if (typeof aoTexto === 'function') stream.on('text', (delta) => aoTexto(delta));
 
