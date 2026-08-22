@@ -7,28 +7,70 @@
   <link rel="stylesheet" href="/estilo.css">
 </head>
 <body>
-  <header>
-    <h1>jur</h1>
-    <span id="saude" class="pastilha">verificando…</span>
-    <input id="chave" type="password" placeholder="Chave da Anthropic (opcional)" autocomplete="off">
-  </header>
+  <aside id="lateral">
+    <div class="lateral-topo">
+      <span class="marca">jur</span>
+      <button id="tema" class="icone" title="Alternar tema" aria-label="Alternar tema">◐</button>
+    </div>
 
-  <main>
-    <aside>
-      <input id="filtro" type="search" placeholder="filtrar tribunal…">
-      <p id="placar" class="placar"></p>
-      <div id="tribunais"></div>
-    </aside>
+    <button id="nova-conversa" class="botao-novo">
+      <span aria-hidden="true">+</span> Nova conversa
+    </button>
 
-    <section class="conversa">
-      <div id="mensagens"></div>
-      <form id="formulario">
-        <textarea id="entrada" rows="2" placeholder="Ex.: acórdãos do TRF4 sobre auxílio-acidente em 2024"></textarea>
-        <button type="submit">Enviar</button>
-      </form>
+    <nav id="historico" aria-label="Conversas"></nav>
+
+    <button id="abrir-config" class="config">
+      <span class="config-avatar" aria-hidden="true">⚙</span>
+      <span class="config-texto">
+        <strong>Configurações</strong>
+        <small>Chaves e conexão</small>
+      </span>
+    </button>
+  </aside>
+
+  <main id="centro">
+    <section id="inicial">
+      <h1 class="saudacao">Sobre o que você quer pesquisar?</h1>
+      <div id="caixa-inicial" class="caixa-entrada"></div>
+      <section id="prompts" aria-label="Modelos de prompt"></section>
+      <section id="disponibilidade" aria-label="Disponibilidade dos tribunais"></section>
+      <section id="manual" aria-label="Manual"></section>
+    </section>
+
+    <section id="conversa" hidden>
+      <div id="mensagens" role="log" aria-live="polite"></div>
+      <div id="caixa-conversa" class="caixa-entrada"></div>
     </section>
   </main>
 
+  <div id="painel-config" class="painel" hidden></div>
+  <div id="painel-ressalva" class="painel" hidden></div>
+
+  <template id="tpl-entrada">
+    <form class="formulario">
+      <textarea class="entrada" rows="1" placeholder="Pergunte sobre jurisprudência…"></textarea>
+      <div class="entrada-rodape">
+        <div class="seletor-modelo">
+          <select class="modelo" aria-label="Modelo">
+            <option value="claude-opus-5">Opus 5</option>
+            <option value="claude-sonnet-5">Sonnet 5</option>
+            <option value="claude-haiku-4-5">Haiku 4.5</option>
+          </select>
+          <select class="esforco" aria-label="Nível de esforço">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high" selected>High</option>
+          </select>
+        </div>
+        <button type="submit" class="enviar" aria-label="Enviar">↑</button>
+      </div>
+    </form>
+  </template>
+
+  <!-- app.js PRIMEIRO: ele define window.jurApi e window.jurUI, que os outros dois consomem
+       ja no carregamento (disponibilidade.js busca /api/v1/tribunais de imediato). -->
   <script src="/app.js"></script>
+  <script src="/disponibilidade.js"></script>
+  <script src="/config.js"></script>
 </body>
 </html>

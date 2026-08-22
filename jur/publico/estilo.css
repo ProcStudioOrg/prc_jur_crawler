@@ -1,75 +1,167 @@
+/* Paleta do Claude. Claro por padrao; escuro por preferencia do sistema ou
+   por data-tema="escuro" no <html>, que o alternador escreve. */
 :root {
-  --fundo: #101418; --painel: #171c22; --borda: #262d36;
-  --texto: #e6e9ee; --fraco: #8a94a3;
-  --ok: #3fb950; --instavel: #d29922; --bloqueado: #4d5560; --sessao: #58a6ff;
+  --fundo: #FAF9F5;
+  --superficie: #FFFFFF;
+  --lateral: #F0EEE6;
+  --texto: #1F1E1D;
+  --fraco: #6F6E69;
+  --borda: #E3E0D8;
+  --acento: #D97757;
+  --ok: #2E7D46;
+  --instavel: #B7791F;
+  --bloqueado: #8A8781;
+  --sessao: #2C6BB0;
+  --raio: 12px;
+  --lateral-largura: 264px;
 }
+:root[data-tema="escuro"] {
+  --fundo: #262624;
+  --superficie: #30302E;
+  --lateral: #1F1E1D;
+  --texto: #FAF9F5;
+  --fraco: #A3A099;
+  --borda: #3E3D3A;
+  --acento: #D97757;
+  --ok: #4CAF6A;
+  --instavel: #D6A03A;
+  --bloqueado: #6F6E69;
+  --sessao: #5B9BD5;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) {
+    --fundo: #262624; --superficie: #30302E; --lateral: #1F1E1D;
+    --texto: #FAF9F5; --fraco: #A3A099; --borda: #3E3D3A;
+    --ok: #4CAF6A; --instavel: #D6A03A; --bloqueado: #6F6E69; --sessao: #5B9BD5;
+  }
+}
+
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--fundo); color: var(--texto);
-       font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+body {
+  margin: 0; display: flex; height: 100vh; overflow: hidden;
+  background: var(--fundo); color: var(--texto);
+  font: 15px/1.6 ui-sans-serif, -apple-system, "Segoe UI", system-ui, sans-serif;
+}
 
-header { display: flex; align-items: center; gap: 12px; padding: 10px 16px;
-         border-bottom: 1px solid var(--borda); background: var(--painel); }
-header h1 { margin: 0; font-size: 18px; letter-spacing: .5px; }
-header input { margin-left: auto; width: 280px; padding: 6px 10px; border-radius: 6px;
-               border: 1px solid var(--borda); background: var(--fundo); color: var(--texto); }
+/* ---------- lateral ---------- */
+#lateral {
+  width: var(--lateral-largura); flex: 0 0 var(--lateral-largura);
+  background: var(--lateral); border-right: 1px solid var(--borda);
+  display: flex; flex-direction: column; padding: 12px;
+}
+.lateral-topo { display: flex; align-items: center; justify-content: space-between; padding: 4px 6px 12px; }
+.marca { font-size: 19px; font-weight: 600; letter-spacing: -.01em; }
+.icone {
+  background: none; border: 0; color: var(--fraco); cursor: pointer;
+  font-size: 16px; padding: 4px 6px; border-radius: 6px;
+}
+.icone:hover { background: var(--borda); color: var(--texto); }
 
-main { display: grid; grid-template-columns: 320px 1fr; height: calc(100vh - 53px); }
-aside { border-right: 1px solid var(--borda); padding: 12px; overflow-y: auto; }
-aside > input { width: 100%; padding: 6px 10px; margin-bottom: 8px; border-radius: 6px;
-                border: 1px solid var(--borda); background: var(--painel); color: var(--texto); }
-.placar { margin: 0 0 10px; font-size: 12px; color: var(--fraco); }
+.botao-novo {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  padding: 9px 12px; margin-bottom: 14px;
+  background: var(--superficie); color: var(--texto);
+  border: 1px solid var(--borda); border-radius: var(--raio);
+  font: inherit; font-weight: 500; cursor: pointer; text-align: left;
+}
+.botao-novo:hover { border-color: var(--acento); }
 
-.grupo { margin-bottom: 14px; }
-.grupo h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .8px;
-            color: var(--fraco); margin: 0 0 6px; }
-.tribunal { display: flex; align-items: center; gap: 8px; padding: 5px 8px;
-            border-radius: 6px; cursor: pointer; }
-.tribunal:hover { background: var(--painel); }
-.tribunal[data-disponivel="false"] { opacity: .45; cursor: not-allowed; }
-.tribunal .sigla { font-weight: 600; min-width: 78px; }
-.tribunal .nome { font-size: 12px; color: var(--fraco);
-                  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.bolinha { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 8px; }
-.bolinha[data-e="ok"] { background: var(--ok); }
-.bolinha[data-e="instavel"] { background: var(--instavel); }
-.bolinha[data-e="sem-acesso"] { background: var(--bloqueado); }
-.bolinha[data-e="exige-sessao"] { background: var(--sessao); }
+#historico { flex: 1; overflow-y: auto; margin: 0 -4px; }
+#historico h2 {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--fraco); margin: 12px 10px 6px; font-weight: 600;
+}
+.conversa-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px; border-radius: 8px; cursor: pointer;
+  color: var(--texto); font-size: 14px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.conversa-item:hover { background: var(--borda); }
+.conversa-item[aria-current="true"] { background: var(--borda); font-weight: 500; }
+.conversa-item .apagar { margin-left: auto; opacity: 0; border: 0; background: none; color: var(--fraco); cursor: pointer; }
+.conversa-item:hover .apagar { opacity: 1; }
+.vazio { color: var(--fraco); font-size: 13px; padding: 8px 10px; }
 
-/* Ressalva sempre visivel (sem hover) para tribunal != ok — o title da linha
-   cobre hover em desktop, mas nao cobre touch/mobile nem quem nunca passou o
-   mouse, e e exatamente quem mais precisa ver que "0 resultados" pode ser base
-   parada (ex.: TRF1 congelado em 07/2025), nao ausencia de jurisprudencia. */
-.ressalva { margin: 0 4px 8px 24px; padding: 4px 8px; border-radius: 6px;
-            font-size: 11px; line-height: 1.4; color: var(--fraco);
-            background: var(--painel); border-left: 3px solid var(--borda);
-            word-wrap: break-word; }
-.ressalva[data-e="instavel"] { border-left-color: var(--instavel); }
-.ressalva[data-e="sem-acesso"] { border-left-color: var(--bloqueado); }
-.ressalva[data-e="exige-sessao"] { border-left-color: var(--sessao); }
-.ressalva.expansivel { cursor: pointer; }
-.ressalva.expansivel:hover { color: var(--texto); }
-/* Truncada (estado padrao) fica curta por natureza (~90 chars). Aberta pode
-   chegar a milhares de caracteres (a nota do stj tem ~2900) — max-height +
-   scroll interno evita que um unico tribunal domine a coluna inteira. */
-.ressalva.aberta { max-height: 220px; overflow-y: auto; }
+.config {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 9px 10px; margin-top: 8px;
+  background: none; border: 0; border-top: 1px solid var(--borda);
+  color: var(--texto); font: inherit; cursor: pointer; text-align: left;
+}
+.config:hover { background: var(--borda); }
+.config-avatar {
+  width: 28px; height: 28px; flex: 0 0 28px; border-radius: 50%;
+  background: var(--acento); color: #fff;
+  display: grid; place-items: center; font-size: 14px;
+}
+.config-texto { display: flex; flex-direction: column; line-height: 1.25; }
+.config-texto small { color: var(--fraco); font-size: 12px; }
 
-.conversa { display: flex; flex-direction: column; min-width: 0; }
-#mensagens { flex: 1; overflow-y: auto; padding: 16px; }
-.msg { max-width: 760px; margin: 0 0 14px; padding: 10px 14px; border-radius: 10px;
-       white-space: pre-wrap; word-wrap: break-word; }
-.msg.user { background: #1f6feb22; border: 1px solid #1f6feb55; margin-left: auto; }
-.msg.assistant { background: var(--painel); border: 1px solid var(--borda); }
-.msg.ferramenta { background: transparent; border: 1px dashed var(--borda);
-                  color: var(--fraco); font-size: 12px; font-family: ui-monospace, monospace; }
-.msg.erro { background: #f8514922; border: 1px solid #f8514966; }
+/* ---------- centro ---------- */
+#centro { flex: 1; min-width: 0; overflow-y: auto; }
+#inicial { max-width: 740px; margin: 0 auto; padding: 12vh 24px 80px; }
+.saudacao { font-size: 30px; font-weight: 400; letter-spacing: -.02em; margin: 0 0 26px; text-align: center; }
 
-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--borda); }
-form textarea { flex: 1; resize: none; padding: 8px 10px; border-radius: 8px;
-                border: 1px solid var(--borda); background: var(--painel);
-                color: var(--texto); font: inherit; }
-form button { padding: 8px 18px; border-radius: 8px; border: 0;
-              background: #1f6feb; color: #fff; font-weight: 600; cursor: pointer; }
-form button:disabled { opacity: .5; cursor: default; }
+.caixa-entrada { margin-bottom: 34px; }
+.formulario {
+  background: var(--superficie); border: 1px solid var(--borda);
+  border-radius: 16px; padding: 12px 14px 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+.formulario:focus-within { border-color: var(--acento); }
+.entrada {
+  width: 100%; border: 0; resize: none; background: none; color: var(--texto);
+  font: inherit; outline: none; max-height: 200px;
+}
+.entrada-rodape { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.seletor-modelo { display: flex; gap: 4px; margin-left: auto; }
+.seletor-modelo select {
+  background: none; border: 0; color: var(--fraco); font: inherit; font-size: 13px;
+  cursor: pointer; padding: 3px 4px; border-radius: 6px;
+}
+.seletor-modelo select:hover { background: var(--borda); color: var(--texto); }
+.enviar {
+  width: 30px; height: 30px; flex: 0 0 30px; border: 0; border-radius: 8px;
+  background: var(--acento); color: #fff; cursor: pointer; font-size: 15px;
+}
+.enviar:disabled { opacity: .45; cursor: default; }
 
-.pastilha { font-size: 12px; padding: 2px 8px; border-radius: 999px;
-            border: 1px solid var(--borda); color: var(--fraco); }
+/* ---------- blocos da tela inicial ---------- */
+#inicial section { margin-bottom: 30px; }
+.titulo-bloco {
+  font-size: 12px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--fraco); font-weight: 600; margin: 0 0 10px;
+}
+
+/* ---------- mensagens ---------- */
+#conversa { display: flex; flex-direction: column; height: 100%; }
+#conversa[hidden] { display: none; }
+#mensagens { flex: 1; overflow-y: auto; padding: 28px 24px; }
+#conversa .caixa-entrada { max-width: 740px; margin: 0 auto 20px; width: 100%; padding: 0 24px; }
+.msg { max-width: 740px; margin: 0 auto 20px; white-space: pre-wrap; word-wrap: break-word; }
+.msg.user { background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 12px 16px; }
+.msg.assistant { padding: 2px 0; }
+.msg.ferramenta {
+  color: var(--fraco); font-size: 12.5px; font-family: ui-monospace, SFMono-Regular, monospace;
+  border-left: 2px solid var(--borda); padding-left: 10px;
+}
+.msg.erro { color: #B3261E; border: 1px solid #B3261E44; border-radius: var(--raio); padding: 12px 16px; }
+
+/* ---------- paineis ---------- */
+.painel {
+  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  display: grid; place-items: center; padding: 24px; z-index: 10;
+}
+.painel[hidden] { display: none; }
+.painel-caixa {
+  background: var(--superficie); border: 1px solid var(--borda); border-radius: 16px;
+  max-width: 620px; width: 100%; max-height: 80vh; overflow-y: auto; padding: 22px 24px;
+}
+.painel h2 { margin: 0 0 4px; font-size: 18px; }
+.painel .fechar { float: right; background: none; border: 0; color: var(--fraco); font-size: 20px; cursor: pointer; }
+
+@media (max-width: 860px) {
+  #lateral { display: none; }
+  #inicial { padding-top: 6vh; }
+}
