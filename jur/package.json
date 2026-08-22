@@ -31,6 +31,6 @@
     "playwright": "^1.57.0"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   }
 }

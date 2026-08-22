@@ -35,4 +35,12 @@ describe('db', () => {
                  VALUES (?,?,?,?)`).run('c1', 'user', 'ola', 2);
     assert.strictEqual(con.prepare('SELECT COUNT(*) c FROM mensagem WHERE conversa_id=?').get('c1').c, 1);
   });
+
+  it('rejeita mensagem com conversa_id inexistente', () => {
+    const con = db.abrir(arquivoTmp());
+    assert.throws(() => {
+      con.prepare(`INSERT INTO mensagem (conversa_id, papel, conteudo, criado_em)
+                   VALUES (?,?,?,?)`).run('c_inexistente', 'user', 'ola', 2);
+    }, /FOREIGN KEY constraint failed/);
+  });
 });
