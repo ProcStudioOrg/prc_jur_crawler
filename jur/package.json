@@ -27,6 +27,7 @@
     "aceite": "node tests/aceite.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.120.0",
     "commander": "^12.1.0",
     "playwright": "^1.57.0"
   },
