@@ -95,6 +95,13 @@ async function executar(comando, params = {}, opcoes = {}) {
     let erroPadrao = '';
     let expirou = false;
 
+    // INVARIANTE: aoIniciar precisa ser chamado de forma SINCRONA logo apos o spawn,
+    // sem nenhum `await` antes desta linha. jobs.js (Task 6) depende disso: se
+    // cancelar() acontecer entre o spawn e este callback, ele marca a entrada como
+    // "cancelada aguardando pid" em vez de matar na hora; e' este callback sincrono
+    // que fecha a janela rapido o suficiente pra isso nao vazar um Chromium orfao.
+    // Um `await` introduzido aqui alargaria essa janela sem quebrar nenhum teste hoje
+    // (o executor real e' sincrono neste ponto) — mas tornaria o vazamento real.
     if (typeof opcoes.aoIniciar === 'function') opcoes.aoIniciar(filho.pid);
 
     const relogio = setTimeout(() => {

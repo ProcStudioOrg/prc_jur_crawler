@@ -5,6 +5,7 @@ const path = require('node:path');
 const { describe, it } = require('node:test');
 const db = require('../servidor/db');
 const jobs = require('../servidor/jobs');
+const executorReal = require('../servidor/executor');
 
 const tmpDir = () => fs.mkdtempSync(path.join(os.tmpdir(), 'jur-jobs-'));
 
@@ -43,6 +44,15 @@ describe('jobs', () => {
     assert.throws(() => fila.enfileirar('bloqueado', {}), /indispon/i);
   });
 
+  it('aguardar com id inexistente resolve na hora com null, sem travar', async () => {
+    const fila = filaDeTeste(async () => ({ ok: true, total: 0, resultados: [] }));
+    const resultado = await Promise.race([
+      fila.aguardar('id-que-nao-existe'),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('aguardar travou por mais de 300ms')), 300)),
+    ]);
+    assert.strictEqual(resultado, null);
+  });
+
   it('respeita a concorrencia: nunca mais de 3 rodando ao mesmo tempo', async () => {
     let rodando = 0;
     let pico = 0;
@@ -56,6 +66,10 @@ describe('jobs', () => {
     const ids = Array.from({ length: 9 }, () => fila.enfileirar('stf', { query: 'x' }).id);
     await Promise.all(ids.map((id) => fila.aguardar(id)));
     assert.ok(pico <= 3, `pico de concorrencia foi ${pico}, esperava <= 3`);
+    // Nao basta nunca ULTRAPASSAR 3: uma fila travada em 1 (por exemplo, um bug que
+    // nunca libera o slot) tambem passaria no assert.ok acima sem ser pega. Prova que
+    // o pico de fato CHEGA a usar as 3 vagas de concorrencia.
+    assert.strictEqual(pico, 3, `pico de concorrencia foi ${pico}, esperava que chegasse a 3`);
   });
 
   it('cancela um job que ainda esta na fila', async () => {
@@ -68,6 +82,35 @@ describe('jobs', () => {
     assert.strictEqual(fila.cancelar(segundo.id), true);
     assert.strictEqual(fila.obter(segundo.id).status, 'cancelado');
     await fila.aguardar(primeiro.id);
+  });
+
+  it('cancelar antes do pid chegar nao deixa processo orfao: aoIniciar mata quando o pid aparece', async () => {
+    const chamadasMatarGrupo = [];
+    const matarGrupoOriginal = executorReal.matarGrupo;
+    executorReal.matarGrupo = (pid) => chamadasMatarGrupo.push(pid);
+    try {
+      let aoIniciarCapturado;
+      let resolverExecucao;
+      const fila = filaDeTeste((comando, params, extra) => {
+        aoIniciarCapturado = extra.aoIniciar;
+        return new Promise((resolve) => { resolverExecucao = resolve; });
+      }, 1);
+      const { id } = fila.enfileirar('stf', { query: 'x' });
+      // deixa o bombear() colocar o job em 'rodando' antes de cancelar, mas cancela
+      // ANTES de aoIniciar disparar (pid ainda desconhecido nesse instante)
+      await new Promise((r) => setImmediate(r));
+      assert.strictEqual(fila.obter(id).status, 'rodando');
+      assert.strictEqual(fila.cancelar(id), true);
+      assert.deepStrictEqual(chamadasMatarGrupo, []); // ainda nao tinha pid pra matar
+      // so agora o pid "chega", depois do cancelamento
+      aoIniciarCapturado(4321);
+      assert.deepStrictEqual(chamadasMatarGrupo, [4321]); // aoIniciar matou assim que soube
+      resolverExecucao({ ok: false, total: 0, resultados: [], arquivo: null, erro: 'morto' });
+      const job = await fila.aguardar(id);
+      assert.strictEqual(job.status, 'cancelado');
+    } finally {
+      executorReal.matarGrupo = matarGrupoOriginal;
+    }
   });
 
   it('emite eventos de inicio e fim', async () => {

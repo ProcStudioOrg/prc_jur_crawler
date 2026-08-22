@@ -10,13 +10,17 @@ function criarFila(opcoes = {}) {
   const con = opcoes.con;
   const executarFn = opcoes.executarFn || ((comando, params, extra) => executorPadrao.executar(comando, params, extra));
   const catalogoFn = opcoes.catalogoFn || ((comando) => catalogoPadrao.obter(comando));
+  // opcoes.concorrencia === 0 cai no padrao por causa do `||` (0 e falsy) — e proposital:
+  // uma fila com concorrencia zero nunca processaria nada (bombear() nunca entraria no
+  // laco), entao 0 nao e um valor suportado e cai para o padrao em vez de travar a fila
+  // em silencio.
   const concorrencia = opcoes.concorrencia || CONCORRENCIA_PADRAO;
   const dirResultados = opcoes.dirResultados || path.join(process.env.JUR_DADOS || '/dados', 'resultados');
 
   fs.mkdirSync(dirResultados, { recursive: true });
 
   const pendentes = [];
-  const rodando = new Map();          // jobId -> {pid}
+  const rodando = new Map();          // jobId -> {pid, cancelado}
   const ouvintes = new Set();
   const esperando = new Map();        // jobId -> [resolve]
 
@@ -81,7 +85,7 @@ function criarFila(opcoes = {}) {
   }
 
   async function rodar(job) {
-    rodando.set(job.id, { pid: null });
+    rodando.set(job.id, { pid: null, cancelado: false });
     con.prepare(`UPDATE job SET status='rodando', iniciado_em=? WHERE id=?`).run(Date.now(), job.id);
     emitir({ tipo: 'iniciado', jobId: job.id, comando: job.comando });
 
@@ -90,9 +94,18 @@ function criarFila(opcoes = {}) {
     try {
       r = await executarFn(job.comando, job.params, {
         arquivoSaida: arquivo,
+        // IMPORTANTE: isto so funciona porque o executor real chama aoIniciar de forma
+        // SINCRONA logo apos o spawn (ver comentario em executor.js). Se cancelar() for
+        // chamado enquanto o pid ainda e null, ele marca `atual.cancelado = true` em vez
+        // de matar; e aqui, quando o pid finalmente chega, conferimos essa marca e matamos
+        // o processo tardiamente — em vez de deixar o Chromium orfao porque a entrada em
+        // `rodando` sumiu antes do pid aparecer.
         aoIniciar: (pid) => {
           const atual = rodando.get(job.id);
-          if (atual) atual.pid = pid;
+          if (atual) {
+            atual.pid = pid;
+            if (atual.cancelado) executorPadrao.matarGrupo(pid);
+          }
           con.prepare('UPDATE job SET pid=? WHERE id=?').run(pid, job.id);
         },
       });
@@ -121,8 +134,21 @@ function criarFila(opcoes = {}) {
     const job = obter(id);
     if (!job || ['concluido', 'erro', 'cancelado'].includes(job.status)) return false;
     const vivo = rodando.get(id);
-    if (vivo && vivo.pid) executorPadrao.matarGrupo(vivo.pid);
-    rodando.delete(id);
+    if (vivo) {
+      if (vivo.pid) {
+        executorPadrao.matarGrupo(vivo.pid);
+      } else {
+        // O pid ainda nao chegou (aoIniciar pode nao ter disparado). Nao apagamos a
+        // entrada de `rodando` aqui — se apagassemos, quando aoIniciar chegasse depois
+        // com o pid real, `rodando.get(job.id)` seria undefined e ninguem mais tentaria
+        // matar aquele processo (Chromium orfao). Em vez disso marcamos "cancelado
+        // aguardando pid" e deixamos o proprio aoIniciar matar assim que o pid aparecer.
+        // A entrada continua existindo (e contando pra concorrencia) ate `rodar()` fazer
+        // `rodando.delete()` apos o `await` resolver, o que so acontece quando o processo
+        // de fato termina.
+        vivo.cancelado = true;
+      }
+    }
     con.prepare(`UPDATE job SET status='cancelado', terminado_em=? WHERE id=?`).run(Date.now(), id);
     emitir({ tipo: 'cancelado', jobId: id });
     setImmediate(bombear);
@@ -130,6 +156,18 @@ function criarFila(opcoes = {}) {
   }
 
   function resultados(id, offset = 0, limite = 20) {
+    // DIVIDA TECNICA: leitura sincrona (fs.readFileSync + JSON.parse) num processo unico
+    // que tambem serve HTTP, MCP, chat e despacha os outros jobs da fila. Um arquivo de
+    // resultados grande bloqueia o event loop inteiro enquanto le E parseia — a CADA
+    // pagina pedida, nao so na primeira, porque nada aqui e cacheado. Sob carga (varias
+    // paginas pedidas em sequencia, ou um job grande concluindo enquanto alguem pagina)
+    // isso trava toda a fila e todas as outras rotas por alguns ms a segundos, proporcional
+    // ao tamanho do arquivo. Saida futura: (a) trocar por leitura assincrona
+    // (fs.promises.readFile) — muda a assinatura de `resultados` para retornar Promise,
+    // o que cascateia pelas tasks que a chamam; ou (b) cachear o array ja parseado por
+    // job (invalidado quando o job muda de arquivo/termina), o que evita reparsear a
+    // cada pagina sem mudar a assinatura. Nenhuma das duas foi feita aqui de proposito
+    // — ver a Task 6 do plano de dockerizacao.
     const job = obter(id);
     if (!job || !job.arquivo || !fs.existsSync(job.arquivo)) return { total: job ? job.total : 0, itens: [] };
     let bruto;
@@ -144,7 +182,11 @@ function criarFila(opcoes = {}) {
 
   function aguardar(id) {
     const job = obter(id);
-    if (job && !['enfileirado', 'rodando'].includes(job.status)) return Promise.resolve(job);
+    // Id que nao existe no banco: nao ha job nenhum que algum dia dispare `emitir()` pra
+    // esse jobId, entao a fila de espera nunca seria drenada — a promise travaria pra
+    // sempre. Resolve na hora com null, igual `obter()` ja faz para id desconhecido.
+    if (!job) return Promise.resolve(null);
+    if (!['enfileirado', 'rodando'].includes(job.status)) return Promise.resolve(job);
     return new Promise((resolve) => {
       if (!esperando.has(id)) esperando.set(id, []);
       esperando.get(id).push(resolve);
