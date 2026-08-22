@@ -256,6 +256,8 @@ function documento() {
                 },
               },
             },
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
           },
         },
       },
@@ -264,7 +266,7 @@ function documento() {
           summary: 'Cria uma busca de jurisprudência (assíncrona)',
           description:
             'Enfileira o job e devolve o id imediatamente (202) — a busca roda em segundo plano. '
-            + 'Acompanhe por `GET /api/v1/buscas/:id`, pela lista, ou pelo stream de eventos. '
+            + 'Acompanhe por `GET /api/v1/buscas/{id}`, pela lista, ou pelo stream de eventos. '
             + 'Datas aceitam só DD/MM/AAAA; ISO (AAAA-MM-DD) é recusado com 400 para não filtrar '
             + 'em silêncio contra a data errada.',
           requestBody: {
@@ -337,7 +339,7 @@ function documento() {
           },
         },
       },
-      '/api/v1/buscas/:id': {
+      '/api/v1/buscas/{id}': {
         get: {
           summary: 'Status de uma busca',
           parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
@@ -377,7 +379,7 @@ function documento() {
           },
         },
       },
-      '/api/v1/buscas/:id/resultados': {
+      '/api/v1/buscas/{id}/resultados': {
         get: {
           summary: 'Lê uma página dos resultados de uma busca',
           description:
@@ -405,7 +407,7 @@ function documento() {
           },
         },
       },
-      '/api/v1/buscas/:id/eventos': {
+      '/api/v1/buscas/{id}/eventos': {
         get: {
           summary: 'Acompanha uma busca em tempo real (SSE)',
           description:
@@ -522,7 +524,7 @@ function documento() {
           },
         },
       },
-      '/api/v1/chaves/:id': {
+      '/api/v1/chaves/{id}': {
         delete: {
           summary: 'Revoga uma chave de conexão',
           parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
@@ -579,7 +581,7 @@ function documento() {
           },
         },
       },
-      '/api/v1/conversas/:id': {
+      '/api/v1/conversas/{id}': {
         get: {
           summary: 'Lê uma conversa com o histórico completo',
           parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],

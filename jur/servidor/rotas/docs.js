@@ -78,13 +78,13 @@ const PAGINA = `<!doctype html>
     }
 
     function agrupar(paths) {
-      // Agrupa por recurso: primeiro segmento fixo do caminho (ignora :id e afins).
+      // Agrupa por recurso: primeiro segmento fixo do caminho (ignora {id} e afins).
       const grupos = new Map();
       for (const [caminho, metodos] of Object.entries(paths)) {
         const segmentos = caminho.split('/').filter(Boolean);
         let recurso = '/';
         for (const s of segmentos) {
-          if (s.startsWith(':')) break;
+          if (s.startsWith('{')) break;
           recurso += (recurso === '/' ? '' : '/') + s;
         }
         if (!grupos.has(recurso)) grupos.set(recurso, []);

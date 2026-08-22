@@ -4,7 +4,18 @@ const path = require('node:path');
 const { describe, it } = require('node:test');
 const openapi = require('../servidor/openapi');
 
-/** Varre os arquivos de rota e extrai (metodo, caminho) de cada roteador.rota(...). */
+/**
+ * Varre os arquivos de rota e extrai (metodo, caminho) de cada roteador.rota(...).
+ *
+ * Normaliza parametro de caminho Express-style (`:id`) para o template OpenAPI
+ * (`{id}`) ANTES de comparar. O codigo registra rotas com `:id` (e o roteador em
+ * servidor/http.js entende so essa sintaxe); o documento OpenAPI usa `{id}`, porque
+ * e o UNICO formato de parametro de caminho que a especificacao 3.1 reconhece —
+ * `:id` e segmento literal para qualquer ferramenta que leia o documento (Swagger UI,
+ * Redoc, openapi-generator, Postman, linters). A garantia que importa aqui —
+ * rota registrada e documentada em sincronia — nao depende de qual sintaxe
+ * representa o parametro, entao a normalizacao mora na extracao, nao no documento.
+ */
 function rotasRegistradas() {
   const dirs = [path.join(__dirname, '..', 'servidor'), path.join(__dirname, '..', 'servidor', 'rotas')];
   const achadas = [];
@@ -13,7 +24,8 @@ function rotasRegistradas() {
       if (!arquivo.endsWith('.js')) continue;
       const texto = fs.readFileSync(path.join(dir, arquivo), 'utf8');
       for (const m of texto.matchAll(/roteador\.rota\(\s*'([A-Z]+)'\s*,\s*'([^']+)'/g)) {
-        achadas.push(`${m[1]} ${m[2]}`);
+        const caminho = m[2].replace(/:([a-zA-Z_]+)/g, '{$1}');
+        achadas.push(`${m[1]} ${caminho}`);
       }
     }
   }
@@ -56,5 +68,28 @@ describe('openapi', () => {
     const s = Object.values(d.components.securitySchemes)[0];
     assert.strictEqual(s.type, 'http');
     assert.strictEqual(s.scheme, 'bearer');
+  });
+
+  // Validador offline, sem dependencia nova: a regra 3.1 e que todo `parameters` com
+  // `in: 'path'` precisa ter `{nome}` correspondente no template do caminho — e o
+  // exato defeito que motivou trocar `:id` por `{id}` no documento (revisao). Sem
+  // este teste, um path novo com parametro poderia reintroduzir `:id` (ou esquecer
+  // `{...}` no template) e nada aqui acusaria — os dois testes de reconciliacao
+  // acima so comparam METODO+CAMINHO, nao olham dentro de `parameters`.
+  it('todo parametro de caminho tem {nome} correspondente no template', () => {
+    const d = openapi.documento();
+    const problemas = [];
+    for (const [caminho, metodos] of Object.entries(d.paths)) {
+      const noTemplate = new Set([...caminho.matchAll(/\{([a-zA-Z_]+)\}/g)].map((m) => m[1]));
+      for (const [metodo, operacao] of Object.entries(metodos)) {
+        for (const p of operacao.parameters || []) {
+          if (p.in !== 'path') continue;
+          if (!noTemplate.has(p.name)) {
+            problemas.push(`${metodo.toUpperCase()} ${caminho}: parametro de path "${p.name}" sem {${p.name}} no template`);
+          }
+        }
+      }
+    }
+    assert.deepStrictEqual(problemas, []);
   });
 });
