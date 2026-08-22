@@ -49,7 +49,17 @@ function analisarSSE(texto) {
 describe('rotas de chat', () => {
   let servidor; let base; let fila;
 
+  // I7 (revisao final): o teste do 401 abaixo so vale se ANTHROPIC_API_KEY estiver
+  // vazia. Numa maquina com a chave exportada — o estado NORMAL de quem usa o produto —
+  // ele nao so falhava como seguia para `llm.conversar`, que chamaria a API DE VERDADE
+  // e cobraria do desenvolvedor por rodar a suite. A chave sai do ambiente antes de
+  // qualquer teste deste arquivo e volta no fim; `node --test` roda cada arquivo num
+  // processo separado, entao isto nao vaza para as outras suites.
+  let chaveOriginal;
+
   before(async () => {
+    chaveOriginal = process.env.ANTHROPIC_API_KEY;
+    delete process.env.ANTHROPIC_API_KEY;
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-chat-'));
     fila = jobs.criarFila({
       con: db.abrir(path.join(dir, 'jur.db')),
@@ -61,7 +71,11 @@ describe('rotas de chat', () => {
     base = `http://127.0.0.1:${servidor.address().port}`;
   });
 
-  after(() => servidor.close());
+  after(() => {
+    servidor.close();
+    if (chaveOriginal === undefined) delete process.env.ANTHROPIC_API_KEY;
+    else process.env.ANTHROPIC_API_KEY = chaveOriginal;
+  });
 
   const postar = (corpo, extra = {}) => fetch(`${base}/api/v1/chat`, {
     method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(corpo), ...extra,
@@ -83,6 +97,10 @@ describe('rotas de chat', () => {
   });
 
   it('401 sem chave da Anthropic e sem cliente de teste', async () => {
+    // Guarda explicita: se por qualquer motivo a chave voltar ao ambiente, este teste
+    // falha AQUI, antes de chegar em llm.conversar — nunca vira chamada paga.
+    assert.strictEqual(process.env.ANTHROPIC_API_KEY, undefined,
+      'o before() deste describe precisa ter limpado a chave: sem isso o teste faz chamada real e paga');
     const semChaveNemCliente = http.createServer(criarApp({ fila }).handler);
     await new Promise((r) => semChaveNemCliente.listen(0, r));
     const portaIsolada = semChaveNemCliente.address().port;
@@ -92,6 +110,40 @@ describe('rotas de chat', () => {
     });
     assert.strictEqual(r.status, 401);
     semChaveNemCliente.close();
+  });
+
+  // C2 (revisao final): esta rota gasta a chave da Anthropic do operador (Opus 5,
+  // max_tokens 64000). Um site hostil aberto no browser da vitima consegue POSTar aqui
+  // como "requisicao simples" do CORS (content-type text/plain, sem preflight) — mesmo
+  // sem conseguir LER o SSE de volta, a conta ja foi paga.
+  it('recusa Origin hostil com 403 antes de tocar no LLM', async () => {
+    const clienteLLM = clienteFalso([{ stop_reason: 'end_turn', content: [{ type: 'text', text: 'nunca deveria rodar' }] }]);
+    let chamadas = 0;
+    const original = clienteLLM.messages.stream.bind(clienteLLM.messages);
+    clienteLLM.messages.stream = (p, o) => { chamadas++; return original(p, o); };
+
+    const srv = http.createServer(criarApp({ fila, clienteLLM }).handler);
+    await new Promise((r) => srv.listen(0, r));
+    const porta = srv.address().port;
+    try {
+      const r = await fetch(`http://127.0.0.1:${porta}/api/v1/chat`, {
+        method: 'POST',
+        headers: { 'content-type': 'text/plain', origin: 'https://evil.example' },
+        body: JSON.stringify({ mensagens: [{ role: 'user', content: 'oi' }] }),
+      });
+      assert.strictEqual(r.status, 403);
+      assert.strictEqual(chamadas, 0, 'nem uma chamada ao LLM pode sair de uma origem hostil');
+
+      // Contraprova: a MESMA requisicao com Origin de loopback passa.
+      const ok = await fetch(`http://127.0.0.1:${porta}/api/v1/chat`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', origin: `http://localhost:${porta}` },
+        body: JSON.stringify({ mensagens: [{ role: 'user', content: 'oi' }] }),
+      });
+      assert.strictEqual(ok.status, 200);
+      await ok.text();
+      assert.strictEqual(chamadas, 1);
+    } finally { srv.close(); }
   });
 
   it('feliz: SSE emite texto, ferramenta e fim', async () => {

@@ -85,6 +85,43 @@ describe('ferramentas', () => {
     assert.match(texto, /job/i);
   });
 
+  // C1 (revisao final): a validacao coagia com Number() antes de olhar o tipo, entao
+  // true, [5] e '0x10' passavam e viravam `-m true`/`-m 0x10` na CLI — parseInt da NaN/0,
+  // zero pagina e percorrida e o job termina "concluido" com total 0. Do lado da tool o
+  // estrago e pior que na rota: o texto de zero resultados manda o modelo repassar a
+  // ressalva do acervo, ou seja, uma busca que nunca rodou vira "nao ha jurisprudencia".
+  it('buscar_jurisprudencia recusa maxPaginas que so passa por coacao de tipo, sem enfileirar', async () => {
+    const antes = fila.listar(100).length;
+    for (const maxPaginas of [true, [5], '0x10', '1e3', {}, 1.5]) {
+      const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x', maxPaginas }, { fila });
+      assert.match(texto, /maxPaginas invalido/i, `maxPaginas=${JSON.stringify(maxPaginas)} devia ser recusado, veio: ${texto}`);
+    }
+    assert.strictEqual(fila.listar(100).length, antes, 'nenhum job devia ter sido enfileirado');
+  });
+
+  // I4 (revisao final): a descricao da tool diz DD/MM/AAAA mas o schema nao e strict e o
+  // modelo emite ISO com naturalidade. Sem validacao, `-di 2024-01-01` filtrava errado e
+  // o zero resultante era lido como ausencia de julgado.
+  it('buscar_jurisprudencia recusa data em ISO com texto que ensina o formato, sem enfileirar', async () => {
+    const antes = fila.listar(100).length;
+    const { texto, ok } = await ferramentas.executarDetalhado(
+      'buscar_jurisprudencia', { tribunal: 'stf', query: 'x', dataInicio: '2024-01-01' }, { fila },
+    );
+    assert.strictEqual(ok, false, 'data invalida e falha de EXECUCAO, nao resultado do dominio');
+    assert.match(texto, /DD\/MM\/AAAA/);
+    assert.match(texto, /01\/01\/2024/, 'precisa mostrar a data ja no formato certo');
+    assert.strictEqual(fila.listar(100).length, antes, 'nenhum job devia ter sido enfileirado');
+  });
+
+  it('buscar_jurisprudencia recusa data impossivel e aceita DD/MM/AAAA valido', async () => {
+    const ruim = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x', dataFim: '31/02/2024' }, { fila });
+    assert.match(ruim, /dataFim/);
+    const bom = await ferramentas.executar(
+      'buscar_jurisprudencia', { tribunal: 'stf', query: 'x', dataInicio: '01/01/2024', dataFim: '31/12/2024' }, { fila },
+    );
+    assert.match(bom, /^job /);
+  });
+
   // Important 2 (revisao da Task 9): sem clamp, offset negativo caia na semantica de
   // indice negativo do Array.slice — o mesmo bug que o fix da Task 8 corrigiu na rota
   // HTTP (ver "ninguem espera isso de uma API de paginacao" em rotas/buscas.js).
@@ -188,6 +225,64 @@ describe('ferramentas', () => {
       const { texto, ok } = await ferramentas.executarDetalhado('ler_resultados', { job_id: id }, { fila: filaLenta });
       assert.strictEqual(ok, true);
       assert.match(texto, /enfileirado|rodando/);
+    });
+
+    // C3 (revisao final): com o arquivo de resultados sumido, a tool respondia
+    // "Sem itens em offset 0 (total 42)" com ok:true — o modelo lia isso e reportava ao
+    // usuario que a busca nao trouxe julgados. Falha de infra disfarcada de busca vazia
+    // e o unico modo de falha que este repo inteiro existe para impedir.
+    it('ler_resultados com arquivo sumido e falha de EXECUCAO com texto que proibe dizer "nao ha jurisprudencia"', async () => {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-c3-'));
+      const arquivo = path.join(dir, 'some.json');
+      fs.writeFileSync(arquivo, JSON.stringify(Array.from({ length: 42 }, (_, i) => ({ processo: `P${i}` }))));
+      const filaFalha = jobs.criarFila({
+        con: db.abrir(path.join(dir, 'jur.db')),
+        dirResultados: dir,
+        executarFn: async () => ({ ok: true, total: 42, resultados: [], arquivo, erro: null }),
+      });
+      const inicio = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila: filaFalha });
+      const jobId = inicio.match(/[0-9a-f-]{36}/)[0];
+
+      fs.unlinkSync(arquivo);
+      const { texto, ok } = await ferramentas.executarDetalhado('ler_resultados', { job_id: jobId }, { fila: filaFalha });
+      assert.strictEqual(ok, false, 'falha de leitura e falha de EXECUCAO, nao conteudo do dominio');
+      assert.match(texto, /FALHA AO LER/);
+      assert.ok(!/^Sem itens/.test(texto), `nao pode se passar por pagina vazia: ${texto}`);
+      assert.match(texto, /NAO diga ao usuario que nao ha jurisprudencia/i);
+    });
+
+    // I5 (revisao final): `buscar_jurisprudencia` fazia fila.aguardar(id) SEM timeout e
+    // o executor so desiste em 10 min. O cliente MCP desistia antes — e ao desistir
+    // NUNCA tinha recebido o job_id, entao `ler_resultados` era inutil e o crawler seguia
+    // rodando sem ninguem. O trabalho virava irrecuperavel.
+    it('busca que estoura o prazo devolve o job_id e o caminho de volta, em vez de segurar a chamada', async () => {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-i5-'));
+      const filaLenta = jobs.criarFila({
+        con: db.abrir(path.join(dir, 'jur.db')),
+        dirResultados: dir,
+        executarFn: () => new Promise(() => {}), // nunca termina, como um tribunal de browser travado
+      });
+      const comeco = Date.now();
+      const { texto, ok } = await ferramentas.executarDetalhado(
+        'buscar_jurisprudencia', { tribunal: 'stf', query: 'x' },
+        { fila: filaLenta, timeoutBuscaMs: 80 },
+      );
+      assert.ok(Date.now() - comeco < 3000, 'a chamada tem que voltar, nao ficar presa ate o timeout do executor');
+      assert.strictEqual(ok, true, 'busca em andamento e resultado legitimo, nao falha de execucao');
+
+      const idNoTexto = texto.match(/[0-9a-f-]{36}/);
+      assert.ok(idNoTexto, `o texto PRECISA carregar o job_id, senao o trabalho e irrecuperavel: ${texto}`);
+      const job = filaLenta.obter(idNoTexto[0]);
+      assert.ok(job, 'o job_id do texto tem que ser um job de verdade');
+      assert.strictEqual(job.status, 'rodando', 'a busca segue rodando: nada foi cancelado');
+      assert.match(texto, /ler_resultados/, 'precisa ensinar como pegar o resultado depois');
+      assert.ok(!/A busca FALHOU/.test(texto), `nao pode parecer falha de crawler: ${texto}`);
+      assert.ok(!/0 resultados/.test(texto), `nao pode parecer busca vazia: ${texto}`);
+      assert.match(texto, /NAO diga ao usuario/i, 'precisa proibir explicitamente o "nao ha jurisprudencia"');
+
+      // E o caminho de volta funciona de verdade: ler_resultados com esse id responde.
+      const depois = await ferramentas.executar('ler_resultados', { job_id: idNoTexto[0] }, { fila: filaLenta });
+      assert.match(depois, /rodando|enfileirado/);
     });
 
     it('executar() continua devolvendo so o texto — contrato do llm.js intacto', async () => {

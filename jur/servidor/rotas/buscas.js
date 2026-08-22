@@ -1,6 +1,7 @@
 const catalogo = require('../catalogo');
 const { json, sse, lerCorpo } = require('../http');
-const { validarMaxPaginas, normalizarPaginacao } = require('../validacao');
+const { enriquecerJob } = require('../enriquecer');
+const { validarMaxPaginas, validarData, normalizarPaginacao } = require('../validacao');
 
 // Cada pagina de maxPaginas e uma requisicao real ao portal do tribunal — nao e so
 // lentidao nossa, e uso do recurso de terceiro. 50 e 5x o default da CLI (10), folga
@@ -16,10 +17,9 @@ const MAX_PAGINAS_TETO = 50;
 const LIMITE_TETO = 100;
 const LIMITE_PADRAO = 20;
 
-// Aviso generico para quando total===0 e o tribunal nao tem `nota` no catalogo (ex.:
-// tcu, disponivel mas sem ressalva registrada). A garantia de que zero nunca viaja
-// sozinho nao pode depender de todo tribunal ter nota preenchida — ver Important 3.
-const AVISO_ZERO_SEM_NOTA = 'zero resultados nao comprova que nao ha jurisprudencia sobre o tema — este tribunal nao tem ressalva registrada no catalogo.';
+// A regra do zero (e a de falha de leitura) vive em servidor/enriquecer.js, uma vez so,
+// e TODA rota de leitura daqui a aplica — status, lista, resultados e SSE. Ver o
+// cabecalho daquele modulo para o porque (achado I1: a regra existia so no status).
 
 function registrar(roteador, deps) {
   const fila = deps.fila;
@@ -34,6 +34,14 @@ function registrar(roteador, deps) {
     const validacaoMaxPaginas = validarMaxPaginas(maxPaginas, MAX_PAGINAS_TETO);
     if (!validacaoMaxPaginas.valido) {
       return json(res, 400, { erro: validacaoMaxPaginas.motivo });
+    }
+    // I4: data em formato errado (ISO, tipicamente) chegava intacta em `-di`/`-df` e o
+    // crawler filtrava errado ou nao filtrava — o job terminava com total 0 e a regra do
+    // zero culpava o acervo por um filtro que o usuario nunca escreveu. Ver validacao.js
+    // para a decisao de RECUSAR ISO em vez de converter em silencio.
+    for (const [campo, valor] of [['dataInicio', dataInicio], ['dataFim', dataFim]]) {
+      const v = validarData(valor, campo);
+      if (!v.valido) return json(res, 400, { erro: v.motivo });
     }
 
     const info = catalogo.obter(tribunal);
@@ -52,23 +60,13 @@ function registrar(roteador, deps) {
   });
 
   roteador.rota('GET', '/api/v1/buscas', (req, res) => {
-    json(res, 200, { buscas: fila.listar(Number(req.query.limite) || 50) });
+    json(res, 200, { buscas: fila.listar(Number(req.query.limite) || 50).map((j) => enriquecerJob(j, fila)) });
   });
 
   roteador.rota('GET', '/api/v1/buscas/:id', (req, res) => {
     const job = fila.obter(req.params.id);
     if (!job) return json(res, 404, { erro: 'busca nao encontrada' });
-    const info = catalogo.obter(job.comando);
-    // total 0 nunca viaja sozinho: SEMPRE que total===0 ha pelo menos um aviso, com
-    // ou sem nota no catalogo (ex.: tcu, disponivel mas sem ressalva registrada).
-    // Depender so de `info.nota` deixaria exatamente esses tribunais reproduzir a
-    // armadilha que a regra existe para evitar — a garantia precisa ser estrutural,
-    // nao depender de dado que pode faltar.
-    const avisos = [];
-    if (job.status === 'concluido' && job.total === 0) {
-      avisos.push(info && info.nota ? info.nota : AVISO_ZERO_SEM_NOTA);
-    }
-    json(res, 200, { ...job, estadoTribunal: info ? info.estado : null, avisos });
+    json(res, 200, enriquecerJob(job, fila));
   });
 
   roteador.rota('GET', '/api/v1/buscas/:id/resultados', (req, res) => {
@@ -82,7 +80,30 @@ function registrar(roteador, deps) {
     // ninguem espera de uma API de paginacao. Regra em servidor/validacao.js,
     // compartilhada com ferramentas.js (que usa teto/default menores).
     const { offset, limite } = normalizarPaginacao(req.query.offset, req.query.limite, LIMITE_TETO, LIMITE_PADRAO);
-    json(res, 200, { ...fila.resultados(req.params.id, offset, limite), offset, limite });
+    const pagina = fila.resultados(req.params.id, offset, limite);
+    const enriquecido = enriquecerJob(job, fila);
+    if (pagina.erro) {
+      // C3: 500, nao 200 com lista vazia. `total: 42, itens: []` sem sinal nenhum e
+      // uma contradicao que o cliente (e o modelo) leem como "a busca nao achou nada".
+      return json(res, 500, {
+        erro: `falha ao ler os resultados: ${pagina.erro}`,
+        status: job.status,
+        total: pagina.total,
+        itens: [],
+        offset,
+        limite,
+        estadoTribunal: enriquecido.estadoTribunal,
+        avisos: enriquecido.avisos,
+      });
+    }
+    json(res, 200, {
+      ...pagina,
+      status: job.status,
+      offset,
+      limite,
+      estadoTribunal: enriquecido.estadoTribunal,
+      avisos: enriquecido.avisos,
+    });
   });
 
   roteador.rota('DELETE', '/api/v1/buscas/:id', (req, res) => {
@@ -98,11 +119,15 @@ function registrar(roteador, deps) {
     if (!job) return json(res, 404, { erro: 'busca nao encontrada' });
 
     const canal = sse(res);
-    canal.enviar('estado', job);
+    // I1: este e o canal que o spec desenhou para o fluxo POST -> 202 -> stream. Quem o
+    // segue nao tem motivo nenhum para voltar a rota de status, entao mandar o job cru
+    // aqui era a forma mais provavel de o usuario receber um zero sem a ressalva do
+    // tribunal — e uma falha de leitura sem nenhum sinal.
+    canal.enviar('estado', enriquecerJob(job, fila));
 
     const ouvinte = (evento) => {
       if (evento.jobId !== id) return;
-      canal.enviar(evento.tipo, fila.obter(id));
+      canal.enviar(evento.tipo, enriquecerJob(fila.obter(id), fila));
       if (['concluido', 'erro', 'cancelado'].includes(evento.tipo)) encerrar();
     };
     function encerrar() {

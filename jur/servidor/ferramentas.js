@@ -1,5 +1,5 @@
 const catalogo = require('./catalogo');
-const { validarMaxPaginas, normalizarPaginacao } = require('./validacao');
+const { validarMaxPaginas, validarData, normalizarPaginacao } = require('./validacao');
 
 const LIMITE_MAX = 20;
 const LIMITE_PADRAO = 5;
@@ -8,6 +8,38 @@ const LIMITE_PADRAO = 5;
 // maxPaginas nao muda entre as duas superficies, so o de paginacao de resultados
 // muda (100 na rota, LIMITE_MAX aqui, para nao estourar o contexto do modelo).
 const MAX_PAGINAS_TETO = 50;
+
+// I5 (revisao final): `buscar_jurisprudencia` chamava fila.aguardar(id) SEM TIMEOUT, e
+// o executor da CLI so desiste em 10 minutos. Nesse meio tempo o POST /mcp fica aberto,
+// o cliente MCP desiste antes — e quando desiste, o chamador NUNCA RECEBEU O job_id.
+// Resultado: `ler_resultados` fica inutil (ninguem sabe o id) e o crawler segue rodando
+// sem ninguem ouvindo; o trabalho vira irrecuperavel. O chat resolveu isso com
+// AbortController (rotas/chat.js), mas o MCP nao herdou nada disso.
+//
+// A saida e devolver, dentro do prazo, um texto UTIL que carrega o job_id e ensina o
+// caminho de volta (`ler_resultados`), em vez de segurar a conexao ate ela morrer. O job
+// continua rodando: nada e cancelado aqui de proposito — quem chamou pode buscar o
+// resultado depois.
+const TIMEOUT_BUSCA_MS = Number(process.env.JUR_TIMEOUT_BUSCA_MS || 60_000);
+
+// Sentinela propria em vez de null: `fila.aguardar` ja usa null para "job_id que nao
+// existe", e confundir os dois transformaria um timeout em "job desconhecido".
+const EXPIROU = Symbol('busca ainda rodando');
+
+function aguardarComTimeout(fila, id, ms) {
+  if (!(ms > 0)) return fila.aguardar(id);
+  let relogio;
+  const espera = fila.aguardar(id).then((j) => { clearTimeout(relogio); return j; });
+  const limite = new Promise((resolve) => {
+    // Sem unref() de proposito: o timer PRECISA segurar o event loop enquanto a espera
+    // corre, senao um processo que nao tem mais nada agendado (a fila esta bloqueada
+    // justamente esperando o crawler) sai antes de o prazo vencer e a promise fica
+    // pendente para sempre. Nao vaza: o caminho feliz limpa o timer no .then acima, e
+    // o caminho de timeout ja disparou.
+    relogio = setTimeout(() => resolve(EXPIROU), ms);
+  });
+  return Promise.race([espera, limite]);
+}
 
 function definicoes() {
   return [
@@ -39,8 +71,8 @@ function definicoes() {
         properties: {
           tribunal: { type: 'string', description: 'o comando do tribunal, ex.: stf, trf4, tjpr' },
           query: { type: 'string', description: 'os termos de busca' },
-          dataInicio: { type: 'string', description: 'DD/MM/AAAA' },
-          dataFim: { type: 'string', description: 'DD/MM/AAAA' },
+          dataInicio: { type: 'string', description: 'data no formato DD/MM/AAAA, ex.: 01/01/2024. ISO (AAAA-MM-DD) e RECUSADO.' },
+          dataFim: { type: 'string', description: 'data no formato DD/MM/AAAA, ex.: 31/12/2024. ISO (AAAA-MM-DD) e RECUSADO.' },
           maxPaginas: { type: 'integer', description: `paginas a percorrer (default 3, maximo ${MAX_PAGINAS_TETO})` },
         },
         required: ['tribunal', 'query'],
@@ -116,13 +148,41 @@ async function buscar(entrada, deps) {
   const validacaoMaxPaginas = validarMaxPaginas(entrada.maxPaginas, MAX_PAGINAS_TETO);
   if (!validacaoMaxPaginas.valido) return { texto: validacaoMaxPaginas.motivo, ok: false };
 
+  // I4: o schema desta tool nao e `strict`, e o modelo emite ISO com naturalidade a
+  // partir de "desde 2024". Sem validar, `-di 2024-01-01` filtrava errado e o total 0
+  // resultante era lido como "o acervo nao tem" — falha de parametro disfarcada de
+  // busca vazia. O texto devolvido ENSINA o formato para o modelo corrigir sozinho.
+  for (const campo of ['dataInicio', 'dataFim']) {
+    const v = validarData(entrada[campo], campo);
+    if (!v.valido) return { texto: v.motivo, ok: false };
+  }
+
   const { id } = deps.fila.enfileirar(entrada.tribunal, {
     query: entrada.query,
     dataInicio: entrada.dataInicio,
     dataFim: entrada.dataFim,
     maxPaginas: entrada.maxPaginas || 3,
   });
-  const job = await deps.fila.aguardar(id);
+  const prazoMs = deps.timeoutBuscaMs === undefined ? TIMEOUT_BUSCA_MS : deps.timeoutBuscaMs;
+  const job = await aguardarComTimeout(deps.fila, id, prazoMs);
+
+  if (job === EXPIROU) {
+    return {
+      texto: `A busca ${id} em ${info.comando} AINDA ESTA RODANDO — passou de ${Math.round(prazoMs / 1000)}s `
+        + 'e este canal nao pode ficar esperando mais (tribunal que exige navegador chega a levar minutos).\n'
+        + `O TRABALHO NAO FOI PERDIDO. Guarde este job_id: ${id}\n`
+        + `Para pegar o resultado, chame ler_resultados com job_id "${id}" daqui a pouco — `
+        + 'se ainda nao tiver terminado, ele diz o status e voce tenta de novo.\n'
+        + 'NAO diga ao usuario que a busca falhou nem que nao ha jurisprudencia: ela nao terminou.',
+      ok: true,
+    };
+  }
+  // Defensivo: `aguardar` resolve com null se o job sumir do banco entre o enfileirar e
+  // o fim (banco indisponivel, por exemplo). Sem isto, `job.status` abaixo seria um
+  // TypeError cru dentro do loop de tool-use.
+  if (!job) {
+    return { texto: `Nao foi possivel obter o estado final da busca ${id}.`, ok: false };
+  }
 
   if (job.status === 'erro') {
     return {
@@ -161,7 +221,20 @@ async function lerResultados(entrada, deps) {
     return { texto: `O job ${job.id} esta "${job.status}", ainda nao da para ler resultados.`, ok: true };
   }
   const { offset, limite } = normalizarPaginacao(entrada.offset, entrada.limite, LIMITE_MAX, LIMITE_PADRAO);
-  const { total, itens } = deps.fila.resultados(job.id, offset, limite);
+  const { total, itens, erro } = deps.fila.resultados(job.id, offset, limite);
+  // C3: falha de LEITURA e falha de EXECUCAO da ferramenta (ok:false), nao conteudo do
+  // dominio. Antes ela voltava como "Sem itens em offset 0 (total 42)" com ok:true, e o
+  // modelo reportava ao usuario que a busca nao trouxe julgados — falha de infra
+  // disfarcada de busca vazia, que e exatamente o que este repo existe para impedir.
+  if (erro) {
+    return {
+      texto: `FALHA AO LER os resultados do job ${job.id}: ${erro}\n`
+        + `A busca terminou com total ${total}, mas os julgados nao estao mais legiveis no disco.\n`
+        + 'Isso NAO e uma busca vazia: NAO diga ao usuario que nao ha jurisprudencia. '
+        + 'Refaca a busca com buscar_jurisprudencia.',
+      ok: false,
+    };
+  }
   if (!itens.length) return { texto: `Sem itens em offset ${offset} (total ${total}).`, ok: true };
   return {
     texto: `Mostrando ${offset + 1}–${offset + itens.length} de ${total}:\n\n`
