@@ -4,6 +4,7 @@ const { criarRoteador } = require('./http');
 const db = require('./db');
 const jobs = require('./jobs');
 const chaves = require('./chaves');
+const conversas = require('./conversas');
 const autenticacao = require('./autenticacao');
 
 function criarApp(deps = {}) {
@@ -13,6 +14,7 @@ function criarApp(deps = {}) {
   require('./rotas/buscas').registrar(roteador, deps);
   require('./rotas/chat').registrar(roteador, deps);
   require('./rotas/chaves').registrar(roteador, deps);
+  require('./rotas/conversas').registrar(roteador, deps);
   require('./mcp').registrar(roteador, deps);
   roteador.estaticos(path.join(__dirname, '..', 'publico'), '/');
   return roteador;
@@ -22,6 +24,7 @@ function iniciar() {
   const con = db.abrir();
   const fila = jobs.criarFila({ con });
   const gerenciadorChaves = chaves.criarGerenciador(con);
+  const repositorioConversas = conversas.criarRepositorio(con);
   const porta = Number(process.env.PORT || 3000);
   // C2: default de loopback, NAO 0.0.0.0. A guarda (exigirChave abaixo) cobre quem nao
   // tem chave, mas continua levando a chave da Anthropic do operador atras dela
@@ -36,7 +39,7 @@ function iniciar() {
   // acima.
   const exigirChave = process.env.JUR_EXIGIR_CHAVE !== '0';
   const servidor = http.createServer(
-    criarApp({ fila, chaves: gerenciadorChaves, exigirChave }).handler,
+    criarApp({ fila, chaves: gerenciadorChaves, conversas: repositorioConversas, exigirChave }).handler,
   );
   servidor.listen(porta, endereco, () => {
     console.log(`jur ouvindo em http://${endereco}:${porta} (concorrencia ${fila.concorrencia})`);

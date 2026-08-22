@@ -21,6 +21,17 @@ function validarMensagens(mensagens) {
   return null;
 }
 
+/** Extrai o texto puro de um content (string ou array de blocos da Messages API),
+ *  so para alimentar renomearSePrimeira — o conteudo estruturado em si e gravado
+ *  intacto por conversas.acrescentar, nunca achatado. */
+function extrairTexto(content) {
+  if (typeof content === 'string') return content;
+  if (Array.isArray(content)) {
+    return content.filter((b) => b && b.type === 'text').map((b) => b.text).join(' ');
+  }
+  return '';
+}
+
 function registrar(roteador, deps) {
   roteador.rota('POST', '/api/v1/chat', async (req, res) => {
     // C2: esta rota gasta a chave da Anthropic do operador (Opus 5, max_tokens 64000).
@@ -46,6 +57,18 @@ function registrar(roteador, deps) {
     const apiKey = req.headers['x-api-key'] || process.env.ANTHROPIC_API_KEY;
     if (!apiKey && !deps.clienteLLM) {
       return json(res, 401, { erro: 'sem chave da Anthropic: defina ANTHROPIC_API_KEY ou informe na interface' });
+    }
+
+    // Persistencia de conversa e opcional: so grava se o cliente mandou conversaId E o
+    // servidor tem um repositorio (deps.conversas) configurado. Sem isso, comportamento
+    // identico ao de antes desta rota saber de conversa nenhuma.
+    const conversaId = deps.conversas && typeof corpo.conversaId === 'string' && corpo.conversaId
+      ? corpo.conversaId
+      : null;
+    if (conversaId) {
+      const ultima = mensagens[mensagens.length - 1];
+      deps.conversas.acrescentar(conversaId, 'user', ultima.content);
+      deps.conversas.renomearSePrimeira(conversaId, extrairTexto(ultima.content));
     }
 
     // Rastreia so os jobs de busca que ESTA conversa criou, para cancelar so os dela
@@ -95,6 +118,16 @@ function registrar(roteador, deps) {
         aoFerramenta: (nome, entrada) => canal.enviar('ferramenta', { nome, entrada }),
       });
       canal.enviar('fim', { texto: r.texto });
+      if (conversaId) {
+        // r.mensagens e o historico COMPLETO depois do turno; as que entraram (mensagens)
+        // ja estao no banco (a ultima delas foi gravada acima, as anteriores vieram de
+        // turnos passados). So as que vieram DEPOIS sao novas neste turno — inclui
+        // possiveis rodadas de tool_use/tool_result no meio, nao so a resposta final.
+        // O content vai como veio (array de blocos quando for o caso), nunca achatado —
+        // sem isso o modelo perde os job_id das buscas no proximo turno.
+        const novas = r.mensagens.slice(mensagens.length);
+        for (const m of novas) deps.conversas.acrescentar(conversaId, m.role, m.content);
+      }
     } catch (e) {
       if (e && e.name === 'APIUserAbortError') {
         // Cliente desconectou (aba fechada, rede caiu) e nos mesmos abortamos a chamada
