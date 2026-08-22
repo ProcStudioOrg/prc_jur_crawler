@@ -89,4 +89,83 @@ describe('llm', () => {
     const r = await llm.conversar({ mensagens: [{ role: 'user', content: 'x' }], cliente: clienteFalso(semFim), deps: { fila }, maxIteracoes: 4 });
     assert.match(r.texto, /limite/i);
   });
+
+  it('avisa quando o modelo recusa em vez de devolver texto vazio no fim', async () => {
+    const cliente = clienteFalso([{ stop_reason: 'refusal', content: [] }]);
+    const r = await llm.conversar({ mensagens: [{ role: 'user', content: 'x' }], cliente, deps: { fila } });
+    assert.notStrictEqual(r.texto, '', 'refusal com content vazio nao pode virar texto em branco');
+    assert.match(r.texto, /recus/i);
+  });
+
+  it('nao chama a API se o signal ja chega abortado', async () => {
+    const cliente = clienteFalso([{ stop_reason: 'end_turn', content: [{ type: 'text', text: 'nunca deveria rodar' }] }]);
+    let chamadas = 0;
+    const original = cliente.messages.stream.bind(cliente.messages);
+    cliente.messages.stream = (p, o) => { chamadas++; return original(p, o); };
+
+    const controlador = new AbortController();
+    controlador.abort();
+    await assert.rejects(
+      () => llm.conversar({ mensagens: [{ role: 'user', content: 'x' }], cliente, deps: { fila }, sinal: controlador.signal }),
+      (e) => e.name === 'APIUserAbortError',
+    );
+    assert.strictEqual(chamadas, 0, 'nao deveria nem tentar chamar a API com o signal ja abortado');
+  });
+
+  it('aborta no meio do loop de tools e para de chamar a API de novo', async () => {
+    const cliente = clienteFalso([
+      { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 'tu1', name: 'listar_tribunais', input: {} }] },
+      { stop_reason: 'end_turn', content: [{ type: 'text', text: 'nunca deveria rodar' }] },
+    ]);
+    let chamadas = 0;
+    const original = cliente.messages.stream.bind(cliente.messages);
+    cliente.messages.stream = (p, o) => { chamadas++; return original(p, o); };
+
+    const controlador = new AbortController();
+    await assert.rejects(
+      () => llm.conversar({
+        mensagens: [{ role: 'user', content: 'x' }],
+        cliente, deps: { fila }, sinal: controlador.signal,
+        aoFerramenta: () => controlador.abort(), // simula o cliente indo embora enquanto a tool roda
+      }),
+      (e) => e.name === 'APIUserAbortError',
+    );
+    assert.strictEqual(chamadas, 1, 'a primeira chamada ja tinha ido; a segunda nao deveria acontecer');
+  });
+
+  it('roda tools do mesmo turno em paralelo, preservando a ordem dos tool_result', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-llm-par-'));
+    const filaParalela = jobs.criarFila({
+      con: db.abrir(path.join(dir, 'jur.db')),
+      dirResultados: dir,
+      executarFn: async (comando) => {
+        // stf demora bem mais que trf2 — se as tools rodassem em serie, o tempo total
+        // seria perto da SOMA (210ms); em paralelo, perto do MAIOR (150ms). A folga de
+        // 60ms entre os dois absorve jitter de agendamento do event loop sem ficar lento.
+        const atraso = comando === 'stf' ? 150 : 60;
+        await new Promise((resolve) => { setTimeout(resolve, atraso); });
+        return { ok: true, total: 1, resultados: [{ tribunal: comando }], arquivo: null, erro: null };
+      },
+    });
+    const cliente = clienteFalso([
+      {
+        stop_reason: 'tool_use',
+        content: [
+          { type: 'tool_use', id: 'a-stf', name: 'buscar_jurisprudencia', input: { tribunal: 'stf', query: 'x' } },
+          { type: 'tool_use', id: 'b-trf2', name: 'buscar_jurisprudencia', input: { tribunal: 'trf2', query: 'x' } },
+        ],
+      },
+      { stop_reason: 'end_turn', content: [{ type: 'text', text: 'pronto' }] },
+    ]);
+
+    const inicio = Date.now();
+    const r = await llm.conversar({ mensagens: [{ role: 'user', content: 'x' }], cliente, deps: { fila: filaParalela } });
+    const duracao = Date.now() - inicio;
+
+    assert.ok(duracao < 180, `esperava rodar em paralelo (~150ms), levou ${duracao}ms — parece serial (~210ms)`);
+
+    const turnoDeResultados = r.mensagens.find((m) => Array.isArray(m.content) && m.content[0] && m.content[0].type === 'tool_result');
+    assert.deepStrictEqual(turnoDeResultados.content.map((c) => c.tool_use_id), ['a-stf', 'b-trf2'],
+      'a ordem do tool_result precisa bater com a ordem do tool_use, mesmo com trf2 terminando primeiro');
+  });
 });
