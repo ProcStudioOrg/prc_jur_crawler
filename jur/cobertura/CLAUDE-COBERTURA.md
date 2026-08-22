@@ -10,11 +10,12 @@
 |---|---|
 | Catalogados | **76** |
 | 🟢 Busca funcionando (`jur <cmd>`) | **67** |
-| 🟡🟠🔴🔵 Instáveis / quebrados / bloqueados / mapeados | **8** |
-| ⚪ Não mapeados | **1** |
+| 🟡🟠🔴🔑🔵 Instáveis / quebrados / bloqueados / exigem sessão / mapeados | **9** |
+| ⚪ Não mapeados | **0** |
 
 Legenda de status: 🟢 `ok` funcionando · 🟡 `instavel` funciona com ressalva ·
 🟠 `quebrado` crawler existe mas o site mudou/saiu do ar · 🔴 `sem-acesso` bloqueado ·
+🔑 `exige-sessao` funcionaria com a credencial do proprio usuario, nao e bloqueio permanente nem esta funcionando hoje ·
 🔵 `mapeado` human-codegen pronto, falta crawler · ⚪ `nao-mapeado` nada feito ainda.
 
 Colunas da matriz:
@@ -130,7 +131,7 @@ Colunas da matriz:
 | Tribunal | UF | Sistema processual | Jurisprudência | Cmd | CodeGen | Shots | Tests | Skills | Working |
 |---|---|---|---|---|---|---|---|---|---|
 | **CARF** | — | — | 🟢 ok | `jur carf` | completo | 7 | ✅ | — | ✅ |
-| **CRPS** | — | — | undefined exige-sessao | `jur crps` | nao | 2 | — | — | — |
+| **CRPS** | — | — | 🔑 exige-sessao | `jur crps` | nao | 2 | — | — | — |
 | **CSJT** | — | — | 🟢 ok | `jur csjt` | nao | — | ✅ | verificador/falcao | ✅ |
 
 ## Tribunais operacionais — detalhe

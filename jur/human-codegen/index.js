@@ -25,7 +25,7 @@ function modulos(dir, rel = '') {
     if (!e.isDirectory()) continue;
     const full = path.join(dir, e.name);
     const r = rel ? `${rel}/${e.name}` : e.name;
-    const arquivos = fs.readdirSync(full).filter((f) => fs.statSync(path.join(full, f)).isFile());
+    const arquivos = fs.readdirSync(full).filter((f) => !f.startsWith('.') && fs.statSync(path.join(full, f)).isFile());
     if (arquivos.length) out.push({ modulo: r, arquivos: arquivos.sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true })) });
     out.push(...modulos(full, r));
   }
@@ -35,7 +35,8 @@ function modulos(dir, rel = '') {
 function gerar(trib) {
   const root = path.join(HC, trib);
   const mods = modulos(root);
-  const soltos = fs.readdirSync(root).filter((f) => fs.statSync(path.join(root, f)).isFile() && f !== 'INDEX.md');
+  // dotfiles (.DS_Store etc) sao lixo do SO, nao artefato de mapeamento — ignorados aqui.
+  const soltos = fs.readdirSync(root).filter((f) => !f.startsWith('.') && fs.statSync(path.join(root, f)).isFile() && f !== 'INDEX.md');
 
   const L = [`# ${trib} — índice do mapeamento`, ''];
   L.push('> Gerado por `node human-codegen/index.js`. Não editar à mão.');

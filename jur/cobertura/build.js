@@ -510,14 +510,14 @@ const SEG_TITULO = {
   administrativo: 'Instâncias Administrativas',
 };
 
-const ICONE = { ok: '🟢', instavel: '🟡', quebrado: '🟠', 'sem-acesso': '🔴', mapeado: '🔵', 'nao-mapeado': '⚪' };
+const ICONE = { ok: '🟢', instavel: '🟡', quebrado: '🟠', 'sem-acesso': '🔴', 'exige-sessao': '🔑', mapeado: '🔵', 'nao-mapeado': '⚪' };
 
 function render(data) {
   const L = [];
   const g = (seg) => data.tribunais.filter((t) => t.segmento === seg);
   const total = data.tribunais.length;
   const ok = data.tribunais.filter((t) => t.jurisprudencia.status === 'ok').length;
-  const mapeado = data.tribunais.filter((t) => ['mapeado', 'instavel', 'quebrado', 'sem-acesso'].includes(t.jurisprudencia.status)).length;
+  const mapeado = data.tribunais.filter((t) => ['mapeado', 'instavel', 'quebrado', 'sem-acesso', 'exige-sessao'].includes(t.jurisprudencia.status)).length;
 
   L.push('# CLAUDE-COBERTURA — cobertura de jurisprudência por tribunal');
   L.push('');
@@ -531,11 +531,12 @@ function render(data) {
   L.push('|---|---|');
   L.push(`| Catalogados | **${total}** |`);
   L.push(`| 🟢 Busca funcionando (\`jur <cmd>\`) | **${ok}** |`);
-  L.push(`| 🟡🟠🔴🔵 Instáveis / quebrados / bloqueados / mapeados | **${mapeado}** |`);
+  L.push(`| 🟡🟠🔴🔑🔵 Instáveis / quebrados / bloqueados / exigem sessão / mapeados | **${mapeado}** |`);
   L.push(`| ⚪ Não mapeados | **${total - ok - mapeado}** |`);
   L.push('');
   L.push('Legenda de status: 🟢 `ok` funcionando · 🟡 `instavel` funciona com ressalva ·');
   L.push('🟠 `quebrado` crawler existe mas o site mudou/saiu do ar · 🔴 `sem-acesso` bloqueado ·');
+  L.push('🔑 `exige-sessao` funcionaria com a credencial do proprio usuario, nao e bloqueio permanente nem esta funcionando hoje ·');
   L.push('🔵 `mapeado` human-codegen pronto, falta crawler · ⚪ `nao-mapeado` nada feito ainda.');
   L.push('');
   L.push('Colunas da matriz:');
