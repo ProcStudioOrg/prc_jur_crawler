@@ -91,7 +91,7 @@ Fora dele: `csjt` (bug — acervo funcional invisível para qualquer lista gerad
 |---|---|---|
 | D1 | **Executar a CLI como subprocesso**, não chamar as classes | a uniformidade só existe na CLI; ganha isolamento de processo de graça |
 | D2 | **Um container só** | SQLite dispensa banco; frontend sem build dispensa serviço de front |
-| D3 | **`node:20-slim` + `playwright install --with-deps chromium`** (~1,1 GB) | metade da imagem oficial; firefox/webkit são código morto no repo |
+| D3 | **`node:20-slim` + `playwright install --with-deps chromium`** (**2,25 GB em disco, medido na Task 3** — a estimativa original de ~1,1 GB estava errada; o layer do `--with-deps` sozinho pesa 1,37 GB de libs de sistema do Debian (X11, Mesa, NSS, fontconfig etc.), que é o que domina o tamanho, não o Chromium em si. Reduzir mais exigiria trocar de estratégia — libs mínimas hand-picked, ou base `mcr.microsoft.com/playwright` — decisão de arquitetura fora do escopo da Task 3) | firefox/webkit são código morto no repo, então não entram |
 | D4 | **SQLite em volume** | estado fora do processo sem serviço extra; migra para Postgres trocando uma camada |
 | D5 | **Frontend HTML+JS puro** servido pelo mesmo Node | zero build step; é um chat, uma lista e um campo |
 | D6 | **Três superfícies, uma implementação** | REST, MCP e chat chamam as mesmas funções de `jobs`+`catalogo` |
@@ -117,7 +117,7 @@ Fora dele: `csjt` (bug — acervo funcional invisível para qualquer lista gerad
 ### 4.1 Container
 
 ```
-jur-app  (node:20-slim + chromium do Playwright, ~1,1 GB)
+jur-app  (node:20-slim + chromium do Playwright, 2,25 GB em disco — medido na Task 3, ver D3)
  ├── :3000  frontend estático + API HTTP + MCP
  └── volumes:
      ├── jur-dados  → /dados   (SQLite + resultados/*.json)

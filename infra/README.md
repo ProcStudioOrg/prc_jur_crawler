@@ -12,9 +12,24 @@ recreate refaz o desafio do WAF.
 Build nativo arm64 (host Apple Silicon), sem emulação — `docker image inspect jur:dev`
 confirma `"Architecture": "arm64"`. Não foi preciso cair para `--platform=linux/amd64`.
 
-Imagem final: **2.53 GB em disco** (700 MB de content size), `docker images jur:dev`,
-22/08/2026. A maior parte é o próprio Chromium baixado pelo `playwright install`
-(~195 MB comprimidos, bem mais expandido em disco) mais as libs `--with-deps`.
+Imagem final: **2.25 GB em disco** (`docker system df -v`, coluna SIZE/UNIQUE SIZE —
+esse é o número que importa, quanto a imagem ocupa de fato no host). `docker images`
+mostra a mesma coisa arredondada. Existe também um "content size" de ~700 MB que
+aparece em `docker image inspect`/`docker images` em algumas versões do Docker Desktop:
+esse número é a soma dos **blobs de camada comprimidos** (o que seria transferido num
+`push`/`pull`), não o espaço em disco depois de descompactado — **não usar esse valor
+para comparar com estimativas de tamanho de imagem**, que sempre se referem a disco.
+Medido em 22/08/2026, depois da exclusão de `jur/human-codegen/**/*.png` (ver abaixo).
+Antes dessa exclusão a imagem tinha 2.53 GB em disco.
+
+A maior parte do peso é o próprio `--with-deps` (libs de sistema do Debian que o
+Chromium do Playwright precisa: X11, Mesa, NSS, fontconfig, etc.) — sozinho esse layer
+pesa **1.37 GB**, contra bem menos do Chromium/Chrome-headless-shell/ffmpeg baixados
+pelo `playwright install` (~195 MB comprimidos na rede, mais expandidos em disco).
+Reduzir mais isso exigiria trocar de estratégia — instalar só o subconjunto mínimo de
+libs em vez de `--with-deps`, ou partir de `mcr.microsoft.com/playwright` (que já as
+inclui de forma mais enxuta) — o que é decisão de arquitetura de base de imagem, fora
+do escopo desta task.
 
 ### Dois defeitos do Dockerfile descobertos ao vivo (e corrigidos nesta task)
 

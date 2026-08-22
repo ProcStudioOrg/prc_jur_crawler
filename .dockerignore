@@ -6,3 +6,10 @@ docs
 agente-diario
 .superpowers
 **/.DS_Store
+
+# jur/human-codegen NAO entra inteiro: bin/jur faz require() em tempo de execucao de
+# varios *.json daqui para o --listar-filtros de TJPI, TJTO, TJRR, TCEPR, TCESP e TCEPA
+# (ex.: require('../human-codegen/TJPI/01-juspi/combos.json')). Excluir o diretorio
+# inteiro quebraria esses seis comandos com MODULE_NOT_FOUND. So os PNGs (698 arquivos,
+# 133 dos 151 MB do diretorio — screenshot de mapeamento, nunca lido em runtime) saem.
+jur/human-codegen/**/*.png
