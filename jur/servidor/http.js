@@ -116,6 +116,64 @@ function lerCorpo(req) {
   });
 }
 
+/**
+ * Verificacao de Origin para as superficies que um site hostil poderia dirigir a
+ * partir do browser da vitima (achado C2 da revisao final).
+ *
+ * O problema medido: `POST /mcp` com `Origin: https://evil.example` e
+ * `content-type: text/plain` e uma "requisicao simples" no modelo do CORS — o browser
+ * NAO faz preflight, entao a ausencia de cabecalhos CORS na resposta nao impede o
+ * envio, so impede o site de LER a resposta. Para o MCP isso ja basta: o pedido chega
+ * e EXECUTA (tools/call enfileira busca; tools/list vaza o catalogo de ferramentas).
+ * O mesmo vale para POST /api/v1/chat, que gasta a chave da Anthropic do operador.
+ * O spec do MCP exige validar Origin em transporte HTTP exatamente por isso.
+ *
+ * Politica:
+ * - Sem cabecalho Origin: PERMITE. Cliente nao-browser (curl, cliente MCP nativo,
+ *   SDK) nao manda Origin; exigi-lo quebraria todo consumidor legitimo sem fechar
+ *   nada — o ataque que isto barra so existe quando ha um browser, e browser sempre
+ *   manda Origin em requisicao cross-site.
+ * - Origin de loopback (localhost, 127.x, ::1): PERMITE — e o frontend do proprio jur.
+ * - Origin igual ao Host da requisicao: PERMITE. E o caso de quem expos o servico de
+ *   proposito (JUR_BIND) e abre a UI pelo IP da LAN: o front e servido pela mesma
+ *   origem, entao continua funcionando sem afrouxar nada para terceiros.
+ * - Qualquer outra coisa (inclusive "null", a origem opaca de iframe sandbox e
+ *   file://, que nem parseia como URL): RECUSA.
+ */
+function origemPermitida(req) {
+  const origem = req.headers.origin;
+  if (!origem) return true;
+
+  let u;
+  try { u = new URL(origem); } catch { return false; }
+
+  const h = u.hostname;
+  // Ancorado nas duas pontas de proposito: /^127\./ sozinho aceitaria o hostname
+  // "127.0.0.1.evil.example", que e um dominio de terceiro, nao loopback. (Pego pelo
+  // proprio teste desta correcao.)
+  if (h === 'localhost' || h === '::1' || h === '[::1]') return true;
+  if (/^127\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(h)) return true;
+
+  const host = req.headers.host;
+  if (host && u.host === host) return true;
+
+  return false;
+}
+
+/**
+ * Aplica origemPermitida e ja responde 403 quando recusa. Devolve true quando a
+ * requisicao foi BLOQUEADA (o chamador deve retornar imediatamente).
+ */
+function bloquearOrigemHostil(req, res) {
+  if (origemPermitida(req)) return false;
+  json(res, 403, {
+    erro: 'origem nao permitida',
+    detalhe: 'esta superficie so aceita requisicoes locais ou da mesma origem; '
+      + `Origin recebida: ${req.headers.origin}`,
+  });
+  return true;
+}
+
 function caminhoDentroDoDiretorio(alvo, raiz) {
   // "alvo.startsWith(raiz)" sozinho, sem separador, deixaria um diretorio irmao cujo
   // nome comeca com o mesmo prefixo (ex.: raiz "/app/publico" e alvo
@@ -189,4 +247,4 @@ function criarRoteador() {
   };
 }
 
-module.exports = { criarRoteador, json, sse, lerCorpo, caminhoDentroDoDiretorio };
+module.exports = { criarRoteador, json, sse, lerCorpo, caminhoDentroDoDiretorio, origemPermitida, bloquearOrigemHostil };

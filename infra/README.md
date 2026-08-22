@@ -84,6 +84,52 @@ foram necessários. O sandbox nativo do Chromium permanece ligado.
 - **`crps`** — exige login Gov.br com validação de dispositivo; container é, por definição,
   dispositivo desconhecido. Ver `CLAUDE-CRPS.md`.
 
+## Exposição na rede — `JUR_BIND` e a porta publicada
+
+**Default: o serviço só responde em loopback.** Ele **não tem autenticação nenhuma** e
+carrega a chave da Anthropic do operador atrás de `POST /api/v1/chat` (Opus 5,
+`max_tokens: 64000`). Publicado em `0.0.0.0`, qualquer pessoa na mesma rede enfileira
+jobs contra os portais dos tribunais usando o IP do operador, lê o acervo de resultados
+já baixado e gasta o dinheiro dele no chat. Isso foi **medido** na revisão final: com
+`ports: "3000:3000"` o serviço respondia da LAN em `http://192.168.0.78:3000`.
+
+Duas travas, em camadas diferentes:
+
+| Onde | Variável / linha | Default | O que controla |
+|---|---|---|---|
+| Processo Node | `JUR_BIND` | `127.0.0.1` | em qual endereço o `servidor.listen()` escuta |
+| Docker | `ports:` no `compose.yml` | `127.0.0.1:3000:3000` | em qual interface do **host** a porta é publicada |
+
+No `compose.yml` o `JUR_BIND` vale `0.0.0.0` **de propósito**: dentro do container o
+processo precisa escutar em todas as interfaces para o Docker conseguir encaminhar a
+porta. Quem limita a exposição ali é o prefixo `127.0.0.1:` do `ports`.
+
+**Para expor de propósito** (ex.: outro computador da casa vai usar a interface), mude
+as duas pontas conscientemente:
+
+    # docker: publica na LAN
+    ports:
+      - "3000:3000"          # ou "192.168.0.78:3000:3000" para uma interface só
+
+    # fora do container:
+    JUR_BIND=0.0.0.0 node jur/servidor/index.js
+
+Ao fazer isso você aceita que **não há login**: ponha o serviço atrás de um proxy com
+autenticação, ou restrinja por firewall. Não existe modo "exposto e seguro" no v1 —
+autenticação está explicitamente fora de escopo no spec (§7).
+
+### Verificação de `Origin`
+
+`POST /mcp` e `POST /api/v1/chat` recusam com **403** qualquer `Origin` que não seja
+loopback nem igual ao `Host` da requisição. Motivo: as duas são alcançáveis como
+"requisição simples" do CORS (`content-type: text/plain`), que o browser envia **sem
+preflight** — um site hostil aberto no browser da vítima executava `tools/call` e
+`POST /chat` mesmo sem conseguir ler a resposta. Requisição **sem** `Origin` (curl,
+cliente MCP nativo, SDK) continua passando: browser sempre manda `Origin` em requisição
+cross-site, então exigir o cabeçalho quebraria todo consumidor legítimo sem fechar nada.
+Expor via `JUR_BIND` continua funcionando: a UI servida pelo próprio serviço tem
+`Origin` igual ao `Host`.
+
 ## Comandos
 
     docker build -f infra/Dockerfile -t jur:dev .

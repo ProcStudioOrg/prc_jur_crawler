@@ -1,4 +1,4 @@
-const { sse, lerCorpo, json } = require('../http');
+const { sse, lerCorpo, json, bloquearOrigemHostil } = require('../http');
 const llm = require('../llm');
 
 const ROLES_VALIDOS = new Set(['user', 'assistant']);
@@ -22,6 +22,11 @@ function validarMensagens(mensagens) {
 
 function registrar(roteador, deps) {
   roteador.rota('POST', '/api/v1/chat', async (req, res) => {
+    // C2: esta rota gasta a chave da Anthropic do operador (Opus 5, max_tokens 64000).
+    // Um site hostil aberto no browser da vitima consegue POSTar aqui sem preflight
+    // (requisicao simples), e mesmo sem conseguir LER a resposta a conta ja foi paga.
+    if (bloquearOrigemHostil(req, res)) return undefined;
+
     let corpo;
     try { corpo = await lerCorpo(req); } catch (e) { return json(res, 400, { erro: e.message }); }
 

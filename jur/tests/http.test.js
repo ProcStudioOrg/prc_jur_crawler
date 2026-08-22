@@ -8,8 +8,8 @@ const { execFileSync } = require('node:child_process');
 const { describe, it, before, after } = require('node:test');
 const db = require('../servidor/db');
 const jobs = require('../servidor/jobs');
-const { criarApp } = require('../servidor/index');
-const { criarRoteador, json, sse, lerCorpo, caminhoDentroDoDiretorio } = require('../servidor/http');
+const { criarApp, iniciar } = require('../servidor/index');
+const { criarRoteador, json, sse, lerCorpo, caminhoDentroDoDiretorio, origemPermitida } = require('../servidor/http');
 
 let servidor;
 let base;
@@ -229,5 +229,69 @@ describe('caminhoDentroDoDiretorio - colisao de prefixo (Important 2)', () => {
     assert.strictEqual(caminhoDentroDoDiretorio(raiz, raiz), true);
     assert.strictEqual(caminhoDentroDoDiretorio('/app/publico/index.html', raiz), true);
     assert.strictEqual(caminhoDentroDoDiretorio('/app/publico/sub/dir/a.js', raiz), true);
+  });
+});
+
+// C2 (revisao final): o servico nao tem autenticacao e leva a chave da Anthropic do
+// operador atras de POST /api/v1/chat. Publicado em 0.0.0.0 (o que `listen(porta)`
+// sozinho faz), qualquer um da LAN enfileira jobs contra tribunais com o IP do
+// operador e gasta o dinheiro dele — medido ao vivo pelo revisor em
+// http://192.168.0.78:3000. O default agora e loopback; expor e uma decisao explicita
+// via JUR_BIND (documentada em infra/README.md).
+describe('bind do servidor (C2)', () => {
+  const envOriginal = { PORT: process.env.PORT, JUR_BIND: process.env.JUR_BIND, JUR_DADOS: process.env.JUR_DADOS };
+  after(() => {
+    for (const [k, v] of Object.entries(envOriginal)) {
+      if (v === undefined) delete process.env[k]; else process.env[k] = v;
+    }
+  });
+
+  function subir(bind) {
+    process.env.JUR_DADOS = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-bind-'));
+    process.env.PORT = '0';
+    if (bind === undefined) delete process.env.JUR_BIND; else process.env.JUR_BIND = bind;
+    return iniciar();
+  }
+
+  it('sem JUR_BIND escuta so em 127.0.0.1, nunca em 0.0.0.0', async () => {
+    const srv = subir(undefined);
+    await new Promise((r) => srv.once('listening', r));
+    try {
+      assert.strictEqual(srv.address().address, '127.0.0.1');
+      assert.notStrictEqual(srv.address().address, '0.0.0.0');
+      assert.notStrictEqual(srv.address().address, '::');
+    } finally { srv.close(); }
+  });
+
+  it('JUR_BIND permite expor de proposito', async () => {
+    const srv = subir('0.0.0.0');
+    await new Promise((r) => srv.once('listening', r));
+    try {
+      assert.strictEqual(srv.address().address, '0.0.0.0');
+    } finally { srv.close(); }
+  });
+});
+
+describe('origemPermitida (C2)', () => {
+  const req = (origin, host = '127.0.0.1:3000') => ({ headers: origin === undefined ? { host } : { origin, host } });
+
+  it('permite requisicao sem Origin — cliente nao-browser nunca manda o cabecalho', () => {
+    assert.strictEqual(origemPermitida(req(undefined)), true);
+  });
+
+  it('permite loopback em qualquer forma', () => {
+    for (const o of ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://127.0.0.5:8080', 'http://[::1]:3000']) {
+      assert.strictEqual(origemPermitida(req(o)), true, o);
+    }
+  });
+
+  it('permite mesma origem quando o servico foi exposto de proposito', () => {
+    assert.strictEqual(origemPermitida(req('http://192.168.0.78:3000', '192.168.0.78:3000')), true);
+  });
+
+  it('recusa origem externa, origem opaca e origem parecida com localhost', () => {
+    for (const o of ['https://evil.example', 'null', 'http://localhost.evil.example', 'http://127.0.0.1.evil.example', 'http://192.168.0.99:3000']) {
+      assert.strictEqual(origemPermitida(req(o)), false, o);
+    }
   });
 });

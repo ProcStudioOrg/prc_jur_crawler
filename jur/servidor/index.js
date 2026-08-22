@@ -17,9 +17,15 @@ function criarApp(deps = {}) {
 function iniciar() {
   const fila = jobs.criarFila({ con: db.abrir() });
   const porta = Number(process.env.PORT || 3000);
+  // C2: default de loopback, NAO 0.0.0.0. Este servico nao tem autenticacao e leva a
+  // chave da Anthropic do operador atras dele (POST /api/v1/chat) — publicado na LAN,
+  // qualquer um da rede enfileira jobs contra tribunais com o IP do operador, le o
+  // acervo de resultados e gasta o dinheiro dele. Quem QUER expor declara JUR_BIND
+  // (ex.: JUR_BIND=0.0.0.0), e ai assume a decisao explicitamente. Ver infra/README.md.
+  const endereco = process.env.JUR_BIND || '127.0.0.1';
   const servidor = http.createServer(criarApp({ fila }).handler);
-  servidor.listen(porta, () => {
-    console.log(`jur ouvindo em http://localhost:${porta} (concorrencia ${fila.concorrencia})`);
+  servidor.listen(porta, endereco, () => {
+    console.log(`jur ouvindo em http://${endereco}:${porta} (concorrencia ${fila.concorrencia})`);
   });
   return servidor;
 }

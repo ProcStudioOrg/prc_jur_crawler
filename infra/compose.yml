@@ -5,13 +5,21 @@ services:
       context: ..
       dockerfile: infra/Dockerfile
     image: jur:dev
+    # 127.0.0.1 no lado do HOST de proposito: "3000:3000" publicava em 0.0.0.0 e o
+    # servico responde sem nenhuma autenticacao, com a chave da Anthropic do operador
+    # atras de POST /api/v1/chat. Medido: respondia da LAN. Quem quiser expor de
+    # proposito troca esta linha e ajusta JUR_BIND — ver infra/README.md.
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     environment:
       PORT: "3000"
       JUR_DADOS: /dados
       TMPDIR: /cache
       JUR_CONCORRENCIA: "3"
+      # Dentro do container o bind precisa ser 0.0.0.0 para o Docker conseguir
+      # encaminhar a porta publicada; quem limita a exposicao e o "127.0.0.1:" do
+      # ports acima. Fora do container (node servidor/index.js) o default e 127.0.0.1.
+      JUR_BIND: "0.0.0.0"
       ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
       # JUR_BROWSER_ARGS: "--no-sandbox --disable-dev-shm-usage"   # so no nivel 3 — nao foi preciso (ver infra/README.md)
     volumes:
@@ -25,7 +33,7 @@ services:
     shm_size: 1gb
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/v1/saude').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/v1/saude').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
       interval: 30s
       timeout: 5s
       retries: 3
