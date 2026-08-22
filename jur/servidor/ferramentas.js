@@ -1,6 +1,13 @@
 const catalogo = require('./catalogo');
+const { validarMaxPaginas, normalizarPaginacao } = require('./validacao');
 
 const LIMITE_MAX = 20;
+const LIMITE_PADRAO = 5;
+
+// Mesmo teto que a rota HTTP usa para maxPaginas (rotas/buscas.js) — o teto de
+// maxPaginas nao muda entre as duas superficies, so o de paginacao de resultados
+// muda (100 na rota, LIMITE_MAX aqui, para nao estourar o contexto do modelo).
+const MAX_PAGINAS_TETO = 50;
 
 function definicoes() {
   return [
@@ -18,6 +25,7 @@ function definicoes() {
           uf: { type: 'string', description: 'sigla do estado, ex.: PR' },
           estado: { type: 'string', enum: ['ok', 'instavel', 'sem-acesso', 'exige-sessao'] },
         },
+        additionalProperties: false,
       },
     },
     {
@@ -33,9 +41,10 @@ function definicoes() {
           query: { type: 'string', description: 'os termos de busca' },
           dataInicio: { type: 'string', description: 'DD/MM/AAAA' },
           dataFim: { type: 'string', description: 'DD/MM/AAAA' },
-          maxPaginas: { type: 'integer', description: 'paginas a percorrer (default 3)' },
+          maxPaginas: { type: 'integer', description: `paginas a percorrer (default 3, maximo ${MAX_PAGINAS_TETO})` },
         },
         required: ['tribunal', 'query'],
+        additionalProperties: false,
       },
     },
     {
@@ -48,9 +57,10 @@ function definicoes() {
         properties: {
           job_id: { type: 'string' },
           offset: { type: 'integer', description: 'default 0' },
-          limite: { type: 'integer', description: `default 5, maximo ${LIMITE_MAX}` },
+          limite: { type: 'integer', description: `default ${LIMITE_PADRAO}, maximo ${LIMITE_MAX}` },
         },
         required: ['job_id'],
+        additionalProperties: false,
       },
     },
   ];
@@ -74,6 +84,9 @@ async function buscar(entrada, deps) {
       + `Motivo registrado: ${info.nota}\n`
       + 'Nao invente resultado: diga isso ao usuario e sugira outro tribunal.';
   }
+
+  const validacaoMaxPaginas = validarMaxPaginas(entrada.maxPaginas, MAX_PAGINAS_TETO);
+  if (!validacaoMaxPaginas.valido) return validacaoMaxPaginas.motivo;
 
   const { id } = deps.fila.enfileirar(entrada.tribunal, {
     query: entrada.query,
@@ -102,8 +115,7 @@ async function lerResultados(entrada, deps) {
   const job = deps.fila.obter(entrada.job_id);
   if (!job) return `Job desconhecido: ${entrada.job_id}`;
   if (job.status !== 'concluido') return `O job ${job.id} esta "${job.status}", ainda nao da para ler resultados.`;
-  const offset = Number(entrada.offset) || 0;
-  const limite = Math.min(Number(entrada.limite) || 5, LIMITE_MAX);
+  const { offset, limite } = normalizarPaginacao(entrada.offset, entrada.limite, LIMITE_MAX, LIMITE_PADRAO);
   const { total, itens } = deps.fila.resultados(job.id, offset, limite);
   if (!itens.length) return `Sem itens em offset ${offset} (total ${total}).`;
   return `Mostrando ${offset + 1}–${offset + itens.length} de ${total}:\n\n`

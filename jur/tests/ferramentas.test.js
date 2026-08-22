@@ -35,6 +35,12 @@ describe('ferramentas', () => {
     }
   });
 
+  it('os tres schemas declaram additionalProperties: false', () => {
+    for (const d of ferramentas.definicoes()) {
+      assert.strictEqual(d.input_schema.additionalProperties, false, `${d.name} precisa fechar o schema`);
+    }
+  });
+
   it('listar_tribunais devolve texto com estado', async () => {
     const texto = await ferramentas.executar('listar_tribunais', { segmento: 'superior' }, { fila });
     assert.match(texto, /stf/);
@@ -59,6 +65,39 @@ describe('ferramentas', () => {
     const texto = await ferramentas.executar('ler_resultados', { job_id: jobId, offset: 1, limite: 1 }, { fila });
     assert.match(texto, /segunda/);
     assert.ok(!texto.includes('primeira'), 'offset deve pular o primeiro');
+  });
+
+  // Important 1 (revisao da Task 9): sem validar maxPaginas, um valor invalido virava
+  // literalmente `-m abc`/`-m -5` na CLI e o crawler processava 0 paginas em silencio —
+  // o mesmo bug que o commit 22afab6 corrigiu na rota HTTP, so que do lado da tool.
+  it('buscar_jurisprudencia recusa maxPaginas invalido (nao-numerico, negativo, acima do teto) sem enfileirar', async () => {
+    const antes = fila.listar(100).length;
+    for (const maxPaginas of ['abc', -5, 99999]) {
+      const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x', maxPaginas }, { fila });
+      assert.match(texto, /maxPaginas invalido/i, `maxPaginas=${maxPaginas} devia ser recusado`);
+      assert.ok(!/^job /.test(texto), `maxPaginas=${maxPaginas} nao devia virar job`);
+    }
+    assert.strictEqual(fila.listar(100).length, antes, 'nenhum job devia ter sido enfileirado');
+  });
+
+  it('buscar_jurisprudencia aceita maxPaginas ausente ou dentro do teto', async () => {
+    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x', maxPaginas: 5 }, { fila });
+    assert.match(texto, /job/i);
+  });
+
+  // Important 2 (revisao da Task 9): sem clamp, offset negativo caia na semantica de
+  // indice negativo do Array.slice — o mesmo bug que o fix da Task 8 corrigiu na rota
+  // HTTP (ver "ninguem espera isso de uma API de paginacao" em rotas/buscas.js).
+  it('ler_resultados clampa offset e limite negativos em vez de usar indice negativo do slice', async () => {
+    const inicio = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila });
+    const jobId = inicio.match(/[0-9a-f-]{36}/)[0];
+    const texto = await ferramentas.executar('ler_resultados', { job_id: jobId, offset: -4, limite: 2 }, { fila });
+    // Com o bug, offset=-4/limite=2 cai em Array.slice(-4, -2) e rotula itens com
+    // indice negativo ("Mostrando -3–-2 de 2"); clampado, offset vira 0 e devolve os
+    // dois itens da fixture, do inicio.
+    assert.match(texto, /primeira/);
+    assert.match(texto, /segunda/);
+    assert.ok(!/-\d/.test(texto), `nao pode rotular item com indice negativo: ${texto}`);
   });
 
   it('tool desconhecida vira erro legivel, nao excecao crua', async () => {

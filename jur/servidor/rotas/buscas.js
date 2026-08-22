@@ -1,30 +1,25 @@
 const catalogo = require('../catalogo');
 const { json, sse, lerCorpo } = require('../http');
+const { validarMaxPaginas, normalizarPaginacao } = require('../validacao');
 
 // Cada pagina de maxPaginas e uma requisicao real ao portal do tribunal — nao e so
 // lentidao nossa, e uso do recurso de terceiro. 50 e 5x o default da CLI (10), folga
 // suficiente para uma busca legitimamente ampla sem abrir espaco para varrer o
-// acervo inteiro por engano (ou de proposito) num unico job.
+// acervo inteiro por engano (ou de proposito) num unico job. Esse teto e da rota HTTP
+// especificamente — as tools do LLM (ferramentas.js) usam o mesmo teto de maxPaginas,
+// mas um teto de paginacao menor; ver comentario em servidor/validacao.js.
 const MAX_PAGINAS_TETO = 50;
+
+// Paginacao de resultados desta rota: teto alto porque quem pagina aqui e um cliente
+// HTTP normal (UI, script), nao um LLM que precisa caber no contexto — diferente do
+// teto de 20 que ferramentas.js usa para ler_resultados.
+const LIMITE_TETO = 100;
+const LIMITE_PADRAO = 20;
 
 // Aviso generico para quando total===0 e o tribunal nao tem `nota` no catalogo (ex.:
 // tcu, disponivel mas sem ressalva registrada). A garantia de que zero nunca viaja
 // sozinho nao pode depender de todo tribunal ter nota preenchida — ver Important 3.
 const AVISO_ZERO_SEM_NOTA = 'zero resultados nao comprova que nao ha jurisprudencia sobre o tema — este tribunal nao tem ressalva registrada no catalogo.';
-
-/**
- * Aceita ausente/vazio (usa o default da CLI). Rejeita qualquer coisa que nao seja
- * um inteiro positivo dentro do teto: string nao numerica ("abc"), negativo/zero e
- * valor acima do teto. Sem essa checagem, "abc" vira literalmente `-m abc` na linha
- * de comando (Commander nao converte tipo) e o crawler processa 0 paginas em
- * silencio — a mesma ambiguidade "zero resultados vs argumento invalido" que a regra
- * do zero existe para evitar, so que entrando por outra porta.
- */
-function maxPaginasInvalida(valor) {
-  if (valor === undefined || valor === null || valor === '') return false;
-  const n = Number(valor);
-  return !Number.isInteger(n) || n < 1 || n > MAX_PAGINAS_TETO;
-}
 
 function registrar(roteador, deps) {
   const fila = deps.fila;
@@ -36,10 +31,9 @@ function registrar(roteador, deps) {
     const { tribunal, query, dataInicio, dataFim, maxPaginas } = corpo;
     if (!tribunal) return json(res, 400, { erro: 'campo obrigatorio: tribunal' });
     if (!query) return json(res, 400, { erro: 'campo obrigatorio: query' });
-    if (maxPaginasInvalida(maxPaginas)) {
-      return json(res, 400, {
-        erro: `maxPaginas invalido: precisa ser um inteiro entre 1 e ${MAX_PAGINAS_TETO}`,
-      });
+    const validacaoMaxPaginas = validarMaxPaginas(maxPaginas, MAX_PAGINAS_TETO);
+    if (!validacaoMaxPaginas.valido) {
+      return json(res, 400, { erro: validacaoMaxPaginas.motivo });
     }
 
     const info = catalogo.obter(tribunal);
@@ -85,11 +79,9 @@ function registrar(roteador, deps) {
     // motivo pra recusar a requisicao — corrigir em silencio mantem funcionando uma
     // URL editada a mao ou um estado de UI defasado. Sem o clamp, offset negativo cai
     // na semantica de indice negativo do Array.slice (conta a partir do fim), que
-    // ninguem espera de uma API de paginacao.
-    const offsetBruto = Number(req.query.offset);
-    const offset = Number.isFinite(offsetBruto) && offsetBruto > 0 ? Math.floor(offsetBruto) : 0;
-    const limiteBruto = Number(req.query.limite);
-    const limite = Number.isFinite(limiteBruto) && limiteBruto > 0 ? Math.min(Math.floor(limiteBruto), 100) : 20;
+    // ninguem espera de uma API de paginacao. Regra em servidor/validacao.js,
+    // compartilhada com ferramentas.js (que usa teto/default menores).
+    const { offset, limite } = normalizarPaginacao(req.query.offset, req.query.limite, LIMITE_TETO, LIMITE_PADRAO);
     json(res, 200, { ...fila.resultados(req.params.id, offset, limite), offset, limite });
   });
 
