@@ -23,7 +23,7 @@ describe('chaves de conexao', () => {
 
   it('NAO guarda o valor em claro no banco', () => {
     const c = g.gerar('teste');
-    const linha = g._paraTeste().prepare('SELECT * FROM chave_conexao WHERE id=?').get(c.id);
+    const linha = chaves._conexaoParaTeste(g).prepare('SELECT * FROM chave_conexao WHERE id=?').get(c.id);
     assert.ok(linha.hash && linha.hash !== c.valor, 'o hash nao pode ser o proprio valor');
     const bruto = JSON.stringify(linha);
     assert.ok(!bruto.includes(c.valor), 'o valor da chave vazou para alguma coluna');
