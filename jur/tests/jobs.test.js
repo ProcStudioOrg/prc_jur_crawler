@@ -123,6 +123,151 @@ describe('jobs', () => {
     assert.ok(vistos.includes('concluido'));
   });
 
+  // I6 (revisao final): `rodar()` e async e o call site em bombear() nao a aguardava; o
+  // try/catch cobria SO o executarFn. Um throw de con.prepare(...).run() no UPDATE de
+  // conclusao (SQLITE_FULL com /dados cheio), de obter(), ou do JSON.parse de
+  // params_json virava unhandled rejection — e o Node 22 derruba o processo, levando
+  // junto TODO cliente SSE e TODO job em voo.
+  describe('falha do banco dentro de rodar() nao derruba o processo (I6)', () => {
+    /** Conexao real com um `prepare` que sabota o SQL escolhido. */
+    function conSabotado(caminho, deveQuebrar) {
+      const real = db.abrir(caminho);
+      return { prepare: (sql) => { deveQuebrar(sql); return real.prepare(sql); } };
+    }
+
+    function filaComCon(con, dir, executarFn) {
+      return jobs.criarFila({
+        con,
+        dirResultados: dir,
+        concorrencia: 1,
+        executarFn,
+        catalogoFn: (comando) => ({ comando, nome: 'X', disponivel: true, estado: 'ok', nota: '' }),
+      });
+    }
+
+    async function semRejeicaoNaoTratada(corpo) {
+      const rejeicoes = [];
+      const ouvinte = (e) => rejeicoes.push(e);
+      process.on('unhandledRejection', ouvinte);
+      try {
+        const r = await corpo();
+        // Deixa qualquer rejeicao pendente aflorar antes de julgar.
+        await new Promise((res) => setTimeout(res, 50));
+        assert.deepStrictEqual(
+          rejeicoes.map((e) => (e && e.message) || String(e)), [],
+          'nenhuma rejeicao pode escapar: no Node 22 ela mata o processo inteiro',
+        );
+        return r;
+      } finally { process.off('unhandledRejection', ouvinte); }
+    }
+
+    it('SQLITE_FULL no UPDATE de conclusao vira job com erro, sem unhandled rejection e sem travar aguardar()', async () => {
+      const dir = tmpDir();
+      let armado = false;
+      const con = conSabotado(path.join(dir, 'jur.db'), (sql) => {
+        if (armado && /status='concluido'/.test(sql)) throw new Error('SQLITE_FULL: database or disk is full');
+      });
+      const fila = filaComCon(con, dir, async () => {
+        armado = true; // so sabota depois que o job ja esta rodando
+        return { ok: true, total: 7, resultados: [], arquivo: null, erro: null };
+      });
+
+      const job = await semRejeicaoNaoTratada(async () => {
+        const { id } = fila.enfileirar('stf', { query: 'x' });
+        return Promise.race([
+          fila.aguardar(id),
+          new Promise((_, rej) => setTimeout(() => rej(new Error('aguardar travou: ninguem liberou quem esperava')), 2000)),
+        ]);
+      });
+
+      assert.ok(job, 'aguardar precisa resolver, nao travar');
+      assert.strictEqual(job.status, 'erro');
+      assert.match(job.erro, /falha interna da fila/);
+      assert.match(job.erro, /SQLITE_FULL/);
+    });
+
+    it('falha ja no UPDATE de inicio tambem e contida, e a fila continua bombeando o proximo job', async () => {
+      const dir = tmpDir();
+      let sabotarInicio = true;
+      const con = conSabotado(path.join(dir, 'jur.db'), (sql) => {
+        if (sabotarInicio && /status='rodando'/.test(sql)) {
+          sabotarInicio = false; // so o primeiro job quebra
+          throw new Error('SQLITE_FULL: database or disk is full');
+        }
+      });
+      const fila = filaComCon(con, dir, async () => ({ ok: true, total: 1, resultados: [], arquivo: null, erro: null }));
+
+      const [primeiro, segundo] = await semRejeicaoNaoTratada(async () => {
+        const a = fila.enfileirar('stf', { query: 'a' });
+        const b = fila.enfileirar('stf', { query: 'b' });
+        return Promise.all([
+          Promise.race([fila.aguardar(a.id), new Promise((_, rej) => setTimeout(() => rej(new Error('travou no primeiro')), 2000))]),
+          Promise.race([fila.aguardar(b.id), new Promise((_, rej) => setTimeout(() => rej(new Error('travou no segundo')), 2000))]),
+        ]);
+      });
+
+      assert.strictEqual(primeiro.status, 'erro');
+      assert.strictEqual(segundo.status, 'concluido',
+        'a fila precisa continuar processando: um job que explodiu nao pode parar a fila');
+    });
+  });
+
+  // C3 (revisao final): NENHUM dos 107 testes cobria falha de leitura — e ela devolvia
+  // {total: job.total, itens: []} sem sinal nenhum, identico a uma busca legitimamente
+  // vazia. Gatilhos reais e banais: `docker compose down -v`, disco cheio, remontagem
+  // de /dados. Com job concluido e total 42, o REST respondia {"total":42,"itens":[]},
+  // que e uma contradicao que o cliente le como "nao veio julgado nenhum".
+  describe('falha de leitura do arquivo de resultados (C3)', () => {
+    it('arquivo ausente vira erro explicito, nao pagina vazia', async () => {
+      const dir = tmpDir();
+      const arquivo = path.join(dir, 'sumiu.json');
+      fs.writeFileSync(arquivo, JSON.stringify(Array.from({ length: 42 }, (_, i) => ({ n: i }))));
+      const fila = filaDeTeste(async () => ({ ok: true, total: 42, resultados: [], arquivo, erro: null }));
+      const { id } = fila.enfileirar('stf', { query: 'x' });
+      await fila.aguardar(id);
+      assert.strictEqual(fila.resultados(id, 0, 20).erro, null, 'antes de sumir, sem erro');
+
+      fs.unlinkSync(arquivo); // `docker compose down -v` / disco remontado
+      const pagina = fila.resultados(id, 0, 20);
+      assert.strictEqual(pagina.itens.length, 0);
+      assert.strictEqual(pagina.total, 42);
+      assert.ok(pagina.erro, 'total 42 com itens [] PRECISA carregar erro; sem ele e busca vazia disfarcada');
+      assert.match(pagina.erro, /ausente/i);
+      assert.match(fila.erroDeLeitura(fila.obter(id)), /ausente/i);
+    });
+
+    it('JSON corrompido vira erro explicito, nao pagina vazia', async () => {
+      const dir = tmpDir();
+      const arquivo = path.join(dir, 'corrompido.json');
+      fs.writeFileSync(arquivo, '[{"n":1},{"n":2'); // truncado (disco cheio no meio da escrita)
+      const fila = filaDeTeste(async () => ({ ok: true, total: 2, resultados: [], arquivo, erro: null }));
+      const { id } = fila.enfileirar('stf', { query: 'x' });
+      await fila.aguardar(id);
+      const pagina = fila.resultados(id, 0, 20);
+      assert.strictEqual(pagina.itens.length, 0);
+      assert.ok(pagina.erro, 'JSON ilegivel PRECISA carregar erro');
+      assert.match(pagina.erro, /ilegivel/i);
+    });
+
+    it('job que ainda nao terminou NAO e falha de leitura — so ainda nao tem arquivo', async () => {
+      const fila = filaDeTeste(() => new Promise(() => {}));
+      const { id } = fila.enfileirar('stf', { query: 'x' });
+      const pagina = fila.resultados(id, 0, 20);
+      assert.strictEqual(pagina.erro, null);
+      assert.strictEqual(fila.erroDeLeitura(fila.obter(id)), null);
+    });
+
+    it('caminho feliz continua com erro null', async () => {
+      const dir = tmpDir();
+      const arquivo = path.join(dir, 'ok.json');
+      fs.writeFileSync(arquivo, JSON.stringify([{ n: 1 }]));
+      const fila = filaDeTeste(async () => ({ ok: true, total: 1, resultados: [], arquivo, erro: null }));
+      const { id } = fila.enfileirar('stf', { query: 'x' });
+      await fila.aguardar(id);
+      assert.deepStrictEqual(fila.resultados(id, 0, 20).erro, null);
+    });
+  });
+
   it('pagina os resultados a partir do arquivo', async () => {
     const dir = tmpDir();
     const arquivo = path.join(dir, 'r.json');
