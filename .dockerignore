@@ -1,0 +1,8 @@
+node_modules
+jur/node_modules
+jur/resultados
+.git
+docs
+agente-diario
+.superpowers
+**/.DS_Store
