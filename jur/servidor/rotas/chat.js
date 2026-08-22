@@ -66,6 +66,15 @@ function registrar(roteador, deps) {
       ? corpo.conversaId
       : null;
     if (conversaId) {
+      // Checagem de existencia por PK antes do INSERT: sem isso, um conversaId invalido
+      // (conversa apagada, digitada errada, de outro banco) batia na FK de mensagem e o
+      // cliente recebia o 500 cru do SQLite ("FOREIGN KEY constraint failed"), diferente
+      // de todo o resto do roteador, que nunca deixa erro sem contexto em portugues. O
+      // custo e uma unica consulta indexada por chave primaria — barato, e evita o
+      // INSERT que ia falhar de qualquer forma.
+      if (!deps.conversas.obter(conversaId)) {
+        return json(res, 404, { erro: 'conversa nao encontrada' });
+      }
       const ultima = mensagens[mensagens.length - 1];
       deps.conversas.acrescentar(conversaId, 'user', ultima.content);
       deps.conversas.renomearSePrimeira(conversaId, extrairTexto(ultima.content));

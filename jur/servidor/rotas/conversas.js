@@ -14,9 +14,11 @@ function registrar(roteador, deps) {
   });
 
   roteador.rota('GET', '/api/v1/conversas/:id', (req, res) => {
-    const lista = repo.listar(1000).find((c) => c.id === req.params.id);
-    if (!lista) return json(res, 404, { erro: 'conversa nao encontrada' });
-    json(res, 200, { ...lista, mensagens: repo.mensagens(req.params.id) });
+    // obter() busca direto por PK — nao varre nem fica cego para uma conversa fora
+    // das N mais recentes, ao contrario de listar(N).find(...).
+    const conversa = repo.obter(req.params.id);
+    if (!conversa) return json(res, 404, { erro: 'conversa nao encontrada' });
+    json(res, 200, { ...conversa, mensagens: repo.mensagens(req.params.id) });
   });
 
   roteador.rota('DELETE', '/api/v1/conversas/:id', (req, res) => {
