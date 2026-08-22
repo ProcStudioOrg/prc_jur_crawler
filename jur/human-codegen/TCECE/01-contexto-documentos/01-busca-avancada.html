@@ -1,0 +1,1225 @@
+<ion-col class="col" col-10="">
+
+                <ion-row align-items-center="" class="input-title-row row" margin-bottom="">
+                    <ion-col class="col" col-auto="">
+                        <h1 ion-text="" no-margin="" class="text text-md">Documentos</h1>
+                    </ion-col>
+                    <ion-col class="col" col-auto="">
+                        <button class="btn-header button button-md button-clear button-clear-md button-clear-md-primary-light" clear="" color="primary-light" icon-only="" ion-button="" title="Ajuda"><span class="button-inner">
+                            <ion-icon name="icocontexto-informacao" role="img" class="icon icon-md ion-md-icocontexto-informacao" aria-label="icocontexto informacao"></ion-icon>
+                        </span><div class="button-effect"></div></button>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="input-busca-row row">
+                    <ion-col class="col">
+                        <ion-item class="input-busca item item-block item-md"><div class="item-inner"><div class="input-wrapper"><!----><ion-label class="label label-md">
+                            <ion-searchbar autofocus="" placeholder="O que você está procurando?" class="searchbar searchbar-md ng-valid searchbar-left-aligned searchbar-active ng-dirty searchbar-has-value ng-touched"><div class="searchbar-input-container"><button class="searchbar-md-cancel button button-md button-clear button-clear-md button-clear-md-dark" clear="" color="dark" ion-button="" mode="md" type="button"><span class="button-inner"><ion-icon name="md-arrow-back" role="img" class="icon icon-md ion-md-arrow-back" aria-label="arrow back"></ion-icon></span><div class="button-effect"></div></button><div class="searchbar-search-icon"></div><input class="searchbar-input" dir="auto" placeholder="O que você está procurando?" type="search" autocomplete="off" autocorrect="off" spellcheck="false"><button class="searchbar-clear-icon button button-md button-clear button-clear-md" clear="" ion-button="" type="button"><span class="button-inner"></span><div class="button-effect"></div></button></div><button class="searchbar-ios-cancel button button-ios button-clear button-clear-ios" clear="" ion-button="" mode="ios" type="button" tabindex="1"><span class="button-inner">Cancel</span><div class="button-effect"></div></button></ion-searchbar>
+                        </ion-label></div><!----></div><div class="button-effect"></div></ion-item>
+                    </ion-col>
+                    <ion-col class="col" col-auto="">
+                        <button class="btn btn-buscar button button-md button-default button-default-md button-md-primary-light animated pulse" color="primary-light" ion-button="" text-capitalize=""><span class="button-inner"> Buscar
+                        </span><div class="button-effect"></div></button>
+                        <button class="btn btn-historico button button-md button-outline button-outline-md button-outline-md-primary-light animated pulse" color="primary-light" ion-button="" outline="" text-capitalize=""><span class="button-inner">
+                            <ion-icon name="icocontexto-historico" role="img" class="icon icon-md ion-md-icocontexto-historico" aria-label="icocontexto historico"></ion-icon>
+                        </span><div class="button-effect"></div></button>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="input-busca-toolbar-row row" margin-large-top="">
+                    <ion-col class="busca-avancada col">
+                        <p class="busca-avancada-label text text-md" ion-text="" no-margin="">Busca avançada</p>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="input-busca-toolbar-row row">
+                    <ion-col class="col" col-auto="">
+                        <ion-item class="busca-avancada item item-block item-md" no-lines=""><div class="item-inner"><div class="input-wrapper"><ion-label class="label label-md" item-end="" id="lbl-13">Filtros</ion-label><!----></div><button class="btn-filtros item-button button button-md button-outline button-outline-md button-outline-md-primary-light" ion-button="" item-end="" text-capitalize="" title="Filtrar por"><span class="button-inner">
+                                <ion-icon name="ios-funnel" role="img" class="icon icon-md ion-ios-funnel" aria-label="funnel"></ion-icon>
+                                <ion-badge item-end="" class="badge badge-md" hidden="">0</ion-badge>
+                            </span><div class="button-effect"></div></button><!----></div><div class="button-effect"></div></ion-item>
+                    </ion-col>
+
+                    <ion-col class="col" col-auto="">
+                        <ion-item class="busca-avancada item item-block item-md item-toggle" no-lines="" title="Localiza documentos contendo as palavras tal qual foram digitadas no campo de busca (não utiliza o radical da palavra). Por exemplo, ao digitar a palavra 'relatoria', não serão exibidas palavras semelhantes como 'relator' ou 'relatora', mas apenas os documentos que contenham a palavra 'relatoria'."><div class="item-inner"><div class="input-wrapper"><ion-label class="label label-md" id="lbl-14">Palavra Exata</ion-label><!----></div><ion-toggle item-end="" class="toggle toggle-md ng-untouched ng-pristine ng-valid"><div class="toggle-icon"><div class="toggle-inner"></div></div><button class="item-cover item-cover-md item-cover-default item-cover-default-md" disable-activated="" ion-button="item-cover" role="checkbox" type="button" id="toggle-14-0" aria-checked="false" aria-labelledby="lbl-14" aria-disabled="false"><span class="button-inner"></span><div class="button-effect"></div></button></ion-toggle><!----></div><div class="button-effect"></div></ion-item>
+                    </ion-col>
+
+                    <ion-col class="col" col-auto="">
+                        <ion-item class="busca-avancada item item-block item-md" no-lines=""><div class="item-inner"><div class="input-wrapper"><ion-label class="label label-md" id="lbl-15">Operadores Lógicos</ion-label><!----></div><ion-segment class="segment-ios segment-ios-primary-light segment segment-md segment-md-primary-light" color="primary-light" item-end="" small="">
+                                <ion-segment-button class="segment-button" role="button" tappable="" title="Localiza documentos que contenham simultaneamente todas as palavras digitadas. Operador padrão – não precisa ser digitado. Ex: contas AND regulares / contas regulares" aria-pressed="false">
+                                    e
+                                <div class="button-effect"></div></ion-segment-button>
+                                <ion-segment-button class="segment-button" role="button" tappable="" title="Localiza documentos que contenham pelo menos uma das palavras digitadas. Ex: regulares OR irregulares." aria-pressed="false">
+                                    ou
+                                <div class="button-effect"></div></ion-segment-button>
+                                <ion-segment-button class="segment-button" role="button" tappable="" title="Localiza documentos que contenham a primeira palavra digitada e não contenham a segunda. Ex: regulares NOT ressalvas" aria-pressed="false">
+                                    não
+                                <div class="button-effect"></div></ion-segment-button>
+                                <ion-segment-button class="segment-button" role="button" tappable="" title="Pesquisa por frase. Coloca uma frase entre aspas duplas. Localiza documentos que contenham as palavras entre aspas próximas entre si. Por exemplo, &quot;relatoria do excelentíssimo&quot;" aria-pressed="false">
+                                    " "
+                                <div class="button-effect"></div></ion-segment-button>
+                            </ion-segment><!----></div><div class="button-effect"></div></ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="input-filtro-row row" margin-large-top="">
+                    <ion-col class="col">
+                        <!---->
+                    </ion-col>
+                </ion-row>
+
+                <!----><ion-row class="row" margin-bottom="" margin-top="">
+                    <ion-col class="col">
+                        <hr>
+                    </ion-col>
+                </ion-row>
+
+
+                <!---->
+
+                <!----><div>
+
+                    <h2 ion-text="" no-margin="" class="text text-md">Resultados</h2>
+
+                    <ion-row class="sort-list-row row">
+                        <ion-col class="col" no-padding="">
+                            <p class="result-row">2.130 documentos encontrados
+                                (0.051 segundos)</p>
+                        </ion-col>
+
+                        <ion-col class="col" col-auto="" text-right="">
+                            <ion-item class="sort-select item item-block item-md item-select input-has-value item-input-has-value" no-lines=""><div class="item-inner"><div class="input-wrapper"><ion-label class="label label-md" id="lbl-16">Ordenar por</ion-label><!----><ion-select canceltext="Cancelar" class="select select-ios select-md ng-untouched ng-pristine ng-valid" interface="popover" oktext="OK"><!----><!----><div class="select-text">Mais recentes</div><div class="select-icon"><div class="select-icon-inner"></div></div><button aria-haspopup="true" class="item-cover item-cover-md item-cover-default item-cover-default-md" ion-button="item-cover" type="button" id="select-16-0" aria-labelledby="lbl-16" aria-disabled="false"><span class="button-inner"></span><div class="button-effect"></div></button></ion-select></div><!----></div><div class="button-effect"></div></ion-item>
+                        </ion-col>
+
+                        <ion-col class="result-options col" col-auto="">
+                            <button clear="" color="primary-light" icon-only="" ion-button="" class="button button-md button-clear button-clear-md button-clear-md-primary-light"><span class="button-inner">
+                                <ion-icon name="icocontexto-sumario" role="img" class="icon icon-md ion-md-icocontexto-sumario" aria-label="icocontexto sumario"></ion-icon>
+                            </span><div class="button-effect"></div></button>
+                        </ion-col>
+
+                    </ion-row>
+                    
+                    <ion-row class="input-list-row row animated zoomInDown">
+                        <ion-col class="col">
+
+                            
+                            <!----><ion-list class="lista list list-md">
+
+                                <!----><ion-card class="card-shadow card card-md">
+                                    <ion-card-header padding-large-bottom="" class="card-header card-header-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col-left col">
+                                                <h3 class="item-head-h2 items-align-start" text-wrap="">
+                                                    <ion-icon name="icocontexto-documentos" role="img" class="icon icon-md ion-md-icocontexto-documentos" aria-label="icocontexto documentos"></ion-icon>
+                                                    Voto -
+                                                    nº 5855/2026
+                                                </h3>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row align-items-center="" class="row">
+                                            <ion-col class="col-left col">
+                                                <p class="item-head-h3" text-normal="">Disponibilizado em
+                                                    <span>21/08/2026</span></p>
+                                                <p class="item-head-h3" text-normal="">Contido no processo <!----><span class="typeLink">23945/2022-6</span>
+                                                </p>
+                                            </ion-col>
+                                            <ion-col class="col-right col" col-3="">
+                                                <button color="primary-light" ion-button="" item-end="" text-normal="" title="Visualizar Documento" class="button button-md button-default button-default-md button-md-primary-light"><span class="button-inner">
+                                                    Visualizar completo
+                                                </span><div class="button-effect"></div></button>
+                                            </ion-col>
+                                        </ion-row>
+                                        <hr>
+                                    </ion-card-header>
+                                    <ion-card-content class="card-content card-content-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Espécie do processo</label>
+                                                    <span class="item-text">TOMADA DE CONTAS ESPECIAL</span>
+                                                </div>
+                                            </ion-col>
+
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Localidade</label>
+                                                    <span class="item-text">SANTA QUITÉRIA</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Setor</label>
+                                                    <span class="item-text">GAB.CONS. PATRICIA</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Entidade</label>
+                                                    <span class="item-text">Prefeitura Municipal de Santa Quitéria</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!----><label class="item-label">Conteúdo
+                                                        encontrado</label>
+                                                    <!----><p class="item-text" text-wrap="">Afirmou que os
+indícios de <mark>nepotismo</mark> constituem ilação política sobre servidores sem poder decisório ou ex-
+agentes fora da gestão em 2016 e defendeu a ausência de dolo, má-fé ou erro grosseiro (art.
+28 da LINDB, formalismo moderado, razoabilidade e proporcionalidade).
+23. Todavia,  cabe  ao  ordenador  instruir  originariamente  os  processos  com  a
+fundamentação legal, a justificativa da necessidade do serviço e a identificação nominal dos
+beneficiários e eventos institucionais,  não o eximindo a mera alegação de dificuldade de
+acesso posterior ao acervo municipal.
+24. (...) </p>
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+                                                </div>
+
+                                            </ion-col>
+                                        </ion-row>
+
+                                    </ion-card-content>
+                                </ion-card><ion-card class="card-shadow card card-md">
+                                    <ion-card-header padding-large-bottom="" class="card-header card-header-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col-left col">
+                                                <h3 class="item-head-h2 items-align-start" text-wrap="">
+                                                    <ion-icon name="icocontexto-documentos" role="img" class="icon icon-md ion-md-icocontexto-documentos" aria-label="icocontexto documentos"></ion-icon>
+                                                    Esclarecimento -
+                                                    nº 47689/2026
+                                                </h3>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row align-items-center="" class="row">
+                                            <ion-col class="col-left col">
+                                                <p class="item-head-h3" text-normal="">Disponibilizado em
+                                                    <span>20/08/2026</span></p>
+                                                <p class="item-head-h3" text-normal="">Contido no processo <!----><span class="typeLink">20122/2026-5</span>
+                                                </p>
+                                            </ion-col>
+                                            <ion-col class="col-right col" col-3="">
+                                                <button color="primary-light" ion-button="" item-end="" text-normal="" title="Visualizar Documento" class="button button-md button-default button-default-md button-md-primary-light"><span class="button-inner">
+                                                    Visualizar completo
+                                                </span><div class="button-effect"></div></button>
+                                            </ion-col>
+                                        </ion-row>
+                                        <hr>
+                                    </ion-card-header>
+                                    <ion-card-content class="card-content card-content-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Espécie do processo</label>
+                                                    <span class="item-text">PRESTAÇÃO DE CONTAS DE GESTÃO</span>
+                                                </div>
+                                            </ion-col>
+
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Localidade</label>
+                                                    <span class="item-text">CEARÁ</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Setor</label>
+                                                    <span class="item-text">EXTERNO AO TCE</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Entidade</label>
+                                                    <span class="item-text">Companhia de Água e Esgoto do Ceará - Cagece</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!----><label class="item-label">Conteúdo
+                                                        encontrado</label>
+                                                    <!----><p class="item-text" text-wrap="">O 
+contrato de consultoria (doc. 12) foi devidamente anexado ao módulo de Monitora-
+mento de Decisões na PCA 2024: 
+ 
+ 
+ Determinação 06 (Ocorrência 15 no processo de origem) - Inventários: Os inventários 
+físicos dos exercícios de 2023 (doc. 13) e 2024 (doc. 14) foram integralmente adequa-
+dos aos moldes do Anexo III do Decreto Estadual nº 27.786/2005 e encaminhados como 
+evidência, tornando desnecessária a elaboração de plano de ação corretivo; 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ Determinação 07 (Ocorrência 11 no processo de origem) - Prevenção ao <mark>Nepotismo</mark>: 
+A CAGECE editou a Resolução nº 01/2021 (doc. 15) para (...) </p>
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+                                                </div>
+
+                                            </ion-col>
+                                        </ion-row>
+
+                                    </ion-card-content>
+                                </ion-card><ion-card class="card-shadow card card-md">
+                                    <ion-card-header padding-large-bottom="" class="card-header card-header-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col-left col">
+                                                <h3 class="item-head-h2 items-align-start" text-wrap="">
+                                                    <ion-icon name="icocontexto-documentos" role="img" class="icon icon-md ion-md-icocontexto-documentos" aria-label="icocontexto documentos"></ion-icon>
+                                                    Esclarecimento -
+                                                    nº 47204/2026
+                                                </h3>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row align-items-center="" class="row">
+                                            <ion-col class="col-left col">
+                                                <p class="item-head-h3" text-normal="">Disponibilizado em
+                                                    <span>19/08/2026</span></p>
+                                                <p class="item-head-h3" text-normal="">Contido no processo <!----><span class="typeLink">19904/2026-8</span>
+                                                </p>
+                                            </ion-col>
+                                            <ion-col class="col-right col" col-3="">
+                                                <button color="primary-light" ion-button="" item-end="" text-normal="" title="Visualizar Documento" class="button button-md button-default button-default-md button-md-primary-light"><span class="button-inner">
+                                                    Visualizar completo
+                                                </span><div class="button-effect"></div></button>
+                                            </ion-col>
+                                        </ion-row>
+                                        <hr>
+                                    </ion-card-header>
+                                    <ion-card-content class="card-content card-content-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Espécie do processo</label>
+                                                    <span class="item-text">ATENDIMENTO À COMUNICAÇÃO PROCESSUAL</span>
+                                                </div>
+                                            </ion-col>
+
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Localidade</label>
+                                                    <span class="item-text">CEARÁ</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Setor</label>
+                                                    <span class="item-text">EXTERNO AO TCE</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Entidade</label>
+                                                    <span class="item-text">Secretaria da Cultura</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!----><label class="item-label">Conteúdo
+                                                        encontrado</label>
+                                                    <!----><p class="item-text" text-wrap="">IV.5 – Da inexistência de <mark>nepotismo</mark> e de improbidade (inclusive à luz da jurisprudência 
+invocada pelo próprio representante) 
+A tese de <mark>nepotismo</mark> é juridicamente insubsistente e, curiosamente, é desmentida pela própria 
+jurisprudência transcrita na representação. (...) </p><p class="item-text" text-wrap="">O precedente colacionado (TJ-RN, Apelação Cível nº 
+0800119-65.2024.8.20.5138) assenta que a mera relação de parentesco não basta para 
+caracterizar improbidade por <mark>nepotismo</mark>, sendo imprescindível a demonstração de (i) 
+subordinação hierárquica entre os envolvidos, (ii) possibilidade de interferência mútua nas 
+nomeações e (iii) dolo específico do agente em obter proveito indevido. (...) </p><p class="item-text" text-wrap="">Como demonstrado, as premissas da representação são factualmente 
+falsas: o vínculo é celetista e anterior aos principais contratos; a escolha é colegiada; o aumento 
+decorre da expansão de equipamentos; a gestão é eficiente, auditada e transparente; e a tese de 
+<mark>nepotismo</mark> é afastada pela própria jurisprudência invocada. A aparência do bom direito milita, na 
+verdade, em favor da regularidade da atuação da entidade. 
+Tampouco há periculum in mora. (...) </p><p class="item-text" text-wrap="">P
+A
+R
+A
+ V
+A
+L
+ID
+A
+R
+ A
+(S
+) A
+S
+S
+IN
+A
+T
+U
+R
+A
+(S
+) D
+IG
+IT
+A
+IS
+ A
+C
+E
+S
+S
+E
+ h
+ttp
+s://valid
+ad
+orassin
+atu
+ra.tce.ce.gov.b
+r E
+ IN
+S
+IR
+A
+ O
+ C
+Ó
+D
+IG
+O
+ 67B
+694E
+3A
+B
+1561348C
+4B
+08528C
+412B
+47
+ 
+b) no mérito, a IMPROCEDÊNCIA integral da Representação e o seu ARQUIVAMENTO, 
+ante a inexistência de qualquer irregularidade nos contratos de gestão, de <mark>nepotismo</mark> ou de 
+improbidade; 
+c) a manutenção dos repasses decorrentes dos contratos de gestão, indispensáveis à 
+continuidade dos serviços públicos culturais; 
+d) a valoração dos contratos de gestão nºs 01/2022, 016/2022 e 018/2022 (e respectivos (...) </p>
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+                                                </div>
+
+                                            </ion-col>
+                                        </ion-row>
+
+                                    </ion-card-content>
+                                </ion-card><ion-card class="card-shadow card card-md">
+                                    <ion-card-header padding-large-bottom="" class="card-header card-header-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col-left col">
+                                                <h3 class="item-head-h2 items-align-start" text-wrap="">
+                                                    <ion-icon name="icocontexto-documentos" role="img" class="icon icon-md ion-md-icocontexto-documentos" aria-label="icocontexto documentos"></ion-icon>
+                                                    Anexos aos esclarecimentos -
+                                                    nº 43873/2026
+                                                </h3>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row align-items-center="" class="row">
+                                            <ion-col class="col-left col">
+                                                <p class="item-head-h3" text-normal="">Disponibilizado em
+                                                    <span>13/08/2026</span></p>
+                                                <p class="item-head-h3" text-normal="">Contido no processo <!----><span class="typeLink">19473/2026-7</span>
+                                                </p>
+                                            </ion-col>
+                                            <ion-col class="col-right col" col-3="">
+                                                <button color="primary-light" ion-button="" item-end="" text-normal="" title="Visualizar Documento" class="button button-md button-default button-default-md button-md-primary-light"><span class="button-inner">
+                                                    Visualizar completo
+                                                </span><div class="button-effect"></div></button>
+                                            </ion-col>
+                                        </ion-row>
+                                        <hr>
+                                    </ion-card-header>
+                                    <ion-card-content class="card-content card-content-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Espécie do processo</label>
+                                                    <span class="item-text">ATENDIMENTO À COMUNICAÇÃO PROCESSUAL</span>
+                                                </div>
+                                            </ion-col>
+
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Localidade</label>
+                                                    <span class="item-text">CEARÁ</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Setor</label>
+                                                    <span class="item-text">EXTERNO AO TCE</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Entidade</label>
+                                                    <span class="item-text">SECRETARIA DO MEIO AMBIENTE E MUDANÇA DO CLIMA</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!----><label class="item-label">Conteúdo
+                                                        encontrado</label>
+                                                    <!----><p class="item-text" text-wrap="">Assertiva 50: Existem planos, instrumentos e 
+mecanismos e são realizadas ações de prevenção ao 
+<mark>nepotismo</mark> de forma a respeitar as regras estabelecidas 
+na legislação vigente.
+QUADRO 5 – Assertivas Pouco/Não Aderentes por Área/Atividade.
+21
+As assertivas registradas com níveis Pouco/Não Aderentes (2 e 0) indicam
+um baixo  grau  de  maturidade  de  integridade  do  órgão/entidade,  exigindo  que  a
+gestão superior  adote providências,  sendo obrigatória  a  proposição de Plano de
+Integridade para sanar as fragilidades identificadas no Diagnóstico de Integridade.
+22
+5. (...) </p>
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+                                                </div>
+
+                                            </ion-col>
+                                        </ion-row>
+
+                                    </ion-card-content>
+                                </ion-card><ion-card class="card-shadow card card-md">
+                                    <ion-card-header padding-large-bottom="" class="card-header card-header-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col-left col">
+                                                <h3 class="item-head-h2 items-align-start" text-wrap="">
+                                                    <ion-icon name="icocontexto-documentos" role="img" class="icon icon-md ion-md-icocontexto-documentos" aria-label="icocontexto documentos"></ion-icon>
+                                                    Anexos aos esclarecimentos -
+                                                    nº 40447/2026
+                                                </h3>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row align-items-center="" class="row">
+                                            <ion-col class="col-left col">
+                                                <p class="item-head-h3" text-normal="">Disponibilizado em
+                                                    <span>15/07/2026</span></p>
+                                                <p class="item-head-h3" text-normal="">Contido no processo <!----><span class="typeLink">17107/2026-5</span>
+                                                </p>
+                                            </ion-col>
+                                            <ion-col class="col-right col" col-3="">
+                                                <button color="primary-light" ion-button="" item-end="" text-normal="" title="Visualizar Documento" class="button button-md button-default button-default-md button-md-primary-light"><span class="button-inner">
+                                                    Visualizar completo
+                                                </span><div class="button-effect"></div></button>
+                                            </ion-col>
+                                        </ion-row>
+                                        <hr>
+                                    </ion-card-header>
+                                    <ion-card-content class="card-content card-content-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Espécie do processo</label>
+                                                    <span class="item-text">ATENDIMENTO À COMUNICAÇÃO PROCESSUAL</span>
+                                                </div>
+                                            </ion-col>
+
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Localidade</label>
+                                                    <span class="item-text">MUCAMBO</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Setor</label>
+                                                    <span class="item-text">EXTERNO AO TCE</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Entidade</label>
+                                                    <span class="item-text">Fundo Municipal de Educacao</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!----><label class="item-label">Conteúdo
+                                                        encontrado</label>
+                                                    <!----><p class="item-text" text-wrap="">Dessa forma, foi instaurada uma cultura de alienação de massas e a desconfiança 
+passou a habitar o inconsciente coletivo a partir da crença de que não havia como se combater 
+males como a corrupção, o <mark>nepotismo</mark> e os empregos oportunizados por meio de tráfico de 
+influência. 
+Em outrora, o dinheiro público não era foco de preocupação social, mas essa 
+realidade foi consideravelmente alterada com o advento da democracia e do desenvolvimento 
+12 
+do Estado Republicano nos moldes das normas constitucionais vigentes. (...) </p>
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+                                                </div>
+
+                                            </ion-col>
+                                        </ion-row>
+
+                                    </ion-card-content>
+                                </ion-card><ion-card class="card-shadow card card-md">
+                                    <ion-card-header padding-large-bottom="" class="card-header card-header-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col-left col">
+                                                <h3 class="item-head-h2 items-align-start" text-wrap="">
+                                                    <ion-icon name="icocontexto-documentos" role="img" class="icon icon-md ion-md-icocontexto-documentos" aria-label="icocontexto documentos"></ion-icon>
+                                                    Parecer -
+                                                    nº 3368/2026
+                                                </h3>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row align-items-center="" class="row">
+                                            <ion-col class="col-left col">
+                                                <p class="item-head-h3" text-normal="">Disponibilizado em
+                                                    <span>13/07/2026</span></p>
+                                                <p class="item-head-h3" text-normal="">Contido no processo <!----><span class="typeLink">04571/2022-3</span>
+                                                </p>
+                                            </ion-col>
+                                            <ion-col class="col-right col" col-3="">
+                                                <button color="primary-light" ion-button="" item-end="" text-normal="" title="Visualizar Documento" class="button button-md button-default button-default-md button-md-primary-light"><span class="button-inner">
+                                                    Visualizar completo
+                                                </span><div class="button-effect"></div></button>
+                                            </ion-col>
+                                        </ion-row>
+                                        <hr>
+                                    </ion-card-header>
+                                    <ion-card-content class="card-content card-content-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Espécie do processo</label>
+                                                    <span class="item-text">TOMADA DE CONTAS ESPECIAL</span>
+                                                </div>
+                                            </ion-col>
+
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Localidade</label>
+                                                    <span class="item-text">MUCAMBO</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Setor</label>
+                                                    <span class="item-text">MPC - 2a PROCURADORIA DE CONTAS</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Entidade</label>
+                                                    <span class="item-text">Prefeitura Municipal de Mucambo</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!----><label class="item-label">Conteúdo
+                                                        encontrado</label>
+                                                    <!----><p class="item-text" text-wrap="">solicitado no exame inicial; c) gratificação paga aos servidores nominados neste item, 
+denominada de “Ampliação de Carga Horária”, tendo por base o mês de março de 2016, 
+foi considerada irregular ante a falta de amparo legal; d) remuneração de servidores 
+públicos inferior a um salário-mínimo, em afronta à CF/1988; e) contratação de dois 
+servidores temporários, sem demonstrar a excepcionalidade da demanda e sequer foi 
+constatada a existência de regular processo seletivo que respaldasse as contratações 
+feitas; f) cessão de servidores sem a formalização do devido convênio; g) existência de 
+<mark>nepotismo</mark> (...) </p><p class="item-text" text-wrap="">dos servidores, Alysson da Costa Azevedo e Vitória Dayane Costa de 
+Vasconcelos, parentes dos gestores, caracterizando <mark>nepotismo</mark> previsto na Sumula 
+Vinculante 13 do STF, consoante apontado pela Inspetoria e ratificado pela defesa; e, h) 
+inadequada classificação de despesas com a contratação de servidores, 
+predominantemente de profissionais da área de saúde.
+5. (...) </p>
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+                                                </div>
+
+                                            </ion-col>
+                                        </ion-row>
+
+                                    </ion-card-content>
+                                </ion-card><ion-card class="card-shadow card card-md">
+                                    <ion-card-header padding-large-bottom="" class="card-header card-header-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col-left col">
+                                                <h3 class="item-head-h2 items-align-start" text-wrap="">
+                                                    <ion-icon name="icocontexto-documentos" role="img" class="icon icon-md ion-md-icocontexto-documentos" aria-label="icocontexto documentos"></ion-icon>
+                                                    Esclarecimento -
+                                                    nº 40177/2026
+                                                </h3>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row align-items-center="" class="row">
+                                            <ion-col class="col-left col">
+                                                <p class="item-head-h3" text-normal="">Disponibilizado em
+                                                    <span>13/07/2026</span></p>
+                                                <p class="item-head-h3" text-normal="">Contido no processo <!----><span class="typeLink">16952/2026-4</span>
+                                                </p>
+                                            </ion-col>
+                                            <ion-col class="col-right col" col-3="">
+                                                <button color="primary-light" ion-button="" item-end="" text-normal="" title="Visualizar Documento" class="button button-md button-default button-default-md button-md-primary-light"><span class="button-inner">
+                                                    Visualizar completo
+                                                </span><div class="button-effect"></div></button>
+                                            </ion-col>
+                                        </ion-row>
+                                        <hr>
+                                    </ion-card-header>
+                                    <ion-card-content class="card-content card-content-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Espécie do processo</label>
+                                                    <span class="item-text">ATENDIMENTO À COMUNICAÇÃO PROCESSUAL</span>
+                                                </div>
+                                            </ion-col>
+
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Localidade</label>
+                                                    <span class="item-text">GRAÇA</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Setor</label>
+                                                    <span class="item-text">EXTERNO AO TCE</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Entidade</label>
+                                                    <span class="item-text">Câmara Municipal de Graça</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!----><label class="item-label">Conteúdo
+                                                        encontrado</label>
+                                                    <!----><p class="item-text" text-wrap="">No caso concreto, a Unidade Técnica não demonstrou que o Presidente tenha criado cargos 
+comissionados inconstitucionais no exercício de 2024, nem que tenha alterado a estrutura para 
+ampliar indevidamente nomeações, nem que tenha agido com finalidade pessoal, favorecimento, 
+<mark>nepotismo</mark>, desvio de finalidade ou burla deliberada ao concurso. (...) </p>
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+                                                </div>
+
+                                            </ion-col>
+                                        </ion-row>
+
+                                    </ion-card-content>
+                                </ion-card><ion-card class="card-shadow card card-md">
+                                    <ion-card-header padding-large-bottom="" class="card-header card-header-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col-left col">
+                                                <h3 class="item-head-h2 items-align-start" text-wrap="">
+                                                    <ion-icon name="icocontexto-documentos" role="img" class="icon icon-md ion-md-icocontexto-documentos" aria-label="icocontexto documentos"></ion-icon>
+                                                    Voto -
+                                                    nº 5060/2026
+                                                </h3>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row align-items-center="" class="row">
+                                            <ion-col class="col-left col">
+                                                <p class="item-head-h3" text-normal="">Disponibilizado em
+                                                    <span>10/07/2026</span></p>
+                                                <p class="item-head-h3" text-normal="">Contido no processo <!----><span class="typeLink">01138/2026-2</span>
+                                                </p>
+                                            </ion-col>
+                                            <ion-col class="col-right col" col-3="">
+                                                <button color="primary-light" ion-button="" item-end="" text-normal="" title="Visualizar Documento" class="button button-md button-default button-default-md button-md-primary-light"><span class="button-inner">
+                                                    Visualizar completo
+                                                </span><div class="button-effect"></div></button>
+                                            </ion-col>
+                                        </ion-row>
+                                        <hr>
+                                    </ion-card-header>
+                                    <ion-card-content class="card-content card-content-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Espécie do processo</label>
+                                                    <span class="item-text">REPRESENTAÇÃO</span>
+                                                </div>
+                                            </ion-col>
+
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Localidade</label>
+                                                    <span class="item-text">ASSARÉ</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Setor</label>
+                                                    <span class="item-text">GAB. AUDITOR FERNANDO UCHOA</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Entidade</label>
+                                                    <span class="item-text">Prefeitura Municipal de Assaré</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!----><label class="item-label">Conteúdo
+                                                        encontrado</label>
+                                                    <!----><p class="item-text" text-wrap="">uma representação cuja a inicial é con-
+fusa, e que busca uma condenação baseada em meras ilações, fato que por
+si só demonstra a inexistência de indícios suficientes que justifiquem a ins-
+tauração de procedimento administrativo de caráter investigativo,  uma vez
+que os fatos narrados, os quais em tese poderiam configurar irregularidade,
+mas efetivamente vieram desacompanhados de qualquer instrumento pro-
+batório que pudesse comprovar o alegado, de outro lado, quanto à última
+das alegativas, a nomeação de parentes – independentemente do grau –
+para cargos de natureza política não caracteriza <mark>nepotismo</mark> (...) </p>
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+                                                </div>
+
+                                            </ion-col>
+                                        </ion-row>
+
+                                    </ion-card-content>
+                                </ion-card><ion-card class="card-shadow card card-md">
+                                    <ion-card-header padding-large-bottom="" class="card-header card-header-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col-left col">
+                                                <h3 class="item-head-h2 items-align-start" text-wrap="">
+                                                    <ion-icon name="icocontexto-documentos" role="img" class="icon icon-md ion-md-icocontexto-documentos" aria-label="icocontexto documentos"></ion-icon>
+                                                    Relatório de instrução -
+                                                    nº 2929/2026
+                                                </h3>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row align-items-center="" class="row">
+                                            <ion-col class="col-left col">
+                                                <p class="item-head-h3" text-normal="">Disponibilizado em
+                                                    <span>08/07/2026</span></p>
+                                                <p class="item-head-h3" text-normal="">Contido no processo <!----><span class="typeLink">13078/2026-4</span>
+                                                </p>
+                                            </ion-col>
+                                            <ion-col class="col-right col" col-3="">
+                                                <button color="primary-light" ion-button="" item-end="" text-normal="" title="Visualizar Documento" class="button button-md button-default button-default-md button-md-primary-light"><span class="button-inner">
+                                                    Visualizar completo
+                                                </span><div class="button-effect"></div></button>
+                                            </ion-col>
+                                        </ion-row>
+                                        <hr>
+                                    </ion-card-header>
+                                    <ion-card-content class="card-content card-content-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Espécie do processo</label>
+                                                    <span class="item-text">REPRESENTAÇÃO</span>
+                                                </div>
+                                            </ion-col>
+
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Localidade</label>
+                                                    <span class="item-text">MAURITI</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Setor</label>
+                                                    <span class="item-text">ASSESSORIA DE INSTRUÇÃO DE CAUTELARES</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Entidade</label>
+                                                    <span class="item-text">Prefeitura Municipal de Mauriti</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!----><label class="item-label">Conteúdo
+                                                        encontrado</label>
+                                                    <!----><p class="item-text" text-wrap="">Destaca  um  suposto  quadro  de  <mark>nepotismo</mark>  e  quebra  de  imparcialidade  na  Secretaria 
+Municipal de Educação, visto que o documento de formalização da demanda (DFD) foi subscrito 
+pelo  Sr.  Gilberto  Jucá  da  Silva,  Ordenador  de  Despesas,  figurando  como  responsável  pela 
+demanda a Presidente da Comissão de Planejamento, Sra. Francisca Laís Jucá da Silva. (...) </p>
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+                                                </div>
+
+                                            </ion-col>
+                                        </ion-row>
+
+                                    </ion-card-content>
+                                </ion-card><ion-card class="card-shadow card card-md">
+                                    <ion-card-header padding-large-bottom="" class="card-header card-header-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col-left col">
+                                                <h3 class="item-head-h2 items-align-start" text-wrap="">
+                                                    <ion-icon name="icocontexto-documentos" role="img" class="icon icon-md ion-md-icocontexto-documentos" aria-label="icocontexto documentos"></ion-icon>
+                                                    Anexos aos esclarecimentos -
+                                                    nº 33445/2026
+                                                </h3>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row align-items-center="" class="row">
+                                            <ion-col class="col-left col">
+                                                <p class="item-head-h3" text-normal="">Disponibilizado em
+                                                    <span>08/07/2026</span></p>
+                                                <p class="item-head-h3" text-normal="">Contido no processo <!----><span class="typeLink">16509/2026-9</span>
+                                                </p>
+                                            </ion-col>
+                                            <ion-col class="col-right col" col-3="">
+                                                <button color="primary-light" ion-button="" item-end="" text-normal="" title="Visualizar Documento" class="button button-md button-default button-default-md button-md-primary-light"><span class="button-inner">
+                                                    Visualizar completo
+                                                </span><div class="button-effect"></div></button>
+                                            </ion-col>
+                                        </ion-row>
+                                        <hr>
+                                    </ion-card-header>
+                                    <ion-card-content class="card-content card-content-md">
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Espécie do processo</label>
+                                                    <span class="item-text">PRESTAÇÃO DE CONTAS DE GESTÃO</span>
+                                                </div>
+                                            </ion-col>
+
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Localidade</label>
+                                                    <span class="item-text">MILAGRES</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Setor</label>
+                                                    <span class="item-text">EXTERNO AO TCE</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <label class="item-label">Entidade</label>
+                                                    <span class="item-text">Fundo Municipal de Educacao Bã¿Sica</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+
+                                        <ion-row class="row">
+                                            <ion-col class="col">
+                                                <div class="item-group">
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!----><label class="item-label">Conteúdo
+                                                        encontrado</label>
+                                                    <!----><p class="item-text" text-wrap="">Dessa forma, foi instaurada uma cultura de alienação de massas e a desconfiança 
+passou a habitar o inconsciente coletivo a partir da crença de que não havia como se combater 
+males como a corrupção, o <mark>nepotismo</mark> e os empregos oportunizados por meio de tráfico de 
+influência. 
+Em outrora, o dinheiro público não era foco de preocupação social, mas essa 
+realidade foi consideravelmente alterada com o advento da democracia e do desenvolvimento 
+PREFEITURA 
+CQMJSSO DE 
+	
+12 
+PA3 . 
+do Estado Republicano nos moldes das normas constitucionais vigentes. (...) </p>
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+
+                                                    <!---->
+                                                    <!---->
+                                                </div>
+
+                                            </ion-col>
+                                        </ion-row>
+
+                                    </ion-card-content>
+                                </ion-card>
+                            </ion-list>
+                            
+                            <!----><ion-infinite-scroll>
+                                <ion-infinite-scroll-content state="enabled"><div class="infinite-loading"><!----><div class="infinite-loading-spinner"><ion-spinner class="spinner spinner-md spinner-crescent spinner-md-crescent"><!----><svg viewBox="0 0 64 64" style="animation-duration: 750ms;"><circle transform="translate(32,32)" r="26"></circle></svg><!----></ion-spinner></div><!----></div></ion-infinite-scroll-content>
+                            </ion-infinite-scroll>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </ion-col>

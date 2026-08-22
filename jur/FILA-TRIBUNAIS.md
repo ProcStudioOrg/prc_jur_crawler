@@ -1243,8 +1243,22 @@ os estados grandes. Domínio costuma ser `.gov.br`, não `.jus.br` — TCE não 
 | 26 | **TCE-PA** | PA | ⚠️ municípios paraenses são do **TCM-PA** — **confirmado por ausência de campo de município** na pesquisa avançada (12 campos, nenhum é município). ⚠️ **a entrada oficial redireciona**: `www.tce.pa.gov.br` → **302** → `www.tcepa.tc.br`. A porta é a **Pesquisa Integrada** (`/pesquisaintegrada/pesquisa/resultados`, ASP.NET WebForms, GET puro em querystring) — busca, 12 campos Lucene, faixa de data, paginação profunda, card em 3 bases, permalink e PDF medidos | ok 21/08 |
 | 27 | **TCE-ES** | ES | ✅ **o ES não tem TCM** — e aqui a prova saiu do **acervo** (Prefeitura Municipal de Serra, Câmara Municipal de Vitória, Câmara Municipal de Iúna), não da ausência de combo. ⚠️ **a entrada oficial redireciona**: `www.tce.es.gov.br` → **301** → `www.tcees.tc.br`. A porta é a **Pesquisa de Jurisprudência** dentro de um **iframe** (`acessoidentificado.tcees.tc.br/Publica/PesquisarExcerto`, ASP.NET MVC sobre Solr, POST que devolve JSON com HTML dentro, sem captcha) — busca, 14 facetas provadas por contagem, janela de data, paginação profunda e estável, card em 2 vintages, citação oficial, permalink e PDF medidos | ok 21/08 |
 | 28 | **TCE-MG** | MG | 🔴 o portal que se chama "Jurisprudência" (**TCJuris**) está atrás de **reCAPTCHA v2 conferido no servidor**; a porta aberta é o **MapJuris** (`/TextualDadosProcesso`, sem captcha) — busca mapeada em 16/08, **crawler fechado em 20/08** (2º salto do grid, Fase 3b, operadores, filtros e rate limit medidos) | ok 20/08 |
-| 29 | **TCE-CE** | CE | ✅ TCM-CE extinto em 2017 e o acervo **migrou** — confirmado por medição (186 localidades no combo, **inclusive FORTALEZA**; processos trazem "PROCESSO MIGRADO DO TCM (SGP)"). A porta é a **API REST do SPA Contexto** (`contexto-api…/documentos/buscar`, Elasticsearch, sem captcha) — **busca, filtros, paginação e download do PDF medidos; falta a lista de tipos "Documentos de Decisão" e o crawler** | parcial 18/08 |
+| 29 | **TCE-CE** | CE | ✅ TCM-CE extinto em 2017 e o acervo **migrou** — confirmado por medição **tripla** (186 localidades no combo, **inclusive FORTALEZA**; sessões `TCM - 1ª/2ª CÂMARA/PLENO ORDINÁRIA` no combo de tipo de sessão; processos com "PROCESSO MIGRADO DO TCM (SGP)"). A porta é a **API REST do SPA Contexto** (`contexto-api…/documentos/buscar`, Elasticsearch, sem captcha) — **crawler fechado em 22/08**: lista oficial do "Documentos de Decisão" capturada do XHR, 5 filtros mortos identificados, paginação estável, PDF público e 28/28 testes verdes | ok 22/08 |
 | 30 | **TCE-GO** | GO | ⚠️ municípios goianos são do **TCM-GO** — **NÃO confirmado por medição** (o formulário não tem combo de município). A porta é a **API REST do SPA Iago** (`iago-search-api…/decisions/search`, Elasticsearch, sem captcha) — **busca, 13 filtros, agregações, paginação até o fim do acervo (383.075) e inteiro teor em texto medidos; falta operadores booleanos, `number=`/`process=` isolados e o crawler** | parcial 19/08 |
+
+🔴 **A FILA FICOU SEM NENHUM `pendente` EM 22/08/2026.** Com o TCE-CE fechado, sobra
+**um único `parcial`: o TCE-GO (19/08)**. Isso deixa a regra da dívida de crawler num
+ponto cego que vale registrar, porque ele quase custou um slot vazio:
+
+- O slot **1600** manda "pegue o primeiro `pendente`". Não havia nenhum.
+- O gatilho da dívida (`≥ 3 parcial`) é do slot **2000**, e só valia com 2 parciais.
+- A condição de parada escrita é "**nem `pendente` nem `parcial`**" — e havia `parcial`.
+
+Ou seja: pela letra, o slot 1600 de 22/08 não tinha alvo **e** não podia parar. O que se
+fez foi o que a regra da dívida existe para garantir: **com zero `pendente`, o alvo é o
+`parcial` mais antigo**, em qualquer slot. Foi assim que o TCE-CE (18/08) fechou.
+**Enquanto a fila não receber alvos novos, os dois slots pegam o `parcial` mais antigo**;
+quando não sobrar nem isso, aí sim a fila acabou.
 
 📌 **O que o TCE-PR (feito em 14/08/2026) ensinou — leia
 [`CLAUDE-TCEPR.md`](CLAUDE-TCEPR.md).** Primeiro alvo do Bloco 5 e **primeiro
@@ -2536,3 +2550,78 @@ distribuição por ano do acervo sem termo** (só a faceta, que é global); as b
 **rate limit exato do WAF não foi bisectado** (cada tentativa custa um cooldown).
 ⏱️ Timebox **não estourado**: 16:00 → 17:09, ~69 min — dos quais **~25 minutos foram
 cooldown de WAF**, não trabalho.
+
+---
+
+📌 **O que o TCE-CE (crawler fechado em 22/08/2026) ensinou — leia
+[`CLAUDE-TCECE.md`](CLAUDE-TCECE.md).** Terceiro alvo fechado pela regra da dívida
+(depois de TJMT, TJPB) e o **primeiro `parcial` do Bloco 5** a virar 🟢. A lição do dia é
+que **o palpite bem-informado sobre um vocabulário controlado erra mais do que parece**:
+
+- 🔴 **A LISTA PALPITADA ERRAVA 6 DE 8 — E O PALPITE ERA RAZOÁVEL.** O mapeamento de
+  18/08 deixou como fallback "os tipos que parecem decisão": `633 DECISÃO`,
+  `687 ACÓRDÃO RETIFICADOR`, `653 DESPACHO DECISÓRIO`, `5 DESPACHO SINGULAR`,
+  `160 SÚMULA`, `124 DECISÃO JUDICIAL`. A lista **oficial**, capturada do XHR do checkbox
+  "Documentos de Decisão", é `["4","12","25","6","13","3","172","98"]` = ACÓRDÃO,
+  DECLARACAO DE VOTO, PARECER PRÉVIO, **RELATÓRIO**, RELATÓRIO VOTO, **RESOLUÇÃO**, VOTO,
+  VOTO VISTA. **Nenhum** do palpite está nela; três dela não estavam no palpite.
+  **Quando o portal tem um botão que já faz a curadoria, capture o XHR dele em vez de
+  reconstruir a lista pelos nomes** — vale para todo combo de "tipo de documento".
+- 🔴 **E O RÓTULO PODE NÃO EXISTIR NO BUNDLE.** `grep "Decisão"` em
+  `main.03360a1865.js` devolve **uma** ocorrência, no texto de ajuda. Procurar o label do
+  checkbox no JS e não achar levaria a concluir que o filtro foi removido. O que resolveu
+  foi **abrir a tela e clicar** — e, antes disso, **ler a imagem de ajuda do próprio app**
+  (`assets/imgs/busca-sistematizada-ajuda-1.png`), que ilustra o filtro. Screenshot do
+  portal é fonte de mapeamento, não só entregável.
+- 🔴 **O SELETOR POR TEXTO NÃO CASA QUANDO O RÓTULO É IRMÃO DO BOTÃO.** Em 18/08 o
+  botão FILTROS foi dado como "não clicável no Playwright". Ele é
+  `button.btn-filtros`; o texto "Filtros" é um `<ion-label id="lbl-13">` **irmão**.
+  Custou 4 tentativas de seletor. **Quando `getByText` falhar, dumpe o HTML do ancestral
+  e procure o `<button>` de verdade** em vez de concluir que o controle não abre.
+- 🔴 **SATURAÇÃO ESCONDE EFEITO DE FLAG, E ISSO SE LÊ COMO "FLAG INERTE".** Em 18/08
+  `buscaPalavraExata` foi anotado como suspeito porque as 3 combinações davam 10.000.
+  Repetido **abaixo do teto** (com o filtro de decisão): `nepotismos` = **239 → 5**. A
+  flag funciona e é a única de texto que funciona. **Nunca teste flag em termo saturado.**
+- 🔴 **SEXTA CASCA DE HTTP 200 DO REPO: ERRO DO SERVIDOR DENTRO DO ENVELOPE.** Toda
+  resposta é `{"erros":[...],"data":{...}}` com HTTP 200 — data em DD/MM/YYYY sem
+  `format` devolve `{"erros":["400 Bad Request"],"data":null}`. Quem checa
+  `statusCode === 200` e lê `data.lista` recebe `undefined` e escreve "zero resultados".
+- 🔴 **CINCO FILTROS MORTOS, E O COMBO POPULADO NÃO PROVA NADA.** `idmembrorelator` tem
+  32 opções e devolve **0** para 3 relatores reais; `tpsessao` tem 19 e devolve 0.
+  O que fechou o argumento foi `{"exists":{"field":"dtsessao"}}` = 0 **mais** o valor
+  inventado. **Testar um valor só e ver 0 se lê como "esse relator não tem julgado".**
+- 🔴 **"O TEXTO JÁ VEM NA BUSCA" PRECISA SER MEDIDO POR TIPO, E CONTRA O PDF.** O
+  mapeamento de 18/08 registrou o `conteudo` como texto integral — amostrando
+  ESCLARECIMENTO e um acórdão via outro endpoint. No acórdão da busca normal são **976
+  chars com "1/12" na primeira linha**, e o PDF tem o dobro. **O que falta é a EMENTA, o
+  RELATOR e a SESSÃO** — ou seja, o campo morto no índice **existe no documento**, só não
+  foi indexado. Medir 2 tipos não bastou; medir **contra o PDF** bastou.
+- 🔴 **O WAF DO `www` NÃO É O WAF DA API.** Playwright headless sem override recebe
+  "Web Page Blocked!" com Attack ID em `www.tce.ce.gov.br`; `contexto-api` e `api-add`
+  respondem 200 para qualquer UA. **Testar só a API e concluir "não há WAF" é erro** — e
+  o inverso (testar só a tela e declarar bloqueado) é o erro mais caro. Terceira
+  repetição da lição TJRN/TJAP: **sobrescreva o User-Agent sempre**.
+- 🔴 **QUINTA VEZ SEGUIDA NO BLOCO 5 QUE A LEGENDA DO PORTAL MENTE SOBRE OPERADOR.**
+  `E`/`OU`/`NÃO` devolvem os mesmos 1.217 do espaço, e o `OU` entrega a **interseção**.
+  Depois de TCE-PR, TCDF, TCE-MG e TCE-PA, isto deixou de ser achado e virou **default do
+  bloco**: no próximo TCE, presuma que a legenda está errada até medir.
+- ⚠️ **PARÂMETRO ACEITO NÃO É PARÂMETRO OBEDECIDO** (lição do TCE-PA, confirmada):
+  `size`, `qtd`, `tamanho`, `limit`, `from` e `pagina` = 50 foram **todos** aceitos com
+  HTTP 200 e **todos** devolveram 10 itens.
+- ✅ **O QUE FUNCIONA E É RARO:** o acervo é **publicado em endpoint próprio**
+  (`/documentos/total-documentos` = 5.318.348) — o que resolve a saturação em 10.000 que
+  em TCDF e TCE-PA obrigou a somar agregações; a paginação por `search_after` é **estável
+  e sem teto de profundidade**; e a verificação tem **duas portas independentes**
+  (o índice do Contexto e `api-processos/porNumero`, que é o sistema de tramitação).
+
+⚠️ **Pendências declaradas do TCE-CE:** `identidade` (11.519 opções), `idinteressado` e
+`idsituacao` **não provados por contagem**; `dssumula` sem teste positivo (SÚMULA não está
+na lista oficial de decisão); **rate limit não medido** (~120 requisições sem 429, não
+bisectado); o **JSF `tcewsapi…jurisdicionadoJurisprudenciaPortal.xhtml`** — o que o menu
+oficial chama de "Jurisprudência → Consulta" — **continua não mapeado**, e falta comparar
+o acervo dele com o do Contexto; `/documentos/buscar-jurisprudencia` (tesauro TCN) não
+virou flag; e `/sumulas`, `/normativos`, `/boletim`, `/sessao` e o `Acervo DOE-TCM` seguem
+sem mapeamento.
+⏱️ Timebox **estourado em ~15 min** (16:00 → ~17:45, ~105 min), **com o crawler já verde**:
+o excedente foi a Fase 6 (doc, roteamento, cobertura, commit). O mapeamento em si custou
+~50 min, dos quais 4 tentativas de seletor até abrir o painel de filtros.

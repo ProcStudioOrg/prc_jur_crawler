@@ -1,8 +1,10 @@
 # TCE-CE — Contexto/Documentos — o que vem DEPOIS da busca
 
-> ⚠️ **Esta seção está incompleta.** A skill `browser-post-search` **não foi rodada até o
-> fim** — o timebox de 90 min estourou. O que está abaixo foi medido; o que falta está
-> listado em "Pendências" e é o primeiro trabalho do próximo slot.
+> ✅ **Fechada em 22/08/2026.** Em 18/08 o timebox estourou com a `browser-post-search`
+> pela metade. Nesta rodada ela foi retomada e concluída, e o crawler fechou 🟢.
+> ⚠️ **As seções 1 a 6 abaixo são de 18/08 e três delas foram DESMENTIDAS pela medição
+> de 22/08** — leia o bloco "✅ Fechado em 22/08/2026" no fim antes de confiar em §3,
+> §4 (parte) e §6. O texto antigo fica de propósito: é o registro de onde se errou.
 
 ## 1. Onde o resultado aparece
 
@@ -30,7 +32,12 @@ HTML completo em `01-card-resultado.html`; print em `01.06-card-dissecado.png`.
 via JS. **Não existe permalink na interface.** O identificador estável é `iddocumento`
 (§5).
 
-## 3. O texto: **a ementa/inteiro teor já vem no payload da busca**
+## 3. O texto ~~já vem no payload da busca~~ — 🔴 **DESMENTIDO EM 22/08, ver §8 do fim**
+
+> 🔴 O que está escrito abaixo vale para os documentos que foram amostrados em 18/08,
+> e **é falso para acórdão**: o `conteudo` do ACÓRDÃO 1374/2023 tem 1.007 chars contra
+> 2.218 do PDF, e o que falta é a EMENTA, o RELATOR e a SESSÃO. Medido em 10 de 10
+> acórdãos da primeira página.
 
 O campo **`conteudo`** de cada item da `lista` traz o **texto integral do documento**
 (extraído do PDF), não um trecho. Não é preciso um segundo salto para ler a decisão.
@@ -89,7 +96,8 @@ bundle). Pendência.
 
 Ver §6 do `01-contexto-documentos.txt`: `searchAfterSort` = campo `sort` do último item.
 10 por página. Página 2 medida e sem sobreposição com a página 1.
-⚠️ **Estabilidade (mesma página duas vezes) NÃO medida** — pendência do checklist.
+✅ **Estabilidade MEDIDA em 22/08 e confirmada** — ver §2 do bloco do fim.
+🔴 E a página é **fixa em 10**: nenhum dos 6 nomes de parâmetro testados muda isso (§4).
 
 ---
 
@@ -122,9 +130,9 @@ invariante nº 1 do repo** (citar como julgado o que não é julgado).
 > Documentos para acessar a base completa. No módulo de Documentos, **selecione a opção
 > 'Documentos de Decisão' nos filtros**"
 
-⚠️ **A lista exata de `idtipodocumento` por trás do botão "Documentos de Decisão" NÃO foi
-capturada** — o botão `FILTROS` não foi clicável no Playwright depois da busca (o seletor
-por texto não casou; ver `_map3-tcece.js`). É a **pendência nº 1**.
+✅ **A lista foi capturada em 22/08** — `["4","12","25","6","13","3","172","98"]`. Ver §1
+do bloco do fim. O botão abre por `button.btn-filtros`; o seletor por texto não casava
+porque "Filtros" é um `<ion-label>` **irmão** do botão, não o botão.
 
 ### O outro endpoint: `/documentos/buscar-jurisprudencia`
 
@@ -143,31 +151,195 @@ POST https://contexto-api.tce.ce.gov.br/documentos/buscar-jurisprudencia
   "para acessar a base completa".
 
 **Portanto**: nem um nem outro serve puro. O caminho é `/documentos/buscar` (busca livre)
-**+ filtro `idtipodocumento` restrito aos tipos de decisão**. Falta fechar essa lista.
+**+ filtro `idtipodocumento` restrito aos tipos de decisão** — e é exatamente o que o
+`TCECECrawler` faz por padrão. ✅ A lista foi fechada em 22/08 (§1 do bloco do fim).
 
 ---
 
-## Pendências — o que o próximo slot pega primeiro
+## ✅ Fechado em 22/08/2026 — o que era pendência e agora está medido
 
-1. 🔴 **A lista de `idtipodocumento` do "Documentos de Decisão"** — abrir o painel FILTROS
-   no browser (o botão não casou por texto; tentar `ion-fab`, ícone, ou ler o chunk
-   lazy-loaded `filtros-documentos.module.*.js` em `contexto/build/`) e capturar o XHR.
-   Sem isso o crawler não sabe o que é decisão. Fallback aceitável enquanto isso: usar a
-   lista de tipos de decisão já identificada em `01-contexto-documentos.txt` §5.
-2. **Estabilidade da paginação** — mesma página duas vezes, comparar ids e ordem.
-3. **`buscaPalavraExata` / `buscaPesquisaExata` não fazem diferença** em nenhuma das 3
-   combinações testadas (todas 10000 numa frase de 4 palavras — o que é suspeito demais
-   para ser coincidência). Testar em termo estreito e provar se são inertes ou se exigem
-   aspas dentro de `texto`.
-4. **Tamanho de página** — o SPA fixa 10; testar se a API aceita `size`/`qtd`/`from`.
-5. **Filtros não provados por contagem**: `esfera-julgamento` (7), `membro-relator` (32),
-   `localidade` (186), `entidade` (11.519), `especie` (210).
-6. **`dssumula`** em documento do tipo SÚMULA (id 160).
-7. **Rate limit não medido**; os dois IPs de DNS de `tcewsapi` (189.90.160.53 /
-   189.90.161.131) não foram testados quanto a dessincronia.
-8. **O JSF `tcewsapi.tce.ce.gov.br/paginas/jurisdicionadoJurisprudenciaPortal.xhtml`** —
-   é o que o menu oficial chama de "Jurisprudência → Consulta" e **não foi mapeado**
-   (3,1 MB, PrimeFaces 6.1, sem captcha, IDs `j_idt` autogerados). Falta comparar o
-   acervo dele com o do Contexto: pode haver julgado num que não está no outro.
-9. Módulos irmãos não mapeados: `/sumulas` do portal, `/normativos`, `/boletim`
-   (Informativos de Jurisprudência), `/sessao`.
+### 1. 🔴 A lista do "Documentos de Decisão" — CAPTURADA DO XHR, não adivinhada
+
+O painel `FILTROS` abre por `button.btn-filtros` (o seletor por texto não casa porque
+o rótulo "Filtros" é um `<ion-label id="lbl-13">` **irmão** do botão, não o botão).
+Dentro dele, sob o rótulo **"Busca para Jurispridência"** (sic — o portal escreve
+errado), há **um único** `ion-checkbox`: **"Documentos de Decisão"**.
+Prints: `01.07-painel-filtros.png`, `01.08-decisao-marcado.png`, `01.09-resultado-decisao.png`.
+HTML do modal: `01-painel-filtros.html`. XHR: `xhr-filtro-documentos-decisao.json`.
+
+Marcando-o e clicando **Filtrar**, o corpo que o SPA emite é:
+
+```json
+{"texto":"nepotismo",
+ "filtros":[{"terms":{"idtipodocumento":["4","12","25","6","13","3","172","98"]}}],
+ "searchAfterSort":null,"buscaPalavraExata":false,"buscaPesquisaExata":false,"sort":"desc"}
+```
+
+| id | tipo |
+|---|---|
+| 4 | ACÓRDÃO |
+| 12 | DECLARACAO DE VOTO |
+| 25 | PARECER PRÉVIO |
+| 6 | RELATÓRIO |
+| 13 | RELATÓRIO VOTO |
+| 3 | RESOLUÇÃO |
+| 172 | VOTO |
+| 98 | VOTO VISTA |
+
+`nepotismo` = 2.130 cru → **239** com o filtro (11%).
+
+🔴 **A LISTA PALPITADA EM 18/08 ESTARIA ERRADA.** O fallback proposto era
+`633 DECISÃO`, `687 ACÓRDÃO RETIFICADOR`, `653 DESPACHO DECISÓRIO`, `5 DESPACHO
+SINGULAR`, `160 SÚMULA`, `124 DECISÃO JUDICIAL` — **nenhum** deles está na lista
+oficial. E três da oficial (RELATÓRIO, DECLARACAO DE VOTO, RESOLUÇÃO) não estavam no
+palpite. Ler o nome do tipo e deduzir "isto é decisão" produziu 6 falsos positivos e
+3 falsos negativos em 8. **Capturar o XHR valeu mais que ler os nomes.**
+
+⚠️ A string "Documentos de Decisão" **não existe** em `build/main.03360a1865.js`
+(grep: uma única ocorrência de "Decisão", no texto de ajuda). Procurar o rótulo no
+bundle e não achar levaria a concluir que o filtro não existe mais. Ele existe — só
+não está no bundle como literal.
+
+### 2. ✅ Estabilidade da paginação — MEDIDA, e é estável
+
+Mesma busca (`nepotismo`, filtro de decisão), duas rodadas com 4 s de intervalo:
+
+```
+pág1 A: 9712405,9579759,9544029,9343180,9331003,9219537,9205174,9205242,9092601,9092602
+pág1 B: idênticas
+pág2 A: 9075781,9076554,9047204,8955498,8945532,8945533,8922854,8868150,8854622,8837858
+pág2 B: idênticas         sobreposição pág1/pág2: 0
+```
+
+Cursor = o campo `sort` do **último** documento da página: `[1764288000000,"9092602"]`.
+
+### 3. ✅ `buscaPalavraExata` FUNCIONA; `buscaPesquisaExata` é inerte
+
+A suspeita de 18/08 ("todas 10000, suspeito demais") era **saturação escondendo o
+efeito**. Repetido com o filtro de decisão (contagens abaixo do teto):
+
+| termo | padrão | `buscaPalavraExata` | `buscaPesquisaExata` |
+|---|---|---|---|
+| `nepotismo` | 239 | 238 | 239 |
+| **`nepotismos`** | **239** | **5** | 239 |
+| `relatoria` / `relator` | 10.000 | 10.000 | 10.000 |
+
+✅ `buscaPalavraExata` **desliga o stemming** — e a tela diz isso no `title` do
+toggle: *"não utiliza o radical da palavra… ao digitar 'relatoria' não serão exibidas
+'relator' ou 'relatora'"*. É o único controle de texto que funciona nesta API.
+🔴 `buscaPesquisaExata` é **inerte** nos 6 pares testados, inclusive em frase de 3
+palavras. E aspas dentro de `texto` **quebram** (envelope de erro). **Não há busca
+por frase exata nesta base.**
+
+### 4. 🔴 A PÁGINA É FIXA EM 10 E NÃO HÁ PARÂMETRO QUE MUDE ISSO
+
+`size`, `qtd`, `tamanho`, `limit`, `from` e `pagina` = 50: **todos** aceitos com
+HTTP 200, **todos** devolveram 10 itens e o mesmo `tamanho`. Parâmetro aceito não é
+parâmetro obedecido (lição do TCE-PA). Varredura profunda custa 1 request / 10 docs.
+
+### 5. 🔴 CINCO FILTROS DO CONTRATO ESTÃO MORTOS NO ÍNDICE
+
+O bundle monta cláusulas para **16** filtros; o painel expõe **7**. Os que sobram
+respondem HTTP 200 e **zero**:
+
+| campo | teste | resultado |
+|---|---|---|
+| `dtsessao` (data de JULGAMENTO) | `{"exists":{"field":"dtsessao"}}` | **0** |
+| `esferajulgamento` | `{"exists":{"field":"esferajulgamento"}}` | **0** |
+| `idmembrorelator` (RELATOR) | 3 relatores **reais** + 1 inventado | **0** |
+| `tpespeciecategoria` | os **4** valores do combo | **0** |
+| `tpsessao` | id 11 (PLENO-ORDINARIA) | **0** |
+
+⚠️ **Não há filtro por relator nem por data de julgamento nesta base.** Os combos
+existem e estão populados (32 relatores, 19 tipos de sessão) — o campo é que vem
+`null` em todo documento. Testar um relator só e ver 0 leria como "esse relator não
+tem julgado"; foi o **inventado** e o `exists` que fecharam o argumento.
+
+### 6. ✅ Os que FUNCIONAM, provados por contagem (base `nepotismo` = 2.130)
+
+| cláusula | resultado |
+|---|---|
+| `{"terms":{"idtipodocumento":["4"]}}` | 64 ; `["999999"]` → **0** (id inválido não é ignorado) |
+| `{"terms":{"idlocalidade":["60"]}}` FORTALEZA | 62 ; `["999999"]` → 0 |
+| `{"terms":{"idespecie":["74"]}}` TOMADA DE CONTAS ESP. | 731 |
+| `{"terms":{"idsetor":["32"]}}` GAB.CONS. ALEXANDRE | 10 |
+| `{"range":{"dtfinalizado":{gte,lte}}}` 2024 | 169 ; só `gte` → 399 ; só `lte` → 1.900 |
+
+✅ **As duas pontas da data funcionam sozinhas** — ao contrário do TCE-PR, onde uma
+zerava e a outra era ignorada.
+
+🔴 **O FORMATO DA DATA É UM 400 MASCARADO EM 200:**
+
+```
+{"range":{"dtfinalizado":{"gte":"2024-01-01","lte":"2024-12-31"}}}            -> 169 ✅
+{"range":{"dtfinalizado":{"format":"dd/MM/yyyy","gte":"01/01/2024",...}}}     -> 169 ✅
+{"range":{"dtfinalizado":{"gte":"01/01/2024","lte":"31/12/2024"}}}
+                        -> HTTP 200 com {"erros":["400 Bad Request"],"data":null}
+```
+
+**Toda** resposta desta API é `{"erros":[...],"data":{...}}` com HTTP 200 — inclusive
+quando o Elasticsearch recusa. Quem checar `statusCode === 200` e ler `data.lista`
+recebe `undefined` e conclui "zero resultados". É a **sexta casca de HTTP 200** do
+repo.
+
+### 7. ✅ O ACERVO É PUBLICADO — raro no Bloco 5
+
+`GET /documentos/total-documentos` → `{"erros":[],"data":"5318348"}`
+`GET /documentos/data-carga` → `2026-08-22T06:03:23-0300`
+
+Isso resolve o que a busca não resolve: `texto:""` satura em 10.000, então sem este
+endpoint o tamanho da base seria "desconhecido". ⚠️ São **documentos** do Contexto,
+não decisões.
+
+### 8. 🔴 O `conteudo` DA BUSCA NÃO É O INTEIRO TEOR — e o de 18/08 dizia que era
+
+O ACÓRDÃO 1754/2026 (id 9343180) declara **"1/12"** na primeira linha e traz **976
+chars** de `conteudo`: é a primeira página, não as doze. Comparado com o PDF, no
+ACÓRDÃO 1374/2023 (id 6886405):
+
+| fonte | chars |
+|---|---|
+| `conteudo` da busca | 1.007 |
+| `pdftotext` do PDF público | **2.218** |
+
+E o que falta no `conteudo` é justamente o que importa: **a EMENTA, o RELATOR e a
+SESSÃO DE JULGAMENTO** só aparecem no PDF —
+
+```
+ACÓRDÃO N° 1374 / 2023 / PROCESSO: 04747/2018-4 / ESPÉCIE: TOMADA DE CONTAS ESPECIAL
+MUNICÍPIO: NOVA RUSSAS / RELATOR: CONSELHEIRO SUBSTITUTO MANASSÉS PEDROSA CAVALCANTE
+SESSÃO DE JULGAMENTO: 15 A 19-05-2023 - 1ª CÂMARA - VIRTUAL ORDINÁRIA
+EMENTA: TOMADA DE CONTAS ESPECIAL, oriunda de denúncia acerca de …
+```
+
+⚠️ **É por isso que `dtsessao` e `idmembrorelator` estarem mortos no índice não
+significa que o dado não exista** — ele existe, no PDF, e simplesmente não foi
+indexado. Medido em 10 de 10 acórdãos da primeira página: `conteudo` < 5.000 chars.
+**`--fetch-inteiro-teor` (que baixa o PDF) não é opcional para uso jurisprudencial.**
+
+### 9. ✅ Permalink — confirmado de novo em sessão limpa
+
+`https://api-add.tce.ce.gov.br/arquivos/documento?documento_id=<iddocumento>` →
+200 `application/pdf`, sem cookie e sem referer. Medido nesta rodada em 5 documentos
+(118 KB a 287 KB, todos com assinatura `%PDF`). Continua sendo **o único** endereço
+público do documento: o card não tem `<a href>` e a rota do SPA nunca muda.
+
+---
+
+## Pendências que SOBRAM (declaradas, não esquecidas)
+
+1. **`identidade`** (11.519 opções), `idinteressado` e `idsituacao` **não foram
+   provados por contagem** — o crawler expõe `--entidade` mas o veredito é `null`.
+2. **`dssumula`** continua `null`: `{"exists":{"field":"dssumula"}}` = **0** no
+   índice inteiro. Não foi possível medir em documento do tipo SÚMULA (160) porque
+   **SÚMULA não está na lista oficial de "Documentos de Decisão"** — o que por si só
+   é achado, mas deixa o campo sem teste positivo.
+3. **Rate limit não medido.** Nenhuma das ~120 requisições desta sessão levou 429 ou
+   bloqueio, mas o limite não foi bisectado.
+4. **O JSF `tcewsapi.tce.ce.gov.br/paginas/jurisdicionadoJurisprudenciaPortal.xhtml`**
+   — o que o menu oficial chama de "Jurisprudência → Consulta" — **continua não
+   mapeado**. Falta comparar o acervo dele com o do Contexto.
+5. **`/documentos/buscar-jurisprudencia`** (busca sistematizada por tesauro) segue
+   sem `texto` e é subconjunto declarado; não foi transformado em flag.
+6. Módulos irmãos não mapeados: `/sumulas`, `/normativos`, `/boletim`
+   (Informativos de Jurisprudência), `/sessao`, `Acervo DOE-TCM`.

@@ -1,0 +1,12 @@
+[
+ {
+  "m": "POST",
+  "u": "https://contexto-api.tce.ce.gov.br/documentos/buscar",
+  "body": "{\"texto\":\"nepotismo\",\"filtros\":[{\"terms\":{\"idtipodocumento\":[\"4\",\"12\",\"25\",\"6\",\"13\",\"3\",\"172\",\"98\"]}}],\"searchAfterSort\":null,\"buscaPalavraExata\":false,\"buscaPesquisaExata\":false,\"sort\":\"desc\"}"
+ },
+ {
+  "m": "POST",
+  "u": "https://contexto-api.tce.ce.gov.br/logs-es/salvar-log-busca-app",
+  "body": "{\"tempo_processamento\":0.17,\"termos\":\"nepotismo\",\"filtros\":[\"{idtipodocumento:4}\",\"{idtipodocumento:12}\",\"{idtipodocumento:25}\",\"{idtipodocumento:6}\",\"{idtipodocumento:13}\",\"{idtipodocumento:3}\",\"{idtipodocumento:172}\",\"{idtipodocumento:98}\"],\"timestamp\":\"2026-08-22T19:08:35.781Z\",\"origem\":\"[Documentos]: 186.224.78.221\"}"
+ }
+]
