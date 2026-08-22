@@ -94,13 +94,12 @@ async function executar(comando, params = {}, opcoes = {}) {
     let saida = '';
     let erroPadrao = '';
     let expirou = false;
-    let cancelarSigkill = null;
 
     if (typeof opcoes.aoIniciar === 'function') opcoes.aoIniciar(filho.pid);
 
     const relogio = setTimeout(() => {
       expirou = true;
-      cancelarSigkill = matarGrupo(filho.pid);
+      matarGrupo(filho.pid);
     }, timeoutMs);
 
     filho.stdout.on('data', (d) => { saida += d.toString(); });
@@ -108,16 +107,11 @@ async function executar(comando, params = {}, opcoes = {}) {
 
     filho.on('error', (e) => {
       clearTimeout(relogio);
-      if (cancelarSigkill) cancelarSigkill();
       resolve({ ok: false, total: 0, resultados: [], arquivo: null, erro: e.message, codigoSaida: null, envelope: null });
     });
 
     filho.on('close', (codigo) => {
       clearTimeout(relogio);
-      // Se o grupo ja saiu (por SIGTERM ou sozinho) antes dos 5s, cancela o
-      // SIGKILL de garantia — senao, se o SO reciclar o PID nessa janela, o
-      // sinal atinge processo alheio em vez do grupo que morreu.
-      if (cancelarSigkill) cancelarSigkill();
 
       if (expirou) {
         return resolve({
@@ -126,6 +120,10 @@ async function executar(comando, params = {}, opcoes = {}) {
         });
       }
 
+      // Ler `envelope.error` AQUI, dentro do executor, e legitimo — e a
+      // superfície de erro que a CLI declarou, nao extracao de resultado.
+      // O que e proibido e um consumidor ACIMA deste modulo depender de
+      // qualquer campo do envelope (ver o comentario acima de `executar`).
       const envelope = ultimoJson(saida);
       if (!envelope || envelope.success !== true) {
         const erro = (envelope && envelope.error) || erroPadrao.trim() || `saida sem envelope (codigo ${codigo})`;
@@ -148,22 +146,29 @@ async function executar(comando, params = {}, opcoes = {}) {
 
 /**
  * Mata o grupo inteiro (node + Chromium filhos), com SIGKILL de garantia 5s
- * depois. Devolve uma funcao que cancela esse SIGKILL — o chamador usa isso
- * quando o `close` chega antes dos 5s, para nao arriscar atingir um PID
- * reciclado pelo SO depois que o grupo original ja morreu.
+ * depois — INCONDICIONAL, de proposito. O Chromium e NETO do processo que
+ * spawnamos (filho do node do `bin/jur`), nao filho direto: o evento `close`
+ * do executor dispara quando o node do crawler sai, o que costuma ser quase
+ * imediato apos o SIGTERM (acao default, sem handler proprio em jur/ alem
+ * deste arquivo) — MESMO que o Chromium, que recebeu o mesmo SIGTERM via
+ * broadcast do grupo, ainda esteja de pe ignorando ou demorando a sair. Uma
+ * versao anterior cancelava este SIGKILL quando `close` chegava antes dos 5s,
+ * o que evitava atingir um PID reciclado pelo SO — mas trocava um risco
+ * pequeno e raro (PID reciclado numa janela de 5s) por um risco maior e mais
+ * frequente (Chromium orfao vazando memoria dentro do container,
+ * exatamente no caminho de timeout, que e onde um browser travado e mais
+ * provavel). Reprovado em revisao; revertido para SIGKILL sempre disparar.
  */
 function matarGrupo(pid) {
-  if (!pid) return () => {};
+  if (!pid) return;
   try {
     process.kill(-pid, 'SIGTERM');
   } catch {
     try { process.kill(pid, 'SIGTERM'); } catch { /* ja morreu */ }
   }
-  const sigkill = setTimeout(() => {
+  setTimeout(() => {
     try { process.kill(-pid, 'SIGKILL'); } catch { /* ja morreu */ }
-  }, 5000);
-  sigkill.unref();
-  return () => clearTimeout(sigkill);
+  }, 5000).unref();
 }
 
 // `Resultado.envelope` e diagnostico/teste apenas, NAO contratual — ver o

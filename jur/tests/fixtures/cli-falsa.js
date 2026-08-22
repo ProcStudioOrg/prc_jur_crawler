@@ -33,4 +33,21 @@ if (modo === 'inline') {
   // (todas usam {success, count, output}), mas o executor precisa cobrir o caso.
   const resultados = [{ processo: '7', ementa: 'y' }];
   process.stdout.write(JSON.stringify({ success: true, count: 1, results: resultados }) + '\n');
+} else if (modo === 'trava-neto-ignora-sigterm') {
+  // Reproduz a arvore real: o executor spawna ESTE processo (equivalente ao
+  // node do bin/jur) com {detached:true}, e ESTE processo spawna um NETO
+  // (equivalente ao Chromium) SEM detached — o neto fica no MESMO grupo.
+  // Este processo (o filho direto) NAO instala handler de SIGTERM: morre
+  // rapido no sinal, como o node do bin/jur morreria de verdade. O NETO
+  // ignora SIGTERM de proposito, simulando um Chromium que nao morre so com
+  // o sinal gentil. So o SIGKILL de garantia (broadcast por -pid no grupo)
+  // deve conseguir terminar o neto.
+  const { spawn } = require('node:child_process');
+  const neto = spawn(process.execPath, [__filename, 'neto-ignora-sigterm', '-o', saida], { stdio: 'ignore' });
+  fs.writeFileSync(saida + '.neto-pid', String(neto.pid));
+  setInterval(() => {}, 1000);
+} else if (modo === 'neto-ignora-sigterm') {
+  process.on('SIGTERM', () => { /* ignora de proposito */ });
+  fs.writeFileSync(saida + '.pronto', '1');
+  setInterval(() => {}, 1000);
 }
