@@ -75,8 +75,11 @@
     </form>
   </template>
 
-  <!-- app.js PRIMEIRO: ele define window.jurApi e window.jurUI, que os outros dois consomem
-       ja no carregamento (disponibilidade.js busca /api/v1/tribunais de imediato). -->
+  <!-- markdown.js antes de app.js: `bolha()` consulta window.jurMarkdown ja na primeira
+       resposta. app.js antes dos outros dois: ele define window.jurApi e window.jurUI,
+       que eles consomem no carregamento (disponibilidade.js busca /api/v1/tribunais de
+       imediato). -->
+  <script src="/markdown.js"></script>
   <script src="/app.js"></script>
   <script src="/disponibilidade.js"></script>
   <script src="/config.js"></script>

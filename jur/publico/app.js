@@ -289,7 +289,7 @@ async function reanexar(id) {
       if (conversaAtual !== id) return;
       if (nome === 'texto') {
         if (!destino) destino = bolha('assistant', '');
-        destino.textContent += dados.texto;
+        acrescentarAssistente(destino, dados.texto);
         $('#mensagens').scrollTop = $('#mensagens').scrollHeight;
       } else if (nome === 'ferramenta') {
         bolha('ferramenta', `▸ ${dados.nome}(${JSON.stringify(dados.entrada)})`);
@@ -316,10 +316,31 @@ async function reanexar(id) {
 $('#nova-conversa').addEventListener('click', irParaInicial);
 
 // ---------- mensagens ----------
+/**
+ * A bolha do ASSISTENTE guarda o texto cru em `data-bruto` e reparseia o markdown
+ * inteiro a cada pedaco que chega. Renderizar so o delta nao funcionaria: no meio do
+ * streaming o markdown esta sempre pela metade (`**` sem fechar, lista sem o proximo
+ * item), e o significado de um pedaco depende do que veio antes. Reparsear alguns KB
+ * alguns milhares de vezes e irrelevante nesta escala, e evita o texto pular de cru para
+ * renderizado quando a resposta termina.
+ */
+function escreverAssistente(div, bruto) {
+  div.dataset.bruto = bruto;
+  window.jurMarkdown.renderizar(bruto, div);
+}
+
+function acrescentarAssistente(div, pedaco) {
+  escreverAssistente(div, (div.dataset.bruto || '') + pedaco);
+}
+
 function bolha(classe, texto) {
   const div = document.createElement('div');
   div.className = `msg ${classe}`;
-  div.textContent = texto;
+  // So o assistente. O que o USUARIO digitou vai como texto puro: renderizar markdown
+  // ali seria reinterpretar a entrada dele — quem escreve `**` quer ver `**`. Erro
+  // tambem e texto puro, pelo mesmo motivo.
+  if (classe === 'assistant') escreverAssistente(div, texto);
+  else div.textContent = texto;
   $('#mensagens').appendChild(div);
   $('#mensagens').scrollTop = $('#mensagens').scrollHeight;
   return div;
@@ -435,7 +456,7 @@ async function enviar(campo, modelo, esforco) {
       if (nome === 'texto') {
         if (!aindaNaMesmaConversa) return;
         if (!destino) destino = bolha('assistant', '');
-        destino.textContent += dados.texto;
+        acrescentarAssistente(destino, dados.texto);
         $('#mensagens').scrollTop = $('#mensagens').scrollHeight;
       } else if (nome === 'ferramenta') {
         if (!aindaNaMesmaConversa) return;
