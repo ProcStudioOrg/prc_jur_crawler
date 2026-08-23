@@ -196,6 +196,48 @@ body {
 .estado-linha { font-size: 13px; color: var(--fraco); }
 .painel .nota { white-space: pre-wrap; font-size: 14px; line-height: 1.65; }
 
+/* ---------- painel de configurações ---------- */
+.secao-config { margin-top: 22px; }
+.secao-config h3 { margin: 0 0 4px; font-size: 15px; }
+.campo {
+  width: 100%; padding: 9px 11px; margin-top: 8px;
+  background: var(--fundo); color: var(--texto);
+  border: 1px solid var(--borda); border-radius: 9px; font: inherit;
+}
+.campo:focus { outline: none; border-color: var(--acento); }
+.form-chave { display: flex; gap: 8px; align-items: flex-end; margin-top: 8px; }
+.form-chave .campo { margin-top: 0; }
+.botao-acento {
+  padding: 9px 14px; border: 0; border-radius: 9px; white-space: nowrap;
+  background: var(--acento); color: #fff; font: inherit; font-weight: 500; cursor: pointer;
+}
+.botao-acento:disabled { opacity: .5; cursor: default; }
+.chave-nova {
+  margin-top: 12px; padding: 12px; border-radius: var(--raio);
+  background: var(--fundo); border: 1px solid var(--acento);
+}
+.chave-nova p { margin: 0 0 6px; font-size: 13px; }
+.chave-nova code {
+  display: block; word-break: break-all; font-size: 12.5px;
+  font-family: ui-monospace, SFMono-Regular, monospace; margin-bottom: 8px;
+}
+.lista-chaves { margin-top: 12px; }
+.chave-linha {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 0; border-top: 1px solid var(--borda); font-size: 14px;
+}
+.chave-linha small { color: var(--fraco); font-size: 12px; }
+.revogar {
+  background: none; border: 1px solid var(--borda); border-radius: 8px;
+  padding: 5px 10px; color: var(--fraco); font: inherit; font-size: 13px; cursor: pointer;
+}
+.revogar:hover { border-color: #B3261E; color: #B3261E; }
+.exemplo {
+  background: var(--fundo); border: 1px solid var(--borda); border-radius: var(--raio);
+  padding: 12px; overflow-x: auto; font-size: 12.5px; line-height: 1.6;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
 @media (max-width: 860px) {
   #lateral { display: none; }
   #inicial { padding-top: 6vh; }

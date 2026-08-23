@@ -52,20 +52,29 @@ dentro da imagem. Funciona igual em macOS, Linux e Windows/WSL.
     cd infra && docker compose up -d --build
 
 Abra `http://localhost:3000`. A interface tem o chat, a lista de tribunais com o estado de
-cada um (verde ok · amarelo instável · cinza bloqueado · azul exige sessão) e o campo da
-chave da Anthropic — que fica no seu browser, nunca no servidor.
+cada um (verde ok · amarelo instável · cinza bloqueado · azul exige sessão), o campo da
+chave da Anthropic — que fica no seu browser, nunca no servidor — e, em Configurações no
+rodapé da lateral, o gerador de chaves de conexão.
+
+A API exige `Authorization: Bearer <chave>` em qualquer requisição que não venha da própria
+interface (curl, MCP, script). A chave é gerada na interface, em Configurações — o valor
+aparece uma única vez, então copie na hora. Para desenvolvimento local, `JUR_EXIGIR_CHAVE=0`
+desliga essa exigência inteira. A documentação completa da API (todas as rotas, com exemplos)
+fica em `http://localhost:3000/docs`.
 
 A mesma API serve três clientes:
 
 | Superfície | Endereço |
 |---|---|
 | REST | `http://localhost:3000/api/v1` |
-| MCP | `http://localhost:3000/mcp` (`claude mcp add --transport http jur http://localhost:3000/mcp`) |
+| MCP | `http://localhost:3000/mcp` (`claude mcp add --transport http jur http://localhost:3000/mcp --header "Authorization: Bearer SUA_CHAVE"`) |
 | Interface | `http://localhost:3000` |
 
 Exemplo de busca por REST:
 
-    curl -X POST localhost:3000/api/v1/buscas -H 'content-type: application/json' \
+    curl -X POST localhost:3000/api/v1/buscas \
+      -H "Authorization: Bearer SUA_CHAVE" \
+      -H 'content-type: application/json' \
       -d '{"tribunal":"trf4","query":"auxilio-acidente","dataInicio":"01/01/2024"}'
 
 Ressalvas do container estão em [`infra/README.md`](infra/README.md) — em especial `trf3`
