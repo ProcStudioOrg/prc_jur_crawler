@@ -476,7 +476,10 @@ function documento() {
             200: {
               description:
                 'stream SSE: eventos `texto` (incremental), `ferramenta` (nome + entrada de cada tool chamada), '
-                + '`fim` (texto completo) e, em falha durante o stream, `erro`',
+                + '`fim` ({ texto, mensagens }: texto e o array `mensagens` com os blocos NOVOS deste turno — '
+                + 'inclui rodadas de tool_use/tool_result quando houver, não só a resposta final; o cliente '
+                + 'precisa desses blocos para montar o histórico do próximo turno sem perder o `job_id` das '
+                + 'buscas nem a ressalva do tribunal presa no tool_result) e, em falha durante o stream, `erro`',
               content: { 'text/event-stream': { schema: { type: 'string' } } },
             },
             400: RESPOSTAS.Erro400,

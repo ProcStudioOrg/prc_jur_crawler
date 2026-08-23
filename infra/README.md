@@ -121,9 +121,11 @@ quem alcança a porta**. Exposto sem proxy autenticado na frente, o serviço fic
 
 ## Autenticação — o que a chave de conexão protege e o que ela não protege
 
-Guarda única no roteador (`jur/servidor/autenticacao.js`), aplicada a **todas** as rotas
-`/api/v1/*` e a `/mcp`. A única isenta é `GET /api/v1/saude`, que é o healthcheck do
-container e roda de dentro, sem como carregar segredo.
+Guarda única no roteador (`jur/servidor/autenticacao.js`), aplicada a **toda** requisição
+— não só `/api/v1/*` e `/mcp`: também `/`, `/docs`, `/api/v1/openapi.json` e os estáticos,
+porque a guarda roda antes do roteador procurar qual rota bate. A única isenta é
+`GET /api/v1/saude`, que é o healthcheck do container e roda de dentro, sem como carregar
+segredo.
 
 **O que existe:**
 
@@ -141,10 +143,14 @@ container e roda de dentro, sem como carregar segredo.
   `fetch` da própria página —, e usar `Origin` trancava a interface do lado de fora dela
   mesma. Isso está travado em `jur/tests/browser/interface-real.test.js`, com Chromium de
   verdade.
-- **Barreira de origem.** Antes de qualquer outra coisa, a guarda recusa com **403**
-  requisição vinda de outro site (`Origin` que não seja loopback nem igual ao `Host`, ou
-  `Sec-Fetch-Site` `cross-site`/`same-site`). Vale para toda rota, mesmo com
-  `JUR_EXIGIR_CHAVE=0`.
+- **Barreira de origem.** Antes de qualquer outra coisa — mesmo com `JUR_EXIGIR_CHAVE=0`
+  —, a guarda recusa com **403** requisição com `Origin` que não seja loopback nem igual
+  ao `Host`. Isso vale para toda rota, com a chave exigida ligada ou desligada. Já o 403
+  por `Sec-Fetch-Site` `cross-site`/`same-site` só existe quando a chave está
+  **exigida**: com `JUR_EXIGIR_CHAVE=0` o código sai mais cedo (antes de chegar na
+  checagem de `Sec-Fetch-Site`, que vive junto da dispensa da interface local, logo
+  acima), e a requisição sem `Origin` mas com `Sec-Fetch-Site: cross-site` ou
+  `same-site` passa com 200.
 
 **O que isso de fato protege — e o que não protege:**
 
