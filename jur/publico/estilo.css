@@ -306,3 +306,8 @@ body {
   #lateral { width: 86vw; flex-basis: 86vw; }
   body.lateral-aberta .abrir-lateral { left: auto; right: 10px; }
 }
+
+/* Ficha do tribunal: se a busca por magistrado existe ali. Um portal sem esse filtro
+   (TJPR, entre outros) parecia busca quebrada enquanto a tela nao dizia nada. */
+.painel .nota.magistrado { margin-top: 14px; font-size: 13.5px; }
+.painel .nota.magistrado small { display: block; margin-top: 4px; color: var(--fraco); font-size: 12.5px; }

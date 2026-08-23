@@ -21,9 +21,10 @@ before(() => {
 });
 
 describe('ferramentas', () => {
-  it('publica exatamente as tres tools com schema', () => {
+  it('publica exatamente as quatro tools com schema', () => {
     const nomes = ferramentas.definicoes().map((d) => d.name).sort();
-    assert.deepStrictEqual(nomes, ['buscar_jurisprudencia', 'ler_resultados', 'listar_tribunais']);
+    assert.deepStrictEqual(nomes,
+      ['buscar_jurisprudencia', 'listar_relatores', 'listar_tribunais', 'ler_resultados'].sort());
     for (const d of ferramentas.definicoes()) {
       assert.ok(d.description.length > 20, `${d.name} precisa de descricao util`);
       assert.strictEqual(d.input_schema.type, 'object');
@@ -36,7 +37,7 @@ describe('ferramentas', () => {
     }
   });
 
-  it('os tres schemas declaram additionalProperties: false', () => {
+  it('todos os schemas declaram additionalProperties: false', () => {
     for (const d of ferramentas.definicoes()) {
       assert.strictEqual(d.input_schema.additionalProperties, false, `${d.name} precisa fechar o schema`);
     }
@@ -312,5 +313,135 @@ describe('ferramentas', () => {
       assert.strictEqual(typeof texto, 'string');
       assert.match(texto, /job_id.*obrigat/i);
     });
+  });
+});
+
+/**
+ * Busca por MAGISTRADO. O achado que originou isto: um usuario tentou buscar por
+ * magistrado no TJPR e nao conseguiu. Duas causas somadas — o portal do TJPR nao tem
+ * esse filtro, e o servidor nao expunha o parametro para tribunal nenhum. O resultado
+ * era o pior possivel: nao funcionava e nao havia por que.
+ *
+ * O invariante que estes testes protegem: pedir relator num tribunal que nao filtra por
+ * relator NAO pode virar uma busca sem o filtro (que devolveria julgados de todo mundo
+ * como se fossem daquele magistrado) nem um zero (que se leria como "esse magistrado
+ * nao julgou nada sobre o tema").
+ */
+describe('ferramentas — busca por magistrado', () => {
+  const capturando = () => {
+    const chamadas = [];
+    return {
+      chamadas,
+      fila: { ...fila, enfileirar: (c, p) => { chamadas.push([c, p]); return fila.enfileirar(c, p); } },
+    };
+  };
+
+  it('buscar_jurisprudencia aceita relator no schema', () => {
+    const d = ferramentas.definicoes().find((x) => x.name === 'buscar_jurisprudencia');
+    assert.ok(d.input_schema.properties.relator, 'sem isto o modelo nao tem como pedir');
+    assert.match(d.description, /magistrado|relator/i,
+      'a descricao precisa dizer que o filtro existe e que nao vale em todo tribunal');
+  });
+
+  it('tribunal com suporte repassa o relator para a fila', async () => {
+    const { chamadas, fila: espia } = capturando();
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'stf', query: 'x', relator: 'GILMAR MENDES' }, { fila: espia, timeoutBuscaMs: 0 });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(chamadas[0][1].relator, 'GILMAR MENDES');
+  });
+
+  it('sem relator no pedido, nada de relator vai para a fila', async () => {
+    const { chamadas, fila: espia } = capturando();
+    await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'stf', query: 'x' }, { fila: espia, timeoutBuscaMs: 0 });
+    assert.ok(!chamadas[0][1].relator, 'nao pode inventar filtro que o usuario nao pediu');
+  });
+
+  it('TJPR: relator pedido num tribunal sem o filtro NAO vira busca sem filtro', async () => {
+    const { chamadas, fila: espia } = capturando();
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'tjpr', query: 'usucapiao', relator: 'FULANO' }, { fila: espia, timeoutBuscaMs: 0 });
+    assert.strictEqual(chamadas.length, 0,
+      'rodar a busca sem o filtro entregaria julgados de todos os desembargadores como se fossem de um');
+    assert.strictEqual(r.ok, false, 'e parametro invalido PARA ESTE TRIBUNAL, nao resultado do dominio');
+    assert.match(r.texto, /tjpr/i);
+    assert.match(r.texto, /nao diga|não diga/i,
+      'o texto precisa impedir o modelo de reportar isso como ausencia de julgados');
+  });
+
+  it('a recusa por falta de suporte ensina a alternativa, nao so recusa', async () => {
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'tjpr', query: 'x', relator: 'F' }, { fila, timeoutBuscaMs: 0 });
+    assert.match(r.texto, /relator/i);
+    assert.match(r.texto, /resultado/i, 'a saida e ler o campo relator de cada julgado devolvido');
+  });
+
+  it('tribunal que exige nome exato avisa disso ao devolver o resultado', async () => {
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'stf', query: 'x', relator: 'gilmar' }, { fila, timeoutBuscaMs: 0 });
+    assert.match(r.texto, /EXATO/i,
+      'no STF nome parcial devolve zero, e zero aqui se le como "o ministro nao julgou isso"');
+  });
+
+  it('relator vazio e o mesmo que nao pedir relator', async () => {
+    const { chamadas, fila: espia } = capturando();
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'tjpr', query: 'x', relator: '   ' }, { fila: espia, timeoutBuscaMs: 0 });
+    assert.strictEqual(r.ok, true, 'string em branco nao e um pedido de filtro por magistrado');
+    assert.strictEqual(chamadas.length, 1);
+  });
+});
+
+describe('ferramentas — listar_relatores', () => {
+  it('publica schema com tribunal obrigatorio', () => {
+    const d = ferramentas.definicoes().find((x) => x.name === 'listar_relatores');
+    assert.deepStrictEqual(d.input_schema.required, ['tribunal']);
+  });
+
+  it('tribunal sem o filtro nem tenta listar', async () => {
+    const r = await ferramentas.executarDetalhado('listar_relatores', { tribunal: 'tjpr' }, { fila });
+    assert.strictEqual(r.ok, false);
+    assert.match(r.texto, /tjpr/i);
+  });
+
+  it('tribunal desconhecido e parametro invalido', async () => {
+    const r = await ferramentas.executarDetalhado('listar_relatores', { tribunal: 'tjxx' }, { fila });
+    assert.strictEqual(r.ok, false);
+    assert.match(r.texto, /desconhecid/i);
+  });
+
+  it('tribunal suportado mas sem flag de listagem explica em vez de falhar mudo', async () => {
+    // trf1 aceita -r mas a CLI nao tem --listar-* nenhum para relatores.
+    const r = await ferramentas.executarDetalhado('listar_relatores', { tribunal: 'trf1' }, { fila });
+    assert.match(r.texto, /listagem|listar/i);
+  });
+
+  it('listagem que exige termo pede o termo em vez de rodar errado', async () => {
+    // O --listar-filtros do TJPB e autocomplete: sem termo nao ha o que listar.
+    const r = await ferramentas.executarDetalhado('listar_relatores', { tribunal: 'tjpb' }, { fila });
+    assert.strictEqual(r.ok, false);
+    assert.match(r.texto, /termo/i);
+  });
+
+  it('usa o executor de listagem e devolve o que a CLI respondeu', async () => {
+    const chamadas = [];
+    const listarFn = async (comando, args) => {
+      chamadas.push([comando, args]);
+      return { ok: true, dados: { success: true, relatores: ['MINISTRO A', 'MINISTRO B'] }, erro: null };
+    };
+    const r = await ferramentas.executarDetalhado('listar_relatores', { tribunal: 'stf' }, { fila, listarFn });
+    assert.strictEqual(r.ok, true);
+    assert.deepStrictEqual(chamadas[0], ['stf', ['--listar-facetas', 'ministro_facet']]);
+    assert.match(r.texto, /MINISTRO A/);
+  });
+
+  it('falha da CLI vira ok:false, nunca lista vazia', async () => {
+    const listarFn = async () => ({ ok: false, dados: null, erro: 'portal fora do ar' });
+    const r = await ferramentas.executarDetalhado('listar_relatores', { tribunal: 'stf' }, { fila, listarFn });
+    assert.strictEqual(r.ok, false);
+    assert.match(r.texto, /fora do ar/);
+    assert.match(r.texto, /nao diga|não diga|NAO /i,
+      'lista que falhou nao pode ser lida como "este tribunal nao tem esses magistrados"');
   });
 });

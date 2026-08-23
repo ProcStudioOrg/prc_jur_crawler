@@ -70,6 +70,40 @@
     corpo.appendChild(ul);
   }
 
+  // Como o valor precisa vir, por forma. O que importa aqui e a assimetria: nos
+  // tribunais de nome-exato e codigo, o valor aproximado NAO da erro — da zero, e zero
+  // se le como "esse magistrado nao julgou nada sobre o tema".
+  const FORMA_MAGISTRADO = {
+    'nome-exato': 'sim — exige o NOME EXATO do combo do tribunal (nome parcial devolve zero, não erro)',
+    trecho: 'sim — basta um trecho do nome',
+    nome: 'sim — pelo nome do magistrado',
+    codigo: 'sim — mas por CÓDIGO/matrícula, não pelo nome',
+  };
+
+  /**
+   * Diz, na ficha do tribunal, se a busca por magistrado existe ali. Um usuario tentou
+   * buscar por magistrado no TJPR e nao conseguiu: o portal do TJPR nao tem esse filtro,
+   * e nada na tela dizia isso. Silencio vira "quebrado" na cabeca de quem tenta.
+   */
+  function linhaMagistrado(t) {
+    const r = t.relator || { suportado: false };
+    const p = document.createElement('p');
+    p.className = 'nota magistrado';
+    const rotulo = document.createElement('strong');
+    rotulo.textContent = 'Busca por magistrado: ';
+    p.appendChild(rotulo);
+    p.appendChild(document.createTextNode(
+      r.suportado ? (FORMA_MAGISTRADO[r.forma] || 'sim') : 'não — este portal não tem esse filtro',
+    ));
+    if (r.nota) {
+      const detalhe = document.createElement('small');
+      detalhe.textContent = r.nota;
+      p.appendChild(document.createElement('br'));
+      p.appendChild(detalhe);
+    }
+    return p;
+  }
+
   function abrirRessalva(t) {
     const caixa = document.createElement('div');
     const h = document.createElement('h2');
@@ -84,6 +118,7 @@
     nota.className = 'nota';
     nota.textContent = t.nota || 'Sem ressalva registrada para este tribunal.';
     caixa.appendChild(h); caixa.appendChild(estado); caixa.appendChild(nota);
+    caixa.appendChild(linhaMagistrado(t));
     window.jurUI.abrirPainel($('#painel-ressalva'), '');
     $('.painel-caixa', $('#painel-ressalva')).appendChild(caixa);
   }

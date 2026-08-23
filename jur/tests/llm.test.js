@@ -6,6 +6,7 @@ const { describe, it, before } = require('node:test');
 const db = require('../servidor/db');
 const jobs = require('../servidor/jobs');
 const llm = require('../servidor/llm');
+const ferramentas = require('../servidor/ferramentas');
 
 let fila;
 before(() => {
@@ -54,7 +55,9 @@ describe('llm', () => {
     assert.ok(!('temperature' in capturado), 'temperature devolve 400 no Opus 5');
     assert.ok(!JSON.stringify(capturado).includes('budget_tokens'), 'budget_tokens foi removido da API');
     assert.ok(!JSON.stringify(capturado).includes('"type":"disabled"'), 'nao desligue o thinking do Opus 5');
-    assert.strictEqual(capturado.tools.length, 3);
+    assert.strictEqual(capturado.tools.length, ferramentas.definicoes().length,
+      'o loop precisa publicar as MESMAS tools que ferramentas.js define — travar o numero aqui\n'
+      + '     so obriga a editar o teste a cada tool nova, sem provar nada sobre o que foi enviado');
   });
 
   it('executa a tool pedida e devolve o resultado ao modelo', async () => {

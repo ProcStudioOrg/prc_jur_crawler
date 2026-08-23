@@ -25,6 +25,10 @@ if (modo === 'inline') {
   process.stdout.write(JSON.stringify({ success: true, count: 1 }) + '\n');
 } else if (modo === 'travado') {
   setInterval(() => {}, 1000); // nunca termina: exercita o timeout
+} else if (modo === 'eco-listagem') {
+  // Modo de LISTAGEM (--listar-*): nao recebe -o e nao produz arquivo. Devolve os args
+  // que recebeu para o teste conferir que nada da busca (query, datas, -o) vazou.
+  process.stdout.write(JSON.stringify({ success: true, args, relatores: ['FULANO DE TAL'] }) + '\n');
 } else if (modo === 'eco') {
   process.stdout.write(JSON.stringify({ success: true, args }) + '\n');
 } else if (modo === 'so-envelope') {

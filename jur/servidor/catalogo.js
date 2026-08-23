@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const relator = require('./relator');
 
 const FONTE = path.join(__dirname, '..', 'cobertura', 'tribunais.json');
 const ESTADOS = ['ok', 'instavel', 'sem-acesso', 'exige-sessao'];
@@ -23,6 +24,11 @@ function carregar() {
         acesso: j.acesso || null,
         nota: j.nota || '',
         disponivel: DISPONIVEIS.has(estado),
+        // Busca por MAGISTRADO. Vai no catalogo, e nao so na tool, porque quem precisa
+        // saber disso ANTES de tentar sao os dois: o modelo (listar_tribunais) e o
+        // usuario na tela (publico/disponibilidade.js). Ver servidor/relator.js.
+        relator: relator.obter(j.comando) || { suportado: false, forma: null, listagem: null,
+          nota: 'nao classificado — trate como sem filtro de magistrado' },
       };
     });
 }

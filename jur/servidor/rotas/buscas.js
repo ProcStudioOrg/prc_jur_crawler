@@ -1,4 +1,5 @@
 const catalogo = require('../catalogo');
+const relator = require('../relator');
 const { json, sse, lerCorpo } = require('../http');
 const { enriquecerJob } = require('../enriquecer');
 const { validarMaxPaginas, validarData, normalizarPaginacao } = require('../validacao');
@@ -28,7 +29,7 @@ function registrar(roteador, deps) {
     let corpo;
     try { corpo = await lerCorpo(req); } catch (e) { return json(res, 400, { erro: e.message }); }
 
-    const { tribunal, query, dataInicio, dataFim, maxPaginas } = corpo;
+    const { tribunal, query, dataInicio, dataFim, maxPaginas, relator: relatorPedido } = corpo;
     if (!tribunal) return json(res, 400, { erro: 'campo obrigatorio: tribunal' });
     if (!query) return json(res, 400, { erro: 'campo obrigatorio: query' });
     const validacaoMaxPaginas = validarMaxPaginas(maxPaginas, MAX_PAGINAS_TETO);
@@ -51,8 +52,25 @@ function registrar(roteador, deps) {
       return json(res, 409, { erro: `tribunal indisponivel (${info.estado})`, estado: info.estado, nota: info.nota });
     }
 
+    // Filtro por MAGISTRADO: RECUSA em vez de ignorar. Ignorar rodaria a busca sem o
+    // recorte e devolveria julgados de todos os desembargadores como se fossem de um so
+    // — e o cliente HTTP nao teria como perceber, porque a resposta seria um 202 normal.
+    // Mesma politica de ferramentas.js; a diferenca e que aqui vira 400, nao texto.
+    const filtroRelator = typeof relatorPedido === 'string' ? relatorPedido.trim() : '';
+    if (filtroRelator) {
+      const capacidade = relator.obter(tribunal);
+      if (!capacidade || !capacidade.suportado) {
+        return json(res, 400, {
+          erro: `o tribunal ${tribunal} nao tem filtro por magistrado`,
+          detalhe: capacidade ? capacidade.nota : 'a CLI do jur nao expoe esse filtro para este tribunal',
+        });
+      }
+    }
+
     try {
-      const { id, status } = fila.enfileirar(tribunal, { query, dataInicio, dataFim, maxPaginas });
+      const { id, status } = fila.enfileirar(tribunal, {
+        query, dataInicio, dataFim, maxPaginas, relator: filtroRelator || undefined,
+      });
       return json(res, 202, { id, status });
     } catch (e) {
       return json(res, 409, { erro: e.message });

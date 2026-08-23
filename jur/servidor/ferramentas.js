@@ -1,4 +1,6 @@
 const catalogo = require('./catalogo');
+const relator = require('./relator');
+const executorPadrao = require('./executor');
 const { validarMaxPaginas, validarData, normalizarPaginacao } = require('./validacao');
 
 const LIMITE_MAX = 20;
@@ -49,7 +51,9 @@ function definicoes() {
         'Lista os tribunais brasileiros disponiveis para busca de jurisprudencia, com o estado de cada um. '
         + 'Use ANTES de buscar, para escolher o tribunal certo e evitar pedir um que esta bloqueado. '
         + 'Estados: ok (funciona), instavel (funciona com ressalva — leia a nota), '
-        + 'sem-acesso (bloqueado por captcha), exige-sessao (precisa da credencial do usuario).',
+        + 'sem-acesso (bloqueado por captcha), exige-sessao (precisa da credencial do usuario). '
+        + 'Cada linha traz tambem `magistrado:` — se o tribunal filtra por relator e em que forma '
+        + '(nome-exato, trecho, nome, codigo) ou `nao`, quando esse filtro nao existe naquele portal.',
       input_schema: {
         type: 'object',
         properties: {
@@ -65,7 +69,9 @@ function definicoes() {
       description:
         'Executa uma busca de jurisprudencia num tribunal e espera ela terminar. '
         + 'Devolve o id do job e o total encontrado, NAO os julgados — use ler_resultados para os textos. '
-        + 'Pode demorar minutos em tribunais que exigem navegador.',
+        + 'Pode demorar minutos em tribunais que exigem navegador. '
+        + 'O filtro por MAGISTRADO (relator) existe em parte dos tribunais, nao em todos, '
+        + 'e a forma do valor muda de um para outro — veja o campo relator.',
       input_schema: {
         type: 'object',
         properties: {
@@ -74,8 +80,36 @@ function definicoes() {
           dataInicio: { type: 'string', description: 'data no formato DD/MM/AAAA, ex.: 01/01/2024. ISO (AAAA-MM-DD) e RECUSADO.' },
           dataFim: { type: 'string', description: 'data no formato DD/MM/AAAA, ex.: 31/12/2024. ISO (AAAA-MM-DD) e RECUSADO.' },
           maxPaginas: { type: 'integer', description: `paginas a percorrer (default 3, maximo ${MAX_PAGINAS_TETO})` },
+          relator: {
+            type: 'string',
+            description: 'MAGISTRADO (relator). So funciona nos tribunais que tem esse filtro — '
+              + 'listar_tribunais informa quais, e nos que nao tem a busca e RECUSADA em vez de rodar sem o filtro. '
+              + 'A forma do valor varia: em uns basta um trecho do nome, em outros so o NOME EXATO do combo filtra, '
+              + 'e em alguns o que filtra e um CODIGO, nao o nome. Use listar_relatores antes para pegar o valor valido.',
+          },
         },
         required: ['tribunal', 'query'],
+        additionalProperties: false,
+      },
+    },
+    {
+      name: 'listar_relatores',
+      description:
+        'Lista os magistrados (relatores) que um tribunal aceita no filtro de busca, com o valor exato a usar. '
+        + 'Use ANTES de buscar com relator em qualquer tribunal que exija nome exato ou codigo — '
+        + 'valor aproximado nao da erro nesses tribunais, da ZERO, e zero se le como '
+        + '"esse magistrado nao julgou nada sobre o tema".',
+      input_schema: {
+        type: 'object',
+        properties: {
+          tribunal: { type: 'string', description: 'o comando do tribunal, ex.: stf, tjsc, trt9' },
+          termo: {
+            type: 'string',
+            description: 'trecho do nome. Obrigatorio so nos tribunais cuja listagem e autocomplete '
+              + '(a ferramenta avisa quando for o caso).',
+          },
+        },
+        required: ['tribunal'],
         additionalProperties: false,
       },
     },
@@ -115,7 +149,11 @@ async function listarTribunais(entrada) {
   if (!lista.length) return { texto: 'Nenhum tribunal bate com esse filtro.', ok: true };
   const linhas = lista.map((t) => {
     const uf = t.uf.length ? ` [${t.uf.join(',')}]` : '';
-    return `${t.comando} — ${t.nome}${uf} · ${t.estado}`;
+    // `magistrado:` diz se o filtro por relator existe naquele tribunal e em que forma.
+    // Sem isto o modelo so descobre tentando, e o TJPR (que nao tem o filtro) parecia
+    // uma busca quebrada em vez de um tribunal que nao oferece o recorte.
+    const r = t.relator && t.relator.suportado ? `magistrado: ${t.relator.forma}` : 'magistrado: nao';
+    return `${t.comando} — ${t.nome}${uf} · ${t.estado} · ${r}`;
   });
   return { texto: `${lista.length} tribunais:\n${linhas.join('\n')}`, ok: true };
 }
@@ -148,6 +186,17 @@ async function buscar(entrada, deps) {
   const validacaoMaxPaginas = validarMaxPaginas(entrada.maxPaginas, MAX_PAGINAS_TETO);
   if (!validacaoMaxPaginas.valido) return { texto: validacaoMaxPaginas.motivo, ok: false };
 
+  // Filtro por MAGISTRADO. Onde o tribunal nao tem esse filtro, o pedido e RECUSADO —
+  // nao silenciosamente ignorado. Ignorar rodaria a busca sem o recorte e devolveria os
+  // julgados de TODOS os desembargadores como se fossem daquele magistrado: o modelo nao
+  // teria como saber, e o usuario receberia uma lista errada com cara de certa. E o
+  // mesmo padrao da ressalva do zero — a falha aqui nao da sintoma.
+  const relatorPedido = typeof entrada.relator === 'string' ? entrada.relator.trim() : '';
+  const capacidade = relator.obter(entrada.tribunal);
+  if (relatorPedido && (!capacidade || !capacidade.suportado)) {
+    return { texto: relator.explicarAusencia(entrada.tribunal, info.nome), ok: false };
+  }
+
   // I4: o schema desta tool nao e `strict`, e o modelo emite ISO com naturalidade a
   // partir de "desde 2024". Sem validar, `-di 2024-01-01` filtrava errado e o total 0
   // resultante era lido como "o acervo nao tem" — falha de parametro disfarcada de
@@ -162,7 +211,13 @@ async function buscar(entrada, deps) {
     dataInicio: entrada.dataInicio,
     dataFim: entrada.dataFim,
     maxPaginas: entrada.maxPaginas || 3,
+    relator: relatorPedido || undefined,
   });
+  // Vai junto de TODA resposta desta busca (inclusive o zero e o timeout): quando o
+  // tribunal exige nome exato ou codigo, o valor aproximado nao falha — devolve zero. Se
+  // essa ressalva so aparecesse no caminho do zero, o modelo leria "0 resultados" sem
+  // saber que a causa provavel foi a forma do valor.
+  const ressalvaRelator = relatorPedido ? `\nRESSALVA DO FILTRO DE MAGISTRADO: ${relator.explicarForma(entrada.tribunal)}` : '';
   const prazoMs = deps.timeoutBuscaMs === undefined ? TIMEOUT_BUSCA_MS : deps.timeoutBuscaMs;
   const job = await aguardarComTimeout(deps.fila, id, prazoMs);
 
@@ -173,7 +228,8 @@ async function buscar(entrada, deps) {
         + `O TRABALHO NAO FOI PERDIDO. Guarde este job_id: ${id}\n`
         + `Para pegar o resultado, chame ler_resultados com job_id "${id}" daqui a pouco — `
         + 'se ainda nao tiver terminado, ele diz o status e voce tenta de novo.\n'
-        + 'NAO diga ao usuario que a busca falhou nem que nao ha jurisprudencia: ela nao terminou.',
+        + 'NAO diga ao usuario que a busca falhou nem que nao ha jurisprudencia: ela nao terminou.'
+        + ressalvaRelator,
       ok: true,
     };
   }
@@ -187,7 +243,8 @@ async function buscar(entrada, deps) {
   if (job.status === 'erro') {
     return {
       texto: `A busca FALHOU (job ${job.id}): ${job.erro}\n`
-        + 'Isso NAO significa que nao ha jurisprudencia — o crawler nao completou. Diga isso ao usuario.',
+        + 'Isso NAO significa que nao ha jurisprudencia — o crawler nao completou. Diga isso ao usuario.'
+        + ressalvaRelator,
       ok: true,
     };
   }
@@ -197,13 +254,87 @@ async function buscar(entrada, deps) {
     return {
       texto: `job ${job.id}: 0 resultados em ${info.comando} para "${entrada.query}".\n`
         + `RESSALVA DO TRIBUNAL: ${info.nota || '(sem ressalva registrada)'}\n`
-        + 'Zero aqui pode ser ausencia de julgado OU limitacao do acervo — nao afirme que "nao existe jurisprudencia".',
+        + 'Zero aqui pode ser ausencia de julgado OU limitacao do acervo — nao afirme que "nao existe jurisprudencia".'
+        + ressalvaRelator,
       ok: true,
     };
   }
   return {
     texto: `job ${job.id}: ${job.total} resultados em ${info.comando} para "${entrada.query}". `
-      + 'Use ler_resultados com esse job_id para ver os julgados.',
+      + 'Use ler_resultados com esse job_id para ver os julgados.'
+      + ressalvaRelator,
+    ok: true,
+  };
+}
+
+/**
+ * Lista os valores validos do filtro de magistrado de um tribunal.
+ *
+ * Existe porque, na maioria dos tribunais que TEM o filtro, valor aproximado nao da
+ * erro: da zero. E zero de um filtro errado e indistinguivel de "este magistrado nao
+ * julgou nada sobre o tema" — que e a afirmacao que este repo inteiro existe para nao
+ * deixar o modelo fazer sem base.
+ */
+async function listarRelatores(entrada, deps) {
+  if (!entrada.tribunal) return { texto: 'tribunal e obrigatorio.', ok: false };
+
+  const info = catalogo.obter(entrada.tribunal);
+  if (!info) {
+    return {
+      texto: `Tribunal desconhecido: "${entrada.tribunal}". Use listar_tribunais para ver os validos.`,
+      ok: false,
+    };
+  }
+
+  const capacidade = relator.obter(entrada.tribunal);
+  if (!capacidade || !capacidade.suportado) {
+    return { texto: relator.explicarAusencia(entrada.tribunal, info.nome), ok: false };
+  }
+
+  if (!capacidade.listagem) {
+    // Suporta o filtro mas a CLI nao expoe nenhum modo de listagem para ele. Dizer isso
+    // e util: o modelo sabe que precisa do nome vindo do usuario e nao fica chamando
+    // esta ferramenta em laco.
+    return {
+      texto: `${info.comando} aceita filtro por magistrado, mas NAO tem listagem de relatores na CLI.\n`
+        + `${relator.explicarForma(entrada.tribunal)}\n`
+        + 'Peca o nome ao usuario, ou busque por termo e leia o campo `relator` dos julgados devolvidos.',
+      ok: true,
+    };
+  }
+
+  const args = [...capacidade.listagem.args];
+  if (capacidade.listagem.exigeTermo) {
+    const termo = typeof entrada.termo === 'string' ? entrada.termo.trim() : '';
+    if (!termo) {
+      return {
+        texto: `A listagem de relatores de ${info.comando} e AUTOCOMPLETE: ela exige um trecho do nome.\n`
+          + 'Chame listar_relatores de novo passando `termo` com parte do nome do magistrado.',
+        ok: false,
+      };
+    }
+    args[args.indexOf('<termo>')] = termo;
+  }
+
+  const listarFn = deps.listarFn || ((comando, a) => executorPadrao.listar(comando, a));
+  const r = await listarFn(entrada.tribunal, args);
+  if (!r.ok) {
+    // Falha de LEITURA do combo, nunca "este tribunal nao tem esses magistrados".
+    return {
+      texto: `FALHA AO LISTAR os relatores de ${info.comando}: ${r.erro}\n`
+        + 'Isso NAO e uma lista vazia. NAO diga ao usuario que o magistrado nao existe nesse tribunal '
+        + 'e nao chute o valor: sem o combo, buscar com nome aproximado devolve zero silencioso.',
+      ok: false,
+    };
+  }
+
+  // O envelope vem cru: cada tribunal nomeia sua chave de um jeito (`relatores`,
+  // `magistrados`, dentro de `combos`…). Serializar aqui e mais honesto que adivinhar
+  // um formato unico e entregar um recorte errado.
+  const { success, ...dados } = r.dados || {};
+  return {
+    texto: `Filtro de magistrado de ${info.comando}. ${relator.explicarForma(entrada.tribunal)}\n\n`
+      + `${JSON.stringify(dados)}`,
     ok: true,
   };
 }
@@ -257,6 +388,7 @@ async function executarDetalhado(nome, entrada = {}, deps = {}) {
   try {
     if (nome === 'listar_tribunais') return await listarTribunais(entrada);
     if (nome === 'buscar_jurisprudencia') return await buscar(entrada, deps);
+    if (nome === 'listar_relatores') return await listarRelatores(entrada, deps);
     if (nome === 'ler_resultados') return await lerResultados(entrada, deps);
     return { texto: `Ferramenta desconhecida: ${nome}`, ok: false };
   } catch (e) {

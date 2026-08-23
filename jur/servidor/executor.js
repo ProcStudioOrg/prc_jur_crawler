@@ -13,7 +13,7 @@ const TIMEOUT_PADRAO = 10 * 60 * 1000;
  * unico buscaria no campo errado e devolveria zero — que se le como
  * "nao ha julgado". Ver o spec, secao 2.4.
  */
-const PARAMS_ACEITOS = ['query', 'dataInicio', 'dataFim', 'maxPaginas', 'numero'];
+const PARAMS_ACEITOS = ['query', 'dataInicio', 'dataFim', 'maxPaginas', 'numero', 'relator'];
 
 const BANDEIRA = {
   query: '-q',
@@ -21,7 +21,18 @@ const BANDEIRA = {
   dataFim: '-df',
   maxPaginas: '-m',
   numero: '-n',
+  // `relator` PODE entrar onde `orgao` nao pode: conferido em bin/jur, `-r` e
+  // `--relator` em todos os 64 comandos que a registram, e nenhum outro comando usa
+  // `-r` para outra coisa. Nao ha a colisao semantica que barra o `orgao`. O que varia
+  // aqui e a FORMA do valor (nome exato x trecho x codigo) e QUAIS tribunais tem o
+  // filtro — os 11 que nao tem estao mapeados em servidor/relator.js, e quem barra o
+  // pedido antes de chegar aqui e ferramentas.js, que e onde existe texto para o modelo
+  // ler. O executor so ganha a capacidade; a politica nao mora nele.
+  relator: '-r',
 };
+
+/** Modos utilitarios da CLI (`--listar-*`): sem `-o`, sem resultado, so o combo. */
+const TIMEOUT_LISTAGEM_PADRAO = 60 * 1000;
 
 function montarArgs(cliPath, comando, params, arquivoSaida) {
   const args = [cliPath, comando, '--json', '-o', arquivoSaida];
@@ -178,7 +189,59 @@ function matarGrupo(pid) {
   }, 5000).unref();
 }
 
+/**
+ * Roda um modo de LISTAGEM da CLI (`--listar-filtros`, `--listar-relatores`, …) e
+ * devolve o envelope parseado. Caminho separado de `executar` de proposito:
+ *
+ *  - listagem NAO tem `-o`. Passar um arquivo de saida aqui criaria a expectativa de um
+ *    arquivo de resultados que nunca e escrito, e `extrairResultados` leria um vazio
+ *    como "busca sem julgados" — a falha que este repo inteiro existe para impedir.
+ *  - o envelope da listagem NAO e uma lista de julgados: e o dominio de um combo. Ele
+ *    volta cru (`dados`) porque cada tribunal nomeia sua chave de um jeito
+ *    (`relatores`, `magistrados`, dentro de `combos`…), e inventar um formato unico aqui
+ *    seria adivinhar.
+ *
+ * `args` e uma allowlist estreita: o primeiro precisa comecar com `--listar`. Sem isso
+ * este caminho viraria um executor generico de CLI a partir de entrada do modelo.
+ */
+async function listar(comando, args = [], opcoes = {}) {
+  const cliPath = opcoes.cliPath || CLI_PADRAO;
+  const timeoutMs = opcoes.timeoutMs || TIMEOUT_LISTAGEM_PADRAO;
+  if (!Array.isArray(args) || !args.length || !String(args[0]).startsWith('--listar')) {
+    return { ok: false, dados: null, erro: 'modo de listagem invalido: o primeiro argumento precisa ser uma flag --listar-*' };
+  }
+
+  return new Promise((resolve) => {
+    const filho = spawn(process.execPath, [cliPath, comando, ...args.map(String), '--json'],
+      { detached: true, stdio: ['ignore', 'pipe', 'pipe'] });
+
+    let saida = '';
+    let erroPadrao = '';
+    let expirou = false;
+    const relogio = setTimeout(() => { expirou = true; matarGrupo(filho.pid); }, timeoutMs);
+
+    filho.stdout.on('data', (d) => { saida += d.toString(); });
+    filho.stderr.on('data', (d) => { erroPadrao += d.toString(); });
+
+    filho.on('error', (e) => {
+      clearTimeout(relogio);
+      resolve({ ok: false, dados: null, erro: e.message });
+    });
+
+    filho.on('close', (codigo) => {
+      clearTimeout(relogio);
+      if (expirou) return resolve({ ok: false, dados: null, erro: `timeout apos ${timeoutMs}ms` });
+      const envelope = ultimoJson(saida);
+      if (!envelope || envelope.success !== true) {
+        const erro = (envelope && envelope.error) || erroPadrao.trim() || `saida sem envelope (codigo ${codigo})`;
+        return resolve({ ok: false, dados: null, erro });
+      }
+      return resolve({ ok: true, dados: envelope, erro: null });
+    });
+  });
+}
+
 // `Resultado.envelope` e diagnostico/teste apenas, NAO contratual — ver o
 // comentario acima de `executar`. Nenhum consumidor deste modulo pode
 // depender dele; use `arquivo`/`resultados`/`total`/`ok`/`erro`.
-module.exports = { executar, matarGrupo, PARAMS_ACEITOS };
+module.exports = { executar, listar, matarGrupo, PARAMS_ACEITOS };

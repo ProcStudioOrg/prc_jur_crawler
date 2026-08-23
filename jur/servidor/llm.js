@@ -19,7 +19,13 @@ Regras que nao se quebram:
    repasse a ressalva do tribunal ao usuario. Varios acervos tem recorte de periodo.
 4. Busca que FALHOU e diferente de busca vazia. Diga qual das duas aconteceu.
 5. Pagine com ler_resultados. Nao peca centenas de julgados de uma vez.
-6. Responda em portugues do Brasil.`;
+6. Responda em portugues do Brasil.
+7. Busca por MAGISTRADO (relator) existe so em parte dos tribunais. listar_tribunais diz
+   quais, no campo "magistrado". Onde nao existe, a busca e recusada — isso NAO e
+   "esse magistrado nao julgou nada": diga que o tribunal nao filtra por magistrado e
+   ofereca ler o campo relator dos julgados de uma busca por termo. Onde existe, a forma
+   do valor varia (trecho do nome, nome EXATO do combo, ou codigo): nos que exigem exato
+   ou codigo, chame listar_relatores antes, porque valor aproximado nao da erro — da zero.`;
 
 function erroAbortado() {
   // Mesmo formato do APIUserAbortError que o SDK lança quando o `signal` passado pra

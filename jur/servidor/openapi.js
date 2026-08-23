@@ -128,7 +128,7 @@ function documento() {
           properties: {
             id: { type: 'string', format: 'uuid' },
             comando: { type: 'string', description: 'o tribunal buscado (comando da CLI)' },
-            params: { type: 'object', description: 'query, dataInicio, dataFim, maxPaginas enviados na criação' },
+            params: { type: 'object', description: 'query, dataInicio, dataFim, maxPaginas, relator enviados na criação' },
             status: { $ref: '#/components/schemas/StatusBusca' },
             total: { type: ['integer', 'null'], description: 'total de resultados; 0 SEMPRE vem acompanhado de avisos[] explicando a ressalva' },
             arquivo: { type: ['string', 'null'] },
@@ -282,7 +282,8 @@ function documento() {
             'Enfileira o job e devolve o id imediatamente (202) — a busca roda em segundo plano. '
             + 'Acompanhe por `GET /api/v1/buscas/{id}`, pela lista, ou pelo stream de eventos. '
             + 'Datas aceitam só DD/MM/AAAA; ISO (AAAA-MM-DD) é recusado com 400 para não filtrar '
-            + 'em silêncio contra a data errada.',
+            + 'em silêncio contra a data errada. O mesmo vale para `relator`: tribunal sem esse '
+            + 'filtro devolve 400 em vez de rodar a busca sem ele.',
           requestBody: {
             required: true,
             content: {
@@ -295,6 +296,14 @@ function documento() {
                     dataInicio: { type: 'string', description: 'DD/MM/AAAA, ex.: 01/01/2024' },
                     dataFim: { type: 'string', description: 'DD/MM/AAAA, ex.: 31/12/2024' },
                     maxPaginas: { type: 'integer', description: 'páginas a percorrer, 1 a 50 (cada página é uma requisição real ao portal do tribunal)' },
+                    relator: {
+                      type: 'string',
+                      description: 'filtro por MAGISTRADO. Existe só em parte dos tribunais: '
+                        + 'pedir num tribunal que não tem o filtro devolve 400 — a busca NÃO roda sem o recorte, '
+                        + 'porque devolver julgados de todos os magistrados como se fossem de um só não daria sintoma nenhum. '
+                        + 'A forma do valor varia por tribunal (trecho do nome, nome exato do combo, ou código); '
+                        + '`GET /api/v1/tribunais` traz `relator.forma` de cada um.',
+                    },
                   },
                   required: ['tribunal', 'query'],
                 },

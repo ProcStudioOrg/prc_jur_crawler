@@ -64,6 +64,23 @@ describe('executor', () => {
       'chave fora da allowlist nao pode virar argumento');
   });
 
+  // `relator` entrou na allowlist para o filtro por magistrado existir. Diferente de
+  // `orgao` (que fica fora de proposito, porque o mesmo nome significa orgao JULGADOR
+  // nos tribunais judiciais e orgao FISCALIZADO nos TCEs), `-r` e a MESMA flag em todos
+  // os 64 comandos que a tem — conferido em bin/jur: nenhum registra `-r` para outra coisa.
+  it('repassa relator como -r', async () => {
+    const r = await executar_(tmp(), 'eco', {}, { query: 'x', relator: 'GILMAR MENDES' });
+    const args = r.envelope.args;
+    assert.ok(args.includes('-r'), 'relator precisa virar -r');
+    assert.strictEqual(args[args.indexOf('-r') + 1], 'GILMAR MENDES');
+  });
+
+  it('relator vazio nao vira flag solta', async () => {
+    const r = await executar_(tmp(), 'eco', {}, { query: 'x', relator: '' });
+    assert.ok(!r.envelope.args.includes('-r'),
+      '-r sem valor faria a CLI consumir o proximo argumento como se fosse o nome');
+  });
+
   it('cai no scan do envelope quando o arquivo nao existe', async () => {
     const r = await executar_(tmp(), 'so-envelope');
     assert.strictEqual(r.ok, true);
@@ -137,4 +154,40 @@ describe('executor', () => {
   function executar_(arquivo, modo, extras = {}, params = { query: 'x' }) {
     return executor.executar(modo, params, { arquivoSaida: arquivo, cliPath: CLI_FALSA, ...extras });
   }
+});
+
+describe('executor.listar — os modos --listar-* da CLI', () => {
+  const listar_ = (comando, args, opcoes = {}) =>
+    executor.listar(comando, args, { cliPath: CLI_FALSA, ...opcoes });
+
+  it('devolve o envelope da CLI', async () => {
+    const r = await listar_('eco-listagem', ['--listar-relatores']);
+    assert.strictEqual(r.ok, true);
+    assert.deepStrictEqual(r.dados.relatores, ['FULANO DE TAL']);
+  });
+
+  it('manda a flag de listagem e --json, e NADA da busca', async () => {
+    const r = await listar_('eco-listagem', ['--listar-filtros', 'magistrados']);
+    const args = r.dados.args;
+    assert.deepStrictEqual(args, ['--listar-filtros', 'magistrados', '--json'],
+      'listagem nao tem -o nem -q: um -o solto criaria arquivo de resultado que nunca existe');
+  });
+
+  it('propaga falha da CLI como falha, nunca como listagem vazia', async () => {
+    const r = await listar_('erro', ['--listar-filtros']);
+    assert.strictEqual(r.ok, false);
+    assert.match(r.erro, /fora do ar/);
+  });
+
+  it('recusa argumento que nao comeca com --listar', async () => {
+    const r = await listar_('eco-listagem', ['-q', 'x; rm -rf /']);
+    assert.strictEqual(r.ok, false,
+      'so os modos --listar-* passam por aqui — este caminho nao pode virar um executor generico');
+  });
+
+  it('expira em vez de segurar o chamador para sempre', async () => {
+    const r = await listar_('travado', ['--listar-filtros'], { timeoutMs: 300 });
+    assert.strictEqual(r.ok, false);
+    assert.match(r.erro, /timeout/i);
+  });
 });
