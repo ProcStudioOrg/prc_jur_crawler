@@ -89,9 +89,20 @@ function montarCaixa(destino) {
   return destino;
 }
 
+/**
+ * Modelos que REJEITAM o campo esforco na API (o SDK devolve 400 se ele for
+ * mandado). Fonte unica: tanto `sincronizarEsforco` (esconder o <select>, que e so
+ * apresentacao) quanto `enviar` (o que de fato vai no corpo do POST) consultam esta
+ * mesma lista — revisao encontrou que o codigo anterior so escondia o <select> mas
+ * `enviar` continuava lendo `esforco.value` mesmo escondido, e mandava "high" junto
+ * com claude-haiku-4-5, quebrando o chat com 400 assim que alguem trocava de modelo.
+ */
+const MODELOS_SEM_ESFORCO = new Set(['claude-haiku-4-5']);
+function aceitaEsforco(modelo) { return !MODELOS_SEM_ESFORCO.has(modelo); }
+
 /** O haiku rejeita nivel de esforco na API — some com o seletor nele. */
 function sincronizarEsforco(modelo, esforco) {
-  esforco.hidden = modelo.value === 'claude-haiku-4-5';
+  esforco.hidden = !aceitaEsforco(modelo.value);
 }
 
 function ajustarAltura(campo) {
@@ -201,8 +212,24 @@ async function enviar(campo, modelo, esforco) {
   const texto = campo.value.trim();
   if (!texto) return;
 
+  // Trava sincrona, ANTES de qualquer await: dois Enter (ou dois cliques) quase
+  // simultaneos na mesma caixa chamam `enviar` duas vezes antes do primeiro `await`
+  // devolver. Sem desabilitar AQUI — e nao so depois de criar a conversa, como antes —
+  // o segundo passa pelo `if (!conversaAtual)` antes do primeiro POST
+  // /api/v1/conversas responder, e cria duas conversas para o mesmo envio.
+  const botaoNoInicio = $('.enviar', caixaAtiva());
+  if (botaoNoInicio.disabled) return;
+  botaoNoInicio.disabled = true;
+
   if (!conversaAtual) {
-    const c = await window.jurApi.pedir('/api/v1/conversas', { method: 'POST', body: '{}' });
+    let c;
+    try {
+      c = await window.jurApi.pedir('/api/v1/conversas', { method: 'POST', body: '{}' });
+    } catch (e) {
+      botaoNoInicio.disabled = false;
+      bolha('erro', e.message);
+      return;
+    }
     conversaAtual = c.id;
     historicoLocal.length = 0;
     $('#inicial').hidden = true;
@@ -211,11 +238,25 @@ async function enviar(campo, modelo, esforco) {
     montarCaixa($('#caixa-conversa'));
   }
 
+  // O botao que fica desabilitado durante o streaming: se a conversa acabou de ser
+  // criada, `montarCaixa` trocou o DOM e este e um botao NOVO; se a conversa ja
+  // existia, e o mesmo `botaoNoInicio` travado acima.
   const botao = $('.enviar', caixaAtiva());
   botao.disabled = true;
+
   campo.value = ''; ajustarAltura(campo);
   bolha('user', texto);
   historicoLocal.push({ role: 'user', content: texto });
+
+  // Amarra esta resposta a conversa que a originou. Se o usuario trocar de conversa
+  // enquanto o streaming ainda esta rodando, os deltas que chegarem depois nao podem
+  // renderizar na tela nem entrar no `historicoLocal` da conversa que estiver ativa
+  // NAQUELE momento — ela pertence a outra conversa. O servidor ja persiste a
+  // resposta inteira no banco pelo `conversaId` que mandamos no corpo do POST
+  // (ver servidor/rotas/chat.js), entao deixamos o stream terminar sozinho (o `signal`
+  // so aborta por timeout de inatividade, nao por troca de tela) — a conversa orfa
+  // fica gravada e aparece certinha da proxima vez que o usuario abri-la.
+  const conversaDoEnvio = conversaAtual;
 
   let destino = null;
   const controle = new AbortController();
@@ -227,35 +268,57 @@ async function enviar(campo, modelo, esforco) {
     const chave = window.jurApi.chave();
     if (chave) cab['x-api-key'] = chave;
 
+    // O que vai no corpo depende do MODELO, nao de o <select> de esforco estar
+    // visivel — esconder e so apresentacao (sincronizarEsforco). Mandar "esforco"
+    // com claude-haiku-4-5 e 400 na API.
+    const esforcoParaEnviar = aceitaEsforco(modelo) ? esforco : undefined;
+
     const r = await fetch('/api/v1/chat', {
       method: 'POST', headers: cab, signal: controle.signal,
-      body: JSON.stringify({ mensagens: historicoLocal, modelo, esforco, conversaId: conversaAtual }),
+      body: JSON.stringify({
+        mensagens: historicoLocal, modelo, esforco: esforcoParaEnviar, conversaId: conversaAtual,
+      }),
     });
     if (!r.ok) {
       const corpo = await r.json().catch(() => ({ erro: `HTTP ${r.status}` }));
-      bolha('erro', corpo.erro);
+      if (conversaAtual === conversaDoEnvio) bolha('erro', corpo.erro);
       return;
     }
     await lerSSE(r, (nome, dados) => {
+      const aindaNaMesmaConversa = conversaAtual === conversaDoEnvio;
       if (nome === 'texto') {
+        if (!aindaNaMesmaConversa) return;
         if (!destino) destino = bolha('assistant', '');
         destino.textContent += dados.texto;
         $('#mensagens').scrollTop = $('#mensagens').scrollHeight;
       } else if (nome === 'ferramenta') {
+        if (!aindaNaMesmaConversa) return;
         bolha('ferramenta', `▸ ${dados.nome}(${JSON.stringify(dados.entrada)})`);
         destino = null;
       } else if (nome === 'fim') {
-        historicoLocal.push({ role: 'assistant', content: dados.texto });
-        carregarHistorico();
+        if (aindaNaMesmaConversa) {
+          historicoLocal.push({ role: 'assistant', content: dados.texto });
+          carregarHistorico();
+        }
+        // Orfa: nada a fazer aqui — o servidor ja gravou a resposta inteira no banco,
+        // associada a conversaDoEnvio.
       } else if (nome === 'erro') {
-        bolha('erro', dados.erro);
+        if (aindaNaMesmaConversa) bolha('erro', dados.erro);
       }
     }, renovar);
   } catch (e) {
-    bolha('erro', e.name === 'AbortError' ? 'A resposta demorou demais e foi interrompida.' : e.message);
+    if (conversaAtual === conversaDoEnvio) {
+      bolha('erro', e.name === 'AbortError' ? 'A resposta demorou demais e foi interrompida.' : e.message);
+    }
   } finally {
     clearTimeout(relogio);
     botao.disabled = false;
+    // Reabilita tambem o botao ORIGINAL da caixa inicial: quando este envio criou a
+    // conversa, `botao` (acima) e um elemento NOVO em #caixa-conversa — o antigo em
+    // #caixa-inicial, que travamos no topo da funcao, e persistente no DOM (so e
+    // montado uma vez, no carregamento) e ficava desabilitado pra sempre depois do
+    // primeiro envio se nao fosse reabilitado aqui tambem.
+    botaoNoInicio.disabled = false;
   }
 }
 
