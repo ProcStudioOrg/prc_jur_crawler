@@ -93,12 +93,39 @@ function criarRepositorio(con) {
     con.prepare('UPDATE conversa SET titulo = ? WHERE id = ?').run(titulo, conversaId);
   }
 
+  /**
+   * Registra que esta conversa disparou este job de busca. Idempotente pela PK composta:
+   * o mesmo job pode ser reportado mais de uma vez (um retry do modelo, uma releitura)
+   * sem duplicar a linha.
+   *
+   * NAO guarda tribunal, query nem total: esses dados vivem na tabela `job`, e copia-los
+   * aqui criaria duas versoes da mesma verdade que divergem quando o job muda de estado.
+   * Quem le junta os dois.
+   */
+  function vincularBusca(conversaId, jobId) {
+    if (!conversaId || !jobId) return;
+    con.prepare(`INSERT OR IGNORE INTO conversa_busca (conversa_id, job_id, criado_em)
+                 VALUES (?,?,?)`).run(conversaId, jobId, Date.now());
+  }
+
+  /** Os job_id desta conversa, na ordem em que foram disparados. */
+  function buscas(id) {
+    return con.prepare(`SELECT job_id FROM conversa_busca WHERE conversa_id = ?
+                        ORDER BY criado_em ASC, rowid ASC`).all(id).map((l) => l.job_id);
+  }
+
   function apagar(id) {
+    // O vinculo sai junto: sem isto a tabela cresce para sempre com linhas orfas, e a FK
+    // de conversa_busca barraria o DELETE da conversa de qualquer forma.
+    con.prepare('DELETE FROM conversa_busca WHERE conversa_id = ?').run(id);
     con.prepare('DELETE FROM mensagem WHERE conversa_id = ?').run(id);
     return con.prepare('DELETE FROM conversa WHERE id = ?').run(id).changes > 0;
   }
 
-  return { criar, listar, obter, mensagens, acrescentar, renomearSePrimeira, apagar };
+  return {
+    criar, listar, obter, mensagens, acrescentar, renomearSePrimeira, apagar,
+    vincularBusca, buscas,
+  };
 }
 
 module.exports = { criarRepositorio, TITULO_MAX, truncarPorCodePoint };

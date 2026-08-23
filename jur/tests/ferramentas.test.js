@@ -522,3 +522,36 @@ describe('ferramentas — escopo de tribunais escolhido pelo usuario', () => {
     assert.match(r.texto, /desligad/i);
   });
 });
+
+/**
+ * O `jobId` no retorno de `executarDetalhado` e o que permite ligar uma busca a conversa
+ * que a pediu. Antes ele so existia dentro do TEXTO do tool_result ("job <id>: N
+ * resultados") — legivel para o modelo, inutil para o servidor, que teria de reparsear a
+ * propria mensagem que acabou de escrever.
+ */
+describe('ferramentas — jobId no retorno', () => {
+  it('busca bem-sucedida devolve o jobId', async () => {
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'stf', query: 'x' }, { fila, timeoutBuscaMs: 0 });
+    assert.ok(r.jobId, 'sem isto nao ha como vincular a busca a conversa');
+    assert.ok(r.texto.includes(r.jobId), 'o texto e o campo precisam falar do mesmo job');
+  });
+
+  it('busca que expirou tambem devolve o jobId — o trabalho continua e sera lido depois', async () => {
+    const filaLenta = { ...fila, aguardar: () => new Promise(() => {}) };
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'stf', query: 'x' }, { fila: filaLenta, timeoutBuscaMs: 20 });
+    assert.ok(r.jobId, 'e justamente no timeout que o vinculo mais importa');
+  });
+
+  it('recusa antes de enfileirar nao inventa jobId', async () => {
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'tjxx', query: 'x' }, { fila, timeoutBuscaMs: 0 });
+    assert.ok(!r.jobId);
+  });
+
+  it('as outras ferramentas nao devolvem jobId', async () => {
+    const r = await ferramentas.executarDetalhado('listar_tribunais', {}, { fila });
+    assert.ok(!r.jobId);
+  });
+});

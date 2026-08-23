@@ -69,7 +69,8 @@ function erroAbortado() {
   return erro;
 }
 
-async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramenta, sinal,
+async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramenta,
+                          aoResultadoFerramenta, sinal,
                           modelo = MODELO, esforco = null, escopo = undefined,
                           maxIteracoes = MAX_ITERACOES }) {
   const anthropic = cliente || new Anthropic(apiKey ? { apiKey } : {});
@@ -144,8 +145,18 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
     // rejeicao por chamada aqui.
     const resultados = await Promise.all(chamadas.map(async (chamada) => {
       if (typeof aoFerramenta === 'function') aoFerramenta(chamada.name, chamada.input);
-      const texto = await ferramentas.executar(chamada.name, chamada.input, deps);
-      return { type: 'tool_result', tool_use_id: chamada.id, content: texto };
+      // `executarDetalhado` em vez de `executar`: e ele que traz o `jobId`, e sem o
+      // jobId a rota teria de reparsear o texto que ela mesma acabou de escrever para
+      // descobrir qual busca foi feita. `executar` continua existindo com o contrato
+      // antigo (so texto) porque o MCP e outros chamadores dependem dele.
+      const detalhe = await ferramentas.executarDetalhado(chamada.name, chamada.input, deps);
+      if (typeof aoResultadoFerramenta === 'function') {
+        // Isolado: o gancho serve para registrar o vinculo conversa->busca, o que e util
+        // mas nao vale perder a resposta inteira. `executarDetalhado` nunca lanca; este
+        // try existe para o OUVINTE, nao para ela.
+        try { aoResultadoFerramenta(chamada.name, chamada.input, detalhe); } catch { /* ouvinte quebrado */ }
+      }
+      return { type: 'tool_result', tool_use_id: chamada.id, content: detalhe.texto };
     }));
     historico.push({ role: 'user', content: resultados });
   }

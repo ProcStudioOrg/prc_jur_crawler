@@ -670,6 +670,36 @@ function documento() {
           },
         },
       },
+      '/api/v1/conversas/{id}/buscas': {
+        get: {
+          summary: 'As buscas de jurisprudência que esta conversa disparou',
+          description:
+            'Responde "o que ESTA análise leu". Cada item é o job completo (comando do tribunal, '
+            + '`params` com a query, status, total), e os julgados vêm em seguida por '
+            + '`GET /api/v1/buscas/{id}/resultados`. '
+            + 'O vínculo é gravado assim que a busca é despachada, não no fim do turno: uma busca '
+            + 'de minutos ficaria invisível exatamente durante os minutos em que se quer olhar para ela. '
+            + 'Vínculo órfão (job removido do banco) some da lista em vez de virar uma linha sem dados, '
+            + 'que seria indistinguível de uma busca sem resultado.',
+          parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+          responses: {
+            200: {
+              description: 'buscas da conversa, na ordem em que foram disparadas',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: { buscas: { type: 'array', items: { $ref: '#/components/schemas/Busca' } } },
+                  },
+                },
+              },
+            },
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
+            404: RESPOSTAS.Erro404,
+          },
+        },
+      },
       '/api/v1/conversas/{id}/stream': {
         get: {
           summary: 'Reconecta ao turno em andamento de uma conversa (SSE)',

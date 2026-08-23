@@ -259,8 +259,12 @@ async function buscar(entrada, deps) {
   const prazoMs = deps.timeoutBuscaMs === undefined ? TIMEOUT_BUSCA_MS : deps.timeoutBuscaMs;
   const job = await aguardarComTimeout(deps.fila, id, prazoMs);
 
+  // A partir daqui a busca EXISTE, entao todo retorno carrega o `jobId` — inclusive o
+  // timeout e o erro. E no timeout que ele mais importa: o job continua rodando, e sem o
+  // vinculo ninguem consegue achar o resultado depois.
   if (job === EXPIROU) {
     return {
+      jobId: id,
       texto: `A busca ${id} em ${info.comando} AINDA ESTA RODANDO — passou de ${Math.round(prazoMs / 1000)}s `
         + 'e este canal nao pode ficar esperando mais (tribunal que exige navegador chega a levar minutos).\n'
         + `O TRABALHO NAO FOI PERDIDO. Guarde este job_id: ${id}\n`
@@ -275,21 +279,23 @@ async function buscar(entrada, deps) {
   // o fim (banco indisponivel, por exemplo). Sem isto, `job.status` abaixo seria um
   // TypeError cru dentro do loop de tool-use.
   if (!job) {
-    return { texto: `Nao foi possivel obter o estado final da busca ${id}.`, ok: false };
+    return { jobId: id, texto: `Nao foi possivel obter o estado final da busca ${id}.`, ok: false };
   }
 
   if (job.status === 'erro') {
     return {
+      jobId: id,
       texto: `A busca FALHOU (job ${job.id}): ${job.erro}\n`
         + 'Isso NAO significa que nao ha jurisprudencia — o crawler nao completou. Diga isso ao usuario.'
         + ressalvaRelator,
       ok: true,
     };
   }
-  if (job.status === 'cancelado') return { texto: `A busca ${job.id} foi cancelada.`, ok: true };
+  if (job.status === 'cancelado') return { jobId: id, texto: `A busca ${job.id} foi cancelada.`, ok: true };
 
   if (job.total === 0) {
     return {
+      jobId: id,
       texto: `job ${job.id}: 0 resultados em ${info.comando} para "${entrada.query}".\n`
         + `RESSALVA DO TRIBUNAL: ${info.nota || '(sem ressalva registrada)'}\n`
         + 'Zero aqui pode ser ausencia de julgado OU limitacao do acervo — nao afirme que "nao existe jurisprudencia".'
@@ -298,6 +304,7 @@ async function buscar(entrada, deps) {
     };
   }
   return {
+    jobId: id,
     texto: `job ${job.id}: ${job.total} resultados em ${info.comando} para "${entrada.query}". `
       + 'Use ler_resultados com esse job_id para ver os julgados.'
       + ressalvaRelator,

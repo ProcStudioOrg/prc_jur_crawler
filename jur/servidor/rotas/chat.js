@@ -176,6 +176,14 @@ function registrar(roteador, deps) {
           escopo,
           aoTexto: (t) => emitir('texto', { texto: t }),
           aoFerramenta: (nome, entrada) => emitir('ferramenta', { nome, entrada }),
+          // Vincula a busca a conversa ASSIM QUE ela e despachada, nao no fim do turno:
+          // uma busca de minutos ficaria invisivel exatamente durante os minutos em que
+          // o usuario quer abrir o painel e olhar para ela.
+          aoResultadoFerramenta: (nome, entrada, resultado) => {
+            if (!resultado || !resultado.jobId) return;
+            if (conversaId) deps.conversas.vincularBusca(conversaId, resultado.jobId);
+            emitir('busca', { jobId: resultado.jobId, tribunal: entrada.tribunal, query: entrada.query });
+          },
         });
         // r.mensagens e o historico COMPLETO depois do turno; as que entraram (mensagens)
         // ja estao no banco (a ultima delas foi gravada acima, as anteriores vieram de

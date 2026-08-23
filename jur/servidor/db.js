@@ -3,13 +3,14 @@ const path = require('node:path');
 const { DatabaseSync } = require('node:sqlite');
 
 const SCHEMA = `
-/* user_version = 2: v1 era o schema inicial sem migração. v2 acrescentou a tabela
-   chave_conexao (chaves de conexão emitidas para clientes externos). Continuamos
-   sem migração automática — a mudança foi aditiva, então CREATE TABLE IF NOT EXISTS
-   já cobre banco antigo que ainda não tinha essa tabela. A coluna user_version fica
-   registrada para uma versão futura decidir o que fazer se o schema evoluir de um
-   jeito que exija migração de verdade (renomear/remover coluna, por exemplo). */
-PRAGMA user_version = 2;
+/* user_version = 3: v1 era o schema inicial sem migração. v2 acrescentou chave_conexao
+   (chaves emitidas para clientes externos). v3 acrescenta conversa_busca, o vínculo
+   entre uma conversa e os jobs de busca que ela disparou. Continuamos sem migração
+   automática — as três mudanças foram aditivas, então CREATE TABLE IF NOT EXISTS já
+   cobre banco antigo. A coluna user_version fica registrada para uma versão futura
+   decidir o que fazer se o schema evoluir de um jeito que exija migração de verdade
+   (renomear/remover coluna, por exemplo). */
+PRAGMA user_version = 3;
 
 CREATE TABLE IF NOT EXISTS job (
   id           TEXT PRIMARY KEY,
@@ -44,6 +45,19 @@ CREATE TABLE IF NOT EXISTS mensagem (
   criado_em    INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_mensagem_conversa ON mensagem (conversa_id, criado_em);
+
+/* Quais buscas cada conversa disparou. É o que responde "o que ESTA análise leu" — sem
+   isso os job_id só existiam dentro do TEXTO dos tool_result, e sumiam de vista depois
+   de um F5. Não dá para ser uma coluna na tabela mensagem: um turno pode disparar
+   várias buscas em paralelo (o modelo paraleliza tool_use) e uma coluna não comporta N.
+   A PK composta faz o vínculo repetido ser idempotente em vez de duplicar a linha. */
+CREATE TABLE IF NOT EXISTS conversa_busca (
+  conversa_id  TEXT NOT NULL REFERENCES conversa(id),
+  job_id       TEXT NOT NULL,
+  criado_em    INTEGER NOT NULL,
+  PRIMARY KEY (conversa_id, job_id)
+);
+CREATE INDEX IF NOT EXISTS idx_conversa_busca ON conversa_busca (conversa_id, criado_em);
 
 CREATE TABLE IF NOT EXISTS sessao (
   comando      TEXT PRIMARY KEY,

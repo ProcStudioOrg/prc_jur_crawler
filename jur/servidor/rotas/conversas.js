@@ -57,6 +57,29 @@ function registrar(roteador, deps) {
     json(res, 200, { ...conversa, mensagens: repo.mensagens(req.params.id) });
   });
 
+  /**
+   * As buscas que ESTA conversa disparou, ja juntadas com o job. E o que alimenta o
+   * painel de decisoes: dai o cliente pede os julgados em
+   * GET /api/v1/buscas/{jobId}/resultados, que ja existia.
+   *
+   * O vinculo guarda so o job_id (ver conversas.js); tribunal, query, status e total vem
+   * do job na hora da leitura, porque copia-los para o vinculo criaria duas versoes da
+   * mesma verdade que divergem quando o job muda de estado.
+   */
+  roteador.rota('GET', '/api/v1/conversas/:id/buscas', (req, res) => {
+    if (!repo.obter(req.params.id)) return json(res, 404, { erro: 'conversa nao encontrada' });
+    const buscas = repo.buscas(req.params.id)
+      // Vinculo orfao (o job sumiu do banco) some da lista em vez de virar uma linha sem
+      // dado nenhum, que o painel mostraria como uma busca vazia — indistinguivel de uma
+      // busca sem resultado.
+      .map((jobId) => (deps.fila ? deps.fila.obter(jobId) : null))
+      .filter(Boolean)
+      .map((job) => (deps.fila.erroDeLeitura
+        ? { ...job, erroLeitura: deps.fila.erroDeLeitura(job) }
+        : job));
+    json(res, 200, { buscas });
+  });
+
   roteador.rota('DELETE', '/api/v1/conversas/:id', (req, res) => {
     if (!repo.apagar(req.params.id)) return json(res, 404, { erro: 'conversa nao encontrada' });
     json(res, 200, { id: req.params.id, apagada: true });

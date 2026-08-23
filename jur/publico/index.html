@@ -46,10 +46,18 @@
     </section>
 
     <section id="conversa" hidden>
+      <button id="abrir-decisoes" class="abrir-decisoes" type="button" hidden
+              aria-controls="decisoes" aria-expanded="false"></button>
       <div id="mensagens" role="log" aria-live="polite"></div>
       <div id="caixa-conversa" class="caixa-entrada"></div>
     </section>
   </main>
+
+  <!-- Painel das decisoes que a conversa leu. Em tela larga fica ancorado ao lado do
+       centro; abaixo de 1100px vira gaveta sobreposta, como o drawer de intimacoes do
+       ProcStudio. -->
+  <div id="fundo-decisoes" class="fundo-decisoes" aria-hidden="true"></div>
+  <aside id="decisoes" aria-label="Decisões consultadas" hidden></aside>
 
   <div id="painel-config" class="painel" hidden></div>
   <div id="painel-ressalva" class="painel" hidden></div>
@@ -82,6 +90,7 @@
   <script src="/markdown.js"></script>
   <script src="/app.js"></script>
   <script src="/disponibilidade.js"></script>
+  <script src="/decisoes.js"></script>
   <script src="/config.js"></script>
 </body>
 </html>

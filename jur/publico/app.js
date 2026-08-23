@@ -225,6 +225,8 @@ async function carregarHistorico() {
 
 function irParaInicial() {
   encerrarReanexo();
+  // As buscas da conversa anterior nao podem continuar na tela como se fossem desta.
+  if (window.jurDecisoes) window.jurDecisoes.sincronizar(null);
   conversaAtual = null;
   $('#conversa').hidden = true;
   $('#inicial').hidden = false;
@@ -254,6 +256,7 @@ async function abrirConversa(id) {
     if (texto) bolha(m.papel === 'user' ? 'user' : 'assistant', texto);
   }
   carregarHistorico();
+  if (window.jurDecisoes) window.jurDecisoes.sincronizar(id);
   reanexar(id);
 }
 
@@ -294,6 +297,8 @@ async function reanexar(id) {
       } else if (nome === 'ferramenta') {
         bolha('ferramenta', `▸ ${dados.nome}(${JSON.stringify(dados.entrada)})`);
         destino = null;
+      } else if (nome === 'busca') {
+        if (window.jurDecisoes) window.jurDecisoes.sincronizar(id);
       } else if (nome === 'fim') {
         // O historico local precisa receber o turno inteiro (com os blocos de
         // ferramenta): e ele que volta ao modelo na proxima pergunta, e sem os blocos
@@ -466,6 +471,10 @@ async function enviar(campo, modelo, esforco) {
         if (!aindaNaMesmaConversa) return;
         bolha('ferramenta', `▸ ${dados.nome}(${JSON.stringify(dados.entrada)})`);
         destino = null;
+      } else if (nome === 'busca') {
+        // Uma busca acabou de ser vinculada a conversa: o painel de decisoes ja pode
+        // mostra-la, mesmo antes de o turno terminar.
+        if (aindaNaMesmaConversa && window.jurDecisoes) window.jurDecisoes.sincronizar(conversaDoEnvio);
       } else if (nome === 'fim') {
         if (aindaNaMesmaConversa) {
           // C1: o turno inteiro, com os blocos `tool_use`/`tool_result` como vieram do

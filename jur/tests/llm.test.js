@@ -254,3 +254,77 @@ describe('llm — escopo de tribunais no prompt do sistema', () => {
     assert.match(sistema, /nenhum tribunal/i);
   });
 });
+
+/**
+ * `aoResultadoFerramenta` e o gancho que leva o jobId de volta a rota, para ela vincular
+ * a busca a conversa. Precisa existir separado do `aoFerramenta`, que dispara ANTES da
+ * execucao (para o cliente ja mostrar "buscando…") e portanto nao tem resultado nenhum
+ * em maos.
+ */
+describe('llm — aviso de resultado de ferramenta', () => {
+  function clienteComToolUse() {
+    let i = 0;
+    const respostas = [
+      { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 't1', name: 'buscar_jurisprudencia', input: { tribunal: 'stf', query: 'x' } }] },
+      { stop_reason: 'end_turn', content: [{ type: 'text', text: 'pronto' }] },
+    ];
+    return {
+      messages: {
+        stream() {
+          const r = respostas[i++];
+          const p = { on() { return p; }, async finalMessage() { return r; } };
+          return p;
+        },
+      },
+    };
+  }
+
+  it('avisa com o nome, a entrada e o resultado — inclusive o jobId', async () => {
+    const vistos = [];
+    const fila = {
+      enfileirar: () => ({ id: 'job-42', status: 'enfileirado' }),
+      obter: () => ({ id: 'job-42', status: 'concluido', total: 3 }),
+      aguardar: async () => ({ id: 'job-42', status: 'concluido', total: 3 }),
+    };
+    await llm.conversar({
+      mensagens: [{ role: 'user', content: 'busca' }],
+      cliente: clienteComToolUse(),
+      deps: { fila, timeoutBuscaMs: 0 },
+      aoResultadoFerramenta: (nome, entrada, resultado) => vistos.push({ nome, entrada, resultado }),
+    });
+    assert.strictEqual(vistos.length, 1);
+    assert.strictEqual(vistos[0].nome, 'buscar_jurisprudencia');
+    assert.strictEqual(vistos[0].entrada.tribunal, 'stf');
+    assert.strictEqual(vistos[0].resultado.jobId, 'job-42');
+  });
+
+  it('sem o gancho, o loop roda igual — ele e opcional', async () => {
+    const fila = {
+      enfileirar: () => ({ id: 'j', status: 'enfileirado' }),
+      obter: () => ({ id: 'j', status: 'concluido', total: 0 }),
+      aguardar: async () => ({ id: 'j', status: 'concluido', total: 0 }),
+    };
+    const r = await llm.conversar({
+      mensagens: [{ role: 'user', content: 'busca' }],
+      cliente: clienteComToolUse(),
+      deps: { fila, timeoutBuscaMs: 0 },
+    });
+    assert.strictEqual(r.texto, 'pronto');
+  });
+
+  it('gancho que lanca nao derruba o turno', async () => {
+    const fila = {
+      enfileirar: () => ({ id: 'j', status: 'enfileirado' }),
+      obter: () => ({ id: 'j', status: 'concluido', total: 0 }),
+      aguardar: async () => ({ id: 'j', status: 'concluido', total: 0 }),
+    };
+    const r = await llm.conversar({
+      mensagens: [{ role: 'user', content: 'busca' }],
+      cliente: clienteComToolUse(),
+      deps: { fila, timeoutBuscaMs: 0 },
+      aoResultadoFerramenta: () => { throw new Error('ouvinte quebrado'); },
+    });
+    assert.strictEqual(r.texto, 'pronto',
+      'o vinculo com a conversa e util, mas nao vale perder a resposta inteira por causa dele');
+  });
+});

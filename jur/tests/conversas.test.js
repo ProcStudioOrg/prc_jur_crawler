@@ -618,3 +618,142 @@ describe('continuidade — o turno sobrevive ao cliente ir embora', () => {
     } finally { srv.close(); }
   });
 });
+
+/**
+ * VINCULO CONVERSA -> BUSCA. Sem isto nao ha como responder "o que ESTA analise leu":
+ * depois de um F5, os job_id so existiam dentro do TEXTO dos tool_result, e a coluna
+ * `mensagem.job_id` sempre foi NULL. Ela tambem nao serviria: um turno pode disparar
+ * varias buscas em paralelo (o modelo paraleliza tool_use), e uma coluna nao comporta N.
+ * Dai uma tabela propria.
+ */
+describe('conversas — buscas vinculadas', () => {
+  it('vincula e devolve na ordem em que foram feitas', () => {
+    const c = repo.criar();
+    repo.vincularBusca(c.id, 'job-a');
+    repo.vincularBusca(c.id, 'job-b');
+    assert.deepStrictEqual(repo.buscas(c.id), ['job-a', 'job-b']);
+  });
+
+  it('conversa sem busca devolve lista vazia, nao erro', () => {
+    assert.deepStrictEqual(repo.buscas(repo.criar().id), []);
+  });
+
+  it('o mesmo job vinculado duas vezes aparece uma vez so', () => {
+    const c = repo.criar();
+    repo.vincularBusca(c.id, 'job-x');
+    repo.vincularBusca(c.id, 'job-x');
+    assert.deepStrictEqual(repo.buscas(c.id), ['job-x']);
+  });
+
+  it('buscas de uma conversa nao vazam para outra', () => {
+    const a = repo.criar();
+    const b = repo.criar();
+    repo.vincularBusca(a.id, 'so-de-a');
+    assert.deepStrictEqual(repo.buscas(b.id), []);
+  });
+
+  it('apagar a conversa leva os vinculos junto — senao a tabela cresce para sempre', () => {
+    const c = repo.criar();
+    repo.vincularBusca(c.id, 'job-z');
+    repo.apagar(c.id);
+    assert.deepStrictEqual(repo.buscas(c.id), []);
+  });
+});
+
+/**
+ * A ponta que o drawer consome: quais buscas ESTA conversa disparou, ja com tribunal,
+ * query, status e total. E o vinculo precisa ser gravado enquanto o turno roda — nao no
+ * fim —, senao uma busca que demora minutos fica invisivel exatamente durante os minutos
+ * em que o usuario quer olhar para ela.
+ */
+describe('buscas da conversa — do chat ate a rota', () => {
+  let chaveOriginal;
+  before(() => { chaveOriginal = process.env.ANTHROPIC_API_KEY; delete process.env.ANTHROPIC_API_KEY; });
+  after(() => {
+    if (chaveOriginal === undefined) delete process.env.ANTHROPIC_API_KEY;
+    else process.env.ANTHROPIC_API_KEY = chaveOriginal;
+  });
+
+  const subir = (deps) => new Promise((resolve) => {
+    const srv = http.createServer(criarApp(deps).handler);
+    srv.listen(0, () => resolve(srv));
+  });
+
+  function montar(nome) {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), `jur-dec-${nome}-`));
+    const con = db.abrir(path.join(dir, 'jur.db'));
+    const arquivo = path.join(dir, 'saida.json');
+    fs.writeFileSync(arquivo, JSON.stringify([
+      { processo: '0000627-73.2019.8.16.0080', relator: 'FULANO', ementa: 'usucapiao' },
+      { processo: '0043348-93.2013.8.16.0001', relator: 'BELTRANO', ementa: 'metragem' },
+    ]));
+    const fila = jobs.criarFila({
+      con, dirResultados: dir,
+      executarFn: async () => ({ ok: true, total: 2, resultados: [], arquivo, erro: null }),
+    });
+    return { con, fila, repo: conversas.criarRepositorio(con) };
+  }
+
+  it('o chat vincula a busca a conversa, e a rota devolve com os dados do job', async () => {
+    const { fila, repo: repoC } = montar('fluxo');
+    const c = repoC.criar();
+    const clienteLLM = clienteFalso([
+      { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 't1', name: 'buscar_jurisprudencia', input: { tribunal: 'stf', query: 'usucapiao' } }] },
+      { stop_reason: 'end_turn', content: [{ type: 'text', text: 'achei' }] },
+    ]);
+    const srv = await subir({ conversas: repoC, fila, clienteLLM });
+    const base = `http://127.0.0.1:${srv.address().port}`;
+    try {
+      const r = await fetch(`${base}/api/v1/chat`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ conversaId: c.id, mensagens: [{ role: 'user', content: 'busca' }] }),
+      });
+      await r.text();
+
+      const { buscas } = await (await fetch(`${base}/api/v1/conversas/${c.id}/buscas`)).json();
+      assert.strictEqual(buscas.length, 1);
+      assert.strictEqual(buscas[0].comando, 'stf');
+      assert.strictEqual(buscas[0].status, 'concluido');
+      assert.strictEqual(buscas[0].total, 2);
+      assert.strictEqual(buscas[0].params.query, 'usucapiao',
+        'sem a query o drawer nao consegue dizer QUAL busca foi essa');
+
+      // E os julgados vem pela rota que ja existia, pelo id que acabamos de descobrir.
+      const pagina = await (await fetch(`${base}/api/v1/buscas/${buscas[0].id}/resultados`)).json();
+      assert.strictEqual(pagina.itens.length, 2);
+      assert.match(JSON.stringify(pagina.itens), /0000627-73/);
+    } finally { srv.close(); }
+  });
+
+  it('conversa sem busca devolve lista vazia', async () => {
+    const { repo: repoC } = montar('vazia');
+    const c = repoC.criar();
+    const srv = await subir({ conversas: repoC });
+    try {
+      const r = await fetch(`http://127.0.0.1:${srv.address().port}/api/v1/conversas/${c.id}/buscas`);
+      assert.deepStrictEqual((await r.json()).buscas, []);
+    } finally { srv.close(); }
+  });
+
+  it('conversa inexistente e 404', async () => {
+    const { repo: repoC } = montar('inexistente');
+    const srv = await subir({ conversas: repoC });
+    try {
+      const r = await fetch(`http://127.0.0.1:${srv.address().port}/api/v1/conversas/nao-existe/buscas`);
+      assert.strictEqual(r.status, 404);
+    } finally { srv.close(); }
+  });
+
+  it('job vinculado que sumiu do banco nao derruba a rota', async () => {
+    const { repo: repoC, fila } = montar('orfao');
+    const c = repoC.criar();
+    repoC.vincularBusca(c.id, 'job-que-nao-existe');
+    const srv = await subir({ conversas: repoC, fila });
+    try {
+      const r = await fetch(`http://127.0.0.1:${srv.address().port}/api/v1/conversas/${c.id}/buscas`);
+      assert.strictEqual(r.status, 200);
+      assert.deepStrictEqual((await r.json()).buscas, [],
+        'vinculo orfao some da lista em vez de virar uma linha vazia sem dado nenhum');
+    } finally { srv.close(); }
+  });
+});
