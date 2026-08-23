@@ -6,6 +6,7 @@ const path = require('node:path');
 const { describe, it, before, after } = require('node:test');
 const db = require('../servidor/db');
 const conversas = require('../servidor/conversas');
+const jobs = require('../servidor/jobs');
 const { criarApp } = require('../servidor/index');
 
 let repo;
@@ -101,6 +102,17 @@ describe('conversas', () => {
 });
 
 /** Cliente falso com a mesma forma do SDK: .messages.stream(...) -> {on, finalMessage}. */
+/** Le um corpo SSE completo (`event: X\ndata: Y\n\n`) e devolve a lista de eventos. */
+function analisarSSE(texto) {
+  return texto.split('\n\n').filter(Boolean).map((bloco) => {
+    const linhas = bloco.split('\n');
+    const linhaEvento = linhas.find((l) => l.startsWith('event: '));
+    const linhaDado = linhas.find((l) => l.startsWith('data: '));
+    if (!linhaEvento) return null; // comentario (': ping')
+    return { evento: linhaEvento.slice(7), dado: linhaDado ? JSON.parse(linhaDado.slice(6)) : undefined };
+  }).filter(Boolean);
+}
+
 function clienteFalso(respostas) {
   let i = 0;
   return {
@@ -330,7 +342,11 @@ describe('chat.js grava o turno na conversa quando conversaId vem no corpo', () 
     } finally { srv.close(); }
   });
 
-  it('desconexao no meio da chamada ao LLM: so a mensagem do usuario fica gravada, e o signal realmente disparou', async () => {
+  // ANTES este teste fixava o oposto: desconectar abortava a chamada e a conversa
+  // ficava so com a pergunta do usuario. Era exatamente a falha relatada — fechar o
+  // navegador matava a conversa. Com persistencia ligada (conversaId) o turno agora
+  // sobrevive, e o que este teste guarda e que o signal NAO dispara mais.
+  it('com conversaId, desconectar NAO aborta a chamada ao LLM', async () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-conv-chat-abort-'));
     const repoChat = conversas.criarRepositorio(db.abrir(path.join(dir, 'jur.db')));
     const c = repoChat.criar();
@@ -344,39 +360,261 @@ describe('chat.js grava o turno na conversa quando conversaId vem no corpo', () 
         method: 'POST', headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ conversaId: c.id, mensagens: [{ role: 'user', content: 'ola' }] }),
         signal: controlador.signal,
-      }).catch(() => {}); // abortar o fetch do lado do cliente rejeita a promise — esperado
+      }).catch(() => {});
 
-      // Espera a mensagem do usuario aparecer no banco (prova que a rota ja passou da
-      // gravacao inicial e esta parada dentro da chamada ao LLM, que nunca resolve
-      // sozinha neste cliente falso).
       let gravada;
       for (let tentativa = 0; tentativa < 100 && !gravada; tentativa++) {
         await new Promise((r) => setTimeout(r, 10));
         gravada = repoChat.mensagens(c.id).length > 0;
       }
       assert.ok(gravada, 'a mensagem do usuario deveria ter sido gravada antes da chamada ao LLM');
-      assert.strictEqual(repoChat.mensagens(c.id).length, 1);
-      assert.strictEqual(estado.abortou, false, 'pre-condicao: o signal nao pode ter disparado antes do abort');
 
       controlador.abort();
       await chegou;
+      // Janela generosa: se o abort fosse propagar, propagaria bem antes disto.
+      await new Promise((r) => setTimeout(r, 300));
 
-      // Espera o SIGNAL de fato disparar no cliente falso — NAO um tempo fixo. Um tempo
-      // fixo aprova tanto "abortou certinho" quanto "essa chamada travou para sempre e
-      // ninguem percebeu": as duas deixam o banco com so a mensagem do usuario dentro de
-      // qualquer janela de espera. So `estado.abortou === true` prova que o
-      // AbortController do servidor de fato propagou ate o cliente do LLM.
-      for (let tentativa = 0; tentativa < 100 && !estado.abortou; tentativa++) {
-        await new Promise((r) => setTimeout(r, 10));
+      assert.strictEqual(estado.abortou, false,
+        'abortar aqui joga fora o turno inteiro so porque o usuario fechou a aba');
+    } finally { srv.close(); }
+  });
+});
+
+/**
+ * CONTINUIDADE. Fechar o navegador matava a conversa: o `res.on('close')` de
+ * rotas/chat.js abortava a chamada da Anthropic e cancelava as buscas daquela conversa.
+ * O usuario voltava e encontrava so a propria pergunta gravada — sem resposta e sem
+ * nenhum sinal de que algo tinha sido interrompido. Buscas de jurisprudencia levam
+ * minutos: sair da tela enquanto rodam e o caso normal, nao o excepcional.
+ */
+describe('continuidade — o turno sobrevive ao cliente ir embora', () => {
+  let chaveOriginal;
+  before(() => { chaveOriginal = process.env.ANTHROPIC_API_KEY; delete process.env.ANTHROPIC_API_KEY; });
+  after(() => {
+    if (chaveOriginal === undefined) delete process.env.ANTHROPIC_API_KEY;
+    else process.env.ANTHROPIC_API_KEY = chaveOriginal;
+  });
+
+  const subir = (deps) => new Promise((resolve) => {
+    const srv = http.createServer(criarApp(deps).handler);
+    srv.listen(0, () => resolve(srv));
+  });
+  const adormecer = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  /**
+   * Cliente do SDK que so responde quando o teste mandar, e que REGISTRA se o signal
+   * disparou. Sem `estado.abortou` um cliente falso que ignora o signal faria o teste
+   * passar mesmo com o abort intacto — provaria so que o texto chegou, nao que a
+   * desconexao deixou de matar o turno.
+   */
+  function clienteControlado() {
+    let liberar;
+    const presa = new Promise((r) => { liberar = r; });
+    let chegou;
+    const chamado = new Promise((r) => { chegou = r; });
+    const estado = { abortou: false };
+    return {
+      liberar,
+      chamado,
+      estado,
+      cliente: {
+        messages: {
+          stream(params, opcoes) {
+            const sinal = opcoes && opcoes.signal;
+            if (sinal) sinal.addEventListener('abort', () => { estado.abortou = true; });
+            const ouvintes = {};
+            const p = {
+              on(evento, fn) { ouvintes[evento] = fn; return p; },
+              async finalMessage() {
+                if (ouvintes.text) ouvintes.text('parcial ');
+                chegou();
+                await presa;
+                if (ouvintes.text) ouvintes.text('e o resto');
+                return { stop_reason: 'end_turn', content: [{ type: 'text', text: 'parcial e o resto' }] };
+              },
+            };
+            return p;
+          },
+        },
+      },
+    };
+  }
+
+  function ambiente(nome) {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), `jur-cont-${nome}-`));
+    return conversas.criarRepositorio(db.abrir(path.join(dir, 'jur.db')));
+  }
+
+  it('cliente desconecta no meio: o turno termina e a resposta INTEIRA fica gravada', async () => {
+    const repoC = ambiente('desconecta');
+    const c = repoC.criar();
+    const { cliente, liberar, chamado, estado } = clienteControlado();
+    const srv = await subir({ conversas: repoC, clienteLLM: cliente });
+    const porta = srv.address().port;
+    try {
+      const controlador = new AbortController();
+      const req = fetch(`http://127.0.0.1:${porta}/api/v1/chat`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        signal: controlador.signal,
+        body: JSON.stringify({ conversaId: c.id, mensagens: [{ role: 'user', content: 'pergunta' }] }),
+      }).catch(() => {});
+      await chamado;
+
+      controlador.abort();          // fecha o navegador
+      await req;
+      await adormecer(50);
+      assert.strictEqual(estado.abortou, false,
+        'o signal nao pode disparar: e ele que matava a conversa quando o navegador fechava');
+      liberar();                    // a LLM responde DEPOIS de o cliente sumir
+
+      for (let i = 0; i < 200 && repoC.mensagens(c.id).length < 2; i++) await adormecer(10);
+      const m = repoC.mensagens(c.id);
+      assert.strictEqual(m.length, 2,
+        'sem isto a conversa fica so com a pergunta do usuario, como se nada tivesse acontecido');
+      assert.strictEqual(m[1].papel, 'assistant');
+      assert.match(JSON.stringify(m[1].conteudo), /e o resto/,
+        'o turno precisa chegar ao FIM, nao parar onde a conexao caiu');
+    } finally { srv.close(); }
+  });
+
+  it('a busca em andamento NAO e mais cancelada quando o cliente vai embora', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-cont-job-'));
+    const con = db.abrir(path.join(dir, 'jur.db'));
+    const repoC = conversas.criarRepositorio(con);
+    const filaLenta = jobs.criarFila({
+      con, dirResultados: dir, executarFn: () => new Promise(() => {}),
+    });
+    const c = repoC.criar();
+    const clienteLLM = clienteFalso([
+      { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 't1', name: 'buscar_jurisprudencia', input: { tribunal: 'stf', query: 'x' } }] },
+    ]);
+    const srv = await subir({ conversas: repoC, fila: filaLenta, clienteLLM });
+    const porta = srv.address().port;
+    try {
+      const controlador = new AbortController();
+      const req = fetch(`http://127.0.0.1:${porta}/api/v1/chat`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        signal: controlador.signal,
+        body: JSON.stringify({ conversaId: c.id, mensagens: [{ role: 'user', content: 'busca no stf' }] }),
+      }).catch(() => {});
+
+      let job;
+      for (let i = 0; i < 200 && !job; i++) {
+        await adormecer(10);
+        job = filaLenta.listar().find((j) => j.comando === 'stf');
       }
-      assert.strictEqual(estado.abortou, true,
-        'o signal deveria ter disparado abort no cliente do LLM — sem isso este teste so prova '
-        + 'que a chamada nunca terminou, nao que ela foi cancelada corretamente');
+      assert.ok(job, 'o job devia ter sido criado');
 
-      const finais = repoChat.mensagens(c.id);
-      assert.strictEqual(finais.length, 1, 'nenhuma mensagem nova deveria ter sido gravada apos o abort');
-      assert.strictEqual(finais[0].papel, 'user');
-      assert.strictEqual(finais[0].conteudo, 'ola');
+      controlador.abort();
+      await req;
+      await adormecer(150);
+
+      assert.notStrictEqual(filaLenta.obter(job.id).status, 'cancelado',
+        'cancelar aqui joga fora minutos de crawl justamente quando o usuario saiu para esperar');
+    } finally { srv.close(); }
+  });
+
+  it('a lista de conversas marca qual esta em andamento', async () => {
+    const repoC = ambiente('lista');
+    const c = repoC.criar();
+    const { cliente, liberar, chamado } = clienteControlado();
+    const srv = await subir({ conversas: repoC, clienteLLM: cliente });
+    const porta = srv.address().port;
+    const base = `http://127.0.0.1:${porta}`;
+    try {
+      const lista = async () => (await (await fetch(`${base}/api/v1/conversas`)).json()).conversas;
+      assert.strictEqual((await lista()).find((x) => x.id === c.id).emAndamento, false);
+
+      const req = fetch(`${base}/api/v1/chat`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ conversaId: c.id, mensagens: [{ role: 'user', content: 'oi' }] }),
+      });
+      await chamado;
+      assert.strictEqual((await lista()).find((x) => x.id === c.id).emAndamento, true,
+        'e este campo que acende o icone de "rodando" na lateral');
+
+      liberar();
+      await (await req).text();
+      assert.strictEqual((await lista()).find((x) => x.id === c.id).emAndamento, false);
+    } finally { srv.close(); }
+  });
+
+  it('reanexar ao stream reproduz o que passou e continua ao vivo', async () => {
+    const repoC = ambiente('reanexa');
+    const c = repoC.criar();
+    const { cliente, liberar, chamado } = clienteControlado();
+    const srv = await subir({ conversas: repoC, clienteLLM: cliente });
+    const porta = srv.address().port;
+    const base = `http://127.0.0.1:${porta}`;
+    try {
+      const req = fetch(`${base}/api/v1/chat`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ conversaId: c.id, mensagens: [{ role: 'user', content: 'oi' }] }),
+      });
+      await chamado;
+
+      const fluxo = await fetch(`${base}/api/v1/conversas/${c.id}/stream`);
+      assert.strictEqual(fluxo.status, 200);
+      const lendo = fluxo.text();
+
+      liberar();
+      const eventos = analisarSSE(await lendo);
+      await (await req).text();
+
+      const textos = eventos.filter((e) => e.evento === 'texto').map((e) => e.dado.texto).join('');
+      assert.match(textos, /parcial /,
+        'quem reabre a conversa no meio precisa ver o que ja tinha chegado, nao a resposta comecando do nada');
+      assert.match(textos, /e o resto/, 'e depois continuar recebendo ao vivo');
+      assert.ok(eventos.some((e) => e.evento === 'fim'), 'o stream reanexado tambem recebe o fim');
+    } finally { srv.close(); }
+  });
+
+  it('stream de conversa sem turno vivo fecha na hora em vez de pendurar o cliente', async () => {
+    const repoC = ambiente('semturno');
+    const c = repoC.criar();
+    const srv = await subir({ conversas: repoC });
+    try {
+      const r = await fetch(`http://127.0.0.1:${srv.address().port}/api/v1/conversas/${c.id}/stream`);
+      assert.strictEqual(r.status, 200);
+      const eventos = analisarSSE(await r.text());
+      assert.deepStrictEqual(eventos.map((e) => e.evento), ['encerrado'],
+        'sem este aviso o cliente fica com a conexao aberta esperando um turno que nao existe');
+    } finally { srv.close(); }
+  });
+
+  it('stream de conversa inexistente e 404, nao um SSE vazio', async () => {
+    const repoC = ambiente('inexistente');
+    const srv = await subir({ conversas: repoC });
+    try {
+      const r = await fetch(`http://127.0.0.1:${srv.address().port}/api/v1/conversas/nao-existe/stream`);
+      assert.strictEqual(r.status, 404);
+    } finally { srv.close(); }
+  });
+
+  it('segundo POST na mesma conversa com turno vivo e recusado com 409', async () => {
+    const repoC = ambiente('duplo');
+    const c = repoC.criar();
+    const { cliente, liberar, chamado } = clienteControlado();
+    const srv = await subir({ conversas: repoC, clienteLLM: cliente });
+    const base = `http://127.0.0.1:${srv.address().port}`;
+    try {
+      const primeiro = fetch(`${base}/api/v1/chat`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ conversaId: c.id, mensagens: [{ role: 'user', content: 'um' }] }),
+      });
+      await chamado;
+
+      const segundo = await fetch(`${base}/api/v1/chat`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ conversaId: c.id, mensagens: [{ role: 'user', content: 'dois' }] }),
+      });
+      assert.strictEqual(segundo.status, 409,
+        'dois turnos concorrentes gravariam mensagens intercaladas e o historico voltaria fora de ordem');
+      assert.strictEqual(repoC.mensagens(c.id).filter((m) => m.conteudo === 'dois').length, 0,
+        'o turno recusado nao pode deixar a pergunta gravada como se tivesse rodado');
+
+      liberar();
+      await (await primeiro).text();
     } finally { srv.close(); }
   });
 });

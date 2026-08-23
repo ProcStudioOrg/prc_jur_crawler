@@ -311,3 +311,17 @@ body {
    (TJPR, entre outros) parecia busca quebrada enquanto a tela nao dizia nada. */
 .painel .nota.magistrado { margin-top: 14px; font-size: 13.5px; }
 .painel .nota.magistrado small { display: block; margin-top: 4px; color: var(--fraco); font-size: 12.5px; }
+
+/* Conversa cujo turno continua rodando no servidor. O turno sobrevive ao navegador
+   fechar (servidor/turnos.js): sem este indicador, uma conversa respondendo fica
+   indistinguivel de uma parada, e o usuario conclui que ela morreu. */
+.conversa-item .em-andamento {
+  flex: 0 0 auto; width: 11px; height: 11px; border-radius: 50%;
+  border: 2px solid var(--borda); border-top-color: var(--acento);
+  animation: jur-girar .9s linear infinite;
+}
+@keyframes jur-girar { to { transform: rotate(360deg); } }
+/* Quem pede menos movimento continua vendo o estado — so nao ve a animacao. */
+@media (prefers-reduced-motion: reduce) {
+  .conversa-item .em-andamento { animation: none; border-top-color: var(--acento); border-right-color: var(--acento); }
+}

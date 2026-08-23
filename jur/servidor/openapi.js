@@ -202,6 +202,14 @@ function documento() {
             titulo: { type: ['string', 'null'], description: 'renomeada automaticamente com o texto da primeira mensagem' },
             criadoEm: { type: 'integer' },
             atualizadoEm: { type: 'integer' },
+            emAndamento: {
+              type: 'boolean',
+              description: 'há um turno de chat rodando nesta conversa AGORA. Só aparece na listagem '
+                + '(`GET /api/v1/conversas`). O turno sobrevive ao cliente desconectar, então este '
+                + 'campo é o que distingue "ainda respondendo" de "parada" — sem ele, reabrir uma '
+                + 'conversa em andamento mostra só a pergunta do usuário e parece que morreu. '
+                + 'Vive em memória: reiniciar o servidor zera todos.',
+            },
           },
           required: ['id', 'criadoEm'],
         },
@@ -651,14 +659,40 @@ function documento() {
           },
         },
       },
+      '/api/v1/conversas/{id}/stream': {
+        get: {
+          summary: 'Reconecta ao turno em andamento de uma conversa (SSE)',
+          description:
+            'text/event-stream. Reproduz na hora tudo o que o turno já emitiu e depois segue ao '
+            + 'vivo, com os mesmos eventos de `POST /api/v1/chat` (`texto`, `ferramenta`, `fim`, '
+            + '`erro`). Existe porque o turno NÃO morre mais junto com a conexão que o pediu: '
+            + 'fechar o navegador deixa a resposta rodando, e reabrir a conversa reconecta ao que '
+            + 'já chegou em vez de mostrar uma tela parada. '
+            + 'Se não houver turno em andamento (inclusive um que acabou de terminar), emite '
+            + '`encerrado` e fecha — as mensagens desse turno já estão em '
+            + '`GET /api/v1/conversas/{id}`, e reproduzir o buffer por cima delas mostraria o '
+            + 'mesmo turno duas vezes.',
+          parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+          responses: {
+            200: {
+              description: 'stream de eventos do turno, ou um único `encerrado` quando não há turno vivo',
+              content: { 'text/event-stream': { schema: { type: 'string' } } },
+            },
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
+            404: RESPOSTAS.Erro404,
+          },
+        },
+      },
       '/mcp': {
         post: {
           summary: 'Protocolo MCP (JSON-RPC 2.0) — busca de jurisprudência para clientes LLM',
           description:
             'Implementa `initialize`, `notifications/initialized`, `tools/list` e `tools/call`, '
-            + 'protocolVersion fixo em 2025-06-18. As três ferramentas expostas em `tools/list` '
-            + '— `listar_tribunais`, `buscar_jurisprudencia`, `ler_resultados` — cobrem o mesmo '
-            + 'fluxo da API REST (catálogo, criar busca, ler página de resultados), com os mesmos '
+            + 'protocolVersion fixo em 2025-06-18. As ferramentas expostas em `tools/list` '
+            + '— `listar_tribunais`, `buscar_jurisprudencia`, `listar_relatores`, `ler_resultados` — '
+            + 'cobrem o mesmo fluxo da API REST (catálogo, criar busca, listar os magistrados que o '
+            + 'tribunal aceita no filtro, ler página de resultados), com os mesmos '
             + 'limites e a mesma regra do zero, devolvidas como texto em `content[0].text`. '
             + 'Notificações (sem `id`) sempre respondem 202 sem corpo; chamadas com `id` sempre '
             + 'respondem 200 com um envelope JSON-RPC (erro de protocolo vem em `error`, nunca '

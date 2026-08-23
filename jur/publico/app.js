@@ -152,10 +152,39 @@ let conversaAtual = null;
 /** O que vai para a API a cada turno. Reconstruido ao abrir conversa existente. */
 const historicoLocal = [];
 
+/**
+ * Enquanto houver ALGUMA conversa respondendo, a lista se recarrega sozinha. O turno
+ * agora sobrevive ao navegador fechar (servidor/turnos.js), e sem esta sondagem o
+ * indicador ficaria aceso para sempre numa conversa que ja terminou — ou, pior, nunca
+ * acenderia numa aberta em outra aba.
+ */
+let relogioHistorico = null;
+/**
+ * Conversas cujo turno ESTE cliente esta transmitindo agora (o stream do proprio POST
+ * /api/v1/chat). Serve a duas coisas:
+ *
+ *  1. Decidir se vale sondar a lista. No instante em que o envio comeca o servidor ainda
+ *     nao registrou o turno, entao `emAndamento` volta false e a sondagem nunca seria
+ *     agendada — o indicador so apareceria depois de um F5.
+ *  2. Impedir o reanexo de virar um SEGUNDO consumidor do mesmo turno. Reabrir a
+ *     conversa que este cliente ja esta transmitindo somava o stream do envio com o
+ *     stream de reanexo, e cada pedaco de texto aparecia DUAS vezes na tela.
+ */
+const enviosLocais = new Set();
+function agendarRecargaHistorico(precisa) {
+  if (!precisa) {
+    if (relogioHistorico) { clearTimeout(relogioHistorico); relogioHistorico = null; }
+    return;
+  }
+  if (relogioHistorico) return;
+  relogioHistorico = setTimeout(() => { relogioHistorico = null; carregarHistorico(); }, 5000);
+}
+
 async function carregarHistorico() {
   const alvo = $('#historico');
   let lista = [];
   try { lista = (await window.jurApi.pedir('/api/v1/conversas')).conversas; } catch { /* segue vazio */ }
+  agendarRecargaHistorico(enviosLocais.size > 0 || lista.some((c) => c.emAndamento));
   if (!lista.length) { alvo.innerHTML = '<p class="vazio">Nenhuma conversa ainda.</p>'; return; }
   alvo.innerHTML = '<h2>Conversas</h2>';
   for (const c of lista) {
@@ -165,6 +194,17 @@ async function carregarHistorico() {
     const titulo = document.createElement('span');
     titulo.textContent = c.titulo || 'Sem título';
     item.appendChild(titulo);
+    if (c.emAndamento) {
+      // O rotulo importa tanto quanto o desenho: um circulo girando nao diz nada a quem
+      // usa leitor de tela, e e justamente quem nao ve a animacao que mais precisa saber
+      // que a conversa nao morreu.
+      const girando = document.createElement('span');
+      girando.className = 'em-andamento';
+      girando.setAttribute('role', 'img');
+      girando.setAttribute('aria-label', 'respondendo agora');
+      girando.title = 'Respondendo — continua mesmo se você fechar esta aba';
+      item.appendChild(girando);
+    }
     const apagar = document.createElement('button');
     apagar.className = 'apagar'; apagar.textContent = '×';
     apagar.title = 'Apagar conversa';
@@ -184,6 +224,7 @@ async function carregarHistorico() {
 }
 
 function irParaInicial() {
+  encerrarReanexo();
   conversaAtual = null;
   $('#conversa').hidden = true;
   $('#inicial').hidden = false;
@@ -192,6 +233,7 @@ function irParaInicial() {
 }
 
 async function abrirConversa(id) {
+  encerrarReanexo();
   const dados = await window.jurApi.pedir(`/api/v1/conversas/${id}`);
   conversaAtual = id;
   $('#inicial').hidden = true;
@@ -212,6 +254,63 @@ async function abrirConversa(id) {
     if (texto) bolha(m.papel === 'user' ? 'user' : 'assistant', texto);
   }
   carregarHistorico();
+  reanexar(id);
+}
+
+// ---------- reanexar a um turno em andamento ----------
+// Uma unica reconexao viva por vez: trocar de conversa fecha a anterior.
+let reanexado = null;
+
+function encerrarReanexo() {
+  if (reanexado) { reanexado.abort(); reanexado = null; }
+}
+
+/**
+ * Reconecta ao turno que continua rodando no servidor. Sem isto, abrir uma conversa em
+ * andamento mostrava so as mensagens ja gravadas e uma tela parada ate o fim — o
+ * usuario nao tinha como saber se ainda vinha resposta.
+ *
+ * Se nao houver turno vivo, o servidor manda `encerrado` e fecha; nada acontece na tela.
+ */
+async function reanexar(id) {
+  encerrarReanexo();
+  // Ja ha um stream deste cliente para esta conversa (o do proprio envio). Abrir outro
+  // duplicaria cada delta na tela: os dois consumidores renderizam o mesmo turno.
+  if (enviosLocais.has(id)) return;
+  const controle = new AbortController();
+  reanexado = controle;
+  let destino = null;
+  try {
+    const r = await fetch(`/api/v1/conversas/${id}/stream`, { signal: controle.signal });
+    if (!r.ok) return;
+    await lerSSE(r, (nome, dados) => {
+      // Trocou de conversa no meio: o abort ja veio, mas um chunk em voo ainda pode
+      // cair aqui. Nao pode escrever na conversa que estiver aberta AGORA.
+      if (conversaAtual !== id) return;
+      if (nome === 'texto') {
+        if (!destino) destino = bolha('assistant', '');
+        destino.textContent += dados.texto;
+        $('#mensagens').scrollTop = $('#mensagens').scrollHeight;
+      } else if (nome === 'ferramenta') {
+        bolha('ferramenta', `▸ ${dados.nome}(${JSON.stringify(dados.entrada)})`);
+        destino = null;
+      } else if (nome === 'fim') {
+        // O historico local precisa receber o turno inteiro (com os blocos de
+        // ferramenta): e ele que volta ao modelo na proxima pergunta, e sem os blocos
+        // vao junto o job_id das buscas e a ressalva do zero.
+        const novas = Array.isArray(dados.mensagens) && dados.mensagens.length
+          ? dados.mensagens
+          : [{ role: 'assistant', content: dados.texto }];
+        for (const m of novas) historicoLocal.push({ role: m.role, content: m.content });
+        carregarHistorico();
+      } else if (nome === 'erro') {
+        bolha('erro', dados.erro);
+      }
+    });
+  } catch { /* abortado ou rede caiu: a conversa continua gravada no servidor */ }
+  finally {
+    if (reanexado === controle) reanexado = null;
+  }
 }
 
 $('#nova-conversa').addEventListener('click', irParaInicial);
@@ -282,6 +381,8 @@ async function enviar(campo, modelo, esforco) {
   const botao = $('.enviar', caixaAtiva());
   botao.disabled = true;
 
+  // Este envio JA e o stream do turno: um reanexo por cima duplicaria cada delta.
+  encerrarReanexo();
   campo.value = ''; ajustarAltura(campo);
   bolha('user', texto);
   historicoLocal.push({ role: 'user', content: texto });
@@ -297,6 +398,10 @@ async function enviar(campo, modelo, esforco) {
   const conversaDoEnvio = conversaAtual;
 
   let destino = null;
+  // Liga a sondagem da lateral ANTES do POST: a partir daqui existe um turno deste
+  // cliente, e e isso que faz o indicador aparecer sem esperar um F5.
+  enviosLocais.add(conversaDoEnvio);
+  carregarHistorico();
   const controle = new AbortController();
   let relogio = setTimeout(() => controle.abort(), 30000);
   const renovar = () => { clearTimeout(relogio); relogio = setTimeout(() => controle.abort(), 30000); };
@@ -322,6 +427,9 @@ async function enviar(campo, modelo, esforco) {
       if (conversaAtual === conversaDoEnvio) bolha('erro', corpo.erro);
       return;
     }
+    // O stream abriu: o servidor ja registrou o turno. Recarrega agora para o indicador
+    // aparecer de imediato, em vez de esperar a proxima sondagem.
+    carregarHistorico();
     await lerSSE(r, (nome, dados) => {
       const aindaNaMesmaConversa = conversaAtual === conversaDoEnvio;
       if (nome === 'texto') {
@@ -362,6 +470,11 @@ async function enviar(campo, modelo, esforco) {
     }
   } finally {
     clearTimeout(relogio);
+    enviosLocais.delete(conversaDoEnvio);
+    // Aqui o stream ja fechou, e o servidor so fecha depois de tirar o turno do registro
+    // — entao esta leitura e a que apaga o indicador na hora certa, sem esperar a
+    // proxima sondagem.
+    carregarHistorico();
     botao.disabled = false;
     // Reabilita tambem o botao ORIGINAL da caixa inicial: quando este envio criou a
     // conversa, `botao` (acima) e um elemento NOVO em #caixa-conversa — o antigo em

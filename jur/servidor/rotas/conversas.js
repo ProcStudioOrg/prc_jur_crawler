@@ -1,4 +1,4 @@
-const { json, lerCorpo } = require('../http');
+const { json, lerCorpo, sse } = require('../http');
 
 function registrar(roteador, deps) {
   const repo = deps.conversas;
@@ -10,7 +10,43 @@ function registrar(roteador, deps) {
   });
 
   roteador.rota('GET', '/api/v1/conversas', (req, res) => {
-    json(res, 200, { conversas: repo.listar(Number(req.query.limite) || 100) });
+    // `emAndamento` e o que acende o icone de "respondendo" na lateral. Sem ele, uma
+    // conversa cujo turno continua rodando (agora que ele sobrevive ao cliente ir
+    // embora) e indistinguivel de uma conversa parada: o usuario reabre, ve a propria
+    // pergunta e conclui que morreu.
+    const lista = repo.listar(Number(req.query.limite) || 100).map((c) => ({
+      ...c,
+      emAndamento: Boolean(deps.turnos && deps.turnos.emAndamento(c.id)),
+    }));
+    json(res, 200, { conversas: lista });
+  });
+
+  /**
+   * Reconecta ao turno em andamento de uma conversa. Reproduz o que ja chegou e segue
+   * ao vivo — e o que faz reabrir a conversa no meio mostrar a resposta se formando em
+   * vez de uma tela parada ate o fim.
+   *
+   * Turno ja encerrado nao reproduz nada: manda `encerrado` e fecha. As mensagens dele
+   * estao no banco, e reproduzir o buffer por cima do que o cliente carregou de
+   * GET /conversas/:id mostraria o mesmo turno duas vezes.
+   */
+  roteador.rota('GET', '/api/v1/conversas/:id/stream', (req, res) => {
+    if (!repo.obter(req.params.id)) return json(res, 404, { erro: 'conversa nao encontrada' });
+
+    const canal = sse(res);
+    const desanexar = deps.turnos && deps.turnos.anexar(
+      req.params.id,
+      (nome, dados) => canal.enviar(nome, dados),
+      () => canal.fechar(),
+    );
+    if (!desanexar) {
+      // Sem este aviso o cliente fica com a conexao aberta esperando um turno que nao
+      // existe (ou que acabou de terminar) ate o timeout do browser.
+      canal.enviar('encerrado', { motivo: 'nao ha turno em andamento nesta conversa' });
+      return canal.fechar();
+    }
+    res.on('close', desanexar);
+    return undefined;
   });
 
   roteador.rota('GET', '/api/v1/conversas/:id', (req, res) => {

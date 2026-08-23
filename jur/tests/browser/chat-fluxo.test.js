@@ -155,9 +155,14 @@ describe('chat: regressao da revisao da Task 7', () => {
       await page.waitForSelector('#conversa:not([hidden])', { timeout: 5000 });
       await page.waitForTimeout(300); // da tempo do POST /api/v1/chat de X sair do lado do cliente
 
-      // 3) troca pra Y (unico item que a lateral conhece agora) ENQUANTO X ainda esta
-      //    streamando em segundo plano.
-      await page.click('#historico .conversa-item');
+      // 3) troca pra Y ENQUANTO X ainda esta streamando em segundo plano.
+      //    Seleciona Y PELO TITULO, nao pela posicao: desde a continuidade (item 3) a
+      //    lateral se atualiza assim que o turno abre, entao X tambem esta listada — e
+      //    listada em primeiro, por atualizado_em. Clicar no "primeiro item" abriria X e
+      //    o teste passaria a afirmar algo sobre a tela errada.
+      await page.waitForFunction(() => [...document.querySelectorAll('#historico .conversa-item span')]
+        .some((e) => e.textContent.startsWith('pergunta Y')), null, { timeout: 10000 });
+      await page.click('#historico .conversa-item:has(span:text-is("pergunta Y"))');
       await page.waitForTimeout(200);
       const mensagensDeYLogoDepois = await page.$eval('#mensagens', (el) => el.textContent);
       assert.doesNotMatch(

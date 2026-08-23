@@ -95,6 +95,17 @@ lê o acervo de resultados já baixado e gasta o dinheiro do operador no chat. I
 **medido** na revisão final: com `ports: "3000:3000"` o serviço respondia da LAN em
 `http://192.168.0.78:3000`.
 
+⚠️ **Um turno de chat não morre junto com a conexão.** Desde a mudança de continuidade,
+fechar o navegador (ou perder a rede) **não** aborta a chamada à Anthropic nem cancela as
+buscas daquela conversa: o turno vai até o fim, é persistido, e reabrir a conversa
+reconecta ao que já chegou (`GET /api/v1/conversas/{id}/stream`). Foi uma troca
+deliberada — buscas de jurisprudência levam minutos, e perder o crawl custa mais que
+terminar a chamada. Operacionalmente isso significa que **um POST que ninguém está mais
+ouvindo continua gastando a chave**, limitado pelo teto de passos do turno
+(`MAX_ITERACOES` em `servidor/llm.js`). Vale só quando há onde voltar: sem `conversaId`
+(persistência desligada) a política antiga continua valendo, e a desconexão aborta.
+Os turnos vivos ficam **em memória** — reiniciar o container mata todos.
+
 Duas travas de exposição, em camadas diferentes:
 
 | Onde | Variável / linha | Default | O que controla |

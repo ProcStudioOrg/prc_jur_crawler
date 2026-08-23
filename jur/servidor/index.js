@@ -5,9 +5,15 @@ const db = require('./db');
 const jobs = require('./jobs');
 const chaves = require('./chaves');
 const conversas = require('./conversas');
+const turnos = require('./turnos');
 const autenticacao = require('./autenticacao');
 
 function criarApp(deps = {}) {
+  // Registro dos turnos vivos. Fica por app (nao global) para cada servidor de teste ter
+  // o seu. Criado aqui, e nao em iniciar(), para as rotas de chat/conversas terem acesso
+  // mesmo quando o app e montado direto — que e como todo teste o monta.
+  const deps2 = { ...deps, turnos: deps.turnos || turnos.criarRegistro() };
+  deps = deps2;
   const guarda = autenticacao.criarGuarda({ chaves: deps.chaves, exigir: deps.exigirChave });
   const roteador = criarRoteador({ guarda });
   require('./rotas/tribunais').registrar(roteador);
