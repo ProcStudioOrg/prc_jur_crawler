@@ -441,6 +441,10 @@ async function enviar(campo, modelo, esforco) {
       method: 'POST', headers: cab, signal: controle.signal,
       body: JSON.stringify({
         mensagens: historicoLocal, modelo, esforco: esforcoParaEnviar, conversaId: conversaAtual,
+        // Tribunais que o usuario deixou ligados na Disponibilidade. Vai sempre que o
+        // painel ja carregou: e com isto que o servidor recorta o catalogo no prompt, e
+        // e dai que vem a economia de chamada de listar_tribunais.
+        tribunais: window.jurEscopo ? window.jurEscopo.ligados() : undefined,
       }),
     });
     if (!r.ok) {

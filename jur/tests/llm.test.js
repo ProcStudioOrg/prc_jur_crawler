@@ -195,3 +195,62 @@ describe('llm', () => {
     assert.ok(!('output_config' in capturado), 'haiku nao aceita output_config');
   });
 });
+
+/**
+ * O escopo declarado pelo usuario entra no PROMPT, e e dai que vem a economia de chamada
+ * de ferramenta: com o catalogo ja a vista, o modelo nao precisa gastar uma rodada
+ * inteira chamando listar_tribunais so para descobrir onde pode buscar.
+ */
+describe('llm — escopo de tribunais no prompt do sistema', () => {
+  function clienteEspiao(capturado) {
+    return {
+      messages: {
+        stream(params) {
+          capturado.params = params;
+          const p = { on() { return p; }, async finalMessage() { return { stop_reason: 'end_turn', content: [{ type: 'text', text: 'ok' }] }; } };
+          return p;
+        },
+      },
+    };
+  }
+
+  const rodar = async (escopo) => {
+    const capturado = {};
+    await llm.conversar({
+      mensagens: [{ role: 'user', content: 'oi' }],
+      cliente: clienteEspiao(capturado),
+      deps: {},
+      escopo,
+    });
+    return capturado.params.system;
+  };
+
+  it('sem escopo, o prompt fica como sempre foi', async () => {
+    assert.strictEqual(await rodar(undefined), llm.SISTEMA);
+  });
+
+  it('com escopo, o prompt lista os tribunais ligados', async () => {
+    const sistema = await rodar(['stf', 'trf4']);
+    assert.notStrictEqual(sistema, llm.SISTEMA);
+    assert.match(sistema, /\bstf\b/);
+    assert.match(sistema, /\btrf4\b/);
+  });
+
+  it('o prompt dispensa explicitamente a chamada a listar_tribunais', async () => {
+    const sistema = await rodar(['stf']);
+    assert.match(sistema, /listar_tribunais/,
+      'sem dizer que nao precisa chamar, o modelo chama assim mesmo e a economia nao acontece');
+  });
+
+  it('o prompt proibe buscar fora do escopo e proibe ler isso como ausencia de julgado', async () => {
+    const sistema = await rodar(['stf']);
+    assert.match(sistema, /desligad/i);
+    assert.match(sistema, /nao ha jurisprudencia|não há jurisprudência|ausencia|ausência/i);
+  });
+
+  it('escopo vazio tambem entra no prompt — desligar tudo nao pode virar silencio', async () => {
+    const sistema = await rodar([]);
+    assert.notStrictEqual(sistema, llm.SISTEMA);
+    assert.match(sistema, /nenhum tribunal/i);
+  });
+});

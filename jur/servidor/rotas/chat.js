@@ -1,5 +1,6 @@
 const { sse, lerCorpo, json } = require('../http');
 const llm = require('../llm');
+const catalogo = require('../catalogo');
 const validacao = require('../validacao');
 
 const ROLES_VALIDOS = new Set(['user', 'assistant']);
@@ -52,6 +53,15 @@ function registrar(roteador, deps) {
     const vEsforco = validacao.validarEsforco(corpo.esforco, vModelo.valor);
     if (!vEsforco.ok) return json(res, 400, { erro: vEsforco.erro });
 
+    // Tribunais que o usuario deixou LIGADOS no painel de disponibilidade. Vai para dois
+    // lugares: o prompt (para o modelo nao precisar chamar listar_tribunais so para
+    // descobrir onde pode buscar) e as ferramentas (que recusam o que estiver fora).
+    const vTribunais = validacao.validarTribunais(
+      corpo.tribunais, new Set(catalogo.listar().map((t) => t.comando)),
+    );
+    if (!vTribunais.ok) return json(res, 400, { erro: vTribunais.erro });
+    const escopo = vTribunais.valor;
+
     // A chave nunca e persistida: vem do header (localStorage do browser) ou do ambiente.
     // deps.clienteLLM (so em teste) dispensa a chave real.
     const apiKey = req.headers['x-api-key'] || process.env.ANTHROPIC_API_KEY;
@@ -95,6 +105,8 @@ function registrar(roteador, deps) {
     // Rastreia so os jobs de busca que ESTA conversa criou, para cancelar so os dela
     // (nao os de outra conversa concorrente) se o cliente for embora no meio.
     const jobsDesteChat = new Set();
+    // Set para as ferramentas (consulta por pertinencia); array para o prompt (ordem).
+    const escopoTribunais = escopo ? new Set(escopo) : undefined;
     const filaRastreada = deps.fila && {
       ...deps.fila,
       enfileirar(...args) {
@@ -157,10 +169,11 @@ function registrar(roteador, deps) {
           mensagens,
           apiKey,
           cliente: deps.clienteLLM,
-          deps: filaRastreada ? { ...deps, fila: filaRastreada } : deps,
+          deps: { ...deps, ...(filaRastreada ? { fila: filaRastreada } : {}), escopoTribunais },
           sinal: controlador.signal,
           modelo: vModelo.valor,
           esforco: vEsforco.valor,
+          escopo,
           aoTexto: (t) => emitir('texto', { texto: t }),
           aoFerramenta: (nome, entrada) => emitir('ferramenta', { nome, entrada }),
         });

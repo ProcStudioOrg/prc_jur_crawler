@@ -144,8 +144,39 @@ function definicoes() {
 //     explicar ao usuario, nao um erro de tool — errar essa fronteira para o lado do
 //     isError faria o cliente esconder ou tentar de novo uma resposta que ja e final.
 
-async function listarTribunais(entrada) {
-  const lista = catalogo.listar({ segmento: entrada.segmento, uf: entrada.uf, estado: entrada.estado });
+/**
+ * O usuario liga e desliga tribunais no painel de disponibilidade, e a selecao chega em
+ * `deps.escopoTribunais` (um Set). `undefined` significa "o cliente nao declarou escopo"
+ * — catalogo inteiro, como sempre foi. Um Set VAZIO nao e a mesma coisa: significa que o
+ * usuario desligou tudo, e a diferenca importa porque tratar vazio como "sem restricao"
+ * faria a interface prometer um recorte que o servidor ignora.
+ */
+function foraDoEscopo(comando, deps) {
+  return Boolean(deps.escopoTribunais) && !deps.escopoTribunais.has(comando);
+}
+
+/**
+ * Texto da recusa. E aqui que mora o invariante: um tribunal desligado NAO pode virar um
+ * zero. Sem estas frases o modelo reporta a recusa como "nao encontrei jurisprudencia" —
+ * a mesma falha do zero do tribunal, com outra causa.
+ */
+function explicarDesligado(comando, nome, deps) {
+  const ligados = [...deps.escopoTribunais];
+  if (!ligados.length) {
+    return `Nenhum tribunal esta ligado no painel do usuario, entao nao ha onde buscar.\n`
+      + 'A BUSCA NAO FOI FEITA. NAO diga que nao ha jurisprudencia: ninguem procurou. '
+      + 'Peca ao usuario para ligar ao menos um tribunal na Disponibilidade.';
+  }
+  return `O tribunal ${comando} (${nome}) esta DESLIGADO no painel do usuario.\n`
+    + `Ligados agora: ${ligados.join(', ')}.\n`
+    + 'A BUSCA NAO FOI FEITA. NAO diga que nao ha jurisprudencia nesse tribunal, e NAO troque '
+    + `por outro em silencio como se fosse a mesma coisa. Peca ao usuario para ligar ${comando} `
+    + 'na Disponibilidade, ou confirme com ele se prefere um dos que estao ligados.';
+}
+
+async function listarTribunais(entrada, deps = {}) {
+  const lista = catalogo.listar({ segmento: entrada.segmento, uf: entrada.uf, estado: entrada.estado })
+    .filter((t) => !foraDoEscopo(t.comando, deps));
   if (!lista.length) return { texto: 'Nenhum tribunal bate com esse filtro.', ok: true };
   const linhas = lista.map((t) => {
     const uf = t.uf.length ? ` [${t.uf.join(',')}]` : '';
@@ -174,6 +205,13 @@ async function buscar(entrada, deps) {
       ok: false,
     };
   }
+  // Depois de `!info` (desconhecido continua sendo desconhecido, nao "desligado") e
+  // antes de qualquer outra coisa: o escopo e do usuario, e nem chega a valer a pena
+  // discutir disponibilidade de um tribunal que ele desligou.
+  if (foraDoEscopo(entrada.tribunal, deps)) {
+    return { texto: explicarDesligado(info.comando, info.nome, deps), ok: false };
+  }
+
   if (!info.disponivel) {
     return {
       texto: `O tribunal ${info.comando} (${info.nome}) esta INDISPONIVEL — estado "${info.estado}".\n`
@@ -286,6 +324,10 @@ async function listarRelatores(entrada, deps) {
     };
   }
 
+  if (foraDoEscopo(entrada.tribunal, deps)) {
+    return { texto: explicarDesligado(info.comando, info.nome, deps), ok: false };
+  }
+
   const capacidade = relator.obter(entrada.tribunal);
   if (!capacidade || !capacidade.suportado) {
     return { texto: relator.explicarAusencia(entrada.tribunal, info.nome), ok: false };
@@ -386,7 +428,7 @@ async function lerResultados(entrada, deps) {
  */
 async function executarDetalhado(nome, entrada = {}, deps = {}) {
   try {
-    if (nome === 'listar_tribunais') return await listarTribunais(entrada);
+    if (nome === 'listar_tribunais') return await listarTribunais(entrada, deps);
     if (nome === 'buscar_jurisprudencia') return await buscar(entrada, deps);
     if (nome === 'listar_relatores') return await listarRelatores(entrada, deps);
     if (nome === 'ler_resultados') return await lerResultados(entrada, deps);

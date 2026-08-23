@@ -217,3 +217,68 @@ describe('rotas de chat', () => {
     srv.close();
   });
 });
+
+/**
+ * O escopo de tribunais vem do painel de disponibilidade e chega no corpo do POST.
+ * Comando desconhecido e RECUSADO com 400 em vez de ignorado: ignorar deixaria o escopo
+ * real menor do que o pedido sem ninguem perceber, e escopo menor em silencio vira zero
+ * em silencio mais adiante.
+ */
+describe('POST /api/v1/chat — escopo de tribunais', () => {
+  let servidor; let base; let chaveOriginal;
+
+  before(async () => {
+    chaveOriginal = process.env.ANTHROPIC_API_KEY;
+    delete process.env.ANTHROPIC_API_KEY;
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-escopo-'));
+    const fila = jobs.criarFila({
+      con: db.abrir(path.join(dir, 'jur.db')),
+      dirResultados: dir,
+      executarFn: async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null }),
+    });
+    const clienteLLM = clienteFalso([{ stop_reason: 'end_turn', content: [{ type: 'text', text: 'ok' }] }]);
+    servidor = http.createServer(criarApp({ fila, clienteLLM }).handler);
+    await new Promise((r) => servidor.listen(0, r));
+    base = `http://127.0.0.1:${servidor.address().port}`;
+  });
+
+  after(() => {
+    servidor.close();
+    if (chaveOriginal === undefined) delete process.env.ANTHROPIC_API_KEY;
+    else process.env.ANTHROPIC_API_KEY = chaveOriginal;
+  });
+
+  const enviar = (extra) => fetch(`${base}/api/v1/chat`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ mensagens: [{ role: 'user', content: 'oi' }], ...extra }),
+  });
+
+  it('aceita uma lista de comandos validos', async () => {
+    const r = await enviar({ tribunais: ['stf', 'trf4'] });
+    assert.strictEqual(r.status, 200);
+    await r.text();
+  });
+
+  it('recusa comando desconhecido com 400 em vez de ignorar', async () => {
+    const r = await enviar({ tribunais: ['stf', 'tjxx'] });
+    assert.strictEqual(r.status, 400);
+    assert.match((await r.json()).erro, /tjxx/);
+  });
+
+  it('recusa tribunais que nao e lista', async () => {
+    assert.strictEqual((await enviar({ tribunais: 'stf' })).status, 400);
+  });
+
+  it('lista vazia e aceita — desligar tudo e uma escolha, nao um erro', async () => {
+    const r = await enviar({ tribunais: [] });
+    assert.strictEqual(r.status, 200);
+    await r.text();
+  });
+
+  it('sem o campo, segue funcionando como antes', async () => {
+    const r = await enviar({});
+    assert.strictEqual(r.status, 200);
+    await r.text();
+  });
+});

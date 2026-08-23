@@ -244,23 +244,80 @@ body {
 .ponto[data-e="sem-acesso"] { background: var(--bloqueado); }
 .ponto[data-e="exige-sessao"] { background: var(--sessao); }
 
+.placar-ligados { margin-left: auto; color: var(--texto); font-weight: 600; }
+
+/* ---------- filtros de area e UF ---------- */
+.barra-filtros { margin: 4px 0 12px; display: flex; flex-direction: column; gap: 6px; }
+.linha-filtro { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.rotulo-filtro { font-size: 11.5px; color: var(--fraco); font-weight: 600; margin-right: 2px; }
+/* Colapsado: 27 UFs ocupariam a tela inteira sem ninguem ter pedido. `max-height` em vez
+   de esconder item a item para o "+" continuar sendo um alvo estavel. */
+.linha-filtro.colapsado { max-height: 30px; overflow: hidden; }
+.chip-filtro {
+  display: inline-flex; align-items: center; gap: 5px;
+  font: inherit; font-size: 12px; padding: 3px 9px; border-radius: 999px; cursor: pointer;
+  background: var(--superficie); color: var(--fraco);
+  border: 1px solid var(--borda);
+}
+.chip-filtro:hover { border-color: var(--acento); color: var(--texto); }
+.chip-filtro[aria-pressed="true"] {
+  background: var(--acento); border-color: var(--acento); color: #fff;
+}
+.chip-conta {
+  font-size: 10.5px; font-variant-numeric: tabular-nums;
+  background: var(--lateral); color: var(--fraco); border-radius: 999px; padding: 0 5px;
+}
+.chip-filtro[aria-pressed="true"] .chip-conta { background: rgba(255,255,255,.25); color: #fff; }
+.chip-filtro.mais { border-style: dashed; }
+.acoes-escopo { gap: 12px; margin-top: 2px; }
+.ligacao {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font: inherit; font-size: 12px; color: var(--fraco); text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ligacao:hover { color: var(--acento); }
+
+/* ---------- grade de tribunais ---------- */
 .grade-tribunais { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip-tribunal[hidden] { display: none; }
+/* O chip e a moldura; os dois botoes dentro dele nao tem borda propria. Precisa ser
+   assim porque sao DUAS acoes distintas no mesmo objeto — ver a sigla e o tribunal
+   (esquerda) e liga/desliga (direita) — e botao dentro de botao nao existe em HTML. */
+.chip-tribunal {
+  display: inline-flex; align-items: stretch; overflow: hidden;
+  border: 1px solid var(--borda); border-left-width: 3px; border-radius: 6px;
+  background: var(--superficie);
+}
+.chip-tribunal:hover { border-color: var(--acento); }
+.chip-tribunal[data-e="ok"] { border-left-color: var(--ok); }
+.chip-tribunal[data-e="instavel"] { border-left-color: var(--instavel); }
 .sigla {
   font: inherit; font-size: 12px; font-family: ui-monospace, SFMono-Regular, monospace;
-  padding: 3px 8px; border-radius: 6px; cursor: pointer;
-  background: var(--superficie); color: var(--texto);
-  border: 1px solid var(--borda); border-left-width: 3px;
+  text-transform: uppercase; letter-spacing: .02em;
+  padding: 3px 4px 3px 8px; cursor: pointer;
+  background: none; color: var(--texto); border: 0;
 }
-.sigla:hover { border-color: var(--acento); }
-.sigla[data-e="ok"] { border-left-color: var(--ok); }
-.sigla[data-e="instavel"] { border-left-color: var(--instavel); }
+/* A bolinha: verde = entra nas buscas, oca = fora. O anel continua desenhado quando
+   apagada, entao o alvo de clique nao some — e o estado nao depende so de cor: o
+   preenchimento (cheio x vazio) distingue os dois sem enxergar matiz. */
+.liga {
+  display: inline-flex; align-items: center; padding: 0 8px 0 3px;
+  background: none; border: 0; cursor: pointer;
+}
+.liga::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  border: 1.5px solid var(--bloqueado); background: transparent;
+}
+.liga[aria-pressed="true"]::before { background: var(--ok); border-color: var(--ok); }
+.liga:focus-visible, .sigla:focus-visible { outline: 2px solid var(--acento); outline-offset: -2px; }
 /* Era `opacity: .6` no elemento inteiro — apagava texto E borda juntos, e a borda ja
    partia de uma cor marginal: o tribunal bloqueado (a informacao que mais importa,
    porque evita uma busca que nao vai funcionar) ficava o mais dificil de ler da grade
    (achado Important da revisao da Task 9). Troca: sem opacidade nenhuma, cor de texto
    propria (--fraco, que ja passa 4,5:1 sozinha) no lugar de apagar o --texto normal. */
-.sigla[data-e="sem-acesso"] { border-left-color: var(--bloqueado); color: var(--fraco); }
-.sigla[data-e="exige-sessao"] { border-left-color: var(--sessao); }
+.chip-tribunal[data-e="sem-acesso"] { border-left-color: var(--bloqueado); }
+.chip-tribunal[data-e="sem-acesso"] .sigla { color: var(--fraco); }
+.chip-tribunal[data-e="exige-sessao"] { border-left-color: var(--sessao); }
 
 .manual summary { cursor: pointer; font-size: 13px; color: var(--fraco); font-weight: 600; }
 .manual-corpo h3 { font-size: 14px; margin: 16px 0 4px; }

@@ -27,6 +27,39 @@ Regras que nao se quebram:
    do valor varia (trecho do nome, nome EXATO do combo, ou codigo): nos que exigem exato
    ou codigo, chame listar_relatores antes, porque valor aproximado nao da erro — da zero.`;
 
+/**
+ * Bloco que descreve o escopo escolhido pelo usuario no painel de disponibilidade.
+ *
+ * Existe por dois motivos, nesta ordem de importancia:
+ *  1. O invariante. Um tribunal desligado nao pode virar um zero. Se o modelo so
+ *     descobrisse o recorte ao levar uma recusa da ferramenta, ele teria margem para
+ *     trocar de tribunal em silencio ou reportar "nao encontrei" — as duas coisas erradas.
+ *  2. A economia. Com o catalogo a vista, ele nao gasta uma rodada inteira (uma chamada
+ *     paga, com o contexto todo) so para chamar listar_tribunais e descobrir onde pode
+ *     buscar.
+ *
+ * So entra quando o cliente DECLARA o escopo. Sem declaracao, o prompt fica exatamente
+ * como sempre foi e o modelo descobre pela ferramenta.
+ */
+function blocoEscopo(escopo) {
+  if (!Array.isArray(escopo)) return '';
+  if (!escopo.length) {
+    // Mesma frase que a recusa da ferramenta usa (servidor/ferramentas.js): as duas
+    // superficies precisam dizer a mesma coisa, senao o modelo recebe duas versoes do
+    // mesmo fato e escolhe uma.
+    return '\n\nESCOPO: NENHUM TRIBUNAL esta ligado no painel de disponibilidade do usuario.\n'
+      + 'Nao ha onde buscar. Nao chame buscar_jurisprudencia: peca a ele para ligar ao menos um.\n'
+      + 'Isso NAO e ausencia de jurisprudencia — e ausencia de busca.';
+  }
+  return '\n\nESCOPO: o usuario ligou estes tribunais no painel de disponibilidade, e SO eles:\n'
+    + `${escopo.join(', ')}\n`
+    + 'Voce ja tem o catalogo aqui — NAO chame listar_tribunais so para saber onde pode buscar '
+    + '(chame apenas se precisar do estado ou da ressalva de um deles).\n'
+    + 'Buscar em tribunal fora desta lista e recusado pela ferramenta. Se o usuario pedir um '
+    + 'tribunal DESLIGADO, diga que ele esta desligado e peca para liga-lo — nunca troque por '
+    + 'outro em silencio, e nunca apresente isso como ausencia de jurisprudencia: a busca nao foi feita.';
+}
+
 function erroAbortado() {
   // Mesmo formato do APIUserAbortError que o SDK lança quando o `signal` passado pra
   // .stream() ja chega abortado (ou aborta no meio do request): quem chama (rotas/chat.js)
@@ -37,8 +70,10 @@ function erroAbortado() {
 }
 
 async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramenta, sinal,
-                          modelo = MODELO, esforco = null, maxIteracoes = MAX_ITERACOES }) {
+                          modelo = MODELO, esforco = null, escopo = undefined,
+                          maxIteracoes = MAX_ITERACOES }) {
   const anthropic = cliente || new Anthropic(apiKey ? { apiKey } : {});
+  const sistema = SISTEMA + blocoEscopo(escopo);
   const historico = [...mensagens];
   let textoFinal = '';
 
@@ -52,7 +87,7 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
     const parametros = {
       model: modelo,
       max_tokens: MAX_TOKENS,
-      system: SISTEMA,
+      system: sistema,
       tools: ferramentas.definicoes(),
       messages: historico,
     };

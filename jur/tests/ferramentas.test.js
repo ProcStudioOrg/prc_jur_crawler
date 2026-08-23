@@ -445,3 +445,80 @@ describe('ferramentas — listar_relatores', () => {
       'lista que falhou nao pode ser lida como "este tribunal nao tem esses magistrados"');
   });
 });
+
+/**
+ * ESCOPO DE TRIBUNAIS. O usuario liga e desliga tribunais no painel de disponibilidade,
+ * e a selecao vai no corpo do POST /api/v1/chat. O ganho e economizar chamada de
+ * ferramenta: com o escopo declarado, o catalogo entra no prompt e o modelo nao precisa
+ * chamar listar_tribunais para descobrir onde pode buscar.
+ *
+ * O invariante que estes testes protegem e o mesmo de sempre, na sua versao nova:
+ * TRIBUNAL DESLIGADO NAO PODE VIRAR ZERO. Se a busca rodasse mesmo assim, ou se rodasse
+ * em outro lugar sem avisar, o usuario leria "nao ha jurisprudencia" onde na verdade
+ * ninguem procurou.
+ */
+describe('ferramentas — escopo de tribunais escolhido pelo usuario', () => {
+  const escopo = (...comandos) => ({ fila, escopoTribunais: new Set(comandos), timeoutBuscaMs: 0 });
+
+  it('listar_tribunais devolve so os tribunais dentro do escopo', async () => {
+    const r = await ferramentas.executarDetalhado('listar_tribunais', {}, escopo('stf', 'trf4'));
+    assert.match(r.texto, /^2 tribunais/m);
+    assert.match(r.texto, /\bstf\b/);
+    assert.match(r.texto, /\btrf4\b/);
+    assert.ok(!/\btjpr\b/.test(r.texto), 'tribunal fora do escopo nao pode aparecer no catalogo');
+  });
+
+  it('sem escopo declarado, o catalogo continua inteiro', async () => {
+    const r = await ferramentas.executarDetalhado('listar_tribunais', {}, { fila });
+    assert.match(r.texto, /\btjpr\b/);
+  });
+
+  it('buscar num tribunal DESLIGADO e recusado, e a busca nao roda', async () => {
+    const chamadas = [];
+    const deps = {
+      ...escopo('stf'),
+      fila: { ...fila, enfileirar: (c, p) => { chamadas.push(c); return fila.enfileirar(c, p); } },
+    };
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'trf4', query: 'x' }, deps);
+    assert.strictEqual(chamadas.length, 0);
+    assert.strictEqual(r.ok, false);
+    assert.match(r.texto, /desligad/i);
+    assert.match(r.texto, /nao diga|não diga/i,
+      'sem esta frase o modelo reporta a recusa como ausencia de jurisprudencia');
+    assert.match(r.texto, /stf/,
+      'a recusa precisa dizer quais tribunais ESTAO ligados, senao o modelo fica sem saida');
+  });
+
+  it('a recusa manda ligar o tribunal, nao trocar de tribunal em silencio', async () => {
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'tjpr', query: 'usucapiao' }, escopo('stf'));
+    assert.match(r.texto, /ligar|ligue/i);
+  });
+
+  it('tribunal dentro do escopo busca normalmente', async () => {
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'stf', query: 'x' }, escopo('stf'));
+    assert.strictEqual(r.ok, true);
+  });
+
+  it('escopo vazio nao e "tudo liberado" — e uma recusa que explica', async () => {
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'stf', query: 'x' }, { fila, escopoTribunais: new Set(), timeoutBuscaMs: 0 });
+    assert.strictEqual(r.ok, false,
+      'um Set vazio significa "o usuario desligou tudo", nao "nao ha restricao"');
+    assert.match(r.texto, /nenhum tribunal/i);
+  });
+
+  it('tribunal desconhecido continua sendo desconhecido, nao "desligado"', async () => {
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'tjxx', query: 'x' }, escopo('stf'));
+    assert.match(r.texto, /desconhecid/i);
+  });
+
+  it('listar_relatores tambem respeita o escopo', async () => {
+    const r = await ferramentas.executarDetalhado('listar_relatores', { tribunal: 'tjsc' }, escopo('stf'));
+    assert.strictEqual(r.ok, false);
+    assert.match(r.texto, /desligad/i);
+  });
+});

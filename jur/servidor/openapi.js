@@ -476,6 +476,17 @@ function documento() {
                 schema: {
                   type: 'object',
                   properties: {
+                    tribunais: {
+                      type: 'array',
+                      items: { type: 'string' },
+                      description: 'escopo: os comandos de tribunal que o usuário deixou LIGADOS no painel '
+                        + 'de disponibilidade. Omitir o campo significa "sem restrição" (catálogo inteiro); '
+                        + 'uma lista VAZIA significa "o usuário desligou tudo" e não é a mesma coisa. '
+                        + 'Comando desconhecido devolve 400 em vez de ser ignorado — um escopo menor em '
+                        + 'silêncio vira um zero em silêncio mais adiante. O escopo entra no prompt do sistema '
+                        + '(para o modelo não gastar uma rodada chamando `listar_tribunais`) e as ferramentas '
+                        + 'recusam qualquer tribunal fora dele, sempre dizendo que a busca NÃO foi feita.',
+                    },
                     mensagens: {
                       type: 'array', items: { $ref: '#/components/schemas/MensagemEnviada' },
                       description: 'histórico do turno; a última precisa ser role "user" (terminar em "assistant" seria prefill, que a API recusa)',

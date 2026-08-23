@@ -179,7 +179,38 @@ function validarEsforco(valor, modelo) {
   return { ok: true, valor, erro: null };
 }
 
+/**
+ * Escopo de tribunais que o usuario ligou no painel de disponibilidade.
+ *
+ * `undefined` e valido e significa "o cliente nao declarou escopo" — catalogo inteiro.
+ * Um array VAZIO tambem e valido e significa "o usuario desligou tudo": os dois nao
+ * podem colapsar no mesmo caso, porque tratar vazio como "sem restricao" faria o
+ * servidor buscar exatamente onde o usuario disse para nao buscar.
+ *
+ * Comando desconhecido e RECUSADO em vez de ignorado. Ignorar deixaria o escopo real
+ * menor do que o pedido sem ninguem perceber — e um escopo menor em silencio e um zero
+ * em silencio mais adiante.
+ */
+function validarTribunais(valor, comandosValidos) {
+  if (valor === undefined || valor === null) return { ok: true, valor: undefined };
+  if (!Array.isArray(valor)) return { ok: false, erro: 'tribunais precisa ser uma lista de comandos' };
+  const invalidos = [];
+  const limpos = [];
+  for (const bruto of valor) {
+    if (typeof bruto !== 'string') { invalidos.push(String(bruto)); continue; }
+    const c = bruto.trim().toLowerCase();
+    if (!c) continue;
+    if (comandosValidos && !comandosValidos.has(c)) { invalidos.push(c); continue; }
+    if (!limpos.includes(c)) limpos.push(c);
+  }
+  if (invalidos.length) {
+    return { ok: false, erro: `tribunal desconhecido em tribunais: ${invalidos.join(', ')}` };
+  }
+  return { ok: true, valor: limpos };
+}
+
 module.exports = {
+  validarTribunais,
   validarMaxPaginas, validarData, normalizarPaginacao,
   validarModelo, validarEsforco, MODELOS, ESFORCOS,
 };
