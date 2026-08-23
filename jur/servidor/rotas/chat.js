@@ -126,15 +126,28 @@ function registrar(roteador, deps) {
         aoTexto: (t) => canal.enviar('texto', { texto: t }),
         aoFerramenta: (nome, entrada) => canal.enviar('ferramenta', { nome, entrada }),
       });
-      canal.enviar('fim', { texto: r.texto });
+      // r.mensagens e o historico COMPLETO depois do turno; as que entraram (mensagens)
+      // ja estao no banco (a ultima delas foi gravada acima, as anteriores vieram de
+      // turnos passados). So as que vieram DEPOIS sao novas neste turno — inclui
+      // possiveis rodadas de tool_use/tool_result no meio, nao so a resposta final.
+      // O content vai como veio (array de blocos quando for o caso), nunca achatado.
+      const novas = r.mensagens.slice(mensagens.length);
+
+      // C1 (revisao final): o `fim` carrega o turno INTEIRO, nao so o texto. O cliente
+      // monta o historico do proximo turno incrementalmente, na mesma sessao, sem
+      // recarregar a pagina — e era ele, nao o banco, que achatava tudo em
+      // {role:'assistant', content: texto}. Achatado aqui o modelo perde duas coisas no
+      // turno 2: o `job_id` das buscas que ele mesmo fez (o usuario pede "mostra os 5
+      // primeiros" e ele refaz o crawl) e, pior, a RESSALVA DO TRIBUNAL para total 0,
+      // que vive dentro do `tool_result` — sem ela a vista, o modelo pode afirmar "nao
+      // ha jurisprudencia", que e exatamente o invariante que este repo existe para
+      // proteger. Mandamos os blocos daqui, e nao deixamos o cliente refazer
+      // GET /conversas/:id, porque esta e a MESMA lista que acabou de ser persistida
+      // (uma fonte so), vale mesmo sem persistencia ligada (conversaId null), nao custa
+      // ida-e-volta extra e nao abre corrida com a troca de conversa no meio do stream.
+      canal.enviar('fim', { texto: r.texto, mensagens: novas });
       if (conversaId) {
-        // r.mensagens e o historico COMPLETO depois do turno; as que entraram (mensagens)
-        // ja estao no banco (a ultima delas foi gravada acima, as anteriores vieram de
-        // turnos passados). So as que vieram DEPOIS sao novas neste turno — inclui
-        // possiveis rodadas de tool_use/tool_result no meio, nao so a resposta final.
-        // O content vai como veio (array de blocos quando for o caso), nunca achatado —
-        // sem isso o modelo perde os job_id das buscas no proximo turno.
-        const novas = r.mensagens.slice(mensagens.length);
+        // Sem isso o modelo perde os job_id das buscas no proximo turno depois de um F5.
         for (const m of novas) deps.conversas.acrescentar(conversaId, m.role, m.content);
       }
     } catch (e) {

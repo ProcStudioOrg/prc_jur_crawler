@@ -110,6 +110,12 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
   }
 
   const aviso = 'Atingi o limite de passos desta conversa sem concluir. Refaca o pedido de forma mais especifica.';
+  // Sair pelo teto deixa o historico terminando num `user` com tool_result (a ultima
+  // rodada de ferramentas ficou sem resposta do modelo). Como o turno inteiro agora volta
+  // ao cliente e volta a nos no turno seguinte (C1), fechar com um `assistant` aqui e o
+  // que mantem os papeis alternando — sem isso o proximo turno mandaria dois `user`
+  // seguidos e a API recusaria com 400.
+  historico.push({ role: 'assistant', content: [{ type: 'text', text: textoFinal || aviso }] });
   return { mensagens: historico, texto: textoFinal || aviso };
 }
 

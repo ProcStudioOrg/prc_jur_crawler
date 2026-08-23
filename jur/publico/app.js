@@ -297,7 +297,19 @@ async function enviar(campo, modelo, esforco) {
         destino = null;
       } else if (nome === 'fim') {
         if (aindaNaMesmaConversa) {
-          historicoLocal.push({ role: 'assistant', content: dados.texto });
+          // C1: o turno inteiro, com os blocos `tool_use`/`tool_result` como vieram do
+          // servidor — NAO `{role:'assistant', content: dados.texto}`. Achatar aqui era o
+          // caminho paralelo ao de `abrirConversa` (que reidrata do banco integro) e
+          // valia durante a MESMA sessao, sem recarregar: como o servidor usa o
+          // `mensagens` que ESTE cliente manda, o turno 2 saia sem ferramenta nenhuma
+          // mesmo com o banco tendo tudo. O usuario perdia o `job_id` (pedia "mostra os 5
+          // primeiros" e o modelo refazia o crawl) e — pior — a ressalva do zero, que
+          // mora dentro do `tool_result`: fora do contexto, nada impede o modelo de
+          // afirmar "nao ha jurisprudencia".
+          const novas = Array.isArray(dados.mensagens) && dados.mensagens.length
+            ? dados.mensagens
+            : [{ role: 'assistant', content: dados.texto }];
+          for (const m of novas) historicoLocal.push({ role: m.role, content: m.content });
           carregarHistorico();
         }
         // Orfa: nada a fazer aqui — o servidor ja gravou a resposta inteira no banco,

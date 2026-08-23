@@ -39,9 +39,11 @@ function clienteFalso(script) {
           async finalMessage() {
             if (config.delayMs) await new Promise((r) => setTimeout(r, config.delayMs));
             if (config.texto && ouvintes.text) ouvintes.text(config.texto);
+            // `conteudo` (opcional) permite roteirizar um turno de tool_use com os blocos
+            // de verdade; sem ele o comportamento e o de sempre — um unico bloco de texto.
             return {
               stop_reason: config.stopReason || 'end_turn',
-              content: [{ type: 'text', text: config.texto || '' }],
+              content: config.conteudo || [{ type: 'text', text: config.texto || '' }],
             };
           },
         };
@@ -199,6 +201,93 @@ describe('chat: regressao da revisao da Task 7', () => {
         mensagensDeXAoReabrir, /RESPOSTA-DE-X-DEMOROU/,
         'o servidor devia ter persistido a resposta de X mesmo orfa no cliente',
       );
+    } finally {
+      await page.close();
+      await browser.close();
+      await new Promise((r) => servidor.close(r));
+    }
+  });
+
+  // C1 (revisao final de branch): o caminho de `abrirConversa` reidrata do banco com os
+  // blocos integros e sempre esteve certo. O defeito vivia no caminho PARALELO — durante a
+  // MESMA sessao, sem recarregar, o historico e montado incrementalmente e o evento `fim`
+  // achatava o turno inteiro em `{role:'assistant', content: dados.texto}`. Como
+  // rotas/chat.js usa o `mensagens` que o CLIENTE manda, o turno 2 saia sem `tool_use` nem
+  // `tool_result` mesmo com o banco tendo tudo — e junto com eles iam embora o `job_id` da
+  // busca e a RESSALVA DO ZERO, que mora dentro do `tool_result`. Fora do contexto do
+  // turno 2, nada segura o modelo de afirmar "nao ha jurisprudencia".
+  it('Critical 1 (revisao final) — o turno 2 da MESMA sessao, sem recarregar, leva tool_use, tool_result e a ressalva do zero', async () => {
+    const cliente = clienteFalso([
+      // turno 1, chamada 1: o modelo pede a busca.
+      {
+        texto: 'vou consultar o STF',
+        stopReason: 'tool_use',
+        conteudo: [
+          { type: 'text', text: 'vou consultar o STF' },
+          { type: 'tool_use', id: 'tu_busca_1', name: 'buscar_jurisprudencia', input: { tribunal: 'stf', query: 'tema sem resultado' } },
+        ],
+      },
+      // turno 1, chamada 2: com o tool_result na mao, responde.
+      { texto: 'a busca voltou vazia', stopReason: 'end_turn' },
+      // turno 2, chamada 1: e AQUI que olhamos o historico que o cliente remontou.
+      { texto: 'resposta do turno 2', stopReason: 'end_turn' },
+    ]);
+    const { servidor, base } = await subirServidor({ clienteLLM: cliente });
+    const browser = await chromium.launch();
+    const page = await browser.newPage();
+    const corposChat = [];
+    await page.route('**/api/v1/chat', (route) => {
+      corposChat.push(JSON.parse(route.request().postData()));
+      route.continue();
+    });
+    try {
+      await page.goto(base + '/', { waitUntil: 'networkidle' });
+
+      await page.fill('#caixa-inicial .entrada', 'tem jurisprudencia sobre isso no STF?');
+      await page.click('#caixa-inicial .enviar');
+      await esperarRespostaCompleta(page);
+
+      // Segundo turno na MESMA sessao — nada de reload, nada de reabrir pela lateral.
+      await page.fill('#caixa-conversa .entrada', 'mostra os 5 primeiros');
+      await page.click('#caixa-conversa .enviar');
+      await esperarRespostaCompleta(page);
+
+      assert.strictEqual(corposChat.length, 2, `esperava 2 POST /api/v1/chat, teve ${corposChat.length}`);
+      const historicoDoTurno2 = corposChat[1].mensagens;
+      const bruto = JSON.stringify(historicoDoTurno2);
+
+      const blocos = historicoDoTurno2
+        .filter((m) => Array.isArray(m.content))
+        .flatMap((m) => m.content);
+      const usos = blocos.filter((b) => b && b.type === 'tool_use');
+      const resultados = blocos.filter((b) => b && b.type === 'tool_result');
+
+      assert.strictEqual(usos.length, 1, `o turno 2 precisa carregar o tool_use do turno 1: ${bruto}`);
+      assert.strictEqual(usos[0].id, 'tu_busca_1', bruto);
+      assert.strictEqual(resultados.length, 1, `o turno 2 precisa carregar o tool_result do turno 1: ${bruto}`);
+      assert.strictEqual(resultados[0].tool_use_id, 'tu_busca_1', bruto);
+
+      // O job_id: sem ele o usuario pede "mostra os 5 primeiros" e o modelo refaz o crawl.
+      const textoDoResultado = typeof resultados[0].content === 'string'
+        ? resultados[0].content
+        : JSON.stringify(resultados[0].content);
+      assert.match(textoDoResultado, /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/,
+        `o tool_result do turno 2 precisa levar o job_id da busca: ${textoDoResultado}`);
+
+      // A ressalva do zero: o invariante do repo. Ela so existe dentro do tool_result.
+      assert.match(textoDoResultado, /RESSALVA DO TRIBUNAL/,
+        `a ressalva do zero precisa continuar a vista no turno 2: ${textoDoResultado}`);
+      assert.match(textoDoResultado, /nao afirme que "nao existe jurisprudencia"/,
+        `a proibicao explicita precisa continuar a vista no turno 2: ${textoDoResultado}`);
+
+      // E a prova pelo outro lado: e isto que chega ao modelo na chamada do turno 2.
+      const mensagensNaChamada3 = JSON.stringify(cliente.chamadas[2].messages);
+      assert.match(mensagensNaChamada3, /"tool_use"/, 'a chamada do turno 2 precisa conter tool_use');
+      assert.match(mensagensNaChamada3, /"tool_result"/, 'a chamada do turno 2 precisa conter tool_result');
+      assert.match(mensagensNaChamada3, /RESSALVA DO TRIBUNAL/, 'a chamada do turno 2 precisa conter a ressalva do zero');
+
+      const erros = await page.$$eval('#mensagens .msg.erro', (els) => els.map((e) => e.textContent));
+      assert.deepStrictEqual(erros, [], `nenhuma bolha de erro esperada, veio: ${JSON.stringify(erros)}`);
     } finally {
       await page.close();
       await browser.close();
