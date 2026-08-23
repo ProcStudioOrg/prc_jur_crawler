@@ -6,6 +6,7 @@ const { describe, it, before } = require('node:test');
 const db = require('../servidor/db');
 const jobs = require('../servidor/jobs');
 const ferramentas = require('../servidor/ferramentas');
+const catalogo = require('../servidor/catalogo');
 
 let fila;
 before(() => {
@@ -47,10 +48,22 @@ describe('ferramentas', () => {
     assert.match(texto, /ok|sem-acesso/);
   });
 
-  it('buscar_jurisprudencia roda ate o fim e informa o job', async () => {
-    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila });
+  // A assercao antiga era `/2/` sobre uma fixture de total 2 — e todo job_id e um UUID
+  // hexadecimal, que quase sempre contem um "2". Ela casava com o id e nunca com o total:
+  // trocar o texto por `job.total + 100` passava batido, e o modelo anunciaria ao usuario
+  // uma contagem de julgados que nao existe. Fixture com total distinto e assercao no
+  // trecho inteiro ("137 resultados"), que UUID nenhum produz.
+  it('buscar_jurisprudencia roda ate o fim e informa o job COM o total certo', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-total-'));
+    const filaContada = jobs.criarFila({
+      con: db.abrir(path.join(dir, 'jur.db')),
+      dirResultados: dir,
+      executarFn: async () => ({ ok: true, total: 137, resultados: [], arquivo: null, erro: null }),
+    });
+    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila: filaContada });
     assert.match(texto, /job/i);
-    assert.match(texto, /2/);
+    assert.match(texto, /\b137 resultados\b/, `o total anunciado precisa ser o do job: ${texto}`);
+    assert.doesNotMatch(texto, /\b237 resultados\b/);
   });
 
   it('buscar_jurisprudencia explica o motivo quando o tribunal esta bloqueado', async () => {
@@ -209,6 +222,15 @@ describe('ferramentas', () => {
       const { texto, ok } = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'stf', query: 'nada' }, { fila: filaZero });
       assert.strictEqual(ok, true);
       assert.match(texto, /0 resultados/);
+      // `/0 resultados/` sobrevivia a apagar a linha da ressalva — e e ela, dentro do
+      // tool_result, o unico lugar onde o modelo ve por que aquele zero pode nao ser
+      // ausencia de jurisprudencia. Sem ela o texto continua "legitimo" e o modelo
+      // responde "nao ha jurisprudencia" com a conciencia limpa.
+      assert.match(texto, /RESSALVA DO TRIBUNAL/, `o zero precisa carregar a ressalva: ${texto}`);
+      assert.ok(texto.includes(catalogo.obter('stf').nota),
+        'a ressalva precisa ser a PROPRIA nota do catalogo do stf, integral');
+      assert.match(texto, /nao afirme que "nao existe jurisprudencia"/,
+        'a proibicao explicita ao modelo nao pode sumir do texto do zero');
     });
 
     it('busca cujo crawler falhou (job com status erro) e resultado legitimo, nao falha de execucao', async () => {

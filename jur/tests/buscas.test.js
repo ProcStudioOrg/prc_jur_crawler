@@ -6,6 +6,8 @@ const path = require('node:path');
 const { describe, it, before, after } = require('node:test');
 const db = require('../servidor/db');
 const jobs = require('../servidor/jobs');
+const catalogo = require('../servidor/catalogo');
+const { AVISO_ZERO_SEM_NOTA } = require('../servidor/enriquecer');
 const { criarApp } = require('../servidor/index');
 
 let servidor; let base; let fila;
@@ -170,13 +172,28 @@ describe('avisos no zero resultados (Important 3)', () => {
     method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(corpo),
   });
 
+  // O nome deste teste sempre prometeu "o aviso e a PROPRIA nota", mas a assercao so
+  // dizia `avisos.length > 0` — trocar a nota do catalogo pelo texto generico passava
+  // batido, e com ele some a unica informacao que explica POR QUE aquele zero pode nao
+  // ser ausencia de jurisprudencia (recorte de acervo, base congelada). Agora a
+  // comparacao e com o texto do catalogo, e o generico e recusado explicitamente.
   it('tribunal com nota no catalogo: o aviso e a propria nota', async () => {
+    const notaDoStf = catalogo.obter('stf').nota;
+    assert.ok(notaDoStf.length > 80, 'fixture invalida: o stf precisa ter nota no catalogo');
+
     const { id } = await (await criarZero({ tribunal: 'stf', query: 'termo-sem-resultado' })).json();
     await filaZero.aguardar(id);
     const job = await (await fetch(`${baseZero}/api/v1/buscas/${id}`)).json();
     assert.strictEqual(job.total, 0);
-    assert.ok(job.avisos.length > 0, 'total 0 nunca pode viajar com avisos vazio');
-    assert.ok(job.avisos[0].length > 0);
+    assert.strictEqual(job.avisos.length, 1, `esperava exatamente a nota do catalogo: ${JSON.stringify(job.avisos)}`);
+    assert.strictEqual(job.avisos[0], notaDoStf, 'o aviso precisa ser a PROPRIA nota do catalogo do stf');
+    // Trecho literal, para que trocar a nota por qualquer outro texto plausivel falhe.
+    assert.match(job.avisos[0], /Instancia unica|Inst.ncia .nica|acordaos 368\.511/,
+      'o aviso nao carrega o conteudo real da nota do stf');
+    assert.notStrictEqual(job.avisos[0], AVISO_ZERO_SEM_NOTA,
+      'tribunal COM nota nao pode receber o aviso generico');
+    assert.strictEqual(job.estadoTribunal, catalogo.obter('stf').estado,
+      'estadoTribunal precisa ser o estado do catalogo, nao null');
   });
 
   it('tribunal sem nota no catalogo (tcu): ainda assim recebe um aviso generico honesto', async () => {
@@ -184,8 +201,11 @@ describe('avisos no zero resultados (Important 3)', () => {
     await filaZero.aguardar(id);
     const job = await (await fetch(`${baseZero}/api/v1/buscas/${id}`)).json();
     assert.strictEqual(job.total, 0);
-    assert.ok(job.avisos.length > 0, 'total 0 nunca pode viajar com avisos vazio, mesmo sem nota no catalogo');
+    assert.strictEqual(job.avisos.length, 1, JSON.stringify(job.avisos));
+    assert.strictEqual(job.avisos[0], AVISO_ZERO_SEM_NOTA,
+      'sem nota no catalogo o aviso precisa ser exatamente o generico honesto');
     assert.match(job.avisos[0], /nao comprova/i);
+    assert.strictEqual(job.estadoTribunal, catalogo.obter('tcu').estado);
   });
 });
 
@@ -238,6 +258,25 @@ describe('regra do zero em TODAS as superficies de leitura (I1)', () => {
     return id;
   }
 
+  // Mata a mutacao "remover a guarda status === concluido": `total` nasce 0 no banco
+  // (db.js: DEFAULT 0), entao sem a guarda TODO job enfileirado/rodando ja sairia com a
+  // ressalva do zero — o usuario leria "nao ha jurisprudencia" sobre uma busca que ainda
+  // nem rodou, e o aviso viraria ruido que se aprende a ignorar. Fica nesta suite porque
+  // aqui o executarFn so termina quando o teste manda, o que da uma janela estavel com o
+  // job em 'rodando'.
+  it('job que ainda NAO concluiu nao carrega aviso de zero, mesmo com total 0', async () => {
+    const id = await criarERodar();
+    const job = await (await fetch(`${b}/api/v1/buscas/${id}`)).json();
+    assert.strictEqual(job.status, 'rodando');
+    assert.strictEqual(job.total, 0, 'o job nasce com total 0 — e por isso que a guarda importa');
+    assert.deepStrictEqual(job.avisos, [],
+      `job nao-concluido com total 0 nao pode carregar a ressalva do zero: ${JSON.stringify(job.avisos)}`);
+    assert.strictEqual(job.estadoTribunal, catalogo.obter('stf').estado,
+      'estadoTribunal precisa ser o do catalogo, nao null');
+    liberar();
+    await filaZero.aguardar(id);
+  });
+
   it('SSE: estado inicial E evento terminal carregam avisos e estadoTribunal', async () => {
     const id = await criarERodar();
     const resp = await fetch(`${b}/api/v1/buscas/${id}/eventos`);
@@ -247,15 +286,38 @@ describe('regra do zero em TODAS as superficies de leitura (I1)', () => {
 
     const estado = eventos.find((e) => e.evento === 'estado');
     assert.ok(estado, 'o SSE precisa mandar o estado inicial');
-    assert.ok(Array.isArray(estado.dado.avisos), 'o estado inicial precisa carregar avisos[] (spec §5)');
-    assert.ok('estadoTribunal' in estado.dado);
+    // `'estadoTribunal' in dado` passava com o campo valendo null, e `Array.isArray` passava
+    // com o array vazio — as duas assercoes sobreviviam a trocar este enriquecimento por
+    // `{...job, avisos: [], estadoTribunal: null}`. Agora o valor e comparado.
+    assert.deepStrictEqual(estado.dado.avisos, [],
+      'o job ainda esta rodando: aviso de zero aqui seria ruido, nao ressalva');
+    assert.strictEqual(estado.dado.estadoTribunal, catalogo.obter('stf').estado,
+      'o estado inicial do SSE precisa levar o estadoTribunal de verdade, nao null');
 
     const concluido = eventos.find((e) => e.evento === 'concluido');
     assert.ok(concluido, 'o SSE precisa mandar o evento terminal');
     assert.strictEqual(concluido.dado.total, 0);
-    assert.ok(concluido.dado.avisos.length > 0,
-      'total 0 no SSE sem aviso e exatamente o zero que se le como "nao ha jurisprudencia"');
-    assert.ok('estadoTribunal' in concluido.dado);
+    assert.deepStrictEqual(concluido.dado.avisos, [catalogo.obter('stf').nota],
+      'total 0 no SSE precisa levar a PROPRIA nota do stf — e ela que explica o zero');
+    assert.strictEqual(concluido.dado.estadoTribunal, catalogo.obter('stf').estado);
+  });
+
+  // O evento `estado` inicial e o unico que quem conecta DEPOIS do fim recebe: o handler
+  // manda o estado e fecha na hora. Se ele viajar sem a ressalva, o zero chega cru a quem
+  // seguiu o fluxo POST -> 202 -> stream e demorou um segundo a mais para conectar.
+  it('SSE: conectar num job JA concluido com total 0 recebe a ressalva no evento inicial', async () => {
+    const id = await criarERodar();
+    liberar();
+    await filaZero.aguardar(id);
+
+    const eventos = analisarSSE(await (await fetch(`${b}/api/v1/buscas/${id}/eventos`)).text());
+    const estado = eventos.find((e) => e.evento === 'estado');
+    assert.ok(estado, 'o SSE precisa mandar o estado inicial mesmo com o job ja terminado');
+    assert.strictEqual(estado.dado.status, 'concluido');
+    assert.strictEqual(estado.dado.total, 0);
+    assert.deepStrictEqual(estado.dado.avisos, [catalogo.obter('stf').nota],
+      'zero num job ja concluido nao pode viajar sem a nota do tribunal');
+    assert.strictEqual(estado.dado.estadoTribunal, catalogo.obter('stf').estado);
   });
 
   it('GET /buscas (lista) carrega avisos e estadoTribunal em cada item', async () => {
@@ -263,8 +325,13 @@ describe('regra do zero em TODAS as superficies de leitura (I1)', () => {
     assert.ok(buscas.length > 0);
     for (const j of buscas) {
       assert.ok(Array.isArray(j.avisos), 'todo item da lista precisa de avisos[]');
-      assert.ok('estadoTribunal' in j);
-      if (j.status === 'concluido' && j.total === 0) assert.ok(j.avisos.length > 0);
+      assert.strictEqual(j.estadoTribunal, catalogo.obter(j.comando).estado,
+        'estadoTribunal na lista precisa ser o do catalogo, nao null');
+      if (j.status === 'concluido' && j.total === 0) {
+        assert.deepStrictEqual(j.avisos, [catalogo.obter(j.comando).nota]);
+      } else {
+        assert.deepStrictEqual(j.avisos, [], 'so job concluido com total 0 carrega a ressalva do zero');
+      }
     }
   });
 
@@ -275,8 +342,9 @@ describe('regra do zero em TODAS as superficies de leitura (I1)', () => {
     const pagina = await (await fetch(`${b}/api/v1/buscas/${id}/resultados`)).json();
     assert.strictEqual(pagina.total, 0);
     assert.strictEqual(pagina.status, 'concluido');
-    assert.ok(pagina.avisos.length > 0, 'zero resultados na rota de resultados tambem precisa do aviso');
-    assert.ok('estadoTribunal' in pagina);
+    assert.deepStrictEqual(pagina.avisos, [catalogo.obter('stf').nota],
+      'zero resultados na rota de resultados tambem precisa da nota do tribunal');
+    assert.strictEqual(pagina.estadoTribunal, catalogo.obter('stf').estado);
   });
 });
 
