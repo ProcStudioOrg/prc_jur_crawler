@@ -242,25 +242,38 @@ class TJGONavigator {
     const tempoMs = mTempo ? parseInt(mTempo[1], 10) : null;
 
     const resultados = [];
-    const partes = html.split('<div class="search-result">').slice(1);
-    for (let bloco of partes) {
+    // O portal passou a incluir atributos (data-realizador, data-classe-acao,
+    // data-numero...) na abertura do card. Não dependa mais de uma abertura
+    // sem atributos: esse detalhe transformava uma busca válida em zero cards.
+    // `data-classe-acao` pode conter "->"; por isso o fechamento da abertura
+    // é ancorado no `<h4>` seguinte, e não no primeiro caractere `>`.
+    const partes = [...html.matchAll(/<div\s+class="search-result"([\s\S]*?)>\s*(<h4[\s\S]*?)(?=<div\s+class="search-result"|<div id="Paginacao|$)/gi)];
+    for (const parte of partes) {
+      let bloco = parte[2];
+      const atributos = parte[1] || '';
+      const attr = (name) => {
+        const m = atributos.match(new RegExp(`${name}=["']([^"']*)["']`, 'i'));
+        return m ? limparHtml(m[1]) : '';
+      };
       const fim = bloco.indexOf('<div id="Paginacao');
       if (fim >= 0) bloco = bloco.slice(0, fim);
 
-      const proc = bloco.match(/<h4>\s*([\d][\d.\-]+)/);
+      const proc = bloco.match(/<h4[^>]*>\s*([\d][\d.\-]+)/i);
       const idArq = bloco.match(/abrirArquivo\('ConsultaJurisprudencia',\s*'(\d+)'\)/);
       // citação do botão "Copiar": (Tribunal de Justiça do Estado de Goiás,
       //  <classe>, <processo>, <magistrado> - (<cargo>), <serventia>, julgado em <data>)
       const cit = bloco.match(/\(Tribunal de Justiça do Estado de Goiás,\s*([^']*?)\s*julgado em\s*([\d/: ]+)\)/);
-      let classe = '';
+      let classe = attr('data-classe-acao');
       if (cit && proc) {
         const idx = cit[1].indexOf(proc[1]);
-        if (idx > 0) classe = cit[1].slice(0, idx).replace(/,\s*$/, '').replace(/,\s*$/, '').trim();
+        if (idx > 0 && !classe) classe = cit[1].slice(0, idx).replace(/,\s*$/, '').replace(/,\s*$/, '').trim();
       }
-      const julgadoEm = cit ? cit[2].trim() : '';
+      const julgadoEm = attr('data-movi-data') || (cit ? cit[2].trim() : '');
 
       const bolds = [...bloco.matchAll(/<p>\s*<b>(?!<i>)([^<]+)<\/b>\s*<\/p>/g)].map(m => limparHtml(m[1]));
-      const mag = bloco.match(/<b><i>([^<]*?)\s*-\s*\(([^)]*)\)<\/i><\/b>/);
+      const realizador = attr('data-realizador');
+      const mag = bloco.match(/<b><i>([^<]*?)\s*-\s*\(([^)]*)\)<\/i><\/b>/)
+        || realizador.match(/^(.+?)\s*-\s*\(([^)]*)\)$/);
       const pub = bloco.match(/Publicado em\s*([\d/]+(?:\s[\d:]+)?)/);
       const texto = bloco.match(/<p class="conteudoTexto"[^>]*>([\s\S]*?)<\/p>/);
 
@@ -269,8 +282,9 @@ class TJGONavigator {
         numeroProcesso: proc[1],
         idArquivo: idArq ? idArq[1] : null,
         classe,
-        serventia: bolds[0] || '',
-        tipoAto: bolds[1] || '',
+        serventia: attr('data-serventia') || bolds[0] || '',
+        // O markup atual não exibe o tipo do ato; não inferir a partir da ementa.
+        tipoAto: '',
         magistrado: mag ? limparHtml(mag[1]) : '',
         cargoMagistrado: mag ? limparHtml(mag[2]) : '',
         dataJulgamento: julgadoEm,

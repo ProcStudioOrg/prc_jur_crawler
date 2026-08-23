@@ -1,21 +1,32 @@
 # TODO — próximos alvos do `jur`
 
 Duas frentes: os **judiciais** que faltam (JURCRAWLERS) e as **instâncias
-administrativas** (novo — hoje só o TCU está coberto). Status vivo dos judiciais:
+administrativas**. Status vivo dos judiciais:
 [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md). Para mapear
 qualquer alvo novo, use a skill `codegen` e cumpra o Passo 0 (procurar API
 oficial e portal novo antes do DevTools — a lição do TJCE/TJMG/TJDFT).
 
-## 1. Judiciais (JURCRAWLERS) — 16 TJs restantes
+## 1. Judiciais (JURCRAWLERS) — bloqueios residuais
 
 Em ordem de alavanca (ver memória do projeto e o placar):
 
+- **TJSP**: ✅ voltou a funcionar via Playwright; reCAPTCHA invisível é aceito,
+  mas a integração depende de browser. Ver [`CLAUDE-TJSP.md`](CLAUDE-TJSP.md).
 - **ESAJ restantes** (TJAL, TJAM, TJMS, TJAC): cjsg responde 200 e o Playwright
   headless passa no reCAPTCHA v3 — dá para um crawler ESAJ parametrizado por
   host. Mas procure o portal próprio de cada um antes, como no TJCE.
 - **TJBA** (host de cjsg não resolve) e **TJRN** (403): exigem descoberta separada.
-- **eJURIS do TJRJ**: Turmas Recursais cariocas + acervo histórico seguem sem crawler.
-- Demais: TJAP, TJES, TJMT, TJPB, TJPE, TJPI, TJRO, TJRR, TJSE, TJTO.
+- **TJRJ-eJURIS, TJRO**: reclassificar e corrigir regressões detectadas no smoke;
+  ambos têm cobertura documentada, mas falharam no teste desta rodada.
+- **TJRN, TJSE, TJMA**: sem acesso confirmado; não há atalho estadual implementado.
+
+### 1.1 TNU/CJF — encerrado para este projeto
+
+Decisão registrada: **não investir mais tempo em TNU/CJF**. A cobertura é
+desatualizada/congelada e não substitui os portais próprios; qualquer menção a
+TNU/CJF deve ser tratada como histórico, não como fonte atual de jurisprudência.
+As demais coberturas federais/estaduais tornam essa rota irrelevante para fechar
+o produto.
 
 ## 2. Instâncias administrativas
 
@@ -97,9 +108,10 @@ Nota de escopo: onde existe TCM (SP, RJ, BA, GO, PA), decidir se o TCM entra
 no catálogo junto — senão a busca de "contas municipais" no TCE devolve zero
 que se lê como "não há julgado", a armadilha clássica do repo.
 
-Falta tudo: nenhum TCE foi sondado ainda (portal de jurisprudência, API,
-captcha). Começar pelos que provavelmente têm busca aberta e rodar `codegen`
-um a um.
+Já há 10 TCEs e o TCDF mapeados no catálogo. Ainda faltam sondar/cobrir
+16 TCEs estaduais e os TCMs de BA, GO, PA, RJ e SP; a prioridade deve ser
+definida depois de verificar se o Jusbrasil oferece fonte licenciada para esses
+acervos.
 
 ## 3. `jur-web/` — pendências
 

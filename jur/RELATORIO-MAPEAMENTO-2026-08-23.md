@@ -19,11 +19,11 @@ Escopo: catálogo de jurisprudência do Brasil, testes offline, smoke real e su�
 | Integração TJRS | 21/21 passaram |
 | Integração TRT9/Falcão | 19/19 passaram |
 | Integração TJSC | 13/14 passaram |
-| Integração TJGO | 8/17 passaram |
+| Integração TJGO | 14/17 passaram após correção do parser de cards |
 
 ### Conclusão curta
 
-O projeto tem cobertura ampla e uma camada de mapeamento madura. Porém, “mapeado” não significa “funcionando hoje”: nesta rodada, **TJGO, TJRJ-EJURIS, TJRO e TCEPA** apresentaram falha real, enquanto **TJSC** falhou na auditoria do Checker. O smoke também não executa todos os 76 comandos: a Justiça do Trabalho usa um canário único (TRT9) porque os 26 comandos compartilham o Falcão.
+O projeto tem cobertura ampla e uma camada de mapeamento madura. Porém, “mapeado” não significa “funcionando hoje”: nesta rodada, **TJGO** apresentou mudança real de markup; **TJRJ-EJURIS** tinha falha TLS no cliente; **TJRO** está sob bloqueio temporário de rate limit; **TCEPA** voltou a funcionar após o cooldown. O smoke também não executa todos os 76 comandos: a Justiça do Trabalho usa um canário único (TRT9) porque os 26 comandos compartilham o Falcão.
 
 ## Evidências executadas
 
@@ -34,14 +34,14 @@ O projeto tem cobertura ampla e uma camada de mapeamento madura. Porém, “mape
 | `npm run test:tjrs -- --rapido` | 21/21 | datas de julgamento/publicação, origem comum/turmas e tipo |
 | `npm run test:tjsc -- --rapido` | 13/14 | data, origem, tipo e paginação; falhou Checker |
 | `npm run test:trt9 -- --rapido` | 19/19 | Falcão, 1º/2º grau, quatro coleções, data, órgão, tribunal e Checker |
-| `npm run test:tjgo -- --rapido` | 8/17 | Turmas Recursais, magistrado e data passam; várias buscas falham/zeram |
+| `npm run test:tjgo -- --rapido` | 14/17 | Parser corrigido; continuam não comprováveis dois filtros de órgão e o tipo Acórdão |
 
 ## Recursos pedidos: o que realmente funciona
 
 | Recurso | Situação comprovada | Evidência / limite |
 |---|---|---|
 | Busca textual | Funciona em 38/42 comandos do smoke | Termo padrão: “dano moral”, últimos 12 meses |
-| Intervalo de datas | **Funciona**, mas o campo varia | TJRS: julgamento/publicação; TJSC: julgamento; TRT9: data; TJGO: publicação |
+| Intervalo de datas | **Funciona**, mas o campo varia | TJRS: julgamento/publicação; TJSC: julgamento; TRT9: data; TJGO: julgamento no markup atual |
 | Turmas Recursais | **Funciona em vários TJs** | TJRS, TJSC e TJGO comprovados; flags variam por portal |
 | Sentenças | **Funciona no Falcão/TRTs** | Coleção `sentencas`, grau 1, Varas/CEJUSC |
 | Acórdãos | **Funciona no Falcão/TRTs e em vários TJs/TRFs** | Coleção `acordaos`, grau 2 |
@@ -50,7 +50,7 @@ O projeto tem cobertura ampla e uma camada de mapeamento madura. Porém, “mape
 | Relator de acórdão | **Funciona onde o portal expõe o campo** | TJGO passou; existem testes específicos em TCEs, TCDF e Falcão |
 | Data + Turma + Magistrado | Parcial | A combinação precisa ser validada por tribunal |
 | Inteiro teor | Varia muito | Falcão e STF trazem texto; outros oferecem ementa, trecho, PDF ou permalink |
-| Checker por número | Geralmente implementado | TJRS/TRT9 passaram; TJSC falhou a amostra; TJGO falhou por zero |
+| Checker por número | Geralmente implementado | TJRS/TRT9/TJGO passaram; TJSC falhou a amostra |
 
 ## Catálogo completo — 76 entradas
 
@@ -86,14 +86,14 @@ Coluna “catálogo” é o estado em `cobertura/tribunais.json`. Coluna “smok
 | `tjpi` | Tribunal de Justiça do Piauí | ok | ok — 25 resultados | retornou resultado |
 | `tjpr` | Tribunal de Justiça do Paraná | ok | ok — 40 resultados | retornou resultado |
 | `tjrj` | Tribunal de Justiça do Rio de Janeiro | ok | ok — 10 resultados | retornou resultado |
-| `tjrj-ejuris` | TJ do Rio de Janeiro — módulo eJURIS (legado) | ok | erro — fetch failed | REGRESSÃO observada |
+| `tjrj-ejuris` | TJ do Rio de Janeiro — módulo eJURIS (legado) | ok | 10 resultados; 819.137 no servidor | TLS corrigido com intermediário GlobalSign local |
 | `tjrn` | Tribunal de Justiça do Rio Grande do Norte | sem-acesso | não executado pelo smoke | bloqueado/sem acesso conforme catálogo |
 | `tjro` | Tribunal de Justiça de Rondônia | ok | erro — Resposta não-JSON em /search/varios_parametros/: <!DOCTYPE html> | REGRESSÃO observada |
 | `tjrr` | Tribunal de Justiça de Roraima | ok | ok — 60 resultados | retornou resultado |
 | `tjrs` | Tribunal de Justiça do Rio Grande do Sul | ok | ok — 10 resultados | retornou resultado |
 | `tjsc` | Tribunal de Justiça de Santa Catarina | ok | ok — 10 resultados | retornou resultado |
 | `-` | Tribunal de Justiça de Sergipe | sem-acesso | não executado pelo smoke | bloqueado/sem acesso conforme catálogo |
-| `tjsp` | Tribunal de Justiça de São Paulo | sem-acesso | não executado pelo smoke | bloqueado/sem acesso conforme catálogo |
+| `tjsp` | Tribunal de Justiça de São Paulo | ok-browser | 20 resultados; 12.417 no recorte de julgamento de agosto/2026 | ESAJ via Playwright; reCAPTCHA invisível aceito; dependente de browser |
 | `tjto` | Tribunal de Justiça do Tocantins | ok | ok — 50 resultados | retornou resultado |
 | `trt1` | TRT da 1ª Região | ok | não executado pelo smoke | canário não executado |
 | `trt2` | TRT da 2ª Região (São Paulo Capital) | ok | não executado pelo smoke | canário não executado |
@@ -123,7 +123,7 @@ Coluna “catálogo” é o estado em `cobertura/tribunais.json`. Coluna “smok
 | `tceba` | Tribunal de Contas do Estado da Bahia | ok | ok — 1 resultados | retornou resultado |
 | `tcees` | Tribunal de Contas do Estado do Espírito Santo | ok | ok — 4 resultados | retornou resultado |
 | `tcemg` | Tribunal de Contas do Estado de Minas Gerais | ok | ok — 12 resultados | retornou resultado |
-| `tcepa` | Tribunal de Contas do Estado do Pará | ok | bloqueio — CAPTCHA | REGRESSÃO observada |
+| `tcepa` | Tribunal de Contas do Estado do Pará | ok | 25 resultados; 19.718 no servidor | CAPTCHA temporário por ritmo; reteste passou após cooldown |
 | `tcepe` | Tribunal de Contas do Estado de Pernambuco | ok | ok — 24 resultados | retornou resultado |
 | `tcepr` | Tribunal de Contas do Estado do Paraná | ok | ok — 20 resultados | retornou resultado |
 | `tcerj` | Tribunal de Contas do Estado do Rio de Janeiro | ok | ok — 20 resultados | retornou resultado |
@@ -139,11 +139,16 @@ Coluna “catálogo” é o estado em `cobertura/tribunais.json`. Coluna “smok
 
 | Comando | Resultado real | Diagnóstico atual |
 |---|---|---|
-| `tjgo` | Smoke: zero; integração: 8/17 | Turmas Recursais, magistrado e data de publicação passaram; busca geral, acórdão, paginação, processo e Checker falharam/zeraram |
-| `tjrj-ejuris` | `fetch failed` | Falha de rede/endpoint; não classificar como zero jurisprudência |
+| `tjgo` | Smoke antigo: zero; integração atual: 14/17 | Parser corrigido; busca, paginação, processo, magistrado, texto e Checker passaram; tipo/publicação não vêm no markup atual |
+| `tjrj-ejuris` | Resolvido: 10 resultados | Cadeia TLS incompleta do portal; cliente passou a confiar no intermediário GlobalSign oficial |
 | `tjro` | HTML onde era esperado JSON | Endpoint `/search/varios_parametros/` mudou, bloqueou ou redirecionou |
-| `tcepa` | CAPTCHA | Bloqueio externo/WAF, não erro de parser |
+| `tcepa` | Resolvido após cooldown | WAF F5 Shape por ritmo; crawler já aborta explicitamente quando o desafio aparece |
 | `tjsc` | 13/14 | Busca e filtros funcionam, mas Checker não confirmou a amostra |
+
+O TJSP foi reclassificado depois do smoke: o smoke antigo não o executou porque o
+catálogo ainda dizia “sem acesso”. O teste direto no navegador confirmou busca,
+ementa, relator, órgão, comarca, data de julgamento, data de publicação, 2º grau,
+Colégios Recursais e paginação.
 
 ## O que já está bem mapeado
 
@@ -158,9 +163,8 @@ Coluna “catálogo” é o estado em `cobertura/tribunais.json`. Coluna “smok
 
 | Prioridade | Trabalho | Critério de aceite |
 |---|---|---|
-| P0 | Corrigir ou reclassificar TJGO | Busca geral, acórdão, paginação, processo e Checker passarem; ou catálogo marcar o estado correto |
-| P0 | Diagnosticar TJRO | Endpoint voltar a JSON ou crawler emitir diagnóstico específico |
-| P0 | Retestar TJRJ-EJURIS | HTTP/DNS estável e busca com resultado |
+| P0 | Fechar TJGO | Resolver/reclassificar os dois filtros de órgão e documentar tipo/publicação ausentes |
+| P0 | Aguardar/retestar TJRO | WAF bloqueado por IP; retestar após cooldown sem rajada |
 | P1 | Resolver auditoria TJSC | 3 resultados confirmados por número ou contrato do Checker documentado |
 | P1 | Separar juiz de sentença de relator de acórdão | Não usar `relator` como sinônimo universal de juiz |
 | P1 | Executar suítes profundas restantes | Data, tipo, órgão/turma e magistrado quando houver filtro |
@@ -172,3 +176,43 @@ Coluna “catálogo” é o estado em `cobertura/tribunais.json`. Coluna “smok
 
 Implementação, teste automatizado e funcionamento observado são estados diferentes. Um filtro presente na CLI, mas não exercitado contra o portal, permanece “não comprovado” até uma suíte real validá-lo.
 
+## Verificação externa — Jusbrasil Soluções
+
+Consulta feita em 23/08/2026 na documentação e página comercial oficiais.
+
+| Pergunta | Resultado | Impacto no JURCRAWLER |
+|---|---|---|
+| Existe API pública/self-service de jurisprudência? | ❌ Não encontrada; a contratação da API exige contrato e credenciais fornecidas pelo Jusbrasil | Não há integração imediata para completar tribunais faltantes |
+| A API entrega jurisprudência? | ❌ A própria FAQ diz que não disponibiliza jurisprudência nem Jus IA via API | Não usar como substituto dos crawlers de julgados |
+| O que a API entrega? | ✅ Processos estruturados, andamentos, partes, monitoramento, distribuição, autos, OAB, diários e consultas por CNJ/CPF/CNPJ/nome | Pode ser avaliada separadamente para cobertura processual |
+| Cobertura | A página comercial anuncia cobertura nacional e 96 tribunais na consulta processual | Não equivale a 96 acervos de jurisprudência |
+| Preço público | A partir de **R$ 1.000/mês**, com faturamento mínimo e cobrança por chamada; plano sob demanda é personalizado | Custo não justificado para resolver jurisprudência, já que o produto não entrega esse acervo |
+| Requisitos | Formulário comercial com nome, e-mail, celular, cargo, empresa e contexto de uso; contrato de serviços; token/API key após contratação | Só avançar se houver interesse em processos/diários e dados empresariais para o contato comercial |
+
+Conclusão: **não abrir conta nem comprar agora para tentar fechar a cobertura jurisprudencial**. O caminho correto continua sendo corrigir os portais próprios restantes e, se necessário, avaliar fornecedores que vendam explicitamente uma API de jurisprudência licenciada.
+
+## Triagem de fornecedores alternativos
+
+Pesquisa externa realizada em 23/08/2026. “Cobertura nacional” abaixo é a
+promessa comercial do fornecedor; ainda exige teste de amostra, datas, tipos,
+magistrado e links oficiais antes de entrar no crawler.
+
+| Serviço | É jurisprudência? | Cobertura declarada | Acesso/custo publicado | Veredito |
+|---|---|---|---|---|
+| **Lei na Mão** | ✅ Endpoint `/api/v1/jurisprudencia` | “Principais tribunais”; não lista claramente todos os TJs/TRTs/TCEs | API beta; conta/API key; Starter R$149/mês/10.000 créditos, Pro R$599/100.000; 1 crédito por consulta | **Primeiro candidato para trial**; confirmar lista de tribunais e campos |
+| **RAGJur** | ✅ Busca de julgados, BM25 + embeddings, verificação de citação | 65M+ julgados, 55 fontes; lista 30+ tribunais, não 100% do catálogo | Trial 7 dias/500 queries; Starter R$1.497/5.000 queries; Growth R$4.997/50.000 | **Melhor candidato técnico para jurisprudência**, mas não fecha sozinho estados/tribunais faltantes |
+| **Escavador Business** | ⚠️ Tem jurisprudência no acervo/site, mas API é apresentada como processos, diários, autos e monitoramento | Nacional; 440+ sistemas monitorados | Créditos e preços no painel; teste por cadastro; sem tabela pública encontrada | Pode complementar por processo/inteiro teor; **não aprovado como busca de jurisprudência** |
+| **Data Lawyer** | ⚠️ Jurimetria, processos e peças; API comercial | Não ficou comprovada uma API de busca nacional de julgados | Chave temporária de 48h no fluxo documentado; preço sob consulta | Pedir demo apenas se precisarmos de jurimetria/peças |
+| **JUDIT** | ❌ Dados processuais, documentos e movimentações | +90 tribunais | Cadastro comercial; preço não publicado | Não resolve o acervo jurisprudencial |
+| **Lex Platform** | ❌ Busca de processos, não julgados | 91 tribunais | API key; preços não localizados na documentação aberta | Não resolve o objetivo |
+| **JurisPublica** | ✅ Site gratuito de consulta | 88 tribunais declarados, mas fontes explicitadas como DataJud + STF/STJ | Gratuito, sem cadastro; não encontrei API pública | Útil para comparação manual, não para integração sem API |
+
+### Próximo passo recomendado
+
+1. Criar uma conta de teste no **Lei na Mão** e no **RAGJur**.
+2. Para cada um, testar `TJAM`, `TJMA`, `TJRN`, `TJSE`, `TCEPA`, `TJRO`,
+   `TJRJ-eJURIS`, além de `TJSP`, com termo, data inicial/final, tipo e relator.
+3. Exigir no retorno: número CNJ, tribunal, data de julgamento/publicação,
+   órgão, magistrado/relator, ementa e link oficial/permalink.
+4. Comparar 20 resultados por tribunal contra os crawlers oficiais. Só então
+   decidir se compra e se o fornecedor entra como fallback.

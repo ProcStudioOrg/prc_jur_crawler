@@ -98,7 +98,7 @@ Cada doc traz as flags específicas, exemplos e ressalvas daquele tribunal.
 | `tjrs` | TJ do Rio Grande do Sul | RS | `CLAUDE-TJRS.md` | 🟢 OK (HTTP direto, sem browser) |
 | `tjsc` | TJ de Santa Catarina | SC | `CLAUDE-TJSC.md` | 🟢 OK (browser — portal atrás de verificação de segurança) |
 | — | TJ de Sergipe | SE | `CLAUDE-TJSE.md` | 🔴 **sem comando** — captcha nos **dois** módulos (Turnstile no judicial, reCAPTCHA no administrativo); nem `-n` existe |
-| `tjsp` | TJ de São Paulo | SP | `CLAUDE-TJSP.md` | 🔴 sem acesso — não rodar |
+| `tjsp` | TJ de São Paulo | SP | `CLAUDE-TJSP.md` | 🟢 OK (ESAJ via Playwright; reCAPTCHA invisível aceito no fluxo testado; dependente de browser) |
 | `tjto` | TJ do Tocantins | TO | `CLAUDE-TJTO.md` | 🟢 OK (portal Jurisprudência 4.0, HTTP direto, sem browser — **sem captcha**; ementa, **citação oficial** e **permalink público** já vêm na busca). Base corrente, e **tem 1º grau** (254.501 sentenças, de 2024 em diante) |
 | `tst` | **Tribunal Superior do Trabalho** | Nacional (**trabalhista**) | `CLAUDE-FALCAO.md` | 🟢 OK (API direta, sem browser) |
 | `trt1`…`trt24` | TRTs 1ª a 24ª Região (**trabalhista**) | todo o país — ver tabela no doc | `CLAUDE-FALCAO.md` | 🟢 OK (API direta, sem browser) |
@@ -115,9 +115,10 @@ acervo de **acórdãos** do TJAP continua atrás de Turnstile e **não tem via a
 leia `CLAUDE-TJAP.md` antes de prometer acórdão amapaense. O módulo **eJURIS** do TJRJ
 (legado, com Turmas Recursais e acervo histórico) tem comando próprio,
 `jur tjrj-ejuris` — o `jur tjrj` continua cobrindo só o e-Proc.
-Dos 27 TJs, **22 têm comando 🟢**, 4 estão
-bloqueados com o motivo medido (TJMA, TJRN, TJSE, TJSP) e 1 é instável (TJAM, base
-congelada). Veja `cobertura/CLAUDE-COBERTURA.md` e use a
+Dos 27 TJs, **23 têm comando 🟢**, 3 estão
+bloqueados com o motivo medido (TJMA, TJRN, TJSE) e 1 é instável (TJAM, base
+congelada). O TJSP voltou a funcionar via navegador, com a ressalva do reCAPTCHA
+invisível. Veja `cobertura/CLAUDE-COBERTURA.md` e use a
 skill [`codegen`](skills/codegen/SKILL.md) para mapear.
 
 **Exemplos de roteamento:**

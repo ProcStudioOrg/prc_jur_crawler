@@ -8,6 +8,11 @@ class TJSPCrawler extends BaseCrawler {
   constructor(options = {}) {
     super(options);
     this.baseUrl = 'https://esaj.tjsp.jus.br/cjsg/consultaCompleta.do';
+    this.silent = options.silent ?? false;
+  }
+
+  log(message) {
+    if (!this.silent) console.log(message);
   }
 
   /**
@@ -39,14 +44,14 @@ class TJSPCrawler extends BaseCrawler {
 
     if (filters.origem2grau !== false) {
       if (!(await grau2.isChecked())) await grau2.check();
-      console.log('Enabled: 2° grau');
+      this.log('Enabled: 2° grau');
     } else {
       if (await grau2.isChecked()) await grau2.uncheck();
     }
 
     if (filters.origemRecursal !== false) {
       if (!(await recursal.isChecked())) await recursal.check();
-      console.log('Enabled: Colégios Recursais');
+      this.log('Enabled: Colégios Recursais');
     } else {
       if (await recursal.isChecked()) await recursal.uncheck();
     }
@@ -68,21 +73,21 @@ class TJSPCrawler extends BaseCrawler {
     // Configure judgment dates
     if (filters.dataJulgamentoInicio) {
       await this.page.locator('#iddados\\.dtJulgamentoInicio').fill(filters.dataJulgamentoInicio);
-      console.log(`Set judgment start date: ${filters.dataJulgamentoInicio}`);
+      this.log(`Set judgment start date: ${filters.dataJulgamentoInicio}`);
     }
     if (filters.dataJulgamentoFim) {
       await this.page.locator('#iddados\\.dtJulgamentoFim').fill(filters.dataJulgamentoFim);
-      console.log(`Set judgment end date: ${filters.dataJulgamentoFim}`);
+      this.log(`Set judgment end date: ${filters.dataJulgamentoFim}`);
     }
 
     // Configure publication dates
     if (filters.dataPublicacaoInicio) {
       await this.page.locator('#iddados\\.dtPublicacaoInicio').fill(filters.dataPublicacaoInicio);
-      console.log(`Set publication start date: ${filters.dataPublicacaoInicio}`);
+      this.log(`Set publication start date: ${filters.dataPublicacaoInicio}`);
     }
     if (filters.dataPublicacaoFim) {
       await this.page.locator('#iddados\\.dtPublicacaoFim').fill(filters.dataPublicacaoFim);
-      console.log(`Set publication end date: ${filters.dataPublicacaoFim}`);
+      this.log(`Set publication end date: ${filters.dataPublicacaoFim}`);
     }
   }
 
@@ -92,7 +97,7 @@ class TJSPCrawler extends BaseCrawler {
    */
   async executeSearch(query) {
     await this.page.locator('#iddados\\.buscaInteiroTeor').fill(query);
-    console.log(`Set search query: ${query}`);
+    this.log(`Set search query: ${query}`);
 
     await this.page.locator('#pbSubmit').click();
     await this.waitForLoad();
@@ -157,7 +162,7 @@ class TJSPCrawler extends BaseCrawler {
       return items;
     });
 
-    console.log(`Found ${pageResults.length} result items on page`);
+    this.log(`Found ${pageResults.length} result items on page`);
     return pageResults;
   }
 

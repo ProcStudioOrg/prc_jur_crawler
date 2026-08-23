@@ -1,6 +1,10 @@
 # CJF — os portais de jurisprudência do Conselho da Justiça Federal
 
-**Status:** 🟡 usar com ressalva grave · sondado em **27/07/2026** · sem crawler próprio
+**Status:** 🔴 encerrado para este projeto · desatualizado/congelado · não investir
+
+Decisão de produto registrada em 23/08/2026: TNU/CJF não será tratado como rota
+para fechar cobertura. O conteúdo está congelado/desatualizado e não substitui
+os portais próprios. Este documento fica apenas como histórico técnico.
 
 O CJF hospeda a jurisprudência do **TRF1** (que não tem portal em `trf1.jus.br`), da **TNU** e
 uma **Jurisprudência Unificada** que promete STF + STJ + TNU + TRF1–TRF5 numa busca só.

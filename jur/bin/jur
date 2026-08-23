@@ -3567,6 +3567,7 @@ program
       headless,
       slowMo: headless ? 0 : 100,
       timeout: 60000,
+      silent: jsonMode,
     });
 
     try {

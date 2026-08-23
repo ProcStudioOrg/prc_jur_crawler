@@ -203,6 +203,11 @@ Elasticsearch). Para varrer acervo grande, recorte por data ou por tipo.
 
 ## 🔴 O WAF — três barreiras diferentes
 
+Reteste de 23/08/2026: o backend respondeu `STIC - Página Bloqueada` (HTTP 200)
+após as sondagens desta rodada. É bloqueio temporário por IP/rate limit, não
+mudança confirmada do contrato JSON. O crawler deve parar e aguardar cooldown;
+não fazer retry agressivo.
+
 1. **STIC bloqueia por User-Agent** — e responde **HTTP 200** com a página de bloqueio, não
    403. Quem olhar só o status conclui que o portal está no ar e a busca veio vazia.
    Confira o corpo. Resolve com UA de Chrome real (o Navigator já manda).

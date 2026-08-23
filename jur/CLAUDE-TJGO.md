@@ -13,6 +13,8 @@ O TJGO tem **três** sistemas de jurisprudência (mapeamento em `human-codegen/T
 3. Jurisprudência Administrativa (Órgão Especial / Conselho Superior) — não implementado
    (o link do Conselho Superior estava em branco no mapeamento de jul/2026)
 
+**Status atual:** 🟡 busca funcional, com campos reduzidos após mudança de markup
+
 **Sem browser**: o formulário aceita POST direto (charset ISO-8859-1) e o
 Cloudflare Turnstile **não é exigido para a busca** — só para baixar o arquivo
 original de um ato. Cada resultado já traz o **texto completo da decisão**,
@@ -68,6 +70,14 @@ Flags `-v/--headed` são ignoradas.
 | `--full-text` | | inclui `inteiroTeor` completo no JSON |
 
 ## Ressalvas importantes
+
+0. **Markup atualizado em agosto/2026:** os cards atuais fornecem processo,
+   arquivo, classe/assunto, serventia, magistrado, texto completo e `Julgado em`
+   por atributos `data-*`. Eles não exibem mais tipo do ato nem data de
+   publicação no card. O crawler deixa `tipoDocumento` e `dataPublicacao` vazios
+   para não inventar metadados; `dataJulgamento` é o campo comprovado. Os filtros
+   por tipo e intervalo continuam sendo enviados ao portal, mas a auditoria deve
+   validar apenas o conjunto retornado enquanto esses campos não voltarem.
 
 1. **Tipo "Acórdão" quase não existe**: as câmaras publicam o acórdão como tipo
    **"Ementa"** (ex.: 1º sem/2026 — 9.374 Ementas × 4 Acórdãos para "dano moral").

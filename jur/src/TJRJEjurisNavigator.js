@@ -1,4 +1,16 @@
 // src/TJRJEjurisNavigator.js
+const https = require('node:https');
+const fs = require('node:fs');
+const path = require('node:path');
+const tls = require('node:tls');
+
+// O servidor do TJRJ entrega a folha e omite o intermediário GlobalSign.
+// Mantemos a confiança adicional restrita a este host/cliente; não alteramos
+// NODE_TLS_REJECT_UNAUTHORIZED nem o trust store global do processo.
+const TJRJ_INTERMEDIATE_CA = fs.readFileSync(
+  path.join(__dirname, 'certs/tjrj-globalsign-rsa-ov-ssl-ca-2018.pem'),
+  'utf8'
+);
 
 /**
  * Navigator do eJURIS do TJRJ — o módulo LEGADO de jurisprudência, irmão do
@@ -137,15 +149,46 @@ class TJRJEjurisNavigator {
     const ctrl = new AbortController();
     const t = setTimeout(() => ctrl.abort(), this.timeout);
     try {
-      const res = await fetch(url, {
-        ...init,
-        redirect: 'manual',
-        signal: ctrl.signal,
-        headers: {
-          'User-Agent': UA,
-          Cookie: this._cookieHeader(),
-          ...(init.headers || {}),
-        },
+      const alvo = new URL(url);
+      const headers = {
+        'User-Agent': UA,
+        Cookie: this._cookieHeader(),
+        ...(init.headers || {}),
+      };
+      const corpo = init.body == null ? null : Buffer.from(String(init.body));
+      const res = await new Promise((resolve, reject) => {
+        const req = https.request({
+          protocol: alvo.protocol,
+          hostname: alvo.hostname,
+          port: alvo.port || 443,
+          path: `${alvo.pathname}${alvo.search}`,
+          method: init.method || 'GET',
+          headers: {
+            ...headers,
+            ...(corpo ? { 'Content-Length': corpo.length } : {}),
+          },
+          ca: [...tls.rootCertificates, TJRJ_INTERMEDIATE_CA],
+          signal: ctrl.signal,
+        }, (resposta) => {
+          const partes = [];
+          resposta.on('data', (parte) => partes.push(parte));
+          resposta.on('end', () => {
+            const h = new Headers();
+            for (const [chave, valor] of Object.entries(resposta.headers)) {
+              if (Array.isArray(valor)) valor.forEach((v) => h.append(chave, v));
+              else if (valor != null) h.set(chave, valor);
+            }
+            const texto = Buffer.concat(partes).toString('utf8');
+            resolve({
+              status: resposta.statusCode,
+              headers: h,
+              text: async () => texto,
+            });
+          });
+        });
+        req.on('error', reject);
+        if (corpo) req.write(corpo);
+        req.end();
       });
       this._comerCookies(res);
       return res;

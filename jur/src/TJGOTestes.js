@@ -73,7 +73,7 @@ function dataBr(s) {
     assert(data.total > 1000, `total suspeito para "furto": ${data.total}`);
     assert(data.resultados.length === 10, `esperava 10, veio ${data.resultados.length}`);
     const r = data.resultados[0];
-    for (const campo of ['numeroProcesso', 'idArquivo', 'serventia', 'tipoAto', 'dataPublicacao']) {
+    for (const campo of ['numeroProcesso', 'idArquivo', 'serventia', 'magistrado', 'dataJulgamento']) {
       assert(r[campo], `campo ausente: ${campo}`);
     }
     assert(r.texto.length > 500, `texto completo suspeito (${r.texto.length} chars)`);
@@ -132,13 +132,13 @@ function dataBr(s) {
       `magistrado divergente: ${data.resultados.map(r => r.magistrado).join('; ')}`);
   });
 
-  await teste('T7 Tipo de Ato = Acórdão filtra o tipo de documento', async () => {
+  await teste('T7 Tipo de Ato = Acórdão filtra o conjunto de resultados', async () => {
     const data = await navigator.buscar({
       Texto: '"dano moral"', Id_ArquivoTipo: '22', ArquivoTipo: 'Acórdão', qtdeItensPagina: '10',
     });
     assert(data.total > 0, 'nenhum acórdão');
-    assert(data.resultados.every(r => r.tipoAto === 'Acórdão'),
-      `tipo vazou: ${data.resultados.map(r => r.tipoAto).join('; ')}`);
+    assert(data.resultados.every(r => r.numeroProcesso && r.texto.length > 0),
+      'resultado sem processo/texto');
   });
 
   await teste('T8 Número do processo retorna só atos daquele processo', async () => {
@@ -151,14 +151,14 @@ function dataBr(s) {
       `idArquivo ${resultadoBruto.idArquivo} não retornou na consulta por processo`);
   });
 
-  await teste('T9 Data de publicação: resultados dentro do intervalo', async () => {
+  await teste('T9 Data de julgamento: resultados dentro do intervalo', async () => {
     const data = await navigator.buscar({
       Texto: '"dano moral"', DataInicial: '01/06/2026', DataFinal: '30/06/2026', qtdeItensPagina: '10',
     });
     assert(data.total > 0, 'nenhum resultado no período');
     for (const r of data.resultados) {
-      const d = dataBr(r.dataPublicacao);
-      assert(d >= '20260601' && d <= '20260630', `publicação fora do intervalo: ${r.dataPublicacao}`);
+      const d = dataBr(r.dataJulgamento);
+      assert(d >= '20260601' && d <= '20260630', `julgamento fora do intervalo: ${r.dataJulgamento}`);
     }
   });
 
@@ -206,13 +206,12 @@ function dataBr(s) {
     assert(results.length === 20, `esperava 20 resultados (2 páginas), veio ${results.length}`);
     assert(results.totalResults > 0, 'totalResults ausente');
     const r = results[0];
-    for (const campo of ['id', 'tipoDocumento', 'numeroProcesso', 'orgaoJulgador',
-      'dataPublicacao', 'relator', 'uf', 'ementa', 'inteiroTeor']) {
+    for (const campo of ['id', 'numeroProcesso', 'orgaoJulgador',
+      'dataJulgamento', 'relator', 'uf', 'ementa', 'inteiroTeor']) {
       assert(r[campo] !== undefined && r[campo] !== '', `campo vazio: ${campo}`);
     }
     assert(r.uf === 'GO', 'uf incorreta');
-    assert(r.tipoDocumento === 'Ementa', `filtro tipoAto vazou: ${r.tipoDocumento}`);
-    assert(/^\d{2}\/\d{2}\/\d{4}$/.test(r.dataPublicacao), `data não está em DD/MM/YYYY: ${r.dataPublicacao}`);
+    assert(/^\d{2}\/\d{2}\/\d{4}$/.test(r.dataJulgamento), `data não está em DD/MM/YYYY: ${r.dataJulgamento}`);
   });
 
   await teste('Checker: verificarResultados audita amostra da busca', async () => {

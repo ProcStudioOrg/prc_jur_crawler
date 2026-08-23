@@ -1,5 +1,11 @@
 # CLAUDE-TJRJ-EJURIS — TJRJ, módulo eJURIS (`jur tjrj-ejuris`)
 
+**Reteste em 23/08/2026:** o portal entrega a cadeia TLS incompleta para Node
+(`UNABLE_TO_VERIFY_LEAF_SIGNATURE`). O navigator passou a confiar no
+intermediário oficial GlobalSign junto às raízes padrão, restrito a este host;
+não há desativação global de TLS. Busca real: 10 documentos, 819.137 no servidor
+para `dano moral`.
+
 O **módulo legado** de jurisprudência do TJRJ, por **HTTP direto, sem browser**.
 Irmão de [`CLAUDE-TJRJ.md`](CLAUDE-TJRJ.md) (`jur tjrj`, base nova do e-Proc).
 
