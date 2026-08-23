@@ -339,24 +339,33 @@
     rotuloUf.className = 'rotulo-filtro';
     rotuloUf.textContent = 'UF:';
     linhaUf.appendChild(rotuloUf);
+
+    // 27 UFs ocupam a tela inteira sem ninguem ter pedido, entao a lista comeca
+    // colapsada — no padrao do painel de intimacoes do ProcStudio. O contentor que
+    // colapsa e SO o dos chips: o botao que expande fica FORA dele. Dentro, ele sumia
+    // junto com o que deveria revelar, e a unica saida do estado colapsado ficava
+    // invisivel.
+    const chipsUf = document.createElement('div');
+    chipsUf.className = 'chips-uf colapsado';
     const ufs = [...new Set(tribunais.flatMap((t) => t.uf))].sort();
     for (const uf of ufs) {
-      linhaUf.appendChild(chipFiltro(
+      chipsUf.appendChild(chipFiltro(
         'filtro-uf', uf, uf,
         tribunais.filter((t) => t.uf.includes(uf)).length,
         () => alternar(filtros.uf, uf),
       ));
     }
-    // 27 UFs ocupam a tela inteira sem ninguem ter pedido; colapsa como o painel de
-    // intimacoes do ProcStudio faz, com o "+N" abrindo o resto.
-    linhaUf.classList.add('colapsado');
+    linhaUf.appendChild(chipsUf);
+
     const maisUf = document.createElement('button');
     maisUf.type = 'button';
     maisUf.className = 'chip-filtro mais';
-    maisUf.textContent = 'todas as UFs';
+    maisUf.textContent = `todas as ${ufs.length} UFs`;
+    maisUf.setAttribute('aria-expanded', 'false');
     maisUf.addEventListener('click', () => {
-      const aberto = linhaUf.classList.toggle('colapsado');
-      maisUf.textContent = aberto ? 'todas as UFs' : 'menos UFs';
+      const colapsado = chipsUf.classList.toggle('colapsado');
+      maisUf.textContent = colapsado ? `todas as ${ufs.length} UFs` : 'menos UFs';
+      maisUf.setAttribute('aria-expanded', String(!colapsado));
     });
     linhaUf.appendChild(maisUf);
     elBarraFiltros.appendChild(linhaUf);

@@ -204,6 +204,29 @@ describe('disponibilidade — filtros', () => {
     } finally { await page.close(); }
   });
 
+  // O botao que expande as UFs estava DENTRO do contentor colapsado, entao ele sumia
+  // junto com o que deveria revelar: a unica saida do estado colapsado ficava invisivel.
+  it('a lista de UFs comeca colapsada e o botao que expande fica VISIVEL', async () => {
+    const page = await abrir();
+    try {
+      assert.strictEqual(await page.isVisible('.chip-filtro.mais'), true,
+        'sem este botao visivel, as UFs escondidas sao inalcancaveis');
+
+      // `checkVisibility()` nao serve aqui: elemento recortado por `overflow: hidden`
+      // continua "visivel" para ele. O que denuncia o recorte e scrollHeight > clientHeight.
+      const recortado = (p) => p.$eval('.chips-uf', (el) => el.scrollHeight > el.clientHeight + 1);
+      assert.strictEqual(await recortado(page), true, 'a lista de UFs deveria comecar colapsada');
+
+      await page.click('.chip-filtro.mais');
+      assert.strictEqual(await recortado(page), false, 'expandir precisa revelar as UFs escondidas');
+      assert.strictEqual(await page.getAttribute('.chip-filtro.mais', 'aria-expanded'), 'true');
+
+      // E o caminho de volta existe.
+      await page.click('.chip-filtro.mais');
+      assert.strictEqual(await recortado(page), true);
+    } finally { await page.close(); }
+  });
+
   it('da para limpar os filtros e voltar a lista inteira', async () => {
     const page = await abrir();
     try {

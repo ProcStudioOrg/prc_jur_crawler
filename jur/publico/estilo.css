@@ -249,11 +249,12 @@ body {
 
 /* ---------- filtros de area e UF ---------- */
 .barra-filtros { margin: 4px 0 12px; display: flex; flex-direction: column; gap: 6px; }
-.linha-filtro { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
-.rotulo-filtro { font-size: 11.5px; color: var(--fraco); font-weight: 600; margin-right: 2px; }
-/* Colapsado: 27 UFs ocupariam a tela inteira sem ninguem ter pedido. `max-height` em vez
-   de esconder item a item para o "+" continuar sendo um alvo estavel. */
-.linha-filtro.colapsado { max-height: 30px; overflow: hidden; }
+.linha-filtro { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 5px; }
+.rotulo-filtro { font-size: 11.5px; color: var(--fraco); font-weight: 600; margin-right: 2px; line-height: 24px; }
+/* Só os CHIPS colapsam. O botão que expande é irmão deste contêiner, nunca filho: dentro
+   dele, ele sumia junto com o que deveria revelar e a lista virava um beco sem saída. */
+.chips-uf { display: flex; flex-wrap: wrap; gap: 5px; flex: 1 1 0; min-width: 0; }
+.chips-uf.colapsado { max-height: 26px; overflow: hidden; }
 .chip-filtro {
   display: inline-flex; align-items: center; gap: 5px;
   font: inherit; font-size: 12px; padding: 3px 9px; border-radius: 999px; cursor: pointer;
