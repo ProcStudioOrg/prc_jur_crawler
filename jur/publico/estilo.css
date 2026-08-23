@@ -10,7 +10,10 @@
   --acento: #D97757;
   --ok: #2E7D46;
   --instavel: #B7791F;
-  --bloqueado: #8A8781;
+  /* Estava #8A8781 (3,58:1 contra --superficie, marginal) — escurecido para folga
+     real acima do minimo de 3:1 exigido para o ponto/borda de "sem-acesso"
+     (achado Important da revisao da Task 9, herdado da Task 8). */
+  --bloqueado: #726F69;
   --sessao: #2C6BB0;
   --raio: 12px;
   --lateral-largura: 264px;
@@ -25,14 +28,16 @@
   --acento: #D97757;
   --ok: #4CAF6A;
   --instavel: #D6A03A;
-  --bloqueado: #6F6E69;
+  /* Estava #6F6E69 (2,59:1 contra --superficie escuro — reprovava o minimo de 3:1).
+     Clareado para dar folga real. */
+  --bloqueado: #9C9992;
   --sessao: #5B9BD5;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-tema="claro"]) {
     --fundo: #262624; --superficie: #30302E; --lateral: #1F1E1D;
     --texto: #FAF9F5; --fraco: #A3A099; --borda: #3E3D3A;
-    --ok: #4CAF6A; --instavel: #D6A03A; --bloqueado: #6F6E69; --sessao: #5B9BD5;
+    --ok: #4CAF6A; --instavel: #D6A03A; --bloqueado: #9C9992; --sessao: #5B9BD5;
   }
 }
 
@@ -186,7 +191,12 @@ body {
 .sigla:hover { border-color: var(--acento); }
 .sigla[data-e="ok"] { border-left-color: var(--ok); }
 .sigla[data-e="instavel"] { border-left-color: var(--instavel); }
-.sigla[data-e="sem-acesso"] { border-left-color: var(--bloqueado); opacity: .6; }
+/* Era `opacity: .6` no elemento inteiro — apagava texto E borda juntos, e a borda ja
+   partia de uma cor marginal: o tribunal bloqueado (a informacao que mais importa,
+   porque evita uma busca que nao vai funcionar) ficava o mais dificil de ler da grade
+   (achado Important da revisao da Task 9). Troca: sem opacidade nenhuma, cor de texto
+   propria (--fraco, que ja passa 4,5:1 sozinha) no lugar de apagar o --texto normal. */
+.sigla[data-e="sem-acesso"] { border-left-color: var(--bloqueado); color: var(--fraco); }
 .sigla[data-e="exige-sessao"] { border-left-color: var(--sessao); }
 
 .manual summary { cursor: pointer; font-size: 13px; color: var(--fraco); font-weight: 600; }
