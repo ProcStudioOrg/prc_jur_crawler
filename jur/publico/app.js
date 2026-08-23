@@ -1,148 +1,173 @@
 // jur/publico/app.js
-const $ = (s) => document.querySelector(s);
-const CHAVE_LOCAL = 'jur.chave';
+const $ = (s, raiz = document) => raiz.querySelector(s);
+const CHAVE_LLM = 'jur.chaveLlm';
+const CHAVE_TEMA = 'jur.tema';
+const CHAVE_MODELO = 'jur.modelo';
+const CHAVE_ESFORCO = 'jur.esforco';
 
-let tribunais = [];
-const historico = [];
+const guardado = {
+  ler(k, padrao = '') { try { return localStorage.getItem(k) ?? padrao; } catch { return padrao; } },
+  escrever(k, v) { try { localStorage.setItem(k, v); } catch { /* modo privado */ } },
+};
 
-// ---------- chave: fica no browser, nunca no servidor ----------
-const campoChave = $('#chave');
-try { campoChave.value = localStorage.getItem(CHAVE_LOCAL) || ''; } catch { /* modo privado */ }
-campoChave.addEventListener('change', () => {
-  try { localStorage.setItem(CHAVE_LOCAL, campoChave.value.trim()); } catch { /* ignora */ }
+// ---------- API ----------
+window.jurApi = {
+  chave: () => guardado.ler(CHAVE_LLM).trim(),
+  async pedir(caminho, opcoes = {}) {
+    const r = await fetch(caminho, {
+      ...opcoes,
+      headers: { 'content-type': 'application/json', ...(opcoes.headers || {}) },
+    });
+    if (!r.ok) {
+      const corpo = await r.json().catch(() => ({ erro: `HTTP ${r.status}` }));
+      throw new Error(corpo.erro || `HTTP ${r.status}`);
+    }
+    return r.status === 204 ? null : r.json();
+  },
+};
+
+// ---------- tema ----------
+function aplicarTema(t) {
+  if (t) document.documentElement.dataset.tema = t;
+  else delete document.documentElement.dataset.tema;
+}
+aplicarTema(guardado.ler(CHAVE_TEMA, ''));
+$('#tema').addEventListener('click', () => {
+  const atual = document.documentElement.dataset.tema;
+  const escuroAgora = atual ? atual === 'escuro'
+    : matchMedia('(prefers-color-scheme: dark)').matches;
+  const novo = escuroAgora ? 'claro' : 'escuro';
+  aplicarTema(novo);
+  guardado.escrever(CHAVE_TEMA, novo);
 });
 
-// ---------- catalogo ----------
-const SEGMENTOS = [
-  ['superior', 'Superiores'], ['federal', 'Federais'], ['estadual', 'Estaduais'],
-  ['trabalhista', 'Trabalhista'], ['contas', 'Contas'],
-];
+// ---------- painéis ----------
+window.jurUI = {
+  abrirPainel(painel, html) {
+    painel.innerHTML = `<div class="painel-caixa"><button class="fechar" aria-label="Fechar">×</button>${html}</div>`;
+    painel.hidden = false;
+    const fechar = () => { painel.hidden = true; };
+    $('.fechar', painel).addEventListener('click', fechar);
+    painel.addEventListener('click', (e) => { if (e.target === painel) fechar(); });
+    document.addEventListener('keydown', function esc(e) {
+      if (e.key === 'Escape') { fechar(); document.removeEventListener('keydown', esc); }
+    });
+    return painel;
+  },
+  preencherEntrada(texto) {
+    const campo = $('.entrada', caixaAtiva());
+    campo.value = texto;
+    campo.focus();
+    ajustarAltura(campo);
+  },
+};
 
-// Tamanho da ressalva antes de truncar (clique expande). O catalogo tem nota de
-// ~2900 caracteres (stj) ate uma linha (tjsp) — sem truncar, a coluna de 320px
-// vira uma parede de texto so daquele tribunal.
-const LIMITE_RESSALVA = 90;
+// ---------- caixa de entrada ----------
+function montarCaixa(destino) {
+  destino.innerHTML = '';
+  destino.appendChild($('#tpl-entrada').content.cloneNode(true));
+  const form = $('.formulario', destino);
+  const campo = $('.entrada', destino);
+  const modelo = $('.modelo', destino);
+  const esforco = $('.esforco', destino);
 
-/**
- * Ressalva sempre visivel (sem hover), para qualquer estado != 'ok'. O title
- * na linha (abaixo) cobre desktop; isto cobre quem nunca passou o mouse e
- * quem esta em touch/mobile, onde title nao existe — e e exatamente esse
- * usuario que mais precisa saber, por exemplo, que o TRF1 tem a base
- * congelada desde 31/07/2025 antes de ler "0 resultados" como "nao ha
- * jurisprudencia".
- */
-function criarRessalva(t) {
-  const el = document.createElement('div');
-  el.className = 'ressalva';
-  el.dataset.e = t.estado;
+  modelo.value = guardado.ler(CHAVE_MODELO, 'claude-opus-5');
+  esforco.value = guardado.ler(CHAVE_ESFORCO, 'high');
+  sincronizarEsforco(modelo, esforco);
 
-  const precisaTruncar = t.nota.length > LIMITE_RESSALVA;
-  let aberta = false;
+  modelo.addEventListener('change', () => {
+    guardado.escrever(CHAVE_MODELO, modelo.value);
+    sincronizarEsforco(modelo, esforco);
+  });
+  esforco.addEventListener('change', () => guardado.escrever(CHAVE_ESFORCO, esforco.value));
 
-  function render() {
-    const corpo = aberta || !precisaTruncar ? t.nota : `${t.nota.slice(0, LIMITE_RESSALVA)}…`;
-    el.textContent = `⚠️ ${corpo}`;                 // textContent: nunca HTML de fonte externa
-    el.classList.toggle('aberta', aberta);
-  }
-  render();
-
-  if (precisaTruncar) {
-    el.classList.add('expansivel');
-    el.title = 'clique para ver a ressalva inteira';
-    el.addEventListener('click', () => { aberta = !aberta; render(); });
-  }
-  return el;
+  campo.addEventListener('input', () => ajustarAltura(campo));
+  campo.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
+  });
+  form.addEventListener('submit', (e) => { e.preventDefault(); enviar(campo, modelo.value, esforco.value); });
+  return destino;
 }
 
-function pintarTribunais() {
-  const termo = $('#filtro').value.trim().toLowerCase();
-  const visiveis = tribunais.filter((t) =>
-    !termo || t.comando.includes(termo) || t.nome.toLowerCase().includes(termo)
-    || t.uf.some((u) => u.toLowerCase() === termo));
+/** O haiku rejeita nivel de esforco na API — some com o seletor nele. */
+function sincronizarEsforco(modelo, esforco) {
+  esforco.hidden = modelo.value === 'claude-haiku-4-5';
+}
 
-  const alvo = $('#tribunais');
+function ajustarAltura(campo) {
+  campo.style.height = 'auto';
+  campo.style.height = `${Math.min(campo.scrollHeight, 200)}px`;
+}
+
+const caixaAtiva = () => ($('#conversa').hidden ? $('#caixa-inicial') : $('#caixa-conversa'));
+
+// ---------- histórico ----------
+let conversaAtual = null;
+/** O que vai para a API a cada turno. Reconstruido ao abrir conversa existente. */
+const historicoLocal = [];
+
+async function carregarHistorico() {
+  const alvo = $('#historico');
+  let lista = [];
+  try { lista = (await window.jurApi.pedir('/api/v1/conversas')).conversas; } catch { /* segue vazio */ }
+  if (!lista.length) { alvo.innerHTML = '<p class="vazio">Nenhuma conversa ainda.</p>'; return; }
+  alvo.innerHTML = '<h2>Conversas</h2>';
+  for (const c of lista) {
+    const item = document.createElement('div');
+    item.className = 'conversa-item';
+    item.setAttribute('aria-current', String(c.id === conversaAtual));
+    const titulo = document.createElement('span');
+    titulo.textContent = c.titulo || 'Sem título';
+    item.appendChild(titulo);
+    const apagar = document.createElement('button');
+    apagar.className = 'apagar'; apagar.textContent = '×';
+    apagar.title = 'Apagar conversa';
+    apagar.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      await window.jurApi.pedir(`/api/v1/conversas/${c.id}`, { method: 'DELETE' });
+      if (c.id === conversaAtual) irParaInicial();
+      carregarHistorico();
+    });
+    item.appendChild(apagar);
+    item.addEventListener('click', () => abrirConversa(c.id));
+    alvo.appendChild(item);
+  }
+}
+
+function irParaInicial() {
+  conversaAtual = null;
+  $('#conversa').hidden = true;
+  $('#inicial').hidden = false;
+  $('#mensagens').innerHTML = '';
+  carregarHistorico();
+}
+
+async function abrirConversa(id) {
+  const dados = await window.jurApi.pedir(`/api/v1/conversas/${id}`);
+  conversaAtual = id;
+  $('#inicial').hidden = true;
+  $('#conversa').hidden = false;
+  montarCaixa($('#caixa-conversa'));
+
+  const alvo = $('#mensagens');
   alvo.innerHTML = '';
 
-  const ordem = [...SEGMENTOS.map(([k]) => k), null];
-  for (const chave of ordem) {
-    const doGrupo = visiveis.filter((t) => (chave === null ? !SEGMENTOS.some(([k]) => k === t.segmento) : t.segmento === chave));
-    if (!doGrupo.length) continue;
-
-    const grupo = document.createElement('div');
-    grupo.className = 'grupo';
-    const rotulo = (SEGMENTOS.find(([k]) => k === chave) || [null, 'Outros'])[1];
-    const titulo = document.createElement('h2');
-    titulo.textContent = `${rotulo} (${doGrupo.length})`;
-    grupo.appendChild(titulo);
-
-    for (const t of doGrupo) {
-      const linha = document.createElement('div');
-      linha.className = 'tribunal';
-      linha.dataset.disponivel = String(t.disponivel);
-      // A nota tambem vai no title: atalho de hover para quem tem mouse. Mas o
-      // hover sozinho NAO cumpre o requisito (nao existe em touch, e fica
-      // desconectado do "0 resultados" que aparece la na conversa) — por isso
-      // a ressalva() abaixo tambem existe, sempre visivel.
-      linha.title = t.nota ? `${t.estado} — ${t.nota}` : t.estado;
-
-      // Monta os tres <span> por DOM (textContent), nao por template string em
-      // innerHTML: t.comando e t.nome vem do catalogo (jur/cobertura/tribunais.json),
-      // que hoje e estatico mas registra texto de portais de tribunal — a fonte
-      // certa de nome "sujo" no futuro. innerHTML com string interpolada seria um
-      // sink de XSS pronto para herdar assim que essa fonte deixar de ser estatica.
-      const bolinha = document.createElement('span');
-      bolinha.className = 'bolinha';
-      bolinha.dataset.e = t.estado;
-
-      const sigla = document.createElement('span');
-      sigla.className = 'sigla';
-      sigla.textContent = t.comando;
-
-      const nome = document.createElement('span');
-      nome.className = 'nome';
-      nome.textContent = t.nome;
-
-      linha.append(bolinha, sigla, nome);
-
-      if (t.disponivel) {
-        linha.addEventListener('click', () => {
-          $('#entrada').value = `Busque no ${t.comando} sobre `;
-          $('#entrada').focus();
-        });
-      }
-      grupo.appendChild(linha);
-
-      if (t.estado !== 'ok' && t.nota) {
-        grupo.appendChild(criarRessalva(t));
-      }
-    }
-    alvo.appendChild(grupo);
+  // O historico enviado ao modelo precisa voltar INTEIRO, com os blocos de ferramenta —
+  // sem eles o modelo perde os job_id das buscas que ele mesmo fez nesta conversa.
+  historicoLocal.length = 0;
+  for (const m of dados.mensagens) {
+    historicoLocal.push({ role: m.papel, content: m.conteudo });
+    const texto = typeof m.conteudo === 'string'
+      ? m.conteudo
+      : m.conteudo.filter((b) => b.type === 'text').map((b) => b.text).join('');
+    if (texto) bolha(m.papel === 'user' ? 'user' : 'assistant', texto);
   }
+  carregarHistorico();
 }
 
-async function carregarTribunais() {
-  const r = await fetch('/api/v1/tribunais');
-  tribunais = (await r.json()).tribunais;
-  const conta = (e) => tribunais.filter((t) => t.estado === e).length;
-  $('#placar').textContent =
-    `${tribunais.length} tribunais · ${conta('ok')} ok · ${conta('instavel')} instáveis · `
-    + `${conta('sem-acesso')} bloqueados · ${conta('exige-sessao')} exigem sessão`;
-  pintarTribunais();
-}
+$('#nova-conversa').addEventListener('click', irParaInicial);
 
-$('#filtro').addEventListener('input', pintarTribunais);
-
-// ---------- saude ----------
-async function verificarSaude() {
-  try {
-    const r = await fetch('/api/v1/saude');
-    $('#saude').textContent = r.ok ? 'online' : 'com problema';
-  } catch {
-    $('#saude').textContent = 'offline';
-  }
-}
-
-// ---------- chat ----------
+// ---------- mensagens ----------
 function bolha(classe, texto) {
   const div = document.createElement('div');
   div.className = `msg ${classe}`;
@@ -152,72 +177,65 @@ function bolha(classe, texto) {
   return div;
 }
 
-/**
- * Le um corpo SSE do fetch e chama aoEvento(nome, dados) por evento completo.
- * aoAtividade(), se dado, roda a cada pedaço de bytes recebido (inclusive o
- * ": ping" de keepalive do servidor) — serve para o chamador resetar um
- * timeout de inatividade sem depender de eventos nomeados.
- */
 async function lerSSE(resposta, aoEvento, aoAtividade) {
   const leitor = resposta.body.getReader();
-  const decodificador = new TextDecoder();
+  const dec = new TextDecoder();
   let buffer = '';
-  while (true) {
+  for (;;) {
     const { done, value } = await leitor.read();
     if (done) break;
     if (aoAtividade) aoAtividade();
-    buffer += decodificador.decode(value, { stream: true });
+    buffer += dec.decode(value, { stream: true });
     const partes = buffer.split('\n\n');
     buffer = partes.pop();
     for (const parte of partes) {
       const nome = (parte.match(/^event: (.+)$/m) || [])[1];
       const dado = (parte.match(/^data: (.+)$/m) || [])[1];
-      if (!nome || !dado) continue;          // linha de ping
-      try { aoEvento(nome, JSON.parse(dado)); } catch { /* ignora fragmento */ }
+      if (!nome || !dado) continue;
+      try { aoEvento(nome, JSON.parse(dado)); } catch { /* fragmento */ }
     }
   }
 }
 
-// 2x o ": ping" de 15s que o servidor manda em servidor/http.js — qualquer
-// atividade real no stream (evento ou ping) reinicia o relogio. So dispara se
-// nem o keepalive chegar, o que sinaliza queda de rede/proxy, nao lentidao do LLM.
-const TIMEOUT_INATIVIDADE_MS = 30000;
-
-$('#formulario').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const texto = $('#entrada').value.trim();
+async function enviar(campo, modelo, esforco) {
+  const texto = campo.value.trim();
   if (!texto) return;
 
-  const botao = $('#formulario button');
+  if (!conversaAtual) {
+    const c = await window.jurApi.pedir('/api/v1/conversas', { method: 'POST', body: '{}' });
+    conversaAtual = c.id;
+    historicoLocal.length = 0;
+    $('#inicial').hidden = true;
+    $('#conversa').hidden = false;
+    $('#mensagens').innerHTML = '';
+    montarCaixa($('#caixa-conversa'));
+  }
+
+  const botao = $('.enviar', caixaAtiva());
   botao.disabled = true;
-  $('#entrada').value = '';
+  campo.value = ''; ajustarAltura(campo);
   bolha('user', texto);
-  historico.push({ role: 'user', content: texto });
+  historicoLocal.push({ role: 'user', content: texto });
 
   let destino = null;
-  const controlador = new AbortController();
-  let timeoutId = null;
-  const reiniciarTimeout = () => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => controlador.abort(), TIMEOUT_INATIVIDADE_MS);
-  };
+  const controle = new AbortController();
+  let relogio = setTimeout(() => controle.abort(), 30000);
+  const renovar = () => { clearTimeout(relogio); relogio = setTimeout(() => controle.abort(), 30000); };
 
   try {
-    const cabecalhos = { 'content-type': 'application/json' };
-    if (campoChave.value.trim()) cabecalhos['x-api-key'] = campoChave.value.trim();
+    const cab = { 'content-type': 'application/json' };
+    const chave = window.jurApi.chave();
+    if (chave) cab['x-api-key'] = chave;
 
-    reiniciarTimeout();
     const r = await fetch('/api/v1/chat', {
-      method: 'POST', headers: cabecalhos, body: JSON.stringify({ mensagens: historico }),
-      signal: controlador.signal,
+      method: 'POST', headers: cab, signal: controle.signal,
+      body: JSON.stringify({ mensagens: historicoLocal, modelo, esforco, conversaId: conversaAtual }),
     });
-
     if (!r.ok) {
       const corpo = await r.json().catch(() => ({ erro: `HTTP ${r.status}` }));
       bolha('erro', corpo.erro);
       return;
     }
-
     await lerSSE(r, (nome, dados) => {
       if (nome === 'texto') {
         if (!destino) destino = bolha('assistant', '');
@@ -227,23 +245,20 @@ $('#formulario').addEventListener('submit', async (e) => {
         bolha('ferramenta', `▸ ${dados.nome}(${JSON.stringify(dados.entrada)})`);
         destino = null;
       } else if (nome === 'fim') {
-        historico.push({ role: 'assistant', content: dados.texto });
+        historicoLocal.push({ role: 'assistant', content: dados.texto });
+        carregarHistorico();
       } else if (nome === 'erro') {
         bolha('erro', dados.erro);
       }
-    }, reiniciarTimeout);
-  } catch (erro) {
-    if (erro.name === 'AbortError') {
-      bolha('erro', `sem resposta do servidor por ${TIMEOUT_INATIVIDADE_MS / 1000}s — conexão interrompida`);
-    } else {
-      bolha('erro', erro.message);
-    }
+    }, renovar);
+  } catch (e) {
+    bolha('erro', e.name === 'AbortError' ? 'A resposta demorou demais e foi interrompida.' : e.message);
   } finally {
-    clearTimeout(timeoutId);
+    clearTimeout(relogio);
     botao.disabled = false;
   }
-});
+}
 
-carregarTribunais();
-verificarSaude();
-setInterval(verificarSaude, 30000);
+// ---------- início ----------
+montarCaixa($('#caixa-inicial'));
+carregarHistorico();
