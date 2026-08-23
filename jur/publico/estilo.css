@@ -161,6 +161,41 @@ body {
 .painel h2 { margin: 0 0 4px; font-size: 18px; }
 .painel .fechar { float: right; background: none; border: 0; color: var(--fraco); font-size: 20px; cursor: pointer; }
 
+.grade-prompts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+.cartao-prompt {
+  padding: 12px 14px; text-align: left; font: inherit; font-size: 14px;
+  background: var(--superficie); color: var(--texto);
+  border: 1px solid var(--borda); border-radius: var(--raio); cursor: pointer;
+}
+.cartao-prompt:hover { border-color: var(--acento); }
+
+.placar { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--fraco); margin-bottom: 12px; }
+.ponto { display: inline-block; width: 8px; height: 8px; border-radius: 50%; vertical-align: middle; }
+.ponto[data-e="ok"] { background: var(--ok); }
+.ponto[data-e="instavel"] { background: var(--instavel); }
+.ponto[data-e="sem-acesso"] { background: var(--bloqueado); }
+.ponto[data-e="exige-sessao"] { background: var(--sessao); }
+
+.grade-tribunais { display: flex; flex-wrap: wrap; gap: 5px; }
+.sigla {
+  font: inherit; font-size: 12px; font-family: ui-monospace, SFMono-Regular, monospace;
+  padding: 3px 8px; border-radius: 6px; cursor: pointer;
+  background: var(--superficie); color: var(--texto);
+  border: 1px solid var(--borda); border-left-width: 3px;
+}
+.sigla:hover { border-color: var(--acento); }
+.sigla[data-e="ok"] { border-left-color: var(--ok); }
+.sigla[data-e="instavel"] { border-left-color: var(--instavel); }
+.sigla[data-e="sem-acesso"] { border-left-color: var(--bloqueado); opacity: .6; }
+.sigla[data-e="exige-sessao"] { border-left-color: var(--sessao); }
+
+.manual summary { cursor: pointer; font-size: 13px; color: var(--fraco); font-weight: 600; }
+.manual-corpo h3 { font-size: 14px; margin: 16px 0 4px; }
+.manual-corpo p { margin: 0; font-size: 14px; color: var(--fraco); }
+.manual-corpo ul { padding-left: 18px; font-size: 14px; color: var(--fraco); }
+.estado-linha { font-size: 13px; color: var(--fraco); }
+.painel .nota { white-space: pre-wrap; font-size: 14px; line-height: 1.65; }
+
 @media (max-width: 860px) {
   #lateral { display: none; }
   #inicial { padding-top: 6vh; }
