@@ -8,6 +8,18 @@
     escrever(k, v) { try { localStorage.setItem(k, v); } catch { /* modo privado */ } },
   };
 
+  /**
+   * Confirma QUAL chave esta salva sem mostrar o segredo: prefixo (que identifica o
+   * provedor) + os quatro ultimos (que distinguem uma chave da outra). Corta por code
+   * point, nao por unidade UTF-16, para nao partir par substituto ao meio — uma chave
+   * nao deveria ter emoji, mas o campo aceita qualquer coisa que o usuario colar.
+   */
+  function mascarar(valor) {
+    const pontos = Array.from(valor);
+    if (pontos.length <= 12) return `…${pontos.slice(-2).join('')}`;
+    return `${pontos.slice(0, 7).join('')}…${pontos.slice(-4).join('')}`;
+  }
+
   function quando(ms) {
     if (!ms) return 'nunca';
     return new Date(ms).toLocaleString('pt-BR');
@@ -70,13 +82,68 @@
     const d1 = document.createElement('p');
     d1.className = 'vazio';
     d1.textContent = 'A sua chave da Anthropic, que o jur usa para conversar. Fica só neste browser e nunca é guardada no servidor.';
+
+    // <form> em vez de input solto: Enter dentro do campo vira submit de graca, sem
+    // handler de teclado proprio.
+    const formLlm = document.createElement('form');
+    formLlm.className = 'form-chave';
     const campo = document.createElement('input');
     campo.type = 'password';
     campo.className = 'campo';
     campo.placeholder = 'sk-ant-…';
+    campo.autocomplete = 'off';
+    campo.setAttribute('aria-describedby', 'status-chave-llm');
     campo.value = guardado.ler(CHAVE_LLM);
-    campo.addEventListener('change', () => guardado.escrever(CHAVE_LLM, campo.value.trim()));
-    s1.appendChild(t1); s1.appendChild(d1); s1.appendChild(campo);
+    const salvar = document.createElement('button');
+    salvar.type = 'submit';
+    salvar.id = 'salvar-chave-llm';
+    salvar.className = 'botao-acento';
+    salvar.textContent = 'Salvar';
+    formLlm.appendChild(campo); formLlm.appendChild(salvar);
+
+    // A regiao que fecha o achado: antes disto, salvar (ou nao salvar) era indistinguivel
+    // — o campo mostrava as mesmas bolinhas nos dois casos. `role="status"` faz o leitor
+    // de tela anunciar a mudanca sem roubar o foco.
+    const estadoChave = document.createElement('p');
+    estadoChave.id = 'status-chave-llm';
+    estadoChave.className = 'estado-chave';
+    estadoChave.setAttribute('role', 'status');
+
+    function pintar(estado, texto) {
+      estadoChave.dataset.estado = estado;
+      estadoChave.textContent = texto;
+    }
+
+    function mostrarGuardado() {
+      const atual = guardado.ler(CHAVE_LLM).trim();
+      if (!atual) return pintar('vazio', 'Nenhuma chave guardada neste browser — o chat não responde sem ela.');
+      return pintar('salvo', `Chave salva neste browser (${mascarar(atual)}).`);
+    }
+
+    function gravar() {
+      const valor = campo.value.trim();
+      guardado.escrever(CHAVE_LLM, valor);
+      if (!valor) return pintar('removido', 'Chave removida deste browser.');
+      // Formato inesperado AVISA, nao bloqueia: recusar aqui quebraria uma chave valida
+      // de formato futuro, e o unico lugar da interface onde se digita a chave viraria
+      // uma porta trancada. O valor ja foi gravado acima.
+      if (!valor.startsWith('sk-ant-')) {
+        return pintar('formato', `Salvo (${mascarar(valor)}), mas isso não parece uma chave da Anthropic — elas começam com sk-ant-.`);
+      }
+      return pintar('salvo', `Chave salva neste browser (${mascarar(valor)}).`);
+    }
+
+    campo.addEventListener('input', () => {
+      if (campo.value.trim() === guardado.ler(CHAVE_LLM).trim()) return mostrarGuardado();
+      return pintar('pendente', 'Alteração ainda não gravada. Clique em Salvar (ou tecle Enter).');
+    });
+    // Sair do campo continua gravando, como antes — quem ja tinha o habito nao regride.
+    // A diferenca e que agora isso aparece na tela.
+    campo.addEventListener('change', gravar);
+    formLlm.addEventListener('submit', (e) => { e.preventDefault(); gravar(); });
+
+    mostrarGuardado();
+    s1.appendChild(t1); s1.appendChild(d1); s1.appendChild(formLlm); s1.appendChild(estadoChave);
     caixa.appendChild(s1);
 
     // --- chaves de conexão ---

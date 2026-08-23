@@ -236,6 +236,12 @@ body {
   background: var(--acento); color: #fff; font: inherit; font-weight: 500; cursor: pointer;
 }
 .botao-acento:disabled { opacity: .5; cursor: default; }
+/* Retorno de "a chave foi salva?". A cor reforca o estado, mas nunca e o unico sinal:
+   o texto sozinho ja diz o que aconteceu (o estado nao pode depender de enxergar cor). */
+.estado-chave { margin: 8px 0 0; font-size: 13px; color: var(--fraco); }
+.estado-chave[data-estado="salvo"] { color: var(--ok); }
+.estado-chave[data-estado="pendente"],
+.estado-chave[data-estado="formato"] { color: var(--instavel); }
 .chave-nova {
   margin-top: 12px; padding: 12px; border-radius: var(--raio);
   background: var(--fundo); border: 1px solid var(--acento);
