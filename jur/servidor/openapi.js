@@ -34,7 +34,8 @@ const RESPOSTAS = {
   Erro401: {
     description:
       'sem chave de conexao valida. Nao se aplica a chamadas da propria interface local '
-      + '(reconhecida pelo cabecalho Sec-Fetch-Site) nem a GET /api/v1/saude.',
+      + '(reconhecida pelo cabecalho Sec-Fetch-Site, que o browser controla mas um cliente '
+      + 'programatico forja) nem a GET /api/v1/saude.',
     content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
   },
   Erro403: {
@@ -67,12 +68,19 @@ function documento() {
         + 'Cada tribunal tem um dos quatro estados: `ok`, `instavel`, `sem-acesso` ou '
         + '`exige-sessao`. Só `ok` e `instavel` são consultáveis via API (campo `disponivel`).\n\n'
         + '## Autenticação\n\n'
-        + 'Toda rota exige `Authorization: Bearer <chave>`, gerada em `POST /api/v1/chaves`, '
-        + 'exceto `GET /api/v1/saude` (healthcheck, livre) e as requisições que a própria '
-        + 'interface local dispara — o servidor reconhece pelo cabeçalho `Sec-Fetch-Site` '
-        + '(`same-origin` ou `none`) e dispensa a chave nesse caso. A autenticação pode ser '
-        + 'desligada inteira com `JUR_EXIGIR_CHAVE=0` (uso local, não recomendado se o servidor '
-        + 'sai de localhost).\n\n'
+        + 'Toda rota exige `Authorization: Bearer <chave>`, gerada na interface em Configurações '
+        + '(`POST /api/v1/chaves`), exceto `GET /api/v1/saude` (healthcheck, livre) e as '
+        + 'requisições que a própria interface local dispara — o servidor reconhece pelo cabeçalho '
+        + '`Sec-Fetch-Site` (`same-origin` ou `none`) e dispensa a chave nesse caso. A exigência '
+        + 'pode ser desligada inteira com `JUR_EXIGIR_CHAVE=0`.\n\n'
+        + '**Alcance real dessa dispensa.** `Sec-Fetch-Site` é controlado pelo browser: uma '
+        + 'página hostil aberta no browser da vítima não consegue forjá-lo, então a dispensa '
+        + 'protege de verdade contra CSRF — que é o ataque para o qual ela existe. **Mas um '
+        + 'cliente programático (curl, script) forja esse cabeçalho numa linha.** Em loopback '
+        + 'isso é aceitável; com o servidor exposto (`JUR_BIND`, ou `ports:` do Docker sem o '
+        + 'prefixo `127.0.0.1:`), **não é** — nessa configuração a chave de conexão deixa de ser '
+        + 'barreira, e expor a porta exige um proxy autenticado ou firewall na frente. As chaves '
+        + 'autenticam *clientes*, não pessoas: qualquer chave válida pode emitir outras.\n\n'
         + '## MCP\n\n'
         + '`POST /mcp` expõe as mesmas capacidades de busca via protocolo MCP (JSON-RPC 2.0) '
         + 'para clientes LLM, com três ferramentas: `listar_tribunais`, `buscar_jurisprudencia` '
@@ -83,7 +91,13 @@ function documento() {
       securitySchemes: {
         chaveDeConexao: {
           type: 'http', scheme: 'bearer',
-          description: 'Chave gerada em POST /api/v1/chaves. A interface local, servida pela mesma origem, dispensa a chave.',
+          description:
+            'Chave gerada na interface, em Configurações (POST /api/v1/chaves); o valor completo '
+            + 'aparece uma única vez. A interface local é dispensada da chave por Sec-Fetch-Site, '
+            + 'cabeçalho que o browser controla e uma página hostil não forja (protege contra CSRF) '
+            + '— mas que um cliente programático forja à vontade. Em loopback é aceitável; com o '
+            + 'servidor exposto, a chave não é barreira: use um proxy autenticado na frente. '
+            + 'JUR_EXIGIR_CHAVE=0 desliga a exigência.',
         },
       },
       schemas: {

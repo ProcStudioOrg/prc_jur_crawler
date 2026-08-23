@@ -86,14 +86,16 @@ foram necessários. O sandbox nativo do Chromium permanece ligado.
 
 ## Exposição na rede — `JUR_BIND` e a porta publicada
 
-**Default: o serviço só responde em loopback.** Ele **não tem autenticação nenhuma** e
-carrega a chave da Anthropic do operador atrás de `POST /api/v1/chat` (Opus 5,
-`max_tokens: 64000`). Publicado em `0.0.0.0`, qualquer pessoa na mesma rede enfileira
-jobs contra os portais dos tribunais usando o IP do operador, lê o acervo de resultados
-já baixado e gasta o dinheiro dele no chat. Isso foi **medido** na revisão final: com
-`ports: "3000:3000"` o serviço respondia da LAN em `http://192.168.0.78:3000`.
+**Default: o serviço só responde em loopback**, e as rotas de API exigem chave.
 
-Duas travas, em camadas diferentes:
+`POST /api/v1/chat` gasta a chave da Anthropic do operador (Opus 5, `max_tokens: 64000`),
+e `POST /api/v1/buscas` enfileira crawl real contra os portais dos tribunais usando o IP
+dele. Publicado em `0.0.0.0` sem nada na frente, quem alcança a porta enfileira jobs,
+lê o acervo de resultados já baixado e gasta o dinheiro do operador no chat. Isso foi
+**medido** na revisão final: com `ports: "3000:3000"` o serviço respondia da LAN em
+`http://192.168.0.78:3000`.
+
+Duas travas de exposição, em camadas diferentes:
 
 | Onde | Variável / linha | Default | O que controla |
 |---|---|---|---|
@@ -114,21 +116,58 @@ as duas pontas conscientemente:
     # fora do container:
     JUR_BIND=0.0.0.0 node jur/servidor/index.js
 
-Ao fazer isso você aceita que **não há login**: ponha o serviço atrás de um proxy com
-autenticação, ou restrinja por firewall. Não existe modo "exposto e seguro" no v1 —
-autenticação está explicitamente fora de escopo no spec (§7).
+Antes de fazer isso, leia a seção seguinte: **a chave de conexão não é barreira contra
+quem alcança a porta**. Exposto sem proxy autenticado na frente, o serviço fica aberto.
 
-### Verificação de `Origin`
+## Autenticação — o que a chave de conexão protege e o que ela não protege
 
-`POST /mcp` e `POST /api/v1/chat` recusam com **403** qualquer `Origin` que não seja
-loopback nem igual ao `Host` da requisição. Motivo: as duas são alcançáveis como
-"requisição simples" do CORS (`content-type: text/plain`), que o browser envia **sem
-preflight** — um site hostil aberto no browser da vítima executava `tools/call` e
-`POST /chat` mesmo sem conseguir ler a resposta. Requisição **sem** `Origin` (curl,
-cliente MCP nativo, SDK) continua passando: browser sempre manda `Origin` em requisição
-cross-site, então exigir o cabeçalho quebraria todo consumidor legítimo sem fechar nada.
-Expor via `JUR_BIND` continua funcionando: a UI servida pelo próprio serviço tem
-`Origin` igual ao `Host`.
+Guarda única no roteador (`jur/servidor/autenticacao.js`), aplicada a **todas** as rotas
+`/api/v1/*` e a `/mcp`. A única isenta é `GET /api/v1/saude`, que é o healthcheck do
+container e roda de dentro, sem como carregar segredo.
+
+**O que existe:**
+
+- **Chave de conexão.** Cliente programático (Claude Code, cliente MCP, script, `curl`)
+  precisa mandar `Authorization: Bearer <chave>`. A chave é gerada na interface, em
+  **Configurações → Chaves de conexão**, e o valor completo aparece **uma vez só**, na
+  criação — o servidor guarda hash e prefixo. Sem chave válida: **401**.
+- **Desligar.** `JUR_EXIGIR_CHAVE=0` desliga a exigência de chave inteira
+  (`servidor/index.js`). O default — inclusive no `Dockerfile`, que não seta a variável —
+  é **ligada**.
+- **Dispensa da interface local.** A página servida pelo próprio serviço não manda chave
+  nenhuma. Ela é reconhecida pelo cabeçalho **`Sec-Fetch-Site`** (`same-origin` para os
+  `fetch` que ela dispara, `none` para a navegação inicial). Não dá para usar `Origin`
+  aqui: o browser **não** manda `Origin` em GET de mesma origem — nem na navegação nem no
+  `fetch` da própria página —, e usar `Origin` trancava a interface do lado de fora dela
+  mesma. Isso está travado em `jur/tests/browser/interface-real.test.js`, com Chromium de
+  verdade.
+- **Barreira de origem.** Antes de qualquer outra coisa, a guarda recusa com **403**
+  requisição vinda de outro site (`Origin` que não seja loopback nem igual ao `Host`, ou
+  `Sec-Fetch-Site` `cross-site`/`same-site`). Vale para toda rota, mesmo com
+  `JUR_EXIGIR_CHAVE=0`.
+
+**O que isso de fato protege — e o que não protege:**
+
+`Sec-Fetch-Site` é um cabeçalho **controlado pelo browser**: uma página hostil aberta no
+browser da vítima não consegue forjá-lo. Contra o ataque que motivou a guarda — o site
+malicioso que dispara `POST /api/v1/buscas` ou `POST /api/v1/chat` como "requisição
+simples" do CORS, sem preflight, e paga a conta do operador mesmo sem conseguir ler a
+resposta — a dispensa **funciona**: é proteção contra CSRF, e cumpre esse papel.
+
+**Mas um cliente programático forja `Sec-Fetch-Site: same-origin` numa linha de `curl`.**
+Ou seja: quem consegue abrir uma conexão TCP com a porta entra sem chave. Em loopback isso
+é aceitável — quem já está na máquina tem o `jur.db` e a chave da Anthropic de qualquer
+jeito. **Exposto via `JUR_BIND` ou pelo `ports:` do Docker, não é**: nessa configuração a
+chave de conexão deixa de ser barreira, e qualquer pessoa que alcance a porta usa a API
+inteira. Não existe fechamento honesto sem exigir chave também da interface, o que mudaria
+o produto — então a regra é:
+
+> **Expor a porta exige um proxy autenticado (ou firewall) na frente.** A chave de conexão
+> serve para identificar e revogar clientes programáticos, não para proteger uma porta
+> aberta.
+
+Multiusuário e login continuam fora de escopo (spec §5): as chaves de conexão autenticam
+*clientes*, não pessoas — e qualquer chave válida pode emitir outras.
 
 ## Comandos
 
