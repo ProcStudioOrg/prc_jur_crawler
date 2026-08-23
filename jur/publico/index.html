@@ -7,6 +7,14 @@
   <link rel="stylesheet" href="/estilo.css">
 </head>
 <body>
+  <!-- I4: abaixo de 860px a lateral vira gaveta. Sem este botao ela simplesmente sumia,
+       e com ela iam Nova conversa, o historico e — o que bloqueia o produto —
+       Configuracoes, o unico lugar da interface onde se digita a chave da Anthropic.
+       O chat respondia "informe na interface" e nao havia caminho na tela para obedecer. -->
+  <button id="abrir-lateral" class="abrir-lateral" aria-controls="lateral" aria-expanded="false"
+          aria-label="Abrir menu">☰</button>
+  <div id="fundo-lateral" class="fundo-lateral" aria-hidden="true"></div>
+
   <aside id="lateral">
     <div class="lateral-topo">
       <span class="marca">jur</span>

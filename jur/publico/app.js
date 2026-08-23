@@ -41,6 +41,41 @@ $('#tema').addEventListener('click', () => {
   guardado.escrever(CHAVE_TEMA, novo);
 });
 
+// ---------- lateral em tela estreita (I4) ----------
+// Abaixo de 860px a lateral e uma gaveta. Sem isto ela simplesmente desaparecia, e com
+// ela iam Nova conversa, o historico e Configuracoes — o unico lugar da interface onde se
+// digita a chave da Anthropic. O chat pedia "informe na interface" e nao havia interface
+// para obedecer. O CSS decide QUANDO a gaveta existe; aqui so ligamos o abre/fecha.
+const botaoLateral = $('#abrir-lateral');
+const fundoLateral = $('#fundo-lateral');
+
+function lateralAberta() { return document.body.classList.contains('lateral-aberta'); }
+
+function fecharLateral(devolverFoco = false) {
+  if (!lateralAberta()) return;
+  document.body.classList.remove('lateral-aberta');
+  botaoLateral.setAttribute('aria-expanded', 'false');
+  if (devolverFoco) botaoLateral.focus();
+}
+
+function abrirLateral() {
+  document.body.classList.add('lateral-aberta');
+  botaoLateral.setAttribute('aria-expanded', 'true');
+  // Leva o foco para dentro da gaveta: sem isto quem navega por teclado abriria a gaveta
+  // e continuaria com o foco no botao, tabulando por cima do conteudo de baixo.
+  $('#nova-conversa').focus();
+}
+
+botaoLateral.addEventListener('click', () => (lateralAberta() ? fecharLateral(true) : abrirLateral()));
+fundoLateral.addEventListener('click', () => fecharLateral());
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fecharLateral(true); });
+// Escolher qualquer coisa dentro da gaveta fecha a gaveta — menos o "×" de apagar, que
+// deixa o usuario na lista para apagar mais de uma conversa.
+$('#lateral').addEventListener('click', (e) => {
+  if (e.target.closest('.apagar')) return;
+  if (e.target.closest('#nova-conversa, .conversa-item, #abrir-config')) fecharLateral();
+});
+
 // ---------- painéis ----------
 window.jurUI = {
   abrirPainel(painel, html) {
@@ -133,6 +168,9 @@ async function carregarHistorico() {
     const apagar = document.createElement('button');
     apagar.className = 'apagar'; apagar.textContent = '×';
     apagar.title = 'Apagar conversa';
+    // I5: o botao e visivel sempre (ver estilo.css); o rotulo acessivel importa porque
+    // "×" sozinho nao diz nada a quem chega nele por teclado ou leitor de tela.
+    apagar.setAttribute('aria-label', `Apagar conversa: ${c.titulo || 'Sem título'}`);
     apagar.addEventListener('click', async (e) => {
       e.stopPropagation();
       await window.jurApi.pedir(`/api/v1/conversas/${c.id}`, { method: 'DELETE' });

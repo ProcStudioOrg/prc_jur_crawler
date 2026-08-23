@@ -84,8 +84,22 @@ body {
 }
 .conversa-item:hover { background: var(--borda); }
 .conversa-item[aria-current="true"] { background: var(--borda); font-weight: 500; }
-.conversa-item .apagar { margin-left: auto; opacity: 0; border: 0; background: none; color: var(--fraco); cursor: pointer; }
-.conversa-item:hover .apagar { opacity: 1; }
+/* I5: era `opacity: 0` + `:hover`. Em touch o botao nunca aparecia e nao havia outro
+   caminho para apagar uma conversa; e como `opacity: 0` NAO tira o elemento da ordem de
+   tabulacao, quem usa teclado focava um botao invisivel. E a mesma classe de defeito que
+   este projeto ja reprovou uma vez na ressalva do tribunal, e que o spec §2.3 proibe
+   ("sem depender de hover"). Agora: sempre visivel (discreto), reforcado no hover do item
+   e no foco de teclado, e em cheio onde nao existe hover. */
+.conversa-item .apagar {
+  margin-left: auto; flex: 0 0 auto; border: 0; background: none;
+  color: var(--fraco); cursor: pointer; opacity: .6;
+  line-height: 1; padding: 4px 6px; border-radius: 6px; font-size: 15px;
+}
+.conversa-item:hover .apagar,
+.conversa-item .apagar:hover,
+.conversa-item .apagar:focus-visible { opacity: 1; color: var(--texto); }
+.conversa-item .apagar:focus-visible { outline: 2px solid var(--acento); outline-offset: 1px; }
+@media (hover: none) { .conversa-item .apagar { opacity: 1; } }
 .vazio { color: var(--fraco); font-size: 13px; padding: 8px 10px; }
 
 .config {
@@ -248,7 +262,41 @@ body {
   font-family: ui-monospace, SFMono-Regular, monospace;
 }
 
+/* ---------- lateral em tela estreita (I4) ---------- */
+/* Em tela larga o botao e o fundo nao existem: a lateral e coluna fixa. */
+.abrir-lateral, .fundo-lateral { display: none; }
+
 @media (max-width: 860px) {
-  #lateral { display: none; }
-  #inicial { padding-top: 6vh; }
+  /* A lateral nao some mais: vira gaveta sobreposta. `visibility` (e nao so o
+     translate) e o que a tira da ordem de tabulacao enquanto esta fechada. */
+  #lateral {
+    position: fixed; top: 0; bottom: 0; left: 0; z-index: 30;
+    visibility: hidden; transform: translateX(-100%);
+    transition: transform .18s ease, visibility .18s ease;
+    box-shadow: 0 0 28px rgba(0,0,0,.22);
+  }
+  body.lateral-aberta #lateral { visibility: visible; transform: none; }
+
+  .abrir-lateral {
+    display: block; position: fixed; top: 10px; left: 10px; z-index: 40;
+    background: var(--superficie); color: var(--texto);
+    border: 1px solid var(--borda); border-radius: 9px;
+    padding: 6px 11px; font: inherit; font-size: 17px; line-height: 1.2; cursor: pointer;
+  }
+  .abrir-lateral:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+  body.lateral-aberta .abrir-lateral { left: calc(var(--lateral-largura) + 10px); }
+
+  .fundo-lateral { position: fixed; inset: 0; z-index: 25; background: rgba(0,0,0,.35); }
+  body.lateral-aberta .fundo-lateral { display: block; }
+
+  /* Espaco para o botao flutuante nao cobrir o conteudo. */
+  #inicial { padding-top: 62px; }
+  #mensagens { padding-top: 58px; }
+}
+
+/* Abaixo da largura da propria gaveta (~390px e menos), ela ocupa quase a tela toda e o
+   botao nao cabe ao lado — ele volta para dentro do fluxo visual, sobre o fundo escuro. */
+@media (max-width: 340px) {
+  #lateral { width: 86vw; flex-basis: 86vw; }
+  body.lateral-aberta .abrir-lateral { left: auto; right: 10px; }
 }
