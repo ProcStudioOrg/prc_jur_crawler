@@ -21,12 +21,18 @@ jur_cert_tem_nomes() {
   local jur_sans
 
   [[ -f "$jur_cert" ]] || return 1
+  openssl x509 -in "$jur_cert" -checkend 0 -noout 2>/dev/null || return 1
   jur_sans=$(openssl x509 -in "$jur_cert" -noout -ext subjectAltName 2>/dev/null |
     sed 's/,/\n/g' |
     sed -n 's/^[[:space:]]*DNS://p') || return 1
 
   grep -Fxq 'jurcrawler.com.br' <<<"$jur_sans" &&
     grep -Fxq 'www.jurcrawler.com.br' <<<"$jur_sans"
+}
+
+jur_validar_e_recarregar() {
+  nginx -t || return 1
+  systemctl reload nginx
 }
 
 jur_limpar_backup() {
@@ -53,8 +59,8 @@ jur_restaurar() {
       rm -f -- "$jur_enabled"
     fi
 
-    if nginx -t; then
-      systemctl reload nginx
+    if jur_validar_e_recarregar; then
+      :
     else
       echo 'falha ao validar a restauracao do vhost jurcrawler' >&2
     fi
@@ -78,17 +84,16 @@ trap 'jur_restaurar "$?"' ERR
 
 install -d -m 0755 /var/www/letsencrypt
 
+if command -v ufw >/dev/null 2>&1 && ufw status | grep -q '^Status: active'; then
+  ufw allow 80/tcp
+fi
+
 if ! jur_cert_tem_nomes; then
   jur_rollback=1
   install -m 0644 "$jur_script_dir/jurcrawler-http.conf" "$jur_site"
   ln -sfn "$jur_site" "$jur_enabled"
 
-  if command -v ufw >/dev/null 2>&1 && ufw status | grep -q '^Status: active'; then
-    ufw allow 80/tcp
-  fi
-
-  nginx -t
-  systemctl reload nginx
+  jur_validar_e_recarregar
 
   certbot certonly --webroot -w /var/www/letsencrypt \
     --cert-name jurcrawler.com.br \
@@ -103,7 +108,6 @@ fi
 jur_rollback=1
 install -m 0644 "$jur_script_dir/jurcrawler.conf" "$jur_site"
 ln -sfn "$jur_site" "$jur_enabled"
-nginx -t
-systemctl reload nginx
+jur_validar_e_recarregar
 certbot renew --dry-run --cert-name jurcrawler.com.br
 jur_rollback=0
