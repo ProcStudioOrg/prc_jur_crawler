@@ -10,6 +10,7 @@ const jobs = require('../../servidor/jobs');
 const chaves = require('../../servidor/chaves');
 const conversas = require('../../servidor/conversas');
 const { criarApp } = require('../../servidor/index');
+const { gerarChaveBrowser, injetarChave } = require('./chave-conexao');
 
 /**
  * Dois achados da revisao final de branch, os dois sobre acesso que so existia numa
@@ -29,7 +30,7 @@ const { criarApp } = require('../../servidor/index');
  * computada, coisas que nao existem num teste HTTP.
  */
 
-let servidor; let base; let browser;
+let servidor; let base; let browser; let chaveBrowser;
 
 before(async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-lateral-'));
@@ -38,9 +39,11 @@ before(async () => {
     con, dirResultados: dir,
     executarFn: async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null }),
   });
+  const gerenciador = chaves.criarGerenciador(con);
+  chaveBrowser = gerarChaveBrowser(gerenciador);
   servidor = http.createServer(criarApp({
     fila,
-    chaves: chaves.criarGerenciador(con),
+    chaves: gerenciador,
     conversas: conversas.criarRepositorio(con),
     exigirChave: true,
   }).handler);
@@ -62,11 +65,12 @@ after(async () => {
  */
 async function abrirPagina(width, height = 844) {
   const page = await browser.newPage({ viewport: { width, height } });
+  await injetarChave(page, chaveBrowser);
   await page.goto(base + '/', { waitUntil: 'networkidle' });
   await page.evaluate(async () => {
-    const { conversas: antigas } = await (await fetch('/api/v1/conversas')).json();
-    for (const c of antigas) await fetch(`/api/v1/conversas/${c.id}`, { method: 'DELETE' });
-    await fetch('/api/v1/conversas', {
+    const { conversas: antigas } = await window.jurApi.pedir('/api/v1/conversas');
+    for (const c of antigas) await window.jurApi.pedir(`/api/v1/conversas/${c.id}`, { method: 'DELETE' });
+    await window.jurApi.pedir('/api/v1/conversas', {
       method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}',
     });
   });
@@ -159,7 +163,7 @@ describe('I5 — apagar conversa nao depende de hover', () => {
 
       await apagar.click();
       await page.waitForSelector('#historico .vazio');
-      const { conversas: lista } = await page.evaluate(() => fetch('/api/v1/conversas').then((r) => r.json()));
+      const { conversas: lista } = await page.evaluate(() => window.jurApi.pedir('/api/v1/conversas'));
       assert.strictEqual(lista.length, 0, 'o clique precisa ter apagado a conversa de verdade');
     } finally {
       await page.close();
@@ -197,11 +201,12 @@ describe('I5 — apagar conversa nao depende de hover', () => {
   it('em tela sem hover (touch) o "x" fica em cheio', async () => {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
     try {
+      await injetarChave(page, chaveBrowser);
       await page.goto(base + '/', { waitUntil: 'networkidle' });
       await page.evaluate(async () => {
-        const { conversas: antigas } = await (await fetch('/api/v1/conversas')).json();
-        for (const c of antigas) await fetch(`/api/v1/conversas/${c.id}`, { method: 'DELETE' });
-        await fetch('/api/v1/conversas', {
+        const { conversas: antigas } = await window.jurApi.pedir('/api/v1/conversas');
+        for (const c of antigas) await window.jurApi.pedir(`/api/v1/conversas/${c.id}`, { method: 'DELETE' });
+        await window.jurApi.pedir('/api/v1/conversas', {
           method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}',
         });
       });

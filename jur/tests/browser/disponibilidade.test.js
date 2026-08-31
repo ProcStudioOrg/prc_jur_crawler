@@ -10,6 +10,7 @@ const jobs = require('../../servidor/jobs');
 const chaves = require('../../servidor/chaves');
 const conversas = require('../../servidor/conversas');
 const { criarApp } = require('../../servidor/index');
+const { gerarChaveBrowser, injetarChave } = require('./chave-conexao');
 
 /**
  * O painel de disponibilidade era uma grade de siglas minusculas e nada mais: dava para
@@ -24,7 +25,7 @@ const { criarApp } = require('../../servidor/index');
  *   bolinha a DIREITA = ligado/desligado (o usuario decide)
  */
 
-let servidor; let base; let browser;
+let servidor; let base; let browser; let chaveBrowser;
 
 before(async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-disp-'));
@@ -33,8 +34,10 @@ before(async () => {
     con, dirResultados: dir,
     executarFn: async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null }),
   });
+  const gerenciador = chaves.criarGerenciador(con);
+  chaveBrowser = gerarChaveBrowser(gerenciador);
   servidor = http.createServer(criarApp({
-    fila, chaves: chaves.criarGerenciador(con), conversas: conversas.criarRepositorio(con), exigirChave: true,
+    fila, chaves: gerenciador, conversas: conversas.criarRepositorio(con), exigirChave: true,
   }).handler);
   await new Promise((r) => servidor.listen(0, r));
   base = `http://127.0.0.1:${servidor.address().port}`;
@@ -48,6 +51,7 @@ after(async () => {
 
 async function abrir(desligados = null) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
+  await injetarChave(page, chaveBrowser);
   await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
   await page.evaluate((d) => {
     localStorage.removeItem('jur.tribunaisDesligados');

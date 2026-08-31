@@ -10,6 +10,7 @@ const jobs = require('../../servidor/jobs');
 const chaves = require('../../servidor/chaves');
 const conversas = require('../../servidor/conversas');
 const { criarApp } = require('../../servidor/index');
+const { gerarChaveBrowser, injetarChave } = require('./chave-conexao');
 
 /**
  * O painel de decisoes: acesso aos julgados que a conversa de fato leu.
@@ -22,7 +23,7 @@ const { criarApp } = require('../../servidor/index');
  * fazer o LLM rodar de verdade so acrescentaria partes moveis a um teste de interface.
  */
 
-let servidor; let base; let browser; let repo; let fila; let jobConcluido; let jobVazio;
+let servidor; let base; let browser; let repo; let fila; let jobConcluido; let jobVazio; let chaveBrowser;
 
 before(async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-dec-ui-'));
@@ -54,8 +55,10 @@ before(async () => {
   jobVazio = filaVazia.enfileirar('stf', { query: 'nada disso' }).id;
   await filaVazia.aguardar(jobVazio);
 
+  const gerenciador = chaves.criarGerenciador(con);
+  chaveBrowser = gerarChaveBrowser(gerenciador);
   servidor = http.createServer(criarApp({
-    fila, chaves: chaves.criarGerenciador(con), conversas: repo, exigirChave: true,
+    fila, chaves: gerenciador, conversas: repo, exigirChave: true,
   }).handler);
   await new Promise((r) => servidor.listen(0, r));
   base = `http://127.0.0.1:${servidor.address().port}`;
@@ -89,6 +92,7 @@ async function abrirCom(jobIds) {
   for (const j of jobIds) repo.vincularBusca(c.id, j);
 
   const page = await browser.newPage({ viewport: { width: 1400, height: 900 } });
+  await injetarChave(page, chaveBrowser);
   await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('#historico .conversa-item');
   await page.click(`#historico .conversa-item:has(span:text-is("${titulo}"))`);

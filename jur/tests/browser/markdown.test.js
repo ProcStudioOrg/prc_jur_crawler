@@ -10,6 +10,7 @@ const jobs = require('../../servidor/jobs');
 const chaves = require('../../servidor/chaves');
 const conversas = require('../../servidor/conversas');
 const { criarApp } = require('../../servidor/index');
+const { gerarChaveBrowser, injetarChave } = require('./chave-conexao');
 
 /**
  * O markdown do assistente chegava CRU na tela: `bolha()` escreve com textContent, entao
@@ -25,7 +26,7 @@ const { criarApp } = require('../../servidor/index');
  * Uma pagina so para todos os casos: cada `evaluate` e barato, subir um browser nao.
  */
 
-let servidor; let base; let browser; let page;
+let servidor; let base; let browser; let page; let chaveBrowser;
 
 before(async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-md-'));
@@ -34,13 +35,16 @@ before(async () => {
     con, dirResultados: dir,
     executarFn: async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null }),
   });
+  const gerenciador = chaves.criarGerenciador(con);
+  chaveBrowser = gerarChaveBrowser(gerenciador);
   servidor = http.createServer(criarApp({
-    fila, chaves: chaves.criarGerenciador(con), conversas: conversas.criarRepositorio(con), exigirChave: true,
+    fila, chaves: gerenciador, conversas: conversas.criarRepositorio(con), exigirChave: true,
   }).handler);
   await new Promise((r) => servidor.listen(0, r));
   base = `http://127.0.0.1:${servidor.address().port}`;
   browser = await chromium.launch();
   page = await browser.newPage();
+  await injetarChave(page, chaveBrowser);
   await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => Boolean(window.jurMarkdown), null, { timeout: 10000 });
 });
@@ -261,6 +265,7 @@ describe('a caixa de entrada alinha com o texto das mensagens', () => {
   it('as duas bordas internas coincidem', async () => {
     const p = await browser.newPage({ viewport: { width: 1280, height: 900 } });
     try {
+      await injetarChave(p, chaveBrowser);
       await p.goto(base + '/', { waitUntil: 'domcontentloaded' });
       // Monta a tela de conversa sem depender do LLM: e geometria, nao fluxo.
       await p.evaluate(() => {
@@ -292,6 +297,7 @@ describe('a caixa de entrada alinha com o texto das mensagens', () => {
   it('a caixa de texto tem altura de duas linhas, nao de uma', async () => {
     const p = await browser.newPage({ viewport: { width: 1280, height: 900 } });
     try {
+      await injetarChave(p, chaveBrowser);
       await p.goto(base + '/', { waitUntil: 'domcontentloaded' });
       const altura = await p.evaluate(
         () => document.querySelector('#caixa-inicial .entrada').getBoundingClientRect().height,

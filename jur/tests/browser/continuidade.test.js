@@ -10,6 +10,7 @@ const jobs = require('../../servidor/jobs');
 const chaves = require('../../servidor/chaves');
 const conversas = require('../../servidor/conversas');
 const { criarApp } = require('../../servidor/index');
+const { gerarChaveBrowser, injetarChave } = require('./chave-conexao');
 
 /**
  * O lado da TELA da continuidade. O servidor ja mantem o turno rodando depois que o
@@ -22,7 +23,7 @@ const { criarApp } = require('../../servidor/index');
  * for chamada, para o turno ficar "em andamento" o tempo que a asserção precisar.
  */
 
-let servidor; let base; let browser; let liberar; let repo;
+let servidor; let base; let browser; let liberar; let repo; let chaveBrowser;
 
 before(async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-cont-ui-'));
@@ -52,8 +53,10 @@ before(async () => {
     },
   };
 
+  const gerenciador = chaves.criarGerenciador(con);
+  chaveBrowser = gerarChaveBrowser(gerenciador);
   servidor = http.createServer(criarApp({
-    fila, clienteLLM, conversas: repo, chaves: chaves.criarGerenciador(con), exigirChave: true,
+    fila, clienteLLM, conversas: repo, chaves: gerenciador, exigirChave: true,
   }).handler);
   await new Promise((r) => servidor.listen(0, r));
   base = `http://127.0.0.1:${servidor.address().port}`;
@@ -68,11 +71,12 @@ after(async () => {
 
 async function abrir() {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  await injetarChave(page, chaveBrowser);
   await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
   await page.evaluate(async () => {
     localStorage.setItem('jur.chaveLlm', 'sk-ant-teste');
-    const { conversas: antigas } = await (await fetch('/api/v1/conversas')).json();
-    for (const c of antigas) await fetch(`/api/v1/conversas/${c.id}`, { method: 'DELETE' });
+    const { conversas: antigas } = await window.jurApi.pedir('/api/v1/conversas');
+    for (const c of antigas) await window.jurApi.pedir(`/api/v1/conversas/${c.id}`, { method: 'DELETE' });
   });
   await page.reload({ waitUntil: 'domcontentloaded' });
   return page;

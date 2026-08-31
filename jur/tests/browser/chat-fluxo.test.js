@@ -10,6 +10,7 @@ const jobs = require('../../servidor/jobs');
 const chaves = require('../../servidor/chaves');
 const conversas = require('../../servidor/conversas');
 const { criarApp } = require('../../servidor/index');
+const { gerarChaveBrowser, injetarChave } = require('./chave-conexao');
 
 /**
  * Regressao dos tres achados da revisao da Task 7 (dois Critical + um Important),
@@ -62,6 +63,7 @@ async function subirServidor({ clienteLLM } = {}) {
     executarFn: async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null }),
   });
   const gerenciadorChaves = chaves.criarGerenciador(con);
+  const chaveBrowser = gerarChaveBrowser(gerenciadorChaves);
   const repositorioConversas = conversas.criarRepositorio(con);
   const servidor = http.createServer(
     criarApp({
@@ -70,7 +72,7 @@ async function subirServidor({ clienteLLM } = {}) {
   );
   await new Promise((r) => servidor.listen(0, r));
   const porta = servidor.address().port;
-  return { servidor, base: `http://127.0.0.1:${porta}` };
+  return { servidor, base: `http://127.0.0.1:${porta}`, chaveBrowser };
 }
 
 const esperarRespostaCompleta = (page, timeout = 15000) => page.waitForFunction(() => {
@@ -84,10 +86,11 @@ describe('chat: regressao da revisao da Task 7', () => {
       { texto: 'resposta com opus (default)', stopReason: 'end_turn' },
       { texto: 'resposta com haiku', stopReason: 'end_turn' },
     ]);
-    const { servidor, base } = await subirServidor({ clienteLLM: cliente });
+    const { servidor, base, chaveBrowser } = await subirServidor({ clienteLLM: cliente });
     const browser = await chromium.launch();
     const page = await browser.newPage();
     try {
+      await injetarChave(page, chaveBrowser);
       await page.goto(base + '/', { waitUntil: 'networkidle' });
       await page.fill('#caixa-inicial .entrada', 'pergunta com o modelo padrao');
       await page.click('#caixa-inicial .enviar');
@@ -130,7 +133,7 @@ describe('chat: regressao da revisao da Task 7', () => {
       { texto: 'RESPOSTA-DE-X-DEMOROU', stopReason: 'end_turn', delayMs: 3000 }, // 1a de X (lenta)
       { texto: 'RESPOSTA-DE-Y-2', stopReason: 'end_turn' }, // 2a mensagem de Y, ja de volta nela
     ]);
-    const { servidor, base } = await subirServidor({ clienteLLM: cliente });
+    const { servidor, base, chaveBrowser } = await subirServidor({ clienteLLM: cliente });
     const browser = await chromium.launch();
     const page = await browser.newPage();
     const corposChat = [];
@@ -139,6 +142,7 @@ describe('chat: regressao da revisao da Task 7', () => {
       route.continue();
     });
     try {
+      await injetarChave(page, chaveBrowser);
       await page.goto(base + '/', { waitUntil: 'networkidle' });
 
       // 1) cria a conversa Y e espera a resposta (rapida) terminar por completo.
@@ -237,7 +241,7 @@ describe('chat: regressao da revisao da Task 7', () => {
       // turno 2, chamada 1: e AQUI que olhamos o historico que o cliente remontou.
       { texto: 'resposta do turno 2', stopReason: 'end_turn' },
     ]);
-    const { servidor, base } = await subirServidor({ clienteLLM: cliente });
+    const { servidor, base, chaveBrowser } = await subirServidor({ clienteLLM: cliente });
     const browser = await chromium.launch();
     const page = await browser.newPage();
     const corposChat = [];
@@ -246,6 +250,7 @@ describe('chat: regressao da revisao da Task 7', () => {
       route.continue();
     });
     try {
+      await injetarChave(page, chaveBrowser);
       await page.goto(base + '/', { waitUntil: 'networkidle' });
 
       await page.fill('#caixa-inicial .entrada', 'tem jurisprudencia sobre isso no STF?');
@@ -302,7 +307,7 @@ describe('chat: regressao da revisao da Task 7', () => {
 
   it('Important — dois Enter quase simultaneos na tela inicial criam so UMA conversa', async () => {
     const cliente = clienteFalso([{ texto: 'unica resposta', stopReason: 'end_turn' }]);
-    const { servidor, base } = await subirServidor({ clienteLLM: cliente });
+    const { servidor, base, chaveBrowser } = await subirServidor({ clienteLLM: cliente });
     const browser = await chromium.launch();
     const page = await browser.newPage();
     const postsConversas = [];
@@ -311,6 +316,7 @@ describe('chat: regressao da revisao da Task 7', () => {
       route.continue();
     });
     try {
+      await injetarChave(page, chaveBrowser);
       await page.goto(base + '/', { waitUntil: 'networkidle' });
       await page.waitForSelector('#caixa-inicial .entrada');
 
@@ -333,7 +339,7 @@ describe('chat: regressao da revisao da Task 7', () => {
       assert.strictEqual(postsConversas.length, 1, `esperava 1 POST /api/v1/conversas, teve ${postsConversas.length}`);
       assert.strictEqual(cliente.chamadas.length, 1, `esperava 1 chamada ao LLM, teve ${cliente.chamadas.length}`);
 
-      const { conversas: lista } = await page.evaluate(() => fetch('/api/v1/conversas').then((r) => r.json()));
+      const { conversas: lista } = await page.evaluate(() => window.jurApi.pedir('/api/v1/conversas'));
       assert.strictEqual(lista.length, 1, `esperava 1 conversa no banco, teve ${lista.length}`);
     } finally {
       await page.close();
