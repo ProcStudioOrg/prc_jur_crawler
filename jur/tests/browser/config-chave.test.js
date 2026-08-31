@@ -27,7 +27,7 @@ const { criarApp } = require('../../servidor/index');
  * de foco e da regiao aria-live.
  */
 
-let servidor; let base; let browser;
+let servidor; let base; let browser; let chaveConexaoValida;
 
 before(async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-config-'));
@@ -36,9 +36,11 @@ before(async () => {
     con, dirResultados: dir,
     executarFn: async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null }),
   });
+  const gerenciadorChaves = chaves.criarGerenciador(con);
+  chaveConexaoValida = gerenciadorChaves.gerar('teste de configuracao').valor;
   servidor = http.createServer(criarApp({
     fila,
-    chaves: chaves.criarGerenciador(con),
+    chaves: gerenciadorChaves,
     conversas: conversas.criarRepositorio(con),
     exigirChave: true,
   }).handler);
@@ -53,13 +55,17 @@ after(async () => {
 });
 
 /** Abre a pagina em tela larga (a lateral e coluna fixa) com o localStorage controlado. */
-async function abrirConfig(chaveInicial = null) {
+async function abrirConfig(chaveInicial = null, chaveConexaoInicial = null) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
   await page.evaluate((k) => {
     localStorage.removeItem('jur.chaveLlm');
+    localStorage.removeItem('jur.chaveConexao');
     if (k) localStorage.setItem('jur.chaveLlm', k);
   }, chaveInicial);
+  if (chaveConexaoInicial) {
+    await page.evaluate((k) => localStorage.setItem('jur.chaveConexao', k), chaveConexaoInicial);
+  }
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.click('#abrir-config');
   await page.waitForSelector('#status-chave-llm');
@@ -187,6 +193,63 @@ describe('painel de configuracoes — salvar a chave da LLM da um retorno', () =
         await page.getAttribute('#status-chave-llm', 'role'), 'status',
         'sem role=status a confirmacao e invisivel para quem nao ve a tela',
       );
+    } finally {
+      await page.close();
+    }
+  });
+});
+
+describe('painel de configuracoes — chave de conexao desta instalacao', () => {
+  it('salva uma chave valida, valida na API e libera a interface', async () => {
+    const page = await abrirConfig();
+    try {
+      await page.fill('#chave-conexao', chaveConexaoValida);
+      await Promise.all([
+        page.waitForNavigation(),
+        page.click('#salvar-chave-conexao'),
+      ]);
+      assert.strictEqual(
+        await page.evaluate(() => localStorage.getItem('jur.chaveConexao')),
+        chaveConexaoValida,
+      );
+      assert.strictEqual(await page.isHidden('#estado-conexao'), true);
+    } finally {
+      await page.close();
+    }
+  });
+
+  it('mantem uma chave recusada no campo e nao recarrega a pagina', async () => {
+    const page = await abrirConfig();
+    try {
+      await page.fill('#chave-conexao', 'jur_invalida');
+      const navegou = page.waitForNavigation({ timeout: 400 })
+        .then(() => true)
+        .catch(() => false);
+      await page.click('#salvar-chave-conexao');
+      await page.waitForFunction(
+        () => document.querySelector('#status-chave-conexao').dataset.estado === 'invalido',
+      );
+      assert.strictEqual(await navegou, false);
+      assert.strictEqual(await page.inputValue('#chave-conexao'), 'jur_invalida');
+      assert.strictEqual(
+        await page.evaluate(() => localStorage.getItem('jur.chaveConexao')),
+        'jur_invalida',
+      );
+    } finally {
+      await page.close();
+    }
+  });
+
+  it('salvar vazio remove a chave, recarrega e volta a bloquear a interface', async () => {
+    const page = await abrirConfig(null, chaveConexaoValida);
+    try {
+      await page.fill('#chave-conexao', '');
+      await Promise.all([
+        page.waitForNavigation(),
+        page.click('#salvar-chave-conexao'),
+      ]);
+      assert.strictEqual(await page.evaluate(() => localStorage.getItem('jur.chaveConexao')), '');
+      assert.strictEqual(await page.isVisible('#estado-conexao'), true);
     } finally {
       await page.close();
     }

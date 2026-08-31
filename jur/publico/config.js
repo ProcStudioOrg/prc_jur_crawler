@@ -146,6 +146,66 @@
     s1.appendChild(t1); s1.appendChild(d1); s1.appendChild(formLlm); s1.appendChild(estadoChave);
     caixa.appendChild(s1);
 
+    // --- acesso desta instalacao ---
+    // Esta chave autoriza chamadas para a API do jur. Ela nao e a chave da Anthropic:
+    // a primeira identifica este browser para o nosso servidor; a segunda so e enviada
+    // ao provedor quando o usuario pede uma resposta no chat.
+    const sConexao = document.createElement('section');
+    sConexao.className = 'secao-config';
+    const tConexao = document.createElement('h3');
+    tConexao.textContent = 'Acesso a esta instalação';
+    const dConexao = document.createElement('p');
+    dConexao.className = 'vazio';
+    dConexao.textContent = 'Cole a chave de conexão emitida para este jur. Ela fica só neste browser.';
+    const formConexao = document.createElement('form');
+    formConexao.id = 'form-chave-conexao';
+    formConexao.className = 'form-chave';
+    const campoConexao = document.createElement('input');
+    campoConexao.id = 'chave-conexao';
+    campoConexao.type = 'password';
+    campoConexao.className = 'campo';
+    campoConexao.placeholder = 'jur_…';
+    campoConexao.autocomplete = 'off';
+    campoConexao.setAttribute('aria-describedby', 'status-chave-conexao');
+    campoConexao.value = window.jurApi.chaveConexao();
+    const salvarConexao = document.createElement('button');
+    salvarConexao.id = 'salvar-chave-conexao';
+    salvarConexao.type = 'submit';
+    salvarConexao.className = 'botao-acento';
+    salvarConexao.textContent = 'Salvar e validar';
+    formConexao.appendChild(campoConexao); formConexao.appendChild(salvarConexao);
+    const estadoConexao = document.createElement('p');
+    estadoConexao.id = 'status-chave-conexao';
+    estadoConexao.className = 'estado-chave';
+    estadoConexao.setAttribute('role', 'status');
+
+    function pintarConexao(estado, texto) {
+      estadoConexao.dataset.estado = estado;
+      estadoConexao.textContent = texto;
+    }
+
+    formConexao.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const valor = campoConexao.value.trim();
+      window.jurApi.salvarChaveConexao(valor);
+      if (!valor) {
+        pintarConexao('removido', 'Chave removida deste browser.');
+        window.setTimeout(() => window.location.reload(), 150);
+        return;
+      }
+      try {
+        await window.jurApi.pedir('/api/v1/chaves');
+        pintarConexao('salvo', `Chave aceita (${mascarar(valor)}).`);
+        window.setTimeout(() => window.location.reload(), 150);
+      } catch (erro) {
+        pintarConexao('invalido', `Chave recusada: ${erro.message}`);
+      }
+    });
+
+    sConexao.appendChild(tConexao); sConexao.appendChild(dConexao);
+    sConexao.appendChild(formConexao); sConexao.appendChild(estadoConexao);
+    caixa.appendChild(sConexao);
+
     // --- chaves de conexão ---
     const s2 = document.createElement('section');
     s2.className = 'secao-config';
