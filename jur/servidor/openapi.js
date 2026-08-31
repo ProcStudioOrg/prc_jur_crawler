@@ -507,7 +507,11 @@ function documento() {
             },
             400: RESPOSTAS.Erro400,
             401: {
-              description: 'sem chave de conexão válida, OU sem chave da Anthropic (nem x-api-key nem ANTHROPIC_API_KEY no servidor)',
+              description:
+                'A chave de conexão em `Authorization: Bearer <chave>` está ausente, inválida ou '
+                + 'revogada, OU a credencial Anthropic está ausente tanto de `x-api-key` quanto de '
+                + '`ANTHROPIC_API_KEY` no servidor. As duas credenciais são independentes: uma não '
+                + 'substitui a outra.',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
             },
             403: RESPOSTAS.Erro403,

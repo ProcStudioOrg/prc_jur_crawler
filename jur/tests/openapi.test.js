@@ -87,6 +87,16 @@ describe('openapi', () => {
     ]);
   });
 
+  it('separa no chat a chave de conexao da credencial Anthropic', () => {
+    const d = openapi.documento();
+    const resposta = d.paths['/api/v1/chat'].post.responses[401];
+
+    assert.match(resposta.description, /Authorization: Bearer/);
+    assert.match(resposta.description, /x-api-key/);
+    assert.match(resposta.description, /ANTHROPIC_API_KEY/);
+    assert.match(resposta.description, /independentes/);
+  });
+
   // Validador offline, sem dependencia nova: a regra 3.1 e que todo `parameters` com
   // `in: 'path'` precisa ter `{nome}` correspondente no template do caminho — e o
   // exato defeito que motivou trocar `:id` por `{id}` no documento (revisao). Sem
