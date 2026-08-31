@@ -86,15 +86,16 @@ npm run test:browser    # node --test "tests/browser/*.test.js"
 Sobem um Chromium de verdade (via Playwright) contra o servidor da interface — não um
 `fetch` do Node, que deixa o site escolher headers que nenhum browser real deixaria (ex.:
 `Origin` setado à mão). Sobem com `exigirChave:true`, o mesmo padrão de produção
-(`infra/Dockerfile` não seta `JUR_EXIGIR_CHAVE`), então também são o teste que garante que
-a própria interface nunca fica trancada para fora dela mesma.
+(`infra/Dockerfile` não seta `JUR_EXIGIR_CHAVE`). Todas as suítes recebem uma chave de
+conexão real: a interface a salva como `jur.chaveConexao` e envia Bearer nas operações
+protegidas.
 
 Ficam fora do glob de `npm test` de propósito: lançar um Chromium custa ~1-2s por suíte, e
 essa suíte já tem 188 testes rápidos.
 
 | Arquivo | O que cobre |
 |---|---|
-| `interface-real.test.js` | a página carrega sem exigir chave (200, não 401); o `fetch` same-origin que a própria página dispara também passa livre; gerar chave de conexão pela interface funciona; um `curl` sem credencial nenhuma continua tomando 401 |
+| `interface-real.test.js` | a página pública carrega; com uma chave de conexão real em `jur.chaveConexao`, a interface envia Bearer e acessa a API; um `curl` sem credencial continua tomando 401 |
 | `chat-fluxo.test.js` | regressão dos três achados da revisão da Task 7 — trocar de modelo para o Haiku não quebra o chat mandando um campo que ele rejeita; trocar de conversa no meio do streaming não vaza texto/histórico para a conversa errada; dois `Enter` quase simultâneos na tela inicial criam só uma conversa |
 
 **6 testes** ao todo. Teste que ninguém sabe que existe não protege ninguém — rode este

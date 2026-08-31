@@ -32,14 +32,11 @@ const RESPOSTAS = {
     content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
   },
   Erro401: {
-    description:
-      'sem chave de conexao valida. Nao se aplica a chamadas da propria interface local '
-      + '(reconhecida pelo cabecalho Sec-Fetch-Site, que o browser controla mas um cliente '
-      + 'programatico forja) nem a GET /api/v1/saude.',
+    description: 'Authorization: Bearer ausente, inválido ou revogado.',
     content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
   },
   Erro403: {
-    description: 'origem da requisicao recusada (Origin ou Sec-Fetch-Site de outro site)',
+    description: 'origem hostil recusada pelo cabeçalho Origin.',
     content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
   },
   Erro404: {
@@ -68,36 +65,34 @@ function documento() {
         + 'Cada tribunal tem um dos quatro estados: `ok`, `instavel`, `sem-acesso` ou '
         + '`exige-sessao`. Só `ok` e `instavel` são consultáveis via API (campo `disponivel`).\n\n'
         + '## Autenticação\n\n'
-        + 'Toda rota exige `Authorization: Bearer <chave>`, gerada na interface em Configurações '
-        + '(`POST /api/v1/chaves`), exceto `GET /api/v1/saude` (healthcheck, livre) e as '
-        + 'requisições que a própria interface local dispara — o servidor reconhece pelo cabeçalho '
-        + '`Sec-Fetch-Site` (`same-origin` ou `none`) e dispensa a chave nesse caso. A exigência '
-        + 'pode ser desligada inteira com `JUR_EXIGIR_CHAVE=0`.\n\n'
-        + '**Alcance real dessa dispensa.** `Sec-Fetch-Site` é controlado pelo browser: uma '
-        + 'página hostil aberta no browser da vítima não consegue forjá-lo, então a dispensa '
-        + 'protege de verdade contra CSRF — que é o ataque para o qual ela existe. **Mas um '
-        + 'cliente programático (curl, script) forja esse cabeçalho numa linha.** Em loopback '
-        + 'isso é aceitável; com o servidor exposto (`JUR_BIND`, ou `ports:` do Docker sem o '
-        + 'prefixo `127.0.0.1:`), **não é** — nessa configuração a chave de conexão deixa de ser '
-        + 'barreira, e expor a porta exige um proxy autenticado ou firewall na frente. As chaves '
-        + 'autenticam *clientes*, não pessoas: qualquer chave válida pode emitir outras.\n\n'
+        + 'Toda operação protegida exige `Authorization: Bearer <chave>`, inclusive as chamadas '
+        + 'da interface. As únicas operações públicas deste documento são `GET /api/v1/saude`, '
+        + '`GET /api/v1/openapi.json` e `GET /docs`. A interface guarda a chave de conexão em '
+        + '`localStorage` sob `jur.chaveConexao`; a exigência pode ser desligada inteira com '
+        + '`JUR_EXIGIR_CHAVE=0`.\n\n'
+        + 'A instalação local deve permanecer em loopback (`127.0.0.1:3000`). A página pública '
+        + 'planejada é `https://jurcrawler.com.br`; uma implantação exposta exige controle de '
+        + 'acesso de borda. As chaves autenticam *clientes*, não pessoas, e qualquer chave válida '
+        + 'pode emitir outras.\n\n'
         + '## MCP\n\n'
         + '`POST /mcp` expõe as mesmas capacidades de busca via protocolo MCP (JSON-RPC 2.0) '
         + 'para clientes LLM, com três ferramentas: `listar_tribunais`, `buscar_jurisprudencia` '
         + 'e `ler_resultados`.',
     },
-    servers: [{ url: 'http://localhost:3000', description: 'local' }],
+    servers: [
+      { url: 'http://localhost:3000', description: 'instalação local em loopback' },
+      { url: 'https://jurcrawler.com.br', description: 'página pública planejada' },
+    ],
     components: {
       securitySchemes: {
         chaveDeConexao: {
           type: 'http', scheme: 'bearer',
           description:
             'Chave gerada na interface, em Configurações (POST /api/v1/chaves); o valor completo '
-            + 'aparece uma única vez. A interface local é dispensada da chave por Sec-Fetch-Site, '
-            + 'cabeçalho que o browser controla e uma página hostil não forja (protege contra CSRF) '
-            + '— mas que um cliente programático forja à vontade. Em loopback é aceitável; com o '
-            + 'servidor exposto, a chave não é barreira: use um proxy autenticado na frente. '
-            + 'JUR_EXIGIR_CHAVE=0 desliga a exigência.',
+            + 'aparece uma única vez. A interface a armazena em `localStorage` como '
+            + '`jur.chaveConexao` e a envia como Bearer em toda operação protegida. Mantenha a '
+            + 'instalação local em loopback; uma implantação pública exige controle de acesso de '
+            + 'borda. JUR_EXIGIR_CHAVE=0 desliga a exigência.',
         },
       },
       schemas: {
@@ -528,8 +523,7 @@ function documento() {
           summary: 'Gera uma chave de conexão',
           description:
             'Segue a mesma guarda de autenticação de qualquer outra rota — não há exceção de '
-            + '"bootstrap": a interface local já passa sem chave (Sec-Fetch-Site), e qualquer '
-            + 'chave válida também pode gerar outras.',
+            + '"bootstrap": qualquer chave válida pode gerar outras.',
           requestBody: {
             required: false,
             content: {
@@ -801,15 +795,13 @@ function documento() {
           summary: 'Este documento OpenAPI',
           description:
             'Devolve exatamente o que esta função gera — a mesma fonte que alimenta GET /docs. '
-            + 'Segue a guarda normal (não está em LIVRES): livre para a interface local, exige '
-            + 'chave para qualquer outro cliente quando JUR_EXIGIR_CHAVE está ligado.',
+            + 'É uma operação pública.',
+          security: [],
           responses: {
             200: {
               description: 'documento OpenAPI 3.1',
               content: { 'application/json': { schema: { type: 'object' } } },
             },
-            401: RESPOSTAS.Erro401,
-            403: RESPOSTAS.Erro403,
           },
         },
       },
@@ -818,17 +810,13 @@ function documento() {
           summary: 'Documentação legível da API',
           description:
             'Página HTML autocontida (sem CDN, sem script externo) que lê /api/v1/openapi.json e '
-            + 'lista as rotas agrupadas por recurso — funciona offline. Segue a guarda normal '
-            + '(não está em LIVRES): abrir pelo navegador direto na própria máquina passa sem '
-            + 'chave (é reconhecida como a interface local); outro cliente precisa de '
-            + '`Authorization: Bearer`.',
+            + 'lista as rotas agrupadas por recurso — funciona offline e é pública.',
+          security: [],
           responses: {
             200: {
               description: 'página HTML',
               content: { 'text/html': { schema: { type: 'string' } } },
             },
-            401: RESPOSTAS.Erro401,
-            403: RESPOSTAS.Erro403,
           },
         },
       },

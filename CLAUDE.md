@@ -33,16 +33,19 @@ dentro da imagem. Funciona igual em macOS, Linux e Windows/WSL.
 
     cd infra && docker compose up -d --build
 
-Abra `http://localhost:3000`. A interface tem o chat, a lista de tribunais com o estado de
-cada um (verde ok · amarelo instável · cinza bloqueado · azul exige sessão), o campo da
-chave da Anthropic — que fica no seu browser, nunca no servidor — e, em Configurações no
-rodapé da lateral, o gerador de chaves de conexão.
+Abra `http://localhost:3000`. A página estática é pública; a interface tem o chat, a lista de
+tribunais com o estado de cada um (verde ok · amarelo instável · cinza bloqueado · azul exige
+sessão) e Configurações para colar a chave de conexão.
 
-A API exige `Authorization: Bearer <chave>` em qualquer requisição que não venha da própria
-interface (curl, MCP, script). A chave é gerada na interface, em Configurações — o valor
-aparece uma única vez, então copie na hora. Para desenvolvimento local, `JUR_EXIGIR_CHAVE=0`
-desliga essa exigência inteira. A documentação completa da API (todas as rotas, com exemplos)
-fica em `http://localhost:3000/docs`.
+Toda operação protegida da API — inclusive as disparadas pela interface — exige
+`Authorization: Bearer <chave>`. A interface armazena a chave em `localStorage`, sob
+`jur.chaveConexao`; a chave é emitida em Configurações e o valor aparece uma única vez, então
+copie na hora. `GET /api/v1/saude`, `GET /api/v1/openapi.json` e `GET /docs` são públicas.
+Para desenvolvimento local, `JUR_EXIGIR_CHAVE=0` desliga a exigência inteira. A documentação
+completa da API fica em `http://localhost:3000/docs`.
+
+Mantenha a porta 3000 em loopback. A página pública planejada é
+`https://jurcrawler.com.br`; uma implantação exposta requer controle de acesso de borda.
 
 A mesma API serve três clientes:
 

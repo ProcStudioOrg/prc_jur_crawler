@@ -70,6 +70,23 @@ describe('openapi', () => {
     assert.strictEqual(s.scheme, 'bearer');
   });
 
+  it('documenta somente saude, OpenAPI e docs como operacoes publicas', () => {
+    const d = openapi.documento();
+    const publicas = [];
+    for (const [caminho, metodos] of Object.entries(d.paths)) {
+      for (const [metodo, operacao] of Object.entries(metodos)) {
+        if (Array.isArray(operacao.security) && operacao.security.length === 0) {
+          publicas.push(`${metodo.toUpperCase()} ${caminho}`);
+        }
+      }
+    }
+    assert.deepStrictEqual(publicas.sort(), [
+      'GET /api/v1/openapi.json',
+      'GET /api/v1/saude',
+      'GET /docs',
+    ]);
+  });
+
   // Validador offline, sem dependencia nova: a regra 3.1 e que todo `parameters` com
   // `in: 'path'` precisa ter `{nome}` correspondente no template do caminho — e o
   // exato defeito que motivou trocar `:id` por `{id}` no documento (revisao). Sem
