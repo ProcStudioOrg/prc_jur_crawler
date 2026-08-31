@@ -54,25 +54,11 @@ describe('autenticacao', () => {
     assert.strictEqual(r.status, 401);
   });
 
-  it('deixa /api/v1/saude passar sem chave — e o healthcheck do container', async () => {
-    assert.strictEqual((await fetch(`${base}/api/v1/saude`)).status, 200);
-  });
-
-  // C2 (revisao do fix): o browser NAO manda Origin em GET de mesma origem — nem na
-  // navegacao (GET /) nem no fetch que a propria pagina dispara. Usar Origin como sinal
-  // de "propria interface" trancava a UI do lado de fora dela mesma com exigirChave
-  // ligado (o padrao). O sinal certo e Sec-Fetch-Site, que todo browser manda em toda
-  // requisicao — inclusive navegacao GET — e que fetch/curl fora de browser nao manda.
-  // Ver servidor/autenticacao.js (ehProprioFrontend) para o raciocinio completo; o
-  // teste de browser real que pegou esse bug fica em tests/browser/interface-real.test.js.
-  it('deixa passar sem chave quando Sec-Fetch-Site diz que e a propria pagina (same-origin)', async () => {
-    const r = await fetch(`${base}/api/v1/tribunais`, { headers: { 'sec-fetch-site': 'same-origin' } });
-    assert.strictEqual(r.status, 200);
-  });
-
-  it('deixa passar sem chave em navegacao direta (Sec-Fetch-Site: none)', async () => {
-    const r = await fetch(`${base}/api/v1/tribunais`, { headers: { 'sec-fetch-site': 'none' } });
-    assert.strictEqual(r.status, 200);
+  it('mantem interface, docs, OpenAPI e saude publicos', async () => {
+    for (const caminho of ['/', '/docs', '/api/v1/openapi.json', '/api/v1/saude']) {
+      const r = await fetch(base + caminho);
+      assert.strictEqual(r.status, 200, caminho);
+    }
   });
 
   it('NAO deixa passar so por mandar Origin de mesma origem sem Sec-Fetch-Site — regressao do bug original', async () => {
@@ -83,11 +69,23 @@ describe('autenticacao', () => {
     assert.strictEqual(r.status, 401, 'Origin sozinho (sem Sec-Fetch-Site) nao pode dispensar chave');
   });
 
-  it('recusa Sec-Fetch-Site: same-site e cross-site mesmo sem Origin hostil', async () => {
-    for (const sfs of ['same-site', 'cross-site']) {
-      const r = await fetch(`${base}/api/v1/tribunais`, { headers: { 'sec-fetch-site': sfs } });
-      assert.strictEqual(r.status, 403, `Sec-Fetch-Site: ${sfs} devia ser recusado`);
+  it('Sec-Fetch-Site forjado nunca substitui Bearer', async () => {
+    for (const valor of ['same-origin', 'none', 'same-site', 'cross-site']) {
+      const r = await fetch(`${base}/api/v1/chaves`, {
+        headers: { 'sec-fetch-site': valor },
+      });
+      assert.strictEqual(r.status, 401, valor);
     }
+  });
+
+  it('Bearer valido continua aceito com qualquer Sec-Fetch-Site', async () => {
+    const r = await fetch(`${base}/api/v1/chaves`, {
+      headers: {
+        authorization: `Bearer ${chaveValida}`,
+        'sec-fetch-site': 'cross-site',
+      },
+    });
+    assert.strictEqual(r.status, 200);
   });
 
   it('recusa origem hostil mesmo sem exigir chave para GET', async () => {
