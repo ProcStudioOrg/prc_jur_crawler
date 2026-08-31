@@ -31,10 +31,18 @@ node -e "const d=require('./cobertura/tribunais.json');
 console.log(JSON.stringify(d.tribunais.find(t=>t.codigo===process.argv[1]),null,2))" TJSC
 ```
 
-Isso dá o sistema processual, as UFs e o status atual. Depois:
+Isso dá o sistema processual, as UFs e o status atual. Interprete assim:
+
+- registro com status `ok`: já operacional; não rode codegen;
+- registro citado em `cobertura/CLAUDE-FALHAS.md`: implementação existente fora
+  do caminho normal; leia o guia antes de decidir por correção ou remapeamento;
+- sem registro: alvo ainda não implementado. Confira `human-codegen/<TRIBUNAL>/`
+  antes de começar, pois pode haver mapeamento parcial reaproveitável.
+
+Depois:
 
 1. Ache o **irmão mais próximo já mapeado** na mesma família (PJe / e-Proc / ESAJ / Projudi)
-   em `cobertura/CLAUDE-COBERTURA.md` e leia o `CLAUDE-<IRMAO>.md`. Metade do trabalho está lá.
+   em `cobertura/tribunais.json` e leia o `CLAUDE-<IRMAO>.md`. Metade do trabalho está lá.
 2. Lembre da ressalva: a família do sistema de **tramitação** é pista, não garantia sobre a
    **jurisprudência** — são sistemas diferentes.
 

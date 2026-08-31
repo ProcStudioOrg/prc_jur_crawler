@@ -594,8 +594,8 @@
         "url": "https://esaj.tjac.jus.br/cjsg/consultaCompleta.do",
         "comando": "tjac",
         "acesso": "http",
-        "status": "ok",
-        "nota": "SEGUNDO e-SAJ cjsg com crawler no repo (depois do TJMS) — e a prova de que instalações do MESMO módulo divergem: OITO comportamentos medidos diferem do TJMS e copiar as suposições de lá produz bug silencioso. DIFERENÇAS: página de 20 (não 100); ACENTO NÃO IMPORTA aqui (usucapiao=334 × usucapião=334, execucao/execução=11.078, prisao/prisão=7.949, alimenticia/alimentícia=130 — o índice NORMALIZA, o oposto exato do TJMS onde usucapiao=3 × usucapião=3.885; avisar sobre acento neste tribunal mandaria o usuário refazer busca correta); só DUAS abas de tipo, A e D (a aba H de Homologação de Acordo do TJMS NÃO EXISTE — enviá-la responde totalResultadoAba-H=0 sem erro, aba inexistente se apresentando como aba vazia); paginação ESTÁVEL (mesma página 3×, 3/3 idênticas, contra 2 variantes do TJMS — não herde a margem de ~1/100 pulado); trocaDePagina.do sem sessão devolve HTTP 404 (falha barulhenta) e não HTTP 200 vazio; formato da citação é OUTRO — '(Relator (a): …; Comarca: …; Número do Processo:…; Órgão julgador: …; Data do julgamento: …; Data de registro: …)' SEM a sigla do tribunal e COM sufixo de origem depois do parêntese, então o regex \\(\\s*TJMS\\s*\\. não casa nada e exigir \\)\\s*$ também não; operador $ ZERA (usucapi$=0, contra 4 no TJMS). 🔴 BLOQUEIO ASSIMÉTRICO — A DESCOBERTA PRINCIPAL: a BUSCA é livre (POST direto, sem browser, sem cookie, typeof grecaptcha undefined, nenhum sitekey na tela), mas o INTEIRO TEOR está atrás de reCAPTCHA v2 (sitekey 6LevDTsUAAAAAN6dsn77RReaDKhYAQrOVkTUOgOD): getArquivo.do?cdAcordao=&cdForo= NUNCA devolve PDF, devolve HTTP 200 text/html ~10,7 KB com 'Para acessar o conteúdo do Acórdão, por favor digite o código da figura no campo abaixo. Esta validação lhe dará acesso para visualizar 20 resultados', um uuidCaptcha vazio e google.com/recaptcha/api.js — e a SESSÃO DA BUSCA NÃO DESTRAVA (testado com o JSESSIONID ativo em 3 documentos: mesma tela). CONSEQUÊNCIA: 🔴 NÃO EXISTE PERMALINK no TJAC (o getArquivo.do é o único candidato e está travado; o popup 'ementa sem formatação' é MODAL e a URL não muda; resultadoCompleta.do é POST com ;jsessionid= embutido) — inteiroTeorLink sai null de propósito e a verificação é por reconsulta (-n), casando por cdAcordao. A BOA NOTÍCIA: a EMENTA ÍNTEGRA já vem no HTML da busca (div#textAreaDados_<cdAcordao>) e no TJAC ela é substancial e estruturada no padrão CNJ (I. CASO EM EXAME / II. QUESTÃO EM DISCUSSÃO / III. RAZÕES DE DECIDIR / IV. DISPOSITIVO E TESE / Tese de julgamento / Dispositivos e Jurisprudência citados): ~4.200 chars no acórdão, ~5.600 na Turma Recursal, ~1.000 na monocrática — e o '+' que expande a ementa no card é toggle de CSS puro, ZERO XHR (718 → 4.507 chars sem um request). --fetch-inteiro-teor grava a ementa íntegra e um bloco '=== INTEIRO TEOR === NÃO DISPONÍVEL' em vez de gravar o HTML do captcha com nome de acórdão. ⚠️ NO ACRE O JUIZADO É MAIOR QUE A JUSTIÇA COMUM, 2,8× — inverte o padrão de todo TJ do repo: dano moral na ementa dá 2º grau 7.649 × Turmas Recursais 21.353 × ambas 29.002 (soma exata, filtro aditivo e disjunto). O default --origem comum esconde 74% do acervo em matéria de consumo; número baixo em comum NÃO é escassez de jurisprudência. E, ao contrário do TJMG e do TJCE, a ementa da Turma Recursal do TJAC é ÍNTEGRA e é a MAIOR das três — não repasse aqui o aviso genérico de que em Turma Recursal a ementa é frase genérica. ⚠️ INTERVALO DE DATA ACIMA DE 1 ANO (364 de diferença) devolve 0 em julgamento e em publicação (01/01/2025→31/12/2025 = 1.804; →01/01/2026 = 0; 01/01/2020→31/12/2025 = 0) — mas aqui, diferente do TJMS, a tela AVISA ('A faixa entre data de inicio e data de fim deve ser de no máximo 1 ano'), só que com HTTP 200 e o formulário de volta; o sinal técnico que distingue recusa de zero genuíno é o hidden: estouro = NENHUM totalResultadoAba-* (totais {}), zero genuíno = totalResultadoAba-A=0. O TJACCrawler fatia em janelas de 364 dias (aí -m N vale POR JANELA) e reporta 'busca RECUSADA' em vez de 0. ⚠️ TRÊS OPERADORES ZERAM SEM ERRO: ADJ (dano ADJ2 moral = 0), PROX (dano PROX5 moral = 0) e $ (usucapi$ = 0). E o NÃO ACENTUADO NÃO É OPERADOR: dano=10.907, dano moral=7.649, dano NAO moral=3.258 (= 10.907−7.649, prova aritmética de que NAO é a exclusão) enquanto dano NÃO moral=6.429, que não bate com nada — vira termo literal. E/OU/NAO/'frase exata' (7.149) funcionam. O crawler avisa nos três. ⚠️ trocaDePagina.do PAGINA A ÚLTIMA BUSCA DA SESSÃO — a URL só tem tipoDeDecisao e pagina, não identifica a busca: buscar('dano moral')→paginar(2) dá 0700714-76.2023.8.01.0011 e, na MESMA sessão, buscar('usucapião')→paginar(2) dá 0700133-73.2023.8.01.0007. Intercalar buscas e paginar devolve as páginas da busca ERRADA com HTTP 200 e cards válidos, sem sintoma; o Navigator aceita a assinatura da busca esperada e recusa a paginação órfã. TOTAL EXATO, não saturado: 7.649 declarado = 382 páginas × 20 + 9 na página 383 (a 384 vem vazia). Monocrática é acervo RESIDUAL (29 × 7.649 = 0,4%) mas TEM ementa, ao contrário do TJCE. Busca sem termo devolve 0 (não existe 'listar tudo'). Base começa por volta de 2000 (1990=0, 2000=4, 2026 até 04/08=1.025). CHARSET UTF-8 na tela e nas respostas (o e-Proc do próprio TJAC responde ISO-8859-1), e as ementas usam &sect; de verdade. ESCOPO: 2º grau (Câmaras Cíveis, Câmara Criminal, Órgão Especial) + Turmas Recursais, ambos no SAJ; NÃO tem 1º grau (é o cjpg, sem crawler) e NÃO cobre o acervo do e-Proc — o TJAC roda ESAJ e e-Proc em paralelo e o módulo de jurisprudência do e-Proc NÃO está habilitado (eproc1g e eproc2g …acao=jurisprudencia@jurisprudencia/pesquisar devolvem HTTP 200 com 'Falha no processamento da solicitação' e o menu público não tem item Jurisprudência — tem, inclusive, 'Consulta Pública SAJ'), igual ao TJMS e diferente do TJRJ. API oficial PROCURADA E INEXISTENTE, com uma armadilha nova: dadosabertos./api./jurisprudencia.tjac.jus.br RESOLVEM DNS e respondem HTTP 200 — mas servem o MESMO HTML da home institucional, md5 idêntico ao de www.tjac.jus.br (3ef4ac90ee77235fa13dacdc3a84c1d1): é vhost curinga, não serviço. DNS que resolve ≠ endpoint que existe. /dados-abertos, /transparencia/dados-abertos, /api-docs, /swagger-ui.html e cjsg/swagger-ui.html dão 404. O portal oficial (www.tjac.jus.br/jurisprudencia/) linka o próprio cjsg. PENDÊNCIA DECLARADA: os combos-árvore (classesTreeSelection, assuntosTreeSelection, secoesTreeSelection) NÃO foram enumerados neste mapeamento — o tempo foi para a descoberta do reCAPTCHA do inteiro teor; eles existem no formulário e o crawler não expõe flags para eles. Não escreva que o TJAC não tem esses filtros."
+        "status": "instavel",
+        "nota": "A busca respondeu com sucesso, mas zerou termos amplos em duas medições; o inteiro teor já exige reCAPTCHA."
       },
       "repo": {
         "crawler": "src/TJACCrawler.js",
@@ -604,7 +604,7 @@
         "screenshots": 12,
         "tests": "src/TJACTestes.js",
         "skills": [],
-        "working": true
+        "working": false
       },
       "portal": "https://portal-eproc.tjac.jus.br/"
     },
@@ -1469,8 +1469,8 @@
         "url": "https://app.tjpb.jus.br/juris-pb",
         "comando": "tjpb",
         "acesso": "api",
-        "status": "ok",
-        "nota": "PORTAL JURIS-PB — SPA Angular 19 + PrimeNG sobre Spring Boot + Elasticsearch. Mapeado em 08/08/2026 como parcial e FECHADO em 13/08/2026 pelo slot da divida de crawler (segundo alvo da regra, depois do TJMT). API GET https://app.tjpb.jus.br/juris-pb-backend/public/search, PUBLICA: sem auth, sem token, sem cookie, sem sessao e SEM CAPTCHA em etapa nenhuma; ementa e inteiro teor ja vem no payload, em TEXTO PLANO (sem entidade HTML, sem export de Word do TJPE, sem acento perdido do TJRO). 2.515.754 documentos em 13/08/2026, base CORRENTE (documento do proprio dia nas duas medicoes). SEGUNDO TRIBUNAL DO REPO COM 1o GRAU E O MAIOR DELES: 1.970.661 sentencas, 78% do acervo, contra 1.509.942 do TJES. 🔴 DEFEITO CENTRAL, NOVO NO REPO: o `advanced=true` E UM PORTAO, NAO UM FILTRO — a API tem dois conjuntos de filtros MUTUAMENTE EXCLUSIVOS e o que esta fora do modo ativo e IGNORADO com HTTP 200 e contagem plausivel. No modo simples: `grau` particiona exato (8.998 + 3.210 = 12.208) e data/instancia/codigo*/idRelator/numeroProcesso sao ignorados; com `advanced=true` e o inverso, e o `grau` que vira inerte. 🔴 numeroProcesso SEM o portao devolve A BASE INTEIRA (2.515.754), inclusive para numero inventado — um Checker ingenuo leria 2,5 milhoes de documentos confirmando um processo que nao existe. ⚠️ E O MAPEAMENTO DE 08/08 ERROU POR CAUSA DISSO: registrou `instancia` como IGNORADO (medido so no modo simples) e concluiu que nao havia particao Juizado x Justica Comum — com o portao ela existe e FECHA EXATA (PRIMEIRO_GRAU 8.998 + SEGUNDO_GRAU 3.169 + TURMAS_RECURSAIS 41 = 12.208). Fechar o parcial corrigiu o mapeamento, como no TJMT. 🔴 SO ACORDAO DE 2o GRAU COMUM TEM EMENTA (76/76 em amostra de 200): acordao de TURMA RECURSAL nao tem (0/4), sentenca de 1o grau nao tem (0/108, e vem tambem SEM RELATOR) e monocratica nao tem (0/12) — quem tem ementa e o PAR (tipo, instancia), nao o tipo, e o mapeamento de 08/08 dizia so \"ACORDAO tem ementa\". 🔴 ACENTO OBRIGATORIO e indice NAO normaliza (usucapiao = 64 x usucapiao com til = 12.208), padrao TJMS/TJBA. ✅ OPERADORES COERENTES, o caso limpo do repo: portugues E ingles funcionam com aritmetica exata (OU = 125.729 = 12.206 + 120.847 - 7.324; NAO = 4.882 = 12.206 - 7.324), espaco = AND, parenteses e frase exata valem, token desconhecido ZERA (sintoma visivel); PROX/ADJ nao existem. 🔴 SO HA DATA DE JULGAMENTO — meioPublicacao null em 200/200, espelho do TJRO — e ela e um TIMESTAMP COM MILISSEGUNDOS (assinatura/indexacao), nao data de sessao. 🔴 MEIA JANELA DE DATA E IGNORADA em silencio (so a ponta inicial devolve o acervo inteiro, HTTP 200), padrao TJPI; ✅ mas DD/MM/YYYY cru da HTTP 400 honesto, nao o parse MM/DD silencioso do TJMT, e o no-op 1900..2100 devolve o total (comportamento correto: so o PAR no-op+janela estreita decide). 🔴 NAO EXISTE PERMALINK: /public/documentos/{id} exige ?grau= (chave composta, licao TJPE) e responde 404 DocumentNotFoundException \"Documento vazio\" para o id da busca. 🔴 A TELA ESTA ATRAS DO CLOUDFLARE E A API NAO: /juris-pb/* devolve 403 ao curl — index e TODOS os assets (browser-*.js, search.page-*.js, PNG, woff) — inclusive como PRIMEIRA requisicao de um contexto novo, o que CORRIGE a hipotese de 08/08 de que o 403 era cota de rate limit; no Playwright o HTML carrega (46 KB) e os sub-recursos continuam 403, entao a SPA nunca renderiza e a Fase 3b segue NAO EXECUTADA. Combos sao AUTOCOMPLETE (exigem term, sem lista canonica) e o mesmo NOME tem varios ids (tres \"Joao Pessoa\": 200/0/9010 = 1.689/3.169/41); parametro repetido e OR com soma exata, id inventado da 0, mas grau=9 NAO erra — fallback silencioso para 2. ✅ Paginacao ESTAVEL (30 ids identicos em 2 execucoes), total EXATO sem saturacao, size max 50 com HTTP 400 honesto; ⚠️ offset teto de 10.000 (max_result_window do ES) com HTTP 404 ElasticSearchQueryException. ✅ DataJud responde (api_publica_tjpb, medido 13/08/2026). Sem vhost curinga (NXDOMAIN de verdade). Suite: 18/18 verde."
+        "status": "instavel",
+        "nota": "A API pública respondeu HTTP 503 em duas medições consecutivas."
       },
       "repo": {
         "crawler": "src/TJPBCrawler.js",
@@ -1479,7 +1479,7 @@
         "screenshots": 1,
         "tests": "src/TJPBTestes.js",
         "skills": [],
-        "working": true
+        "working": false
       },
       "portal": "https://pjesg.tjpb.jus.br/pje2g/"
     },
@@ -2056,8 +2056,8 @@
         "url": "https://eprocwebcon.tjsc.jus.br/consulta1g/externo_controlador.php?acao=jurisprudencia@jurisprudencia/pesquisar",
         "comando": "tjsc",
         "acesso": "browser",
-        "status": "ok",
-        "nota": "Módulo eproc-jur, mesma família do TRF4. Browser obrigatório: host atrás de verificação de segurança F5/Shape (JS challenge) — e o UA padrão do Playwright headless é barrado, precisa de UA de Chrome comum. Justiça Comum × Turmas Recursais pelo combo Origem (#selOrigem: 1=TJSC, 3=Turmas Recursais, 4=Turmas de Uniformização, 5=Conselho da Magistratura). ATENÇÃO: o portal antigo https://busca.tjsc.jus.br/jurisprudencia/ (HTTP puro) é base histórica CONGELADA desde 08/10/2025 — 15 resultados contra 8.315 do portal novo no mesmo recorte."
+        "status": "instavel",
+        "nota": "O portal novo alterna entre acesso funcional e bloqueio pela verificação F5/Shape; o portal antigo está congelado."
       },
       "repo": {
         "crawler": "src/TJSCCrawler.js",
@@ -2068,7 +2068,7 @@
         "skills": [
           "verificador/tjsc"
         ],
-        "working": true
+        "working": false
       }
     },
     {
@@ -2166,8 +2166,8 @@
         "url": "https://esaj.tjsp.jus.br/cjsg/consultaCompleta.do",
         "comando": "tjsp",
         "acesso": "browser",
-        "status": "sem-acesso",
-        "nota": "Bloqueio de acesso — não rodar"
+        "status": "instavel",
+        "nota": "Acesso incerto: o fluxo Playwright depende do reCAPTCHA invisível e alterna entre dias funcionais e dias bloqueados."
       },
       "repo": {
         "crawler": "src/TJSPCrawler.js",

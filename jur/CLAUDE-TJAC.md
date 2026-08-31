@@ -1,6 +1,6 @@
 # TJAC — Tribunal de Justiça do Acre
 
-**Escopo:** AC · **Status:** 🟡 busca 🟢 OK · **inteiro teor 🔴 reCAPTCHA**
+**Escopo:** AC · **Status:** 🟡 instável — busca zerou termos amplos em 30/08/2026 · **inteiro teor 🔴 reCAPTCHA**
 **Crawler:** `src/TJACCrawler.js` · **Mapeamento:** `human-codegen/TJAC/01-cjsg/`
 **Portal:** e-SAJ `cjsg` — https://esaj.tjac.jus.br/cjsg/consultaCompleta.do
 

@@ -31,15 +31,16 @@ Recursais), competência (Juizado × Justiça Comum), área (cível × criminal)
 
 | Pista no pedido | Tribunal |
 |---|---|
-| Nome de estado ou sigla de UF | TJ daquele estado (confirme cobertura) |
+| Nome de estado ou sigla de UF | TJ daquele estado (confirme se há falha) |
 | "federal", INSS, benefício previdenciário, servidor federal | TRF da região daquela UF |
-| Trabalhista, verbas rescisórias, CLT | TRT (⚠️ ainda não coberto — avise) |
+| Trabalhista, verbas rescisórias, CLT | TRT da UF do vínculo; todos estão no FALCÃO |
 | Contas públicas, licitação, TCU | TCU |
 | "Turmas Recursais", Juizado Especial Federal | TRF (`--origem turmas-recursais` no TRF4) |
 | Nenhuma pista | **Pergunte.** Não escolha por você. |
 
-Confira sempre em `cobertura/CLAUDE-COBERTURA.md` se o tribunal deduzido está 🟢.
-Se estiver ⚪/🔴, diga isso **antes** e ofereça a alternativa.
+Confira sempre `cobertura/CLAUDE-FALHAS.md`. Se o tribunal estiver ali, diga a
+limitação **antes** e leia o guia para oferecer alternativa pertinente. Se não
+estiver no catálogo de `CLAUDE.md`, trate como ainda não implementado.
 
 ## Como transformar o tema em query
 

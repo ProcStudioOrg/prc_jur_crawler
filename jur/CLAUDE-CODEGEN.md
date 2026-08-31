@@ -6,7 +6,7 @@ como saímos do zero até uma busca de jurisprudência funcionando por CLI, test
 Quem executa é a skill `codegen` (`/jur-codegen <TRIBUNAL>`). Este doc é a especificação
 que ela segue — leia-o antes de mapear qualquer tribunal novo.
 
-- Estado atual de cada tribunal: [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md)
+- Exceções operacionais: [`cobertura/CLAUDE-FALHAS.md`](cobertura/CLAUDE-FALHAS.md)
 - Template de mapeamento: [`human-codegen/MODELO-TRIBUNAL.md`](human-codegen/MODELO-TRIBUNAL.md)
 - Roteamento por tribunal: [`CLAUDE.md`](CLAUDE.md)
 
@@ -52,9 +52,9 @@ prc_jur_crawler/                     ← raiz do git / do plugin
     │   ├── cnj.js                   ← validação/decomposição de nº CNJ (genérico)
     │   ├── inteiroTeorFetcher.js    ← download + strip de HTML
     │   └── <TRIBUNAL>{Crawler,Navigator,Checker,Testes}.js
-    ├── cobertura/                   ← o que temos e o que falta
-    │   ├── CLAUDE-COBERTURA.md      ← gerado
-    │   ├── tribunais.json           ← gerado, fonte da verdade legível por máquina
+    ├── cobertura/                   ← catálogo interno + falhas humanas
+    │   ├── CLAUDE-FALHAS.md         ← gerado, somente exceções operacionais
+    │   ├── tribunais.json           ← gerado, catálogo legível por máquina
     │   ├── build.js                 ← o gerador (edite AQUI)
     │   └── base/                    ← insumos crus (planilha Digesto, tribunais_brasileiros)
     ├── human-codegen/               ← mapeamento humano da navegação
@@ -123,7 +123,7 @@ mapeamento** — anote na coluna de observação em vez de deixar implícito.
 | **Próprio / SPA** | Angular/React com API JSON por trás (`/bff/api/...`) | **Melhor caso**: fale com a API direto, sem browser |
 
 Ao começar um tribunal, procure primeiro um irmão já mapeado na mesma família em
-[`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md) e leia o `CLAUDE-<IRMAO>.md`.
+[`cobertura/tribunais.json`](cobertura/tribunais.json) e leia o `CLAUDE-<IRMAO>.md`.
 
 ### Ordem de preferência de acesso
 
@@ -188,7 +188,8 @@ Ao começar um tribunal, procure primeiro um irmão já mapeado na mesma famíli
 
 ### Fase 1 — Descoberta
 
-- Confirme sistema e UF em [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md).
+- Confirme sistema e UF em [`cobertura/tribunais.json`](cobertura/tribunais.json) e
+  veja se há exceção em [`cobertura/CLAUDE-FALHAS.md`](cobertura/CLAUDE-FALHAS.md).
 - Ache o portal de **jurisprudência** (≠ consulta processual). Se as URLs óbvias falharem, use o
   método em [`cobertura/base/tribunais-brasileiros/method_court_discovery.md`](cobertura/base/tribunais-brasileiros/method_court_discovery.md).
 - Um tribunal pode ter **vários módulos** (TJGO tem 3; TJRJ tem EJURIS + eproc). Liste todos,
@@ -312,7 +313,7 @@ Espelhe o padrão TJGO/TJPA — quatro arquivos, responsabilidades separadas:
 Depois registre o subcomando em `bin/jur` e respeite as flags comuns
 (`-q -m -o -v --json`) e as convenções (`-di/-df` DD/MM/YYYY, `--fetch-inteiro-teor`).
 
-### Fase 5 — Documentação e cobertura
+### Fase 5 — Documentação, catálogo e falhas
 
 1. Escreva `CLAUDE-<TRIBUNAL>.md` — escopo, status, flags específicas, exemplos, **ressalvas**.
    As ressalvas são a parte mais valiosa: é onde mora o que quebra.
@@ -393,7 +394,7 @@ sem isto o crawler entrega contagem, não jurisprudência)
       busca não sabe que o tribunal existe e nunca vai rotear para ele
 - [ ] Entrada em `cobertura/build.js` atualizada e build rodado
 - [ ] `node tests/smoke.js <cmd>` verde — **não precisa editar o smoke**: ele deriva a lista
-      de `cobertura/tribunais.json` sozinho, basta o build da cobertura ter rodado
+      de `cobertura/tribunais.json` sozinho, basta o build do catálogo ter rodado
 - [ ] `node sync-plugin.js` rodado se alguma skill mudou
 
 ---

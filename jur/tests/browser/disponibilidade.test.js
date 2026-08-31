@@ -79,7 +79,8 @@ describe('disponibilidade — leitura', () => {
     const page = await abrir();
     try {
       assert.strictEqual(await page.getAttribute(chip('tjpr'), 'data-e'), 'ok');
-      assert.strictEqual(await page.getAttribute(chip('tjsp'), 'data-e'), 'sem-acesso');
+      assert.strictEqual(await page.getAttribute(chip('tjsp'), 'data-e'), 'instavel');
+      assert.strictEqual(await page.getAttribute(chip('stj'), 'data-e'), 'sem-acesso');
     } finally { await page.close(); }
   });
 
@@ -135,11 +136,11 @@ describe('disponibilidade — liga/desliga', () => {
   it('tribunal bloqueado nao pode ser ligado, e clicar explica por que', async () => {
     const page = await abrir();
     try {
-      assert.strictEqual(await ligado(page, 'tjsp'), 'false',
+      assert.strictEqual(await ligado(page, 'stj'), 'false',
         'tribunal sem acesso nao esta disponivel para busca — mostra-lo ligado seria mentira');
-      await page.click(`${chip('tjsp')} .liga`);
+      await page.click(`${chip('stj')} .liga`);
       await page.waitForSelector('#painel-ressalva:not([hidden])');
-      assert.strictEqual(await ligado(page, 'tjsp'), 'false');
+      assert.strictEqual(await ligado(page, 'stj'), 'false');
     } finally { await page.close(); }
   });
 
@@ -151,7 +152,7 @@ describe('disponibilidade — liga/desliga', () => {
       assert.strictEqual(await ligado(page, 'stf'), 'false');
       await page.click('#ligar-todos');
       assert.strictEqual(await ligado(page, 'tjpr'), 'true');
-      assert.strictEqual(await ligado(page, 'tjsp'), 'false', 'ligar todos nao liga o que esta bloqueado');
+      assert.strictEqual(await ligado(page, 'stj'), 'false', 'ligar todos nao liga o que esta bloqueado');
     } finally { await page.close(); }
   });
 
@@ -268,8 +269,10 @@ describe('disponibilidade — o escopo chega ao servidor', () => {
       assert.ok(!corpo.tribunais.includes('tjpr'), 'tribunal desligado nao pode ir no escopo');
       assert.ok(!corpo.tribunais.includes('tjsc'));
       assert.ok(corpo.tribunais.includes('stf'), 'os ligados precisam ir');
-      assert.ok(!corpo.tribunais.includes('tjsp'),
+      assert.ok(!corpo.tribunais.includes('stj'),
         'tribunal bloqueado nao entra no escopo: pedi-lo so gastaria uma recusa');
+      assert.ok(corpo.tribunais.includes('tjsp'),
+        'tribunal instavel continua selecionavel: o estado precisa ser testado na rodada atual');
     } finally { await page.close(); }
   });
 });

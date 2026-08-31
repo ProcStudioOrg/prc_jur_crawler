@@ -1,5 +1,7 @@
 # TJSC — Tribunal de Justiça de Santa Catarina
 
+**Status atual:** 🟡 instável — a verificação F5/Shape bloqueou duas medições em 30/08/2026. O mesmo fluxo funciona em outras rodadas; reteste antes de buscar.
+
 Comando: `./bin/jur tjsc` · Stack: `src/TJSCCrawler.js` + `src/TJSCNavigator.js` +
 `src/TJSCChecker.js` · Testes: `node src/TJSCTestes.js` (`npm run test:tjsc`) ·
 Verificação: `skills/verificador/tribunais/tjsc.md` ·

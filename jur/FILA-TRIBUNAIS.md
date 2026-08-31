@@ -3,7 +3,8 @@
 > **Este arquivo é a fonte da verdade da fila.** O agente roda **2× por dia (16:00 e
 > 20:00 BRT)**; cada execução lê a tabela, pega **o primeiro alvo com status `pendente`**
 > e trabalha **só nele**. Duas execuções por dia = dois tribunais por dia.
-> Status vivo dos crawlers prontos: [`cobertura/CLAUDE-COBERTURA.md`](cobertura/CLAUDE-COBERTURA.md).
+> Exceções dos crawlers prontos: [`cobertura/CLAUDE-FALHAS.md`](cobertura/CLAUDE-FALHAS.md).
+> Ausente da lista = operacional dentro do catálogo atual.
 
 ## Regras de escopo — leia antes de sair navegando
 

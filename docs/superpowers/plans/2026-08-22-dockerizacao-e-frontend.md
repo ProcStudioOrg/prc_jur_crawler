@@ -193,7 +193,7 @@ Fecha [BRU-69](https://linear.app/brunopellizzetti/issue/BRU-69). Hoje a CLI tem
 - Modify: `jur/cobertura/build.js` (tabela `JURIS`)
 - Modify: `jur/tests/smoke.js` (adicionar a checagem)
 - Create: `jur/tests/reconciliacao.test.js`
-- Regenerate: `jur/cobertura/tribunais.json`, `jur/cobertura/CLAUDE-COBERTURA.md`
+- Regenerate: `jur/cobertura/tribunais.json`, `jur/cobertura/CLAUDE-FALHAS.md`
 
 **Interfaces:**
 - Consumes: `catalogo.listar()` da Task 1
@@ -293,7 +293,7 @@ Abra `jur/cobertura/build.js`, localize a tabela que mapeia sigla → `{url, com
 - [ ] **Step 6: Regenere o catálogo**
 
 Run: `cd jur && npm run docs`
-Expected: `cobertura/tribunais.json` e `cobertura/CLAUDE-COBERTURA.md` atualizados; `git diff --stat` mostra os dois arquivos.
+Expected: `cobertura/tribunais.json` e `cobertura/CLAUDE-FALHAS.md` atualizados; `git diff --stat` mostra os dois arquivos.
 
 - [ ] **Step 7: Rode a reconciliação e confirme que passa**
 
@@ -334,7 +334,7 @@ Expected: a linha `OK  reconciliacao catalogo x CLI` aparece. (O resto do smoke 
 - [ ] **Step 10: Commit**
 
 ```bash
-git add jur/cobertura/build.js jur/cobertura/tribunais.json jur/cobertura/CLAUDE-COBERTURA.md \
+git add jur/cobertura/build.js jur/cobertura/tribunais.json jur/cobertura/CLAUDE-FALHAS.md \
         jur/servidor/catalogo.js jur/tests/reconciliacao.test.js jur/tests/smoke.js
 git commit -m "poe o CSJT no catalogo, que a CLI sabia rodar e o placar nao mostrava, e o CRPS como exige-sessao — mais o teste que teria pego os dois"
 ```

@@ -1,30 +1,18 @@
-# jur — jurisprudência dos tribunais brasileiros
+# jur_crawler — jurisprudência dos tribunais brasileiros
 
-CLI + skills de Claude para buscar, verificar e mapear jurisprudência (case law) nos tribunais
-brasileiros. Feito para ser usado por agentes de IA: cada busca é verificável contra a base
+CLI + Skills para buscar jurisprudência nos tribunais brasileiros, construída com Playwright. Feito para ser usado por agentes de IA: cada busca é verificável contra a base
 oficial do tribunal, e cada tribunal tem o mapeamento humano da sua navegação versionado.
 
-**61 tribunais catalogados · 41 com busca funcionando hoje.**
-Placar atualizado: [`jur/cobertura/CLAUDE-COBERTURA.md`](jur/cobertura/CLAUDE-COBERTURA.md).
 
 ## Instalar como plugin do Claude Code
+TODO
 
-```
-/plugin marketplace add brpl20/prc_jur_crawler
-/plugin install jur-tribunais
-```
-
-(ou, local: `/plugin marketplace add /caminho/para/prc_jur_crawler`)
-
-Quatro skills, uma por função — não uma por estado:
-
-| Skill | Faz |
-|---|---|
-| `jur-improve-user-prompt` | Pedido vago → plano de busca (tribunal, query, objetivo, período) |
-| `jur-browser` | Roteia o tribunal, refina, executa, baixa inteiro teor, analisa |
-| `jur-verificador` | Confirma que cada julgado citado existe na base oficial (anti-alucinação) |
-| `jur-fixer` | Conserta crawler quebrado comparando a tela atual com os prints do mapeamento |
-| `jur-codegen` | Mapeia um tribunal novo e monta o crawler |
+## Skills
+`jur-improve-user-prompt`: Pedido vago → plano de busca (tribunal, query, objetivo, período)
+`jur-browser`: Roteia o tribunal, refina, executa, baixa inteiro teor, analisa
+`jur-verificador`: Confirma que cada julgado citado existe na base oficial (anti-alucinação)
+`jur-fixer`: Conserta crawler quebrado comparando a tela atual com os prints do mapeamento
+`jur-codegen`: Mapeia um tribunal novo e monta o crawler
 
 ## Usar a CLI
 
@@ -38,13 +26,7 @@ npx playwright install chromium
 ./bin/jur <comando> --help
 ```
 
-Operacionais: o `stf` · a Justiça do Trabalho inteira (`tst`, `trt1`…`trt24`, `csjt`) · os
-federais `trf2` `trf4` `trf5` `trf6` · os estaduais `tjce` `tjdft` `tjgo` `tjmg` `tjpa`
-`tjpr` `tjrj` `tjrs` `tjsc` · e o `tcu`.
-Instáveis: `trf1` `trf3` · bloqueados por captcha: **`stj`** (desde 27/07/2026 — desafio
-interativo do Cloudflare; ver `jur/CLAUDE-STJ.md`) `tjma` (só consulta por nº) `tjsp`.
-
-## Rodar em container (com browser, API, MCP e interface)
+## Versão Web: Rodar em container (com browser, API, MCP e interface)
 
 Ambiente fechado: Node 22, Chromium travado pelo `package-lock` e todas as dependências
 dentro da imagem. Funciona igual em macOS, Linux e Windows/WSL.
@@ -80,19 +62,6 @@ Exemplo de busca por REST:
 Ressalvas do container estão em [`infra/README.md`](infra/README.md) — em especial `trf3`
 (exige Chrome proprietário) e `crps` (exige login Gov.br, que valida dispositivo).
 
-## Sem Chrome? `jur-web/`
-
-Para Claude.ai, Claude Code na web e Windows sem dependências — onde não há shell,
-browser nem Playwright, só uma tool que faz GET numa URL. Não é o crawler portado: é a
-**gramática de URL** dos tribunais que sobrevivem a essa restrição.
-
-**29 acervos**: a Justiça do Trabalho inteira (TST + 24 TRTs + CSJT), CARF, TJPR e TJGO.
-Placar medido e critérios em [`jur-web/TRIBUNAIS.md`](jur-web/TRIBUNAIS.md); a skill em
-[`jur-web/SKILL.md`](jur-web/SKILL.md).
-
-O corte é medido, não estimado — `node jur-web/medicao/medir.mjs` reprova tribunal que
-responde mas **não busca**. Foi o que barrou TRF6 e TJRJ, que devolviam 24 e 22 julgados
-para qualquer string, inclusive `xkqzwvbnhjplmrt`.
 
 ## Estrutura
 
@@ -100,14 +69,13 @@ para qualquer string, inclusive `xkqzwvbnhjplmrt`.
 prc_jur_crawler/
 ├── .claude-plugin/marketplace.json   catálogo do marketplace
 ├── plugins/jur-tribunais/            plugin empacotado (skills espelhadas de jur/skills/)
-├── jur-web/                          versão só-URL (Claude.ai / Windows) — 29 acervos
 └── jur/                              o crawler
     ├── CLAUDE.md                     roteamento: qual tribunal / qual doc
     ├── CLAUDE-CODEGEN.md             como mapear um tribunal novo (doc-mestre)
     ├── CLAUDE-<TRIBUNAL>.md          flags e ressalvas de cada tribunal
     ├── bin/jur                       a CLI
     ├── src/                          crawlers, navigators, checkers
-    ├── cobertura/                    o que temos e o que falta (gerado de fontes cruas)
+    ├── cobertura/                    catálogo interno + lista humana de falhas
     ├── human-codegen/                mapeamento humano da navegação + prints
     ├── skills/                       fonte das skills
     ├── tests/                        smoke recorrente + testes
@@ -118,8 +86,8 @@ prc_jur_crawler/
 
 ```bash
 cd jur
-npm run docs              # regenera cobertura/ e os INDEX.md de human-codegen/
-npm run smoke             # os tribunais 🟢 ainda funcionam?
+npm run docs              # regenera CLAUDE-FALHAS.md e os INDEX.md
+npm run smoke             # detecta novas falhas externas
 node sync-plugin.js       # espelha jur/skills/ no plugin
 ```
 
@@ -134,8 +102,8 @@ Três invariantes, e nenhuma é decorativa:
    consulta por número na base oficial. Ementa é citada do texto retornado, nunca de memória.
 2. **Todo tribunal tem seus prints.** É o que permite descobrir *o que* mudou quando o site
    muda. Print desatualizado = conserto às cegas.
-3. **A cobertura é gerada, não escrita.** `cobertura/tribunais.json` sai de fontes cruas
-   versionadas; ninguém edita a tabela à mão e ninguém inventa URL.
+3. **As falhas humanas são geradas, não duplicadas.** `cobertura/CLAUDE-FALHAS.md`
+   deriva do catálogo interno; ausência da lista significa caminho operacional.
 
 ## Fontes
 

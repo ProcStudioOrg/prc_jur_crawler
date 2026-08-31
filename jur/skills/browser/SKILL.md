@@ -27,7 +27,8 @@ SEMPRE informe o usuário a cada refinamento que você fizer.
 
 1. **Entender a intenção** — tema, objetivo (tese favorável / contrária / panorama), recorte temporal.
    Em caso de pedido vago, use a skill `jur-improve-user-prompt` primeiro.
-2. **Rotear o tribunal** — tabela em `CLAUDE.md`; cobertura completa em `cobertura/CLAUDE-COBERTURA.md`.
+2. **Rotear o tribunal** — tabela em `CLAUDE.md`; exceções em `cobertura/CLAUDE-FALHAS.md`.
+   Ausente da lista de falhas = operacional dentro do catálogo atual.
 3. **Ler o doc do tribunal** — `CLAUDE-<TRIBUNAL>.md`: flags específicas, operadores que de fato
    funcionam, e as **ressalvas** (é onde mora o que quebra).
 4. **Contar antes de coletar** — rodar com `-m 1 --json` para saber o volume.
@@ -274,9 +275,10 @@ SEMPRE informe o usuário a cada refinamento que você fizer.
 | Admissibilidade de Recurso de Revista | `jur <trt> -g admissibilidade` — ⚠️ é ato do **TRT** de origem; o `tst` não tem essa coleção (ele recebe o RR já admitido) |
 | Varrer vários TRTs na mesma pergunta | Serialize e espace: os 26 comandos batem no **mesmo host** e rajada rende HTTP 429. Não paralelize — é a exceção à regra geral do repo |
 
-Tribunal não coberto → diga isso explicitamente, mostre o status em
-`cobertura/CLAUDE-COBERTURA.md`, e ofereça (a) o tribunal vizinho coberto ou
-(b) mapear o tribunal com a skill `jur-codegen`. **Nunca invente resultado.**
+Tribunal sem comando no catálogo → diga que ainda não foi implementado e ofereça
+mapear com `jur-codegen`. Tribunal presente em `cobertura/CLAUDE-FALHAS.md` → leia
+o guia, explique a falha e só ofereça outra instância ou ramo quando juridicamente
+pertinente e claramente rotulado. **Nunca invente resultado.**
 
 Buscas em tribunais diferentes rodam em paralelo — cada crawler sobe seu próprio processo:
 
@@ -382,5 +384,5 @@ Quantos julgados foram confirmados na base oficial (`jur-verificador`). Diga se 
 | "Posso analisar sem baixar" | Sem inteiro teor você não tem o acórdão. |
 | "Vou pular a contagem inicial" | A contagem define a estratégia. NUNCA pule. |
 | "Sei as flags de cor" | Leia o `CLAUDE-<TRIBUNAL>.md`. As flags mudam por tribunal. |
-| "Esse tribunal deve funcionar" | Confira `cobertura/CLAUDE-COBERTURA.md`. TJSP não roda. |
+| "Esse tribunal deve funcionar" | Confira `cobertura/CLAUDE-FALHAS.md`. O TJSP é incerto e precisa de teste na rodada. |
 | "Verifico depois" | Verifique antes de mostrar. Julgado não confirmado não entra na resposta. |

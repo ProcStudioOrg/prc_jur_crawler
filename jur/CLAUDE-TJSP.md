@@ -1,12 +1,12 @@
 # TJSP — Tribunal de Justiça de São Paulo
 
-**Escopo:** SP · **Status:** 🟢 funcional, dependente de navegador
+**Escopo:** SP · **Status:** 🟡 incerto/instável, dependente de navegador
 **Crawler:** `src/TJSPCrawler.js` (Playwright + ESAJ)
 
-O portal respondeu HTTP 200 e a busca foi executada em navegador headless. O ESAJ
-carrega reCAPTCHA invisível (reCAPTCHA v3 + `captchaControleAcesso.do`), mas o
-token foi aceito no fluxo Playwright testado em 23/08/2026; não é um bloqueio
-absoluto por captcha neste momento.
+O ESAJ carrega reCAPTCHA invisível (reCAPTCHA v3 +
+`captchaControleAcesso.do`). O mesmo fluxo Playwright funciona em alguns dias e
+é bloqueado em outros; portanto, **não prometa disponibilidade antes do teste da
+rodada**. Não é bloqueio permanente nem acesso estável.
 
 ## Capacidades verificadas
 
@@ -29,6 +29,6 @@ Exemplos:
 ./bin/jur tjsp -q "dano moral" -di 01/08/2026 -df 31/08/2026 -m 1 --json
 ```
 
-Ressalvas: o acesso exige browser e pode variar conforme o reCAPTCHA; não tratar
-o resultado como API HTTP estável. A CLI agora mantém `--json` limpo, sem logs
-de diagnóstico misturados ao JSON.
+Ressalvas: o acesso exige browser e varia conforme o reCAPTCHA. Falha da rodada
+é indisponibilidade externa, não ausência de jurisprudência. A CLI mantém
+`--json` limpo, sem logs de diagnóstico misturados ao JSON.

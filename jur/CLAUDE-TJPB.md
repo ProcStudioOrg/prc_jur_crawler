@@ -1,5 +1,7 @@
 # TJPB — Tribunal de Justiça da Paraíba
 
+**Status atual:** 🟡 instável — a API pública respondeu HTTP 503 em duas medições em 30/08/2026. Reteste antes de concluir que não há resultados.
+
 `jur tjpb` — portal **Juris-PB** (`https://app.tjpb.jus.br/juris-pb`), SPA Angular 19 +
 PrimeNG sobre backend **Spring Boot + Elasticsearch**. O crawler é **HTTP direto, sem
 browser**: a API `/juris-pb-backend/public/*` é pública, sem auth, sem token, sem cookie,
