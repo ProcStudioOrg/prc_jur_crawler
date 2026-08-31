@@ -86,6 +86,13 @@ describe('proxy publico do jurcrawler', () => {
     );
   });
 
+  it('rejeita certificado cujo notBefore ainda nao chegou', () => {
+    const script = ler('ativar-jurcrawler.sh');
+    assert.match(script, /openssl x509 -in "\$jur_cert" -noout -startdate/);
+    assert.match(script, /date -d "\$jur_inicio" \+%s/);
+    assert.match(script, /\(\( jur_inicio_epoch <= jur_agora_epoch \)\) \|\| return 1/);
+  });
+
   it('ativa de forma recuperavel, valida SAN e limita as operacoes do host', () => {
     const script = ler('ativar-jurcrawler.sh');
     assert.doesNotThrow(() => execFileSync('bash', ['-n', ativador]));

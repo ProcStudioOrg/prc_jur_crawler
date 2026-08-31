@@ -18,9 +18,14 @@ jur_had_enabled=0
 jur_rollback=0
 
 jur_cert_tem_nomes() {
-  local jur_sans
+  local jur_inicio jur_inicio_epoch jur_agora_epoch jur_sans
 
   [[ -f "$jur_cert" ]] || return 1
+  jur_inicio=$(openssl x509 -in "$jur_cert" -noout -startdate 2>/dev/null) || return 1
+  jur_inicio=${jur_inicio#notBefore=}
+  jur_inicio_epoch=$(date -d "$jur_inicio" +%s 2>/dev/null) || return 1
+  jur_agora_epoch=$(date +%s) || return 1
+  (( jur_inicio_epoch <= jur_agora_epoch )) || return 1
   openssl x509 -in "$jur_cert" -checkend 0 -noout 2>/dev/null || return 1
   jur_sans=$(openssl x509 -in "$jur_cert" -noout -ext subjectAltName 2>/dev/null |
     sed 's/,/\n/g' |
