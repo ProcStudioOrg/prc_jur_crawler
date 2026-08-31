@@ -91,13 +91,13 @@ conexão real: a interface a salva como `jur.chaveConexao` e envia Bearer nas op
 protegidas.
 
 Ficam fora do glob de `npm test` de propósito: lançar um Chromium custa ~1-2s por suíte, e
-essa suíte já tem 188 testes rápidos.
+a suíte rápida não precisa subir um browser.
 
 | Arquivo | O que cobre |
 |---|---|
-| `interface-real.test.js` | a página pública carrega; com uma chave de conexão real em `jur.chaveConexao`, a interface envia Bearer e acessa a API; um `curl` sem credencial continua tomando 401 |
+| `interface-real.test.js` | a página pública carrega; com uma chave de conexão real em `jur.chaveConexao`, a interface envia Bearer e acessa a API; o 401 Anthropic não é confundido com o 401 Bearer; um `curl` sem credencial continua tomando 401 |
 | `chat-fluxo.test.js` | regressão dos três achados da revisão da Task 7 — trocar de modelo para o Haiku não quebra o chat mandando um campo que ele rejeita; trocar de conversa no meio do streaming não vaza texto/histórico para a conversa errada; dois `Enter` quase simultâneos na tela inicial criam só uma conversa |
 
-**6 testes** ao todo. Teste que ninguém sabe que existe não protege ninguém — rode este
+Teste que ninguém sabe que existe não protege ninguém — rode este
 `npm run test:browser` sempre que mexer em `jur/servidor/autenticacao.js` ou em
 `jur/publico/*.js`.

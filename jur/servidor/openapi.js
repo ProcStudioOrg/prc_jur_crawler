@@ -233,7 +233,7 @@ function documento() {
       '/api/v1/saude': {
         get: {
           summary: 'Healthcheck',
-          description: 'Única rota livre de autenticação — o container a chama de dentro, sem chave para carregar.',
+          description: 'Rota pública de saúde usada pelo healthcheck do container, sem exigir chave de conexão.',
           security: [],
           responses: {
             200: {

@@ -232,10 +232,10 @@ describe('caminhoDentroDoDiretorio - colisao de prefixo (Important 2)', () => {
   });
 });
 
-// C2 (revisao final): o servico nao tem autenticacao e leva a chave da Anthropic do
-// operador atras de POST /api/v1/chat. Publicado em 0.0.0.0 (o que `listen(porta)`
-// sozinho faz), qualquer um da LAN enfileira jobs contra tribunais com o IP do
-// operador e gasta o dinheiro dele — medido ao vivo pelo revisor em
+// C2 (revisao final): alem do Bearer obrigatorio, o servico limita a exposicao por
+// padrao porque leva a chave da Anthropic do operador atras de POST /api/v1/chat.
+// Publicado em 0.0.0.0 (o que `listen(porta)` sozinho faz), qualquer cliente da LAN
+// ganha uma superficie para tentar credenciais — medido ao vivo pelo revisor em
 // http://192.168.0.78:3000. O default agora e loopback; expor e uma decisao explicita
 // via JUR_BIND (documentada em infra/README.md).
 describe('bind do servidor (C2)', () => {

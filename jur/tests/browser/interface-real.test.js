@@ -10,6 +10,7 @@ const { chromium } = require('playwright');
 const db = require('../../servidor/db');
 const jobs = require('../../servidor/jobs');
 const chaves = require('../../servidor/chaves');
+const conversas = require('../../servidor/conversas');
 const { criarApp } = require('../../servidor/index');
 
 const execFileAsync = promisify(execFile);
@@ -27,13 +28,15 @@ const execFileAsync = promisify(execFile);
  * que nao seta JUR_EXIGIR_CHAVE) e dirige um Chromium de verdade contra ele.
  *
  * Fica fora de `tests/*.test.js` (o glob do `npm test`) de proposito: subir um Chromium
- * custa ~1-2s de lancamento por suite, e essa suite ja tem 165 testes rapidos. Rodar
+ * custa ~1-2s de lancamento por suite, e a suite rapida nao precisa subir browser. Rodar
  * via `npm run test:browser`.
  */
 
-let servidor; let base; let porta; let browser; let chaveValida;
+let servidor; let base; let porta; let browser; let chaveValida; let chaveAnthropicOriginal;
 
 before(async () => {
+  chaveAnthropicOriginal = process.env.ANTHROPIC_API_KEY;
+  delete process.env.ANTHROPIC_API_KEY;
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-ui-real-'));
   const con = db.abrir(path.join(dir, 'jur.db'));
   const fila = jobs.criarFila({
@@ -42,7 +45,12 @@ before(async () => {
   });
   const g = chaves.criarGerenciador(con);
   chaveValida = g.gerar('interface real').valor;
-  servidor = http.createServer(criarApp({ fila, chaves: g, exigirChave: true }).handler);
+  servidor = http.createServer(criarApp({
+    fila,
+    chaves: g,
+    conversas: conversas.criarRepositorio(con),
+    exigirChave: true,
+  }).handler);
   await new Promise((r) => servidor.listen(0, r));
   porta = servidor.address().port;
   base = `http://127.0.0.1:${porta}`;
@@ -52,6 +60,8 @@ before(async () => {
 after(async () => {
   await browser.close();
   await new Promise((r) => servidor.close(r));
+  if (chaveAnthropicOriginal === undefined) delete process.env.ANTHROPIC_API_KEY;
+  else process.env.ANTHROPIC_API_KEY = chaveAnthropicOriginal;
 });
 
 describe('interface real em Chromium, com exigencia de chave ligada', () => {
@@ -76,6 +86,26 @@ describe('interface real em Chromium, com exigencia de chave ligada', () => {
       await page.goto(base + '/');
       const resultado = await page.evaluate(() => window.jurApi.pedir('/api/v1/tribunais'));
       assert.ok(resultado.tribunais.length > 0);
+      assert.strictEqual(await page.isHidden('#estado-conexao'), true);
+    } finally {
+      await page.close();
+    }
+  });
+
+  it('Bearer valido sem chave Anthropic mostra so o erro Anthropic', async () => {
+    const page = await browser.newPage();
+    try {
+      await page.addInitScript((valor) => {
+        localStorage.setItem('jur.chaveConexao', valor);
+        localStorage.removeItem('jur.chaveLlm');
+      }, chaveValida);
+      await page.goto(base + '/', { waitUntil: 'networkidle' });
+      await page.fill('#caixa-inicial .entrada', 'oi');
+      await page.click('#caixa-inicial .enviar');
+      const erro = page.locator('#mensagens .msg.erro');
+      await erro.waitFor();
+
+      assert.match(await erro.textContent(), /sem chave da Anthropic/i);
       assert.strictEqual(await page.isHidden('#estado-conexao'), true);
     } finally {
       await page.close();

@@ -6,8 +6,8 @@ services:
       dockerfile: infra/Dockerfile
     image: jur:dev
     # 127.0.0.1 no lado do HOST de proposito: "3000:3000" publicava em 0.0.0.0 e o
-    # servico responde sem nenhuma autenticacao, com a chave da Anthropic do operador
-    # atras de POST /api/v1/chat. Medido: respondia da LAN. Quem quiser expor de
+    # servico exige Bearer na API, mas ainda leva a chave da Anthropic do operador
+    # atras de POST /api/v1/chat. Medido: a porta respondia da LAN. Quem quiser expor de
     # proposito troca esta linha e ajusta JUR_BIND — ver infra/README.md.
     ports:
       - "127.0.0.1:3000:3000"

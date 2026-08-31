@@ -23,6 +23,7 @@ function criarGuarda(opcoes = {}) {
     const valor = cabecalho.startsWith('Bearer ') ? cabecalho.slice(7).trim() : '';
     if (gerenciador.verificar(valor)) return false;
 
+    res.setHeader('www-authenticate', 'Bearer realm="jur"');
     json(res, 401, {
       erro: 'chave de conexao ausente ou invalida — salve uma chave valida em Configuracoes',
     });

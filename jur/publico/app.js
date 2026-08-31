@@ -25,7 +25,8 @@ window.jurApi = {
     const chave = window.jurApi.chaveConexao();
     if (chave) headers.set('authorization', `Bearer ${chave}`);
     const resposta = await fetch(caminho, { ...opcoes, headers });
-    if (resposta.status === 401) {
+    if (resposta.status === 401
+        && resposta.headers.get('www-authenticate') === 'Bearer realm="jur"') {
       document.dispatchEvent(new CustomEvent('jur:autenticacao-negada'));
     }
     return resposta;

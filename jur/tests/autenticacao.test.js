@@ -10,9 +10,11 @@ const chaves = require('../servidor/chaves');
 const { criarApp } = require('../servidor/index');
 const { criarGuarda } = require('../servidor/autenticacao');
 
-let servidor; let base; let chaveValida;
+let servidor; let base; let chaveValida; let chaveAnthropicOriginal;
 
 before(async () => {
+  chaveAnthropicOriginal = process.env.ANTHROPIC_API_KEY;
+  delete process.env.ANTHROPIC_API_KEY;
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-auth-'));
   const con = db.abrir(path.join(dir, 'jur.db'));
   const fila = jobs.criarFila({ con, dirResultados: dir,
@@ -24,13 +26,32 @@ before(async () => {
   base = `http://127.0.0.1:${servidor.address().port}`;
 });
 
-after(() => servidor.close());
+after(() => {
+  servidor.close();
+  if (chaveAnthropicOriginal === undefined) delete process.env.ANTHROPIC_API_KEY;
+  else process.env.ANTHROPIC_API_KEY = chaveAnthropicOriginal;
+});
 
 const post = (caminho, corpo, cab = {}) => fetch(base + caminho, {
   method: 'POST', headers: { 'content-type': 'application/json', ...cab }, body: JSON.stringify(corpo),
 });
 
 describe('autenticacao', () => {
+  it('distingue o 401 Bearer da instalacao do 401 da credencial Anthropic', async () => {
+    const semBearer = await post('/api/v1/chat', { mensagens: [{ role: 'user', content: 'oi' }] });
+    assert.strictEqual(semBearer.status, 401);
+    assert.strictEqual(semBearer.headers.get('www-authenticate'), 'Bearer realm="jur"');
+
+    const semAnthropic = await post(
+      '/api/v1/chat',
+      { mensagens: [{ role: 'user', content: 'oi' }] },
+      { authorization: `Bearer ${chaveValida}` },
+    );
+    assert.strictEqual(semAnthropic.status, 401);
+    assert.strictEqual(semAnthropic.headers.get('www-authenticate'), null);
+    assert.match((await semAnthropic.json()).erro, /Anthropic/i);
+  });
+
   it('recusa POST /buscas sem chave', async () => {
     const r = await post('/api/v1/buscas', { tribunal: 'stf', query: 'x' });
     assert.strictEqual(r.status, 401);
@@ -100,11 +121,12 @@ describe('autenticacao', () => {
  * "origemPermitida (C2)" em tests/http.test.js. A guarda usa bloquearOrigemHostil
  * (a mesma funcao, ja coberta la) para a Barreira 1, entao aqui o foco e confirmar,
  * direto contra criarGuarda (sem HTTP de verdade), que a mesma lista dificil de casos
- * continua recusada/aceita quando passa pela guarda — inclusive os que dependem da
- * Barreira 2 (mesma-origem local) para passar sem chave.
+ * continua recusada/aceita quando passa pela guarda. A politica de chave e separada:
+ * caminhos publicos passam sem credencial; caminhos protegidos exigem Bearer quando
+ * `exigir` esta ligado, mesmo se a origem for local.
  */
 describe('criarGuarda — variantes de Origin (C2)', () => {
-  const CAMINHO = '/api/v1/tribunais'; // rota comum, fora de LIVRES
+  const CAMINHO = '/api/v1/tribunais'; // rota protegida, fora de PUBLICOS
 
   function reqFalso(origin, host = '127.0.0.1:3000') {
     const headers = { host };
