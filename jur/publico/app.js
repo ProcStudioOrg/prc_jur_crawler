@@ -1,6 +1,7 @@
 // jur/publico/app.js
 const $ = (s, raiz = document) => raiz.querySelector(s);
 const CHAVE_LLM = 'jur.chaveLlm';
+const CHAVE_CONEXAO = 'jur.chaveConexao';
 const CHAVE_TEMA = 'jur.tema';
 const CHAVE_MODELO = 'jur.modelo';
 const CHAVE_ESFORCO = 'jur.esforco';
@@ -12,15 +13,30 @@ const guardado = {
 
 // ---------- API ----------
 window.jurApi = {
-  chave: () => guardado.ler(CHAVE_LLM).trim(),
+  chaveLlm: () => guardado.ler(CHAVE_LLM).trim(),
+  chaveConexao: () => guardado.ler(CHAVE_CONEXAO).trim(),
+  salvarChaveConexao(valor) {
+    guardado.escrever(CHAVE_CONEXAO, String(valor || '').trim());
+    document.dispatchEvent(new CustomEvent('jur:chave-conexao-alterada'));
+  },
+  async requisitar(caminho, opcoes = {}) {
+    const headers = new Headers(opcoes.headers || {});
+    if (opcoes.body && !headers.has('content-type')) headers.set('content-type', 'application/json');
+    const chave = window.jurApi.chaveConexao();
+    if (chave) headers.set('authorization', `Bearer ${chave}`);
+    const resposta = await fetch(caminho, { ...opcoes, headers });
+    if (resposta.status === 401) {
+      document.dispatchEvent(new CustomEvent('jur:autenticacao-negada'));
+    }
+    return resposta;
+  },
   async pedir(caminho, opcoes = {}) {
-    const r = await fetch(caminho, {
-      ...opcoes,
-      headers: { 'content-type': 'application/json', ...(opcoes.headers || {}) },
-    });
+    const r = await window.jurApi.requisitar(caminho, opcoes);
     if (!r.ok) {
       const corpo = await r.json().catch(() => ({ erro: `HTTP ${r.status}` }));
-      throw new Error(corpo.erro || `HTTP ${r.status}`);
+      const erro = new Error(corpo.erro || `HTTP ${r.status}`);
+      erro.status = r.status;
+      throw erro;
     }
     return r.status === 204 ? null : r.json();
   },
@@ -284,7 +300,7 @@ async function reanexar(id) {
   reanexado = controle;
   let destino = null;
   try {
-    const r = await fetch(`/api/v1/conversas/${id}/stream`, { signal: controle.signal });
+    const r = await window.jurApi.requisitar(`/api/v1/conversas/${id}/stream`, { signal: controle.signal });
     if (!r.ok) return;
     await lerSSE(r, (nome, dados) => {
       // Trocou de conversa no meio: o abort ja veio, mas um chunk em voo ainda pode
@@ -372,6 +388,10 @@ async function lerSSE(resposta, aoEvento, aoAtividade) {
 }
 
 async function enviar(campo, modelo, esforco) {
+  if (!window.jurApi.chaveConexao()) {
+    $('#abrir-config').click();
+    return;
+  }
   const texto = campo.value.trim();
   if (!texto) return;
 
@@ -434,7 +454,7 @@ async function enviar(campo, modelo, esforco) {
 
   try {
     const cab = { 'content-type': 'application/json' };
-    const chave = window.jurApi.chave();
+    const chave = window.jurApi.chaveLlm();
     if (chave) cab['x-api-key'] = chave;
 
     // O que vai no corpo depende do MODELO, nao de o <select> de esforco estar
@@ -442,7 +462,7 @@ async function enviar(campo, modelo, esforco) {
     // com claude-haiku-4-5 e 400 na API.
     const esforcoParaEnviar = aceitaEsforco(modelo) ? esforco : undefined;
 
-    const r = await fetch('/api/v1/chat', {
+    const r = await window.jurApi.requisitar('/api/v1/chat', {
       method: 'POST', headers: cab, signal: controle.signal,
       body: JSON.stringify({
         mensagens: historicoLocal, modelo, esforco: esforcoParaEnviar, conversaId: conversaAtual,
@@ -522,3 +542,11 @@ async function enviar(campo, modelo, esforco) {
 // ---------- início ----------
 montarCaixa($('#caixa-inicial'));
 carregarHistorico();
+function sincronizarEstadoConexao() {
+  $('#estado-conexao').hidden = Boolean(window.jurApi.chaveConexao());
+}
+
+$('#configurar-conexao').addEventListener('click', () => $('#abrir-config').click());
+document.addEventListener('jur:chave-conexao-alterada', sincronizarEstadoConexao);
+document.addEventListener('jur:autenticacao-negada', () => { $('#estado-conexao').hidden = false; });
+sincronizarEstadoConexao();

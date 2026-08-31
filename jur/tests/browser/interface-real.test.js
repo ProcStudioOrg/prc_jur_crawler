@@ -31,7 +31,7 @@ const execFileAsync = promisify(execFile);
  * via `npm run test:browser`.
  */
 
-let servidor; let base; let porta; let browser;
+let servidor; let base; let porta; let browser; let chaveValida;
 
 before(async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-ui-real-'));
@@ -41,6 +41,7 @@ before(async () => {
     executarFn: async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null }),
   });
   const g = chaves.criarGerenciador(con);
+  chaveValida = g.gerar('interface real').valor;
   servidor = http.createServer(criarApp({ fila, chaves: g, exigirChave: true }).handler);
   await new Promise((r) => servidor.listen(0, r));
   porta = servidor.address().port;
@@ -53,63 +54,42 @@ after(async () => {
   await new Promise((r) => servidor.close(r));
 });
 
-describe('interface real em Chromium, com exigencia de chave ligada (fix Sec-Fetch-Site)', () => {
-  it('a pagina carrega (200, nao 401) e o fetch que ELA MESMA dispara tambem funciona', async () => {
+describe('interface real em Chromium, com exigencia de chave ligada', () => {
+  it('carrega a pagina, mas a API recusa o browser sem chave', async () => {
     const page = await browser.newPage();
     try {
-      const respostaNavegacao = await page.goto(base + '/');
-      assert.strictEqual(
-        respostaNavegacao.status(), 200,
-        'GET / nao pode exigir chave — e a propria interface carregando pela primeira vez',
-      );
-
-      // fetch same-origin disparado de DENTRO da pagina, exatamente como o app.js real
-      // disparado o proprio browser — nao setamos nenhum header a mao.
-      const resultado = await page.evaluate(async () => {
-        const r = await fetch('/api/v1/tribunais');
-        return { status: r.status };
-      });
-      assert.strictEqual(
-        resultado.status, 200,
-        'fetch de mesma origem disparado pela propria pagina nao pode exigir chave',
-      );
+      assert.strictEqual((await page.goto(base + '/')).status(), 200);
+      const status = await page.evaluate(() => fetch('/api/v1/tribunais').then((r) => r.status));
+      assert.strictEqual(status, 401);
+      assert.strictEqual(await page.isVisible('#estado-conexao'), true);
     } finally {
       await page.close();
     }
   });
 
-  it('gerar chave pela interface funciona (POST /api/v1/chaves disparado de dentro da pagina)', async () => {
-    // A UI ainda nao tem um botao de "gerar chave" (nao faz parte desta task); o que
-    // importa aqui e o caminho que esse botao vai usar quando existir: um fetch
-    // same-origin disparado do browser real, carregado a partir desta mesma pagina.
+  it('a UI salva Bearer e volta a acessar a API', async () => {
     const page = await browser.newPage();
     try {
+      await page.addInitScript((valor) => {
+        localStorage.setItem('jur.chaveConexao', valor);
+      }, chaveValida);
       await page.goto(base + '/');
-      const resultado = await page.evaluate(async () => {
-        const r = await fetch('/api/v1/chaves', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ nome: 'gerada no teste de browser real' }),
-        });
-        return { status: r.status, corpo: await r.json() };
-      });
-      assert.strictEqual(resultado.status, 201, JSON.stringify(resultado));
-      assert.ok(
-        typeof resultado.corpo.valor === 'string' && resultado.corpo.valor.startsWith('jur_'),
-        'a chave gerada pela interface precisa ter o formato esperado',
-      );
+      const resultado = await page.evaluate(() => window.jurApi.pedir('/api/v1/tribunais'));
+      assert.ok(resultado.tribunais.length > 0);
+      assert.strictEqual(await page.isHidden('#estado-conexao'), true);
     } finally {
       await page.close();
     }
   });
 
-  it('um cliente sem credencial nenhuma (curl real, sem Sec-Fetch-Site) continua tomando 401', async () => {
+  it('um cliente sem credencial nenhuma (curl real, com Sec-Fetch-Site forjado) continua tomando 401', async () => {
     const { stdout } = await execFileAsync('curl', [
       '-s', '-o', '/dev/null', '-w', '%{http_code}',
       '-X', 'POST', `${base}/api/v1/buscas`,
       '-H', 'content-type: application/json',
+      '-H', 'Sec-Fetch-Site: same-origin',
       '-d', JSON.stringify({ tribunal: 'stf', query: 'x' }),
     ]);
-    assert.strictEqual(stdout.trim(), '401', 'curl sem chave e sem Sec-Fetch-Site precisa continuar recusado');
+    assert.strictEqual(stdout.trim(), '401', 'curl sem chave e com Sec-Fetch-Site forjado precisa continuar recusado');
   });
 });
