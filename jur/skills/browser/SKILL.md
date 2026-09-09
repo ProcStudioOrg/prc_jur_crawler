@@ -179,6 +179,7 @@ SEMPRE informe o usuário a cada refinamento que você fizer.
 | RJ ou ES federal | `jur trf2` (só 2º grau; base **começa em 2018**). ⚠️ neste portal o **espaço entre termos quebra a busca** — o crawler conserta sozinho, não use `--literal`; ver `CLAUDE-TRF2.md` |
 | Juizado Especial **Federal** / Turma Recursal no RJ ou ES | `jur trf2 --origem turmas` (Justiça Federal comum é `--origem trf2`, o default) |
 | RS/SC/PR federal, Turmas Recursais previdenciárias | `jur trf4` |
+| Entendimento de um **relator** ou de uma **turma** do TRF4 sobre um tema | `jur trf4 -q "<tema>" -r <trecho do nome>` / `--orgao-julgador "10ª Turma"`, com `--tipo-documento acordao --campo ementa` (sem `--campo ementa` a busca é no inteiro teor e infla 5× com acórdãos que só citam a frase). `--listar-combos` lista relatores e órgãos. 🔴 nome do relator dentro de `-q` **não** filtra relator — acha quem o cita. Ver `CLAUDE-TRF4.md` |
 | SP/MS federal | `jur trf3` (⚠️ instável — ver doc) |
 | AL/CE/PB/PE/RN/SE federal | `jur trf5` |
 | **MG federal, de 2023 em diante** | `jur trf6` (só 2º grau). ⚠️ operadores em **português** e o espaço funciona — **nunca hifenize** a query do TRF6 (é o oposto do TRF2); ver `CLAUDE-TRF6.md` |

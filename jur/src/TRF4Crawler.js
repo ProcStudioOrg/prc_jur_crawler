@@ -175,6 +175,32 @@ class TRF4Crawler extends BaseCrawler {
       }, filters.orgaos);
     }
 
+    // Filtros nativos da pesquisa avançada que o portal já oferece (medido em
+    // 09/09/2026): Relator (#selRelator), Órgão julgador (#selOrgao) e Tipo de
+    // documento (#selTipoDocumento). Todos são <select multiple> com selectpicker;
+    // o value de cada option é o próprio rótulo. O casamento é por substring,
+    // sem acento e sem caixa — "penteado" acha "LUIZ FERNANDO WOWK PENTEADO".
+    // Valor que não casa com NENHUMA option é erro, nunca silêncio: um nome
+    // errado devolveria 0 resultados e pareceria "o relator nunca julgou isso".
+    if (filters.relatores && filters.relatores.length > 0) {
+      await this.selectMultiple('#selRelator', filters.relatores, 'Relator');
+    }
+    if (filters.orgaosJulgadores && filters.orgaosJulgadores.length > 0) {
+      await this.selectMultiple('#selOrgao', filters.orgaosJulgadores, 'Órgão julgador');
+    }
+    if (filters.tiposDocumento && filters.tiposDocumento.length > 0) {
+      await this.selectMultiple('#selTipoDocumento', filters.tiposDocumento, 'Tipo de documento');
+    }
+
+    // Campo pesquisado: inteiro teor (default do portal) ou só a ementa.
+    if (filters.campo === 'ementa') {
+      await this.page.evaluate(() => {
+        const r = document.getElementById('optEmenta');
+        if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
+      });
+      this.log('Set campo: ementa');
+    }
+
     // Configure date filters using Playwright fill with force
     const fillDate = async (selector, value) => {
       const field = this.page.locator(selector);
@@ -199,6 +225,97 @@ class TRF4Crawler extends BaseCrawler {
       await fillDate('#dtPublicacaoFim', filters.dataDisponibilizacaoFim);
       this.log(`Set publication end date: ${filters.dataDisponibilizacaoFim}`);
     }
+  }
+
+  /**
+   * Lista os combos da pesquisa avançada (para `--listar-combos`): origens, tipos de
+   * documento, órgãos julgadores, relatores e classes. É o rol que `--relator`,
+   * `--orgao-julgador` e `--tipo-documento` casam por substring.
+   */
+  async listarCombos() {
+    const combos = {
+      origens: '#selOrigem',
+      tiposDocumento: '#selTipoDocumento',
+      orgaosJulgadores: '#selOrgao',
+      relatores: '#selRelator',
+      classes: '#selClasse',
+    };
+    try {
+      await this.init();
+      await this.navigateToSearch();
+      const saida = {};
+      for (const [chave, selector] of Object.entries(combos)) {
+        await this.page.waitForFunction(
+          (sel) => { const el = document.querySelector(sel); return el && el.options.length > 1; },
+          selector,
+          { timeout: 15000 }
+        ).catch(() => {});
+        saida[chave] = await this.page.evaluate((sel) => {
+          const el = document.querySelector(sel);
+          if (!el) return [];
+          return [...el.options].map(o => o.textContent.trim()).filter(Boolean);
+        }, selector);
+      }
+      return saida;
+    } finally {
+      await this.close();
+    }
+  }
+
+  /**
+   * Marca, num <select multiple> da pesquisa avançada, as options cujo rótulo
+   * contém algum dos valores pedidos (sem acento, sem caixa). Lança erro se
+   * algum valor não casar com nenhuma option, listando as opções parecidas.
+   */
+  async selectMultiple(selector, valores, rotulo) {
+    // As listas são carregadas por XHR (hdnUrlCarregarListasCombobox): espere
+    // ter option antes de casar, senão tudo "não existe".
+    await this.page.waitForFunction(
+      (sel) => { const el = document.querySelector(sel); return el && el.options.length > 1; },
+      selector,
+      { timeout: 15000 }
+    ).catch(() => {});
+
+    const norm = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().trim();
+    const resultado = await this.page.evaluate(({ selector, valores }) => {
+      const norm = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().trim();
+      const sel = document.querySelector(selector);
+      if (!sel) return { erro: `seletor ${selector} não encontrado` };
+      const opts = [...sel.options];
+      const marcados = [];
+      const semMatch = [];
+      for (const opt of opts) opt.selected = false;
+      for (const v of valores) {
+        const alvo = norm(v);
+        // Igualdade primeiro, substring só se nada for igual: "1ª Turma" tem de marcar
+        // a 1ª Turma, não também a 11ª e a 1ª Turma Suplementar (substring pegaria as três).
+        const exatos = opts.filter(o => norm(o.textContent) === alvo || norm(o.value) === alvo);
+        const hits = exatos.length > 0
+          ? exatos
+          : opts.filter(o => norm(o.textContent).includes(alvo) || norm(o.value).includes(alvo));
+        if (hits.length === 0) semMatch.push(v);
+        for (const h of hits) { h.selected = true; marcados.push(h.textContent.trim()); }
+      }
+      if (typeof jQuery !== 'undefined' && jQuery.fn.selectpicker) {
+        jQuery(selector).selectpicker('refresh');
+      }
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+      const todas = opts.map(o => o.textContent.trim());
+      return { marcados: [...new Set(marcados)], semMatch, todas };
+    }, { selector, valores });
+
+    if (resultado.erro) throw new Error(resultado.erro);
+    if (resultado.semMatch.length > 0) {
+      const sugestoes = [];
+      for (const v of resultado.semMatch) {
+        const partes = norm(v).split(/\s+/).filter(p => p.length >= 4);
+        const parecidas = resultado.todas.filter(t => partes.some(p => norm(t).includes(p))).slice(0, 8);
+        sugestoes.push(`"${v}" (parecidos: ${parecidas.length ? parecidas.join(' | ') : 'nenhum'})`);
+      }
+      throw new Error(`${rotulo}: nenhuma opção do portal casa com ${sugestoes.join('; ')}`);
+    }
+    this.log(`Set ${rotulo}: ${resultado.marcados.join(', ')}`);
+    return resultado.marcados;
   }
 
   /**

@@ -13,6 +13,12 @@ Além das flags comuns (ver `CLAUDE.md`):
 -dpi, --data-pub-inicio <date>  Publication start date (DD/MM/YYYY)
 -dpf, --data-pub-fim <date>     Publication end date (DD/MM/YYYY)
 --origem <tipo>                 trf4 (default) | turmas-recursais
+-r, --relator <nomes>           Filtro nativo por relator(a); vírgula separa vários. Casa por
+                                substring, sem acento e sem caixa ("penteado")
+--orgao-julgador <orgaos>       Filtro nativo por órgão julgador ("10ª Turma"; vírgula separa)
+--tipo-documento <tipos>        acordao | monocratica | vice (vírgula separa)
+--campo <campo>                 inteiro-teor (default do portal) | ementa
+--listar-combos                 Lista origens, tipos, órgãos, relatores e classes do portal e sai
 --fetch-inteiro-teor            Download full text of each result
 --output-dir <dir>              Directory for downloaded files (default: ./resultados)
 --max-results <number>          Max total results to collect
@@ -25,7 +31,48 @@ Além das flags comuns (ver `CLAUDE.md`):
 
 # Download do inteiro teor
 ./bin/jur trf4 -q "aposentadoria especial enfermeiro" --fetch-inteiro-teor --output-dir ./resultados
+
+# Entendimento de UM relator sobre um tema, só acórdãos, só onde a ementa fala do tema
+./bin/jur trf4 -q '"contribuinte individual" "agentes biológicos"' -r penteado --tipo-documento acordao --campo ementa
+
+# A mesma pergunta para a turma inteira
+./bin/jur trf4 -q '"contribuinte individual" "agentes biológicos"' --orgao-julgador "10ª Turma" --tipo-documento acordao --campo ementa
+
+# Descobrir o nome exato de um relator / órgão antes de filtrar
+./bin/jur trf4 --listar-combos --json
 ```
+
+## Filtros nativos: relator, órgão julgador, tipo, campo (mapeado em 09/09/2026)
+
+A pesquisa avançada do portal tem `<select multiple>` de **Relator / Relatora** (`#selRelator`,
+256 nomes), **Órgão julgador** (`#selOrgao`, 34 — as Turmas vão até a 12ª), **Tipo Documento**
+(`#selTipoDocumento`: Acórdão, Decisão monocrática, Despacho/Decisão da Vice-Presidência),
+**Classe** (`#selClasse`, 174) e o rádio **Inteiro teor × Ementa** (`#optInteiroTeor`/`#optEmenta`).
+O crawler expõe os quatro primeiros como `-r`, `--orgao-julgador`, `--tipo-documento`, `--campo`.
+As listas são carregadas por XHR depois do DOM (`hdnUrlCarregarListasCombobox`): o crawler espera
+o combo ter option antes de casar.
+
+- **Casamento por igualdade primeiro, substring depois**, sempre sem acento e sem caixa.
+  `"1ª Turma"` marca só a 1ª Turma (substring marcaria também `11ª TURMA` e `1ª TURMA
+  SUPLEMENTAR`); `"penteado"` acha `LUIZ FERNANDO WOWK PENTEADO`. O combo repete alguns
+  nomes com e sem acento (`ALTAIR ANTONIO GREGORIO` / `GREGÓRIO`) — a normalização casa os
+  dois, o que é o desejado.
+- **Valor que não casa com nenhuma option é ERRO, nunca zero.** Um nome errado devolveria
+  0 resultados e se leria como "esse relator nunca julgou isso". Medido: `-r "xyzabc"` →
+  `Relator: nenhuma opção do portal casa com "xyzabc" (parecidos: nenhum)`.
+- 🔴 **O nome do relator como termo de busca NÃO é filtro de relator.** `-q '... PENTEADO'`
+  acha todo acórdão que *cita* um precedente dele (medido: 261 resultados, dos quais a maioria
+  de outros relatores). Use `-r`.
+- 🔴 **O default do portal é buscar no inteiro teor, e isso infla o resultado com ruído.**
+  Medido em 09/09/2026 com `-r penteado --tipo-documento acordao`: `"contribuinte
+  individual" "agentes biológicos"` dá **520** no inteiro teor e **98** com `--campo ementa`
+  — e no inteiro teor a primeira página era de acórdãos sobre hidrocarbonetos, ruído e
+  fumos metálicos que só mencionam a frase de passagem. Para "o que o relator decide sobre
+  X", `--campo ementa` é o recorte certo; o inteiro teor serve para achar acórdão que discute
+  X sem levar X ao título.
+- `--tipo-documento acordao` corta os ~70% de decisões monocráticas do acervo (ver Volume).
+- O servidor (`servidor/relator.js`) classifica o TRF4 como `trecho` com listagem
+  `--listar-combos`.
 
 ## Notas
 

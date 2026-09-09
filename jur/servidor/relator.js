@@ -47,7 +47,6 @@ const CAPACIDADE = {
   // A CLI nao expoe --relator para estes. Onde o motivo esta medido no repo, ele vai
   // junto; onde nao esta, a nota diz so o que foi verificado (a flag nao existe).
   tjpr: nao(`O portal de jurisprudencia do TJPR nao tem campo de relator na busca — ele filtra por orgao julgador (--orgao), nao por magistrado. O relator vem no RESULTADO. ${LER_NO_RESULTADO}`),
-  trf4: nao(`A CLI do jur nao expoe filtro de relator para o TRF4. ${LER_NO_RESULTADO}`),
   tcu: nao(`A CLI do jur nao expoe filtro de relator para o TCU. ${LER_NO_RESULTADO}`),
   tjmg: nao(`A CLI do jur nao expoe filtro de relator para o TJMG (Consulta Unificada). ${LER_NO_RESULTADO}`),
   tjgo: nao(`A CLI do jur nao expoe filtro de relator para o TJGO. ${LER_NO_RESULTADO}`),
@@ -65,6 +64,7 @@ const CAPACIDADE = {
   tjam: sim('trecho', null, 'Casa por trecho no campo nmAgente da tela.'),
   tjal: sim('trecho', null, 'Casa por trecho no campo nmAgente da tela. ATENCAO: em Turma Recursal o relator vem generico ("Juiz 1 Turma Recursal Unificada") — buscar por nome de pessoa nao acha julgado de Turma Recursal.'),
   tcepe: sim('trecho', ['--listar-filtros'], 'Casamento por substring.'),
+  trf4: sim('trecho', ['--listar-combos'], 'Casa por substring, sem acento e sem caixa, no combo "Relator / Relatora" do portal ("penteado" acha LUIZ FERNANDO WOWK PENTEADO). Aceita varios nomes separados por virgula. Nome que nao casa com nenhuma opcao da ERRO, nao zero. O combo repete alguns nomes com e sem acento — o trecho casa os dois.'),
 
   // ---------- nome, sem qualificacao documentada ----------
   trf1: sim('nome', null),

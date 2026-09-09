@@ -138,12 +138,31 @@ program
   .option('-m, --max-pages <number>', 'Maximum pages to crawl', 10)
   .option('-o, --output <file>', 'Output JSON file', 'resultados/results-trf4.json')
   .option('--orgaos <orgaos>', 'Origin filter comma-separated: TRF4,TRU4,"Turmas Recursais","Varas Federais"')
+  .option('-r, --relator <nomes>', 'Filtro nativo por relator(a), separados por virgula; casa por substring sem acento (ex.: "penteado,wowk")')
+  .option('--orgao-julgador <orgaos>', 'Filtro nativo por orgao julgador, separados por virgula (ex.: "10ª Turma", "5ª Turma,6ª Turma")')
+  .option('--tipo-documento <tipos>', 'Filtro nativo por tipo: acordao | monocratica | vice (separados por virgula)')
+  .option('--campo <campo>', 'Onde pesquisar o texto: inteiro-teor (default do portal) | ementa')
+  .option('--listar-combos', 'Lista origens, tipos de documento, orgaos julgadores, relatores e classes do portal e sai')
   .option('-v, --visible', 'Show browser window (disable headless mode)')
   .option('--headed', 'Alias for --visible: show browser window for debugging')
   .option('--json', 'Quiet mode: suppress logs, output JSON summary only')
   .action(async (opts) => {
     const jsonMode = opts.json;
     const log = jsonMode ? () => {} : console.log.bind(console);
+
+    if (opts.listarCombos) {
+      try {
+        const crawler = new TRF4Crawler({ headless: !(opts.visible || opts.headed), timeout: 60000, log });
+        const combos = await crawler.listarCombos();
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: true, ...combos }) + '\n');
+        else console.log(JSON.stringify(combos, null, 2));
+        process.exit(0);
+      } catch (error) {
+        if (jsonMode) process.stdout.write(JSON.stringify({ success: false, error: error.message }) + '\n');
+        else console.error('Erro ao listar combos:', error.message);
+        process.exit(1);
+      }
+    }
 
     // Modo consulta direta por numero (TRF4Checker) — a verificacao de um julgado
     if (opts.numero) {
@@ -176,6 +195,10 @@ program
     log(`Data Publicacao Inicio: ${opts.dataPubInicio || 'not set'}`);
     log(`Data Publicacao Fim: ${opts.dataPubFim || 'not set'}`);
     log(`Orgaos: ${opts.orgaos || 'all (default)'}`);
+    log(`Relator: ${opts.relator || 'all (default)'}`);
+    log(`Orgao julgador: ${opts.orgaoJulgador || 'all (default)'}`);
+    log(`Tipo documento: ${opts.tipoDocumento || 'all (default)'}`);
+    log(`Campo: ${opts.campo || 'inteiro-teor (default)'}`);
     log(`Max Pages: ${opts.maxPages}`);
     log(`Max Results: ${opts.maxResults || 'unlimited'}`);
     log(`Fetch Inteiro Teor: ${!!opts.fetchInteiroTeor}`);
@@ -199,7 +222,20 @@ program
         dataDisponibilizacaoInicio: opts.dataPubInicio || null,
         dataDisponibilizacaoFim: opts.dataPubFim || null,
         orgaos: opts.orgaos ? opts.orgaos.split(',').map(o => o.trim()) : null,
+        relatores: opts.relator ? opts.relator.split(',').map(o => o.trim()).filter(Boolean) : null,
+        orgaosJulgadores: opts.orgaoJulgador ? opts.orgaoJulgador.split(',').map(o => o.trim()).filter(Boolean) : null,
+        tiposDocumento: opts.tipoDocumento
+          ? opts.tipoDocumento.split(',').map(o => o.trim().toLowerCase()).filter(Boolean).map(t => {
+              const mapa = { acordao: 'Acórdão', 'acórdão': 'Acórdão', monocratica: 'Decisão monocrática', 'monocrática': 'Decisão monocrática', vice: 'Vice-Presidência' };
+              if (!mapa[t]) throw new Error(`--tipo-documento: use acordao, monocratica ou vice (recebido "${t}")`);
+              return mapa[t];
+            })
+          : null,
+        campo: opts.campo === 'ementa' ? 'ementa' : null,
       };
+      if (opts.campo && !['ementa', 'inteiro-teor'].includes(opts.campo)) {
+        throw new Error(`--campo: use ementa ou inteiro-teor (recebido "${opts.campo}")`);
+      }
 
       const searchOptions = {
         maxPages: parseInt(opts.maxPages, 10),
