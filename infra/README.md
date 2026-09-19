@@ -127,39 +127,21 @@ as duas pontas conscientemente:
     # fora do container:
     JUR_BIND=0.0.0.0 node jur/servidor/index.js
 
-Antes de fazer isso, leia a seção seguinte: uma instalação exposta precisa de controle de
-acesso de borda. A porta 3000 local deve continuar limitada ao loopback.
+Antes de fazer isso, configure SSO e HTTPS conforme a seção seguinte. A porta 3000 local deve continuar limitada ao loopback.
 
-## Autenticação — o que a chave de conexão protege e o que ela não protege
+## Autenticação ProcStudio e chaves pessoais
 
-As operações de API e MCP passam por uma guarda única no roteador
-(`jur/servidor/autenticacao.js`). `GET /api/v1/saude`, `GET /api/v1/openapi.json` e
-`GET /docs` são operações públicas; os estáticos, incluindo a página da interface, também
-são públicos para que a aplicação possa carregar. Toda operação protegida exige Bearer —
-inclusive uma chamada disparada pela interface.
+A aplicação exige login ProcStudio e um cofre configurado. Veja [configuração, armazenamento
+e ordem de publicação](../docs/procstudio-llm.md). Configure as variáveis do Compose a partir
+de `infra/.env.example` em um arquivo privado, fora do Git. O Compose recusa variáveis ausentes.
 
-**O que existe:**
+A interface usa sessão HttpOnly, SameSite=Lax e Secure em HTTPS. Mutações exigem Origin exato.
+Scripts e MCP usam Bearer pessoal; o servidor armazena somente hash dessas chaves.
+O Rails valida usuário/equipe a cada requisição. Streams são revalidados a cada 30 segundos.
+As chaves dos provedores são criptografadas com AES-256-GCM e vinculadas ao proprietário.
 
-- **Chave de conexão.** Todo cliente de uma operação protegida — interface, Claude Code,
-  MCP, script ou `curl` — precisa mandar `Authorization: Bearer <chave>`. A interface a
-  guarda em `localStorage` como `jur.chaveConexao`. A chave é gerada em
-  **Configurações → Chaves de conexão**, e o valor completo aparece **uma vez só**, na
-  criação — o servidor guarda hash e prefixo. Bearer ausente, inválido ou revogado recebe
-  **401**.
-- **Desligar.** `JUR_EXIGIR_CHAVE=0` desliga a exigência de chave inteira
-  (`servidor/index.js`). O default — inclusive no `Dockerfile`, que não seta a variável —
-  é **ligada**.
-- **Barreira de origem.** Antes de qualquer outra coisa — mesmo com `JUR_EXIGIR_CHAVE=0`
-  —, a guarda recusa com **403** requisição com `Origin` que não seja loopback nem igual
-  ao `Host`. Isso vale para toda rota, com a chave exigida ligada ou desligada: um
-  `Origin` hostil recebe **403**.
-
-Mantenha a instalação de desenvolvimento em loopback. A página pública planejada é
-`https://jurcrawler.com.br`; para disponibilizá-la fora da máquina, use controle de acesso
-de borda (proxy autenticado ou firewall) e não publique `3000` diretamente.
-
-Multiusuário e login continuam fora de escopo (spec §5): as chaves de conexão autenticam
-*clientes*, não pessoas — e qualquer chave válida pode emitir outras.
+Não existe modo público `JUR_EXIGIR_CHAVE=0` nem `ANTHROPIC_API_KEY` global nesta aplicação.
+A porta 3000 continua em loopback atrás do proxy HTTPS. Não use `down -v` para atualizar.
 
 ## Comandos
 

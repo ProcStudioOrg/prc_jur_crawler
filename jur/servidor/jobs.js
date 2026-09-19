@@ -276,6 +276,7 @@ function criarFila(opcoes = {}) {
     aoEvento: (fn) => ouvintes.add(fn),
     removerOuvinte: (fn) => ouvintes.delete(fn),
     concorrencia,
+    ocupada: () => pendentes.length > 0 || rodando.size > 0,
   };
 }
 

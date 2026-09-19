@@ -103,9 +103,11 @@ describe('I4 — em tela estreita ainda ha caminho ate Configuracoes (a chave da
         assert.strictEqual(await page.isVisible('#historico .conversa-item'), true, 'o historico tambem volta');
         assert.strictEqual(await page.isVisible('#abrir-config'), true);
 
-        // O que fecha o achado: chegar ao campo da chave da Anthropic.
+        // Chegar à credencial pelo fluxo de conexão em tela estreita.
         await page.click('#abrir-config');
         await page.waitForSelector('#painel-config .painel-caixa', { state: 'visible' });
+        await page.getByRole('button', {name:'Adicionar conexão',exact:true}).click();
+        await page.getByRole('button', {name:'Continuar',exact:true}).click();
         const campoChave = await page.$('#painel-config input[type="password"]');
         assert.ok(campoChave, 'o painel precisa trazer o campo da chave da LLM');
         assert.strictEqual(await campoChave.isVisible(), true, 'o campo da chave precisa estar visivel');

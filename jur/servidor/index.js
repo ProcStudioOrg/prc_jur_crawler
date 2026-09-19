@@ -1,10 +1,6 @@
 const http = require('node:http');
 const path = require('node:path');
 const { criarRoteador } = require('./http');
-const db = require('./db');
-const jobs = require('./jobs');
-const chaves = require('./chaves');
-const conversas = require('./conversas');
 const turnos = require('./turnos');
 const autenticacao = require('./autenticacao');
 
@@ -20,6 +16,7 @@ function criarApp(deps = {}) {
   require('./rotas/buscas').registrar(roteador, deps);
   require('./rotas/chat').registrar(roteador, deps);
   require('./rotas/chaves').registrar(roteador, deps);
+  require('./rotas/conexoes-llm').registrar(roteador, deps);
   require('./rotas/conversas').registrar(roteador, deps);
   require('./mcp').registrar(roteador, deps);
   require('./rotas/docs').registrar(roteador, deps);
@@ -28,32 +25,21 @@ function criarApp(deps = {}) {
 }
 
 function iniciar() {
-  const con = db.abrir();
-  const fila = jobs.criarFila({ con });
-  const gerenciadorChaves = chaves.criarGerenciador(con);
-  const repositorioConversas = conversas.criarRepositorio(con);
-  const porta = Number(process.env.PORT || 3000);
-  // C2: default de loopback, NAO 0.0.0.0. A guarda (exigirChave abaixo) cobre quem nao
-  // tem chave, mas continua levando a chave da Anthropic do operador atras dela
-  // (POST /api/v1/chat) — publicado na LAN sem pensar, e mais uma superficie para
-  // alguem tentar. Quem QUER expor declara JUR_BIND (ex.: JUR_BIND=0.0.0.0), e ai
-  // assume a decisao explicitamente. Ver infra/README.md.
-  const endereco = process.env.JUR_BIND || '127.0.0.1';
-  // Ligado por padrao: sem isto, qualquer site cross-origin (achado da revisao final)
-  // enfileira busca real contra tribunal usando o IP do operador via POST /buscas, e
-  // /mcp e /api/v1/chat ficam abertos para qualquer cliente que saiba a porta. Desligar
-  // exige a variavel explicitamente — quem faz isso assume a decisao, como o JUR_BIND
-  // acima.
-  const exigirChave = process.env.JUR_EXIGIR_CHAVE !== '0';
-  const servidor = http.createServer(
-    criarApp({ fila, chaves: gerenciadorChaves, conversas: repositorioConversas, exigirChave }).handler,
-  );
-  servidor.listen(porta, endereco, () => {
-    console.log(`jur ouvindo em http://${endereco}:${porta} (concorrencia ${fila.concorrencia})`);
+  const { criarCliente } = require('./procstudio');
+  const { criarAplicacao } = require('./aplicacao');
+  const app = criarAplicacao({
+    dir: process.env.JUR_DADOS || '/dados', cofreKey: process.env.JUR_ENCRYPTION_KEY,
+    publicUrl: process.env.JUR_PUBLIC_URL, frontendUrl: process.env.PROCSTUDIO_FRONTEND_URL,
+    clientId: process.env.PROCSTUDIO_CLIENT_ID,
+    procstudio: criarCliente({ url: process.env.PROCSTUDIO_API_URL,
+      issuer: process.env.PROCSTUDIO_ISSUER, clientId: process.env.PROCSTUDIO_CLIENT_ID,
+      secret: process.env.PROCSTUDIO_CLIENT_SECRET }),
   });
+  const servidor = http.createServer(app.handler);
+  servidor.listen(Number(process.env.PORT || 3000), process.env.JUR_BIND || '127.0.0.1');
   return servidor;
 }
 
-if (require.main === module) iniciar();
-
 module.exports = { criarApp, iniciar };
+
+if (require.main === module) iniciar();

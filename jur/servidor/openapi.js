@@ -49,6 +49,41 @@ const RESPOSTAS = {
   },
 };
 
+const connectionSchema = { type: 'object', properties: {
+  provider: { type: 'string', enum: ['anthropic', 'openai', 'openrouter', 'gemini', 'custom'] },
+  name: { type: 'string', maxLength: 80 }, model: { type: 'string', maxLength: 256 },
+  endpoint: { type: 'string', format: 'uri', description: 'Somente custom; HTTPS público compatível com Chat Completions.' },
+  apiKey: { type: 'string', writeOnly: true, description: 'Nunca devolvida; criptografada e vinculada ao proprietário.' },
+} };
+function operation(summary, { schema, id = false, created = false } = {}) {
+  return { summary,
+    ...(id ? { parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }] } : {}),
+    ...(schema ? { requestBody: { required: true, content: { 'application/json': { schema } } } } : {}),
+    responses: { [created ? 201 : 200]: { description: 'Sucesso. Metadados não incluem credenciais em claro.' },
+      400: RESPOSTAS.Erro400, 401: RESPOSTAS.Erro401, 403: RESPOSTAS.Erro403, 404: RESPOSTAS.Erro404 },
+  };
+}
+const ACCOUNT_PATHS = {
+  '/api/v1/me': { get: operation('Identidade ProcStudio autenticada') },
+  '/auth/login': { get: { summary: 'Inicia login ProcStudio com PKCE', security: [], responses: { 303: { description: 'Redirecionamento ao ProcStudio; cookie temporário HttpOnly.' } } } },
+  '/auth/callback': { get: { summary: 'Consome código temporário de uso único', security: [], parameters: ['code', 'state'].map(name => ({ name, in: 'query', required: true, schema: { type: 'string' } })), responses: { 303: { description: 'Retorna à interface com cookie de sessão ou mensagem de erro.' } } } },
+  '/auth/logout': { post: operation('Encerra a sessão delegada do JurCrawler') },
+  '/api/v1/conexoes-llm': {
+    get: operation('Lista metadados das conexões de IA pessoais'),
+    post: operation('Cria uma conexão privada de IA', { created: true, schema: { ...connectionSchema, required: ['provider', 'apiKey'] } }),
+  },
+  '/api/v1/conexoes-llm/{id}': {
+    patch: operation('Atualiza conexão privada; chave omitida mantém o segredo', { id: true, schema: connectionSchema }),
+    delete: operation('Remove conexão e credencial', { id: true }),
+  },
+  '/api/v1/conexoes-llm/{id}/modelos': { get: operation('Obtém catálogo do provedor; falha retorna 422 sem corpo bruto', { id: true }) },
+  '/api/v1/conexoes-llm/{id}/validar': { post: operation('Valida credencial consultando o catálogo', { id: true }) },
+  '/api/v1/preferencias': {
+    get: operation('Consulta conexão e modelo selecionados'),
+    patch: operation('Seleciona conexão e modelo pessoais', { schema: { type: 'object', required: ['conexaoId', 'modelo'], properties: { conexaoId: { type: 'string' }, modelo: { type: 'string' } } } }),
+  },
+};
+
 function documento() {
   return {
     openapi: '3.1.0',
@@ -65,15 +100,8 @@ function documento() {
         + 'Cada tribunal tem um dos quatro estados: `ok`, `instavel`, `sem-acesso` ou '
         + '`exige-sessao`. Só `ok` e `instavel` são consultáveis via API (campo `disponivel`).\n\n'
         + '## Autenticação\n\n'
-        + 'Toda operação protegida exige `Authorization: Bearer <chave>`, inclusive as chamadas '
-        + 'da interface. As únicas operações públicas deste documento são `GET /api/v1/saude`, '
-        + '`GET /api/v1/openapi.json` e `GET /docs`. A interface guarda a chave de conexão em '
-        + '`localStorage` sob `jur.chaveConexao`; a exigência pode ser desligada inteira com '
-        + '`JUR_EXIGIR_CHAVE=0`.\n\n'
-        + 'A instalação local deve permanecer em loopback (`127.0.0.1:3000`). A página pública '
-        + 'planejada é `https://jurcrawler.com.br`; uma implantação exposta exige controle de '
-        + 'acesso de borda. As chaves autenticam *clientes*, não pessoas, e qualquer chave válida '
-        + 'pode emitir outras.\n\n'
+        + 'Interface: sessão HttpOnly delegada pelo ProcStudio. REST/MCP: chave pessoal Bearer. '
+        + 'Dados e credenciais são privados por emissor, usuário e equipe. Saúde, documentação e início de login são públicos.\n\n'
         + '## MCP\n\n'
         + '`POST /mcp` expõe as mesmas capacidades de busca via protocolo MCP (JSON-RPC 2.0) '
         + 'para clientes LLM, com três ferramentas: `listar_tribunais`, `buscar_jurisprudencia` '
@@ -81,19 +109,15 @@ function documento() {
     },
     servers: [
       { url: 'http://localhost:3000', description: 'instalação local em loopback' },
-      { url: 'https://jurcrawler.com.br', description: 'página pública planejada' },
+      { url: 'https://jurcrawler.com.br', description: 'JurCrawler' },
     ],
     components: {
       securitySchemes: {
         chaveDeConexao: {
           type: 'http', scheme: 'bearer',
-          description:
-            'Chave gerada na interface, em Configurações (POST /api/v1/chaves); o valor completo '
-            + 'aparece uma única vez. A interface a armazena em `localStorage` como '
-            + '`jur.chaveConexao` e a envia como Bearer em toda operação protegida. Mantenha a '
-            + 'instalação local em loopback; uma implantação pública exige controle de acesso de '
-            + 'borda. JUR_EXIGIR_CHAVE=0 desliga a exigência.',
+          description: 'Chave pessoal criada em Configurações → Integrações. Acesso somente aos dados do titular; o valor aparece uma vez.',
         },
+        sessaoProcStudio: { type: 'apiKey', in: 'cookie', name: 'jur_session', description: 'Cookie HttpOnly emitido após login ProcStudio. Mutações exigem Origin da instalação.' },
       },
       schemas: {
         Erro: ERRO,
@@ -228,8 +252,9 @@ function documento() {
         },
       },
     },
-    security: [{ chaveDeConexao: [] }],
+    security: [{ chaveDeConexao: [] }, { sessaoProcStudio: [] }],
     paths: {
+      ...ACCOUNT_PATHS,
       '/api/v1/saude': {
         get: {
           summary: 'Healthcheck',
@@ -459,11 +484,8 @@ function documento() {
           description:
             'text/event-stream. O assistente pode chamar as mesmas ferramentas do MCP '
             + '(listar_tribunais, buscar_jurisprudencia, ler_resultados) durante a conversa. '
-            + 'Gasta a chave da Anthropic do operador — por isso exige `Authorization: Bearer` '
-            + 'mesmo vindo da interface local (não está na lista de rotas livres). A chave da '
-            + 'Anthropic em si vem do cabeçalho `x-api-key` ou de `ANTHROPIC_API_KEY` no '
-            + 'ambiente do servidor, nunca é persistida. Se `conversaId` for informado, o turno '
-            + 'é gravado na conversa.',
+            + 'Usa uma conexão privada de IA do titular autenticado. A credencial é decifrada somente no servidor. '
+            + 'Se conversaId for informado, persiste o turno na conversa pessoal.',
           requestBody: {
             required: true,
             content: {
@@ -486,11 +508,11 @@ function documento() {
                       type: 'array', items: { $ref: '#/components/schemas/MensagemEnviada' },
                       description: 'histórico do turno; a última precisa ser role "user" (terminar em "assistant" seria prefill, que a API recusa)',
                     },
-                    modelo: { type: 'string', enum: ['claude-opus-5', 'claude-sonnet-5', 'claude-haiku-4-5'], description: 'default claude-opus-5' },
-                    esforco: { type: 'string', enum: ['low', 'medium', 'high'], description: 'default high; claude-haiku-4-5 não aceita este campo' },
+                    modelo: { type: 'string', maxLength: 256, description: 'ID do modelo do provedor; usa o modelo salvo se omitido.' },
+                    conexaoId: { type: 'string', description: 'ID de uma conexão de IA pertencente ao titular.' },
                     conversaId: { type: 'string', description: 'opcional — se informado, persiste o turno nesta conversa' },
                   },
-                  required: ['mensagens'],
+                  required: ['mensagens', 'conexaoId'],
                 },
               },
             },
@@ -508,10 +530,7 @@ function documento() {
             400: RESPOSTAS.Erro400,
             401: {
               description:
-                'A chave de conexão em `Authorization: Bearer <chave>` está ausente, inválida ou '
-                + 'revogada, OU a credencial Anthropic está ausente tanto de `x-api-key` quanto de '
-                + '`ANTHROPIC_API_KEY` no servidor. As duas credenciais são independentes: uma não '
-                + 'substitui a outra.',
+                'Sessão ProcStudio ou Authorization: Bearer pessoal ausente, inválido ou revogado.',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
             },
             403: RESPOSTAS.Erro403,

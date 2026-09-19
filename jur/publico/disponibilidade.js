@@ -129,22 +129,22 @@
   // nasce ligado; guardando os ligados, ele nasceria invisivel para todo mundo que ja
   // tem a chave no localStorage — um tribunal que existe e ninguem consegue usar, sem
   // sintoma nenhum.
-  const CHAVE_DESLIGADOS = 'jur.tribunaisDesligados';
+  function chaveDesligados() { const p = window.jurSessao?.principal; return p ? 'jur.tribunaisDesligados.' + JSON.stringify([p.issuer, p.userId, p.teamId]) : null; }
 
   function lerDesligados() {
     try {
-      const bruto = JSON.parse(localStorage.getItem(CHAVE_DESLIGADOS) || '[]');
+      const bruto = JSON.parse(localStorage.getItem(chaveDesligados()) || '[]');
       return new Set(Array.isArray(bruto) ? bruto : []);
     } catch { return new Set(); }
   }
 
   function gravarDesligados(conjunto) {
-    try { localStorage.setItem(CHAVE_DESLIGADOS, JSON.stringify([...conjunto])); }
+    try { localStorage.setItem(chaveDesligados(), JSON.stringify([...conjunto])); }
     catch { /* modo privado */ }
   }
 
   let tribunais = [];
-  let desligados = lerDesligados();
+  let desligados = new Set();
   const filtros = { area: new Set(), uf: new Set() };
 
   /** Tribunal indisponivel nunca conta como ligado: mostra-lo assim seria mentira, e
@@ -294,6 +294,7 @@
   }
 
   async function montarDisponibilidade() {
+    desligados = lerDesligados();
     const alvo = $('#disponibilidade');
     try {
       tribunais = (await window.jurApi.pedir('/api/v1/tribunais')).tribunais;
@@ -413,6 +414,6 @@
   }
 
   montarPrompts();
-  montarDisponibilidade();
+  document.addEventListener('jur:sessao', montarDisponibilidade);
   montarManual();
 }());

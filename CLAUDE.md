@@ -33,19 +33,19 @@ dentro da imagem. Funciona igual em macOS, Linux e Windows/WSL.
 
     cd infra && docker compose up -d --build
 
-Abra `http://localhost:3000`. A página estática é pública; a interface tem o chat, a lista de
-tribunais com o estado de cada um (verde ok · amarelo instável · cinza bloqueado · azul exige
-sessão) e Configurações para colar a chave de conexão.
+Configure primeiro as variáveis de SSO e cofre conforme [integração ProcStudio](docs/procstudio-llm.md).
+Abra `http://localhost:3000` e entre com a conta ProcStudio. A interface usa cookie HttpOnly;
+REST/MCP usam chaves pessoais geradas em Configurações → Integrações. Dados, resultados,
+conversas e credenciais são isolados por emissor, usuário e equipe. A API revalida a identidade
+no Rails e falha fechada se ele estiver indisponível.
 
-Toda operação protegida da API — inclusive as disparadas pela interface — exige
-`Authorization: Bearer <chave>`. A interface armazena a chave em `localStorage`, sob
-`jur.chaveConexao`; a chave é emitida em Configurações e o valor aparece uma única vez, então
-copie na hora. `GET /api/v1/saude`, `GET /api/v1/openapi.json` e `GET /docs` são públicas.
-Para desenvolvimento local, `JUR_EXIGIR_CHAVE=0` desliga a exigência inteira. A documentação
-completa da API fica em `http://localhost:3000/docs`.
+Configurações → IA permite Anthropic, OpenAI, OpenRouter, Gemini e endpoints HTTPS públicos
+compatíveis com OpenAI Chat Completions. As chaves são criptografadas no servidor; não ficam
+no localStorage nem voltam nas respostas. Não existe chave de LLM global ou bypass de login
+na aplicação de produção. `criarApp` é roteador interno para testes; iniciar produção usa `criarAplicacao`.
 
-Mantenha a porta 3000 em loopback. A página pública planejada é
-`https://jurcrawler.com.br`; uma implantação exposta requer controle de acesso de borda.
+Saúde, OpenAPI e documentação são públicas. Mantenha a porta Docker em loopback atrás do
+proxy HTTPS. A documentação da API fica em `http://localhost:3000/docs`.
 
 A mesma API serve três clientes:
 

@@ -6,7 +6,15 @@
   <title>jur — jurisprudência dos tribunais brasileiros</title>
   <link rel="stylesheet" href="/estilo.css">
 </head>
-<body>
+<body class="aguardando-sessao">
+  <section id="login-procstudio" aria-label="Entrar no JurCrawler">
+    <div class="login-conteudo"><span class="marca">ProcStudio <b>Jurisprudência</b></span>
+    <h1>Pesquisa jurídica,<br>com a sua conta.</h1>
+    <p>Consulte as bases oficiais dos tribunais e converse com a IA de sua escolha.</p>
+    <a class="botao-acento entrar-procstudio" href="/auth/login">Entrar com ProcStudio <span aria-hidden="true">→</span></a>
+    <p class="login-privacidade">Suas conexões de IA e pesquisas ficam privadas na sua conta.</p>
+    <p id="login-erro" role="status"></p></div>
+  </section>
   <!-- I4: abaixo de 860px a lateral vira gaveta. Sem este botao ela simplesmente sumia,
        e com ela iam Nova conversa, o historico e — o que bloqueia o produto —
        Configuracoes, o unico lugar da interface onde se digita a chave da Anthropic.
@@ -17,7 +25,7 @@
 
   <aside id="lateral">
     <div class="lateral-topo">
-      <span class="marca">jur</span>
+      <span class="marca">ProcStudio <b>Jurisprudência</b></span>
       <button id="tema" class="icone" title="Alternar tema" aria-label="Alternar tema">◐</button>
     </div>
 
@@ -31,17 +39,13 @@
       <span class="config-avatar" aria-hidden="true">⚙</span>
       <span class="config-texto">
         <strong>Configurações</strong>
-        <small>Chaves e conexão</small>
+        <small>Provedores e integrações</small>
       </span>
     </button>
+    <div class="conta-atual"><span id="conta-nome"></span><button id="sair-conta" type="button">Sair</button></div>
   </aside>
 
   <main id="centro">
-    <section id="estado-conexao" class="estado-conexao" role="status" hidden>
-      <strong>Conecte esta instalação</strong>
-      <span>Cole uma chave de conexão para acessar conversas, buscas e chat.</span>
-      <button id="configurar-conexao" type="button">Abrir Configurações</button>
-    </section>
     <section id="inicial">
       <h1 class="saudacao">Sobre o que você quer pesquisar?</h1>
       <div id="caixa-inicial" class="caixa-entrada"></div>
@@ -71,18 +75,7 @@
     <form class="formulario">
       <textarea class="entrada" rows="1" placeholder="Pergunte sobre jurisprudência…"></textarea>
       <div class="entrada-rodape">
-        <div class="seletor-modelo">
-          <select class="modelo" aria-label="Modelo">
-            <option value="claude-opus-5">Opus 5</option>
-            <option value="claude-sonnet-5">Sonnet 5</option>
-            <option value="claude-haiku-4-5">Haiku 4.5</option>
-          </select>
-          <select class="esforco" aria-label="Nível de esforço">
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high" selected>High</option>
-          </select>
-        </div>
+        <div class="seletor-modelo"></div>
         <button type="submit" class="enviar" aria-label="Enviar">↑</button>
       </div>
     </form>
@@ -93,9 +86,12 @@
        que eles consomem no carregamento (disponibilidade.js busca /api/v1/tribunais de
        imediato). -->
   <script src="/markdown.js"></script>
+  <script src="/conexoes.js"></script>
+  <script src="/seletor-modelo.js"></script>
   <script src="/app.js"></script>
   <script src="/disponibilidade.js"></script>
   <script src="/decisoes.js"></script>
   <script src="/config.js"></script>
+  <script src="/sessao.js"></script>
 </body>
 </html>

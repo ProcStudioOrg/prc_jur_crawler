@@ -54,8 +54,8 @@ async function abrir(desligados = null) {
   await injetarChave(page, chaveBrowser);
   await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
   await page.evaluate((d) => {
-    localStorage.removeItem('jur.tribunaisDesligados');
-    if (d) localStorage.setItem('jur.tribunaisDesligados', JSON.stringify(d));
+    localStorage.removeItem('jur.tribunaisDesligados.["fixture","fixture","test"]');
+    if (d) localStorage.setItem('jur.tribunaisDesligados.["fixture","fixture","test"]', JSON.stringify(d));
   }, desligados);
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForSelector('.chip-tribunal');
@@ -102,7 +102,7 @@ describe('disponibilidade — leitura', () => {
 
 describe('disponibilidade — liga/desliga', () => {
   const ligado = (page, c) => page.getAttribute(`${chip(c)} .liga`, 'aria-pressed');
-  const guardado = (page) => page.evaluate(() => localStorage.getItem('jur.tribunaisDesligados'));
+  const guardado = (page) => page.evaluate(() => localStorage.getItem('jur.tribunaisDesligados.["fixture","fixture","test"]'));
 
   it('tudo comeca ligado', async () => {
     const page = await abrir();

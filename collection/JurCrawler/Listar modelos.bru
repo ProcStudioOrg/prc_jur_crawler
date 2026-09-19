@@ -1,0 +1,15 @@
+meta {
+  name: Listar modelos
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/v1/conexoes-llm/{{connection_id}}/modelos
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{personal_token}}
+}

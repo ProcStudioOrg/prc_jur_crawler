@@ -1,0 +1,22 @@
+meta {
+  name: Selecionar modelo
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base_url}}/api/v1/preferencias
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{personal_token}}
+}
+
+body:json {
+{
+  "conexaoId": "{{connection_id}}",
+  "modelo": "{{model_id}}"
+}
+}

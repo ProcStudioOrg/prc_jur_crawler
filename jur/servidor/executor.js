@@ -100,7 +100,7 @@ async function executar(comando, params = {}, opcoes = {}) {
   return new Promise((resolve) => {
     // detached: o crawler abre Chromium filho. Sem grupo proprio, matar o node
     // deixaria o browser orfao consumindo memoria dentro do container.
-    const filho = spawn(process.execPath, args, { detached: true, stdio: ['ignore', 'pipe', 'pipe'] });
+    const filho = spawn(process.execPath, args, { detached: true, stdio: ['ignore', 'pipe', 'pipe'], cwd: opcoes.cwd, env: opcoes.env });
 
     let saida = '';
     let erroPadrao = '';
@@ -213,7 +213,7 @@ async function listar(comando, args = [], opcoes = {}) {
 
   return new Promise((resolve) => {
     const filho = spawn(process.execPath, [cliPath, comando, ...args.map(String), '--json'],
-      { detached: true, stdio: ['ignore', 'pipe', 'pipe'] });
+      { detached: true, stdio: ['ignore', 'pipe', 'pipe'], cwd: opcoes.cwd, env: opcoes.env });
 
     let saida = '';
     let erroPadrao = '';

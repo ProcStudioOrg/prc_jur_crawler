@@ -5,10 +5,7 @@ services:
       context: ..
       dockerfile: infra/Dockerfile
     image: jur:dev
-    # 127.0.0.1 no lado do HOST de proposito: "3000:3000" publicava em 0.0.0.0 e o
-    # servico exige Bearer na API, mas ainda leva a chave da Anthropic do operador
-    # atras de POST /api/v1/chat. Medido: a porta respondia da LAN. Quem quiser expor de
-    # proposito troca esta linha e ajusta JUR_BIND — ver infra/README.md.
+    # Publicação somente no proxy local; identidade validada pelo ProcStudio.
     ports:
       - "127.0.0.1:3000:3000"
     environment:
@@ -20,7 +17,13 @@ services:
       # encaminhar a porta publicada; quem limita a exposicao e o "127.0.0.1:" do
       # ports acima. Fora do container (node servidor/index.js) o default e 127.0.0.1.
       JUR_BIND: "0.0.0.0"
-      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+      JUR_ENCRYPTION_KEY: "${JUR_ENCRYPTION_KEY:?Configure JUR_ENCRYPTION_KEY}"
+      JUR_PUBLIC_URL: "${JUR_PUBLIC_URL:?Configure JUR_PUBLIC_URL}"
+      PROCSTUDIO_FRONTEND_URL: "${PROCSTUDIO_FRONTEND_URL:?Configure PROCSTUDIO_FRONTEND_URL}"
+      PROCSTUDIO_API_URL: "${PROCSTUDIO_API_URL:?Configure PROCSTUDIO_API_URL}"
+      PROCSTUDIO_ISSUER: "${PROCSTUDIO_ISSUER:?Configure PROCSTUDIO_ISSUER}"
+      PROCSTUDIO_CLIENT_ID: "${PROCSTUDIO_CLIENT_ID:?Configure PROCSTUDIO_CLIENT_ID}"
+      PROCSTUDIO_CLIENT_SECRET: "${PROCSTUDIO_CLIENT_SECRET:?Configure PROCSTUDIO_CLIENT_SECRET}"
       # JUR_BROWSER_ARGS: "--no-sandbox --disable-dev-shm-usage"   # so no nivel 3 — nao foi preciso (ver infra/README.md)
     volumes:
       - jur-dados:/dados

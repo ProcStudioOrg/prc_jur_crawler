@@ -1,13 +1,13 @@
-/* Paleta do Claude. Claro por padrao; escuro por preferencia do sistema ou
+/* Identidade ProcStudio. Claro por padrão; escuro por preferência do sistema ou
    por data-tema="escuro" no <html>, que o alternador escreve. */
 :root {
-  --fundo: #FAF9F5;
+  --fundo: #FEFEFA;
   --superficie: #FFFFFF;
-  --lateral: #F0EEE6;
-  --texto: #1F1E1D;
-  --fraco: #6D6C67;
-  --borda: #E3E0D8;
-  --acento: #D97757;
+  --lateral: #F0F4F3;
+  --texto: #373F45;
+  --fraco: #59646E;
+  --borda: #D8DFE4;
+  --acento: #0277EE;
   --ok: #2E7D46;
   --instavel: #B7791F;
   /* Estava #8A8781 (3,58:1 contra --superficie, marginal) — escurecido para folga
@@ -15,17 +15,17 @@
      (achado Important da revisao da Task 9, herdado da Task 8). */
   --bloqueado: #726F69;
   --sessao: #2C6BB0;
-  --raio: 12px;
+  --raio: 8px;
   --lateral-largura: 264px;
 }
 :root[data-tema="escuro"] {
-  --fundo: #262624;
-  --superficie: #30302E;
-  --lateral: #1F1E1D;
-  --texto: #FAF9F5;
-  --fraco: #A3A099;
-  --borda: #3E3D3A;
-  --acento: #D97757;
+  --fundo: #101827;
+  --superficie: #172235;
+  --lateral: #373F45;
+  --texto: #FEFEFA;
+  --fraco: #B3C1CF;
+  --borda: #33465C;
+  --acento: #0277EE;
   --ok: #4CAF6A;
   --instavel: #D6A03A;
   /* Estava #6F6E69 (2,59:1 contra --superficie escuro — reprovava o minimo de 3:1).
@@ -35,8 +35,8 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-tema="claro"]) {
-    --fundo: #262624; --superficie: #30302E; --lateral: #1F1E1D;
-    --texto: #FAF9F5; --fraco: #A3A099; --borda: #3E3D3A;
+    --fundo: #101827; --superficie: #172235; --lateral: #373F45;
+    --texto: #FEFEFA; --fraco: #B3C1CF; --borda: #33465C;
     --ok: #4CAF6A; --instavel: #D6A03A; --bloqueado: #9C9992; --sessao: #5B9BD5;
   }
 }
@@ -228,7 +228,7 @@ body {
 /* ---------- paineis ---------- */
 .painel {
   position: fixed; inset: 0; background: rgba(0,0,0,.35);
-  display: grid; place-items: center; padding: 24px; z-index: 10;
+  display: grid; place-items: center; padding: 24px; z-index: 60;
 }
 .painel[hidden] { display: none; }
 .painel-caixa {
@@ -523,3 +523,82 @@ body {
 }
 .decisoes-vazio p { margin: 0 0 8px; }
 .decisoes-vazio p:last-child { margin: 0; color: var(--fraco); }
+
+/* ProcStudio — conexões pessoais e pesquisa */
+:root { --brand-dark: #01013D; --azul-suave: #EAF3FE; }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }
+::selection { background: #98D9FD; color: #01013D; }
+input, textarea { caret-color: var(--acento); }
+[hidden] { display: none !important; }
+.marca { color: var(--brand-dark); font-weight: 750; font-size: 21px; letter-spacing: -.5px; }
+.marca b { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0; color: var(--fraco); }
+.lateral-topo { align-items: center; padding: 12px 8px 20px; }
+.botao-acento { background: var(--acento); color: #fff; border: 0; border-radius: 8px; padding: 11px 16px; font-weight: 600; cursor: pointer; }
+.botao-acento:hover { background: #0062C7; }
+.botao-secundario { background: var(--superficie); border: 1px solid var(--borda); color: var(--texto); padding: 10px 14px; border-radius: 8px; cursor: pointer; }
+button:disabled { opacity: .55; cursor: not-allowed; }
+.conta-atual { display: flex; align-items: center; justify-content: space-between; padding: 14px 8px 2px; font-size: 12px; color: var(--fraco); }
+.conta-atual button { background: none; border: 0; color: var(--texto); cursor: pointer; padding: 6px; }
+#login-procstudio { display: grid; place-items: center; width: 100%; min-height: 100dvh; padding: 32px; background: var(--fundo); }
+.login-conteudo { max-width: 520px; }
+.login-conteudo .marca { display: block; margin-bottom: 48px; }
+.login-conteudo h1 { font-size: clamp(32px, 4vw, 46px); line-height: 1.15; letter-spacing: -.03em; color: var(--brand-dark); margin: 0 0 24px; }
+.login-conteudo p { color: var(--fraco); max-width: 44ch; }
+.entrar-procstudio { display: inline-flex; gap: 32px; text-decoration: none; margin-top: 22px; }
+.login-privacidade { font-size: 13px; margin-top: 24px; }
+.aguardando-sessao > :is(#lateral,#centro,#abrir-lateral,#decisoes,#painel-config) { display: none !important; }
+#inicial { max-width: 920px; }
+.saudacao { color: var(--brand-dark); font-weight: 650; letter-spacing: -.03em; }
+.formulario { border-color: var(--borda); }
+.formulario:focus-within { border-color: var(--acento); }
+.seletor-modelo { position: relative; min-width: 0; }
+.modelo-abrir { max-width: 360px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: var(--lateral); color: var(--texto); border: 1px solid var(--borda); padding: 6px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; }
+.modelo-popover { position: absolute; bottom: calc(100% + 12px); right: 0; z-index: 8; width: min(400px, calc(100vw - 48px)); max-height: 420px; overflow: auto; background: var(--superficie); border: 1px solid var(--borda); border-radius: 12px; padding: 16px; box-shadow: 0 8px 28px #01013d18; }
+.modelo-popover label { display: grid; gap: 6px; font-size: 12px; margin-bottom: 12px; }
+.modelo-popover .campo { width: 100%; }
+.modelo-opcoes { max-height: 220px; overflow: auto; }
+.modelo-opcao { display: grid; text-align: left; width: 100%; background: none; border: 0; color: var(--texto); padding: 10px; border-radius: 6px; cursor: pointer; }
+.modelo-opcao:hover { background: var(--lateral); }
+.modelo-opcao small { color: var(--fraco); overflow-wrap: anywhere; }
+.modelo-status { font-size: 12px; }
+.config-caixa { display: flex; flex-direction: column; width: min(680px, 100%); padding: 0; overflow: hidden; max-height: min(760px, 90dvh); }
+.config-cabecalho { display: flex; align-items: center; justify-content: space-between; padding: 22px 28px 16px; flex-shrink: 0; }
+.config-cabecalho h2 { color: var(--brand-dark); font-size: 21px; }
+.config-cabecalho .fechar { float: none; width: 36px; height: 36px; border-radius: 6px; }
+.config-tabs { display: flex; gap: 24px; padding: 0 28px; border-bottom: 1px solid var(--borda); }
+.config-tabs button { background: none; color: var(--fraco); border: 0; padding: 12px 2px; border-bottom: 2px solid transparent; cursor: pointer; }
+.config-tabs button[aria-selected="true"] { color: var(--acento); border-bottom-color: var(--acento); font-weight: 650; }
+.config-corpo { overflow-y: auto; padding: 24px 28px; margin: 4px 8px 4px 0; scrollbar-width: thin; scrollbar-color: #A6B7C7 transparent; min-height: 330px; }
+.config-corpo h3 { margin: 0 0 12px; font-size: 18px; color: var(--texto); }
+.config-descricao { color: var(--fraco); font-size: 13px; margin: 0 0 20px; }
+.config-label { display: grid; gap: 7px; font-weight: 550; font-size: 13px; margin-bottom: 18px; }
+.config-label .campo { width: 100%; font-weight: 400; min-height: 44px; background: var(--superficie); }
+.config-etapas { list-style: none; display: flex; gap: 0; counter-reset: passos; padding: 0; margin: 0 0 32px; }
+.config-etapas li { display: flex; align-items: center; gap: 8px; flex: 1; color: var(--fraco); font-size: 12px; }
+.config-etapas li::before { counter-increment: passos; content: counter(passos); display: grid; place-items: center; width: 24px; height: 24px; background: var(--lateral); border-radius: 50%; font-weight: 650; }
+.config-etapas [aria-current] { color: var(--acento); font-weight: 650; }
+.config-etapas [aria-current]::before { background: var(--acento); color: white; }
+.config-etapa > button { margin-right: 10px; margin-top: 8px; }
+.config-modelos { max-height: 200px; overflow-y: auto; margin-bottom: 18px; scrollbar-width: thin; }
+.config-modelo { display: block; width: 100%; padding: 10px; text-align: left; background: none; color: var(--texto); border: 0; border-radius: 6px; cursor: pointer; overflow-wrap: anywhere; font-size: 13px; }
+.config-modelo:hover, .config-modelo.selecionado { background: var(--azul-suave); color: #002272; }
+.config-caixa > .estado-chave { margin: 0; padding: 0 28px 20px; font-size: 13px; }
+.config-caixa > .estado-chave:empty { display: none; }
+.conexao-linha { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--borda); padding: 16px 0; margin-bottom: 18px; }
+.conexao-linha > div { flex: 1; min-width: 0; }
+.conexao-linha small { display: block; color: var(--fraco); font-size: 12px; }
+.conexao-linha button { padding: 6px 10px; font-size: 12px; }
+:root[data-tema="escuro"] { --brand-dark: #E3EDFA; --azul-suave: #1B3858; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema="claro"]) { --brand-dark: #E3EDFA; --azul-suave: #1B3858; } }
+@media (max-width: 600px) {
+ .painel { padding: 12px; }
+ .config-cabecalho, .config-corpo { padding: 18px; }
+ .config-tabs { padding: 0 18px; }
+ .config-etapas { gap: 8px; }
+ .config-etapas li { font-size: 11px; gap: 4px; }
+ .conexao-linha { flex-wrap: wrap; }
+ .conexao-linha > div { flex-basis: 100%; }
+ .modelo-abrir { max-width: 230px; }
+}

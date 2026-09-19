@@ -1,0 +1,15 @@
+meta {
+  name: Remover conexao
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{base_url}}/api/v1/conexoes-llm/{{connection_id}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{personal_token}}
+}

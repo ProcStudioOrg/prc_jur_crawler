@@ -48,10 +48,25 @@ function registrar(roteador, deps) {
     if (motivoInvalido) return json(res, 400, { erro: motivoInvalido });
     const mensagens = corpo.mensagens;
 
-    const vModelo = validacao.validarModelo(corpo.modelo);
-    if (!vModelo.ok) return json(res, 400, { erro: vModelo.erro });
-    const vEsforco = validacao.validarEsforco(corpo.esforco, vModelo.valor);
-    if (!vEsforco.ok) return json(res, 400, { erro: vEsforco.erro });
+    let cliente = deps.clienteLLM;
+    let vModelo; let vEsforco;
+    if (deps.conexoes) {
+      const connection = typeof corpo.conexaoId === 'string' && deps.conexoes.obter(corpo.conexaoId);
+      if (!connection) return json(res, 400, { erro: 'Configure uma conexão de IA antes de conversar.' });
+      const modelo = corpo.modelo || connection.model;
+      if (typeof modelo !== 'string' || !modelo || modelo.length > 256 || /\s/.test(modelo)) {
+        return json(res, 400, { erro: 'Escolha um modelo válido para esta conexão.' });
+      }
+      vModelo = { ok: true, valor: modelo };
+      vEsforco = { ok: true, valor: null };
+      // Resolve a credencial novamente a cada chamada, inclusive após tool use.
+      cliente = { messages: { stream: (...args) => deps.conexoes.cliente(corpo.conexaoId).messages.stream(...args) } };
+    } else {
+      vModelo = validacao.validarModelo(corpo.modelo);
+      if (!vModelo.ok) return json(res, 400, { erro: vModelo.erro });
+      vEsforco = validacao.validarEsforco(corpo.esforco, vModelo.valor);
+      if (!vEsforco.ok) return json(res, 400, { erro: vEsforco.erro });
+    }
 
     // Tribunais que o usuario deixou LIGADOS no painel de disponibilidade. Vai para dois
     // lugares: o prompt (para o modelo nao precisar chamar listar_tribunais so para
@@ -62,11 +77,11 @@ function registrar(roteador, deps) {
     if (!vTribunais.ok) return json(res, 400, { erro: vTribunais.erro });
     const escopo = vTribunais.valor;
 
-    // A chave nunca e persistida: vem do header (localStorage do browser) ou do ambiente.
-    // deps.clienteLLM (so em teste) dispensa a chave real.
-    const apiKey = req.headers['x-api-key'] || process.env.ANTHROPIC_API_KEY;
-    if (!apiKey && !deps.clienteLLM) {
-      return json(res, 401, { erro: 'sem chave da Anthropic: defina ANTHROPIC_API_KEY ou informe na interface' });
+    // Produção usa exclusivamente a conexão privada acima. O header abaixo pertence
+    // ao roteador interno de testes, que não é exposto pela aplicação autenticada.
+    const apiKey = deps.conexoes ? undefined : req.headers['x-api-key'];
+    if (!apiKey && !cliente) {
+      return json(res, 401, { erro: 'sem chave da Anthropic: configure uma conexão de IA' });
     }
 
     // Persistencia de conversa e opcional: so grava se o cliente mandou conversaId E o
@@ -168,9 +183,9 @@ function registrar(roteador, deps) {
         const r = await llm.conversar({
           mensagens,
           apiKey,
-          cliente: deps.clienteLLM,
+          cliente,
           deps: { ...deps, ...(filaRastreada ? { fila: filaRastreada } : {}), escopoTribunais },
-          sinal: controlador.signal,
+          sinal: req.authSignal ? AbortSignal.any([controlador.signal, req.authSignal]) : controlador.signal,
           modelo: vModelo.valor,
           esforco: vEsforco.valor,
           escopo,
