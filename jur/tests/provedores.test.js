@@ -113,17 +113,64 @@ test("erro do provedor não expõe credencial nem resposta bruta", async () => {
   );
 });
 test("stream interrompido não anuncia conclusão", async () => {
+  const diagnosticos = [];
   const c = criarCliente(
     { provider: "openai", apiKey: "fixture" },
     async () =>
-      new Response(event({ choices: [{ delta: { content: "parcial" } }] })),
+      new Response(
+        event({
+          id: "gen-fixture-eof",
+          choices: [{ delta: { content: "parcial" } }],
+        }),
+      ),
+    (evento) => diagnosticos.push(evento),
   );
   await assert.rejects(
     c.messages
       .stream({ model: "x", system: "", messages: [], tools: [] }, {})
       .finalMessage(),
-    /interrompida/,
+    (e) => e.name === "ProviderStreamError" && /interrompida/.test(e.message),
   );
+  assert.deepEqual(diagnosticos, [
+    {
+      event: "llm_stream_failure",
+      provider: "openai",
+      model: "x",
+      origin: "provider",
+      phase: "response_body",
+      generationId: "gen-fixture-eof",
+      errorName: "ProviderPrematureEOFError",
+      errorCode: "PREMATURE_EOF",
+    },
+  ]);
+});
+
+test("frame SSE truncado também passa pelo diagnóstico de EOF prematuro", async () => {
+  const diagnosticos = [];
+  const c = criarCliente(
+    { provider: "openrouter", apiKey: "fixture" },
+    async () => new Response('data: {"id":"gen-truncada"'),
+    (evento) => diagnosticos.push(evento),
+  );
+
+  await assert.rejects(
+    c.messages
+      .stream({ model: "vendor/model", system: "", messages: [], tools: [] }, {})
+      .finalMessage(),
+    (e) => e.name === "ProviderStreamError",
+  );
+  assert.deepEqual(diagnosticos, [
+    {
+      event: "llm_stream_failure",
+      provider: "openrouter",
+      model: "vendor/model",
+      origin: "provider",
+      phase: "response_body",
+      generationId: null,
+      errorName: "ProviderPrematureEOFError",
+      errorCode: "PREMATURE_EOF",
+    },
+  ]);
 });
 
 test("reset do socket no meio do stream vira erro seguro, diagnosticável e não repete a cobrança", async () => {
@@ -249,6 +296,82 @@ test("aborto pelo sinal no meio do stream fica distinto de queda do provedor", a
       errorCode: null,
     },
   ]);
+});
+
+test("reset do Gemini registra responseId como identificador da geração", async () => {
+  const diagnosticos = [];
+  const erroSocket = Object.assign(new Error("aborted"), {
+    code: "ECONNRESET",
+  });
+  const c = criarCliente(
+    { provider: "gemini", apiKey: "fixture" },
+    async () =>
+      new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.enqueue(
+              new TextEncoder().encode(
+                event({
+                  responseId: "gemini-response-fixture",
+                  candidates: [
+                    { content: { parts: [{ text: "parcial" }] } },
+                  ],
+                }),
+              ),
+            );
+            setTimeout(() => controller.error(erroSocket), 0);
+          },
+        }),
+      ),
+    (evento) => diagnosticos.push(evento),
+  );
+
+  await assert.rejects(
+    c.messages
+      .stream(
+        {
+          model: "gemini-3-pro",
+          system: "",
+          messages: [{ role: "user", content: "oi" }],
+          tools: [],
+        },
+        {},
+      )
+      .finalMessage(),
+    (e) => e.name === "ProviderStreamError",
+  );
+  assert.equal(diagnosticos[0].generationId, "gemini-response-fixture");
+});
+
+test("diagnóstico assíncrono rejeitado não interfere na falha original", async () => {
+  let rejeicaoConsumida = false;
+  const erroSocket = Object.assign(new Error("aborted"), {
+    code: "ECONNRESET",
+  });
+  const c = criarCliente(
+    { provider: "openrouter", apiKey: "fixture" },
+    async () =>
+      new Response(
+        new ReadableStream({
+          start(controller) {
+            setTimeout(() => controller.error(erroSocket), 0);
+          },
+        }),
+      ),
+    () => ({
+      catch() {
+        rejeicaoConsumida = true;
+      },
+    }),
+  );
+
+  await assert.rejects(
+    c.messages
+      .stream({ model: "vendor/model", system: "", messages: [], tools: [] }, {})
+      .finalMessage(),
+    (e) => e.name === "ProviderStreamError",
+  );
+  assert.equal(rejeicaoConsumida, true);
 });
 
 test("catálogo com JSON inválido não devolve corpo bruto nem credencial no erro", async () => {

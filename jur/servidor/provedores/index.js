@@ -93,7 +93,7 @@ function paraGemini(messages) {
   return contents;
 }
 async function* eventos(response) {
-  if (!response.body) throw new Error("Resposta interrompida pelo provedor.");
+  if (!response.body) throw erroEOFPrematuro();
   const decoder = new TextDecoder();
   let buffer = "";
   let bytes = 0;
@@ -124,7 +124,7 @@ async function* eventos(response) {
       if (data) yield data;
     }
   }
-  if (buffer.trim()) throw new Error("Resposta interrompida pelo provedor.");
+  if (buffer.trim()) throw erroEOFPrematuro();
 }
 function diagnosticoPadrao(evento) {
   console.error(JSON.stringify(evento));
@@ -141,6 +141,22 @@ function erroStreamInterrompido() {
     ),
     { name: "ProviderStreamError", code: "PROVIDER_STREAM_INTERRUPTED" },
   );
+}
+function erroEOFPrematuro() {
+  return Object.assign(new Error("Resposta interrompida pelo provedor."), {
+    name: "ProviderPrematureEOFError",
+    code: "PREMATURE_EOF",
+  });
+}
+function registrarDiagnosticoSeguro(registrar, evento) {
+  try {
+    const resultado = registrar(evento);
+    if (resultado && typeof resultado.catch === "function") {
+      resultado.catch(() => {});
+    }
+  } catch {
+    // Observabilidade nunca substitui a falha original do provedor.
+  }
 }
 function criarCliente(
   connection,
@@ -277,7 +293,10 @@ function criarCliente(
                 } catch {
                   throw new Error("Resposta inválida do provedor.");
                 }
-                if (typeof data.id === "string") generationId = data.id.slice(0, 256);
+                const idGeracao = gemini ? data.responseId : data.id;
+                if (typeof idGeracao === "string") {
+                  generationId = idGeracao.slice(0, 256);
+                }
                 if (data.error) throw erroProvedor(data.error.code);
                 if (gemini) {
                   const candidate = data.candidates?.[0];
@@ -331,11 +350,13 @@ function criarCliente(
                   }
                 }
               }
+              if (!finished) throw erroEOFPrematuro();
             } catch (error) {
               const erroDoCorpo = error.name === "ProviderResponseBodyError";
+              const eofPrematuro = error.name === "ProviderPrematureEOFError";
               const abortoDoSinal =
                 error.name === "APIUserAbortError" && signal?.aborted;
-              if (!erroDoCorpo && !abortoDoSinal) throw error;
+              if (!erroDoCorpo && !eofPrematuro && !abortoDoSinal) throw error;
               const cause = erroDoCorpo ? error.cause || error : error;
               const diagnostico = {
                 event: "llm_stream_failure",
@@ -347,16 +368,10 @@ function criarCliente(
                 errorName: cause.name || "Error",
                 errorCode: cause.code || null,
               };
-              try {
-                registrarDiagnostico(diagnostico);
-              } catch {
-                // Observabilidade nunca substitui a falha original do provedor.
-              }
+              registrarDiagnosticoSeguro(registrarDiagnostico, diagnostico);
               if (abortoDoSinal || signal?.aborted) throw erroAbortado();
               throw erroStreamInterrompido();
             }
-            if (!finished)
-              throw new Error("Resposta interrompida pelo provedor.");
             for (const call of calls.values()) {
               let input;
               try {
