@@ -97,7 +97,17 @@ async function* eventos(response) {
   const decoder = new TextDecoder();
   let buffer = "";
   let bytes = 0;
-  for await (const chunk of response.body) {
+  async function* corpoComErroTipado() {
+    try {
+      for await (const chunk of response.body) yield chunk;
+    } catch (cause) {
+      const error = new Error("Falha ao ler o stream do provedor.");
+      error.name = "ProviderResponseBodyError";
+      error.cause = cause;
+      throw error;
+    }
+  }
+  for await (const chunk of corpoComErroTipado()) {
     bytes += chunk.length;
     if (bytes > 16 * 1024 * 1024) throw new Error("Resposta excedeu o limite.");
     buffer += decoder.decode(chunk, { stream: true });
@@ -116,7 +126,27 @@ async function* eventos(response) {
   }
   if (buffer.trim()) throw new Error("Resposta interrompida pelo provedor.");
 }
-function criarCliente(connection, transport = requisitar) {
+function diagnosticoPadrao(evento) {
+  console.error(JSON.stringify(evento));
+}
+function erroAbortado() {
+  return Object.assign(new Error("Requisição cancelada."), {
+    name: "APIUserAbortError",
+  });
+}
+function erroStreamInterrompido() {
+  return Object.assign(
+    new Error(
+      "A conexão com o provedor foi interrompida antes de concluir. Tente novamente.",
+    ),
+    { name: "ProviderStreamError", code: "PROVIDER_STREAM_INTERRUPTED" },
+  );
+}
+function criarCliente(
+  connection,
+  transport = requisitar,
+  registrarDiagnostico = diagnosticoPadrao,
+) {
   const endpoint = ENDPOINTS[connection.provider] || connection.endpoint;
   if (!endpoint) throw new Error("Provedor não configurado.");
   if (connection.provider === "anthropic") {
@@ -234,72 +264,96 @@ function criarCliente(connection, transport = requisitar) {
             let text = "",
               finished = false,
               stop = "end_turn";
-            for await (const raw of eventos(response)) {
-              if (signal?.aborted)
-                throw Object.assign(new Error("Requisição cancelada."), {
-                  name: "APIUserAbortError",
-                });
-              if (raw === "[DONE]") {
-                break;
+            let generationId = null;
+            try {
+              for await (const raw of eventos(response)) {
+                if (signal?.aborted) throw erroAbortado();
+                if (raw === "[DONE]") {
+                  break;
+                }
+                let data;
+                try {
+                  data = JSON.parse(raw);
+                } catch {
+                  throw new Error("Resposta inválida do provedor.");
+                }
+                if (typeof data.id === "string") generationId = data.id.slice(0, 256);
+                if (data.error) throw erroProvedor(data.error.code);
+                if (gemini) {
+                  const candidate = data.candidates?.[0];
+                  if (data.promptFeedback?.blockReason)
+                    throw new Error("O provedor recusou esta solicitação.");
+                  for (const part of candidate?.content?.parts || []) {
+                    if (part.text && !part.thought) {
+                      text += part.text;
+                      listeners.forEach((fn) => fn(part.text));
+                    }
+                    if (part.functionCall) {
+                      const f = part.functionCall;
+                      content.push({
+                        type: "tool_use",
+                        id: f.id || randomUUID(),
+                        name: f.name,
+                        input: f.args || {},
+                        ...(part.thoughtSignature
+                          ? { geminiSignature: part.thoughtSignature }
+                          : {}),
+                      });
+                    }
+                  }
+                  if (candidate?.finishReason) {
+                    finished = true;
+                    if (candidate.finishReason !== "STOP")
+                      throw new Error("O provedor interrompeu a resposta.");
+                  }
+                } else {
+                  const choice = data.choices?.[0];
+                  const delta = choice?.delta;
+                  if (delta?.content) {
+                    text += delta.content;
+                    listeners.forEach((fn) => fn(delta.content));
+                  }
+                  for (const t of delta?.tool_calls || []) {
+                    const old = calls.get(t.index) || {
+                      id: "",
+                      name: "",
+                      args: "",
+                    };
+                    old.id += t.id || "";
+                    old.name += t.function?.name || "";
+                    old.args += t.function?.arguments || "";
+                    calls.set(t.index, old);
+                  }
+                  if (choice?.finish_reason) {
+                    finished = true;
+                    if (!["stop", "tool_calls"].includes(choice.finish_reason))
+                      throw new Error("O provedor interrompeu a resposta.");
+                  }
+                }
               }
-              let data;
+            } catch (error) {
+              const erroDoCorpo = error.name === "ProviderResponseBodyError";
+              const abortoDoSinal =
+                error.name === "APIUserAbortError" && signal?.aborted;
+              if (!erroDoCorpo && !abortoDoSinal) throw error;
+              const cause = erroDoCorpo ? error.cause || error : error;
+              const diagnostico = {
+                event: "llm_stream_failure",
+                provider: connection.provider,
+                model,
+                origin: signal?.aborted ? "signal" : "provider",
+                phase: "response_body",
+                generationId,
+                errorName: cause.name || "Error",
+                errorCode: cause.code || null,
+              };
               try {
-                data = JSON.parse(raw);
+                registrarDiagnostico(diagnostico);
               } catch {
-                throw new Error("Resposta inválida do provedor.");
+                // Observabilidade nunca substitui a falha original do provedor.
               }
-              if (data.error) throw erroProvedor(data.error.code);
-              if (gemini) {
-                const candidate = data.candidates?.[0];
-                if (data.promptFeedback?.blockReason)
-                  throw new Error("O provedor recusou esta solicitação.");
-                for (const part of candidate?.content?.parts || []) {
-                  if (part.text && !part.thought) {
-                    text += part.text;
-                    listeners.forEach((fn) => fn(part.text));
-                  }
-                  if (part.functionCall) {
-                    const f = part.functionCall;
-                    content.push({
-                      type: "tool_use",
-                      id: f.id || randomUUID(),
-                      name: f.name,
-                      input: f.args || {},
-                      ...(part.thoughtSignature
-                        ? { geminiSignature: part.thoughtSignature }
-                        : {}),
-                    });
-                  }
-                }
-                if (candidate?.finishReason) {
-                  finished = true;
-                  if (candidate.finishReason !== "STOP")
-                    throw new Error("O provedor interrompeu a resposta.");
-                }
-              } else {
-                const choice = data.choices?.[0];
-                const delta = choice?.delta;
-                if (delta?.content) {
-                  text += delta.content;
-                  listeners.forEach((fn) => fn(delta.content));
-                }
-                for (const t of delta?.tool_calls || []) {
-                  const old = calls.get(t.index) || {
-                    id: "",
-                    name: "",
-                    args: "",
-                  };
-                  old.id += t.id || "";
-                  old.name += t.function?.name || "";
-                  old.args += t.function?.arguments || "";
-                  calls.set(t.index, old);
-                }
-                if (choice?.finish_reason) {
-                  finished = true;
-                  if (!["stop", "tool_calls"].includes(choice.finish_reason))
-                    throw new Error("O provedor interrompeu a resposta.");
-                }
-              }
+              if (abortoDoSinal || signal?.aborted) throw erroAbortado();
+              throw erroStreamInterrompido();
             }
             if (!finished)
               throw new Error("Resposta interrompida pelo provedor.");

@@ -126,6 +126,131 @@ test("stream interrompido não anuncia conclusão", async () => {
   );
 });
 
+test("reset do socket no meio do stream vira erro seguro, diagnosticável e não repete a cobrança", async () => {
+  const diagnosticos = [];
+  let requisicoes = 0;
+  const segredo = "sk-or-segredo-fixture";
+  const prompt = "conteudo sigiloso do processo";
+  const erroSocket = Object.assign(new Error("aborted"), {
+    code: "ECONNRESET",
+  });
+  const c = criarCliente(
+    { provider: "openrouter", apiKey: segredo },
+    async () => {
+      requisicoes++;
+      return new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.enqueue(
+              new TextEncoder().encode(
+                event({
+                  id: "gen-fixture-reset",
+                  choices: [{ delta: { content: "parcial" } }],
+                }),
+              ),
+            );
+            setTimeout(() => controller.error(erroSocket), 0);
+          },
+        }),
+      );
+    },
+    (evento) => diagnosticos.push(evento),
+  );
+
+  await assert.rejects(
+    c.messages
+      .stream(
+        {
+          model: "vendor/model",
+          system: "system",
+          messages: [{ role: "user", content: prompt }],
+          tools: [],
+        },
+        {},
+      )
+      .finalMessage(),
+    (e) =>
+      e.name === "ProviderStreamError" &&
+      e.message ===
+        "A conexão com o provedor foi interrompida antes de concluir. Tente novamente.",
+  );
+  assert.equal(requisicoes, 1);
+  assert.deepEqual(diagnosticos, [
+    {
+      event: "llm_stream_failure",
+      provider: "openrouter",
+      model: "vendor/model",
+      origin: "provider",
+      phase: "response_body",
+      generationId: "gen-fixture-reset",
+      errorName: "Error",
+      errorCode: "ECONNRESET",
+    },
+  ]);
+  assert.ok(!JSON.stringify(diagnosticos).includes(segredo));
+  assert.ok(!JSON.stringify(diagnosticos).includes(prompt));
+});
+
+test("aborto pelo sinal no meio do stream fica distinto de queda do provedor", async () => {
+  const diagnosticos = [];
+  const abortar = new AbortController();
+  const c = criarCliente(
+    { provider: "openrouter", apiKey: "fixture" },
+    async () =>
+      new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.enqueue(
+              new TextEncoder().encode(
+                event({
+                  id: "gen-fixture-signal",
+                  choices: [{ delta: { content: "parcial" } }],
+                }),
+              ),
+            );
+            setTimeout(() => {
+              abortar.abort();
+              controller.enqueue(
+                new TextEncoder().encode(
+                  event({ choices: [{ delta: { content: "ignorado" } }] }),
+                ),
+              );
+              controller.close();
+            }, 0);
+          },
+        }),
+      ),
+    (evento) => diagnosticos.push(evento),
+  );
+
+  await assert.rejects(
+    c.messages
+      .stream(
+        {
+          model: "vendor/model",
+          system: "system",
+          messages: [{ role: "user", content: "oi" }],
+          tools: [],
+        },
+        { signal: abortar.signal },
+      )
+      .finalMessage(),
+    (e) => e.name === "APIUserAbortError",
+  );
+  assert.deepEqual(diagnosticos, [
+    {
+      event: "llm_stream_failure",
+      provider: "openrouter",
+      model: "vendor/model",
+      origin: "signal",
+      phase: "response_body",
+      generationId: "gen-fixture-signal",
+      errorName: "APIUserAbortError",
+      errorCode: null,
+    },
+  ]);
+});
+
 test("catálogo com JSON inválido não devolve corpo bruto nem credencial no erro", async () => {
   const { listarModelos } = require("../servidor/provedores");
   await assert.rejects(
