@@ -2,6 +2,9 @@
 
 Para validar no seu computador sem login ProcStudio, use o [ambiente local](ambiente-local.md).
 
+Produção publicada em 27/09/2026 com cinco vagas e login ProcStudio. Veja as
+[evidências da implantação](qa/2026-09-27-producao-navegadores.md).
+
 O painel **Navegadores**, acima da conversa, mostra a capacidade global do servidor
 e apenas as pesquisas da conta autenticada. Abra-o para ativar **Acompanhar navegador**
 ou **Resolver CAPTCHA manualmente**. As opções valem para novas pesquisas; CAPTCHA
