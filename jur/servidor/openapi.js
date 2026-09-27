@@ -64,6 +64,30 @@ function operation(summary, { schema, id = false, created = false } = {}) {
   };
 }
 const ACCOUNT_PATHS = {
+  '/api/v1/navegadores': { get: {
+    ...operation('Capacidade global, fila e sessões da conta autenticada'),
+    description: 'total, ocupados, disponiveis e naFila são globais. sessoes contém apenas id, comando, status, posicao, acompanhar e mensagem da própria conta. Posição é 1-based. Preferências acompanhar/captcha são opt-in, provedor é local ou browserbase quando configurado.',
+  } },
+  '/api/v1/navegadores/preferencias': { post: operation('Configura acompanhamento para novas buscas; captcha implica acompanhar', {
+    schema: { type: 'object', required: ['acompanhar', 'captcha'], properties: {
+      acompanhar: { type: 'boolean', default: false }, captcha: { type: 'boolean', default: false },
+      provedor: { type: 'string', enum: ['local', 'browserbase'], default: 'local' },
+    } },
+  }) },
+  '/api/v1/navegadores/{id}/tela': { get: {
+    ...operation('Captura JPEG em memória da sessão opt-in', { id: true }),
+    description: 'Retorna imagem (base64 JPEG), largura e altura. Sem gravação. 409 quando indisponível; 429 durante outra operação; 504 após 10s. Resposta no-store.',
+  } },
+  '/api/v1/navegadores/{id}/acao': { post: {
+    ...operation('Interage somente enquanto a automação aguarda o usuário', { id: true, schema: {
+      type: 'object', required: ['tipo'], properties: {
+        tipo: { type: 'string', enum: ['clicar', 'texto', 'tecla', 'rolar', 'continuar'] },
+        x: { type: 'number', minimum: 0, maximum: 1 }, y: { type: 'number', minimum: 0, maximum: 1 },
+        texto: { type: 'string', maxLength: 1000 }, tecla: { type: 'string' }, deltaY: { type: 'number' },
+      },
+    } }),
+    description: 'Coordenadas normalizadas à imagem; teclas permitidas pelo servidor. Continuar verifica o resultado real do portal. 409 fora da pausa ou desafio não concluído; 429 durante outra operação; 504 por timeout.',
+  } },
   '/api/v1/me': { get: operation('Identidade ProcStudio autenticada') },
   '/auth/login': { get: { summary: 'Inicia login ProcStudio com PKCE', security: [], responses: { 303: { description: 'Redirecionamento ao ProcStudio; cookie temporário HttpOnly.' } } } },
   '/auth/callback': { get: { summary: 'Consome código temporário de uso único', security: [], parameters: ['code', 'state'].map(name => ({ name, in: 'query', required: true, schema: { type: 'string' } })), responses: { 303: { description: 'Retorna à interface com cookie de sessão ou mensagem de erro.' } } } },

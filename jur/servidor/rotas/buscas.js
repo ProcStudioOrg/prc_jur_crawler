@@ -47,7 +47,7 @@ function registrar(roteador, deps) {
 
     const info = catalogo.obter(tribunal);
     if (!info) return json(res, 404, { erro: `tribunal desconhecido: ${tribunal}` });
-    if (!info.disponivel) {
+    if (!info.disponivel && !fila.permitirAssistido?.(tribunal)) {
       // A nota vai junto: "indisponivel" sem motivo faz o usuario tentar de novo.
       return json(res, 409, { erro: `tribunal indisponivel (${info.estado})`, estado: info.estado, nota: info.nota });
     }

@@ -96,11 +96,13 @@ async function executar(comando, params = {}, opcoes = {}) {
   const arquivoSaida = opcoes.arquivoSaida;
   const timeoutMs = opcoes.timeoutMs || TIMEOUT_PADRAO;
   const args = montarArgs(cliPath, comando, params, arquivoSaida);
+  const assistido = opcoes.navegador?.acompanhar || opcoes.env?.JUR_ACOMPANHAR === '1';
+  if (assistido || opcoes.env?.JUR_BROWSER_CDP) args.unshift('--require', path.join(__dirname, '..', 'src', 'navegadorPreload.js'));
 
   return new Promise((resolve) => {
     // detached: o crawler abre Chromium filho. Sem grupo proprio, matar o node
     // deixaria o browser orfao consumindo memoria dentro do container.
-    const filho = spawn(process.execPath, args, { detached: true, stdio: ['ignore', 'pipe', 'pipe'], cwd: opcoes.cwd, env: opcoes.env });
+    const filho = spawn(process.execPath, args, { detached: true, stdio: assistido ? ['ignore', 'pipe', 'pipe', 'ipc'] : ['ignore', 'pipe', 'pipe'], cwd: opcoes.cwd, env: opcoes.env });
 
     let saida = '';
     let erroPadrao = '';
@@ -114,6 +116,7 @@ async function executar(comando, params = {}, opcoes = {}) {
     // Um `await` introduzido aqui alargaria essa janela sem quebrar nenhum teste hoje
     // (o executor real e' sincrono neste ponto) — mas tornaria o vazamento real.
     if (typeof opcoes.aoIniciar === 'function') opcoes.aoIniciar(filho.pid);
+    if (typeof opcoes.aoProcesso === 'function') opcoes.aoProcesso(filho);
 
     const relogio = setTimeout(() => {
       expirou = true;

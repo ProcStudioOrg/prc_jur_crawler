@@ -49,6 +49,10 @@ proxy HTTPS. A documentação da API fica em `http://localhost:3000/docs`.
 
 A mesma API serve três clientes:
 
+O painel opcional **Navegadores** mostra vagas globais e posição na fila, acompanha a
+tela e permite intervenção humana em CAPTCHA de STJ/TJSP. Padrão: três vagas,
+acompanhamento desligado. Consulte [operação e testes](docs/navegadores.md).
+
 | Superfície | Endereço |
 |---|---|
 | REST | `http://localhost:3000/api/v1` |

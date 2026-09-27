@@ -1,0 +1,15 @@
+meta {
+  name: Capturar tela da minha busca
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{base_url}}/api/v1/navegadores/{{job_id}}/tela
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{personal_token}}
+}

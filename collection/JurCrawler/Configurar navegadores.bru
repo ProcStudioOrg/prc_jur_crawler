@@ -1,0 +1,23 @@
+meta {
+  name: Configurar acompanhamento opcional
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{base_url}}/api/v1/navegadores/preferencias
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{personal_token}}
+}
+
+body:json {
+  {
+    "acompanhar": true,
+    "captcha": true,
+    "provedor": "local"
+  }
+}

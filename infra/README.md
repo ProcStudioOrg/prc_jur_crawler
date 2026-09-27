@@ -147,3 +147,13 @@ A porta 3000 continua em loopback atrás do proxy HTTPS. Não use `down -v` para
 
     docker build -f infra/Dockerfile -t jur:dev .
     docker run --rm jur:dev node bin/jur tcu -q "licitacao" -m 1 --json
+# Navegadores assistidos
+
+O pool global respeita `JUR_CONCORRENCIA` (padrão 3), em uma única instância da aplicação.
+O Docker inclui Xvfb para STJ com janela e usa `init: true` para gerir os processos
+filhos. Ao executar a imagem diretamente com seu comando padrão, use `docker run
+--init --shm-size=1g ...`; sem init, `xvfb-run` pode bloquear a partida como PID 1.
+O diretório de sockets X11 é preparado na imagem para o usuário não-root.
+Não há porta VNC/CDP exposta. Browserbase é
+opcional via `BROWSERBASE_API_KEY`/`BROWSERBASE_PROJECT_ID`; só é usado por opção da conta.
+Veja [configuração, privacidade e validação](../docs/navegadores.md).

@@ -1,4 +1,8 @@
 const BaseCrawler = require('./BaseCrawler');
+const { aguardarIntervencao } = require('./navegadorAssistido');
+
+const FORMULARIO = '#iddados\\.buscaInteiroTeor';
+const RESULTADOS = 'tr.fundocinza1';
 
 /**
  * Crawler for TJSP (Tribunal de Justiça de São Paulo) jurisprudência
@@ -15,12 +19,70 @@ class TJSPCrawler extends BaseCrawler {
     if (!this.silent) console.log(message);
   }
 
+  /** Sinais visíveis do bloqueio, sem tratar menções em ementas como CAPTCHA. */
+  async detectarDesafio() {
+    return this.page.evaluate(() => {
+      const visivel = (el) => {
+        if (!el || !el.getClientRects().length) return false;
+        const area = el.getBoundingClientRect();
+        if (area.width <= 0 || area.height <= 0) return false;
+        for (let atual = el; atual; atual = atual.parentElement) {
+          const css = getComputedStyle(atual);
+          if (css.display === 'none' || css.visibility === 'hidden' || css.opacity === '0') return false;
+        }
+        return true;
+      };
+      const token = [...document.querySelectorAll('[name="g-recaptcha-response"], [name="h-captcha-response"], [name="cf-turnstile-response"]')].some((el) => el.value?.trim());
+      const frames = [...document.querySelectorAll('iframe')].filter(visivel);
+      if (frames.some((el) => {
+        const descricao = `${el.title} ${el.src}`;
+        if (!/captcha|turnstile|challenge/i.test(descricao)) return false;
+        // O e-SAJ mantém o selo do reCAPTCHA invisível junto ao formulário.
+        // Sua presença não é um pedido de interação; o bframe aberto é.
+        if (/\/anchor(?:\?|#)/i.test(el.src) && /(?:[?&])size=invisible(?:&|$)/i.test(el.src)) return false;
+        if (el.closest('.grecaptcha-badge') && !/bframe|challenge/i.test(descricao)) return false;
+        // O anchor pode permanecer visível depois de uma resposta válida.
+        return !token || /bframe|challenge/i.test(descricao);
+      })) return true;
+      if ([...document.querySelectorAll('#challenge-form, #cf-challenge-running, input[name*="captcha" i]:not([type="hidden"]), input[id*="captcha" i]:not([type="hidden"])')].some(visivel)) return true;
+      if (/captcha|verifica[çc][aã]o.*(?:seguran[çc]a|human)|um momento|just a moment/i.test(document.title)) return true;
+      // Textos extensos da jurisprudência podem citar robôs ou CAPTCHA.
+      const portal = [...document.querySelectorAll('tr.fundocinza1, [id="iddados.buscaInteiroTeor"]')].some(visivel);
+      if (portal) return false;
+      const texto = document.body?.innerText || '';
+      return /(?:confirme|verifique|prove).{0,65}(?:human|rob[oô])|n[aã]o sou um rob[oô]|verifica[çc][aã]o (?:de seguran[çc]a|autom[aá]tica|humana)|valid[aã][çc][aã]o de seguran[çc]a|captcha/i.test(texto);
+    });
+  }
+
+  async _portalDisponivel() {
+    if (await this.detectarDesafio()) return false;
+    if (await this.page.locator(FORMULARIO).isVisible() || await this.page.locator(RESULTADOS).first().isVisible()) return true;
+    return this._resultadoVazioExplicito();
+  }
+
+  async _resultadoVazioExplicito() {
+    const texto = await this.page.locator('body').innerText();
+    return /nenhum (?:resultado|ac[oó]rd[aã]o|registro|documento) (?:foi )?encontrado|n[aã]o (?:foram|foi) encontrad[oa]s? (?:resultados|ac[oó]rd[aã]os|registros|documentos)|n[aã]o h[aá] (?:resultados|ac[oó]rd[aã]os|registros|documentos)/i.test(texto);
+  }
+
+  async _aguardarDesafio() {
+    if (!(await this.detectarDesafio())) return false;
+    const concluido = await aguardarIntervencao(this.page, {
+      verificar: () => this._portalDisponivel(),
+      mensagem: 'O TJSP solicitou uma verificação. Resolva o desafio na tela e selecione Continuar.',
+    });
+    if (!concluido) throw new Error('TJSP: a consulta foi bloqueada por CAPTCHA ou verificação de segurança. Ative a intervenção manual para tentar novamente.');
+    return true;
+  }
+
   /**
    * Navigate to the jurisprudência search page
    */
   async navigateToSearch() {
     await this.page.goto(this.baseUrl);
+    await this._aguardarDesafio();
     await this.waitForLoad();
+    await this._aguardarDesafio();
     await this.page.waitForSelector('#iddados\\.buscaInteiroTeor', { timeout: 15000 });
   }
 
@@ -100,8 +162,10 @@ class TJSPCrawler extends BaseCrawler {
     this.log(`Set search query: ${query}`);
 
     await this.page.locator('#pbSubmit').click();
+    await this._aguardarDesafio();
     await this.waitForLoad();
     await this.page.waitForTimeout(3000);
+    await this._aguardarDesafio();
   }
 
   /**
@@ -109,7 +173,16 @@ class TJSPCrawler extends BaseCrawler {
    * @returns {Array<Object>} Array of result objects
    */
   async extractResults() {
+    const houveIntervencao = await this._aguardarDesafio();
     await this.page.waitForSelector('tr.fundocinza1', { timeout: 15000 }).catch(() => {});
+    await this._aguardarDesafio();
+    // Uma verificação pode devolver o formulário em vez da página consultada.
+    // Isso não demonstra que a busca teve zero resultados.
+    if (!(await this.page.locator(RESULTADOS).count()) &&
+        (houveIntervencao || await this.page.locator(FORMULARIO).isVisible()) &&
+        !(await this._resultadoVazioExplicito())) {
+      throw new Error('TJSP: a página de resultados não foi confirmada após a verificação. Inicie uma nova busca.');
+    }
 
     const pageResults = await this.page.evaluate(() => {
       const items = [];
@@ -184,8 +257,10 @@ class TJSPCrawler extends BaseCrawler {
    */
   async goToNextPage() {
     await this.page.locator('a[title="Próxima página"]').first().click();
+    await this._aguardarDesafio();
     await this.waitForLoad();
     await this.page.waitForTimeout(2000);
+    await this._aguardarDesafio();
   }
 
   /**
@@ -193,6 +268,7 @@ class TJSPCrawler extends BaseCrawler {
    * @returns {number|null}
    */
   async getTotalResults() {
+    await this._aguardarDesafio();
     try {
       const bodyText = await this.page.locator('body').textContent();
       const match = bodyText.match(/de\s+([\d.]+)\s*$/m);

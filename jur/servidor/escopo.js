@@ -1,3 +1,7 @@
+const { randomUUID } = require("node:crypto");
+const { criarPool } = require("./navegadores/pool");
+const { criarRegistro } = require("./navegadores/registro");
+const { comBrowserbase } = require("./navegadores/browserbase");
 const fs = require("node:fs");
 const path = require("node:path");
 const db = require("./db");
@@ -6,29 +10,30 @@ const conversas = require("./conversas");
 const turnos = require("./turnos");
 const executor = require("./executor");
 const { dono, hash } = require("./sessoes-web");
-function criarEscopos({ dir, executarFn, limite = 100 }) {
+function criarEscopos({ dir, executarFn, limite = 100, concorrencia }) {
   const cache = new Map();
-  let ativos = 0;
-  const espera = [];
-  async function executarLimitado(fn, comando, params, extra, home) {
-    if (ativos >= 3) await new Promise((resolve) => espera.push(resolve));
-    else ativos++;
-    try {
-      return await fn(comando, params, {
-        ...extra,
-        cwd: home,
-        env: {
-          ...process.env,
-          JUR_DADOS: home,
-          TMPDIR: path.join(home, "tmp"),
-          JUR_SESSION_DIR: path.join(home, "sessoes"),
-        },
-      });
-    } finally {
-      const next = espera.shift();
-      if (next) next();
-      else ativos--;
-    }
+  const pool = criarPool(concorrencia);
+  function executarNoEscopo(fn, comando, params, extra, home) {
+    const executarComCdp = (cdp = '') => fn(comando, params, {
+      ...extra,
+      cwd: home,
+      env: {
+        ...process.env,
+        JUR_DADOS: home,
+        TMPDIR: path.join(home, "tmp"),
+        JUR_SESSION_DIR: path.join(home, "sessoes"),
+        JUR_ACOMPANHAR: extra.navegador?.acompanhar ? "1" : "0",
+        JUR_CAPTCHA: extra.navegador?.captcha ? "1" : "0",
+        JUR_BROWSER_CDP: cdp,
+      },
+    });
+    return extra.navegador?.provedor === 'browserbase'
+      ? comBrowserbase(executarComCdp, { sinal: extra.sinal }) : executarComCdp();
+  }
+  async function listarLimitado(comando, params, home) {
+    const liberar = await pool.adquirir(randomUUID());
+    try { return await executarNoEscopo(executor.listar, comando, params, {}, home); }
+    finally { liberar(); }
   }
   function obter(principal) {
     const identity = dono(principal);
@@ -75,20 +80,25 @@ function criarEscopos({ dir, executarFn, limite = 100 }) {
       con.close();
       throw new Error("Identidade do armazenamento inválida.");
     }
+    const navegadores = criarRegistro(con, { browserbase: Boolean(process.env.BROWSERBASE_API_KEY && process.env.BROWSERBASE_PROJECT_ID) });
     const item = {
       id,
       owner,
       home,
       con,
       emUso: 0,
+      pool,
+      navegadores,
       conversas: conversas.criarRepositorio(con),
       turnos: turnos.criarRegistro(),
-      listarFn: (c, p) => executarLimitado(executor.listar, c, p, {}, home),
+      listarFn: (c, p) => listarLimitado(c, p, home),
       fila: jobs.criarFila({
         con,
+        pool,
+        navegadores,
         dirResultados: path.join(home, "resultados"),
         executarFn: (c, p, e) =>
-          executarLimitado(executarFn || executor.executar, c, p, e, home),
+          executarNoEscopo(executarFn || executor.executar, c, p, e, home),
       }),
     };
     cache.set(id, item);
@@ -97,7 +107,7 @@ function criarEscopos({ dir, executarFn, limite = 100 }) {
   return {
     obter,
     fechar() {
-      for (const item of cache.values()) item.con.close();
+      for (const item of cache.values()) { item.navegadores.fechar(); item.con.close(); }
       cache.clear();
     },
   };

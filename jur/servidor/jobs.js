@@ -8,6 +8,8 @@ const CONCORRENCIA_PADRAO = Number(process.env.JUR_CONCORRENCIA || 3);
 
 function criarFila(opcoes = {}) {
   const con = opcoes.con;
+  const pool = opcoes.pool;
+  const navegadores = opcoes.navegadores;
   const executarFn = opcoes.executarFn || ((comando, params, extra) => executorPadrao.executar(comando, params, extra));
   const catalogoFn = opcoes.catalogoFn || ((comando) => catalogoPadrao.obter(comando));
   // opcoes.concorrencia === 0 cai no padrao por causa do `||` (0 e falsy) — e proposital:
@@ -71,17 +73,23 @@ function criarFila(opcoes = {}) {
   function enfileirar(comando, params = {}) {
     const tribunal = catalogoFn(comando);
     if (!tribunal) throw new Error(`tribunal desconhecido: ${comando}`);
-    if (!tribunal.disponivel) throw new Error(`tribunal indisponivel: ${comando} (${tribunal.estado})`);
+    if (!tribunal.disponivel && !navegadores?.assistido(comando)) throw new Error(`tribunal indisponivel: ${comando} (${tribunal.estado})`);
 
     const id = crypto.randomUUID();
-    con.prepare(`INSERT INTO job (id, comando, params_json, status, criado_em)
-                 VALUES (?, ?, ?, 'enfileirado', ?)`).run(id, comando, JSON.stringify(params), Date.now());
-    pendentes.push(id);
-    setImmediate(bombear);
+    navegadores?.registrar(id, comando);
+    try {
+      con.prepare(`INSERT INTO job (id, comando, params_json, status, criado_em)
+                   VALUES (?, ?, ?, 'enfileirado', ?)`).run(id, comando, JSON.stringify(params), Date.now());
+    } catch (e) { navegadores?.remover(id); throw e; }
+    // Reservar na admissão preserva A1,B1,A2 entre contas e listagens. O await
+    // do pool mantém o lançamento assíncrono e permite cancelar antes do spawn.
+    if (pool) rodar({ id, comando, params }).catch((e) => console.error('[jobs]', e.message));
+    else { pendentes.push(id); setImmediate(bombear); }
     return { id, status: 'enfileirado' };
   }
 
   function bombear() {
+    if (pool) return;
     while (rodando.size < concorrencia && pendentes.length) {
       const id = pendentes.shift();
       const job = obter(id);
@@ -114,9 +122,8 @@ function criarFila(opcoes = {}) {
       await rodarInterno(job);
     } catch (e) {
       const motivo = `falha interna da fila: ${e && e.message ? e.message : e}`;
-      rodando.delete(job.id);
       try {
-        con.prepare(`UPDATE job SET status='erro', erro=?, terminado_em=? WHERE id=?`)
+        con.prepare(`UPDATE job SET status='erro', erro=?, terminado_em=? WHERE id=? AND status != 'cancelado'`)
           .run(motivo, Date.now(), job.id);
       } catch { /* o banco pode ser justamente o que quebrou */ }
       // emitir() ja isola ouvinte quebrado e ja tolera obter() lancando; e ele que
@@ -125,11 +132,21 @@ function criarFila(opcoes = {}) {
       // conter.
       try { emitir({ tipo: 'erro', jobId: job.id, erro: motivo }); } catch { /* nunca */ }
       setImmediate(bombear);
+    } finally {
+      const atual = rodando.get(job.id);
+      atual?.liberar?.();
+      rodando.delete(job.id);
+      navegadores?.remover(job.id);
+      setImmediate(bombear);
     }
   }
 
   async function rodarInterno(job) {
-    rodando.set(job.id, { pid: null, cancelado: false });
+    const atual = { pid: null, cancelado: false, controller: new AbortController() };
+    rodando.set(job.id, atual);
+    if (pool) atual.liberar = await pool.adquirir(job.id, atual.controller.signal);
+    if (atual.cancelado) return;
+    navegadores?.iniciar(job.id);
     con.prepare(`UPDATE job SET status='rodando', iniciado_em=? WHERE id=?`).run(Date.now(), job.id);
     emitir({ tipo: 'iniciado', jobId: job.id, comando: job.comando });
 
@@ -138,6 +155,10 @@ function criarFila(opcoes = {}) {
     try {
       r = await executarFn(job.comando, job.params, {
         arquivoSaida: arquivo,
+        jobId: job.id,
+        sinal: atual.controller.signal,
+        navegador: navegadores?.opcoes(job.id),
+        aoProcesso: (child) => navegadores?.anexar(job.id, child),
         // IMPORTANTE: isto so funciona porque o executor real chama aoIniciar de forma
         // SINCRONA logo apos o spawn (ver comentario em executor.js). Se cancelar() for
         // chamado enquanto o pid ainda e null, ele marca `atual.cancelado = true` em vez
@@ -156,8 +177,6 @@ function criarFila(opcoes = {}) {
     } catch (e) {
       r = { ok: false, total: 0, resultados: [], arquivo: null, erro: e.message };
     }
-
-    rodando.delete(job.id);
 
     // Se foi cancelado no meio, o cancelamento manda: nao sobrescreve.
     if (obter(job.id).status === 'cancelado') { setImmediate(bombear); return; }
@@ -179,6 +198,8 @@ function criarFila(opcoes = {}) {
     if (!job || ['concluido', 'erro', 'cancelado'].includes(job.status)) return false;
     const vivo = rodando.get(id);
     if (vivo) {
+      vivo.cancelado = true;
+      vivo.controller.abort();
       if (vivo.pid) {
         executorPadrao.matarGrupo(vivo.pid);
       } else {
@@ -193,6 +214,7 @@ function criarFila(opcoes = {}) {
         vivo.cancelado = true;
       }
     }
+    if (!vivo) navegadores?.remover(id);
     con.prepare(`UPDATE job SET status='cancelado', terminado_em=? WHERE id=?`).run(Date.now(), id);
     emitir({ tipo: 'cancelado', jobId: id });
     setImmediate(bombear);
@@ -276,6 +298,7 @@ function criarFila(opcoes = {}) {
     aoEvento: (fn) => ouvintes.add(fn),
     removerOuvinte: (fn) => ouvintes.delete(fn),
     concorrencia,
+    permitirAssistido: (comando) => Boolean(navegadores?.assistido(comando)),
     ocupada: () => pendentes.length > 0 || rodando.size > 0,
   };
 }

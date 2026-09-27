@@ -22,6 +22,7 @@ function criarAplicacao({
   frontendUrl,
   clientId,
   executarFn,
+  concorrencia,
   clienteLLM,
   llmTransport,
 }) {
@@ -44,7 +45,7 @@ function criarAplicacao({
   const cofre = criarCofre(cofreKey);
   const sessoes = criarSessoes({ con, cofre, procstudio });
   const chaves = criarChaves(con);
-  const scopes = criarEscopos({ dir, executarFn });
+  const scopes = criarEscopos({ dir, executarFn, concorrencia });
   const publicApp = criarApp();
   const secure = new URL(publicUrl).protocol === "https:" ? "; Secure" : "";
   const setCookie = (name, value, age) =>

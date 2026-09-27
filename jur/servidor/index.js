@@ -12,8 +12,9 @@ function criarApp(deps = {}) {
   deps = deps2;
   const guarda = autenticacao.criarGuarda({ chaves: deps.chaves, exigir: deps.exigirChave });
   const roteador = criarRoteador({ guarda });
-  require('./rotas/tribunais').registrar(roteador);
+  require('./rotas/tribunais').registrar(roteador, deps);
   require('./rotas/buscas').registrar(roteador, deps);
+  require('./rotas/navegadores').registrar(roteador, deps);
   require('./rotas/chat').registrar(roteador, deps);
   require('./rotas/chaves').registrar(roteador, deps);
   require('./rotas/conexoes-llm').registrar(roteador, deps);

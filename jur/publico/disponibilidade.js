@@ -415,5 +415,6 @@
 
   montarPrompts();
   document.addEventListener('jur:sessao', montarDisponibilidade);
+  document.addEventListener('jur:navegadores-preferencias', montarDisponibilidade);
   montarManual();
 }());
