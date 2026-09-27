@@ -1,5 +1,7 @@
 # Acompanhamento de navegadores e CAPTCHA manual
 
+Para validar no seu computador sem login ProcStudio, use o [ambiente local](ambiente-local.md).
+
 O painel **Navegadores**, acima da conversa, mostra a capacidade global do servidor
 e apenas as pesquisas da conta autenticada. Abra-o para ativar **Acompanhar navegador**
 ou **Resolver CAPTCHA manualmente**. As opções valem para novas pesquisas; CAPTCHA

@@ -8,6 +8,7 @@
   },
   "main": "src/index.js",
   "scripts": {
+    "dev:local": "node dev/local.js",
     "postinstall": "echo 'Agora rode: npx playwright install chromium'",
     "cobertura": "node cobertura/build.js",
     "indice": "node human-codegen/index.js",

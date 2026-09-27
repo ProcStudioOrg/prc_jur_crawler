@@ -91,6 +91,17 @@ prc_jur_crawler/
 
 ## Manutenção
 
+### Ambiente local sem ProcStudio
+
+`cd jur && npm run dev:local` inicia uma conta de desenvolvimento em
+`http://127.0.0.1:4317`; `JUR_CONCORRENCIA=5` ajusta as vagas. A entrada `jur/dev/local.js`
+usa a aplicação real e oferece pesquisa direta sem chave LLM. Dados em `.local/jur/`;
+o chat exige chave própria. Esse diretório de código é excluído do Docker de produção.
+Veja [operação e testes](docs/ambiente-local.md). Não substituir a autenticação do
+entrypoint de produção por esse emissor local.
+
+### Comandos de manutenção
+
 ```bash
 cd jur
 npm run docs              # regenera CLAUDE-FALHAS.md e os INDEX.md

@@ -5,6 +5,8 @@ jur/resultados
 docs
 agente-diario
 .superpowers
+.local
+jur/dev
 **/.DS_Store
 
 # jur/human-codegen NAO entra inteiro: bin/jur faz require() em tempo de execucao de

@@ -62,3 +62,4 @@ output/
 # jur: outputs de busca e relatórios (nada disso entra no git)
 jur/resultados/
 .gstack/
+.local/
