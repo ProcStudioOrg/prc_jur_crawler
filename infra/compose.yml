@@ -4,7 +4,7 @@ services:
     build:
       context: ..
       dockerfile: infra/Dockerfile
-    image: jur:dev
+    image: "${JUR_IMAGE:-jur:dev}"
     # Repassa sinais e recolhe filhos de Xvfb/Chromium; xvfb-run não deve ser PID 1.
     init: true
     # Publicação somente no proxy local; identidade validada pelo ProcStudio.
@@ -37,7 +37,7 @@ services:
     # security_opt:                                                # so no nivel 2 — nao foi preciso (ver infra/README.md)
     #   - seccomp=./chrome-seccomp.json
     # 3 Chromium simultaneos ~ 900 MB, mais o Node. Abaixo de 2g o OOM killer aparece.
-    mem_limit: 2g
+    mem_limit: "${JUR_MEM_LIMIT:-2g}"
     # Chromium usa /dev/shm; o default de 64 MB do Docker faz a aba morrer sozinha.
     shm_size: 1gb
     restart: unless-stopped

@@ -157,3 +157,16 @@ O diretório de sockets X11 é preparado na imagem para o usuário não-root.
 Não há porta VNC/CDP exposta. Browserbase é
 opcional via `BROWSERBASE_API_KEY`/`BROWSERBASE_PROJECT_ID`; só é usado por opção da conta.
 Veja [configuração, privacidade e validação](../docs/navegadores.md).
+
+## Releases em produção
+
+Use `JUR_IMAGE=jur:<commit>` no `infra/.env` privado de cada release para manter a
+imagem anterior disponível. `JUR_MEM_LIMIT` controla o teto de RAM do container
+(padrão `2g`), independentemente de `JUR_CONCORRENCIA`. Ajuste os dois conforme o
+servidor; aumentar vagas não aumenta automaticamente a memória disponível.
+
+Antes de trocar `current`, construa e valide a nova imagem com dados separados,
+guarde a release anterior em `.previous-release` e faça backup dos volumes. Suba
+com `docker compose -p jur ... up -d --no-build`. O rollback usa a imagem anterior
+já construída, sem apagar volumes. As credenciais e a chave do cofre são preservadas
+entre releases. O acesso de deploy atual está em `AGENTS.md`.
