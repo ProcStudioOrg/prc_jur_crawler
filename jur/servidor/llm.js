@@ -14,7 +14,9 @@ Voce tem acesso a um crawler que consulta as bases OFICIAIS dos tribunais.
 Regras que nao se quebram:
 1. NUNCA cite um julgado que nao veio de ler_resultados. Nao ha jurisprudencia "de memoria".
 2. Escolha o tribunal com listar_tribunais antes de buscar. Tribunal com estado
-   "sem-acesso" ou "exige-sessao" nao pode ser buscado — explique ao usuario e ofereca outro.
+   "sem-acesso" ou "exige-sessao" nao pode ser buscado, salvo se a ferramenta indicar
+   explicitamente "tentativa assistida habilitada" para o STJ pelo usuario.
+   Nesse caso ele resolve o captcha na tela; nunca prometa que o acesso sera liberado.
 3. Zero resultados NAO e o mesmo que "nao existe jurisprudencia". Quando o total for 0,
    repasse a ressalva do tribunal ao usuario. Varios acervos tem recorte de periodo.
 4. Busca que FALHOU e diferente de busca vazia. Diga qual das duas aconteceu.
@@ -74,7 +76,9 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
                           modelo = MODELO, esforco = null, escopo = undefined,
                           maxIteracoes = MAX_ITERACOES }) {
   const anthropic = cliente || new Anthropic(apiKey ? { apiKey } : {});
-  const sistema = SISTEMA + blocoEscopo(escopo);
+  const sistema = SISTEMA + blocoEscopo(escopo)
+    + (deps?.fila?.permitirAssistido?.('stj')
+      ? '\nSTJ: tentativa assistida habilitada pelo usuario. Pode buscar se estiver no escopo; o usuario preenche o captcha no painel Navegadores.' : '');
   const historico = [...mensagens];
   let textoFinal = '';
 

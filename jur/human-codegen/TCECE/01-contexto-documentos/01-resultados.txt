@@ -165,7 +165,7 @@ o rótulo "Filtros" é um `<ion-label id="lbl-13">` **irmão** do botão, não o
 Dentro dele, sob o rótulo **"Busca para Jurispridência"** (sic — o portal escreve
 errado), há **um único** `ion-checkbox`: **"Documentos de Decisão"**.
 Prints: `01.07-painel-filtros.png`, `01.08-decisao-marcado.png`, `01.09-resultado-decisao.png`.
-HTML do modal: `01-painel-filtros.html`. XHR: `xhr-filtro-documentos-decisao.json`.
+HTML do modal: `01-painel-filtros.html`. XHR: `01-xhr-filtro-documentos-decisao.json`.
 
 Marcando-o e clicando **Filtrar**, o corpo que o SPA emite é:
 

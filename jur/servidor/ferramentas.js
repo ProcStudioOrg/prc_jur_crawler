@@ -184,7 +184,8 @@ async function listarTribunais(entrada, deps = {}) {
     // Sem isto o modelo so descobre tentando, e o TJPR (que nao tem o filtro) parecia
     // uma busca quebrada em vez de um tribunal que nao oferece o recorte.
     const r = t.relator && t.relator.suportado ? `magistrado: ${t.relator.forma}` : 'magistrado: nao';
-    return `${t.comando} — ${t.nome}${uf} · ${t.estado} · ${r}`;
+    const assistido = deps.fila?.permitirAssistido?.(t.comando) ? ' · tentativa assistida habilitada; usuário resolve captcha na tela' : '';
+    return `${t.comando} — ${t.nome}${uf} · ${t.estado} · ${r}${assistido}`;
   });
   return { texto: `${lista.length} tribunais:\n${linhas.join('\n')}`, ok: true };
 }
@@ -212,7 +213,7 @@ async function buscar(entrada, deps) {
     return { texto: explicarDesligado(info.comando, info.nome, deps), ok: false };
   }
 
-  if (!info.disponivel) {
+  if (!info.disponivel && !deps.fila?.permitirAssistido?.(entrada.tribunal)) {
     return {
       texto: `O tribunal ${info.comando} (${info.nome}) esta INDISPONIVEL — estado "${info.estado}".\n`
         + `Motivo registrado: ${info.nota}\n`

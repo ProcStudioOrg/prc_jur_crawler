@@ -267,6 +267,7 @@ describe('a caixa de entrada alinha com o texto das mensagens', () => {
     try {
       await injetarChave(p, chaveBrowser);
       await p.goto(base + '/', { waitUntil: 'domcontentloaded' });
+      await p.locator('#login-procstudio').waitFor({ state: 'hidden' });
       // Monta a tela de conversa sem depender do LLM: e geometria, nao fluxo.
       await p.evaluate(() => {
         document.querySelector('#inicial').hidden = true;
@@ -299,6 +300,7 @@ describe('a caixa de entrada alinha com o texto das mensagens', () => {
     try {
       await injetarChave(p, chaveBrowser);
       await p.goto(base + '/', { waitUntil: 'domcontentloaded' });
+      await p.locator('#login-procstudio').waitFor({ state: 'hidden' });
       const altura = await p.evaluate(
         () => document.querySelector('#caixa-inicial .entrada').getBoundingClientRect().height,
       );

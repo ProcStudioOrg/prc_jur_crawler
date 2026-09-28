@@ -351,6 +351,29 @@ describe('ferramentas — busca por magistrado', () => {
     assert.strictEqual(chamadas[0][1].relator, 'GILMAR MENDES');
   });
 
+  it('TCE-GO: aceita o relator do processo e explica o nome exigido', async () => {
+    const { chamadas, fila: espia } = capturando();
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'tcego', query: 'aposentadoria', relator: 'CARLA CINTIA SANTILLO' },
+      { fila: espia, timeoutBuscaMs: 0 });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(chamadas.length, 1);
+    assert.strictEqual(chamadas[0][1].relator, 'CARLA CINTIA SANTILLO');
+    assert.match(r.texto, /PROCESSO/);
+    assert.match(r.texto, /CAIXA ALTA/);
+  });
+
+  it('TCE-CE: recusa o filtro ignorado pela CLI e orienta consultar o PDF', async () => {
+    const { chamadas, fila: espia } = capturando();
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia',
+      { tribunal: 'tcece', query: 'nepotismo', relator: 'FULANO' },
+      { fila: espia, timeoutBuscaMs: 0 });
+    assert.strictEqual(r.ok, false);
+    assert.strictEqual(chamadas.length, 0, 'a flag aceita pela CLI nao filtra a busca');
+    assert.match(r.texto, /idmembrorelator/);
+    assert.match(r.texto, /PDF/);
+  });
+
   it('sem relator no pedido, nada de relator vai para a fila', async () => {
     const { chamadas, fila: espia } = capturando();
     await ferramentas.executarDetalhado('buscar_jurisprudencia',

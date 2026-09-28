@@ -12,8 +12,8 @@ const FalcaoTribunais = require('../src/FalcaoTribunais');
  * Duas falhas somadas viram a pior das saidas: a busca "nao funciona" sem motivo.
  *
  * Este mapa e a traducao, para o servidor, do que a CLI oferece por tribunal. A FONTE DA
- * VERDADE CONTINUA SENDO A CLI: tests/contrato-cli.test.js roda `<comando> --help` de
- * cada tribunal e reprova o mapa que divergir — nos dois sentidos (dizer que suporta
+ * VERDADE CONTINUA SENDO A CLI e suas ressalvas: tests/contrato-cli.test.js roda
+ * `<comando> --help` de cada tribunal e reprova o mapa que divergir — nos dois sentidos (dizer que suporta
  * quando nao suporta, e dizer que nao suporta quando suporta). Mesmo padrao dos quatro
  * parametros que o executor ja injetava.
  *
@@ -44,8 +44,8 @@ const LER_NO_RESULTADO = 'Alternativa: buscar por termo e ler o campo `relator` 
 
 const CAPACIDADE = {
   // ---------- sem filtro de magistrado ----------
-  // A CLI nao expoe --relator para estes. Onde o motivo esta medido no repo, ele vai
-  // junto; onde nao esta, a nota diz so o que foi verificado (a flag nao existe).
+  // A CLI nao expoe --relator funcional para estes (no TCE-CE so emite aviso).
+  // Onde o motivo esta medido no repo, ele vai junto.
   tjpr: nao(`O portal de jurisprudencia do TJPR nao tem campo de relator na busca — ele filtra por orgao julgador (--orgao), nao por magistrado. O relator vem no RESULTADO. ${LER_NO_RESULTADO}`),
   tcu: nao(`A CLI do jur nao expoe filtro de relator para o TCU. ${LER_NO_RESULTADO}`),
   tjmg: nao(`A CLI do jur nao expoe filtro de relator para o TJMG (Consulta Unificada). ${LER_NO_RESULTADO}`),
@@ -56,6 +56,7 @@ const CAPACIDADE = {
   tjrn: nao('No TJRN nao existe busca nenhuma: o dominio inteiro responde 403 (Akamai). So consulta por numero de processo via DataJud, que nao tem filtro de relator.'),
   tjsp: nao('O TJSP esta sem acesso — nao ha busca a filtrar.'),
   crps: nao('O CRPS nao tem busca (login Gov.br) — nao ha filtro nenhum a oferecer.'),
+  tcece: nao('O campo idmembrorelator esta morto no indice do Contexto. A CLI aceita --relator apenas para avisar que o filtro sera ignorado. Alternativa: buscar por termo e consultar o relator no PDF publico de cada decisao; o campo relator do resultado vem vazio.'),
 
   // ---------- nome parcial serve ----------
   tjrj: sim('trecho', ['--listar-combos']),
@@ -94,6 +95,7 @@ const CAPACIDADE = {
   tcepr: sim('nome-exato', ['--listar-filtros']),
   tcees: sim('nome-exato', ['--listar-filtros'], 'O campo e NomeRelator, nao id.'),
   tcepa: sim('nome-exato', ['--listar-filtros']),
+  tcego: sim('nome-exato', ['--listar-filtros'], 'Nome em CAIXA ALTA do relator do PROCESSO (rapporteur). Pode divergir do relator da DECISAO; a CLI oferece --relator-decisao para esse outro filtro.'),
   tcerj: sim('nome-exato', ['--listar-filtros'], 'No TCE-RJ o filtro real e o CONSELHEIRO: o campo `relator` da API e ignorado em silencio. A CLI redireciona -r para --conselheiro sozinha.'),
 
   // ---------- so codigo/id/matricula ----------

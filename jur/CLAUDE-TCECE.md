@@ -9,6 +9,10 @@
 
 ## Escopo
 
+Na interface e nas ferramentas de chat/MCP, o catálogo registra este tribunal sem
+filtro por relator. `buscar_jurisprudencia` recusa pedidos com `relator` e orienta a
+consulta ao PDF: a flag `-r` da CLI apenas avisa que o filtro será ignorado.
+
 | | |
 |---|---|
 | Abrangência | **Estado do Ceará + os 184 municípios, inclusive Fortaleza** |

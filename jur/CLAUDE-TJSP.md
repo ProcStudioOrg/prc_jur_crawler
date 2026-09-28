@@ -3,6 +3,13 @@
 **Escopo:** SP · **Status:** 🟡 incerto/instável, dependente de navegador
 **Crawler:** `src/TJSPCrawler.js` (Playwright + ESAJ)
 
+A aplicação permite **Resolver CAPTCHA manualmente**, opcional no painel Navegadores.
+O crawler pausa diante de desafio visível e só retoma após conferir a página. O selo
+permanente do reCAPTCHA invisível não causa pausa. No diagnóstico de 26/09/2026, a home
+respondeu 200 com formulário e a busca `dano moral`, uma página, retornou 20 resultados.
+Isso não comprova resolução humana de CAPTCHA real nem disponibilidade permanente.
+Veja [operação e testes](../docs/navegadores.md).
+
 O ESAJ carrega reCAPTCHA invisível (reCAPTCHA v3 +
 `captchaControleAcesso.do`). O mesmo fluxo Playwright funciona em alguns dias e
 é bloqueado em outros; portanto, **não prometa disponibilidade antes do teste da

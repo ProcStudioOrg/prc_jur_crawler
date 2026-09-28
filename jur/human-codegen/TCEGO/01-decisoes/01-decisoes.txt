@@ -160,7 +160,7 @@ Devolve um array `[{key, agg:[{label, value}]}]` com as chaves
 `area`, `tema`, `subtema`, `ano` (51), `tipo_documento` (4), `colegiado` (3),
 `tipo_sessao` (3), `relator_decisao` (13), `relator_processo` (23).
 
-📌 Enumeração completa gravada em **`aggregations-acervo-completo.json`** (ao lado deste
+📌 Enumeração completa gravada em **`01-aggregations-acervo-completo.json`** (ao lado deste
 arquivo). É a lista de valores aceitos pelos filtros — e o `value` é a contagem.
 
 ## 5. Desambiguação Juizado × Justiça Comum

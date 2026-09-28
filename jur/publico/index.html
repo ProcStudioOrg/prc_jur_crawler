@@ -6,7 +6,15 @@
   <title>jur — jurisprudência dos tribunais brasileiros</title>
   <link rel="stylesheet" href="/estilo.css">
 </head>
-<body>
+<body class="aguardando-sessao">
+  <section id="login-procstudio" aria-label="Entrar no JurCrawler">
+    <div class="login-conteudo"><span class="marca">ProcStudio <b>Jurisprudência</b></span>
+    <h1>Pesquisa jurídica,<br>com a sua conta.</h1>
+    <p>Consulte as bases oficiais dos tribunais e converse com a IA de sua escolha.</p>
+    <a class="botao-acento entrar-procstudio" href="/auth/login">Entrar com ProcStudio <span aria-hidden="true">→</span></a>
+    <p class="login-privacidade">Suas conexões de IA e pesquisas ficam privadas na sua conta.</p>
+    <p id="login-erro" role="status"></p></div>
+  </section>
   <!-- I4: abaixo de 860px a lateral vira gaveta. Sem este botao ela simplesmente sumia,
        e com ela iam Nova conversa, o historico e — o que bloqueia o produto —
        Configuracoes, o unico lugar da interface onde se digita a chave da Anthropic.
@@ -17,7 +25,7 @@
 
   <aside id="lateral">
     <div class="lateral-topo">
-      <span class="marca">jur</span>
+      <span class="marca">ProcStudio <b>Jurisprudência</b></span>
       <button id="tema" class="icone" title="Alternar tema" aria-label="Alternar tema">◐</button>
     </div>
 
@@ -31,16 +39,63 @@
       <span class="config-avatar" aria-hidden="true">⚙</span>
       <span class="config-texto">
         <strong>Configurações</strong>
-        <small>Chaves e conexão</small>
+        <small>Provedores e integrações</small>
       </span>
     </button>
+    <div class="conta-atual"><span id="conta-nome"></span><button id="sair-conta" type="button">Sair</button></div>
   </aside>
 
   <main id="centro">
-    <section id="estado-conexao" class="estado-conexao" role="status" hidden>
-      <strong>Conecte esta instalação</strong>
-      <span>Cole uma chave de conexão para acessar conversas, buscas e chat.</span>
-      <button id="configurar-conexao" type="button">Abrir Configurações</button>
+    <section id="navegadores" aria-label="Navegadores de pesquisa" hidden>
+      <button id="navegadores-abrir" type="button" aria-expanded="false" aria-controls="navegadores-corpo">
+        <span class="navegadores-resumo"><strong>Navegadores</strong><span id="navegadores-capacidade" role="status">Consultando disponibilidade…</span></span>
+        <span id="navegadores-fila"></span><span class="navegadores-seta" aria-hidden="true">⌄</span>
+      </button>
+      <div id="navegadores-corpo" hidden>
+        <fieldset class="navegadores-preferencias" aria-describedby="navegadores-preferencias-ajuda">
+          <legend>Opções de acompanhamento</legend>
+          <label><input id="navegadores-acompanhar" type="checkbox" disabled> Acompanhar navegador</label>
+          <label><input id="navegadores-captcha" type="checkbox" disabled> Resolver CAPTCHA manualmente</label>
+          <label id="navegadores-provedor-campo" hidden>Navegador
+            <select id="navegadores-provedor" disabled><option value="local">Servidor ProcStudio</option></select>
+          </label>
+          <p id="navegadores-preferencias-ajuda">Vale para novas pesquisas. CAPTCHA manual disponível no STJ e TJSP; ao ativar, você também acompanha a tela.</p>
+        </fieldset>
+        <p id="navegadores-preferencias-erro" class="navegadores-erro" role="alert" hidden></p>
+        <p id="navegadores-conexao-erro" class="navegadores-erro" role="alert" hidden></p>
+        <p id="navegadores-vazio">Suas pesquisas em andamento aparecerão aqui.</p>
+        <div id="navegadores-sessoes" hidden>
+          <div class="navegadores-sessao-linha">
+            <label for="navegadores-sessao">Sua pesquisa</label>
+            <select id="navegadores-sessao"></select>
+            <button id="navegadores-cancelar" type="button" class="botao-secundario">Cancelar pesquisa</button>
+          </div>
+          <p id="navegadores-estado" role="status"></p>
+          <div id="navegadores-visualizacao" hidden>
+            <p id="navegadores-tela-espera" role="status">Carregando tela…</p>
+            <button id="navegadores-tela" type="button" aria-label="Tela do navegador: clique para selecionar um campo" aria-describedby="navegadores-controles-ajuda" disabled>
+              <img id="navegadores-imagem" alt="Tela atual da pesquisa no tribunal" draggable="false" hidden>
+            </button>
+          </div>
+          <div id="navegadores-controles" hidden>
+            <p id="navegadores-controles-ajuda">Clique na imagem para selecionar um campo. Envie o texto ou as teclas necessárias e, ao terminar o CAPTCHA, continue a pesquisa.</p>
+            <form id="navegadores-texto-form">
+              <label for="navegadores-texto">Texto para o navegador</label>
+              <div class="navegadores-texto-linha"><input id="navegadores-texto" type="text" maxlength="1000" autocomplete="off" spellcheck="false"><button id="navegadores-enviar-texto" type="submit" class="botao-secundario">Enviar texto</button></div>
+            </form>
+            <div class="navegadores-acoes">
+              <label class="navegadores-tecla-campo">Tecla
+                <select id="navegadores-tecla"><option value="Tab">Tab</option><option value="Enter">Enter</option><option value="Backspace">Apagar</option><option value="Space">Espaço</option><option value="Escape">Esc</option><option value="ArrowUp">↑ Seta acima</option><option value="ArrowDown">↓ Seta abaixo</option><option value="ArrowLeft">← Seta à esquerda</option><option value="ArrowRight">→ Seta à direita</option></select>
+              </label>
+              <button id="navegadores-enviar-tecla" type="button" class="botao-secundario">Enviar tecla</button>
+              <button id="navegadores-rolar-cima" type="button" class="botao-secundario" aria-label="Rolar navegador para cima">↑ Rolar</button>
+              <button id="navegadores-rolar-baixo" type="button" class="botao-secundario" aria-label="Rolar navegador para baixo">↓ Rolar</button>
+              <button id="navegadores-continuar" type="button" class="botao-acento">Continuar pesquisa</button>
+            </div>
+          </div>
+          <p id="navegadores-acao-erro" class="navegadores-erro" role="alert" hidden></p>
+        </div>
+      </div>
     </section>
     <section id="inicial">
       <h1 class="saudacao">Sobre o que você quer pesquisar?</h1>
@@ -61,7 +116,7 @@
   <!-- Painel das decisoes que a conversa leu. Em tela larga fica ancorado ao lado do
        centro; abaixo de 1100px vira gaveta sobreposta, como o drawer de intimacoes do
        ProcStudio. -->
-  <div id="fundo-decisoes" class="fundo-decisoes" aria-hidden="true"></div>
+  <div id="fundo-decisoes" class="fundo-decisoes" aria-hidden="true" hidden></div>
   <aside id="decisoes" aria-label="Decisões consultadas" hidden></aside>
 
   <div id="painel-config" class="painel" hidden></div>
@@ -71,18 +126,7 @@
     <form class="formulario">
       <textarea class="entrada" rows="1" placeholder="Pergunte sobre jurisprudência…"></textarea>
       <div class="entrada-rodape">
-        <div class="seletor-modelo">
-          <select class="modelo" aria-label="Modelo">
-            <option value="claude-opus-5">Opus 5</option>
-            <option value="claude-sonnet-5">Sonnet 5</option>
-            <option value="claude-haiku-4-5">Haiku 4.5</option>
-          </select>
-          <select class="esforco" aria-label="Nível de esforço">
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high" selected>High</option>
-          </select>
-        </div>
+        <div class="seletor-modelo"></div>
         <button type="submit" class="enviar" aria-label="Enviar">↑</button>
       </div>
     </form>
@@ -93,9 +137,13 @@
        que eles consomem no carregamento (disponibilidade.js busca /api/v1/tribunais de
        imediato). -->
   <script src="/markdown.js"></script>
+  <script src="/conexoes.js"></script>
+  <script src="/seletor-modelo.js"></script>
   <script src="/app.js"></script>
   <script src="/disponibilidade.js"></script>
   <script src="/decisoes.js"></script>
   <script src="/config.js"></script>
+  <script src="/navegadores.js"></script>
+  <script src="/sessao.js"></script>
 </body>
 </html>

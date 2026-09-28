@@ -48,7 +48,7 @@ type Message = { role: 'user' | 'assistant'; content: Block[] };
 
 Owner é serializado como JSON do trio ordenado e transformado em hash para paths;
 não concatenar valores livres com separadores. Os blocos são representação interna,
-sem campos exclusivos como assinaturas de raciocínio de um provedor.
+com uma exceção implementada: `geminiSignature` preserva a assinatura opaca de ferramenta exigida pelo Gemini. Não inclui texto de raciocínio privado. O isolamento foi implementado por banco/diretório SQLite pessoal, com registro de proprietário validado, em vez de predicados em cada consulta.
 
 ## Task 1: Delegação de acesso no Rails
 

@@ -136,7 +136,10 @@ describe('executor', () => {
 
     // O SIGKILL e real; espera o SO propagar antes de checar (busy-poll leve).
     let netoVivoDepois = true;
-    for (let tentativas = 0; tentativas < 50 && netoVivoDepois; tentativas++) {
+    // Cinquenta voltas de setImmediate podem acabar antes de o SO recolher o
+    // processo encerrado, especialmente com Chromium concorrente. Aguarda a condição real.
+    const limiteReap = Date.now() + 2000;
+    while (netoVivoDepois && Date.now() < limiteReap) {
       try { process.kill(netoPid, 0); } catch { netoVivoDepois = false; }
       if (netoVivoDepois) await new Promise((resolve) => setImmediate(resolve));
     }

@@ -1,0 +1,19 @@
+meta {
+  name: Continuar após verificação humana
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{base_url}}/api/v1/navegadores/{{job_id}}/acao
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{personal_token}}
+}
+
+body:json {
+  { "tipo": "continuar" }
+}

@@ -1,125 +1,69 @@
-const assert = require('node:assert');
-const http = require('node:http');
-const fs = require('node:fs');
-const os = require('node:os');
-const path = require('node:path');
-const { execFile } = require('node:child_process');
-const { promisify } = require('node:util');
-const { describe, it, before, after } = require('node:test');
-const { chromium } = require('playwright');
-const db = require('../../servidor/db');
-const jobs = require('../../servidor/jobs');
-const chaves = require('../../servidor/chaves');
-const conversas = require('../../servidor/conversas');
-const { criarApp } = require('../../servidor/index');
-
-const execFileAsync = promisify(execFile);
-
-/**
- * Este e o teste que teria pego o bug bloqueante da revisao: a guarda (Barreira 2)
- * usava `Origin` como sinal de "e a propria interface", mas o browser NAO manda Origin
- * em GET de mesma origem — nem na navegacao (GET /) nem no fetch que a propria pagina
- * dispara. O teste HTTP direto (tests/autenticacao.test.js) nao pegava isso porque o
- * `fetch` do Node permite SETAR Origin manualmente — um header que nenhum browser de
- * verdade deixa o site escolher. So um browser real, que decide sozinho o que manda,
- * expoe a diferenca.
- *
- * Sobe o servidor com exigirChave:true (o padrao em producao — ver infra/Dockerfile,
- * que nao seta JUR_EXIGIR_CHAVE) e dirige um Chromium de verdade contra ele.
- *
- * Fica fora de `tests/*.test.js` (o glob do `npm test`) de proposito: subir um Chromium
- * custa ~1-2s de lancamento por suite, e a suite rapida nao precisa subir browser. Rodar
- * via `npm run test:browser`.
- */
-
-let servidor; let base; let porta; let browser; let chaveValida; let chaveAnthropicOriginal;
-
-before(async () => {
-  chaveAnthropicOriginal = process.env.ANTHROPIC_API_KEY;
-  delete process.env.ANTHROPIC_API_KEY;
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-ui-real-'));
-  const con = db.abrir(path.join(dir, 'jur.db'));
-  const fila = jobs.criarFila({
-    con, dirResultados: dir,
-    executarFn: async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null }),
-  });
-  const g = chaves.criarGerenciador(con);
-  chaveValida = g.gerar('interface real').valor;
-  servidor = http.createServer(criarApp({
-    fila,
-    chaves: g,
-    conversas: conversas.criarRepositorio(con),
-    exigirChave: true,
-  }).handler);
-  await new Promise((r) => servidor.listen(0, r));
-  porta = servidor.address().port;
-  base = `http://127.0.0.1:${porta}`;
-  browser = await chromium.launch();
-});
-
-after(async () => {
-  await browser.close();
-  await new Promise((r) => servidor.close(r));
-  if (chaveAnthropicOriginal === undefined) delete process.env.ANTHROPIC_API_KEY;
-  else process.env.ANTHROPIC_API_KEY = chaveAnthropicOriginal;
-});
-
-describe('interface real em Chromium, com exigencia de chave ligada', () => {
-  it('carrega a pagina, mas a API recusa o browser sem chave', async () => {
-    const page = await browser.newPage();
-    try {
-      assert.strictEqual((await page.goto(base + '/')).status(), 200);
-      const status = await page.evaluate(() => fetch('/api/v1/tribunais').then((r) => r.status));
-      assert.strictEqual(status, 401);
-      assert.strictEqual(await page.isVisible('#estado-conexao'), true);
-    } finally {
-      await page.close();
-    }
-  });
-
-  it('a UI salva Bearer e volta a acessar a API', async () => {
-    const page = await browser.newPage();
-    try {
-      await page.addInitScript((valor) => {
-        localStorage.setItem('jur.chaveConexao', valor);
-      }, chaveValida);
-      await page.goto(base + '/');
-      const resultado = await page.evaluate(() => window.jurApi.pedir('/api/v1/tribunais'));
-      assert.ok(resultado.tribunais.length > 0);
-      assert.strictEqual(await page.isHidden('#estado-conexao'), true);
-    } finally {
-      await page.close();
-    }
-  });
-
-  it('Bearer valido sem chave Anthropic mostra so o erro Anthropic', async () => {
-    const page = await browser.newPage();
-    try {
-      await page.addInitScript((valor) => {
-        localStorage.setItem('jur.chaveConexao', valor);
-        localStorage.removeItem('jur.chaveLlm');
-      }, chaveValida);
-      await page.goto(base + '/', { waitUntil: 'networkidle' });
-      await page.fill('#caixa-inicial .entrada', 'oi');
-      await page.click('#caixa-inicial .enviar');
-      const erro = page.locator('#mensagens .msg.erro');
-      await erro.waitFor();
-
-      assert.match(await erro.textContent(), /sem chave da Anthropic/i);
-      assert.strictEqual(await page.isHidden('#estado-conexao'), true);
-    } finally {
-      await page.close();
-    }
-  });
-
-  it('um cliente sem credencial nenhuma (curl real, com Sec-Fetch-Site forjado) continua tomando 401', async () => {
-    const { stdout } = await execFileAsync('curl', [
-      '-s', '-o', '/dev/null', '-w', '%{http_code}',
-      '-X', 'POST', `${base}/api/v1/buscas`,
-      '-H', 'content-type: application/json',
-      '-H', 'Sec-Fetch-Site: same-origin',
-      '-d', JSON.stringify({ tribunal: 'stf', query: 'x' }),
-    ]);
-    assert.strictEqual(stdout.trim(), '401', 'curl sem chave e com Sec-Fetch-Site forjado precisa continuar recusado');
-  });
+const { test } = require("node:test");
+const assert = require("node:assert/strict");
+const { chromium } = require("playwright");
+const { fixture } = require("./sso-fixture");
+test("cookies reais: login, CSRF e troca de usuário sem dados herdados", async () => {
+  const f = await fixture();
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  page.setDefaultTimeout(5000);
+  try {
+    await page.goto(f.base);
+    await page.locator("#login-procstudio").waitFor({ state: "visible" });
+    assert.equal(
+      await page.evaluate(() =>
+        fetch("/api/v1/tribunais").then((r) => r.status),
+      ),
+      401,
+    );
+    await f.login(page, "alice");
+    assert.ok(
+      (await page.evaluate(() => window.jurApi.pedir("/api/v1/tribunais")))
+        .tribunais.length > 0,
+    );
+    const c = await page.evaluate(() =>
+      window.jurApi.pedir("/api/v1/conversas", { method: "POST", body: "{}" }),
+    );
+    await page.evaluate(() =>
+      window.jurApi.pedir("/api/v1/conexoes-llm", {
+        method: "POST",
+        body: JSON.stringify({
+          provider: "openrouter",
+          name: "Alice privada",
+          apiKey: "alice-private-key",
+          model: "vendor/model",
+        }),
+      }),
+    );
+    assert.ok(
+      !(await page.evaluate(() => document.cookie)).includes("jur_session"),
+    );
+    assert.equal(
+      (
+        await page.request.post(f.base + "/api/v1/conversas", { data: {} })
+      ).status(),
+      403,
+      "POST sem Origin recusado",
+    );
+    await page.click("#sair-conta");
+    await page.locator("#login-procstudio").waitFor({ state: "visible" });
+    await f.login(page, "bob");
+    const data = await page.evaluate(
+      async (id) => ({
+        connections: await window.jurApi.pedir("/api/v1/conexoes-llm"),
+        conversations: await window.jurApi.pedir("/api/v1/conversas"),
+        other: await fetch("/api/v1/conversas/" + id).then((r) => r.status),
+      }),
+      c.id,
+    );
+    assert.deepEqual(data.connections.conexoes, []);
+    assert.deepEqual(data.conversations.conversas, []);
+    assert.equal(data.other, 404);
+    assert.ok(
+      !(await page.locator("body").textContent()).includes("Alice privada"),
+    );
+  } finally {
+    await browser.close();
+    await f.close();
+  }
 });

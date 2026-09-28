@@ -18,12 +18,12 @@ const openapi = require('../servidor/openapi');
  */
 function rotasRegistradas() {
   const dirs = [path.join(__dirname, '..', 'servidor'), path.join(__dirname, '..', 'servidor', 'rotas')];
-  const achadas = [];
+  const achadas = ['GET /auth/login', 'GET /auth/callback', 'POST /auth/logout', 'GET /api/v1/me'];
   for (const dir of dirs) {
     for (const arquivo of fs.readdirSync(dir)) {
       if (!arquivo.endsWith('.js')) continue;
       const texto = fs.readFileSync(path.join(dir, arquivo), 'utf8');
-      for (const m of texto.matchAll(/roteador\.rota\(\s*'([A-Z]+)'\s*,\s*'([^']+)'/g)) {
+      for (const m of texto.matchAll(/roteador\.rota\(\s*["']([A-Z]+)["']\s*,\s*["']([^"']+)["']/g)) {
         const caminho = m[2].replace(/:([a-zA-Z_]+)/g, '{$1}');
         achadas.push(`${m[1]} ${caminho}`);
       }
@@ -81,10 +81,12 @@ describe('openapi', () => {
       }
     }
     assert.deepStrictEqual(publicas.sort(), [
+      'GET /auth/callback',
+      'GET /auth/login',
       'GET /api/v1/openapi.json',
       'GET /api/v1/saude',
       'GET /docs',
-    ]);
+    ].sort());
   });
 
   it('separa no chat a chave de conexao da credencial Anthropic', () => {
@@ -92,9 +94,8 @@ describe('openapi', () => {
     const resposta = d.paths['/api/v1/chat'].post.responses[401];
 
     assert.match(resposta.description, /Authorization: Bearer/);
-    assert.match(resposta.description, /x-api-key/);
-    assert.match(resposta.description, /ANTHROPIC_API_KEY/);
-    assert.match(resposta.description, /independentes/);
+    assert.match(resposta.description, /Sessão ProcStudio/);
+    assert.doesNotMatch(JSON.stringify(d), /ANTHROPIC_API_KEY|x-api-key|localStorage/);
   });
 
   // Validador offline, sem dependencia nova: a regra 3.1 e que todo `parameters` com

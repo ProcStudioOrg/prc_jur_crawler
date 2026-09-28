@@ -99,12 +99,13 @@ describe('chat: regressao da revisao da Task 7', () => {
       assert.strictEqual(cliente.chamadas.length, 1);
       assert.deepStrictEqual(
         cliente.chamadas[0].output_config, { effort: 'high' },
-        'com o modelo padrao (opus, aceita esforco) o corpo devia levar output_config',
+        'o fixture legado mantém seu padrão de esforço',
       );
 
       // troca para Haiku, na MESMA conversa, e envia de novo — este e o caminho que
       // quebrava antes: o <select> escondido continuava sendo lido por `enviar`.
-      await page.selectOption('#caixa-conversa .modelo', 'claude-haiku-4-5');
+      await page.click('#caixa-conversa .modelo-abrir');
+      await page.getByRole('button', { name: 'Haiku claude-haiku-4-5' }).click();
       await page.fill('#caixa-conversa .entrada', 'pergunta com haiku');
       await page.click('#caixa-conversa .enviar');
       await esperarRespostaCompleta(page);

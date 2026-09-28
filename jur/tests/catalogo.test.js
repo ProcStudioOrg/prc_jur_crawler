@@ -21,6 +21,18 @@ describe('catalogo', () => {
     assert.strictEqual(stj.disponivel, false);
   });
 
+  it('identifica os novos tribunais de contas por nome e UF', () => {
+    for (const [comando, nome, uf] of [
+      ['tcece', 'Tribunal de Contas do Estado do Ceará', 'CE'],
+      ['tcego', 'Tribunal de Contas do Estado de Goiás', 'GO'],
+    ]) {
+      const tribunal = catalogo.obter(comando);
+      assert.strictEqual(tribunal.nome, nome);
+      assert.deepStrictEqual(tribunal.uf, [uf]);
+      assert.strictEqual(tribunal.disponivel, true);
+    }
+  });
+
   it('trata instavel como disponivel, mas preserva a nota', () => {
     const trf1 = catalogo.obter('trf1');
     assert.strictEqual(trf1.estado, 'instavel');

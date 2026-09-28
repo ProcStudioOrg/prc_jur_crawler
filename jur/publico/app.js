@@ -1,10 +1,6 @@
 // jur/publico/app.js
 const $ = (s, raiz = document) => raiz.querySelector(s);
-const CHAVE_LLM = 'jur.chaveLlm';
-const CHAVE_CONEXAO = 'jur.chaveConexao';
 const CHAVE_TEMA = 'jur.tema';
-const CHAVE_MODELO = 'jur.modelo';
-const CHAVE_ESFORCO = 'jur.esforco';
 
 const guardado = {
   ler(k, padrao = '') { try { return localStorage.getItem(k) ?? padrao; } catch { return padrao; } },
@@ -13,20 +9,13 @@ const guardado = {
 
 // ---------- API ----------
 window.jurApi = {
-  chaveLlm: () => guardado.ler(CHAVE_LLM).trim(),
-  chaveConexao: () => guardado.ler(CHAVE_CONEXAO).trim(),
-  salvarChaveConexao(valor) {
-    guardado.escrever(CHAVE_CONEXAO, String(valor || '').trim());
-    document.dispatchEvent(new CustomEvent('jur:chave-conexao-alterada'));
-  },
   async requisitar(caminho, opcoes = {}) {
     const headers = new Headers(opcoes.headers || {});
     if (opcoes.body && !headers.has('content-type')) headers.set('content-type', 'application/json');
-    const chave = window.jurApi.chaveConexao();
-    if (chave) headers.set('authorization', `Bearer ${chave}`);
+
     const resposta = await fetch(caminho, { ...opcoes, headers });
     if (resposta.status === 401
-        && resposta.headers.get('www-authenticate') === 'Bearer realm="jur"') {
+        && resposta.headers.get('www-authenticate')?.startsWith('Session')) {
       document.dispatchEvent(new CustomEvent('jur:autenticacao-negada'));
     }
     return resposta;
@@ -120,41 +109,13 @@ function montarCaixa(destino) {
   destino.appendChild($('#tpl-entrada').content.cloneNode(true));
   const form = $('.formulario', destino);
   const campo = $('.entrada', destino);
-  const modelo = $('.modelo', destino);
-  const esforco = $('.esforco', destino);
-
-  modelo.value = guardado.ler(CHAVE_MODELO, 'claude-opus-5');
-  esforco.value = guardado.ler(CHAVE_ESFORCO, 'high');
-  sincronizarEsforco(modelo, esforco);
-
-  modelo.addEventListener('change', () => {
-    guardado.escrever(CHAVE_MODELO, modelo.value);
-    sincronizarEsforco(modelo, esforco);
-  });
-  esforco.addEventListener('change', () => guardado.escrever(CHAVE_ESFORCO, esforco.value));
-
+  window.jurSeletor.montar($('.seletor-modelo', destino));
   campo.addEventListener('input', () => ajustarAltura(campo));
   campo.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
   });
-  form.addEventListener('submit', (e) => { e.preventDefault(); enviar(campo, modelo.value, esforco.value); });
+  form.addEventListener('submit', (e) => { e.preventDefault(); enviar(campo, window.jurConexoes.selected?.modelo, null); });
   return destino;
-}
-
-/**
- * Modelos que REJEITAM o campo esforco na API (o SDK devolve 400 se ele for
- * mandado). Fonte unica: tanto `sincronizarEsforco` (esconder o <select>, que e so
- * apresentacao) quanto `enviar` (o que de fato vai no corpo do POST) consultam esta
- * mesma lista — revisao encontrou que o codigo anterior so escondia o <select> mas
- * `enviar` continuava lendo `esforco.value` mesmo escondido, e mandava "high" junto
- * com claude-haiku-4-5, quebrando o chat com 400 assim que alguem trocava de modelo.
- */
-const MODELOS_SEM_ESFORCO = new Set(['claude-haiku-4-5']);
-function aceitaEsforco(modelo) { return !MODELOS_SEM_ESFORCO.has(modelo); }
-
-/** O haiku rejeita nivel de esforco na API — some com o seletor nele. */
-function sincronizarEsforco(modelo, esforco) {
-  esforco.hidden = !aceitaEsforco(modelo.value);
 }
 
 function ajustarAltura(campo) {
@@ -389,7 +350,8 @@ async function lerSSE(resposta, aoEvento, aoAtividade) {
 }
 
 async function enviar(campo, modelo, esforco) {
-  if (!window.jurApi.chaveConexao()) {
+  if (!window.jurSessao?.principal) { location.assign('/auth/login'); return; }
+  if (!window.jurConexoes.selected) {
     $('#abrir-config').click();
     return;
   }
@@ -455,18 +417,12 @@ async function enviar(campo, modelo, esforco) {
 
   try {
     const cab = { 'content-type': 'application/json' };
-    const chave = window.jurApi.chaveLlm();
-    if (chave) cab['x-api-key'] = chave;
 
-    // O que vai no corpo depende do MODELO, nao de o <select> de esforco estar
-    // visivel — esconder e so apresentacao (sincronizarEsforco). Mandar "esforco"
-    // com claude-haiku-4-5 e 400 na API.
-    const esforcoParaEnviar = aceitaEsforco(modelo) ? esforco : undefined;
 
     const r = await window.jurApi.requisitar('/api/v1/chat', {
       method: 'POST', headers: cab, signal: controle.signal,
       body: JSON.stringify({
-        mensagens: historicoLocal, modelo, esforco: esforcoParaEnviar, conversaId: conversaAtual,
+        mensagens: historicoLocal, modelo, conexaoId: window.jurConexoes.selected?.conexaoId, conversaId: conversaAtual,
         // Tribunais que o usuario deixou ligados na Disponibilidade. Vai sempre que o
         // painel ja carregou: e com isto que o servidor recorta o catalogo no prompt, e
         // e dai que vem a economia de chamada de listar_tribunais.
@@ -542,12 +498,10 @@ async function enviar(campo, modelo, esforco) {
 
 // ---------- início ----------
 montarCaixa($('#caixa-inicial'));
-carregarHistorico();
-function sincronizarEstadoConexao() {
-  $('#estado-conexao').hidden = Boolean(window.jurApi.chaveConexao());
-}
-
-$('#configurar-conexao').addEventListener('click', () => $('#abrir-config').click());
-document.addEventListener('jur:chave-conexao-alterada', sincronizarEstadoConexao);
-document.addEventListener('jur:autenticacao-negada', () => { $('#estado-conexao').hidden = false; });
-sincronizarEstadoConexao();
+document.addEventListener('jur:sessao', carregarHistorico);
+document.addEventListener('jur:sair', () => {
+  encerrarReanexo(); clearTimeout(relogioHistorico); conversaAtual = null; historicoLocal.length = 0;
+  $('#historico').replaceChildren(); $('#mensagens').replaceChildren();
+  $('#conversa').hidden = true; $('#inicial').hidden = false;
+  $('#painel-config').hidden = true; if (window.jurDecisoes) window.jurDecisoes.fechar?.();
+});

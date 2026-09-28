@@ -249,6 +249,7 @@ describe('bind do servidor (C2)', () => {
   function subir(bind) {
     process.env.JUR_DADOS = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-bind-'));
     process.env.PORT = '0';
+    Object.assign(process.env, { PROCSTUDIO_API_URL: 'https://rails.fixture', PROCSTUDIO_ISSUER: 'https://rails.fixture', PROCSTUDIO_CLIENT_ID: 'fixture', PROCSTUDIO_CLIENT_SECRET: 'fixture', PROCSTUDIO_FRONTEND_URL: 'https://proc.fixture', JUR_PUBLIC_URL: 'http://127.0.0.1', JUR_ENCRYPTION_KEY: Buffer.alloc(32, 7).toString('base64') });
     if (bind === undefined) delete process.env.JUR_BIND; else process.env.JUR_BIND = bind;
     return iniciar();
   }

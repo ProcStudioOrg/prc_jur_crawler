@@ -64,6 +64,8 @@ const NOME_TRIBUNAL = {
   TCEPA: 'Tribunal de Contas do Estado do Pará',
   TCEMG: 'Tribunal de Contas do Estado de Minas Gerais',
   TCEES: 'Tribunal de Contas do Estado do Espírito Santo',
+  TCECE: 'Tribunal de Contas do Estado do Ceará',
+  TCEGO: 'Tribunal de Contas do Estado de Goiás',
   TJRJ_EJURIS: 'TJ do Rio de Janeiro — módulo eJURIS (legado)',
   CSJT: 'Conselho Superior da Justiça do Trabalho',
   CRPS: 'Conselho de Recursos da Previdência Social',
@@ -204,6 +206,8 @@ Object.assign(JURISPRUDENCIA.TJSC, {
 });
 
 const REPO = {
+  TCECE: { crawler: 'src/TCECECrawler.js', codegen: 'completo', tests: 'src/TCECETestes.js', skills: [], extra: 'TCECENavigator.js (API publica do Contexto) + TCECEChecker.js (indice e consulta processual independente). Relator e ementa completa exigem o PDF publico; o indice nao oferece filtro de relator.' },
+  TCEGO: { crawler: 'src/TCEGOCrawler.js', codegen: 'completo', tests: 'src/TCEGOTestes.js', skills: [], extra: 'TCEGONavigator.js (API REST do Iago) + TCEGOChecker.js (reconsulta e inteiro teor). Distingue ementa oficial de resumo por IA e avisa sobre busca semantica e totais saturados.' },
   TRF1: { crawler: 'src/TRF1Crawler.js', codegen: 'texto', tests: false, skills: [] },
   TRF2: { crawler: 'src/TRF2Crawler.js', codegen: 'completo', tests: 'src/TRF2Testes.js', skills: ['verificador/trf2'], extra: 'TRF2Navigator.js + TRF2Checker.js' },
   TRF3: { crawler: 'src/TRF3Crawler.js', codegen: 'texto', tests: false, skills: [], extra: 'src/trf3_drission.py' },

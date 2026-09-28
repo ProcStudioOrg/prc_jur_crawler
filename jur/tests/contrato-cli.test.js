@@ -113,11 +113,14 @@ describe('mapa de busca por magistrado x o que a CLI oferece', () => {
       `marcados suportado mas SEM --relator na CLI: ${mentindo.join(', ')}`);
   });
 
-  // O lado que fecha o achado do TJPR: dizer "nao suportado" para um tribunal que na
-  // verdade suporta e negar ao usuario uma busca que existe.
-  it('todo tribunal marcado como nao suportado realmente nao tem --relator', () => {
+  // TCE-CE aceita a flag so para emitir aviso: o campo do indice esta morto.
+  // Ter a flag nao pode fazer o servidor anunciar um filtro que nao funciona.
+  const RELATOR_IGNORADO = new Set(['tcece']);
+
+  it('todo tribunal marcado como nao suportado realmente nao tem --relator funcional', () => {
     const injusticados = relator.comandos()
       .filter((c) => !relator.obter(c).suportado)
+      .filter((c) => !RELATOR_IGNORADO.has(c))
       .filter((c) => ajuda(c).includes('--relator'));
     assert.deepStrictEqual(injusticados, [],
       `marcados sem suporte mas a CLI TEM --relator: ${injusticados.join(', ')}`);

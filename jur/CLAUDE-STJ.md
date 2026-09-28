@@ -1,5 +1,14 @@
 # STJ — Superior Tribunal de Justiça
 
+## Tentativa assistida opcional (26/09/2026)
+
+Na aplicação web/API, a conta pode ativar **Resolver CAPTCHA manualmente** no painel
+Navegadores. Só esse opt-in permite enfileirar STJ: o crawler pausa, o usuário interage
+com a tela e a busca retoma após confirmar `#pesquisaLivre`. Não é solver automático,
+nem alteração do estado `sem-acesso` no catálogo. O diagnóstico headless desta rodada
+ainda respondeu 403. Sem opt-in, a restrição abaixo continua valendo.
+Veja [operação e testes](../docs/navegadores.md).
+
 > # 🔴 BLOQUEADO DESDE 27/07/2026 — NÃO RODAR `jur stj`
 >
 > ## O que foi medido (27/07/2026)
@@ -28,7 +37,7 @@
 >
 > ## Consequências que o agente precisa aceitar
 >
-> 1. **Não rode o comando** "para tentar" — ele queima 10 tentativas e falha.
+> 1. **Não rode o comando** "para tentar" sem a intervenção opcional da aplicação — ele queima 10 tentativas e falha.
 > 2. **Não existe substituto para o STJ** em lei federal infraconstitucional.
 >    Ofereça `trf*`/`tj*` **dizendo que é instância inferior** e que a
 >    orientação do STJ não pôde ser conferida. Constitucional → `stf` (🟢).

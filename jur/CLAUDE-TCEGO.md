@@ -6,6 +6,11 @@
 
 ## Escopo
 
+Na interface e nas ferramentas de chat/MCP, `relator` corresponde ao relator do
+**processo**, com nome exato em caixa alta. Use `listar_relatores` para consultar os
+valores de `--listar-filtros`. O relator da decisão é outro campo, acessível pela
+flag `--relator-decisao` da CLI.
+
 | | |
 |---|---|
 | Módulo | Consulta Ampla de Decisões (`https://decisoes.tce.go.gov.br/`) |

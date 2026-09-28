@@ -1,0 +1,23 @@
+meta {
+  name: Criar conexao
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/v1/conexoes-llm
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{personal_token}}
+}
+
+body:json {
+{
+  "provider": "openrouter",
+  "name": "Minha conexão",
+  "apiKey": "{{llm_api_key}}"
+}
+}

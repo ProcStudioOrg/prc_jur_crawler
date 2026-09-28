@@ -3,6 +3,7 @@ const { chromium } = require('playwright');
 const fs = require('node:fs');
 const path = require('node:path');
 const { sanitizeFilename, stripHtml } = require('./inteiroTeorFetcher');
+const { aguardarIntervencao } = require('./navegadorAssistido');
 
 /**
  * Navigator do SCON — Pesquisa de Jurisprudência do STJ
@@ -331,6 +332,10 @@ class STJNavigator {
         if (i) this.log(`Desafio do Cloudflare liberado na tentativa ${i + 1}.`);
         return this.page;
       }
+      if (await aguardarIntervencao(this.page, {
+        verificar: () => this.page.locator('#pesquisaLivre').isVisible(),
+        mensagem: 'O STJ solicitou uma verificação. Resolva o desafio na tela e selecione Continuar.',
+      })) return this.page;
       this.log(`Verificação automática do STJ ainda ativa (tentativa ${i + 1}/${this.tentativasDesafio})...`);
       await this.page.waitForTimeout(2500);
     }
@@ -351,7 +356,17 @@ class STJNavigator {
       headers: { Referer: HOME },
       timeout: this.timeout,
     });
-    return { status: res.status(), html: (await res.body()).toString('latin1') };
+    const status = res.status();
+    if (status === 403 || status === 429) {
+      throw new Error(`STJ: a consulta foi bloqueada pela verificação de segurança (HTTP ${status}). Inicie uma nova busca para tentar a intervenção manual.`);
+    }
+    if (status < 200 || status >= 300) throw new Error(`STJ: falha ao consultar o portal (HTTP ${status}).`);
+    const html = (await res.body()).toString('latin1');
+    if (/<title\b[^>]*>[^<]*(?:just a moment|um momento|verifica[çc][aã]o autom[aá]tica|access denied|attention required)/i.test(html) ||
+        /id=["'](?:challenge-form|cf-challenge-running)["']/i.test(html)) {
+      throw new Error('STJ: o desafio de segurança reapareceu durante a consulta. Inicie uma nova busca para tentar a intervenção manual.');
+    }
+    return { status, html };
   }
 
   /**

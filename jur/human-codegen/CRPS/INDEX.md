@@ -6,10 +6,4 @@
 ## Arquivos na raiz
 
 - [`01-area-logada-campos.json`](01-area-logada-campos.json)
-- [`01-area-logada.html`](01-area-logada.html)
-- [`01-area-logada.png`](01-area-logada.png)
 - [`02-estado-final-campos.json`](02-estado-final-campos.json)
-- [`02-estado-final.html`](02-estado-final.html)
-- [`02-estado-final.png`](02-estado-final.png)
-- [`sessao-ttl.log`](sessao-ttl.log)
-- [`xhr-sessao.json`](xhr-sessao.json)

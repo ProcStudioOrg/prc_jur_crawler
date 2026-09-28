@@ -18,6 +18,10 @@ RUN npm ci --omit=dev
 # importa firefox, e nenhum passa browserType:'firefox').
 RUN npx playwright install --with-deps chromium && chown -R node:node /ms-playwright
 
+# STJ exige Chromium com janela. Display virtual compartilhado, sem porta VNC/CDP pública.
+RUN apt-get update && apt-get install -y --no-install-recommends xvfb xauth && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
+
 COPY jur/ ./
 
 # O STFNavigator cacheia o cookie aws-waf-token em os.tmpdir() e ele vale ~4 dias.
@@ -35,4 +39,4 @@ RUN mkdir -p /cache /dados/resultados /app/resultados && chown -R node:node /cac
 USER node
 
 EXPOSE 3000
-CMD ["node", "servidor/index.js"]
+CMD ["xvfb-run", "-a", "-s", "-screen 0 1440x1100x24", "node", "servidor/index.js"]

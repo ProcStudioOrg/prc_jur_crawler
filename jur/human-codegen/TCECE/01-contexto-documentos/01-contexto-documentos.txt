@@ -171,22 +171,22 @@ Tanto `"4"` (string) quanto `4` (número) funcionam em `idtipodocumento`.
 
 | Tabela | n | Arquivo |
 |---|---|---|
-| `tipo-documento` | **569** | `aux-tipo-documento.json` |
-| `especie` | 210 | `aux-especie.json` |
-| `subespecie` | 365 | `aux-subespecie.json` |
-| `categoria-especie` | 4 | `aux-categoria-especie.json` |
-| `esfera-julgamento` | 7 | `aux-esfera-julgamento.json` |
-| `situacao` | 144 | `aux-situacao.json` |
-| `tipo-julgamento` | 153 | `aux-tipo-julgamento.json` |
-| `membro-relator` | **32** | `aux-membro-relator.json` |
-| `tipo-sessao` | 19 | `aux-tipo-sessao.json` |
-| `localidade` | **186** | `aux-localidade.json` |
-| `setor` | 374 | `aux-setor.json` |
-| `entidade` | **11.519** | `aux-entidade.json` (897 KB) |
+| `tipo-documento` | **569** | `01-aux-tipo-documento.json` |
+| `especie` | 210 | `01-aux-especie.json` |
+| `subespecie` | 365 | `01-aux-subespecie.json` |
+| `categoria-especie` | 4 | `01-aux-categoria-especie.json` |
+| `esfera-julgamento` | 7 | `01-aux-esfera-julgamento.json` |
+| `situacao` | 144 | `01-aux-situacao.json` |
+| `tipo-julgamento` | 153 | `01-aux-tipo-julgamento.json` |
+| `membro-relator` | **32** | `01-aux-membro-relator.json` |
+| `tipo-sessao` | 19 | `01-aux-tipo-sessao.json` |
+| `localidade` | **186** | `01-aux-localidade.json` |
+| `setor` | 374 | `01-aux-setor.json` |
+| `entidade` | **11.519** | `01-aux-entidade.json` (897 KB) |
 
 ### ✅ A armadilha do TCM é FALSA no Ceará — provado pelo combo (método do TCE-PR)
 
-`aux-localidade.json` traz **186 localidades**, entre elas **`{"id":"60","descricao":"FORTALEZA"}`**
+`01-aux-localidade.json` traz **186 localidades**, entre elas **`{"id":"60","descricao":"FORTALEZA"}`**
 — a capital. O Ceará tem 184 municípios; a lista soma os 184 + `CEARÁ` (esfera estadual) + 1.
 O **TCM-CE foi extinto em 2017 e o acervo migrou**: a consulta por processo devolve, no campo
 assunto, `"PROCESSO MIGRADO DO TCM (SGP). N° DO PROCESSO TCM: 2064013"`. Ou seja, o TCE-CE
