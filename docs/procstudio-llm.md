@@ -40,6 +40,19 @@ O Rails revalida usuário/equipe em cada requisição e a cada 30s durante strea
 troca de equipe, expiração e revogação encerram o acesso; logout encerra a sessão do crawler.
 Chaves de integração são revogadas separadamente e não dependem da sessão de navegador.
 
+## Diagnóstico de streams interrompidos
+
+Uma interrupção durante a leitura do stream gera uma linha JSON no log do container com
+`event: "llm_stream_failure"`. O campo `origin` separa `provider` (o socket do provedor
+terminou antes da resposta) de `signal` (o JurCrawler cancelou a requisição, por exemplo
+após revogação ou expiração da sessão). Quando o provedor já informou seu identificador,
+`generationId` permite correlacionar o incidente com o painel dele. O diagnóstico inclui
+somente provedor, modelo, fase e metadados técnicos do erro; não inclui prompt nem credencial.
+
+Não há retry automático depois que um stream começou: repetir uma rodada que já produziu
+texto ou executou ferramentas poderia duplicar cobrança e buscas. O usuário recebe uma
+mensagem legível e pode decidir se quer tentar novamente.
+
 ## Configuração e publicação
 
 Primeiro publique a alteração aditiva no ProcStudio (migration de códigos/sessões,
