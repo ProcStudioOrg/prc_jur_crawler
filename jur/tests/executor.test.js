@@ -185,6 +185,24 @@ describe('executor', () => {
     assert.ok(!args.includes('--output-dir'));
   });
 
+  // A consulta por numero da CLI nao grava o -o e o envelope nao tem `count`: o
+  // caminho generico pegava o primeiro array (`avisos`) e um processo ENCONTRADO
+  // virava "0 resultados" — ou um aviso virava julgado.
+  it('consulta por numero encontrada vira 1 resultado: o registro da consulta', async () => {
+    const r = await executar_(tmp(), 'consulta-encontrada', {}, { numero: '1' });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(r.total, 1);
+    assert.strictEqual(r.resultados[0].encontrado, true);
+    assert.deepStrictEqual(r.resultados[0].documentos, [{ id: 'd1' }]);
+  });
+
+  it('consulta por numero nao encontrada e zero, e aviso nao vira julgado', async () => {
+    const r = await executar_(tmp(), 'consulta-ausente', {}, { numero: '1' });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(r.total, 0);
+    assert.deepStrictEqual(r.resultados, []);
+  });
+
   it('juizados e inteiroTeor falsos nao poem flag nenhuma', async () => {
     const r = await executar_(tmp(), 'eco', {}, { query: 'x', juizados: false, inteiroTeor: false });
     assert.ok(!r.envelope.args.includes('--origem'));

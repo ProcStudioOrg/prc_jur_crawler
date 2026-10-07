@@ -211,6 +211,13 @@ sete funcionalidades.
     `servidor/juizados.js`, um mapa comando → args, por exemplo
     `trf4: ['--origem','turmas-recursais']`, `trf1: ['--fontes','JEF1']`,
     `tjpr: ['--origem','turmas']`. Teste de contrato confere cada valor no `--help`.
+  - `numero` (string, CNJ ou número do próprio tribunal): consulta por número,
+    `-n`. `required` passa a ser só `tribunal`; `query` ou `numero` é obrigatório.
+    Tribunal sem consulta por número (`SEM_NUMERO`) recusa. A consulta devolve o
+    registro dela como um resultado quando o processo é encontrado (a CLI não grava
+    o arquivo `-o` nesse modo; o executor grava o registro). A rota REST aceita o
+    mesmo campo. A ficha não muda: a linha "Consulta por número" já existia e agora
+    é alcançável pelo chat.
 - Inteiro teor é **sob demanda**, só por `ler_inteiro_teor`, um julgado por vez. A
   busca não aceita `inteiroTeor`: com `--fetch-inteiro-teor` a maioria dos comandos
   da CLI grava só no `--output-dir` e pula o arquivo `-o`, e o job terminava

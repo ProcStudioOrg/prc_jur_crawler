@@ -84,7 +84,13 @@ function definicoes() {
         type: 'object',
         properties: {
           tribunal: { type: 'string', description: 'o comando do tribunal, ex.: stf, trf4, tjpr' },
-          query: { type: 'string', description: 'os termos de busca' },
+          query: { type: 'string', description: 'os termos de busca. Obrigatorio quando nao houver numero.' },
+          numero: {
+            type: 'string',
+            description: 'numero do processo (CNJ ou o numero do proprio tribunal) para CONSULTA POR NUMERO. '
+              + 'Com numero, a consulta e so por ele (query e ignorada) e devolve 1 resultado — o registro da consulta — '
+              + 'quando o processo e encontrado na base. Onde o tribunal nao tem consulta por numero a busca e RECUSADA.',
+          },
           dataInicio: { type: 'string', description: 'data no formato DD/MM/AAAA, ex.: 01/01/2024. ISO (AAAA-MM-DD) e RECUSADO.' },
           dataFim: { type: 'string', description: 'data no formato DD/MM/AAAA, ex.: 31/12/2024. ISO (AAAA-MM-DD) e RECUSADO.' },
           dataPubInicio: { type: 'string', description: 'data de PUBLICACAO inicial, DD/MM/AAAA. So existe em parte dos tribunais; listar_tribunais mostra "publicacao" em quem tem. Onde nao existe a busca e RECUSADA.' },
@@ -103,7 +109,7 @@ function definicoes() {
               + 'e em alguns o que filtra e um CODIGO, nao o nome. Use listar_relatores antes para pegar o valor valido.',
           },
         },
-        required: ['tribunal', 'query'],
+        required: ['tribunal'],
         additionalProperties: false,
       },
     },
@@ -227,7 +233,9 @@ async function buscar(entrada, deps) {
   // ausente cai em catalogo.obter(undefined) -> null -> mensagem de "desconhecido"
   // enganosa, e query ausente seguia ate o crawler em silencio.
   if (!entrada.tribunal) return { texto: 'tribunal e obrigatorio.', ok: false };
-  if (!entrada.query) return { texto: 'query e obrigatoria.', ok: false };
+  // Consulta por numero dispensa termo: um dos dois basta, nenhum dos dois e erro.
+  const numeroPedido = typeof entrada.numero === 'string' ? entrada.numero.trim() : '';
+  if (!entrada.query && !numeroPedido) return { texto: 'informe query ou numero: a query e obrigatoria quando nao ha numero.', ok: false };
 
   const info = catalogo.obter(entrada.tribunal);
   // Nome que nao bate com nenhum tribunal do catalogo e parametro invalido (ok:false),
@@ -275,7 +283,7 @@ async function buscar(entrada, deps) {
   // teor nao entra aqui: e sob demanda, em ler_inteiro_teor (ver executor.js).
   const pedeJuizados = entrada.juizados === true;
   const pedePublicacao = Boolean(entrada.dataPubInicio || entrada.dataPubFim);
-  for (const [pede, chave] of [[pedeJuizados, 'juizados'], [pedePublicacao, 'periodoPublicacao']]) {
+  for (const [pede, chave] of [[pedeJuizados, 'juizados'], [pedePublicacao, 'periodoPublicacao'], [Boolean(numeroPedido), 'numero']]) {
     if (!pede) continue;
     const recusa = capacidades.recusar(entrada.tribunal, chave, info.nome, { disponivel: info.disponivel || assistido });
     if (recusa) return { texto: recusa, ok: false };
@@ -291,7 +299,8 @@ async function buscar(entrada, deps) {
   }
 
   const { id } = deps.fila.enfileirar(entrada.tribunal, {
-    query: entrada.query,
+    query: entrada.query || undefined,
+    numero: numeroPedido || undefined,
     dataInicio: entrada.dataInicio,
     dataFim: entrada.dataFim,
     dataPubInicio: entrada.dataPubInicio,
@@ -304,6 +313,8 @@ async function buscar(entrada, deps) {
   // tribunal exige nome exato ou codigo, o valor aproximado nao falha — devolve zero. Se
   // essa ressalva so aparecesse no caminho do zero, o modelo leria "0 resultados" sem
   // saber que a causa provavel foi a forma do valor.
+  // Com numero a CLI faz so a consulta por numero; o texto diz o que de fato rodou.
+  const alvo = numeroPedido ? `o numero ${numeroPedido}` : `"${entrada.query}"`;
   const ressalvaRelator = relatorPedido ? `\nRESSALVA DO FILTRO DE MAGISTRADO: ${relator.explicarForma(entrada.tribunal)}` : '';
   const prazoMs = deps.timeoutBuscaMs === undefined ? TIMEOUT_BUSCA_MS : deps.timeoutBuscaMs;
   const job = await aguardarComTimeout(deps.fila, id, prazoMs);
@@ -345,7 +356,7 @@ async function buscar(entrada, deps) {
   if (job.total === 0) {
     return {
       jobId: id,
-      texto: `job ${job.id}: 0 resultados em ${info.comando} para "${entrada.query}".\n`
+      texto: `job ${job.id}: 0 resultados em ${info.comando} para ${alvo}.\n`
         + `RESSALVA DO TRIBUNAL: ${info.nota || '(sem ressalva registrada)'}\n`
         + 'Zero aqui pode ser ausencia de julgado OU limitacao do acervo — nao afirme que "nao existe jurisprudencia".'
         + ressalvaRelator,
@@ -354,7 +365,7 @@ async function buscar(entrada, deps) {
   }
   return {
     jobId: id,
-    texto: `job ${job.id}: ${job.total} resultados em ${info.comando} para "${entrada.query}". `
+    texto: `job ${job.id}: ${job.total} resultados em ${info.comando} para ${alvo}. `
       + 'Use ler_resultados com esse job_id para ver os julgados.'
       + ressalvaRelator,
     ok: true,

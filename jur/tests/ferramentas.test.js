@@ -340,6 +340,40 @@ describe('ferramentas', () => {
   });
 
 
+  // A ficha mostra "Consulta por numero"; sem o parametro a linha prometia algo que o
+  // chat nao alcancava.
+  describe('consulta por numero', () => {
+    it('schema: so tribunal e obrigatorio, e numero existe', () => {
+      const s = ferramentas.definicoes().find((d) => d.name === 'buscar_jurisprudencia').input_schema;
+      assert.deepStrictEqual(s.required, ['tribunal']);
+      assert.strictEqual(s.properties.numero.type, 'string');
+    });
+
+    it('sem query e sem numero e erro de parametro', async () => {
+      const r = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'trf4' }, { fila });
+      assert.strictEqual(r.ok, false);
+      assert.match(r.texto, /informe query ou numero/);
+    });
+
+    it('numero num tribunal sem consulta por numero (TJSP) e RECUSADO', async () => {
+      const r = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'tjsp', numero: '1000000-00.2024.8.26.0100' }, { fila });
+      assert.strictEqual(r.ok, false);
+      assert.match(r.texto, /NAO FOI FEITA/);
+    });
+
+    it('numero no TRF4 vai para o job', async () => {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-num-'));
+      let recebidos = null;
+      const f = jobs.criarFila({
+        con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
+        executarFn: async (comando, params) => { recebidos = params; return { ok: true, total: 1, resultados: [], arquivo: null, erro: null }; },
+      });
+      const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'trf4', numero: '5000000-00.2024.4.04.7000' }, { fila: f });
+      assert.strictEqual(recebidos.numero, '5000000-00.2024.4.04.7000');
+      assert.match(texto, /5000000-00\.2024\.4\.04\.7000/);
+    });
+  });
+
   it('STJ assistido com periodo de publicacao e enfileirado, nao recusado', async () => {
     let enfileirado = null;
     const filaAssistida = {

@@ -32,10 +32,13 @@ function registrar(roteador, deps) {
 
     const {
       tribunal, query, dataInicio, dataFim, dataPubInicio, dataPubFim, maxPaginas,
-      relator: relatorPedido, juizados, inteiroTeor,
+      relator: relatorPedido, juizados, inteiroTeor, numero,
     } = corpo;
     if (!tribunal) return json(res, 400, { erro: 'campo obrigatorio: tribunal' });
-    if (!query) return json(res, 400, { erro: 'campo obrigatorio: query' });
+    // Consulta por numero dispensa termo; nenhum dos dois e erro de cliente.
+    if (numero !== undefined && typeof numero !== 'string') return json(res, 400, { erro: 'numero precisa ser texto' });
+    const numeroPedido = typeof numero === 'string' ? numero.trim() : '';
+    if (!query && !numeroPedido) return json(res, 400, { erro: 'informe query ou numero' });
     // Booleano estrito: 'sim' ou 1 truthy rodariam a busca com um recorte que o cliente
     // nao pediu de fato (ou sem o que pediu), e a resposta 202 nao denunciaria.
     if (juizados !== undefined && typeof juizados !== 'boolean') return json(res, 400, { erro: 'juizados precisa ser true ou false' });
@@ -83,7 +86,7 @@ function registrar(roteador, deps) {
 
     // Mesma politica do relator para juizados e publicacao: 400, nunca rodar sem o
     // recorte pedido.
-    for (const [pede, chave] of [[juizados === true, 'juizados'], [Boolean(dataPubInicio || dataPubFim), 'periodoPublicacao']]) {
+    for (const [pede, chave] of [[juizados === true, 'juizados'], [Boolean(dataPubInicio || dataPubFim), 'periodoPublicacao'], [Boolean(numeroPedido), 'numero']]) {
       if (!pede) continue;
       const recusa = capacidades.recusar(tribunal, chave, info.nome, { disponivel: info.disponivel || assistido });
       if (recusa) return json(res, 400, { erro: `o tribunal ${tribunal} nao oferece ${capacidades.ROTULOS[chave].toLowerCase()} nesta busca`, detalhe: recusa });
@@ -91,7 +94,8 @@ function registrar(roteador, deps) {
 
     try {
       const { id, status } = fila.enfileirar(tribunal, {
-        query, dataInicio, dataFim, dataPubInicio, dataPubFim, maxPaginas,
+        query: query || undefined, dataInicio, dataFim, dataPubInicio, dataPubFim, maxPaginas,
+        numero: numeroPedido || undefined,
         relator: filtroRelator || undefined,
         juizados: juizados === true || undefined,
       });

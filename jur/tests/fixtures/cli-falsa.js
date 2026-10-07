@@ -32,6 +32,13 @@ if (modo === 'inline') {
   // Modo de LISTAGEM (--listar-*): nao recebe -o e nao produz arquivo. Devolve os args
   // que recebeu para o teste conferir que nada da busca (query, datas, -o) vazou.
   process.stdout.write(JSON.stringify({ success: true, args, relatores: ['FULANO DE TAL'] }) + '\n');
+} else if (modo === 'consulta-encontrada') {
+  // Consulta por numero (-n) da CLI real: nao escreve o -o, devolve o registro no
+  // envelope com `encontrado`, e o primeiro array costuma ser `avisos`, nao julgados.
+  process.stdout.write(JSON.stringify({ success: true, numero: '1', encontrado: true, avisos: [], documentos: [{ id: 'd1' }] }) + '\n');
+} else if (modo === 'consulta-ausente') {
+  process.stdout.write(JSON.stringify({ success: true, numero: '1', encontrado: false, avisos: ['base parcial'] }) + '\n');
+  process.exit(1);
 } else if (modo === 'eco') {
   process.stdout.write(JSON.stringify({ success: true, args }) + '\n');
 } else if (modo === 'so-envelope') {

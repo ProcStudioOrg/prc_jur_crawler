@@ -180,6 +180,20 @@ async function executar(comando, params = {}, opcoes = {}) {
         return resolve({ ok: false, total: 0, resultados: [], arquivo: null, erro, codigoSaida: codigo, envelope });
       }
 
+      // Consulta por NUMERO: a CLI responde com o registro da consulta no envelope
+      // (`encontrado`, documentos/decisoes/julgados conforme o tribunal), sem `count` e
+      // sem escrever o -o. O caminho generico pegaria o primeiro array — muitas vezes
+      // `avisos` — e um processo encontrado viraria "0 resultados". Aqui o resultado e o
+      // proprio registro: 1 quando encontrado, 0 quando nao.
+      if (params.numero && typeof envelope.encontrado === 'boolean' && !(arquivoSaida && fs.existsSync(arquivoSaida))) {
+        const { success, ...registro } = envelope;
+        const resultados = envelope.encontrado ? [registro] : [];
+        if (arquivoSaida) fs.writeFileSync(arquivoSaida, JSON.stringify(resultados));
+        return resolve({
+          ok: true, total: resultados.length, resultados, arquivo: arquivoSaida, erro: null, codigoSaida: codigo, envelope,
+        });
+      }
+
       const resultados = extrairResultados(envelope, arquivoSaida);
       resolve({
         ok: true,

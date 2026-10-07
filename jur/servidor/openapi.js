@@ -357,7 +357,8 @@ function documento() {
                   type: 'object',
                   properties: {
                     tribunal: { type: 'string', description: 'comando do tribunal, ex.: stf, trf4, tjpr' },
-                    query: { type: 'string', description: 'termos de busca' },
+                    query: { type: 'string', description: 'termos de busca. Obrigatório quando não há `numero`' },
+                    numero: { type: 'string', description: 'número do processo (CNJ ou do próprio tribunal) para consulta por número. Tribunal sem consulta por número (`capacidades.numero` nao-existe) devolve 400' },
                     dataInicio: { type: 'string', description: 'DD/MM/AAAA, ex.: 01/01/2024' },
                     dataFim: { type: 'string', description: 'DD/MM/AAAA, ex.: 31/12/2024' },
                     dataPubInicio: { type: 'string', description: 'data de PUBLICAÇÃO inicial, DD/MM/AAAA. Só em tribunais com `capacidades.periodoPublicacao` diferente de nao-existe; senão 400' },
@@ -374,7 +375,7 @@ function documento() {
                         + '`GET /api/v1/tribunais` traz `relator.forma` de cada um.',
                     },
                   },
-                  required: ['tribunal', 'query'],
+                  required: ['tribunal'],
                 },
               },
             },

@@ -133,4 +133,9 @@ describe('openapi documenta as capacidades', () => {
     for (const k of ['dataPubInicio', 'dataPubFim', 'juizados']) assert.ok(props[k], k);
     assert.ok(!props.inteiroTeor, 'inteiro teor e sob demanda: a flag da CLI pula o arquivo de resultados');
   });
+  it('POST /api/v1/buscas aceita consulta por numero: so tribunal e obrigatorio', () => {
+    const schema = doc.paths['/api/v1/buscas'].post.requestBody.content['application/json'].schema;
+    assert.strictEqual(schema.properties.numero.type, 'string');
+    assert.deepStrictEqual(schema.required, ['tribunal']);
+  });
 });
