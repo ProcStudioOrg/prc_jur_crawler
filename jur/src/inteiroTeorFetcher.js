@@ -131,8 +131,13 @@ function httpGet(url, opcoes = {}, redirecionamentos = 0) {
     req.on('error', reject);
     // setTimeout do request mede inatividade do socket; o prazo aqui e TOTAL, para um
     // portal que pinga um byte por vez nao segurar a ferramenta indefinidamente.
+    // Definitivo: portal que travou por 30 s nao destrava no retry de 1-2 s depois, e
+    // tentar de novo so multiplicaria a espera. O reject direto garante que o erro que
+    // sai e ESTE (o destroy pode emitir um "aborted" generico na resposta).
     const relogio = setTimeout(() => {
-      req.destroy(new Error(`prazo de ${timeoutMs} ms esgotado em ${url}`));
+      const e = erroDefinitivo(`prazo de ${timeoutMs} ms esgotado em ${url}`);
+      reject(e);
+      req.destroy(e);
     }, timeoutMs);
     req.on('close', () => clearTimeout(relogio));
   });

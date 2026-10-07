@@ -94,4 +94,10 @@ describe('httpGet — guardas do download', () => {
   it('servidor que nao termina estoura o prazo', async () => {
     await assert.rejects(httpGet(`${base}/lento`, { timeoutMs: 200 }), /prazo|timeout/i);
   });
+
+  // Portal que travou nao destrava em 1-2 s: tentar de novo so multiplica a espera de
+  // 30 s por tres no servidor.
+  it('prazo esgotado e erro definitivo (sem retry)', async () => {
+    await assert.rejects(httpGet(`${base}/lento`, { timeoutMs: 200 }), (e) => e.definitivo === true);
+  });
 });

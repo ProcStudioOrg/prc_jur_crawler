@@ -528,6 +528,23 @@ describe('ferramentas', () => {
       assert.match(r.texto, /Inteiro teor do TRF1/);
     });
 
+    it('no servidor o download sob demanda e tentado uma vez so (sem retry)', async () => {
+      const http = require('node:http');
+      let pedidos = 0;
+      const srv = http.createServer((req, res) => { pedidos += 1; res.writeHead(500); res.end(); });
+      await new Promise((r) => srv.listen(0, '127.0.0.1', r));
+      try {
+        const link = `http://127.0.0.1:${srv.address().port}/x`;
+        const { fila: f, jobId } = await filaCom([{ processo: 'R', inteiroTeorLink: link }]);
+        const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 }, { fila: f });
+        assert.strictEqual(r.ok, false);
+        assert.match(r.texto, /FALHA AO BAIXAR/);
+        assert.strictEqual(pedidos, 1);
+      } finally {
+        srv.closeAllConnections(); srv.close();
+      }
+    });
+
     it('download vazio e falha, nao documento vazio', async () => {
       const { fila: f, jobId } = await filaCom([{ processo: 'V', inteiroTeorLink: 'https://exemplo/x' }]);
       const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },

@@ -538,7 +538,10 @@ async function lerInteiroTeor(entrada, deps) {
         ok: false,
       };
     }
-    const baixar = deps.baixarInteiroTeor || fetchInteiroTeor;
+    // Uma tentativa so (retries = 0) no servidor: o modelo espera esta ferramenta dentro
+    // do turno, e tres tentativas transformariam um portal lento em minutos de espera.
+    // A CLI (batchDownload) continua com retry, porque roda em lote e sem ninguem esperando.
+    const baixar = deps.baixarInteiroTeor || ((url) => fetchInteiroTeor(url, 0));
     try {
       texto = await baixar(item.inteiroTeorLink);
     } catch (e) {
