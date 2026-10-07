@@ -73,7 +73,9 @@
       return;
     }
     // Tribunal que deixou de estar disponivel sai da selecao em silencio? NAO: fica
-    // guardado (pode voltar), mas `escopo()` o ignora. So a barra o mostra em vermelho.
+    // guardado (pode voltar) e CONTINUA no `escopo()` — o servidor e quem recusa a busca
+    // nele com o motivo, em vez de o escopo encolher sem ninguem perceber. A barra o
+    // mostra em vermelho.
     document.dispatchEvent(new Event('jur:tribunais'));
     document.dispatchEvent(new Event('jur:escopo'));
   }

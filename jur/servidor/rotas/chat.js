@@ -197,7 +197,9 @@ function registrar(roteador, deps) {
           aoResultadoFerramenta: (nome, entrada, resultado) => {
             if (!resultado || !resultado.jobId) return;
             if (conversaId) deps.conversas.vincularBusca(conversaId, resultado.jobId);
-            emitir('busca', { jobId: resultado.jobId, tribunal: entrada.tribunal, query: entrada.query });
+            // Consulta por numero nao tem query: o rotulo e o numero, nunca `undefined`.
+            const rotulo = entrada.query || (entrada.numero ? `nº ${entrada.numero}` : undefined);
+            emitir('busca', { jobId: resultado.jobId, tribunal: entrada.tribunal, query: rotulo, numero: entrada.numero });
           },
         });
         // r.mensagens e o historico COMPLETO depois do turno; as que entraram (mensagens)

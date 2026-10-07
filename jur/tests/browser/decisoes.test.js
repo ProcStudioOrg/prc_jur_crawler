@@ -23,7 +23,7 @@ const { gerarChaveBrowser, injetarChave } = require('./chave-conexao');
  * fazer o LLM rodar de verdade so acrescentaria partes moveis a um teste de interface.
  */
 
-let servidor; let base; let browser; let repo; let fila; let jobConcluido; let jobVazio; let chaveBrowser;
+let servidor; let base; let browser; let repo; let fila; let jobConcluido; let jobVazio; let jobNumero; let chaveBrowser;
 
 before(async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-dec-ui-'));
@@ -54,6 +54,9 @@ before(async () => {
   });
   jobVazio = filaVazia.enfileirar('stf', { query: 'nada disso' }).id;
   await filaVazia.aguardar(jobVazio);
+  // Consulta por numero: nao tem termo, e o painel precisa mostrar o numero.
+  jobNumero = fila.enfileirar('trf4', { numero: '5000123-45.2024.4.04.7000' }).id;
+  await fila.aguardar(jobNumero);
 
   const gerenciador = chaves.criarGerenciador(con);
   chaveBrowser = gerarChaveBrowser(gerenciador);
@@ -175,6 +178,20 @@ describe('painel de decisoes — os julgados', () => {
       assert.match(texto, /0 resultado|zero/i);
       assert.match(texto, /nao significa|não significa|acervo/i,
         'o painel nao pode deixar o zero sozinho na tela');
+    } finally { await page.close(); }
+  });
+
+  it('consulta por numero mostra o numero na lista e no cabecalho, nao "(sem termo)"', async () => {
+    const { page } = await abrirCom([jobNumero]);
+    try {
+      await page.click('#abrir-decisoes');
+      await page.waitForSelector('.busca-item');
+      const linha = await page.textContent('.busca-item');
+      assert.match(linha, /nº 5000123-45\.2024\.4\.04\.7000/);
+      assert.doesNotMatch(linha, /sem termo/);
+      await page.click('.busca-item');
+      await page.waitForSelector('.julgado');
+      assert.match(await page.textContent('#decisoes'), /trf4 · nº 5000123-45/);
     } finally { await page.close(); }
   });
 
