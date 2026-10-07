@@ -133,6 +133,12 @@ describe('openapi documenta as capacidades', () => {
     for (const k of ['dataPubInicio', 'dataPubFim', 'juizados']) assert.ok(props[k], k);
     assert.ok(!props.inteiroTeor, 'inteiro teor e sob demanda: a flag da CLI pula o arquivo de resultados');
   });
+  it('POST /api/v1/buscas explica onde o cliente REST obtem o inteiro teor', () => {
+    const d = doc.paths['/api/v1/buscas'].post.description;
+    assert.match(d, /inteiroTeor/);
+    assert.match(d, /inteiroTeorLink/);
+    assert.match(d, /GET \/api\/v1\/buscas\/\{id\}\/resultados/);
+  });
   it('Busca.params lista todos os parametros que a criacao aceita', () => {
     const d = doc.components.schemas.Busca.properties.params.description;
     for (const k of ['query', 'numero', 'dataInicio', 'dataFim', 'dataPubInicio', 'dataPubFim', 'maxPaginas', 'relator', 'juizados']) {

@@ -77,10 +77,22 @@ describe('rotas de busca', () => {
     assert.strictEqual((await criar({ tribunal: 'trf4', query: 'x', juizados: 'sim' })).status, 400);
   });
 
-  it('inteiroTeor: true e recusado com 400: o inteiro teor e sob demanda, nunca na busca', async () => {
+  it('inteiroTeor: true e recusado com 400 e aponta o caminho REST, nao a ferramenta do chat', async () => {
     const r = await criar({ tribunal: 'trf4', query: 'x', inteiroTeor: true });
     assert.strictEqual(r.status, 400);
-    assert.match((await r.json()).erro, /sob demanda/);
+    const { erro } = await r.json();
+    assert.match(erro, /inteiroTeorLink/);
+    assert.match(erro, /GET \/api\/v1\/buscas\/\{id\}\/resultados/);
+    assert.doesNotMatch(erro, /ler_inteiro_teor/);
+  });
+
+  it('inteiroTeor nao booleano e 400 (validacao estrita); false e aceito', async () => {
+    for (const v of ['true', 1, 'sim', null]) {
+      const r = await criar({ tribunal: 'trf4', query: 'x', inteiroTeor: v });
+      assert.strictEqual(r.status, 400, JSON.stringify(v));
+      assert.match((await r.json()).erro, /precisa ser true ou false/);
+    }
+    assert.strictEqual((await criar({ tribunal: 'trf4', query: 'x', inteiroTeor: false })).status, 202);
   });
 
   it('GET /api/v1/tribunais traz resumo e capacidades', async () => {

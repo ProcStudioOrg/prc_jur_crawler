@@ -45,8 +45,17 @@ function registrar(roteador, deps) {
     // Inteiro teor saiu da busca: a flag da CLI pula o arquivo de resultados e o job
     // terminava "concluido" vazio. Recusar o pedido explicito e mais honesto que aceitar
     // e entregar a busca sem o que o cliente acha que pediu.
+    // Validacao estrita como em `juizados`: 'true' (texto) ou 1 nao podem passar como
+    // "nao pediu". E a mensagem do true fala com o cliente REST, que nao tem as
+    // ferramentas do chat: o caminho dele e o link de cada resultado.
+    if (inteiroTeor !== undefined && typeof inteiroTeor !== 'boolean') {
+      return json(res, 400, { erro: 'inteiroTeor precisa ser true ou false' });
+    }
     if (inteiroTeor === true) {
-      return json(res, 400, { erro: 'inteiroTeor nao e mais aceito na busca: o inteiro teor e sob demanda, um julgado por vez (ferramenta ler_inteiro_teor)' });
+      return json(res, 400, {
+        erro: 'inteiroTeor nao e aceito na busca: o inteiro teor e obtido por resultado, a partir do campo '
+          + 'inteiroTeorLink de cada item em GET /api/v1/buscas/{id}/resultados',
+      });
     }
     const validacaoMaxPaginas = validarMaxPaginas(maxPaginas, MAX_PAGINAS_TETO);
     if (!validacaoMaxPaginas.valido) {

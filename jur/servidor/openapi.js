@@ -348,7 +348,9 @@ function documento() {
             + 'Acompanhe por `GET /api/v1/buscas/{id}`, pela lista, ou pelo stream de eventos. '
             + 'Datas aceitam só DD/MM/AAAA; ISO (AAAA-MM-DD) é recusado com 400 para não filtrar '
             + 'em silêncio contra a data errada. O mesmo vale para `relator`: tribunal sem esse '
-            + 'filtro devolve 400 em vez de rodar a busca sem ele.',
+            + 'filtro devolve 400 em vez de rodar a busca sem ele. `inteiroTeor` não é parâmetro da busca: '
+            + '`true` devolve 400 (e qualquer valor não booleano também). O inteiro teor é obtido por resultado, '
+            + 'a partir do campo `inteiroTeorLink` de cada item em `GET /api/v1/buscas/{id}/resultados`.',
           requestBody: {
             required: true,
             content: {
