@@ -376,15 +376,60 @@ describe('ferramentas', () => {
   });
 
   describe('ler_inteiro_teor', () => {
-    async function filaCom(itens) {
+    async function filaCom(itens, tribunal = 'stf') {
       const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-lit-'));
       const arquivo = path.join(dir, 'saida.json');
       fs.writeFileSync(arquivo, JSON.stringify(itens));
       const f = jobs.criarFila({ con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
         executarFn: async () => ({ ok: true, total: itens.length, resultados: [], arquivo, erro: null }) });
-      const inicio = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila: f });
+      const inicio = await ferramentas.executar('buscar_jurisprudencia', { tribunal, query: 'x' }, { fila: f });
       return { fila: f, jobId: inicio.match(/[0-9a-f-]{36}/)[0] };
     }
+
+    it('usa o inteiroTeorHtml do resultado, sem baixar nada', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'H', inteiroTeorHtml: '<p>Voto do <b>relator</b></p>', inteiroTeorLink: 'https://exemplo/x' }]);
+      let baixou = false;
+      const texto = await ferramentas.executar('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async () => { baixou = true; return 'NAO'; } });
+      assert.match(texto, /Voto do relator/);
+      assert.strictEqual(baixou, false);
+    });
+
+    it('job que nao terminou nao e lido', async () => {
+      const filaFalsa = { obter: () => ({ id: 'j1', status: 'rodando', comando: 'stf' }), resultados: () => { throw new Error('nao devia ler'); } };
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: 'j1', indice: 1 }, { fila: filaFalsa });
+      assert.match(r.texto, /rodando/);
+      assert.doesNotMatch(r.texto, /Inteiro teor do julgado/);
+    });
+
+    it('RECUSA baixar onde o inteiro teor nao funciona (TJAC, reCAPTCHA) e diz que nao tentou', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'T', inteiroTeorLink: 'https://tjac/x' }], 'tjac');
+      let baixou = false;
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async () => { baixou = true; return 'texto'; } });
+      assert.strictEqual(r.ok, false);
+      assert.strictEqual(baixou, false, 'o download nao pode ser tentado');
+      assert.match(r.texto, /NAO foi tentado/);
+      assert.match(r.texto, /reCAPTCHA/);
+    });
+
+    it('download vazio e falha, nao documento vazio', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'V', inteiroTeorLink: 'https://exemplo/x' }]);
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async () => '   \n ' });
+      assert.strictEqual(r.ok, false);
+      assert.match(r.texto, /nao trouxe o documento/);
+    });
+
+    it('pagina de captcha e falha, nao o inteiro teor', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'C', inteiroTeorLink: 'https://exemplo/x' }]);
+      for (const pagina of ['Just a moment... checking your browser', 'Por favor, resolva o reCAPTCHA', 'Verifique que você não é um robô']) {
+        const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+          { fila: f, baixarInteiroTeor: async () => pagina });
+        assert.strictEqual(r.ok, false, pagina);
+        assert.match(r.texto, /nao trouxe o documento/);
+      }
+    });
 
     it('devolve o texto gravado na busca', async () => {
       const { fila: f, jobId } = await filaCom([{ processo: 'A', inteiroTeor: 'EMENTA. Voto. Dispositivo.' }]);

@@ -7,6 +7,10 @@ const { fetchInteiroTeor, stripHtml } = require('../src/inteiroTeorFetcher');
 
 const INTEIRO_TEOR_MAX = 60_000;
 
+// Pagina de verificacao (captcha, Cloudflare) volta com HTTP 200 e content-type html:
+// sem esta checagem ela seria entregue ao modelo como se fosse o acordao.
+const PAGINA_DE_VERIFICACAO = /recaptcha|captcha|just a moment|verifique que você não é um robô/i;
+
 const LIMITE_MAX = 20;
 const LIMITE_PADRAO = 5;
 
@@ -495,6 +499,20 @@ async function lerInteiroTeor(entrada, deps) {
   let texto = typeof item.inteiroTeor === 'string' && item.inteiroTeor.trim() ? item.inteiroTeor : '';
   if (!texto && typeof item.inteiroTeorHtml === 'string' && item.inteiroTeorHtml.trim()) texto = stripHtml(item.inteiroTeorHtml);
   if (!texto && typeof item.inteiroTeorLink === 'string' && item.inteiroTeorLink) {
+    // Onde o inteiro teor sabidamente nao abre (TJAC exige reCAPTCHA) ou nao existe, o
+    // download nem e tentado: ele traria a pagina do desafio, nao o documento. O texto diz
+    // que NAO tentou e por que, para o modelo nao ler isso como "o documento nao existe".
+    const f = capacidades.obter(job.comando)?.funcionalidades.inteiroTeor;
+    if (f && (f.estado === 'nao-funciona' || f.estado === 'nao-existe')) {
+      const motivo = f.nota || (f.estado === 'nao-existe'
+        ? 'O tribunal nao oferece o inteiro teor por este caminho.'
+        : 'O inteiro teor deste tribunal nao esta funcionando no momento.');
+      return {
+        texto: `O download do inteiro teor do julgado ${indice} (${rotulo}) NAO foi tentado: ${motivo}\n`
+          + 'Isso NAO e ausencia do documento. Diga ao usuario que ele precisa abrir o julgado no portal do tribunal.',
+        ok: false,
+      };
+    }
     const baixar = deps.baixarInteiroTeor || fetchInteiroTeor;
     try {
       texto = await baixar(item.inteiroTeorLink);
@@ -502,6 +520,14 @@ async function lerInteiroTeor(entrada, deps) {
       return {
         texto: `FALHA AO BAIXAR o inteiro teor do julgado ${indice} (${rotulo}): ${e.message}\n`
           + 'Isso NAO e ausencia do documento: diga ao usuario que o download falhou.',
+        ok: false,
+      };
+    }
+    if (typeof texto !== 'string' || !texto.trim() || PAGINA_DE_VERIFICACAO.test(texto)) {
+      return {
+        texto: `O download do julgado ${indice} (${rotulo}) nao trouxe o documento (pagina de verificacao ou vazia).\n`
+          + 'Isso NAO e ausencia do documento nem do julgado: diga ao usuario que o portal nao entregou o texto '
+          + 'e que ele pode abrir o julgado no portal do tribunal.',
         ok: false,
       };
     }
