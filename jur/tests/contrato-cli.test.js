@@ -5,6 +5,9 @@ const path = require('node:path');
 const { describe, it } = require('node:test');
 const catalogo = require("../servidor/catalogo");
 const relator = require("../servidor/relator");
+const capacidades = require('../servidor/capacidades');
+// As excecoes vivem no modulo, que e o que a ficha e a ferramenta de busca consomem.
+const { SEM_FILTRO_DATA, SEM_NUMERO, COM_PUBLICACAO, SEM_INTEIRO_TEOR } = capacidades;
 
 const CLI = path.join(__dirname, '..', 'bin', 'jur');
 
@@ -14,20 +17,6 @@ const SEM_OUTPUT = new Set(['crps']);
 // Sem --max-pages: nao paginam.
 const SEM_PAGINACAO = new Set([
   'tjrn', // busca por texto BLOQUEADA (403 Akamai); so consulta por numero via DataJud, sem paginacao
-  'crps', // nao e comando de busca
-]);
-
-// Sem --data-inicio/--data-fim: nao filtram por data de sessao/julgamento.
-const SEM_FILTRO_DATA = new Set([
-  'tjma', // busca por texto BLOQUEADA (captcha); so numero (DataJud) ou -dpi/-dpf (data de PUBLICACAO, campo diferente)
-  'tjrn', // busca por texto BLOQUEADA (403 Akamai); so consulta por numero via DataJud, sem filtro de data
-  'crps', // nao e comando de busca
-]);
-
-// Sem --numero: nao expoem consulta direta por numero de processo.
-const SEM_NUMERO = new Set([
-  'tcu', // nao expoe consulta direta por numero de processo no --help
-  'tjsp', // nao expoe consulta direta por numero de processo no --help
   'crps', // nao e comando de busca
 ]);
 
@@ -184,5 +173,25 @@ describe('mapa de juizados x o que a CLI oferece', () => {
       return /turmas|juizad|JEF/i.test(linhaOrigem);
     });
     assert.deepStrictEqual(escondendo, [], `o --help oferece turmas/juizados mas o mapa diz que nao: ${escondendo.join(', ')}`);
+  });
+});
+
+describe('capacidades x o que a CLI oferece', () => {
+  it('COM_PUBLICACAO bate com --data-pub-inicio/--data-pub-fim, nos dois sentidos', () => {
+    const falhas = [];
+    for (const c of catalogo.comandosDaCli()) {
+      const tem = ajuda(c).includes('--data-pub-inicio') && ajuda(c).includes('--data-pub-fim');
+      if (tem !== COM_PUBLICACAO.has(c)) falhas.push(`${c} (cli: ${tem})`);
+    }
+    assert.deepStrictEqual(falhas, [], `divergencia em periodo de publicacao: ${falhas.join(', ')}`);
+  });
+
+  it('SEM_INTEIRO_TEOR bate com --fetch-inteiro-teor, nos dois sentidos', () => {
+    const falhas = [];
+    for (const c of catalogo.comandosDaCli()) {
+      const tem = ajuda(c).includes('--fetch-inteiro-teor');
+      if (tem === SEM_INTEIRO_TEOR.has(c)) falhas.push(`${c} (cli: ${tem})`);
+    }
+    assert.deepStrictEqual(falhas, [], `divergencia em inteiro teor: ${falhas.join(', ')}`);
   });
 });

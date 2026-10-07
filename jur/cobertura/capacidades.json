@@ -1,0 +1,55 @@
+{
+  "_comentario": "Resumo em portugues para a ficha do tribunal e excecoes por funcionalidade. Nunca mencione CLI, comando ou flag: isto aparece na tela. Tribunal fora de 'ok' precisa de resumo (tests/capacidades.test.js).",
+  "stj": {
+    "resumo": "Bloqueado desde 27/07/2026: o portal exige um desafio interativo do Cloudflare que não automatizamos. Não há substituto para o STJ em lei federal. Você pode tentar resolver o desafio na tela do navegador.",
+    "funcionalidades": {
+      "numero": { "estado": "ressalva", "nota": "Confirma só que o processo existe, não a decisão." }
+    }
+  },
+  "trf1": {
+    "resumo": "A busca responde, mas a base está congelada desde 31/07/2025. Decisões mais recentes não aparecem.",
+    "funcionalidades": {}
+  },
+  "trf3": {
+    "resumo": "O portal oscila e às vezes fica inacessível antes mesmo da busca. Tente de novo mais tarde se falhar.",
+    "funcionalidades": {}
+  },
+  "tjac": {
+    "resumo": "A busca responde, mas termos amplos zeraram em medições repetidas. Confira o total antes de concluir que não há julgado.",
+    "funcionalidades": {
+      "inteiroTeor": { "estado": "nao-funciona", "nota": "O portal exige reCAPTCHA para abrir o documento." }
+    }
+  },
+  "tjam": {
+    "resumo": "A busca responde, mas a base estadual está congelada em 2025. Decisões mais recentes não aparecem.",
+    "funcionalidades": {}
+  },
+  "tjma": {
+    "resumo": "A busca por termo está bloqueada por captcha. Só a consulta por número de processo funciona, e ela confirma o processo, não a decisão.",
+    "funcionalidades": {
+      "numero": { "estado": "ressalva", "nota": "Confirma só que o processo existe, não a decisão." }
+    }
+  },
+  "tjpb": {
+    "resumo": "A busca pública respondeu com erro do servidor em medições consecutivas. Pode voltar a funcionar sem aviso.",
+    "funcionalidades": {}
+  },
+  "tjrn": {
+    "resumo": "O portal bloqueia o acesso automatizado. Só a consulta por número de processo funciona, e ela confirma o processo, não a decisão.",
+    "funcionalidades": {
+      "numero": { "estado": "ressalva", "nota": "Confirma só que o processo existe, não a decisão." }
+    }
+  },
+  "tjsc": {
+    "resumo": "O portal novo está bloqueado por verificação anti-robô nesta rodada; o portal antigo está congelado. Resultados podem estar desatualizados.",
+    "funcionalidades": {}
+  },
+  "tjsp": {
+    "resumo": "Incerto: o reCAPTCHA invisível permite a busca em alguns dias e bloqueia em outros. Se falhar, tente de novo mais tarde.",
+    "funcionalidades": {}
+  },
+  "crps": {
+    "resumo": "Exige login Gov.br em dispositivo validado. A busca automática não está disponível.",
+    "funcionalidades": {}
+  }
+}
