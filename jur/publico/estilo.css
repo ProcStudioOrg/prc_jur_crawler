@@ -20,8 +20,11 @@
   /* semanticos: verde = funciona, amarelo = ressalva, vermelho = nao funciona, cinza = nao existe */
   --ok-fundo: #E7FCD8; --ok-borda: #9FD58E;
   --ressalva: #8A6A00; --ressalva-fundo: #FFF4C2; --ressalva-borda: #E6C84A;
-  --neutro: #6B7280; --neutro-fundo: #EEF0F2; --neutro-borda: #CBD2D9;
+  /* --neutro era #6B7280 (4,2:1 sobre --neutro-fundo, abaixo de 4,5:1 para texto). */
+  --neutro: #5B6270; --neutro-fundo: #EEF0F2; --neutro-borda: #CBD2D9;
   --erro: #C62828; --erro-fundo: #FDE8E7; --erro-borda: #F2A19C;
+  /* Texto da pill da barra "Buscar em": --acento sobre --azul-suave dava 3,85:1. */
+  --pill-texto: #0057B8;
 }
 :root[data-tema="escuro"] {
   --fundo: #101827;
@@ -41,6 +44,7 @@
   --ressalva: #F2CD5C; --ressalva-fundo: #3A3110; --ressalva-borda: #6B5A1E;
   --neutro: #A7B0BC; --neutro-fundo: #22303F; --neutro-borda: #3C4C5E;
   --erro: #FF8A80; --erro-fundo: #3E1F1C; --erro-borda: #7A3A35;
+  --pill-texto: #8EC2FF;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-tema="claro"]) {
@@ -51,6 +55,7 @@
     --ressalva: #F2CD5C; --ressalva-fundo: #3A3110; --ressalva-borda: #6B5A1E;
     --neutro: #A7B0BC; --neutro-fundo: #22303F; --neutro-borda: #3C4C5E;
     --erro: #FF8A80; --erro-fundo: #3E1F1C; --erro-borda: #7A3A35;
+    --pill-texto: #8EC2FF;
   }
 }
 
@@ -318,7 +323,9 @@ body {
   display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px;
   border: 0; background: none; color: var(--texto); font: inherit; text-transform: inherit; letter-spacing: inherit; cursor: pointer;
 }
-.chip-tribunal .cx { width: 13px; height: 13px; border-radius: 3px; border: 1.5px solid var(--neutro-borda); display: grid; place-items: center; font-size: 10px; color: #fff; }
+/* Borda em --fraco: com --neutro-borda a caixinha de selecao ficava em ~1,5:1, abaixo
+   dos 3:1 que um controle precisa para ser percebido. */
+.chip-tribunal .cx { width: 13px; height: 13px; border-radius: 3px; border: 1.5px solid var(--fraco); display: grid; place-items: center; font-size: 10px; color: #fff; }
 .chip-tribunal .sel[aria-pressed="true"] .cx { background: var(--acento); border-color: var(--acento); }
 .chip-tribunal .sel[aria-pressed="true"] .cx::after { content: '✓'; }
 .chip-tribunal.selecionado { border-color: var(--acento); background: var(--azul-suave); }
@@ -682,7 +689,7 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .escopo-chips { display: inline-flex; flex-wrap: wrap; gap: 6px; }
 .pill {
   display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px 3px 10px; border-radius: 999px;
-  background: var(--azul-suave); color: var(--acento); border: 1px solid transparent;
+  background: var(--azul-suave); color: var(--pill-texto); border: 1px solid transparent;
   font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: .02em;
 }
 .pill b { font-weight: 700; }

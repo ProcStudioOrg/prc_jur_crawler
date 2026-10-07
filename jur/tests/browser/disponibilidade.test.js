@@ -355,6 +355,46 @@ describe('escopo — selecao', () => {
   });
 });
 
+// WCAG 2.x: texto pede 4,5:1; borda de controle (componente de interface) pede 3:1.
+// A pill azul sobre azul-suave dava ~4:1 e a borda da caixinha de selecao ~1,5:1.
+describe('contraste no tema claro', () => {
+  it('texto da pill >= 4,5:1 e borda da caixinha de selecao >= 3:1', async () => {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 1000 }, colorScheme: 'light' });
+    try {
+      await injetarChave(page, chaveBrowser);
+      await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
+      await page.evaluate((chave) => localStorage.setItem(chave, JSON.stringify(['tjpr'])), CHAVE);
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await page.waitForSelector('#caixa-inicial .pill[data-comando="tjpr"]');
+      const { pill, cx } = await page.evaluate(() => {
+        const rgb = (s) => s.match(/[\d.]+/g).map(Number);
+        const lum = ([r, g, b]) => {
+          const c = [r, g, b].map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; });
+          return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+        };
+        const razao = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); };
+        // Fundo efetivo: o primeiro ancestral com fundo opaco.
+        const fundo = (el) => {
+          for (let e = el; e; e = e.parentElement) {
+            const c = rgb(getComputedStyle(e).backgroundColor);
+            if (c.length < 4 || c[3] > 0) return c.slice(0, 3);
+          }
+          return [255, 255, 255];
+        };
+        const p = document.querySelector('#caixa-inicial .pill[data-comando="tjpr"]');
+        const chip = document.querySelector('.chip-tribunal[data-comando="trf4"]');
+        const caixa = chip.querySelector('.cx');
+        return {
+          pill: razao(rgb(getComputedStyle(p).color).slice(0, 3), fundo(p)),
+          cx: razao(rgb(getComputedStyle(caixa).borderTopColor).slice(0, 3), fundo(chip)),
+        };
+      });
+      assert.ok(pill >= 4.5, `pill: ${pill.toFixed(2)}:1`);
+      assert.ok(cx >= 3, `borda da caixinha: ${cx.toFixed(2)}:1`);
+    } finally { await page.close(); }
+  });
+});
+
 describe('ficha do tribunal', () => {
   const CHAVES = ['termo', 'periodoJulgamento', 'periodoPublicacao', 'magistrado', 'juizados', 'inteiroTeor', 'numero'];
 
