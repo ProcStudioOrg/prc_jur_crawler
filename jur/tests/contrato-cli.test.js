@@ -155,3 +155,34 @@ describe('mapa de busca por magistrado x o que a CLI oferece', () => {
       `sem nota explicando a ausencia: ${mudos.join(', ')}`);
   });
 });
+
+const juizados = require('../servidor/juizados');
+
+describe('mapa de juizados x o que a CLI oferece', () => {
+  it('todo comando da CLI esta classificado no mapa de juizados', () => {
+    const sem = catalogo.comandosDaCli().filter((c) => !juizados.obter(c));
+    assert.deepStrictEqual(sem, [], `sem entrada em servidor/juizados.js: ${sem.join(', ')}`);
+  });
+
+  it('todo tribunal com recorte tem mesmo a flag e o valor no --help', () => {
+    const mentindo = juizados.comandos().filter((c) => {
+      const info = juizados.obter(c);
+      if (!info.suportado) return false;
+      const texto = ajuda(c);
+      const [flag, valor] = info.args;
+      return !(texto.includes(flag) && texto.includes(valor));
+    });
+    assert.deepStrictEqual(mentindo, [], `mapa diz que tem recorte mas o --help nao mostra: ${mentindo.join(', ')}`);
+  });
+
+  it('todo tribunal sem recorte realmente nao oferece turmas/juizados no --help', () => {
+    const escondendo = juizados.comandos().filter((c) => {
+      const info = juizados.obter(c);
+      if (info.suportado) return false;
+      const texto = ajuda(c);
+      const linhaOrigem = (texto.match(/--origem[^\n]*/) || [''])[0] + (texto.match(/--fontes[^\n]*/) || [''])[0];
+      return /turmas|juizad|JEF/i.test(linhaOrigem);
+    });
+    assert.deepStrictEqual(escondendo, [], `o --help oferece turmas/juizados mas o mapa diz que nao: ${escondendo.join(', ')}`);
+  });
+});
