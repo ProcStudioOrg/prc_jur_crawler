@@ -76,6 +76,13 @@ describe('capacidades por tribunal', () => {
     assert.strictEqual(capacidades.recusar('trf4', 'periodoPublicacao', 'TRF4'), null);
   });
 
+  // Sem o override, o STJ assistido (captcha resolvido pelo usuario) passava pela
+  // checagem de disponibilidade e era barrado logo depois por "nao esta funcionando".
+  it('recusar respeita o override de disponibilidade da tentativa assistida', () => {
+    assert.match(capacidades.recusar('stj', 'periodoPublicacao', 'STJ'), /NAO FOI FEITA/);
+    assert.strictEqual(capacidades.recusar('stj', 'periodoPublicacao', 'STJ', { disponivel: true }), null);
+  });
+
   it('resumoCompacto lista so o que funciona ou tem ressalva, sem termo e numero', () => {
     const r = capacidades.resumoCompacto('trf4');
     assert.match(r, /data/);

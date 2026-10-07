@@ -60,7 +60,8 @@ function registrar(roteador, deps) {
 
     const info = catalogo.obter(tribunal);
     if (!info) return json(res, 404, { erro: `tribunal desconhecido: ${tribunal}` });
-    if (!info.disponivel && !fila.permitirAssistido?.(tribunal)) {
+    const assistido = Boolean(fila.permitirAssistido?.(tribunal));
+    if (!info.disponivel && !assistido) {
       // A nota vai junto: "indisponivel" sem motivo faz o usuario tentar de novo.
       return json(res, 409, { erro: `tribunal indisponivel (${info.estado})`, estado: info.estado, nota: info.nota });
     }
@@ -84,7 +85,7 @@ function registrar(roteador, deps) {
     // recorte pedido.
     for (const [pede, chave] of [[juizados === true, 'juizados'], [Boolean(dataPubInicio || dataPubFim), 'periodoPublicacao']]) {
       if (!pede) continue;
-      const recusa = capacidades.recusar(tribunal, chave, info.nome);
+      const recusa = capacidades.recusar(tribunal, chave, info.nome, { disponivel: info.disponivel || assistido });
       if (recusa) return json(res, 400, { erro: `o tribunal ${tribunal} nao oferece ${capacidades.ROTULOS[chave].toLowerCase()} nesta busca`, detalhe: recusa });
     }
 

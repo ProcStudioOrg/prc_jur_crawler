@@ -245,7 +245,8 @@ async function buscar(entrada, deps) {
     return { texto: explicarDesligado(info.comando, info.nome, deps), ok: false };
   }
 
-  if (!info.disponivel && !deps.fila?.permitirAssistido?.(entrada.tribunal)) {
+  const assistido = Boolean(deps.fila?.permitirAssistido?.(entrada.tribunal));
+  if (!info.disponivel && !assistido) {
     return {
       texto: `O tribunal ${info.comando} (${info.nome}) esta INDISPONIVEL — estado "${info.estado}".\n`
         + `Motivo registrado: ${info.nota}\n`
@@ -276,7 +277,7 @@ async function buscar(entrada, deps) {
   const pedePublicacao = Boolean(entrada.dataPubInicio || entrada.dataPubFim);
   for (const [pede, chave] of [[pedeJuizados, 'juizados'], [pedePublicacao, 'periodoPublicacao']]) {
     if (!pede) continue;
-    const recusa = capacidades.recusar(entrada.tribunal, chave, info.nome);
+    const recusa = capacidades.recusar(entrada.tribunal, chave, info.nome, { disponivel: info.disponivel || assistido });
     if (recusa) return { texto: recusa, ok: false };
   }
 

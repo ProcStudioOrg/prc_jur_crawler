@@ -340,6 +340,20 @@ describe('ferramentas', () => {
   });
 
 
+  it('STJ assistido com periodo de publicacao e enfileirado, nao recusado', async () => {
+    let enfileirado = null;
+    const filaAssistida = {
+      permitirAssistido: (c) => c === 'stj',
+      enfileirar: (comando, params) => { enfileirado = { comando, params }; return { id: 'job-stj' }; },
+      aguardar: async () => ({ id: 'job-stj', status: 'concluido', total: 2 }),
+    };
+    const texto = await ferramentas.executar('buscar_jurisprudencia',
+      { tribunal: 'stj', query: 'x', dataPubInicio: '01/01/2024' }, { fila: filaAssistida, timeoutBuscaMs: 0 });
+    assert.ok(enfileirado, `devia ter enfileirado: ${texto}`);
+    assert.strictEqual(enfileirado.params.dataPubInicio, '01/01/2024');
+    assert.doesNotMatch(texto, /NAO FOI FEITA/);
+  });
+
   it('os parametros novos chegam ao enfileirar', async () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-params-'));
     let recebidos = null;

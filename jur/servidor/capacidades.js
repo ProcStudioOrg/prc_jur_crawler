@@ -118,9 +118,13 @@ function obter(comando, { disponivel } = {}) {
  * nao esta funcionando. null quando pode rodar. O invariante e o mesmo do relator: a
  * busca NAO roda sem o recorte, porque rodar sem ele devolve uma lista errada com cara
  * de certa.
+ *
+ * `disponivel` e o mesmo override de `obter`: quem chama ja decidiu que o tribunal pode
+ * buscar (tentativa assistida do STJ), e sem repassar isso aqui toda funcionalidade
+ * existente seria lida como `nao-funciona` e a busca assistida seria recusada a toa.
  */
-function recusar(comando, chave, nome) {
-  const c = obter(comando);
+function recusar(comando, chave, nome, { disponivel } = {}) {
+  const c = obter(comando, { disponivel });
   if (!c) return null;
   const f = c.funcionalidades[chave];
   if (f.estado === 'nao-existe') {
