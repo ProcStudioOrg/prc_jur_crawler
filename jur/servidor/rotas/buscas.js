@@ -86,7 +86,7 @@ function registrar(roteador, deps) {
 
     // Mesma politica do relator para juizados e publicacao: 400, nunca rodar sem o
     // recorte pedido.
-    for (const [pede, chave] of [[juizados === true, 'juizados'], [Boolean(dataPubInicio || dataPubFim), 'periodoPublicacao'], [Boolean(numeroPedido), 'numero']]) {
+    for (const [pede, chave] of [[juizados === true, 'juizados'], [Boolean(dataPubInicio || dataPubFim), 'periodoPublicacao'], [Boolean(numeroPedido) && !capacidades.numeroComTermoAceito(tribunal, query), 'numero']]) {
       if (!pede) continue;
       const recusa = capacidades.recusar(tribunal, chave, info.nome, { disponivel: info.disponivel || assistido });
       if (recusa) return json(res, 400, { erro: `o tribunal ${tribunal} nao oferece ${capacidades.ROTULOS[chave].toLowerCase()} nesta busca`, detalhe: recusa });

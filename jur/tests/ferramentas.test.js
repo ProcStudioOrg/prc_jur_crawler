@@ -241,6 +241,25 @@ describe('ferramentas', () => {
       assert.match(texto, /não localizado na base/);
     });
 
+    it('trf1: numero sem query e recusado; numero junto de query roda a busca por termo', async () => {
+      const chamadas = [];
+      const f = criarFilaTeste(async (comando, params) => { chamadas.push(params); return { ok: true, total: 0, resultados: [], arquivo: null, erro: null }; });
+      const so = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'trf1', numero: '1' }, { fila: f });
+      assert.strictEqual(so.ok, false);
+      assert.match(so.texto, /NAO FOI FEITA/);
+      assert.strictEqual(chamadas.length, 0);
+      const junto = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'trf1', query: 'auxilio', numero: '1' }, { fila: f });
+      assert.strictEqual(junto.ok, true);
+      assert.strictEqual(chamadas.length, 1);
+      assert.strictEqual(chamadas[0].query, 'auxilio');
+      assert.match(junto.texto, /"auxilio"/, 'o texto diz que rodou a busca por termo');
+    });
+
+    it('a descricao de numero avisa que, sem consulta direta, numero so funciona junto de query', () => {
+      const d = ferramentas.definicoes().find((x) => x.name === 'buscar_jurisprudencia');
+      assert.match(d.input_schema.properties.numero.description, /nos tribunais sem consulta direta, numero só funciona junto de query/);
+    });
+
     it('busca cujo crawler falhou (job com status erro) e resultado legitimo, nao falha de execucao', async () => {
       const filaComErro = criarFilaTeste(async () => ({ ok: false, total: 0, resultados: [], arquivo: null, erro: 'crawler morreu' }));
       const { texto, ok } = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila: filaComErro });

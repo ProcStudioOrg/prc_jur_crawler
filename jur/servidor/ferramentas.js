@@ -88,8 +88,10 @@ function definicoes() {
           numero: {
             type: 'string',
             description: 'numero do processo (CNJ ou o numero do proprio tribunal) para CONSULTA POR NUMERO. '
-              + 'Com numero, a consulta e so por ele (query e ignorada) e devolve 1 resultado — o registro da consulta — '
-              + 'quando o processo e encontrado na base. Onde o tribunal nao tem consulta por numero a busca e RECUSADA.',
+              + 'Onde ha consulta direta, a consulta e so pelo numero (query e ignorada) e devolve o registro do processo '
+              + 'quando ele e encontrado na base. Atencao: nos tribunais sem consulta direta, numero só funciona junto de query '
+              + '(filtra a busca por termo; ex.: trf1, trf3, trf5) — sozinho e RECUSADO. Onde o tribunal nao tem numero '
+              + 'nenhum a busca tambem e RECUSADA.',
           },
           dataInicio: { type: 'string', description: 'data no formato DD/MM/AAAA, ex.: 01/01/2024. ISO (AAAA-MM-DD) e RECUSADO.' },
           dataFim: { type: 'string', description: 'data no formato DD/MM/AAAA, ex.: 31/12/2024. ISO (AAAA-MM-DD) e RECUSADO.' },
@@ -283,7 +285,7 @@ async function buscar(entrada, deps) {
   // teor nao entra aqui: e sob demanda, em ler_inteiro_teor (ver executor.js).
   const pedeJuizados = entrada.juizados === true;
   const pedePublicacao = Boolean(entrada.dataPubInicio || entrada.dataPubFim);
-  for (const [pede, chave] of [[pedeJuizados, 'juizados'], [pedePublicacao, 'periodoPublicacao'], [Boolean(numeroPedido), 'numero']]) {
+  for (const [pede, chave] of [[pedeJuizados, 'juizados'], [pedePublicacao, 'periodoPublicacao'], [Boolean(numeroPedido) && !capacidades.numeroComTermoAceito(entrada.tribunal, entrada.query), 'numero']]) {
     if (!pede) continue;
     const recusa = capacidades.recusar(entrada.tribunal, chave, info.nome, { disponivel: info.disponivel || assistido });
     if (recusa) return { texto: recusa, ok: false };
@@ -314,7 +316,11 @@ async function buscar(entrada, deps) {
   // essa ressalva so aparecesse no caminho do zero, o modelo leria "0 resultados" sem
   // saber que a causa provavel foi a forma do valor.
   // Com numero a CLI faz so a consulta por numero; o texto diz o que de fato rodou.
-  const alvo = numeroPedido ? `o numero ${numeroPedido}` : `"${entrada.query}"`;
+  // Nos tribunais em que o numero so filtra a busca por termo, rodou a busca por termo.
+  const alvo = !numeroPedido ? `"${entrada.query}"`
+    : capacidades.numeroComTermoAceito(entrada.tribunal, entrada.query)
+      ? `"${entrada.query}" filtrado pelo numero ${numeroPedido}`
+      : `o numero ${numeroPedido}`;
   const ressalvaRelator = relatorPedido ? `\nRESSALVA DO FILTRO DE MAGISTRADO: ${relator.explicarForma(entrada.tribunal)}` : '';
   const prazoMs = deps.timeoutBuscaMs === undefined ? TIMEOUT_BUSCA_MS : deps.timeoutBuscaMs;
   const job = await aguardarComTimeout(deps.fila, id, prazoMs);

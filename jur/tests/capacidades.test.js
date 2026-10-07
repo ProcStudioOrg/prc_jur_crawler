@@ -120,6 +120,18 @@ describe('capacidades por tribunal', () => {
     assert.strictEqual(capacidades.recusar('stj', 'periodoPublicacao', 'STJ', { disponivel: true }), null);
   });
 
+  // TRF1/TRF3/TRF5: o -n da CLI e so um filtro DENTRO de uma busca por termo (-q
+  // continua obrigatorio). Na ficha isso nao e "consulta por numero".
+  it('trf1/trf3/trf5 nao tem consulta direta por numero, e a recusa diz por que', () => {
+    for (const c of ['trf1', 'trf3', 'trf5']) {
+      const f = capacidades.obter(c).funcionalidades.numero;
+      assert.strictEqual(f.estado, 'nao-existe', c);
+      assert.match(f.nota, /só filtra por número dentro de uma busca por termo/, c);
+    }
+    assert.ok(capacidades.recusar('trf1', 'numero', 'TRF1'));
+    assert.strictEqual(capacidades.recusar('trf4', 'numero', 'TRF4'), null);
+  });
+
   it('resumoCompacto lista so o que funciona ou tem ressalva, sem termo e numero', () => {
     const r = capacidades.resumoCompacto('trf4');
     assert.match(r, /data/);

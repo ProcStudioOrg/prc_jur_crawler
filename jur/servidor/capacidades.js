@@ -39,6 +39,12 @@ const COM_PUBLICACAO = new Set([
 ]);
 // Sem -n.
 const SEM_NUMERO = new Set(['tcu', 'tjsp', 'crps']);
+// Com -n, mas so como FILTRO dentro de uma busca por termo: na CLI destes, -q continua
+// obrigatorio. Para quem usa a ficha isso nao e "consulta por numero" (trazer um
+// processo pelo numero), entao a funcionalidade aparece como inexistente; a busca com
+// termo + numero continua aceita (ver `numeroSoComTermo` em ferramentas.js e buscas.js).
+const NUMERO_SO_COM_TERMO = new Set(['trf1', 'trf3', 'trf5']);
+const NOTA_NUMERO_SO_COM_TERMO = 'Este tribunal só filtra por número dentro de uma busca por termo.';
 // Sem --fetch-inteiro-teor.
 const SEM_INTEIRO_TEOR = new Set(['trf1', 'trf3', 'trf5', 'tcu', 'tjma', 'tjrn', 'tjsp', 'crps']);
 
@@ -64,13 +70,24 @@ function existencia(comando, chave) {
       return j && j.suportado ? { existe: true, nota: j.nota } : { existe: false, nota: j ? j.nota : '' };
     }
     case 'inteiroTeor': return { existe: !SEM_INTEIRO_TEOR.has(comando), nota: '' };
-    case 'numero': return { existe: !SEM_NUMERO.has(comando), nota: '' };
+    case 'numero':
+      if (NUMERO_SO_COM_TERMO.has(comando)) return { existe: false, nota: NOTA_NUMERO_SO_COM_TERMO };
+      return { existe: !SEM_NUMERO.has(comando), nota: '' };
     default: return { existe: false, nota: '' };
   }
 }
 
 function existe(comando, chave) {
   return existencia(comando, chave).existe;
+}
+
+/**
+ * Pedido com numero E termo num tribunal de NUMERO_SO_COM_TERMO e o uso que a CLI
+ * aceita (-q com -n filtrando): nao ha o que recusar. Sem termo, a recusa de
+ * "Consulta por número" vale normalmente.
+ */
+function numeroComTermoAceito(comando, query) {
+  return NUMERO_SO_COM_TERMO.has(comando) && Boolean(query);
 }
 
 function curado(comando) {
@@ -167,6 +184,6 @@ function resumoCompacto(comando) {
 }
 
 module.exports = {
-  CHAVES, ROTULOS, obter, existe, recusar, resumoCompacto, curado, aplicarCurado,
-  SEM_FILTRO_DATA, COM_PUBLICACAO, SEM_NUMERO, SEM_INTEIRO_TEOR,
+  CHAVES, ROTULOS, obter, existe, recusar, resumoCompacto, curado, aplicarCurado, numeroComTermoAceito,
+  SEM_FILTRO_DATA, COM_PUBLICACAO, SEM_NUMERO, SEM_INTEIRO_TEOR, NUMERO_SO_COM_TERMO,
 };

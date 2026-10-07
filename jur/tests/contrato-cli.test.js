@@ -7,7 +7,7 @@ const catalogo = require("../servidor/catalogo");
 const relator = require("../servidor/relator");
 const capacidades = require('../servidor/capacidades');
 // As excecoes vivem no modulo, que e o que a ficha e a ferramenta de busca consomem.
-const { SEM_FILTRO_DATA, SEM_NUMERO, COM_PUBLICACAO, SEM_INTEIRO_TEOR } = capacidades;
+const { SEM_FILTRO_DATA, SEM_NUMERO, COM_PUBLICACAO, SEM_INTEIRO_TEOR, NUMERO_SO_COM_TERMO } = capacidades;
 
 const CLI = path.join(__dirname, '..', 'bin', 'jur');
 
@@ -69,6 +69,19 @@ describe('contrato da CLI que o executor assume', () => {
     assert.deepStrictEqual(semPaginacao, [], `sem --max-pages: ${semPaginacao.join(', ')}`);
     assert.deepStrictEqual(semData, [], `sem --data-inicio/--data-fim: ${semData.join(', ')}`);
     assert.deepStrictEqual(semNumero, [], `sem --numero: ${semNumero.join(', ')}`);
+  });
+
+  // NUMERO_SO_COM_TERMO (trf1, trf3, trf5): a CLI TEM --numero, mas ele e so um filtro
+  // dentro da busca por termo — -q continua obrigatorio, ao contrario do trf4, onde -n e
+  // consulta direta. Por isso a ficha marca "Consulta por número" como nao-existe para
+  // eles, igual a SEM_NUMERO. Se a CLI de um deles perder o --numero, ele migra para
+  // SEM_NUMERO; se ganhar consulta direta, sai deste conjunto.
+  it('os tribunais de NUMERO_SO_COM_TERMO tem --numero na CLI e estao fora de SEM_NUMERO', () => {
+    for (const c of NUMERO_SO_COM_TERMO) {
+      assert.ok(ajuda(c).includes('--numero'), `${c} sem --numero`);
+      assert.ok(!SEM_NUMERO.has(c), `${c} nao pode estar nos dois conjuntos`);
+      assert.strictEqual(capacidades.existe(c, 'numero'), false, `${c} nao tem consulta direta por numero`);
+    }
   });
 });
 

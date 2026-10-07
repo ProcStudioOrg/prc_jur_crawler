@@ -65,6 +65,14 @@ describe('rotas de busca', () => {
     assert.strictEqual((await criar({ tribunal: 'tjsp', numero: '1' })).status, 400, 'TJSP nao tem consulta por numero');
   });
 
+  it('trf1 sem consulta direta: numero sem query e 400, numero junto de query roda', async () => {
+    const so = await criar({ tribunal: 'trf1', numero: '1000000-00.2024.4.01.3400' });
+    assert.strictEqual(so.status, 400);
+    assert.match((await so.json()).detalhe, /dentro de uma busca por termo/);
+    const junto = await criar({ tribunal: 'trf1', query: 'auxilio', numero: '1000000-00.2024.4.01.3400' });
+    assert.strictEqual(junto.status, 202);
+  });
+
   it('recusa juizados que nao seja booleano', async () => {
     assert.strictEqual((await criar({ tribunal: 'trf4', query: 'x', juizados: 'sim' })).status, 400);
   });
