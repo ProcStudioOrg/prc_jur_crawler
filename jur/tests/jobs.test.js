@@ -296,4 +296,12 @@ describe('enriquecer — avisos da CLI no zero', () => {
     const j = enriquecerJob({ id: 'j', comando: 'tcego', status: 'concluido', total: 0, avisosCli: ['não localizado'] });
     assert.ok(j.avisos.some((a) => a.includes('não localizado')), JSON.stringify(j.avisos));
   });
+  it('job concluido com resultados tambem leva os avisos da consulta (truncamento)', () => {
+    const j = enriquecerJob({ id: 'j', comando: 'tcego', status: 'concluido', total: 10, avisosCli: ['A consulta trouxe 10 de 25 documentos.'] });
+    assert.deepStrictEqual(j.avisos, ['Aviso da consulta: A consulta trouxe 10 de 25 documentos.']);
+  });
+  it('nao vaza avisosCli cru na resposta', () => {
+    const j = enriquecerJob({ id: 'j', comando: 'tcego', status: 'concluido', total: 1, avisosCli: ['x'] });
+    assert.ok(!('avisosCli' in j));
+  });
 });

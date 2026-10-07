@@ -222,6 +222,19 @@ describe('executor', () => {
     assert.deepStrictEqual(JSON.parse(fs.readFileSync(arquivo, 'utf8')), []);
   });
 
+  it('consulta por numero com zero traz as `ressalvas` do envelope (tcdf/tcece) como avisos', async () => {
+    const r = await executar_(tmp(), 'numero-ressalvas', {}, { numero: '1' });
+    assert.strictEqual(r.total, 0);
+    assert.deepStrictEqual(r.resultados, []);
+    assert.ok(r.avisos.includes('Zero. Antes de concluir ausencia: confira o digito verificador.'), JSON.stringify(r.avisos));
+  });
+
+  it('`encontrados` maior que os resultados vira aviso de truncamento mesmo sem zero', async () => {
+    const r = await executar_(tmp(), 'numero-encontrados-truncado', {}, { numero: '1' });
+    assert.strictEqual(r.resultados.length, 10);
+    assert.ok(r.avisos.includes('A consulta trouxe 10 de 25 documentos.'), JSON.stringify(r.avisos));
+  });
+
   it('juizados e inteiroTeor falsos nao poem flag nenhuma', async () => {
     const r = await executar_(tmp(), 'eco', {}, { query: 'x', juizados: false, inteiroTeor: false });
     assert.ok(!r.envelope.args.includes('--origem'));

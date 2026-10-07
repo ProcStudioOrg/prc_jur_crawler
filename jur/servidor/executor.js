@@ -228,17 +228,28 @@ async function executar(comando, params = {}, opcoes = {}) {
 }
 
 /**
- * Avisos da propria CLI (`avisos[]`, `motivo`) quando a consulta por numero volta
- * vazia. Ficam FORA dos resultados — aviso nao e julgado — mas nao podem sumir: sem
+ * Avisos da propria CLI (`avisos[]`, `motivo`, `ressalvas[]`) quando a consulta por numero
+ * volta vazia, mais o aviso de truncamento (`encontrados` > resultados). Ficam FORA dos resultados — aviso nao e julgado — mas nao podem sumir: sem
  * eles, "nao localizado" ou "base parcial" chegariam ao usuario como um zero seco, e
  * zero seco e lido como ausencia de jurisprudencia.
  */
 function avisosSeVazio(envelope, resultados) {
-  if (resultados.length) return {};
-  const avisos = (Array.isArray(envelope.avisos) ? envelope.avisos : [])
-    .filter((a) => a !== null && a !== undefined && a !== '')
-    .map((a) => (typeof a === 'string' ? a : JSON.stringify(a)));
-  if (typeof envelope.motivo === 'string' && envelope.motivo.trim()) avisos.push(envelope.motivo.trim());
+  const avisos = [];
+  const juntar = (a) => {
+    const t = (typeof a === 'string' ? a : JSON.stringify(a)).trim();
+    if (t && !avisos.includes(t)) avisos.push(t);
+  };
+  if (!resultados.length) {
+    (Array.isArray(envelope.avisos) ? envelope.avisos : [])
+      .filter((a) => a !== null && a !== undefined && a !== '').forEach(juntar);
+    if (typeof envelope.motivo === 'string') juntar(envelope.motivo);
+    // tcdf/tcece/tcemg -n: o aviso do zero vem em `ressalvas`, nao em `avisos`.
+    if (Array.isArray(envelope.ressalvas)) envelope.ressalvas.filter((a) => typeof a === 'string').forEach(juntar);
+  }
+  // Truncamento vale tambem com resultados: o usuario nao pode achar que veio tudo.
+  if (typeof envelope.encontrados === 'number' && envelope.encontrados > resultados.length) {
+    juntar(`A consulta trouxe ${resultados.length} de ${envelope.encontrados} documentos.`);
+  }
   return avisos.length ? { avisos } : {};
 }
 

@@ -50,6 +50,18 @@ if (modo === 'inline') {
   process.stdout.write(JSON.stringify({
     success: true, encontrados: 0, total: 0, avisos: ['não localizado'], resultados: [],
   }) + '\n');
+} else if (modo === 'numero-ressalvas') {
+  // tcdf/tcece -n: o aviso do zero vem em `ressalvas` (array de strings), nao em `avisos`.
+  process.stdout.write(JSON.stringify({
+    success: true, encontrados: 0, resultados: [],
+    ressalvas: ['Zero. Antes de concluir ausencia: confira o digito verificador.'],
+  }) + '\n');
+} else if (modo === 'numero-encontrados-truncado') {
+  // Envelope diz 25 documentos, mas so 10 vieram: truncamento precisa virar aviso.
+  process.stdout.write(JSON.stringify({
+    success: true, encontrados: 25,
+    resultados: Array.from({ length: 10 }, (_, i) => ({ processo: `t${i}` })),
+  }) + '\n');
 } else if (modo === 'eco') {
   process.stdout.write(JSON.stringify({ success: true, args }) + '\n');
 } else if (modo === 'so-envelope') {

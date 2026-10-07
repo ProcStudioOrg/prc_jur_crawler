@@ -257,6 +257,7 @@ describe('avisos no zero resultados (Important 3)', () => {
     await filaZero.aguardar(id);
     const job = await (await fetch(`${baseZero}/api/v1/buscas/${id}`)).json();
     assert.strictEqual(job.total, 0);
+    assert.ok(!('avisosCli' in job), 'avisosCli cru nao pode vazar na resposta REST');
     assert.strictEqual(job.avisos.length, 1, `esperava exatamente a nota do catalogo: ${JSON.stringify(job.avisos)}`);
     assert.strictEqual(job.avisos[0], notaDoStf, 'o aviso precisa ser a PROPRIA nota do catalogo do stf');
     // Trecho literal, para que trocar a nota por qualquer outro texto plausivel falhe.
