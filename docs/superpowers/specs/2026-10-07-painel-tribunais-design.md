@@ -162,6 +162,12 @@ As exceções hoje em `tests/contrato-cli.test.js` (`SEM_FILTRO_DATA`, `SEM_NUME
 `SEM_PAGINACAO`, `RELATOR_IGNORADO`) mudam para dentro do módulo, e o teste passa a
 reprovar o módulo que divergir do `--help`, nos dois sentidos.
 
+Nota de implementação: só `SEM_FILTRO_DATA` e `SEM_NUMERO` (mais `COM_PUBLICACAO` e
+`SEM_INTEIRO_TEOR`) foram para `servidor/capacidades.js`. `SEM_PAGINACAO` e
+`RELATOR_IGNORADO` ficam no teste de contrato: não são capacidades mostradas na ficha
+nem oferecidas ao modelo (paginação não é filtro; relator tem módulo próprio), então
+movê-los criaria exportações sem consumidor.
+
 ### Estado (se funciona)
 
 1. Tribunal `sem-acesso` ou `exige-sessao`: toda funcionalidade existente vira

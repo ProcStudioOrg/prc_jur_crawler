@@ -12,11 +12,12 @@ const FalcaoTribunais = require('../src/FalcaoTribunais');
  * A FONTE DA VERDADE CONTINUA SENDO A CLI: tests/contrato-cli.test.js roda `--help` de
  * cada comando e reprova o mapa que divergir, nos dois sentidos.
  */
+// As notas vao para a ficha do tribunal (e para o modelo): texto de tela, acentuado.
 const sim = (args, nota = '') => ({ suportado: true, args, nota });
 const nao = (nota) => ({ suportado: false, args: null, nota });
 
-const SEM_RECORTE = 'Este tribunal nao separa Juizados de Justica Comum na busca.';
-const INSTANCIA_UNICA = 'Tribunal de instancia unica: nao ha juizados.';
+const SEM_RECORTE = 'Este tribunal não separa Juizados da Justiça Comum na busca.';
+const INSTANCIA_UNICA = 'Tribunal de instância única: não há juizados.';
 
 const MAPA = {
   trf4: sim(['--origem', 'turmas-recursais']),
@@ -28,12 +29,12 @@ const MAPA = {
   tjam: sim(['--origem', 'turmas']),
   tjal: sim(['--origem', 'turmas']),
   tjba: sim(['--origem', 'turmas']),
-  tjpe: sim(['--origem', 'turmas'], 'Recorte feito no cliente, pelo orgao julgador.'),
-  tjpi: sim(['--origem', 'turmas'], 'Recorte feito no cliente, pelo orgao julgador.'),
+  tjpe: sim(['--origem', 'turmas'], 'O portal não tem esse filtro: as decisões são separadas pelo órgão julgador de cada uma.'),
+  tjpi: sim(['--origem', 'turmas'], 'O portal não tem esse filtro: as decisões são separadas pelo órgão julgador de cada uma.'),
   tjpa: sim(['--origem', 'turmas']),
   tjrs: sim(['--origem', 'turmas']),
   tjsc: sim(['--origem', 'turmas']),
-  tjes: sim(['--origem', 'turmas'], 'So nos acervos do PJe de 2o grau.'),
+  tjes: sim(['--origem', 'turmas'], 'Só nos acervos do PJe de 2º grau.'),
   tjro: sim(['--origem', 'turmas']),
   tjto: sim(['--origem', 'turmas']),
   tjrr: sim(['--origem', 'turmas']),
@@ -43,31 +44,31 @@ const MAPA = {
   trf5: nao(SEM_RECORTE),
   tjpr: nao(SEM_RECORTE),
   tjrj: nao(SEM_RECORTE),
-  tjce: nao('A origem no TJCE separa PJe de SAJ, nao Juizados de Justica Comum.'),
+  tjce: nao('A busca do TJCE separa os sistemas PJe e SAJ, não Juizados da Justiça Comum.'),
   tjdft: nao(SEM_RECORTE),
   tjmg: nao(SEM_RECORTE),
   tjgo: nao(SEM_RECORTE),
   tjmt: nao(SEM_RECORTE),
   tjpb: nao(SEM_RECORTE),
   tjap: nao(SEM_RECORTE),
-  tjma: nao('A busca por texto do TJMA esta bloqueada por captcha; nao ha recorte a oferecer.'),
-  tjrn: nao('No TJRN nao existe busca por texto; nao ha recorte a oferecer.'),
+  tjma: nao('A busca por texto do TJMA está bloqueada por captcha; não há recorte a oferecer.'),
+  tjrn: nao('No TJRN não existe busca por texto; não há recorte a oferecer.'),
   tjsp: nao(SEM_RECORTE),
   stf: nao(INSTANCIA_UNICA),
   stj: nao(INSTANCIA_UNICA),
-  crps: nao('O CRPS nao tem busca (login Gov.br).'),
-  tcu: nao('Tribunal de contas: nao ha juizados.'),
-  carf: nao('Instancia administrativa: nao ha juizados.'),
+  crps: nao('O CRPS não tem busca: o acesso exige login Gov.br.'),
+  tcu: nao('Tribunal de contas: não há juizados.'),
+  carf: nao('Instância administrativa: não há juizados.'),
 };
 
 for (const c of ['tcepr', 'tcesc', 'tcers', 'tcesp', 'tcerj', 'tceba', 'tcepe', 'tcdf', 'tcemg', 'tcees', 'tcepa', 'tcece', 'tcego']) {
-  MAPA[c] = nao('Tribunal de contas: nao ha juizados.');
+  MAPA[c] = nao('Tribunal de contas: não há juizados.');
 }
 
 // Os 26 acervos do FALCAO: Justica do Trabalho nao tem juizados especiais.
 for (const meta of Object.values(FalcaoTribunais.TRIBUNAIS)) {
   const comando = String(meta.comando || meta.sigla || '').toLowerCase();
-  if (comando) MAPA[comando] = nao('Justica do Trabalho: nao ha juizados especiais.');
+  if (comando) MAPA[comando] = nao('Justiça do Trabalho: não há juizados especiais.');
 }
 
 function obter(comando) {

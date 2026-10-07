@@ -90,6 +90,17 @@ describe('capacidades por tribunal', () => {
     }
   });
 
+  // As notas vao para a ficha do tribunal: portugues de tela, com acento, sem jargao
+  // de implementacao ("recorte feito no cliente").
+  it('as notas das funcionalidades sao texto de tela: acentuadas e sem jargao', () => {
+    const SEM_ACENTO = /\b(nao|ha|esta|instancia|Justica|orgao|So|unica)\b|\b2o\b|no cliente/;
+    for (const t of catalogo.listar()) {
+      for (const [chave, f] of Object.entries(capacidades.obter(t.comando).funcionalidades)) {
+        assert.doesNotMatch(f.nota, SEM_ACENTO, `${t.comando}.${chave}: ${f.nota}`);
+      }
+    }
+  });
+
   it('disponivel pode ser sobreposto (tentativa assistida)', () => {
     const stj = capacidades.obter('stj', { disponivel: true }).funcionalidades;
     assert.strictEqual(stj.termo.estado, 'funciona');

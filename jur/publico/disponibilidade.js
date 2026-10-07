@@ -188,6 +188,9 @@
       const erro = document.createElement('p'); erro.className = 'vazio';
       erro.textContent = `Não foi possível carregar a lista de tribunais: ${evento.detail.erro}`;
       alvo.appendChild(erro);
+      // Os nos da montagem anterior sairam do DOM: sem zerar, `redesenhar` continuaria
+      // atualizando placar e grade soltos a cada jur:escopo, sem efeito visivel.
+      elGrade = elBarraFiltros = elPlacar = elLimpar = null;
       return;
     }
     const lista = tribunais();

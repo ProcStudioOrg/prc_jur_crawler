@@ -184,7 +184,7 @@ function documento() {
           properties: {
             id: { type: 'string', format: 'uuid' },
             comando: { type: 'string', description: 'o tribunal buscado (comando da CLI)' },
-            params: { type: 'object', description: 'query, dataInicio, dataFim, maxPaginas, relator enviados na criação' },
+            params: { type: 'object', description: 'query, numero, dataInicio, dataFim, dataPubInicio, dataPubFim, maxPaginas, relator, juizados enviados na criação (os ausentes não aparecem)' },
             status: { $ref: '#/components/schemas/StatusBusca' },
             total: { type: ['integer', 'null'], description: 'total de resultados; 0 SEMPRE vem acompanhado de avisos[] explicando a ressalva' },
             arquivo: { type: ['string', 'null'] },

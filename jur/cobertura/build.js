@@ -587,8 +587,17 @@ function renderFalhas(data) {
 }
 
 const data = build();
-fs.writeFileSync(path.join(__dirname, 'tribunais.json'), JSON.stringify(data, null, 2) + '\n');
-fs.writeFileSync(path.join(__dirname, 'CLAUDE-FALHAS.md'), renderFalhas(data));
+// Escrita atomica: grava num temporario e renomeia por cima. tests/falhas-documentacao
+// roda este script em paralelo com outros arquivos de teste que fazem `require` de
+// tribunais.json; com writeFileSync direto havia uma janela com o arquivo truncado e o
+// outro processo quebrava com JSON invalido. O rename no mesmo diretorio e atomico.
+function gravarAtomico(destino, conteudo) {
+  const temporario = `${destino}.tmp-${process.pid}`;
+  fs.writeFileSync(temporario, conteudo);
+  fs.renameSync(temporario, destino);
+}
+gravarAtomico(path.join(__dirname, 'tribunais.json'), JSON.stringify(data, null, 2) + '\n');
+gravarAtomico(path.join(__dirname, 'CLAUDE-FALHAS.md'), renderFalhas(data));
 const coberturaLegada = path.join(__dirname, 'CLAUDE-COBERTURA.md');
 if (fs.existsSync(coberturaLegada)) fs.unlinkSync(coberturaLegada);
 console.log(`ok: ${data.tribunais.length} tribunais -> cobertura/tribunais.json + cobertura/CLAUDE-FALHAS.md`);
