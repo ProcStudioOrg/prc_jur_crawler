@@ -234,6 +234,40 @@ describe('escopo — selecao', () => {
     } finally { await page.close(); }
   });
 
+  // Antes, a selecao so com um indisponivel virava "todos os disponiveis": o usuario
+  // pedia o STJ e o modelo buscava nos outros 70 sem dizer. Agora a selecao vai como
+  // esta, e o servidor recusa o STJ com o motivo certo.
+  it('selecao so com um indisponivel manda ELE, nunca alarga para todos', async () => {
+    const page = await abrir(['stj']);
+    try {
+      const corpo = await escopoNoPost(page);
+      assert.deepStrictEqual(corpo.tribunais, ['stj']);
+    } finally { await page.close(); }
+  });
+
+  it('catalogo que nao carregou: nao envia, avisa e tenta carregar de novo', async () => {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
+    try {
+      await injetarChave(page, chaveBrowser);
+      let pedidosCatalogo = 0;
+      let chat = 0;
+      // Registrada depois de injetarChave: no Playwright a rota mais recente vence.
+      await page.route('**/api/v1/tribunais', (rota) => { pedidosCatalogo++; rota.fulfill({ status: 500, contentType: 'application/json', body: '{"erro":"falhou"}' }); });
+      await page.route('**/api/v1/chat', (rota) => { chat++; rota.abort(); });
+      await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
+      await page.waitForSelector('#caixa-inicial .entrada');
+      for (let i = 0; i < 100 && !pedidosCatalogo; i++) await page.waitForTimeout(50);
+      const antes = pedidosCatalogo;
+      await page.fill('#caixa-inicial .entrada', 'oi');
+      await page.click('#caixa-inicial .enviar');
+      await page.getByText('A lista de tribunais ainda não carregou; tente de novo em instantes.').waitFor();
+      for (let i = 0; i < 40 && pedidosCatalogo === antes; i++) await page.waitForTimeout(50);
+      assert.strictEqual(chat, 0, 'nenhum POST /api/v1/chat');
+      assert.ok(pedidosCatalogo > antes, 'o catalogo e pedido de novo');
+      assert.strictEqual(await page.inputValue('#caixa-inicial .entrada'), 'oi', 'o texto digitado nao se perde');
+    } finally { await page.close(); }
+  });
+
   it('selecionar um tribunal manda SO ele, e a selecao sobrevive ao F5', async () => {
     const page = await abrir();
     try {

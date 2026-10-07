@@ -38,11 +38,20 @@
     tribunais: () => tribunais,
     selecionados: () => [...selecionados],
     podeSelecionar,
-    /** O que vai no POST: a selecao, ou todos os disponiveis quando ela esta vazia. */
+    /**
+     * O que vai no POST: a selecao, ou todos os disponiveis quando ela esta vazia.
+     *
+     * A selecao NUNCA alarga em silencio. Ela so perde comandos que nao existem mais no
+     * catalogo; um selecionado que ficou indisponivel continua indo, e o servidor o
+     * recusa com o motivo certo. Antes ele era filtrado, a lista ficava vazia e virava
+     * "todos os disponiveis": o usuario pedia o STJ e o modelo buscava nos outros.
+     */
     escopo() {
-      const validos = selecionados.filter(podeSelecionar);
-      return validos.length ? validos : disponiveis();
+      if (!selecionados.length) return disponiveis();
+      return selecionados.filter((c) => porComando(c));
     },
+    /** Pede o catalogo de novo (ex.: o envio achou a lista vazia por falha de rede). */
+    recarregar: () => carregar(),
     selecionar(c) { if (podeSelecionar(c) && !selecionados.includes(c)) { selecionados.push(c); avisar(); } },
     tirar(c) { const i = selecionados.indexOf(c); if (i >= 0) { selecionados.splice(i, 1); avisar(); } },
     alternar(c) { if (selecionados.includes(c)) this.tirar(c); else this.selecionar(c); },
