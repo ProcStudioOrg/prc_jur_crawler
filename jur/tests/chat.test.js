@@ -216,6 +216,27 @@ describe('rotas de chat', () => {
 
     srv.close();
   });
+
+  it('busca fora do escopo e recusada e NAO cria job', async () => {
+    const cliente = clienteFalso([
+      { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 't1', name: 'buscar_jurisprudencia', input: { tribunal: 'trf4', query: 'x' } }] },
+      { stop_reason: 'end_turn', content: [{ type: 'text', text: 'ok' }] },
+    ]);
+    const app = http.createServer(criarApp({ fila, clienteLLM: cliente }).handler);
+    await new Promise((r) => app.listen(0, r));
+    const antes = fila.listar(100).length;
+    const r = await fetch(`http://127.0.0.1:${app.address().port}/api/v1/chat`, {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ mensagens: [{ role: 'user', content: 'busca no trf4' }], tribunais: ['stf'] }),
+    });
+    const texto = await r.text();
+    app.close();
+    assert.strictEqual(r.status, 200);
+    assert.strictEqual(fila.listar(100).length, antes, 'nenhum job pode ter sido criado fora do escopo');
+    const eventos = analisarSSE(texto);
+    assert.ok(eventos.some((e) => e.evento === 'fim'));
+    assert.ok(!eventos.some((e) => e.evento === 'busca'), 'sem job, sem evento busca');
+  });
 });
 
 /**
