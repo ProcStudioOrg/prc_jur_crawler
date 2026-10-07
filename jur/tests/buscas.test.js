@@ -33,6 +33,45 @@ const criar = (corpo) => fetch(`${base}/api/v1/buscas`, {
 });
 
 describe('rotas de busca', () => {
+
+  it('aceita os parametros novos e os repassa ao job', async () => {
+    const r = await criar({ tribunal: 'trf4', query: 'x', juizados: true, inteiroTeor: true, dataPubInicio: '01/01/2024', dataPubFim: '31/01/2024' });
+    assert.strictEqual(r.status, 202);
+    const { id } = await r.json();
+    const job = fila.obter(id);
+    assert.strictEqual(job.params.juizados, true);
+    assert.strictEqual(job.params.inteiroTeor, true);
+    assert.strictEqual(job.params.dataPubInicio, '01/01/2024');
+  });
+
+  it('recusa juizados, publicacao e inteiro teor onde o tribunal nao tem — 400 com detalhe', async () => {
+    for (const corpo of [
+      { tribunal: 'tjpr', query: 'x', juizados: true },
+      { tribunal: 'tjce', query: 'x', dataPubInicio: '01/01/2024' },
+      { tribunal: 'tjac', query: 'x', inteiroTeor: true },
+    ]) {
+      const r = await criar(corpo);
+      assert.strictEqual(r.status, 400, JSON.stringify(corpo));
+      const j = await r.json();
+      assert.ok(j.erro && j.detalhe, JSON.stringify(j));
+    }
+  });
+
+  it('recusa juizados e inteiroTeor que nao sejam booleanos', async () => {
+    assert.strictEqual((await criar({ tribunal: 'trf4', query: 'x', juizados: 'sim' })).status, 400);
+    assert.strictEqual((await criar({ tribunal: 'trf4', query: 'x', inteiroTeor: 1 })).status, 400);
+  });
+
+  it('GET /api/v1/tribunais traz resumo e capacidades', async () => {
+    const r = await fetch(`${base}/api/v1/tribunais`);
+    const { tribunais } = await r.json();
+    const stf = tribunais.find((t) => t.comando === 'stf');
+    assert.ok(stf.resumo.length > 10);
+    assert.strictEqual(stf.capacidades.juizados.estado, 'nao-existe');
+    assert.strictEqual(stf.capacidades.termo.estado, 'funciona');
+    const stj = tribunais.find((t) => t.comando === 'stj');
+    assert.strictEqual(stj.capacidades.termo.estado, 'nao-funciona');
+  });
   it('cria busca e devolve 202 com id', async () => {
     const r = await criar({ tribunal: 'stf', query: 'aposentadoria' });
     assert.strictEqual(r.status, 202);

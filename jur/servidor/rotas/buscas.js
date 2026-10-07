@@ -1,5 +1,6 @@
 const catalogo = require('../catalogo');
 const relator = require('../relator');
+const capacidades = require('../capacidades');
 const { json, sse, lerCorpo } = require('../http');
 const { enriquecerJob } = require('../enriquecer');
 const { validarMaxPaginas, validarData, normalizarPaginacao } = require('../validacao');
@@ -29,9 +30,17 @@ function registrar(roteador, deps) {
     let corpo;
     try { corpo = await lerCorpo(req); } catch (e) { return json(res, 400, { erro: e.message }); }
 
-    const { tribunal, query, dataInicio, dataFim, maxPaginas, relator: relatorPedido } = corpo;
+    const {
+      tribunal, query, dataInicio, dataFim, dataPubInicio, dataPubFim, maxPaginas,
+      relator: relatorPedido, juizados, inteiroTeor,
+    } = corpo;
     if (!tribunal) return json(res, 400, { erro: 'campo obrigatorio: tribunal' });
     if (!query) return json(res, 400, { erro: 'campo obrigatorio: query' });
+    // Booleano estrito: 'sim' ou 1 truthy rodariam a busca com um recorte que o cliente
+    // nao pediu de fato (ou sem o que pediu), e a resposta 202 nao denunciaria.
+    for (const [nome, valor] of [['juizados', juizados], ['inteiroTeor', inteiroTeor]]) {
+      if (valor !== undefined && typeof valor !== 'boolean') return json(res, 400, { erro: `${nome} precisa ser true ou false` });
+    }
     const validacaoMaxPaginas = validarMaxPaginas(maxPaginas, MAX_PAGINAS_TETO);
     if (!validacaoMaxPaginas.valido) {
       return json(res, 400, { erro: validacaoMaxPaginas.motivo });
@@ -40,7 +49,7 @@ function registrar(roteador, deps) {
     // crawler filtrava errado ou nao filtrava — o job terminava com total 0 e a regra do
     // zero culpava o acervo por um filtro que o usuario nunca escreveu. Ver validacao.js
     // para a decisao de RECUSAR ISO em vez de converter em silencio.
-    for (const [campo, valor] of [['dataInicio', dataInicio], ['dataFim', dataFim]]) {
+    for (const [campo, valor] of [['dataInicio', dataInicio], ['dataFim', dataFim], ['dataPubInicio', dataPubInicio], ['dataPubFim', dataPubFim]]) {
       const v = validarData(valor, campo);
       if (!v.valido) return json(res, 400, { erro: v.motivo });
     }
@@ -67,9 +76,20 @@ function registrar(roteador, deps) {
       }
     }
 
+    // Mesma politica do relator para juizados, publicacao e inteiro teor: 400, nunca
+    // rodar sem o recorte pedido.
+    for (const [pede, chave] of [[juizados === true, 'juizados'], [inteiroTeor === true, 'inteiroTeor'], [Boolean(dataPubInicio || dataPubFim), 'periodoPublicacao']]) {
+      if (!pede) continue;
+      const recusa = capacidades.recusar(tribunal, chave, info.nome);
+      if (recusa) return json(res, 400, { erro: `o tribunal ${tribunal} nao oferece ${capacidades.ROTULOS[chave].toLowerCase()} nesta busca`, detalhe: recusa });
+    }
+
     try {
       const { id, status } = fila.enfileirar(tribunal, {
-        query, dataInicio, dataFim, maxPaginas, relator: filtroRelator || undefined,
+        query, dataInicio, dataFim, dataPubInicio, dataPubFim, maxPaginas,
+        relator: filtroRelator || undefined,
+        juizados: juizados === true || undefined,
+        inteiroTeor: inteiroTeor === true || undefined,
       });
       return json(res, 202, { id, status });
     } catch (e) {

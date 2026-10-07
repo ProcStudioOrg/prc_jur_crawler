@@ -121,3 +121,15 @@ describe('openapi', () => {
     assert.deepStrictEqual(problemas, []);
   });
 });
+
+describe('openapi documenta as capacidades', () => {
+  const doc = openapi.documento();
+  it('Tribunal tem resumo e capacidades', () => {
+    const props = doc.components.schemas.Tribunal.properties;
+    assert.ok(props.resumo && props.capacidades);
+  });
+  it('POST /api/v1/buscas documenta os quatro parametros novos', () => {
+    const props = doc.paths['/api/v1/buscas'].post.requestBody.content['application/json'].schema.properties;
+    for (const k of ['dataPubInicio', 'dataPubFim', 'juizados', 'inteiroTeor']) assert.ok(props[k], k);
+  });
+});

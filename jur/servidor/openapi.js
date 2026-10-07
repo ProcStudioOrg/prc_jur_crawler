@@ -128,8 +128,8 @@ function documento() {
         + 'Dados e credenciais são privados por emissor, usuário e equipe. Saúde, documentação e início de login são públicos.\n\n'
         + '## MCP\n\n'
         + '`POST /mcp` expõe as mesmas capacidades de busca via protocolo MCP (JSON-RPC 2.0) '
-        + 'para clientes LLM, com três ferramentas: `listar_tribunais`, `buscar_jurisprudencia` '
-        + 'e `ler_resultados`.',
+        + 'para clientes LLM, com cinco ferramentas: `listar_tribunais`, `buscar_jurisprudencia`, '
+        + '`listar_relatores`, `ler_resultados` e `ler_inteiro_teor`.',
     },
     servers: [
       { url: 'http://localhost:3000', description: 'instalação local em loopback' },
@@ -160,8 +160,21 @@ function documento() {
             acesso: { type: ['string', 'null'] },
             nota: { type: 'string', description: 'ressalva do tribunal — a mesma que aparece em `avisos[]` quando uma busca dá total 0' },
             disponivel: { type: 'boolean', description: 'true só para estado ok ou instavel; buscar num tribunal indisponível devolve 409' },
+            resumo: { type: 'string', description: 'uma ou duas frases em português sobre o estado do tribunal, para exibir ao usuário' },
+            capacidades: {
+              type: 'object',
+              description: 'estado de cada funcionalidade: termo, periodoJulgamento, periodoPublicacao, magistrado, juizados, inteiroTeor, numero',
+              additionalProperties: {
+                type: 'object',
+                properties: {
+                  estado: { type: 'string', enum: ['funciona', 'ressalva', 'nao-funciona', 'nao-existe'] },
+                  nota: { type: 'string' },
+                },
+                required: ['estado', 'nota'],
+              },
+            },
           },
-          required: ['comando', 'codigo', 'nome', 'uf', 'estado', 'nota', 'disponivel'],
+          required: ['comando', 'codigo', 'nome', 'uf', 'estado', 'nota', 'disponivel', 'resumo', 'capacidades'],
         },
         Busca: {
           type: 'object',
@@ -347,6 +360,10 @@ function documento() {
                     query: { type: 'string', description: 'termos de busca' },
                     dataInicio: { type: 'string', description: 'DD/MM/AAAA, ex.: 01/01/2024' },
                     dataFim: { type: 'string', description: 'DD/MM/AAAA, ex.: 31/12/2024' },
+                    dataPubInicio: { type: 'string', description: 'data de PUBLICAÇÃO inicial, DD/MM/AAAA. Só em tribunais com `capacidades.periodoPublicacao` diferente de nao-existe; senão 400' },
+                    dataPubFim: { type: 'string', description: 'data de PUBLICAÇÃO final, DD/MM/AAAA' },
+                    juizados: { type: 'boolean', description: 'true restringe a Juizados / Turmas Recursais. Tribunal sem esse recorte devolve 400 — a busca não roda sem ele' },
+                    inteiroTeor: { type: 'boolean', description: 'true baixa o inteiro teor de cada julgado durante a busca (mais lento). Tribunal sem inteiro teor devolve 400' },
                     maxPaginas: { type: 'integer', description: 'páginas a percorrer, 1 a 50 (cada página é uma requisição real ao portal do tribunal)' },
                     relator: {
                       type: 'string',
@@ -507,7 +524,7 @@ function documento() {
           summary: 'Conversa com o assistente (streaming, com ferramentas de busca)',
           description:
             'text/event-stream. O assistente pode chamar as mesmas ferramentas do MCP '
-            + '(listar_tribunais, buscar_jurisprudencia, ler_resultados) durante a conversa. '
+            + '(listar_tribunais, buscar_jurisprudencia, listar_relatores, ler_resultados, ler_inteiro_teor) durante a conversa. '
             + 'Usa uma conexão privada de IA do titular autenticado. A credencial é decifrada somente no servidor. '
             + 'Se conversaId for informado, persiste o turno na conversa pessoal.',
           requestBody: {
@@ -772,7 +789,7 @@ function documento() {
           description:
             'Implementa `initialize`, `notifications/initialized`, `tools/list` e `tools/call`, '
             + 'protocolVersion fixo em 2025-06-18. As ferramentas expostas em `tools/list` '
-            + '— `listar_tribunais`, `buscar_jurisprudencia`, `listar_relatores`, `ler_resultados` — '
+            + '— `listar_tribunais`, `buscar_jurisprudencia`, `listar_relatores`, `ler_resultados`, `ler_inteiro_teor` — '
             + 'cobrem o mesmo fluxo da API REST (catálogo, criar busca, listar os magistrados que o '
             + 'tribunal aceita no filtro, ler página de resultados), com os mesmos '
             + 'limites e a mesma regra do zero, devolvidas como texto em `content[0].text`. '
