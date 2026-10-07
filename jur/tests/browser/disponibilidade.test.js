@@ -75,37 +75,59 @@ const escopoNoPost = async (page, seletorCaixa = '#caixa-inicial') => {
 const chip = (comando) => `.chip-tribunal[data-comando="${comando}"]`;
 
 describe('disponibilidade — leitura', () => {
-  // A maiuscula e do CSS, nao do DOM. Passar o texto para maiusculo no JS levaria o
-  // valor junto — e "TJPR" nao casa com nenhum comando do servidor. Por isso o teste
-  // olha o estilo COMPUTADO e, em seguida, exige que o dado tenha ficado minusculo.
   it('as siglas aparecem em MAIUSCULAS sem que o dado mude', async () => {
     const page = await abrir();
     try {
-      const transformacao = await page.$eval(`${chip('tjpr')} .sigla`,
-        (el) => getComputedStyle(el).textTransform);
+      const transformacao = await page.$eval(`${chip('tjpr')} .sel`, (el) => getComputedStyle(el).textTransform);
       assert.strictEqual(transformacao, 'uppercase');
-      assert.strictEqual((await page.textContent(`${chip('tjpr')} .sigla`)).trim(), 'tjpr');
+      assert.strictEqual((await page.textContent(`${chip('tjpr')} .sel`)).trim(), 'tjpr');
       assert.strictEqual(await page.getAttribute(chip('tjpr'), 'data-comando'), 'tjpr');
     } finally { await page.close(); }
   });
 
-  it('a barra da esquerda continua mostrando o estado REAL do tribunal', async () => {
+  it('o chip carrega o estado REAL do tribunal, e indisponivel e vermelho', async () => {
     const page = await abrir();
     try {
       assert.strictEqual(await page.getAttribute(chip('tjpr'), 'data-e'), 'ok');
       assert.strictEqual(await page.getAttribute(chip('tjsp'), 'data-e'), 'instavel');
       assert.strictEqual(await page.getAttribute(chip('stj'), 'data-e'), 'sem-acesso');
+      const corErro = await page.$eval(':root', (el) => getComputedStyle(el).getPropertyValue('--erro').trim());
+      const corSigla = await page.$eval(`${chip('stj')} .sel`, (el) => getComputedStyle(el).color);
+      const hex = (h) => { const n = parseInt(h.slice(1), 16); return `rgb(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255})`; };
+      assert.strictEqual(corSigla, hex(corErro), 'a sigla do indisponivel usa a cor de erro');
     } finally { await page.close(); }
   });
 
-  it('clicar na sigla abre a ressalva; isso nao pode virar o liga/desliga', async () => {
+  it('o placar conta funcionando, com ressalva, indisponiveis e selecionados', async () => {
+    const page = await abrir(['tjpr']);
+    try {
+      const t = await page.textContent('#disponibilidade .placar');
+      assert.match(t, /funcionando/);
+      assert.match(t, /com ressalva/);
+      assert.match(t, /indispon/);
+      assert.match(t, /1 selecionado/);
+    } finally { await page.close(); }
+  });
+
+  it('tribunal indisponivel nao seleciona: o clique abre a ficha', async () => {
     const page = await abrir();
     try {
-      await page.click(`${chip('tjpr')} .sigla`);
-      await page.waitForSelector('#painel-ressalva:not([hidden])');
-      assert.match(await page.textContent('#painel-ressalva'), /Paran/);
-      assert.strictEqual(await page.getAttribute(`${chip('tjpr')} .liga`, 'aria-pressed'), 'true',
-        'abrir os detalhes nao pode desligar o tribunal sem querer');
+      assert.strictEqual(await page.getAttribute(`${chip('stj')} .sel`, 'aria-disabled'), 'true');
+      // O Playwright trata aria-disabled como "nao habilitado" e recusa o clique; o usuario
+      // real consegue clicar (e deve cair na ficha), por isso force.
+      await page.click(`${chip('stj')} .sel`, { force: true });
+      await page.waitForSelector('#painel-ficha:not([hidden])');
+      assert.deepStrictEqual(JSON.parse(await guardado(page) || '[]'), []);
+    } finally { await page.close(); }
+  });
+
+  it('o botao de informacao abre a ficha sem mexer na selecao', async () => {
+    const page = await abrir(['tjpr']);
+    try {
+      await page.click(`${chip('tjpr')} .info`);
+      await page.waitForSelector('#painel-ficha:not([hidden])');
+      assert.match(await page.textContent('#painel-ficha'), /Paran/);
+      assert.deepStrictEqual(JSON.parse(await guardado(page)), ['tjpr']);
     } finally { await page.close(); }
   });
 });
@@ -185,13 +207,17 @@ describe('disponibilidade — filtros', () => {
     } finally { await page.close(); }
   });
 
-  it('filtrar nao desliga ninguem — sao coisas diferentes', async () => {
-    const page = await abrir();
+  it('filtrar nao mexe na selecao, e "Selecionar os visiveis" seleciona so o que passa no filtro', async () => {
+    const page = await abrir(['stf']);
     try {
-      await page.click('.filtro-area[data-valor="trabalhista"]');
-      await page.click('#limpar-filtros');
-      assert.strictEqual(await page.getAttribute(`${chip('tjpr')} .liga`, 'aria-pressed'), 'true',
-        'esconder da tela nao pode tirar o tribunal do escopo da busca');
+      await page.click('.filtro-uf[data-valor="PR"]');
+      assert.deepStrictEqual(JSON.parse(await guardado(page)), ['stf'], 'filtrar nao pode mudar o escopo');
+      await page.click('#selecionar-visiveis');
+      const sel = JSON.parse(await guardado(page));
+      assert.ok(sel.includes('stf') && sel.includes('tjpr') && sel.includes('trt9'));
+      assert.ok(!sel.includes('tjsc'));
+      await page.click('#limpar-selecao');
+      assert.deepStrictEqual(JSON.parse(await guardado(page)), []);
     } finally { await page.close(); }
   });
 });

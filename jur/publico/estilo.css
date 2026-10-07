@@ -261,12 +261,10 @@ body {
 
 .placar { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--fraco); margin-bottom: 12px; }
 .ponto { display: inline-block; width: 8px; height: 8px; border-radius: 50%; vertical-align: middle; }
-.ponto[data-e="ok"] { background: var(--ok); }
-.ponto[data-e="instavel"] { background: var(--instavel); }
-.ponto[data-e="sem-acesso"] { background: var(--bloqueado); }
-.ponto[data-e="exige-sessao"] { background: var(--sessao); }
-
-.placar-ligados { margin-left: auto; color: var(--texto); font-weight: 600; }
+.ponto.ok { background: var(--ok); }
+.ponto.ressalva { background: var(--ressalva); }
+.ponto.erro { background: var(--erro); }
+.placar-selecionados { margin-left: auto; color: var(--texto); font-weight: 600; }
 
 /* ---------- filtros de area e UF ---------- */
 .barra-filtros { margin: 4px 0 12px; display: flex; flex-direction: column; gap: 6px; }
@@ -301,46 +299,35 @@ body {
 .ligacao:hover { color: var(--acento); }
 
 /* ---------- grade de tribunais ---------- */
-.grade-tribunais { display: flex; flex-wrap: wrap; gap: 5px; }
+.grade-tribunais { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip-tribunal[hidden] { display: none; }
-/* O chip e a moldura; os dois botoes dentro dele nao tem borda propria. Precisa ser
-   assim porque sao DUAS acoes distintas no mesmo objeto — ver a sigla e o tribunal
-   (esquerda) e liga/desliga (direita) — e botao dentro de botao nao existe em HTML. */
+/* Barra a esquerda = estado REAL (o servidor decide). Caixa = selecionado (o usuario
+   decide). Vermelho inteiro = indisponivel, e nao seleciona. */
 .chip-tribunal {
   display: inline-flex; align-items: stretch; overflow: hidden;
-  border: 1px solid var(--borda); border-left-width: 3px; border-radius: 6px;
-  background: var(--superficie);
+  border: 1px solid var(--neutro-borda); border-radius: 7px; background: var(--superficie);
+  font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: .02em;
 }
-.chip-tribunal:hover { border-color: var(--acento); }
-.chip-tribunal[data-e="ok"] { border-left-color: var(--ok); }
-.chip-tribunal[data-e="instavel"] { border-left-color: var(--instavel); }
-.sigla {
-  font: inherit; font-size: 12px; font-family: ui-monospace, SFMono-Regular, monospace;
-  text-transform: uppercase; letter-spacing: .02em;
-  padding: 3px 4px 3px 8px; cursor: pointer;
-  background: none; color: var(--texto); border: 0;
+.chip-tribunal:not([data-e="sem-acesso"]):not([data-e="exige-sessao"]):hover { border-color: var(--acento); }
+.chip-tribunal .marca-estado { width: 4px; flex: 0 0 4px; }
+.chip-tribunal[data-e="ok"] .marca-estado { background: var(--ok); }
+.chip-tribunal[data-e="instavel"] .marca-estado { background: var(--ressalva); }
+.chip-tribunal[data-e="sem-acesso"] .marca-estado, .chip-tribunal[data-e="exige-sessao"] .marca-estado { background: var(--erro); }
+.chip-tribunal .sel {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px;
+  border: 0; background: none; color: var(--texto); font: inherit; text-transform: inherit; letter-spacing: inherit; cursor: pointer;
 }
-/* A bolinha: verde = entra nas buscas, oca = fora. O anel continua desenhado quando
-   apagada, entao o alvo de clique nao some — e o estado nao depende so de cor: o
-   preenchimento (cheio x vazio) distingue os dois sem enxergar matiz. */
-.liga {
-  display: inline-flex; align-items: center; padding: 0 8px 0 3px;
-  background: none; border: 0; cursor: pointer;
-}
-.liga::before {
-  content: ''; width: 8px; height: 8px; border-radius: 50%;
-  border: 1.5px solid var(--bloqueado); background: transparent;
-}
-.liga[aria-pressed="true"]::before { background: var(--ok); border-color: var(--ok); }
-.liga:focus-visible, .sigla:focus-visible { outline: 2px solid var(--acento); outline-offset: -2px; }
-/* Era `opacity: .6` no elemento inteiro — apagava texto E borda juntos, e a borda ja
-   partia de uma cor marginal: o tribunal bloqueado (a informacao que mais importa,
-   porque evita uma busca que nao vai funcionar) ficava o mais dificil de ler da grade
-   (achado Important da revisao da Task 9). Troca: sem opacidade nenhuma, cor de texto
-   propria (--fraco, que ja passa 4,5:1 sozinha) no lugar de apagar o --texto normal. */
-.chip-tribunal[data-e="sem-acesso"] { border-left-color: var(--bloqueado); }
-.chip-tribunal[data-e="sem-acesso"] .sigla { color: var(--fraco); }
-.chip-tribunal[data-e="exige-sessao"] { border-left-color: var(--sessao); }
+.chip-tribunal .cx { width: 13px; height: 13px; border-radius: 3px; border: 1.5px solid var(--neutro-borda); display: grid; place-items: center; font-size: 10px; color: #fff; }
+.chip-tribunal .sel[aria-pressed="true"] .cx { background: var(--acento); border-color: var(--acento); }
+.chip-tribunal .sel[aria-pressed="true"] .cx::after { content: '✓'; }
+.chip-tribunal.selecionado { border-color: var(--acento); background: var(--azul-suave); }
+.chip-tribunal .info { border: 0; border-left: 1px solid var(--borda); background: none; color: var(--fraco); padding: 0 7px; font-family: inherit; font-size: 12px; cursor: pointer; }
+.chip-tribunal .info:hover { background: var(--lateral); color: var(--texto); }
+.chip-tribunal[data-e="sem-acesso"], .chip-tribunal[data-e="exige-sessao"] { border-color: var(--erro-borda); background: var(--erro-fundo); }
+.chip-tribunal[data-e="sem-acesso"] .sel, .chip-tribunal[data-e="exige-sessao"] .sel { color: var(--erro); cursor: not-allowed; }
+.chip-tribunal[data-e="sem-acesso"] .cx, .chip-tribunal[data-e="exige-sessao"] .cx { border-color: var(--erro-borda); color: var(--erro); }
+.chip-tribunal[data-e="sem-acesso"] .cx::after, .chip-tribunal[data-e="exige-sessao"] .cx::after { content: '✕'; }
+.chip-tribunal .sel:focus-visible, .chip-tribunal .info:focus-visible { outline: 2px solid var(--acento); outline-offset: -2px; }
 
 .manual summary { cursor: pointer; font-size: 13px; color: var(--fraco); font-weight: 600; }
 .manual-corpo h3 { font-size: 14px; margin: 16px 0 4px; }
