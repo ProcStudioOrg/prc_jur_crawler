@@ -520,14 +520,18 @@ async function lerInteiroTeor(entrada, deps) {
   let texto = typeof item.inteiroTeor === 'string' && item.inteiroTeor.trim() ? item.inteiroTeor : '';
   if (!texto && typeof item.inteiroTeorHtml === 'string' && item.inteiroTeorHtml.trim()) texto = stripHtml(item.inteiroTeorHtml);
   if (!texto && typeof item.inteiroTeorLink === 'string' && item.inteiroTeorLink) {
-    // Onde o inteiro teor sabidamente nao abre (TJAC exige reCAPTCHA) ou nao existe, o
+    // Onde o inteiro teor sabidamente nao abre (curadoria: TJAC exige reCAPTCHA), o
     // download nem e tentado: ele traria a pagina do desafio, nao o documento. O texto diz
     // que NAO tentou e por que, para o modelo nao ler isso como "o documento nao existe".
-    const f = capacidades.obter(job.comando)?.funcionalidades.inteiroTeor;
-    if (f && (f.estado === 'nao-funciona' || f.estado === 'nao-existe')) {
-      const motivo = f.nota || (f.estado === 'nao-existe'
-        ? 'O tribunal nao oferece o inteiro teor por este caminho.'
-        : 'O inteiro teor deste tribunal nao esta funcionando no momento.');
+    //
+    // `disponivel: true` porque a busca JA rodou: a disponibilidade de agora (STJ que so
+    // busca na tentativa assistida, tribunal que caiu depois) nao diz nada sobre o link
+    // que o resultado trouxe; so o estado proprio do inteiro teor importa. E `nao-existe`
+    // NAO bloqueia: ele significa que a busca nao tem a flag de baixar o inteiro teor
+    // (TRF1, TRF3, TRF5...), nao que o link do resultado seja inutil.
+    const f = capacidades.obter(job.comando, { disponivel: true })?.funcionalidades.inteiroTeor;
+    if (f && f.estado === 'nao-funciona') {
+      const motivo = f.nota || 'O inteiro teor deste tribunal nao esta funcionando no momento.';
       return {
         texto: `O download do inteiro teor do julgado ${indice} (${rotulo}) NAO foi tentado: ${motivo}\n`
           + 'Isso NAO e ausencia do documento. Diga ao usuario que ele precisa abrir o julgado no portal do tribunal.',

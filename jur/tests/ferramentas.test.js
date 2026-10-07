@@ -460,6 +460,20 @@ describe('ferramentas', () => {
       return { fila: f, jobId: inicio.match(/[0-9a-f-]{36}/)[0] };
     }
 
+    // Job ja concluido de um tribunal que a busca normal recusaria (STJ sem-acesso): a
+    // fila e preenchida direto, como a tentativa assistida faria.
+    async function filaComAssistido(itens, tribunal) {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-ass-'));
+      const arquivo = path.join(dir, 'saida.json');
+      fs.writeFileSync(arquivo, JSON.stringify(itens));
+      const f = jobs.criarFila({ con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
+        catalogoFn: (comando) => ({ comando, nome: comando, disponivel: true, estado: 'ok', nota: '' }),
+        executarFn: async () => ({ ok: true, total: itens.length, resultados: [], arquivo, erro: null }) });
+      const { id } = f.enfileirar(tribunal, { query: 'x' });
+      await f.aguardar(id);
+      return { fila: f, jobId: id };
+    }
+
     it('usa o inteiroTeorHtml do resultado, sem baixar nada', async () => {
       const { fila: f, jobId } = await filaCom([{ processo: 'H', inteiroTeorHtml: '<p>Voto do <b>relator</b></p>', inteiroTeorLink: 'https://exemplo/x' }]);
       let baixou = false;
@@ -485,6 +499,33 @@ describe('ferramentas', () => {
       assert.strictEqual(baixou, false, 'o download nao pode ser tentado');
       assert.match(r.texto, /NAO foi tentado/);
       assert.match(r.texto, /reCAPTCHA/);
+    });
+
+    // A busca ja rodou: a disponibilidade de AGORA nao importa (STJ assistido, ou um
+    // tribunal que caiu depois), so o estado proprio do inteiro teor.
+    it('job de tribunal hoje indisponivel (STJ assistido) devolve o inteiro teor que veio no resultado', async () => {
+      const { fila: f, jobId } = await filaComAssistido([{ processo: 'S', inteiroTeor: 'Voto do ministro relator' }], 'stj');
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 }, { fila: f });
+      assert.strictEqual(r.ok, true);
+      assert.match(r.texto, /Voto do ministro relator/);
+    });
+
+    it('job de tribunal hoje indisponivel (STJ assistido) ainda baixa pelo link', async () => {
+      const { fila: f, jobId } = await filaComAssistido([{ processo: 'S', inteiroTeorLink: 'https://stj/x' }], 'stj');
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async () => 'Acordao do STJ baixado' });
+      assert.strictEqual(r.ok, true, r.texto);
+      assert.match(r.texto, /Acordao do STJ baixado/);
+    });
+
+    it('trf1 nao tem a flag de inteiro teor na busca, mas o link do resultado e baixado sob demanda', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'T1', inteiroTeorLink: 'https://trf1/x' }], 'trf1');
+      let pedido = null;
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async (url) => { pedido = url; return 'Inteiro teor do TRF1'; } });
+      assert.strictEqual(r.ok, true, r.texto);
+      assert.strictEqual(pedido, 'https://trf1/x');
+      assert.match(r.texto, /Inteiro teor do TRF1/);
     });
 
     it('download vazio e falha, nao documento vazio', async () => {
