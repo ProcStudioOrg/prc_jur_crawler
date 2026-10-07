@@ -175,13 +175,14 @@ describe('executor', () => {
     assert.strictEqual(r.envelope, null, 'a CLI nao pode ter sido chamada');
   });
 
-  it('inteiro teor liga a flag e aponta o diretorio ao lado do arquivo de saida', async () => {
-    const arquivo = tmp();
-    const r = await executar_(arquivo, 'eco', {}, { query: 'x', inteiroTeor: true });
+  // Inteiro teor e SOB DEMANDA (ler_inteiro_teor): com --fetch-inteiro-teor a maioria
+  // dos comandos grava so no --output-dir e pula o -o, e o job terminava "concluido"
+  // sem arquivo de resultados — que se le como busca vazia.
+  it('inteiroTeor nunca vira flag: a busca sempre grava o arquivo de resultados', async () => {
+    const r = await executar_(tmp(), 'eco', {}, { query: 'x', inteiroTeor: true });
     const args = r.envelope.args;
-    assert.ok(args.includes('--fetch-inteiro-teor'));
-    const dir = args[args.indexOf('--output-dir') + 1];
-    assert.strictEqual(dir, arquivo.replace(/\.json$/, '-inteiro-teor'));
+    assert.ok(!args.includes('--fetch-inteiro-teor'));
+    assert.ok(!args.includes('--output-dir'));
   });
 
   it('juizados e inteiroTeor falsos nao poem flag nenhuma', async () => {

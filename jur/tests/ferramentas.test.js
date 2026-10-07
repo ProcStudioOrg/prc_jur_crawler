@@ -317,9 +317,10 @@ describe('ferramentas', () => {
 
   it('buscar_jurisprudencia expoe as funcionalidades novas no schema', () => {
     const p = ferramentas.definicoes().find((d) => d.name === 'buscar_jurisprudencia').input_schema.properties;
-    for (const k of ['dataPubInicio', 'dataPubFim', 'juizados', 'inteiroTeor']) assert.ok(k in p, k);
+    for (const k of ['dataPubInicio', 'dataPubFim', 'juizados']) assert.ok(k in p, k);
     assert.strictEqual(p.juizados.type, 'boolean');
-    assert.strictEqual(p.inteiroTeor.type, 'boolean');
+    // Inteiro teor e sob demanda (ler_inteiro_teor), nunca durante a busca.
+    assert.ok(!('inteiroTeor' in p));
   });
 
   it('juizados num tribunal sem recorte e RECUSADO, nao ignorado', async () => {
@@ -338,10 +339,6 @@ describe('ferramentas', () => {
     assert.match(texto, /DD\/MM\/AAAA/);
   });
 
-  it('inteiro teor onde nao funciona e RECUSADO com o motivo curado', async () => {
-    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'tjac', query: 'x', inteiroTeor: true }, { fila });
-    assert.match(texto, /reCAPTCHA/);
-  });
 
   it('os parametros novos chegam ao enfileirar', async () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-params-'));
@@ -354,7 +351,7 @@ describe('ferramentas', () => {
       { tribunal: 'trf4', query: 'x', juizados: true, inteiroTeor: true, dataPubInicio: '01/01/2024', dataPubFim: '31/01/2024' },
       { fila: filaEspia });
     assert.strictEqual(recebidos.juizados, true);
-    assert.strictEqual(recebidos.inteiroTeor, true);
+    assert.strictEqual(recebidos.inteiroTeor, undefined, 'inteiro teor nao vai mais para a busca');
     assert.strictEqual(recebidos.dataPubInicio, '01/01/2024');
     assert.strictEqual(recebidos.dataPubFim, '31/01/2024');
   });

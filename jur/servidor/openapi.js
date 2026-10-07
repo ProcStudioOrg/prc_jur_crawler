@@ -363,7 +363,7 @@ function documento() {
                     dataPubInicio: { type: 'string', description: 'data de PUBLICAÇÃO inicial, DD/MM/AAAA. Só em tribunais com `capacidades.periodoPublicacao` diferente de nao-existe; senão 400' },
                     dataPubFim: { type: 'string', description: 'data de PUBLICAÇÃO final, DD/MM/AAAA' },
                     juizados: { type: 'boolean', description: 'true restringe a Juizados / Turmas Recursais. Tribunal sem esse recorte devolve 400 — a busca não roda sem ele' },
-                    inteiroTeor: { type: 'boolean', description: 'true baixa o inteiro teor de cada julgado durante a busca (mais lento). Tribunal sem inteiro teor devolve 400' },
+
                     maxPaginas: { type: 'integer', description: 'páginas a percorrer, 1 a 50 (cada página é uma requisição real ao portal do tribunal)' },
                     relator: {
                       type: 'string',

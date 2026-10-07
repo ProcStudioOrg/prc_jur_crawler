@@ -38,8 +38,12 @@ function registrar(roteador, deps) {
     if (!query) return json(res, 400, { erro: 'campo obrigatorio: query' });
     // Booleano estrito: 'sim' ou 1 truthy rodariam a busca com um recorte que o cliente
     // nao pediu de fato (ou sem o que pediu), e a resposta 202 nao denunciaria.
-    for (const [nome, valor] of [['juizados', juizados], ['inteiroTeor', inteiroTeor]]) {
-      if (valor !== undefined && typeof valor !== 'boolean') return json(res, 400, { erro: `${nome} precisa ser true ou false` });
+    if (juizados !== undefined && typeof juizados !== 'boolean') return json(res, 400, { erro: 'juizados precisa ser true ou false' });
+    // Inteiro teor saiu da busca: a flag da CLI pula o arquivo de resultados e o job
+    // terminava "concluido" vazio. Recusar o pedido explicito e mais honesto que aceitar
+    // e entregar a busca sem o que o cliente acha que pediu.
+    if (inteiroTeor === true) {
+      return json(res, 400, { erro: 'inteiroTeor nao e mais aceito na busca: o inteiro teor e sob demanda, um julgado por vez (ferramenta ler_inteiro_teor)' });
     }
     const validacaoMaxPaginas = validarMaxPaginas(maxPaginas, MAX_PAGINAS_TETO);
     if (!validacaoMaxPaginas.valido) {
@@ -76,9 +80,9 @@ function registrar(roteador, deps) {
       }
     }
 
-    // Mesma politica do relator para juizados, publicacao e inteiro teor: 400, nunca
-    // rodar sem o recorte pedido.
-    for (const [pede, chave] of [[juizados === true, 'juizados'], [inteiroTeor === true, 'inteiroTeor'], [Boolean(dataPubInicio || dataPubFim), 'periodoPublicacao']]) {
+    // Mesma politica do relator para juizados e publicacao: 400, nunca rodar sem o
+    // recorte pedido.
+    for (const [pede, chave] of [[juizados === true, 'juizados'], [Boolean(dataPubInicio || dataPubFim), 'periodoPublicacao']]) {
       if (!pede) continue;
       const recusa = capacidades.recusar(tribunal, chave, info.nome);
       if (recusa) return json(res, 400, { erro: `o tribunal ${tribunal} nao oferece ${capacidades.ROTULOS[chave].toLowerCase()} nesta busca`, detalhe: recusa });
@@ -89,7 +93,6 @@ function registrar(roteador, deps) {
         query, dataInicio, dataFim, dataPubInicio, dataPubFim, maxPaginas,
         relator: filtroRelator || undefined,
         juizados: juizados === true || undefined,
-        inteiroTeor: inteiroTeor === true || undefined,
       });
       return json(res, 202, { id, status });
     } catch (e) {

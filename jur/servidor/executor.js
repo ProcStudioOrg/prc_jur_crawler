@@ -15,9 +15,13 @@ const juizados = require('./juizados');
  * unico buscaria no campo errado e devolveria zero — que se le como
  * "nao ha julgado". Ver o spec, secao 2.4.
  *
- * `juizados` e `inteiroTeor` sao BOOLEANOS e nao entram em BANDEIRA: o valor da
- * flag de juizados muda por tribunal (servidor/juizados.js) e inteiro teor exige
- * duas flags. Os dois sao montados abaixo, nunca a partir de texto do modelo.
+ * `juizados` e BOOLEANO e nao entra em BANDEIRA: o valor da flag muda por tribunal
+ * (servidor/juizados.js) e e montado abaixo, nunca a partir de texto do modelo.
+ *
+ * Inteiro teor NAO passa por aqui de proposito: com `--fetch-inteiro-teor` a maioria
+ * dos comandos da CLI grava so no `--output-dir` e pula o `-o`, e o job terminava
+ * "concluido" sem arquivo de resultados — lido como busca vazia. O texto integral e
+ * sob demanda, um julgado por vez, em `ler_inteiro_teor` (servidor/ferramentas.js).
  */
 const PARAMS_ACEITOS = ['query', 'dataInicio', 'dataFim', 'dataPubInicio', 'dataPubFim', 'maxPaginas', 'numero', 'relator'];
 
@@ -42,9 +46,6 @@ const BANDEIRA = {
 /** Modos utilitarios da CLI (`--listar-*`): sem `-o`, sem resultado, so o combo. */
 const TIMEOUT_LISTAGEM_PADRAO = 60 * 1000;
 
-function dirInteiroTeor(arquivoSaida) {
-  return String(arquivoSaida).replace(/\.json$/, '') + '-inteiro-teor';
-}
 
 /**
  * Devolve `{ args }` ou `{ erro }`. Erro aqui e so o de juizados sem recorte: a
@@ -65,7 +66,6 @@ function montarArgs(cliPath, comando, params, arquivoSaida, opcoes = {}) {
     if (!j || !j.suportado) return { erro: `o tribunal ${comando} nao tem recorte de juizados; a busca nao rodou sem o filtro` };
     args.push(...j.args);
   }
-  if (params.inteiroTeor === true) args.push('--fetch-inteiro-teor', '--output-dir', dirInteiroTeor(arquivoSaida));
   return { args };
 }
 

@@ -211,16 +211,19 @@ sete funcionalidades.
     `servidor/juizados.js`, um mapa comando → args, por exemplo
     `trf4: ['--origem','turmas-recursais']`, `trf1: ['--fontes','JEF1']`,
     `tjpr: ['--origem','turmas']`. Teste de contrato confere cada valor no `--help`.
-  - `inteiroTeor` (boolean): `--fetch-inteiro-teor` com `--output-dir` no diretório
-    do job. A descrição avisa que é mais lento e deve ser usado em buscas estreitas.
-- O executor (`PARAMS_ACEITOS`/`BANDEIRA`) aceita os quatro parâmetros novos. A
+- Inteiro teor é **sob demanda**, só por `ler_inteiro_teor`, um julgado por vez. A
+  busca não aceita `inteiroTeor`: com `--fetch-inteiro-teor` a maioria dos comandos
+  da CLI grava só no `--output-dir` e pula o arquivo `-o`, e o job terminava
+  `concluido` sem resultados — que se lê como "não há jurisprudência". A linha
+  "Inteiro teor" da ficha continua significando "o texto integral pode ser lido".
+- O executor (`PARAMS_ACEITOS`/`BANDEIRA`) aceita os parâmetros novos. A
   tradução de `juizados` fica no módulo próprio, não no executor, pelo mesmo motivo
   que `orgao` ficou fora: o valor muda por tribunal.
 - Pedido de funcionalidade que o tribunal não tem é **recusado com texto
   explícito**, como já acontece com relator. Nunca roda sem o filtro.
 - Ferramenta nova `ler_inteiro_teor(job_id, indice)`: devolve o texto integral de
-  um julgado de uma busca concluída. Usa o campo `inteiroTeor` do resultado quando a
-  busca foi feita com `inteiroTeor: true`; senão, baixa na hora pelo
+  um julgado de uma busca concluída. Usa o campo `inteiroTeor` (ou
+  `inteiroTeorHtml`) que o próprio resultado trouxer; senão, baixa na hora pelo
   `inteiroTeorLink` com `src/inteiroTeorFetcher.js`, se o link existir. Texto
   limitado a 60 mil caracteres com aviso de corte. Sem link e sem texto, responde
   que o tribunal não oferece inteiro teor por este caminho.
@@ -257,8 +260,9 @@ sete funcionalidades.
 
 ## Riscos e decisões
 
-- Expor inteiro teor no chat pode gerar buscas longas. Mitigação: descrição da
-  ferramenta orienta uso em buscas estreitas, e `maxPaginas` padrão continua 3.
+- Inteiro teor durante a busca foi descartado (a flag da CLI pula o arquivo de
+  resultados). Fica sob demanda em `ler_inteiro_teor`, um julgado por chamada, o
+  que também evita buscas longas.
 - O JSON curado pode envelhecer. Mitigação: o teste reprova tribunal fora de `ok`
   sem resumo, e o smoke continua apontando regressão de busca por termo.
 - Perder a escolha de "desligados" de quem já usava é aceitável: o produto ainda

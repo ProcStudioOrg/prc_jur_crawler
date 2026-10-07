@@ -89,10 +89,7 @@ function definicoes() {
             type: 'boolean',
             description: 'true restringe a JUIZADOS ESPECIAIS / TURMAS RECURSAIS. So existe em parte dos tribunais (listar_tribunais mostra "juizados"); onde nao existe a busca e RECUSADA em vez de rodar sem o recorte. Sem o campo, busca na Justica Comum (padrao do portal).',
           },
-          inteiroTeor: {
-            type: 'boolean',
-            description: 'true baixa o INTEIRO TEOR de cada julgado durante a busca (mais lento; use em buscas estreitas, poucas paginas). Depois leia com ler_inteiro_teor. Onde o tribunal nao oferece, a busca e RECUSADA.',
-          },
+
           maxPaginas: { type: 'integer', description: `paginas a percorrer (default 3, maximo ${MAX_PAGINAS_TETO})` },
           relator: {
             type: 'string',
@@ -147,7 +144,8 @@ function definicoes() {
       name: 'ler_inteiro_teor',
       description:
         'Devolve o TEXTO INTEGRAL de UM julgado de uma busca concluida, pelo indice que ler_resultados mostra ([1], [2]...). '
-        + 'Usa o texto baixado na busca (inteiroTeor: true) ou baixa na hora pelo link do julgado. '
+        + 'E o UNICO caminho para o texto integral: a busca nao baixa inteiro teor. '
+        + 'Usa o texto que veio no proprio resultado, quando houver, ou baixa na hora pelo link do julgado. '
         + `Texto cortado em ${INTEIRO_TEOR_MAX} caracteres, com aviso. Um julgado por chamada.`,
       input_schema: {
         type: 'object',
@@ -267,12 +265,12 @@ async function buscar(entrada, deps) {
     return { texto: relator.explicarAusencia(entrada.tribunal, info.nome), ok: false };
   }
 
-  // Mesma politica do relator para as tres funcionalidades novas: pedido num tribunal
-  // que nao tem (ou onde nao funciona) e RECUSADO com texto, nunca rodado sem o filtro.
+  // Mesma politica do relator para juizados e publicacao: pedido num tribunal que nao
+  // tem (ou onde nao funciona) e RECUSADO com texto, nunca rodado sem o filtro. Inteiro
+  // teor nao entra aqui: e sob demanda, em ler_inteiro_teor (ver executor.js).
   const pedeJuizados = entrada.juizados === true;
-  const pedeInteiroTeor = entrada.inteiroTeor === true;
   const pedePublicacao = Boolean(entrada.dataPubInicio || entrada.dataPubFim);
-  for (const [pede, chave] of [[pedeJuizados, 'juizados'], [pedeInteiroTeor, 'inteiroTeor'], [pedePublicacao, 'periodoPublicacao']]) {
+  for (const [pede, chave] of [[pedeJuizados, 'juizados'], [pedePublicacao, 'periodoPublicacao']]) {
     if (!pede) continue;
     const recusa = capacidades.recusar(entrada.tribunal, chave, info.nome);
     if (recusa) return { texto: recusa, ok: false };
@@ -296,7 +294,6 @@ async function buscar(entrada, deps) {
     maxPaginas: entrada.maxPaginas || 3,
     relator: relatorPedido || undefined,
     juizados: pedeJuizados || undefined,
-    inteiroTeor: pedeInteiroTeor || undefined,
   });
   // Vai junto de TODA resposta desta busca (inclusive o zero e o timeout): quando o
   // tribunal exige nome exato ou codigo, o valor aproximado nao falha — devolve zero. Se
@@ -469,7 +466,7 @@ async function lerResultados(entrada, deps) {
   return {
     texto: `Mostrando ${offset + 1}–${offset + itens.length} de ${total}:\n\n`
       + semTeor.map((it, i) => `[${offset + i + 1}] ${JSON.stringify(it)}`).join('\n\n')
-      + '\n\n(Para o texto integral de um julgado, chame ler_inteiro_teor com o indice entre colchetes.)',
+      + '\n\n(A busca nao traz o texto integral. Para le-lo, chame ler_inteiro_teor com o indice entre colchetes, um julgado por vez.)',
     ok: true,
   };
 }
@@ -511,8 +508,8 @@ async function lerInteiroTeor(entrada, deps) {
   }
   if (!texto) {
     return {
-      texto: `O julgado ${indice} (${rotulo}) nao traz inteiro teor por este caminho: sem texto gravado e sem link. `
-        + 'Se o tribunal oferecer inteiro teor (listar_tribunais), refaca a busca com inteiroTeor: true.',
+      texto: `O julgado ${indice} (${rotulo}) nao traz inteiro teor por este caminho: o resultado nao tem texto nem link do documento. `
+        + 'Isso NAO significa que o documento nao existe: diga ao usuario que ele precisa abrir o julgado no portal do tribunal.',
       ok: true,
     };
   }

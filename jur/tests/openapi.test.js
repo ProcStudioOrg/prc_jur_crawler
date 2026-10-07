@@ -128,8 +128,9 @@ describe('openapi documenta as capacidades', () => {
     const props = doc.components.schemas.Tribunal.properties;
     assert.ok(props.resumo && props.capacidades);
   });
-  it('POST /api/v1/buscas documenta os quatro parametros novos', () => {
+  it('POST /api/v1/buscas documenta os parametros novos e nao oferece inteiroTeor', () => {
     const props = doc.paths['/api/v1/buscas'].post.requestBody.content['application/json'].schema.properties;
-    for (const k of ['dataPubInicio', 'dataPubFim', 'juizados', 'inteiroTeor']) assert.ok(props[k], k);
+    for (const k of ['dataPubInicio', 'dataPubFim', 'juizados']) assert.ok(props[k], k);
+    assert.ok(!props.inteiroTeor, 'inteiro teor e sob demanda: a flag da CLI pula o arquivo de resultados');
   });
 });

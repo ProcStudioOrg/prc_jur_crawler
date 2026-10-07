@@ -66,7 +66,7 @@ Exemplo de busca por REST:
       -H 'content-type: application/json' \
       -d '{"tribunal":"trf4","query":"auxilio-acidente","dataInicio":"01/01/2024"}'
 
-Parâmetros opcionais da busca: `dataInicio`, `dataFim`, `dataPubInicio`, `dataPubFim`, `relator`, `juizados` (true/false), `inteiroTeor` (true/false). `GET /api/v1/tribunais` traz `capacidades` dizendo o que cada tribunal aceita.
+Parâmetros opcionais da busca: `dataInicio`, `dataFim`, `dataPubInicio`, `dataPubFim`, `relator`, `juizados` (true/false). `GET /api/v1/tribunais` traz `capacidades` dizendo o que cada tribunal aceita.
 
 Ressalvas do container estão em [`infra/README.md`](infra/README.md) — em especial `trf3`
 (exige Chrome proprietário) e `crps` (exige login Gov.br, que valida dispositivo).

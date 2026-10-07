@@ -35,20 +35,19 @@ const criar = (corpo) => fetch(`${base}/api/v1/buscas`, {
 describe('rotas de busca', () => {
 
   it('aceita os parametros novos e os repassa ao job', async () => {
-    const r = await criar({ tribunal: 'trf4', query: 'x', juizados: true, inteiroTeor: true, dataPubInicio: '01/01/2024', dataPubFim: '31/01/2024' });
+    const r = await criar({ tribunal: 'trf4', query: 'x', juizados: true, dataPubInicio: '01/01/2024', dataPubFim: '31/01/2024' });
     assert.strictEqual(r.status, 202);
     const { id } = await r.json();
     const job = fila.obter(id);
     assert.strictEqual(job.params.juizados, true);
-    assert.strictEqual(job.params.inteiroTeor, true);
+    assert.strictEqual(job.params.inteiroTeor, undefined);
     assert.strictEqual(job.params.dataPubInicio, '01/01/2024');
   });
 
-  it('recusa juizados, publicacao e inteiro teor onde o tribunal nao tem — 400 com detalhe', async () => {
+  it('recusa juizados e publicacao onde o tribunal nao tem — 400 com detalhe', async () => {
     for (const corpo of [
       { tribunal: 'tjpr', query: 'x', juizados: true },
       { tribunal: 'tjce', query: 'x', dataPubInicio: '01/01/2024' },
-      { tribunal: 'tjac', query: 'x', inteiroTeor: true },
     ]) {
       const r = await criar(corpo);
       assert.strictEqual(r.status, 400, JSON.stringify(corpo));
@@ -57,9 +56,14 @@ describe('rotas de busca', () => {
     }
   });
 
-  it('recusa juizados e inteiroTeor que nao sejam booleanos', async () => {
+  it('recusa juizados que nao seja booleano', async () => {
     assert.strictEqual((await criar({ tribunal: 'trf4', query: 'x', juizados: 'sim' })).status, 400);
-    assert.strictEqual((await criar({ tribunal: 'trf4', query: 'x', inteiroTeor: 1 })).status, 400);
+  });
+
+  it('inteiroTeor: true e recusado com 400: o inteiro teor e sob demanda, nunca na busca', async () => {
+    const r = await criar({ tribunal: 'trf4', query: 'x', inteiroTeor: true });
+    assert.strictEqual(r.status, 400);
+    assert.match((await r.json()).erro, /sob demanda/);
   });
 
   it('GET /api/v1/tribunais traz resumo e capacidades', async () => {
