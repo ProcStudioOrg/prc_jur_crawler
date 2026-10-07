@@ -21,10 +21,10 @@ before(() => {
 });
 
 describe('ferramentas', () => {
-  it('publica exatamente as quatro tools com schema', () => {
+  it('publica exatamente as cinco tools com schema', () => {
     const nomes = ferramentas.definicoes().map((d) => d.name).sort();
     assert.deepStrictEqual(nomes,
-      ['buscar_jurisprudencia', 'listar_relatores', 'listar_tribunais', 'ler_resultados'].sort());
+      ['buscar_jurisprudencia', 'ler_inteiro_teor', 'listar_relatores', 'listar_tribunais', 'ler_resultados'].sort());
     for (const d of ferramentas.definicoes()) {
       assert.ok(d.description.length > 20, `${d.name} precisa de descricao util`);
       assert.strictEqual(d.input_schema.type, 'object');
@@ -312,6 +312,123 @@ describe('ferramentas', () => {
       const texto = await ferramentas.executar('ler_resultados', {}, { fila });
       assert.strictEqual(typeof texto, 'string');
       assert.match(texto, /job_id.*obrigat/i);
+    });
+  });
+
+  it('buscar_jurisprudencia expoe as funcionalidades novas no schema', () => {
+    const p = ferramentas.definicoes().find((d) => d.name === 'buscar_jurisprudencia').input_schema.properties;
+    for (const k of ['dataPubInicio', 'dataPubFim', 'juizados', 'inteiroTeor']) assert.ok(k in p, k);
+    assert.strictEqual(p.juizados.type, 'boolean');
+    assert.strictEqual(p.inteiroTeor.type, 'boolean');
+  });
+
+  it('juizados num tribunal sem recorte e RECUSADO, nao ignorado', async () => {
+    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'tjpr', query: 'x', juizados: true }, { fila });
+    assert.match(texto, /NAO FOI FEITA/);
+    assert.doesNotMatch(texto, /job/i);
+  });
+
+  it('periodo de publicacao num tribunal sem esse filtro e RECUSADO', async () => {
+    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'tjce', query: 'x', dataPubInicio: '01/01/2024' }, { fila });
+    assert.match(texto, /NAO FOI FEITA/);
+  });
+
+  it('periodo de publicacao em ISO e recusado com instrucao', async () => {
+    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'trf4', query: 'x', dataPubInicio: '2024-01-01' }, { fila });
+    assert.match(texto, /DD\/MM\/AAAA/);
+  });
+
+  it('inteiro teor onde nao funciona e RECUSADO com o motivo curado', async () => {
+    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'tjac', query: 'x', inteiroTeor: true }, { fila });
+    assert.match(texto, /reCAPTCHA/);
+  });
+
+  it('os parametros novos chegam ao enfileirar', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-params-'));
+    let recebidos = null;
+    const filaEspia = jobs.criarFila({
+      con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
+      executarFn: async (comando, params) => { recebidos = params; return { ok: true, total: 1, resultados: [], arquivo: null, erro: null }; },
+    });
+    await ferramentas.executar('buscar_jurisprudencia',
+      { tribunal: 'trf4', query: 'x', juizados: true, inteiroTeor: true, dataPubInicio: '01/01/2024', dataPubFim: '31/01/2024' },
+      { fila: filaEspia });
+    assert.strictEqual(recebidos.juizados, true);
+    assert.strictEqual(recebidos.inteiroTeor, true);
+    assert.strictEqual(recebidos.dataPubInicio, '01/01/2024');
+    assert.strictEqual(recebidos.dataPubFim, '31/01/2024');
+  });
+
+  it('listar_tribunais traz o resumo compacto de capacidades por linha', async () => {
+    const texto = await ferramentas.executar('listar_tribunais', { segmento: 'federal' }, { fila });
+    assert.match(texto, /trf4 .*filtros: .*juizados/);
+  });
+
+  it('ler_resultados omite o inteiro teor dos itens', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-it-'));
+    const arquivo = path.join(dir, 'saida.json');
+    fs.writeFileSync(arquivo, JSON.stringify([{ processo: 'A', ementa: 'curta', inteiroTeor: 'TEXTO-GIGANTE', inteiroTeorHtml: '<p>x</p>' }]));
+    const f = jobs.criarFila({ con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
+      executarFn: async () => ({ ok: true, total: 1, resultados: [], arquivo, erro: null }) });
+    const inicio = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila: f });
+    const jobId = inicio.match(/[0-9a-f-]{36}/)[0];
+    const texto = await ferramentas.executar('ler_resultados', { job_id: jobId }, { fila: f });
+    assert.match(texto, /curta/);
+    assert.doesNotMatch(texto, /TEXTO-GIGANTE/);
+    assert.doesNotMatch(texto, /inteiroTeorHtml/);
+  });
+
+  describe('ler_inteiro_teor', () => {
+    async function filaCom(itens) {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-lit-'));
+      const arquivo = path.join(dir, 'saida.json');
+      fs.writeFileSync(arquivo, JSON.stringify(itens));
+      const f = jobs.criarFila({ con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
+        executarFn: async () => ({ ok: true, total: itens.length, resultados: [], arquivo, erro: null }) });
+      const inicio = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila: f });
+      return { fila: f, jobId: inicio.match(/[0-9a-f-]{36}/)[0] };
+    }
+
+    it('devolve o texto gravado na busca', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'A', inteiroTeor: 'EMENTA. Voto. Dispositivo.' }]);
+      const texto = await ferramentas.executar('ler_inteiro_teor', { job_id: jobId, indice: 1 }, { fila: f });
+      assert.match(texto, /Dispositivo/);
+    });
+
+    it('baixa pelo link quando nao ha texto gravado', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'B', inteiroTeorLink: 'https://exemplo/x.html' }]);
+      const texto = await ferramentas.executar('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async (url) => `BAIXADO de ${url}` });
+      assert.match(texto, /BAIXADO de https:\/\/exemplo\/x.html/);
+    });
+
+    it('falha de download e falha, nao ausencia', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'B', inteiroTeorLink: 'https://exemplo/x.html' }]);
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async () => { throw new Error('503'); } });
+      assert.strictEqual(r.ok, false);
+      assert.match(r.texto, /FALHA AO BAIXAR/);
+    });
+
+    it('sem texto e sem link, diz que nao ha caminho', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'C' }]);
+      const texto = await ferramentas.executar('ler_inteiro_teor', { job_id: jobId, indice: 1 }, { fila: f });
+      assert.match(texto, /nao traz inteiro teor/i);
+    });
+
+    it('corta em 60 mil caracteres e avisa', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'D', inteiroTeor: 'x'.repeat(70000) }]);
+      const texto = await ferramentas.executar('ler_inteiro_teor', { job_id: jobId, indice: 1 }, { fila: f });
+      assert.match(texto, /CORTADO/);
+      assert.ok(texto.length < 61000);
+    });
+
+    it('indice fora da busca e erro de parametro', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'A', inteiroTeor: 'x' }]);
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 9 }, { fila: f });
+      assert.strictEqual(r.ok, false);
+      const semIndice = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId }, { fila: f });
+      assert.strictEqual(semIndice.ok, false);
     });
   });
 });

@@ -2,6 +2,10 @@ const catalogo = require('./catalogo');
 const relator = require('./relator');
 const executorPadrao = require('./executor');
 const { validarMaxPaginas, validarData, normalizarPaginacao } = require('./validacao');
+const capacidades = require('./capacidades');
+const { fetchInteiroTeor, stripHtml } = require('../src/inteiroTeorFetcher');
+
+const INTEIRO_TEOR_MAX = 60_000;
 
 const LIMITE_MAX = 20;
 const LIMITE_PADRAO = 5;
@@ -79,6 +83,16 @@ function definicoes() {
           query: { type: 'string', description: 'os termos de busca' },
           dataInicio: { type: 'string', description: 'data no formato DD/MM/AAAA, ex.: 01/01/2024. ISO (AAAA-MM-DD) e RECUSADO.' },
           dataFim: { type: 'string', description: 'data no formato DD/MM/AAAA, ex.: 31/12/2024. ISO (AAAA-MM-DD) e RECUSADO.' },
+          dataPubInicio: { type: 'string', description: 'data de PUBLICACAO inicial, DD/MM/AAAA. So existe em parte dos tribunais; listar_tribunais mostra "publicacao" em quem tem. Onde nao existe a busca e RECUSADA.' },
+          dataPubFim: { type: 'string', description: 'data de PUBLICACAO final, DD/MM/AAAA.' },
+          juizados: {
+            type: 'boolean',
+            description: 'true restringe a JUIZADOS ESPECIAIS / TURMAS RECURSAIS. So existe em parte dos tribunais (listar_tribunais mostra "juizados"); onde nao existe a busca e RECUSADA em vez de rodar sem o recorte. Sem o campo, busca na Justica Comum (padrao do portal).',
+          },
+          inteiroTeor: {
+            type: 'boolean',
+            description: 'true baixa o INTEIRO TEOR de cada julgado durante a busca (mais lento; use em buscas estreitas, poucas paginas). Depois leia com ler_inteiro_teor. Onde o tribunal nao oferece, a busca e RECUSADA.',
+          },
           maxPaginas: { type: 'integer', description: `paginas a percorrer (default 3, maximo ${MAX_PAGINAS_TETO})` },
           relator: {
             type: 'string',
@@ -126,6 +140,22 @@ function definicoes() {
           limite: { type: 'integer', description: `default ${LIMITE_PADRAO}, maximo ${LIMITE_MAX}` },
         },
         required: ['job_id'],
+        additionalProperties: false,
+      },
+    },
+    {
+      name: 'ler_inteiro_teor',
+      description:
+        'Devolve o TEXTO INTEGRAL de UM julgado de uma busca concluida, pelo indice que ler_resultados mostra ([1], [2]...). '
+        + 'Usa o texto baixado na busca (inteiroTeor: true) ou baixa na hora pelo link do julgado. '
+        + `Texto cortado em ${INTEIRO_TEOR_MAX} caracteres, com aviso. Um julgado por chamada.`,
+      input_schema: {
+        type: 'object',
+        properties: {
+          job_id: { type: 'string' },
+          indice: { type: 'integer', description: 'posicao do julgado na busca, a partir de 1, como em ler_resultados' },
+        },
+        required: ['job_id', 'indice'],
         additionalProperties: false,
       },
     },
@@ -185,7 +215,7 @@ async function listarTribunais(entrada, deps = {}) {
     // uma busca quebrada em vez de um tribunal que nao oferece o recorte.
     const r = t.relator && t.relator.suportado ? `magistrado: ${t.relator.forma}` : 'magistrado: nao';
     const assistido = deps.fila?.permitirAssistido?.(t.comando) ? ' · tentativa assistida habilitada; usuário resolve captcha na tela' : '';
-    return `${t.comando} — ${t.nome}${uf} · ${t.estado} · ${r}${assistido}`;
+    return `${t.comando} — ${t.nome}${uf} · ${t.estado} · ${r}${assistido} · ${capacidades.resumoCompacto(t.comando)}`;
   });
   return { texto: `${lista.length} tribunais:\n${linhas.join('\n')}`, ok: true };
 }
@@ -217,7 +247,8 @@ async function buscar(entrada, deps) {
     return {
       texto: `O tribunal ${info.comando} (${info.nome}) esta INDISPONIVEL — estado "${info.estado}".\n`
         + `Motivo registrado: ${info.nota}\n`
-        + 'Nao invente resultado: diga isso ao usuario e sugira outro tribunal.',
+        + 'Nao invente resultado. Diga isso ao usuario e PERGUNTE se ele quer buscar em outro tribunal — '
+        + 'nao busque em outro por conta propria.',
       ok: true,
     };
   }
@@ -236,11 +267,22 @@ async function buscar(entrada, deps) {
     return { texto: relator.explicarAusencia(entrada.tribunal, info.nome), ok: false };
   }
 
+  // Mesma politica do relator para as tres funcionalidades novas: pedido num tribunal
+  // que nao tem (ou onde nao funciona) e RECUSADO com texto, nunca rodado sem o filtro.
+  const pedeJuizados = entrada.juizados === true;
+  const pedeInteiroTeor = entrada.inteiroTeor === true;
+  const pedePublicacao = Boolean(entrada.dataPubInicio || entrada.dataPubFim);
+  for (const [pede, chave] of [[pedeJuizados, 'juizados'], [pedeInteiroTeor, 'inteiroTeor'], [pedePublicacao, 'periodoPublicacao']]) {
+    if (!pede) continue;
+    const recusa = capacidades.recusar(entrada.tribunal, chave, info.nome);
+    if (recusa) return { texto: recusa, ok: false };
+  }
+
   // I4: o schema desta tool nao e `strict`, e o modelo emite ISO com naturalidade a
   // partir de "desde 2024". Sem validar, `-di 2024-01-01` filtrava errado e o total 0
   // resultante era lido como "o acervo nao tem" — falha de parametro disfarcada de
   // busca vazia. O texto devolvido ENSINA o formato para o modelo corrigir sozinho.
-  for (const campo of ['dataInicio', 'dataFim']) {
+  for (const campo of ['dataInicio', 'dataFim', 'dataPubInicio', 'dataPubFim']) {
     const v = validarData(entrada[campo], campo);
     if (!v.valido) return { texto: v.motivo, ok: false };
   }
@@ -249,8 +291,12 @@ async function buscar(entrada, deps) {
     query: entrada.query,
     dataInicio: entrada.dataInicio,
     dataFim: entrada.dataFim,
+    dataPubInicio: entrada.dataPubInicio,
+    dataPubFim: entrada.dataPubFim,
     maxPaginas: entrada.maxPaginas || 3,
     relator: relatorPedido || undefined,
+    juizados: pedeJuizados || undefined,
+    inteiroTeor: pedeInteiroTeor || undefined,
   });
   // Vai junto de TODA resposta desta busca (inclusive o zero e o timeout): quando o
   // tribunal exige nome exato ou codigo, o valor aproximado nao falha — devolve zero. Se
@@ -417,11 +463,62 @@ async function lerResultados(entrada, deps) {
     };
   }
   if (!itens.length) return { texto: `Sem itens em offset ${offset} (total ${total}).`, ok: true };
+  // O inteiro teor NAO vai aqui: um item pode ter dezenas de KB, e dez itens estourariam
+  // o contexto. Quem quiser o texto integral chama ler_inteiro_teor, um julgado por vez.
+  const semTeor = itens.map(({ inteiroTeor, inteiroTeorHtml, ...resto }) => resto);
   return {
     texto: `Mostrando ${offset + 1}–${offset + itens.length} de ${total}:\n\n`
-      + itens.map((it, i) => `[${offset + i + 1}] ${JSON.stringify(it)}`).join('\n\n'),
+      + semTeor.map((it, i) => `[${offset + i + 1}] ${JSON.stringify(it)}`).join('\n\n')
+      + '\n\n(Para o texto integral de um julgado, chame ler_inteiro_teor com o indice entre colchetes.)',
     ok: true,
   };
+}
+
+/**
+ * Um julgado por chamada, de proposito: o inteiro teor de um acordao passa facil de
+ * 30 KB, e devolver varios de uma vez estouraria o contexto do modelo.
+ */
+async function lerInteiroTeor(entrada, deps) {
+  if (!entrada.job_id) return { texto: 'job_id e obrigatorio.', ok: false };
+  const indice = Number(entrada.indice);
+  if (!Number.isInteger(indice) || indice < 1) {
+    return { texto: 'indice e obrigatorio: a posicao do julgado a partir de 1, como ler_resultados mostra entre colchetes.', ok: false };
+  }
+  const job = deps.fila.obter(entrada.job_id);
+  if (!job) return { texto: `Job desconhecido: ${entrada.job_id}`, ok: false };
+  if (job.status !== 'concluido') {
+    return { texto: `O job ${job.id} esta "${job.status}", ainda nao da para ler o inteiro teor.`, ok: true };
+  }
+  const { total, itens, erro } = deps.fila.resultados(job.id, indice - 1, 1);
+  if (erro) return { texto: `FALHA AO LER os resultados do job ${job.id}: ${erro}. Isso NAO e ausencia do julgado.`, ok: false };
+  if (!itens.length) return { texto: `Nao ha julgado ${indice} nesta busca: ela tem ${total}.`, ok: false };
+
+  const item = itens[0];
+  const rotulo = item.processo || item.numeroProcesso || item.numero || `item ${indice}`;
+  let texto = typeof item.inteiroTeor === 'string' && item.inteiroTeor.trim() ? item.inteiroTeor : '';
+  if (!texto && typeof item.inteiroTeorHtml === 'string' && item.inteiroTeorHtml.trim()) texto = stripHtml(item.inteiroTeorHtml);
+  if (!texto && typeof item.inteiroTeorLink === 'string' && item.inteiroTeorLink) {
+    const baixar = deps.baixarInteiroTeor || fetchInteiroTeor;
+    try {
+      texto = await baixar(item.inteiroTeorLink);
+    } catch (e) {
+      return {
+        texto: `FALHA AO BAIXAR o inteiro teor do julgado ${indice} (${rotulo}): ${e.message}\n`
+          + 'Isso NAO e ausencia do documento: diga ao usuario que o download falhou.',
+        ok: false,
+      };
+    }
+  }
+  if (!texto) {
+    return {
+      texto: `O julgado ${indice} (${rotulo}) nao traz inteiro teor por este caminho: sem texto gravado e sem link. `
+        + 'Se o tribunal oferecer inteiro teor (listar_tribunais), refaca a busca com inteiroTeor: true.',
+      ok: true,
+    };
+  }
+  const cortado = texto.length > INTEIRO_TEOR_MAX;
+  const aviso = cortado ? ` — CORTADO em ${INTEIRO_TEOR_MAX} de ${texto.length} caracteres` : '';
+  return { texto: `Inteiro teor do julgado ${indice} (${rotulo})${aviso}:\n\n${texto.slice(0, INTEIRO_TEOR_MAX)}`, ok: true };
 }
 
 /**
@@ -440,6 +537,7 @@ async function executarDetalhado(nome, entrada = {}, deps = {}) {
     if (nome === 'buscar_jurisprudencia') return await buscar(entrada, deps);
     if (nome === 'listar_relatores') return await listarRelatores(entrada, deps);
     if (nome === 'ler_resultados') return await lerResultados(entrada, deps);
+    if (nome === 'ler_inteiro_teor') return await lerInteiroTeor(entrada, deps);
     return { texto: `Ferramenta desconhecida: ${nome}`, ok: false };
   } catch (e) {
     return { texto: `Erro ao executar ${nome}: ${e.message}`, ok: false };
