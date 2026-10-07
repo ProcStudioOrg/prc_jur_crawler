@@ -78,6 +78,20 @@ function curado(comando) {
   return c && typeof c === 'object' ? c : null;
 }
 
+/**
+ * Aplica a sobreposicao curada de UMA funcionalidade. Exportada so para o teste: o
+ * modulo le o JSON no require, e testar a regra com um override inventado aqui e menor
+ * que abrir uma porta de injecao do mapa inteiro.
+ *
+ * A curadoria corrige o FUNCIONA, nunca o EXISTE. Quando a funcionalidade nao existe
+ * (fonte: CLI, travada por tests/contrato-cli.test.js), uma entrada curada e ignorada:
+ * aplicá-la faria a ficha prometer algo que o tribunal nao tem.
+ */
+function aplicarCurado(ex, estado, nota, sobre) {
+  if (!ex.existe || !sobre || !sobre.estado) return { estado, nota };
+  return { estado: sobre.estado, nota: sobre.nota || nota };
+}
+
 function resumoPadrao(tribunal, funcionalidades) {
   if (tribunal.estado === 'sem-acesso' || tribunal.estado === 'exige-sessao') return 'Indisponível no momento.';
   if (tribunal.estado === 'instavel') return 'Busca com ressalva no momento.';
@@ -106,9 +120,7 @@ function obter(comando, { disponivel } = {}) {
     else if (chave === 'termo' && t.estado === 'instavel') estado = 'ressalva';
     else if (chave === 'magistrado' && (ex.forma === 'nome-exato' || ex.forma === 'codigo')) estado = 'ressalva';
     else estado = 'funciona';
-    const s = sobre && sobre.funcionalidades && sobre.funcionalidades[chave];
-    if (s && s.estado) { estado = s.estado; nota = s.nota || nota; }
-    funcionalidades[chave] = { estado, nota };
+    funcionalidades[chave] = aplicarCurado(ex, estado, nota, sobre && sobre.funcionalidades && sobre.funcionalidades[chave]);
   }
   return { resumo: (sobre && sobre.resumo) || resumoPadrao(t, funcionalidades), funcionalidades };
 }
@@ -155,6 +167,6 @@ function resumoCompacto(comando) {
 }
 
 module.exports = {
-  CHAVES, ROTULOS, obter, existe, recusar, resumoCompacto, curado,
+  CHAVES, ROTULOS, obter, existe, recusar, resumoCompacto, curado, aplicarCurado,
   SEM_FILTRO_DATA, COM_PUBLICACAO, SEM_NUMERO, SEM_INTEIRO_TEOR,
 };

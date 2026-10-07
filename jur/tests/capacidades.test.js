@@ -48,6 +48,32 @@ describe('capacidades por tribunal', () => {
     assert.match(tjac.inteiroTeor.nota, /reCAPTCHA/);
   });
 
+  // A curadoria corrige o FUNCIONA, nunca o EXISTE: o existe vem da CLI e o contrato
+  // testa. Uma entrada curada para algo que nao existe faria a ficha prometer (e a
+  // ferramenta tentar) uma funcionalidade que o tribunal nao tem.
+  it('o curado nao se aplica a funcionalidade que nao existe', () => {
+    const sobre = { estado: 'ressalva', nota: 'curado' };
+    assert.deepStrictEqual(capacidades.aplicarCurado({ existe: false }, 'nao-existe', '', sobre), { estado: 'nao-existe', nota: '' });
+    assert.deepStrictEqual(capacidades.aplicarCurado({ existe: true }, 'funciona', '', sobre), { estado: 'ressalva', nota: 'curado' });
+    assert.deepStrictEqual(capacidades.aplicarCurado({ existe: true }, 'funciona', 'n', undefined), { estado: 'funciona', nota: 'n' });
+  });
+
+  it('cobertura/capacidades.json so tem tribunais do catalogo, chaves conhecidas e estados validos', () => {
+    const curado = require('../cobertura/capacidades.json');
+    const comandos = new Set(catalogo.listar().map((t) => t.comando));
+    const estados = ['funciona', 'ressalva', 'nao-funciona', 'nao-existe'];
+    const problemas = [];
+    for (const [comando, entrada] of Object.entries(curado)) {
+      if (comando.startsWith('_')) continue;
+      if (!comandos.has(comando)) problemas.push(`${comando}: nao esta no catalogo`);
+      for (const [chave, f] of Object.entries(entrada.funcionalidades || {})) {
+        if (!capacidades.CHAVES.includes(chave)) problemas.push(`${comando}.${chave}: chave desconhecida`);
+        if (!estados.includes(f.estado)) problemas.push(`${comando}.${chave}: estado invalido ${f.estado}`);
+      }
+    }
+    assert.deepStrictEqual(problemas, []);
+  });
+
   it('o JSON curado da o resumo, e todo tribunal fora de ok tem um', () => {
     const semResumo = catalogo.listar()
       .filter((t) => t.estado !== 'ok')
