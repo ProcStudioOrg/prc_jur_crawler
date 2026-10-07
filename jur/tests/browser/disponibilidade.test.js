@@ -263,4 +263,34 @@ describe('escopo — selecao', () => {
       assert.deepStrictEqual(JSON.parse(await guardado(page)), ['tjpr', 'trf4']);
     } finally { await page.close(); }
   });
+
+  it('remontar a barra nao acumula ouvintes: so a barra viva redesenha', async () => {
+    const page = await abrir();
+    try {
+      // Conta os redesenhos de chips causados por UM jur:escopo depois de 1 montagem e depois de 5
+      // no mesmo contentor: com vazamento a segunda contagem seria ~5x a primeira.
+      const { uma, cinco } = await page.evaluate(() => {
+        const c = document.querySelector('#caixa-inicial .barra-escopo');
+        // Barras antigas desenham nos proprios chips (ja soltos do DOM), entao um
+        // MutationObserver no chip vivo nao as veria: conta as chamadas de redesenho.
+        const medir = () => {
+          let n = 0;
+          const orig = Element.prototype.replaceChildren;
+          Element.prototype.replaceChildren = function (...a) {
+            if (this.classList.contains('escopo-chips')) n++;
+            return orig.apply(this, a);
+          };
+          document.dispatchEvent(new Event('jur:escopo'));
+          Element.prototype.replaceChildren = orig;
+          return n;
+        };
+        window.jurEscopo.montarBarra(c);
+        const uma = medir();
+        for (let i = 0; i < 5; i++) window.jurEscopo.montarBarra(c);
+        return { uma, cinco: medir() };
+      });
+      assert.ok(uma > 0, 'a barra viva redesenha');
+      assert.strictEqual(cinco, uma);
+    } finally { await page.close(); }
+  });
 });

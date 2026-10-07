@@ -70,7 +70,19 @@
   }
 
   // ---------- barra "Buscar em" ----------
+  // Ouvintes de `document` por montagem: montarCaixa remonta a barra a cada conversa,
+  // e sem isso as barras soltas do DOM continuariam redesenhando e fechando popovers.
+  const montagens = new Map();
   function montarBarra(container) {
+    for (const [no, controlador] of montagens) {
+      if (no === container || !no.isConnected) {
+        controlador.abort();
+        montagens.delete(no);
+      }
+    }
+    const controlador = new AbortController();
+    montagens.set(container, controlador);
+    const opcoes = { signal: controlador.signal };
     container.innerHTML = '';
     const rotulo = document.createElement('span');
     rotulo.className = 'escopo-rotulo';
@@ -161,14 +173,19 @@
     todos.addEventListener('click', () => window.jurEscopo.limpar());
     $('.escopo-busca', popover).addEventListener('input', desenharOpcoes);
     container.addEventListener('keydown', (e) => { if (e.key === 'Escape') { fechar(); adicionar.focus(); } });
-    document.addEventListener('click', (e) => { if (!container.contains(e.target)) fechar(); });
-    document.addEventListener('jur:escopo', desenhar);
-    document.addEventListener('jur:tribunais', desenhar);
+    document.addEventListener('click', (e) => { if (!container.contains(e.target)) fechar(); }, opcoes);
+    document.addEventListener('jur:escopo', desenhar, opcoes);
+    document.addEventListener('jur:tribunais', desenhar, opcoes);
     desenhar();
   }
 
   document.addEventListener('jur:sessao', carregar);
   // A tentativa assistida (captcha manual no STJ) muda `disponivel` em tempo de execucao.
   document.addEventListener('jur:navegadores-preferencias', carregar);
-  document.addEventListener('jur:sair', () => { tribunais = []; selecionados = []; });
+  document.addEventListener('jur:sair', () => {
+    tribunais = []; selecionados = [];
+    // Ao sair, nenhuma barra montada deve continuar ouvindo.
+    for (const controlador of montagens.values()) controlador.abort();
+    montagens.clear();
+  });
 }());
