@@ -341,16 +341,26 @@ body {
 }
 /* Borda em --fraco: com --neutro-borda a caixinha de selecao ficava em ~1,5:1, abaixo
    dos 3:1 que um controle precisa para ser percebido. */
-.chip-tribunal .cx { width: 13px; height: 13px; border-radius: 3px; border: 1.5px solid var(--fraco); display: grid; place-items: center; font-size: 10px; color: #fff; }
+.chip-tribunal .cx { width: 13px; height: 13px; box-sizing: border-box; border-radius: 3px; border: 1.5px solid var(--fraco); display: grid; place-items: center; }
 .chip-tribunal .sel[aria-pressed="true"] .cx { background: var(--acento); border-color: var(--acento); }
-.chip-tribunal .sel[aria-pressed="true"] .cx::after { content: '✓'; }
+/* ✓ e ✕ desenhados em CSS: o caractere da fonte tem metrica propria e saia torto,
+   fora do centro da caixinha. */
+.chip-tribunal .sel[aria-pressed="true"] .cx::after {
+  content: ''; width: 3px; height: 7px; border: solid #fff; border-width: 0 2px 2px 0;
+  transform: translateY(-1px) rotate(45deg);
+}
 .chip-tribunal.selecionado { border-color: var(--acento); background: var(--azul-suave); }
 .chip-tribunal .info { border: 0; border-left: 1px solid var(--borda); background: none; color: var(--fraco); padding: 0 7px; font-family: inherit; font-size: 12px; cursor: pointer; }
 .chip-tribunal .info:hover { background: var(--lateral); color: var(--texto); }
 .chip-tribunal[data-e="sem-acesso"], .chip-tribunal[data-e="exige-sessao"] { border-color: var(--erro-borda); background: var(--erro-fundo); }
 .chip-tribunal[data-e="sem-acesso"] .sel, .chip-tribunal[data-e="exige-sessao"] .sel { color: var(--erro); cursor: not-allowed; }
 .chip-tribunal[data-e="sem-acesso"] .cx, .chip-tribunal[data-e="exige-sessao"] .cx { border-color: var(--erro-borda); color: var(--erro); }
-.chip-tribunal[data-e="sem-acesso"] .cx::after, .chip-tribunal[data-e="exige-sessao"] .cx::after { content: '✕'; }
+.chip-tribunal[data-e="sem-acesso"] .cx::after, .chip-tribunal[data-e="exige-sessao"] .cx::after {
+  content: ''; width: 8px; height: 8px;
+  background:
+    linear-gradient(45deg, transparent calc(50% - 1px), currentColor calc(50% - 1px), currentColor calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(-45deg, transparent calc(50% - 1px), currentColor calc(50% - 1px), currentColor calc(50% + 1px), transparent calc(50% + 1px));
+}
 .chip-tribunal .sel:focus-visible, .chip-tribunal .info:focus-visible { outline: 2px solid var(--acento); outline-offset: -2px; }
 
 .manual summary { cursor: pointer; font-size: 13px; color: var(--fraco); font-weight: 600; }
