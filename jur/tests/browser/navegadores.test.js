@@ -285,10 +285,16 @@ test('ativar CAPTCHA atualiza o escopo real do STJ sem recarregar a página', as
   await f.login(page);
   await page.locator('.chip-tribunal[data-comando="stj"]').waitFor();
   assert.equal(await page.evaluate(() => window.jurEscopo.escopo().includes('stj')), false);
+  const indisp = async () => Number((/(\d+) indispon/.exec(await page.locator('#disponibilidade .placar').innerText()) || [])[1]);
+  const antes = await indisp();
   await expandir(page);
   await page.check('#navegadores-captcha');
   await page.waitForFunction(() => window.jurEscopo.escopo().includes('stj'));
-  assert.equal(await page.locator('.chip-tribunal[data-comando="stj"]').getAttribute('data-e'), 'sem-acesso');
+  const chipStj = page.locator('.chip-tribunal[data-comando="stj"]');
+  assert.equal(await chipStj.getAttribute('data-e'), 'assistido');
+  assert.equal(await chipStj.locator('.sel').getAttribute('aria-disabled'), null);
+  assert.equal(await indisp(), antes - 1);
   await page.uncheck('#navegadores-captcha');
   await page.waitForFunction(() => !window.jurEscopo.escopo().includes('stj'));
+  assert.equal(await chipStj.getAttribute('data-e'), 'sem-acesso');
 });

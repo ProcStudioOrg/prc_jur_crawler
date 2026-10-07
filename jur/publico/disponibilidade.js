@@ -65,8 +65,14 @@
 
   // O estado e do servidor; a cor do ponto vem daqui. Dois estados vermelhos: ambos
   // significam "nao da para buscar agora", so o motivo muda (a ficha explica).
-  const ROTULO_BADGE = { ok: 'Funcionando', instavel: 'Com ressalva', 'sem-acesso': 'Indisponível', 'exige-sessao': 'Indisponível' };
-  const COR = { ok: 'ok', instavel: 'ressalva', 'sem-acesso': 'erro', 'exige-sessao': 'erro' };
+  const ROTULO_BADGE = { ok: 'Funcionando', instavel: 'Com ressalva', 'sem-acesso': 'Indisponível', 'exige-sessao': 'Indisponível', assistido: 'Com CAPTCHA manual' };
+  const COR = { ok: 'ok', instavel: 'ressalva', 'sem-acesso': 'erro', 'exige-sessao': 'erro', assistido: 'ressalva' };
+
+  // Estado apenas visual. O servidor decide a disponibilidade em tempo de execucao:
+  // com "Resolver CAPTCHA manualmente" ligado, o STJ continua 'sem-acesso' no catalogo
+  // mas vem disponivel e assistido. A cor tem de seguir o que o usuario realmente
+  // consegue fazer (vermelho = nao selecionavel), entao esse caso vira 'assistido'.
+  function estadoVisual(t) { return t.assistido ? 'assistido' : t.estado; }
 
   const ROTULO_AREA = {
     superior: 'Superiores', federal: 'Justiça Federal', estadual: 'Justiça Estadual',
@@ -121,8 +127,8 @@
 
   function desenharPlacar() {
     elPlacar.replaceChildren();
-    const conta = (estados) => tribunais().filter((t) => estados.includes(t.estado)).length;
-    for (const [estados, rotulo, cor] of [[['ok'], 'funcionando', 'ok'], [['instavel'], 'com ressalva', 'ressalva'], [['sem-acesso', 'exige-sessao'], 'indisponíveis', 'erro']]) {
+    const conta = (estados) => tribunais().filter((t) => estados.includes(estadoVisual(t))).length;
+    for (const [estados, rotulo, cor] of [[['ok'], 'funcionando', 'ok'], [['instavel', 'assistido'], 'com ressalva', 'ressalva'], [['sem-acesso', 'exige-sessao'], 'indisponíveis', 'erro']]) {
       const item = document.createElement('span');
       const ponto = document.createElement('span'); ponto.className = `ponto ${cor}`;
       item.append(ponto, document.createTextNode(` ${conta(estados)} ${rotulo}`));
@@ -139,7 +145,7 @@
     const chip = document.createElement('span');
     chip.className = 'chip-tribunal';
     chip.dataset.comando = t.comando;
-    chip.dataset.e = t.estado;
+    chip.dataset.e = estadoVisual(t);
 
     const barra = document.createElement('i');
     barra.className = 'marca-estado';
@@ -156,7 +162,9 @@
       sel.setAttribute('aria-label', `${t.comando} indisponível — ver motivo`);
       sel.addEventListener('click', () => window.jurFicha.abrir(t.comando));
     } else {
-      sel.title = `${t.nome}: incluir ou tirar da busca`;
+      sel.title = t.assistido
+        ? `${t.nome}: busca com CAPTCHA manual. Incluir ou tirar da busca`
+        : `${t.nome}: incluir ou tirar da busca`;
       sel.setAttribute('aria-label', `${t.comando} na busca`);
       sel.addEventListener('click', () => window.jurEscopo.alternar(t.comando));
     }
@@ -295,14 +303,14 @@
       const h = document.createElement('h2');
       const code = document.createElement('code'); code.textContent = t.comando;
       const estado = document.createElement('span');
-      estado.className = `badge badge-estado ${COR[t.estado]}`;
-      estado.textContent = `● ${ROTULO_BADGE[t.estado] || t.estado}`;
+      estado.className = `badge badge-estado ${COR[estadoVisual(t)] || 'neutro'}`;
+      estado.textContent = `● ${ROTULO_BADGE[estadoVisual(t)] || t.estado}`;
       h.append(code, estado);
       const nome = document.createElement('p');
       nome.className = 'ficha-nome';
       nome.textContent = `${t.nome}${t.uf?.length ? ` · ${t.uf.join(', ')}` : ' · nacional'}`;
       const resumo = document.createElement('p');
-      resumo.className = `ficha-resumo ${COR[t.estado]}`;
+      resumo.className = `ficha-resumo ${COR[estadoVisual(t)] || 'neutro'}`;
       resumo.textContent = t.resumo || '';
 
       const tabela = document.createElement('table');

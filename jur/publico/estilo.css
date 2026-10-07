@@ -311,7 +311,8 @@ body {
 .chip-tribunal:not([data-e="sem-acesso"]):not([data-e="exige-sessao"]):hover { border-color: var(--acento); }
 .chip-tribunal .marca-estado { width: 4px; flex: 0 0 4px; }
 .chip-tribunal[data-e="ok"] .marca-estado { background: var(--ok); }
-.chip-tribunal[data-e="instavel"] .marca-estado { background: var(--ressalva); }
+.chip-tribunal[data-e="instavel"] .marca-estado,
+.chip-tribunal[data-e="assistido"] .marca-estado { background: var(--ressalva); }
 .chip-tribunal[data-e="sem-acesso"] .marca-estado, .chip-tribunal[data-e="exige-sessao"] .marca-estado { background: var(--erro); }
 .chip-tribunal .sel {
   display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px;
