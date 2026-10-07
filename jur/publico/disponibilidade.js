@@ -255,15 +255,101 @@
   document.addEventListener('jur:escopo', redesenhar);
   montarManual();
 
-  // Esboco: a Task 9 substitui pela ficha completa. Aqui so abre o painel com o titulo.
+  // A ficha nunca mostra a nota tecnica do catalogo (t.nota): o usuario le o resumo em
+  // portugues e a nota POR FUNCIONALIDADE, que e escrita para ele.
+  const ROTULO_FUNC = {
+    termo: 'Busca por termo',
+    periodoJulgamento: 'Período de julgamento',
+    periodoPublicacao: 'Período de publicação',
+    magistrado: 'Magistrado',
+    juizados: 'Juizados / Turmas Recursais',
+    inteiroTeor: 'Inteiro teor',
+    numero: 'Consulta por número',
+  };
+  const CHAVES_FUNC = Object.keys(ROTULO_FUNC);
+  const BADGE = {
+    funciona: ['✓', 'Funciona', 'ok'],
+    ressalva: ['!', 'Com ressalva', 'ressalva'],
+    'nao-funciona': ['✕', 'Não funciona', 'erro'],
+    'nao-existe': ['—', 'Não existe neste tribunal', 'neutro'],
+  };
+
+  function badge(estado, classeExtra = '') {
+    const [sinal, rotulo, cor] = BADGE[estado] || BADGE['nao-existe'];
+    const s = document.createElement('span');
+    s.className = `badge ${cor} ${classeExtra}`.trim();
+    s.dataset.estado = estado;
+    s.textContent = `${sinal} ${rotulo}`;
+    return s;
+  }
+
   window.jurFicha = {
     abrir(comando) {
       const t = tribunais().find((x) => x.comando === comando);
       if (!t) return;
-      window.jurUI.abrirPainel($('#painel-ficha'), '');
-      const caixa = $('.painel-caixa', $('#painel-ficha'));
-      const h = document.createElement('h2'); h.textContent = `${t.comando} — ${t.nome}`;
-      caixa.appendChild(h);
+      const painel = $('#painel-ficha');
+      window.jurUI.abrirPainel(painel, '');
+      const caixa = $('.painel-caixa', painel);
+      caixa.classList.add('ficha');
+
+      const h = document.createElement('h2');
+      const code = document.createElement('code'); code.textContent = t.comando;
+      const estado = document.createElement('span');
+      estado.className = `badge badge-estado ${COR[t.estado]}`;
+      estado.textContent = `● ${ROTULO_BADGE[t.estado] || t.estado}`;
+      h.append(code, estado);
+      const nome = document.createElement('p');
+      nome.className = 'ficha-nome';
+      nome.textContent = `${t.nome}${t.uf?.length ? ` · ${t.uf.join(', ')}` : ' · nacional'}`;
+      const resumo = document.createElement('p');
+      resumo.className = `ficha-resumo ${COR[t.estado]}`;
+      resumo.textContent = t.resumo || '';
+
+      const tabela = document.createElement('table');
+      tabela.className = 'tab-cap';
+      tabela.innerHTML = '<thead><tr><th>Funcionalidade</th><th>Estado</th></tr></thead><tbody></tbody>';
+      const corpo = $('tbody', tabela);
+      for (const chave of CHAVES_FUNC) {
+        const f = (t.capacidades && t.capacidades[chave]) || { estado: 'nao-existe', nota: '' };
+        const tr = document.createElement('tr');
+        tr.dataset.chave = chave;
+        const td1 = document.createElement('td');
+        td1.textContent = ROTULO_FUNC[chave];
+        if (f.nota) { const small = document.createElement('small'); small.textContent = f.nota; td1.appendChild(small); }
+        const td2 = document.createElement('td');
+        td2.appendChild(badge(f.estado));
+        tr.append(td1, td2);
+        corpo.appendChild(tr);
+      }
+
+      const acoes = document.createElement('div');
+      acoes.className = 'ficha-acoes';
+      const incluir = document.createElement('button');
+      incluir.type = 'button'; incluir.className = 'botao-acento ficha-incluir';
+      incluir.textContent = selecionado(t.comando) ? 'Já está na busca' : 'Incluir na busca';
+      incluir.disabled = !t.disponivel || selecionado(t.comando);
+      incluir.addEventListener('click', () => { window.jurEscopo.selecionar(t.comando); painel.hidden = true; });
+      const fechar = document.createElement('button');
+      fechar.type = 'button'; fechar.className = 'botao-secundario ficha-fechar';
+      fechar.textContent = 'Fechar';
+      fechar.addEventListener('click', () => { painel.hidden = true; });
+      acoes.append(incluir, fechar);
+      // So o STJ tem tentativa assistida (servidor/navegadores/registro.js). O botao leva ao
+      // painel Navegadores, onde a opcao de captcha manual mora.
+      if (t.comando === 'stj' && !t.assistido) {
+        const captcha = document.createElement('button');
+        captcha.type = 'button'; captcha.className = 'botao-secundario ficha-captcha';
+        captcha.textContent = 'Tentar com CAPTCHA manual';
+        captcha.addEventListener('click', () => {
+          painel.hidden = true;
+          const abrir = $('#navegadores-abrir');
+          if (abrir && abrir.getAttribute('aria-expanded') !== 'true') abrir.click();
+          $('#navegadores-captcha')?.focus();
+        });
+        acoes.appendChild(captcha);
+      }
+
+      caixa.append(h, nome, resumo, tabela, acoes);
     },
   };
 }());

@@ -320,3 +320,55 @@ describe('escopo — selecao', () => {
     } finally { await page.close(); }
   });
 });
+
+describe('ficha do tribunal', () => {
+  const CHAVES = ['termo', 'periodoJulgamento', 'periodoPublicacao', 'magistrado', 'juizados', 'inteiroTeor', 'numero'];
+
+  it('mostra badge de estado, resumo em portugues e as sete linhas, sem texto tecnico', async () => {
+    const page = await abrir();
+    try {
+      await page.click(`${chip('stf')} .info`);
+      await page.waitForSelector('#painel-ficha:not([hidden])');
+      assert.match(await page.textContent('#painel-ficha .badge-estado'), /Funcionando/);
+      assert.ok((await page.textContent('#painel-ficha .ficha-resumo')).length > 10);
+      const chaves = await page.$$eval('#painel-ficha .tab-cap tr[data-chave]', (els) => els.map((e) => e.dataset.chave));
+      assert.deepStrictEqual(chaves, CHAVES);
+      assert.strictEqual(await page.getAttribute('#painel-ficha tr[data-chave="juizados"] .badge', 'data-estado'), 'nao-existe');
+      assert.strictEqual(await page.getAttribute('#painel-ficha tr[data-chave="magistrado"] .badge', 'data-estado'), 'ressalva');
+      const texto = await page.textContent('#painel-ficha');
+      assert.doesNotMatch(texto, /NXDOMAIN|WAF|Elasticsearch|--[a-z]/, 'a nota tecnica nao pode aparecer na ficha');
+    } finally { await page.close(); }
+  });
+
+  it('tribunal indisponivel: badge vermelho, tudo que existe nao funciona, incluir desabilitado', async () => {
+    const page = await abrir();
+    try {
+      await page.click(`${chip('stj')} .sel`, { force: true }); // aria-disabled: so sinaliza indisponivel, o clique abre a ficha
+      await page.waitForSelector('#painel-ficha:not([hidden])');
+      assert.match(await page.textContent('#painel-ficha .badge-estado'), /Indispon/);
+      assert.strictEqual(await page.getAttribute('#painel-ficha tr[data-chave="termo"] .badge', 'data-estado'), 'nao-funciona');
+      assert.strictEqual(await page.isDisabled('#painel-ficha .ficha-incluir'), true);
+      assert.strictEqual(await page.isVisible('#painel-ficha .ficha-captcha'), true, 'o STJ oferece tentativa com captcha manual');
+    } finally { await page.close(); }
+  });
+
+  it('"Incluir na busca" seleciona e fecha', async () => {
+    const page = await abrir();
+    try {
+      await page.click(`${chip('trf4')} .info`);
+      await page.waitForSelector('#painel-ficha:not([hidden])');
+      await page.click('#painel-ficha .ficha-incluir');
+      await page.waitForSelector('#painel-ficha[hidden]', { state: 'attached' }); // oculto nunca e 'visible'
+      assert.deepStrictEqual(JSON.parse(await guardado(page)), ['trf4']);
+    } finally { await page.close(); }
+  });
+
+  it('a linha com nota mostra a nota embaixo do nome', async () => {
+    const page = await abrir();
+    try {
+      await page.click(`${chip('stf')} .info`);
+      await page.waitForSelector('#painel-ficha:not([hidden])');
+      assert.match(await page.textContent('#painel-ficha tr[data-chave="magistrado"] small'), /exato/i);
+    } finally { await page.close(); }
+  });
+});
