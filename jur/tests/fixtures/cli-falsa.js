@@ -2,7 +2,10 @@
 // Imita `bin/jur <cmd> --json`. Modo escolhido pelo primeiro argumento.
 const fs = require('node:fs');
 
-const modo = process.argv[2];
+// `--modo X` permite que o comando (argv[2]) seja um tribunal real, como trf4, quando o
+// teste precisa do nome do tribunal (mapa de juizados) e do modo ao mesmo tempo.
+const idxModo = process.argv.indexOf('--modo');
+const modo = idxModo >= 0 ? process.argv[idxModo + 1] : process.argv[2];
 const args = process.argv.slice(3);
 const saida = args[args.indexOf('-o') + 1];
 

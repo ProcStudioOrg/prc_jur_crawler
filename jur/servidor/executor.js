@@ -6,19 +6,27 @@ const path = require('node:path');
 const CLI_PADRAO = path.join(__dirname, '..', 'bin', 'jur');
 const TIMEOUT_PADRAO = 10 * 60 * 1000;
 
+const juizados = require('./juizados');
+
 /**
  * Allowlist fechada. Só o denominador comum verificado da CLI entra aqui.
  * `orgao` esta DELIBERADAMENTE fora: o mesmo nome significa orgao JULGADOR
  * nos tribunais judiciais e orgao FISCALIZADO nos TCEs, entao um mapeamento
  * unico buscaria no campo errado e devolveria zero — que se le como
  * "nao ha julgado". Ver o spec, secao 2.4.
+ *
+ * `juizados` e `inteiroTeor` sao BOOLEANOS e nao entram em BANDEIRA: o valor da
+ * flag de juizados muda por tribunal (servidor/juizados.js) e inteiro teor exige
+ * duas flags. Os dois sao montados abaixo, nunca a partir de texto do modelo.
  */
-const PARAMS_ACEITOS = ['query', 'dataInicio', 'dataFim', 'maxPaginas', 'numero', 'relator'];
+const PARAMS_ACEITOS = ['query', 'dataInicio', 'dataFim', 'dataPubInicio', 'dataPubFim', 'maxPaginas', 'numero', 'relator'];
 
 const BANDEIRA = {
   query: '-q',
   dataInicio: '-di',
   dataFim: '-df',
+  dataPubInicio: '-dpi',
+  dataPubFim: '-dpf',
   maxPaginas: '-m',
   numero: '-n',
   // `relator` PODE entrar onde `orgao` nao pode: conferido em bin/jur, `-r` e
@@ -34,14 +42,31 @@ const BANDEIRA = {
 /** Modos utilitarios da CLI (`--listar-*`): sem `-o`, sem resultado, so o combo. */
 const TIMEOUT_LISTAGEM_PADRAO = 60 * 1000;
 
-function montarArgs(cliPath, comando, params, arquivoSaida) {
+function dirInteiroTeor(arquivoSaida) {
+  return String(arquivoSaida).replace(/\.json$/, '') + '-inteiro-teor';
+}
+
+/**
+ * Devolve `{ args }` ou `{ erro }`. Erro aqui e so o de juizados sem recorte: a
+ * ferramenta e a rota ja recusam antes, mas o executor e a ultima barreira para a
+ * busca nunca rodar SEM o filtro que foi pedido.
+ */
+function montarArgs(cliPath, comando, params, arquivoSaida, opcoes = {}) {
   const args = [cliPath, comando, '--json', '-o', arquivoSaida];
+  // So a fixture de teste passa `modo`: a CLI real (commander) recusa flag desconhecida.
+  if (opcoes.modo !== undefined) args.push('--modo', String(opcoes.modo));
   for (const chave of PARAMS_ACEITOS) {
     const valor = params[chave];
     if (valor === undefined || valor === null || valor === '') continue;
     args.push(BANDEIRA[chave], String(valor));
   }
-  return args;
+  if (params.juizados === true) {
+    const j = juizados.obter(comando);
+    if (!j || !j.suportado) return { erro: `o tribunal ${comando} nao tem recorte de juizados; a busca nao rodou sem o filtro` };
+    args.push(...j.args);
+  }
+  if (params.inteiroTeor === true) args.push('--fetch-inteiro-teor', '--output-dir', dirInteiroTeor(arquivoSaida));
+  return { args };
 }
 
 /** A CLI pode imprimir aviso antes do JSON: vale a ultima linha que parseia. */
@@ -95,7 +120,11 @@ async function executar(comando, params = {}, opcoes = {}) {
   const cliPath = opcoes.cliPath || CLI_PADRAO;
   const arquivoSaida = opcoes.arquivoSaida;
   const timeoutMs = opcoes.timeoutMs || TIMEOUT_PADRAO;
-  const args = montarArgs(cliPath, comando, params, arquivoSaida);
+  const montado = montarArgs(cliPath, comando, params, arquivoSaida, { modo: opcoes.modo });
+  if (montado.erro) {
+    return { ok: false, total: 0, resultados: [], arquivo: null, erro: montado.erro, codigoSaida: null, envelope: null };
+  }
+  const args = montado.args;
   const assistido = opcoes.navegador?.acompanhar || opcoes.env?.JUR_ACOMPANHAR === '1';
   if (assistido || opcoes.env?.JUR_BROWSER_CDP) args.unshift('--require', path.join(__dirname, '..', 'src', 'navegadorPreload.js'));
 

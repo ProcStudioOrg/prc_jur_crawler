@@ -154,6 +154,42 @@ describe('executor', () => {
     assert.ok(visto > 0);
   });
 
+  it('repassa periodo de publicacao como -dpi/-dpf', async () => {
+    const r = await executar_(tmp(), 'eco', {}, { query: 'x', dataPubInicio: '01/01/2024', dataPubFim: '31/01/2024' });
+    const args = r.envelope.args;
+    assert.ok(args.includes('-dpi') && args[args.indexOf('-dpi') + 1] === '01/01/2024');
+    assert.ok(args.includes('-dpf') && args[args.indexOf('-dpf') + 1] === '31/01/2024');
+  });
+
+  it('traduz juizados pelo mapa do tribunal, nunca por texto do modelo', async () => {
+    const arquivo = tmp();
+    const r = await executor.executar('trf4', { query: 'x', juizados: true }, { arquivoSaida: arquivo, cliPath: CLI_FALSA, modo: 'eco' });
+    const args = r.envelope.args;
+    assert.ok(args.includes('--origem') && args[args.indexOf('--origem') + 1] === 'turmas-recursais');
+  });
+
+  it('juizados num tribunal sem recorte falha ANTES de rodar, em vez de buscar sem o filtro', async () => {
+    const r = await executor.executar('tjpr', { query: 'x', juizados: true }, { arquivoSaida: tmp(), cliPath: CLI_FALSA, modo: 'eco' });
+    assert.strictEqual(r.ok, false);
+    assert.match(r.erro, /juizados/i);
+    assert.strictEqual(r.envelope, null, 'a CLI nao pode ter sido chamada');
+  });
+
+  it('inteiro teor liga a flag e aponta o diretorio ao lado do arquivo de saida', async () => {
+    const arquivo = tmp();
+    const r = await executar_(arquivo, 'eco', {}, { query: 'x', inteiroTeor: true });
+    const args = r.envelope.args;
+    assert.ok(args.includes('--fetch-inteiro-teor'));
+    const dir = args[args.indexOf('--output-dir') + 1];
+    assert.strictEqual(dir, arquivo.replace(/\.json$/, '-inteiro-teor'));
+  });
+
+  it('juizados e inteiroTeor falsos nao poem flag nenhuma', async () => {
+    const r = await executar_(tmp(), 'eco', {}, { query: 'x', juizados: false, inteiroTeor: false });
+    assert.ok(!r.envelope.args.includes('--origem'));
+    assert.ok(!r.envelope.args.includes('--fetch-inteiro-teor'));
+  });
+
   function executar_(arquivo, modo, extras = {}, params = { query: 'x' }) {
     return executor.executar(modo, params, { arquivoSaida: arquivo, cliPath: CLI_FALSA, ...extras });
   }
