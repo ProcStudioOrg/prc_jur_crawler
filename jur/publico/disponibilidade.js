@@ -121,6 +121,11 @@
       chip.classList.toggle('selecionado', sel);
       chip.querySelector('.sel').setAttribute('aria-pressed', String(sel));
     }
+    // Grupo sem nenhum tribunal visivel some inteiro: um titulo "Justica do Trabalho"
+    // sobre uma grade vazia parece que o segmento nao tem tribunal nenhum.
+    for (const grupo of elGrade.querySelectorAll('.grupo-tribunais')) {
+      grupo.hidden = !grupo.querySelector('.chip-tribunal:not([hidden])');
+    }
     elLimpar.hidden = !(filtros.area.size || filtros.uf.size);
     desenharPlacar();
   }
@@ -250,8 +255,29 @@
     elBarraFiltros.appendChild(acoes);
     alvo.appendChild(elBarraFiltros);
 
-    elGrade = document.createElement('div'); elGrade.className = 'grade-tribunais';
-    for (const t of lista) elGrade.appendChild(montarChipTribunal(t));
+    // Um bloco por segmento, na ordem da hierarquia (Superiores -> Administrativos), e
+    // dentro dele uma grade de colunas fixas. Misturar os 77 numa fileira so obrigava a
+    // ler sigla por sigla para achar o segmento; agrupado, o olho vai direto ao bloco.
+    elGrade = document.createElement('div'); elGrade.className = 'grupos-tribunais';
+    const ORDEM = ['superior', 'federal', 'estadual', 'trabalhista', 'contas', 'administrativo'];
+    const segmentos = [...new Set(lista.map((t) => t.segmento || 'outros'))]
+      .sort((a, b) => (ORDEM.indexOf(a) + 1 || 99) - (ORDEM.indexOf(b) + 1 || 99));
+    for (const seg of segmentos) {
+      const doSeg = lista.filter((t) => (t.segmento || 'outros') === seg)
+        .sort((a, b) => a.comando.localeCompare(b.comando, 'pt-BR', { numeric: true }));
+      const grupo = document.createElement('div');
+      grupo.className = 'grupo-tribunais';
+      grupo.dataset.segmento = seg;
+      const titulo = document.createElement('h3');
+      titulo.className = 'grupo-titulo';
+      const nome = document.createElement('span'); nome.textContent = ROTULO_AREA[seg] || seg;
+      const conta = document.createElement('span'); conta.className = 'grupo-conta'; conta.textContent = String(doSeg.length);
+      titulo.append(nome, conta);
+      const grade = document.createElement('div'); grade.className = 'grade-tribunais';
+      for (const t of doSeg) grade.appendChild(montarChipTribunal(t));
+      grupo.append(titulo, grade);
+      elGrade.appendChild(grupo);
+    }
     alvo.appendChild(elGrade);
 
     const dica = document.createElement('p'); dica.className = 'vazio';

@@ -162,6 +162,9 @@ body {
      do rodape e o conjunto parecia apertado ao lado do texto largo das respostas. */
   min-height: 48px;
 }
+/* A caixa inteira (.formulario:focus-within) ja mostra o foco; o contorno global de
+   :focus-visible no textarea desenhava uma segunda caixa dentro da primeira. */
+.formulario .entrada:focus-visible { outline: none; }
 .entrada-rodape { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
 .seletor-modelo { display: flex; gap: 4px; margin-left: auto; }
 .seletor-modelo select {
@@ -304,7 +307,20 @@ body {
 .ligacao:hover { color: var(--acento); }
 
 /* ---------- grade de tribunais ---------- */
-.grade-tribunais { display: flex; flex-wrap: wrap; gap: 6px; }
+/* Um bloco por segmento; dentro dele, colunas de largura fixa para as siglas alinharem
+   em linhas e colunas. A diferenca entre blocos e sutil de proposito: um fundo levemente
+   tingido e o titulo pequeno bastam para o olho separar os segmentos. */
+.grupos-tribunais { display: flex; flex-direction: column; gap: 10px; }
+.grupo-tribunais { padding: 10px 12px 12px; border-radius: 10px; border: 1px solid var(--borda); background: color-mix(in srgb, var(--lateral) 55%, transparent); }
+.grupo-tribunais:nth-child(even) { background: color-mix(in srgb, var(--lateral) 25%, transparent); }
+.grupo-tribunais[hidden] { display: none; }
+.grupo-titulo { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-size: 11.5px; font-weight: 650; text-transform: uppercase; letter-spacing: .06em; color: var(--fraco); }
+.grupo-conta { font-size: 10.5px; font-weight: 600; letter-spacing: 0; padding: 0 6px; border-radius: 999px; background: var(--superficie); border: 1px solid var(--borda); font-variant-numeric: tabular-nums; }
+.grade-tribunais { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 6px; }
+.grade-tribunais .chip-tribunal { display: flex; }
+.grade-tribunais .chip-tribunal .sel { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.grade-tribunais { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+.grade-tribunais .chip-tribunal .cx { flex: 0 0 13px; }
 .chip-tribunal[hidden] { display: none; }
 /* Barra a esquerda = estado REAL (o servidor decide). Caixa = selecionado (o usuario
    decide). Vermelho inteiro = indisponivel, e nao seleciona. */
