@@ -30,6 +30,14 @@ describe('jobs', () => {
     assert.strictEqual(job.total, 2);
   });
 
+  it('guarda os avisos da CLI de uma consulta vazia no job (avisos_json)', async () => {
+    const fila = filaDeTeste(async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null, avisos: ['não localizado'] }));
+    const { id } = fila.enfileirar('tcego', { numero: '1' });
+    const job = await fila.aguardar(id);
+    assert.strictEqual(job.total, 0);
+    assert.deepStrictEqual(job.avisosCli, ['não localizado']);
+  });
+
   it('marca erro quando o crawler falha, e nao concluido com zero', async () => {
     const fila = filaDeTeste(async () => ({ ok: false, total: 0, resultados: [], arquivo: null, erro: 'fora do ar' }));
     const { id } = fila.enfileirar('stf', { query: 'x' });
@@ -279,5 +287,13 @@ describe('jobs', () => {
     assert.strictEqual(pagina.total, 25);
     assert.strictEqual(pagina.itens.length, 5);
     assert.strictEqual(pagina.itens[0].n, 10);
+  });
+});
+
+describe('enriquecer — avisos da CLI no zero', () => {
+  const { enriquecerJob } = require('../servidor/enriquecer');
+  it('job concluido com zero leva os avisos da propria consulta para avisos[]', () => {
+    const j = enriquecerJob({ id: 'j', comando: 'tcego', status: 'concluido', total: 0, avisosCli: ['não localizado'] });
+    assert.ok(j.avisos.some((a) => a.includes('não localizado')), JSON.stringify(j.avisos));
   });
 });

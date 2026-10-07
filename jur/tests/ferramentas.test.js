@@ -234,6 +234,13 @@ describe('ferramentas', () => {
         'a proibicao explicita ao modelo nao pode sumir do texto do zero');
     });
 
+    it('zero resultados carrega os avisos que a propria CLI deu (ex.: nao localizado)', async () => {
+      const filaZero = criarFilaTeste(async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null, avisos: ['não localizado na base'] }));
+      const { texto } = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'stf', query: 'nada' }, { fila: filaZero });
+      assert.match(texto, /0 resultados/);
+      assert.match(texto, /não localizado na base/);
+    });
+
     it('busca cujo crawler falhou (job com status erro) e resultado legitimo, nao falha de execucao', async () => {
       const filaComErro = criarFilaTeste(async () => ({ ok: false, total: 0, resultados: [], arquivo: null, erro: 'crawler morreu' }));
       const { texto, ok } = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila: filaComErro });

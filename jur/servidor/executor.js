@@ -191,6 +191,25 @@ async function executar(comando, params = {}, opcoes = {}) {
         if (arquivoSaida) fs.writeFileSync(arquivoSaida, JSON.stringify(resultados));
         return resolve({
           ok: true, total: resultados.length, resultados, arquivo: arquivoSaida, erro: null, codigoSaida: codigo, envelope,
+          ...avisosSeVazio(envelope, resultados),
+        });
+      }
+
+      // Consulta por NUMERO no formato dos tribunais de contas (tcego, tcdf, tcemg,
+      // tcece -n): `encontrados` e um NUMERO, sem o booleano, e `avisos` vem antes de
+      // `resultados` no envelope. O caminho generico pegaria `avisos` como se fossem
+      // julgados — e um processo encontrado viraria "0 resultados" (ou um aviso viraria
+      // julgado). Aqui so `resultados` conta, e o -o e sempre escrito, porque e dele que
+      // ler_resultados le depois.
+      if (params.numero && typeof envelope.encontrados === 'number') {
+        const resultados = Array.isArray(envelope.resultados) ? envelope.resultados : [];
+        if (arquivoSaida) fs.writeFileSync(arquivoSaida, JSON.stringify(resultados));
+        // Quando `encontrados` e a lista discordam, vale a LISTA: e ela que ler_resultados
+        // vai mostrar, e anunciar N julgados que nao estao no arquivo seria o caminho
+        // inverso do mesmo erro ("ha resultados" sem resultado nenhum para ler).
+        return resolve({
+          ok: true, total: resultados.length, resultados, arquivo: arquivoSaida, erro: null, codigoSaida: codigo, envelope,
+          ...avisosSeVazio(envelope, resultados),
         });
       }
 
@@ -206,6 +225,21 @@ async function executar(comando, params = {}, opcoes = {}) {
       });
     });
   });
+}
+
+/**
+ * Avisos da propria CLI (`avisos[]`, `motivo`) quando a consulta por numero volta
+ * vazia. Ficam FORA dos resultados — aviso nao e julgado — mas nao podem sumir: sem
+ * eles, "nao localizado" ou "base parcial" chegariam ao usuario como um zero seco, e
+ * zero seco e lido como ausencia de jurisprudencia.
+ */
+function avisosSeVazio(envelope, resultados) {
+  if (resultados.length) return {};
+  const avisos = (Array.isArray(envelope.avisos) ? envelope.avisos : [])
+    .filter((a) => a !== null && a !== undefined && a !== '')
+    .map((a) => (typeof a === 'string' ? a : JSON.stringify(a)));
+  if (typeof envelope.motivo === 'string' && envelope.motivo.trim()) avisos.push(envelope.motivo.trim());
+  return avisos.length ? { avisos } : {};
 }
 
 /**

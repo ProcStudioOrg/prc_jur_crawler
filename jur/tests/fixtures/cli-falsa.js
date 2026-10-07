@@ -39,6 +39,17 @@ if (modo === 'inline') {
 } else if (modo === 'consulta-ausente') {
   process.stdout.write(JSON.stringify({ success: true, numero: '1', encontrado: false, avisos: ['base parcial'] }) + '\n');
   process.exit(1);
+} else if (modo === 'numero-encontrados') {
+  // tcego/tcdf/tcemg/tcece -n: sem o booleano `encontrado`, com `encontrados` numerico,
+  // e `avisos` vem ANTES de `resultados` — o primeiro array do envelope nao e julgado.
+  process.stdout.write(JSON.stringify({
+    success: true, encontrados: 2, total: 2, avisos: ['x'],
+    resultados: [{ processo: 'a1' }, { processo: 'a2' }],
+  }) + '\n');
+} else if (modo === 'numero-encontrados-vazio') {
+  process.stdout.write(JSON.stringify({
+    success: true, encontrados: 0, total: 0, avisos: ['não localizado'], resultados: [],
+  }) + '\n');
 } else if (modo === 'eco') {
   process.stdout.write(JSON.stringify({ success: true, args }) + '\n');
 } else if (modo === 'so-envelope') {

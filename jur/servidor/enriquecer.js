@@ -37,6 +37,9 @@ function enriquecerJob(job, fila) {
 
   if (job.status === 'concluido' && job.total === 0) {
     avisos.push(info && info.nota ? info.nota : AVISO_ZERO_SEM_NOTA);
+    // O motivo concreto que a CLI deu para ESTE zero (ex.: "nao localizado") tambem vai
+    // para REST/MCP/SSE — e o mesmo texto que buscar_jurisprudencia mostra ao modelo.
+    for (const a of job.avisosCli || []) avisos.push(`Aviso da consulta: ${a}`);
   }
 
   const erroResultados = fila && typeof fila.erroDeLeitura === 'function' ? fila.erroDeLeitura(job) : null;

@@ -203,6 +203,25 @@ describe('executor', () => {
     assert.deepStrictEqual(r.resultados, []);
   });
 
+  it('consulta por numero com `encontrados` numerico devolve os resultados, nao os avisos, e grava o -o', async () => {
+    const arquivo = tmp();
+    const r = await executar_(arquivo, 'numero-encontrados', {}, { numero: '1' });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(r.total, 2);
+    assert.deepStrictEqual(r.resultados, [{ processo: 'a1' }, { processo: 'a2' }]);
+    assert.deepStrictEqual(JSON.parse(fs.readFileSync(arquivo, 'utf8')), r.resultados);
+  });
+
+  it('consulta por numero com `encontrados` zero e 0 resultados e traz os avisos da CLI', async () => {
+    const arquivo = tmp();
+    const r = await executar_(arquivo, 'numero-encontrados-vazio', {}, { numero: '1' });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(r.total, 0);
+    assert.deepStrictEqual(r.resultados, []);
+    assert.deepStrictEqual(r.avisos, ['não localizado']);
+    assert.deepStrictEqual(JSON.parse(fs.readFileSync(arquivo, 'utf8')), []);
+  });
+
   it('juizados e inteiroTeor falsos nao poem flag nenhuma', async () => {
     const r = await executar_(tmp(), 'eco', {}, { query: 'x', juizados: false, inteiroTeor: false });
     assert.ok(!r.envelope.args.includes('--origem'));

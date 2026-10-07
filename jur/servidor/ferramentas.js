@@ -358,6 +358,9 @@ async function buscar(entrada, deps) {
       jobId: id,
       texto: `job ${job.id}: 0 resultados em ${info.comando} para ${alvo}.\n`
         + `RESSALVA DO TRIBUNAL: ${info.nota || '(sem ressalva registrada)'}\n`
+        // O que a CLI disse sobre ESTA consulta (ex.: "nao localizado", "base parcial").
+        // Sem isto o motivo concreto do zero morria no executor e o modelo so via o zero.
+        + (job.avisosCli && job.avisosCli.length ? `AVISOS DA CONSULTA: ${job.avisosCli.join(' | ')}\n` : '')
         + 'Zero aqui pode ser ausencia de julgado OU limitacao do acervo — nao afirme que "nao existe jurisprudencia".'
         + ressalvaRelator,
       ok: true,
