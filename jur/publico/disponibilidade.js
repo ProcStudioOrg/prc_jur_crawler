@@ -152,15 +152,8 @@
   const podeLigar = (t) => t.disponivel;
   const estaLigado = (t) => podeLigar(t) && !desligados.has(t.comando);
 
-  /**
-   * Os tribunais que vao no corpo do POST /api/v1/chat. app.js consome isto — e a unica
-   * porta entre o painel e a busca.
-   */
-  window.jurEscopo = {
-    ligados() {
-      return tribunais.filter(estaLigado).map((t) => t.comando);
-    },
-  };
+  // Ate a grade nova (escopo.js e dono da selecao), o placar conta os ligados daqui.
+  const ligados = () => tribunais.filter(estaLigado).map((t) => t.comando);
 
   // ---------- filtros ----------
 
@@ -235,10 +228,10 @@
       item.appendChild(document.createTextNode(` ${conta(estado)} ${ROTULO[estado]}`));
       elPlacar.appendChild(item);
     }
-    const ligados = document.createElement('strong');
-    ligados.className = 'placar-ligados';
-    ligados.textContent = `${window.jurEscopo.ligados().length} ligados para busca`;
-    elPlacar.appendChild(ligados);
+    const forte = document.createElement('strong');
+    forte.className = 'placar-ligados';
+    forte.textContent = `${ligados().length} ligados para busca`;
+    elPlacar.appendChild(forte);
   }
 
   function montarChipTribunal(t) {

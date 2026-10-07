@@ -284,11 +284,11 @@ test('ativar CAPTCHA atualiza o escopo real do STJ sem recarregar a página', as
   t.after(async () => { await page.close(); await f.close(); });
   await f.login(page);
   await page.locator('.chip-tribunal[data-comando="stj"]').waitFor();
-  assert.equal(await page.evaluate(() => window.jurEscopo.ligados().includes('stj')), false);
+  assert.equal(await page.evaluate(() => window.jurEscopo.escopo().includes('stj')), false);
   await expandir(page);
   await page.check('#navegadores-captcha');
-  await page.waitForFunction(() => window.jurEscopo.ligados().includes('stj'));
+  await page.waitForFunction(() => window.jurEscopo.escopo().includes('stj'));
   assert.equal(await page.locator('.chip-tribunal[data-comando="stj"]').getAttribute('data-e'), 'sem-acesso');
   await page.uncheck('#navegadores-captcha');
-  await page.waitForFunction(() => !window.jurEscopo.ligados().includes('stj'));
+  await page.waitForFunction(() => !window.jurEscopo.escopo().includes('stj'));
 });

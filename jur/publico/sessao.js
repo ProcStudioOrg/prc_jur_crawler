@@ -12,6 +12,11 @@
       localStorage.removeItem(key);
     } catch {}
   }
+  try {
+    for (const k of Object.keys(localStorage)) {
+      if (k.startsWith("jur.tribunaisDesligados.")) localStorage.removeItem(k);
+    }
+  } catch {}
   function sair() {
     principal = null;
     window.jurConexoes.limpar();

@@ -49,19 +49,29 @@ after(async () => {
   await new Promise((r) => servidor.close(r));
 });
 
-async function abrir(desligados = null) {
+const CHAVE = 'jur.tribunaisSelecionados.["fixture","fixture","test"]';
+
+async function abrir(selecionados = null) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
   await injetarChave(page, chaveBrowser);
   await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
-  await page.evaluate((d) => {
-    localStorage.removeItem('jur.tribunaisDesligados.["fixture","fixture","test"]');
-    if (d) localStorage.setItem('jur.tribunaisDesligados.["fixture","fixture","test"]', JSON.stringify(d));
-  }, desligados);
+  await page.evaluate(({ chave, s }) => {
+    localStorage.removeItem(chave);
+    if (s) localStorage.setItem(chave, JSON.stringify(s));
+  }, { chave: CHAVE, s: selecionados });
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForSelector('.chip-tribunal');
   return page;
 }
-
+const guardado = (page) => page.evaluate((c) => localStorage.getItem(c), CHAVE);
+const escopoNoPost = async (page, seletorCaixa = '#caixa-inicial') => {
+  let corpo = null;
+  await page.route('**/api/v1/chat', (rota) => { corpo = JSON.parse(rota.request().postData()); rota.abort(); });
+  await page.fill(`${seletorCaixa} .entrada`, 'oi');
+  await page.click(`${seletorCaixa} .enviar`);
+  for (let i = 0; i < 100 && !corpo; i++) await page.waitForTimeout(50);
+  return corpo;
+};
 const chip = (comando) => `.chip-tribunal[data-comando="${comando}"]`;
 
 describe('disponibilidade — leitura', () => {
@@ -96,74 +106,6 @@ describe('disponibilidade — leitura', () => {
       assert.match(await page.textContent('#painel-ressalva'), /Paran/);
       assert.strictEqual(await page.getAttribute(`${chip('tjpr')} .liga`, 'aria-pressed'), 'true',
         'abrir os detalhes nao pode desligar o tribunal sem querer');
-    } finally { await page.close(); }
-  });
-});
-
-describe('disponibilidade — liga/desliga', () => {
-  const ligado = (page, c) => page.getAttribute(`${chip(c)} .liga`, 'aria-pressed');
-  const guardado = (page) => page.evaluate(() => localStorage.getItem('jur.tribunaisDesligados.["fixture","fixture","test"]'));
-
-  it('tudo comeca ligado', async () => {
-    const page = await abrir();
-    try {
-      assert.strictEqual(await ligado(page, 'tjpr'), 'true');
-      assert.strictEqual(await ligado(page, 'stf'), 'true');
-    } finally { await page.close(); }
-  });
-
-  it('clicar na bolinha desliga, e o estado sobrevive ao F5', async () => {
-    const page = await abrir();
-    try {
-      await page.click(`${chip('tjpr')} .liga`);
-      assert.strictEqual(await ligado(page, 'tjpr'), 'false');
-      assert.match(await guardado(page), /tjpr/);
-
-      await page.reload({ waitUntil: 'domcontentloaded' });
-      await page.waitForSelector('.chip-tribunal');
-      assert.strictEqual(await ligado(page, 'tjpr'), 'false');
-      assert.strictEqual(await ligado(page, 'stf'), 'true', 'desligar um nao pode desligar os outros');
-    } finally { await page.close(); }
-  });
-
-  // Guarda o que DESLIGOU, nao o que ligou: assim um tribunal novo numa versao futura
-  // nasce ligado. Guardando os ligados, ele nasceria invisivel para quem ja tem a chave
-  // no localStorage — um tribunal que existe e ninguem consegue usar, sem sintoma.
-  it('o localStorage guarda os DESLIGADOS, nao os ligados', async () => {
-    const page = await abrir();
-    try {
-      await page.click(`${chip('tjpr')} .liga`);
-      assert.deepStrictEqual(JSON.parse(await guardado(page)), ['tjpr']);
-    } finally { await page.close(); }
-  });
-
-  it('tribunal bloqueado nao pode ser ligado, e clicar explica por que', async () => {
-    const page = await abrir();
-    try {
-      assert.strictEqual(await ligado(page, 'stj'), 'false',
-        'tribunal sem acesso nao esta disponivel para busca — mostra-lo ligado seria mentira');
-      await page.click(`${chip('stj')} .liga`);
-      await page.waitForSelector('#painel-ressalva:not([hidden])');
-      assert.strictEqual(await ligado(page, 'stj'), 'false');
-    } finally { await page.close(); }
-  });
-
-  it('ha como ligar e desligar tudo de uma vez', async () => {
-    const page = await abrir();
-    try {
-      await page.click('#desligar-todos');
-      assert.strictEqual(await ligado(page, 'tjpr'), 'false');
-      assert.strictEqual(await ligado(page, 'stf'), 'false');
-      await page.click('#ligar-todos');
-      assert.strictEqual(await ligado(page, 'tjpr'), 'true');
-      assert.strictEqual(await ligado(page, 'stj'), 'false', 'ligar todos nao liga o que esta bloqueado');
-    } finally { await page.close(); }
-  });
-
-  it('o placar diz quantos estao ligados', async () => {
-    const page = await abrir(['tjpr']);
-    try {
-      assert.match(await page.textContent('#disponibilidade .placar'), /ligad/i);
     } finally { await page.close(); }
   });
 });
@@ -254,29 +196,71 @@ describe('disponibilidade — filtros', () => {
   });
 });
 
-describe('disponibilidade — o escopo chega ao servidor', () => {
-  it('o POST /api/v1/chat leva os tribunais ligados', async () => {
-    const page = await abrir(['tjpr', 'tjsc']);
+describe('escopo — selecao', () => {
+  it('comeca em "todos os disponiveis" e o POST leva todos os disponiveis, nunca undefined', async () => {
+    const page = await abrir();
     try {
-      let corpo = null;
-      await page.route('**/api/v1/chat', (rota) => {
-        corpo = JSON.parse(rota.request().postData());
-        rota.abort();
-      });
-      await page.fill('#caixa-inicial .entrada', 'oi');
-      await page.click('#caixa-inicial .enviar');
-      await page.waitForFunction(() => true);
-      for (let i = 0; i < 100 && !corpo; i++) await page.waitForTimeout(50);
+      assert.match(await page.textContent('#caixa-inicial .barra-escopo'), /Todos os dispon/);
+      const corpo = await escopoNoPost(page);
+      assert.ok(Array.isArray(corpo.tribunais) && corpo.tribunais.length > 50);
+      assert.ok(corpo.tribunais.includes('stf') && corpo.tribunais.includes('tjsp'));
+      assert.ok(!corpo.tribunais.includes('stj'), 'indisponivel nao entra');
+    } finally { await page.close(); }
+  });
 
-      assert.ok(corpo, 'o POST precisa sair');
-      assert.ok(Array.isArray(corpo.tribunais), 'sem este campo o servidor nao tem como recortar nada');
-      assert.ok(!corpo.tribunais.includes('tjpr'), 'tribunal desligado nao pode ir no escopo');
-      assert.ok(!corpo.tribunais.includes('tjsc'));
-      assert.ok(corpo.tribunais.includes('stf'), 'os ligados precisam ir');
-      assert.ok(!corpo.tribunais.includes('stj'),
-        'tribunal bloqueado nao entra no escopo: pedi-lo so gastaria uma recusa');
-      assert.ok(corpo.tribunais.includes('tjsp'),
-        'tribunal instavel continua selecionavel: o estado precisa ser testado na rodada atual');
+  it('selecionar um tribunal manda SO ele, e a selecao sobrevive ao F5', async () => {
+    const page = await abrir();
+    try {
+      await page.click(`${chip('tjpr')} .sel`);
+      assert.strictEqual(await page.getAttribute(`${chip('tjpr')} .sel`, 'aria-pressed'), 'true');
+      assert.deepStrictEqual(JSON.parse(await guardado(page)), ['tjpr']);
+      assert.match(await page.textContent('#caixa-inicial .barra-escopo'), /tjpr/i);
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await page.waitForSelector('.chip-tribunal');
+      const corpo = await escopoNoPost(page);
+      assert.deepStrictEqual(corpo.tribunais, ['tjpr']);
+    } finally { await page.close(); }
+  });
+
+  it('mais cliques somam; clicar de novo tira; o x da barra tambem tira', async () => {
+    const page = await abrir();
+    try {
+      await page.click(`${chip('tjpr')} .sel`);
+      await page.click(`${chip('stf')} .sel`);
+      assert.deepStrictEqual(JSON.parse(await guardado(page)), ['tjpr', 'stf']);
+      await page.click(`${chip('stf')} .sel`);
+      assert.deepStrictEqual(JSON.parse(await guardado(page)), ['tjpr']);
+      await page.click('#caixa-inicial .barra-escopo .pill[data-comando="tjpr"] .tirar');
+      assert.deepStrictEqual(JSON.parse(await guardado(page)), []);
+      assert.match(await page.textContent('#caixa-inicial .barra-escopo'), /Todos os dispon/);
+    } finally { await page.close(); }
+  });
+
+  it('"Todos os disponiveis" limpa a selecao', async () => {
+    const page = await abrir(['tjpr', 'stf']);
+    try {
+      await page.click('#caixa-inicial .barra-escopo .escopo-todos');
+      assert.deepStrictEqual(JSON.parse(await guardado(page)), []);
+    } finally { await page.close(); }
+  });
+
+  it('a chave legada de desligados e apagada no carregamento', async () => {
+    const page = await abrir();
+    try {
+      await page.evaluate(() => localStorage.setItem('jur.tribunaisDesligados.["fixture","fixture","test"]', '["tjpr"]'));
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await page.waitForSelector('.chip-tribunal');
+      assert.strictEqual(await page.evaluate(() => localStorage.getItem('jur.tribunaisDesligados.["fixture","fixture","test"]')), null);
+    } finally { await page.close(); }
+  });
+
+  it('o popover "+ adicionar" da barra seleciona por busca de sigla', async () => {
+    const page = await abrir(['tjpr']);
+    try {
+      await page.click('#caixa-inicial .barra-escopo .escopo-adicionar');
+      await page.fill('#caixa-inicial .barra-escopo .escopo-busca', 'trf4');
+      await page.click('#caixa-inicial .barra-escopo .escopo-opcao[data-comando="trf4"]');
+      assert.deepStrictEqual(JSON.parse(await guardado(page)), ['tjpr', 'trf4']);
     } finally { await page.close(); }
   });
 });
