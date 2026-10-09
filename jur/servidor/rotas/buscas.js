@@ -1,5 +1,6 @@
 const catalogo = require('../catalogo');
 const relator = require('../relator');
+const capacidades = require('../capacidades');
 const { json, sse, lerCorpo } = require('../http');
 const { enriquecerJob } = require('../enriquecer');
 const { validarMaxPaginas, validarData, normalizarPaginacao } = require('../validacao');
@@ -29,9 +30,33 @@ function registrar(roteador, deps) {
     let corpo;
     try { corpo = await lerCorpo(req); } catch (e) { return json(res, 400, { erro: e.message }); }
 
-    const { tribunal, query, dataInicio, dataFim, maxPaginas, relator: relatorPedido } = corpo;
+    const {
+      tribunal, query, dataInicio, dataFim, dataPubInicio, dataPubFim, maxPaginas,
+      relator: relatorPedido, juizados, inteiroTeor, numero,
+    } = corpo;
     if (!tribunal) return json(res, 400, { erro: 'campo obrigatorio: tribunal' });
-    if (!query) return json(res, 400, { erro: 'campo obrigatorio: query' });
+    // Consulta por numero dispensa termo; nenhum dos dois e erro de cliente.
+    if (numero !== undefined && typeof numero !== 'string') return json(res, 400, { erro: 'numero precisa ser texto' });
+    const numeroPedido = typeof numero === 'string' ? numero.trim() : '';
+    if (!query && !numeroPedido) return json(res, 400, { erro: 'informe query ou numero' });
+    // Booleano estrito: 'sim' ou 1 truthy rodariam a busca com um recorte que o cliente
+    // nao pediu de fato (ou sem o que pediu), e a resposta 202 nao denunciaria.
+    if (juizados !== undefined && typeof juizados !== 'boolean') return json(res, 400, { erro: 'juizados precisa ser true ou false' });
+    // Inteiro teor saiu da busca: a flag da CLI pula o arquivo de resultados e o job
+    // terminava "concluido" vazio. Recusar o pedido explicito e mais honesto que aceitar
+    // e entregar a busca sem o que o cliente acha que pediu.
+    // Validacao estrita como em `juizados`: 'true' (texto) ou 1 nao podem passar como
+    // "nao pediu". E a mensagem do true fala com o cliente REST, que nao tem as
+    // ferramentas do chat: o caminho dele e o link de cada resultado.
+    if (inteiroTeor !== undefined && typeof inteiroTeor !== 'boolean') {
+      return json(res, 400, { erro: 'inteiroTeor precisa ser true ou false' });
+    }
+    if (inteiroTeor === true) {
+      return json(res, 400, {
+        erro: 'inteiroTeor nao e aceito na busca: o inteiro teor e obtido por resultado, a partir do campo '
+          + 'inteiroTeorLink de cada item em GET /api/v1/buscas/{id}/resultados',
+      });
+    }
     const validacaoMaxPaginas = validarMaxPaginas(maxPaginas, MAX_PAGINAS_TETO);
     if (!validacaoMaxPaginas.valido) {
       return json(res, 400, { erro: validacaoMaxPaginas.motivo });
@@ -40,14 +65,15 @@ function registrar(roteador, deps) {
     // crawler filtrava errado ou nao filtrava — o job terminava com total 0 e a regra do
     // zero culpava o acervo por um filtro que o usuario nunca escreveu. Ver validacao.js
     // para a decisao de RECUSAR ISO em vez de converter em silencio.
-    for (const [campo, valor] of [['dataInicio', dataInicio], ['dataFim', dataFim]]) {
+    for (const [campo, valor] of [['dataInicio', dataInicio], ['dataFim', dataFim], ['dataPubInicio', dataPubInicio], ['dataPubFim', dataPubFim]]) {
       const v = validarData(valor, campo);
       if (!v.valido) return json(res, 400, { erro: v.motivo });
     }
 
     const info = catalogo.obter(tribunal);
     if (!info) return json(res, 404, { erro: `tribunal desconhecido: ${tribunal}` });
-    if (!info.disponivel && !fila.permitirAssistido?.(tribunal)) {
+    const assistido = Boolean(fila.permitirAssistido?.(tribunal));
+    if (!info.disponivel && !assistido) {
       // A nota vai junto: "indisponivel" sem motivo faz o usuario tentar de novo.
       return json(res, 409, { erro: `tribunal indisponivel (${info.estado})`, estado: info.estado, nota: info.nota });
     }
@@ -67,9 +93,20 @@ function registrar(roteador, deps) {
       }
     }
 
+    // Mesma politica do relator para juizados e publicacao: 400, nunca rodar sem o
+    // recorte pedido.
+    for (const [pede, chave] of [[juizados === true, 'juizados'], [Boolean(dataPubInicio || dataPubFim), 'periodoPublicacao'], [Boolean(numeroPedido) && !capacidades.numeroComTermoAceito(tribunal, query), 'numero']]) {
+      if (!pede) continue;
+      const recusa = capacidades.recusar(tribunal, chave, info.nome, { disponivel: info.disponivel || assistido });
+      if (recusa) return json(res, 400, { erro: `o tribunal ${tribunal} nao oferece ${capacidades.ROTULOS[chave].toLowerCase()} nesta busca`, detalhe: recusa });
+    }
+
     try {
       const { id, status } = fila.enfileirar(tribunal, {
-        query, dataInicio, dataFim, maxPaginas, relator: filtroRelator || undefined,
+        query: query || undefined, dataInicio, dataFim, dataPubInicio, dataPubFim, maxPaginas,
+        numero: numeroPedido || undefined,
+        relator: filtroRelator || undefined,
+        juizados: juizados === true || undefined,
       });
       return json(res, 202, { id, status });
     } catch (e) {

@@ -248,6 +248,12 @@ describe('llm — escopo de tribunais no prompt do sistema', () => {
     assert.match(sistema, /nao ha jurisprudencia|não há jurisprudência|ausencia|ausência/i);
   });
 
+  it('o prompt proibe trocar de tribunal por conta propria quando o pedido e indisponivel', async () => {
+    const sistema = await rodar(['stf', 'trf4']);
+    assert.match(sistema, /nao busque em outro tribunal|não busque em outro tribunal/i);
+    assert.match(llm.SISTEMA, /indisponivel.*pergunte|pergunte.*indisponivel/is);
+  });
+
   it('escopo vazio tambem entra no prompt — desligar tudo nao pode virar silencio', async () => {
     const sistema = await rodar([]);
     assert.notStrictEqual(sistema, llm.SISTEMA);

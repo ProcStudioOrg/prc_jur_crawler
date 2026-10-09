@@ -6,19 +6,31 @@ const path = require('node:path');
 const CLI_PADRAO = path.join(__dirname, '..', 'bin', 'jur');
 const TIMEOUT_PADRAO = 10 * 60 * 1000;
 
+const juizados = require('./juizados');
+
 /**
  * Allowlist fechada. Só o denominador comum verificado da CLI entra aqui.
  * `orgao` esta DELIBERADAMENTE fora: o mesmo nome significa orgao JULGADOR
  * nos tribunais judiciais e orgao FISCALIZADO nos TCEs, entao um mapeamento
  * unico buscaria no campo errado e devolveria zero — que se le como
  * "nao ha julgado". Ver o spec, secao 2.4.
+ *
+ * `juizados` e BOOLEANO e nao entra em BANDEIRA: o valor da flag muda por tribunal
+ * (servidor/juizados.js) e e montado abaixo, nunca a partir de texto do modelo.
+ *
+ * Inteiro teor NAO passa por aqui de proposito: com `--fetch-inteiro-teor` a maioria
+ * dos comandos da CLI grava so no `--output-dir` e pula o `-o`, e o job terminava
+ * "concluido" sem arquivo de resultados — lido como busca vazia. O texto integral e
+ * sob demanda, um julgado por vez, em `ler_inteiro_teor` (servidor/ferramentas.js).
  */
-const PARAMS_ACEITOS = ['query', 'dataInicio', 'dataFim', 'maxPaginas', 'numero', 'relator'];
+const PARAMS_ACEITOS = ['query', 'dataInicio', 'dataFim', 'dataPubInicio', 'dataPubFim', 'maxPaginas', 'numero', 'relator'];
 
 const BANDEIRA = {
   query: '-q',
   dataInicio: '-di',
   dataFim: '-df',
+  dataPubInicio: '-dpi',
+  dataPubFim: '-dpf',
   maxPaginas: '-m',
   numero: '-n',
   // `relator` PODE entrar onde `orgao` nao pode: conferido em bin/jur, `-r` e
@@ -34,14 +46,27 @@ const BANDEIRA = {
 /** Modos utilitarios da CLI (`--listar-*`): sem `-o`, sem resultado, so o combo. */
 const TIMEOUT_LISTAGEM_PADRAO = 60 * 1000;
 
-function montarArgs(cliPath, comando, params, arquivoSaida) {
+
+/**
+ * Devolve `{ args }` ou `{ erro }`. Erro aqui e so o de juizados sem recorte: a
+ * ferramenta e a rota ja recusam antes, mas o executor e a ultima barreira para a
+ * busca nunca rodar SEM o filtro que foi pedido.
+ */
+function montarArgs(cliPath, comando, params, arquivoSaida, opcoes = {}) {
   const args = [cliPath, comando, '--json', '-o', arquivoSaida];
+  // So a fixture de teste passa `modo`: a CLI real (commander) recusa flag desconhecida.
+  if (opcoes.modo !== undefined) args.push('--modo', String(opcoes.modo));
   for (const chave of PARAMS_ACEITOS) {
     const valor = params[chave];
     if (valor === undefined || valor === null || valor === '') continue;
     args.push(BANDEIRA[chave], String(valor));
   }
-  return args;
+  if (params.juizados === true) {
+    const j = juizados.obter(comando);
+    if (!j || !j.suportado) return { erro: `o tribunal ${comando} nao tem recorte de juizados; a busca nao rodou sem o filtro` };
+    args.push(...j.args);
+  }
+  return { args };
 }
 
 /** A CLI pode imprimir aviso antes do JSON: vale a ultima linha que parseia. */
@@ -95,7 +120,11 @@ async function executar(comando, params = {}, opcoes = {}) {
   const cliPath = opcoes.cliPath || CLI_PADRAO;
   const arquivoSaida = opcoes.arquivoSaida;
   const timeoutMs = opcoes.timeoutMs || TIMEOUT_PADRAO;
-  const args = montarArgs(cliPath, comando, params, arquivoSaida);
+  const montado = montarArgs(cliPath, comando, params, arquivoSaida, { modo: opcoes.modo });
+  if (montado.erro) {
+    return { ok: false, total: 0, resultados: [], arquivo: null, erro: montado.erro, codigoSaida: null, envelope: null };
+  }
+  const args = montado.args;
   const assistido = opcoes.navegador?.acompanhar || opcoes.env?.JUR_ACOMPANHAR === '1';
   if (assistido || opcoes.env?.JUR_BROWSER_CDP) args.unshift('--require', path.join(__dirname, '..', 'src', 'navegadorPreload.js'));
 
@@ -151,6 +180,39 @@ async function executar(comando, params = {}, opcoes = {}) {
         return resolve({ ok: false, total: 0, resultados: [], arquivo: null, erro, codigoSaida: codigo, envelope });
       }
 
+      // Consulta por NUMERO: a CLI responde com o registro da consulta no envelope
+      // (`encontrado`, documentos/decisoes/julgados conforme o tribunal), sem `count` e
+      // sem escrever o -o. O caminho generico pegaria o primeiro array — muitas vezes
+      // `avisos` — e um processo encontrado viraria "0 resultados". Aqui o resultado e o
+      // proprio registro: 1 quando encontrado, 0 quando nao.
+      if (params.numero && typeof envelope.encontrado === 'boolean' && !(arquivoSaida && fs.existsSync(arquivoSaida))) {
+        const { success, ...registro } = envelope;
+        const resultados = envelope.encontrado ? [registro] : [];
+        if (arquivoSaida) fs.writeFileSync(arquivoSaida, JSON.stringify(resultados));
+        return resolve({
+          ok: true, total: resultados.length, resultados, arquivo: arquivoSaida, erro: null, codigoSaida: codigo, envelope,
+          ...avisosSeVazio(envelope, resultados),
+        });
+      }
+
+      // Consulta por NUMERO no formato dos tribunais de contas (tcego, tcdf, tcemg,
+      // tcece -n): `encontrados` e um NUMERO, sem o booleano, e `avisos` vem antes de
+      // `resultados` no envelope. O caminho generico pegaria `avisos` como se fossem
+      // julgados — e um processo encontrado viraria "0 resultados" (ou um aviso viraria
+      // julgado). Aqui so `resultados` conta, e o -o e sempre escrito, porque e dele que
+      // ler_resultados le depois.
+      if (params.numero && typeof envelope.encontrados === 'number') {
+        const resultados = Array.isArray(envelope.resultados) ? envelope.resultados : [];
+        if (arquivoSaida) fs.writeFileSync(arquivoSaida, JSON.stringify(resultados));
+        // Quando `encontrados` e a lista discordam, vale a LISTA: e ela que ler_resultados
+        // vai mostrar, e anunciar N julgados que nao estao no arquivo seria o caminho
+        // inverso do mesmo erro ("ha resultados" sem resultado nenhum para ler).
+        return resolve({
+          ok: true, total: resultados.length, resultados, arquivo: arquivoSaida, erro: null, codigoSaida: codigo, envelope,
+          ...avisosSeVazio(envelope, resultados),
+        });
+      }
+
       const resultados = extrairResultados(envelope, arquivoSaida);
       resolve({
         ok: true,
@@ -163,6 +225,32 @@ async function executar(comando, params = {}, opcoes = {}) {
       });
     });
   });
+}
+
+/**
+ * Avisos da propria CLI (`avisos[]`, `motivo`, `ressalvas[]`) quando a consulta por numero
+ * volta vazia, mais o aviso de truncamento (`encontrados` > resultados). Ficam FORA dos resultados — aviso nao e julgado — mas nao podem sumir: sem
+ * eles, "nao localizado" ou "base parcial" chegariam ao usuario como um zero seco, e
+ * zero seco e lido como ausencia de jurisprudencia.
+ */
+function avisosSeVazio(envelope, resultados) {
+  const avisos = [];
+  const juntar = (a) => {
+    const t = (typeof a === 'string' ? a : JSON.stringify(a)).trim();
+    if (t && !avisos.includes(t)) avisos.push(t);
+  };
+  if (!resultados.length) {
+    (Array.isArray(envelope.avisos) ? envelope.avisos : [])
+      .filter((a) => a !== null && a !== undefined && a !== '').forEach(juntar);
+    if (typeof envelope.motivo === 'string') juntar(envelope.motivo);
+    // tcdf/tcece/tcemg -n: o aviso do zero vem em `ressalvas`, nao em `avisos`.
+    if (Array.isArray(envelope.ressalvas)) envelope.ressalvas.filter((a) => typeof a === 'string').forEach(juntar);
+  }
+  // Truncamento vale tambem com resultados: o usuario nao pode achar que veio tudo.
+  if (typeof envelope.encontrados === 'number' && envelope.encontrados > resultados.length) {
+    juntar(`A consulta trouxe ${resultados.length} de ${envelope.encontrados} documentos.`);
+  }
+  return avisos.length ? { avisos } : {};
 }
 
 /**

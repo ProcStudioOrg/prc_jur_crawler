@@ -39,11 +39,11 @@ describe('mcp', () => {
     assert.strictEqual(r.result.serverInfo.name, 'jur');
   });
 
-  it('tools/list publica as quatro tools com inputSchema', async () => {
+  it('tools/list publica as cinco tools com inputSchema', async () => {
     const r = await rpc('tools/list', {});
     const nomes = r.result.tools.map((t) => t.name).sort();
     assert.deepStrictEqual(nomes,
-      ['buscar_jurisprudencia', 'ler_resultados', 'listar_relatores', 'listar_tribunais']);
+      ['buscar_jurisprudencia', 'ler_inteiro_teor', 'ler_resultados', 'listar_relatores', 'listar_tribunais']);
     assert.strictEqual(r.result.tools[0].inputSchema.type, 'object');
   });
 
@@ -177,13 +177,13 @@ describe('mcp', () => {
       for (const origin of [`http://localhost:${porta}`, `http://127.0.0.1:${porta}`, base]) {
         const r = await comOrigem(origin);
         assert.strictEqual(r.status, 200, `${origin} devia passar`);
-        assert.ok((await r.json()).result.tools.length === 4);
+        assert.ok((await r.json()).result.tools.length === 5);
       }
     });
 
     it('aceita requisicao SEM Origin — cliente MCP nativo/curl nao manda o cabecalho', async () => {
       const r = await rpc('tools/list', {});
-      assert.strictEqual(r.result.tools.length, 4);
+      assert.strictEqual(r.result.tools.length, 5);
     });
   });
 });

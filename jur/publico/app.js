@@ -110,6 +110,7 @@ function montarCaixa(destino) {
   const form = $('.formulario', destino);
   const campo = $('.entrada', destino);
   window.jurSeletor.montar($('.seletor-modelo', destino));
+  window.jurEscopo.montarBarra($('.barra-escopo', destino));
   campo.addEventListener('input', () => ajustarAltura(campo));
   campo.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
@@ -316,6 +317,21 @@ function acrescentarAssistente(div, pedaco) {
   escreverAssistente(div, (div.dataset.bruto || '') + pedaco);
 }
 
+/**
+ * Erro antes de existir conversa: a bolha iria para #mensagens, que fica oculto na tela
+ * inicial, e o usuario nao veria nada. Na conversa aberta e uma bolha comum.
+ */
+function avisarNaCaixa(texto) {
+  if (!$('#conversa').hidden) { bolha('erro', texto); return; }
+  const caixa = caixaAtiva();
+  $('.aviso-caixa', caixa)?.remove();
+  const div = document.createElement('div');
+  div.className = 'msg erro aviso-caixa';
+  div.setAttribute('role', 'alert');
+  div.textContent = texto;
+  caixa.prepend(div);
+}
+
 function bolha(classe, texto) {
   const div = document.createElement('div');
   div.className = `msg ${classe}`;
@@ -357,6 +373,16 @@ async function enviar(campo, modelo, esforco) {
   }
   const texto = campo.value.trim();
   if (!texto) return;
+
+  // Sem catalogo nao ha escopo: `escopo()` devolveria [] e o servidor leria "nenhum
+  // tribunal ligado" — ou pior, um cliente mais tolerante cairia no "sem escopo". Nao
+  // envia, avisa e pede o catalogo de novo; o texto digitado fica na caixa.
+  if (!window.jurEscopo.tribunais().length) {
+    avisarNaCaixa('A lista de tribunais ainda não carregou; tente de novo em instantes.');
+    window.jurEscopo.recarregar();
+    return;
+  }
+  $('.aviso-caixa', caixaAtiva())?.remove();
 
   // Trava sincrona, ANTES de qualquer await: dois Enter (ou dois cliques) quase
   // simultaneos na mesma caixa chamam `enviar` duas vezes antes do primeiro `await`
@@ -426,7 +452,9 @@ async function enviar(campo, modelo, esforco) {
         // Tribunais que o usuario deixou ligados na Disponibilidade. Vai sempre que o
         // painel ja carregou: e com isto que o servidor recorta o catalogo no prompt, e
         // e dai que vem a economia de chamada de listar_tribunais.
-        tribunais: window.jurEscopo ? window.jurEscopo.ligados() : undefined,
+        // Sempre uma lista: a selecao, ou todos os disponiveis. `undefined` faria o
+        // servidor cair no modo "sem escopo", que e justamente o que a tela nao promete.
+        tribunais: window.jurEscopo.escopo(),
       }),
     });
     if (!r.ok) {
@@ -497,7 +525,9 @@ async function enviar(campo, modelo, esforco) {
 }
 
 // ---------- início ----------
-montarCaixa($('#caixa-inicial'));
+// escopo.js carrega depois deste arquivo e define window.jurEscopo; a caixa inicial so
+// pode ser montada quando ele existir.
+document.addEventListener('DOMContentLoaded', () => montarCaixa($('#caixa-inicial')));
 document.addEventListener('jur:sessao', carregarHistorico);
 document.addEventListener('jur:sair', () => {
   encerrarReanexo(); clearTimeout(relogioHistorico); conversaAtual = null; historicoLocal.length = 0;

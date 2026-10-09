@@ -59,7 +59,18 @@ function criarFila(opcoes = {}) {
       erro: l.erro,
       criadoEm: l.criado_em,
       terminadoEm: l.terminado_em,
+      // Avisos que a PROPRIA CLI deu (ex.: "nao localizado" numa consulta por numero).
+      // Nome distinto de `avisos` de proposito: enriquecer.js monta `avisos` com as
+      // ressalvas do catalogo e sobrescreveria este campo no spread.
+      avisosCli: lerAvisos(l.avisos_json),
     };
+  }
+
+  function lerAvisos(bruto) {
+    try {
+      const lista = JSON.parse(bruto || '[]');
+      return Array.isArray(lista) ? lista : [];
+    } catch { return []; }
   }
 
   function obter(id) {
@@ -182,8 +193,8 @@ function criarFila(opcoes = {}) {
     if (obter(job.id).status === 'cancelado') { setImmediate(bombear); return; }
 
     if (r.ok) {
-      con.prepare(`UPDATE job SET status='concluido', total=?, arquivo=?, terminado_em=? WHERE id=?`)
-        .run(r.total, r.arquivo || arquivo, Date.now(), job.id);
+      con.prepare(`UPDATE job SET status='concluido', total=?, arquivo=?, avisos_json=?, terminado_em=? WHERE id=?`)
+        .run(r.total, r.arquivo || arquivo, JSON.stringify(Array.isArray(r.avisos) ? r.avisos : []), Date.now(), job.id);
       emitir({ tipo: 'concluido', jobId: job.id, total: r.total });
     } else {
       con.prepare(`UPDATE job SET status='erro', erro=?, terminado_em=? WHERE id=?`)

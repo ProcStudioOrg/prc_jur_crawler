@@ -17,6 +17,14 @@
   --sessao: #2C6BB0;
   --raio: 8px;
   --lateral-largura: 264px;
+  /* semanticos: verde = funciona, amarelo = ressalva, vermelho = nao funciona, cinza = nao existe */
+  --ok-fundo: #E7FCD8; --ok-borda: #9FD58E;
+  --ressalva: #8A6A00; --ressalva-fundo: #FFF4C2; --ressalva-borda: #E6C84A;
+  /* --neutro era #6B7280 (4,2:1 sobre --neutro-fundo, abaixo de 4,5:1 para texto). */
+  --neutro: #5B6270; --neutro-fundo: #EEF0F2; --neutro-borda: #CBD2D9;
+  --erro: #C62828; --erro-fundo: #FDE8E7; --erro-borda: #F2A19C;
+  /* Texto da pill da barra "Buscar em": --acento sobre --azul-suave dava 3,85:1. */
+  --pill-texto: #0057B8;
 }
 :root[data-tema="escuro"] {
   --fundo: #101827;
@@ -32,12 +40,22 @@
      Clareado para dar folga real. */
   --bloqueado: #9C9992;
   --sessao: #5B9BD5;
+  --ok-fundo: #1E3A2A; --ok-borda: #2F6B45;
+  --ressalva: #F2CD5C; --ressalva-fundo: #3A3110; --ressalva-borda: #6B5A1E;
+  --neutro: #A7B0BC; --neutro-fundo: #22303F; --neutro-borda: #3C4C5E;
+  --erro: #FF8A80; --erro-fundo: #3E1F1C; --erro-borda: #7A3A35;
+  --pill-texto: #8EC2FF;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-tema="claro"]) {
     --fundo: #101827; --superficie: #172235; --lateral: #373F45;
     --texto: #FEFEFA; --fraco: #B3C1CF; --borda: #33465C;
     --ok: #4CAF6A; --instavel: #D6A03A; --bloqueado: #9C9992; --sessao: #5B9BD5;
+    --ok-fundo: #1E3A2A; --ok-borda: #2F6B45;
+    --ressalva: #F2CD5C; --ressalva-fundo: #3A3110; --ressalva-borda: #6B5A1E;
+    --neutro: #A7B0BC; --neutro-fundo: #22303F; --neutro-borda: #3C4C5E;
+    --erro: #FF8A80; --erro-fundo: #3E1F1C; --erro-borda: #7A3A35;
+    --pill-texto: #8EC2FF;
   }
 }
 
@@ -144,6 +162,9 @@ body {
      do rodape e o conjunto parecia apertado ao lado do texto largo das respostas. */
   min-height: 48px;
 }
+/* A caixa inteira (.formulario:focus-within) ja mostra o foco; o contorno global de
+   :focus-visible no textarea desenhava uma segunda caixa dentro da primeira. */
+.formulario .entrada:focus-visible { outline: none; }
 .entrada-rodape { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
 .seletor-modelo { display: flex; gap: 4px; margin-left: auto; }
 .seletor-modelo select {
@@ -248,12 +269,10 @@ body {
 
 .placar { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--fraco); margin-bottom: 12px; }
 .ponto { display: inline-block; width: 8px; height: 8px; border-radius: 50%; vertical-align: middle; }
-.ponto[data-e="ok"] { background: var(--ok); }
-.ponto[data-e="instavel"] { background: var(--instavel); }
-.ponto[data-e="sem-acesso"] { background: var(--bloqueado); }
-.ponto[data-e="exige-sessao"] { background: var(--sessao); }
-
-.placar-ligados { margin-left: auto; color: var(--texto); font-weight: 600; }
+.ponto.ok { background: var(--ok); }
+.ponto.ressalva { background: var(--ressalva); }
+.ponto.erro { background: var(--erro); }
+.placar-selecionados { margin-left: auto; color: var(--texto); font-weight: 600; }
 
 /* ---------- filtros de area e UF ---------- */
 .barra-filtros { margin: 4px 0 12px; display: flex; flex-direction: column; gap: 6px; }
@@ -288,53 +307,66 @@ body {
 .ligacao:hover { color: var(--acento); }
 
 /* ---------- grade de tribunais ---------- */
-.grade-tribunais { display: flex; flex-wrap: wrap; gap: 5px; }
+/* Um bloco por segmento; dentro dele, colunas de largura fixa para as siglas alinharem
+   em linhas e colunas. A diferenca entre blocos e sutil de proposito: um fundo levemente
+   tingido e o titulo pequeno bastam para o olho separar os segmentos. */
+.grupos-tribunais { display: flex; flex-direction: column; gap: 10px; }
+.grupo-tribunais { padding: 10px 12px 12px; border-radius: 10px; border: 1px solid var(--borda); background: color-mix(in srgb, var(--lateral) 55%, transparent); }
+.grupo-tribunais:nth-child(even) { background: color-mix(in srgb, var(--lateral) 25%, transparent); }
+.grupo-tribunais[hidden] { display: none; }
+.grupo-titulo { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-size: 11.5px; font-weight: 650; text-transform: uppercase; letter-spacing: .06em; color: var(--fraco); }
+.grupo-conta { font-size: 10.5px; font-weight: 600; letter-spacing: 0; padding: 0 6px; border-radius: 999px; background: var(--superficie); border: 1px solid var(--borda); font-variant-numeric: tabular-nums; }
+.grade-tribunais { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 6px; }
+.grade-tribunais .chip-tribunal { display: flex; }
+.grade-tribunais .chip-tribunal .sel { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.grade-tribunais { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+.grade-tribunais .chip-tribunal .cx { flex: 0 0 13px; }
 .chip-tribunal[hidden] { display: none; }
-/* O chip e a moldura; os dois botoes dentro dele nao tem borda propria. Precisa ser
-   assim porque sao DUAS acoes distintas no mesmo objeto — ver a sigla e o tribunal
-   (esquerda) e liga/desliga (direita) — e botao dentro de botao nao existe em HTML. */
+/* Barra a esquerda = estado REAL (o servidor decide). Caixa = selecionado (o usuario
+   decide). Vermelho inteiro = indisponivel, e nao seleciona. */
 .chip-tribunal {
   display: inline-flex; align-items: stretch; overflow: hidden;
-  border: 1px solid var(--borda); border-left-width: 3px; border-radius: 6px;
-  background: var(--superficie);
+  border: 1px solid var(--neutro-borda); border-radius: 7px; background: var(--superficie);
+  font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: .02em;
 }
-.chip-tribunal:hover { border-color: var(--acento); }
-.chip-tribunal[data-e="ok"] { border-left-color: var(--ok); }
-.chip-tribunal[data-e="instavel"] { border-left-color: var(--instavel); }
-.sigla {
-  font: inherit; font-size: 12px; font-family: ui-monospace, SFMono-Regular, monospace;
-  text-transform: uppercase; letter-spacing: .02em;
-  padding: 3px 4px 3px 8px; cursor: pointer;
-  background: none; color: var(--texto); border: 0;
+.chip-tribunal:not([data-e="sem-acesso"]):not([data-e="exige-sessao"]):hover { border-color: var(--acento); }
+.chip-tribunal .marca-estado { width: 4px; flex: 0 0 4px; }
+.chip-tribunal[data-e="ok"] .marca-estado { background: var(--ok); }
+.chip-tribunal[data-e="instavel"] .marca-estado,
+.chip-tribunal[data-e="assistido"] .marca-estado { background: var(--ressalva); }
+.chip-tribunal[data-e="sem-acesso"] .marca-estado, .chip-tribunal[data-e="exige-sessao"] .marca-estado { background: var(--erro); }
+.chip-tribunal .sel {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px;
+  border: 0; background: none; color: var(--texto); font: inherit; text-transform: inherit; letter-spacing: inherit; cursor: pointer;
 }
-/* A bolinha: verde = entra nas buscas, oca = fora. O anel continua desenhado quando
-   apagada, entao o alvo de clique nao some — e o estado nao depende so de cor: o
-   preenchimento (cheio x vazio) distingue os dois sem enxergar matiz. */
-.liga {
-  display: inline-flex; align-items: center; padding: 0 8px 0 3px;
-  background: none; border: 0; cursor: pointer;
+/* Borda em --fraco: com --neutro-borda a caixinha de selecao ficava em ~1,5:1, abaixo
+   dos 3:1 que um controle precisa para ser percebido. */
+.chip-tribunal .cx { width: 13px; height: 13px; box-sizing: border-box; border-radius: 3px; border: 1.5px solid var(--fraco); display: grid; place-items: center; }
+.chip-tribunal .sel[aria-pressed="true"] .cx { background: var(--acento); border-color: var(--acento); }
+/* ✓ e ✕ desenhados em CSS: o caractere da fonte tem metrica propria e saia torto,
+   fora do centro da caixinha. */
+.chip-tribunal .sel[aria-pressed="true"] .cx::after {
+  content: ''; width: 3px; height: 7px; border: solid #fff; border-width: 0 2px 2px 0;
+  transform: translateY(-1px) rotate(45deg);
 }
-.liga::before {
-  content: ''; width: 8px; height: 8px; border-radius: 50%;
-  border: 1.5px solid var(--bloqueado); background: transparent;
+.chip-tribunal.selecionado { border-color: var(--acento); background: var(--azul-suave); }
+.chip-tribunal .info { border: 0; border-left: 1px solid var(--borda); background: none; color: var(--fraco); padding: 0 7px; font-family: inherit; font-size: 12px; cursor: pointer; }
+.chip-tribunal .info:hover { background: var(--lateral); color: var(--texto); }
+.chip-tribunal[data-e="sem-acesso"], .chip-tribunal[data-e="exige-sessao"] { border-color: var(--erro-borda); background: var(--erro-fundo); }
+.chip-tribunal[data-e="sem-acesso"] .sel, .chip-tribunal[data-e="exige-sessao"] .sel { color: var(--erro); cursor: not-allowed; }
+.chip-tribunal[data-e="sem-acesso"] .cx, .chip-tribunal[data-e="exige-sessao"] .cx { border-color: var(--erro-borda); color: var(--erro); }
+.chip-tribunal[data-e="sem-acesso"] .cx::after, .chip-tribunal[data-e="exige-sessao"] .cx::after {
+  content: ''; width: 8px; height: 8px;
+  background:
+    linear-gradient(45deg, transparent calc(50% - 1px), currentColor calc(50% - 1px), currentColor calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(-45deg, transparent calc(50% - 1px), currentColor calc(50% - 1px), currentColor calc(50% + 1px), transparent calc(50% + 1px));
 }
-.liga[aria-pressed="true"]::before { background: var(--ok); border-color: var(--ok); }
-.liga:focus-visible, .sigla:focus-visible { outline: 2px solid var(--acento); outline-offset: -2px; }
-/* Era `opacity: .6` no elemento inteiro — apagava texto E borda juntos, e a borda ja
-   partia de uma cor marginal: o tribunal bloqueado (a informacao que mais importa,
-   porque evita uma busca que nao vai funcionar) ficava o mais dificil de ler da grade
-   (achado Important da revisao da Task 9). Troca: sem opacidade nenhuma, cor de texto
-   propria (--fraco, que ja passa 4,5:1 sozinha) no lugar de apagar o --texto normal. */
-.chip-tribunal[data-e="sem-acesso"] { border-left-color: var(--bloqueado); }
-.chip-tribunal[data-e="sem-acesso"] .sigla { color: var(--fraco); }
-.chip-tribunal[data-e="exige-sessao"] { border-left-color: var(--sessao); }
+.chip-tribunal .sel:focus-visible, .chip-tribunal .info:focus-visible { outline: 2px solid var(--acento); outline-offset: -2px; }
 
 .manual summary { cursor: pointer; font-size: 13px; color: var(--fraco); font-weight: 600; }
 .manual-corpo h3 { font-size: 14px; margin: 16px 0 4px; }
 .manual-corpo p { margin: 0; font-size: 14px; color: var(--fraco); }
 .manual-corpo ul { padding-left: 18px; font-size: 14px; color: var(--fraco); }
-.estado-linha { font-size: 13px; color: var(--fraco); }
-.painel .nota { white-space: pre-wrap; font-size: 14px; line-height: 1.65; }
 
 /* ---------- painel de configurações ---------- */
 .secao-config { margin-top: 22px; }
@@ -423,10 +455,6 @@ body {
   body.lateral-aberta .abrir-lateral { left: auto; right: 10px; }
 }
 
-/* Ficha do tribunal: se a busca por magistrado existe ali. Um portal sem esse filtro
-   (TJPR, entre outros) parecia busca quebrada enquanto a tela nao dizia nada. */
-.painel .nota.magistrado { margin-top: 14px; font-size: 13.5px; }
-.painel .nota.magistrado small { display: block; margin-top: 4px; color: var(--fraco); font-size: 12.5px; }
 
 /* Conversa cujo turno continua rodando no servidor. O turno sobrevive ao navegador
    fechar (servidor/turnos.js): sem este indicador, uma conversa respondendo fica
@@ -679,3 +707,51 @@ button:disabled { opacity: .55; cursor: not-allowed; }
   #navegadores-continuar { width: 100%; margin-left: 0; }
   #navegadores .navegadores-texto-linha button { flex: 0 0 auto; }
 }
+
+/* ---------- escopo: "Buscar em" ---------- */
+.barra-escopo { position: relative; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; font-size: 13px; min-width: 0; }
+.barra-escopo:empty { display: none; }
+.escopo-rotulo { color: var(--fraco); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; margin-right: 2px; }
+.escopo-chips { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px 3px 10px; border-radius: 999px;
+  background: var(--azul-suave); color: var(--pill-texto); border: 1px solid transparent;
+  font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: .02em;
+}
+.pill b { font-weight: 700; }
+.pill .tirar { border: 0; background: none; color: inherit; padding: 0 2px; line-height: 1; font-size: 14px; cursor: pointer; opacity: .8; }
+.pill .tirar:hover { opacity: 1; }
+.pill-todos { background: var(--neutro-fundo); color: var(--texto); font-family: inherit; text-transform: none; letter-spacing: 0; }
+.pill-indisponivel { background: var(--erro-fundo); color: var(--erro); }
+.escopo-popover {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 9; width: min(420px, 100%);
+  background: var(--superficie); border: 1px solid var(--borda); border-radius: 12px; padding: 12px;
+  box-shadow: 0 8px 28px #01013d18;
+}
+.escopo-popover .campo { margin: 0 0 8px; }
+.escopo-opcoes { max-height: 240px; overflow: auto; display: flex; flex-direction: column; }
+.escopo-opcao { display: flex; gap: 8px; align-items: baseline; text-align: left; width: 100%; background: none; border: 0; color: var(--texto); padding: 8px 10px; border-radius: 6px; cursor: pointer; }
+.escopo-opcao:hover { background: var(--lateral); }
+.escopo-opcao b { font-family: ui-monospace, SFMono-Regular, monospace; text-transform: uppercase; font-size: 12px; }
+.escopo-opcao small { color: var(--fraco); }
+
+/* ---------- ficha do tribunal ---------- */
+.painel-caixa.ficha h2 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0 0 2px; font-size: 17px; color: var(--brand-dark); }
+.painel-caixa.ficha h2 code { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 13px; text-transform: uppercase; background: var(--lateral); padding: 2px 7px; border-radius: 5px; color: var(--texto); }
+.ficha-nome { color: var(--fraco); font-size: 13px; margin: 0 0 12px; }
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1px solid; font-family: inherit; text-transform: none; letter-spacing: 0; white-space: nowrap; }
+.badge.ok { color: var(--ok); background: var(--ok-fundo); border-color: var(--ok-borda); }
+.badge.ressalva { color: var(--ressalva); background: var(--ressalva-fundo); border-color: var(--ressalva-borda); }
+.badge.neutro { color: var(--neutro); background: var(--neutro-fundo); border-color: var(--neutro-borda); }
+.badge.erro { color: var(--erro); background: var(--erro-fundo); border-color: var(--erro-borda); }
+.ficha-resumo { margin: 0 0 14px; padding: 10px 12px; border-radius: var(--raio); font-size: 13.5px; line-height: 1.5; border: 1px solid; color: var(--texto); }
+.ficha-resumo.ok { background: var(--ok-fundo); border-color: var(--ok-borda); }
+.ficha-resumo.ressalva { background: var(--ressalva-fundo); border-color: var(--ressalva-borda); }
+.ficha-resumo.erro { background: var(--erro-fundo); border-color: var(--erro-borda); }
+.tab-cap { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.tab-cap th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--fraco); font-weight: 600; padding: 0 0 6px; border-bottom: 1px solid var(--borda); }
+.tab-cap td { padding: 8px 0; border-bottom: 1px solid var(--borda); vertical-align: top; }
+.tab-cap tr:last-child td { border-bottom: 0; }
+.tab-cap td:last-child { text-align: right; white-space: nowrap; padding-left: 12px; }
+.tab-cap small { display: block; color: var(--fraco); font-size: 12px; margin-top: 2px; white-space: normal; }
+.ficha-acoes { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }

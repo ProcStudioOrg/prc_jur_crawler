@@ -121,3 +121,33 @@ describe('openapi', () => {
     assert.deepStrictEqual(problemas, []);
   });
 });
+
+describe('openapi documenta as capacidades', () => {
+  const doc = openapi.documento();
+  it('Tribunal tem resumo e capacidades', () => {
+    const props = doc.components.schemas.Tribunal.properties;
+    assert.ok(props.resumo && props.capacidades);
+  });
+  it('POST /api/v1/buscas documenta os parametros novos e nao oferece inteiroTeor', () => {
+    const props = doc.paths['/api/v1/buscas'].post.requestBody.content['application/json'].schema.properties;
+    for (const k of ['dataPubInicio', 'dataPubFim', 'juizados']) assert.ok(props[k], k);
+    assert.ok(!props.inteiroTeor, 'inteiro teor e sob demanda: a flag da CLI pula o arquivo de resultados');
+  });
+  it('POST /api/v1/buscas explica onde o cliente REST obtem o inteiro teor', () => {
+    const d = doc.paths['/api/v1/buscas'].post.description;
+    assert.match(d, /inteiroTeor/);
+    assert.match(d, /inteiroTeorLink/);
+    assert.match(d, /GET \/api\/v1\/buscas\/\{id\}\/resultados/);
+  });
+  it('Busca.params lista todos os parametros que a criacao aceita', () => {
+    const d = doc.components.schemas.Busca.properties.params.description;
+    for (const k of ['query', 'numero', 'dataInicio', 'dataFim', 'dataPubInicio', 'dataPubFim', 'maxPaginas', 'relator', 'juizados']) {
+      assert.match(d, new RegExp(`\\b${k}\\b`), k);
+    }
+  });
+  it('POST /api/v1/buscas aceita consulta por numero: so tribunal e obrigatorio', () => {
+    const schema = doc.paths['/api/v1/buscas'].post.requestBody.content['application/json'].schema;
+    assert.strictEqual(schema.properties.numero.type, 'string');
+    assert.deepStrictEqual(schema.required, ['tribunal']);
+  });
+});

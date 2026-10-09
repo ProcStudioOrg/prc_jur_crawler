@@ -13,13 +13,6 @@
       texto: 'Levante acórdãos do TJPR entre 01/01/2024 e 31/12/2024 sobre ' },
   ];
 
-  const ROTULO = {
-    ok: 'funcionando',
-    instavel: 'com ressalva',
-    'sem-acesso': 'bloqueado',
-    'exige-sessao': 'exige sua sessão',
-  };
-
   function montarPrompts() {
     const alvo = $('#prompts');
     alvo.innerHTML = '<p class="titulo-bloco">Comece por aqui</p>';
@@ -59,10 +52,10 @@
     const estados = document.createElement('h3'); estados.textContent = 'Os quatro estados';
     corpo.appendChild(estados);
     const ul = document.createElement('ul');
-    for (const [estado, rotulo] of Object.entries(ROTULO)) {
+    for (const [estado, rotulo] of [['ok', 'funcionando'], ['instavel', 'com ressalva'], ['sem-acesso', 'indisponível'], ['exige-sessao', 'indisponível, exige sua sessão']]) {
       const li = document.createElement('li');
       const ponto = document.createElement('span');
-      ponto.className = 'ponto'; ponto.dataset.e = estado;
+      ponto.className = 'ponto ' + COR[estado];
       li.appendChild(ponto);
       li.appendChild(document.createTextNode(` ${estado} — ${rotulo}`));
       ul.appendChild(li);
@@ -70,112 +63,27 @@
     corpo.appendChild(ul);
   }
 
-  // Como o valor precisa vir, por forma. O que importa aqui e a assimetria: nos
-  // tribunais de nome-exato e codigo, o valor aproximado NAO da erro — da zero, e zero
-  // se le como "esse magistrado nao julgou nada sobre o tema".
-  const FORMA_MAGISTRADO = {
-    'nome-exato': 'sim — exige o NOME EXATO do combo do tribunal (nome parcial devolve zero, não erro)',
-    trecho: 'sim — basta um trecho do nome',
-    nome: 'sim — pelo nome do magistrado',
-    codigo: 'sim — mas por CÓDIGO/matrícula, não pelo nome',
-  };
+  // O estado e do servidor; a cor do ponto vem daqui. Dois estados vermelhos: ambos
+  // significam "nao da para buscar agora", so o motivo muda (a ficha explica).
+  const ROTULO_BADGE = { ok: 'Funcionando', instavel: 'Com ressalva', 'sem-acesso': 'Indisponível', 'exige-sessao': 'Indisponível', assistido: 'Com CAPTCHA manual' };
+  const COR = { ok: 'ok', instavel: 'ressalva', 'sem-acesso': 'erro', 'exige-sessao': 'erro', assistido: 'ressalva' };
 
-  /**
-   * Diz, na ficha do tribunal, se a busca por magistrado existe ali. Um usuario tentou
-   * buscar por magistrado no TJPR e nao conseguiu: o portal do TJPR nao tem esse filtro,
-   * e nada na tela dizia isso. Silencio vira "quebrado" na cabeca de quem tenta.
-   */
-  function linhaMagistrado(t) {
-    const r = t.relator || { suportado: false };
-    const p = document.createElement('p');
-    p.className = 'nota magistrado';
-    const rotulo = document.createElement('strong');
-    rotulo.textContent = 'Busca por magistrado: ';
-    p.appendChild(rotulo);
-    p.appendChild(document.createTextNode(
-      r.suportado ? (FORMA_MAGISTRADO[r.forma] || 'sim') : 'não — este portal não tem esse filtro',
-    ));
-    if (r.nota) {
-      const detalhe = document.createElement('small');
-      detalhe.textContent = r.nota;
-      p.appendChild(document.createElement('br'));
-      p.appendChild(detalhe);
-    }
-    return p;
-  }
-
-  function abrirRessalva(t) {
-    const caixa = document.createElement('div');
-    const h = document.createElement('h2');
-    h.textContent = `${t.comando} — ${t.nome}`;
-    const estado = document.createElement('p');
-    estado.className = 'estado-linha';
-    const ponto = document.createElement('span');
-    ponto.className = 'ponto'; ponto.dataset.e = t.estado;
-    estado.appendChild(ponto);
-    estado.appendChild(document.createTextNode(` ${t.estado} — ${ROTULO[t.estado] || t.estado}`));
-    const nota = document.createElement('p');
-    nota.className = 'nota';
-    nota.textContent = t.nota || 'Sem ressalva registrada para este tribunal.';
-    caixa.appendChild(h); caixa.appendChild(estado); caixa.appendChild(nota);
-    caixa.appendChild(linhaMagistrado(t));
-    window.jurUI.abrirPainel($('#painel-ressalva'), '');
-    $('.painel-caixa', $('#painel-ressalva')).appendChild(caixa);
-  }
-
-  // ---------- escopo: quais tribunais o usuario deixou ligados ----------
-  //
-  // Guarda os DESLIGADOS, nao os ligados. Assim um tribunal novo numa versao futura
-  // nasce ligado; guardando os ligados, ele nasceria invisivel para todo mundo que ja
-  // tem a chave no localStorage — um tribunal que existe e ninguem consegue usar, sem
-  // sintoma nenhum.
-  function chaveDesligados() { const p = window.jurSessao?.principal; return p ? 'jur.tribunaisDesligados.' + JSON.stringify([p.issuer, p.userId, p.teamId]) : null; }
-
-  function lerDesligados() {
-    try {
-      const bruto = JSON.parse(localStorage.getItem(chaveDesligados()) || '[]');
-      return new Set(Array.isArray(bruto) ? bruto : []);
-    } catch { return new Set(); }
-  }
-
-  function gravarDesligados(conjunto) {
-    try { localStorage.setItem(chaveDesligados(), JSON.stringify([...conjunto])); }
-    catch { /* modo privado */ }
-  }
-
-  let tribunais = [];
-  let desligados = new Set();
-  const filtros = { area: new Set(), uf: new Set() };
-
-  /** Tribunal indisponivel nunca conta como ligado: mostra-lo assim seria mentira, e
-   *  manda-lo no escopo so gastaria uma recusa do outro lado. */
-  const podeLigar = (t) => t.disponivel;
-  const estaLigado = (t) => podeLigar(t) && !desligados.has(t.comando);
-
-  /**
-   * Os tribunais que vao no corpo do POST /api/v1/chat. app.js consome isto — e a unica
-   * porta entre o painel e a busca.
-   */
-  window.jurEscopo = {
-    ligados() {
-      return tribunais.filter(estaLigado).map((t) => t.comando);
-    },
-  };
-
-  // ---------- filtros ----------
+  // Estado apenas visual. O servidor decide a disponibilidade em tempo de execucao:
+  // com "Resolver CAPTCHA manualmente" ligado, o STJ continua 'sem-acesso' no catalogo
+  // mas vem disponivel e assistido. A cor tem de seguir o que o usuario realmente
+  // consegue fazer (vermelho = nao selecionavel), entao esse caso vira 'assistido'.
+  function estadoVisual(t) { return t.assistido ? 'assistido' : t.estado; }
 
   const ROTULO_AREA = {
-    superior: 'Superiores',
-    federal: 'Justiça Federal',
-    estadual: 'Justiça Estadual',
-    trabalhista: 'Justiça do Trabalho',
-    contas: 'Tribunais de Contas',
-    // O catalogo tem seis segmentos, nao cinco: CARF, CRPS e CSJT sao instancias
-    // ADMINISTRATIVAS, nao Judiciario. Sem este rotulo o chip mostrava a chave crua.
-    administrativo: 'Administrativos',
+    superior: 'Superiores', federal: 'Justiça Federal', estadual: 'Justiça Estadual',
+    trabalhista: 'Justiça do Trabalho', contas: 'Tribunais de Contas', administrativo: 'Administrativos',
   };
 
-  /** Filtro e SO apresentacao: esconder da tela nao tira ninguem do escopo da busca. */
+  // Filtro e SO apresentacao: esconder da tela nao mexe no escopo da busca.
+  const filtros = { area: new Set(), uf: new Set() };
+  const tribunais = () => window.jurEscopo.tribunais();
+  const selecionado = (c) => window.jurEscopo.selecionados().includes(c);
+
   function passaNoFiltro(t) {
     if (filtros.area.size && !filtros.area.has(t.segmento)) return false;
     if (filtros.uf.size && !t.uf.some((u) => filtros.uf.has(u))) return false;
@@ -187,180 +95,139 @@
     b.type = 'button';
     b.className = `chip-filtro ${classe}`;
     b.dataset.valor = valor;
-    const nome = document.createElement('span');
-    nome.textContent = rotulo;
-    b.appendChild(nome);
-    const n = document.createElement('span');
-    n.className = 'chip-conta';
-    n.textContent = String(contagem);
-    b.appendChild(n);
+    const nome = document.createElement('span'); nome.textContent = rotulo;
+    const n = document.createElement('span'); n.className = 'chip-conta'; n.textContent = String(contagem);
+    b.append(nome, n);
     b.addEventListener('click', aoTrocar);
     return b;
   }
-
-  function alternar(conjunto, valor) {
+  function alternarFiltro(conjunto, valor) {
     if (conjunto.has(valor)) conjunto.delete(valor); else conjunto.add(valor);
     redesenhar();
   }
 
-  // ---------- desenho ----------
-
   let elBarraFiltros; let elGrade; let elPlacar; let elLimpar;
 
   function redesenhar() {
-    // Filtros ativos ficam com aria-pressed; a grade so esconde o que nao passa (os
-    // elementos continuam no DOM, com o mesmo estado de ligado/desligado).
-    for (const b of elBarraFiltros.querySelectorAll('.chip-filtro')) {
+    if (!elGrade) return;
+    for (const b of elBarraFiltros.querySelectorAll('.chip-filtro[data-valor]')) {
       const conjunto = b.classList.contains('filtro-area') ? filtros.area : filtros.uf;
       b.setAttribute('aria-pressed', String(conjunto.has(b.dataset.valor)));
     }
     for (const chip of elGrade.querySelectorAll('.chip-tribunal')) {
-      const t = tribunais.find((x) => x.comando === chip.dataset.comando);
+      const t = tribunais().find((x) => x.comando === chip.dataset.comando);
       chip.hidden = !passaNoFiltro(t);
-      const liga = chip.querySelector('.liga');
-      liga.setAttribute('aria-pressed', String(estaLigado(t)));
+      const sel = selecionado(t.comando);
+      chip.classList.toggle('selecionado', sel);
+      chip.querySelector('.sel').setAttribute('aria-pressed', String(sel));
+    }
+    // Grupo sem nenhum tribunal visivel some inteiro: um titulo "Justica do Trabalho"
+    // sobre uma grade vazia parece que o segmento nao tem tribunal nenhum.
+    for (const grupo of elGrade.querySelectorAll('.grupo-tribunais')) {
+      grupo.hidden = !grupo.querySelector('.chip-tribunal:not([hidden])');
     }
     elLimpar.hidden = !(filtros.area.size || filtros.uf.size);
     desenharPlacar();
   }
 
   function desenharPlacar() {
-    elPlacar.innerHTML = '';
-    const conta = (e) => tribunais.filter((t) => t.estado === e).length;
-    for (const estado of ['ok', 'instavel', 'sem-acesso', 'exige-sessao']) {
+    elPlacar.replaceChildren();
+    const conta = (estados) => tribunais().filter((t) => estados.includes(estadoVisual(t))).length;
+    for (const [estados, rotulo, cor] of [[['ok'], 'funcionando', 'ok'], [['instavel', 'assistido'], 'com ressalva', 'ressalva'], [['sem-acesso', 'exige-sessao'], 'indisponíveis', 'erro']]) {
       const item = document.createElement('span');
-      const ponto = document.createElement('span');
-      ponto.className = 'ponto'; ponto.dataset.e = estado;
-      item.appendChild(ponto);
-      item.appendChild(document.createTextNode(` ${conta(estado)} ${ROTULO[estado]}`));
+      const ponto = document.createElement('span'); ponto.className = `ponto ${cor}`;
+      item.append(ponto, document.createTextNode(` ${conta(estados)} ${rotulo}`));
       elPlacar.appendChild(item);
     }
-    const ligados = document.createElement('strong');
-    ligados.className = 'placar-ligados';
-    ligados.textContent = `${window.jurEscopo.ligados().length} ligados para busca`;
-    elPlacar.appendChild(ligados);
+    const n = window.jurEscopo.selecionados().length;
+    const sel = document.createElement('strong');
+    sel.className = 'placar-selecionados';
+    sel.textContent = n ? `${n} selecionado${n > 1 ? 's' : ''}` : 'todos os disponíveis';
+    elPlacar.appendChild(sel);
   }
 
   function montarChipTribunal(t) {
     const chip = document.createElement('span');
     chip.className = 'chip-tribunal';
     chip.dataset.comando = t.comando;
-    // A barra da esquerda e o estado REAL (o servidor decide); a bolinha da direita e o
-    // liga/desliga (o usuario decide). Sao dois fatos diferentes sobre o mesmo tribunal
-    // e nao podem compartilhar o mesmo sinal visual.
-    chip.dataset.e = t.estado;
+    chip.dataset.e = estadoVisual(t);
 
-    const sigla = document.createElement('button');
-    sigla.type = 'button';
-    sigla.className = 'sigla';
-    sigla.textContent = t.comando;   // o CSS deixa maiusculo; o DADO segue minusculo
-    sigla.title = `${t.nome} — clique para ver detalhes`;
-    sigla.addEventListener('click', () => abrirRessalva(t));
+    const barra = document.createElement('i');
+    barra.className = 'marca-estado';
 
-    const liga = document.createElement('button');
-    liga.type = 'button';
-    liga.className = 'liga';
-    liga.setAttribute('aria-pressed', String(estaLigado(t)));
-    liga.addEventListener('click', () => {
-      if (!podeLigar(t)) {
-        // Nao faz nada em silencio: abre a ressalva, que e onde esta o motivo de o
-        // tribunal nao poder ser usado.
-        abrirRessalva(t);
-        return;
-      }
-      if (desligados.has(t.comando)) desligados.delete(t.comando);
-      else desligados.add(t.comando);
-      gravarDesligados(desligados);
-      redesenhar();
-    });
+    const sel = document.createElement('button');
+    sel.type = 'button';
+    sel.className = 'sel';
+    const caixa = document.createElement('span'); caixa.className = 'cx';
+    sel.append(caixa, document.createTextNode(t.comando));
+    sel.setAttribute('aria-pressed', 'false');
+    if (!t.disponivel) {
+      sel.setAttribute('aria-disabled', 'true');
+      sel.title = `${t.nome}: indisponível. Clique para ver o motivo.`;
+      sel.setAttribute('aria-label', `${t.comando} indisponível — ver motivo`);
+      sel.addEventListener('click', () => window.jurFicha.abrir(t.comando));
+    } else {
+      sel.title = t.assistido
+        ? `${t.nome}: busca com CAPTCHA manual. Incluir ou tirar da busca`
+        : `${t.nome}: incluir ou tirar da busca`;
+      sel.setAttribute('aria-label', `${t.comando} na busca`);
+      sel.addEventListener('click', () => window.jurEscopo.alternar(t.comando));
+    }
 
-    chip.appendChild(sigla);
-    chip.appendChild(liga);
-    rotularLiga(liga, t);
+    const info = document.createElement('button');
+    info.type = 'button';
+    info.className = 'info';
+    info.textContent = 'ⓘ';
+    info.title = 'Ficha do tribunal';
+    info.setAttribute('aria-label', `Ficha de ${t.comando}`);
+    info.addEventListener('click', () => window.jurFicha.abrir(t.comando));
+
+    chip.append(barra, sel, info);
     return chip;
   }
 
-  function rotularLiga(liga, t) {
-    if (!podeLigar(t)) {
-      liga.setAttribute('aria-label', `${t.comando} indisponível (${t.estado}) — não pode ser ligado`);
-      liga.title = `Indisponível (${ROTULO[t.estado] || t.estado}) — clique para ver o motivo`;
-      return;
-    }
-    // O rotulo descreve o ESTADO, nao a acao: `aria-pressed` ja diz o que o clique faz,
-    // e um rotulo que muda entre "Ligar" e "Desligar" faz o leitor de tela anunciar duas
-    // coisas contraditorias.
-    liga.setAttribute('aria-label', `${t.comando} incluído nas buscas`);
-    liga.title = 'Incluir/excluir este tribunal das buscas';
-  }
-
-  async function montarDisponibilidade() {
-    desligados = lerDesligados();
+  function montarDisponibilidade(evento) {
     const alvo = $('#disponibilidade');
-    try {
-      tribunais = (await window.jurApi.pedir('/api/v1/tribunais')).tribunais;
-    } catch (e) {
-      alvo.innerHTML = '<p class="titulo-bloco">Disponibilidade</p>';
-      const erro = document.createElement('p');
-      erro.className = 'vazio';
-      erro.textContent = `Não foi possível carregar a lista de tribunais: ${e.message}`;
+    if (evento?.detail?.erro) {
+      alvo.innerHTML = '<p class="titulo-bloco">Tribunais</p>';
+      const erro = document.createElement('p'); erro.className = 'vazio';
+      erro.textContent = `Não foi possível carregar a lista de tribunais: ${evento.detail.erro}`;
       alvo.appendChild(erro);
+      // Os nos da montagem anterior sairam do DOM: sem zerar, `redesenhar` continuaria
+      // atualizando placar e grade soltos a cada jur:escopo, sem efeito visivel.
+      elGrade = elBarraFiltros = elPlacar = elLimpar = null;
       return;
     }
+    const lista = tribunais();
+    alvo.innerHTML = '<p class="titulo-bloco">Tribunais</p>';
 
-    alvo.innerHTML = '<p class="titulo-bloco">Disponibilidade</p>';
-
-    elPlacar = document.createElement('div');
-    elPlacar.className = 'placar';
+    elPlacar = document.createElement('div'); elPlacar.className = 'placar';
     alvo.appendChild(elPlacar);
 
-    // --- barra de filtros ---
-    elBarraFiltros = document.createElement('div');
-    elBarraFiltros.className = 'barra-filtros';
-
-    const linhaArea = document.createElement('div');
-    linhaArea.className = 'linha-filtro';
-    const rotuloArea = document.createElement('span');
-    rotuloArea.className = 'rotulo-filtro';
-    rotuloArea.textContent = 'Área:';
+    elBarraFiltros = document.createElement('div'); elBarraFiltros.className = 'barra-filtros';
+    const linhaArea = document.createElement('div'); linhaArea.className = 'linha-filtro';
+    const rotuloArea = document.createElement('span'); rotuloArea.className = 'rotulo-filtro'; rotuloArea.textContent = 'Área:';
     linhaArea.appendChild(rotuloArea);
-    const areas = [...new Set(tribunais.map((t) => t.segmento).filter(Boolean))]
+    const areas = [...new Set(lista.map((t) => t.segmento).filter(Boolean))]
       .sort((a, b) => (ROTULO_AREA[a] || a).localeCompare(ROTULO_AREA[b] || b, 'pt-BR'));
     for (const area of areas) {
-      linhaArea.appendChild(chipFiltro(
-        'filtro-area', area, ROTULO_AREA[area] || area,
-        tribunais.filter((t) => t.segmento === area).length,
-        () => alternar(filtros.area, area),
-      ));
+      linhaArea.appendChild(chipFiltro('filtro-area', area, ROTULO_AREA[area] || area,
+        lista.filter((t) => t.segmento === area).length, () => alternarFiltro(filtros.area, area)));
     }
     elBarraFiltros.appendChild(linhaArea);
 
-    const linhaUf = document.createElement('div');
-    linhaUf.className = 'linha-filtro';
-    const rotuloUf = document.createElement('span');
-    rotuloUf.className = 'rotulo-filtro';
-    rotuloUf.textContent = 'UF:';
+    const linhaUf = document.createElement('div'); linhaUf.className = 'linha-filtro';
+    const rotuloUf = document.createElement('span'); rotuloUf.className = 'rotulo-filtro'; rotuloUf.textContent = 'UF:';
     linhaUf.appendChild(rotuloUf);
-
-    // 27 UFs ocupam a tela inteira sem ninguem ter pedido, entao a lista comeca
-    // colapsada — no padrao do painel de intimacoes do ProcStudio. O contentor que
-    // colapsa e SO o dos chips: o botao que expande fica FORA dele. Dentro, ele sumia
-    // junto com o que deveria revelar, e a unica saida do estado colapsado ficava
-    // invisivel.
-    const chipsUf = document.createElement('div');
-    chipsUf.className = 'chips-uf colapsado';
-    const ufs = [...new Set(tribunais.flatMap((t) => t.uf))].sort();
+    const chipsUf = document.createElement('div'); chipsUf.className = 'chips-uf colapsado';
+    const ufs = [...new Set(lista.flatMap((t) => t.uf))].sort();
     for (const uf of ufs) {
-      chipsUf.appendChild(chipFiltro(
-        'filtro-uf', uf, uf,
-        tribunais.filter((t) => t.uf.includes(uf)).length,
-        () => alternar(filtros.uf, uf),
-      ));
+      chipsUf.appendChild(chipFiltro('filtro-uf', uf, uf, lista.filter((t) => t.uf.includes(uf)).length,
+        () => alternarFiltro(filtros.uf, uf)));
     }
     linhaUf.appendChild(chipsUf);
-
     const maisUf = document.createElement('button');
-    maisUf.type = 'button';
-    maisUf.className = 'chip-filtro mais';
+    maisUf.type = 'button'; maisUf.className = 'chip-filtro mais';
     maisUf.textContent = `todas as ${ufs.length} UFs`;
     maisUf.setAttribute('aria-expanded', 'false');
     maisUf.addEventListener('click', () => {
@@ -371,50 +238,155 @@
     linhaUf.appendChild(maisUf);
     elBarraFiltros.appendChild(linhaUf);
 
-    const acoes = document.createElement('div');
-    acoes.className = 'linha-filtro acoes-escopo';
+    const acoes = document.createElement('div'); acoes.className = 'linha-filtro acoes-escopo';
+    const selecionarVisiveis = document.createElement('button');
+    selecionarVisiveis.type = 'button'; selecionarVisiveis.id = 'selecionar-visiveis'; selecionarVisiveis.className = 'ligacao';
+    selecionarVisiveis.textContent = 'Selecionar os visíveis';
+    selecionarVisiveis.addEventListener('click', () => window.jurEscopo.selecionarVarios(lista.filter((t) => t.disponivel && passaNoFiltro(t)).map((t) => t.comando)));
+    const limparSelecao = document.createElement('button');
+    limparSelecao.type = 'button'; limparSelecao.id = 'limpar-selecao'; limparSelecao.className = 'ligacao';
+    limparSelecao.textContent = 'Limpar seleção';
+    limparSelecao.addEventListener('click', () => window.jurEscopo.limpar());
     elLimpar = document.createElement('button');
-    elLimpar.type = 'button';
-    elLimpar.id = 'limpar-filtros';
-    elLimpar.className = 'ligacao';
+    elLimpar.type = 'button'; elLimpar.id = 'limpar-filtros'; elLimpar.className = 'ligacao';
     elLimpar.textContent = 'Limpar filtros';
     elLimpar.addEventListener('click', () => { filtros.area.clear(); filtros.uf.clear(); redesenhar(); });
-    const ligarTodos = document.createElement('button');
-    ligarTodos.type = 'button';
-    ligarTodos.id = 'ligar-todos';
-    ligarTodos.className = 'ligacao';
-    ligarTodos.textContent = 'Ligar todos';
-    ligarTodos.addEventListener('click', () => { desligados.clear(); gravarDesligados(desligados); redesenhar(); });
-    const desligarTodos = document.createElement('button');
-    desligarTodos.type = 'button';
-    desligarTodos.id = 'desligar-todos';
-    desligarTodos.className = 'ligacao';
-    desligarTodos.textContent = 'Desligar todos';
-    desligarTodos.addEventListener('click', () => {
-      desligados = new Set(tribunais.filter(podeLigar).map((t) => t.comando));
-      gravarDesligados(desligados);
-      redesenhar();
-    });
-    acoes.appendChild(ligarTodos); acoes.appendChild(desligarTodos); acoes.appendChild(elLimpar);
+    acoes.append(selecionarVisiveis, limparSelecao, elLimpar);
     elBarraFiltros.appendChild(acoes);
     alvo.appendChild(elBarraFiltros);
 
-    // --- grade ---
-    elGrade = document.createElement('div');
-    elGrade.className = 'grade-tribunais';
-    for (const t of tribunais) elGrade.appendChild(montarChipTribunal(t));
+    // Um bloco por segmento, na ordem da hierarquia (Superiores -> Administrativos), e
+    // dentro dele uma grade de colunas fixas. Misturar os 77 numa fileira so obrigava a
+    // ler sigla por sigla para achar o segmento; agrupado, o olho vai direto ao bloco.
+    elGrade = document.createElement('div'); elGrade.className = 'grupos-tribunais';
+    const ORDEM = ['superior', 'federal', 'estadual', 'trabalhista', 'contas', 'administrativo'];
+    const segmentos = [...new Set(lista.map((t) => t.segmento || 'outros'))]
+      .sort((a, b) => (ORDEM.indexOf(a) + 1 || 99) - (ORDEM.indexOf(b) + 1 || 99));
+    for (const seg of segmentos) {
+      const doSeg = lista.filter((t) => (t.segmento || 'outros') === seg)
+        .sort((a, b) => a.comando.localeCompare(b.comando, 'pt-BR', { numeric: true }));
+      const grupo = document.createElement('div');
+      grupo.className = 'grupo-tribunais';
+      grupo.dataset.segmento = seg;
+      const titulo = document.createElement('h3');
+      titulo.className = 'grupo-titulo';
+      const nome = document.createElement('span'); nome.textContent = ROTULO_AREA[seg] || seg;
+      const conta = document.createElement('span'); conta.className = 'grupo-conta'; conta.textContent = String(doSeg.length);
+      titulo.append(nome, conta);
+      const grade = document.createElement('div'); grade.className = 'grade-tribunais';
+      for (const t of doSeg) grade.appendChild(montarChipTribunal(t));
+      grupo.append(titulo, grade);
+      elGrade.appendChild(grupo);
+    }
     alvo.appendChild(elGrade);
 
-    const dica = document.createElement('p');
-    dica.className = 'vazio';
-    dica.textContent = 'Clique na sigla para ver a ressalva do tribunal; na bolinha, para incluir ou tirar das buscas.';
+    const dica = document.createElement('p'); dica.className = 'vazio';
+    dica.textContent = 'Clique na sigla para incluir ou tirar da busca. O ⓘ abre a ficha com o que funciona em cada tribunal. Filtros só mudam o que aparece aqui; o escopo é o que está em "Buscar em".';
     alvo.appendChild(dica);
 
     redesenhar();
   }
 
   montarPrompts();
-  document.addEventListener('jur:sessao', montarDisponibilidade);
-  document.addEventListener('jur:navegadores-preferencias', montarDisponibilidade);
+  document.addEventListener('jur:tribunais', montarDisponibilidade);
+  document.addEventListener('jur:escopo', redesenhar);
   montarManual();
+
+  // A ficha nunca mostra a nota tecnica do catalogo (t.nota): o usuario le o resumo em
+  // portugues e a nota POR FUNCIONALIDADE, que e escrita para ele.
+  const ROTULO_FUNC = {
+    termo: 'Busca por termo',
+    periodoJulgamento: 'Período de julgamento',
+    periodoPublicacao: 'Período de publicação',
+    magistrado: 'Magistrado',
+    juizados: 'Juizados / Turmas Recursais',
+    inteiroTeor: 'Inteiro teor',
+    numero: 'Consulta por número',
+  };
+  const CHAVES_FUNC = Object.keys(ROTULO_FUNC);
+  const BADGE = {
+    funciona: ['✓', 'Funciona', 'ok'],
+    ressalva: ['!', 'Com ressalva', 'ressalva'],
+    'nao-funciona': ['✕', 'Não funciona', 'erro'],
+    'nao-existe': ['—', 'Não existe neste tribunal', 'neutro'],
+  };
+
+  function badge(estado, classeExtra = '') {
+    const [sinal, rotulo, cor] = BADGE[estado] || BADGE['nao-existe'];
+    const s = document.createElement('span');
+    s.className = `badge ${cor} ${classeExtra}`.trim();
+    s.dataset.estado = estado;
+    s.textContent = `${sinal} ${rotulo}`;
+    return s;
+  }
+
+  window.jurFicha = {
+    abrir(comando) {
+      const t = tribunais().find((x) => x.comando === comando);
+      if (!t) return;
+      const painel = $('#painel-ficha');
+      window.jurUI.abrirPainel(painel, '');
+      const caixa = $('.painel-caixa', painel);
+      caixa.classList.add('ficha');
+
+      const h = document.createElement('h2');
+      const code = document.createElement('code'); code.textContent = t.comando;
+      const estado = document.createElement('span');
+      estado.className = `badge badge-estado ${COR[estadoVisual(t)] || 'neutro'}`;
+      estado.textContent = `● ${ROTULO_BADGE[estadoVisual(t)] || t.estado}`;
+      h.append(code, estado);
+      const nome = document.createElement('p');
+      nome.className = 'ficha-nome';
+      nome.textContent = `${t.nome}${t.uf?.length ? ` · ${t.uf.join(', ')}` : ' · nacional'}`;
+      const resumo = document.createElement('p');
+      resumo.className = `ficha-resumo ${COR[estadoVisual(t)] || 'neutro'}`;
+      resumo.textContent = t.resumo || '';
+
+      const tabela = document.createElement('table');
+      tabela.className = 'tab-cap';
+      tabela.innerHTML = '<thead><tr><th>Funcionalidade</th><th>Estado</th></tr></thead><tbody></tbody>';
+      const corpo = $('tbody', tabela);
+      for (const chave of CHAVES_FUNC) {
+        const f = (t.capacidades && t.capacidades[chave]) || { estado: 'nao-existe', nota: '' };
+        const tr = document.createElement('tr');
+        tr.dataset.chave = chave;
+        const td1 = document.createElement('td');
+        td1.textContent = ROTULO_FUNC[chave];
+        if (f.nota) { const small = document.createElement('small'); small.textContent = f.nota; td1.appendChild(small); }
+        const td2 = document.createElement('td');
+        td2.appendChild(badge(f.estado));
+        tr.append(td1, td2);
+        corpo.appendChild(tr);
+      }
+
+      const acoes = document.createElement('div');
+      acoes.className = 'ficha-acoes';
+      const incluir = document.createElement('button');
+      incluir.type = 'button'; incluir.className = 'botao-acento ficha-incluir';
+      incluir.textContent = selecionado(t.comando) ? 'Já está na busca' : 'Incluir na busca';
+      incluir.disabled = !t.disponivel || selecionado(t.comando);
+      incluir.addEventListener('click', () => { window.jurEscopo.selecionar(t.comando); painel.hidden = true; });
+      const fechar = document.createElement('button');
+      fechar.type = 'button'; fechar.className = 'botao-secundario ficha-fechar';
+      fechar.textContent = 'Fechar';
+      fechar.addEventListener('click', () => { painel.hidden = true; });
+      acoes.append(incluir, fechar);
+      // So o STJ tem tentativa assistida (servidor/navegadores/registro.js). O botao leva ao
+      // painel Navegadores, onde a opcao de captcha manual mora.
+      if (t.comando === 'stj' && !t.assistido) {
+        const captcha = document.createElement('button');
+        captcha.type = 'button'; captcha.className = 'botao-secundario ficha-captcha';
+        captcha.textContent = 'Tentar com CAPTCHA manual';
+        captcha.addEventListener('click', () => {
+          painel.hidden = true;
+          const abrir = $('#navegadores-abrir');
+          if (abrir && abrir.getAttribute('aria-expanded') !== 'true') abrir.click();
+          $('#navegadores-captcha')?.focus();
+        });
+        acoes.appendChild(captcha);
+      }
+
+      caixa.append(h, nome, resumo, tabela, acoes);
+    },
+  };
 }());

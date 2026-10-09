@@ -1,0 +1,189 @@
+const catalogo = require('./catalogo');
+const relator = require('./relator');
+const juizados = require('./juizados');
+const CURADO = require('../cobertura/capacidades.json');
+
+/**
+ * As sete funcionalidades que a ficha do tribunal mostra e que a ferramenta de busca
+ * do chat cobre. Duas perguntas por funcionalidade, respondidas em lugares diferentes:
+ *
+ *   EXISTE?   derivado da CLI (flags) — tests/contrato-cli.test.js reprova divergencia.
+ *   FUNCIONA? propagado do estado do tribunal no catalogo, com sobreposicao curada em
+ *             cobertura/capacidades.json para o que quebrou numa funcionalidade so
+ *             (ex.: TJAC, inteiro teor exige reCAPTCHA).
+ *
+ * Tudo que sai daqui pode ir para a TELA: nada de mencionar CLI, comando ou flag.
+ */
+const CHAVES = ['termo', 'periodoJulgamento', 'periodoPublicacao', 'magistrado', 'juizados', 'inteiroTeor', 'numero'];
+
+const ROTULOS = {
+  termo: 'Busca por termo',
+  periodoJulgamento: 'Período de julgamento',
+  periodoPublicacao: 'Período de publicação',
+  magistrado: 'Magistrado',
+  juizados: 'Juizados / Turmas Recursais',
+  inteiroTeor: 'Inteiro teor',
+  numero: 'Consulta por número',
+};
+
+// ---------- existencia, derivada da CLI ----------
+// Sem -q: so o crps, que nao e comando de busca.
+const SEM_TERMO = new Set(['crps']);
+// Sem -di/-df.
+const SEM_FILTRO_DATA = new Set(['tjma', 'tjrn', 'crps']);
+// Com -dpi/-dpf (data de PUBLICACAO).
+const COM_PUBLICACAO = new Set([
+  'trf4', 'trf2', 'trf6', 'carf', 'tjpr', 'tjrj', 'tjms', 'tjac', 'tjam', 'tjal', 'tjba', 'tjpi', 'tjpa',
+  'tjdft', 'tjmg', 'tjrs', 'tjma', 'tjsp', 'tjsc', 'stf', 'stj', 'tjmt', 'tjpb', 'tjap', 'tjro', 'tjrr',
+  'tcers', 'tcesp', 'tcerj', 'tceba', 'tcepe', 'tcdf',
+]);
+// Sem -n.
+const SEM_NUMERO = new Set(['tcu', 'tjsp', 'crps']);
+// Com -n, mas so como FILTRO dentro de uma busca por termo: na CLI destes, -q continua
+// obrigatorio. Para quem usa a ficha isso nao e "consulta por numero" (trazer um
+// processo pelo numero), entao a funcionalidade aparece como inexistente; a busca com
+// termo + numero continua aceita (ver `numeroSoComTermo` em ferramentas.js e buscas.js).
+const NUMERO_SO_COM_TERMO = new Set(['trf1', 'trf3', 'trf5']);
+const NOTA_NUMERO_SO_COM_TERMO = 'Este tribunal só filtra por número dentro de uma busca por termo.';
+// Sem --fetch-inteiro-teor.
+const SEM_INTEIRO_TEOR = new Set(['trf1', 'trf3', 'trf5', 'tcu', 'tjma', 'tjrn', 'tjsp', 'crps']);
+
+const NOTA_FORMA = {
+  'nome-exato': 'Nome exato, como aparece na listagem do tribunal. Nome parcial devolve zero.',
+  codigo: 'Pelo código do magistrado, não pelo nome.',
+  trecho: '',
+  nome: '',
+};
+
+function existencia(comando, chave) {
+  switch (chave) {
+    case 'termo': return { existe: !SEM_TERMO.has(comando), nota: '' };
+    case 'periodoJulgamento': return { existe: !SEM_FILTRO_DATA.has(comando), nota: '' };
+    case 'periodoPublicacao': return { existe: COM_PUBLICACAO.has(comando), nota: '' };
+    case 'magistrado': {
+      const r = relator.obter(comando);
+      if (!r || !r.suportado) return { existe: false, nota: '' };
+      return { existe: true, nota: NOTA_FORMA[r.forma] || '', forma: r.forma };
+    }
+    case 'juizados': {
+      const j = juizados.obter(comando);
+      return j && j.suportado ? { existe: true, nota: j.nota } : { existe: false, nota: j ? j.nota : '' };
+    }
+    case 'inteiroTeor': return { existe: !SEM_INTEIRO_TEOR.has(comando), nota: '' };
+    case 'numero':
+      if (NUMERO_SO_COM_TERMO.has(comando)) return { existe: false, nota: NOTA_NUMERO_SO_COM_TERMO };
+      return { existe: !SEM_NUMERO.has(comando), nota: '' };
+    default: return { existe: false, nota: '' };
+  }
+}
+
+function existe(comando, chave) {
+  return existencia(comando, chave).existe;
+}
+
+/**
+ * Pedido com numero E termo num tribunal de NUMERO_SO_COM_TERMO e o uso que a CLI
+ * aceita (-q com -n filtrando): nao ha o que recusar. Sem termo, a recusa de
+ * "Consulta por número" vale normalmente.
+ */
+function numeroComTermoAceito(comando, query) {
+  return NUMERO_SO_COM_TERMO.has(comando) && Boolean(query);
+}
+
+function curado(comando) {
+  const c = CURADO[comando];
+  return c && typeof c === 'object' ? c : null;
+}
+
+/**
+ * Aplica a sobreposicao curada de UMA funcionalidade. Exportada so para o teste: o
+ * modulo le o JSON no require, e testar a regra com um override inventado aqui e menor
+ * que abrir uma porta de injecao do mapa inteiro.
+ *
+ * A curadoria corrige o FUNCIONA, nunca o EXISTE. Quando a funcionalidade nao existe
+ * (fonte: CLI, travada por tests/contrato-cli.test.js), uma entrada curada e ignorada:
+ * aplicá-la faria a ficha prometer algo que o tribunal nao tem.
+ */
+function aplicarCurado(ex, estado, nota, sobre) {
+  if (!ex.existe || !sobre || !sobre.estado) return { estado, nota };
+  return { estado: sobre.estado, nota: sobre.nota || nota };
+}
+
+function resumoPadrao(tribunal, funcionalidades) {
+  if (tribunal.estado === 'sem-acesso' || tribunal.estado === 'exige-sessao') return 'Indisponível no momento.';
+  if (tribunal.estado === 'instavel') return 'Busca com ressalva no momento.';
+  const filtros = CHAVES.filter((k) => k !== 'termo' && k !== 'numero' && funcionalidades[k].estado !== 'nao-existe')
+    .map((k) => ROTULOS[k].toLowerCase());
+  return filtros.length ? `Busca funcionando. Filtros disponíveis: ${filtros.join(', ')}.` : 'Busca funcionando.';
+}
+
+/**
+ * `disponivel` pode ser sobreposto porque a tentativa assistida (STJ com captcha manual)
+ * torna um tribunal `sem-acesso` buscavel em tempo de execucao — a rota de tribunais
+ * ja faz essa troca, e a ficha precisa acompanhar.
+ */
+function obter(comando, { disponivel } = {}) {
+  const t = catalogo.obter(comando);
+  if (!t) return null;
+  const podeBuscar = disponivel === undefined ? t.disponivel : disponivel;
+  const sobre = curado(comando);
+  const funcionalidades = {};
+  for (const chave of CHAVES) {
+    const ex = existencia(comando, chave);
+    let estado;
+    let nota = ex.nota || '';
+    if (!ex.existe) estado = 'nao-existe';
+    else if (!podeBuscar) estado = 'nao-funciona';
+    else if (chave === 'termo' && t.estado === 'instavel') estado = 'ressalva';
+    else if (chave === 'magistrado' && (ex.forma === 'nome-exato' || ex.forma === 'codigo')) estado = 'ressalva';
+    else estado = 'funciona';
+    funcionalidades[chave] = aplicarCurado(ex, estado, nota, sobre && sobre.funcionalidades && sobre.funcionalidades[chave]);
+  }
+  return { resumo: (sobre && sobre.resumo) || resumoPadrao(t, funcionalidades), funcionalidades };
+}
+
+/**
+ * Texto para o MODELO quando ele pede uma funcionalidade que o tribunal nao tem ou que
+ * nao esta funcionando. null quando pode rodar. O invariante e o mesmo do relator: a
+ * busca NAO roda sem o recorte, porque rodar sem ele devolve uma lista errada com cara
+ * de certa.
+ *
+ * `disponivel` e o mesmo override de `obter`: quem chama ja decidiu que o tribunal pode
+ * buscar (tentativa assistida do STJ), e sem repassar isso aqui toda funcionalidade
+ * existente seria lida como `nao-funciona` e a busca assistida seria recusada a toa.
+ */
+function recusar(comando, chave, nome, { disponivel } = {}) {
+  const c = obter(comando, { disponivel });
+  if (!c) return null;
+  const f = c.funcionalidades[chave];
+  if (f.estado === 'nao-existe') {
+    if (chave === 'juizados') return juizados.explicarAusencia(comando, nome);
+    return `O tribunal ${comando} (${nome}) NAO tem "${ROTULOS[chave]}" na busca.${f.nota ? ` ${f.nota}` : ''}\n`
+      + 'A BUSCA NAO FOI FEITA: nao apresente uma busca sem esse recorte como se fosse com ele. '
+      + 'Diga isso ao usuario e pergunte se ele quer buscar sem o recorte.';
+  }
+  if (f.estado === 'nao-funciona') {
+    return `"${ROTULOS[chave]}" NAO esta funcionando em ${comando} (${nome}).${f.nota ? ` ${f.nota}` : ''}\n`
+      + 'A BUSCA NAO FOI FEITA. Diga isso ao usuario; nao invente resultado.';
+  }
+  return null;
+}
+
+function resumoCompacto(comando) {
+  const c = obter(comando);
+  if (!c) return '';
+  const partes = [];
+  for (const chave of CHAVES) {
+    if (chave === 'termo' || chave === 'numero') continue;
+    const f = c.funcionalidades[chave];
+    if (f.estado !== 'funciona' && f.estado !== 'ressalva') continue;
+    const rotulo = { periodoJulgamento: 'data', periodoPublicacao: 'publicacao', magistrado: 'magistrado', juizados: 'juizados', inteiroTeor: 'inteiro teor' }[chave];
+    partes.push(f.estado === 'ressalva' && f.nota ? `${rotulo} (${f.nota.split('.')[0].toLowerCase()})` : rotulo);
+  }
+  return partes.length ? `filtros: ${partes.join(', ')}` : 'sem filtros alem do termo';
+}
+
+module.exports = {
+  CHAVES, ROTULOS, obter, existe, recusar, resumoCompacto, curado, aplicarCurado, numeroComTermoAceito,
+  SEM_FILTRO_DATA, COM_PUBLICACAO, SEM_NUMERO, SEM_INTEIRO_TEOR, NUMERO_SO_COM_TERMO,
+};

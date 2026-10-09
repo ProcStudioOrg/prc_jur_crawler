@@ -150,7 +150,7 @@
 
       const query = document.createElement('span');
       query.className = 'busca-query';
-      query.textContent = (b.params && b.params.query) || '(sem termo)';
+      query.textContent = rotuloBusca(b) || '(sem termo)';
       item.appendChild(query);
 
       if (b.erroLeitura) {
@@ -166,8 +166,17 @@
     painel.appendChild(corpo);
   }
 
+  // Consulta por numero nao tem termo: sem isto ela aparecia como "(sem termo)", como
+  // se fosse uma busca vazia de criterio, quando o criterio e o numero do processo.
+  function rotuloBusca(b) {
+    const p = b.params || {};
+    if (p.query) return p.query;
+    if (p.numero) return `nº ${p.numero}`;
+    return '';
+  }
+
   async function desenharJulgados(b) {
-    painel.appendChild(cabecalho(`${b.comando} · ${(b.params && b.params.query) || ''}`, true));
+    painel.appendChild(cabecalho(`${b.comando} · ${rotuloBusca(b)}`, true));
     const corpo = document.createElement('div');
     corpo.className = 'decisoes-corpo';
     painel.appendChild(corpo);

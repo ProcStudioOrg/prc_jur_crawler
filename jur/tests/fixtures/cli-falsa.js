@@ -2,7 +2,10 @@
 // Imita `bin/jur <cmd> --json`. Modo escolhido pelo primeiro argumento.
 const fs = require('node:fs');
 
-const modo = process.argv[2];
+// `--modo X` permite que o comando (argv[2]) seja um tribunal real, como trf4, quando o
+// teste precisa do nome do tribunal (mapa de juizados) e do modo ao mesmo tempo.
+const idxModo = process.argv.indexOf('--modo');
+const modo = idxModo >= 0 ? process.argv[idxModo + 1] : process.argv[2];
 const args = process.argv.slice(3);
 const saida = args[args.indexOf('-o') + 1];
 
@@ -29,6 +32,36 @@ if (modo === 'inline') {
   // Modo de LISTAGEM (--listar-*): nao recebe -o e nao produz arquivo. Devolve os args
   // que recebeu para o teste conferir que nada da busca (query, datas, -o) vazou.
   process.stdout.write(JSON.stringify({ success: true, args, relatores: ['FULANO DE TAL'] }) + '\n');
+} else if (modo === 'consulta-encontrada') {
+  // Consulta por numero (-n) da CLI real: nao escreve o -o, devolve o registro no
+  // envelope com `encontrado`, e o primeiro array costuma ser `avisos`, nao julgados.
+  process.stdout.write(JSON.stringify({ success: true, numero: '1', encontrado: true, avisos: [], documentos: [{ id: 'd1' }] }) + '\n');
+} else if (modo === 'consulta-ausente') {
+  process.stdout.write(JSON.stringify({ success: true, numero: '1', encontrado: false, avisos: ['base parcial'] }) + '\n');
+  process.exit(1);
+} else if (modo === 'numero-encontrados') {
+  // tcego/tcdf/tcemg/tcece -n: sem o booleano `encontrado`, com `encontrados` numerico,
+  // e `avisos` vem ANTES de `resultados` — o primeiro array do envelope nao e julgado.
+  process.stdout.write(JSON.stringify({
+    success: true, encontrados: 2, total: 2, avisos: ['x'],
+    resultados: [{ processo: 'a1' }, { processo: 'a2' }],
+  }) + '\n');
+} else if (modo === 'numero-encontrados-vazio') {
+  process.stdout.write(JSON.stringify({
+    success: true, encontrados: 0, total: 0, avisos: ['não localizado'], resultados: [],
+  }) + '\n');
+} else if (modo === 'numero-ressalvas') {
+  // tcdf/tcece -n: o aviso do zero vem em `ressalvas` (array de strings), nao em `avisos`.
+  process.stdout.write(JSON.stringify({
+    success: true, encontrados: 0, resultados: [],
+    ressalvas: ['Zero. Antes de concluir ausencia: confira o digito verificador.'],
+  }) + '\n');
+} else if (modo === 'numero-encontrados-truncado') {
+  // Envelope diz 25 documentos, mas so 10 vieram: truncamento precisa virar aviso.
+  process.stdout.write(JSON.stringify({
+    success: true, encontrados: 25,
+    resultados: Array.from({ length: 10 }, (_, i) => ({ processo: `t${i}` })),
+  }) + '\n');
 } else if (modo === 'eco') {
   process.stdout.write(JSON.stringify({ success: true, args }) + '\n');
 } else if (modo === 'so-envelope') {

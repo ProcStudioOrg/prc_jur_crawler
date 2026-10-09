@@ -21,10 +21,10 @@ before(() => {
 });
 
 describe('ferramentas', () => {
-  it('publica exatamente as quatro tools com schema', () => {
+  it('publica exatamente as cinco tools com schema', () => {
     const nomes = ferramentas.definicoes().map((d) => d.name).sort();
     assert.deepStrictEqual(nomes,
-      ['buscar_jurisprudencia', 'listar_relatores', 'listar_tribunais', 'ler_resultados'].sort());
+      ['buscar_jurisprudencia', 'ler_inteiro_teor', 'listar_relatores', 'listar_tribunais', 'ler_resultados'].sort());
     for (const d of ferramentas.definicoes()) {
       assert.ok(d.description.length > 20, `${d.name} precisa de descricao util`);
       assert.strictEqual(d.input_schema.type, 'object');
@@ -234,6 +234,32 @@ describe('ferramentas', () => {
         'a proibicao explicita ao modelo nao pode sumir do texto do zero');
     });
 
+    it('zero resultados carrega os avisos que a propria CLI deu (ex.: nao localizado)', async () => {
+      const filaZero = criarFilaTeste(async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null, avisos: ['não localizado na base'] }));
+      const { texto } = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'stf', query: 'nada' }, { fila: filaZero });
+      assert.match(texto, /0 resultados/);
+      assert.match(texto, /não localizado na base/);
+    });
+
+    it('trf1: numero sem query e recusado; numero junto de query roda a busca por termo', async () => {
+      const chamadas = [];
+      const f = criarFilaTeste(async (comando, params) => { chamadas.push(params); return { ok: true, total: 0, resultados: [], arquivo: null, erro: null }; });
+      const so = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'trf1', numero: '1' }, { fila: f });
+      assert.strictEqual(so.ok, false);
+      assert.match(so.texto, /NAO FOI FEITA/);
+      assert.strictEqual(chamadas.length, 0);
+      const junto = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'trf1', query: 'auxilio', numero: '1' }, { fila: f });
+      assert.strictEqual(junto.ok, true);
+      assert.strictEqual(chamadas.length, 1);
+      assert.strictEqual(chamadas[0].query, 'auxilio');
+      assert.match(junto.texto, /"auxilio"/, 'o texto diz que rodou a busca por termo');
+    });
+
+    it('a descricao de numero avisa que, sem consulta direta, numero so funciona junto de query', () => {
+      const d = ferramentas.definicoes().find((x) => x.name === 'buscar_jurisprudencia');
+      assert.match(d.input_schema.properties.numero.description, /nos tribunais sem consulta direta, numero só funciona junto de query/);
+    });
+
     it('busca cujo crawler falhou (job com status erro) e resultado legitimo, nao falha de execucao', async () => {
       const filaComErro = criarFilaTeste(async () => ({ ok: false, total: 0, resultados: [], arquivo: null, erro: 'crawler morreu' }));
       const { texto, ok } = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila: filaComErro });
@@ -312,6 +338,271 @@ describe('ferramentas', () => {
       const texto = await ferramentas.executar('ler_resultados', {}, { fila });
       assert.strictEqual(typeof texto, 'string');
       assert.match(texto, /job_id.*obrigat/i);
+    });
+  });
+
+  it('buscar_jurisprudencia expoe as funcionalidades novas no schema', () => {
+    const p = ferramentas.definicoes().find((d) => d.name === 'buscar_jurisprudencia').input_schema.properties;
+    for (const k of ['dataPubInicio', 'dataPubFim', 'juizados']) assert.ok(k in p, k);
+    assert.strictEqual(p.juizados.type, 'boolean');
+    // Inteiro teor e sob demanda (ler_inteiro_teor), nunca durante a busca.
+    assert.ok(!('inteiroTeor' in p));
+  });
+
+  it('juizados num tribunal sem recorte e RECUSADO, nao ignorado', async () => {
+    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'tjpr', query: 'x', juizados: true }, { fila });
+    assert.match(texto, /NAO FOI FEITA/);
+    assert.doesNotMatch(texto, /job/i);
+  });
+
+  it('periodo de publicacao num tribunal sem esse filtro e RECUSADO', async () => {
+    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'tjce', query: 'x', dataPubInicio: '01/01/2024' }, { fila });
+    assert.match(texto, /NAO FOI FEITA/);
+  });
+
+  it('periodo de publicacao em ISO e recusado com instrucao', async () => {
+    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'trf4', query: 'x', dataPubInicio: '2024-01-01' }, { fila });
+    assert.match(texto, /DD\/MM\/AAAA/);
+  });
+
+
+  // A ficha mostra "Consulta por numero"; sem o parametro a linha prometia algo que o
+  // chat nao alcancava.
+  describe('consulta por numero', () => {
+    it('schema: so tribunal e obrigatorio, e numero existe', () => {
+      const s = ferramentas.definicoes().find((d) => d.name === 'buscar_jurisprudencia').input_schema;
+      assert.deepStrictEqual(s.required, ['tribunal']);
+      assert.strictEqual(s.properties.numero.type, 'string');
+    });
+
+    it('sem query e sem numero e erro de parametro', async () => {
+      const r = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'trf4' }, { fila });
+      assert.strictEqual(r.ok, false);
+      assert.match(r.texto, /informe query ou numero/);
+    });
+
+    it('numero num tribunal sem consulta por numero (TJSP) e RECUSADO', async () => {
+      const r = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'tjsp', numero: '1000000-00.2024.8.26.0100' }, { fila });
+      assert.strictEqual(r.ok, false);
+      assert.match(r.texto, /NAO FOI FEITA/);
+    });
+
+    it('numero no TRF4 vai para o job', async () => {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-num-'));
+      let recebidos = null;
+      const f = jobs.criarFila({
+        con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
+        executarFn: async (comando, params) => { recebidos = params; return { ok: true, total: 1, resultados: [], arquivo: null, erro: null }; },
+      });
+      const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'trf4', numero: '5000000-00.2024.4.04.7000' }, { fila: f });
+      assert.strictEqual(recebidos.numero, '5000000-00.2024.4.04.7000');
+      assert.match(texto, /5000000-00\.2024\.4\.04\.7000/);
+    });
+  });
+
+  it('STJ assistido com periodo de publicacao e enfileirado, nao recusado', async () => {
+    let enfileirado = null;
+    const filaAssistida = {
+      permitirAssistido: (c) => c === 'stj',
+      enfileirar: (comando, params) => { enfileirado = { comando, params }; return { id: 'job-stj' }; },
+      aguardar: async () => ({ id: 'job-stj', status: 'concluido', total: 2 }),
+    };
+    const texto = await ferramentas.executar('buscar_jurisprudencia',
+      { tribunal: 'stj', query: 'x', dataPubInicio: '01/01/2024' }, { fila: filaAssistida, timeoutBuscaMs: 0 });
+    assert.ok(enfileirado, `devia ter enfileirado: ${texto}`);
+    assert.strictEqual(enfileirado.params.dataPubInicio, '01/01/2024');
+    assert.doesNotMatch(texto, /NAO FOI FEITA/);
+  });
+
+  it('os parametros novos chegam ao enfileirar', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-params-'));
+    let recebidos = null;
+    const filaEspia = jobs.criarFila({
+      con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
+      executarFn: async (comando, params) => { recebidos = params; return { ok: true, total: 1, resultados: [], arquivo: null, erro: null }; },
+    });
+    await ferramentas.executar('buscar_jurisprudencia',
+      { tribunal: 'trf4', query: 'x', juizados: true, inteiroTeor: true, dataPubInicio: '01/01/2024', dataPubFim: '31/01/2024' },
+      { fila: filaEspia });
+    assert.strictEqual(recebidos.juizados, true);
+    assert.strictEqual(recebidos.inteiroTeor, undefined, 'inteiro teor nao vai mais para a busca');
+    assert.strictEqual(recebidos.dataPubInicio, '01/01/2024');
+    assert.strictEqual(recebidos.dataPubFim, '31/01/2024');
+  });
+
+  it('listar_tribunais traz o resumo compacto de capacidades por linha', async () => {
+    const texto = await ferramentas.executar('listar_tribunais', { segmento: 'federal' }, { fila });
+    assert.match(texto, /trf4 .*filtros: .*juizados/);
+  });
+
+  it('ler_resultados omite o inteiro teor dos itens', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-it-'));
+    const arquivo = path.join(dir, 'saida.json');
+    fs.writeFileSync(arquivo, JSON.stringify([{ processo: 'A', ementa: 'curta', inteiroTeor: 'TEXTO-GIGANTE', inteiroTeorHtml: '<p>x</p>' }]));
+    const f = jobs.criarFila({ con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
+      executarFn: async () => ({ ok: true, total: 1, resultados: [], arquivo, erro: null }) });
+    const inicio = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' }, { fila: f });
+    const jobId = inicio.match(/[0-9a-f-]{36}/)[0];
+    const texto = await ferramentas.executar('ler_resultados', { job_id: jobId }, { fila: f });
+    assert.match(texto, /curta/);
+    assert.doesNotMatch(texto, /TEXTO-GIGANTE/);
+    assert.doesNotMatch(texto, /inteiroTeorHtml/);
+  });
+
+  describe('ler_inteiro_teor', () => {
+    async function filaCom(itens, tribunal = 'stf') {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-lit-'));
+      const arquivo = path.join(dir, 'saida.json');
+      fs.writeFileSync(arquivo, JSON.stringify(itens));
+      const f = jobs.criarFila({ con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
+        executarFn: async () => ({ ok: true, total: itens.length, resultados: [], arquivo, erro: null }) });
+      const inicio = await ferramentas.executar('buscar_jurisprudencia', { tribunal, query: 'x' }, { fila: f });
+      return { fila: f, jobId: inicio.match(/[0-9a-f-]{36}/)[0] };
+    }
+
+    // Job ja concluido de um tribunal que a busca normal recusaria (STJ sem-acesso): a
+    // fila e preenchida direto, como a tentativa assistida faria.
+    async function filaComAssistido(itens, tribunal) {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-ass-'));
+      const arquivo = path.join(dir, 'saida.json');
+      fs.writeFileSync(arquivo, JSON.stringify(itens));
+      const f = jobs.criarFila({ con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
+        catalogoFn: (comando) => ({ comando, nome: comando, disponivel: true, estado: 'ok', nota: '' }),
+        executarFn: async () => ({ ok: true, total: itens.length, resultados: [], arquivo, erro: null }) });
+      const { id } = f.enfileirar(tribunal, { query: 'x' });
+      await f.aguardar(id);
+      return { fila: f, jobId: id };
+    }
+
+    it('usa o inteiroTeorHtml do resultado, sem baixar nada', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'H', inteiroTeorHtml: '<p>Voto do <b>relator</b></p>', inteiroTeorLink: 'https://exemplo/x' }]);
+      let baixou = false;
+      const texto = await ferramentas.executar('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async () => { baixou = true; return 'NAO'; } });
+      assert.match(texto, /Voto do relator/);
+      assert.strictEqual(baixou, false);
+    });
+
+    it('job que nao terminou nao e lido', async () => {
+      const filaFalsa = { obter: () => ({ id: 'j1', status: 'rodando', comando: 'stf' }), resultados: () => { throw new Error('nao devia ler'); } };
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: 'j1', indice: 1 }, { fila: filaFalsa });
+      assert.match(r.texto, /rodando/);
+      assert.doesNotMatch(r.texto, /Inteiro teor do julgado/);
+    });
+
+    it('RECUSA baixar onde o inteiro teor nao funciona (TJAC, reCAPTCHA) e diz que nao tentou', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'T', inteiroTeorLink: 'https://tjac/x' }], 'tjac');
+      let baixou = false;
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async () => { baixou = true; return 'texto'; } });
+      assert.strictEqual(r.ok, false);
+      assert.strictEqual(baixou, false, 'o download nao pode ser tentado');
+      assert.match(r.texto, /NAO foi tentado/);
+      assert.match(r.texto, /reCAPTCHA/);
+    });
+
+    // A busca ja rodou: a disponibilidade de AGORA nao importa (STJ assistido, ou um
+    // tribunal que caiu depois), so o estado proprio do inteiro teor.
+    it('job de tribunal hoje indisponivel (STJ assistido) devolve o inteiro teor que veio no resultado', async () => {
+      const { fila: f, jobId } = await filaComAssistido([{ processo: 'S', inteiroTeor: 'Voto do ministro relator' }], 'stj');
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 }, { fila: f });
+      assert.strictEqual(r.ok, true);
+      assert.match(r.texto, /Voto do ministro relator/);
+    });
+
+    it('job de tribunal hoje indisponivel (STJ assistido) ainda baixa pelo link', async () => {
+      const { fila: f, jobId } = await filaComAssistido([{ processo: 'S', inteiroTeorLink: 'https://stj/x' }], 'stj');
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async () => 'Acordao do STJ baixado' });
+      assert.strictEqual(r.ok, true, r.texto);
+      assert.match(r.texto, /Acordao do STJ baixado/);
+    });
+
+    it('trf1 nao tem a flag de inteiro teor na busca, mas o link do resultado e baixado sob demanda', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'T1', inteiroTeorLink: 'https://trf1/x' }], 'trf1');
+      let pedido = null;
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async (url) => { pedido = url; return 'Inteiro teor do TRF1'; } });
+      assert.strictEqual(r.ok, true, r.texto);
+      assert.strictEqual(pedido, 'https://trf1/x');
+      assert.match(r.texto, /Inteiro teor do TRF1/);
+    });
+
+    it('no servidor o download sob demanda e tentado uma vez so (sem retry)', async () => {
+      const http = require('node:http');
+      let pedidos = 0;
+      const srv = http.createServer((req, res) => { pedidos += 1; res.writeHead(500); res.end(); });
+      await new Promise((r) => srv.listen(0, '127.0.0.1', r));
+      try {
+        const link = `http://127.0.0.1:${srv.address().port}/x`;
+        const { fila: f, jobId } = await filaCom([{ processo: 'R', inteiroTeorLink: link }]);
+        const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 }, { fila: f });
+        assert.strictEqual(r.ok, false);
+        assert.match(r.texto, /FALHA AO BAIXAR/);
+        assert.strictEqual(pedidos, 1);
+      } finally {
+        srv.closeAllConnections(); srv.close();
+      }
+    });
+
+    it('download vazio e falha, nao documento vazio', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'V', inteiroTeorLink: 'https://exemplo/x' }]);
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async () => '   \n ' });
+      assert.strictEqual(r.ok, false);
+      assert.match(r.texto, /nao trouxe o documento/);
+    });
+
+    it('pagina de captcha e falha, nao o inteiro teor', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'C', inteiroTeorLink: 'https://exemplo/x' }]);
+      for (const pagina of ['Just a moment... checking your browser', 'Por favor, resolva o reCAPTCHA', 'Verifique que você não é um robô']) {
+        const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+          { fila: f, baixarInteiroTeor: async () => pagina });
+        assert.strictEqual(r.ok, false, pagina);
+        assert.match(r.texto, /nao trouxe o documento/);
+      }
+    });
+
+    it('devolve o texto gravado na busca', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'A', inteiroTeor: 'EMENTA. Voto. Dispositivo.' }]);
+      const texto = await ferramentas.executar('ler_inteiro_teor', { job_id: jobId, indice: 1 }, { fila: f });
+      assert.match(texto, /Dispositivo/);
+    });
+
+    it('baixa pelo link quando nao ha texto gravado', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'B', inteiroTeorLink: 'https://exemplo/x.html' }]);
+      const texto = await ferramentas.executar('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async (url) => `BAIXADO de ${url}` });
+      assert.match(texto, /BAIXADO de https:\/\/exemplo\/x.html/);
+    });
+
+    it('falha de download e falha, nao ausencia', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'B', inteiroTeorLink: 'https://exemplo/x.html' }]);
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 1 },
+        { fila: f, baixarInteiroTeor: async () => { throw new Error('503'); } });
+      assert.strictEqual(r.ok, false);
+      assert.match(r.texto, /FALHA AO BAIXAR/);
+    });
+
+    it('sem texto e sem link, diz que nao ha caminho', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'C' }]);
+      const texto = await ferramentas.executar('ler_inteiro_teor', { job_id: jobId, indice: 1 }, { fila: f });
+      assert.match(texto, /nao traz inteiro teor/i);
+    });
+
+    it('corta em 60 mil caracteres e avisa', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'D', inteiroTeor: 'x'.repeat(70000) }]);
+      const texto = await ferramentas.executar('ler_inteiro_teor', { job_id: jobId, indice: 1 }, { fila: f });
+      assert.match(texto, /CORTADO/);
+      assert.ok(texto.length < 61000);
+    });
+
+    it('indice fora da busca e erro de parametro', async () => {
+      const { fila: f, jobId } = await filaCom([{ processo: 'A', inteiroTeor: 'x' }]);
+      const r = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId, indice: 9 }, { fila: f });
+      assert.strictEqual(r.ok, false);
+      const semIndice = await ferramentas.executarDetalhado('ler_inteiro_teor', { job_id: jobId }, { fila: f });
+      assert.strictEqual(semIndice.ok, false);
     });
   });
 });

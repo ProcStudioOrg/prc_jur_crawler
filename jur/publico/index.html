@@ -120,9 +120,10 @@
   <aside id="decisoes" aria-label="Decisões consultadas" hidden></aside>
 
   <div id="painel-config" class="painel" hidden></div>
-  <div id="painel-ressalva" class="painel" hidden></div>
+  <div id="painel-ficha" class="painel" hidden></div>
 
   <template id="tpl-entrada">
+    <div class="barra-escopo" aria-label="Tribunais da busca"></div>
     <form class="formulario">
       <textarea class="entrada" rows="1" placeholder="Pergunte sobre jurisprudência…"></textarea>
       <div class="entrada-rodape">
@@ -140,6 +141,7 @@
   <script src="/conexoes.js"></script>
   <script src="/seletor-modelo.js"></script>
   <script src="/app.js"></script>
+  <script src="/escopo.js"></script>
   <script src="/disponibilidade.js"></script>
   <script src="/decisoes.js"></script>
   <script src="/config.js"></script>

@@ -33,6 +33,78 @@ const criar = (corpo) => fetch(`${base}/api/v1/buscas`, {
 });
 
 describe('rotas de busca', () => {
+
+  it('aceita os parametros novos e os repassa ao job', async () => {
+    const r = await criar({ tribunal: 'trf4', query: 'x', juizados: true, dataPubInicio: '01/01/2024', dataPubFim: '31/01/2024' });
+    assert.strictEqual(r.status, 202);
+    const { id } = await r.json();
+    const job = fila.obter(id);
+    assert.strictEqual(job.params.juizados, true);
+    assert.strictEqual(job.params.inteiroTeor, undefined);
+    assert.strictEqual(job.params.dataPubInicio, '01/01/2024');
+  });
+
+  it('recusa juizados e publicacao onde o tribunal nao tem — 400 com detalhe', async () => {
+    for (const corpo of [
+      { tribunal: 'tjpr', query: 'x', juizados: true },
+      { tribunal: 'tjce', query: 'x', dataPubInicio: '01/01/2024' },
+    ]) {
+      const r = await criar(corpo);
+      assert.strictEqual(r.status, 400, JSON.stringify(corpo));
+      const j = await r.json();
+      assert.ok(j.erro && j.detalhe, JSON.stringify(j));
+    }
+  });
+
+  it('consulta por numero: query ou numero obrigatorio, numero sozinho e aceito', async () => {
+    assert.strictEqual((await criar({ tribunal: 'trf4' })).status, 400);
+    const r = await criar({ tribunal: 'trf4', numero: '5000000-00.2024.4.04.7000' });
+    assert.strictEqual(r.status, 202);
+    const { id } = await r.json();
+    assert.strictEqual(fila.obter(id).params.numero, '5000000-00.2024.4.04.7000');
+    assert.strictEqual((await criar({ tribunal: 'tjsp', numero: '1' })).status, 400, 'TJSP nao tem consulta por numero');
+  });
+
+  it('trf1 sem consulta direta: numero sem query e 400, numero junto de query roda', async () => {
+    const so = await criar({ tribunal: 'trf1', numero: '1000000-00.2024.4.01.3400' });
+    assert.strictEqual(so.status, 400);
+    assert.match((await so.json()).detalhe, /dentro de uma busca por termo/);
+    const junto = await criar({ tribunal: 'trf1', query: 'auxilio', numero: '1000000-00.2024.4.01.3400' });
+    assert.strictEqual(junto.status, 202);
+  });
+
+  it('recusa juizados que nao seja booleano', async () => {
+    assert.strictEqual((await criar({ tribunal: 'trf4', query: 'x', juizados: 'sim' })).status, 400);
+  });
+
+  it('inteiroTeor: true e recusado com 400 e aponta o caminho REST, nao a ferramenta do chat', async () => {
+    const r = await criar({ tribunal: 'trf4', query: 'x', inteiroTeor: true });
+    assert.strictEqual(r.status, 400);
+    const { erro } = await r.json();
+    assert.match(erro, /inteiroTeorLink/);
+    assert.match(erro, /GET \/api\/v1\/buscas\/\{id\}\/resultados/);
+    assert.doesNotMatch(erro, /ler_inteiro_teor/);
+  });
+
+  it('inteiroTeor nao booleano e 400 (validacao estrita); false e aceito', async () => {
+    for (const v of ['true', 1, 'sim', null]) {
+      const r = await criar({ tribunal: 'trf4', query: 'x', inteiroTeor: v });
+      assert.strictEqual(r.status, 400, JSON.stringify(v));
+      assert.match((await r.json()).erro, /precisa ser true ou false/);
+    }
+    assert.strictEqual((await criar({ tribunal: 'trf4', query: 'x', inteiroTeor: false })).status, 202);
+  });
+
+  it('GET /api/v1/tribunais traz resumo e capacidades', async () => {
+    const r = await fetch(`${base}/api/v1/tribunais`);
+    const { tribunais } = await r.json();
+    const stf = tribunais.find((t) => t.comando === 'stf');
+    assert.ok(stf.resumo.length > 10);
+    assert.strictEqual(stf.capacidades.juizados.estado, 'nao-existe');
+    assert.strictEqual(stf.capacidades.termo.estado, 'funciona');
+    const stj = tribunais.find((t) => t.comando === 'stj');
+    assert.strictEqual(stj.capacidades.termo.estado, 'nao-funciona');
+  });
   it('cria busca e devolve 202 com id', async () => {
     const r = await criar({ tribunal: 'stf', query: 'aposentadoria' });
     assert.strictEqual(r.status, 202);
@@ -185,6 +257,7 @@ describe('avisos no zero resultados (Important 3)', () => {
     await filaZero.aguardar(id);
     const job = await (await fetch(`${baseZero}/api/v1/buscas/${id}`)).json();
     assert.strictEqual(job.total, 0);
+    assert.ok(!('avisosCli' in job), 'avisosCli cru nao pode vazar na resposta REST');
     assert.strictEqual(job.avisos.length, 1, `esperava exatamente a nota do catalogo: ${JSON.stringify(job.avisos)}`);
     assert.strictEqual(job.avisos[0], notaDoStf, 'o aviso precisa ser a PROPRIA nota do catalogo do stf');
     // Trecho literal, para que trocar a nota por qualquer outro texto plausivel falhe.

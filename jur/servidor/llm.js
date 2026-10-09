@@ -27,7 +27,11 @@ Regras que nao se quebram:
    "esse magistrado nao julgou nada": diga que o tribunal nao filtra por magistrado e
    ofereca ler o campo relator dos julgados de uma busca por termo. Onde existe, a forma
    do valor varia (trecho do nome, nome EXATO do combo, ou codigo): nos que exigem exato
-   ou codigo, chame listar_relatores antes, porque valor aproximado nao da erro — da zero.`;
+   ou codigo, chame listar_relatores antes, porque valor aproximado nao da erro — da zero.
+8. Se o usuario pedir um tribunal INDISPONIVEL (sem-acesso, exige-sessao) ou que nao esta no
+   escopo, diga isso e PERGUNTE se ele quer buscar em outro. Nunca busque em outro tribunal
+   por conta propria: substituir o tribunal em silencio entrega uma resposta sobre outra
+   jurisdicao com cara de resposta ao pedido.`;
 
 /**
  * Bloco que descreve o escopo escolhido pelo usuario no painel de disponibilidade.
@@ -58,8 +62,9 @@ function blocoEscopo(escopo) {
     + 'Voce ja tem o catalogo aqui — NAO chame listar_tribunais so para saber onde pode buscar '
     + '(chame apenas se precisar do estado ou da ressalva de um deles).\n'
     + 'Buscar em tribunal fora desta lista e recusado pela ferramenta. Se o usuario pedir um '
-    + 'tribunal DESLIGADO, diga que ele esta desligado e peca para liga-lo — nunca troque por '
-    + 'outro em silencio, e nunca apresente isso como ausencia de jurisprudencia: a busca nao foi feita.';
+    + 'tribunal DESLIGADO, diga que ele esta desligado e peca para liga-lo — '
+    + 'nao busque em outro tribunal no lugar (nem em um que esteja ligado) sem o usuario pedir, '
+    + 'e nunca apresente isso como ausencia de jurisprudencia: a busca nao foi feita.';
 }
 
 function erroAbortado() {

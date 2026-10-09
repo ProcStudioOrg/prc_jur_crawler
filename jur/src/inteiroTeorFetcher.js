@@ -61,22 +61,61 @@ function sanitizeFilename(name) {
     .trim();
 }
 
-function httpGet(url) {
+// Guardas do download. O inteiro teor sob demanda (ler_inteiro_teor, no servidor) baixa
+// um link que veio do portal do tribunal, a pedido do modelo: sem prazo, um portal que
+// nao fecha a conexao prende a ferramenta; sem teto, um arquivo enorme vai inteiro para
+// a memoria; sem limite de redirecionamento, um laco nunca termina. E o content-type
+// barra PDF/binario: decodificar bytes de PDF como texto devolveria lixo com cara de
+// documento, e o modelo o leria como o acordao.
+const LIMITES_DOWNLOAD = Object.freeze({ timeoutMs: 30_000, maxBytes: 5 * 1024 * 1024, maxRedirects: 5 });
+const TIPOS_TEXTO = ['text/html', 'text/plain', 'application/xhtml+xml'];
+
+// Erro que nao melhora tentando de novo (tipo errado, grande demais, laco): o retry de
+// fetchInteiroTeor so faria o usuario esperar mais para receber a mesma recusa.
+function erroDefinitivo(mensagem) {
+  const e = new Error(mensagem);
+  e.definitivo = true;
+  return e;
+}
+
+function httpGet(url, opcoes = {}, redirecionamentos = 0) {
+  const { timeoutMs, maxBytes, maxRedirects } = { ...LIMITES_DOWNLOAD, ...opcoes };
   return new Promise((resolve, reject) => {
     const client = url.startsWith('https') ? https : http;
-    client.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (res) => {
+    const req = client.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (res) => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        return httpGet(res.headers.location).then(resolve).catch(reject);
+        res.resume();
+        if (redirecionamentos >= maxRedirects) {
+          return reject(erroDefinitivo(`mais de ${maxRedirects} redirecionamentos a partir de ${url}`));
+        }
+        const proximo = new URL(res.headers.location, url).toString();
+        return httpGet(proximo, opcoes, redirecionamentos + 1).then(resolve).catch(reject);
       }
       if (res.statusCode !== 200) {
+        res.resume();
         return reject(new Error(`HTTP ${res.statusCode} for ${url}`));
       }
+      const contentType = res.headers['content-type'] || '';
+      const tipo = contentType.split(';')[0].trim().toLowerCase();
+      if (!TIPOS_TEXTO.includes(tipo)) {
+        res.destroy();
+        return reject(erroDefinitivo(`content-type nao e texto (${tipo || 'ausente'}) em ${url}`));
+      }
       const chunks = [];
-      res.on('data', chunk => chunks.push(chunk));
+      let bytes = 0;
+      res.on('data', (chunk) => {
+        bytes += chunk.length;
+        if (bytes > maxBytes) {
+          res.destroy();
+          req.destroy();
+          return reject(erroDefinitivo(`documento acima do teto de tamanho (${maxBytes} bytes) em ${url}`));
+        }
+        chunks.push(chunk);
+      });
       res.on('end', () => {
+        if (bytes > maxBytes) return;
         const buf = Buffer.concat(chunks);
         // Detect encoding from Content-Type header (e.g., "charset= ISO-8859-1")
-        const contentType = res.headers['content-type'] || '';
         const charsetMatch = contentType.match(/charset\s*=\s*([\w-]+)/i);
         const charset = charsetMatch ? charsetMatch[1].trim().toLowerCase() : 'utf-8';
 
@@ -88,7 +127,19 @@ function httpGet(url) {
         }
       });
       res.on('error', reject);
-    }).on('error', reject);
+    });
+    req.on('error', reject);
+    // setTimeout do request mede inatividade do socket; o prazo aqui e TOTAL, para um
+    // portal que pinga um byte por vez nao segurar a ferramenta indefinidamente.
+    // Definitivo: portal que travou por 30 s nao destrava no retry de 1-2 s depois, e
+    // tentar de novo so multiplicaria a espera. O reject direto garante que o erro que
+    // sai e ESTE (o destroy pode emitir um "aborted" generico na resposta).
+    const relogio = setTimeout(() => {
+      const e = erroDefinitivo(`prazo de ${timeoutMs} ms esgotado em ${url}`);
+      reject(e);
+      req.destroy(e);
+    }, timeoutMs);
+    req.on('close', () => clearTimeout(relogio));
   });
 }
 
@@ -96,15 +147,18 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function fetchInteiroTeor(url, retries = 2) {
+// `options.log` e opcional: no servidor nao ha log (console.log sujaria o stdout do
+// processo); na CLI o batchDownload repassa o seu.
+async function fetchInteiroTeor(url, retries = 2, options = {}) {
+  const log = options.log || (() => {});
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const html = await httpGet(url);
       return stripHtml(html);
     } catch (err) {
-      if (attempt < retries) {
+      if (attempt < retries && !err.definitivo) {
         const delay = 1000 * (attempt + 1);
-        console.log(`Retry ${attempt + 1}/${retries} after ${delay}ms: ${err.message}`);
+        log(`Retry ${attempt + 1}/${retries} after ${delay}ms: ${err.message}`);
         await sleep(delay);
       } else {
         throw err;
@@ -136,7 +190,7 @@ async function batchDownload(results, outputDir, options = {}) {
 
       try {
         log(`  Downloading: ${result.numeroProcesso}`);
-        const text = await fetchInteiroTeor(result.inteiroTeorLink);
+        const text = await fetchInteiroTeor(result.inteiroTeorLink, 2, { log });
         fs.writeFileSync(filepath, text, 'utf-8');
         return { ...result, arquivo: filename };
       } catch (err) {
@@ -162,4 +216,4 @@ async function batchDownload(results, outputDir, options = {}) {
   return downloaded;
 }
 
-module.exports = { stripHtml, sanitizeFilename, fetchInteiroTeor, httpGet, batchDownload };
+module.exports = { stripHtml, sanitizeFilename, fetchInteiroTeor, httpGet, batchDownload, LIMITES_DOWNLOAD };

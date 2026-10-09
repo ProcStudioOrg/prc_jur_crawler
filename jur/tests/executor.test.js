@@ -154,6 +154,93 @@ describe('executor', () => {
     assert.ok(visto > 0);
   });
 
+  it('repassa periodo de publicacao como -dpi/-dpf', async () => {
+    const r = await executar_(tmp(), 'eco', {}, { query: 'x', dataPubInicio: '01/01/2024', dataPubFim: '31/01/2024' });
+    const args = r.envelope.args;
+    assert.ok(args.includes('-dpi') && args[args.indexOf('-dpi') + 1] === '01/01/2024');
+    assert.ok(args.includes('-dpf') && args[args.indexOf('-dpf') + 1] === '31/01/2024');
+  });
+
+  it('traduz juizados pelo mapa do tribunal, nunca por texto do modelo', async () => {
+    const arquivo = tmp();
+    const r = await executor.executar('trf4', { query: 'x', juizados: true }, { arquivoSaida: arquivo, cliPath: CLI_FALSA, modo: 'eco' });
+    const args = r.envelope.args;
+    assert.ok(args.includes('--origem') && args[args.indexOf('--origem') + 1] === 'turmas-recursais');
+  });
+
+  it('juizados num tribunal sem recorte falha ANTES de rodar, em vez de buscar sem o filtro', async () => {
+    const r = await executor.executar('tjpr', { query: 'x', juizados: true }, { arquivoSaida: tmp(), cliPath: CLI_FALSA, modo: 'eco' });
+    assert.strictEqual(r.ok, false);
+    assert.match(r.erro, /juizados/i);
+    assert.strictEqual(r.envelope, null, 'a CLI nao pode ter sido chamada');
+  });
+
+  // Inteiro teor e SOB DEMANDA (ler_inteiro_teor): com --fetch-inteiro-teor a maioria
+  // dos comandos grava so no --output-dir e pula o -o, e o job terminava "concluido"
+  // sem arquivo de resultados — que se le como busca vazia.
+  it('inteiroTeor nunca vira flag: a busca sempre grava o arquivo de resultados', async () => {
+    const r = await executar_(tmp(), 'eco', {}, { query: 'x', inteiroTeor: true });
+    const args = r.envelope.args;
+    assert.ok(!args.includes('--fetch-inteiro-teor'));
+    assert.ok(!args.includes('--output-dir'));
+  });
+
+  // A consulta por numero da CLI nao grava o -o e o envelope nao tem `count`: o
+  // caminho generico pegava o primeiro array (`avisos`) e um processo ENCONTRADO
+  // virava "0 resultados" — ou um aviso virava julgado.
+  it('consulta por numero encontrada vira 1 resultado: o registro da consulta', async () => {
+    const r = await executar_(tmp(), 'consulta-encontrada', {}, { numero: '1' });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(r.total, 1);
+    assert.strictEqual(r.resultados[0].encontrado, true);
+    assert.deepStrictEqual(r.resultados[0].documentos, [{ id: 'd1' }]);
+  });
+
+  it('consulta por numero nao encontrada e zero, e aviso nao vira julgado', async () => {
+    const r = await executar_(tmp(), 'consulta-ausente', {}, { numero: '1' });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(r.total, 0);
+    assert.deepStrictEqual(r.resultados, []);
+  });
+
+  it('consulta por numero com `encontrados` numerico devolve os resultados, nao os avisos, e grava o -o', async () => {
+    const arquivo = tmp();
+    const r = await executar_(arquivo, 'numero-encontrados', {}, { numero: '1' });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(r.total, 2);
+    assert.deepStrictEqual(r.resultados, [{ processo: 'a1' }, { processo: 'a2' }]);
+    assert.deepStrictEqual(JSON.parse(fs.readFileSync(arquivo, 'utf8')), r.resultados);
+  });
+
+  it('consulta por numero com `encontrados` zero e 0 resultados e traz os avisos da CLI', async () => {
+    const arquivo = tmp();
+    const r = await executar_(arquivo, 'numero-encontrados-vazio', {}, { numero: '1' });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(r.total, 0);
+    assert.deepStrictEqual(r.resultados, []);
+    assert.deepStrictEqual(r.avisos, ['não localizado']);
+    assert.deepStrictEqual(JSON.parse(fs.readFileSync(arquivo, 'utf8')), []);
+  });
+
+  it('consulta por numero com zero traz as `ressalvas` do envelope (tcdf/tcece) como avisos', async () => {
+    const r = await executar_(tmp(), 'numero-ressalvas', {}, { numero: '1' });
+    assert.strictEqual(r.total, 0);
+    assert.deepStrictEqual(r.resultados, []);
+    assert.ok(r.avisos.includes('Zero. Antes de concluir ausencia: confira o digito verificador.'), JSON.stringify(r.avisos));
+  });
+
+  it('`encontrados` maior que os resultados vira aviso de truncamento mesmo sem zero', async () => {
+    const r = await executar_(tmp(), 'numero-encontrados-truncado', {}, { numero: '1' });
+    assert.strictEqual(r.resultados.length, 10);
+    assert.ok(r.avisos.includes('A consulta trouxe 10 de 25 documentos.'), JSON.stringify(r.avisos));
+  });
+
+  it('juizados e inteiroTeor falsos nao poem flag nenhuma', async () => {
+    const r = await executar_(tmp(), 'eco', {}, { query: 'x', juizados: false, inteiroTeor: false });
+    assert.ok(!r.envelope.args.includes('--origem'));
+    assert.ok(!r.envelope.args.includes('--fetch-inteiro-teor'));
+  });
+
   function executar_(arquivo, modo, extras = {}, params = { query: 'x' }) {
     return executor.executar(modo, params, { arquivoSaida: arquivo, cliPath: CLI_FALSA, ...extras });
   }

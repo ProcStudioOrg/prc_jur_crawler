@@ -32,11 +32,18 @@ const AVISO_ZERO_SEM_NOTA = 'zero resultados nao comprova que nao ha jurispruden
  */
 function enriquecerJob(job, fila) {
   if (!job) return job;
+  // `avisosCli` e campo interno da fila: o que sai e `avisos[]`, nao o cru ao lado.
+  const { avisosCli, ...resto } = job;
   const info = catalogo.obter(job.comando);
   const avisos = [];
 
   if (job.status === 'concluido' && job.total === 0) {
     avisos.push(info && info.nota ? info.nota : AVISO_ZERO_SEM_NOTA);
+  }
+  // O que a CLI avisou sobre ESTA consulta (ex.: "nao localizado", truncamento) tambem
+  // vai para REST/MCP/SSE, com ou sem zero — e o mesmo texto que o modelo ve.
+  if (job.status === 'concluido') {
+    for (const a of avisosCli || []) avisos.push(`Aviso da consulta: ${a}`);
   }
 
   const erroResultados = fila && typeof fila.erroDeLeitura === 'function' ? fila.erroDeLeitura(job) : null;
@@ -45,7 +52,7 @@ function enriquecerJob(job, fila) {
       + 'A busca terminou, mas os julgados nao estao mais legiveis — isto NAO e uma busca vazia.');
   }
 
-  return { ...job, estadoTribunal: info ? info.estado : null, avisos, erroResultados: erroResultados || null };
+  return { ...resto, estadoTribunal: info ? info.estado : null, avisos, erroResultados: erroResultados || null };
 }
 
 module.exports = { enriquecerJob, AVISO_ZERO_SEM_NOTA };

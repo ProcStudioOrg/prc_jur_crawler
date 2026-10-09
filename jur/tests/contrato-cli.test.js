@@ -5,6 +5,9 @@ const path = require('node:path');
 const { describe, it } = require('node:test');
 const catalogo = require("../servidor/catalogo");
 const relator = require("../servidor/relator");
+const capacidades = require('../servidor/capacidades');
+// As excecoes vivem no modulo, que e o que a ficha e a ferramenta de busca consomem.
+const { SEM_FILTRO_DATA, SEM_NUMERO, COM_PUBLICACAO, SEM_INTEIRO_TEOR, NUMERO_SO_COM_TERMO } = capacidades;
 
 const CLI = path.join(__dirname, '..', 'bin', 'jur');
 
@@ -14,20 +17,6 @@ const SEM_OUTPUT = new Set(['crps']);
 // Sem --max-pages: nao paginam.
 const SEM_PAGINACAO = new Set([
   'tjrn', // busca por texto BLOQUEADA (403 Akamai); so consulta por numero via DataJud, sem paginacao
-  'crps', // nao e comando de busca
-]);
-
-// Sem --data-inicio/--data-fim: nao filtram por data de sessao/julgamento.
-const SEM_FILTRO_DATA = new Set([
-  'tjma', // busca por texto BLOQUEADA (captcha); so numero (DataJud) ou -dpi/-dpf (data de PUBLICACAO, campo diferente)
-  'tjrn', // busca por texto BLOQUEADA (403 Akamai); so consulta por numero via DataJud, sem filtro de data
-  'crps', // nao e comando de busca
-]);
-
-// Sem --numero: nao expoem consulta direta por numero de processo.
-const SEM_NUMERO = new Set([
-  'tcu', // nao expoe consulta direta por numero de processo no --help
-  'tjsp', // nao expoe consulta direta por numero de processo no --help
   'crps', // nao e comando de busca
 ]);
 
@@ -80,6 +69,19 @@ describe('contrato da CLI que o executor assume', () => {
     assert.deepStrictEqual(semPaginacao, [], `sem --max-pages: ${semPaginacao.join(', ')}`);
     assert.deepStrictEqual(semData, [], `sem --data-inicio/--data-fim: ${semData.join(', ')}`);
     assert.deepStrictEqual(semNumero, [], `sem --numero: ${semNumero.join(', ')}`);
+  });
+
+  // NUMERO_SO_COM_TERMO (trf1, trf3, trf5): a CLI TEM --numero, mas ele e so um filtro
+  // dentro da busca por termo — -q continua obrigatorio, ao contrario do trf4, onde -n e
+  // consulta direta. Por isso a ficha marca "Consulta por número" como nao-existe para
+  // eles, igual a SEM_NUMERO. Se a CLI de um deles perder o --numero, ele migra para
+  // SEM_NUMERO; se ganhar consulta direta, sai deste conjunto.
+  it('os tribunais de NUMERO_SO_COM_TERMO tem --numero na CLI e estao fora de SEM_NUMERO', () => {
+    for (const c of NUMERO_SO_COM_TERMO) {
+      assert.ok(ajuda(c).includes('--numero'), `${c} sem --numero`);
+      assert.ok(!SEM_NUMERO.has(c), `${c} nao pode estar nos dois conjuntos`);
+      assert.strictEqual(capacidades.existe(c, 'numero'), false, `${c} nao tem consulta direta por numero`);
+    }
   });
 });
 
@@ -153,5 +155,56 @@ describe('mapa de busca por magistrado x o que a CLI oferece', () => {
       .filter((c) => !relator.obter(c).nota);
     assert.deepStrictEqual(mudos, [],
       `sem nota explicando a ausencia: ${mudos.join(', ')}`);
+  });
+});
+
+const juizados = require('../servidor/juizados');
+
+describe('mapa de juizados x o que a CLI oferece', () => {
+  it('todo comando da CLI esta classificado no mapa de juizados', () => {
+    const sem = catalogo.comandosDaCli().filter((c) => !juizados.obter(c));
+    assert.deepStrictEqual(sem, [], `sem entrada em servidor/juizados.js: ${sem.join(', ')}`);
+  });
+
+  it('todo tribunal com recorte tem mesmo a flag e o valor no --help', () => {
+    const mentindo = juizados.comandos().filter((c) => {
+      const info = juizados.obter(c);
+      if (!info.suportado) return false;
+      const texto = ajuda(c);
+      const [flag, valor] = info.args;
+      return !(texto.includes(flag) && texto.includes(valor));
+    });
+    assert.deepStrictEqual(mentindo, [], `mapa diz que tem recorte mas o --help nao mostra: ${mentindo.join(', ')}`);
+  });
+
+  it('todo tribunal sem recorte realmente nao oferece turmas/juizados no --help', () => {
+    const escondendo = juizados.comandos().filter((c) => {
+      const info = juizados.obter(c);
+      if (info.suportado) return false;
+      const texto = ajuda(c);
+      const linhaOrigem = (texto.match(/--origem[^\n]*/) || [''])[0] + (texto.match(/--fontes[^\n]*/) || [''])[0];
+      return /turmas|juizad|JEF/i.test(linhaOrigem);
+    });
+    assert.deepStrictEqual(escondendo, [], `o --help oferece turmas/juizados mas o mapa diz que nao: ${escondendo.join(', ')}`);
+  });
+});
+
+describe('capacidades x o que a CLI oferece', () => {
+  it('COM_PUBLICACAO bate com --data-pub-inicio/--data-pub-fim, nos dois sentidos', () => {
+    const falhas = [];
+    for (const c of catalogo.comandosDaCli()) {
+      const tem = ajuda(c).includes('--data-pub-inicio') && ajuda(c).includes('--data-pub-fim');
+      if (tem !== COM_PUBLICACAO.has(c)) falhas.push(`${c} (cli: ${tem})`);
+    }
+    assert.deepStrictEqual(falhas, [], `divergencia em periodo de publicacao: ${falhas.join(', ')}`);
+  });
+
+  it('SEM_INTEIRO_TEOR bate com --fetch-inteiro-teor, nos dois sentidos', () => {
+    const falhas = [];
+    for (const c of catalogo.comandosDaCli()) {
+      const tem = ajuda(c).includes('--fetch-inteiro-teor');
+      if (tem === SEM_INTEIRO_TEOR.has(c)) falhas.push(`${c} (cli: ${tem})`);
+    }
+    assert.deepStrictEqual(falhas, [], `divergencia em inteiro teor: ${falhas.join(', ')}`);
   });
 });
