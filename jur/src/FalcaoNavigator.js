@@ -162,6 +162,12 @@ class FalcaoNavigator {
     this.userAgent = options.userAgent ?? USER_AGENT;
     this.log = options.log ?? (() => {});
     this.sessionId = options.sessionId ?? FalcaoNavigator.novoSessionId();
+    // Com CDP (navegador remoto) as chamadas saem do navegador, não do IP do servidor:
+    // o CloudFront do Falcão devolve 403 para o IP do servidor de produção.
+    this.cdp = options.cdp ?? (process.env.JUR_BROWSER_CDP || null);
+    this._remota = null;
+    this._emVoo = 0;
+    this._ocioso = null;
   }
 
   /**
@@ -183,47 +189,25 @@ class FalcaoNavigator {
       .join('&');
     const url = `${API_URL}/${endpoint}?${qs}`;
 
-    return new Promise((resolve, reject) => {
-      const req = https.get(url, {
-        headers: {
-          'User-Agent': this.userAgent, // sem isto o CloudFront devolve 403
-          'Accept': 'application/json',
-          'Accept-Language': 'pt-BR,pt;q=0.9',
-          'Referer': `${APP_URL}/pesquisa`,
-          'Origin': BASE_URL,
-        },
-      }, (res) => {
-        const chunks = [];
-        res.on('data', (c) => chunks.push(c));
-        res.on('end', () => {
-          const text = Buffer.concat(chunks).toString('utf-8');
-          if (res.statusCode === 429) {
-            // Estrangulamento, não erro: varrer vários acervos em sequência bate
-            // nisso com facilidade. Marcado para o backoff longo lá embaixo.
-            const err = new Error(`HTTP 429 em ${endpoint}: limite de taxa do Falcão`);
-            err.rateLimited = true;
-            err.retryAfter = Number(res.headers['retry-after']) || null;
-            return reject(err);
-          }
-          if (res.statusCode !== 200) {
-            return reject(new Error(`HTTP ${res.statusCode} em ${endpoint}: ${text.slice(0, 200)}`));
-          }
-          let json;
-          try {
-            json = JSON.parse(text);
-          } catch (e) {
-            return reject(new Error(`JSON inválido de ${endpoint}: ${text.slice(0, 200)}`));
-          }
-          // O Falcão devolve erro de negócio com HTTP 200 + {userMessage}
-          if (json && json.userMessage) {
-            return reject(new Error(`Falcão recusou a consulta: ${json.userMessage}`));
-          }
-          resolve(json);
-        });
-        res.on('error', reject);
-      });
-      req.setTimeout(this.timeout, () => req.destroy(new Error(`Timeout ${this.timeout}ms: ${endpoint}`)));
-      req.on('error', reject);
+    return this._requisitar(url, endpoint).then(({ status, retryAfter, text }) => {
+      if (status === 429) {
+        // Estrangulamento, não erro: varrer vários acervos em sequência bate
+        // nisso com facilidade. Marcado para o backoff longo lá embaixo.
+        const err = new Error(`HTTP 429 em ${endpoint}: limite de taxa do Falcão`);
+        err.rateLimited = true;
+        err.retryAfter = retryAfter;
+        throw err;
+      }
+      if (status !== 200) throw new Error(`HTTP ${status} em ${endpoint}: ${text.slice(0, 200)}`);
+      let json;
+      try {
+        json = JSON.parse(text);
+      } catch (e) {
+        throw new Error(`JSON inválido de ${endpoint}: ${text.slice(0, 200)}`);
+      }
+      // O Falcão devolve erro de negócio com HTTP 200 + {userMessage}
+      if (json && json.userMessage) throw new Error(`Falcão recusou a consulta: ${json.userMessage}`);
+      return json;
     }).catch((err) => {
       // Erro de negócio (limite do usuário anônimo, formato) não adianta repetir
       if (/Falcão recusou/.test(err.message)) throw err;
@@ -239,6 +223,78 @@ class FalcaoNavigator {
       this.log(`Retry ${attempt + 1}/${teto} em ${Math.round(delay / 1000)}s: ${err.message}`);
       return new Promise((r) => setTimeout(r, delay)).then(() => this._get(endpoint, params, attempt + 1));
     });
+  }
+
+  /** @private Transporte cru: {status, retryAfter, text}. Node direto ou via navegador remoto. */
+  _requisitar(url, endpoint) {
+    if (this.cdp) return this._requisitarNoNavegador(url);
+    return new Promise((resolve, reject) => {
+      const req = https.get(url, {
+        headers: {
+          'User-Agent': this.userAgent, // sem isto o CloudFront devolve 403
+          'Accept': 'application/json',
+          'Accept-Language': 'pt-BR,pt;q=0.9',
+          'Referer': `${APP_URL}/pesquisa`,
+          'Origin': BASE_URL,
+        },
+      }, (res) => {
+        const chunks = [];
+        res.on('data', (c) => chunks.push(c));
+        res.on('end', () => resolve({
+          status: res.statusCode,
+          retryAfter: Number(res.headers['retry-after']) || null,
+          text: Buffer.concat(chunks).toString('utf-8'),
+        }));
+        res.on('error', reject);
+      });
+      req.setTimeout(this.timeout, () => req.destroy(new Error(`Timeout ${this.timeout}ms: ${endpoint}`)));
+      req.on('error', reject);
+    });
+  }
+
+  /** @private Página do Falcão aberta no navegador remoto; o fetch sai da mesma origem da API. */
+  _paginaRemota() {
+    if (!this._remota) {
+      this._remota = (async () => {
+        const { chromium } = require('playwright');
+        let browser;
+        try { browser = await chromium.connectOverCDP(this.cdp, { timeout: 60000 }); }
+        // A URL CDP carrega o token do fornecedor: nunca repassar a mensagem original.
+        catch { throw new Error('Não foi possível conectar ao navegador remoto.'); }
+        const context = browser.contexts()[0] || await browser.newContext();
+        const page = await context.newPage();
+        await page.goto(`${APP_URL}/pesquisa`, { waitUntil: 'domcontentloaded', timeout: this.timeout });
+        return { browser, page };
+      })();
+      this._remota.catch(() => { this._remota = null; });
+    }
+    return this._remota;
+  }
+
+  /** @private */
+  async _requisitarNoNavegador(url) {
+    clearTimeout(this._ocioso);
+    this._emVoo++;
+    try {
+      const { page } = await this._paginaRemota();
+      return await page.evaluate(async ({ url, ms }) => {
+        const r = await fetch(url, { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(ms) });
+        return { status: r.status, retryAfter: Number(r.headers.get('retry-after')) || null, text: await r.text() };
+      }, { url, ms: this.timeout });
+    } finally {
+      // Conexão CDP aberta prende o processo da CLI: sem chamadas por um instante, solta.
+      if (--this._emVoo === 0) this._ocioso = setTimeout(() => this.fechar(), 1500);
+    }
+  }
+
+  /** Solta o navegador remoto, se houver. Sem efeito no transporte direto. */
+  async fechar() {
+    clearTimeout(this._ocioso);
+    const remota = this._remota;
+    this._remota = null;
+    if (remota) {
+      try { await (await remota).browser.close(); } catch { /* já desconectado */ }
+    }
   }
 
   /** @private Monta a querystring comum a /pesquisa e /pesquisa/filtros. */

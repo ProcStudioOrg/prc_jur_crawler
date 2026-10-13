@@ -71,8 +71,10 @@
     el('captcha').checked = preferencias.captcha;
     const provedores = dados?.provedores || ['local'];
     const disponivel = provedores.includes(preferencias.provedor);
-    const lista = provedores.map((p) => [p, p === 'local' ? 'Servidor ProcStudio' : 'Browserbase']);
-    if (!disponivel) lista.push([preferencias.provedor, 'Browserbase (indisponível)', true]);
+    const remotos = dados?.remoto?.fornecedores?.join(' → ') || 'Kernel → Steel';
+    const ROTULO = { local: 'Servidor ProcStudio', remoto: `Navegador remoto (${remotos})`, browserbase: 'Browserbase' };
+    const lista = provedores.map((p) => [p, ROTULO[p] || p]);
+    if (!disponivel) lista.push([preferencias.provedor, `${ROTULO[preferencias.provedor] || preferencias.provedor} (indisponível)`, true]);
     opcoes(el('provedor'), lista);
     el('provedor').value = preferencias.provedor;
     el('provedor-campo').hidden = provedores.length < 2 && disponivel;
@@ -90,9 +92,10 @@
     renderPreferencias();
     if (!dados) return;
     const { total, ocupados, disponiveis, sessoes, naFila } = dados;
-    texto(el('capacidade'), disponiveis > 0
+    const remoto = dados.remoto ? ` · remotos: ${dados.remoto.disponiveis} de ${dados.remoto.total} livres` : '';
+    texto(el('capacidade'), (disponiveis > 0
       ? `${disponiveis} de ${total} navegadores disponíveis`
-      : `${ocupados} de ${total} navegadores ocupados`);
+      : `${ocupados} de ${total} navegadores ocupados`) + remoto);
     const espera = sessoes.filter((s) => s.status === 'enfileirado' && s.posicao)
       .sort((a, b) => a.posicao - b.posicao)[0];
     const pausada = sessoes.some((s) => s.status === 'aguardando_usuario');
@@ -100,7 +103,7 @@
       : espera ? `Sua posição na fila: ${espera.posicao}` : naFila ? `${naFila} na fila` : '');
     el('fila').dataset.pausa = String(pausada);
     if (!atual()) selecionada = sessoes.find((s) => s.status === 'aguardando_usuario')?.id || sessoes[0]?.id || '';
-    opcoes(el('sessao'), sessoes.map((s) => [s.id, `${s.comando.toUpperCase()} · ${estadoSessao(s)} · ${s.id.slice(0, 6)}`]));
+    opcoes(el('sessao'), sessoes.map((s) => [s.id, `${s.comando.toUpperCase()} · ${estadoSessao(s)}${s.navegador ? ` · via ${s.navegador}` : ''} · ${s.id.slice(0, 6)}`]));
     el('sessao').value = selecionada;
     el('sessoes').hidden = !sessoes.length;
     el('vazio').hidden = !!sessoes.length;
@@ -108,7 +111,10 @@
     let mensagem = '';
     if (s?.status === 'enfileirado') mensagem = `${estadoSessao(s)}. A pesquisa começa quando um navegador ficar disponível.`;
     else if (s?.status === 'aguardando_usuario') mensagem = s.mensagem || 'O tribunal solicitou uma verificação. A pesquisa aguarda sua intervenção por até 2 minutos.';
-    else if (s) mensagem = s.acompanhar ? 'Pesquisa em andamento. Você pode acompanhar a tela abaixo.' : 'Pesquisa em andamento. O acompanhamento estava desativado ao iniciar.';
+    else if (s) mensagem = (s.navegador ? `Pesquisando via ${s.navegador}. ` : 'Pesquisa em andamento. ')
+      + (s.acompanhar ? 'Você pode acompanhar a tela abaixo.' : 'O acompanhamento estava desativado ao iniciar.');
+    if (s?.provedor === 'remoto' && preferencias.provedor !== 'remoto')
+      mensagem += ' Este tribunal bloqueia o servidor; a pesquisa usa navegador remoto.';
     texto(el('estado'), mensagem);
     el('visualizacao').hidden = !s?.acompanhar || !['rodando', 'aguardando_usuario'].includes(s?.status);
     if (!podeVer() || (sessaoDaTela && sessaoDaTela !== selecionada)) limparTela();

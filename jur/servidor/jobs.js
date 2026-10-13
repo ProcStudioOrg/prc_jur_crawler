@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const executorPadrao = require('./executor');
 const catalogoPadrao = require('./catalogo');
+const { rotulo: rotuloNavegador } = require('./navegadores/remotos');
 
 const CONCORRENCIA_PADRAO = Number(process.env.JUR_CONCORRENCIA || 3);
 
@@ -63,6 +64,8 @@ function criarFila(opcoes = {}) {
       // Nome distinto de `avisos` de proposito: enriquecer.js monta `avisos` com as
       // ressalvas do catalogo e sobrescreveria este campo no spread.
       avisosCli: lerAvisos(l.avisos_json),
+      // Onde a busca rodou: "Servidor ProcStudio", "Kernel", "Steel (reserva)"...
+      navegador: l.navegador || null,
     };
   }
 
@@ -170,6 +173,12 @@ function criarFila(opcoes = {}) {
         sinal: atual.controller.signal,
         navegador: navegadores?.opcoes(job.id),
         aoProcesso: (child) => navegadores?.anexar(job.id, child),
+        aoNavegador: (info) => {
+          const rotulo = rotuloNavegador(info);
+          con.prepare('UPDATE job SET navegador=? WHERE id=?').run(rotulo, job.id);
+          navegadores?.fornecedor?.(job.id, rotulo);
+          emitir({ tipo: 'navegador', jobId: job.id, navegador: rotulo });
+        },
         // IMPORTANTE: isto so funciona porque o executor real chama aoIniciar de forma
         // SINCRONA logo apos o spawn (ver comentario em executor.js). Se cancelar() for
         // chamado enquanto o pid ainda e null, ele marca `atual.cancelado = true` em vez

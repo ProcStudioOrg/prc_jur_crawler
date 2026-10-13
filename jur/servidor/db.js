@@ -9,8 +9,10 @@ const SCHEMA = `
    automática — as três mudanças foram aditivas, então CREATE TABLE IF NOT EXISTS já
    cobre banco antigo. A coluna user_version fica registrada para uma versão futura
    decidir o que fazer se o schema evoluir de um jeito que exija migração de verdade
-   (renomear/remover coluna, por exemplo). */
-PRAGMA user_version = 3;
+   (renomear/remover coluna, por exemplo).
+   v4 acrescenta job.navegador (onde a busca rodou: servidor, Kernel, Steel...). Coluna em
+   tabela existente não vem com IF NOT EXISTS; abrir() faz o ALTER quando falta. */
+PRAGMA user_version = 4;
 
 CREATE TABLE IF NOT EXISTS job (
   id           TEXT PRIMARY KEY,
@@ -25,7 +27,8 @@ CREATE TABLE IF NOT EXISTS job (
   erro         TEXT,
   total        INTEGER NOT NULL DEFAULT 0,
   arquivo      TEXT,
-  avisos_json  TEXT NOT NULL DEFAULT '[]'
+  avisos_json  TEXT NOT NULL DEFAULT '[]',
+  navegador    TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_job_status ON job (status, criado_em);
 
@@ -96,6 +99,8 @@ function abrir(caminho = caminhoPadrao()) {
   con.exec('PRAGMA journal_mode = WAL;');
   con.exec('PRAGMA foreign_keys = ON;');
   con.exec(SCHEMA);
+  if (!con.prepare('PRAGMA table_info(job)').all().some((c) => c.name === 'navegador'))
+    con.exec('ALTER TABLE job ADD COLUMN navegador TEXT');
 
   // Garante permissão 600 no arquivo de banco e nos arquivos WAL (segredo)
   try {

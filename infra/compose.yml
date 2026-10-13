@@ -19,6 +19,12 @@ services:
       # O provedor remoto só aparece quando as duas variáveis estão configuradas.
       BROWSERBASE_API_KEY: "${BROWSERBASE_API_KEY:-}"
       BROWSERBASE_PROJECT_ID: "${BROWSERBASE_PROJECT_ID:-}"
+      # Navegadores remotos (servidor/navegadores/remotos.js): Kernel primeiro, Steel de
+      # reserva. Com pelo menos uma chave, TRF3 e Falcão passam a usar o remoto.
+      KERNEL_API_KEY: "${KERNEL_API_KEY:-}"
+      STEEL_API_KEY: "${STEEL_API_KEY:-}"
+      JUR_NAVEGADOR_REMOTO: "${JUR_NAVEGADOR_REMOTO:-kernel,steel}"
+      JUR_CONCORRENCIA_REMOTA: "${JUR_CONCORRENCIA_REMOTA:-5}"
       # Dentro do container o bind precisa ser 0.0.0.0 para o Docker conseguir
       # encaminhar a porta publicada; quem limita a exposicao e o "127.0.0.1:" do
       # ports acima. Fora do container (node servidor/index.js) o default e 127.0.0.1.

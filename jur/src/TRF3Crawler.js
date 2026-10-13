@@ -21,7 +21,7 @@ class TRF3Crawler extends BaseCrawler {
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
         await this.page.goto(this.baseUrl, { waitUntil: 'domcontentloaded', timeout: 90000 });
-        await this.page.waitForSelector('input[placeholder="Digite sua Pesquisa"]', { timeout: 60000 });
+        await this.page.waitForSelector('[placeholder="Digite sua Pesquisa"]', { timeout: 60000 });
         await this.page.waitForTimeout(1000);
         lastError = null;
         break;
@@ -68,7 +68,7 @@ class TRF3Crawler extends BaseCrawler {
     if (needsAdvanced) {
       // Open advanced search
       try {
-        const advancedBtn = this.page.locator('button:has-text("Abrir pesquisa Avançada")');
+        const advancedBtn = this.page.getByRole('button', { name: 'Abrir pesquisa Avançada' });
         if (await advancedBtn.isVisible()) {
           await advancedBtn.click();
           await this.page.waitForTimeout(500);
@@ -219,20 +219,20 @@ class TRF3Crawler extends BaseCrawler {
    */
   async executeSearch(query) {
     // Fill search field
-    const searchBox = this.page.locator('input[placeholder="Digite sua Pesquisa"]');
+    const searchBox = this.page.locator('[placeholder="Digite sua Pesquisa"]');
     await searchBox.click();
     await searchBox.fill(query);
     console.log(`Set search query: ${query}`);
 
     // Click search button (icon button with text "Fazer Pesquisa")
-    await this.page.click('button:has-text("Fazer Pesquisa")');
+    await this.page.getByRole('button', { name: 'Fazer Pesquisa', exact: true }).click();
 
     // Wait for results page
     await this.page.waitForURL(/ListaResumida/, { timeout: 30000 });
     await this.waitForLoad();
 
     // Wait for results to appear
-    await this.page.waitForSelector('ul li', { timeout: 30000 }).catch(() => {
+    await this.page.waitForSelector('li a[href*="ListaColecao"]', { timeout: 30000 }).catch(() => {
       console.log('Warning: No results found or timeout waiting for results');
     });
 
@@ -260,10 +260,10 @@ class TRF3Crawler extends BaseCrawler {
     const results = [];
 
     // Wait for results to load
-    await this.page.waitForSelector('ul li a[href*="ListaColecao"]', { timeout: 10000 }).catch(() => {});
+    await this.page.waitForSelector('li a[href*="ListaColecao"]', { timeout: 10000 }).catch(() => {});
 
     // Get all result items
-    const items = await this.page.locator('ul li').filter({
+    const items = await this.page.locator('li').filter({
       has: this.page.locator('a[href*="ListaColecao"]')
     }).all();
 
@@ -274,85 +274,20 @@ class TRF3Crawler extends BaseCrawler {
         const result = await item.evaluate(el => {
           const link = el.querySelector('a[href*="ListaColecao"]');
           if (!link) return null;
+          const txt = (n) => n?.textContent?.replace(/\s+/g, ' ').trim() || '';
 
-          // Get all direct child divs/spans
-          const children = Array.from(link.children);
+          // Layout de out/2026: div.processo (número), div.informacoes-basicas
+          // (classe, órgão, relator, datas) e div.ementa, cada dado num span.info.
+          const numeroProcesso = (txt(link.querySelector('.processo .info')).match(/\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}/) || [''])[0];
+          const infos = Array.from(link.querySelectorAll('.informacoes-basicas .info')).map(txt);
+          const achar = (re) => infos.find((t) => re.test(t)) || '';
 
-          // Extract process number - usually in second child
-          let numeroProcesso = '';
-          let classe = '';
-          let orgaoJulgador = '';
-          let relator = '';
-          let dataPublicacao = '';
-          let dataJulgamento = '';
-          let ementa = '';
-
-          for (let i = 0; i < children.length; i++) {
-            const child = children[i];
-            const text = child.textContent?.trim() || '';
-
-            // Process number (format: NNNNNNN-NN.NNNN.N.NN.NNNN)
-            if (text.match(/^\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}$/)) {
-              numeroProcesso = text;
-              continue;
-            }
-
-            // Check for metadata container (has multiple child divs with class info)
-            const subChildren = Array.from(child.children);
-            if (subChildren.length >= 3) {
-              // This is likely the metadata container
-              for (const sub of subChildren) {
-                const subText = sub.textContent?.trim() || '';
-
-                // Classe (contains " - ")
-                if (subText.includes(' - ') && !classe) {
-                  classe = subText;
-                }
-                // Orgao julgador (contains "Turma" or "Seção")
-                else if ((subText.includes('Turma') || subText.includes('Seção')) && !orgaoJulgador) {
-                  orgaoJulgador = subText;
-                }
-                // Relator (starts with "Desembargador")
-                else if (subText.startsWith('Desembargador') && !relator) {
-                  relator = subText;
-                }
-                // Data publicacao
-                else if (subText.includes('DATA:') && !dataPublicacao) {
-                  dataPublicacao = subText;
-                }
-                // Data julgamento
-                else if (subText.includes('Julgamento:') && !dataJulgamento) {
-                  dataJulgamento = subText;
-                }
-              }
-            }
-
-            // Ementa - usually the last large text block
-            if (text.length > 200 && text.includes('EMENTA') || text.includes('PODER JUDICIÁRIO')) {
-              ementa = text;
-            }
-          }
-
-          // If ementa not found, try last child
-          if (!ementa && children.length > 0) {
-            const lastChild = children[children.length - 1];
-            ementa = lastChild.innerText?.trim() || '';
-          }
-
-          // Clean up dates
-          if (dataPublicacao) {
-            const match = dataPublicacao.match(/DATA:\s*(\d{2}\/\d{2}\/\d{4})/);
-            if (match) dataPublicacao = match[1];
-          }
-          if (dataJulgamento) {
-            const match = dataJulgamento.match(/Julgamento:\s*(\d{2}\/\d{2}\/\d{4})/);
-            if (match) dataJulgamento = match[1];
-          }
-
-          // Clean up relator
-          if (relator) {
-            relator = relator.replace(/^Desembargador(a)?\s+Federal\s+/i, '').trim();
-          }
+          const classe = achar(/ - /);
+          const orgaoJulgador = achar(/Turma|Seção|Órgão Especial|Plenário/);
+          const relator = achar(/^(Desembargador|Juiz)/).replace(/^Desembargador(a)?\s+Federal\s+/i, '').trim();
+          const dataPublicacao = (achar(/DATA:/i).match(/DATA:\s*(\d{2}\/\d{2}\/\d{4})/i) || [, ''])[1];
+          const dataJulgamento = (achar(/Julgamento:/).match(/Julgamento:\s*(\d{2}\/\d{2}\/\d{4})/) || [, ''])[1];
+          const ementa = (link.querySelector('.ementa')?.innerText || '').trim().replace(/^Ementa\s*/i, '');
 
           return {
             numeroProcesso,
@@ -400,7 +335,7 @@ class TRF3Crawler extends BaseCrawler {
   async goToNextPage() {
     await this.page.click('a:has-text("Próxima página")');
     await this.waitForLoad();
-    await this.page.waitForSelector('ul li a[href*="ListaColecao"]', { timeout: 30000 }).catch(() => {});
+    await this.page.waitForSelector('li a[href*="ListaColecao"]', { timeout: 30000 }).catch(() => {});
     await this.page.waitForTimeout(1500);
   }
 

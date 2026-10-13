@@ -323,7 +323,14 @@ async function buscar(entrada, deps) {
       : `o numero ${numeroPedido}`;
   const ressalvaRelator = relatorPedido ? `\nRESSALVA DO FILTRO DE MAGISTRADO: ${relator.explicarForma(entrada.tribunal)}` : '';
   const prazoMs = deps.timeoutBuscaMs === undefined ? TIMEOUT_BUSCA_MS : deps.timeoutBuscaMs;
-  const job = await aguardarComTimeout(deps.fila, id, prazoMs);
+  // Diz no chat onde a busca está rodando (servidor, Kernel, Steel...) assim que a vaga abre.
+  const aoNavegador = (ev) => {
+    if (ev?.jobId === id && ev.tipo === 'navegador') deps.aoProgresso?.(`${info.comando}: buscando via ${ev.navegador}`);
+  };
+  if (typeof deps.aoProgresso === 'function') deps.fila.aoEvento?.(aoNavegador);
+  let job;
+  try { job = await aguardarComTimeout(deps.fila, id, prazoMs); }
+  finally { deps.fila.removerOuvinte?.(aoNavegador); }
 
   // A partir daqui a busca EXISTE, entao todo retorno carrega o `jobId` — inclusive o
   // timeout e o erro. E no timeout que ele mais importa: o job continua rodando, e sem o
