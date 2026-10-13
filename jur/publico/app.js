@@ -276,6 +276,9 @@ async function reanexar(id) {
       } else if (nome === 'ferramenta') {
         bolha('ferramenta', `▸ ${dados.nome}(${JSON.stringify(dados.entrada)})`);
         destino = null;
+      } else if (nome === 'progresso') {
+        bolha('ferramenta', `↳ ${dados.texto}`);
+        destino = null;
       } else if (nome === 'busca') {
         if (window.jurDecisoes) window.jurDecisoes.sincronizar(id);
       } else if (nome === 'fim') {
@@ -475,6 +478,10 @@ async function enviar(campo, modelo, esforco) {
       } else if (nome === 'ferramenta') {
         if (!aindaNaMesmaConversa) return;
         bolha('ferramenta', `▸ ${dados.nome}(${JSON.stringify(dados.entrada)})`);
+        destino = null;
+      } else if (nome === 'progresso') {
+        if (!aindaNaMesmaConversa) return;
+        bolha('ferramenta', `↳ ${dados.texto}`);
         destino = null;
       } else if (nome === 'busca') {
         // Uma busca acabou de ser vinculada a conversa: o painel de decisoes ja pode

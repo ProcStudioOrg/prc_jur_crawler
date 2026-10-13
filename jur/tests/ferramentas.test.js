@@ -449,6 +449,22 @@ describe('ferramentas', () => {
     assert.doesNotMatch(texto, /inteiroTeorHtml/);
   });
 
+  it('buscar avisa no chat por qual navegador a busca rodou e grava no job', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-nav-'));
+    const arquivo = path.join(dir, 'saida.json');
+    fs.writeFileSync(arquivo, '[{"processo":"A"}]');
+    const f = jobs.criarFila({ con: db.abrir(path.join(dir, 'jur.db')), dirResultados: dir,
+      executarFn: async (c, p, extra) => {
+        extra.aoNavegador({ fornecedor: 'steel', nome: 'Steel', reserva: true });
+        return { ok: true, total: 1, resultados: [], arquivo, erro: null };
+      } });
+    const avisos = [];
+    const r = await ferramentas.executarDetalhado('buscar_jurisprudencia', { tribunal: 'stf', query: 'x' },
+      { fila: f, aoProgresso: (t) => avisos.push(t) });
+    assert.deepStrictEqual(avisos, ['stf: buscando via Steel (reserva)']);
+    assert.strictEqual(f.obter(r.jobId).navegador, 'Steel (reserva)');
+  });
+
   describe('ler_inteiro_teor', () => {
     async function filaCom(itens, tribunal = 'stf') {
       const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-tools-lit-'));

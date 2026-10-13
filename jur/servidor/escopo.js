@@ -2,6 +2,7 @@ const { randomUUID } = require("node:crypto");
 const { criarPool } = require("./navegadores/pool");
 const { criarRegistro } = require("./navegadores/registro");
 const { comBrowserbase } = require("./navegadores/browserbase");
+const remotos = require("./navegadores/remotos");
 const fs = require("node:fs");
 const path = require("node:path");
 const db = require("./db");
@@ -13,6 +14,20 @@ const { dono, hash } = require("./sessoes-web");
 function criarEscopos({ dir, executarFn, limite = 100, concorrencia }) {
   const cache = new Map();
   const pool = criarPool(concorrencia);
+  // O Chromium remoto não pesa no servidor; a vaga remota só limita o processo Node do
+  // crawler e respeita a concorrência dos fornecedores (Kernel Developer: 5).
+  const remoto = remotos.configurados().length > 0;
+  const poolRemoto = remoto ? criarPool(Number(process.env.JUR_CONCORRENCIA_REMOTA || 5)) : null;
+  const provedorDe = (comando, extra) =>
+    extra.navegador?.provedor || (remoto && remotos.exigeRemoto(comando) ? "remoto" : "local");
+  const poolDe = (provedor) => (provedor === "remoto" ? poolRemoto : pool);
+  function poolDaConta(navegadores) {
+    return {
+      adquirir: (id, sinal) => poolDe(navegadores.opcoes(id)?.provedor).adquirir(id, sinal),
+      posicao: (id) => pool.posicao(id) ?? poolRemoto?.posicao(id) ?? null,
+      estado: () => ({ ...pool.estado(), remoto: poolRemoto ? { ...poolRemoto.estado(), fornecedores: remotos.nomes() } : null }),
+    };
+  }
   function executarNoEscopo(fn, comando, params, extra, home) {
     const executarComCdp = (cdp = '') => fn(comando, params, {
       ...extra,
@@ -27,11 +42,19 @@ function criarEscopos({ dir, executarFn, limite = 100, concorrencia }) {
         JUR_BROWSER_CDP: cdp,
       },
     });
-    return extra.navegador?.provedor === 'browserbase'
-      ? comBrowserbase(executarComCdp, { sinal: extra.sinal }) : executarComCdp();
+    const avisar = (info) => { try { extra.aoNavegador?.(info); } catch { /* aviso não derruba a busca */ } };
+    const provedor = provedorDe(comando, extra);
+    if (provedor === "remoto")
+      return remotos.comNavegadorRemoto(executarComCdp, { sinal: extra.sinal, aoFornecedor: avisar });
+    if (provedor === "browserbase") {
+      avisar({ fornecedor: "browserbase", nome: "Browserbase" });
+      return comBrowserbase(executarComCdp, { sinal: extra.sinal });
+    }
+    avisar({ fornecedor: "local", nome: "Servidor ProcStudio" });
+    return executarComCdp();
   }
   async function listarLimitado(comando, params, home) {
-    const liberar = await pool.adquirir(randomUUID());
+    const liberar = await poolDe(provedorDe(comando, {})).adquirir(randomUUID());
     try { return await executarNoEscopo(executor.listar, comando, params, {}, home); }
     finally { liberar(); }
   }
@@ -80,21 +103,22 @@ function criarEscopos({ dir, executarFn, limite = 100, concorrencia }) {
       con.close();
       throw new Error("Identidade do armazenamento inválida.");
     }
-    const navegadores = criarRegistro(con, { browserbase: Boolean(process.env.BROWSERBASE_API_KEY && process.env.BROWSERBASE_PROJECT_ID) });
+    const navegadores = criarRegistro(con, { browserbase: Boolean(process.env.BROWSERBASE_API_KEY && process.env.BROWSERBASE_PROJECT_ID), remoto });
+    const poolConta = poolDaConta(navegadores);
     const item = {
       id,
       owner,
       home,
       con,
       emUso: 0,
-      pool,
+      pool: poolConta,
       navegadores,
       conversas: conversas.criarRepositorio(con),
       turnos: turnos.criarRegistro(),
       listarFn: (c, p) => listarLimitado(c, p, home),
       fila: jobs.criarFila({
         con,
-        pool,
+        pool: poolConta,
         navegadores,
         dirResultados: path.join(home, "resultados"),
         executarFn: (c, p, e) =>

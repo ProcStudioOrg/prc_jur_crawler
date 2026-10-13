@@ -153,6 +153,15 @@
       query.textContent = rotuloBusca(b) || '(sem termo)';
       item.appendChild(query);
 
+      // Onde rodou: o servidor ou um navegador remoto (Kernel, Steel...), para o usuário
+      // saber por que um tribunal bloqueado no servidor respondeu.
+      if (b.navegador) {
+        const via = document.createElement('span');
+        via.className = 'busca-navegador';
+        via.textContent = `via ${b.navegador}`;
+        item.appendChild(via);
+      }
+
       if (b.erroLeitura) {
         const aviso = document.createElement('span');
         aviso.className = 'busca-aviso';

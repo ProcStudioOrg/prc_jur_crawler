@@ -3,6 +3,14 @@
 **Escopo:** SP, MS · **Status:** ⚠️ Restrição de navegador — instável
 **Crawler:** `src/TRF3Crawler.js` · **Fallback:** `src/trf3_drission.py` (Python/DrissionPage)
 
+> ✅ **13/10/2026: funciona pelo navegador remoto.** O host recusa IP de datacenter
+> brasileiro (servidor de produção), mas responde pelo egresso da Kernel/Steel. Na web,
+> TRF3 vai sempre pelo remoto (`servidor/navegadores/remotos.js`); na CLI, rode com
+> `JUR_BROWSER_CDP=<wss do fornecedor> node --require src/navegadorPreload.js bin/jur trf3 ...`.
+> O layout mudou nesta data (campo virou `textarea`, botão só com `aria-label`, lista em
+> `ol.lista-retorno` com `.processo`/`.informacoes-basicas`/`.ementa`); o crawler foi
+> ajustado e não depende mais do Chrome proprietário quando conectado por CDP.
+>
 > ⚠️ **Verificado em 27/07/2026: o host está INACESSÍVEL, e não é mais a verificação de
 > navegador.** `web.trf3.jus.br` resolve pela Akamai (`a1855.dscb.akamai.net` → 189.86.122.19),
 > mas nada responde: Playwright dá `net::ERR_HTTP2_PROTOCOL_ERROR` já no `goto` (inclusive com

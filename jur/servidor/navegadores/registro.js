@@ -1,10 +1,13 @@
 const { randomUUID } = require('node:crypto');
+const { exigeRemoto } = require('./remotos');
 const erro = (mensagem, status = 409) => Object.assign(new Error(mensagem), { status });
 
-function criarRegistro(con, { browserbase = false } = {}) {
+function criarRegistro(con, { browserbase = false, remoto = false } = {}) {
   con.exec('CREATE TABLE IF NOT EXISTS navegador_preferencias (id INTEGER PRIMARY KEY CHECK(id=1), valor TEXT NOT NULL)');
   const sessoes = new Map();
-  const provedores = browserbase ? ['local', 'browserbase'] : ['local'];
+  const provedores = ['local', ...(remoto ? ['remoto'] : []), ...(browserbase ? ['browserbase'] : [])];
+  // Tribunal que bloqueia o IP do servidor vai pelo remoto mesmo com preferência local.
+  const provedorPara = (comando, p) => (remoto && exigeRemoto(comando) ? 'remoto' : p.provedor);
   function preferencias() {
     const row = con.prepare('SELECT valor FROM navegador_preferencias WHERE id=1').get();
     return row ? JSON.parse(row.valor) : { acompanhar: false, captcha: false, provedor: 'local' };
@@ -18,8 +21,13 @@ function criarRegistro(con, { browserbase = false } = {}) {
   }
   function registrar(id, comando) {
     const p = preferencias();
-    if (!provedores.includes(p.provedor)) throw erro('Provedor de navegador não configurado. Selecione o navegador local.');
-    sessoes.set(id, { id, comando, ...p, status: 'enfileirado', pendentes: new Map() });
+    const provedor = provedorPara(comando, p);
+    if (!provedores.includes(provedor)) throw erro('Provedor de navegador não configurado. Selecione o navegador local.');
+    sessoes.set(id, { id, comando, ...p, provedor, status: 'enfileirado', pendentes: new Map() });
+  }
+  function fornecedor(id, rotulo) {
+    const s = sessoes.get(id);
+    if (s) s.navegador = rotulo;
   }
   function anexar(id, child) {
     const s = sessoes.get(id);
@@ -67,12 +75,12 @@ function criarRegistro(con, { browserbase = false } = {}) {
     });
   }
   return {
-    preferencias, salvar, registrar, anexar, remover, requisitar, provedores,
+    preferencias, salvar, registrar, anexar, remover, requisitar, provedores, fornecedor,
     assistido: (comando) => comando === 'stj' && preferencias().captcha,
     opcoes: (id) => { const s = sessoes.get(id); return s && { acompanhar: s.acompanhar, captcha: s.captcha, provedor: s.provedor }; },
     listar: (pool) => [...sessoes.values()].map((s) => ({
       id: s.id, comando: s.comando, status: s.status, acompanhar: s.acompanhar,
-      posicao: pool.posicao(s.id), mensagem: s.mensagem || '',
+      posicao: pool.posicao(s.id), mensagem: s.mensagem || '', provedor: s.provedor, navegador: s.navegador || null,
     })),
     iniciar: (id) => { const s = sessoes.get(id); if (s) s.status = 'rodando'; },
     fechar: () => { for (const id of sessoes.keys()) remover(id); },

@@ -184,7 +184,10 @@ function registrar(roteador, deps) {
           mensagens,
           apiKey,
           cliente,
-          deps: { ...deps, ...(filaRastreada ? { fila: filaRastreada } : {}), escopoTribunais },
+          deps: {
+            ...deps, ...(filaRastreada ? { fila: filaRastreada } : {}), escopoTribunais,
+            aoProgresso: (texto) => emitir('progresso', { texto }),
+          },
           sinal: req.authSignal ? AbortSignal.any([controlador.signal, req.authSignal]) : controlador.signal,
           modelo: vModelo.valor,
           esforco: vEsforco.valor,

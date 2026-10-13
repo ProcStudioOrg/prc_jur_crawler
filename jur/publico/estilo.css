@@ -530,6 +530,7 @@ body {
 .busca-item[data-status="erro"] .busca-total { color: #B3261E; }
 .busca-query { font-size: 13px; color: var(--fraco); overflow-wrap: anywhere; }
 .busca-aviso { font-size: 12px; color: #B3261E; }
+.busca-navegador { font-size: 12px; color: var(--fraco); }
 
 .julgado { padding: 12px 0; border-top: 1px solid var(--borda); }
 .julgado h3 { margin: 0 0 4px; font-size: 13.5px; font-family: ui-monospace, SFMono-Regular, monospace; }

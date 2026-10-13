@@ -56,6 +56,41 @@ página no TJSP, terminou com **20 resultados** nesta rodada. **Não houve resol
 humana de CAPTCHA real nesta validação.** Os testes reproduzíveis de intervenção
 usam um desafio local controlado.
 
+## Navegadores remotos: Kernel e Steel
+
+O IP do servidor de produção (Hostinger, AS47583) é recusado pelo CloudFront do Falcão
+(403 em TST, TRTs e CSJT) e pela Akamai do TRF3 (conexão derrubada). Pelo egresso de
+navegadores remotos os dois respondem. Medido em 13/10/2026 com a imagem de produção:
+
+| Caminho | Falcão (API) | TRF3 (busca completa) |
+|---|---|---|
+| IP do servidor | 403 | conexão recusada |
+| Kernel, sem stealth | 200 (10 de 11 sessões; 1 caiu em IP bloqueado) | 10 resultados |
+| Kernel, com stealth | 403 (proxy residencial bloqueado) | 10 resultados |
+| Steel, sem proxy pago | 200 (7 de 7) | 10 resultados |
+| STJ, qualquer caminho | — | desafio interativo do Cloudflare: continua bloqueado |
+
+`servidor/navegadores/remotos.js` abre a sessão pela API do fornecedor, entrega a URL
+CDP ao crawler (`JUR_BROWSER_CDP`) e encerra a sessão no fim. Ordem por custo:
+**Kernel** (US$0,06/h, cobrança por segundo, US$5/mês de crédito no plano Developer,
+5 simultâneos) e **Steel** de reserva (US$0,10/h por minuto arredondado, US$30 de
+crédito único, 10 simultâneos). A reserva entra quando a sessão não abre, o CDP não
+conecta ou o tribunal recusa o IP sorteado (403, `ERR_HTTP2_PROTOCOL_ERROR`). Stealth,
+proxy pago e solver de CAPTCHA ficam desligados.
+
+- TRF3 e os comandos do Falcão vão **sempre** pelo remoto quando há chave; os demais
+  seguem a preferência da conta, que ganha a opção "Navegador remoto".
+- O Falcão não usa navegador para buscar: com CDP, o `FalcaoNavigator` abre a página do
+  Falcão no remoto e faz as chamadas da API de dentro dela.
+- Vagas remotas (`JUR_CONCORRENCIA_REMOTA`, padrão 5) são separadas das locais: o
+  Chromium roda no fornecedor, então o servidor só segura o processo Node do crawler.
+- A interface mostra onde cada busca rodou: no chat (`↳ trt2: buscando via Kernel`),
+  no painel de decisões (`via Steel (reserva)`) e no painel Navegadores. A API expõe
+  `navegador` no job e o evento SSE `navegador`.
+
+Configuração: `KERNEL_API_KEY`, `STEEL_API_KEY` e opcionalmente `JUR_NAVEGADOR_REMOTO`
+(ordem, padrão `kernel,steel`) no `infra/.env`.
+
 ## Browserbase, Stagehand e Skyvern
 
 Browserbase é um provedor opcional implementado. Configure `BROWSERBASE_API_KEY` e

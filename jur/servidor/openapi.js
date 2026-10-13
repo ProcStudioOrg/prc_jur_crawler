@@ -66,12 +66,12 @@ function operation(summary, { schema, id = false, created = false } = {}) {
 const ACCOUNT_PATHS = {
   '/api/v1/navegadores': { get: {
     ...operation('Capacidade global, fila e sessões da conta autenticada'),
-    description: 'total, ocupados, disponiveis e naFila são globais. sessoes contém apenas id, comando, status, posicao, acompanhar e mensagem da própria conta. Posição é 1-based. Preferências acompanhar/captcha são opt-in, provedor é local ou browserbase quando configurado.',
+    description: 'total, ocupados, disponiveis e naFila são globais. sessoes contém apenas id, comando, status, posicao, acompanhar e mensagem da própria conta. Posição é 1-based. Preferências acompanhar/captcha são opt-in, provedor é local, remoto (Kernel com Steel de reserva) ou browserbase quando configurado. TRF3 e Falcão (TST, TRTs, CSJT) usam o remoto mesmo com preferência local, porque bloqueiam o IP do servidor. remoto traz as vagas remotas e os fornecedores na ordem de uso; cada sessão traz provedor e navegador (onde está rodando).',
   } },
   '/api/v1/navegadores/preferencias': { post: operation('Configura acompanhamento para novas buscas; captcha implica acompanhar', {
     schema: { type: 'object', required: ['acompanhar', 'captcha'], properties: {
       acompanhar: { type: 'boolean', default: false }, captcha: { type: 'boolean', default: false },
-      provedor: { type: 'string', enum: ['local', 'browserbase'], default: 'local' },
+      provedor: { type: 'string', enum: ['local', 'remoto', 'browserbase'], default: 'local' },
     } },
   }) },
   '/api/v1/navegadores/{id}/tela': { get: {
@@ -191,6 +191,7 @@ function documento() {
             erro: { type: ['string', 'null'], description: 'motivo da falha quando status é "erro"' },
             criadoEm: { type: 'integer', description: 'epoch ms' },
             terminadoEm: { type: ['integer', 'null'], description: 'epoch ms' },
+            navegador: { type: ['string', 'null'], description: 'onde a busca rodou: "Servidor ProcStudio", "Kernel", "Steel (reserva)"…; null enquanto na fila' },
             estadoTribunal: { anyOf: [{ $ref: '#/components/schemas/EstadoTribunal' }, { type: 'null' }] },
             avisos: {
               type: 'array', items: { type: 'string' },
@@ -507,7 +508,7 @@ function documento() {
           summary: 'Acompanha uma busca em tempo real (SSE)',
           description:
             'text/event-stream. Emite `estado` (imediato, snapshot atual) e depois `iniciado`, '
-            + '`concluido`, `erro` ou `cancelado` conforme o job avança — cada evento carrega o '
+            + '`navegador` (quando o navegador da busca é escolhido), `concluido`, `erro` ou `cancelado` conforme o job avança — cada evento carrega o '
             + 'job inteiro (Busca), já com `avisos[]`. A conexão fecha sozinha quando o job chega a '
             + 'um estado final.',
           parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
