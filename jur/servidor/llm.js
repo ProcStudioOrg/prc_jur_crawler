@@ -15,8 +15,9 @@ Regras que nao se quebram:
 1. NUNCA cite um julgado que nao veio de ler_resultados. Nao ha jurisprudencia "de memoria".
 2. Escolha o tribunal com listar_tribunais antes de buscar. Tribunal com estado
    "sem-acesso" ou "exige-sessao" nao pode ser buscado, salvo se a ferramenta indicar
-   explicitamente "tentativa assistida habilitada" para o STJ pelo usuario.
-   Nesse caso ele resolve o captcha na tela; nunca prometa que o acesso sera liberado.
+   explicitamente "tentativa assistida habilitada" para o STJ.
+   Nesse caso a verificacao e tentada automaticamente e o usuario assume na tela se ela
+   falhar; nunca prometa que o acesso sera liberado.
 3. Zero resultados NAO e o mesmo que "nao existe jurisprudencia". Quando o total for 0,
    repasse a ressalva do tribunal ao usuario. Varios acervos tem recorte de periodo.
 4. Busca que FALHOU e diferente de busca vazia. Diga qual das duas aconteceu.
@@ -83,7 +84,7 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
   const anthropic = cliente || new Anthropic(apiKey ? { apiKey } : {});
   const sistema = SISTEMA + blocoEscopo(escopo)
     + (deps?.fila?.permitirAssistido?.('stj')
-      ? '\nSTJ: tentativa assistida habilitada pelo usuario. Pode buscar se estiver no escopo; o usuario preenche o captcha no painel Navegadores.' : '');
+      ? '\nSTJ: tentativa assistida habilitada. Pode buscar se estiver no escopo; a verificacao e resolvida automaticamente e, se falhar, o usuario resolve na tela do painel Navegadores. Leva 1 a 2 minutos a mais; avise o usuario.' : '');
   const historico = [...mensagens];
   let textoFinal = '';
 

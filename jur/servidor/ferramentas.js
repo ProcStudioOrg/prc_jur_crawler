@@ -224,7 +224,7 @@ async function listarTribunais(entrada, deps = {}) {
     // Sem isto o modelo so descobre tentando, e o TJPR (que nao tem o filtro) parecia
     // uma busca quebrada em vez de um tribunal que nao oferece o recorte.
     const r = t.relator && t.relator.suportado ? `magistrado: ${t.relator.forma}` : 'magistrado: nao';
-    const assistido = deps.fila?.permitirAssistido?.(t.comando) ? ' · tentativa assistida habilitada; usuário resolve captcha na tela' : '';
+    const assistido = deps.fila?.permitirAssistido?.(t.comando) ? ' · tentativa assistida habilitada; captcha resolvido automaticamente ou pelo usuário na tela' : '';
     return `${t.comando} — ${t.nome}${uf} · ${t.estado} · ${r}${assistido} · ${capacidades.resumoCompacto(t.comando)}`;
   });
   return { texto: `${lista.length} tribunais:\n${linhas.join('\n')}`, ok: true };

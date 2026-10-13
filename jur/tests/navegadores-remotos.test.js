@@ -123,3 +123,33 @@ test('TRF3 e Falcão vão pelo remoto mesmo com preferência local', () => {
   assert.throws(() => semRemoto.salvar({ acompanhar: false, captcha: false, provedor: 'remoto' }), /prefer/i);
   con.close();
 });
+
+test('STJ vai só pela Steel, com resolvedor, e abre sempre assistido', async () => {
+  assert.deepEqual(remotos.opcoesPara('stj'), { ordem: 'steel', captcha: true });
+  assert.deepEqual(remotos.opcoesPara('trf3'), {});
+  assert.ok(remotos.exigeRemoto('stj'));
+  const { chamadas, fetchFn } = fornecedoresFalsos();
+  const recebidas = [];
+  await remotos.comNavegadorRemoto(async (cdp, info) => { recebidas.push([cdp, info]); return { ok: true }; },
+    { ...remotos.opcoesPara('stj'), fetchFn });
+  assert.ok(!chamadas.some((c) => c.url.includes('onkernel')), 'Kernel fica de fora do STJ');
+  assert.equal(chamadas.find((c) => c.url === 'https://api.steel.dev/v1/sessions').body.solveCaptcha, true);
+  assert.deepEqual(recebidas[0][1], { captcha: true });
+
+  const con = new DatabaseSync(':memory:');
+  const r = criarRegistro(con, { remoto: true });
+  assert.ok(r.assistido('stj'), 'STJ buscável sem a preferência de captcha');
+  r.registrar('s1', 'stj');
+  assert.deepEqual(r.opcoes('s1'), { acompanhar: true, captcha: true, provedor: 'remoto' });
+  r.registrar('t1', 'tjsp');
+  assert.deepEqual(r.opcoes('t1'), { acompanhar: false, captcha: false, provedor: 'local' });
+  con.close();
+
+  // Sem chave da Steel o STJ volta ao comportamento anterior (local, captcha manual opcional).
+  delete process.env.STEEL_API_KEY;
+  assert.ok(!remotos.exigeRemoto('stj'));
+  const semSteel = criarRegistro(new DatabaseSync(':memory:'), { remoto: true });
+  assert.ok(!semSteel.assistido('stj'));
+  semSteel.registrar('s2', 'stj');
+  assert.equal(semSteel.opcoes('s2').provedor, 'local');
+});

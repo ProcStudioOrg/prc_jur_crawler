@@ -39,6 +39,7 @@ function criarPonte({ enviar = () => {}, captcha = false, timeoutMs = PRAZO_PADR
   let fila = Promise.resolve();
   let captura = null;
   let pendentes = 0;
+  let andamento = '';
   const emitir = (dados) => enviar({ jurNavegador: true, ...dados });
   const estado = (valor, mensagem) => emitir({ tipo: 'estado', estado: valor, mensagem });
   const paginaAtual = () => [...paginas].reverse().find((p) => !p.isClosed());
@@ -61,7 +62,7 @@ function criarPonte({ enviar = () => {}, captcha = false, timeoutMs = PRAZO_PADR
       paginas.delete(page);
       if (pausa?.page === page) finalizarPausa(pausa, new ErroAssistido('O navegador foi fechado durante a intervenção.'));
     });
-    if (!pausa) estado('rodando', 'Navegador em execução.');
+    if (!pausa) estado('rodando', andamento);
   }
 
   function aguardarIntervencao(page, { verificar, mensagem = 'Resolva a verificação e selecione Continuar.', timeoutMs: prazo } = {}) {
@@ -164,7 +165,13 @@ function criarPonte({ enviar = () => {}, captcha = false, timeoutMs = PRAZO_PADR
     paginas.clear();
   }
 
-  return { anexarPagina, aguardarIntervencao, executarAcao, capturarTela, tratarMensagem, encerrar };
+  // Mensagem de andamento para o painel, sem pausar (ex.: resolvedor automático trabalhando).
+  function informar(mensagem) {
+    andamento = mensagem;
+    if (!pausa) estado('rodando', mensagem);
+  }
+
+  return { anexarPagina, aguardarIntervencao, executarAcao, capturarTela, tratarMensagem, encerrar, informar };
 }
 
 let ponteProcesso;
@@ -193,4 +200,8 @@ function aguardarIntervencao(page, opcoes) {
   return obterPonte().aguardarIntervencao(page, opcoes);
 }
 
-module.exports = { validarAcao, criarPonte, obterPonte, aguardarIntervencao };
+function informar(mensagem) {
+  obterPonte()?.informar(mensagem);
+}
+
+module.exports = { validarAcao, criarPonte, obterPonte, aguardarIntervencao, informar };

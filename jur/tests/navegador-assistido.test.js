@@ -189,3 +189,14 @@ test('STJ distingue falha HTTP de busca vazia explícita', async () => {
   nav.context.request.get = async () => ({ status: () => 200, body: async () => Buffer.from('Nenhum documento encontrado', 'latin1') });
   assert.equal((await nav.buscar({ query: 'consulta' })).total, 0);
 });
+
+test('informar mostra o andamento sem pausar e sobrevive a uma página nova', () => {
+  const { criarPonte } = carregar();
+  const enviadas = [];
+  const ponte = criarPonte({ enviar: (m) => enviadas.push(m), captcha: true });
+  ponte.informar('A Steel está resolvendo.');
+  ponte.anexarPagina(pagina());
+  assert.deepEqual(enviadas.map((m) => [m.estado, m.mensagem]), [
+    ['rodando', 'A Steel está resolvendo.'], ['rodando', 'A Steel está resolvendo.'],
+  ]);
+});

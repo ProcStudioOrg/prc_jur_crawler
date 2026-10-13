@@ -1,6 +1,7 @@
 const catalogo = require('../catalogo');
 const capacidades = require('../capacidades');
 const { json } = require('../http');
+const { assistidoSempre } = require('../navegadores/remotos');
 
 function registrar(roteador, deps = {}) {
   roteador.rota('GET', '/api/v1/saude', (req, res) => {
@@ -12,7 +13,9 @@ function registrar(roteador, deps = {}) {
     json(res, 200, { tribunais: catalogo.listar({ segmento, uf, estado }).map((t) => {
       const assistido = Boolean(deps.fila?.permitirAssistido?.(t.comando));
       const base = assistido
-        ? { ...t, disponivel: true, assistido: true, nota: t.nota + ' Tentativa assistida habilitada: você pode preencher o captcha na tela do navegador. Acesso não garantido.' }
+        ? { ...t, disponivel: true, assistido: true, nota: t.nota + (assistidoSempre(t.comando)
+          ? ' Busca pelo navegador remoto: a verificação é resolvida automaticamente (1 a 2 minutos) e, se falhar, você resolve na tela do navegador, que abre sozinha. Acesso não garantido.'
+          : ' Tentativa assistida habilitada: você pode preencher o captcha na tela do navegador. Acesso não garantido.') }
         : t;
       // `resumo` e `capacidades` sao o que a FICHA mostra; `nota` continua no payload
       // para o modelo e para clientes antigos, mas a interface deixa de renderiza-la.

@@ -42,8 +42,9 @@ ações fora da pausa humana. Nenhuma chave, cookie ou URL CDP é entregue à in
 
 ## STJ e TJSP
 
-- STJ: o catálogo continua `sem-acesso`. A opção manual habilita uma **tentativa
-  assistida** exclusivamente para aquela conta, também no chat e MCP. O critério de
+- STJ: o catálogo continua `sem-acesso`. Com `STEEL_API_KEY` ele fica buscável para
+  todos, pela Steel com resolvedor (seção abaixo). Sem ela, a opção manual habilita uma
+  **tentativa assistida** exclusivamente para aquela conta, também no chat e MCP. O critério de
   retomada é o campo de pesquisa oficial visível. Não garante liberação pelo Cloudflare.
 - TJSP: identifica desafios visíveis; o selo permanente do reCAPTCHA invisível não é
   um bloqueio por si só. Após intervenção, formulário ou resultados precisam estar
@@ -68,7 +69,8 @@ navegadores remotos os dois respondem. Medido em 13/10/2026 com a imagem de prod
 | Kernel, sem stealth | 200 (10 de 11 sessões; 1 caiu em IP bloqueado) | 10 resultados |
 | Kernel, com stealth | 403 (proxy residencial bloqueado) | 10 resultados |
 | Steel, sem proxy pago | 200 (7 de 7) | 10 resultados |
-| STJ, qualquer caminho | — | desafio interativo do Cloudflare: continua bloqueado |
+| STJ, qualquer caminho sem resolvedor | — | desafio interativo do Cloudflare |
+| STJ, Steel com `solveCaptcha` | — | 10 acórdãos em 52s (desafio resolvido em ~60-80s) |
 
 `servidor/navegadores/remotos.js` abre a sessão pela API do fornecedor, entrega a URL
 CDP ao crawler (`JUR_BROWSER_CDP`) e encerra a sessão no fim. Ordem por custo:
@@ -76,7 +78,10 @@ CDP ao crawler (`JUR_BROWSER_CDP`) e encerra a sessão no fim. Ordem por custo:
 5 simultâneos) e **Steel** de reserva (US$0,10/h por minuto arredondado, US$30 de
 crédito único, 10 simultâneos). A reserva entra quando a sessão não abre, o CDP não
 conecta ou o tribunal recusa o IP sorteado (403, `ERR_HTTP2_PROTOCOL_ERROR`). Stealth,
-proxy pago e solver de CAPTCHA ficam desligados.
+proxy pago ficam desligados. O solver de CAPTCHA liga só no STJ, só na Steel (perfil
+`stj` em `remotos.js`): o STJ abre sempre acompanhado, o painel abre sozinho e, se o
+solver não liberar em 150s, a busca pausa para o usuário resolver na tela. Detalhes em
+[`CLAUDE-STJ.md`](../jur/CLAUDE-STJ.md).
 
 - TRF3 e os comandos do Falcão vão **sempre** pelo remoto quando há chave; os demais
   seguem a preferência da conta, que ganha a opção "Navegador remoto".

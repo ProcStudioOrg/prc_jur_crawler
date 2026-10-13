@@ -16,6 +16,8 @@
   let timerTela;
   let versaoTela = 0;
   let sessaoDaTela = '';
+  // Sessões que abrem o painel sozinhas (STJ: resolução automática com intervenção de reserva).
+  const abertasAuto = new Set();
 
   const aberta = () => !el('corpo').hidden;
   const atual = () => dados?.sessoes.find((s) => s.id === selecionada);
@@ -88,10 +90,25 @@
       campo.disabled = !podeControlar() || !!pedidoAcao;
     }
   }
+  function abrirPainel() {
+    if (aberta()) return;
+    el('corpo').hidden = false;
+    el('abrir').setAttribute('aria-expanded', 'true');
+  }
+  function abrirAssistidas(sessoes) {
+    const nova = sessoes.find((s) => s.comando === 'stj' && s.acompanhar && !abertasAuto.has(s.id));
+    for (const s of sessoes) if (s.comando === 'stj') abertasAuto.add(s.id);
+    if (!nova) return;
+    selecionada = nova.id;
+    limparTela();
+    abrirPainel();
+    painel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
   function render() {
     renderPreferencias();
     if (!dados) return;
     const { total, ocupados, disponiveis, sessoes, naFila } = dados;
+    abrirAssistidas(sessoes);
     const remoto = dados.remoto ? ` · remotos: ${dados.remoto.disponiveis} de ${dados.remoto.total} livres` : '';
     texto(el('capacidade'), (disponiveis > 0
       ? `${disponiveis} de ${total} navegadores disponíveis`
@@ -112,6 +129,7 @@
     if (s?.status === 'enfileirado') mensagem = `${estadoSessao(s)}. A pesquisa começa quando um navegador ficar disponível.`;
     else if (s?.status === 'aguardando_usuario') mensagem = s.mensagem || 'O tribunal solicitou uma verificação. A pesquisa aguarda sua intervenção por até 2 minutos.';
     else if (s) mensagem = (s.navegador ? `Pesquisando via ${s.navegador}. ` : 'Pesquisa em andamento. ')
+      + (s.mensagem ? `${s.mensagem} ` : '')
       + (s.acompanhar ? 'Você pode acompanhar a tela abaixo.' : 'O acompanhamento estava desativado ao iniciar.');
     if (s?.provedor === 'remoto' && preferencias.provedor !== 'remoto')
       mensagem += ' Este tribunal bloqueia o servidor; a pesquisa usa navegador remoto.';
@@ -290,6 +308,7 @@
     pedidoEstado = pedidoAcao = null;
     dados = null;
     selecionada = '';
+    abertasAuto.clear();
     salvandoPreferencias = false;
     preferencias = { acompanhar: false, captcha: false, provedor: 'local' };
     painel.hidden = true;
