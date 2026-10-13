@@ -66,7 +66,7 @@ function operation(summary, { schema, id = false, created = false } = {}) {
 const ACCOUNT_PATHS = {
   '/api/v1/navegadores': { get: {
     ...operation('Capacidade global, fila e sessões da conta autenticada'),
-    description: 'total, ocupados, disponiveis e naFila são globais. sessoes contém apenas id, comando, status, posicao, acompanhar e mensagem da própria conta. Posição é 1-based. Preferências acompanhar/captcha são opt-in, provedor é local, remoto (Kernel com Steel de reserva) ou browserbase quando configurado. TRF3 e Falcão (TST, TRTs, CSJT) usam o remoto mesmo com preferência local, porque bloqueiam o IP do servidor. remoto traz as vagas remotas e os fornecedores na ordem de uso; cada sessão traz provedor e navegador (onde está rodando).',
+    description: 'total, ocupados, disponiveis e naFila são globais. sessoes contém apenas id, comando, status, posicao, acompanhar e mensagem da própria conta. Posição é 1-based. Preferências acompanhar/captcha são opt-in, provedor é local, remoto (Kernel com Steel de reserva) ou browserbase quando configurado. TRF3 e Falcão (TST, TRTs, CSJT) usam o remoto mesmo com preferência local, porque bloqueiam o IP do servidor. STJ, com Steel configurada, vai só pela Steel com resolvedor de captcha e sempre com acompanhamento e intervenção manual de reserva. remoto traz as vagas remotas e os fornecedores na ordem de uso; cada sessão traz provedor e navegador (onde está rodando).',
   } },
   '/api/v1/navegadores/preferencias': { post: operation('Configura acompanhamento para novas buscas; captcha implica acompanhar', {
     schema: { type: 'object', required: ['acompanhar', 'captcha'], properties: {

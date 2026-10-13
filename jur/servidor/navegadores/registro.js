@@ -1,5 +1,5 @@
 const { randomUUID } = require('node:crypto');
-const { exigeRemoto } = require('./remotos');
+const { exigeRemoto, assistidoSempre } = require('./remotos');
 const erro = (mensagem, status = 409) => Object.assign(new Error(mensagem), { status });
 
 function criarRegistro(con, { browserbase = false, remoto = false } = {}) {
@@ -8,6 +8,9 @@ function criarRegistro(con, { browserbase = false, remoto = false } = {}) {
   const provedores = ['local', ...(remoto ? ['remoto'] : []), ...(browserbase ? ['browserbase'] : [])];
   // Tribunal que bloqueia o IP do servidor vai pelo remoto mesmo com preferência local.
   const provedorPara = (comando, p) => (remoto && exigeRemoto(comando) ? 'remoto' : p.provedor);
+  // STJ pela Steel com resolvedor: abre acompanhado e com intervenção manual de reserva,
+  // seja qual for a preferência, para o usuário ver a tentativa e assumir se ela falhar.
+  const sempreAssistido = (comando) => remoto && assistidoSempre(comando);
   function preferencias() {
     const row = con.prepare('SELECT valor FROM navegador_preferencias WHERE id=1').get();
     return row ? JSON.parse(row.valor) : { acompanhar: false, captcha: false, provedor: 'local' };
@@ -23,7 +26,8 @@ function criarRegistro(con, { browserbase = false, remoto = false } = {}) {
     const p = preferencias();
     const provedor = provedorPara(comando, p);
     if (!provedores.includes(provedor)) throw erro('Provedor de navegador não configurado. Selecione o navegador local.');
-    sessoes.set(id, { id, comando, ...p, provedor, status: 'enfileirado', pendentes: new Map() });
+    const forcar = sempreAssistido(comando) ? { acompanhar: true, captcha: true } : {};
+    sessoes.set(id, { id, comando, ...p, ...forcar, provedor, status: 'enfileirado', pendentes: new Map() });
   }
   function fornecedor(id, rotulo) {
     const s = sessoes.get(id);
@@ -76,7 +80,7 @@ function criarRegistro(con, { browserbase = false, remoto = false } = {}) {
   }
   return {
     preferencias, salvar, registrar, anexar, remover, requisitar, provedores, fornecedor,
-    assistido: (comando) => comando === 'stj' && preferencias().captcha,
+    assistido: (comando) => comando === 'stj' && (preferencias().captcha || sempreAssistido(comando)),
     opcoes: (id) => { const s = sessoes.get(id); return s && { acompanhar: s.acompanhar, captcha: s.captcha, provedor: s.provedor }; },
     listar: (pool) => [...sessoes.values()].map((s) => ({
       id: s.id, comando: s.comando, status: s.status, acompanhar: s.acompanhar,

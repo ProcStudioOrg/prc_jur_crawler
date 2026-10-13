@@ -66,9 +66,27 @@ async function abrir(t, dados = estado(), viewport = { width: 1280, height: 900 
   return { f, page, chamadas, controle };
 }
 async function expandir(page) {
-  await page.click('#navegadores-abrir');
+  // Sessão de STJ abre o painel sozinha no primeiro estado; só clica se continuar fechado.
+  await page.waitForFunction(() => !/Consultando/.test(document.querySelector('#navegadores-capacidade').textContent));
+  if (await page.locator('#navegadores-abrir').getAttribute('aria-expanded') !== 'true') await page.click('#navegadores-abrir');
   await page.locator('#navegadores-corpo').waitFor({ state: 'visible' });
 }
+
+test('busca no STJ abre o navegador interativo sozinha, uma vez por sessão', async (t) => {
+  const { f, page, controle } = await abrir(t, estado([{ ...sessao('outro'), comando: 'tjsp' }]));
+  await f.login(page);
+  await page.getByText('2 de 5 navegadores disponíveis', { exact: true }).waitFor();
+  assert.equal(await page.locator('#navegadores-abrir').getAttribute('aria-expanded'), 'false');
+  controle.dados.sessoes = [...controle.dados.sessoes,
+    { ...sessao('stj-novo'), provedor: 'remoto', navegador: 'Steel', mensagem: 'A Steel está resolvendo automaticamente.' }];
+  await page.locator('#navegadores-corpo').waitFor({ state: 'visible', timeout: 8000 });
+  assert.equal(await page.locator('#navegadores-sessao').inputValue(), 'stj-novo');
+  assert.match(await page.locator('#navegadores-estado').textContent(), /via Steel\. A Steel está resolvendo automaticamente\./);
+  await page.locator('#navegadores-imagem').waitFor({ state: 'visible' });
+  await page.click('#navegadores-abrir');
+  await page.waitForTimeout(3500);
+  assert.equal(await page.locator('#navegadores-abrir').getAttribute('aria-expanded'), 'false', 'fechar à mão é respeitado');
+});
 
 test('capacidade aparece apenas na conta autenticada; CAPTCHA ativa acompanhamento e falha ao salvar reverte', async (t) => {
   const { f, page, chamadas, controle } = await abrir(t);

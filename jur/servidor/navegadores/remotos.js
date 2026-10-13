@@ -26,7 +26,7 @@ const FORNECEDORES = {
     async abrir(chave, pedir) {
       const headers = { authorization: `Bearer ${chave}` };
       // stealth desligado de propósito: ele sai por proxy residencial que o CloudFront
-      // do Falcão recusa (403) e liga o resolvedor de captcha, que este repo não usa.
+      // do Falcão recusa (403) e liga o resolvedor de captcha (só o STJ usa, pela Steel).
       const s = await pedir('https://api.onkernel.com/browsers', {
         method: 'POST', headers, body: { stealth: false, headless: true, timeout_seconds: 300 },
       });
@@ -38,11 +38,12 @@ const FORNECEDORES = {
   steel: {
     nome: 'Steel',
     chave: () => process.env.STEEL_API_KEY,
-    async abrir(chave, pedir) {
+    async abrir(chave, pedir, { captcha = false } = {}) {
       const headers = { 'steel-api-key': chave };
-      // Plano Launch encerra a sessão em 15 min; sem proxy pago e sem resolvedor de captcha.
+      // Plano Launch encerra a sessão em 15 min; sem proxy pago. O resolvedor de captcha
+      // só liga para o perfil que o pede (STJ, ver PERFIS).
       const s = await pedir('https://api.steel.dev/v1/sessions', {
-        method: 'POST', headers, body: { useProxy: false, solveCaptcha: false, sessionTimeout: 900000 },
+        method: 'POST', headers, body: { useProxy: false, solveCaptcha: captcha, sessionTimeout: 900000 },
       });
       if (!s?.id || !/^[\w-]+$/.test(s.id)) throw new Error('resposta inválida');
       const cdp = `wss://connect.steel.dev?apiKey=${encodeURIComponent(chave)}&sessionId=${s.id}`;
@@ -80,7 +81,7 @@ function criarPedido(fetchFn) {
  * não conecta nela ou quando o tribunal recusa o IP de saída. Erro do crawler em si
  * (seletor, zero resultados) não troca de fornecedor: o resultado volta como veio.
  */
-async function comNavegadorRemoto(executar, { ordem, fetchFn = fetch, sinal, aoFornecedor = () => {} } = {}) {
+async function comNavegadorRemoto(executar, { ordem, captcha = false, fetchFn = fetch, sinal, aoFornecedor = () => {} } = {}) {
   const lista = configurados(ordem);
   if (!lista.length) throw new Error('Navegador remoto não configurado. Selecione o navegador local.');
   const pedir = criarPedido(fetchFn);
@@ -89,13 +90,13 @@ async function comNavegadorRemoto(executar, { ordem, fetchFn = fetch, sinal, aoF
     sinal?.throwIfAborted();
     const f = FORNECEDORES[id];
     let sessao;
-    try { sessao = await f.abrir(f.chave(), pedir); }
+    try { sessao = await f.abrir(f.chave(), pedir, { captcha }); }
     catch (e) { falhas.push(`${f.nome}: ${e.message}`); continue; }
     try { aoFornecedor({ fornecedor: id, nome: f.nome, reserva: i > 0, falhas: [...falhas] }); } catch { /* aviso não derruba a busca */ }
     let r;
     try {
       sinal?.throwIfAborted();
-      r = await executar(sessao.cdp);
+      r = await executar(sessao.cdp, { captcha });
     } finally {
       try { await sessao.fechar(); }
       catch {
@@ -120,6 +121,24 @@ const rotulo = (info) => (info.reserva ? `${info.nome} (reserva)` : info.nome);
 // Hosts que recusam o IP do servidor (403 do CloudFront no Falcão, conexão recusada
 // pela Akamai no TRF3). Medido em 13/10/2026; rode o teste antes de ampliar a lista.
 const EGRESSO_BLOQUEADO = new Set(['trf3', ...Object.values(require('../../src/FalcaoTribunais').TRIBUNAIS).map((t) => t.comando)]);
-const exigeRemoto = (comando) => EGRESSO_BLOQUEADO.has(comando);
 
-module.exports = { comNavegadorRemoto, configurados, nomes, rotulo, exigeRemoto };
+// STJ: o Cloudflare mostra um desafio Turnstile em qualquer egresso (H2, Kernel, Steel).
+// Decisão de 13/10/2026: só no STJ, a Steel liga o resolvedor de captcha (medido: libera
+// em ~60-80s). Se ele falhar, o usuário resolve na tela; por isso o STJ sempre abre com
+// acompanhamento e intervenção manual. Kernel fica de fora: o solver dela exige stealth,
+// que sai por proxy residencial.
+const PERFIS = { stj: { ordem: 'steel', captcha: true } };
+const perfil = (comando) => {
+  const p = PERFIS[comando];
+  return p && configurados(p.ordem).length ? p : null;
+};
+const exigeRemoto = (comando) => EGRESSO_BLOQUEADO.has(comando) || Boolean(perfil(comando));
+/** Opções de `comNavegadorRemoto` para o comando: perfil próprio ou a ordem padrão. */
+const opcoesPara = (comando) => {
+  const p = perfil(comando);
+  return p ? { ordem: p.ordem, captcha: p.captcha } : {};
+};
+/** O tribunal abre sempre assistido: acompanhamento e intervenção manual de reserva. */
+const assistidoSempre = (comando) => Boolean(perfil(comando)?.captcha);
+
+module.exports = { comNavegadorRemoto, configurados, nomes, rotulo, exigeRemoto, opcoesPara, assistidoSempre };

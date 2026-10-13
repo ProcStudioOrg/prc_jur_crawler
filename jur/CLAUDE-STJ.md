@@ -1,5 +1,23 @@
 # STJ — Superior Tribunal de Justiça
 
+## Produção: Steel com resolvedor de captcha (13/10/2026)
+
+Exceção consciente à regra "este repo não automatiza captcha", decidida pelo dono do
+projeto e válida **só para o STJ**: na aplicação web/API/MCP, com `STEEL_API_KEY`
+configurada, toda busca no STJ abre uma sessão Steel com `solveCaptcha: true`
+(`servidor/navegadores/remotos.js`, perfil `stj`; a Kernel fica de fora). A busca abre
+sempre com acompanhamento e intervenção manual, e o painel Navegadores abre sozinho.
+
+- O resolvedor libera o `#pesquisaLivre` sem recarregar a página. Medido: o desafio
+  caiu em ~60-80s e a busca completa (`usucapião extraordinária`, 1 página, 10
+  acórdãos) levou 52s.
+- Se não liberar em 150s, a busca pausa para o usuário resolver na tela. Se o prazo da
+  intervenção vencer, o job termina em erro com a causa.
+- Com o navegador remoto as consultas vão por `fetch` dentro da página: o
+  `cf_clearance` vale para o IP do navegador e o `context.request` sairia do servidor
+  (HTTP 403, medido).
+- Sem a chave da Steel vale o comportamento abaixo (tentativa assistida opcional).
+
 ## Tentativa assistida opcional (26/09/2026)
 
 Na aplicação web/API, a conta pode ativar **Resolver CAPTCHA manualmente** no painel

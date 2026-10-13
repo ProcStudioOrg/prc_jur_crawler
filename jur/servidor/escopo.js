@@ -29,7 +29,7 @@ function criarEscopos({ dir, executarFn, limite = 100, concorrencia }) {
     };
   }
   function executarNoEscopo(fn, comando, params, extra, home) {
-    const executarComCdp = (cdp = '') => fn(comando, params, {
+    const executarComCdp = (cdp = '', { captcha = false } = {}) => fn(comando, params, {
       ...extra,
       cwd: home,
       env: {
@@ -40,12 +40,14 @@ function criarEscopos({ dir, executarFn, limite = 100, concorrencia }) {
         JUR_ACOMPANHAR: extra.navegador?.acompanhar ? "1" : "0",
         JUR_CAPTCHA: extra.navegador?.captcha ? "1" : "0",
         JUR_BROWSER_CDP: cdp,
+        // O fornecedor está resolvendo o captcha sozinho: o crawler espera antes de pedir ajuda.
+        JUR_CAPTCHA_AUTOMATICO: captcha ? "1" : "0",
       },
     });
     const avisar = (info) => { try { extra.aoNavegador?.(info); } catch { /* aviso não derruba a busca */ } };
     const provedor = provedorDe(comando, extra);
     if (provedor === "remoto")
-      return remotos.comNavegadorRemoto(executarComCdp, { sinal: extra.sinal, aoFornecedor: avisar });
+      return remotos.comNavegadorRemoto(executarComCdp, { ...remotos.opcoesPara(comando), sinal: extra.sinal, aoFornecedor: avisar });
     if (provedor === "browserbase") {
       avisar({ fornecedor: "browserbase", nome: "Browserbase" });
       return comBrowserbase(executarComCdp, { sinal: extra.sinal });

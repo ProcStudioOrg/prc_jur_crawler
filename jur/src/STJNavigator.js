@@ -3,7 +3,7 @@ const { chromium } = require('playwright');
 const fs = require('node:fs');
 const path = require('node:path');
 const { sanitizeFilename, stripHtml } = require('./inteiroTeorFetcher');
-const { aguardarIntervencao } = require('./navegadorAssistido');
+const { aguardarIntervencao, informar } = require('./navegadorAssistido');
 
 /**
  * Navigator do SCON — Pesquisa de Jurisprudência do STJ
@@ -38,6 +38,18 @@ const { aguardarIntervencao } = require('./navegadorAssistido');
  * `usucapião` percent-encodado em UTF-8 devolve **0 resultados em silêncio**;
  * em latin-1 devolve 2.356. Toda montagem de URL passa por `encLatin1()` e toda
  * resposta é lida como latin-1. Não use `URLSearchParams` aqui.
+ *
+ * NAVEGADOR REMOTO COM RESOLVEDOR (produção, desde 13/10/2026)
+ * -----------------------------------------------------------
+ * O servidor de produção roda headless e leva o desafio interativo (Turnstile) em
+ * qualquer egresso. Lá o STJ vai por uma sessão Steel com `solveCaptcha` ligado
+ * (`servidor/navegadores/remotos.js`, perfil `stj`): medido, o resolvedor libera o
+ * `#pesquisaLivre` em ~60-80s. Duas regras nesse modo:
+ *   - não recarregar a página enquanto o resolvedor trabalha (cada goto reinicia o
+ *     desafio); só depois do prazo o usuário assume pela intervenção manual;
+ *   - `context.request` sai do processo Node (IP do servidor), e o `cf_clearance`
+ *     vale só para o IP do navegador: HTTP 403. As consultas vão por `fetch` dentro
+ *     da página.
  *
  * O módulo de PRECEDENTES QUALIFICADOS (temas repetitivos, IACs) vive em outro
  * host — `processo.stj.jus.br` — que **não** tem Cloudflare. Ver STJRepetitivos
@@ -289,6 +301,10 @@ class STJNavigator {
     this.slowMo = options.slowMo ?? 0;
     this.log = options.log ?? (() => {});
     this.tentativasDesafio = options.tentativasDesafio ?? 10;
+    // Navegador remoto (preload converte o launch em CDP) e resolvedor do fornecedor.
+    this.remoto = Boolean(process.env.JUR_BROWSER_CDP);
+    this.resolvedor = process.env.JUR_CAPTCHA_AUTOMATICO === '1';
+    this.esperaResolvedor = options.esperaResolvedor ?? 150000;
     this.browser = null;
     this.context = null;
     this.page = null;
@@ -302,11 +318,13 @@ class STJNavigator {
       slowMo: this.slowMo,
       args: ['--disable-blink-features=AutomationControlled'],
     });
-    this.context = await this.browser.newContext({
+    // Na sessão remota o resolvedor atua no contexto padrão que o fornecedor já abriu.
+    const padrao = this.remoto ? this.browser.contexts()[0] : null;
+    this.context = padrao || await this.browser.newContext({
       viewport: { width: 1440, height: 1100 },
       locale: 'pt-BR',
     });
-    this.page = await this.context.newPage();
+    this.page = (padrao && padrao.pages()[0]) || await this.context.newPage();
     this.page.setDefaultTimeout(this.timeout);
   }
 
@@ -324,6 +342,7 @@ class STJNavigator {
    */
   async abrir() {
     await this._init();
+    if (this.resolvedor) return this._abrirComResolvedor();
     for (let i = 0; i < this.tentativasDesafio; i++) {
       await this.page.goto(HOME, { waitUntil: 'domcontentloaded', timeout: this.timeout })
         .catch((e) => this.log(`  goto falhou (${e.message.split('\n')[0]}), retentando`));
@@ -347,21 +366,58 @@ class STJNavigator {
     );
   }
 
+  /** @private Uma navegação só; o resolvedor do fornecedor trabalha na mesma página. */
+  async _abrirComResolvedor() {
+    const liberado = () => this.page.locator('#pesquisaLivre').count().then((n) => n > 0);
+    await this.page.goto(HOME, { waitUntil: 'domcontentloaded', timeout: this.timeout })
+      .catch((e) => this.log(`  goto falhou (${e.message.split('\n')[0]})`));
+    const inicio = Date.now();
+    informar('O STJ pediu verificação; a Steel está resolvendo automaticamente (cerca de 1 a 2 minutos).');
+    while (Date.now() - inicio < this.esperaResolvedor) {
+      if (await liberado().catch(() => false)) {
+        const s = Math.round((Date.now() - inicio) / 1000);
+        this.log(`Desafio do Cloudflare liberado pelo resolvedor em ${s}s.`);
+        informar(`Verificação do STJ resolvida automaticamente em ${s}s. Pesquisando.`);
+        return this.page;
+      }
+      await this.page.waitForTimeout(3000);
+    }
+    const s = Math.round(this.esperaResolvedor / 1000);
+    this.log(`Resolvedor automático não liberou o STJ em ${s}s; aguardando intervenção manual.`);
+    if (await aguardarIntervencao(this.page, {
+      verificar: () => this.page.locator('#pesquisaLivre').isVisible(),
+      mensagem: `A resolução automática não liberou o STJ em ${s}s. Resolva o desafio na tela e selecione Continuar.`,
+    })) return this.page;
+    throw new Error(`STJ: o desafio do Cloudflare não liberou (resolução automática esgotou ${s}s e não havia intervenção manual).`);
+  }
+
+  /** @private GET pelo próprio navegador remoto: o `cf_clearance` vale só para o IP dele. */
+  async _getNaPagina(url) {
+    return this.page.evaluate(async ({ alvo, referrer }) => {
+      const r = await fetch(alvo, { credentials: 'include', referrer });
+      return { status: r.status, html: new TextDecoder('latin1').decode(await r.arrayBuffer()) };
+    }, { alvo: url, referrer: HOME });
+  }
+
   /**
    * GET no SCON reaproveitando os cookies do desafio.
    * A resposta é decodificada como latin-1 (charset declarado do site).
    */
   async get(url) {
+    if (this.remoto) return this._validar(await this._getNaPagina(url));
     const res = await this.context.request.get(url, {
       headers: { Referer: HOME },
       timeout: this.timeout,
     });
-    const status = res.status();
+    return this._validar({ status: res.status(), html: (await res.body()).toString('latin1') });
+  }
+
+  /** @private */
+  _validar({ status, html }) {
     if (status === 403 || status === 429) {
       throw new Error(`STJ: a consulta foi bloqueada pela verificação de segurança (HTTP ${status}). Inicie uma nova busca para tentar a intervenção manual.`);
     }
     if (status < 200 || status >= 300) throw new Error(`STJ: falha ao consultar o portal (HTTP ${status}).`);
-    const html = (await res.body()).toString('latin1');
     if (/<title\b[^>]*>[^<]*(?:just a moment|um momento|verifica[çc][aã]o autom[aá]tica|access denied|attention required)/i.test(html) ||
         /id=["'](?:challenge-form|cf-challenge-running)["']/i.test(html)) {
       throw new Error('STJ: o desafio de segurança reapareceu durante a consulta. Inicie uma nova busca para tentar a intervenção manual.');
