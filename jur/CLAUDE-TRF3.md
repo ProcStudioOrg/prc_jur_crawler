@@ -11,6 +11,14 @@
 > `ol.lista-retorno` com `.processo`/`.informacoes-basicas`/`.ementa`); o crawler foi
 > ajustado e não depende mais do Chrome proprietário quando conectado por CDP.
 >
+> Correções da noite de 13/10/2026, depois de uma busca em produção voltar com 0 resultados:
+> - a seta "Próxima página" é só ícone (nome no `aria-label`), e a paginação parava na página 1;
+> - o portal nunca fica `networkidle`: a espera custava ~60s por página e às vezes estourava;
+> - zero resultados só vale com o aviso "Nenhum Resultado Encontrado" (contador `0 ~ 0`).
+>   Se nem a lista nem o aviso aparecerem em 60s, a busca falha com erro, em vez de voltar vazia.
+>
+> Medido pela Kernel: 3 páginas trouxeram 30 processos distintos em 142s; 1 página leva 53s.
+>
 > ⚠️ **Verificado em 27/07/2026: o host está INACESSÍVEL, e não é mais a verificação de
 > navegador.** `web.trf3.jus.br` resolve pela Akamai (`a1855.dscb.akamai.net` → 189.86.122.19),
 > mas nada responde: Playwright dá `net::ERR_HTTP2_PROTOCOL_ERROR` já no `goto` (inclusive com
