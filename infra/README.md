@@ -170,3 +170,9 @@ guarde a release anterior em `.previous-release` e faça backup dos volumes. Sub
 com `docker compose -p jur ... up -d --no-build`. O rollback usa a imagem anterior
 já construída, sem apagar volumes. As credenciais e a chave do cofre são preservadas
 entre releases. O acesso de deploy atual está em `AGENTS.md`.
+
+Toda release leva versão nova em `jur/package.json` (regra em [`CHANGELOG.md`](../CHANGELOG.md)).
+Com `USAGE_WEBHOOK_URL` no `infra/.env`, o primeiro boot de cada versão+revisão manda
+`{"service":"jurcrawler","event":"deploy","version":...,"revision":...}` ao FFD; restart
+da mesma release não repete o aviso (marcador em `/dados/.ultimo-deploy-avisado`). O log
+do container mostra `aviso de deploy: enviado|repetido|falhou`.

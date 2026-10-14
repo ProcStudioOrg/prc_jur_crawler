@@ -37,7 +37,12 @@ function iniciar() {
       secret: process.env.PROCSTUDIO_CLIENT_SECRET }),
   });
   const servidor = http.createServer(app.handler);
-  servidor.listen(Number(process.env.PORT || 3000), process.env.JUR_BIND || '127.0.0.1');
+  servidor.listen(Number(process.env.PORT || 3000), process.env.JUR_BIND || '127.0.0.1', () => {
+    const { avisarDeploy, revisaoDaImagem } = require('./aviso-deploy');
+    avisarDeploy({ url: process.env.USAGE_WEBHOOK_URL, dir: process.env.JUR_DADOS || '/dados',
+      versao: require('../package.json').version, revisao: revisaoDaImagem(process.env.JUR_IMAGE) })
+      .then((r) => { if (r !== 'desligado') console.log(`aviso de deploy: ${r}`); });
+  });
   return servidor;
 }
 
