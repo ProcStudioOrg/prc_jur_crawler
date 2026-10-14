@@ -13,6 +13,15 @@ class TRF3Crawler extends BaseCrawler {
   }
 
   /**
+   * O portal mantém requisições em segundo plano e quase nunca fica `networkidle`:
+   * essa espera custava ~60s por página e às vezes estourava (13/10/2026). O sinal de
+   * pronto é a lista ou o aviso de zero resultados (`aguardarLista`).
+   */
+  async waitForLoad() {
+    await this.page.waitForLoadState('domcontentloaded');
+  }
+
+  /**
    * Navigate to the jurisprudencia search page
    */
   async navigateToSearch() {
@@ -36,10 +45,10 @@ class TRF3Crawler extends BaseCrawler {
     // Select base if not TRF3 (default)
     if (this.base === 1) {
       await this.page.click('a[href="/jurisprudencia/home/index/1"]');
-      await this.page.waitForLoadState('networkidle');
+      await this.waitForLoad();
     } else if (this.base === 2) {
       await this.page.click('a[href="/jurisprudencia/home/index/2"]');
-      await this.page.waitForLoadState('networkidle');
+      await this.waitForLoad();
     }
   }
 
@@ -231,10 +240,7 @@ class TRF3Crawler extends BaseCrawler {
     await this.page.waitForURL(/ListaResumida/, { timeout: 30000 });
     await this.waitForLoad();
 
-    // Wait for results to appear
-    await this.page.waitForSelector('li a[href*="ListaColecao"]', { timeout: 30000 }).catch(() => {
-      console.log('Warning: No results found or timeout waiting for results');
-    });
+    await this.aguardarLista();
 
     await this.page.waitForTimeout(1000);
 
@@ -253,14 +259,30 @@ class TRF3Crawler extends BaseCrawler {
   }
 
   /**
+   * Espera a lista ou o aviso oficial de zero resultados ("Nenhum Resultado
+   * Encontrado", contador "0 ~ 0"). Qualquer outra coisa é falha, nunca lista vazia:
+   * em 13/10/2026 uma lista lenta virou "0 resultados" em produção.
+   */
+  async aguardarLista(timeout = 60000) {
+    const lista = this.page.locator('li a[href*="ListaColecao"]').first();
+    const vazio = this.page.getByText('Nenhum Resultado Encontrado').first();
+    try {
+      await lista.or(vazio).waitFor({ state: 'visible', timeout });
+    } catch {
+      throw new Error(`TRF3: a lista de resultados não carregou em ${Math.round(timeout / 1000)}s (${this.page.url()}).`);
+    }
+    this.semResultados = !(await lista.isVisible().catch(() => false));
+    if (this.semResultados) console.log('TRF3: nenhum resultado encontrado (confirmado pelo site).');
+  }
+
+  /**
    * Extract results from the current page
    * @returns {Array<Object>} Array of result objects
    */
   async extractResults() {
     const results = [];
 
-    // Wait for results to load
-    await this.page.waitForSelector('li a[href*="ListaColecao"]', { timeout: 10000 }).catch(() => {});
+    if (this.semResultados) return results;
 
     // Get all result items
     const items = await this.page.locator('li').filter({
@@ -317,7 +339,8 @@ class TRF3Crawler extends BaseCrawler {
    */
   async hasNextPage() {
     try {
-      const nextBtn = this.page.locator('a:has-text("Próxima página")');
+      // Layout de out/2026: a seta é só ícone; o nome está no aria-label.
+      const nextBtn = this.page.locator('a[aria-label="Próxima página"]').first();
       if (!(await nextBtn.isVisible())) {
         return false;
       }
@@ -333,9 +356,9 @@ class TRF3Crawler extends BaseCrawler {
    * Navigate to the next page of results
    */
   async goToNextPage() {
-    await this.page.click('a:has-text("Próxima página")');
+    await this.page.locator('a[aria-label="Próxima página"]').first().click();
     await this.waitForLoad();
-    await this.page.waitForSelector('li a[href*="ListaColecao"]', { timeout: 30000 }).catch(() => {});
+    await this.aguardarLista();
     await this.page.waitForTimeout(1500);
   }
 
@@ -345,8 +368,8 @@ class TRF3Crawler extends BaseCrawler {
    */
   async getTotalResults() {
     try {
-      const totalText = await this.page.locator('div, span').filter({ hasText: /^\d+\s*~\s*\d+$/ }).first().textContent();
-      const match = totalText.match(/~\s*(\d+)/);
+      // Contador "1 ~ 887" acima da lista (layout de out/2026).
+      const match = (await this.page.locator('body').innerText()).match(/\b\d+\s*~\s*(\d+)\b/);
       return match ? parseInt(match[1], 10) : null;
     } catch {
       return null;
