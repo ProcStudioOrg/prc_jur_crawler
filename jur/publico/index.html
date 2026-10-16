@@ -4,16 +4,41 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>jur — jurisprudência dos tribunais brasileiros</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/estilo.css">
 </head>
 <body class="aguardando-sessao">
+  <!-- Icone do JurCrawler: lupa com o raio da familia de IA do ProcStudio. Mesmo path de
+       JurisprudenceSearchSolid.svelte no app principal; definido uma vez e reusado via <use>. -->
+  <svg class="simbolos" aria-hidden="true" focusable="false"><symbol id="icone-jur" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M10.5 2a8.5 8.5 0 0 1 6.9 13.46l4.07 4.07a1.4 1.4 0 0 1-1.98 1.98l-4.07-4.07A8.5 8.5 0 1 1 10.5 2zm1.08 2.98-4.56 6.36h3l-.6 4.68 4.56-6.36h-3l.6-4.68z"/></symbol></svg>
   <section id="login-procstudio" aria-label="Entrar no JurCrawler">
-    <div class="login-conteudo"><span class="marca">ProcStudio <b>Jurisprudência</b></span>
-    <h1>Pesquisa jurídica,<br>com a sua conta.</h1>
-    <p>Consulte as bases oficiais dos tribunais e converse com a IA de sua escolha.</p>
-    <a class="botao-acento entrar-procstudio" href="/auth/login">Entrar com ProcStudio <span aria-hidden="true">→</span></a>
-    <p class="login-privacidade">Suas conexões de IA e pesquisas ficam privadas na sua conta.</p>
-    <p id="login-erro" role="status"></p></div>
+    <div class="entrada-pagina">
+      <div class="login-conteudo">
+        <div class="entrada-logo" aria-hidden="true"><div class="entrada-pilha" id="entrada-pilha"></div></div>
+        <span class="entrada-marca">JurCrawler <small>por ProcStudio</small></span>
+        <h1>Jurisprudência dos tribunais, <em>verificada</em> na base oficial.</h1>
+        <p class="entrada-sub">A IA pesquisa, lê os acórdãos e organiza. Cada citação é conferida por número antes de chegar em você.</p>
+        <div class="entrada-prova" aria-label="Em números"><span><b>73</b>tribunais</span><span><b>0</b>citações sem conferir</span><span><b>1</b>login</span></div>
+        <a class="botao-acento entrar-procstudio" href="/auth/login">Entrar com ProcStudio <span aria-hidden="true">→</span></a>
+        <p class="login-privacidade">Suas conexões de IA e pesquisas ficam privadas na sua conta.</p>
+        <p id="login-erro" role="status"></p>
+        <p class="entrada-pronto" aria-hidden="true">system ready <i></i></p>
+      </div>
+
+      <section class="entrada-terminal" aria-label="Demonstração: pesquisa real reproduzida">
+        <div class="entrada-barra"><span class="luzes" aria-hidden="true"><i></i><i></i><i></i></span><span class="titulo">jur · sessão 2026-10-16 · reprodução de pesquisa real</span><span class="estado" id="entrada-estado">● online</span></div>
+        <div class="entrada-tty" id="entrada-tty" aria-live="off"></div>
+      </section>
+
+      <section class="entrada-oque" aria-label="O que é o JurCrawler">
+        <img src="/robo.webp" alt="" width="150" height="150" loading="lazy">
+        <div>
+          <h2><b>O que é o JurCrawler</b> jurcrawler.com.br</h2>
+          <p>Um <b>agente de IA que pesquisa jurisprudência</b>: você descreve o que busca, ele varre os tribunais indicados, lê os acórdãos, organiza os precedentes por tese e devolve o resultado pronto para usar. <b>Cada julgado citado é conferido por número na base oficial</b> antes de entrar na resposta. Entra com sua conta ProcStudio; não há cadastro novo.</p>
+          <span class="fala">73 tribunais mapeados · prints de cada navegação versionados · nada citado de memória</span>
+        </div>
+      </section>
+    </div>
   </section>
   <!-- I4: abaixo de 860px a lateral vira gaveta. Sem este botao ela simplesmente sumia,
        e com ela iam Nova conversa, o historico e — o que bloqueia o produto —
@@ -25,7 +50,7 @@
 
   <aside id="lateral">
     <div class="lateral-topo">
-      <span class="marca">ProcStudio <b>Jurisprudência</b></span>
+      <span class="marca"><svg class="marca-icone" aria-hidden="true"><use href="#icone-jur"/></svg><span class="marca-texto">ProcStudio <b>Jurisprudência</b></span></span>
       <button id="tema" class="icone" title="Alternar tema" aria-label="Alternar tema">◐</button>
     </div>
 
@@ -98,6 +123,7 @@
       </div>
     </section>
     <section id="inicial">
+      <svg class="inicial-emblema" aria-hidden="true"><use href="#icone-jur"/></svg>
       <h1 class="saudacao">Sobre o que você quer pesquisar?</h1>
       <div id="caixa-inicial" class="caixa-entrada"></div>
       <section id="prompts" aria-label="Modelos de prompt"></section>
@@ -146,6 +172,7 @@
   <script src="/decisoes.js"></script>
   <script src="/config.js"></script>
   <script src="/navegadores.js"></script>
+  <script src="/entrada.js"></script>
   <script src="/sessao.js"></script>
 </body>
 </html>

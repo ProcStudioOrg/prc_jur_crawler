@@ -3,7 +3,7 @@ const path = require('node:path');
 
 const TIPOS = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
                 '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8',
-                '.svg': 'image/svg+xml', '.ico': 'image/x-icon' };
+                '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.webp': 'image/webp' };
 
 function json(res, codigo, corpo) {
   const texto = JSON.stringify(corpo);
