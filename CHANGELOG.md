@@ -11,6 +11,14 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
+## 1.0.1 — 16/10/2026
+
+- Tela de entrada nova: ícone oficial (lupa + raio) centralizado em 3D por camadas, nome
+  JurCrawler, terminal em estilo CRT que reproduz a pesquisa real de pensão por morte no
+  TJPR/STF (julgados verificados por número) e faixa "O que é o JurCrawler" com o robô 3D.
+  Tudo escopado em `#login-procstudio`; o app logado não muda.
+- `favicon.svg` e `icone.svg` com o ícone do JurCrawler; `robo.webp` servido com MIME correto.
+
 ## 1.0.0 — 14/10/2026
 
 Primeira versão numerada. Reúne o que está em produção desde o SSO ProcStudio (24/09):

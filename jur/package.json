@@ -1,6 +1,6 @@
 {
   "name": "jur",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "CLI de busca de jurisprudência nos tribunais brasileiros",
   "bin": {

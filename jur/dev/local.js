@@ -47,8 +47,8 @@ async function iniciarLocal({
     .replace('</head>', '<link rel="stylesheet" href="/__local/painel.css"></head>')
     .replace('</body>', '<script src="/__local/painel.js"></script></body>')
     .replace('Entrar com ProcStudio', 'Entrar localmente')
-    .replace('Pesquisa jurídica,<br>com a sua conta.', 'JurCrawler no seu computador')
-    .replace('Consulte as bases oficiais dos tribunais e converse com a IA de sua escolha.', 'Ambiente de validação com conta local. Pesquisas reais, sem login ProcStudio.')
+    .replace('Jurisprudência dos tribunais, <em>verificada</em> na base oficial.', 'JurCrawler no seu computador, <em>sem</em> login ProcStudio.')
+    .replace('A IA pesquisa, lê os acórdãos e organiza. Cada citação é conferida por número antes de chegar em você.', 'Ambiente de validação com conta local. Pesquisas reais, sem login ProcStudio.')
     .replace('Suas conexões de IA e pesquisas ficam privadas na sua conta.', 'Dados separados da produção. O chat aceita uma chave de IA sua nas configurações.');
   const assets = {
     '/__local/painel.js': ['painel.js', 'text/javascript; charset=utf-8'],
