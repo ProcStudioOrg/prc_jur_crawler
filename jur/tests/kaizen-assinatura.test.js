@@ -53,3 +53,16 @@ test('segredo em JSON, cabecalho e cookie tambem some', () => {
 test('montarAssinatura tolera tribunal/classe/passo indefinidos', () => {
   assert.equal(montarAssinatura({ erro: 'x' }), 'desconhecido|desconhecido|desconhecido|x');
 });
+test('segredo com chave generica (aspas ou nao, : ou =) some', () => {
+  const casos = [
+    '{"cookie":"sid=SEGREDO1"}', '{"authorization":"SEGREDO1"}', '{"Authorization":"Basic SEGREDO1"}',
+    '{"x-api-key":"SEGREDO1"}', 'token: SEGREDO1', 'apiKey: SEGREDO1', '{apiKey: "SEGREDO1"}',
+    'access_token=SEGREDO1', 'Proxy-Authorization: Basic SEGREDO1', 'Set-Cookie: sid=SEGREDO1',
+  ];
+  for (const c of casos) assert.doesNotMatch(sanitizar(c), /SEGREDO/, c);
+});
+test('cookie nao engole texto que vem depois dele', () => {
+  const s = sanitizar('Cookie: sid=SEGREDO1; outro=SEGREDO2; erro: timeout');
+  assert.doesNotMatch(s, /SEGREDO/);
+  assert.match(s, /erro: timeout/);
+});

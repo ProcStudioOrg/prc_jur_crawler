@@ -1,20 +1,23 @@
 // Assinatura estável de uma falha: o mesmo defeito, com números/ids/URLs diferentes,
 // tem que cair na mesma assinatura para o FFD agrupar. Módulo puro, sem I/O.
 
-const CHAVES = 'api[-_]?key|apikey|token|session_?id|senha|password';
+// Nome de chave que carrega segredo (com prefixo livre: x-api-key, access_token, Proxy-Authorization).
+const CHAVE = '[\\w-]*(?:token|key|secret|senha|password|passwd|cookie|authorization|auth|session_?id|session|signature|sig)';
+// Valor: string entre aspas, esquema+credencial (Bearer x) ou palavra solta até , ; } & ou espaço.
+const VALOR = '"[^"]*"|\'[^\']*\'|(?:Bearer|Basic|Token)\\s+[^\\s,;}&]+|[^\\s,;}&"\']+';
+const CHAVE_VALOR = new RegExp(`(["']?)(${CHAVE})\\1(\\s*[:=]\\s*)(?:${VALOR})`, 'gi');
+// Cabeçalho Cookie: só a corrida de pares nome=valor; texto depois dela fica intacto.
+const PAR = '[\\w.%-]+=[^;\\s]*';
+const COOKIE = new RegExp(`(cookie\\s*:\\s*)${PAR}(?:;\\s*${PAR})*`, 'gi');
 
-// Segredo nunca sai: URL de CDP (carrega o token do fornecedor), chaves em
-// query/atribuição e Bearer são removidos antes de qualquer outra coisa.
+// Segredo nunca sai: URL de CDP (carrega o token do fornecedor), cookies, chaves em
+// JSON/cabeçalho/query/atribuição e Bearer são removidos antes de qualquer outra coisa.
 function sanitizar(texto) {
   return String(texto ?? '')
     .replace(/wss?:\/\/\S+/gi, '[cdp]')
-    // cabeçalhos HTTP coladas em mensagem de erro: valor inteiro some (cookie vai até o fim da linha)
-    .replace(/(authorization|proxy-authorization)\s*:\s*(?:(?:Bearer|Basic|Token)\s+)?[^\s;,]+/gi, '$1: [redigido]')
-    .replace(/(x-[\w-]*(?:token|key|secret)|set-cookie|cookie)\s*:[^\n]*/gi, '$1: [redigido]')
-    .replace(/Bearer\s+\S+/gi, 'Bearer [redigido]')
-    // JSON/objeto serializado: "apiKey":"x", 'secret': 'x'
-    .replace(new RegExp(`(["'])(${CHAVES}|secret)\\1\\s*:\\s*(?:"[^"]*"|'[^']*'|[^\\s,}]+)`, 'gi'), '$1$2$1:"[redigido]"')
-    .replace(new RegExp(`(${CHAVES})=[^\\s&]*`, 'gi'), '[redigido]')
+    .replace(COOKIE, '$1[redigido]')
+    .replace(CHAVE_VALOR, '$1$2$1$3[redigido]')
+    .replace(/Bearer\s+(?!\[redigido\])\S+/gi, 'Bearer [redigido]')
     // query some da URL: pode carregar dado de processo ou credencial que escapou acima
     .replace(/(https?:\/\/[^\s?#]+)[?#]\S*/gi, '$1');
 }
