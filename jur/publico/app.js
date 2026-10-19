@@ -202,6 +202,22 @@ async function carregarHistorico() {
   }
 }
 
+// BRU-76: conversa que nasceu neste envio e cujo primeiro turno o servidor recusou.
+// Apaga no servidor, volta para a tela inicial com o texto preservado e mostra o
+// erro na propria caixa — sem bolha numa conversa que deixou de existir.
+async function descartarConversaVazia(id, texto, erro) {
+  try {
+    await window.jurApi.pedir(`/api/v1/conversas/${id}`, { method: 'DELETE' });
+  } catch { /* se o servidor nao apagou, a conversa aparece no historico — pior caso e o antigo */ }
+  historicoLocal.length = 0;
+  if (conversaAtual === id) {
+    irParaInicial();
+    const campo = $('#caixa-inicial .entrada');
+    if (campo) { campo.value = texto; ajustarAltura(campo); campo.focus(); }
+    avisarNaCaixa(erro || 'Não foi possível iniciar a conversa.');
+  }
+}
+
 function irParaInicial() {
   encerrarReanexo();
   // As buscas da conversa anterior nao podem continuar na tela como se fossem desta.
@@ -396,6 +412,11 @@ async function enviar(campo, modelo, esforco) {
   if (botaoNoInicio.disabled) return;
   botaoNoInicio.disabled = true;
 
+  // BRU-76: a conversa e criada ANTES de o servidor aceitar o turno. Se o POST /chat
+  // falhar (sem conexao de IA, chave invalida, validacao), sobrava uma conversa "Sem
+  // titulo" vazia no historico a cada tentativa. Marcamos que ELA nasceu neste envio
+  // para, nesse caso, apaga-la e devolver o texto a caixa inicial.
+  let conversaCriadaAgora = false;
   if (!conversaAtual) {
     let c;
     try {
@@ -405,6 +426,7 @@ async function enviar(campo, modelo, esforco) {
       bolha('erro', e.message);
       return;
     }
+    conversaCriadaAgora = true;
     conversaAtual = c.id;
     historicoLocal.length = 0;
     $('#inicial').hidden = true;
@@ -462,6 +484,10 @@ async function enviar(campo, modelo, esforco) {
     });
     if (!r.ok) {
       const corpo = await r.json().catch(() => ({ erro: `HTTP ${r.status}` }));
+      if (conversaCriadaAgora) {
+        await descartarConversaVazia(conversaDoEnvio, texto, corpo.erro);
+        return;
+      }
       if (conversaAtual === conversaDoEnvio) bolha('erro', corpo.erro);
       return;
     }
