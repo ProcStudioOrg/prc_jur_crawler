@@ -1,0 +1,113 @@
+{
+ "origem": "resultados/results-carf.json",
+ "itens": [
+  {
+   "numeroDecisao": "2102-003.945",
+   "processo": "10283.007661/2010-71",
+   "processoUrl": null,
+   "orgaoJulgador": "Segunda Turma Ordinária da Primeira Câmara da Segunda Seção / Primeira Câmara / Segunda Seção de Julgamento",
+   "relator": "CARLOS EDUARDO FAGUNDES DE PAULA",
+   "dataJulgamento": "10/09/2025",
+   "dataPublicacao": "03/11/2025"
+  },
+  {
+   "numeroDecisao": "2002-010.066",
+   "processo": "11020.720532/2012-97",
+   "processoUrl": null,
+   "orgaoJulgador": "Segunda Turma Extraordinária da Segunda Seção / Segunda Seção de Julgamento",
+   "relator": "MARCELO FREITAS DE SOUZA COSTA",
+   "dataJulgamento": "28/01/2026",
+   "dataPublicacao": "07/04/2026"
+  },
+  {
+   "numeroDecisao": "2002-010.284",
+   "processo": "10640.002507/2010-04",
+   "processoUrl": null,
+   "orgaoJulgador": "Segunda Turma Extraordinária da Segunda Seção / Segunda Seção de Julgamento",
+   "relator": "ANDRE BARROS DE MOURA",
+   "dataJulgamento": "18/05/2026",
+   "dataPublicacao": "23/06/2026"
+  },
+  {
+   "numeroDecisao": "2001-008.217",
+   "processo": "10882.721224/2020-86",
+   "processoUrl": null,
+   "orgaoJulgador": "Primeira Turma Extraordinária da Segunda Seção / Segunda Seção de Julgamento",
+   "relator": "LILIAN CLAUDIA DE SOUZA",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": "14/04/2026"
+  },
+  {
+   "numeroDecisao": "2101-003.737",
+   "processo": "10865.720024/2013-95",
+   "processoUrl": null,
+   "orgaoJulgador": "Primeira Turma Ordinária da Primeira Câmara da Segunda Seção / Primeira Câmara / Segunda Seção de Julgamento",
+   "relator": "ROBERTO JUNQUEIRA DE ALVARENGA NETO",
+   "dataJulgamento": "23/04/2026",
+   "dataPublicacao": "03/06/2026"
+  },
+  {
+   "numeroDecisao": "2402-013.214",
+   "processo": "10980.725184/2011-42",
+   "processoUrl": null,
+   "orgaoJulgador": "Segunda Turma Ordinária da Quarta Câmara da Segunda Seção / Quarta Câmara / Segunda Seção de Julgamento",
+   "relator": "JOAO RICARDO FAHRION NUSKE",
+   "dataJulgamento": "06/10/2025",
+   "dataPublicacao": "21/11/2025"
+  },
+  {
+   "numeroDecisao": "2003-006.909",
+   "processo": "17613.720838/2011-79",
+   "processoUrl": null,
+   "orgaoJulgador": "Terceira Turma Extraordinária da Segunda Seção / Segunda Seção de Julgamento",
+   "relator": "FRANCISCO IBIAPINO LUZ",
+   "dataJulgamento": "13/04/2026",
+   "dataPublicacao": "19/05/2026"
+  },
+  {
+   "numeroDecisao": "1402-007.716",
+   "processo": "10830.721414/2017-11",
+   "processoUrl": null,
+   "orgaoJulgador": "Segunda Turma Ordinária da Quarta Câmara da Primeira Seção / Quarta Câmara / Primeira Seção de Julgamento",
+   "relator": "MAURITANIA ELVIRA DE SOUSA MENDONCA",
+   "dataJulgamento": "30/04/2026",
+   "dataPublicacao": "11/06/2026"
+  },
+  {
+   "numeroDecisao": "2301-011.702",
+   "processo": "13896.723001/2011-00",
+   "processoUrl": null,
+   "orgaoJulgador": "Primeira Turma Ordinária da Terceira Câmara da Segunda Seção / Terceira Câmara / Segunda Seção de Julgamento",
+   "relator": "FLAVIA LILIAN SELMER DIAS",
+   "dataJulgamento": "08/09/2025",
+   "dataPublicacao": "08/10/2025"
+  },
+  {
+   "numeroDecisao": "2402-013.438",
+   "processo": "11624.720114/2014-62",
+   "processoUrl": null,
+   "orgaoJulgador": "Segunda Turma Ordinária da Quarta Câmara da Segunda Seção / Quarta Câmara / Segunda Seção de Julgamento",
+   "relator": "JOAO RICARDO FAHRION NUSKE",
+   "dataJulgamento": "03/02/2026",
+   "dataPublicacao": "07/05/2026"
+  },
+  {
+   "numeroDecisao": "2001-008.514",
+   "processo": "13370.722022/2020-10",
+   "processoUrl": null,
+   "orgaoJulgador": "Primeira Turma Extraordinária da Segunda Seção / Segunda Seção de Julgamento",
+   "relator": "WILDERSON BOTTO",
+   "dataJulgamento": "17/06/2026",
+   "dataPublicacao": "31/07/2026"
+  },
+  {
+   "numeroDecisao": "2402-013.439",
+   "processo": "19985.723364/2014-67",
+   "processoUrl": null,
+   "orgaoJulgador": "Segunda Turma Ordinária da Quarta Câmara da Segunda Seção / Quarta Câmara / Segunda Seção de Julgamento",
+   "relator": "JOAO RICARDO FAHRION NUSKE",
+   "dataJulgamento": "03/02/2026",
+   "dataPublicacao": "07/05/2026"
+  }
+ ]
+}

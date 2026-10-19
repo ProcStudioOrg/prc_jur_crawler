@@ -1,0 +1,125 @@
+{
+ "origem": "resultados/results-stf.json",
+ "itens": [
+  {
+   "processo": "Rcl 88673 AgR",
+   "numeroProcesso": "Rcl 88673 AgR",
+   "numero": 88673,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur559208/false",
+   "orgaoJulgador": "Segunda Turma",
+   "dataJulgamento": "25/02/2026",
+   "dataPublicacao": "10/04/2026",
+   "relator": "DIAS TOFFOLI"
+  },
+  {
+   "processo": "ARE 1587208 AgR",
+   "numeroProcesso": "ARE 1587208 AgR",
+   "numero": 1587208,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur558323/false",
+   "orgaoJulgador": "Tribunal Pleno",
+   "dataJulgamento": "23/03/2026",
+   "dataPublicacao": "30/03/2026",
+   "relator": "EDSON FACHIN (Presidente)"
+  },
+  {
+   "processo": "RE 1503786 AgR",
+   "numeroProcesso": "RE 1503786 AgR",
+   "numero": 1503786,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur556774/false",
+   "orgaoJulgador": "Segunda Turma",
+   "dataJulgamento": "25/02/2026",
+   "dataPublicacao": "17/03/2026",
+   "relator": "NUNES MARQUES"
+  },
+  {
+   "processo": "ARE 1572229 AgR",
+   "numeroProcesso": "ARE 1572229 AgR",
+   "numero": 1572229,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur548632/false",
+   "orgaoJulgador": "Segunda Turma",
+   "dataJulgamento": "26/11/2025",
+   "dataPublicacao": "27/11/2025",
+   "relator": "LUIZ FUX"
+  },
+  {
+   "processo": "RE 1574910 AgR",
+   "numeroProcesso": "RE 1574910 AgR",
+   "numero": 1574910,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur555440/false",
+   "orgaoJulgador": "Segunda Turma",
+   "dataJulgamento": "02/03/2026",
+   "dataPublicacao": "09/03/2026",
+   "relator": "GILMAR MENDES"
+  },
+  {
+   "processo": "ARE 1579714 AgR",
+   "numeroProcesso": "ARE 1579714 AgR",
+   "numero": 1579714,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur556311/false",
+   "orgaoJulgador": "Tribunal Pleno",
+   "dataJulgamento": "25/02/2026",
+   "dataPublicacao": "13/03/2026",
+   "relator": "EDSON FACHIN (Presidente)"
+  },
+  {
+   "processo": "ARE 1562629 AgR",
+   "numeroProcesso": "ARE 1562629 AgR",
+   "numero": 1562629,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur548432/false",
+   "orgaoJulgador": "Primeira Turma",
+   "dataJulgamento": "27/10/2025",
+   "dataPublicacao": "25/11/2025",
+   "relator": "CRISTIANO ZANIN"
+  },
+  {
+   "processo": "ARE 1560924 AgR",
+   "numeroProcesso": "ARE 1560924 AgR",
+   "numero": 1560924,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur545670/false",
+   "orgaoJulgador": "Tribunal Pleno",
+   "dataJulgamento": "20/10/2025",
+   "dataPublicacao": "23/10/2025",
+   "relator": "EDSON FACHIN (Presidente)"
+  },
+  {
+   "processo": "ARE 1596174 AgR",
+   "numeroProcesso": "ARE 1596174 AgR",
+   "numero": 1596174,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur563713/false",
+   "orgaoJulgador": "Tribunal Pleno",
+   "dataJulgamento": "18/05/2026",
+   "dataPublicacao": "27/05/2026",
+   "relator": "EDSON FACHIN (Presidente)"
+  },
+  {
+   "processo": "ARE 1582817 ED",
+   "numeroProcesso": "ARE 1582817 ED",
+   "numero": 1582817,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur556451/false",
+   "orgaoJulgador": "Tribunal Pleno",
+   "dataJulgamento": "25/02/2026",
+   "dataPublicacao": "16/03/2026",
+   "relator": "EDSON FACHIN (Presidente)"
+  },
+  {
+   "processo": "AP 2616",
+   "numeroProcesso": "AP 2616",
+   "numero": 2616,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur551499/false",
+   "orgaoJulgador": "Primeira Turma",
+   "dataJulgamento": "02/12/2025",
+   "dataPublicacao": "05/12/2025",
+   "relator": "ALEXANDRE DE MORAES"
+  },
+  {
+   "processo": "ARE 1572891 AgR",
+   "numeroProcesso": "ARE 1572891 AgR",
+   "numero": 1572891,
+   "processoUrl": "https://jurisprudencia.stf.jus.br/pages/search/sjur551725/false",
+   "orgaoJulgador": "Tribunal Pleno",
+   "dataJulgamento": "22/12/2025",
+   "dataPublicacao": "16/01/2026",
+   "relator": "EDSON FACHIN (Presidente)"
+  }
+ ]
+}

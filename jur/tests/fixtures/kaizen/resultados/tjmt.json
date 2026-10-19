@@ -1,0 +1,125 @@
+{
+ "origem": "resultados/results-tjmt.json",
+ "itens": [
+  {
+   "numeroProcesso": "1022420-19.2025.8.11.0003",
+   "numeroProcessoSemMascara": "10224201920258110003",
+   "processoUrl": null,
+   "orgaoJulgador": "Terceira Câmara de Direito Privado",
+   "relator": "ANTONIA SIQUEIRA GONCALVES",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "29/08/2026",
+   "tipoProcesso": "Cível"
+  },
+  {
+   "numeroProcesso": "1043054-19.2025.8.11.0041",
+   "numeroProcessoSemMascara": "10430541920258110041",
+   "processoUrl": null,
+   "orgaoJulgador": "Quarta Câmara de Direito Privado",
+   "relator": "ANGLIZEY SOLIVAN DE OLIVEIRA",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "29/08/2026",
+   "tipoProcesso": "Cível"
+  },
+  {
+   "numeroProcesso": "1073435-10.2025.8.11.0041",
+   "numeroProcessoSemMascara": "10734351020258110041",
+   "processoUrl": null,
+   "orgaoJulgador": "Quarta Câmara de Direito Privado",
+   "relator": "ANGLIZEY SOLIVAN DE OLIVEIRA",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "29/08/2026",
+   "tipoProcesso": "Cível"
+  },
+  {
+   "numeroProcesso": "1110651-05.2025.8.11.0041",
+   "numeroProcessoSemMascara": "11106510520258110041",
+   "processoUrl": null,
+   "orgaoJulgador": "Quarta Câmara de Direito Privado",
+   "relator": "ANGLIZEY SOLIVAN DE OLIVEIRA",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "29/08/2026",
+   "tipoProcesso": "Cível"
+  },
+  {
+   "numeroProcesso": "1034542-73.2025.8.11.0000",
+   "numeroProcessoSemMascara": "10345427320258110000",
+   "processoUrl": null,
+   "orgaoJulgador": "Primeira Câmara de Direito Público e Coletivo",
+   "relator": "LIDIO MODESTO DA SILVA FILHO",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "27/08/2026",
+   "tipoProcesso": "Cível"
+  },
+  {
+   "numeroProcesso": "1007280-59.2024.8.11.0041",
+   "numeroProcessoSemMascara": "10072805920248110041",
+   "processoUrl": null,
+   "orgaoJulgador": "Quarta Câmara de Direito Privado",
+   "relator": "SERLY MARCONDES ALVES",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "30/08/2026",
+   "tipoProcesso": "Cível"
+  },
+  {
+   "numeroProcesso": "1000487-08.2020.8.11.0086",
+   "numeroProcessoSemMascara": "10004870820208110086",
+   "processoUrl": null,
+   "orgaoJulgador": "Quarta Câmara de Direito Privado",
+   "relator": "ANGLIZEY SOLIVAN DE OLIVEIRA",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "tipoProcesso": "Cível"
+  },
+  {
+   "numeroProcesso": "1026721-09.2025.8.11.0003",
+   "numeroProcessoSemMascara": "10267210920258110003",
+   "processoUrl": null,
+   "orgaoJulgador": "Terceira Câmara de Direito Privado",
+   "relator": "ANTONIA SIQUEIRA GONCALVES",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "29/08/2026",
+   "tipoProcesso": "Cível"
+  },
+  {
+   "numeroProcesso": "0000077-14.2014.8.11.0009",
+   "numeroProcessoSemMascara": "00000771420148110009",
+   "processoUrl": null,
+   "orgaoJulgador": "Quarta Câmara de Direito Privado",
+   "relator": "RUBENS DE OLIVEIRA SANTOS FILHO",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "29/08/2026",
+   "tipoProcesso": "Cível"
+  },
+  {
+   "numeroProcesso": "1119781-19.2025.8.11.0041",
+   "numeroProcessoSemMascara": "11197811920258110041",
+   "processoUrl": null,
+   "orgaoJulgador": "Quarta Câmara de Direito Privado",
+   "relator": "SERLY MARCONDES ALVES",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "29/08/2026",
+   "tipoProcesso": "Cível"
+  },
+  {
+   "numeroProcesso": "1009717-30.2023.8.11.0002",
+   "numeroProcessoSemMascara": "10097173020238110002",
+   "processoUrl": null,
+   "orgaoJulgador": "Quarta Câmara de Direito Privado",
+   "relator": "SERLY MARCONDES ALVES",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "29/08/2026",
+   "tipoProcesso": "Cível"
+  },
+  {
+   "numeroProcesso": "1043185-96.2022.8.11.0041",
+   "numeroProcessoSemMascara": "10431859620228110041",
+   "processoUrl": null,
+   "orgaoJulgador": "Quarta Câmara de Direito Privado",
+   "relator": "ANGLIZEY SOLIVAN DE OLIVEIRA",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "29/08/2026",
+   "tipoProcesso": "Cível"
+  }
+ ]
+}

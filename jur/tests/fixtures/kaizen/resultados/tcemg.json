@@ -1,0 +1,101 @@
+{
+ "origem": "resultados/results-tcemg.json",
+ "itens": [
+  {
+   "processo": "1188139",
+   "numeroProcesso": "1188139",
+   "relator": "CONS. AGOSTINHO PATRUS",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "10/06/2026",
+   "dataPublicacao": "24/06/2026"
+  },
+  {
+   "processo": "1200008",
+   "numeroProcesso": "1200008",
+   "relator": "CONS. EM EXERC. ADONIAS MONTEIRO",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "27/05/2026",
+   "dataPublicacao": "19/06/2026"
+  },
+  {
+   "processo": "1196107",
+   "numeroProcesso": "1196107",
+   "relator": "CONS. SUBST. TELMO PASSARELI",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "29/04/2026",
+   "dataPublicacao": "15/05/2026"
+  },
+  {
+   "processo": "1127139",
+   "numeroProcesso": "1127139",
+   "relator": "CONS. GILBERTO DINIZ",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "25/03/2026",
+   "dataPublicacao": "10/04/2026"
+  },
+  {
+   "processo": "1196328",
+   "numeroProcesso": "1196328",
+   "relator": "CONS. EM EXERC. HAMILTON COELHO",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "18/03/2026",
+   "dataPublicacao": "09/04/2026"
+  },
+  {
+   "processo": "1174305",
+   "numeroProcesso": "1174305",
+   "relator": "CONS. EM EXERC. LICURGO MOURÃO",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "18/03/2026",
+   "dataPublicacao": "30/03/2026"
+  },
+  {
+   "processo": "1160702",
+   "numeroProcesso": "1160702",
+   "relator": "CONS. EM EXERC. LICURGO MOURÃO",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "29/10/2025",
+   "dataPublicacao": "24/11/2025"
+  },
+  {
+   "processo": "1189195",
+   "numeroProcesso": "1189195",
+   "relator": "CONS. EM EXERC. TELMO PASSARELI",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "05/11/2025",
+   "dataPublicacao": "13/11/2025"
+  },
+  {
+   "processo": "1167118",
+   "numeroProcesso": "1167118",
+   "relator": "CONS. EM EXERC. TELMO PASSARELI",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "10/09/2025",
+   "dataPublicacao": "25/09/2025"
+  },
+  {
+   "processo": "1141248",
+   "numeroProcesso": "1141248",
+   "relator": "CONS. DURVAL ANGELO",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "10/09/2025",
+   "dataPublicacao": "24/09/2025"
+  },
+  {
+   "processo": "1184889",
+   "numeroProcesso": "1184889",
+   "relator": "CONS. EM EXERC. HAMILTON COELHO",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "10/09/2025",
+   "dataPublicacao": "17/09/2025"
+  },
+  {
+   "processo": "1192181",
+   "numeroProcesso": "1192181",
+   "relator": "CONS. EM EXERC. TELMO PASSARELI",
+   "orgaoJulgador": "Tribunal Pleno — TCE-MG",
+   "dataJulgamento": "03/09/2025",
+   "dataPublicacao": "10/09/2025"
+  }
+ ]
+}

@@ -1,0 +1,101 @@
+{
+ "origem": "resultados/results-tjpi.json",
+ "itens": [
+  {
+   "numeroProcesso": "0800400-95.2024.8.18.0152",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35924991/public",
+   "orgaoJulgador": "3ª Turma Recursal",
+   "relator": "EDVALDO DE SOUSA REBOUCAS NETO",
+   "dataJulgamento": "",
+   "dataPublicacao": "25/08/2026"
+  },
+  {
+   "numeroProcesso": "0803423-47.2024.8.18.0088",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35924969/public",
+   "orgaoJulgador": "3ª Turma Recursal",
+   "relator": "EDVALDO DE SOUSA REBOUCAS NETO",
+   "dataJulgamento": "",
+   "dataPublicacao": "25/08/2026"
+  },
+  {
+   "numeroProcesso": "0832147-36.2023.8.18.0140",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35921815/public",
+   "orgaoJulgador": "1ª Câmara Especializada Cível",
+   "relator": "DIOCLECIO SOUSA DA SILVA",
+   "dataJulgamento": "",
+   "dataPublicacao": "25/08/2026"
+  },
+  {
+   "numeroProcesso": "0832147-36.2023.8.18.0140",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35898136/public",
+   "orgaoJulgador": "1ª Câmara Especializada Cível",
+   "relator": "DIOCLECIO SOUSA DA SILVA",
+   "dataJulgamento": "",
+   "dataPublicacao": "25/08/2026"
+  },
+  {
+   "numeroProcesso": "0800203-19.2023.8.18.0042",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35836817/public",
+   "orgaoJulgador": "3ª Câmara Especializada Cível",
+   "relator": "LUCICLEIDE PEREIRA BELO",
+   "dataJulgamento": "",
+   "dataPublicacao": "20/08/2026"
+  },
+  {
+   "numeroProcesso": "0803900-78.2023.8.18.0032",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35836816/public",
+   "orgaoJulgador": "3ª Câmara Especializada Cível",
+   "relator": "LUCICLEIDE PEREIRA BELO",
+   "dataJulgamento": "",
+   "dataPublicacao": "20/08/2026"
+  },
+  {
+   "numeroProcesso": "0802171-74.2019.8.18.0026",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35772245/public",
+   "orgaoJulgador": "3ª Câmara Especializada Cível",
+   "relator": "LUCICLEIDE PEREIRA BELO",
+   "dataJulgamento": "",
+   "dataPublicacao": "19/08/2026"
+  },
+  {
+   "numeroProcesso": "0801339-62.2023.8.18.0103",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35767005/public",
+   "orgaoJulgador": "3ª Câmara Especializada Cível",
+   "relator": "AGRIMAR RODRIGUES DE ARAUJO",
+   "dataJulgamento": "",
+   "dataPublicacao": "18/08/2026"
+  },
+  {
+   "numeroProcesso": "0801339-62.2023.8.18.0103",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35756592/public",
+   "orgaoJulgador": "3ª Câmara Especializada Cível",
+   "relator": "AGRIMAR RODRIGUES DE ARAUJO",
+   "dataJulgamento": "",
+   "dataPublicacao": "18/08/2026"
+  },
+  {
+   "numeroProcesso": "0800567-41.2026.8.18.0056",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35707781/public",
+   "orgaoJulgador": "3ª Câmara Especializada Cível",
+   "relator": "FERNANDO LOPES E SILVA NETO",
+   "dataJulgamento": "",
+   "dataPublicacao": "17/08/2026"
+  },
+  {
+   "numeroProcesso": "0800567-41.2026.8.18.0056",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35732421/public",
+   "orgaoJulgador": "3ª Câmara Especializada Cível",
+   "relator": "FERNANDO LOPES E SILVA NETO",
+   "dataJulgamento": "",
+   "dataPublicacao": "17/08/2026"
+  },
+  {
+   "numeroProcesso": "0800740-34.2025.8.18.0013",
+   "processoUrl": "https://jurisprudencia.tjpi.jus.br/jurisprudences/35673220/public",
+   "orgaoJulgador": "1ª Turma Recursal",
+   "relator": "LITELTON VIEIRA DE OLIVEIRA",
+   "dataJulgamento": "",
+   "dataPublicacao": "14/08/2026"
+  }
+ ]
+}

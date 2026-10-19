@@ -1,0 +1,85 @@
+{
+ "origem": "resultados/results-tjrj.json",
+ "itens": [
+  {
+   "numeroProcesso": "0800120-79.2025.8.19.0082",
+   "processoUrl": "https://eproc2g-ws.tjrj.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "3ª Câmara de Direito Privado",
+   "dataJulgamento": "30/08/2026",
+   "dataPublicacao": "30/08/2026",
+   "relator": "LUIZ FERNANDO PINTO"
+  },
+  {
+   "numeroProcesso": "0935155-60.2025.8.19.0001",
+   "processoUrl": "https://eproc2g-ws.tjrj.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "16ª Câmara de Direito Privado",
+   "dataJulgamento": "30/08/2026",
+   "dataPublicacao": "30/08/2026",
+   "relator": "CARLOS GUSTAVO VIANNA DIREITO"
+  },
+  {
+   "numeroProcesso": "0807878-04.2023.8.19.0075",
+   "processoUrl": "https://eproc2g-ws.tjrj.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "3ª Câmara de Direito Privado",
+   "dataJulgamento": "29/08/2026",
+   "dataPublicacao": "29/08/2026",
+   "relator": "FERNANDA XAVIER DE BRITO"
+  },
+  {
+   "numeroProcesso": "0813440-64.2024.8.19.0202",
+   "processoUrl": "https://eproc2g-ws.tjrj.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "3ª Câmara de Direito Privado",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "26/08/2026",
+   "relator": "FERNANDA XAVIER DE BRITO"
+  },
+  {
+   "numeroProcesso": "0809461-48.2025.8.19.0206",
+   "processoUrl": "https://eproc2g-ws.tjrj.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "20ª Câmara de Direito Privado",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "27/08/2026",
+   "relator": "LUIZ HENRIQUE OLIVEIRA MARQUES"
+  },
+  {
+   "numeroProcesso": "0871377-53.2024.8.19.0001",
+   "processoUrl": "https://eproc2g-ws.tjrj.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "20ª Câmara de Direito Privado",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "27/08/2026",
+   "relator": "CESAR FELIPE CURY"
+  },
+  {
+   "numeroProcesso": "0020049-81.2010.8.19.0204",
+   "processoUrl": "https://eproc2g-ws.tjrj.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "20ª Câmara de Direito Privado",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "27/08/2026",
+   "relator": "CESAR FELIPE CURY"
+  },
+  {
+   "numeroProcesso": "0806418-43.2023.8.19.0087",
+   "processoUrl": "https://eproc2g-ws.tjrj.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "20ª Câmara de Direito Privado",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "27/08/2026",
+   "relator": "CESAR FELIPE CURY"
+  },
+  {
+   "numeroProcesso": "0810918-25.2025.8.19.0042",
+   "processoUrl": "https://eproc2g-ws.tjrj.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "20ª Câmara de Direito Privado",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "27/08/2026",
+   "relator": "LUIZ HENRIQUE OLIVEIRA MARQUES"
+  },
+  {
+   "numeroProcesso": "0846085-24.2024.8.19.0209",
+   "processoUrl": "https://eproc2g-ws.tjrj.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "20ª Câmara de Direito Privado",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "27/08/2026",
+   "relator": "SÉRGIO NOGUEIRA DE AZEREDO"
+  }
+ ]
+}

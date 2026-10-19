@@ -1,0 +1,65 @@
+{
+ "origem": "resultados/results-tcu.json",
+ "itens": [
+  {
+   "numeroAcordao": "2333",
+   "colegiado": "Plenário",
+   "relator": "JORGE OLIVEIRA"
+  },
+  {
+   "numeroAcordao": "4697",
+   "colegiado": "Primeira Câmara",
+   "relator": "BRUNO DANTAS"
+  },
+  {
+   "numeroAcordao": "4555",
+   "colegiado": "Segunda Câmara",
+   "relator": "JORGE OLIVEIRA"
+  },
+  {
+   "numeroAcordao": "4535",
+   "colegiado": "Segunda Câmara",
+   "relator": "AUGUSTO NARDES"
+  },
+  {
+   "numeroAcordao": "4524",
+   "colegiado": "Segunda Câmara",
+   "relator": "ODAIR CUNHA"
+  },
+  {
+   "numeroAcordao": "2268",
+   "colegiado": "Plenário",
+   "relator": "AUGUSTO NARDES"
+  },
+  {
+   "numeroAcordao": "2263",
+   "colegiado": "Plenário",
+   "relator": "WALTON ALENCAR RODRIGUES"
+  },
+  {
+   "numeroAcordao": "2210",
+   "colegiado": "Plenário",
+   "relator": "BRUNO DANTAS"
+  },
+  {
+   "numeroAcordao": "2209",
+   "colegiado": "Plenário",
+   "relator": "BRUNO DANTAS"
+  },
+  {
+   "numeroAcordao": "2198",
+   "colegiado": "Plenário",
+   "relator": "ANTONIO ANASTASIA"
+  },
+  {
+   "numeroAcordao": "2197",
+   "colegiado": "Plenário",
+   "relator": "WALTON ALENCAR RODRIGUES"
+  },
+  {
+   "numeroAcordao": "2194",
+   "colegiado": "Plenário",
+   "relator": "JORGE OLIVEIRA"
+  }
+ ]
+}

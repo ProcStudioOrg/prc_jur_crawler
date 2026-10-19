@@ -1,0 +1,105 @@
+{
+ "origem": "resultados/results-trf6.json",
+ "itens": [
+  {
+   "numeroProcesso": "6013989-54.2026.4.06.0000",
+   "processo": "6013989-54.2026.4.06.0000",
+   "processoUrl": "https://eproc2g.trf6.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "3ª Turma",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "6390847-36.2025.4.06.3800",
+   "processo": "6390847-36.2025.4.06.3800",
+   "processoUrl": "https://eproc2g.trf6.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "4ª Turma",
+   "dataJulgamento": "25/08/2026",
+   "dataPublicacao": "25/08/2026",
+   "relator": "ANDRE PRADO DE VASCONCELOS",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "1003025-05.2022.4.06.9999",
+   "processo": "1003025-05.2022.4.06.9999",
+   "processoUrl": "https://eproc2g.trf6.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "1ª Turma - PREV/SERV",
+   "dataJulgamento": "25/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "RUBENS ROLLO D OLIVEIRA",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "1003747-91.2020.4.01.3809",
+   "processo": "1003747-91.2020.4.01.3809",
+   "processoUrl": "https://eproc2g.trf6.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "1ª Turma - PREV/SERV",
+   "dataJulgamento": "25/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "GRÉGORE MOREIRA DE MOURA",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "6047472-92.2024.4.06.3800",
+   "processo": "6047472-92.2024.4.06.3800",
+   "processoUrl": "https://eproc2g.trf6.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "4ª Turma",
+   "dataJulgamento": "24/08/2026",
+   "dataPublicacao": "24/08/2026",
+   "relator": "ANDRE PRADO DE VASCONCELOS",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "1000034-43.2018.4.01.3821",
+   "processo": "1000034-43.2018.4.01.3821",
+   "processoUrl": "https://eproc2g.trf6.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "1ª Turma Suplementar",
+   "dataJulgamento": "24/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "0002225-40.2015.4.01.3803",
+   "processo": "0002225-40.2015.4.01.3803",
+   "processoUrl": "https://eproc2g.trf6.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "1ª Turma Suplementar",
+   "dataJulgamento": "24/08/2026",
+   "dataPublicacao": "27/08/2026",
+   "relator": "FLAVIO BITTENCOURT DE SOUZA",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "0012861-08.2014.4.01.3801",
+   "processo": "0012861-08.2014.4.01.3801",
+   "processoUrl": "https://eproc2g.trf6.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "1ª Turma Suplementar",
+   "dataJulgamento": "24/08/2026",
+   "dataPublicacao": "27/08/2026",
+   "relator": "FLAVIO BITTENCOURT DE SOUZA",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "1007312-20.2020.4.01.9999",
+   "processo": "1007312-20.2020.4.01.9999",
+   "processoUrl": "https://eproc2g.trf6.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "1ª Turma Suplementar",
+   "dataJulgamento": "24/08/2026",
+   "dataPublicacao": "26/08/2026",
+   "relator": "GUILHERME BACELAR PATRICIO DE ASSIS",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "0025164-57.2014.4.01.3800",
+   "processo": "0025164-57.2014.4.01.3800",
+   "processoUrl": "https://eproc2g.trf6.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "1ª Turma Suplementar",
+   "dataJulgamento": "24/08/2026",
+   "dataPublicacao": "26/08/2026",
+   "relator": "GUILHERME BACELAR PATRICIO DE ASSIS",
+   "relatorAcordao": ""
+  }
+ ]
+}

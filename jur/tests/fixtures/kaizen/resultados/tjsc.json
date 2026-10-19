@@ -1,0 +1,95 @@
+{
+ "origem": "resultados/results-tjsc.json",
+ "itens": [
+  {
+   "numeroProcesso": "5001101-59.2026.8.24.0930",
+   "processo": "5001101-59.2026.8.24.0930",
+   "processoUrl": "https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "05º Núcleo Comercial de Justiça 4.0",
+   "dataJulgamento": "23/08/2026",
+   "dataPublicacao": "23/08/2026",
+   "relator": "ANTONIO AUGUSTO BAGGIO E UBALDO"
+  },
+  {
+   "numeroProcesso": "0300844-13.2017.8.24.0073",
+   "processo": "0300844-13.2017.8.24.0073",
+   "processoUrl": "https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "4ª Câmara de Direito Público",
+   "dataJulgamento": "22/08/2026",
+   "dataPublicacao": "22/08/2026",
+   "relator": "ELLESTON LISSANDRO CANALI"
+  },
+  {
+   "numeroProcesso": "5077689-84.2026.8.24.0000",
+   "processo": "5077689-84.2026.8.24.0000",
+   "processoUrl": "https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "1ª Câmara de Direito Civil",
+   "dataJulgamento": "22/08/2026",
+   "dataPublicacao": "22/08/2026",
+   "relator": "VITORALDO BRIDI"
+  },
+  {
+   "numeroProcesso": "5031231-89.2026.8.24.0038",
+   "processo": "5031231-89.2026.8.24.0038",
+   "processoUrl": "https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "4ª Câmara de Direito Civil",
+   "dataJulgamento": "22/08/2026",
+   "dataPublicacao": "22/08/2026",
+   "relator": "GUSTAVO HENRIQUE ARACHESKI"
+  },
+  {
+   "numeroProcesso": "5072982-73.2026.8.24.0000",
+   "processo": "5072982-73.2026.8.24.0000",
+   "processoUrl": "https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "8ª Câmara de Direito Civil",
+   "dataJulgamento": "22/08/2026",
+   "dataPublicacao": "22/08/2026",
+   "relator": "ALEX HELENO SANTORE"
+  },
+  {
+   "numeroProcesso": "5007666-44.2026.8.24.0023",
+   "processo": "5007666-44.2026.8.24.0023",
+   "processoUrl": "https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "2ª Câmara de Direito Comercial",
+   "dataJulgamento": "22/08/2026",
+   "dataPublicacao": "22/08/2026",
+   "relator": "STEPHAN KLAUS RADLOFF"
+  },
+  {
+   "numeroProcesso": "5029805-87.2023.8.24.0930",
+   "processo": "5029805-87.2023.8.24.0930",
+   "processoUrl": "https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "7ª Câmara de Direito Civil",
+   "dataJulgamento": "21/08/2026",
+   "dataPublicacao": "21/08/2026",
+   "relator": "MARCELO PONS MEIRELLES"
+  },
+  {
+   "numeroProcesso": "5004019-58.2024.8.24.0040",
+   "processo": "5004019-58.2024.8.24.0040",
+   "processoUrl": "https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "2ª Câmara Especial de Enfrentamento de Acervos",
+   "dataJulgamento": "21/08/2026",
+   "dataPublicacao": "21/08/2026",
+   "relator": "MARCELO PONS MEIRELLES"
+  },
+  {
+   "numeroProcesso": "5110738-13.2024.8.24.0930",
+   "processo": "5110738-13.2024.8.24.0930",
+   "processoUrl": "https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "8ª Câmara de Direito Civil",
+   "dataJulgamento": "21/08/2026",
+   "dataPublicacao": "21/08/2026",
+   "relator": "ELIZA MARIA STRAPAZZON"
+  },
+  {
+   "numeroProcesso": "5001768-98.2026.8.24.0007",
+   "processo": "5001768-98.2026.8.24.0007",
+   "processoUrl": "https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "7ª Câmara de Direito Civil",
+   "dataJulgamento": "21/08/2026",
+   "dataPublicacao": "21/08/2026",
+   "relator": "DAVIDSON JAHN MELLO"
+  }
+ ]
+}

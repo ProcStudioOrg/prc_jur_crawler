@@ -1,0 +1,95 @@
+{
+ "origem": "resultados/results-tjrj-ejuris.json",
+ "itens": [
+  {
+   "processo": "0054750-39.2026.8.19.0000",
+   "numeroAntigo": "202600277685",
+   "orgaoJulgador": "VIGESIMA CAMARA DE DIREITO PRIVADO (ANTIGA 11ª CÂMARA CÍVEL)",
+   "relator": "Des(a). SÉRGIO NOGUEIRA DE AZEREDO",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": null,
+   "processoUrl": "https://www3.tjrj.jus.br/ejud/ConsultaProcesso.aspx"
+  },
+  {
+   "processo": "0130382-15.2019.8.19.0001",
+   "numeroAntigo": "202600135976",
+   "orgaoJulgador": "SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 3ª CÂMARA CÍVEL)",
+   "relator": "Des(a). JEAN ALBERT DE SOUZA SAADI",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": null,
+   "processoUrl": "https://www3.tjrj.jus.br/ejud/ConsultaProcesso.aspx"
+  },
+  {
+   "processo": "0030884-12.2021.8.19.0021",
+   "numeroAntigo": "202500175069",
+   "orgaoJulgador": "SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 3ª CÂMARA CÍVEL)",
+   "relator": "Des(a). JEAN ALBERT DE SOUZA SAADI",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": null,
+   "processoUrl": "https://www3.tjrj.jus.br/ejud/ConsultaProcesso.aspx"
+  },
+  {
+   "processo": "0025777-05.2021.8.19.0209",
+   "numeroAntigo": "202600143793",
+   "orgaoJulgador": "SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 3ª CÂMARA CÍVEL)",
+   "relator": "Des(a). JEAN ALBERT DE SOUZA SAADI",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": null,
+   "processoUrl": "https://www3.tjrj.jus.br/ejud/ConsultaProcesso.aspx"
+  },
+  {
+   "processo": "0001815-18.2019.8.19.0210",
+   "numeroAntigo": "202600143256",
+   "orgaoJulgador": "SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 3ª CÂMARA CÍVEL)",
+   "relator": "Des(a). JEAN ALBERT DE SOUZA SAADI",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": null,
+   "processoUrl": "https://www3.tjrj.jus.br/ejud/ConsultaProcesso.aspx"
+  },
+  {
+   "processo": "0000875-08.2021.8.19.0073",
+   "numeroAntigo": "202600139020",
+   "orgaoJulgador": "SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 3ª CÂMARA CÍVEL)",
+   "relator": "Des(a). JEAN ALBERT DE SOUZA SAADI",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": null,
+   "processoUrl": "https://www3.tjrj.jus.br/ejud/ConsultaProcesso.aspx"
+  },
+  {
+   "processo": "0010663-06.2021.8.19.0054",
+   "numeroAntigo": "202600149109",
+   "orgaoJulgador": "DECIMA SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 14ª CÂMARA CÍVEL)",
+   "relator": "Des(a). FRANCISCO DE ASSIS PESSANHA FILHO",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": null,
+   "processoUrl": "https://www3.tjrj.jus.br/ejud/ConsultaProcesso.aspx"
+  },
+  {
+   "processo": "0967191-92.2024.8.19.0001",
+   "numeroAntigo": "2026.001.02253",
+   "orgaoJulgador": "DECIMA SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 14ª CÂMARA CÍVEL)",
+   "relator": "Des(a). CLEBER GHELFENSTEIN",
+   "dataJulgamento": "27/05/2026",
+   "dataPublicacao": null,
+   "processoUrl": "https://www3.tjrj.jus.br/ejud/ConsultaProcesso.aspx"
+  },
+  {
+   "processo": "0087292-47.2025.8.19.0000",
+   "numeroAntigo": "2025.002.134209",
+   "orgaoJulgador": "DECIMA SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 14ª CÂMARA CÍVEL)",
+   "relator": "Des(a). CLEBER GHELFENSTEIN",
+   "dataJulgamento": "18/03/2026",
+   "dataPublicacao": null,
+   "processoUrl": "https://www3.tjrj.jus.br/ejud/ConsultaProcesso.aspx"
+  },
+  {
+   "processo": "0821820-73.2024.8.19.0203",
+   "numeroAntigo": "2025.001.121712",
+   "orgaoJulgador": "DECIMA SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 14ª CÂMARA CÍVEL)",
+   "relator": "Des(a). CLEBER GHELFENSTEIN",
+   "dataJulgamento": "04/02/2026",
+   "dataPublicacao": null,
+   "processoUrl": "https://www3.tjrj.jus.br/ejud/ConsultaProcesso.aspx"
+  }
+ ]
+}

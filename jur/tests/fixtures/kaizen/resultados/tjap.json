@@ -1,0 +1,105 @@
+{
+ "origem": "resultados/results-tjap.json",
+ "itens": [
+  {
+   "processo": "6004315-97.2026.8.03.0001",
+   "numeroProcesso": "6004315-97.2026.8.03.0001",
+   "processoUrl": "https://bancosentencas.tjap.jus.br/reader/PJE/461154",
+   "orgaoJulgador": "3ª VARA DO JUIZADO ESPECIAL CÍVEL - CENTRO",
+   "relator": "NELBA DE SOUZA SIQUEIRA",
+   "dataJuntada": "02/02/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "6020263-79.2026.8.03.0001",
+   "numeroProcesso": "6020263-79.2026.8.03.0001",
+   "processoUrl": "https://bancosentencas.tjap.jus.br/reader/PJE/488932",
+   "orgaoJulgador": "3ª VARA DO JUIZADO ESPECIAL CÍVEL - CENTRO",
+   "relator": "NELBA DE SOUZA SIQUEIRA",
+   "dataJuntada": "24/03/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "6003830-13.2025.8.03.0008",
+   "numeroProcesso": "6003830-13.2025.8.03.0008",
+   "processoUrl": "https://bancosentencas.tjap.jus.br/reader/PJE/421390",
+   "orgaoJulgador": "1ª VARA DE LARANJAL DO JARI",
+   "relator": "LUCIANA BARROS DE CAMARGO",
+   "dataJuntada": "30/04/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "0005697-06.2021.8.03.0002",
+   "numeroProcesso": "0005697-06.2021.8.03.0002",
+   "processoUrl": "https://bancosentencas.tjap.jus.br/reader/PJE/380160",
+   "orgaoJulgador": "2ª VARA CRIMINAL DE SANTANA",
+   "relator": "ALMIRO DO SOCORRO AVELAR DENIUR",
+   "dataJuntada": "12/02/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "6000468-03.2025.8.03.0008",
+   "numeroProcesso": "6000468-03.2025.8.03.0008",
+   "processoUrl": "https://bancosentencas.tjap.jus.br/reader/PJE/283421",
+   "orgaoJulgador": "1ª VARA DE LARANJAL DO JARI",
+   "relator": "ANTONIO JOSE DE MENEZES",
+   "dataJuntada": "01/07/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "6000658-38.2026.8.03.0005",
+   "numeroProcesso": "6000658-38.2026.8.03.0005",
+   "processoUrl": "https://bancosentencas.tjap.jus.br/reader/PJE/530214",
+   "orgaoJulgador": "VARA ÚNICA DE TARTARUGALZINHO",
+   "relator": "MURILO AUGUSTO DE FARIA SANTOS",
+   "dataJuntada": "16/06/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "6042580-08.2025.8.03.0001",
+   "numeroProcesso": "6042580-08.2025.8.03.0001",
+   "processoUrl": "https://bancosentencas.tjap.jus.br/reader/PJE/345312",
+   "orgaoJulgador": "3º JUIZADO ESPECIAL DE FAZENDA PÚBLICA",
+   "relator": "THINA LUIZA D ALMEIDA GOMES DOS SANTOS SOUSA",
+   "dataJuntada": "26/02/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "6003780-84.2025.8.03.0008",
+   "numeroProcesso": "6003780-84.2025.8.03.0008",
+   "processoUrl": "https://bancosentencas.tjap.jus.br/reader/PJE/419915",
+   "orgaoJulgador": "1ª VARA DE LARANJAL DO JARI",
+   "relator": "LUCIANA BARROS DE CAMARGO",
+   "dataJuntada": "11/05/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "6031999-65.2024.8.03.0001",
+   "numeroProcesso": "6031999-65.2024.8.03.0001",
+   "processoUrl": "https://bancosentencas.tjap.jus.br/reader/PJE/200882",
+   "orgaoJulgador": "1ª VARA DO JUIZADO ESPECIAL CÍVEL - CENTRO",
+   "relator": "ESCLEPIADES DE OLIVEIRA NETO",
+   "dataJuntada": "06/10/2025",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "6005111-22.2025.8.03.0002",
+   "numeroProcesso": "6005111-22.2025.8.03.0002",
+   "processoUrl": "https://bancosentencas.tjap.jus.br/reader/PJE/325526",
+   "orgaoJulgador": "JUIZADO ESPECIAL CIVEL E CRIMINAL - STN",
+   "relator": "LUIZA VAZ DOMINGUES MORENO",
+   "dataJuntada": "24/11/2025",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  }
+ ]
+}

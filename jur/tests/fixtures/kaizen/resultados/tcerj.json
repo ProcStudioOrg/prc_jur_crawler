@@ -1,0 +1,89 @@
+{
+ "origem": "resultados/results-tcerj.json",
+ "itens": [
+  {
+   "processo": "21523802026",
+   "numeroAcordao": "26213/2026",
+   "relator": "Andrea Siqueira Martins",
+   "dataJulgamento": "2026-07-27T00:00:00-03:00",
+   "dataPublicacao": null
+  },
+  {
+   "processo": "11191252025",
+   "numeroAcordao": "23142/2026",
+   "relator": "Thiago Pampolha Gonçalves",
+   "dataJulgamento": "2026-07-15T00:00:00-03:00",
+   "dataPublicacao": null
+  },
+  {
+   "processo": "11191252025",
+   "numeroAcordao": "23142/2026",
+   "relator": "Thiago Pampolha Gonçalves",
+   "dataJulgamento": "2026-07-15T00:00:00-03:00",
+   "dataPublicacao": null
+  },
+  {
+   "processo": "24806922025",
+   "numeroAcordao": "23519/2026",
+   "relator": "Christiano Lacerda Ghuerren",
+   "dataJulgamento": "2026-07-13T00:00:00-03:00",
+   "dataPublicacao": null
+  },
+  {
+   "processo": "20287452025",
+   "numeroAcordao": "23162/2026",
+   "relator": "Rodrigo Melo do Nascimento",
+   "dataJulgamento": "2026-07-13T00:00:00-03:00",
+   "dataPublicacao": null
+  },
+  {
+   "processo": "21204142026",
+   "numeroAcordao": "23065/2026",
+   "relator": "Christiano Lacerda Ghuerren",
+   "dataJulgamento": "2026-07-06T00:00:00-03:00",
+   "dataPublicacao": null
+  },
+  {
+   "processo": "23958792025",
+   "numeroAcordao": "21406/2026",
+   "relator": "Marianna Montebello Willeman",
+   "dataJulgamento": "2026-07-01T00:00:00-03:00",
+   "dataPublicacao": null
+  },
+  {
+   "processo": "10388502026",
+   "numeroAcordao": "20582/2026",
+   "relator": "Marianna Montebello Willeman",
+   "dataJulgamento": "2026-06-22T00:00:00-03:00",
+   "dataPublicacao": null
+  },
+  {
+   "processo": "10388502026",
+   "numeroAcordao": "20582/2026",
+   "relator": "Marianna Montebello Willeman",
+   "dataJulgamento": "2026-06-22T00:00:00-03:00",
+   "dataPublicacao": null
+  },
+  {
+   "processo": "23675572025",
+   "numeroAcordao": "19597/2026",
+   "relator": "Marianna Montebello Willeman",
+   "dataJulgamento": "2026-06-15T00:00:00-03:00",
+   "dataPublicacao": null
+  },
+  {
+   "processo": "20000482025",
+   "numeroAcordao": "20442/2026",
+   "relator": "Christiano Lacerda Ghuerren",
+   "dataJulgamento": "2026-06-15T00:00:00-03:00",
+   "dataPublicacao": null
+  },
+  {
+   "processo": "21582452026",
+   "numeroAcordao": "19605/2026",
+   "relator": "Marianna Montebello Willeman",
+   "dataJulgamento": "2026-06-15T00:00:00-03:00",
+   "dataPublicacao": null
+  }
+ ]
+}

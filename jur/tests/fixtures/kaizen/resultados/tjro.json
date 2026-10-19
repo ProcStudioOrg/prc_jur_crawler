@@ -1,0 +1,137 @@
+{
+ "origem": "resultados/results-tjro.json",
+ "itens": [
+  {
+   "idProcessoDocumento": 30233737,
+   "processo": "70000274120258220019",
+   "numeroProcesso": "70000274120258220019",
+   "processoUrl": null,
+   "orgaoJulgador": "Gabinete Des. Kiyochi Mori",
+   "orgaoJulgadorColegiado": "3ª Câmara Cível",
+   "relator": "JORGE LUIZ DE MOURA GURGEL DO AMARAL",
+   "dataJulgamento": "26/11/2025",
+   "dataPublicacao": null
+  },
+  {
+   "idProcessoDocumento": 31110953,
+   "processo": "70000243420258220004",
+   "numeroProcesso": "70000243420258220004",
+   "processoUrl": null,
+   "orgaoJulgador": "2ª Turma Recursal - Gabinete 03",
+   "orgaoJulgadorColegiado": "2ª Turma Recursal",
+   "relator": "GUILHERME RIBEIRO BALDAN",
+   "dataJulgamento": "12/03/2026",
+   "dataPublicacao": null
+  },
+  {
+   "idProcessoDocumento": 29311841,
+   "processo": "70173503820248220005",
+   "numeroProcesso": "70173503820248220005",
+   "processoUrl": null,
+   "orgaoJulgador": "2ª Turma Recursal - Gabinete 03",
+   "orgaoJulgadorColegiado": "2ª Turma Recursal",
+   "relator": "GUILHERME RIBEIRO BALDAN",
+   "dataJulgamento": "04/09/2025",
+   "dataPublicacao": null
+  },
+  {
+   "idProcessoDocumento": 31110951,
+   "processo": "70000243420258220004",
+   "numeroProcesso": "70000243420258220004",
+   "processoUrl": null,
+   "orgaoJulgador": "2ª Turma Recursal - Gabinete 03",
+   "orgaoJulgadorColegiado": "2ª Turma Recursal",
+   "relator": "GUILHERME RIBEIRO BALDAN",
+   "dataJulgamento": "12/03/2026",
+   "dataPublicacao": null
+  },
+  {
+   "idProcessoDocumento": 29311795,
+   "processo": "70173503820248220005",
+   "numeroProcesso": "70173503820248220005",
+   "processoUrl": null,
+   "orgaoJulgador": "2ª Turma Recursal - Gabinete 03",
+   "orgaoJulgadorColegiado": "2ª Turma Recursal",
+   "relator": "GUILHERME RIBEIRO BALDAN",
+   "dataJulgamento": "04/09/2025",
+   "dataPublicacao": null
+  },
+  {
+   "idProcessoDocumento": 30567128,
+   "processo": "70108919220258220002",
+   "numeroProcesso": "70108919220258220002",
+   "processoUrl": null,
+   "orgaoJulgador": "Gabinete Desa. Inês Moreira",
+   "orgaoJulgadorColegiado": "2ª Câmara Cível",
+   "relator": "INES MOREIRA DA COSTA",
+   "dataJulgamento": "05/01/2026",
+   "dataPublicacao": null
+  },
+  {
+   "idProcessoDocumento": 30568210,
+   "processo": "70025851620218220022",
+   "numeroProcesso": "70025851620218220022",
+   "processoUrl": null,
+   "orgaoJulgador": "Gabinete Desa. Inês Moreira",
+   "orgaoJulgadorColegiado": "2ª Câmara Cível",
+   "relator": "INES MOREIRA DA COSTA",
+   "dataJulgamento": "05/01/2026",
+   "dataPublicacao": null
+  },
+  {
+   "idProcessoDocumento": 31782710,
+   "processo": "70759113320258220001",
+   "numeroProcesso": "70759113320258220001",
+   "processoUrl": null,
+   "orgaoJulgador": "2ª Turma Recursal - Gabinete 03",
+   "orgaoJulgadorColegiado": "2ª Turma Recursal",
+   "relator": "GUILHERME RIBEIRO BALDAN",
+   "dataJulgamento": "15/05/2026",
+   "dataPublicacao": null
+  },
+  {
+   "idProcessoDocumento": 30357879,
+   "processo": "70064505920258220005",
+   "numeroProcesso": "70064505920258220005",
+   "processoUrl": null,
+   "orgaoJulgador": "2ª Turma Recursal - Gabinete 03",
+   "orgaoJulgadorColegiado": "2ª Turma Recursal",
+   "relator": "GUILHERME RIBEIRO BALDAN",
+   "dataJulgamento": "05/12/2025",
+   "dataPublicacao": null
+  },
+  {
+   "idProcessoDocumento": 31175502,
+   "processo": "70385914620258220001",
+   "numeroProcesso": "70385914620258220001",
+   "processoUrl": null,
+   "orgaoJulgador": "2ª Turma Recursal - Gabinete 03",
+   "orgaoJulgadorColegiado": "2ª Turma Recursal",
+   "relator": "GUILHERME RIBEIRO BALDAN",
+   "dataJulgamento": "18/03/2026",
+   "dataPublicacao": null
+  },
+  {
+   "idProcessoDocumento": 31175694,
+   "processo": "70385914620258220001",
+   "numeroProcesso": "70385914620258220001",
+   "processoUrl": null,
+   "orgaoJulgador": "2ª Turma Recursal - Gabinete 03",
+   "orgaoJulgadorColegiado": "2ª Turma Recursal",
+   "relator": "GUILHERME RIBEIRO BALDAN",
+   "dataJulgamento": "18/03/2026",
+   "dataPublicacao": null
+  },
+  {
+   "idProcessoDocumento": 29782061,
+   "processo": "70003076020258220003",
+   "numeroProcesso": "70003076020258220003",
+   "processoUrl": null,
+   "orgaoJulgador": "Gabinete Des. Alexandre Miguel",
+   "orgaoJulgadorColegiado": "2ª Câmara Cível",
+   "relator": "ALEXANDRE MIGUEL",
+   "dataJulgamento": "16/10/2025",
+   "dataPublicacao": null
+  }
+ ]
+}

@@ -1,0 +1,125 @@
+{
+ "origem": "resultados/results-tjdft.json",
+ "itens": [
+  {
+   "juizado": false,
+   "processo": "0708965-46.2026.8.07.0000",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/666c7bac-e8e8-4292-a51c-17dc0fc07638",
+   "orgaoJulgador": "6ª TURMA CÍVEL",
+   "relator": "ARQUIBALDO CARNEIRO PORTELA",
+   "relatorDesignado": "",
+   "dataJulgamento": "19/08/2026",
+   "dataPublicacao": "01/09/2026"
+  },
+  {
+   "juizado": false,
+   "processo": "0704726-76.2025.8.07.0018",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/b3fe5210-5158-4241-ae0a-0e9c3514aa8f",
+   "orgaoJulgador": "2ª TURMA CÍVEL",
+   "relator": "ALVARO CIARLINI",
+   "relatorDesignado": "",
+   "dataJulgamento": "24/06/2026",
+   "dataPublicacao": "04/08/2026"
+  },
+  {
+   "juizado": false,
+   "processo": "0742905-38.2022.8.07.0001",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/f54517f5-42ca-447c-8396-760fe7a8af7e",
+   "orgaoJulgador": "8ª TURMA CÍVEL",
+   "relator": "ROBSON TEIXEIRA DE FREITAS",
+   "relatorDesignado": "",
+   "dataJulgamento": "21/07/2026",
+   "dataPublicacao": "03/08/2026"
+  },
+  {
+   "juizado": false,
+   "processo": "0738376-05.2024.8.07.0001",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/1e88cfbb-f5c0-4616-928a-278b723ff47e",
+   "orgaoJulgador": "8ª TURMA CÍVEL",
+   "relator": "CARMEN BITTENCOURT",
+   "relatorDesignado": "",
+   "dataJulgamento": "07/07/2026",
+   "dataPublicacao": "29/07/2026"
+  },
+  {
+   "juizado": false,
+   "processo": "0725984-51.2025.8.07.0016",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/cea57ff4-822d-4954-861e-3c073b6c24b7",
+   "orgaoJulgador": "3ª TURMA CÍVEL",
+   "relator": "ROBERTO FREITAS FILHO",
+   "relatorDesignado": "",
+   "dataJulgamento": "09/07/2026",
+   "dataPublicacao": "24/07/2026"
+  },
+  {
+   "juizado": false,
+   "processo": "0737362-49.2025.8.07.0001",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/d6cbc88d-1ae0-4b61-bfc8-76980c37f904",
+   "orgaoJulgador": "2ª TURMA CÍVEL",
+   "relator": "ALVARO CIARLINI",
+   "relatorDesignado": "",
+   "dataJulgamento": "01/07/2026",
+   "dataPublicacao": "21/07/2026"
+  },
+  {
+   "juizado": false,
+   "processo": "0729982-72.2025.8.07.0001",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/09bb6a66-6268-4e87-892c-8f9faceed352",
+   "orgaoJulgador": "2ª TURMA CÍVEL",
+   "relator": "ALVARO CIARLINI",
+   "relatorDesignado": "",
+   "dataJulgamento": "17/06/2026",
+   "dataPublicacao": "07/07/2026"
+  },
+  {
+   "juizado": false,
+   "processo": "0726293-94.2024.8.07.0020",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/b357ca64-ddb0-40be-98eb-db5da218d490",
+   "orgaoJulgador": "2ª TURMA CÍVEL",
+   "relator": "JOÃO EGMONT",
+   "relatorDesignado": "",
+   "dataJulgamento": "03/06/2026",
+   "dataPublicacao": "30/06/2026"
+  },
+  {
+   "juizado": false,
+   "processo": "0749179-65.2025.8.07.0016",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/1ed68f0e-756c-4be9-8cf1-7304890e8089",
+   "orgaoJulgador": "5ª TURMA CÍVEL",
+   "relator": "FÁBIO EDUARDO MARQUES",
+   "relatorDesignado": "",
+   "dataJulgamento": "17/06/2026",
+   "dataPublicacao": "26/06/2026"
+  },
+  {
+   "juizado": false,
+   "processo": "0704872-81.2024.8.07.0009",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/bc02bc30-0526-4fb4-b6f9-d75dae078daf",
+   "orgaoJulgador": "1ª TURMA CÍVEL",
+   "relator": "TEÓFILO CAETANO",
+   "relatorDesignado": "",
+   "dataJulgamento": "29/04/2026",
+   "dataPublicacao": "02/06/2026"
+  },
+  {
+   "juizado": false,
+   "processo": "0701133-33.2025.8.07.0020",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/83e7635b-0dd7-480a-9e04-0590543bfbde",
+   "orgaoJulgador": "1ª TURMA CÍVEL",
+   "relator": "TEÓFILO CAETANO",
+   "relatorDesignado": "",
+   "dataJulgamento": "29/04/2026",
+   "dataPublicacao": "02/06/2026"
+  },
+  {
+   "juizado": false,
+   "processo": "0712903-11.2024.8.07.0003",
+   "processoUrl": "https://jurisdf.tjdft.jus.br/acordaos/f7a1ae2e-6d5b-4e26-9bd7-aa478a237a99",
+   "orgaoJulgador": "1ª TURMA CÍVEL",
+   "relator": "CARLOS ALBERTO MARTINS FILHO",
+   "relatorDesignado": "",
+   "dataJulgamento": "13/05/2026",
+   "dataPublicacao": "01/06/2026"
+  }
+ ]
+}

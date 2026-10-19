@@ -1,0 +1,75 @@
+{
+ "origem": "resultados/results-trf5.json",
+ "itens": [
+  {
+   "numeroProcesso": "08022644920244058500",
+   "orgaoJulgador": "GAB 24 - DESA. CIBELE BENEVIDES",
+   "dataJulgamento": "23/07/2026",
+   "relator": "CIBELE BENEVIDES GUEDES DA FONSECA",
+   "dataAutuacao": "-"
+  },
+  {
+   "numeroProcesso": "08002312720174058502",
+   "orgaoJulgador": "GAB 3 - DES. CID MARCONI",
+   "dataJulgamento": "23/07/2026",
+   "relator": "BRUNO LEONARDO CAMARA CARRA",
+   "dataAutuacao": "-"
+  },
+  {
+   "numeroProcesso": "08002539520204058109",
+   "orgaoJulgador": "GAB 7 - DES. PAULO ROBERTO",
+   "dataJulgamento": "23/07/2026",
+   "relator": "ELISE AVESQUE FROTA",
+   "dataAutuacao": "-"
+  },
+  {
+   "numeroProcesso": "08000189420214058109",
+   "orgaoJulgador": "GAB 15 - DES. EDILSON NOBRE",
+   "dataJulgamento": "23/07/2026",
+   "relator": "EDILSON PEREIRA NOBRE JUNIOR",
+   "dataAutuacao": "-"
+  },
+  {
+   "numeroProcesso": "08027059820224058500",
+   "orgaoJulgador": "GAB 2 - DES. BRUNO TEIXEIRA (CONVOCADO)",
+   "dataJulgamento": "22/07/2026",
+   "relator": "BRUNO TEIXEIRA DE PAIVA",
+   "dataAutuacao": "-"
+  },
+  {
+   "numeroProcesso": "08000508920184058502",
+   "orgaoJulgador": "GAB 2 - DES. BRUNO TEIXEIRA (CONVOCADO)",
+   "dataJulgamento": "22/07/2026",
+   "relator": "BRUNO TEIXEIRA DE PAIVA",
+   "dataAutuacao": "-"
+  },
+  {
+   "numeroProcesso": "08000769820244058204",
+   "orgaoJulgador": "GAB 24 - DESA. CIBELE BENEVIDES",
+   "dataJulgamento": "21/07/2026",
+   "relator": "CIBELE BENEVIDES GUEDES DA FONSECA",
+   "dataAutuacao": "-"
+  },
+  {
+   "numeroProcesso": "00366461520254058000",
+   "orgaoJulgador": "GAB 22 - DES. LEONARDO COUTINHO",
+   "dataJulgamento": "21/07/2026",
+   "relator": "LEONARDO AUGUSTO NUNES COUTINHO",
+   "dataAutuacao": "-"
+  },
+  {
+   "numeroProcesso": "00038160320264050000",
+   "orgaoJulgador": "GAB 24 - DESA. CIBELE BENEVIDES",
+   "dataJulgamento": "21/07/2026",
+   "relator": "CIBELE BENEVIDES GUEDES DA FONSECA",
+   "dataAutuacao": "-"
+  },
+  {
+   "numeroProcesso": "00366461520254058000",
+   "orgaoJulgador": "GAB 22 - DES. LEONARDO COUTINHO",
+   "dataJulgamento": "21/07/2026",
+   "relator": "LEONARDO AUGUSTO NUNES COUTINHO",
+   "dataAutuacao": "-"
+  }
+ ]
+}

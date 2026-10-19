@@ -1,0 +1,113 @@
+{
+ "origem": "resultados/results-tjpb.json",
+ "itens": [
+  {
+   "numeroProcesso": "0802383-54.2025.8.15.0031",
+   "numeroProcessoSemMascara": "08023835420258150031",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-22T19:03:35.108",
+   "dataPublicacao": null
+  },
+  {
+   "numeroProcesso": "0803457-46.2025.8.15.0031",
+   "numeroProcessoSemMascara": "08034574620258150031",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-22T18:19:16.337",
+   "dataPublicacao": null
+  },
+  {
+   "numeroProcesso": "0803119-77.2022.8.15.0031",
+   "numeroProcessoSemMascara": "08031197720228150031",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-22T18:15:21.859",
+   "dataPublicacao": null
+  },
+  {
+   "numeroProcesso": "0802162-69.2025.8.15.0161",
+   "numeroProcessoSemMascara": "08021626920258150161",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-22T17:45:05.035",
+   "dataPublicacao": null
+  },
+  {
+   "numeroProcesso": "0802108-06.2025.8.15.0161",
+   "numeroProcessoSemMascara": "08021080620258150161",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-22T17:38:16.667",
+   "dataPublicacao": null
+  },
+  {
+   "numeroProcesso": "0814082-20.2023.8.15.2001",
+   "numeroProcessoSemMascara": "08140822020238152001",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-22T08:44:09.807",
+   "dataPublicacao": null
+  },
+  {
+   "numeroProcesso": "0852051-64.2026.8.15.2001",
+   "numeroProcessoSemMascara": "08520516420268152001",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-22T07:46:49.902",
+   "dataPublicacao": null
+  },
+  {
+   "numeroProcesso": "0800971-59.2023.8.15.0031",
+   "numeroProcessoSemMascara": "08009715920238150031",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-21T21:39:40.213",
+   "dataPublicacao": null
+  },
+  {
+   "numeroProcesso": "0803705-51.2021.8.15.0031",
+   "numeroProcessoSemMascara": "08037055120218150031",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-21T19:28:29.709",
+   "dataPublicacao": null
+  },
+  {
+   "numeroProcesso": "0801518-65.2024.8.15.0031",
+   "numeroProcessoSemMascara": "08015186520248150031",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-21T19:25:08.948",
+   "dataPublicacao": null
+  },
+  {
+   "numeroProcesso": "0801125-09.2025.8.15.0031",
+   "numeroProcessoSemMascara": "08011250920258150031",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-21T16:03:55.057",
+   "dataPublicacao": null
+  },
+  {
+   "numeroProcesso": "0803265-16.2025.8.15.0031",
+   "numeroProcessoSemMascara": "08032651620258150031",
+   "processoUrl": null,
+   "orgaoJulgador": "",
+   "relator": "",
+   "dataJulgamento": "2026-08-21T15:41:04.51",
+   "dataPublicacao": null
+  }
+ ]
+}

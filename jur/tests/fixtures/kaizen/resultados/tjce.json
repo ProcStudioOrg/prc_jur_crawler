@@ -1,0 +1,113 @@
+{
+ "origem": "resultados/results-tjce.json",
+ "itens": [
+  {
+   "processo": "30006187120258060066",
+   "processoUrl": null,
+   "orgaoJulgador": "6ª Câmara de Direito Privado",
+   "orgaoJulgadorOrigem": "1º Gabinete da 6ª Câmara de Direito Privado",
+   "relator": "JOSE TARCILIO SOUZA DA SILVA",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "02359050320248060001",
+   "processoUrl": null,
+   "orgaoJulgador": "1ª Turma do Núcleo de Justiça 4.0 - Direito Privado",
+   "orgaoJulgadorOrigem": "19ª Vara Cível da Comarca de Fortaleza",
+   "relator": "VANESSA MARIA QUARIGUASY PEREIRA VERAS",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "02009430620248060113",
+   "processoUrl": null,
+   "orgaoJulgador": "6ª Câmara de Direito Privado",
+   "orgaoJulgadorOrigem": "1º Gabinete da 6ª Câmara de Direito Privado",
+   "relator": "JOSE TARCILIO SOUZA DA SILVA",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "30031986620258060101",
+   "processoUrl": null,
+   "orgaoJulgador": "6ª Câmara de Direito Privado",
+   "orgaoJulgadorOrigem": "1ª Vara Cível da Comarca de Itapipoca",
+   "relator": "JOSE TARCILIO SOUZA DA SILVA",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "02012213820238060114",
+   "processoUrl": null,
+   "orgaoJulgador": "1ª Turma do Núcleo de Justiça 4.0 - Direito Privado",
+   "orgaoJulgadorOrigem": "1º Gabinete da 1ª Turma do Núcleo de Justiça 4.0 - Direito Privado",
+   "relator": "VANESSA MARIA QUARIGUASY PEREIRA VERAS",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "02011971020238060114",
+   "processoUrl": null,
+   "orgaoJulgador": "1ª Turma do Núcleo de Justiça 4.0 - Direito Privado",
+   "orgaoJulgadorOrigem": "Vara Única da Comarca de Lavras da Mangabeira",
+   "relator": "VANESSA MARIA QUARIGUASY PEREIRA VERAS",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "02508274920248060001",
+   "processoUrl": null,
+   "orgaoJulgador": "1ª Turma do Núcleo de Justiça 4.0 - Direito Privado",
+   "orgaoJulgadorOrigem": "1º Gabinete da 1ª Turma do Núcleo de Justiça 4.0 - Direito Privado",
+   "relator": "VANESSA MARIA QUARIGUASY PEREIRA VERAS",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "02119646320208060001",
+   "processoUrl": null,
+   "orgaoJulgador": "6ª Câmara de Direito Privado",
+   "orgaoJulgadorOrigem": "31ª Vara Cível da Comarca de Fortaleza",
+   "relator": "JOSE TARCILIO SOUZA DA SILVA",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "02023488020248060112",
+   "processoUrl": null,
+   "orgaoJulgador": "6ª Câmara de Direito Privado",
+   "orgaoJulgadorOrigem": "3ª Vara Cível da Comarca de Juazeiro do Norte",
+   "relator": "JOSE TARCILIO SOUZA DA SILVA",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "02002808820238060114",
+   "processoUrl": null,
+   "orgaoJulgador": "6ª Câmara de Direito Privado",
+   "orgaoJulgadorOrigem": "1º Gabinete da 6ª Câmara de Direito Privado",
+   "relator": "JOSE TARCILIO SOUZA DA SILVA",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "02006637720248060099",
+   "processoUrl": null,
+   "orgaoJulgador": "1ª Turma do Núcleo de Justiça 4.0 - Direito Privado",
+   "orgaoJulgadorOrigem": "2ª Vara da Comarca de Itaitinga",
+   "relator": "VANESSA MARIA QUARIGUASY PEREIRA VERAS",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "30220306220258060000",
+   "processoUrl": null,
+   "orgaoJulgador": "6ª Câmara de Direito Privado",
+   "orgaoJulgadorOrigem": "2º Gabinete da 6ª Câmara de Direito Privado",
+   "relator": "FRANCISCO LUCIANO LIMA RODRIGUES",
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": ""
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "origem": "resultados/results-tjms.json",
+ "itens": [
+  {
+   "processo": "0804493-50.2023.8.12.0008",
+   "numeroProcesso": "0804493-50.2023.8.12.0008",
+   "relator": "Vice-Presidente",
+   "orgaoJulgador": "Vice-Presidência",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  },
+  {
+   "processo": "0804412-04.2023.8.12.0008",
+   "numeroProcesso": "0804412-04.2023.8.12.0008",
+   "relator": "Vice-Presidente",
+   "orgaoJulgador": "Vice-Presidência",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  },
+  {
+   "processo": "0800191-41.2024.8.12.0008",
+   "numeroProcesso": "0800191-41.2024.8.12.0008",
+   "relator": "Vice-Presidente",
+   "orgaoJulgador": "Vice-Presidência",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  },
+  {
+   "processo": "0804501-27.2023.8.12.0008",
+   "numeroProcesso": "0804501-27.2023.8.12.0008",
+   "relator": "Vice-Presidente",
+   "orgaoJulgador": "Vice-Presidência",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  },
+  {
+   "processo": "0800223-46.2024.8.12.0008",
+   "numeroProcesso": "0800223-46.2024.8.12.0008",
+   "relator": "Vice-Presidente",
+   "orgaoJulgador": "Vice-Presidência",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  },
+  {
+   "processo": "0825087-09.2023.8.12.0001",
+   "numeroProcesso": "0825087-09.2023.8.12.0001",
+   "relator": "Juíza Cíntia Xavier Letteriello",
+   "orgaoJulgador": "4ª Câmara Cível",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  },
+  {
+   "processo": "0810977-36.2022.8.12.0002",
+   "numeroProcesso": "0810977-36.2022.8.12.0002",
+   "relator": "Des. Luiz Antônio Cavassa de Almeida",
+   "orgaoJulgador": "5ª Câmara Cível",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  },
+  {
+   "processo": "0800457-43.2025.8.12.0024",
+   "numeroProcesso": "0800457-43.2025.8.12.0024",
+   "relator": "Juíza Denize de Barros Dodero",
+   "orgaoJulgador": "1ª Câmara Cível",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  },
+  {
+   "processo": "0807469-63.2024.8.12.0018",
+   "numeroProcesso": "0807469-63.2024.8.12.0018",
+   "relator": "Juíza Cíntia Xavier Letteriello",
+   "orgaoJulgador": "4ª Câmara Cível",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  },
+  {
+   "processo": "0818836-38.2024.8.12.0001",
+   "numeroProcesso": "0818836-38.2024.8.12.0001",
+   "relator": "Juíza Cíntia Xavier Letteriello",
+   "orgaoJulgador": "4ª Câmara Cível",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  },
+  {
+   "processo": "0870032-47.2024.8.12.0001",
+   "numeroProcesso": "0870032-47.2024.8.12.0001",
+   "relator": "Desª Elisabeth Rosa Baisch",
+   "orgaoJulgador": "4ª Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  },
+  {
+   "processo": "0807782-09.2023.8.12.0002",
+   "numeroProcesso": "0807782-09.2023.8.12.0002",
+   "relator": "Desª Elisabeth Rosa Baisch",
+   "orgaoJulgador": "4ª Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "31/08/2026",
+   "processoUrl": "https://esaj.tjms.jus.br/cjsg/getArquivo.do"
+  }
+ ]
+}

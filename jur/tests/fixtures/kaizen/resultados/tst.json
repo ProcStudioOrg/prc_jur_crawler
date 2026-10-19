@@ -1,0 +1,115 @@
+{
+ "origem": "resultados/results-tst.json",
+ "itens": [
+  {
+   "processo": "0010680-83.2019.5.03.0094",
+   "numeroProcesso": "0010680-83.2019.5.03.0094",
+   "orgaoJulgador": "5ª Turma",
+   "orgaoJulgadorColegiado": "5ª Turma",
+   "orgaoJulgadorOrigem1Grau": "",
+   "relator": "MORGANA DE ALMEIDA RICHA",
+   "dataJulgamento": "12/06/2024",
+   "dataJuntada": "14/06/2024",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "0020663-37.2019.5.04.0302",
+   "numeroProcesso": "0020663-37.2019.5.04.0302",
+   "orgaoJulgador": "3ª Turma",
+   "orgaoJulgadorColegiado": "3ª Turma",
+   "orgaoJulgadorOrigem1Grau": "",
+   "relator": "ALBERTO BASTOS BALAZEIRO",
+   "dataJulgamento": "09/10/2024",
+   "dataJuntada": "11/10/2024",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "0000337-39.2021.5.14.0001",
+   "numeroProcesso": "0000337-39.2021.5.14.0001",
+   "orgaoJulgador": "7ª Turma",
+   "orgaoJulgadorColegiado": "7ª Turma",
+   "orgaoJulgadorOrigem1Grau": "",
+   "relator": "CLAUDIO MASCARENHAS BRANDAO",
+   "dataJulgamento": "06/03/2024",
+   "dataJuntada": "15/03/2024",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "0020656-26.2021.5.04.0124",
+   "numeroProcesso": "0020656-26.2021.5.04.0124",
+   "orgaoJulgador": "6ª Turma",
+   "orgaoJulgadorColegiado": "6ª Turma",
+   "orgaoJulgadorOrigem1Grau": "",
+   "relator": "AUGUSTO CESAR LEITE DE CARVALHO",
+   "dataJulgamento": "11/12/2024",
+   "dataJuntada": "13/12/2024",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "0119200-61.2007.5.12.0045",
+   "numeroProcesso": "0119200-61.2007.5.12.0045",
+   "orgaoJulgador": "Subseção I Especializada em Dissídios Individuais",
+   "orgaoJulgadorColegiado": "Subseção I Especializada em Dissídios Individuais",
+   "orgaoJulgadorOrigem1Grau": "",
+   "relator": "JOSE ROBERTO FREIRE PIMENTA",
+   "dataJulgamento": "26/09/2024",
+   "dataJuntada": "04/10/2024",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "0000833-13.2022.5.23.0121",
+   "numeroProcesso": "0000833-13.2022.5.23.0121",
+   "orgaoJulgador": "5ª Turma",
+   "orgaoJulgadorColegiado": "5ª Turma",
+   "orgaoJulgadorOrigem1Grau": "",
+   "relator": "BRENO MEDEIROS",
+   "dataJulgamento": "09/10/2024",
+   "dataJuntada": "15/10/2024",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "0000085-29.2015.5.09.0084",
+   "numeroProcesso": "0000085-29.2015.5.09.0084",
+   "orgaoJulgador": "3ª Turma",
+   "orgaoJulgadorColegiado": "3ª Turma",
+   "orgaoJulgadorOrigem1Grau": "",
+   "relator": "JOSE ROBERTO FREIRE PIMENTA",
+   "dataJulgamento": "07/02/2024",
+   "dataJuntada": "09/02/2024",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "0101490-53.2016.5.01.0551",
+   "numeroProcesso": "0101490-53.2016.5.01.0551",
+   "orgaoJulgador": "8ª Turma",
+   "orgaoJulgadorColegiado": "8ª Turma",
+   "orgaoJulgadorOrigem1Grau": "",
+   "relator": "JOSE PEDRO DE CAMARGO RODRIGUES DE SOUZA",
+   "dataJulgamento": "11/12/2024",
+   "dataJuntada": "16/12/2024",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "0020903-30.2022.5.04.0202",
+   "numeroProcesso": "0020903-30.2022.5.04.0202",
+   "orgaoJulgador": "5ª Turma",
+   "orgaoJulgadorColegiado": "5ª Turma",
+   "orgaoJulgadorOrigem1Grau": "",
+   "relator": "MORGANA DE ALMEIDA",
+   "dataJulgamento": "04/12/2024",
+   "dataJuntada": "11/12/2024",
+   "dataPublicacao": ""
+  },
+  {
+   "processo": "0001322-43.2022.5.10.0111",
+   "numeroProcesso": "0001322-43.2022.5.10.0111",
+   "orgaoJulgador": "6ª Turma",
+   "orgaoJulgadorColegiado": "6ª Turma",
+   "orgaoJulgadorOrigem1Grau": "",
+   "relator": "AUGUSTO CESAR LEITE DE CARVALHO",
+   "dataJulgamento": "04/12/2024",
+   "dataJuntada": "06/12/2024",
+   "dataPublicacao": ""
+  }
+ ]
+}
