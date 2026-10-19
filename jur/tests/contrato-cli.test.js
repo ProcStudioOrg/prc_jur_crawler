@@ -182,7 +182,10 @@ describe('mapa de juizados x o que a CLI oferece', () => {
       const info = juizados.obter(c);
       if (info.suportado) return false;
       const texto = ajuda(c);
-      const linhaOrigem = (texto.match(/--origem[^\n]*/) || [''])[0] + (texto.match(/--fontes[^\n]*/) || [''])[0];
+      // `--foro` entrou aqui pelo BRU-88: o TJPR oferecia `--foro juizados` e o mapa
+      // dizia que nao tinha recorte — este teste nao via porque so lia --origem/--fontes.
+      const linhaOrigem = ['--origem', '--fontes', '--foro']
+        .map((flag) => (texto.match(new RegExp(`${flag}[^\\n]*`)) || [''])[0]).join('');
       return /turmas|juizad|JEF/i.test(linhaOrigem);
     });
     assert.deepStrictEqual(escondendo, [], `o --help oferece turmas/juizados mas o mapa diz que nao: ${escondendo.join(', ')}`);

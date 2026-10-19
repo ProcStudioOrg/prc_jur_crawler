@@ -169,7 +169,7 @@ describe('executor', () => {
   });
 
   it('juizados num tribunal sem recorte falha ANTES de rodar, em vez de buscar sem o filtro', async () => {
-    const r = await executor.executar('tjpr', { query: 'x', juizados: true }, { arquivoSaida: tmp(), cliPath: CLI_FALSA, modo: 'eco' });
+    const r = await executor.executar('tjmg', { query: 'x', juizados: true }, { arquivoSaida: tmp(), cliPath: CLI_FALSA, modo: 'eco' });
     assert.strictEqual(r.ok, false);
     assert.match(r.erro, /juizados/i);
     assert.strictEqual(r.envelope, null, 'a CLI nao pode ter sido chamada');

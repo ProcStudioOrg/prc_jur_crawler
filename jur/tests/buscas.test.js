@@ -46,7 +46,7 @@ describe('rotas de busca', () => {
 
   it('recusa juizados e publicacao onde o tribunal nao tem — 400 com detalhe', async () => {
     for (const corpo of [
-      { tribunal: 'tjpr', query: 'x', juizados: true },
+      { tribunal: 'tjmg', query: 'x', juizados: true },
       { tribunal: 'tjce', query: 'x', dataPubInicio: '01/01/2024' },
     ]) {
       const r = await criar(corpo);

@@ -350,7 +350,7 @@ describe('ferramentas', () => {
   });
 
   it('juizados num tribunal sem recorte e RECUSADO, nao ignorado', async () => {
-    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'tjpr', query: 'x', juizados: true }, { fila });
+    const texto = await ferramentas.executar('buscar_jurisprudencia', { tribunal: 'tjmg', query: 'x', juizados: true }, { fila });
     assert.match(texto, /NAO FOI FEITA/);
     assert.doesNotMatch(texto, /job/i);
   });
