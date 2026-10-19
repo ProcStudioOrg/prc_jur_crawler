@@ -416,6 +416,19 @@ function documento() {
               description: 'tribunal desconhecido (não existe no catálogo)',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
             },
+            429: {
+              description: 'teto de admissão atingido: buscas simultâneas da conta, buscas por hora da conta ou fila global do servidor. Cabeçalho `Retry-After` em segundos; o corpo repete em `retryAfter`',
+              headers: { 'Retry-After': { schema: { type: 'integer' }, description: 'segundos até valer a pena tentar de novo' } },
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: { erro: { type: 'string' }, retryAfter: { type: 'integer' } },
+                    required: ['erro', 'retryAfter'],
+                  },
+                },
+              },
+            },
             409: {
               description: 'tribunal indisponível (sem-acesso ou exige-sessao) — o corpo traz `estado` e `nota` explicando por quê',
               content: {

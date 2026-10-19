@@ -15,6 +15,10 @@ services:
       JUR_DADOS: /dados
       TMPDIR: /cache
       JUR_CONCORRENCIA: "${JUR_CONCORRENCIA:-3}"
+      # Tetos de admissao da fila (BRU-87); 0 desliga o teto. Ver infra/README.md.
+      JUR_ATIVAS_POR_CONTA: "${JUR_ATIVAS_POR_CONTA:-12}"
+      JUR_FILA_GLOBAL: "${JUR_FILA_GLOBAL:-30}"
+      JUR_BUSCAS_POR_HORA: "${JUR_BUSCAS_POR_HORA:-60}"
       JUR_CAPTCHA_TIMEOUT_MS: "${JUR_CAPTCHA_TIMEOUT_MS:-120000}"
       # O provedor remoto só aparece quando as duas variáveis estão configuradas.
       BROWSERBASE_API_KEY: "${BROWSERBASE_API_KEY:-}"

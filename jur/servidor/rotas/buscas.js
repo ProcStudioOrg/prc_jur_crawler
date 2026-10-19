@@ -110,6 +110,12 @@ function registrar(roteador, deps) {
       });
       return json(res, 202, { id, status });
     } catch (e) {
+      // BRU-87: teto de admissao (por conta, por hora ou fila global) — 429 com
+      // Retry-After, para o cliente esperar em vez de insistir. O resto continua 409.
+      if (e.status === 429) {
+        res.setHeader('retry-after', String(e.retryAfter || 60));
+        return json(res, 429, { erro: e.message, retryAfter: e.retryAfter || 60 });
+      }
       return json(res, 409, { erro: e.message });
     }
   });
