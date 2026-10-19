@@ -158,7 +158,7 @@ function documento() {
             uf: { type: 'array', items: { type: 'string' } },
             estado: { $ref: '#/components/schemas/EstadoTribunal' },
             acesso: { type: ['string', 'null'] },
-            nota: { type: 'string', description: 'ressalva do tribunal — a mesma que aparece em `avisos[]` quando uma busca dá total 0' },
+            nota: { type: 'string', description: 'ressalva técnica completa do tribunal — a mesma que aparece em `avisos[]` quando uma busca dá total 0. Só vem no detalhe (GET /api/v1/tribunais/{comando}); a listagem a omite para ficar leve' },
             disponivel: { type: 'boolean', description: 'true só para estado ok ou instavel; buscar num tribunal indisponível devolve 409' },
             resumo: { type: 'string', description: 'uma ou duas frases em português sobre o estado do tribunal, para exibir ao usuário' },
             capacidades: {
@@ -174,7 +174,7 @@ function documento() {
               },
             },
           },
-          required: ['comando', 'codigo', 'nome', 'uf', 'estado', 'nota', 'disponivel', 'resumo', 'capacidades'],
+          required: ['comando', 'codigo', 'nome', 'uf', 'estado', 'disponivel', 'resumo', 'capacidades'],
         },
         Busca: {
           type: 'object',
@@ -338,6 +338,27 @@ function documento() {
             },
             401: RESPOSTAS.Erro401,
             403: RESPOSTAS.Erro403,
+          },
+        },
+      },
+      '/api/v1/tribunais/{comando}': {
+        get: {
+          summary: 'Detalhe de um tribunal, com a ressalva técnica completa',
+          description: 'Mesma forma da listagem, acrescida de `nota` (a ressalva longa do catálogo). Use quando precisar do motivo detalhado de um estado ou de uma busca com total 0.',
+          parameters: [
+            { name: 'comando', in: 'path', required: true, schema: { type: 'string' }, description: 'comando da CLI, ex.: stf, trf4, tjpr' },
+          ],
+          responses: {
+            200: {
+              description: 'o tribunal, com `nota`',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Tribunal' } } },
+            },
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
+            404: {
+              description: 'tribunal desconhecido (não existe no catálogo)',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+            },
           },
         },
       },
