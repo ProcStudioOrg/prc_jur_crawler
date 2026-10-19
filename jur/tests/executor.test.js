@@ -106,9 +106,15 @@ describe('executor', () => {
     // dentro de matarGrupo) — nao afeta os processos filho/neto, que rodam
     // separados.
     t.mock.timers.enable({ apis: ['setTimeout'] });
+    const sinais = [];
+    const killOriginal = process.kill.bind(process);
+    t.mock.method(process, 'kill', (pid, sinal) => { sinais.push([pid, sinal]); return killOriginal(pid, sinal); });
+    let pidFilho = null;
+    // So os sinais deste teste: SIGKILL de garantia de timeouts anteriores ainda pode disparar.
+    const meus = () => sinais.filter(([p, s]) => s !== 0 && Math.abs(p) === pidFilho);
 
     const promessa = executor.executar('trava-neto-ignora-sigterm', { query: 'x' },
-      { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 50 });
+      { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 50, aoIniciar: (pid) => { pidFilho = pid; } });
 
     // Busy-poll via setImmediate (NAO mockado) ate o NETO sinalizar que ja
     // instalou o handler de SIGTERM — sem isso ha uma corrida contra o boot
@@ -118,13 +124,16 @@ describe('executor', () => {
     }
     const netoPid = Number(fs.readFileSync(netoPidFile, 'utf8'));
 
-    t.mock.timers.tick(50); // dispara o relogio do timeout -> matarGrupo -> SIGTERM no grupo inteiro
+    t.mock.timers.tick(50); // dispara o relogio do timeout -> SIGUSR2 so no filho (janela de captura)
+    assert.deepStrictEqual(meus(), [[pidFilho, 'SIGUSR2']],
+      'no estouro so o filho recebe SIGUSR2; o grupo ainda nao pode morrer');
 
-    // Espera o `close' real do filho DIRETO (que morre rapido, sem handler) —
-    // isso resolve a promessa antes do SIGKILL de garantia disparar.
+    // O filho atende o SIGUSR2 (captura sem pagina) e sai; o `close` chega antes do
+    // prazo e o executor mata o grupo NA HORA — o neto ignora o SIGTERM e sobrevive.
     const r = await promessa;
     assert.strictEqual(r.ok, false);
     assert.match(r.erro, /timeout/i);
+    assert.ok(meus().some(([p, s]) => p === -pidFilho && s === 'SIGTERM'), 'close antes do prazo mata o grupo na hora');
 
     // Confirma que o cenario e real: o neto sobreviveu ao SIGTERM (senao este
     // teste nao provaria nada sobre a garantia do SIGKILL).
@@ -144,6 +153,74 @@ describe('executor', () => {
       if (netoVivoDepois) await new Promise((resolve) => setImmediate(resolve));
     }
     assert.strictEqual(netoVivoDepois, false, 'o SIGKILL de garantia deveria ter terminado o neto');
+  });
+
+  it('timeout: SIGUSR2 no filho, SIGTERM no grupo so prazoCapturaMs depois, SIGKILL 5 s apos', async (t) => {
+    const arquivo = tmp();
+    t.mock.timers.enable({ apis: ['setTimeout'] });
+    const sinais = [];
+    const killOriginal = process.kill.bind(process);
+    t.mock.method(process, 'kill', (pid, sinal) => { sinais.push([pid, sinal]); return killOriginal(pid, sinal); });
+    let pid = null;
+    const meus = () => sinais.filter(([p]) => Math.abs(p) === pid);
+    const promessa = executor.executar('trava-sincrono', { query: 'x' },
+      { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 50, prazoCapturaMs: 1000, aoIniciar: (p) => { pid = p; } });
+    while (!fs.existsSync(arquivo + '.pronto')) await new Promise((r) => setImmediate(r));
+
+    t.mock.timers.tick(50);
+    assert.deepStrictEqual(meus(), [[pid, 'SIGUSR2']]);
+    t.mock.timers.tick(999);
+    assert.deepStrictEqual(meus(), [[pid, 'SIGUSR2']], 'o grupo nao morre antes do prazo de captura');
+    t.mock.timers.tick(1);
+    assert.deepStrictEqual(meus(), [[pid, 'SIGUSR2'], [-pid, 'SIGTERM']]);
+    const r = await promessa;
+    assert.strictEqual(r.erro, 'timeout apos 50ms');
+    t.mock.timers.tick(5000);
+    assert.deepStrictEqual(meus().at(-1), [-pid, 'SIGKILL']);
+  });
+
+  it('sempre carrega o preload e passa JUR_FALHA_DIR ao lado do -o', async () => {
+    const dir = path.dirname(tmp()); const arquivo = path.join(dir, 'job1.json');
+    const r = await executor.executar('falha-com-captura', { query: 'x' }, { arquivoSaida: arquivo, cliPath: CLI_FALSA });
+    assert.strictEqual(r.ok, false);
+    assert.match(r.erro, /seletor sumiu/);
+    assert.ok(fs.existsSync(path.join(dir, 'job1.falha', 'meta.json')), 'preload gravou meta.json no exit(1)');
+  });
+
+  it('timeout: SIGUSR2 deixa o filho capturar e o erro continua timeout', async () => {
+    const dir = path.dirname(tmp()); const arquivo = path.join(dir, 'job2.json');
+    const r = await executor.executar('travado', { query: 'x' }, { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 300 });
+    assert.match(r.erro, /^timeout apos 300ms$/);
+    assert.ok(fs.existsSync(path.join(dir, 'job2.falha', 'meta.json')));
+  });
+
+  it('timeout: filho que nao atende SIGUSR2 morre pelo SIGTERM depois do prazo', async () => {
+    const t0 = Date.now();
+    const r = await executor.executar('trava-sincrono', { query: 'x' }, { arquivoSaida: tmp(), cliPath: CLI_FALSA, timeoutMs: 200, prazoCapturaMs: 300 });
+    assert.match(r.erro, /timeout/);
+    assert.ok(Date.now() - t0 < 5000);
+  });
+
+  // O executor conhece os params; o argv nao: em trf1/trf3/trf5 `-n` filtra uma busca com -q.
+  it('JUR_CAPTURA=0 so na consulta pura por numero; busca com -q e -n captura', async () => {
+    const env = async (params) => (await executor.executar('eco-env', params, { arquivoSaida: tmp(), cliPath: CLI_FALSA })).envelope;
+    assert.strictEqual((await env({ numero: '5000' })).captura, '0');
+    assert.strictEqual((await env({ query: 'x', numero: '5000' })).captura, '1');
+    const e = await env({ query: 'x' });
+    assert.strictEqual(e.captura, '1');
+    assert.match(e.falhaDir, /r\.falha$/);
+  });
+
+  it('consulta pura por numero que sai com 1 nao grava captura', async () => {
+    const dir = path.dirname(tmp()); const arquivo = path.join(dir, 'job3.json');
+    await executor.executar('consulta-ausente', { numero: '1' }, { arquivoSaida: arquivo, cliPath: CLI_FALSA });
+    assert.ok(!fs.existsSync(path.join(dir, 'job3.falha')));
+  });
+
+  it('busca com -q e -n que falha grava captura (filtro por numero, nao consulta)', async () => {
+    const dir = path.dirname(tmp()); const arquivo = path.join(dir, 'job4.json');
+    await executor.executar('falha-com-captura', { query: 'x', numero: '1' }, { arquivoSaida: arquivo, cliPath: CLI_FALSA });
+    assert.ok(fs.existsSync(path.join(dir, 'job4.falha', 'meta.json')));
   });
 
   it('informa o pid assim que o processo nasce', async () => {

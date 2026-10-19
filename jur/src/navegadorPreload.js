@@ -168,6 +168,14 @@ function modoConsulta(argv = []) {
   });
 }
 
+// Pelo servidor, JUR_CAPTURA decide: só ele sabe se `-n` é consulta pura ou filtro de uma busca
+// com -q (trf1/trf3/trf5), ou se --decisao/--teses é busca (tcepa/tcemg). O argv é o palpite da
+// CLI usada direto, sem o servidor.
+function capturaLigada(env = process.env, argv = process.argv) {
+  if (env.JUR_CAPTURA) return env.JUR_CAPTURA !== '0';
+  return !modoConsulta(argv);
+}
+
 const silenciar = (stream) => {
   if (!stream || typeof stream.write !== 'function') return;
   stream.write = (_chunk, codificacao, cb) => {
@@ -222,7 +230,7 @@ function instalarSaida(captura, processo = process, { tetoMs = PRAZO_CAPTURA_MS 
   const cdp = process.env.JUR_BROWSER_CDP;
   let captura = null;
   let saida = null;
-  if (process.env.JUR_FALHA_DIR && !modoConsulta(process.argv)) {
+  if (process.env.JUR_FALHA_DIR && capturaLigada()) {
     captura = criarCaptura({ dir: process.env.JUR_FALHA_DIR, tribunal: process.argv[2], rota: cdp ? 'remoto' : 'local' });
     saida = instalarSaida(captura);
   }
@@ -231,4 +239,4 @@ function instalarSaida(captura, processo = process, { tetoMs = PRAZO_CAPTURA_MS 
   });
 }
 
-module.exports = { instrumentarChromium, criarCaptura, derivarPasso, urlSemQuery, instalarSaida, modoConsulta };
+module.exports = { instrumentarChromium, criarCaptura, derivarPasso, urlSemQuery, instalarSaida, modoConsulta, capturaLigada };

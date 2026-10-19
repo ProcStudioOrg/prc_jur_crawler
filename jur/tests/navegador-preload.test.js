@@ -6,7 +6,7 @@ const { EventEmitter } = require('node:events');
 const { test } = require('node:test');
 
 const {
-  criarCaptura, derivarPasso, urlSemQuery, instalarSaida, instrumentarChromium, modoConsulta,
+  criarCaptura, derivarPasso, urlSemQuery, instalarSaida, instrumentarChromium, modoConsulta, capturaLigada,
 } = require('../src/navegadorPreload');
 
 // PNG de 1x1: o conteúdo não importa, só que o arquivo exista e não esteja vazio.
@@ -298,4 +298,29 @@ test('processo real: sucesso sai com 0 e sem captura', () => {
   assert.equal(r.status, 0, r.stderr);
   assert.equal(r.stdout.trim(), '{"success":true,"count":3}');
   assert.equal(r.meta, false);
+});
+
+// O executor sabe se a execucao e consulta pura (params); o argv nao: em trf1/trf3/trf5 `-n`
+// filtra uma busca com -q. JUR_CAPTURA manda; modoConsulta(argv) so vale com a CLI direta.
+test('processo real: JUR_CAPTURA=1 captura mesmo com -n no argv (filtro de busca)', () => {
+  const r = rodarSim(['trf2', '-q', 'x', '-n', '5000'], { Q: '', JUR_CAPTURA: '1' });
+  assert.equal(r.status, 1);
+  assert.equal(r.meta, true);
+  assert.equal(r.stdout.trim().split('\n').length, 1, 'exit interceptado silencia o resto');
+});
+
+test('processo real: JUR_CAPTURA=0 desliga a captura mesmo sem flag de consulta', () => {
+  const r = rodarSim(['trf2'], { Q: '', JUR_CAPTURA: '0' });
+  assert.equal(r.status, 1);
+  assert.equal(r.meta, false);
+});
+
+test('capturaLigada: JUR_CAPTURA manda; sem ela, cai em modoConsulta(argv)', () => {
+  const argvConsulta = ['node', 'bin/jur', 'tcepa', '--decisao', 'x'];
+  const argvBusca = ['node', 'bin/jur', 'trf4', '-q', 'x'];
+  assert.equal(capturaLigada({ JUR_CAPTURA: '1' }, argvConsulta), true);
+  assert.equal(capturaLigada({ JUR_CAPTURA: '0' }, argvBusca), false);
+  assert.equal(capturaLigada({}, argvConsulta), false);
+  assert.equal(capturaLigada({}, argvBusca), true);
+  assert.equal(capturaLigada({ JUR_CAPTURA: '' }, argvBusca), true);
 });
