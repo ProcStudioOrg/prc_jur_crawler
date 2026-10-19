@@ -252,7 +252,7 @@ Payload `user-issues` (genérico, serve ProcStudio, JurCrawler e WAO no futuro):
 
 ```
 { servico: "jurcrawler"|"procstudio"|..., titulo, descricao (até 2000),
-  autor_email, autor_nome?, equipe?, rota?, versao?,
+  autor_email?, autor_nome?, equipe?, rota?, versao?,
   linear: { identifier, url } | null, contexto: {chave: valor}, em }
 ```
 
