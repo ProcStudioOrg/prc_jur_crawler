@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Deploy imutavel do jur no h2, seguindo AGENTS.md e docs/qa/*producao*. Roda de qualquer
-# maquina com ~/.ssh/jurcrawler_deploy. Rascunho de 16/10/2026, ainda nao executado contra o
-# servidor: antes de rodar, confira no h2 o nome do container (jur-jur-1), dos volumes
-# (jur_jur-dados, jur_jur-cache) e o formato de .previous-release (caminho completo).
+# maquina com ~/.ssh/jurcrawler_deploy. Executado pela primeira vez em 19/10/2026
+# (release 20261019-175149-9558950, docs/qa/2026-10-19-producao-tela-entrada.md).
+# Premissas conferidas no h2: container jur-jur-1, volumes jur_jur-dados e jur_jur-cache;
+# .previous-release passa a guardar o caminho completo (antes era so o nome da release).
 # Uso: infra/deploy-h2.sh <sha7 de origin/main> <versao>
 set -euo pipefail
 SHA=${1:?sha}; VER=${2:?versao}
@@ -74,3 +75,4 @@ sleep 5; docker logs jur-jur-1 2>&1 | grep -i "aviso de deploy" | tail -1
 rm -f $A/incoming/jur-$SHA.tar.gz
 echo "release $REL no ar; anterior $PREV"
 REMOTE
+rm -f "$S/jur-$SHA.tar.gz"
