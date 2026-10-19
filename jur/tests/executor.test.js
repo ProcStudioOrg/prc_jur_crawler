@@ -179,6 +179,24 @@ describe('executor', () => {
     assert.deepStrictEqual(meus().at(-1), [-pid, 'SIGKILL']);
   });
 
+  it('timeout sem captura (consulta pura por numero): SIGTERM direto no grupo, sem SIGUSR2', async (t) => {
+    const arquivo = tmp();
+    t.mock.timers.enable({ apis: ['setTimeout'] });
+    const sinais = [];
+    const killOriginal = process.kill.bind(process);
+    t.mock.method(process, 'kill', (pid, sinal) => { sinais.push([pid, sinal]); return killOriginal(pid, sinal); });
+    let pid = null;
+    const meus = () => sinais.filter(([p]) => Math.abs(p) === pid);
+    const promessa = executor.executar('trava-sincrono', { numero: '1' },
+      { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 50, aoIniciar: (p) => { pid = p; } });
+    while (!fs.existsSync(arquivo + '.pronto')) await new Promise((r) => setImmediate(r));
+    t.mock.timers.tick(50);
+    assert.deepStrictEqual(meus(), [[-pid, 'SIGTERM']]);
+    const r = await promessa;
+    assert.strictEqual(r.erro, 'timeout apos 50ms');
+    t.mock.timers.tick(5000);
+  });
+
   it('sempre carrega o preload e passa JUR_FALHA_DIR ao lado do -o', async () => {
     const dir = path.dirname(tmp()); const arquivo = path.join(dir, 'job1.json');
     const r = await executor.executar('falha-com-captura', { query: 'x' }, { arquivoSaida: arquivo, cliPath: CLI_FALSA });

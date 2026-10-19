@@ -140,6 +140,7 @@ async function executar(comando, params = {}, opcoes = {}) {
   // Consulta pura por numero sai com 1 quando "nao encontrado": resultado, nao falha. So aqui
   // se sabe isso — no argv, `-n` tambem e filtro de busca com -q (trf1/trf3/trf5).
   env.JUR_CAPTURA = params.numero && !params.query ? '0' : '1';
+  const comCaptura = Boolean(arquivoSaida) && env.JUR_CAPTURA === '1';
 
   return new Promise((resolve) => {
     // detached: o crawler abre Chromium filho. Sem grupo proprio, matar o node
@@ -163,11 +164,18 @@ async function executar(comando, params = {}, opcoes = {}) {
     let prazoCaptura = null;
     const relogio = setTimeout(() => {
       expirou = true;
-      // SIGUSR2 so no filho: no grupo ele mataria o Chromium antes do print.
+      // Sem captura o preload nao trata SIGUSR2 (a acao padrao mataria o node sem o fechamento
+      // gracioso do Playwright): vai direto o SIGTERM no grupo, como sempre foi.
+      if (!comCaptura) return matarGrupo(filho.pid);
+      // SIGUSR2 so no filho, que e quem tem o handler do preload; no grupo, processo auxiliar
+      // sem handler morreria com ele. O Chromium nem esta neste grupo (ver encerrarPrazo).
       try { process.kill(filho.pid, 'SIGUSR2'); } catch { /* ja morreu */ }
       prazoCaptura = setTimeout(() => { prazoCaptura = null; matarGrupo(filho.pid); }, prazoCapturaMs);
     }, timeoutMs);
-    // O node do crawler saiu durante a janela: o Chromium neto ainda pode estar de pe.
+    // O node do crawler saiu durante a janela: o grupo morre na hora, sem esperar o prazo, para
+    // nao deixar processo auxiliar dele de pe. O Chromium o Playwright lanca detached, em grupo
+    // proprio, e o -pid nao o alcanca: quem o fecha e o handler de saida do Playwright, ou o fim
+    // do pipe quando o node morre.
     const encerrarPrazo = () => {
       if (!prazoCaptura) return;
       clearTimeout(prazoCaptura);

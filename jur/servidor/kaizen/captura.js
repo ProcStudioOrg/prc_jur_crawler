@@ -56,7 +56,14 @@ function lerMeta(dir) {
 function marcarAssinatura(dir, assinatura) {
   const meta = lerMeta(dir);
   if (!meta) return;
-  try { fs.writeFileSync(path.join(dir, 'meta.json'), JSON.stringify({ ...meta, assinatura })); } catch { /* nunca lança */ }
+  // tmp + rename: quem lê o meta.json ao mesmo tempo (relato, envio) nunca vê arquivo pela metade.
+  const tmp = path.join(dir, `meta.json.${process.pid}.${Date.now()}.tmp`);
+  try {
+    fs.writeFileSync(tmp, JSON.stringify({ ...meta, assinatura }));
+    fs.renameSync(tmp, path.join(dir, 'meta.json'));
+  } catch {
+    try { fs.unlinkSync(tmp); } catch { /* nada a limpar */ }
+  }
 }
 
 function assinaturaDaCaptura(dir) {

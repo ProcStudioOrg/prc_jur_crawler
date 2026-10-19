@@ -51,6 +51,7 @@ test('marcarAssinatura grava no meta.json e assinaturaDaCaptura le de volta', ()
   marcarAssinatura(dir, 'trf4|seletor|pagina:x|timeout');
   assert.equal(assinaturaDaCaptura(dir), 'trf4|seletor|pagina:x|timeout');
   assert.equal(JSON.parse(fs.readFileSync(path.join(dir, 'meta.json'), 'utf8')).tribunal, 'trf4');
+  assert.deepEqual(fs.readdirSync(dir), ['meta.json'], 'gravacao atomica nao deixa .tmp para tras');
   assert.equal(assinaturaDaCaptura('/nao/existe'), null);
   assert.doesNotThrow(() => marcarAssinatura('/nao/existe', 'x'));
 });

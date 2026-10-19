@@ -324,3 +324,83 @@ test('capturaLigada: JUR_CAPTURA manda; sem ela, cai em modoConsulta(argv)', () 
   assert.equal(capturaLigada({}, argvBusca), true);
   assert.equal(capturaLigada({ JUR_CAPTURA: '' }, argvBusca), true);
 });
+
+// Cancelamento do usuario (jobs.cancelar -> matarGrupo -> SIGTERM) nao e falha: sem captura, sem espera.
+test('SIGTERM (cancelamento) e depois exit(1): sai na hora, sem captura', async () => {
+  const chamadas = []; const proc = processoFalso((c) => chamadas.push(c));
+  let capturou = 0; instalarSaida({ capturar: async () => { capturou++; } }, proc);
+  proc.on('SIGTERM', () => {}); // o handler do Playwright (posto no launch), que so fecha o browser
+  proc.emit('SIGTERM');
+  assert.deepEqual(chamadas, [], 'com o Playwright presente, quem sai e o crawler');
+  proc.exit(1);
+  assert.deepEqual(chamadas, [1]); assert.equal(capturou, 0);
+  proc.emit('SIGUSR2'); await tique();
+  assert.equal(capturou, 0, 'SIGUSR2 depois do cancelamento nao captura');
+});
+
+test('SIGTERM e depois erro fatal: sai com 1, sem captura', async () => {
+  const chamadas = []; const proc = processoFalso((c) => chamadas.push(c));
+  proc.on('SIGTERM', () => {});
+  let capturou = 0; instalarSaida({ capturar: async () => { capturou++; } }, proc);
+  proc.emit('SIGTERM'); proc.emit('unhandledRejection', new Error('Target closed'));
+  await tique();
+  assert.deepEqual(chamadas, [1]); assert.equal(capturou, 0);
+});
+
+test('listener de SIGTERM so existe enquanto o do Playwright existe (acao padrao preservada)', () => {
+  const proc = processoFalso(() => {});
+  instalarSaida({ capturar: async () => {} }, proc);
+  assert.equal(proc.listenerCount('SIGTERM'), 0, 'sem browser, o SIGTERM mata o node como sempre');
+  const playwright = () => {};
+  proc.on('SIGTERM', playwright);
+  assert.equal(proc.listenerCount('SIGTERM'), 2);
+  proc.off('SIGTERM', playwright); // removeProcessHandlersIfNeeded quando o ultimo browser fecha
+  assert.equal(proc.listenerCount('SIGTERM'), 0);
+  proc.on('SIGTERM', playwright);
+  assert.equal(proc.listenerCount('SIGTERM'), 2, 'volta a vigiar no proximo launch');
+});
+
+function rodarAteSinal(script, env = {}) {
+  const { spawn } = require('node:child_process');
+  const dir = tmp(); const falha = path.join(dir, 'falha'); const pronto = path.join(dir, 'pronto');
+  const arquivo = path.join(dir, 'c.js'); fs.writeFileSync(arquivo, script);
+  const preload = path.resolve(__dirname, '../src/navegadorPreload.js');
+  const filho = spawn(process.execPath, ['--require', preload, arquivo, 'trf4', '-q', 'x'], {
+    cwd: path.resolve(__dirname, '..'), detached: true, stdio: 'ignore',
+    env: { ...process.env, JUR_ACOMPANHAR: '0', JUR_CAPTCHA: '0', JUR_BROWSER_CDP: '', JUR_FALHA_DIR: falha, JUR_CAPTURA: '1', PRONTO: pronto, ...env },
+  });
+  return new Promise((resolve, reject) => {
+    const limite = setTimeout(() => { try { process.kill(-filho.pid, 'SIGKILL'); } catch {} reject(new Error('nao saiu')); }, 20000);
+    let t0 = null;
+    const espera = setInterval(() => {
+      if (!fs.existsSync(pronto)) return;
+      clearInterval(espera); t0 = Date.now();
+      process.kill(-filho.pid, 'SIGTERM'); // como matarGrupo no cancelamento
+    }, 20);
+    filho.on('close', (codigo, sinal) => {
+      clearTimeout(limite); clearInterval(espera);
+      resolve({ codigo, sinal, ms: t0 === null ? null : Date.now() - t0, meta: fs.existsSync(path.join(falha, 'meta.json')) });
+    });
+  });
+}
+
+test('processo real: cancelamento com chromium aberto sai rapido e sem meta.json', async () => {
+  const r = await rodarAteSinal(`const { chromium } = require(${JSON.stringify(require.resolve('playwright'))});
+(async () => {
+  try {
+    const b = await chromium.launch(); const p = await b.newPage(); await p.setContent('<p>oi</p>');
+    require('fs').writeFileSync(process.env.PRONTO, '1');
+    await p.waitForTimeout(60000);
+  } catch (e) { process.stdout.write(JSON.stringify({ success: false, error: 'x' }) + '\\n'); process.exit(1); }
+})();`);
+  assert.notEqual(r.ms, null, 'chegou ao sinal');
+  assert.equal(r.meta, false, 'cancelamento nao e falha');
+  assert.ok(r.ms < 2000, `saiu em ${r.ms} ms`);
+});
+
+test('processo real: SIGTERM antes de qualquer browser ainda mata o processo', async () => {
+  const r = await rodarAteSinal(`require('fs').writeFileSync(process.env.PRONTO, '1'); setInterval(() => {}, 1000);`);
+  assert.equal(r.sinal, 'SIGTERM');
+  assert.equal(r.meta, false);
+  assert.ok(r.ms < 2000, `saiu em ${r.ms} ms`);
+});

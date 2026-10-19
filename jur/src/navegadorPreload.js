@@ -189,6 +189,9 @@ const silenciar = (stream) => {
 function instalarSaida(captura, processo = process, { tetoMs = PRAZO_CAPTURA_MS + 1000 } = {}) {
   const sair = processo.exit.bind(processo);
   let saindo = false;
+  // Cancelamento do usuario chega como SIGTERM no grupo: o handler do Playwright fecha o browser,
+  // o await do crawler rejeita e ele chama exit(1). Isso nao e falha — sai na hora, sem captura.
+  let cancelado = false;
   const capturarESair = (codigo) => {
     saindo = true;
     // O envelope JSON já foi escrito: quem chamou exit(1) continua rodando (o exit interceptado
@@ -204,6 +207,7 @@ function instalarSaida(captura, processo = process, { tetoMs = PRAZO_CAPTURA_MS 
       .finally(() => { clearTimeout(timer); sair(codigo); });
   };
   processo.exit = (codigo) => {
+    if (cancelado && !saindo) return sair(codigo);
     // Depois do primeiro código ≠ 0 tudo é ignorado, inclusive um exit(0) de um fluxo que seguiu.
     if (saindo) return;
     const efetivo = codigo ?? processo.exitCode ?? 0;
@@ -214,6 +218,7 @@ function instalarSaida(captura, processo = process, { tetoMs = PRAZO_CAPTURA_MS 
   const fatal = (erro) => {
     if (saindo) return;
     try { processo.stderr?.write(`${erro?.stack || erro}\n`); } catch { /* stderr fechado */ }
+    if (cancelado) return sair(1);
     processo.exit(1);
   };
   try {
@@ -221,7 +226,27 @@ function instalarSaida(captura, processo = process, { tetoMs = PRAZO_CAPTURA_MS 
     processo.on('unhandledRejection', fatal);
   } catch { /* processo falso sem eventos */ }
   // O executor manda SIGUSR2 no estouro de tempo para dar à captura uma janela antes do kill.
-  try { processo.on('SIGUSR2', () => { if (!saindo) capturarESair(1); }); } catch { /* plataforma sem o sinal */ }
+  try { processo.on('SIGUSR2', () => { if (!saindo && !cancelado) capturarESair(1); }); } catch { /* plataforma sem o sinal */ }
+  // `on`, nunca substituir: o handler do Playwright continua fechando o browser. E so enquanto
+  // houver outro listener de SIGTERM (o do Playwright, posto no launch): listener proprio anula a
+  // acao padrao do sinal, e sem browser aberto — ou com o loop travado — o node tem de morrer no
+  // SIGTERM como morreria sem o preload.
+  let vigiando = false;
+  const aoSigterm = () => {
+    cancelado = true;
+    if (processo.listenerCount('SIGTERM') > 1) return;
+    // Sozinho no sinal (nao deveria acontecer): devolve o SIGTERM ao Node.
+    try { processo.off('SIGTERM', aoSigterm); processo.kill(processo.pid, 'SIGTERM'); } catch { sair(143); }
+  };
+  const vigiar = () => { if (!vigiando) { vigiando = true; processo.on('SIGTERM', aoSigterm); } };
+  try {
+    if (processo.listenerCount('SIGTERM') > 0) vigiar();
+    processo.on('newListener', (evento, fn) => { if (evento === 'SIGTERM' && fn !== aoSigterm) vigiar(); });
+    processo.on('removeListener', (evento, fn) => {
+      if (evento !== 'SIGTERM' || fn === aoSigterm || !vigiando) return;
+      if (processo.listenerCount('SIGTERM') === 1) { vigiando = false; processo.off('SIGTERM', aoSigterm); }
+    });
+  } catch { /* processo falso sem eventos */ }
   return { encerrando: () => saindo };
 }
 
