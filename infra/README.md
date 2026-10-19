@@ -143,6 +143,23 @@ As chaves dos provedores são criptografadas com AES-256-GCM e vinculadas ao pro
 Não existe modo público `JUR_EXIGIR_CHAVE=0` nem `ANTHROPIC_API_KEY` global nesta aplicação.
 A porta 3000 continua em loopback atrás do proxy HTTPS. Não use `down -v` para atualizar.
 
+## Feedback para o Linear
+
+O botão **Reportar** na borda da interface abre um card no Linear sem o usuário sair do
+JurCrawler (`servidor/feedback.js`, rotas `GET /api/v1/feedback/meta` e
+`POST /api/v1/feedback`). É opcional: só existe com `LINEAR_API_KEY` e `LINEAR_TEAM_ID`
+no `infra/.env` privado (o `LINEAR_TEAM_ID` é o UUID do time, por exemplo o do BrunoDev).
+Sem as duas, o botão não aparece e o `POST` responde 503.
+
+Regras fixas no servidor, que o browser não escolhe: título com prefixo `[jurCrawler]`,
+estado inicial `Todo`, checklist de QA no corpo e só labels que existem no time
+(`LINEAR_MODULE_GROUP`/`LINEAR_TYPE_GROUP` opcionais ligam os selects de módulo e tipo).
+A identidade de quem reporta vem da sessão ProcStudio e vai no card como contexto do
+servidor. A chave do Linear nunca chega ao browser, ao log nem à resposta. Cada usuário
+tem 5 envios por hora (429 com `Retry-After`) e o mesmo título + descrição em 10 minutos
+devolve o mesmo card, então duplo clique e retentativa não duplicam. Linear fora → 502 e
+o widget preserva o rascunho.
+
 ## Comandos
 
     docker build -f infra/Dockerfile -t jur:dev .

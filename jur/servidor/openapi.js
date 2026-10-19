@@ -907,6 +907,86 @@ function documento() {
           },
         },
       },
+      '/api/v1/feedback/meta': {
+        get: {
+          summary: 'Configuração do reporter embutido (Reportar problema ou ideia)',
+          description:
+            'Diz se a integração com o Linear está ligada e devolve time (chave e nome), prioridades e '
+            + 'listas de módulo/tipo quando configuradas. Nunca inclui a chave do Linear nem qualquer '
+            + 'credencial; com a integração desligada responde enabled=false. Resposta no-store.',
+          responses: {
+            200: {
+              description: 'configuração do widget',
+              content: { 'application/json': { schema: {
+                type: 'object',
+                required: ['enabled', 'app', 'priorities', 'requireContact'],
+                properties: {
+                  enabled: { type: 'boolean' },
+                  app: { type: 'object', properties: { name: { type: 'string' }, version: { type: 'string' }, commit: { type: ['string', 'null'] }, env: { type: 'string' } } },
+                  team: { type: ['object', 'null'], properties: { key: { type: 'string' }, name: { type: 'string' } } },
+                  modules: { type: 'array', items: { type: 'object', properties: { value: { type: 'string' }, label: { type: 'string' } } } },
+                  types: { type: 'array', items: { type: 'object', properties: { value: { type: 'string' }, label: { type: 'string' } } } },
+                  priorities: { type: 'array', items: { type: 'object', properties: { value: { type: 'integer' }, label: { type: 'string' } } } },
+                  requireContact: { type: 'boolean', description: 'sempre false: quem reporta é o usuário autenticado' },
+                  error: { type: 'string', description: 'presente só quando o Linear não respondeu; mensagem genérica' },
+                },
+              } } },
+            },
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
+          },
+        },
+      },
+      '/api/v1/feedback': {
+        post: {
+          summary: 'Abre um card de problema ou ideia no Linear',
+          description:
+            'Cria um card no time configurado no servidor, com prefixo [jurCrawler], estado Todo e checklist '
+            + 'de QA. A identidade do relator vem da sessão autenticada, nunca do corpo. Mesmo usuário com o '
+            + 'mesmo título e descrição em 10 minutos recebe o MESMO card (idempotente, `repetido: true`). '
+            + 'Limite de 5 envios por hora por usuário.',
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: {
+              type: 'object',
+              required: ['title', 'body'],
+              properties: {
+                title: { type: 'string', minLength: 4, maxLength: 160 },
+                body: { type: 'string', minLength: 1, maxLength: 6000 },
+                module: { type: ['string', 'null'], description: 'um dos valores de modules em /meta; outro valor é ignorado' },
+                type: { type: ['string', 'null'], description: 'um dos valores de types em /meta; outro valor é ignorado' },
+                priority: { type: ['integer', 'null'], enum: [1, 2, 3, 4, null] },
+                context: { type: 'object', description: 'tela, URL, viewport, navegador, console e requisições falhas capturados pelo widget; cada campo é truncado no servidor' },
+              },
+            } } },
+          },
+          responses: {
+            200: {
+              description: 'card criado (ou o já existente, quando repetido)',
+              content: { 'application/json': { schema: {
+                type: 'object',
+                required: ['ok', 'identifier', 'url'],
+                properties: { ok: { type: 'boolean' }, identifier: { type: 'string' }, url: { type: 'string', format: 'uri' }, repetido: { type: 'boolean' } },
+              } } },
+            },
+            400: RESPOSTAS.Erro400,
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
+            429: {
+              description: 'mais de 5 envios na última hora por este usuário; Retry-After em segundos',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+            },
+            502: {
+              description: 'o Linear não respondeu ou recusou; mensagem genérica, rascunho deve ser preservado pelo cliente',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+            },
+            503: {
+              description: 'integração não configurada neste servidor (LINEAR_API_KEY / LINEAR_TEAM_ID ausentes)',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+            },
+          },
+        },
+      },
       '/docs': {
         get: {
           summary: 'Documentação legível da API',

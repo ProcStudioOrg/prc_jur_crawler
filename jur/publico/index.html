@@ -174,5 +174,20 @@
   <script src="/navegadores.js"></script>
   <script src="/entrada.js"></script>
   <script src="/sessao.js"></script>
+  <!-- Reportar problema ou ideia: vira card no Linear pelo servidor (BRU-91). O botao so
+       aparece se GET /api/v1/feedback/meta disser que a integracao esta ligada. -->
+  <script type="module">
+    import { mountIssueReporter } from '/feedback.js';
+    mountIssueReporter({
+      base: '/api/v1/feedback',
+      label: 'Reportar',
+      panelTitle: 'Reportar problema ou ideia',
+      panelSubtitle: 'Vai direto para quem cuida do JurCrawler.',
+      extra: () => ({
+        tela: document.querySelector('#conversa:not([hidden])') ? 'conversa' : 'inicial',
+        tribunais: (window.jurEscopo && window.jurEscopo.escopo && window.jurEscopo.escopo().length) || 0,
+      }),
+    });
+  </script>
 </body>
 </html>
