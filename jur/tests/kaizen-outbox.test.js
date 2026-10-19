@@ -80,3 +80,36 @@ test('nunca lanca e nao loga token nem corpo', async () => {
 test('iniciar/parar nao seguram o processo', () => {
   const o = outbox({ intervaloMs: 10 }); o.iniciar(); o.iniciar(); o.parar();
 });
+test('teto de bytes conta bytes, nao caracteres', () => {
+  const o = outbox({ maxBytes: 150 });
+  o.enfileirar('x', { s: 'ã'.repeat(40) }); o.enfileirar('x', { s: 'ã'.repeat(40) }); // ~90 bytes cada, 45 chars
+  assert.equal(o.pendentes(), 1);
+});
+test('FFD pendurado: uma unica tentativa por drenar()', async () => {
+  let n = 0; const o = outbox({ fetchFn: async () => { n++; throw new Error('timeout'); } });
+  for (let i = 0; i < 5; i++) o.enfileirar('x', { i });
+  await o.drenar(); const antes = n; t += 3600e3; await o.drenar();
+  assert.equal(n - antes, 1); assert.equal(o.pendentes(), 5);
+});
+test('cancela o corpo da resposta', async () => {
+  let cancelado = false;
+  const o = outbox({ fetchFn: async () => ({ status: 200, body: { cancel: async () => { cancelado = true; } } }) });
+  o.enfileirar('x', {}); await o.drenar(); assert.equal(cancelado, true); assert.equal(o.pendentes(), 0);
+});
+test('log de indisponivel limitado a 1 por 10 min, sem segredo', async () => {
+  const logs = []; const orig = console.error; console.error = (...a) => logs.push(a.join(' '));
+  try {
+    const o = outbox({ fetchFn: async () => new Response('', { status: 503 }) });
+    o.enfileirar('x', {}); await o.drenar(); t += 3600e3; await o.drenar(); await o.drenar();
+    const n1 = logs.filter((l) => l.includes('FFD indisponivel (503)')).length;
+    assert.equal(n1, 2, 'um por janela de 10 min');
+    assert.ok(!logs.some((l) => l.includes('ffd.example') || /\btok\b/.test(l)));
+  } finally { console.error = orig; }
+});
+test('migra tabela antiga sem coluna bytes', () => {
+  con.exec('CREATE TABLE kaizen_envio (id INTEGER PRIMARY KEY AUTOINCREMENT, source TEXT NOT NULL, corpo_json TEXT NOT NULL, tentativas INTEGER NOT NULL DEFAULT 0, proxima_em INTEGER NOT NULL, criado_em INTEGER NOT NULL)');
+  con.prepare("INSERT INTO kaizen_envio (source, corpo_json, proxima_em, criado_em) VALUES ('x', 'ãã', 0, 0)").run();
+  const o = outbox();
+  assert.equal(con.prepare('SELECT bytes FROM kaizen_envio').get().bytes, 4);
+  assert.equal(o.pendentes(), 1);
+});
