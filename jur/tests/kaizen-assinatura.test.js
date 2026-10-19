@@ -40,3 +40,16 @@ test('rota pelo rotulo do navegador', () => {
   assert.equal(rotaDoNavegador('Steel (reserva)'), 'remoto');
   assert.equal(rotaDoNavegador(null), null);
 });
+test('segredo em JSON, cabecalho e cookie tambem some', () => {
+  const casos = [
+    '{"apiKey":"SEGREDO1","x":1}', '{"token": "SEGREDO1"}', "{'secret':'SEGREDO1'}", '{"password": SEGREDO1}',
+    'Authorization: Bearer SEGREDO1', 'authorization: Basic SEGREDO1', 'x-webhook-token: SEGREDO1',
+    'Cookie: sid=SEGREDO1; outro=SEGREDO1', 'x-api-key: SEGREDO1',
+  ];
+  for (const c of casos) for (const s of [sanitizar(c), normalizarErro(`falhou ${c}`), montarAssinatura({ tribunal: 't', classe: 'c', passo: 'p', erro: c })]) {
+    assert.doesNotMatch(s, /SEGREDO/i, c);
+  }
+});
+test('montarAssinatura tolera tribunal/classe/passo indefinidos', () => {
+  assert.equal(montarAssinatura({ erro: 'x' }), 'desconhecido|desconhecido|desconhecido|x');
+});
