@@ -300,17 +300,31 @@ async function buscar(entrada, deps) {
     if (!v.valido) return { texto: v.motivo, ok: false };
   }
 
-  const { id } = deps.fila.enfileirar(entrada.tribunal, {
-    query: entrada.query || undefined,
-    numero: numeroPedido || undefined,
-    dataInicio: entrada.dataInicio,
-    dataFim: entrada.dataFim,
-    dataPubInicio: entrada.dataPubInicio,
-    dataPubFim: entrada.dataPubFim,
-    maxPaginas: entrada.maxPaginas || 3,
-    relator: relatorPedido || undefined,
-    juizados: pedeJuizados || undefined,
-  });
+  let id;
+  try {
+    ({ id } = deps.fila.enfileirar(entrada.tribunal, {
+      query: entrada.query || undefined,
+      numero: numeroPedido || undefined,
+      dataInicio: entrada.dataInicio,
+      dataFim: entrada.dataFim,
+      dataPubInicio: entrada.dataPubInicio,
+      dataPubFim: entrada.dataPubFim,
+      maxPaginas: entrada.maxPaginas || 3,
+      relator: relatorPedido || undefined,
+      juizados: pedeJuizados || undefined,
+    }));
+  } catch (e) {
+    // BRU-87: teto de admissao. O modelo tende a "tentar de novo" na hora; o texto
+    // diz o contrario e da o tempo, porque repetir e exatamente o que o teto contem.
+    if (e.status === 429) {
+      return {
+        texto: `A busca em ${entrada.tribunal} NAO foi enfileirada: ${e.message}.\n`
+          + `NAO repita esta busca agora. Diga ao usuario o motivo e que ele pode tentar de novo em ~${e.retryAfter || 60} s.`,
+        ok: false,
+      };
+    }
+    throw e;
+  }
   // Vai junto de TODA resposta desta busca (inclusive o zero e o timeout): quando o
   // tribunal exige nome exato ou codigo, o valor aproximado nao falha — devolve zero. Se
   // essa ressalva so aparecesse no caminho do zero, o modelo leria "0 resultados" sem

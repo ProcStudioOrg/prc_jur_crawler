@@ -8,8 +8,9 @@ describe('mapa de juizados', () => {
   it('traduz o recorte de juizados para os args da CLI de cada tribunal', () => {
     assert.deepStrictEqual(juizados.obter('trf4').args, ['--origem', 'turmas-recursais']);
     assert.deepStrictEqual(juizados.obter('trf1').args, ['--fontes', 'JEF1']);
-    assert.deepStrictEqual(juizados.obter('tjpr').args, null);
-    assert.strictEqual(juizados.obter('tjpr').suportado, false);
+    assert.deepStrictEqual(juizados.obter('tjpr').args, ['--foro', 'juizados']);
+    assert.deepStrictEqual(juizados.obter('tjmg').args, null);
+    assert.strictEqual(juizados.obter('tjmg').suportado, false);
     assert.strictEqual(juizados.obter('nao-existe'), null);
   });
 
@@ -24,8 +25,8 @@ describe('mapa de juizados', () => {
   });
 
   it('explica a ausencia sem mandar o modelo buscar sem o filtro', () => {
-    const texto = juizados.explicarAusencia('tjpr', 'Tribunal de Justica do Parana');
+    const texto = juizados.explicarAusencia('tjmg', 'Tribunal de Justica de Minas Gerais');
     assert.match(texto, /NAO FOI FEITA/);
-    assert.match(texto, /tjpr/);
+    assert.match(texto, /tjmg/);
   });
 });

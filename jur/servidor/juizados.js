@@ -39,10 +39,14 @@ const MAPA = {
   tjto: sim(['--origem', 'turmas']),
   tjrr: sim(['--origem', 'turmas']),
   'tjrj-ejuris': sim(['--origem', 'turmas']),
+  // TJPR: a CLI separa Justiça Comum × Juizados pelo `--foro` (18 órgãos: Turmas
+  // Recursais, Turmas de Uniformização e Núcleo de Conciliação — ver CLAUDE-TJPR.md).
+  // Ficou meses como `nao(SEM_RECORTE)` porque o teste de contrato só olhava a linha
+  // de `--origem`/`--fontes` do --help (BRU-88): a CLI funcionava, a tela recusava.
+  tjpr: sim(['--foro', 'juizados'], 'Turmas Recursais, Turmas de Uniformização e Núcleo de Conciliação dos Juizados Especiais.'),
 
   trf3: nao(SEM_RECORTE),
   trf5: nao(SEM_RECORTE),
-  tjpr: nao(SEM_RECORTE),
   tjrj: nao(SEM_RECORTE),
   tjce: nao('A busca do TJCE separa os sistemas PJe e SAJ, não Juizados da Justiça Comum.'),
   tjdft: nao(SEM_RECORTE),
@@ -51,7 +55,9 @@ const MAPA = {
   tjmt: nao(SEM_RECORTE),
   tjpb: nao(SEM_RECORTE),
   tjap: nao(SEM_RECORTE),
-  tjma: nao('A busca por texto do TJMA está bloqueada por captcha; não há recorte a oferecer.'),
+  // TJMA: a CLI tem `--foro turmas`, logo o recorte EXISTE; se FUNCIONA é o estado do
+  // tribunal (sem-acesso por captcha) que responde, como para toda funcionalidade.
+  tjma: sim(['--foro', 'turmas'], 'Turmas Recursais. A busca por texto do TJMA está bloqueada por captcha.'),
   tjrn: nao('No TJRN não existe busca por texto; não há recorte a oferecer.'),
   tjsp: nao(SEM_RECORTE),
   stf: nao(INSTANCIA_UNICA),

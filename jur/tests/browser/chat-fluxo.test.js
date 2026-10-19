@@ -349,3 +349,37 @@ describe('chat: regressao da revisao da Task 7', () => {
     }
   });
 });
+
+// BRU-76: o primeiro turno recusado pelo servidor (aqui: sem cliente de IA -> 401)
+// nao pode deixar uma conversa "Sem titulo" vazia no historico, e o texto digitado
+// tem de voltar para a caixa inicial com o erro visivel.
+describe('chat: conversa vazia apos erro no primeiro turno (BRU-76)', () => {
+  it('apaga a conversa recem-criada, volta a tela inicial e preserva o texto', async () => {
+    const { servidor, base, chaveBrowser } = await subirServidor({ clienteLLM: null });
+    const browser = await chromium.launch();
+    const page = await browser.newPage();
+    const listar = async () => (await (await fetch(`${base}/api/v1/conversas`, { headers: { authorization: `Bearer ${chaveBrowser}` } })).json()).conversas;
+    try {
+      await injetarChave(page, chaveBrowser);
+      await page.goto(base + '/', { waitUntil: 'networkidle' });
+      const antes = (await listar()).length;
+
+      await page.fill('#caixa-inicial .entrada', 'pergunta sem chave');
+      await page.click('#caixa-inicial .enviar');
+      await page.waitForSelector('#caixa-inicial .aviso-caixa', { timeout: 15000 });
+
+      assert.strictEqual(await page.$eval('#inicial', (el) => el.hidden), false, 'a tela inicial deveria estar visivel');
+      assert.strictEqual(await page.$eval('#conversa', (el) => el.hidden), true, 'a tela de conversa deveria estar oculta');
+      assert.strictEqual(await page.$eval('#caixa-inicial .entrada', (el) => el.value), 'pergunta sem chave', 'o texto digitado tem de voltar');
+      assert.match(await page.$eval('#caixa-inicial .aviso-caixa', (el) => el.textContent), /chave|conex/i);
+      assert.strictEqual(await page.$eval('#caixa-inicial .enviar', (el) => el.disabled), false, 'o botao precisa voltar a funcionar');
+
+      const depois = await listar();
+      assert.strictEqual(depois.length, antes, `conversa vazia ficou no historico: ${JSON.stringify(depois)}`);
+    } finally {
+      await page.close();
+      await browser.close();
+      await new Promise((r) => servidor.close(r));
+    }
+  });
+});

@@ -46,7 +46,7 @@ describe('rotas de busca', () => {
 
   it('recusa juizados e publicacao onde o tribunal nao tem — 400 com detalhe', async () => {
     for (const corpo of [
-      { tribunal: 'tjpr', query: 'x', juizados: true },
+      { tribunal: 'tjmg', query: 'x', juizados: true },
       { tribunal: 'tjce', query: 'x', dataPubInicio: '01/01/2024' },
     ]) {
       const r = await criar(corpo);
@@ -470,5 +470,37 @@ describe('falha de leitura propagada as superficies (C3)', () => {
     assert.strictEqual(status.total, 42);
     assert.ok(status.avisos.length > 0, 'total 42 com resultados ilegiveis nao pode ter avisos vazio');
     assert.match(status.erroResultados, /ausente/i);
+  });
+});
+
+// BRU-87: a rota traduz o teto de admissao em 429 + Retry-After, nao em 409.
+describe('POST /api/v1/buscas sob teto de admissao', () => {
+  let servidorTeto; let baseTeto;
+  before(async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-buscas-teto-'));
+    const filaTeto = jobs.criarFila({
+      con: db.abrir(path.join(dir, 'jur.db')),
+      dirResultados: dir,
+      concorrencia: 1,
+      executarFn: () => new Promise(() => { /* segura a vaga */ }),
+      limites: { ativasPorConta: 1, filaGlobal: 0, buscasPorHora: 0 },
+    });
+    servidorTeto = http.createServer(criarApp({ fila: filaTeto }).handler);
+    await new Promise((r) => servidorTeto.listen(0, r));
+    baseTeto = `http://127.0.0.1:${servidorTeto.address().port}`;
+  });
+  after(() => servidorTeto.close());
+
+  it('a busca alem do teto recebe 429, Retry-After e o motivo', async () => {
+    const post = (q) => fetch(`${baseTeto}/api/v1/buscas`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ tribunal: 'trf4', query: q }),
+    });
+    assert.strictEqual((await post('primeira')).status, 202);
+    const r = await post('segunda');
+    assert.strictEqual(r.status, 429);
+    assert.match(r.headers.get('retry-after'), /^\d+$/);
+    const corpo = await r.json();
+    assert.match(corpo.erro, /simultaneas/);
+    assert.strictEqual(corpo.retryAfter, Number(r.headers.get('retry-after')));
   });
 });

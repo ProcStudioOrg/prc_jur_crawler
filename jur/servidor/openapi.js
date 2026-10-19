@@ -158,7 +158,7 @@ function documento() {
             uf: { type: 'array', items: { type: 'string' } },
             estado: { $ref: '#/components/schemas/EstadoTribunal' },
             acesso: { type: ['string', 'null'] },
-            nota: { type: 'string', description: 'ressalva do tribunal — a mesma que aparece em `avisos[]` quando uma busca dá total 0' },
+            nota: { type: 'string', description: 'ressalva técnica completa do tribunal — a mesma que aparece em `avisos[]` quando uma busca dá total 0. Só vem no detalhe (GET /api/v1/tribunais/{comando}); a listagem a omite para ficar leve' },
             disponivel: { type: 'boolean', description: 'true só para estado ok ou instavel; buscar num tribunal indisponível devolve 409' },
             resumo: { type: 'string', description: 'uma ou duas frases em português sobre o estado do tribunal, para exibir ao usuário' },
             capacidades: {
@@ -174,7 +174,7 @@ function documento() {
               },
             },
           },
-          required: ['comando', 'codigo', 'nome', 'uf', 'estado', 'nota', 'disponivel', 'resumo', 'capacidades'],
+          required: ['comando', 'codigo', 'nome', 'uf', 'estado', 'disponivel', 'resumo', 'capacidades'],
         },
         Busca: {
           type: 'object',
@@ -341,6 +341,27 @@ function documento() {
           },
         },
       },
+      '/api/v1/tribunais/{comando}': {
+        get: {
+          summary: 'Detalhe de um tribunal, com a ressalva técnica completa',
+          description: 'Mesma forma da listagem, acrescida de `nota` (a ressalva longa do catálogo). Use quando precisar do motivo detalhado de um estado ou de uma busca com total 0.',
+          parameters: [
+            { name: 'comando', in: 'path', required: true, schema: { type: 'string' }, description: 'comando da CLI, ex.: stf, trf4, tjpr' },
+          ],
+          responses: {
+            200: {
+              description: 'o tribunal, com `nota`',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Tribunal' } } },
+            },
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
+            404: {
+              description: 'tribunal desconhecido (não existe no catálogo)',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+            },
+          },
+        },
+      },
       '/api/v1/buscas': {
         post: {
           summary: 'Cria uma busca de jurisprudência (assíncrona)',
@@ -394,6 +415,19 @@ function documento() {
             404: {
               description: 'tribunal desconhecido (não existe no catálogo)',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+            },
+            429: {
+              description: 'teto de admissão atingido: buscas simultâneas da conta, buscas por hora da conta ou fila global do servidor. Cabeçalho `Retry-After` em segundos; o corpo repete em `retryAfter`',
+              headers: { 'Retry-After': { schema: { type: 'integer' }, description: 'segundos até valer a pena tentar de novo' } },
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: { erro: { type: 'string' }, retryAfter: { type: 'integer' } },
+                    required: ['erro', 'retryAfter'],
+                  },
+                },
+              },
             },
             409: {
               description: 'tribunal indisponível (sem-acesso ou exige-sessao) — o corpo traz `estado` e `nota` explicando por quê',
@@ -869,6 +903,86 @@ function documento() {
             200: {
               description: 'documento OpenAPI 3.1',
               content: { 'application/json': { schema: { type: 'object' } } },
+            },
+          },
+        },
+      },
+      '/api/v1/feedback/meta': {
+        get: {
+          summary: 'Configuração do reporter embutido (Reportar problema ou ideia)',
+          description:
+            'Diz se a integração com o Linear está ligada e devolve time (chave e nome), prioridades e '
+            + 'listas de módulo/tipo quando configuradas. Nunca inclui a chave do Linear nem qualquer '
+            + 'credencial; com a integração desligada responde enabled=false. Resposta no-store.',
+          responses: {
+            200: {
+              description: 'configuração do widget',
+              content: { 'application/json': { schema: {
+                type: 'object',
+                required: ['enabled', 'app', 'priorities', 'requireContact'],
+                properties: {
+                  enabled: { type: 'boolean' },
+                  app: { type: 'object', properties: { name: { type: 'string' }, version: { type: 'string' }, commit: { type: ['string', 'null'] }, env: { type: 'string' } } },
+                  team: { type: ['object', 'null'], properties: { key: { type: 'string' }, name: { type: 'string' } } },
+                  modules: { type: 'array', items: { type: 'object', properties: { value: { type: 'string' }, label: { type: 'string' } } } },
+                  types: { type: 'array', items: { type: 'object', properties: { value: { type: 'string' }, label: { type: 'string' } } } },
+                  priorities: { type: 'array', items: { type: 'object', properties: { value: { type: 'integer' }, label: { type: 'string' } } } },
+                  requireContact: { type: 'boolean', description: 'sempre false: quem reporta é o usuário autenticado' },
+                  error: { type: 'string', description: 'presente só quando o Linear não respondeu; mensagem genérica' },
+                },
+              } } },
+            },
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
+          },
+        },
+      },
+      '/api/v1/feedback': {
+        post: {
+          summary: 'Abre um card de problema ou ideia no Linear',
+          description:
+            'Cria um card no time configurado no servidor, com prefixo [jurCrawler], estado Todo e checklist '
+            + 'de QA. A identidade do relator vem da sessão autenticada, nunca do corpo. Mesmo usuário com o '
+            + 'mesmo título e descrição em 10 minutos recebe o MESMO card (idempotente, `repetido: true`). '
+            + 'Limite de 5 envios por hora por usuário.',
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: {
+              type: 'object',
+              required: ['title', 'body'],
+              properties: {
+                title: { type: 'string', minLength: 4, maxLength: 160 },
+                body: { type: 'string', minLength: 1, maxLength: 6000 },
+                module: { type: ['string', 'null'], description: 'um dos valores de modules em /meta; outro valor é ignorado' },
+                type: { type: ['string', 'null'], description: 'um dos valores de types em /meta; outro valor é ignorado' },
+                priority: { type: ['integer', 'null'], enum: [1, 2, 3, 4, null] },
+                context: { type: 'object', description: 'tela, URL, viewport, navegador, console e requisições falhas capturados pelo widget; cada campo é truncado no servidor' },
+              },
+            } } },
+          },
+          responses: {
+            200: {
+              description: 'card criado (ou o já existente, quando repetido)',
+              content: { 'application/json': { schema: {
+                type: 'object',
+                required: ['ok', 'identifier', 'url'],
+                properties: { ok: { type: 'boolean' }, identifier: { type: 'string' }, url: { type: 'string', format: 'uri' }, repetido: { type: 'boolean' } },
+              } } },
+            },
+            400: RESPOSTAS.Erro400,
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
+            429: {
+              description: 'mais de 5 envios na última hora por este usuário; Retry-After em segundos',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+            },
+            502: {
+              description: 'o Linear não respondeu ou recusou; mensagem genérica, rascunho deve ser preservado pelo cliente',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+            },
+            503: {
+              description: 'integração não configurada neste servidor (LINEAR_API_KEY / LINEAR_TEAM_ID ausentes)',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
             },
           },
         },

@@ -143,6 +143,23 @@ As chaves dos provedores são criptografadas com AES-256-GCM e vinculadas ao pro
 Não existe modo público `JUR_EXIGIR_CHAVE=0` nem `ANTHROPIC_API_KEY` global nesta aplicação.
 A porta 3000 continua em loopback atrás do proxy HTTPS. Não use `down -v` para atualizar.
 
+## Feedback para o Linear
+
+O botão **Reportar** na borda da interface abre um card no Linear sem o usuário sair do
+JurCrawler (`servidor/feedback.js`, rotas `GET /api/v1/feedback/meta` e
+`POST /api/v1/feedback`). É opcional: só existe com `LINEAR_API_KEY` e `LINEAR_TEAM_ID`
+no `infra/.env` privado (o `LINEAR_TEAM_ID` é o UUID do time, por exemplo o do BrunoDev).
+Sem as duas, o botão não aparece e o `POST` responde 503.
+
+Regras fixas no servidor, que o browser não escolhe: título com prefixo `[jurCrawler]`,
+estado inicial `Todo`, checklist de QA no corpo e só labels que existem no time
+(`LINEAR_MODULE_GROUP`/`LINEAR_TYPE_GROUP` opcionais ligam os selects de módulo e tipo).
+A identidade de quem reporta vem da sessão ProcStudio e vai no card como contexto do
+servidor. A chave do Linear nunca chega ao browser, ao log nem à resposta. Cada usuário
+tem 5 envios por hora (429 com `Retry-After`) e o mesmo título + descrição em 10 minutos
+devolve o mesmo card, então duplo clique e retentativa não duplicam. Linear fora → 502 e
+o widget preserva o rascunho.
+
 ## Comandos
 
     docker build -f infra/Dockerfile -t jur:dev .
@@ -150,6 +167,20 @@ A porta 3000 continua em loopback atrás do proxy HTTPS. Não use `down -v` para
 # Navegadores assistidos
 
 O pool global respeita `JUR_CONCORRENCIA` (padrão 3), em uma única instância da aplicação.
+
+## Tetos de admissão da fila
+
+A fila recusa com **HTTP 429 + `Retry-After`** (e o chat avisa o modelo para esperar)
+quando um destes tetos é atingido. `0` desliga o teto correspondente.
+
+| Variável | Padrão | O que limita |
+|---|---|---|
+| `JUR_ATIVAS_POR_CONTA` | `12` | buscas enfileiradas + rodando de uma mesma conta (uma pergunta do chat nos 9 TJs do Nordeste cria 9) |
+| `JUR_FILA_GLOBAL` | `30` | jobs aguardando vaga no pool local, somando todas as contas (~15 min de espera com 3 vagas) |
+| `JUR_BUSCAS_POR_HORA` | `60` | admissões por conta em janela deslizante de uma hora |
+
+Os valores foram escolhidos para o h2 (3 vagas, 2 GiB) e para o custo dos navegadores
+remotos; o envelope medido sob carga sintética ainda não existe (ver BRU-87).
 O Docker inclui Xvfb para STJ com janela e usa `init: true` para gerir os processos
 filhos. Ao executar a imagem diretamente com seu comando padrão, use `docker run
 --init --shm-size=1g ...`; sem init, `xvfb-run` pode bloquear a partida como PID 1.

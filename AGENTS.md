@@ -10,7 +10,7 @@
 
 ### Custom deploy hooks
 
-- Pre-merge: cd jur && npm test && npm run test:browser && npm run aceite -- TJSC --rapido
+- Pre-merge: cd jur && npm test && npm run test:browser && npm run aceite -- --rapido  (gate de release: TRT9 + TJPR; sem `--rapido` inclui rede)
 - Deploy trigger: manual immutable release over SSH
 - Deploy status: Docker Compose health and public authentication probes; preserve the ProcStudio login and all persistent volumes.
 - Health check: https://jurcrawler.com.br/api/v1/saude

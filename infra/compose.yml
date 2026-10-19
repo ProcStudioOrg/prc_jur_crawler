@@ -15,6 +15,10 @@ services:
       JUR_DADOS: /dados
       TMPDIR: /cache
       JUR_CONCORRENCIA: "${JUR_CONCORRENCIA:-3}"
+      # Tetos de admissao da fila (BRU-87); 0 desliga o teto. Ver infra/README.md.
+      JUR_ATIVAS_POR_CONTA: "${JUR_ATIVAS_POR_CONTA:-12}"
+      JUR_FILA_GLOBAL: "${JUR_FILA_GLOBAL:-30}"
+      JUR_BUSCAS_POR_HORA: "${JUR_BUSCAS_POR_HORA:-60}"
       JUR_CAPTCHA_TIMEOUT_MS: "${JUR_CAPTCHA_TIMEOUT_MS:-120000}"
       # O provedor remoto só aparece quando as duas variáveis estão configuradas.
       BROWSERBASE_API_KEY: "${BROWSERBASE_API_KEY:-}"
@@ -28,6 +32,10 @@ services:
       # Aviso de deploy ao FFD (servidor/aviso-deploy.js). A revisão sai da tag da imagem.
       USAGE_WEBHOOK_URL: "${USAGE_WEBHOOK_URL:-}"
       JUR_IMAGE: "${JUR_IMAGE:-jur:dev}"
+      # Feedback da interface vira card no Linear (servidor/feedback.js). Opcional: sem as
+      # duas variaveis o botao "Reportar" nem aparece. A chave nunca sai do servidor.
+      LINEAR_API_KEY: "${LINEAR_API_KEY:-}"
+      LINEAR_TEAM_ID: "${LINEAR_TEAM_ID:-}"
       # Dentro do container o bind precisa ser 0.0.0.0 para o Docker conseguir
       # encaminhar a porta publicada; quem limita a exposicao e o "127.0.0.1:" do
       # ports acima. Fora do container (node servidor/index.js) o default e 127.0.0.1.

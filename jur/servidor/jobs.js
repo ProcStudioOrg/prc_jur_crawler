@@ -7,6 +7,37 @@ const { rotulo: rotuloNavegador } = require('./navegadores/remotos');
 
 const CONCORRENCIA_PADRAO = Number(process.env.JUR_CONCORRENCIA || 3);
 
+/**
+ * Limites de ADMISSAO (BRU-87). Ate aqui a fila aceitava qualquer pedido: um cliente
+ * em loop (ou uma chave vazada) enfileirava sem teto, e cada job aguardando e uma
+ * linha no banco + uma promise presa no pool — barato por unidade, ilimitado no total,
+ * e todo mundo atras dele espera. Tres tetos, todos sobrescreviveis por ambiente:
+ *
+ *  - JUR_ATIVAS_POR_CONTA (12): buscas enfileiradas+rodando desta conta. Uma pergunta
+ *    do chat que varre "os TJs do Nordeste" cria 9 jobs de uma vez, entao o teto e bem
+ *    maior que o numero de vagas do servidor; 12 cabe isso e ainda impede uma conta de
+ *    sentar em cima de todas as vagas por horas.
+ *  - JUR_FILA_GLOBAL (30): jobs AGUARDANDO vaga no pool local, somando todas as contas.
+ *    Com 3 vagas e ~60-90 s por busca, 30 na fila sao ~15 min de espera — acima disso o
+ *    cliente ganha mais com um 429 e Retry-After do que com uma promessa.
+ *  - JUR_BUSCAS_POR_HORA (60): janela deslizante por conta. Sessenta buscas por hora e
+ *    um advogado pesquisando sem parar; e tambem o teto que mantem o custo nos
+ *    navegadores remotos (Kernel/Steel) previsivel.
+ *
+ * O erro carrega `status: 429` e `retryAfter` (segundos) para a rota HTTP responder
+ * 429 + Retry-After e para o modelo ler quanto esperar em vez de repetir em loop.
+ */
+const LIMITES_PADRAO = {
+  ativasPorConta: Number(process.env.JUR_ATIVAS_POR_CONTA || 12),
+  filaGlobal: Number(process.env.JUR_FILA_GLOBAL || 30),
+  buscasPorHora: Number(process.env.JUR_BUSCAS_POR_HORA || 60),
+};
+const UMA_HORA_MS = 60 * 60 * 1000;
+
+function limiteExcedido(mensagem, retryAfter) {
+  return Object.assign(new Error(mensagem), { status: 429, retryAfter: Math.max(1, Math.ceil(retryAfter)) });
+}
+
 function criarFila(opcoes = {}) {
   const con = opcoes.con;
   const pool = opcoes.pool;
@@ -18,6 +49,9 @@ function criarFila(opcoes = {}) {
   // laco), entao 0 nao e um valor suportado e cai para o padrao em vez de travar a fila
   // em silencio.
   const concorrencia = opcoes.concorrencia || CONCORRENCIA_PADRAO;
+  // `0` desliga o teto correspondente (testes e ambiente local); ausente = padrao.
+  const limites = { ...LIMITES_PADRAO, ...(opcoes.limites || {}) };
+  const admitidas = [];   // instantes das admissoes desta conta na ultima hora
   const dirResultados = opcoes.dirResultados || path.join(process.env.JUR_DADOS || '/dados', 'resultados');
 
   fs.mkdirSync(dirResultados, { recursive: true });
@@ -84,10 +118,48 @@ function criarFila(opcoes = {}) {
     return con.prepare('SELECT * FROM job ORDER BY criado_em DESC LIMIT ?').all(limite).map(linhaParaJob);
   }
 
+  function ativasDaConta() {
+    return con.prepare(`SELECT COUNT(*) AS n FROM job WHERE status IN ('enfileirado','rodando')`).get().n;
+  }
+
+  function aguardandoNoServidor() {
+    if (pool) return pool.estado().naFila;
+    return pendentes.length;
+  }
+
+  // Lanca 429 (com retryAfter) quando algum teto de admissao foi atingido. A ordem
+  // importa pouco; a mensagem importa muito: ela vai para a tela e para o modelo.
+  function conferirLimites() {
+    const agora = Date.now();
+    while (admitidas.length && agora - admitidas[0] >= UMA_HORA_MS) admitidas.shift();
+
+    if (limites.buscasPorHora > 0 && admitidas.length >= limites.buscasPorHora) {
+      const libera = (admitidas[0] + UMA_HORA_MS - agora) / 1000;
+      throw limiteExcedido(
+        `limite de ${limites.buscasPorHora} buscas por hora desta conta atingido; a proxima vaga abre em ${Math.ceil(libera / 60)} min`,
+        libera,
+      );
+    }
+    if (limites.ativasPorConta > 0 && ativasDaConta() >= limites.ativasPorConta) {
+      throw limiteExcedido(
+        `limite de ${limites.ativasPorConta} buscas simultaneas desta conta atingido; espere uma terminar ou cancele uma`,
+        60,
+      );
+    }
+    if (limites.filaGlobal > 0 && aguardandoNoServidor() >= limites.filaGlobal) {
+      throw limiteExcedido(
+        `fila de buscas do servidor cheia (${limites.filaGlobal} aguardando vaga); tente de novo em um minuto`,
+        60,
+      );
+    }
+  }
+
   function enfileirar(comando, params = {}) {
     const tribunal = catalogoFn(comando);
     if (!tribunal) throw new Error(`tribunal desconhecido: ${comando}`);
     if (!tribunal.disponivel && !navegadores?.assistido(comando)) throw new Error(`tribunal indisponivel: ${comando} (${tribunal.estado})`);
+    conferirLimites();
+    admitidas.push(Date.now());
 
     const id = crypto.randomUUID();
     navegadores?.registrar(id, comando);
@@ -318,9 +390,10 @@ function criarFila(opcoes = {}) {
     aoEvento: (fn) => ouvintes.add(fn),
     removerOuvinte: (fn) => ouvintes.delete(fn),
     concorrencia,
+    limites: { ...limites },
     permitirAssistido: (comando) => Boolean(navegadores?.assistido(comando)),
     ocupada: () => pendentes.length > 0 || rodando.size > 0,
   };
 }
 
-module.exports = { criarFila, CONCORRENCIA_PADRAO };
+module.exports = { criarFila, CONCORRENCIA_PADRAO, LIMITES_PADRAO };
