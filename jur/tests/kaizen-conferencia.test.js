@@ -79,3 +79,52 @@ test('falso positivo: periodo cobrindo a faixa real de cada fixture nunca e igno
     assert.notEqual(c.veredito, 'ignorado', f);
   }
 });
+
+// ---- rodada de correcao 1: falsos positivos em resultados saudaveis ----
+const rel = (nomes) => nomes.map((relator) => ({ relator, numeroProcesso: 'n' }));
+test('relator: abreviacao, nome do meio omitido e nome parcial nao sao ignorado', () => {
+  for (const [pedido, achado] of [
+    ['João P. da Silva', 'JOAO PEDRO DA SILVA'],
+    ['João da Silva', 'João Pedro da Silva'],
+    ['Luiz Penteado', 'LUIZ FERNANDO WOWK PENTEADO'],
+  ]) {
+    const [c] = conferir({ relator: pedido }, rel([achado, achado, achado]), { comando: 'trf4' });
+    assert.equal(c.veredito, 'ok', pedido);
+  }
+});
+test('relator: sobreposicao parcial nao conta; nome sem nada em comum ainda viola', () => {
+  const [c] = conferir({ relator: 'João Pedro Silva' }, rel(['João Carlos Souza', 'João Carlos Souza', 'João Carlos Souza']), { comando: 'trf4' });
+  assert.notEqual(c.veredito, 'ignorado');
+  assert.equal(conferir({ relator: 'João Silva' }, rel(['Maria Souza', 'Maria Souza', 'Maria Souza']), { comando: 'trf4' })[0].veredito, 'ignorado');
+});
+test('relator: orgao no lugar da pessoa (tjac/tjal) = sem campo, nao ignorado', () => {
+  const r = rel(['Juiz 1 Turma Recursal Unificada', 'Gabinete do Vice-Presidente', 'Juiz 2 Turma Recursal Unificada']);
+  const [c] = conferir({ relator: 'Fulano de Tal' }, r, { comando: 'tjac' });
+  assert.notEqual(c.veredito, 'ignorado');
+  assert.equal(c.veredito, 'nao_verificavel');
+});
+test('juizados: gabinete, vice-presidencia e vazio nao violam; turma recursal/TNU/colegio recursal ok', () => {
+  const orgaos = ['GABINETE DO DESEMBARGADOR X', 'VICE-PRESIDÊNCIA', '', 'Colégio Recursal de Santos', 'TNU'].map((orgaoJulgador) => ({ orgaoJulgador }));
+  const [c] = conferir({ juizados: true }, orgaos, { comando: 'trf4' });
+  assert.notEqual(c.veredito, 'ignorado');
+  assert.equal(c.violam, 0);
+  const comuns = ['2ª CÂMARA CÍVEL', 'SEÇÃO CRIMINAL', '6ª TURMA CÍVEL'].map((orgaoJulgador) => ({ orgaoJulgador }));
+  assert.equal(conferir({ juizados: true }, comuns, { comando: 'trf4' })[0].veredito, 'ignorado');
+});
+test('numero: varios numeros no filtro, zeros a esquerda, qualquer alias do resultado', () => {
+  const alvo = '5057135-38.2021.4.04.7100';
+  assert.notEqual(conferir({ numero: `5000167-52.2021.4.04.7014, ${alvo}` }, [{ numeroProcesso: `${alvo}/TRF4` }], { comando: 'trf4' })[0].veredito, 'ignorado');
+  assert.equal(conferir({ numero: `0${alvo}` }, [{ numeroProcesso: alvo }], { comando: 'trf4' })[0].veredito, 'ok');
+  // numeroProcesso e um id interno; o CNJ esta em outro alias
+  assert.equal(conferir({ numero: alvo }, [{ numeroProcesso: '123', processo: alvo }], { comando: 'trf4' })[0].veredito, 'ok');
+});
+test('numero: valor que nao tem forma de CNJ e sem campo, nao violacao', () => {
+  const [c] = conferir({ numero: '5057135-38.2021.4.04.7100' }, [{ numeroProcesso: '12345/2020' }], { comando: 'trf4' });
+  assert.notEqual(c.veredito, 'ignorado');
+  assert.equal(c.veredito, 'nao_verificavel');
+});
+test('publicacao: tolerancia de 4 dias; julgamento segue 1', () => {
+  const pub = [1, 2, 3].map(() => ({ dataPublicacao: '01/03/2025' }));
+  assert.equal(conferir({ dataPubInicio: '05/03/2025' }, pub, { comando: 'trf4' })[0].veredito, 'ok');
+  assert.equal(conferir({ dataPubInicio: '06/03/2025' }, pub, { comando: 'trf4' })[0].veredito, 'ignorado');
+});

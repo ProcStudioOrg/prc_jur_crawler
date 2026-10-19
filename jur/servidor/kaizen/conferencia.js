@@ -8,7 +8,6 @@ const FILTROS = ['periodoJulgamento', 'periodoPublicacao', 'magistrado', 'juizad
 const MIN_COM_CAMPO = 3; // abaixo disso a amostra não prova nada (numero: 1)
 const DIA = 24 * 60 * 60 * 1000;
 const MAX_EXEMPLOS = 5;
-const RE_JUIZADO = /turma recursal|juizado|\bjef\b|\btr\b|turma regional de uniformiza/i;
 // Títulos e cargos que variam entre o filtro digitado e o que o tribunal exibe.
 const TOKENS_TITULO = new Set(['des', 'desa', 'min', 'ministro', 'ministra', 'juiz', 'juiza', 'desembargador', 'desembargadora', 'convocado', 'convocada']);
 
@@ -49,16 +48,41 @@ function decidir(filtro, comCampo, violadores, campos, minimo = MIN_COM_CAMPO) {
   return item(filtro, 'ok', `${violam} de ${comCampo} fora do filtro`, comCampo, violam, exemplos);
 }
 
-function conferirPeriodo(filtro, campo, ini, fim, lista) {
+function conferirPeriodo(filtro, campo, ini, fim, lista, tolerancia) {
   const ti = ini ? parseData(ini) : null;
   const tf = fim ? parseData(fim) : null;
   if ((ini && ti === null) || (fim && tf === null) || (ti === null && tf === null)) {
     return item(filtro, 'nao_verificavel', 'data do filtro em formato não reconhecido');
   }
   const comValor = lista.filter((x) => x.norm[campo] !== null);
-  // Tolerância de 1 dia nas duas pontas: fuso e data de sessão vs. de registro.
-  const violadores = comValor.filter(({ norm }) => (ti !== null && norm[campo] < ti - DIA) || (tf !== null && norm[campo] > tf + DIA));
-  return decidir(filtro, comValor.length, violadores, [campo === 'dataJulgamento' ? 'dataJulgamento' : 'dataPublicacao']);
+  // Tolerância nas duas pontas: fuso e data de sessão vs. de registro (publicação atrasa mais).
+  const tol = tolerancia * DIA;
+  const violadores = comValor.filter(({ norm }) => (ti !== null && norm[campo] < ti - tol) || (tf !== null && norm[campo] > tf + tol));
+  return decidir(filtro, comValor.length, violadores, [campo]);
+}
+
+// "Juiz 1 Turma Recursal Unificada", "Gabinete 3": o campo relator traz o órgão, não a pessoa.
+const RE_ORGAO_NO_RELATOR = /turma|camara|gabinete|vice-?presid|presid|secao|plenario|colegiado|unificada|\d/;
+const STOPWORDS_NOME = new Set(['da', 'de', 'do', 'das', 'dos', 'e']);
+const tokensNome = (s) => normalizarNome(s).split(' ').filter((t) => t && !STOPWORDS_NOME.has(t));
+// Inicial ("p" de "P.") casa qualquer token que comece com ela.
+const casaToken = (a, b) => a === b || (a.length === 1 && b.startsWith(a)) || (b.length === 1 && a.startsWith(b));
+const cobre = (menor, maior) => menor.length > 0 && menor.every((t) => maior.some((u) => casaToken(t, u)));
+
+// 'ok' | 'viola' | 'sem'. Sobreposição parcial de nome fica 'sem': na dúvida, não conta.
+function classificarRelator(pedidos, relator) {
+  const nomes = relator.split(';').map((n) => n.trim()).filter(Boolean)
+    .filter((n) => !RE_ORGAO_NO_RELATOR.test(n.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase()));
+  if (!nomes.length) return 'sem';
+  let parcial = false;
+  for (const n of nomes) {
+    const rt = tokensNome(n);
+    for (const pt of pedidos) {
+      if (cobre(pt, rt) || cobre(rt, pt)) return 'ok';
+      if (pt.some((t) => t.length > 1 && rt.includes(t))) parcial = true;
+    }
+  }
+  return parcial ? 'sem' : 'viola';
 }
 
 function conferirMagistrado(relator, lista, comando) {
@@ -66,30 +90,51 @@ function conferirMagistrado(relator, lista, comando) {
   if (!cap || !cap.suportado) return item('magistrado', 'nao_verificavel', 'tribunal sem filtro de magistrado');
   if (cap.forma === 'codigo') return item('magistrado', 'nao_verificavel', 'filtro por código, não por nome');
   // O TRF2/TRF4 etc. aceitam vários nomes separados por vírgula.
-  const pedidos = String(relator).split(',').map(normalizarNome).filter(Boolean);
+  const pedidos = String(relator).split(',').map(tokensNome).filter((t) => t.length);
   if (!pedidos.length) return item('magistrado', 'nao_verificavel', 'nome do magistrado vazio');
-  const comValor = lista.filter((x) => x.norm.relator !== null);
-  const casa = (rel) => rel.split(';').map(normalizarNome).filter(Boolean)
-    .some((n) => pedidos.some((p) => n.includes(p) || p.includes(n)));
-  const violadores = comValor.filter(({ norm }) => !casa(norm.relator));
-  return decidir('magistrado', comValor.length, violadores, ['relator']);
+  const cls = lista.filter((x) => x.norm.relator !== null).map((x) => ({ x, c: classificarRelator(pedidos, x.norm.relator) }))
+    .filter(({ c }) => c !== 'sem');
+  return decidir('magistrado', cls.length, cls.filter(({ c }) => c === 'viola').map(({ x }) => x), ['relator']);
 }
+
+// Só viola quando o órgão é positivamente um colegiado comum; gabinete/vazio/desconhecido = sem campo.
+const RE_JUIZADO = /turmas? (recursa(l|is)|de recursos|de uniformiza|regional de uniformiza|nacional de uniformiza)|col[eé]gio recursal|c[aâ]mara recursal|juizado|\bjef\b|\btru\b|\btnu\b|\btr\b/i;
+const RE_COMUM = /c[aâ]mara (c[ií]vel|criminal|de direito)|\bse[cç][aã]o\b|plen[aá]rio|corte especial|grupo de c[aâ]maras|\bturma\b(?!.*(recurs|uniformiza))/i;
 
 function conferirJuizados(lista) {
-  const e = (x) => (typeof x.norm.juizado === 'boolean' ? x.norm.juizado
-    : x.norm.orgaoJulgador !== null ? RE_JUIZADO.test(x.norm.orgaoJulgador) : null);
-  const comValor = lista.filter((x) => e(x) !== null);
-  const violadores = comValor.filter((x) => e(x) === false);
-  return decidir('juizados', comValor.length, violadores, ['juizado', 'orgaoJulgador']);
+  // 'ok' | 'viola' | null
+  const e = (x) => {
+    if (typeof x.norm.juizado === 'boolean') return x.norm.juizado ? 'ok' : 'viola';
+    const o = x.norm.orgaoJulgador;
+    if (o === null) return null;
+    if (RE_JUIZADO.test(o)) return 'ok';
+    return RE_COMUM.test(o) ? 'viola' : null;
+  };
+  const cls = lista.map((x) => ({ x, c: e(x) })).filter(({ c }) => c !== null);
+  return decidir('juizados', cls.length, cls.filter(({ c }) => c === 'viola').map(({ x }) => x), ['juizado', 'orgaoJulgador']);
 }
 
-const digitos = (s) => String(s).split('/')[0].replace(/\D/g, '');
+// Dígitos do trecho antes de '/', sem zeros à esquerda.
+const digitos = (s) => String(s).split('/')[0].replace(/\D/g, '').replace(/^0+/, '');
+const MIN_DIGITOS_CNJ = 15;
+
+// Todos os valores de número que o resultado traz (vários aliases); só os com forma de CNJ.
+function numerosDoResultado(bruto) {
+  const out = [];
+  for (const k of ALIASES.numeroProcesso) {
+    const v = bruto?.[k];
+    if (typeof v !== 'string' && typeof v !== 'number') continue;
+    const d = digitos(v);
+    if (d.length >= MIN_DIGITOS_CNJ) out.push(d);
+  }
+  return out;
+}
 
 function conferirNumero(numero, lista) {
-  const alvo = digitos(numero);
-  if (!alvo) return item('numero', 'nao_verificavel', 'número do filtro sem dígitos');
-  const comValor = lista.filter((x) => digitos(x.norm.numeroProcesso ?? '') !== '');
-  const violadores = comValor.filter(({ norm }) => digitos(norm.numeroProcesso) !== alvo);
+  const alvos = String(numero).split(/[,;\s]+/).map(digitos).filter(Boolean);
+  if (!alvos.length) return item('numero', 'nao_verificavel', 'número do filtro sem dígitos');
+  const comValor = lista.map((x) => ({ x, nums: numerosDoResultado(x.bruto) })).filter(({ nums }) => nums.length);
+  const violadores = comValor.filter(({ nums }) => !nums.some((n) => alvos.includes(n))).map(({ x }) => x);
   return decidir('numero', comValor.length, violadores, [], 1);
 }
 
@@ -97,8 +142,8 @@ function conferir(params, resultados, { comando } = {}) {
   const p = params || {};
   const lista = (Array.isArray(resultados) ? resultados : []).map((bruto) => ({ bruto, norm: normalizarResultado(bruto) }));
   const out = [];
-  if (p.dataInicio || p.dataFim) out.push(conferirPeriodo('periodoJulgamento', 'dataJulgamento', p.dataInicio, p.dataFim, lista));
-  if (p.dataPubInicio || p.dataPubFim) out.push(conferirPeriodo('periodoPublicacao', 'dataPublicacao', p.dataPubInicio, p.dataPubFim, lista));
+  if (p.dataInicio || p.dataFim) out.push(conferirPeriodo('periodoJulgamento', 'dataJulgamento', p.dataInicio, p.dataFim, lista, 1));
+  if (p.dataPubInicio || p.dataPubFim) out.push(conferirPeriodo('periodoPublicacao', 'dataPublicacao', p.dataPubInicio, p.dataPubFim, lista, 4));
   if (p.relator) out.push(conferirMagistrado(p.relator, lista, comando));
   if (p.juizados === true) out.push(conferirJuizados(lista));
   if (p.numero) out.push(conferirNumero(p.numero, lista));
