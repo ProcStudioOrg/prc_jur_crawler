@@ -34,12 +34,16 @@ function criarRegistro(ponte, aoPagina) {
   };
 }
 
-function instrumentarChromium(chromium, ponte, { cdp, exclusivo = Boolean(cdp), aoPagina } = {}) {
+// Durante a captura de saída nenhum navegador novo começa: a promise fica pendente até o exit.
+const NUNCA = () => new Promise(() => {});
+
+function instrumentarChromium(chromium, ponte, { cdp, exclusivo = Boolean(cdp), aoPagina, encerrando = () => false } = {}) {
   const launch = chromium.launch.bind(chromium);
   const connectOverCDP = chromium.connectOverCDP.bind(chromium);
   const instrumentar = criarRegistro(ponte, aoPagina);
   let ocupado = false;
   chromium.launch = async (...args) => {
+    if (encerrando()) return NUNCA();
     // A trava existe pela ponte/CDP (uma sessão por execução). Sem elas, crawler que abre
     // dois navegadores (STJ) segue como sempre.
     if (exclusivo && ocupado) throw new Error('Esta execução já possui um navegador em uso.');
@@ -59,6 +63,7 @@ function instrumentarChromium(chromium, ponte, { cdp, exclusivo = Boolean(cdp), 
   };
   // O FalcaoNavigator conecta direto; sem trava aqui, só registro das páginas.
   chromium.connectOverCDP = async (...args) => {
+    if (encerrando()) return NUNCA();
     let browser;
     try { browser = await connectOverCDP(...args); } catch (erro) {
       if (cdp) throw new Error(ERRO_CDP);
@@ -153,41 +158,77 @@ function criarCaptura({ dir, tribunal, rota, prazoMs = PRAZO_CAPTURA_MS }) {
   return { anexarPagina, capturar };
 }
 
-function instalarSaida(captura, processo = process) {
+// Consulta direta e listagens saem com 1 como resultado esperado ("não encontrado"), não como
+// falha: nelas o exit segue o caminho original, sem captura nem atraso.
+const FLAGS_CONSULTA = new Set(['-n', '--numero', '--decisao', '--acordao', '--teses', '--status', '-h', '--help']);
+function modoConsulta(argv = []) {
+  return argv.slice(2).some((a) => {
+    const flag = String(a).split('=')[0];
+    return FLAGS_CONSULTA.has(flag) || flag.startsWith('--listar');
+  });
+}
+
+const silenciar = (stream) => {
+  if (!stream || typeof stream.write !== 'function') return;
+  stream.write = (_chunk, codificacao, cb) => {
+    const fim = typeof codificacao === 'function' ? codificacao : cb;
+    if (typeof fim === 'function') process.nextTick(fim);
+    return true;
+  };
+};
+
+// Devolve { encerrando() } para o chromium instrumentado recusar trabalho novo durante a captura.
+function instalarSaida(captura, processo = process, { tetoMs = PRAZO_CAPTURA_MS + 1000 } = {}) {
   const sair = processo.exit.bind(processo);
   let saindo = false;
   const capturarESair = (codigo) => {
-    if (saindo) return;
     saindo = true;
+    // O envelope JSON já foi escrito: quem chamou exit(1) continua rodando (o exit interceptado
+    // retorna), e nada do que ele escrever depois pode virar a "última linha" lida pelo executor.
+    silenciar(processo.stdout);
+    silenciar(processo.stderr);
     // Se o loop esvaziar antes, o processo ainda sai com o código certo.
     processo.exitCode = codigo;
     // Teto absoluto além do prazo da captura: a CLI nunca fica pendurada aqui.
     let timer;
-    const teto = new Promise((r) => { timer = setTimeout(r, PRAZO_CAPTURA_MS + 1000); });
+    const teto = new Promise((r) => { timer = setTimeout(r, tetoMs); });
     Promise.race([Promise.resolve().then(() => captura.capturar()).catch(() => {}), teto])
       .finally(() => { clearTimeout(timer); sair(codigo); });
   };
   processo.exit = (codigo) => {
+    // Depois do primeiro código ≠ 0 tudo é ignorado, inclusive um exit(0) de um fluxo que seguiu.
+    if (saindo) return;
     const efetivo = codigo ?? processo.exitCode ?? 0;
     if (Number(efetivo) === 0) return sair(codigo);
-    // Quem chama exit(1) segue executando até a captura terminar; uma segunda chamada é ignorada.
     capturarESair(efetivo);
   };
+  // Com listener próprio o Node não imprime nem sai sozinho: refazemos as duas coisas, com captura.
+  const fatal = (erro) => {
+    if (saindo) return;
+    try { processo.stderr?.write(`${erro?.stack || erro}\n`); } catch { /* stderr fechado */ }
+    processo.exit(1);
+  };
+  try {
+    processo.on('uncaughtException', fatal);
+    processo.on('unhandledRejection', fatal);
+  } catch { /* processo falso sem eventos */ }
   // O executor manda SIGUSR2 no estouro de tempo para dar à captura uma janela antes do kill.
-  try { processo.on('SIGUSR2', () => capturarESair(1)); } catch { /* plataforma sem o sinal */ }
+  try { processo.on('SIGUSR2', () => { if (!saindo) capturarESair(1); }); } catch { /* plataforma sem o sinal */ }
+  return { encerrando: () => saindo };
 }
 
 {
   const ponte = obterPonte();
   const cdp = process.env.JUR_BROWSER_CDP;
   let captura = null;
-  if (process.env.JUR_FALHA_DIR) {
+  let saida = null;
+  if (process.env.JUR_FALHA_DIR && !modoConsulta(process.argv)) {
     captura = criarCaptura({ dir: process.env.JUR_FALHA_DIR, tribunal: process.argv[2], rota: cdp ? 'remoto' : 'local' });
-    instalarSaida(captura);
+    saida = instalarSaida(captura);
   }
   instrumentarChromium(require('playwright').chromium, ponte || { anexarPagina() {}, encerrar() {} }, {
-    cdp, exclusivo: Boolean(ponte || cdp), aoPagina: captura?.anexarPagina,
+    cdp, exclusivo: Boolean(ponte || cdp), aoPagina: captura?.anexarPagina, encerrando: saida?.encerrando,
   });
 }
 
-module.exports = { instrumentarChromium, criarCaptura, derivarPasso, urlSemQuery, instalarSaida };
+module.exports = { instrumentarChromium, criarCaptura, derivarPasso, urlSemQuery, instalarSaida, modoConsulta };

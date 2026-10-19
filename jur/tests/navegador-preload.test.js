@@ -6,7 +6,7 @@ const { EventEmitter } = require('node:events');
 const { test } = require('node:test');
 
 const {
-  criarCaptura, derivarPasso, urlSemQuery, instalarSaida, instrumentarChromium,
+  criarCaptura, derivarPasso, urlSemQuery, instalarSaida, instrumentarChromium, modoConsulta,
 } = require('../src/navegadorPreload');
 
 // PNG de 1x1: o conteúdo não importa, só que o arquivo exista e não esteja vazio.
@@ -27,8 +27,12 @@ function pagina({ url = 'https://x.br/', html = '<html></html>', titulo = 'Títu
 function processoFalso(aoSair) {
   const proc = new EventEmitter();
   proc.exit = (codigo) => aoSair(codigo);
+  proc.escrito = { stdout: '', stderr: '' };
+  for (const nome of ['stdout', 'stderr']) proc[nome] = { write: (t) => { proc.escrito[nome] += t; return true; } };
   return proc;
 }
+
+const tique = () => new Promise((r) => setImmediate(r));
 
 function chromiumFalso({ falharCdp } = {}) {
   const navegador = () => {
@@ -126,15 +130,82 @@ test('sem pagina: meta.json com passo desconhecido', async () => {
 
 test('exit(1) espera a captura e sai com o mesmo codigo; exit(0) nao captura', async () => {
   const chamadas = []; const proc = processoFalso((c) => chamadas.push(c));
-  let capturou = 0; instalarSaida({ capturar: async () => { capturou++; } }, proc);
-  proc.exit(0); proc.exit(1); await new Promise((r) => setImmediate(r));
-  assert.deepEqual(chamadas, [0, 1]); assert.equal(capturou, 1);
+  let capturou = 0; let liberar;
+  instalarSaida({ capturar: () => { capturou++; return new Promise((r) => { liberar = r; }); } }, proc);
+  proc.exit(0); proc.exit(1); await tique();
+  assert.deepEqual(chamadas, [0]); assert.equal(capturou, 1);
+  assert.equal(proc.exitCode, 1);
+  liberar(); await tique();
+  assert.deepEqual(chamadas, [0, 1]);
+});
+
+test('exit(1) seguido de exit(0) sai com 1 (fluxo que seguiu depois do exit interceptado)', async () => {
+  const chamadas = []; const proc = processoFalso((c) => chamadas.push(c));
+  instalarSaida({ capturar: async () => {} }, proc);
+  proc.exit(1); proc.exit(0); await tique();
+  assert.deepEqual(chamadas, [1]);
+});
+
+test('escrita depois do exit(1) nunca chega ao stdout nem ao stderr', async () => {
+  const chamadas = []; const proc = processoFalso((c) => chamadas.push(c));
+  instalarSaida({ capturar: async () => {} }, proc);
+  proc.stdout.write('{"success":true,"encontrado":false}\n');
+  proc.exit(1);
+  let callback = false;
+  assert.equal(proc.stdout.write('{"success":false}\n', () => { callback = true; }), true);
+  proc.stderr.write('Error during crawling\n');
+  await tique();
+  assert.equal(proc.escrito.stdout, '{"success":true,"encontrado":false}\n');
+  assert.equal(proc.escrito.stderr, '');
+  assert.ok(callback, 'callback de write silenciado ainda é chamado');
+});
+
+test('launch e connectOverCDP depois do exit(1) nunca abrem navegador', async () => {
+  const proc = processoFalso(() => {});
+  const saida = instalarSaida({ capturar: () => new Promise(() => {}) }, proc, { tetoMs: 50 });
+  let abertos = 0;
+  const chromium = { launch: async () => { abertos++; }, connectOverCDP: async () => { abertos++; } };
+  instrumentarChromium(chromium, { anexarPagina() {}, encerrar() {} }, { exclusivo: false, encerrando: saida.encerrando });
+  proc.exit(1);
+  let resolveu = false;
+  chromium.launch().then(() => { resolveu = true; });
+  chromium.connectOverCDP('wss://x').then(() => { resolveu = true; });
+  await new Promise((r) => setTimeout(r, 20));
+  assert.equal(abertos, 0); assert.equal(resolveu, false);
+});
+
+test('captura que nunca termina: o teto forca a saida com o codigo', async () => {
+  const chamadas = []; const proc = processoFalso((c) => chamadas.push(c));
+  instalarSaida({ capturar: () => new Promise(() => {}) }, proc, { tetoMs: 50 });
+  const t0 = Date.now(); proc.exit(4);
+  await new Promise((r) => setTimeout(r, 20));
+  assert.deepEqual(chamadas, []);
+  await new Promise((r) => setTimeout(r, 80));
+  assert.deepEqual(chamadas, [4]); assert.ok(Date.now() - t0 < 500);
+});
+
+test('excecao e rejeicao nao tratadas: stack no stderr, captura e saida com 1', async () => {
+  for (const evento of ['uncaughtException', 'unhandledRejection']) {
+    const chamadas = []; const proc = processoFalso((c) => chamadas.push(c));
+    let capturou = 0; instalarSaida({ capturar: async () => { capturou++; } }, proc);
+    proc.emit(evento, new Error('quebrou no seletor'));
+    await tique();
+    assert.deepEqual(chamadas, [1], evento); assert.equal(capturou, 1);
+    assert.match(proc.escrito.stderr, /quebrou no seletor/);
+  }
+});
+
+test('modo consulta (-n, --numero=, --acordao, --listar-*, --help) fica fora da captura', () => {
+  for (const args of [['trf4', '-n', '5000'], ['trf2', '--numero=5000'], ['tcu', '--acordao', '1/2026'], ['trf4', '--listar-combos'], ['stj', '--help'], ['stf', '--teses', 'x']]) {
+    assert.equal(modoConsulta(['node', 'bin/jur', ...args]), true, args.join(' '));
+  }
+  assert.equal(modoConsulta(['node', 'bin/jur', 'trf4', '-q', 'x', '-p', '5000', '--json']), false);
 });
 
 test('exit(1) repetido durante a captura sai uma vez so', async () => {
   const chamadas = []; const proc = processoFalso((c) => chamadas.push(c));
   instalarSaida({ capturar: async () => {} }, proc);
-  proc.exit(1); proc.exit(1); await new Promise((r) => setImmediate(r));
+  proc.exit(1); proc.exit(1); await tique();
   assert.deepEqual(chamadas, [1]);
 });
 
@@ -183,4 +254,48 @@ test('connectOverCDP direto com CDP configurado nao vaza a URL', async () => {
   const chromium = chromiumFalso({ falharCdp: 'wss://connect.steel.dev?apiKey=SEGREDO' });
   instrumentarChromium(chromium, { anexarPagina() {}, encerrar() {} }, { cdp: 'wss://x', exclusivo: true });
   await assert.rejects(chromium.connectOverCDP('wss://connect.steel.dev?apiKey=SEGREDO'), (e) => !/SEGREDO/.test(e.message));
+});
+
+// Padrão do bin/jur: envelope JSON, exit interceptado retorna e o fluxo segue para outro envelope.
+const SIM = `(async () => {
+  const numero = process.argv.includes('-n');
+  try {
+    if (numero) { process.stdout.write(JSON.stringify({ success: true, encontrado: false }) + '\\n'); process.exit(1); }
+    if (!process.env.Q) throw new Error('Informe -q');
+    process.stdout.write(JSON.stringify({ success: true, count: 3 }) + '\\n');
+    process.exit(0);
+  } catch (e) { process.stdout.write(JSON.stringify({ success: false, error: e.message }) + '\\n'); process.exit(1); }
+})();`;
+
+function rodarSim(args, env = {}) {
+  const { spawnSync } = require('node:child_process');
+  const dir = tmp(); const falha = path.join(dir, 'falha');
+  const script = path.join(dir, 'sim.js'); fs.writeFileSync(script, SIM);
+  const preload = path.resolve(__dirname, '../src/navegadorPreload.js');
+  const r = spawnSync(process.execPath, ['--require', preload, script, ...args], {
+    cwd: path.resolve(__dirname, '..'), encoding: 'utf8',
+    env: { ...process.env, JUR_ACOMPANHAR: '0', JUR_CAPTCHA: '0', JUR_BROWSER_CDP: '', JUR_FALHA_DIR: falha, ...env },
+  });
+  return { ...r, meta: fs.existsSync(path.join(falha, 'meta.json')) };
+}
+
+test('processo real: falha sem -n deixa so o primeiro envelope, sai com 1 e grava meta.json', () => {
+  const r = rodarSim(['trf2'], { Q: '' });
+  assert.equal(r.status, 1, r.stderr);
+  assert.deepEqual(r.stdout.trim().split('\n'), ['{"success":false,"error":"Informe -q"}']);
+  assert.ok(r.meta);
+});
+
+test('processo real: -n sai na hora com o comportamento original e sem captura', () => {
+  const r = rodarSim(['trf2', '-n', '5000'], { Q: '' });
+  assert.equal(r.status, 1);
+  assert.equal(r.stdout.trim().split('\n')[0], '{"success":true,"encontrado":false}');
+  assert.equal(r.meta, false);
+});
+
+test('processo real: sucesso sai com 0 e sem captura', () => {
+  const r = rodarSim(['trf2'], { Q: 'x' });
+  assert.equal(r.status, 0, r.stderr);
+  assert.equal(r.stdout.trim(), '{"success":true,"count":3}');
+  assert.equal(r.meta, false);
 });
