@@ -63,18 +63,25 @@ function contextoDoServidor({ principal, versao, revisao, job, captura = false, 
 
 // ─── conversa aberta na tela ────────────────────────────────────────────────
 
+function curtoLimpo(t) {
+  const limpo = sanitizar(t);
+  return limpo.length > MAX_ARGS ? `${limpo.slice(0, MAX_ARGS)}…` : limpo;
+}
+
 function resumoDeBloco(b) {
   if (!b || typeof b !== 'object') return '';
   if (b.type === 'text') return String(b.text || '');
   if (b.type === 'tool_use') {
     let args = '';
     try { args = JSON.stringify(b.input ?? {}); } catch { args = '{}'; }
-    return `[ferramenta ${b.name}(${args.length > MAX_ARGS ? `${args.slice(0, MAX_ARGS)}…` : args})]`;
+    // Sanitiza o JSON inteiro antes de cortar: corte no meio de um valor entre aspas tiraria a
+    // aspa de fechamento e o padrão chave/valor deixaria o começo da chave passar.
+    return `[ferramenta ${b.name}(${curtoLimpo(args)})]`;
   }
   if (b.type === 'tool_result') {
     const c = typeof b.content === 'string' ? b.content
       : Array.isArray(b.content) ? b.content.map((x) => x?.text || '').join(' ') : '';
-    return `[resultado: ${c.length > MAX_ARGS ? `${c.slice(0, MAX_ARGS)}…` : c}]`;
+    return `[resultado: ${curtoLimpo(c)}]`;
   }
   return '';
 }
@@ -86,7 +93,10 @@ function linhaDeMensagem(m) {
   const limpo = sanitizar(texto).replace(/\s+/g, ' ').trim();
   if (!limpo) return null;
   const curto = limpo.length > MAX_MENSAGEM ? `${limpo.slice(0, MAX_MENSAGEM)}…` : limpo;
-  return `${m.papel === 'user' ? 'usuário' : 'assistente'}: ${curto}`;
+  // tool_result é gravado com papel user, mas quem "falou" foi a ferramenta.
+  const soResultado = Array.isArray(m.conteudo) && m.conteudo.length > 0 && m.conteudo.every((b) => b?.type === 'tool_result');
+  const quem = soResultado ? 'ferramenta (resultado)' : m.papel === 'user' ? 'usuário' : 'assistente';
+  return `${quem}: ${curto}`;
 }
 
 /**
@@ -103,18 +113,18 @@ function historicoDaConversa(mensagens, base = {}) {
   return linhas;
 }
 
-/** Bloco recolhido do card no Linear; crase tripla do texto não pode fechar o bloco de código. */
+/** Bloco recolhido do card no Linear; crase tripla do texto não pode fechar o bloco de código,
+ *  nem `+++` no começo de linha fechar o recolhível (cada mensagem é uma linha só). */
 function blocoDoCard(linhas) {
   if (!linhas.length) return '';
   const corpo = linhas.map((l) => l.replace(/`{3,}/g, "''")).join('\n');
+  // Sintaxe recolhível do Linear (`+++ título` … `+++`); <details> cru não é renderizado lá.
   return [
-    '<details>',
-    `<summary>Conversa na tela (últimas ${linhas.length} mensagens)</summary>`,
-    '',
+    `+++ Histórico da conversa (últimas ${linhas.length} mensagens)`,
     '```',
     corpo,
     '```',
-    '</details>',
+    '+++',
   ].join('\n');
 }
 

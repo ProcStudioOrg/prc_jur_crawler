@@ -66,3 +66,21 @@ test('cookie nao engole texto que vem depois dele', () => {
   assert.doesNotMatch(s, /SEGREDO/);
   assert.match(s, /erro: timeout/);
 });
+
+test('chave crua solta no texto, sem nome de campo, some pelo prefixo do fornecedor', () => {
+  const cruas = [
+    'sk-ant-api03-AbCdEfGhIjKlMnOpQrSt_uv',
+    'sk-proj0123456789abcdefXYZ',
+    'lin_api_0123456789abcdefghijKLMN',
+    'ghp_0123456789abcdefghijKLMNOP',
+    'gho_0123456789abcdefghijKLMNOP',
+    'ffd_wh_0123456789abcdefghij-_KL',
+    'xoxb-1234567890-abcdefghij',
+  ];
+  for (const k of cruas) {
+    const s = sanitizar(`falhou com ${k} no meio`);
+    assert.equal(s, 'falhou com [redigido] no meio', k);
+  }
+  // prefixo sem corpo de chave não é segredo
+  assert.equal(sanitizar('task-runner e sk-curto'), 'task-runner e sk-curto');
+});

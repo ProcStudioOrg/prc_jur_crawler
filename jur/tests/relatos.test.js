@@ -177,8 +177,8 @@ test('conversa da conta: ultimas 12 mensagens no card (recolhido) e no contexto 
   const r = await post('/api/v1/relatos', relato({ extra: { conversaId: c.id } }));
   assert.equal(r.status, 200);
   const d = descricao();
-  assert.match(d, /<details>/);
-  assert.match(d, /<\/details>/);
+  assert.match(d, /^\+\+\+ Histórico da conversa/m);
+  assert.match(d, /^\+\+\+$/m);
   assert.match(d, /mensagem numero 13/);
   // 15 mensagens: as 12 últimas começam na 4ª.
   assert.match(d, /mensagem numero 4\b/);
@@ -199,7 +199,7 @@ test('historico grande: no maximo 6 KB, sem as mais antigas, e contexto do FFD c
   const r = await post('/api/v1/relatos', relato({ extra: { conversaId: c.id, jobId: jobDaConta.id } }));
   assert.equal(r.status, 200);
   const d = descricao();
-  const bloco = d.slice(d.indexOf('<details>'), d.indexOf('</details>'));
+  const bloco = d.slice(d.indexOf('+++ Histórico'), d.lastIndexOf('\n+++'));
   assert.ok(Buffer.byteLength(bloco) <= 6 * 1024 + 300, `bloco com ${Buffer.byteLength(bloco)} bytes`);
   assert.match(bloco, /msg-12 /);
   assert.doesNotMatch(bloco, /msg-1 /, 'a mais antiga sai primeiro');
@@ -213,16 +213,25 @@ test('historico grande: no maximo 6 KB, sem as mais antigas, e contexto do FFD c
 test('conversa que nao e da conta nao entra', async () => {
   const r = await post('/api/v1/relatos', relato({ extra: { conversaId: 'conversa-de-outro-usuario' } }));
   assert.equal(r.status, 200);
-  assert.doesNotMatch(descricao(), /<details>/);
+  assert.doesNotMatch(descricao(), /\+\+\+/);
   assert.ok(!Object.keys(espiao.relatos[0].contexto).some((k) => /Conversa/.test(k)));
 });
 
 // ─── tela ───────────────────────────────────────────────────────────────────
 
-test('index.html monta o widget como modulo e o widget e copia exata do FFD', () => {
+test('index.html monta o widget como modulo e o widget e copia exata do ProcStudio', () => {
   assert.match(fs.readFileSync(INDEX, 'utf8'), /<script type="module" src="\/relatar\.js"><\/script>/);
-  const ffd = '/Users/brpl/code/fullFuckerDashboard/ai-dashboard/issue-reporter/widget.js';
-  if (fs.existsSync(ffd)) assert.ok(fs.readFileSync(ffd).equals(fs.readFileSync(WIDGET)));
+  // Fonte: o widget do ProcStudio (superconjunto do FFD, com showIssueLink); o FFD passa a usar o
+  // mesmo arquivo. Fora da máquina de desenvolvimento o repo não existe e a conferência pula.
+  const repoPs = '/Users/brpl/code/ProcStudio/ProcStudio-Docker';
+  if (!fs.existsSync(repoPs)) return;
+  const { execFileSync } = require('node:child_process');
+  let fonte;
+  try {
+    fonte = execFileSync('git', ['-C', repoPs, 'show', 'origin/development:frontend/src/lib/issue-reporter/widget.js'], { stdio: ['ignore', 'pipe', 'ignore'] });
+  } catch { return; }
+  assert.ok(fonte.equals(fs.readFileSync(WIDGET)), 'widget.js diverge do ProcStudio');
+  assert.match(fs.readFileSync(WIDGET, 'utf8'), /showIssueLink/);
 });
 
 test('relatar.js so monta com sessao e manda job e conversa visiveis', () => {
@@ -232,4 +241,19 @@ test('relatar.js so monta com sessao e manda job e conversa visiveis', () => {
   assert.match(src, /jurBuscaVisivel/);
   assert.match(src, /conversaId/);
   assert.match(src, /showIssueLink:\s*false/);
+});
+
+test('segredo cortado no meio nunca vaza: sanitiza o texto inteiro antes de cortar', async () => {
+  const c = repo.criar();
+  // o corte de 120 caracteres cai dentro do valor da chave
+  repo.acrescentar(c.id, 'assistant', [{ type: 'tool_use', id: 'tu1', name: 'buscar', input: {
+    q: 'x'.repeat(95), apiKey: 'sk-ant-api03-SEGREDOSEGREDOSEGREDO', token: 'SEGREDO2SEGREDO2SEGREDO2',
+  } }]);
+  repo.acrescentar(c.id, 'user', [{ type: 'tool_result', tool_use_id: 'tu1',
+    content: `${'y'.repeat(100)} "access_token":"SEGREDO3SEGREDO3SEGREDO3"` }]);
+  await post('/api/v1/relatos', relato({ extra: { conversaId: c.id } }));
+  const d = descricao();
+  assert.doesNotMatch(d, /sk-ant|SEGREDO/);
+  assert.doesNotMatch(JSON.stringify(espiao.relatos[0].contexto), /sk-ant|SEGREDO/);
+  assert.match(d, /ferramenta \(resultado\): \[resultado: y+/, 'tool_result não é fala do usuário');
 });

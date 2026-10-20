@@ -48,6 +48,28 @@ const DEFAULTS = {
   panelTitle: "Reportar para o Linear",
   /** Linha de apoio sob o titulo. Vazio usa time + rota. */
   panelSubtitle: "",
+  /**
+   * Daqui para baixo: o que muda quando quem reporta e o usuario final, e nao
+   * o time. Os defaults sao o painel interno (FFD, WhatsOrganizer), entao
+   * copiar este arquivo para la nao muda nada.
+   */
+  /** Rotulo e exemplo do titulo. O exemplo deve soar como quem usa a tela. */
+  titleLabel: "O que aconteceu (título)",
+  titlePlaceholder: "Cache de labels não invalida ao trocar de time",
+  bodyPlaceholder: "Passo a passo, o que deveria acontecer, o que aconteceu.",
+  /** `false` esconde o select; a issue segue sem prioridade e a triagem define. */
+  showPriority: true,
+  /**
+   * `false` troca a lista tecnica por `contextNote`. O contexto CONTINUA indo
+   * no envio — por isso a nota nao pode ficar vazia: quem reporta precisa
+   * saber que algo vai junto, so nao precisa ler user-agent.
+   */
+  showContext: true,
+  contextNote:
+    "Junto vão a tela em que você está e os erros técnicos recentes (só a mensagem, sem o conteúdo dos seus dados).",
+  /** `false` confirma com "Recebido" em vez do link do Linear, e sem a lista
+   *  de enviadas — o identificador nao diz nada a quem nao tem conta la. */
+  showIssueLink: true,
 };
 
 const STORE_KEY = "ffd.issue-reporter.recent";
@@ -71,14 +93,43 @@ function ring(size) {
   };
 }
 
-function stringifyArg(arg) {
-  if (arg instanceof Error) return `${arg.name}: ${arg.message}\n${arg.stack || ""}`;
-  if (typeof arg === "string") return arg;
-  try {
-    return JSON.stringify(arg);
-  } catch {
-    return String(arg);
-  }
+/**
+ * O que de um argumento do console vai para a issue.
+ *
+ * So escalar vira texto. Objeto NUNCA e serializado (PRC-981): o padrao dos
+ * clientes HTTP e `console.error("Error in X:", err)`, e o `err` carrega o
+ * corpo da resposta — num 422 de cadastro de cliente, nome e CPF de gente
+ * real iriam parar num board externo, sem que quem reportou visse. De um
+ * Error, ou de um objeto de erro de API (tem `response`, `data` ou `body`),
+ * sai so `name`, `message` e o `status` numerico; de qualquer outro objeto,
+ * so o tipo. A stack tambem fica de fora: o que se manda e a mensagem.
+ */
+export function stringifyArg(arg) {
+  if (arg === null || arg === undefined) return String(arg);
+  const type = typeof arg;
+  if (type === "string") return arg;
+  if (type === "number" || type === "boolean" || type === "bigint" || type === "symbol") return String(arg);
+  if (type === "function") return "[Function]";
+  if (arg instanceof Error || errorLike(arg)) return errorSummary(arg);
+  if (Array.isArray(arg)) return `[Array(${arg.length})]`;
+  return "[Object]";
+}
+
+/** Objeto de erro de cliente HTTP: o que carrega resposta. */
+function errorLike(value) {
+  return (
+    "response" in value ||
+    "data" in value ||
+    "body" in value ||
+    ("message" in value && "status" in value)
+  );
+}
+
+function errorSummary(err) {
+  const name = typeof err.name === "string" && err.name ? err.name : "Error";
+  const message = typeof err.message === "string" ? err.message : "";
+  const status = typeof err.status === "number" ? ` (HTTP ${err.status})` : "";
+  return `${name}: ${message}${status}`;
 }
 
 function installCapture(state, options) {
@@ -341,6 +392,7 @@ details.context summary { cursor: pointer; user-select: none; }
 details.context dl { margin: 8px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; }
 details.context dt { color: var(--ir-muted); white-space: nowrap; }
 details.context dd { margin: 0; color: var(--ir-text); word-break: break-all; }
+.context-note { margin: 0 0 12px; font-size: 11px; line-height: 1.45; color: var(--ir-muted); }
 .pill {
   display: inline-block; margin-left: 6px; padding: 1px 6px;
   border-radius: 999px; font-size: 10px;
@@ -367,8 +419,22 @@ button.send:disabled { opacity: 0.5; cursor: default; }
 .recent a:hover { text-decoration: underline; }
 .recent ul { margin: 6px 0 0; padding-left: 16px; }
 
+/* Celular: folha inferior na altura do conteudo. Em tela cheia o form
+   (flex: 1) empurrava o Enviar para o rodape, com um vao grande entre o
+   ultimo campo e o botao (PRC-1195). */
 @media (max-width: 520px) {
-  .panel { width: 100vw; }
+  .panel {
+    width: 100vw;
+    top: auto;
+    max-height: 100dvh;
+    border-left: none;
+    border-top: 1px solid var(--ir-border);
+    border-radius: 14px 14px 0 0;
+    transform: translateY(100%);
+  }
+  .panel.open { transform: translateY(0); }
+  form { flex: 0 1 auto; }
+  .foot { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
 }
 @media (prefers-reduced-motion: reduce) {
   .panel, .backdrop, .launcher { transition: none; }
@@ -467,7 +533,8 @@ export function mountIssueReporter(userOptions = {}) {
     const ctx = collectContext(state, options);
     const errors = ctx.console.length;
     const fails = ctx.network.length;
-    const recent = meta.requireContact ? [] : readRecent();
+    const linksIssue = options.showIssueLink && !meta.requireContact;
+    const recent = linksIssue ? readRecent() : [];
 
     const preselectedModule =
       meta.moduleByPath[ctx.path] ??
@@ -476,6 +543,28 @@ export function mountIssueReporter(userOptions = {}) {
         .filter(([p]) => p !== "/" && ctx.path.startsWith(p))
         .sort((a, b) => b[0].length - a[0].length)[0]?.[1] ??
       "";
+
+    // Lista tecnica para o time; nota de uma linha para o usuario final. Nos
+    // dois casos o contexto vai no envio — o que muda e quanto se mostra.
+    const contextHtml = options.showContext
+      ? `<details class="context">
+          <summary>
+            Contexto que vai junto
+            ${errors ? `<span class="pill">${errors} erro(s)</span>` : ""}
+            ${fails ? `<span class="pill">${fails} request(s)</span>` : ""}
+          </summary>
+          <dl>
+            <dt>Origem</dt><dd>${esc(meta.app.name)} ${esc(meta.app.version ? `v${meta.app.version}` : "")} ${esc(meta.app.commit || "")}</dd>
+            <dt>Tela</dt><dd>${esc(ctx.screen || ctx.path)}</dd>
+            <dt>URL</dt><dd>${esc(ctx.url)}</dd>
+            <dt>Janela</dt><dd>${esc(ctx.viewport)} · ${esc(ctx.language)} · ${esc(ctx.timezone)}</dd>
+            <dt>Navegador</dt><dd>${esc(ctx.userAgent)}</dd>
+            <dt>Console</dt><dd>${errors ? `${errors} mensagem(ns) de erro` : "nenhuma mensagem de erro"} — só o texto da mensagem; corpo de resposta e objetos não vão</dd>
+            <dt>Requisições</dt><dd>${fails ? `${fails} que falharam` : "nenhuma falhou"} — método, caminho e status, sem query string</dd>
+            ${Object.entries(ctx.extra).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}
+          </dl>
+        </details>`
+      : `<p class="context-note">${esc(options.contextNote)}</p>`;
 
     panel.innerHTML = `
       <div class="head">
@@ -494,13 +583,13 @@ export function mountIssueReporter(userOptions = {}) {
 
       <form>
         <div class="field">
-          <label for="ir-title">O que aconteceu (título)</label>
-          <input id="ir-title" maxlength="160" placeholder="Cache de labels não invalida ao trocar de time" />
+          <label for="ir-title">${esc(options.titleLabel)}</label>
+          <input id="ir-title" maxlength="160" placeholder="${esc(options.titlePlaceholder)}" />
         </div>
 
         <div class="field">
           <label for="ir-body">Detalhe — o que você esperava e o que veio</label>
-          <textarea id="ir-body" maxlength="6000" placeholder="Passo a passo, o que deveria acontecer, o que aconteceu."></textarea>
+          <textarea id="ir-body" maxlength="6000" placeholder="${esc(options.bodyPlaceholder)}"></textarea>
         </div>
 
         <div class="row">
@@ -508,7 +597,7 @@ export function mountIssueReporter(userOptions = {}) {
           ${selectHtml("ir-type", "Tipo", meta.types, "")}
         </div>
 
-        ${selectHtml("ir-priority", "Prioridade", meta.priorities.map((p) => ({ value: String(p.value), label: p.label })), "3")}
+        ${options.showPriority ? selectHtml("ir-priority", "Prioridade", meta.priorities.map((p) => ({ value: String(p.value), label: p.label })), "3") : ""}
 
         ${
           meta.requireContact
@@ -525,21 +614,7 @@ export function mountIssueReporter(userOptions = {}) {
             : ""
         }
 
-        <details class="context">
-          <summary>
-            Contexto que vai junto
-            ${errors ? `<span class="pill">${errors} erro(s)</span>` : ""}
-            ${fails ? `<span class="pill">${fails} request(s)</span>` : ""}
-          </summary>
-          <dl>
-            <dt>Origem</dt><dd>${esc(meta.app.name)} ${esc(meta.app.version ? `v${meta.app.version}` : "")} ${esc(meta.app.commit || "")}</dd>
-            <dt>Tela</dt><dd>${esc(ctx.screen || ctx.path)}</dd>
-            <dt>URL</dt><dd>${esc(ctx.url)}</dd>
-            <dt>Janela</dt><dd>${esc(ctx.viewport)} · ${esc(ctx.language)} · ${esc(ctx.timezone)}</dd>
-            <dt>Navegador</dt><dd>${esc(ctx.userAgent)}</dd>
-            ${Object.entries(ctx.extra).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}
-          </dl>
-        </details>
+        ${contextHtml}
       </form>
 
       ${
@@ -616,10 +691,10 @@ export function mountIssueReporter(userOptions = {}) {
       }
 
       msg.className = "msg ok";
-      if (state.meta.requireContact) {
-        // App publico: quem reportou nao tem conta no Linear, entao o link
-        // nao serve para nada e o identificador nao diz nada. O que ele
-        // precisa saber e que chegou.
+      if (state.meta.requireContact || !options.showIssueLink) {
+        // Quem reportou nao tem conta no Linear, entao o link nao serve para
+        // nada e o identificador nao diz nada. O que ele precisa saber e que
+        // chegou.
         msg.textContent = "Recebido. Obrigado — vamos olhar.";
       } else {
         pushRecent({ identifier: data.identifier, url: data.url, title });
@@ -676,9 +751,28 @@ export function mountIssueReporter(userOptions = {}) {
   const onKey = (e) => {
     if (e.key === "Escape" && open) return close();
     if (!options.hotkey) return;
-    const [mod, key] = options.hotkey.split("+");
+    // "alt+i" -> mod "alt", key "i"; "i" (sem modificador) -> mod "", key "i".
+    // Sem esta distincao, `"i".split("+")` deixava `key` undefined e o
+    // `toUpperCase()` abaixo estourava em TODA tecla digitada na pagina.
+    const parts = options.hotkey.toLowerCase().split("+");
+    const key = parts.length > 1 ? parts[1] : parts[0];
+    const mod = parts.length > 1 ? parts[0] : "";
+    if (!key) return;
     const modOk = mod === "alt" ? e.altKey : mod === "ctrl" ? e.ctrlKey : mod === "meta" ? e.metaKey : true;
-    if (modOk && e.key.toLowerCase() === key) {
+    // Casa por e.code, nao por e.key. No macOS, Option+I e dead key: o e.key
+    // chega como "Dead" ou "ˆ", e o atalho simplesmente nao existia la.
+    // e.code tambem e independente de layout de teclado.
+    const keyOk = e.code === `Key${key.toUpperCase()}` || String(e.key || "").toLowerCase() === key;
+    // AltGr chega ao browser como ctrlKey && altKey. Sem esta guarda, um atalho
+    // de "alt" disparava (e chamava preventDefault) enquanto o usuario de
+    // teclado ABNT2 digitava.
+    const spuriousAltGr = mod === "alt" && e.ctrlKey;
+    // Nao roubar a tecla de quem esta escrevendo.
+    const t = e.target;
+    const typing =
+      t &&
+      (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable === true);
+    if (modOk && keyOk && !spuriousAltGr && !typing) {
       e.preventDefault();
       open ? close() : openPanel();
     }

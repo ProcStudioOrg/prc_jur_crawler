@@ -10,10 +10,21 @@ const CHAVE_VALOR = new RegExp(`(["']?)(${CHAVE})\\1(\\s*[:=]\\s*)(?:${VALOR})`,
 const PAR = '[\\w.%-]+=[^;\\s]*';
 const COOKIE = new RegExp(`(cookie\\s*:\\s*)${PAR}(?:;\\s*${PAR})*`, 'gi');
 
+// Chave crua solta no texto (sem nome de campo antes): Anthropic/OpenAI, Linear, GitHub,
+// webhook do FFD e Slack, pelo prefixo de cada fornecedor.
+const CHAVES_CRUAS = [
+  /\bsk-(?:ant-)?[A-Za-z0-9_-]{16,}/g,
+  /\blin_api_[A-Za-z0-9]{20,}/g,
+  /\bgh[pousr]_[A-Za-z0-9]{20,}/g,
+  /\bffd_wh_[A-Za-z0-9_-]{20,}/g,
+  /\bxox[abpr]-[A-Za-z0-9-]{10,}/g,
+];
+
 // Segredo nunca sai: URL de CDP (carrega o token do fornecedor), cookies, chaves em
 // JSON/cabeçalho/query/atribuição e Bearer são removidos antes de qualquer outra coisa.
 function sanitizar(texto) {
-  return String(texto ?? '')
+  const semCruas = CHAVES_CRUAS.reduce((t, re) => t.replace(re, '[redigido]'), String(texto ?? ''));
+  return semCruas
     .replace(/wss?:\/\/\S+/gi, '[cdp]')
     .replace(COOKIE, '$1[redigido]')
     .replace(CHAVE_VALOR, '$1$2$1$3[redigido]')
