@@ -14,6 +14,17 @@ const P = require('./payload');
 const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
 const MAX_PNG = 10 * 1024 * 1024; // teto do PNG descompactado no FFD
 
+// Filtro que o tribunal não tem (ex.: juizados no TJDFT) é descartado antes da busca;
+// conferi-lo acusaria "ignorado" um filtro que nunca foi aplicado. Os nomes de FILTROS
+// são as mesmas chaves de capacidades.js.
+function tribunalTemFiltro(comando, filtro, params) {
+  try {
+    const capacidades = require('../capacidades');
+    if (capacidades.existe(comando, filtro)) return true;
+    return filtro === 'numero' && capacidades.numeroComTermoAceito(comando, params?.query);
+  } catch { return false; }
+}
+
 const logar = (e) => console.error('[kaizen]', e && e.message ? e.message : String(e));
 
 // O FFD recusa o item inteiro se a tela não for PNG; lê só o cabeçalho, sem descompactar nada.
@@ -120,7 +131,8 @@ function criarKaizen({ dir, env = process.env, fetchFn, agora = Date.now, versao
       const rota = rotaDoNavegador(job?.navegador);
       const base = { origem, tribunal, rota, params: job?.params, jobId: job?.id, usuarioHash: P.hashUsuario(usuarioId, salt) };
       const resultados = Array.isArray(r?.resultados) ? r.resultados : [];
-      const conferencia = conferir(job?.params, resultados, { comando: job?.comando });
+      const conferencia = conferir(job?.params, resultados, { comando: job?.comando })
+        .filter((it) => tribunalTemFiltro(job?.comando, it.filtro, job?.params));
       for (const it of conferencia.filter((x) => x.veredito === 'ignorado')) {
         const classe = P.classeValida(`filtro_ignorado:${it.filtro}`);
         const assinatura = montarAssinatura({ tribunal, classe, passo: 'conferencia', erro: it.detalhe }).trim();

@@ -5,6 +5,8 @@ const { criarCofre } = require("./cofre");
 const { criarSessoes } = require("./sessoes-web");
 const { criarChaves } = require("./chaves-pessoais");
 const { criarEscopos } = require("./escopo");
+const { criarKaizen } = require("./kaizen/index");
+const { revisaoDaImagem } = require("./aviso-deploy");
 const { criarApp } = require("./index");
 const { json } = require("./http");
 function cookie(req, name) {
@@ -25,6 +27,7 @@ function criarAplicacao({
   concorrencia,
   clienteLLM,
   llmTransport,
+  kaizen,
 }) {
   const publicOrigin = new URL(publicUrl).origin;
   const frontend = new URL("/_auth/jurcrawler", frontendUrl);
@@ -45,7 +48,16 @@ function criarAplicacao({
   const cofre = criarCofre(cofreKey);
   const sessoes = criarSessoes({ con, cofre, procstudio });
   const chaves = criarChaves(con);
-  const scopes = criarEscopos({ dir, executarFn, concorrencia });
+  // Uma instância por processo (uma conexão com kaizen.db), compartilhada por todas as contas.
+  const k =
+    kaizen ||
+    criarKaizen({
+      dir,
+      env: process.env,
+      versao: require("../package.json").version,
+      revisao: revisaoDaImagem(process.env.JUR_IMAGE),
+    });
+  const scopes = criarEscopos({ dir, executarFn, concorrencia, kaizen: k });
   const publicApp = criarApp();
   const secure = new URL(publicUrl).protocol === "https:" ? "; Secure" : "";
   const setCookie = (name, value, age) =>
@@ -159,6 +171,7 @@ function criarAplicacao({
           chaves: chaves.para(principal),
           clienteLLM,
           conta: principal,
+          kaizen: k,
         });
       }
       req.principal = principal;
@@ -215,9 +228,12 @@ function criarAplicacao({
   }
   return {
     handler,
+    kaizen: k,
+    ocupado: scopes.ocupado,
     fechar() {
       scopes.fechar();
       con.close();
+      k.fechar();
     },
   };
 }

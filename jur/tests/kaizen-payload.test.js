@@ -265,3 +265,10 @@ test('url sem ;jsessionid e em no futuro vira agora', () => {
   assert.equal(c.url, 'https://a.br/p/q');
   assert.ok(Date.parse(c.em) <= Date.now() + 1000);
 });
+
+test('conferencia so roda para filtro que o tribunal tem (tjdft nao tem juizados)', () => {
+  const comuns = Array.from({ length: 5 }, (_, i) => ({ numeroProcesso: `0000${i}`, orgaoJulgador: '3ª Câmara Cível' }));
+  const pedir = (comando) => kaizen.registrarConcluido(jobFalso({ comando, params: { query: 'x', juizados: true } }), { ok: true, resultados: comuns }, {}).avisos;
+  assert.match(pedir('trf4')[0] || '', /filtro de juizados/, 'controle: trf4 tem juizados e confere');
+  assert.deepEqual(pedir('tjdft'), []);
+});

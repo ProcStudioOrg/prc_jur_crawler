@@ -4,6 +4,8 @@ const path = require('node:path');
 const executorPadrao = require('./executor');
 const catalogoPadrao = require('./catalogo');
 const { rotulo: rotuloNavegador } = require('./navegadores/remotos');
+const { kaizenNulo } = require('./kaizen/index');
+const { dirFalha, assinaturaDaCaptura } = require('./kaizen/captura');
 
 const CONCORRENCIA_PADRAO = Number(process.env.JUR_CONCORRENCIA || 3);
 
@@ -19,6 +21,10 @@ function criarFila(opcoes = {}) {
   // em silencio.
   const concorrencia = opcoes.concorrencia || CONCORRENCIA_PADRAO;
   const dirResultados = opcoes.dirResultados || path.join(process.env.JUR_DADOS || '/dados', 'resultados');
+  // Uma instância de Kaizen por processo (aplicacao.js), compartilhada por todas as filas;
+  // contextoKaizen leva o dono da fila (usuarioId) para o hash do diagnóstico.
+  const kaizen = opcoes.kaizen || kaizenNulo();
+  const contextoKaizen = opcoes.contextoKaizen || {};
 
   fs.mkdirSync(dirResultados, { recursive: true });
 
@@ -66,6 +72,10 @@ function criarFila(opcoes = {}) {
       avisosCli: lerAvisos(l.avisos_json),
       // Onde a busca rodou: "Servidor ProcStudio", "Kernel", "Steel (reserva)"...
       navegador: l.navegador || null,
+      // Por que os fornecedores anteriores caíram quando a busca foi para a reserva.
+      navegadorFalhas: lerAvisos(l.navegador_falhas),
+      // O usuário destravou a busca na tela (captcha manual).
+      resolvidoPeloUsuario: l.resolvido_pelo_usuario === 1,
     };
   }
 
@@ -175,7 +185,8 @@ function criarFila(opcoes = {}) {
         aoProcesso: (child) => navegadores?.anexar(job.id, child),
         aoNavegador: (info) => {
           const rotulo = rotuloNavegador(info);
-          con.prepare('UPDATE job SET navegador=? WHERE id=?').run(rotulo, job.id);
+          const falhas = Array.isArray(info.falhas) ? info.falhas.map(String) : [];
+          con.prepare('UPDATE job SET navegador=?, navegador_falhas=? WHERE id=?').run(rotulo, JSON.stringify(falhas), job.id);
           navegadores?.fornecedor?.(job.id, rotulo);
           emitir({ tipo: 'navegador', jobId: job.id, navegador: rotulo });
         },
@@ -198,19 +209,52 @@ function criarFila(opcoes = {}) {
       r = { ok: false, total: 0, resultados: [], arquivo: null, erro: e.message };
     }
 
-    // Se foi cancelado no meio, o cancelamento manda: nao sobrescreve.
-    if (obter(job.id).status === 'cancelado') { setImmediate(bombear); return; }
+    // A sessão do navegador ainda existe aqui (rodar() só a remove no finally).
+    if (navegadores?.resolvidoPeloUsuario?.(job.id))
+      con.prepare('UPDATE job SET resolvido_pelo_usuario=1 WHERE id=?').run(job.id);
+
+    const jobAtual = obter(job.id);
+    // Se foi cancelado no meio, o cancelamento manda: nao sobrescreve. Cancelamento nao e
+    // falha: o Kaizen so apaga a captura que o crawler possa ter deixado ao morrer.
+    if (jobAtual.status === 'cancelado') {
+      diagnosticarErro(jobAtual, r, { arquivo, cancelado: true });
+      setImmediate(bombear);
+      return;
+    }
 
     if (r.ok) {
+      const avisos = Array.isArray(r.avisos) ? [...r.avisos] : [];
+      // Síncrono e barato; o envio ao FFD fica na outbox. Bug do Kaizen nunca vira erro do job.
+      try { avisos.push(...kaizen.registrarConcluido(jobAtual, r, contextoKaizen).avisos); }
+      catch (e) { console.error('[jobs] kaizen:', e && e.message); }
       con.prepare(`UPDATE job SET status='concluido', total=?, arquivo=?, avisos_json=?, terminado_em=? WHERE id=?`)
-        .run(r.total, r.arquivo || arquivo, JSON.stringify(Array.isArray(r.avisos) ? r.avisos : []), Date.now(), job.id);
+        .run(r.total, r.arquivo || arquivo, JSON.stringify(avisos), Date.now(), job.id);
       emitir({ tipo: 'concluido', jobId: job.id, total: r.total });
     } else {
       con.prepare(`UPDATE job SET status='erro', erro=?, terminado_em=? WHERE id=?`)
         .run(r.erro || 'falha desconhecida', Date.now(), job.id);
       emitir({ tipo: 'erro', jobId: job.id, erro: r.erro });
+      // Depois do evento, sem await: ler print/HTML e enviar nunca atrasa o status nem segura a vaga.
+      diagnosticarErro({ ...jobAtual, status: 'erro' }, r, { arquivo });
     }
     setImmediate(bombear);
+  }
+
+  function diagnosticarErro(jobAtual, r, extra) {
+    try {
+      Promise.resolve(kaizen.registrarErro(jobAtual, r, { ...contextoKaizen, ...extra }))
+        .catch((e) => console.error('[jobs] kaizen:', e && e.message));
+    } catch (e) { console.error('[jobs] kaizen:', e && e.message); }
+  }
+
+  /** Assinatura da falha capturada do job (para o relato do usuário apontar o diagnóstico). */
+  function capturaDoJob(id) {
+    try {
+      if (!obter(id)) return null;
+      const dir = dirFalha(path.join(dirResultados, `${id}.json`));
+      if (!fs.existsSync(path.join(dir, 'meta.json'))) return null;
+      return { assinatura: assinaturaDaCaptura(dir) };
+    } catch { return null; }
   }
 
   function cancelar(id) {
@@ -314,7 +358,7 @@ function criarFila(opcoes = {}) {
   }
 
   return {
-    enfileirar, obter, listar, cancelar, resultados, erroDeLeitura, aguardar,
+    enfileirar, obter, listar, cancelar, resultados, erroDeLeitura, aguardar, capturaDoJob,
     aoEvento: (fn) => ouvintes.add(fn),
     removerOuvinte: (fn) => ouvintes.delete(fn),
     concorrencia,

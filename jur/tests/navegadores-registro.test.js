@@ -32,3 +32,26 @@ test('registro só aceita screenshot opt-in e controle durante pausa da própria
   assert.equal(child.listenerCount('message'), 0);
   con.close();
 });
+
+test('continuar com sucesso marca resolvido pelo usuario; falha nao marca', async () => {
+  const con = new DatabaseSync(':memory:');
+  const r = criarRegistro(con);
+  r.salvar({ acompanhar: true, captcha: true, provedor: 'local' });
+  r.registrar('job', 'stj');
+  let resposta = { erro: 'campo vazio' };
+  const child = new EventEmitter(); child.connected = true;
+  child.send = (m, cb) => { cb?.(); setImmediate(() => child.emit('message', { jurNavegador: true, requestId: m.requestId, ...resposta })); };
+  r.anexar('job', child);
+  child.emit('message', { jurNavegador: true, tipo: 'estado', estado: 'aguardando_usuario', mensagem: 'Preencha o captcha.' });
+  assert.equal(r.resolvidoPeloUsuario('job'), false);
+  await assert.rejects(r.requisitar('job', 'acao', { tipo: 'continuar' }), /campo vazio/);
+  assert.equal(r.resolvidoPeloUsuario('job'), false);
+  resposta = { dados: { ok: true } };
+  await r.requisitar('job', 'acao', { tipo: 'clique', x: 1, y: 1 });
+  assert.equal(r.resolvidoPeloUsuario('job'), false, 'clique não é resgate');
+  assert.deepEqual(await r.requisitar('job', 'acao', { tipo: 'continuar' }), { ok: true });
+  assert.equal(r.resolvidoPeloUsuario('job'), true);
+  assert.equal(r.resolvidoPeloUsuario('outro'), false);
+  r.remover('job');
+  con.close();
+});

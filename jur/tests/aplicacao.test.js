@@ -126,3 +126,22 @@ test("SSO HTTP e recursos isolados: cookies, CSRF, API keys e conversas", async 
     fs.rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test("kaizen: um por aplicacao, criado no dir de dados se nao vier, fechado no fechar", () => {
+  const base = {
+    cofreKey: Buffer.alloc(32, 8).toString("base64"),
+    procstudio: {}, publicUrl: "http://127.0.0.1", frontendUrl: "https://proc.example", clientId: "jur",
+  };
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "jur-app-"));
+  const app = criarAplicacao({ ...base, dir });
+  assert.ok(fs.existsSync(path.join(dir, "kaizen.db")));
+  assert.equal(typeof app.kaizen.registrarErro, "function");
+  assert.equal(app.ocupado(), false);
+  app.fechar();
+  let fechou = 0;
+  const proprio = { registrarErro: async () => {}, registrarConcluido: () => ({ avisos: [] }), fechar: () => { fechou++; } };
+  const app2 = criarAplicacao({ ...base, dir: fs.mkdtempSync(path.join(os.tmpdir(), "jur-app-")), kaizen: proprio });
+  assert.equal(app2.kaizen, proprio);
+  app2.fechar();
+  assert.equal(fechou, 1);
+});

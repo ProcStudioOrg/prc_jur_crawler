@@ -11,7 +11,41 @@ const conversas = require("./conversas");
 const turnos = require("./turnos");
 const executor = require("./executor");
 const { dono, hash } = require("./sessoes-web");
-function criarEscopos({ dir, executarFn, limite = 100, concorrencia }) {
+/**
+ * Roda `fn` (executar/listar do executor) no diretório da conta, pelo navegador da rota
+ * escolhida: local, remoto (Kernel/Steel, com reserva) ou Browserbase. Em nível de módulo
+ * para a sentinela rodar os casos pela mesma rota das buscas.
+ */
+function executarNaRota(fn, comando, params, extra, home) {
+  const remoto = remotos.configurados().length > 0;
+  const provedor = extra.navegador?.provedor || (remoto && remotos.exigeRemoto(comando) ? "remoto" : "local");
+  const executarComCdp = (cdp = '', { captcha = false } = {}) => fn(comando, params, {
+    ...extra,
+    cwd: home,
+    env: {
+      ...process.env,
+      JUR_DADOS: home,
+      TMPDIR: path.join(home, "tmp"),
+      JUR_SESSION_DIR: path.join(home, "sessoes"),
+      JUR_ACOMPANHAR: extra.navegador?.acompanhar ? "1" : "0",
+      JUR_CAPTCHA: extra.navegador?.captcha ? "1" : "0",
+      JUR_BROWSER_CDP: cdp,
+      // O fornecedor está resolvendo o captcha sozinho: o crawler espera antes de pedir ajuda.
+      JUR_CAPTCHA_AUTOMATICO: captcha ? "1" : "0",
+    },
+  });
+  const avisar = (info) => { try { extra.aoNavegador?.(info); } catch { /* aviso não derruba a busca */ } };
+  if (provedor === "remoto")
+    return remotos.comNavegadorRemoto(executarComCdp, { ...remotos.opcoesPara(comando), sinal: extra.sinal, aoFornecedor: avisar });
+  if (provedor === "browserbase") {
+    avisar({ fornecedor: "browserbase", nome: "Browserbase" });
+    return comBrowserbase(executarComCdp, { sinal: extra.sinal });
+  }
+  avisar({ fornecedor: "local", nome: "Servidor ProcStudio" });
+  return executarComCdp();
+}
+
+function criarEscopos({ dir, executarFn, limite = 100, concorrencia, kaizen }) {
   const cache = new Map();
   const pool = criarPool(concorrencia);
   // O Chromium remoto não pesa no servidor; a vaga remota só limita o processo Node do
@@ -28,36 +62,9 @@ function criarEscopos({ dir, executarFn, limite = 100, concorrencia }) {
       estado: () => ({ ...pool.estado(), remoto: poolRemoto ? { ...poolRemoto.estado(), fornecedores: remotos.nomes() } : null }),
     };
   }
-  function executarNoEscopo(fn, comando, params, extra, home) {
-    const executarComCdp = (cdp = '', { captcha = false } = {}) => fn(comando, params, {
-      ...extra,
-      cwd: home,
-      env: {
-        ...process.env,
-        JUR_DADOS: home,
-        TMPDIR: path.join(home, "tmp"),
-        JUR_SESSION_DIR: path.join(home, "sessoes"),
-        JUR_ACOMPANHAR: extra.navegador?.acompanhar ? "1" : "0",
-        JUR_CAPTCHA: extra.navegador?.captcha ? "1" : "0",
-        JUR_BROWSER_CDP: cdp,
-        // O fornecedor está resolvendo o captcha sozinho: o crawler espera antes de pedir ajuda.
-        JUR_CAPTCHA_AUTOMATICO: captcha ? "1" : "0",
-      },
-    });
-    const avisar = (info) => { try { extra.aoNavegador?.(info); } catch { /* aviso não derruba a busca */ } };
-    const provedor = provedorDe(comando, extra);
-    if (provedor === "remoto")
-      return remotos.comNavegadorRemoto(executarComCdp, { ...remotos.opcoesPara(comando), sinal: extra.sinal, aoFornecedor: avisar });
-    if (provedor === "browserbase") {
-      avisar({ fornecedor: "browserbase", nome: "Browserbase" });
-      return comBrowserbase(executarComCdp, { sinal: extra.sinal });
-    }
-    avisar({ fornecedor: "local", nome: "Servidor ProcStudio" });
-    return executarComCdp();
-  }
   async function listarLimitado(comando, params, home) {
     const liberar = await poolDe(provedorDe(comando, {})).adquirir(randomUUID());
-    try { return await executarNoEscopo(executor.listar, comando, params, {}, home); }
+    try { return await executarNaRota(executor.listar, comando, params, {}, home); }
     finally { liberar(); }
   }
   function obter(principal) {
@@ -124,7 +131,9 @@ function criarEscopos({ dir, executarFn, limite = 100, concorrencia }) {
         navegadores,
         dirResultados: path.join(home, "resultados"),
         executarFn: (c, p, e) =>
-          executarNoEscopo(executarFn || executor.executar, c, p, e, home),
+          executarNaRota(executarFn || executor.executar, c, p, e, home),
+        kaizen,
+        contextoKaizen: { usuarioId: principal.userId },
       }),
     };
     cache.set(id, item);
@@ -132,10 +141,15 @@ function criarEscopos({ dir, executarFn, limite = 100, concorrencia }) {
   }
   return {
     obter,
+    // Alguma busca rodando ou esperando vaga, em qualquer conta (a sentinela cede a vez).
+    ocupado: () => {
+      const em = (p) => (p ? p.estado().ocupados + p.estado().naFila > 0 : false);
+      return em(pool) || em(poolRemoto);
+    },
     fechar() {
       for (const item of cache.values()) { item.navegadores.fechar(); item.con.close(); }
       cache.clear();
     },
   };
 }
-module.exports = { criarEscopos };
+module.exports = { criarEscopos, executarNaRota };
