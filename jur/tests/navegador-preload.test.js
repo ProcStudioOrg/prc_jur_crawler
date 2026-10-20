@@ -404,3 +404,59 @@ test('processo real: SIGTERM antes de qualquer browser ainda mata o processo', a
   assert.equal(r.meta, false);
   assert.ok(r.ms < 2000, `saiu em ${r.ms} ms`);
 });
+
+test('envolverMetodos: rejeicao tira a foto da pagina viva e relanca o MESMO erro; sucesso nao fotografa', async () => {
+  const { envolverMetodos } = require('../src/navegadorPreload');
+  class Pagina { async goto(ok) { if (!ok) throw new Error('boom'); return 'feito'; } fechar() { return 'sync'; } }
+  const fotos = [];
+  envolverMetodos(Pagina.prototype, ['goto', 'fechar', 'inexistente'], async (p) => { fotos.push(p); });
+  const p = new Pagina();
+  assert.equal(await p.goto(true), 'feito');
+  assert.equal(p.fechar(), 'sync');
+  assert.deepEqual(fotos, []);
+  let erro; try { await p.goto(false); } catch (e) { erro = e; }
+  assert.equal(erro.message, 'boom');
+  assert.equal(fotos.length, 1); assert.equal(fotos[0], p);
+  // foto que lanca nao troca o erro original
+  class Outra { async x() { throw new TypeError('original'); } }
+  envolverMetodos(Outra.prototype, ['x'], async () => { throw new Error('foto falhou'); });
+  await assert.rejects(new Outra().x(), (e) => e instanceof TypeError && e.message === 'original');
+});
+
+test('criarCaptura: sem pagina aberta grava a ultima foto tirada na falha', async () => {
+  const dir = tmp();
+  class PaginaFalsa extends EventEmitter {
+    constructor() { super(); this.fechada = false; }
+    isClosed() { return this.fechada; }
+    async screenshot() { return PNG; }
+    async content() { return '<html>falha</html>'; }
+    url() { return 'https://x.br/consulta/12?token=SEGREDO'; }
+    async title() { return 'T'; }
+    async waitForSelector() { throw new Error('Timeout'); }
+  }
+  const captura = criarCaptura({ dir, tribunal: 'trf4', prazoMs: 500 });
+  const page = new PaginaFalsa();
+  captura.anexarPagina(page);
+  await assert.rejects(page.waitForSelector('#x'), /Timeout/);
+  page.fechada = true; // o crawler fechou o browser no finally
+  await captura.capturar();
+  assert.ok(fs.existsSync(path.join(dir, 'tela.png')));
+  assert.match(fs.readFileSync(path.join(dir, 'pagina.html'), 'utf8'), /falha/);
+  const meta = JSON.parse(fs.readFileSync(path.join(dir, 'meta.json'), 'utf8'));
+  assert.equal(meta.url, 'https://x.br/consulta/12');
+  assert.match(meta.passo, /^pagina:/);
+});
+
+test('criarCaptura: pagina ja fechada na rejeicao nao gera foto e o erro segue igual', async () => {
+  class Fechada extends EventEmitter {
+    isClosed() { return true; }
+    async screenshot() { throw new Error('nao deveria ler'); }
+    async waitForSelector() { throw new Error('T'); }
+  }
+  const dir = tmp();
+  const captura = criarCaptura({ dir, prazoMs: 200 });
+  const p = new Fechada(); captura.anexarPagina(p);
+  await assert.rejects(p.waitForSelector('#x'), /^Error: T$/);
+  await captura.capturar();
+  assert.ok(!fs.existsSync(path.join(dir, 'tela.png')));
+});

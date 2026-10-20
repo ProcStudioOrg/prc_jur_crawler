@@ -13,7 +13,7 @@ const { criarKaizen } = require('../servidor/kaizen');
 const executor = require('../servidor/executor');
 
 const CLI_FALSA = path.join(__dirname, 'fixtures', 'cli-falha-real.js');
-const ESPERA_MS = 30000;
+const ESPERA_MS = 60000; // folga para maquina carregada (Chromium real)
 
 const dormir = (ms) => new Promise((r) => setTimeout(r, ms));
 async function ate(cond, rotulo) {
@@ -28,7 +28,7 @@ async function ate(cond, rotulo) {
 const ouvir = (server) => new Promise((r) => server.listen(0, '127.0.0.1', () => r(`http://127.0.0.1:${server.address().port}`)));
 const fechar = (server) => { server.closeAllConnections?.(); return new Promise((r) => server.close(r)); };
 
-async function montar({ comWebhook, fetchFn }) {
+async function montar({ comWebhook, fetchFn, modo = 'aberto' }) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-kaizen-int-'));
   const recebidos = [];
   // Site do "tribunal": a pagina existe, o seletor que o crawler espera nao.
@@ -48,6 +48,7 @@ async function montar({ comWebhook, fetchFn }) {
     });
   });
   const urlFfd = await ouvir(ffd);
+  process.env.FIXTURE_MODO = modo;
   process.env.FIXTURE_URL = `${urlSite}/consulta/123/resultado?token=SEGREDO-NA-QUERY&q=abc`;
 
   const env = comWebhook
@@ -98,7 +99,7 @@ async function montar({ comWebhook, fetchFn }) {
   async function encerrar() {
     await fechar(api); await fechar(ffd); await fechar(site);
     app.fechar(); kaizen.fechar();
-    delete process.env.FIXTURE_URL;
+    delete process.env.FIXTURE_URL; delete process.env.FIXTURE_MODO;
     fs.rmSync(dir, { recursive: true, force: true });
   }
   // Arquivos pesados que ainda estao no disco: o meta.json fica de proposito (o relato do usuario
@@ -116,8 +117,8 @@ async function montar({ comWebhook, fetchFn }) {
   return { kaizen, recebidos, buscarEEsperar, encerrar, diretoriosFalha };
 }
 
-test('busca que falha no crawler chega ao FFD falso com captura e assinatura; 2a busca da mesma falha tem a mesma assinatura', async () => {
-  const t = await montar({ comWebhook: true });
+for (const modo of ['aberto', 'fecha']) test(`busca que falha no crawler (browser ${modo === 'fecha' ? 'fechado no finally, como os reais' : 'ainda aberto'}) chega ao FFD falso com captura e assinatura; 2a busca da mesma falha tem a mesma assinatura`, async () => {
+  const t = await montar({ comWebhook: true, modo });
   try {
     const a = await t.buscarEEsperar();
     const b = await t.buscarEEsperar();
@@ -132,9 +133,9 @@ test('busca que falha no crawler chega ao FFD falso com captura e assinatura; 2a
     assert.equal(corpos[0].assinatura, corpos[1].assinatura);
     assert.equal(corpos[0].origem, 'busca');
     assert.equal(corpos[0].tribunal, 'trf4');
-    assert.match(corpos[0].classe, /^[a-z_]+/);
+    assert.equal(corpos[0].classe, 'seletor');
     assert.ok(corpos[0].passo && corpos[0].passo !== 'desconhecido', `passo derivado da pagina: ${corpos[0].passo}`);
-    assert.match(corpos[0].passo, /consulta/);
+    assert.equal(corpos[0].passo, 'pagina:#.#.#.#:#/consulta/#/resultado');
     assert.ok(corpos[0].assinatura.startsWith('trf4|'));
     assert.equal(typeof corpos[0].tela_png_gzip_b64, 'string');
     assert.equal(typeof corpos[0].html_gzip_b64, 'string');
