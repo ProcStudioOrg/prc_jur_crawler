@@ -139,11 +139,14 @@ function criarKaizen({ dir, env = process.env, fetchFn, agora = Date.now, versao
   }
 
   async function registrarSentinela(dados) {
+    const arquivo = dados?.arquivo;
+    let limparNoFim = false;
     try {
-      const { caso, avaliacao, r, arquivo } = dados || {};
+      const { caso, avaliacao, r } = dados || {};
       const classe = avaliacao?.classe;
       const filtro = /^filtro_ignorado:/.test(String(classe || ''));
       if (filtro) {
+        limparNoFim = true;
         // Conferência não tem captura (a busca terminou bem); o print, se houver, sai igual.
         const lista = Array.isArray(avaliacao?.conferencia) ? avaliacao.conferencia : [];
         const it = lista.find((x) => `filtro_ignorado:${x?.filtro}` === classe) || {};
@@ -153,14 +156,18 @@ function criarKaizen({ dir, env = process.env, fetchFn, agora = Date.now, versao
           ...comum(), origem: 'sentinela', tribunal, classe, passo: 'conferencia', assinatura, erro: it.detalhe ?? null,
           rota: null, params: caso?.params, jobId: null, usuarioHash: null, conferencia: lista, exemplos: it.exemplos,
         }));
-        if (arquivo) limparCaptura(dirFalha(arquivo));
         return;
       }
       await registrarFalhaCapturada({
         origem: 'sentinela', tribunal: caso?.tribunal, classe, erro: r?.erro ?? null, rota: null,
         params: caso?.params, jobId: null, usuarioHash: null, arquivo, passoPadrao: 'desconhecido',
       });
-    } catch (e) { logar(e); }
+    } catch (e) {
+      logar(e);
+    } finally {
+      // o ramo de captura limpa sozinho; o da conferência limpa aqui, mesmo se o envio lançar
+      if (limparNoFim && arquivo) { try { limparCaptura(dirFalha(arquivo)); } catch { /* nunca lança */ } }
+    }
   }
 
   function enviarResumo(resumo) {
@@ -168,10 +175,11 @@ function criarKaizen({ dir, env = process.env, fetchFn, agora = Date.now, versao
   }
 
   // true só quando o relato vai de fato ao FFD: sem webhook configurado ele não chegaria a ninguém.
+  // Passa sempre por payloadRelato (idempotente): objeto cru nunca vai direto ao FFD.
   function enviarRelato(relato) {
     try {
       if (!outbox.ligado || !relato) return false;
-      return outbox.enfileirar('user-issues', relato) === true;
+      return outbox.enfileirar('user-issues', P.payloadRelato(relato)) === true;
     } catch (e) { logar(e); return false; }
   }
 

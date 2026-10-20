@@ -22,19 +22,27 @@ function hashUsuario(id, salt) {
   return createHash('sha256').update(String(id) + String(salt)).digest('hex');
 }
 
+// Caractere de controle e surrogate solto viram `\uXXXX` no JSON (6 bytes cada): sem isso,
+// 100 caracteres "cabem" no corte mas estouram o teto em bytes do FFD.
+const SURROGATE_SOLTO = /[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g;
+const limparTexto = (s) => String(s).replace(/[\u0000-\u001f\u007f]/g, ' ').replace(SURROGATE_SOLTO, '\uFFFD');
+
 function valorFiltro(v, max) {
   if (v === undefined || v === null || v === '') return null;
-  if (typeof v === 'boolean' || typeof v === 'number') return v;
-  return cortar(sanitizar(v), max);
+  if (typeof v === 'boolean') return v;
+  if (typeof v === 'number') return Number.isFinite(v) ? v : null;
+  const s = typeof v === 'string' ? v : JSON.stringify(v);
+  return cortar(limparTexto(sanitizar(s)), max);
 }
 
-/** As oito chaves sempre presentes; o FFD guarda até 4 KB, então a query encolhe até caber. */
+/** As oito chaves sempre presentes; o FFD guarda até 4 KB: o valor mais longo encolhe até caber. */
 function filtrosDe(params) {
   const p = params && typeof params === 'object' ? params : {};
   const f = {};
   for (const k of CHAVES_FILTRO) f[k] = valorFiltro(p[k], k === 'query' ? 1000 : 100);
-  while (bytes(f) > MAX_FILTROS && typeof f.query === 'string' && f.query.length) {
-    f.query = f.query.slice(0, Math.floor(f.query.length / 2));
+  while (bytes(f) > MAX_FILTROS) {
+    const k = CHAVES_FILTRO.reduce((a, b) => (bytes(f[b]) > bytes(f[a]) ? b : a));
+    f[k] = typeof f[k] === 'string' && f[k].length > 1 ? f[k].slice(0, Math.floor(f[k].length / 2)) : null;
   }
   return f;
 }
@@ -66,16 +74,19 @@ function revisaoValida(r) {
   return /^[0-9A-Za-z._-]{1,40}$/.test(s) ? s : null;
 }
 
+// O FFD recusa data inválida ou mais de 1 dia à frente (relógio errado): nesses casos vai "agora".
 function emIso(em) {
   const d = em instanceof Date ? em : new Date(em ?? NaN);
-  return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
+  const agora = Date.now();
+  return Number.isNaN(d.getTime()) || d.getTime() > agora + 3600e3 ? new Date(agora).toISOString() : d.toISOString();
 }
 
 function urlSemQuery(u) {
   try {
     const url = new URL(String(u));
     if (url.protocol !== 'http:' && url.protocol !== 'https:') return null;
-    return (url.origin + url.pathname).slice(0, 2000);
+    // `;jsessionid=...` (parâmetro de matriz) carrega sessão no próprio caminho.
+    return (url.origin + url.pathname.replace(/;[^/]*/g, '')).slice(0, 2000);
   } catch { return null; }
 }
 
@@ -95,7 +106,9 @@ function listaLimitada(lista, max, maxItens) {
 function exemploEnviado(e) {
   const o = {};
   for (const [k, v] of Object.entries(e && typeof e === 'object' ? e : {})) {
-    o[k] = typeof v === 'string' ? cortar(sanitizar(v), 300) : (typeof v === 'number' || typeof v === 'boolean' || v === null ? v : cortar(sanitizar(JSON.stringify(v)), 300));
+    o[k] = typeof v === 'boolean' || v === null || (typeof v === 'number' && Number.isFinite(v))
+      ? v
+      : cortar(limparTexto(sanitizar(typeof v === 'string' ? v : JSON.stringify(v) ?? '')), 300);
   }
   return o;
 }
@@ -103,7 +116,7 @@ function exemploEnviado(e) {
 const conferenciaEnviada = (lista) => listaLimitada((Array.isArray(lista) ? lista : []).map((it) => ({
   filtro: it?.filtro ?? null,
   veredito: it?.veredito ?? null,
-  detalhe: cortar(String(it?.detalhe ?? ''), 300),
+  detalhe: cortar(limparTexto(sanitizar(it?.detalhe ?? '')), 300),
   comCampo: Number(it?.comCampo) || 0,
   violam: Number(it?.violam) || 0,
 })), MAX_LISTA, 50);
@@ -174,7 +187,10 @@ function payloadResgate({ versao, revisao, origem, tribunal, tipo, assinatura, e
   };
 }
 
-const contador = (v) => (Number.isInteger(v) && v >= 0 ? v : Math.max(0, Math.trunc(Number(v)) || 0));
+const contador = (v) => {
+  const n = Math.trunc(Number(v));
+  return Number.isFinite(n) && n > 0 ? Math.min(n, Number.MAX_SAFE_INTEGER) : 0;
+};
 
 function payloadResumo({ versao, revisao, em, resumo }) {
   const r = resumo || {};
@@ -215,15 +231,28 @@ function linearValido(l) {
 }
 
 // Contexto acima de 8 KB: corta cada valor; se ainda não couber, vai só o aviso.
+// Contexto vai ao FFD e ao card: cada valor passa por `sanitizar`. Acima de 8 KB corta cada
+// valor; se ainda não couber, vai só o aviso.
 function contextoValido(c) {
   if (!c || typeof c !== 'object' || Array.isArray(c)) return {};
-  if (bytes(c) <= MAX_CONTEXTO) return c;
+  const limpo = {};
+  for (const [k, v] of Object.entries(c)) {
+    limpo[limparTexto(k).slice(0, 200)] = typeof v === 'number' || typeof v === 'boolean' || v === null
+      ? (typeof v === 'number' && !Number.isFinite(v) ? null : v)
+      : limparTexto(sanitizar(typeof v === 'string' ? v : JSON.stringify(v)));
+  }
+  if (bytes(limpo) <= MAX_CONTEXTO) return limpo;
   const curto = {};
-  for (const [k, v] of Object.entries(c)) curto[cortar(k, 100)] = cortar(typeof v === 'string' ? v : JSON.stringify(v), 300);
+  for (const [k, v] of Object.entries(limpo)) curto[cortar(k, 100)] = cortar(v, 300);
   return bytes(curto) <= MAX_CONTEXTO ? curto : { aviso: 'contexto acima de 8 KB, omitido' };
 }
 
-function payloadRelato({ titulo, descricao, autorEmail, autorNome, equipe, rota, versao, linear, contexto, em } = {}) {
+/** Idempotente: aceita também um corpo já montado (autor_email/autor_nome), para reenviar normalizando. */
+function payloadRelato(dados) {
+  const d = dados && typeof dados === 'object' ? dados : {};
+  const { titulo, descricao, equipe, rota, versao, linear, contexto, em } = d;
+  const autorEmail = d.autorEmail !== undefined ? d.autorEmail : d.autor_email;
+  const autorNome = d.autorNome !== undefined ? d.autorNome : d.autor_nome;
   const email = textoOpcional(autorEmail, 200);
   return {
     servico: SERVICO,

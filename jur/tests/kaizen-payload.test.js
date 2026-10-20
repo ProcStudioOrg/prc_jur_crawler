@@ -5,7 +5,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 const { criarKaizen, kaizenNulo } = require('../servidor/kaizen/index');
-const { payloadRelato, payloadFalha, filtrosDe, hashUsuario } = require('../servidor/kaizen/payload');
+const { payloadRelato, payloadFalha, payloadResumo, filtrosDe, hashUsuario } = require('../servidor/kaizen/payload');
 const { dirFalha, assinaturaDaCaptura } = require('../servidor/kaizen/captura');
 
 const FX = path.join(__dirname, 'fixtures', 'kaizen', 'resultados');
@@ -218,4 +218,50 @@ test('kaizen.db em WAL e so do dono', () => {
   k.fechar();
   assert.equal(fs.statSync(path.join(dir, 'kaizen.db')).mode & 0o777, 0o600);
   assert.ok(fs.existsSync(path.join(dir, 'kaizen.db')));
+});
+
+test('filtros: controle, surrogate solto e objeto nunca passam de 4 KB (fix 1)', () => {
+  const ctrl = '\u0001'.repeat(100);
+  const f = filtrosDe({ query: 'q', dataInicio: ctrl, dataFim: ctrl, dataPubInicio: ctrl, dataPubFim: ctrl, relator: ctrl, juizados: ctrl, numero: ctrl });
+  assert.ok(Buffer.byteLength(JSON.stringify(f)) <= 4096);
+  assert.ok(!/[\u0000-\u001f]/.test(JSON.stringify(Object.values(f))));
+  const g = filtrosDe({ query: '\uD800'.repeat(5000), relator: '\uDC00'.repeat(500), numero: { a: 'x'.repeat(5000) }, juizados: Infinity });
+  assert.ok(Buffer.byteLength(JSON.stringify(g)) <= 4096);
+  assert.equal(g.juizados, null);
+  const h = filtrosDe({ query: 'ação'.repeat(2000), relator: '中'.repeat(100), dataInicio: '中'.repeat(100), dataFim: '中'.repeat(100), dataPubInicio: '中'.repeat(100), dataPubFim: '中'.repeat(100), numero: '中'.repeat(100) });
+  assert.ok(Buffer.byteLength(JSON.stringify(h)) <= 4096);
+});
+
+test('sentinela filtro_ignorado limpa a captura mesmo se o envio lancar (fix 2)', async (t) => {
+  t.mock.method(console, 'error', () => {});
+  const arquivo = falhaPronta({ meta: { passo: 'x' }, html: '<p/>', png: PNG });
+  const original = kaizen.outbox.enfileirar;
+  kaizen.outbox.enfileirar = () => { throw new Error('boom'); };
+  try {
+    await kaizen.registrarSentinela({ caso: { tribunal: 'trf4', params: {} }, avaliacao: { classe: 'filtro_ignorado:periodoJulgamento', conferencia: [] }, r: { ok: true }, arquivo });
+  } finally { kaizen.outbox.enfileirar = original; }
+  assert.ok(!fs.existsSync(path.join(dirFalha(arquivo), 'tela.png')));
+});
+
+test('detalhe da conferencia e contexto do relato saem sanitizados; relato cru passa por payloadRelato (fix 3)', async () => {
+  const c = payloadFalha({ tribunal: 'trf4', classe: 'filtro_ignorado:magistrado', passo: 'conferencia', assinatura: 'a', conferencia: [{ filtro: 'magistrado', detalhe: 'token=SEGREDO \u0001' }] });
+  assert.doesNotMatch(JSON.stringify(c.conferencia), /SEGREDO|\\u0001/);
+  const r = payloadRelato({ titulo: 't', descricao: 'd', contexto: { Erro: 'Bearer SEGREDO', n: 1 } });
+  assert.doesNotMatch(JSON.stringify(r.contexto), /SEGREDO/);
+  assert.equal(r.contexto.n, 1);
+  assert.equal(kaizen.enviarRelato({ titulo: '', descricao: 'x', autor_email: 'a@b.c', em: 'lixo', linear: { identifier: 'nao', url: 'x' } }), true);
+  await kaizen.outbox.drenar();
+  const [u] = corpos('user-issues');
+  assert.ok(u.titulo && u.servico === 'jurcrawler' && u.linear === null && u.autor_email === 'a@b.c' && !Number.isNaN(Date.parse(u.em)));
+});
+
+test('resumo com Infinity, NaN e negativo vira 0 (fix 4)', () => {
+  const { resumo } = payloadResumo({ resumo: { rodados: Infinity, ok: NaN, falhas: -3, nao_verificaveis: '2' } });
+  assert.deepEqual(resumo, { rodados: 0, ok: 0, falhas: 0, nao_verificaveis: 2 });
+});
+
+test('url sem ;jsessionid e em no futuro vira agora', () => {
+  const c = payloadFalha({ tribunal: 'trf4', classe: 'seletor', passo: 'x', assinatura: 'a', em: Date.now() + 3 * 86400e3, captura: { meta: { url: 'https://a.br/p;jsessionid=ABC/q' } } });
+  assert.equal(c.url, 'https://a.br/p/q');
+  assert.ok(Date.parse(c.em) <= Date.now() + 1000);
 });
