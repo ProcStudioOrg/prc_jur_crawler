@@ -128,6 +128,8 @@ const caixaAtiva = () => ($('#conversa').hidden ? $('#caixa-inicial') : $('#caix
 
 // ---------- histórico ----------
 let conversaAtual = null;
+// O botão Relatar (relatar.js, módulo) manda o id da conversa na tela; o servidor confere a dona.
+window.jurConversa = { get id() { return conversaAtual; } };
 /** O que vai para a API a cada turno. Reconstruido ao abrir conversa existente. */
 const historicoLocal = [];
 

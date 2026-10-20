@@ -4,7 +4,8 @@
 // issue criada. `config` segue ReporterConfig do FFD: enabled, apiKey, teamId, author,
 // titleTemplate ({module} {title} {author}), moduleGroup, typeGroup, alwaysLabels,
 // initialStateName, app {name, version, commit, env}, requireContact, qaChecklist,
-// moduleByPath e serverContext (fatos do servidor, distintos do `extra` do browser).
+// moduleByPath e serverContext (fatos do servidor, distintos do `extra` do browser);
+// `appendix` (markdown montado pelo servidor) é extensão só do JurCrawler.
 
 // O Linear é chamado pelo objeto do módulo (não por desestruturação) para o teste poder
 // trocar as funções sem mock de loader.
@@ -174,6 +175,9 @@ function composeDescription(config, sub) {
     contextTable(config, sub.context, sub.reporter),
     consoleBlock(sub.context),
     networkBlock(sub.context),
+    // Extensão do JurCrawler (não existe no FFD): bloco montado pelo servidor — a conversa na
+    // tela — fora do corpo do usuário, para não disputar o teto de MAX_BODY com ele.
+    config.appendix ? `\n${config.appendix}\n` : '',
   ];
   if (config.qaChecklist) parts.push(QA_BLOCK);
   parts.push(`\n<sub>Aberta pelo reporter embutido em ${config.app.name}.</sub>`);

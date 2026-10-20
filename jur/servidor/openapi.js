@@ -89,6 +89,18 @@ const ACCOUNT_PATHS = {
     description: 'Coordenadas normalizadas à imagem; teclas permitidas pelo servidor. Continuar verifica o resultado real do portal. 409 fora da pausa ou desafio não concluído; 429 durante outra operação; 504 por timeout.',
   } },
   '/api/v1/me': { get: operation('Identidade ProcStudio autenticada') },
+  '/api/v1/relatos/meta': { get: {
+    ...operation('Configuração do botão Relatar'),
+    description: 'Relato pela interface; chave pessoal é recusada no envio. enabled:false quando o Linear não está configurado (o botão não aparece). Nunca devolve a chave do Linear.',
+  } },
+  '/api/v1/relatos': { post: {
+    ...operation('Relata um problema visto na tela', { schema: { type: 'object', required: ['title', 'body'], properties: {
+      title: { type: 'string', minLength: 4, maxLength: 160 }, body: { type: 'string', maxLength: 6000 },
+      priority: { type: ['integer', 'null'], enum: [1, 2, 3, 4, null] },
+      context: { type: 'object', description: 'Capturado pelo widget. extra.jobId e extra.conversaId apontam a busca e a conversa na tela; o servidor só os usa se forem da própria conta e tira deles os fatos (tribunal, filtros, erro, últimas mensagens).' },
+    } } }),
+    description: 'Relato pela interface; chave pessoal é recusada (403). Abre card no Linear (time configurado) e envia cópia ao painel de diagnóstico. 200 com identifier/url do card; identifier e url nulos quando o card falhou mas o relato foi recebido; 502 quando nada pôde ser registrado.',
+  } },
   '/auth/login': { get: { summary: 'Inicia login ProcStudio com PKCE', security: [], responses: { 303: { description: 'Redirecionamento ao ProcStudio; cookie temporário HttpOnly.' } } } },
   '/auth/callback': { get: { summary: 'Consome código temporário de uso único', security: [], parameters: ['code', 'state'].map(name => ({ name, in: 'query', required: true, schema: { type: 'string' } })), responses: { 303: { description: 'Retorna à interface com cookie de sessão ou mensagem de erro.' } } } },
   '/auth/logout': { post: operation('Encerra a sessão delegada do JurCrawler') },
