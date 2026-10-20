@@ -23,9 +23,13 @@ const okCom = (n, dataJulgamento = '15/08/2026') => ({
   ok: true, total: n, erro: null,
   resultados: Array.from({ length: n }, (_, i) => ({ numeroProcesso: `5057135-38.2021.4.04.71${String(i).padStart(2, '0')}`, dataJulgamento })),
 });
-const falsoQueFalhaEm = (alvo) => async (tribunal) => (tribunal === alvo
-  ? { ok: false, total: 0, resultados: [], erro: 'page.waitForSelector: Timeout 30000ms exceeded.' }
-  : okCom(5));
+// Remoto avisa o fornecedor como executarNaRota faz: é isso que o teto de sessões conta.
+const falsoQueFalhaEm = (alvo) => async (tribunal, params, extra) => {
+  if (tribunal === 'trf3') extra.aoNavegador({ fornecedor: 'kernel', nome: 'Kernel' });
+  return tribunal === alvo
+    ? { ok: false, total: 0, resultados: [], erro: 'page.waitForSelector: Timeout 30000ms exceeded.' }
+    : okCom(5);
+};
 
 let espiao;
 beforeEach(() => {
@@ -115,7 +119,7 @@ test('servidor ocupado alem do teto: o caso e pulado, sem rodar', async () => {
 test('casos espacados por esperaEntreMs; executor que lanca vira falha; enviar=false nao manda resumo', async () => {
   const inicios = [];
   const r = await rodarSentinela({
-    casos: [caso('trf4'), caso('tjpr')], kaizen: espiao, esperaEntreMs: 60, home: tmp(), enviar: false,
+    casos: [caso('trf4'), caso('tjpr')], kaizen: espiao, esperaEntreMs: 60, esperaRetentativaMs: 0, home: tmp(), enviar: false,
     executarFn: async (t) => { inicios.push(Date.now()); if (t === 'tjpr') throw new Error('Timeout 30000ms exceeded'); return okCom(5); },
   });
   assert.ok(inicios[1] - inicios[0] >= 55, `espacamento ${inicios[1] - inicios[0]}ms`);
@@ -139,14 +143,88 @@ test('executor de verdade com a CLI falsa: arquivo na home da sentinela e erro c
   assert.deepEqual(fs.readdirSync(path.join(home, 'resultados')), [], 'resultado da sentinela nao acumula');
 });
 
-test('ligarSentinela: desligada por padrao; ligada usa o kaizen e o ocupado da aplicacao', async () => {
+test('ligarSentinela: desligada por padrao; ligada usa o kaizen e o ocupado da aplicacao', () => {
   const dir = tmp();
   const pedidos = [];
   const agenda = { iniciarAgenda: (o) => { pedidos.push(o); return { parar() {} }; } };
   const app = { kaizen: espiao, ocupado: () => true };
-  assert.equal(ligarSentinela({ app, dir, env: {}, agenda }), null);
+  assert.equal(ligarSentinela({ app, dir, versao: '1.1.0', env: {}, agenda }), null);
   assert.equal(pedidos.length, 0);
-  assert.ok(ligarSentinela({ app, dir, versaoNova: true, env: { JUR_SENTINELA: '1' }, agenda }));
+  assert.ok(ligarSentinela({ app, dir, versao: '1.1.0', revisao: 'abc1234', env: { JUR_SENTINELA: '1' }, agenda }));
   assert.equal(pedidos[0].versaoNova, true);
   assert.ok(fs.existsSync(path.join(dir, 'sentinela', 'resultados')));
+});
+
+test('dois boots da mesma versao: so o primeiro tem rodada remota de boot, com ou sem FFD', () => {
+  const dir = tmp();
+  const pedidos = [];
+  const agenda = { iniciarAgenda: (o) => { pedidos.push(o); return { parar() {} }; } };
+  const ligar = (revisao) => ligarSentinela({ app: { kaizen: espiao, ocupado: () => false }, dir, versao: '1.1.0', revisao, env: { JUR_SENTINELA: '1' }, agenda });
+  ligar('abc1234');
+  assert.equal(pedidos[0].versaoNova, true);
+  pedidos[0].aoBoot(); // a rodada de boot começou
+  ligar('abc1234'); // restart (OOM, reboot): mesma versão
+  assert.equal(pedidos[1].versaoNova, false);
+  ligar('def5678'); // deploy novo
+  assert.equal(pedidos[2].versaoNova, true);
+});
+
+test('prazo da rodada: o que sobra depois dele e pulado', async () => {
+  let chamadas = 0;
+  const r = await rodarSentinela({
+    casos: [caso('trf4'), caso('tjpr'), caso('tjgo')], kaizen: espiao, esperaEntreMs: 0, home: tmp(), prazoMs: 20,
+    executarFn: async () => { chamadas++; await new Promise((ok) => setTimeout(ok, 40)); return okCom(5); },
+  });
+  assert.equal(chamadas, 1);
+  assert.deepEqual([r.rodados, r.pulados], [1, 2]);
+  assert.match(r.itens[2].detalhe, /prazo/);
+});
+
+test('ocupado alem do teto pula o resto da rodada sem esperar de novo', async () => {
+  let consultas = 0;
+  const r = await rodarSentinela({
+    casos: [caso('trf4'), caso('tjpr'), caso('tjgo')], executarFn: async () => okCom(5), kaizen: espiao, esperaEntreMs: 0, home: tmp(),
+    ocupado: () => { consultas++; return true; }, esperaOcupadoMs: 1, tetoOcupadoMs: 5,
+  });
+  assert.equal(r.pulados, 3);
+  const depoisDoPrimeiro = consultas;
+  assert.ok(depoisDoPrimeiro >= 2);
+  assert.ok(r.itens.every((i) => /ocupado/.test(i.detalhe)));
+});
+
+test('teto remoto conta sessoes abertas, nao casos (Kernel + Steel de reserva = 2)', async () => {
+  let chamadas = 0;
+  const executarFn = async (t, p, extra) => {
+    chamadas++;
+    extra.aoNavegador({ fornecedor: 'kernel', nome: 'Kernel' });
+    extra.aoNavegador({ fornecedor: 'steel', nome: 'Steel' });
+    return okCom(5);
+  };
+  const r = await rodarSentinela({ casos: [caso('trf3'), caso('trf3', 'numero'), caso('trf4')], executarFn, kaizen: espiao, maxRemoto: 2, esperaEntreMs: 0, home: tmp() });
+  assert.equal(chamadas, 2, 'trf3 e trf4; o segundo trf3 fica fora');
+  assert.deepEqual(r.itens.map((i) => i.status), ['ok', 'pulado', 'ok']);
+  assert.match(r.itens[1].detalhe, /sessões remotas/);
+});
+
+test('vazio_suspeito ou timeout: tenta de novo uma vez antes de acusar', async () => {
+  let n = 0;
+  const volta = await rodarSentinela({
+    casos: [caso('trf4')], kaizen: espiao, esperaEntreMs: 0, esperaRetentativaMs: 1, home: tmp(),
+    executarFn: async () => (n++ === 0 ? okCom(0) : okCom(5)),
+  });
+  assert.deepEqual([n, volta.ok, volta.falhas], [2, 1, 0]);
+  assert.equal(espiao.sentinela.length, 0);
+
+  let m = 0;
+  const persiste = await rodarSentinela({
+    casos: [caso('trf4')], kaizen: espiao, esperaEntreMs: 0, esperaRetentativaMs: 1, home: tmp(),
+    executarFn: async () => { m++; return { ok: false, resultados: [], erro: `timeout apos 180000ms` }; },
+  });
+  assert.deepEqual([m, persiste.falhas, persiste.rodados], [2, 1, 1]);
+  assert.equal(espiao.sentinela.length, 1);
+  assert.equal(espiao.sentinela[0].avaliacao.classe, 'timeout');
+
+  let k = 0;
+  await rodarSentinela({ casos: [caso('tjpr')], kaizen: espiao, esperaEntreMs: 0, esperaRetentativaMs: 1, home: tmp(), executarFn: async (t, p, e) => { k++; return falsoQueFalhaEm('tjpr')(t, p, e); } });
+  assert.equal(k, 1, 'seletor quebrado nao e duvida: sem nova tentativa');
 });

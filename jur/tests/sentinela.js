@@ -5,7 +5,7 @@
  *
  *   node tests/sentinela.js                 # todos os casos locais
  *   node tests/sentinela.js trf4 tjpr       # só esses tribunais
- *   node tests/sentinela.js --remoto        # inclui TRF3/Falcão/STJ (navegador remoto, pago)
+ *   node tests/sentinela.js --remoto        # inclui TRF3/Falcão/STJ (navegador remoto, pago; exige fornecedor)
  *   node tests/sentinela.js --json          # saída JSON
  *   node tests/sentinela.js --timeout 120   # segundos por caso (padrão 180)
  *   node tests/sentinela.js --enviar        # manda falhas e resumo ao FFD (KAIZEN_WEBHOOK_*)
@@ -17,7 +17,7 @@ const fs = require('node:fs');
 const executor = require('../servidor/executor');
 const { executarNaRota } = require('../servidor/escopo');
 const { criarKaizen, kaizenNulo } = require('../servidor/kaizen');
-const { carregarCasos, selecionarCasos, rodarSentinela } = require('../servidor/kaizen/sentinela');
+const { carregarCasos, selecionarCasos, rodarSentinela, opcoesDoAmbiente, remotoDisponivel } = require('../servidor/kaizen/sentinela');
 
 const ROOT = path.resolve(__dirname, '..');
 const argv = process.argv.slice(2);
@@ -33,7 +33,8 @@ const log = (...a) => { if (!JSON_OUT) console.log(...a); };
 
 async function main() {
   const todos = carregarCasos();
-  const casos = selecionarCasos(todos, { pedidos, remotoPermitido: REMOTO });
+  if (REMOTO && !remotoDisponivel(true)) console.error('--remoto ignorado: nenhum navegador remoto configurado (KERNEL_API_KEY/STEEL_API_KEY)');
+  const casos = selecionarCasos(todos, { pedidos, remotoPermitido: remotoDisponivel(REMOTO) });
   const fora = selecionarCasos(todos, { pedidos, remotoPermitido: true }).length - casos.length;
   if (!casos.length) {
     console.error(`nenhum caso para: ${pedidos.join(', ') || '(todos)'}${fora ? ' (remotos exigem --remoto)' : ''}`);
@@ -46,7 +47,7 @@ async function main() {
 
   log(`sentinela: ${casos.length} casos${fora ? ` · ${fora} remotos fora (use --remoto)` : ''} · timeout ${TIMEOUT / 1000}s${ENVIAR ? ' · enviando ao FFD' : ''}\n`);
   const r = await rodarSentinela({
-    casos, kaizen, home, timeoutMs: TIMEOUT, enviar: ENVIAR, maxRemoto: Number(process.env.JUR_SENTINELA_MAX_REMOTO || 6),
+    casos, kaizen, home, timeoutMs: TIMEOUT, enviar: ENVIAR, ...opcoesDoAmbiente(),
     executarFn: (c, p, e) => executarNaRota(executor.executar, c, p, e, home),
     aoCaso: (it) => log(`${ICONE[it.status] || it.status} ${it.tribunal.padEnd(12)} ${it.capacidade.padEnd(18)} `
       + `${String(it.ms === undefined ? '' : Math.round(it.ms / 1000) + 's').padStart(5)}  ${it.classe ? `${it.classe}: ` : ''}${it.detalhe || ''}`),

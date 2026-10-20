@@ -37,12 +37,13 @@ const diaDaSemanaSP = (ms) => partesSP(ms).semana;
 
 /**
  * Remoto (TRF3/Falcão/STJ) custa dinheiro por sessão: só na segunda-feira e no primeiro boot de
- * uma versão nova. As rodadas são seriais — uma que chega com outra em curso espera a vez.
+ * uma versão nova. As rodadas são seriais; as que chegam com outra em curso viram UMA pendente
+ * (fila sem teto acumularia rodadas atrasadas atrás de uma rodada lenta).
  */
-function iniciarAgenda({ rodar, agora = Date.now, versaoNova = false, atrasoBootMs = 5 * 60e3, hora = 4 }) {
+function iniciarAgenda({ rodar, agora = Date.now, versaoNova = false, atrasoBootMs = 5 * 60e3, hora = 4, aoBoot }) {
   let parado = false;
   let rodando = false;
-  const fila = [];
+  let pendente = null;
   const timers = new Set();
 
   function esperar(ms, fn) {
@@ -59,22 +60,33 @@ function iniciarAgenda({ rodar, agora = Date.now, versaoNova = false, atrasoBoot
       console.error('[sentinela] rodada falhou:', e && e.message ? e.message : String(e));
     } finally {
       rodando = false;
-      const proxima = fila.shift();
+      const proxima = pendente;
+      pendente = null;
       if (proxima && !parado) executar(proxima);
     }
   }
 
-  const disparar = (opcoes) => { if (rodando) fila.push(opcoes); else executar(opcoes); };
+  function disparar(opcoes) {
+    if (!rodando) return executar(opcoes);
+    pendente = { remotoPermitido: Boolean(pendente?.remotoPermitido || opcoes.remotoPermitido) };
+  }
 
-  function agendarDiaria() {
-    const alvo = proximaExecucao(agora(), hora);
+  // `desde`: o timer pode disparar uns ms antes do alvo (relógio monotônico x de parede); a
+  // próxima conta a partir do alvo já atendido, senão a mesma 04:00 rodaria duas vezes.
+  function agendarDiaria(desde = agora()) {
+    const alvo = proximaExecucao(desde, hora);
     esperar(alvo - agora(), () => {
-      agendarDiaria();
+      agendarDiaria(Math.max(agora(), alvo));
       disparar({ remotoPermitido: diaDaSemanaSP(alvo) === 1 });
     });
   }
 
-  if (versaoNova) esperar(atrasoBootMs, () => disparar({ remotoPermitido: true }));
+  if (versaoNova) {
+    esperar(atrasoBootMs, () => {
+      try { aoBoot?.(); } catch (e) { console.error('[sentinela] marcador de versão:', e?.message || e); }
+      disparar({ remotoPermitido: true });
+    });
+  }
   agendarDiaria();
 
   return {
@@ -82,7 +94,7 @@ function iniciarAgenda({ rodar, agora = Date.now, versaoNova = false, atrasoBoot
       parado = true;
       for (const t of timers) clearTimeout(t);
       timers.clear();
-      fila.length = 0;
+      pendente = null;
     },
   };
 }

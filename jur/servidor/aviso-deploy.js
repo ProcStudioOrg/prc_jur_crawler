@@ -17,18 +17,16 @@ function revisaoDaImagem(imagem) {
   return /^[0-9a-f]{7,40}$/.test(tag) ? tag : '';
 }
 
+/** Chave de um deploy: a mesma para o aviso ao FFD e para o marcador da sentinela. */
 const chaveDeploy = (versao, revisao = '') => `${versao}+${revisao}`;
-
-/** Chave do último deploy avisado; null no primeiro boot desta instalação. */
-function marcadorAtual(dir) {
-  try { return fs.readFileSync(path.join(dir, MARCADOR), 'utf8').trim(); } catch { return null; }
-}
 
 async function avisarDeploy({ url, dir, versao, revisao = '', fetchFn = fetch, timeoutMs = 10000 }) {
   if (!url) return 'desligado';
   const chave = chaveDeploy(versao, revisao);
   const marcador = path.join(dir, MARCADOR);
-  if (marcadorAtual(dir) === chave) return 'repetido';
+  try {
+    if (fs.readFileSync(marcador, 'utf8').trim() === chave) return 'repetido';
+  } catch { /* primeiro boot desta instalação */ }
   try {
     const corpo = { service: SERVICO, event: 'deploy', version: versao };
     if (revisao) corpo.revision = revisao;
@@ -46,4 +44,4 @@ async function avisarDeploy({ url, dir, versao, revisao = '', fetchFn = fetch, t
   }
 }
 
-module.exports = { avisarDeploy, revisaoDaImagem, chaveDeploy, marcadorAtual, SERVICO };
+module.exports = { avisarDeploy, revisaoDaImagem, chaveDeploy, SERVICO };
