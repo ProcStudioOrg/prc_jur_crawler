@@ -11,7 +11,7 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
-## 1.1.0 — 19/10/2026
+## 1.2.0 — 20/10/2026
 
 Kaizen: o JurCrawler passa a enxergar as próprias falhas (detalhes em `docs/kaizen.md`).
 
@@ -21,9 +21,23 @@ Kaizen: o JurCrawler passa a enxergar as próprias falhas (detalhes em `docs/kai
 - outbox persistente para o FFD (`jur-diagnostico`), com retentativa e teto de tamanho;
 - botão Relatar na interface: card no Linear BRU e cópia no FFD (`user-issues`), com o histórico da conversa;
   idempotente (mesmo título + descrição em 10 min devolve o mesmo card). Absorve o BRU-91
-  (`/api/v1/feedback`, nunca chegou a produção): fica só o Relatar e a rota `/api/v1/relatos`;
+  (botão "Reportar" e rota `/api/v1/feedback`, em produção desde a 1.1.0): saem, e fica só o
+  Relatar com a rota `/api/v1/relatos`, que faz o mesmo e ainda leva o contexto da busca, a
+  conversa e a cópia no FFD;
 - sentinela diária às 04:00 de São Paulo, com casos reais por tribunal e capacidade (`npm run sentinela`);
 - envs novas: `KAIZEN_WEBHOOK_URL`, `KAIZEN_WEBHOOK_TOKEN`, `KAIZEN_SALT`, `LINEAR_API_KEY`, `LINEAR_TEAM_ID`, `JUR_SENTINELA`, `JUR_SENTINELA_MAX_REMOTO`, `JUR_SENTINELA_PRAZO_MIN`.
+
+## 1.1.0 — 20/10/2026
+
+Lote dos cards do Linear (detalhe em `docs/qa/2026-10-19-cards-linear-jurcrawler.md`; produção em
+`docs/qa/2026-10-20-producao-lote-cards.md`):
+
+- BRU-88: recorte de juizados do TJPR chega à tela, à API e ao chat;
+- BRU-75: catálogo enxuto na listagem e detalhe por tribunal (`GET /api/v1/tribunais/{comando}`);
+- BRU-87: tetos de admissão da fila com 429 e `Retry-After`;
+- BRU-76: primeiro turno recusado não deixa conversa vazia;
+- BRU-77: gate de release executável sem argumento (`npm run aceite`);
+- BRU-91: botão "Reportar" vira card no Linear (`/api/v1/feedback`); substituído pelo Relatar na 1.2.0.
 
 ## 1.0.1 — 16/10/2026
 
