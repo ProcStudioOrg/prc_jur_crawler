@@ -94,13 +94,86 @@ function derivarPasso(url, _titulo) {
   return normalizarPasso(`pagina:${limpa.replace(/^https?:\/\//i, '')}`.replace(/\d+/g, '#'));
 }
 
+// Crawler real fecha o browser no `finally` e só depois o catch chama exit(1): na saída não há
+// mais página aberta. Por isso a foto é tirada NA REJEIÇÃO do método do Playwright que falhou,
+// com a página ainda viva, e a saída usa a última foto se não achar página aberta.
+const METODOS_PAGE = ['goto', 'waitForSelector', 'waitForURL', 'waitForLoadState', 'click', 'fill', 'type',
+  'press', 'selectOption', 'check', 'waitForFunction', 'evaluate'];
+const METODOS_LOCATOR = ['click', 'fill', 'waitFor', 'textContent', 'innerText', 'getAttribute'];
+const ENVOLVIDO = Symbol.for('jur.kaizen.envolvido');
+const PRAZO_FOTO_MS = 3000;
+
+// Envolve os métodos que existem em `proto`: na rejeição chama `aoFalhar(this)` (nunca lança) e
+// relança o MESMO erro. Sucesso não paga nada além de um `.then` na promise.
+function envolverMetodos(proto, nomes, aoFalhar) {
+  if (!proto) return;
+  for (const nome of nomes) {
+    const original = proto[nome];
+    if (typeof original !== 'function' || original[ENVOLVIDO]) continue;
+    const envolvido = function (...args) {
+      const promessa = original.apply(this, args);
+      if (!promessa || typeof promessa.then !== 'function') return promessa;
+      return promessa.then(undefined, async (erro) => {
+        try { await aoFalhar(this); } catch { /* foto nunca troca o erro do crawler */ }
+        throw erro;
+      });
+    };
+    envolvido[ENVOLVIDO] = true;
+    try { proto[nome] = envolvido; } catch { /* protótipo congelado */ }
+  }
+}
+
+// Lê print, HTML, URL e título correndo contra um único prazo: página travada não segura ninguém.
+async function lerPagina(page, prazoMs) {
+  const limite = Date.now() + prazoMs;
+  const obter = (fn) => {
+    const restante = limite - Date.now();
+    if (restante <= 0) return Promise.resolve(null);
+    let timer;
+    const operacao = Promise.resolve().then(fn).catch(() => null);
+    const prazo = new Promise((r) => { timer = setTimeout(() => r(null), restante); });
+    return Promise.race([operacao, prazo]).finally(() => clearTimeout(timer));
+  };
+  const tela = await obter(() => page.screenshot({ type: 'png', fullPage: false }));
+  const html = await obter(() => page.content());
+  const url = (await obter(() => page.url())) || '';
+  const titulo = (await obter(() => page.title())) || '';
+  return { tela, html, url, titulo };
+}
+
 function criarCaptura({ dir, tribunal, rota, prazoMs = PRAZO_CAPTURA_MS }) {
   const paginas = [];
   let promessa = null;
+  let ultima = null; // foto da última falha de método do Playwright; a mais nova substitui a anterior
+  let fotografando = false;
+
+  async function fotografar(page) {
+    // Sem reentrada (a própria leitura passa por métodos da página) e sem página já fechada.
+    if (fotografando) return;
+    try { if (page.isClosed()) return; } catch { return; }
+    fotografando = true;
+    try {
+      const foto = await lerPagina(page, PRAZO_FOTO_MS);
+      if (foto.tela || foto.html) ultima = foto;
+    } catch { /* swallow */ } finally { fotografando = false; }
+  }
+
+  // Uma vez só por protótipo: o Playwright compartilha Page e Locator entre todas as instâncias.
+  function instalarFoto(page) {
+    try {
+      envolverMetodos(Object.getPrototypeOf(page), METODOS_PAGE, fotografar);
+      if (typeof page.locator === 'function') {
+        const proto = Object.getPrototypeOf(page.locator('html'));
+        // Locator não carrega a página no `this`: ela vem de `locator.page()`.
+        envolverMetodos(proto, METODOS_LOCATOR, (loc) => fotografar(loc.page()));
+      }
+    } catch { /* captura nunca derruba a busca */ }
+  }
 
   function anexarPagina(page) {
     if (paginas.includes(page)) return;
     paginas.push(page);
+    instalarFoto(page);
     try {
       page.once?.('close', () => { const i = paginas.indexOf(page); if (i >= 0) paginas.splice(i, 1); });
     } catch { /* página falsa ou já fechada */ }
@@ -114,24 +187,12 @@ function criarCaptura({ dir, tribunal, rota, prazoMs = PRAZO_CAPTURA_MS }) {
   }
 
   async function executar() {
-    const limite = Date.now() + prazoMs;
-    // Cada leitura corre contra o prazo restante: página travada não segura a saída.
-    const obter = (fn) => {
-      const restante = limite - Date.now();
-      if (restante <= 0) return Promise.resolve(null);
-      let timer;
-      const operacao = Promise.resolve().then(fn).catch(() => null);
-      const prazo = new Promise((r) => { timer = setTimeout(() => r(null), restante); });
-      return Promise.race([operacao, prazo]).finally(() => clearTimeout(timer));
-    };
     const page = paginaAtual();
-    let tela = null; let html = null; let url = ''; let titulo = '';
-    if (page) {
-      tela = await obter(() => page.screenshot({ type: 'png', fullPage: false }));
-      html = await obter(() => page.content());
-      url = (await obter(() => page.url())) || '';
-      titulo = (await obter(() => page.title())) || '';
-    }
+    let foto = { tela: null, html: null, url: '', titulo: '' };
+    if (page) foto = await lerPagina(page, prazoMs);
+    // Sem página aberta (o crawler fechou o browser no finally): vale a foto tirada na falha.
+    else if (ultima) foto = ultima;
+    const { tela, html, url, titulo } = foto;
     const meta = {
       url: sanitizar(urlSemQuery(url)),
       titulo: sanitizar(titulo).slice(0, 300),
@@ -264,4 +325,4 @@ function instalarSaida(captura, processo = process, { tetoMs = PRAZO_CAPTURA_MS 
   });
 }
 
-module.exports = { instrumentarChromium, criarCaptura, derivarPasso, urlSemQuery, instalarSaida, modoConsulta, capturaLigada };
+module.exports = { envolverMetodos, instrumentarChromium, criarCaptura, derivarPasso, urlSemQuery, instalarSaida, modoConsulta, capturaLigada };
