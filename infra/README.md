@@ -158,6 +158,31 @@ Não há porta VNC/CDP exposta. Browserbase é
 opcional via `BROWSERBASE_API_KEY`/`BROWSERBASE_PROJECT_ID`; só é usado por opção da conta.
 Veja [configuração, privacidade e validação](../docs/navegadores.md).
 
+## Kaizen: falhas, sentinela e relatos
+
+Como funciona de ponta a ponta: [`docs/kaizen.md`](../docs/kaizen.md). Todas as envs abaixo
+são repassadas pelo `compose.yml`; nenhuma é obrigatória, e sem elas o servidor funciona
+como antes (a captura de falha local continua, mas nada sai do servidor).
+
+| Env | O que faz | Padrão | Sem ela |
+|---|---|---|---|
+| `KAIZEN_WEBHOOK_URL` | Base dos webhooks do FFD (`https://ffd.belzinhos.com.br/api/webhooks`); recebe `/jur-diagnostico` e `/user-issues` | vazio | Outbox desligada: nada é enviado, a captura é apagada |
+| `KAIZEN_WEBHOOK_TOKEN` | Endpoint key `jurcrawler` do FFD (sources `jur-diagnostico,user-issues`), no cabeçalho `x-webhook-token` | vazio | O FFD recusa (401) e o item é descartado |
+| `KAIZEN_SALT` | Sal do `usuario_hash` = SHA256(`usuario_id` + sal). `openssl rand -base64 32` | vazio | `usuario_hash` vai `null` |
+| `LINEAR_API_KEY` | Chave de API do Linear para o card do botão Relatar | vazio | Relato não vira card (só vai ao FFD) |
+| `LINEAR_TEAM_ID` | Id do time BRU (BrunoDev) | vazio | Idem |
+| `JUR_SENTINELA` | `1` liga a sentinela diária (04:00 de São Paulo) | `0` | Sem sentinela |
+| `JUR_SENTINELA_MAX_REMOTO` | Teto de sessões remotas (pagas) por rodada | `6` | Usa o padrão |
+| `JUR_SENTINELA_PRAZO_MIN` | Prazo total da rodada, em minutos | `180` | Usa o padrão |
+
+`JUR_FALHA_DIR` e `JUR_CAPTURA` também existem, mas são **internas**: o executor as define para
+o processo filho de cada busca (onde gravar a captura e se ela vale para aquela busca). Não as
+configure no `.env`.
+
+O container de validação pré-troca (o teste de `/api/v1/saude` antes do `ln -sfn`) roda com
+`-e KAIZEN_WEBHOOK_URL= -e JUR_SENTINELA=0 -e LINEAR_API_KEY=`: ele compartilha `.env` e
+volumes com a produção e não pode mandar falha nem abrir card, nem rodar a sentinela.
+
 ## Releases em produção
 
 Use `JUR_IMAGE=jur:<commit>` no `infra/.env` privado de cada release para manter a

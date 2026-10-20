@@ -93,6 +93,10 @@ prc_jur_crawler/
 
 ## Manutenção
 
+### Kaizen (falhas, sentinela e relatos)
+
+Captura de falha, conferência de filtros, sentinela diária e botão Relatar: [`docs/kaizen.md`](docs/kaizen.md).
+
 ### Ambiente local sem ProcStudio
 
 `cd jur && npm run dev:local` inicia uma conta de desenvolvimento em

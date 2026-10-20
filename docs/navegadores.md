@@ -160,3 +160,5 @@ REST usa a sessão HttpOnly da interface ou chave pessoal. POST por cookie exige
 
 Clique usa `x`/`y` entre 0 e 1, relativos à imagem. Texto limitado a 1000 caracteres.
 Teclas e ações têm allowlist. Sem comandos de navegação arbitrária ou JavaScript.
+
+Falhas, captura e sentinela dos navegadores: [Kaizen](kaizen.md).

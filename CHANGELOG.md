@@ -11,6 +11,18 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
+## 1.1.0 — 19/10/2026
+
+Kaizen: o JurCrawler passa a enxergar as próprias falhas (detalhes em `docs/kaizen.md`).
+
+- captura de falha com print, HTML e passo da navegação, por busca, sem custo em busca que dá certo;
+- conferência dos filtros pedidos contra os resultados, com aviso ao usuário quando o tribunal ignora o filtro (na dúvida, `nao_verificavel`);
+- resgates (navegador reserva e captcha resolvido à mão) registrados;
+- outbox persistente para o FFD (`jur-diagnostico`), com retentativa e teto de tamanho;
+- botão Relatar na interface: card no Linear BRU e cópia no FFD (`user-issues`), com o histórico da conversa;
+- sentinela diária às 04:00 de São Paulo, com casos reais por tribunal e capacidade (`npm run sentinela`);
+- envs novas: `KAIZEN_WEBHOOK_URL`, `KAIZEN_WEBHOOK_TOKEN`, `KAIZEN_SALT`, `LINEAR_API_KEY`, `LINEAR_TEAM_ID`, `JUR_SENTINELA`, `JUR_SENTINELA_MAX_REMOTO`, `JUR_SENTINELA_PRAZO_MIN`.
+
 ## 1.0.1 — 16/10/2026
 
 - Tela de entrada nova: ícone oficial (lupa + raio) centralizado em 3D por camadas, nome
