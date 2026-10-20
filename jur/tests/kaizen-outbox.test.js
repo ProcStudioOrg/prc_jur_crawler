@@ -113,3 +113,10 @@ test('migra tabela antiga sem coluna bytes', () => {
   assert.equal(con.prepare('SELECT bytes FROM kaizen_envio').get().bytes, 4);
   assert.equal(o.pendentes(), 1);
 });
+test('enfileirar devolve true; depois de fechar nada toca o banco', async () => {
+  const o = outbox({ fetchFn: async () => new Response('{}') });
+  assert.equal(o.enfileirar('jur-diagnostico', {}), true);
+  o.fechar(); con.close();
+  assert.equal(o.enfileirar('jur-diagnostico', {}), false);
+  assert.deepEqual(await o.drenar(), { enviados: 0, adiados: 0, descartados: 0 });
+});

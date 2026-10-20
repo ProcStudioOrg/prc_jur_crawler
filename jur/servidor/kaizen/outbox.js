@@ -16,6 +16,7 @@ function criarOutbox({
   let rodando = null;
   let timer = null;
   let ultimoLogIndisp = -Infinity;
+  let fechado = false; // depois de fechar(), a conexão pode já estar fechada por quem a abriu
 
   try {
     con.exec(`CREATE TABLE IF NOT EXISTS kaizen_envio (
@@ -49,15 +50,18 @@ function criarOutbox({
   }
 
   function enfileirar(source, corpo) {
+    if (fechado) return false;
     try {
       const t = agora();
       const corpo_json = JSON.stringify(corpo);
       con.prepare('INSERT INTO kaizen_envio (source, corpo_json, proxima_em, criado_em, bytes) VALUES (?, ?, ?, ?, ?)')
         .run(String(source), corpo_json, t, t, Buffer.byteLength(corpo_json));
       aplicarTeto();
-      setImmediate(() => { drenar(); });
+      setImmediate(() => { if (!fechado) drenar(); });
+      return true;
     } catch (e) {
       console.error('[kaizen] falha ao enfileirar:', e && e.code ? e.code : 'erro');
+      return false;
     }
   }
 
@@ -86,6 +90,7 @@ function criarOutbox({
 
   async function drenarTudo() {
     const res = { enviados: 0, adiados: 0, descartados: 0 };
+    if (fechado) return res;
     try {
       res.descartados += con.prepare('DELETE FROM kaizen_envio WHERE criado_em < ?').run(agora() - VALIDADE_MS).changes;
       if (!ligado) return res;
@@ -93,6 +98,7 @@ function criarOutbox({
         const item = con.prepare('SELECT * FROM kaizen_envio WHERE proxima_em <= ? ORDER BY id LIMIT 1').get(agora());
         if (!item) break;
         const status = await enviar(item);
+        if (fechado) break;
         if (status >= 200 && status < 300) {
           con.prepare('DELETE FROM kaizen_envio WHERE id = ?').run(item.id);
           res.enviados++;
@@ -126,8 +132,9 @@ function criarOutbox({
     timer.unref();
   }
   function parar() { if (timer) { clearInterval(timer); timer = null; } }
+  function fechar() { parar(); fechado = true; }
 
-  return { ligado, enfileirar, drenar, iniciar, parar, pendentes };
+  return { ligado, enfileirar, drenar, iniciar, parar, fechar, pendentes };
 }
 
 module.exports = { criarOutbox, BACKOFF_MS, VALIDADE_MS };
