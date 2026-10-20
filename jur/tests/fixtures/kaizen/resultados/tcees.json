@@ -1,0 +1,45 @@
+{
+ "origem": "resultados/results-tcees.json",
+ "itens": [
+  {
+   "numeroExcerto": "00509/2025",
+   "processo": "05661/2024",
+   "processoClassificacao": "05661/2024 - Controle Externo - Fiscalização - Auditoria",
+   "processoUrl": "https://www.tcees.tc.br/consultas/processo/detalhar-processo-id",
+   "relator": "Davi Diniz de Carvalho",
+   "orgaoJulgador": "Ordinária/1ª Câmara",
+   "dataJulgamento": "07/11/2025",
+   "dataPublicacao": "17/11/2025"
+  },
+  {
+   "numeroExcerto": "00265/2026",
+   "processo": "00160/2025",
+   "processoClassificacao": "00160/2025 - Controle Externo - Fiscalização - Representação",
+   "processoUrl": "https://www.tcees.tc.br/consultas/processo/detalhar-processo-id",
+   "relator": "Rodrigo Flávio Freire Farias Chamoun",
+   "orgaoJulgador": "Ordinária/Plenário",
+   "dataJulgamento": "12/05/2026",
+   "dataPublicacao": "18/05/2026"
+  },
+  {
+   "numeroExcerto": "00255/2026",
+   "processo": "01007/2026",
+   "processoClassificacao": "01007/2026 - Controle Externo - Fiscalização - Representação",
+   "processoUrl": "https://www.tcees.tc.br/consultas/processo/detalhar-processo-id",
+   "relator": "Sebastião Carlos Ranna de Macedo",
+   "orgaoJulgador": "Ordinária/1ª Câmara",
+   "dataJulgamento": "06/05/2026",
+   "dataPublicacao": "08/05/2026"
+  },
+  {
+   "numeroExcerto": "00119/2026",
+   "processo": "07012/2024",
+   "processoClassificacao": "07012/2024 - Controle Externo - Fiscalização - Auditoria",
+   "processoUrl": "https://www.tcees.tc.br/consultas/processo/detalhar-processo-id",
+   "relator": "Marco Antônio da Silva",
+   "orgaoJulgador": "Ordinária/Plenário",
+   "dataJulgamento": "12/02/2026",
+   "dataPublicacao": "23/02/2026"
+  }
+ ]
+}

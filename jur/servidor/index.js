@@ -19,6 +19,7 @@ function criarApp(deps = {}) {
   require('./rotas/chaves').registrar(roteador, deps);
   require('./rotas/conexoes-llm').registrar(roteador, deps);
   require('./rotas/conversas').registrar(roteador, deps);
+  require('./rotas/relatos').registrar(roteador, deps);
   require('./mcp').registrar(roteador, deps);
   require('./rotas/docs').registrar(roteador, deps);
   roteador.estaticos(path.join(__dirname, '..', 'publico'), '/');
@@ -36,12 +37,15 @@ function iniciar() {
       issuer: process.env.PROCSTUDIO_ISSUER, clientId: process.env.PROCSTUDIO_CLIENT_ID,
       secret: process.env.PROCSTUDIO_CLIENT_SECRET }),
   });
+  const { avisarDeploy, revisaoDaImagem } = require('./aviso-deploy');
+  const dir = process.env.JUR_DADOS || '/dados';
+  const versao = require('../package.json').version;
+  const revisao = revisaoDaImagem(process.env.JUR_IMAGE);
   const servidor = http.createServer(app.handler);
   servidor.listen(Number(process.env.PORT || 3000), process.env.JUR_BIND || '127.0.0.1', () => {
-    const { avisarDeploy, revisaoDaImagem } = require('./aviso-deploy');
-    avisarDeploy({ url: process.env.USAGE_WEBHOOK_URL, dir: process.env.JUR_DADOS || '/dados',
-      versao: require('../package.json').version, revisao: revisaoDaImagem(process.env.JUR_IMAGE) })
+    avisarDeploy({ url: process.env.USAGE_WEBHOOK_URL, dir, versao, revisao })
       .then((r) => { if (r !== 'desligado') console.log(`aviso de deploy: ${r}`); });
+    if (require('./kaizen/sentinela').ligarSentinela({ app, dir, versao, revisao })) console.log('sentinela: agendada às 04:00');
   });
   return servidor;
 }

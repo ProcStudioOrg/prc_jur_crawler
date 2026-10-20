@@ -1,0 +1,137 @@
+{
+ "origem": "resultados/results-tcepe.json",
+ "itens": [
+  {
+   "processo": "21100713-4",
+   "anoProcesso": "2021",
+   "numeroDecisao": "1745",
+   "orgaoJulgador": "1a. Câmara",
+   "relator": "RUY RICARDO",
+   "tipoProcesso": "Conformidade",
+   "dataJulgamento": "25/08/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  },
+  {
+   "processo": "20100499-9",
+   "anoProcesso": "2020",
+   "numeroDecisao": "1580",
+   "orgaoJulgador": "1a. Câmara",
+   "relator": "ALDA MAGALHÃES",
+   "tipoProcesso": "Conformidade",
+   "dataJulgamento": "04/08/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  },
+  {
+   "processo": "20100045-3",
+   "anoProcesso": "2014",
+   "numeroDecisao": "1542",
+   "orgaoJulgador": "2a. Câmara",
+   "relator": "RUY RICARDO",
+   "tipoProcesso": "Conformidade",
+   "dataJulgamento": "30/07/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  },
+  {
+   "processo": "25101204-9",
+   "anoProcesso": "2025",
+   "numeroDecisao": "1546",
+   "orgaoJulgador": "2a. Câmara",
+   "relator": "VALDECIR PASCOAL",
+   "tipoProcesso": "Conformidade",
+   "dataJulgamento": "30/07/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  },
+  {
+   "processo": "19100287-2",
+   "anoProcesso": "2018",
+   "numeroDecisao": "1529",
+   "orgaoJulgador": "1a. Câmara",
+   "relator": "MARCOS NÓBREGA",
+   "tipoProcesso": "Gestão",
+   "dataJulgamento": "27/07/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  },
+  {
+   "processo": "21100006-1",
+   "anoProcesso": "2020",
+   "numeroDecisao": "1280",
+   "orgaoJulgador": "2a. Câmara",
+   "relator": "RUY RICARDO",
+   "tipoProcesso": "Conformidade",
+   "dataJulgamento": "15/06/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  },
+  {
+   "processo": "21100148-0",
+   "anoProcesso": "2020",
+   "numeroDecisao": "1276",
+   "orgaoJulgador": "1a. Câmara",
+   "relator": "RUY RICARDO",
+   "tipoProcesso": "Conformidade",
+   "dataJulgamento": "15/06/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  },
+  {
+   "processo": "22100088-4RO002",
+   "anoProcesso": "2026",
+   "numeroDecisao": "1152",
+   "orgaoJulgador": "Pleno",
+   "relator": "DIRCEU RODOLFO",
+   "tipoProcesso": "Recurso Ordinário",
+   "dataJulgamento": "10/06/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  },
+  {
+   "processo": "26100283-1",
+   "anoProcesso": "2026",
+   "numeroDecisao": "1037",
+   "orgaoJulgador": "1a. Câmara",
+   "relator": "DIRCEU RODOLFO",
+   "tipoProcesso": "Medida Cautelar",
+   "dataJulgamento": "26/05/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  },
+  {
+   "processo": "20100332-6",
+   "anoProcesso": "2019",
+   "numeroDecisao": "833",
+   "orgaoJulgador": "2a. Câmara",
+   "relator": "RUY RICARDO",
+   "tipoProcesso": "Gestão",
+   "dataJulgamento": "07/05/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  },
+  {
+   "processo": "23100388-2",
+   "anoProcesso": "2023",
+   "numeroDecisao": "578",
+   "orgaoJulgador": "2a. Câmara",
+   "relator": "RICARDO RIOS",
+   "tipoProcesso": "Conformidade",
+   "dataJulgamento": "26/03/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  },
+  {
+   "processo": "26100169-3",
+   "anoProcesso": "2026",
+   "numeroDecisao": "368",
+   "orgaoJulgador": "1a. Câmara",
+   "relator": "LUIZ ARCOVERDE FILHO",
+   "tipoProcesso": "Medida Cautelar",
+   "dataJulgamento": "10/03/2026",
+   "dataPublicacao": null,
+   "processoUrl": "http://etce.tce.pe.gov.br/epp/ConsultaExternaTCE/listView.seam"
+  }
+ ]
+}

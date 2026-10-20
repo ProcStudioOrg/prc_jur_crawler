@@ -1,0 +1,113 @@
+{
+ "origem": "resultados/results-tjes.json",
+ "itens": [
+  {
+   "processo": "0009613-14.2020.8.08.0012",
+   "relator": "ROBSON LUIZ ALBANEZ",
+   "cargoRelator": "Desembargador(a)",
+   "orgaoJulgador": "4ª Câmara Cível",
+   "dataJuntada": "15/05/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "5003344-09.2023.8.08.0030",
+   "relator": "ROBSON LUIZ ALBANEZ",
+   "cargoRelator": "Desembargador(a)",
+   "orgaoJulgador": "4ª Câmara Cível",
+   "dataJuntada": "19/08/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "5010395-85.2025.8.08.0035",
+   "relator": "MURILO RIBEIRO FERREIRA",
+   "cargoRelator": "Juiz Membro",
+   "orgaoJulgador": "Turma Recursal - 5ª Turma",
+   "dataJuntada": "06/01/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "0004555-83.2019.8.08.0038",
+   "relator": "JORGE HENRIQUE VALLE DOS SANTOS",
+   "cargoRelator": "Desembargador(a)",
+   "orgaoJulgador": "2ª Câmara Cível",
+   "dataJuntada": "09/12/2025",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "5008173-80.2025.8.08.0024",
+   "relator": "WALMEA ELYZE CARVALHO",
+   "cargoRelator": "Juiz Membro",
+   "orgaoJulgador": "Turma Recursal - 3ª Turma",
+   "dataJuntada": "25/05/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "5018171-72.2025.8.08.0024",
+   "relator": "RAFAEL FRACALOSSI MENEZES",
+   "cargoRelator": "Juiz Membro",
+   "orgaoJulgador": "Turma Recursal - 3ª Turma",
+   "dataJuntada": "19/12/2025",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "5008963-89.2025.8.08.0048",
+   "relator": "RAFAEL FRACALOSSI MENEZES",
+   "cargoRelator": "Juiz Membro",
+   "orgaoJulgador": "Turma Recursal - 3ª Turma",
+   "dataJuntada": "05/03/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "5007737-74.2023.8.08.0030",
+   "relator": "JULIO CESAR COSTA DE OLIVEIRA",
+   "cargoRelator": "Desembargador(a)",
+   "orgaoJulgador": "1ª Câmara Cível",
+   "dataJuntada": "09/02/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "5000917-14.2025.8.08.0048",
+   "relator": "PAULO ABIGUENEM ABIB",
+   "cargoRelator": "Juiz Membro",
+   "orgaoJulgador": "Turma Recursal - 1ª Turma",
+   "dataJuntada": "26/11/2025",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "5003080-21.2025.8.08.0030",
+   "relator": "WALMEA ELYZE CARVALHO",
+   "cargoRelator": "Juiz Membro",
+   "orgaoJulgador": "Turma Recursal - 3ª Turma",
+   "dataJuntada": "05/08/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "5020058-28.2024.8.08.0024",
+   "relator": "RAFAEL FRACALOSSI MENEZES",
+   "cargoRelator": "Juiz Membro",
+   "orgaoJulgador": "Turma Recursal - 3ª Turma",
+   "dataJuntada": "19/12/2025",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "5015312-11.2025.8.08.0048",
+   "relator": "WALMEA ELYZE CARVALHO",
+   "cargoRelator": "Juiz Membro",
+   "orgaoJulgador": "Turma Recursal - 3ª Turma",
+   "dataJuntada": "05/08/2026",
+   "dataJulgamento": null,
+   "dataPublicacao": null
+  }
+ ]
+}

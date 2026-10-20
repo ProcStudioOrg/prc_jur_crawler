@@ -132,3 +132,33 @@ test('cache não fecha banco de job cancelado enquanto fila ainda usa recursos',
     fs.rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test('um kaizen para todas as contas, com o usuario de cada fila; ocupado acompanha as vagas', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-scope-'));
+  const vistos = [];
+  const kaizen = {
+    registrarErro: async (job, r, opts) => { vistos.push(opts.usuarioId); },
+    registrarConcluido: () => ({ avisos: [] }),
+  };
+  let soltar;
+  const scopes = criarEscopos({
+    dir, kaizen,
+    executarFn: (c, p) => (p.query === 'presa' ? new Promise((r) => { soltar = r; }) : Promise.resolve({ ok: false, erro: 'x' })),
+  });
+  try {
+    assert.equal(scopes.ocupado(), false);
+    for (const u of ['alice', 'bob']) {
+      const f = scopes.obter(principal(u)).fila;
+      await f.aguardar(f.enfileirar('stf', { query: 'x' }).id);
+    }
+    assert.deepEqual(vistos, ['alice', 'bob']);
+    const f = scopes.obter(principal('alice')).fila;
+    const job = f.enfileirar('stf', { query: 'presa' });
+    for (let i = 0; i < 50 && !soltar; i++) await new Promise((r) => setTimeout(r, 10));
+    assert.equal(scopes.ocupado(), true);
+    soltar({ ok: true, total: 0, resultados: [] });
+    await f.aguardar(job.id);
+    for (let i = 0; i < 50 && scopes.ocupado(); i++) await new Promise((r) => setTimeout(r, 10));
+    assert.equal(scopes.ocupado(), false);
+  } finally { scopes.fechar(); }
+});

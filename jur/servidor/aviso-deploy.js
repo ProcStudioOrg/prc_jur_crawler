@@ -17,9 +17,12 @@ function revisaoDaImagem(imagem) {
   return /^[0-9a-f]{7,40}$/.test(tag) ? tag : '';
 }
 
+/** Chave de um deploy: a mesma para o aviso ao FFD e para o marcador da sentinela. */
+const chaveDeploy = (versao, revisao = '') => `${versao}+${revisao}`;
+
 async function avisarDeploy({ url, dir, versao, revisao = '', fetchFn = fetch, timeoutMs = 10000 }) {
   if (!url) return 'desligado';
-  const chave = `${versao}+${revisao}`;
+  const chave = chaveDeploy(versao, revisao);
   const marcador = path.join(dir, MARCADOR);
   try {
     if (fs.readFileSync(marcador, 'utf8').trim() === chave) return 'repetido';
@@ -41,4 +44,4 @@ async function avisarDeploy({ url, dir, versao, revisao = '', fetchFn = fetch, t
   }
 }
 
-module.exports = { avisarDeploy, revisaoDaImagem, SERVICO };
+module.exports = { avisarDeploy, revisaoDaImagem, chaveDeploy, SERVICO };

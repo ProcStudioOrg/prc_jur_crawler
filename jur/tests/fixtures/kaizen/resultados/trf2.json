@@ -1,0 +1,105 @@
+{
+ "origem": "resultados/results-trf2.json",
+ "itens": [
+  {
+   "numeroProcesso": "5012650-88.2026.4.02.0000",
+   "processo": "5012650-88.2026.4.02.0000",
+   "processoUrl": "https://eproc.trf2.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "3a. SEÇÃO ESPECIALIZADA",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "5075640-80.2022.4.02.5101",
+   "processo": "5075640-80.2022.4.02.5101",
+   "processoUrl": "https://eproc.trf2.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "6ª TURMA ESPECIALIZADA",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "5000727-59.2020.4.02.5114",
+   "processo": "5000727-59.2020.4.02.5114",
+   "processoUrl": "https://eproc.trf2.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "6ª TURMA ESPECIALIZADA",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "5012599-77.2026.4.02.0000",
+   "processo": "5012599-77.2026.4.02.0000",
+   "processoUrl": "https://eproc.trf2.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "1ª TURMA ESPECIALIZADA",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "27/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "5003520-88.2022.4.02.5117",
+   "processo": "5003520-88.2022.4.02.5117",
+   "processoUrl": "https://eproc.trf2.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "6ª TURMA ESPECIALIZADA",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "5007300-42.2026.4.02.5102",
+   "processo": "5007300-42.2026.4.02.5102",
+   "processoUrl": "https://eproc.trf2.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "6ª TURMA ESPECIALIZADA",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "5010391-80.2025.4.02.5101",
+   "processo": "5010391-80.2025.4.02.5101",
+   "processoUrl": "https://eproc.trf2.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "6ª TURMA ESPECIALIZADA",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "5007845-65.2020.4.02.5121",
+   "processo": "5007845-65.2020.4.02.5121",
+   "processoUrl": "https://eproc.trf2.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "6ª TURMA ESPECIALIZADA",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "5003270-55.2022.4.02.5117",
+   "processo": "5003270-55.2022.4.02.5117",
+   "processoUrl": "https://eproc.trf2.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "6ª TURMA ESPECIALIZADA",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  },
+  {
+   "numeroProcesso": "5011489-46.2024.4.02.5001",
+   "processo": "5011489-46.2024.4.02.5001",
+   "processoUrl": "https://eproc.trf2.jus.br/eproc/externo_controlador.php",
+   "orgaoJulgador": "6ª TURMA ESPECIALIZADA",
+   "dataJulgamento": "27/08/2026",
+   "dataPublicacao": "28/08/2026",
+   "relator": "",
+   "relatorAcordao": ""
+  }
+ ]
+}

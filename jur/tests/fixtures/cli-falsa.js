@@ -87,4 +87,14 @@ if (modo === 'inline') {
   process.on('SIGTERM', () => { /* ignora de proposito */ });
   fs.writeFileSync(saida + '.pronto', '1');
   setInterval(() => {}, 1000);
+} else if (modo === 'falha-com-captura') {
+  // Falha comum do crawler: envelope de erro e exit(1), que o preload intercepta para capturar.
+  process.stdout.write(JSON.stringify({ success: false, error: 'seletor sumiu' }) + '\n');
+  process.exit(1);
+} else if (modo === 'trava-sincrono') {
+  // Event loop preso: o handler de SIGUSR2 do preload nunca roda, so o SIGTERM do prazo resolve.
+  fs.writeFileSync(saida + '.pronto', '1');
+  for (;;) { /* trava de proposito */ }
+} else if (modo === 'eco-env') {
+  process.stdout.write(JSON.stringify({ success: true, args, falhaDir: process.env.JUR_FALHA_DIR || null, captura: process.env.JUR_CAPTURA || null }) + '\n');
 }

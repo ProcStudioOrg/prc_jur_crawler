@@ -1,0 +1,113 @@
+{
+ "origem": "resultados/results-tcdf.json",
+ "itens": [
+  {
+   "numeroDocumento": "3857/2025",
+   "processo": "00600-00005654/2023-56",
+   "relator": "Antonio Renato Alves Rainha",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5441,
+   "dataJulgamento": "01/10/2025",
+   "dataPublicacao": null
+  },
+  {
+   "numeroDocumento": "1049/2026",
+   "processo": "00600-00005654/2023-56",
+   "relator": "Antonio Renato Alves Rainha",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5460,
+   "dataJulgamento": "15/04/2026",
+   "dataPublicacao": null
+  },
+  {
+   "numeroDocumento": "1035/2026",
+   "processo": "00600-00009292/2024-53",
+   "relator": "Vinícius Cardoso De Pinho Fragoso",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5460,
+   "dataJulgamento": "15/04/2026",
+   "dataPublicacao": "24/04/2026"
+  },
+  {
+   "numeroDocumento": "1361/2026",
+   "processo": "00600-00011470/2025-97",
+   "relator": "André Clemente Lara De Oliveira",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5462,
+   "dataJulgamento": "06/05/2026",
+   "dataPublicacao": null
+  },
+  {
+   "numeroDocumento": "4534/2025",
+   "processo": "00600-00015168/2023-46",
+   "relator": "André Clemente Lara De Oliveira",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5446,
+   "dataJulgamento": "12/11/2025",
+   "dataPublicacao": "11/12/2025"
+  },
+  {
+   "numeroDocumento": "1730/2026",
+   "processo": "13273/2005",
+   "relator": "Márcio Michel Alves De Oliveira",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5467,
+   "dataJulgamento": "10/06/2026",
+   "dataPublicacao": "18/06/2026"
+  },
+  {
+   "numeroDocumento": "4879/2025",
+   "processo": "00600-00013983/2025-32",
+   "relator": "Anilcéia Luzia Machado",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5449,
+   "dataJulgamento": "10/12/2025",
+   "dataPublicacao": null
+  },
+  {
+   "numeroDocumento": "2496/2026",
+   "processo": "00600-00012061/2025-16",
+   "relator": "Vinícius Cardoso De Pinho Fragoso",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5474,
+   "dataJulgamento": "05/08/2026",
+   "dataPublicacao": null
+  },
+  {
+   "numeroDocumento": "2515/2026",
+   "processo": "00600-00012061/2025-16",
+   "relator": "Vinícius Cardoso De Pinho Fragoso",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5474,
+   "dataJulgamento": "05/08/2026",
+   "dataPublicacao": null
+  },
+  {
+   "numeroDocumento": "977/2026",
+   "processo": "00600-00007113/2022-81",
+   "relator": "Inácio Magalhães Filho",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5460,
+   "dataJulgamento": "15/04/2026",
+   "dataPublicacao": null
+  },
+  {
+   "numeroDocumento": "1552/2026",
+   "processo": "00600-00015712/2025-11",
+   "relator": "Vinícius Cardoso De Pinho Fragoso",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5465,
+   "dataJulgamento": "27/05/2026",
+   "dataPublicacao": null
+  },
+  {
+   "numeroDocumento": "261/2026",
+   "processo": "224130/2019",
+   "relator": "Antonio Renato Alves Rainha",
+   "orgaoJulgador": "Plenario — sessao ORDINÁRIA",
+   "sessaoNumero": 5453,
+   "dataJulgamento": "11/02/2026",
+   "dataPublicacao": null
+  }
+ ]
+}

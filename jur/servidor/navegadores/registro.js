@@ -45,7 +45,11 @@ function criarRegistro(con, { browserbase = false, remoto = false } = {}) {
         if (!p) return;
         clearTimeout(p.timer); s.pendentes.delete(m.requestId);
         if (m.erro) p.reject(erro(String(m.erro).slice(0, 300)));
-        else p.resolve(m.dados);
+        else {
+          // `continuar` aceito durante a pausa = o usuário destravou a busca (captcha manual).
+          if (p.continuar) s.resolvidoPeloUsuario = true;
+          p.resolve(m.dados);
+        }
       } else if (m.tipo === 'estado' && ['rodando', 'aguardando_usuario'].includes(m.estado)) {
         s.status = m.estado;
         s.mensagem = typeof m.mensagem === 'string' ? m.mensagem.slice(0, 300) : '';
@@ -70,7 +74,7 @@ function criarRegistro(con, { browserbase = false, remoto = false } = {}) {
     const requestId = randomUUID();
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => { s.pendentes.delete(requestId); reject(erro('O navegador não respondeu. Tente novamente.', 504)); }, 10000);
-      s.pendentes.set(requestId, { resolve, reject, timer });
+      s.pendentes.set(requestId, { resolve, reject, timer, continuar: tipo === 'acao' && acao?.tipo === 'continuar' });
       const falhar = () => {
         clearTimeout(timer); s.pendentes.delete(requestId); reject(erro('Navegador desconectado.'));
       };
@@ -80,6 +84,7 @@ function criarRegistro(con, { browserbase = false, remoto = false } = {}) {
   }
   return {
     preferencias, salvar, registrar, anexar, remover, requisitar, provedores, fornecedor,
+    resolvidoPeloUsuario: (id) => Boolean(sessoes.get(id)?.resolvidoPeloUsuario),
     assistido: (comando) => comando === 'stj' && (preferencias().captcha || sempreAssistido(comando)),
     opcoes: (id) => { const s = sessoes.get(id); return s && { acompanhar: s.acompanhar, captcha: s.captcha, provedor: s.provedor }; },
     listar: (pool) => [...sessoes.values()].map((s) => ({

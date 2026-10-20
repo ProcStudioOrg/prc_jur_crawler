@@ -9,17 +9,145 @@ const executorReal = require('../servidor/executor');
 
 const tmpDir = () => fs.mkdtempSync(path.join(os.tmpdir(), 'jur-jobs-'));
 
-function filaDeTeste(executarFn, concorrencia = 3) {
+function filaDeTeste(executarFn, concorrencia = 3, kaizen, extra = {}) {
   const dir = tmpDir();
   return jobs.criarFila({
     con: db.abrir(path.join(dir, 'jur.db')),
     dirResultados: dir,
     concorrencia,
     executarFn,
+    ...(kaizen ? { kaizen } : {}),
+    ...extra,
     catalogoFn: (comando) => (comando === 'inexistente' ? null
       : { comando, nome: 'X', disponivel: comando !== 'bloqueado', estado: 'ok', nota: '' }),
   });
 }
+
+/** Kaizen falso que grava os argumentos de cada chamada; `impl` troca o comportamento. */
+function espiaoKaizen(impl = {}) {
+  const chamadas = { registrarErro: [], registrarConcluido: [] };
+  return {
+    chamadas,
+    registrarErro: (...a) => { chamadas.registrarErro.push(a); return (impl.registrarErro || (async () => {}))(...a); },
+    registrarConcluido: (...a) => { chamadas.registrarConcluido.push(a); return (impl.registrarConcluido || (() => ({ avisos: [] })))(...a); },
+  };
+}
+
+async function ate(cond, ms = 2000) {
+  const fim = Date.now() + ms;
+  while (!cond()) {
+    if (Date.now() > fim) throw new Error('condicao nao chegou');
+    await new Promise((r) => setTimeout(r, 10));
+  }
+}
+
+describe('jobs + kaizen', () => {
+  it('erro chama kaizen.registrarErro com o arquivo do job e nao espera o envio', async () => {
+    const k = espiaoKaizen({ registrarErro: () => new Promise(() => {}) });
+    const fila = filaDeTeste(async () => ({ ok: false, erro: 'fora do ar' }), 3, k, { contextoKaizen: { usuarioId: 'u1' } });
+    const job = await fila.aguardar(fila.enfileirar('stf', { query: 'x' }).id);
+    assert.equal(job.status, 'erro');
+    const [jobVisto, r, opts] = k.chamadas.registrarErro[0];
+    assert.match(opts.arquivo, /\.json$/);
+    assert.equal(opts.usuarioId, 'u1');
+    assert.equal(jobVisto.status, 'erro');
+    assert.equal(r.erro, 'fora do ar');
+    // o registrarErro nunca resolve; mesmo assim a vaga e liberada
+    await ate(() => !fila.ocupada());
+  });
+
+  it('concluido junta os avisos do kaizen aos da CLI', async () => {
+    const k = espiaoKaizen({ registrarConcluido: () => ({ avisos: ['o tribunal parece ter ignorado o filtro de data: 7 de 10 resultados fora do período'] }) });
+    const fila = filaDeTeste(async () => ({ ok: true, total: 1, resultados: [{}], avisos: ['base parcial'] }), 3, k);
+    const job = await fila.aguardar(fila.enfileirar('stf', { query: 'x' }).id);
+    assert.deepEqual(job.avisosCli, ['base parcial', 'o tribunal parece ter ignorado o filtro de data: 7 de 10 resultados fora do período']);
+  });
+
+  it('kaizen que lanca nao transforma sucesso em erro', async () => {
+    const k = espiaoKaizen({ registrarConcluido: () => { throw new Error('bug'); } });
+    const fila = filaDeTeste(async () => ({ ok: true, total: 1, resultados: [{}], avisos: ['base parcial'] }), 3, k);
+    const job = await fila.aguardar(fila.enfileirar('stf', { query: 'x' }).id);
+    assert.equal(job.status, 'concluido');
+    assert.deepEqual(job.avisosCli, ['base parcial']);
+  });
+
+  it('registrarErro que lanca de forma sincrona nao muda o erro do job', async () => {
+    const k = espiaoKaizen({ registrarErro: () => { throw new Error('bug'); } });
+    const fila = filaDeTeste(async () => ({ ok: false, erro: 'fora do ar' }), 3, k);
+    const job = await fila.aguardar(fila.enfileirar('stf', { query: 'x' }).id);
+    assert.equal(job.status, 'erro');
+    assert.match(job.erro, /fora do ar/);
+  });
+
+  it('cancelado nao vira falha: kaizen ve o cancelamento e a captura some', async () => {
+    const { criarKaizen } = require('../servidor/kaizen/index');
+    const real = criarKaizen({ dir: tmpDir(), env: {} });
+    const chamadas = [];
+    const k = {
+      registrarErro: (...a) => { chamadas.push(['erro', ...a]); return real.registrarErro(...a); },
+      registrarConcluido: (...a) => { chamadas.push(['concluido', ...a]); return real.registrarConcluido(...a); },
+    };
+    let dirCaptura;
+    const fila = filaDeTeste((c, p, extra) => new Promise((resolve) => {
+      dirCaptura = extra.arquivoSaida.replace(/\.json$/, '.falha');
+      fs.mkdirSync(dirCaptura);
+      fs.writeFileSync(path.join(dirCaptura, 'meta.json'), '{"passo":"x"}');
+      extra.sinal.addEventListener('abort', () => resolve({ ok: false, erro: 'morto' }));
+    }), 3, k);
+    const { id } = fila.enfileirar('stf', { query: 'x' });
+    await ate(() => dirCaptura);
+    assert.equal(fila.cancelar(id), true);
+    await ate(() => chamadas.length > 0);
+    await ate(() => !fs.existsSync(dirCaptura));
+    assert.deepEqual(chamadas.map((c) => c[0]), ['erro']);
+    assert.equal(chamadas[0][1].status, 'cancelado');
+    assert.equal(chamadas[0][3].cancelado, true);
+    assert.equal(fila.obter(id).status, 'cancelado');
+    real.fechar();
+  });
+
+  it('grava navegador_falhas do aoNavegador', async () => {
+    const fila = filaDeTeste(async (c, p, extra) => { extra.aoNavegador({ nome: 'Steel', reserva: true, falhas: ['Kernel: HTTP 500'] }); return { ok: true, total: 0, resultados: [] }; });
+    const job = await fila.aguardar(fila.enfileirar('stf', { query: 'x' }).id);
+    assert.deepEqual([job.navegador, job.navegadorFalhas], ['Steel (reserva)', ['Kernel: HTTP 500']]);
+  });
+
+  it('resgate pelo usuario fica gravado e chega ao kaizen', async () => {
+    const k = espiaoKaizen();
+    const navegadores = {
+      registrar() {}, remover() {}, iniciar() {}, anexar() {}, fornecedor() {},
+      opcoes: () => ({ acompanhar: true, captcha: true, provedor: 'local' }), assistido: () => false,
+      resolvidoPeloUsuario: () => true,
+    };
+    const fila = filaDeTeste(async () => ({ ok: true, total: 0, resultados: [] }), 3, k, { navegadores });
+    const job = await fila.aguardar(fila.enfileirar('stj', { query: 'x' }).id);
+    assert.equal(job.resolvidoPeloUsuario, true);
+    assert.equal(k.chamadas.registrarConcluido[0][0].resolvidoPeloUsuario, true);
+  });
+
+  it('job sem resgate nem navegador: campos novos com valor neutro', async () => {
+    const fila = filaDeTeste(async () => ({ ok: true, total: 0, resultados: [] }));
+    const job = await fila.aguardar(fila.enfileirar('stf', { query: 'x' }).id);
+    assert.deepEqual([job.navegadorFalhas, job.resolvidoPeloUsuario], [[], false]);
+  });
+
+  it('capturaDoJob devolve a assinatura do meta.json da falha', async () => {
+    const fila = filaDeTeste(async (c, p, extra) => {
+      if (p.query !== 'x') return { ok: true, total: 0, resultados: [] };
+      const d = extra.arquivoSaida.replace(/\.json$/, '.falha');
+      fs.mkdirSync(d);
+      fs.writeFileSync(path.join(d, 'meta.json'), JSON.stringify({ passo: 'x', assinatura: 'stf|seletor|x|erro' }));
+      return { ok: false, erro: 'x' };
+    });
+    const { id } = fila.enfileirar('stf', { query: 'x' });
+    await fila.aguardar(id);
+    assert.deepEqual(fila.capturaDoJob(id), { assinatura: 'stf|seletor|x|erro' });
+    const ok = fila.enfileirar('stf', { query: 'y' });
+    await fila.aguardar(ok.id);
+    assert.equal(fila.capturaDoJob(ok.id), null);
+    assert.equal(fila.capturaDoJob('nao-existe'), null);
+  });
+});
 
 describe('jobs', () => {
   it('roda um job ate concluido e guarda o total', async () => {

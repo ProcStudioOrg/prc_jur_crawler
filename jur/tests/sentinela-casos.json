@@ -1,0 +1,195 @@
+{
+  "_comentario": "Casos montados do smoke de 30/08/2026 (resultados/results-<tribunal>.json, termo \"dano moral\" ou o de TERMO_POR_COMANDO, janela 30/08/2025-30/08/2026, -m 1): periodo = mes com julgados nesse resultado; magistrado = relator mais frequente dele; juizados = termo que trouxe turma recursal; numero = processo real dele (TRF4: o do spec). _pendentes: tribunal x capacidade que funciona mas ficou sem caso, com o motivo. Validados ao vivo em 19/10/2026 (node tests/sentinela.js): trf4 (4 casos ok) e tjpr (2 ok). Os demais vieram de resultado real mas ainda não rodaram ao vivo: rode npm run sentinela antes de ligar JUR_SENTINELA=1 e mova para _pendentes o que falhar.",
+  "_pendentes": {
+    "trf2": {
+      "magistrado": "sem relator legivel no resultado real",
+      "juizados": "o resultado real nao trouxe turma recursal com este termo"
+    },
+    "trf4": {
+      "juizados": "o resultado real nao trouxe turma recursal com este termo"
+    },
+    "trf6": {
+      "juizados": "o resultado real nao trouxe turma recursal com este termo"
+    },
+    "tjal": {
+      "juizados": "o resultado real nao trouxe turma recursal com este termo"
+    },
+    "tjap": {
+      "periodoJulgamento": "resultado real sem dataJulgamento legivel",
+      "periodoPublicacao": "resultado real sem dataPublicacao legivel"
+    },
+    "tjba": {
+      "juizados": "o resultado real nao trouxe turma recursal com este termo"
+    },
+    "tjdft": {
+      "periodoPublicacao": "sem resultado real com termo conhecido"
+    },
+    "tjes": {
+      "periodoJulgamento": "resultado real sem dataJulgamento legivel"
+    },
+    "tjmg": {
+      "periodoPublicacao": "sem resultado real com termo conhecido",
+      "numero": "sem numero de processo em resultado real"
+    },
+    "tjms": {
+      "juizados": "o resultado real nao trouxe turma recursal com este termo"
+    },
+    "tjpa": {
+      "juizados": "o resultado real nao trouxe turma recursal com este termo"
+    },
+    "tjpe": {
+      "juizados": "sem resultado real com termo conhecido",
+      "numero": "sem numero de processo em resultado real"
+    },
+    "tjpi": {
+      "periodoJulgamento": "resultado real sem dataJulgamento legivel"
+    },
+    "tjpr": {
+      "periodoPublicacao": "resultado real sem dataPublicacao legivel"
+    },
+    "tjrj-ejuris": {
+      "juizados": "o resultado real nao trouxe turma recursal com este termo"
+    },
+    "tjro": {
+      "periodoPublicacao": "resultado real sem dataPublicacao legivel"
+    },
+    "tjrs": {
+      "periodoPublicacao": "sem resultado real com termo conhecido",
+      "magistrado": "sem resultado real com termo conhecido",
+      "juizados": "sem resultado real com termo conhecido",
+      "numero": "sem numero de processo em resultado real"
+    },
+    "tjto": {
+      "juizados": "sem resultado real com termo conhecido",
+      "numero": "sem numero de processo em resultado real"
+    },
+    "tceba": {
+      "periodoJulgamento": "resultado real sem dataJulgamento legivel",
+      "periodoPublicacao": "resultado real sem dataPublicacao legivel"
+    },
+    "tcece": {
+      "periodoJulgamento": "sem busca real registrada",
+      "numero": "sem numero de processo em resultado real"
+    },
+    "tcego": {
+      "periodoJulgamento": "sem busca real registrada",
+      "numero": "sem numero de processo em resultado real"
+    },
+    "tcepa": {
+      "periodoJulgamento": "resultado real sem dataJulgamento legivel",
+      "numero": "sem numero de processo em resultado real"
+    },
+    "tcepe": {
+      "periodoPublicacao": "resultado real sem dataPublicacao legivel"
+    },
+    "tcerj": {
+      "periodoPublicacao": "resultado real sem dataPublicacao legivel"
+    },
+    "tcers": {
+      "periodoPublicacao": "resultado real sem dataPublicacao legivel"
+    },
+    "tcesp": {
+      "periodoJulgamento": "resultado real sem dataJulgamento legivel",
+      "periodoPublicacao": "resultado real sem dataPublicacao legivel",
+      "magistrado": "sem relator legivel no resultado real"
+    },
+    "tcu": {
+      "periodoJulgamento": "resultado real sem dataJulgamento legivel"
+    },
+    "tjgo": {
+      "periodoJulgamento": "falhou na validação ao vivo de 19/10/2026: o TJGO devolve zero até sem filtro de data (regressão do crawler/portal, não do caso) — volta depois do conserto",
+      "numero": "falhou na validação ao vivo de 19/10/2026: o TJGO devolve zero até sem filtro de data (regressão do crawler/portal, não do caso) — volta depois do conserto"
+    }
+  },
+  "casos": [
+    {"tribunal":"stf","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/03/2026","dataFim":"31/03/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"stf","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/03/2026","dataPubFim":"31/03/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"stf","capacidade":"numero","params":{"numero":"Rcl 88673"},"espera":{"encontrado":true}},
+    {"tribunal":"trf2","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trf2","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trf2","capacidade":"numero","params":{"numero":"5012650-88.2026.4.02.0000"},"espera":{"encontrado":true}},
+    {"tribunal":"trf4","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trf4","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trf4","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"VIVIAN JOSETE PANTALEÃO CAMINHA","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trf4","capacidade":"numero","params":{"numero":"5057135-38.2021.4.04.7100"},"espera":{"encontrado":true}},
+    {"tribunal":"trf5","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/07/2026","dataFim":"31/07/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trf5","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"CIBELE BENEVIDES GUEDES DA FONSECA","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trf6","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trf6","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trf6","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"ANDRE PRADO DE VASCONCELOS","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trf6","capacidade":"numero","params":{"numero":"6013989-54.2026.4.06.0000"},"espera":{"encontrado":true}},
+    {"tribunal":"tjal","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjal","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjal","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"Maria Lúcia de Fátima Barbosa Pirauá","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjal","capacidade":"numero","params":{"numero":"0701003-66.2026.8.02.0046"},"espera":{"encontrado":true}},
+    {"tribunal":"tjap","capacidade":"numero","params":{"numero":"6004315-97.2026.8.03.0001"},"espera":{"encontrado":true}},
+    {"tribunal":"tjba","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjba","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjba","capacidade":"numero","params":{"numero":"0000200-62.2003.8.05.0074"},"espera":{"encontrado":true}},
+    {"tribunal":"tjce","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/02/2026","dataFim":"28/02/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjce","capacidade":"numero","params":{"numero":"30006187120258060066"},"espera":{"encontrado":true}},
+    {"tribunal":"tjdft","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjdft","capacidade":"numero","params":{"numero":"0708965-46.2026.8.07.0000"},"espera":{"encontrado":true}},
+    {"tribunal":"tjes","capacidade":"juizados","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","juizados":true,"maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjes","capacidade":"numero","params":{"numero":"0009613-14.2020.8.08.0012"},"espera":{"encontrado":true}},
+    {"tribunal":"tjmg","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjms","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjms","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjms","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"Elisabeth Rosa Baisch","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjms","capacidade":"numero","params":{"numero":"0804493-50.2023.8.12.0008"},"espera":{"encontrado":true}},
+    {"tribunal":"tjmt","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjmt","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjmt","capacidade":"numero","params":{"numero":"1022420-19.2025.8.11.0003"},"espera":{"encontrado":true}},
+    {"tribunal":"tjpa","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/09/2025","dataFim":"30/09/2025","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjpa","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/05/2026","dataPubFim":"31/05/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjpa","capacidade":"numero","params":{"numero":"0800462-53.2022.8.14.0044"},"espera":{"encontrado":true}},
+    {"tribunal":"tjpe","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjpi","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjpi","capacidade":"juizados","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","juizados":true,"maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjpi","capacidade":"numero","params":{"numero":"0800400-95.2024.8.18.0152"},"espera":{"encontrado":true}},
+    {"tribunal":"tjpr","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjpr","capacidade":"numero","params":{"numero":"0004575-91.2026.8.16.0075"},"espera":{"encontrado":true}},
+    {"tribunal":"tjrj","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjrj","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjrj","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"CESAR FELIPE CURY","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjrj","capacidade":"numero","params":{"numero":"0800120-79.2025.8.19.0082"},"espera":{"encontrado":true}},
+    {"tribunal":"tjrj-ejuris","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjrj-ejuris","capacidade":"numero","params":{"numero":"0054750-39.2026.8.19.0000"},"espera":{"encontrado":true}},
+    {"tribunal":"tjro","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/03/2026","dataFim":"31/03/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjro","capacidade":"juizados","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","juizados":true,"maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjro","capacidade":"numero","params":{"numero":"70000274120258220019"},"espera":{"encontrado":true}},
+    {"tribunal":"tjrr","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjrr","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjrr","capacidade":"juizados","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","juizados":true,"maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjrr","capacidade":"numero","params":{"numero":"08423014320248230010"},"espera":{"encontrado":true}},
+    {"tribunal":"tjrs","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjto","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trt9","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/10/2025","dataFim":"31/10/2025","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"trt9","capacidade":"numero","params":{"numero":"0000860-84.2024.5.09.0195"},"espera":{"encontrado":true}},
+    {"tribunal":"tcdf","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/10/2025","dataFim":"31/10/2025","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcdf","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/03/2026","dataPubFim":"31/03/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcdf","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"Inácio Magalhães Filho","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcdf","capacidade":"numero","params":{"numero":"00600-00005654/2023-56"},"espera":{"encontrado":true}},
+    {"tribunal":"tceba","capacidade":"numero","params":{"numero":"TCE/001614/2019"},"espera":{"encontrado":true}},
+    {"tribunal":"tcees","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/05/2026","dataFim":"31/05/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcees","capacidade":"numero","params":{"numero":"05661/2024"},"espera":{"encontrado":true}},
+    {"tribunal":"tcemg","capacidade":"periodoJulgamento","params":{"query":"licitação","dataInicio":"01/09/2025","dataFim":"30/09/2025","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcemg","capacidade":"numero","params":{"numero":"1188139"},"espera":{"encontrado":true}},
+    {"tribunal":"tcepe","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/09/2025","dataFim":"30/09/2025","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcepe","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"RUY RICARDO","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcepe","capacidade":"numero","params":{"numero":"21100713-4"},"espera":{"encontrado":true}},
+    {"tribunal":"tcepr","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/07/2026","dataFim":"31/07/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcepr","capacidade":"numero","params":{"numero":"784072/2025"},"espera":{"encontrado":true}},
+    {"tribunal":"tcerj","capacidade":"periodoJulgamento","params":{"query":"licitação","dataInicio":"01/06/2026","dataFim":"30/06/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcerj","capacidade":"numero","params":{"numero":"21523802026"},"espera":{"encontrado":true}},
+    {"tribunal":"tcers","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/05/2026","dataFim":"31/05/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcers","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"Marco Peixoto","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcers","capacidade":"numero","params":{"numero":"009765-0200/21-0"},"espera":{"encontrado":true}},
+    {"tribunal":"tcesc","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/01/2026","dataFim":"31/01/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcesc","capacidade":"numero","params":{"numero":"CON 26/00010585"},"espera":{"encontrado":true}},
+    {"tribunal":"tcesp","capacidade":"numero","params":{"numero":"21197/989/25"},"espera":{"encontrado":true}},
+    {"tribunal":"carf","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/02/2026","dataFim":"28/02/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"carf","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/05/2026","dataPubFim":"31/05/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"carf","capacidade":"numero","params":{"numero":"10283.007661/2010-71"},"espera":{"encontrado":true}}
+  ]
+}

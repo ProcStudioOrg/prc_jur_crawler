@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { avisarDeploy, revisaoDaImagem } = require('../servidor/aviso-deploy');
+const { avisarDeploy, revisaoDaImagem, chaveDeploy } = require('../servidor/aviso-deploy');
 
 const tmp = () => fs.mkdtempSync(path.join(os.tmpdir(), 'aviso-deploy-'));
 
@@ -37,4 +37,11 @@ test('revisão só sai de tag com sha', () => {
   assert.equal(revisaoDaImagem('jur:5605c57'), '5605c57');
   assert.equal(revisaoDaImagem('jur:dev'), '');
   assert.equal(revisaoDaImagem(undefined), '');
+});
+
+test('chave do deploy: versao+revisao, a mesma do marcador', async () => {
+  const dir = tmp();
+  assert.equal(chaveDeploy('1.1.0', 'abc1234'), '1.1.0+abc1234');
+  await avisarDeploy({ url: 'https://ffd.example', dir, versao: '1.1.0', revisao: 'abc1234', fetchFn: async () => new Response('{}') });
+  assert.equal(fs.readFileSync(path.join(dir, '.ultimo-deploy-avisado'), 'utf8').trim(), chaveDeploy('1.1.0', 'abc1234'));
 });

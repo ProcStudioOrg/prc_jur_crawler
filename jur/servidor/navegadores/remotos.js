@@ -141,4 +141,4 @@ const opcoesPara = (comando) => {
 /** O tribunal abre sempre assistido: acompanhamento e intervenção manual de reserva. */
 const assistidoSempre = (comando) => Boolean(perfil(comando)?.captcha);
 
-module.exports = { comNavegadorRemoto, configurados, nomes, rotulo, exigeRemoto, opcoesPara, assistidoSempre };
+module.exports = { comNavegadorRemoto, configurados, nomes, rotulo, exigeRemoto, opcoesPara, assistidoSempre, FALHA_DO_FORNECEDOR };

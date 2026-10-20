@@ -5,8 +5,14 @@ const path = require('node:path');
 
 const CLI_PADRAO = path.join(__dirname, '..', 'bin', 'jur');
 const TIMEOUT_PADRAO = 10 * 60 * 1000;
+const PRELOAD = path.join(__dirname, '..', 'src', 'navegadorPreload.js');
+// No estouro do tempo o filho recebe SIGUSR2 e tem esta janela para gravar print e HTML da
+// pagina travada antes do SIGTERM no grupo. O teto do proprio preload e 9 s; o SIGKILL de
+// garantia (5 s depois do SIGTERM) cobre o resto.
+const PRAZO_CAPTURA_MS = 8000;
 
 const juizados = require('./juizados');
+const { dirFalha } = require('./kaizen/captura');
 
 /**
  * Allowlist fechada. Só o denominador comum verificado da CLI entra aqui.
@@ -126,12 +132,20 @@ async function executar(comando, params = {}, opcoes = {}) {
   }
   const args = montado.args;
   const assistido = opcoes.navegador?.acompanhar || opcoes.env?.JUR_ACOMPANHAR === '1';
-  if (assistido || opcoes.env?.JUR_BROWSER_CDP) args.unshift('--require', path.join(__dirname, '..', 'src', 'navegadorPreload.js'));
+  const prazoCapturaMs = opcoes.prazoCapturaMs ?? PRAZO_CAPTURA_MS;
+  // Preload sempre: alem da ponte/CDP, e ele que captura a pagina quando o crawler falha.
+  args.unshift('--require', PRELOAD);
+  const env = { ...(opcoes.env || process.env) };
+  if (arquivoSaida) env.JUR_FALHA_DIR = dirFalha(arquivoSaida);
+  // Consulta pura por numero sai com 1 quando "nao encontrado": resultado, nao falha. So aqui
+  // se sabe isso — no argv, `-n` tambem e filtro de busca com -q (trf1/trf3/trf5).
+  env.JUR_CAPTURA = params.numero && !params.query ? '0' : '1';
+  const comCaptura = Boolean(arquivoSaida) && env.JUR_CAPTURA === '1';
 
   return new Promise((resolve) => {
     // detached: o crawler abre Chromium filho. Sem grupo proprio, matar o node
     // deixaria o browser orfao consumindo memoria dentro do container.
-    const filho = spawn(process.execPath, args, { detached: true, stdio: assistido ? ['ignore', 'pipe', 'pipe', 'ipc'] : ['ignore', 'pipe', 'pipe'], cwd: opcoes.cwd, env: opcoes.env });
+    const filho = spawn(process.execPath, args, { detached: true, stdio: assistido ? ['ignore', 'pipe', 'pipe', 'ipc'] : ['ignore', 'pipe', 'pipe'], cwd: opcoes.cwd, env });
 
     let saida = '';
     let erroPadrao = '';
@@ -147,21 +161,40 @@ async function executar(comando, params = {}, opcoes = {}) {
     if (typeof opcoes.aoIniciar === 'function') opcoes.aoIniciar(filho.pid);
     if (typeof opcoes.aoProcesso === 'function') opcoes.aoProcesso(filho);
 
+    let prazoCaptura = null;
     const relogio = setTimeout(() => {
       expirou = true;
-      matarGrupo(filho.pid);
+      // Sem captura o preload nao trata SIGUSR2 (a acao padrao mataria o node sem o fechamento
+      // gracioso do Playwright): vai direto o SIGTERM no grupo, como sempre foi.
+      if (!comCaptura) return matarGrupo(filho.pid);
+      // SIGUSR2 so no filho, que e quem tem o handler do preload; no grupo, processo auxiliar
+      // sem handler morreria com ele. O Chromium nem esta neste grupo (ver encerrarPrazo).
+      try { process.kill(filho.pid, 'SIGUSR2'); } catch { /* ja morreu */ }
+      prazoCaptura = setTimeout(() => { prazoCaptura = null; matarGrupo(filho.pid); }, prazoCapturaMs);
     }, timeoutMs);
+    // O node do crawler saiu durante a janela: o grupo morre na hora, sem esperar o prazo, para
+    // nao deixar processo auxiliar dele de pe. O Chromium o Playwright lanca detached, em grupo
+    // proprio, e o -pid nao o alcanca: quem o fecha e o handler de saida do Playwright, ou o fim
+    // do pipe quando o node morre.
+    const encerrarPrazo = () => {
+      if (!prazoCaptura) return;
+      clearTimeout(prazoCaptura);
+      prazoCaptura = null;
+      matarGrupo(filho.pid);
+    };
 
     filho.stdout.on('data', (d) => { saida += d.toString(); });
     filho.stderr.on('data', (d) => { erroPadrao += d.toString(); });
 
     filho.on('error', (e) => {
       clearTimeout(relogio);
+      encerrarPrazo();
       resolve({ ok: false, total: 0, resultados: [], arquivo: null, erro: e.message, codigoSaida: null, envelope: null });
     });
 
     filho.on('close', (codigo) => {
       clearTimeout(relogio);
+      encerrarPrazo();
 
       if (expirou) {
         return resolve({
@@ -335,4 +368,4 @@ async function listar(comando, args = [], opcoes = {}) {
 // `Resultado.envelope` e diagnostico/teste apenas, NAO contratual — ver o
 // comentario acima de `executar`. Nenhum consumidor deste modulo pode
 // depender dele; use `arquivo`/`resultados`/`total`/`ok`/`erro`.
-module.exports = { executar, listar, matarGrupo, PARAMS_ACEITOS };
+module.exports = { executar, listar, matarGrupo, PARAMS_ACEITOS, PRAZO_CAPTURA_MS };

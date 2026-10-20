@@ -35,6 +35,8 @@
   // ---------- estado do painel ----------
 
   function fechar() {
+    // Painel fechado: a busca deixou de estar na tela, o Relatar não deve citá-la.
+    window.jurBuscaVisivel = null;
     painel.hidden = true;
     fundo.hidden = true;
     document.body.classList.remove('com-decisoes');
@@ -109,6 +111,8 @@
   function desenhar() {
     painel.innerHTML = '';
     if (aberta) return desenharJulgados(aberta);
+    // De volta à lista: nenhuma busca específica na tela.
+    window.jurBuscaVisivel = null;
     return desenharBuscas();
   }
 
@@ -185,6 +189,8 @@
   }
 
   async function desenharJulgados(b) {
+    // O Relatar manda este id; tribunal e filtros o servidor tira do job da própria conta.
+    window.jurBuscaVisivel = { jobId: b.id, tribunal: b.comando };
     painel.appendChild(cabecalho(`${b.comando} · ${rotuloBusca(b)}`, true));
     const corpo = document.createElement('div');
     corpo.className = 'decisoes-corpo';

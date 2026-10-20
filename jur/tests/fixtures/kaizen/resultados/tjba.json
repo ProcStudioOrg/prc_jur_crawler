@@ -1,0 +1,101 @@
+{
+ "origem": "resultados/results-tjba.json",
+ "itens": [
+  {
+   "numeroProcesso": "0000200-62.2003.8.05.0074",
+   "processoUrl": null,
+   "orgaoJulgador": "QUARTA CAMARA CÍVEL",
+   "relator": "MARCELO SILVA BRITTO",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "27/08/2026"
+  },
+  {
+   "numeroProcesso": "8001678-60.2025.8.05.0150",
+   "processoUrl": null,
+   "orgaoJulgador": "QUARTA CAMARA CÍVEL",
+   "relator": "MARCELO SILVA BRITTO",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "27/08/2026"
+  },
+  {
+   "numeroProcesso": "8004793-20.2026.8.05.0000",
+   "processoUrl": null,
+   "orgaoJulgador": "PRIMEIRA CAMARA CÍVEL",
+   "relator": "LIDIVALDO REAICHE RAIMUNDO BRITTO",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "27/08/2026"
+  },
+  {
+   "numeroProcesso": "8108374-19.2024.8.05.0001",
+   "processoUrl": null,
+   "orgaoJulgador": "QUINTA CAMARA CÍVEL",
+   "relator": "JOSE CICERO LANDIN NETO",
+   "dataJulgamento": "25/08/2026",
+   "dataPublicacao": "27/08/2026"
+  },
+  {
+   "numeroProcesso": "8119943-17.2024.8.05.0001",
+   "processoUrl": null,
+   "orgaoJulgador": "QUINTA CAMARA CÍVEL",
+   "relator": "CARMEM LUCIA SANTOS PINHEIRO",
+   "dataJulgamento": "25/08/2026",
+   "dataPublicacao": "27/08/2026"
+  },
+  {
+   "numeroProcesso": "8149958-32.2025.8.05.0001",
+   "processoUrl": null,
+   "orgaoJulgador": "TERCEIRA CAMARA CÍVEL",
+   "relator": "ANTONIO MARON AGLE FILHO",
+   "dataJulgamento": "25/08/2026",
+   "dataPublicacao": "27/08/2026"
+  },
+  {
+   "numeroProcesso": "8017744-65.2022.8.05.0039",
+   "processoUrl": null,
+   "orgaoJulgador": "SEGUNDA CAMARA CÍVEL",
+   "relator": "MANUEL CARNEIRO BAHIA DE ARAUJO",
+   "dataJulgamento": "25/08/2026",
+   "dataPublicacao": "27/08/2026"
+  },
+  {
+   "numeroProcesso": "0003941-98.2013.8.05.0191",
+   "processoUrl": null,
+   "orgaoJulgador": "PRIMEIRA CAMARA CÍVEL",
+   "relator": "JOSE SOARES FERREIRA ARAS NETO",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "27/08/2026"
+  },
+  {
+   "numeroProcesso": "8042832-86.2026.8.05.0000",
+   "processoUrl": null,
+   "orgaoJulgador": "PRIMEIRA CAMARA CÍVEL",
+   "relator": "JOSE SOARES FERREIRA ARAS NETO",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "27/08/2026"
+  },
+  {
+   "numeroProcesso": "8007388-88.2025.8.05.0141",
+   "processoUrl": null,
+   "orgaoJulgador": "PRIMEIRA CAMARA CÍVEL",
+   "relator": "EDSON RUY BAHIENSE GUIMARAES",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "27/08/2026"
+  },
+  {
+   "numeroProcesso": "8018736-77.2021.8.05.0001",
+   "processoUrl": null,
+   "orgaoJulgador": "PRIMEIRA CAMARA CÍVEL",
+   "relator": "MARIA DE LOURDES PINHO MEDAUAR",
+   "dataJulgamento": "25/08/2026",
+   "dataPublicacao": "27/08/2026"
+  },
+  {
+   "numeroProcesso": "8003711-74.2019.8.05.0201",
+   "processoUrl": null,
+   "orgaoJulgador": "QUARTA CAMARA CÍVEL",
+   "relator": "MARCELO SILVA BRITTO",
+   "dataJulgamento": "26/08/2026",
+   "dataPublicacao": "27/08/2026"
+  }
+ ]
+}

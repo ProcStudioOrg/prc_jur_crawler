@@ -1,0 +1,89 @@
+{
+ "origem": "resultados/results-tjrr.json",
+ "itens": [
+  {
+   "processo": "08423014320248230010",
+   "relator": "ALMIRO PADILHA",
+   "orgaoJulgador": "Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  },
+  {
+   "processo": "08527927520258230010",
+   "relator": "ALMIRO PADILHA",
+   "orgaoJulgador": "Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  },
+  {
+   "processo": "08163241520258230010",
+   "relator": "ALMIRO PADILHA",
+   "orgaoJulgador": "Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  },
+  {
+   "processo": "08420119120258230010",
+   "relator": "TÂNIA VASCONCELOS",
+   "orgaoJulgador": "Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  },
+  {
+   "processo": "08197607920258230010",
+   "relator": "ALMIRO PADILHA",
+   "orgaoJulgador": "Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  },
+  {
+   "processo": "08210333020248230010",
+   "relator": "ALMIRO PADILHA",
+   "orgaoJulgador": "Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  },
+  {
+   "processo": "08226026620248230010",
+   "relator": "ALMIRO PADILHA",
+   "orgaoJulgador": "Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  },
+  {
+   "processo": "08217625620248230010",
+   "relator": "LUIZ FERNANDO MALLET",
+   "orgaoJulgador": "Câmara Criminal",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  },
+  {
+   "processo": "08219848720258230010",
+   "relator": "TÂNIA VASCONCELOS",
+   "orgaoJulgador": "Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  },
+  {
+   "processo": "08187994120258230010",
+   "relator": "TÂNIA VASCONCELOS",
+   "orgaoJulgador": "Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  },
+  {
+   "processo": "08560379420258230010",
+   "relator": "TÂNIA VASCONCELOS",
+   "orgaoJulgador": "Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  },
+  {
+   "processo": "08299500420258230010",
+   "relator": "ALMIRO PADILHA",
+   "orgaoJulgador": "Câmara Cível",
+   "dataJulgamento": "28/08/2026",
+   "dataPublicacao": "28/08/2026"
+  }
+ ]
+}

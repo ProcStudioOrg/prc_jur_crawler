@@ -1,0 +1,137 @@
+{
+ "origem": "resultados/results-tcesc.json",
+ "itens": [
+  {
+   "processo": "CON 26/00010585",
+   "processoNumero": "2600010585",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "Gerson dos Santos Sicca",
+   "tipoProcesso": "Consulta",
+   "dataDecisao": "29/01/2026",
+   "dataSessao": null,
+   "dataPublicacao": "26/06/2026"
+  },
+  {
+   "processo": "RLI 26/00008769",
+   "processoNumero": "2600008769",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "Luiz Eduardo Cherem",
+   "tipoProcesso": "Inspeção de Regularidade referente a Licitações e Contratos",
+   "dataDecisao": "26/01/2026",
+   "dataSessao": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "DEN 25/00182333",
+   "processoNumero": "2500182333",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "Sabrina Nunes Iocken",
+   "tipoProcesso": "Denúncia",
+   "dataDecisao": "20/10/2025",
+   "dataSessao": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "REP 25/00160879",
+   "processoNumero": "2500160879",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "José Nei Alberton Ascari",
+   "tipoProcesso": "Representação - art. 113, § 1º, da Lei nº 8.666/93",
+   "dataDecisao": "11/09/2025",
+   "dataSessao": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "RLI 26/00001080",
+   "processoNumero": "2600001080",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "Aderson Flores",
+   "tipoProcesso": "Inspeção Financeira",
+   "dataDecisao": "07/01/2026",
+   "dataSessao": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "REP 25/00189699",
+   "processoNumero": "2500189699",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "Sabrina Nunes Iocken",
+   "tipoProcesso": "Representação – Lei de Licitações",
+   "dataDecisao": "04/11/2025",
+   "dataSessao": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "REP 25/00177682",
+   "processoNumero": "2500177682",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "Adircélio de Moraes Ferreira Júnior",
+   "tipoProcesso": "Representação – Lei de Licitações",
+   "dataDecisao": "09/10/2025",
+   "dataSessao": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "LCC 25/00158890",
+   "processoNumero": "2500158890",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "Adircélio de Moraes Ferreira Júnior",
+   "tipoProcesso": "Contrato Decorrente de Licitação",
+   "dataDecisao": "08/09/2025",
+   "dataSessao": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "LCC 25/00159005",
+   "processoNumero": "2500159005",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "Adircélio de Moraes Ferreira Júnior",
+   "tipoProcesso": "Contrato Decorrente de Licitação",
+   "dataDecisao": "08/09/2025",
+   "dataSessao": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "REP 26/00002809",
+   "processoNumero": "2600002809",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "José Nei Alberton Ascari",
+   "tipoProcesso": "Representação – Lei de Licitações",
+   "dataDecisao": "12/01/2026",
+   "dataSessao": null,
+   "dataPublicacao": null
+  },
+  {
+   "processo": "REP 25/00178301",
+   "processoNumero": "2500178301",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "Cleber Muniz Gavi",
+   "tipoProcesso": "Representação do Poder Judiciário",
+   "dataDecisao": "13/10/2025",
+   "dataSessao": null,
+   "dataPublicacao": "01/04/2026"
+  },
+  {
+   "processo": "RLA 25/80029138",
+   "processoNumero": "2580029138",
+   "processoUrl": "https://virtual.tce.sc.gov.br/web/",
+   "numeroDecisao": null,
+   "relator": "Luiz Eduardo Cherem",
+   "tipoProcesso": "Auditoria Operacional",
+   "dataDecisao": "05/09/2025",
+   "dataSessao": null,
+   "dataPublicacao": null
+  }
+ ]
+}

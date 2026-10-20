@@ -11,8 +11,11 @@ const SCHEMA = `
    decidir o que fazer se o schema evoluir de um jeito que exija migração de verdade
    (renomear/remover coluna, por exemplo).
    v4 acrescenta job.navegador (onde a busca rodou: servidor, Kernel, Steel...). Coluna em
-   tabela existente não vem com IF NOT EXISTS; abrir() faz o ALTER quando falta. */
-PRAGMA user_version = 4;
+   tabela existente não vem com IF NOT EXISTS; abrir() faz o ALTER quando falta.
+   v5 acrescenta job.resolvido_pelo_usuario (o usuário destravou o captcha na tela) e
+   job.navegador_falhas (por que o fornecedor anterior caiu, quando a busca foi para a
+   reserva) — é o que o Kaizen reporta como resgate. Mesmo ALTER condicional da v4. */
+PRAGMA user_version = 5;
 
 CREATE TABLE IF NOT EXISTS job (
   id           TEXT PRIMARY KEY,
@@ -28,7 +31,9 @@ CREATE TABLE IF NOT EXISTS job (
   total        INTEGER NOT NULL DEFAULT 0,
   arquivo      TEXT,
   avisos_json  TEXT NOT NULL DEFAULT '[]',
-  navegador    TEXT
+  navegador    TEXT,
+  navegador_falhas TEXT,
+  resolvido_pelo_usuario INTEGER NOT NULL DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS idx_job_status ON job (status, criado_em);
 
@@ -99,8 +104,14 @@ function abrir(caminho = caminhoPadrao()) {
   con.exec('PRAGMA journal_mode = WAL;');
   con.exec('PRAGMA foreign_keys = ON;');
   con.exec(SCHEMA);
-  if (!con.prepare('PRAGMA table_info(job)').all().some((c) => c.name === 'navegador'))
-    con.exec('ALTER TABLE job ADD COLUMN navegador TEXT');
+  const colunas = new Set(con.prepare('PRAGMA table_info(job)').all().map((c) => c.name));
+  const faltando = {
+    navegador: 'navegador TEXT',
+    navegador_falhas: 'navegador_falhas TEXT',
+    resolvido_pelo_usuario: 'resolvido_pelo_usuario INTEGER NOT NULL DEFAULT 0',
+  };
+  for (const [nome, def] of Object.entries(faltando))
+    if (!colunas.has(nome)) con.exec(`ALTER TABLE job ADD COLUMN ${def}`);
 
   // Garante permissão 600 no arquivo de banco e nos arquivos WAL (segredo)
   try {
