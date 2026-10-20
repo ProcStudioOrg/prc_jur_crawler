@@ -228,3 +228,66 @@ test('vazio_suspeito ou timeout: tenta de novo uma vez antes de acusar', async (
   await rodarSentinela({ casos: [caso('tjpr')], kaizen: espiao, esperaEntreMs: 0, esperaRetentativaMs: 1, home: tmp(), executarFn: async (t, p, e) => { k++; return falsoQueFalhaEm('tjpr')(t, p, e); } });
   assert.equal(k, 1, 'seletor quebrado nao e duvida: sem nova tentativa');
 });
+
+test('retentativa que nao chega a rodar: o card leva o arquivo e a captura da primeira', async () => {
+  const home = tmp();
+  let n = 0; let livre = true;
+  const executarFn = async (t, p, e) => {
+    n++;
+    // o preload deixa a captura ao lado do arquivo quando o crawler falha
+    const falha = e.arquivoSaida.replace(/\.json$/, '.falha');
+    fs.mkdirSync(falha, { recursive: true });
+    fs.writeFileSync(path.join(falha, 'meta.json'), '{}');
+    livre = false; // um usuario comeca a buscar durante a espera
+    return { ok: false, resultados: [], erro: 'timeout apos 180000ms' };
+  };
+  let capturaExistia = null;
+  espiao.registrarSentinela = async function (d) { this.sentinela.push(d); capturaExistia = fs.existsSync(path.join(d.arquivo.replace(/\.json$/, '.falha'), 'meta.json')); };
+  const r = await rodarSentinela({
+    casos: [caso('trf4')], executarFn, kaizen: espiao, esperaEntreMs: 0, esperaRetentativaMs: 1, home,
+    ocupado: () => !livre, esperaOcupadoMs: 1, tetoOcupadoMs: 5,
+  });
+  assert.equal(n, 1, 'a segunda tentativa nao rodou');
+  assert.equal(r.falhas, 1);
+  assert.equal(capturaExistia, true);
+  assert.deepEqual(fs.readdirSync(path.join(home, 'resultados')), [], 'limpo depois do registro');
+});
+
+test('retentativa que roda: o card leva a segunda tentativa e a primeira e limpa', async () => {
+  const home = tmp();
+  const arquivos = [];
+  const r = await rodarSentinela({
+    casos: [caso('trf4')], kaizen: espiao, esperaEntreMs: 0, esperaRetentativaMs: 1, home,
+    executarFn: async (t, p, e) => { arquivos.push(e.arquivoSaida); fs.writeFileSync(e.arquivoSaida, '[]'); return okCom(0); },
+  });
+  assert.equal(arquivos.length, 2);
+  assert.equal(r.falhas, 1);
+  assert.equal(espiao.sentinela[0].arquivo, arquivos[1]);
+  assert.deepEqual(fs.readdirSync(path.join(home, 'resultados')), []);
+});
+
+test('disjuntor: duas duvidas seguidas no mesmo tribunal pulam o resto dele', async () => {
+  const chamados = [];
+  const casos = [caso('tjpr'), caso('tjpr', 'periodoPublicacao'), caso('tjpr', 'numero'), caso('trf4')];
+  const r = await rodarSentinela({
+    casos, kaizen: espiao, esperaEntreMs: 0, esperaRetentativaMs: 0, home: tmp(),
+    executarFn: async (t, p) => { chamados.push(t); return t === 'tjpr' ? { ok: false, resultados: [], erro: 'timeout apos 180000ms' } : okCom(5); },
+  });
+  assert.deepEqual(r.itens.map((i) => [i.tribunal, i.capacidade, i.status]), [
+    ['tjpr', 'periodoJulgamento', 'falha'], ['tjpr', 'periodoPublicacao', 'falha'], ['tjpr', 'numero', 'pulado'], ['trf4', 'periodoJulgamento', 'ok'],
+  ]);
+  assert.deepEqual([r.falhas, r.pulados, r.ok], [2, 1, 1]);
+  assert.equal(chamados.filter((t) => t === 'tjpr').length, 4, 'duas tentativas em cada um dos dois casos');
+});
+
+test('disjuntor so conta duvidas seguidas: um ok no meio zera', async () => {
+  let i = 0;
+  const casos = [caso('tjpr'), caso('tjpr', 'periodoPublicacao'), caso('tjpr', 'numero')];
+  const r = await rodarSentinela({
+    casos, kaizen: espiao, esperaEntreMs: 0, esperaRetentativaMs: 0, home: tmp(),
+    // caso 1: timeout x2; caso 2: ok; caso 3: timeout x2
+    executarFn: async () => { i++; return i === 3 ? { ok: true, resultados: [{ numeroProcesso: '5057135-38.2021.4.04.7100', dataPublicacao: '15/08/2026' }] } : { ok: false, resultados: [], erro: 'timeout apos 1ms' }; },
+  });
+  assert.equal(r.pulados, 0);
+  assert.equal(r.rodados, 3);
+});

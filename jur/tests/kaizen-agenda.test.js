@@ -95,3 +95,19 @@ test('rodadas que chegam durante outra viram UMA pendente, com remoto se alguma 
   assert.equal(rodadas.length, 2);
   agenda.parar();
 });
+
+test('aoBoot e chamado quando o timer de boot dispara, antes da rodada; sem versao nova, nunca', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'], now: Date.parse('2026-10-20T10:00:00Z') });
+  const ordem = [];
+  const agenda = iniciarAgenda({ rodar: async () => ordem.push('rodar'), versaoNova: true, atrasoBootMs: 1000, aoBoot: () => ordem.push('aoBoot') });
+  t.mock.timers.tick(999); await microtarefas();
+  assert.deepEqual(ordem, []);
+  t.mock.timers.tick(1); await microtarefas();
+  assert.deepEqual(ordem, ['aoBoot', 'rodar']);
+  agenda.parar();
+  let chamado = false;
+  const outra = iniciarAgenda({ rodar: async () => {}, atrasoBootMs: 1000, aoBoot: () => { chamado = true; } });
+  t.mock.timers.tick(5000); await microtarefas();
+  assert.equal(chamado, false);
+  outra.parar();
+});

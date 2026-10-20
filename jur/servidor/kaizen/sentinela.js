@@ -88,6 +88,7 @@ async function rodarSentinela({
   let sessoesRemotas = 0;
   let algumRodou = false;
   let desistiu = null; // motivo para pular o resto da rodada
+  const duvidasSeguidas = new Map(); // tribunal -> timeouts/vazios seguidos
 
   const registrar = (item) => {
     itens.push(item);
@@ -124,6 +125,7 @@ async function rodarSentinela({
     const base = { tribunal: caso.tribunal, capacidade: caso.capacidade };
     if (!desistiu && Date.now() >= fim) desistiu = 'prazo da rodada esgotado';
     if (desistiu) { pular(base, desistiu); continue; }
+    if ((duvidasSeguidas.get(caso.tribunal) || 0) >= 2) { pular(base, 'tribunal com duas falhas seguidas nesta rodada'); continue; }
     if (!podeRemoto(caso)) { pular(base, `teto de ${maxRemoto} sessões remotas`); continue; }
     // espaçamento antes de checar `ocupado`, para a checagem valer no momento de rodar
     if (algumRodou && esperaEntreMs > 0) await dormir(esperaEntreMs);
@@ -137,10 +139,19 @@ async function rodarSentinela({
 
     let t = await tentar(caso);
     if (t.avaliacao.status === 'falha' && RETENTAR.has(t.avaliacao.classe) && Date.now() + esperaRetentativaMs < fim) {
-      limpar(t.arquivo);
       if (esperaRetentativaMs > 0) await dormir(esperaRetentativaMs);
-      if (podeRemoto(caso) && (await esperarLivre(ocupado, esperaOcupadoMs, tetoOcupadoMs))) t = await tentar(caso);
+      // A primeira tentativa só some depois que a segunda existe: se a nova não rodar, o card
+      // sai com o print e o HTML da primeira.
+      if (podeRemoto(caso) && (await esperarLivre(ocupado, esperaOcupadoMs, tetoOcupadoMs))) {
+        const primeira = t;
+        t = await tentar(caso);
+        limpar(primeira.arquivo);
+      }
     }
+    // Disjuntor: duas dúvidas seguidas no mesmo tribunal = ele está fora agora; insistir nos
+    // outros casos dele só gasta a rodada (e sessão remota) para repetir o mesmo card.
+    const duvida = t.avaliacao.status === 'falha' && RETENTAR.has(t.avaliacao.classe);
+    duvidasSeguidas.set(caso.tribunal, duvida ? (duvidasSeguidas.get(caso.tribunal) || 0) + 1 : 0);
     const { r, avaliacao, arquivo, navegador, ms } = t;
     totais.rodados++;
     if (avaliacao.status === 'ok') totais.ok++;
