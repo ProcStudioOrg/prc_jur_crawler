@@ -107,7 +107,8 @@ describe('capacidades por tribunal', () => {
   });
 
   it('recusar explica ausencia e falha, e devolve null quando pode rodar', () => {
-    assert.match(capacidades.recusar('tjpr', 'juizados', 'TJPR'), /NAO FOI FEITA/);
+    assert.match(capacidades.recusar('tjmg', 'juizados', 'TJMG'), /NAO FOI FEITA/);
+    assert.strictEqual(capacidades.recusar('tjpr', 'juizados', 'TJPR'), null, 'TJPR tem --foro juizados (BRU-88)');
     assert.match(capacidades.recusar('tjac', 'inteiroTeor', 'TJAC'), /reCAPTCHA/);
     assert.strictEqual(capacidades.recusar('trf4', 'juizados', 'TRF4'), null);
     assert.strictEqual(capacidades.recusar('trf4', 'periodoPublicacao', 'TRF4'), null);

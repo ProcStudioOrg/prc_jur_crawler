@@ -150,6 +150,20 @@ A porta 3000 continua em loopback atrás do proxy HTTPS. Não use `down -v` para
 # Navegadores assistidos
 
 O pool global respeita `JUR_CONCORRENCIA` (padrão 3), em uma única instância da aplicação.
+
+## Tetos de admissão da fila
+
+A fila recusa com **HTTP 429 + `Retry-After`** (e o chat avisa o modelo para esperar)
+quando um destes tetos é atingido. `0` desliga o teto correspondente.
+
+| Variável | Padrão | O que limita |
+|---|---|---|
+| `JUR_ATIVAS_POR_CONTA` | `12` | buscas enfileiradas + rodando de uma mesma conta (uma pergunta do chat nos 9 TJs do Nordeste cria 9) |
+| `JUR_FILA_GLOBAL` | `30` | jobs aguardando vaga no pool local, somando todas as contas (~15 min de espera com 3 vagas) |
+| `JUR_BUSCAS_POR_HORA` | `60` | admissões por conta em janela deslizante de uma hora |
+
+Os valores foram escolhidos para o h2 (3 vagas, 2 GiB) e para o custo dos navegadores
+remotos; o envelope medido sob carga sintética ainda não existe (ver BRU-87).
 O Docker inclui Xvfb para STJ com janela e usa `init: true` para gerir os processos
 filhos. Ao executar a imagem diretamente com seu comando padrão, use `docker run
 --init --shm-size=1g ...`; sem init, `xvfb-run` pode bloquear a partida como PID 1.

@@ -1,6 +1,7 @@
 // Botão "Relatar" da interface: card no Linear BRU (se configurado) e cópia no FFD (user-issues).
 // O que o servidor afirma (usuário, equipe, versão, a busca e a conversa da própria conta) vale
 // mais do que o `extra` do browser, que só serve para apontar qual busca/conversa está na tela.
+const crypto = require('node:crypto');
 const { json, lerCorpo } = require('../http');
 const { buildMeta, submitIssue, SubmissionError, LinearError } = require('../issue-reporter/report');
 const {
@@ -29,7 +30,24 @@ function dentroDoLimite(principal, agora) {
   }
   return true;
 }
-function zerarLimiteDeRelatos() { relatosPorConta.clear(); }
+function zerarLimiteDeRelatos() { relatosPorConta.clear(); respostasRecentes.clear(); }
+
+// Idempotência (herdada do BRU-91): o mesmo relato (conta + título + descrição) em 10 min devolve a
+// MESMA resposta, sem card novo, sem item novo no FFD e sem gastar o limite. Duplo clique e
+// retentativa do widget não duplicam. Só respostas 200 entram aqui.
+const JANELA_REPETIDO_MS = 10 * 60e3;
+const respostasRecentes = new Map();
+function assinaturaDoRelato(principal, body) {
+  const hash = crypto.createHash('sha256').update(`${texto(body.title)}\n${texto(body.body)}`).digest('hex');
+  return `${principal.issuer || ''}|${principal.userId || ''}|${hash}`;
+}
+function respostaRepetida(assinatura, agora) {
+  for (const [k, v] of respostasRecentes) if (agora - v.em >= JANELA_REPETIDO_MS) respostasRecentes.delete(k);
+  return respostasRecentes.get(assinatura)?.resposta || null;
+}
+function lembrarResposta(assinatura, agora, resposta) {
+  respostasRecentes.set(assinatura, { em: agora, resposta });
+}
 
 const texto = (v) => (typeof v === 'string' ? v.trim() : '');
 
@@ -59,6 +77,11 @@ function registrar(roteador, deps) {
     // e o FFD receberia relato sem título.
     if (texto(body.title).length < MIN_TITULO) return json(res, 400, { error: 'Dê um título com pelo menos 4 caracteres.' });
     if (!texto(body.body)) return json(res, 400, { error: 'Descreva o que aconteceu.' });
+    // Antes do limite: a retentativa do mesmo envio não conta como relato novo nem cai no 429 por
+    // causa do próprio duplo clique.
+    const assinaturaRelato = assinaturaDoRelato(principal, body);
+    const repetida = respostaRepetida(assinaturaRelato, agora());
+    if (repetida) return json(res, 200, { ...repetida, repetido: true });
     if (!dentroDoLimite(principal, agora())) return json(res, 429, { erro: ERRO_LIMITE });
 
     const extra = body.context && typeof body.context.extra === 'object' && body.context.extra ? body.context.extra : {};
@@ -106,9 +129,10 @@ function registrar(roteador, deps) {
       }));
     } catch (e) { console.error('[relatos]', e?.message || e); }
 
-    if (linear) return json(res, 200, { ok: true, identifier: linear.identifier, url: linear.url });
+    const responder = (resposta) => { lembrarResposta(assinaturaRelato, agora(), resposta); return json(res, 200, resposta); };
+    if (linear) return responder({ ok: true, identifier: linear.identifier, url: linear.url });
     // Como o ProcStudio: o card ficou devendo, mas o relato chegou ao FFD — para quem relatou, "Recebido".
-    if (noFfd) return json(res, 200, { ok: true, identifier: null, url: null });
+    if (noFfd) return responder({ ok: true, identifier: null, url: null });
     return json(res, 502, { error: FALHA_GERAL });
   });
 }

@@ -155,6 +155,8 @@ Expected: exit 0.
 
 Run: `cd jur && npm run aceite`
 Expected: exit 0.
+(Desde 19/10/2026 — BRU-77 — o comando sem argumento roda o gate de release:
+TRT9 com `-g 1,2` e TJPR com `--foro comum,juizados`; `--rapido` pula a rede.)
 
 - [ ] **Step 6: Rodar smoke informativo**
 

@@ -20,6 +20,8 @@ Kaizen: o JurCrawler passa a enxergar as próprias falhas (detalhes em `docs/kai
 - resgates (navegador reserva e captcha resolvido à mão) registrados;
 - outbox persistente para o FFD (`jur-diagnostico`), com retentativa e teto de tamanho;
 - botão Relatar na interface: card no Linear BRU e cópia no FFD (`user-issues`), com o histórico da conversa;
+  idempotente (mesmo título + descrição em 10 min devolve o mesmo card). Absorve o BRU-91
+  (`/api/v1/feedback`, nunca chegou a produção): fica só o Relatar e a rota `/api/v1/relatos`;
 - sentinela diária às 04:00 de São Paulo, com casos reais por tribunal e capacidade (`npm run sentinela`);
 - envs novas: `KAIZEN_WEBHOOK_URL`, `KAIZEN_WEBHOOK_TOKEN`, `KAIZEN_SALT`, `LINEAR_API_KEY`, `LINEAR_TEAM_ID`, `JUR_SENTINELA`, `JUR_SENTINELA_MAX_REMOTO`, `JUR_SENTINELA_PRAZO_MIN`.
 

@@ -6,19 +6,18 @@ use [`jur/CLAUDE-CODEGEN.md`](jur/CLAUDE-CODEGEN.md).
 
 ## Controle externo ainda não implementado
 
-Faltam 16 Tribunais de Contas estaduais:
+Faltam 14 Tribunais de Contas estaduais (TCE-CE e TCE-GO entraram em 28/09/2026):
 
-`TCE-AC`, `TCE-AL`, `TCE-AM`, `TCE-AP`, `TCE-CE`, `TCE-GO`, `TCE-MA`,
-`TCE-MS`, `TCE-MT`, `TCE-PB`, `TCE-PI`, `TCE-RN`, `TCE-RO`, `TCE-RR`,
-`TCE-SE` e `TCE-TO`.
+`TCE-AC`, `TCE-AL`, `TCE-AM`, `TCE-AP`, `TCE-MA`, `TCE-MS`, `TCE-MT`,
+`TCE-PB`, `TCE-PI`, `TCE-RN`, `TCE-RO`, `TCE-RR`, `TCE-SE` e `TCE-TO`.
 
 Faltam também cinco Tribunais de Contas municipais:
 
 - `TCM-BA`, `TCM-GO` e `TCM-PA`: contas municipais dos respectivos estados;
 - `TCM-RJ` e `TCM-SP`: contas das capitais.
 
-Prioridade sugerida: TCE-CE, TCE-GO e TCE-MT; depois os TCMs que fecham lacunas
-municipais dos TCEs já existentes.
+Prioridade sugerida: TCE-MT (fecha o lote do BRU-79); depois os TCMs que fecham
+lacunas municipais dos TCEs já existentes.
 
 ## CRPS
 

@@ -41,7 +41,19 @@ describe('http', () => {
     assert.ok(corpo.tribunais.length > 60);
     const stf = corpo.tribunais.find((t) => t.comando === 'stf');
     assert.strictEqual(stf.disponivel, true);
-    assert.ok('estado' in stf && 'nota' in stf);
+    assert.ok('estado' in stf && 'resumo' in stf && 'capacidades' in stf);
+    // BRU-75: a listagem omite `nota` (era ~90% do payload); ela vive no detalhe.
+    assert.ok(!('nota' in stf), 'a listagem nao pode carregar a nota tecnica');
+    const texto = JSON.stringify(corpo);
+    assert.ok(texto.length < 100_000, `listagem pesada demais: ${texto.length} bytes (teto 100 KB)`);
+  });
+
+  it('GET /api/v1/tribunais/:comando devolve o detalhe com a nota; desconhecido da 404', async () => {
+    const stf = await (await fetch(`${base}/api/v1/tribunais/stf`)).json();
+    assert.strictEqual(stf.comando, 'stf');
+    assert.ok(typeof stf.nota === 'string' && stf.nota.length > 0);
+    assert.ok('resumo' in stf && 'capacidades' in stf);
+    assert.strictEqual((await fetch(`${base}/api/v1/tribunais/nao-existe`)).status, 404);
   });
 
   it('GET /api/v1/tribunais?segmento=superior filtra', async () => {

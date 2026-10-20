@@ -109,13 +109,43 @@ test('sem LINEAR_*: POST nem tenta o Linear e responde como Linear fora com FFD 
 });
 
 test('limite por conta: 5 relatos em 10 min, o 6o leva 429; passada a janela, volta', async () => {
-  for (let i = 0; i < 5; i++) assert.equal((await post('/api/v1/relatos', relato())).status, 200);
-  const r = await post('/api/v1/relatos', relato());
+  // Relatos distintos: o mesmo título + descrição repetido é idempotente e não conta.
+  for (let i = 0; i < 5; i++) assert.equal((await post('/api/v1/relatos', relato({ title: `Problema ${i}` }))).status, 200);
+  const r = await post('/api/v1/relatos', relato({ title: 'Problema 5' }));
   assert.equal(r.status, 429);
   assert.equal(r.body.erro, 'Muitos relatos em pouco tempo. Tente de novo em alguns minutos.');
   assert.equal(espiao.relatos.length, 5);
   relogio += 10 * 60e3 + 1;
-  assert.equal((await post('/api/v1/relatos', relato())).status, 200);
+  assert.equal((await post('/api/v1/relatos', relato({ title: 'Problema 5' }))).status, 200);
+});
+
+test('mesmo relato em 10 min: devolve o mesmo card, sem card novo, sem item no FFD e sem gastar o limite', async () => {
+  const primeiro = await post('/api/v1/relatos', relato());
+  assert.equal(primeiro.status, 200);
+  const repetido = await post('/api/v1/relatos', relato());
+  assert.deepEqual([repetido.status, repetido.body], [200, { ...primeiro.body, repetido: true }]);
+  assert.equal(linearChamadas.length, 1);
+  assert.equal(espiao.relatos.length, 1);
+  // A retentativa nao conta no limite: ainda cabem 4 relatos diferentes, o 5o diferente leva 429.
+  for (let i = 0; i < 4; i++) assert.equal((await post('/api/v1/relatos', relato({ title: `Outro problema ${i}` }))).status, 200);
+  assert.equal((await post('/api/v1/relatos', relato({ title: 'Mais um problema' }))).status, 429);
+  // Titulo igual com descricao diferente e outro relato.
+  assert.equal((await post('/api/v1/relatos', relato({ body: 'Agora deu erro 500.' }))).status, 429);
+  // Passada a janela, o mesmo relato vira card novo.
+  relogio += 10 * 60e3 + 1;
+  const depois = await post('/api/v1/relatos', relato());
+  assert.deepEqual([depois.status, depois.body.repetido], [200, undefined]);
+  assert.equal(linearChamadas.length, 6);
+});
+
+test('relato que falhou (502) nao e lembrado: a retentativa tenta de novo', async () => {
+  linear.createIssue = async () => { throw new LinearError('fora'); };
+  espiao.outbox.ligado = false;
+  espiao.enviarRelato = () => false;
+  assert.equal((await post('/api/v1/relatos', relato())).status, 502);
+  espiao.enviarRelato = (r) => { espiao.relatos.push(payloadRelato(r)); return true; };
+  const r = await post('/api/v1/relatos', relato());
+  assert.deepEqual([r.status, r.body], [200, { ok: true, identifier: null, url: null }]);
 });
 
 test('com BRU: meta habilitada com o time e sem a chave', async () => {
@@ -163,7 +193,7 @@ test('Linear fora: 200 Recebido e FFD com linear null; Linear e FFD fora: 502', 
   assert.deepEqual((await post('/api/v1/relatos', relato())).body, { ok: true, identifier: null, url: null });
   assert.equal(espiao.relatos.at(-1).linear, null);
   espiao.enviarRelato = () => false;
-  const r = await post('/api/v1/relatos', relato());
+  const r = await post('/api/v1/relatos', relato({ title: 'Outro problema' }));
   assert.equal(r.status, 502);
   assert.doesNotMatch(JSON.stringify(r.body), /Linear respondeu/);
 });
@@ -174,7 +204,7 @@ test('sem LINEAR_* o relato direto ainda vai ao FFD; sem os dois, 502', async ()
   assert.equal(linearChamadas.length, 0);
   assert.equal(espiao.relatos.length, 1);
   espiao.enviarRelato = () => false;
-  assert.equal((await post('/api/v1/relatos', relato(), { env: {} })).status, 502);
+  assert.equal((await post('/api/v1/relatos', relato({ title: 'Outro problema' }), { env: {} })).status, 502);
 });
 
 test('titulo curto: 400 e nada vai ao FFD', async () => {

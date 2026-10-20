@@ -137,6 +137,9 @@ Rotas em `servidor/rotas/relatos.js`, só pela interface (chave pessoal de REST/
 - `GET /api/v1/relatos/meta`: se o relato está habilitado (Linear configurado **ou** outbox do
   FFD ligada) e o que o widget deve mostrar.
 - Limite por conta: 5 relatos a cada 10 min; o 6º recebe 429.
+- Idempotente: o mesmo título + descrição da mesma conta em 10 min devolve a mesma resposta
+  (`repetido: true`), sem card novo, sem item novo no FFD e sem contar no limite. Duplo clique e
+  retentativa do widget não duplicam. Só respostas 200 são lembradas; 502 pode ser retentado.
 - `POST /api/v1/relatos`: valida título (4+ caracteres) e descrição; **o servidor monta o
   contexto**: usuário, equipe, versão, a busca (`jobId`) e a conversa (`conversaId`) da
   própria conta. O `extra` do navegador só aponta qual busca/conversa está na tela; id de

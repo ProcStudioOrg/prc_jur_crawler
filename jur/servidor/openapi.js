@@ -99,7 +99,7 @@ const ACCOUNT_PATHS = {
       priority: { type: ['integer', 'null'], enum: [1, 2, 3, 4, null] },
       context: { type: 'object', description: 'Capturado pelo widget. extra.jobId e extra.conversaId apontam a busca e a conversa na tela; o servidor só os usa se forem da própria conta e tira deles os fatos (tribunal, filtros, erro, últimas mensagens).' },
     } } }),
-    description: 'Relato pela interface; chave pessoal é recusada (403). Abre card no Linear (time configurado) e envia cópia ao painel de diagnóstico. 200 com identifier/url do card; identifier e url nulos quando o card falhou mas o relato foi recebido; 502 quando nada pôde ser registrado.',
+    description: 'Relato pela interface; chave pessoal é recusada (403). Abre card no Linear (time configurado) e envia cópia ao painel de diagnóstico. 200 com identifier/url do card; identifier e url nulos quando o card falhou mas o relato foi recebido; 502 quando nada pôde ser registrado. Mesma conta com o mesmo título e descrição em 10 minutos recebe a MESMA resposta (`repetido: true`), sem card novo e sem contar no limite de 5 relatos a cada 10 minutos (429).',
   } },
   '/auth/login': { get: { summary: 'Inicia login ProcStudio com PKCE', security: [], responses: { 303: { description: 'Redirecionamento ao ProcStudio; cookie temporário HttpOnly.' } } } },
   '/auth/callback': { get: { summary: 'Consome código temporário de uso único', security: [], parameters: ['code', 'state'].map(name => ({ name, in: 'query', required: true, schema: { type: 'string' } })), responses: { 303: { description: 'Retorna à interface com cookie de sessão ou mensagem de erro.' } } } },
@@ -170,7 +170,7 @@ function documento() {
             uf: { type: 'array', items: { type: 'string' } },
             estado: { $ref: '#/components/schemas/EstadoTribunal' },
             acesso: { type: ['string', 'null'] },
-            nota: { type: 'string', description: 'ressalva do tribunal — a mesma que aparece em `avisos[]` quando uma busca dá total 0' },
+            nota: { type: 'string', description: 'ressalva técnica completa do tribunal — a mesma que aparece em `avisos[]` quando uma busca dá total 0. Só vem no detalhe (GET /api/v1/tribunais/{comando}); a listagem a omite para ficar leve' },
             disponivel: { type: 'boolean', description: 'true só para estado ok ou instavel; buscar num tribunal indisponível devolve 409' },
             resumo: { type: 'string', description: 'uma ou duas frases em português sobre o estado do tribunal, para exibir ao usuário' },
             capacidades: {
@@ -186,7 +186,7 @@ function documento() {
               },
             },
           },
-          required: ['comando', 'codigo', 'nome', 'uf', 'estado', 'nota', 'disponivel', 'resumo', 'capacidades'],
+          required: ['comando', 'codigo', 'nome', 'uf', 'estado', 'disponivel', 'resumo', 'capacidades'],
         },
         Busca: {
           type: 'object',
@@ -353,6 +353,27 @@ function documento() {
           },
         },
       },
+      '/api/v1/tribunais/{comando}': {
+        get: {
+          summary: 'Detalhe de um tribunal, com a ressalva técnica completa',
+          description: 'Mesma forma da listagem, acrescida de `nota` (a ressalva longa do catálogo). Use quando precisar do motivo detalhado de um estado ou de uma busca com total 0.',
+          parameters: [
+            { name: 'comando', in: 'path', required: true, schema: { type: 'string' }, description: 'comando da CLI, ex.: stf, trf4, tjpr' },
+          ],
+          responses: {
+            200: {
+              description: 'o tribunal, com `nota`',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Tribunal' } } },
+            },
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
+            404: {
+              description: 'tribunal desconhecido (não existe no catálogo)',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+            },
+          },
+        },
+      },
       '/api/v1/buscas': {
         post: {
           summary: 'Cria uma busca de jurisprudência (assíncrona)',
@@ -406,6 +427,19 @@ function documento() {
             404: {
               description: 'tribunal desconhecido (não existe no catálogo)',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+            },
+            429: {
+              description: 'teto de admissão atingido: buscas simultâneas da conta, buscas por hora da conta ou fila global do servidor. Cabeçalho `Retry-After` em segundos; o corpo repete em `retryAfter`',
+              headers: { 'Retry-After': { schema: { type: 'integer' }, description: 'segundos até valer a pena tentar de novo' } },
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: { erro: { type: 'string' }, retryAfter: { type: 'integer' } },
+                    required: ['erro', 'retryAfter'],
+                  },
+                },
+              },
             },
             409: {
               description: 'tribunal indisponível (sem-acesso ou exige-sessao) — o corpo traz `estado` e `nota` explicando por quê',

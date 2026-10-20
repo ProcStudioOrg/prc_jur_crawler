@@ -432,4 +432,48 @@ describe('enriquecer — avisos da CLI no zero', () => {
     const j = enriquecerJob({ id: 'j', comando: 'tcego', status: 'concluido', total: 1, avisosCli: ['x'] });
     assert.ok(!('avisosCli' in j));
   });
+
+  // ---------- BRU-87: tetos de admissao ----------
+  const tick = () => new Promise((r) => setImmediate(r));
+  const travado = () => new Promise(() => { /* nunca termina: segura a vaga */ });
+
+  it('limite de buscas simultaneas por conta: a seguinte recebe 429 com retryAfter', async () => {
+    const fila = filaDeTeste(travado, 1, null, { limites: { ativasPorConta: 2, filaGlobal: 0, buscasPorHora: 0 } });
+    fila.enfileirar('stf', { query: 'a' });
+    fila.enfileirar('stf', { query: 'b' });
+    let erro = null;
+    try { fila.enfileirar('stf', { query: 'c' }); } catch (e) { erro = e; }
+    assert.ok(erro, 'a terceira busca ativa deveria ter sido recusada');
+    assert.strictEqual(erro.status, 429);
+    assert.match(erro.message, /simultaneas/);
+    assert.ok(Number.isInteger(erro.retryAfter) && erro.retryAfter > 0);
+    assert.strictEqual(fila.listar().length, 2, 'a recusa nao pode ter gravado job');
+  });
+
+  it('fila global cheia: recusa quando ha mais jobs aguardando vaga do que o teto', async () => {
+    const fila = filaDeTeste(travado, 1, null, { limites: { ativasPorConta: 0, filaGlobal: 1, buscasPorHora: 0 } });
+    fila.enfileirar('stf', { query: 'roda' }); await tick();      // ocupa a unica vaga
+    fila.enfileirar('stf', { query: 'espera' }); await tick();    // 1 aguardando = teto
+    assert.throws(() => fila.enfileirar('stf', { query: 'sobra' }), (e) => e.status === 429 && /cheia/.test(e.message));
+  });
+
+  it('limite por hora: janela deslizante por conta, com retryAfter ate uma hora', async () => {
+    const fila = filaDeTeste(async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null }), 3, null,
+      { limites: { ativasPorConta: 0, filaGlobal: 0, buscasPorHora: 2 } });
+    const a = fila.enfileirar('stf', { query: '1' });
+    const b = fila.enfileirar('stf', { query: '2' });
+    await fila.aguardar(a.id); await fila.aguardar(b.id);        // terminadas, mas ainda contam na hora
+    let erro = null;
+    try { fila.enfileirar('stf', { query: '3' }); } catch (e) { erro = e; }
+    assert.strictEqual(erro && erro.status, 429);
+    assert.match(erro.message, /por hora/);
+    assert.ok(erro.retryAfter >= 1 && erro.retryAfter <= 3600);
+  });
+
+  it('teto 0 desliga o limite correspondente', () => {
+    const fila = filaDeTeste(travado, 1, null, { limites: { ativasPorConta: 0, filaGlobal: 0, buscasPorHora: 0 } });
+    for (let i = 0; i < 12; i++) fila.enfileirar('stf', { query: String(i) });
+    assert.strictEqual(fila.listar().length, 12);
+    assert.deepStrictEqual(fila.limites, { ativasPorConta: 0, filaGlobal: 0, buscasPorHora: 0 });
+  });
 });

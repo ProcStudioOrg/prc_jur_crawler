@@ -9,6 +9,14 @@
  *   node tests/aceite.js TRT9 --flag -g --origens 1,2
  *   node tests/aceite.js TRT9 --sem-desambiguacao      # quando não se aplica
  *   node tests/aceite.js TJRS --rapido                 # pula o que usa rede
+ *   node tests/aceite.js                               # GATE DE RELEASE (ver abaixo)
+ *   node tests/aceite.js --rapido                      # gate só com os itens estáticos
+ *
+ * GATE DE RELEASE (BRU-77): sem código de tribunal, roda a amostra fixa de release —
+ * um tribunal por família de acesso, com a desambiguação que cada um tem — e o exit
+ * code é o pior dos dois. É o comando que AGENTS.md e os planos de publicação mandam
+ * executar antes de promover uma release; antes dele, `npm run aceite` só imprimia o
+ * uso e saía com 2.
  *
  * Exit 0 = todos os itens obrigatórios passaram.
  */
@@ -27,7 +35,25 @@ const fIdx = argv.indexOf('--flag');
 const FLAG = fIdx >= 0 ? argv[fIdx + 1] : '--origem';
 const SEM_DESAMB = argv.includes('--sem-desambiguacao');
 
-if (!CODE) { console.error('uso: node tests/aceite.js <CODIGO> [--origens a,b] [--sem-desambiguacao] [--rapido]'); process.exit(2); }
+// Amostra de release: uma origem HTTP pura (TRT9 = FALCÃO, API JSON) e uma por Chromium
+// (TJPR, Playwright), cada qual com a flag de desambiguação que a própria CLI expõe.
+// Mudar a amostra é decisão de release: registre em docs/qa.
+const AMOSTRA_RELEASE = [
+  ['TRT9', '--flag', '-g', '--origens', '1,2'],
+  ['TJPR', '--flag', '--foro', '--origens', 'comum,juizados'],
+];
+
+if (!CODE) {
+  const { spawnSync } = require('child_process');
+  console.log(`\n=== GATE DE RELEASE — ${AMOSTRA_RELEASE.map((a) => a[0]).join(' + ')}${RAPIDO ? ' (--rapido)' : ''} ===`);
+  let pior = 0;
+  for (const amostra of AMOSTRA_RELEASE) {
+    const r = spawnSync(process.execPath, [__filename, ...amostra, ...(RAPIDO ? ['--rapido'] : [])], { stdio: 'inherit', env: process.env });
+    pior = Math.max(pior, r.status ?? 1);
+  }
+  console.log(`\n=== GATE DE RELEASE: ${pior === 0 ? 'APROVADO' : 'REPROVADO'} ===`);
+  process.exit(pior);
+}
 
 const itens = [];
 const check = (obrig, nome, fn) => {
