@@ -438,6 +438,8 @@ function paginaDeFalha() {
     async title() { return 'T'; }
     async waitForSelector() { if (this.falhar) throw new Error('Timeout'); return null; }
     async goto() { return null; }
+    async textContent() { return 'ok'; }
+    async $eval() { throw new Error('sem proxima pagina'); }
     async close() { this.fechada = true; }
   }
   return { page: new PaginaFalsa(), lidas };
@@ -511,4 +513,40 @@ test('criarCaptura: pagina ja fechada na rejeicao nao gera foto e o erro segue i
   await captura.capturar();
   assert.equal(lidas.screenshot, 0);
   assert.ok(!fs.existsSync(path.join(dir, 'tela.png')));
+});
+
+test('leitura so-sucesso: textContent depois da rejeicao desmarca, e leitura que falha nao marca', async () => {
+  const { page, lidas } = paginaDeFalha();
+  const captura = criarCaptura({ dir: tmp(), prazoMs: 500 });
+  captura.anexarPagina(page);
+  await assert.rejects(page.waitForSelector('#x'), /Timeout/);
+  assert.equal(await page.textContent('#total'), 'ok'); // leitura bem-sucedida desmarca
+  // fim de paginacao engolido: rejeicao de leitura nao marca a pagina
+  assert.equal(await page.$eval('.proxima', (e) => e.href).catch(() => null), null);
+  await page.close();
+  assert.equal(lidas.screenshot, 0); assert.equal(lidas.content, 0);
+});
+
+test('leitura so-sucesso no Locator: count desmarca a pagina', async () => {
+  const { page, lidas } = paginaDeFalha();
+  class LocatorFalso { constructor(p) { this.p = p; } page() { return this.p; } async count() { return 3; } }
+  page.locator = function () { return new LocatorFalso(this); };
+  const captura = criarCaptura({ dir: tmp(), prazoMs: 500 });
+  captura.anexarPagina(page);
+  await assert.rejects(page.waitForSelector('#x'), /Timeout/);
+  assert.equal(await page.locator('.item').count(), 3);
+  await page.close();
+  assert.equal(lidas.screenshot, 0);
+});
+
+test('foto do close respeita o teto de 1,5 s com screenshot travado', async () => {
+  const { page } = paginaDeFalha();
+  page.screenshot = () => new Promise(() => {}); // CDP remoto travado
+  const captura = criarCaptura({ dir: tmp() });
+  captura.anexarPagina(page);
+  await assert.rejects(page.waitForSelector('#x'), /Timeout/);
+  const inicio = Date.now();
+  await page.close();
+  const gasto = Date.now() - inicio;
+  assert.ok(gasto >= 1400 && gasto < 2200, `close levou ${gasto} ms`);
 });

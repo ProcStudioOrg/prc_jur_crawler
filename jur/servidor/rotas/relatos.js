@@ -10,6 +10,26 @@ const { revisaoDaImagem } = require('../aviso-deploy');
 
 const FALHA_GERAL = 'Não conseguimos registrar agora. Tente de novo em alguns minutos.';
 const MIN_TITULO = 4;
+const LIMITE_RELATOS = 5;
+const JANELA_MS = 10 * 60e3;
+const ERRO_LIMITE = 'Muitos relatos em pouco tempo. Tente de novo em alguns minutos.';
+
+// Por conta (emissor + usuário), em memória do processo: cada relato vira card no Linear e item no
+// FFD, e o app de uma conta pode ser recriado — por isso o mapa vive no módulo, não no registrar.
+const relatosPorConta = new Map();
+function dentroDoLimite(principal, agora) {
+  const chave = `${principal.issuer || ''}|${principal.userId || ''}`;
+  const recentes = (relatosPorConta.get(chave) || []).filter((t) => agora - t < JANELA_MS);
+  if (recentes.length >= LIMITE_RELATOS) { relatosPorConta.set(chave, recentes); return false; }
+  recentes.push(agora);
+  relatosPorConta.set(chave, recentes);
+  // Sem crescer para sempre: contas sem relato recente saem do mapa.
+  if (relatosPorConta.size > 1000) {
+    for (const [k, ts] of relatosPorConta) if (!ts.some((t) => agora - t < JANELA_MS)) relatosPorConta.delete(k);
+  }
+  return true;
+}
+function zerarLimiteDeRelatos() { relatosPorConta.clear(); }
 
 const texto = (v) => (typeof v === 'string' ? v.trim() : '');
 
@@ -20,8 +40,13 @@ function registrar(roteador, deps) {
   const versao = deps.versao || require('../../package.json').version;
   const revisao = deps.revisao !== undefined ? deps.revisao : revisaoDaImagem(env.JUR_IMAGE);
 
+  const agora = deps.agora || Date.now;
+  const ffdLigado = () => Boolean(deps.kaizen?.outbox?.ligado);
+
+  // O botão aparece se o relato chega a algum lugar: Linear configurado OU outbox do FFD ligada.
   roteador.rota('GET', '/api/v1/relatos/meta', async (req, res) => {
-    json(res, 200, await buildMeta(configDoRelator({ env, principal, versao, revisao })));
+    const meta = await buildMeta(configDoRelator({ env, principal, versao, revisao }));
+    json(res, 200, !meta.enabled && ffdLigado() ? { ...meta, enabled: true } : meta);
   });
 
   roteador.rota('POST', '/api/v1/relatos', async (req, res) => {
@@ -34,6 +59,7 @@ function registrar(roteador, deps) {
     // e o FFD receberia relato sem título.
     if (texto(body.title).length < MIN_TITULO) return json(res, 400, { error: 'Dê um título com pelo menos 4 caracteres.' });
     if (!texto(body.body)) return json(res, 400, { error: 'Descreva o que aconteceu.' });
+    if (!dentroDoLimite(principal, agora())) return json(res, 429, { erro: ERRO_LIMITE });
 
     const extra = body.context && typeof body.context.extra === 'object' && body.context.extra ? body.context.extra : {};
     const jobId = texto(extra.jobId);
@@ -51,13 +77,16 @@ function registrar(roteador, deps) {
 
     const config = configDoRelator({ env, principal, versao, revisao, serverContext, appendix: blocoDoCard(historico) });
     let linear = null;
-    try {
-      linear = await submitIssue(config, body);
-    } catch (e) {
-      if (e instanceof SubmissionError && e.status !== 503) return json(res, e.status, { error: e.message });
-      // 503 = Linear desligado, nada a logar. A mensagem do LinearError é texto do cliente GraphQL,
-      // nunca a chave; ela fica no log e não vai ao usuário.
-      if (!(e instanceof SubmissionError)) console.error('[relatos] card no Linear falhou:', e instanceof LinearError ? e.message : e?.name || 'erro');
+    // Sem Linear configurado o relato vai só ao FFD (resposta igual à do Linear fora do ar).
+    if (config.enabled) {
+      try {
+        linear = await submitIssue(config, body);
+      } catch (e) {
+        if (e instanceof SubmissionError && e.status !== 503) return json(res, e.status, { error: e.message });
+        // A mensagem do LinearError é texto do cliente GraphQL, nunca a chave; ela fica no log e
+        // não vai ao usuário.
+        if (!(e instanceof SubmissionError)) console.error('[relatos] card no Linear falhou:', e instanceof LinearError ? e.message : e?.name || 'erro');
+      }
     }
 
     const contexto = historico.length ? { ...serverContext, [CHAVE_HISTORICO]: historico.join('\n') } : serverContext;
@@ -84,4 +113,4 @@ function registrar(roteador, deps) {
   });
 }
 
-module.exports = { registrar };
+module.exports = { registrar, zerarLimiteDeRelatos };

@@ -11,6 +11,7 @@ const linear = require('../servidor/issue-reporter/linear');
 const { clearReporterCache, LinearError } = require('../servidor/issue-reporter/report');
 const { payloadRelato } = require('../servidor/kaizen/payload');
 const { criarApp } = require('../servidor/index');
+const { zerarLimiteDeRelatos } = require('../servidor/rotas/relatos');
 
 const INDEX = path.join(__dirname, '..', 'publico', 'index.html');
 const WIDGET = path.join(__dirname, '..', 'publico', 'issue-reporter', 'widget.js');
@@ -37,12 +38,16 @@ let espiao;
 let repo;
 let servidores = [];
 
+let relogio;
 beforeEach(() => {
   clearReporterCache();
+  zerarLimiteDeRelatos();
+  relogio = 1_000_000;
   linearChamadas = [];
   linear.getTeamMeta = async () => BRU;
   linear.createIssue = async (...args) => { linearChamadas.push(args); return { identifier: 'BRU-1', url: 'https://linear.app/x' }; };
   espiao = {
+    outbox: { ligado: true },
     relatos: [],
     enviarRelato(r) { this.relatos.push(payloadRelato(r)); return true; },
     linkFalha: (a) => `https://ffd.belzinhos.com.br/jur-falhas?assinatura=${encodeURIComponent(a)}`,
@@ -56,7 +61,7 @@ afterEach(async () => {
 after(() => Object.assign(linear, original));
 
 async function base(env) {
-  const app = criarApp({ conta: principal, fila, kaizen: espiao, conversas: repo, env, versao: '1.1.0', revisao: 'abc1234' });
+  const app = criarApp({ conta: principal, fila, kaizen: espiao, conversas: repo, env, versao: '1.1.0', revisao: 'abc1234', agora: () => relogio });
   const s = http.createServer(app.handler);
   servidores.push(s);
   await new Promise((r) => s.listen(0, '127.0.0.1', r));
@@ -83,8 +88,34 @@ function relato({ extra = {}, title = 'Busca do TRF4 travou', body = 'Fiquei esp
 
 const descricao = () => linearChamadas[0][1].description;
 
-test('sem LINEAR_*: meta enabled:false e o widget nao monta', async () => {
+test('sem LINEAR_* e sem FFD: meta enabled:false e o widget nao monta', async () => {
+  espiao.outbox.ligado = false;
   assert.equal((await get('/api/v1/relatos/meta', { env: {} })).enabled, false);
+});
+
+test('sem LINEAR_* mas com a outbox do FFD ligada: meta enabled:true, sem time', async () => {
+  const meta = await get('/api/v1/relatos/meta', { env: {} });
+  assert.equal(meta.enabled, true);
+  assert.equal(meta.team, null);
+});
+
+test('sem LINEAR_*: POST nem tenta o Linear e responde como Linear fora com FFD ok', async () => {
+  let tentou = false;
+  linear.getTeamMeta = async () => { tentou = true; return BRU; };
+  const r = await post('/api/v1/relatos', relato(), { env: {} });
+  assert.deepEqual([r.status, r.body], [200, { ok: true, identifier: null, url: null }]);
+  assert.equal(tentou, false);
+  assert.equal(espiao.relatos.length, 1);
+});
+
+test('limite por conta: 5 relatos em 10 min, o 6o leva 429; passada a janela, volta', async () => {
+  for (let i = 0; i < 5; i++) assert.equal((await post('/api/v1/relatos', relato())).status, 200);
+  const r = await post('/api/v1/relatos', relato());
+  assert.equal(r.status, 429);
+  assert.equal(r.body.erro, 'Muitos relatos em pouco tempo. Tente de novo em alguns minutos.');
+  assert.equal(espiao.relatos.length, 5);
+  relogio += 10 * 60e3 + 1;
+  assert.equal((await post('/api/v1/relatos', relato())).status, 200);
 });
 
 test('com BRU: meta habilitada com o time e sem a chave', async () => {
@@ -219,18 +250,19 @@ test('conversa que nao e da conta nao entra', async () => {
 
 // ─── tela ───────────────────────────────────────────────────────────────────
 
-test('index.html monta o widget como modulo e o widget e copia exata do ProcStudio', () => {
+test('index.html monta o widget como modulo e o widget e copia exata do nucleo do FFD', () => {
   assert.match(fs.readFileSync(INDEX, 'utf8'), /<script type="module" src="\/relatar\.js"><\/script>/);
-  // Fonte: o widget do ProcStudio (superconjunto do FFD, com showIssueLink); o FFD passa a usar o
-  // mesmo arquivo. Fora da máquina de desenvolvimento o repo não existe e a conferência pula.
-  const repoPs = '/Users/brpl/code/ProcStudio/ProcStudio-Docker';
-  if (!fs.existsSync(repoPs)) return;
+  // Fonte: o widget canônico do ProcStudio (superconjunto, com showIssueLink), que o FFD adotou no
+  // núcleo (PR #54). Confere contra a origin/main do FFD; fora da máquina de desenvolvimento o
+  // repo não existe e a conferência pula.
+  const repoFfd = '/Users/brpl/code/fullFuckerDashboard';
+  if (!fs.existsSync(repoFfd)) return;
   const { execFileSync } = require('node:child_process');
   let fonte;
   try {
-    fonte = execFileSync('git', ['-C', repoPs, 'show', 'origin/development:frontend/src/lib/issue-reporter/widget.js'], { stdio: ['ignore', 'pipe', 'ignore'] });
+    fonte = execFileSync('git', ['-C', repoFfd, 'show', 'origin/main:ai-dashboard/issue-reporter/widget.js'], { stdio: ['ignore', 'pipe', 'ignore'] });
   } catch { return; }
-  assert.ok(fonte.equals(fs.readFileSync(WIDGET)), 'widget.js diverge do ProcStudio');
+  assert.ok(fonte.equals(fs.readFileSync(WIDGET)), 'widget.js diverge do núcleo do FFD');
   assert.match(fs.readFileSync(WIDGET, 'utf8'), /showIssueLink/);
 });
 

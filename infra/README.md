@@ -166,10 +166,10 @@ como antes (a captura de falha local continua, mas nada sai do servidor).
 
 | Env | O que faz | Padrão | Sem ela |
 |---|---|---|---|
-| `KAIZEN_WEBHOOK_URL` | Base dos webhooks do FFD (`https://ffd.belzinhos.com.br/api/webhooks`); recebe `/jur-diagnostico` e `/user-issues` | vazio | Outbox desligada: nada é enviado, a captura é apagada |
-| `KAIZEN_WEBHOOK_TOKEN` | Endpoint key `jurcrawler` do FFD (sources `jur-diagnostico,user-issues`), no cabeçalho `x-webhook-token` | vazio | O FFD recusa (401) e o item é descartado |
+| `KAIZEN_WEBHOOK_URL` | Base dos webhooks do FFD (`https://ffd.belzinhos.com.br/api/webhooks`); recebe `/jur-diagnostico` e `/user-issues` | vazio | Outbox desligada: nada é guardado nem enviado, a captura é apagada |
+| `KAIZEN_WEBHOOK_TOKEN` | Endpoint key `jurcrawler` do FFD (sources `jur-diagnostico,user-issues`), no cabeçalho `x-webhook-token` | vazio | Outbox desligada (URL ou token vazio basta): nada é guardado nem enviado, a captura é apagada |
 | `KAIZEN_SALT` | Sal do `usuario_hash` = SHA256(`usuario_id` + sal). `openssl rand -base64 32` | vazio | `usuario_hash` vai `null` |
-| `LINEAR_API_KEY` | Chave de API do Linear para o card do botão Relatar | vazio | Relato não vira card (só vai ao FFD) |
+| `LINEAR_API_KEY` | Chave de API do Linear para o card do botão Relatar | vazio | Relato não vira card: vai só ao FFD. Sem Linear e sem outbox ligada, o botão Relatar some |
 | `LINEAR_TEAM_ID` | Id do time BRU (BrunoDev) | vazio | Idem |
 | `JUR_SENTINELA` | `1` liga a sentinela diária (04:00 de São Paulo) | `0` | Sem sentinela |
 | `JUR_SENTINELA_MAX_REMOTO` | Teto de sessões remotas (pagas) por rodada | `6` | Usa o padrão |

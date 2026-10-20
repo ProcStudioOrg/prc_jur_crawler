@@ -49,10 +49,18 @@ async function capturaParaEnvio(dir) {
 function abrirBanco(dir) {
   fs.mkdirSync(dir, { recursive: true });
   const arquivo = path.join(dir, 'kaizen.db');
-  // timeout: a sentinela e as buscas escrevem na mesma fila; sem ele, concorrência vira SQLITE_BUSY.
-  const con = new DatabaseSync(arquivo, { timeout: 5000 });
-  con.exec('PRAGMA journal_mode=WAL');
-  // print/HTML de tribunal e hash de usuário: só o dono do processo lê.
+  // print/HTML de tribunal e hash de usuário: só o dono do processo lê. umask 077 enquanto o banco
+  // nasce (tudo síncrono, nenhuma outra escrita intercala) e uma escrita forçada: o -wal/-shm já
+  // nascem 0600, e os recriados depois herdam o modo do kaizen.db (o SQLite copia o do banco).
+  const umask = process.umask(0o077);
+  let con;
+  try {
+    // timeout: a sentinela e as buscas escrevem na mesma fila; sem ele, concorrência vira SQLITE_BUSY.
+    con = new DatabaseSync(arquivo, { timeout: 5000 });
+    con.exec('PRAGMA journal_mode=WAL');
+    con.exec('CREATE TABLE IF NOT EXISTS kaizen_abertura (id INTEGER PRIMARY KEY)');
+  } finally { process.umask(umask); }
+  // Banco de versão anterior criado com 0644: corrige os três.
   for (const f of [arquivo, `${arquivo}-wal`, `${arquivo}-shm`]) {
     try { fs.chmodSync(f, 0o600); } catch { /* -wal/-shm podem ainda não existir */ }
   }

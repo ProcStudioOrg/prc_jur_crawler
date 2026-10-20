@@ -48,10 +48,10 @@ test('teto de bytes', () => {
   const o = outbox({ maxBytes: 100 }); o.enfileirar('x', { s: 'a'.repeat(60) }); o.enfileirar('x', { s: 'b'.repeat(60) });
   assert.equal(o.pendentes(), 1);
 });
-test('sem URL ou token: grava, nao envia', async () => {
+test('sem URL ou token: desligada, nao guarda nem envia', async () => {
   let n = 0; const o = outbox({ url: '', fetchFn: async () => { n++; return new Response('{}'); } });
-  assert.equal(o.ligado, false); o.enfileirar('jur-diagnostico', {}); await o.drenar();
-  assert.equal(n, 0); assert.equal(o.pendentes(), 1);
+  assert.equal(o.ligado, false); assert.equal(o.enfileirar('jur-diagnostico', {}), false); await o.drenar();
+  assert.equal(n, 0); assert.equal(o.pendentes(), 0);
 });
 test('um POST por vez mesmo com drenar() concorrente', async () => {
   let simultaneos = 0, pico = 0;

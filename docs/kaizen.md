@@ -20,9 +20,11 @@ crawler (filho) --preload--> <job>.falha/ --executor--> jobs.js --kaizen.registr
    (`process.exit(1)` ou exceção), grava em `<job>.falha/` (ao lado do `<job>.json`): `tela.png`,
    `pagina.html` e `meta.json` (URL sem query, título, passo, rota local/remota). A foto é
    **preguiçosa**: uma rejeição do Playwright só *marca* a página como pendente, sem I/O (cerca
-   de 60 crawlers engolem rejeições esperadas em buscas que dão certo). A foto sai só no
+   de 60 crawlers engolem rejeições esperadas em buscas que dão certo); o sucesso de uma ação ou
+   de uma leitura (`content`, `$eval`, `textContent`, `count`, `isVisible`...) desmarca, e leitura
+   que falha não marca (fim de paginação com `.catch(() => null)`). A foto sai só no
    `close()` de página/contexto/navegador que ainda encontre página pendente, com a página
-   viva, e limitada a 3 s. Sem página aberta, ou com `screenshot` travado, a saída acontece em
+   viva: PNG da viewport + HTML, limitada a 1,5 s no total. Sem página aberta, ou com `screenshot` travado, a saída acontece em
    até 8 s com o `meta.json` mesmo assim.
 2. **Executor.** Define `JUR_FALHA_DIR` e `JUR_CAPTURA` para o filho (internas, não vão no
    `.env`). Consulta pura por número (`-n` sem `query`) roda com `JUR_CAPTURA=0`. No estouro do
@@ -113,7 +115,9 @@ Não são falhas: são casos em que o sistema se salvou, registrados para custo 
   hora. Outro 4xx descarta e loga (reenviar não resolve).
 - Descarta após 48 h. Teto de 200 MB / 5000 itens: descarta os mais velhos.
 - HTML acima de 4 MB vai truncado, com aviso no fim do próprio HTML.
-- Sem `KAIZEN_WEBHOOK_URL` a outbox fica desligada (`enfileirar` devolve `false`).
+- Sem `KAIZEN_WEBHOOK_URL` ou sem `KAIZEN_WEBHOOK_TOKEN` a outbox fica desligada: `enfileirar`
+  devolve `false` e não guarda nada (um container de validação não acumula itens que um deploy
+  posterior, já ligado, mandaria ao FFD).
 
 ## No FFD
 
@@ -130,7 +134,9 @@ Não são falhas: são casos em que o sistema se salvou, registrados para custo 
 
 Rotas em `servidor/rotas/relatos.js`, só pela interface (chave pessoal de REST/MCP recebe 403):
 
-- `GET /api/v1/relatos/meta`: se o relato está habilitado e o que o widget deve mostrar.
+- `GET /api/v1/relatos/meta`: se o relato está habilitado (Linear configurado **ou** outbox do
+  FFD ligada) e o que o widget deve mostrar.
+- Limite por conta: 5 relatos a cada 10 min; o 6º recebe 429.
 - `POST /api/v1/relatos`: valida título (4+ caracteres) e descrição; **o servidor monta o
   contexto**: usuário, equipe, versão, a busca (`jobId`) e a conversa (`conversaId`) da
   própria conta. O `extra` do navegador só aponta qual busca/conversa está na tela; id de
@@ -138,12 +144,15 @@ Rotas em `servidor/rotas/relatos.js`, só pela interface (chave pessoal de REST/
 - **Histórico da conversa:** as últimas 12 mensagens, já sanitizadas, em até 6 KB, cortando as
   mais antigas. Vai num bloco recolhido no card do Linear e no `contexto` do FFD.
 - **Linear BRU:** título `[jur] {título} ({autor})`, estado inicial `Todo`, sem grupo de módulo
-  ou tipo. Sem `LINEAR_API_KEY` + `LINEAR_TEAM_ID` o Linear fica desligado.
+  ou tipo. Sem `LINEAR_API_KEY` + `LINEAR_TEAM_ID` o Linear fica desligado e o relato vai só ao
+  FFD (resposta igual à do Linear fora do ar).
 - **Linear fora do ar:** o erro é logado (sem a chave), o usuário não vê a falha e o relato
   segue para o FFD. Só se nem o FFD aceitar (e o Linear estiver desligado/falhou) a resposta é
   "Não conseguimos registrar agora".
-- `widget.js` é cópia byte a byte de `ai-dashboard/issue-reporter/widget.js` do FFD; a chave
-  do Linear nunca vai ao navegador.
+- `widget.js` é o widget canônico do ProcStudio (superconjunto, com `showIssueLink`); o FFD
+  adotou o mesmo arquivo no núcleo (PR #54), então hoje ele é idêntico, byte a byte, ao
+  `ai-dashboard/issue-reporter/widget.js` da `origin/main` do FFD — o teste confere. A chave do
+  Linear nunca vai ao navegador.
 
 ## Sentinela
 

@@ -49,8 +49,10 @@ function criarOutbox({
       WHERE acc > ? OR pos > ?)`).run(maxBytes, maxItens);
   }
 
+  // Desligada (sem URL ou token) não guarda nada: um container de validação sem webhook não pode
+  // acumular itens que um deploy posterior, já ligado, mandaria ao FFD.
   function enfileirar(source, corpo) {
-    if (fechado) return false;
+    if (fechado || !ligado) return false;
     try {
       const t = agora();
       const corpo_json = JSON.stringify(corpo);

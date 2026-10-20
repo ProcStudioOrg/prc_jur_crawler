@@ -272,3 +272,17 @@ test('conferencia so roda para filtro que o tribunal tem (tjdft nao tem juizados
   assert.match(pedir('trf4')[0] || '', /filtro de juizados/, 'controle: trf4 tem juizados e confere');
   assert.deepEqual(pedir('tjdft'), []);
 });
+
+test('kaizen.db, -wal e -shm ficam 0600 depois de um enfileiramento', async () => {
+  const dir = tmp();
+  const k = criarKaizen({ dir, env: ENV, fetchFn: async () => new Response('', { status: 503 }), versao: '1.1.0' });
+  try {
+    k.enviarResumo({ casos: 1 });
+    await k.outbox.drenar();
+    const base = path.join(dir, 'kaizen.db');
+    for (const f of [base, `${base}-wal`, `${base}-shm`]) {
+      assert.ok(fs.existsSync(f), `${path.basename(f)} existe`);
+      assert.equal(fs.statSync(f).mode & 0o777, 0o600, path.basename(f));
+    }
+  } finally { k.fechar(); }
+});

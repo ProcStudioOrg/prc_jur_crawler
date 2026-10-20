@@ -102,9 +102,19 @@ function derivarPasso(url, _titulo) {
 // encontre página pendente — a evidência da falha real, tirada com a página ainda viva.
 const METODOS_PAGE = ['goto', 'waitForSelector', 'waitForURL', 'waitForLoadState', 'click', 'fill', 'type',
   'press', 'selectOption', 'check', 'waitForFunction', 'evaluate'];
-const METODOS_LOCATOR = ['click', 'fill', 'waitFor', 'textContent', 'innerText', 'getAttribute'];
+const METODOS_LOCATOR = ['click', 'fill', 'waitFor'];
+// Leituras: só o sucesso conta (desmarca a página). Fim de paginação e checagens opcionais são
+// leituras com `.catch(() => null)`; se a última chamada de uma busca bem-sucedida fosse uma
+// delas, o close pagaria uma foto à toa. Leitura que falha não marca: quem falha de verdade é
+// a espera/ação que vem depois.
+const LEITURAS_PAGE = ['content', 'title', '$eval', '$$eval', 'isVisible', 'isHidden', 'textContent',
+  'innerText', 'getAttribute'];
+const LEITURAS_LOCATOR = ['count', 'all', 'isVisible', 'isHidden', 'allTextContents', 'allInnerTexts',
+  'evaluate', 'evaluateAll', 'textContent', 'innerText', 'getAttribute', 'inputValue'];
 const ENVOLVIDO = Symbol.for('jur.kaizen.envolvido');
-const PRAZO_FOTO_MS = 3000;
+// Teto da foto tirada no close (CDP remoto incluso): pago só quando há falha pendente. A captura
+// da saída com página aberta segue com PRAZO_CAPTURA_MS.
+const PRAZO_FOTO_MS = 1500;
 
 // Envolve os métodos que existem em `proto`. `antes` roda (e é aguardado) antes do original;
 // `aoSucesso`/`aoFalhar` recebem o `this`. Nenhum hook lança, e o erro do crawler volta o MESMO.
@@ -147,16 +157,18 @@ async function lerPagina(page, prazoMs) {
   return { tela, html, url, titulo };
 }
 
-function criarCaptura({ dir, tribunal, rota, prazoMs = PRAZO_CAPTURA_MS }) {
+function criarCaptura({ dir, tribunal, rota, prazoMs = PRAZO_CAPTURA_MS, prazoFotoMs = PRAZO_FOTO_MS }) {
   const paginas = [];
   let promessa = null;
   let relogio = 0;
   const pendentes = new Map(); // página -> ordem da rejeição ainda sem sucesso depois
   let ultima = null; // { foto, seq }: foto de uma página pendente, tirada no close
   let fotografando = false;
+  let lendo = 0; // leituras da própria captura (content/title) não mexem em pendente
 
-  const marcar = (page) => { if (page) pendentes.set(page, ++relogio); };
+  const marcar = (page) => { if (page && !lendo) pendentes.set(page, ++relogio); };
   const sucesso = (page) => {
+    if (lendo) return;
     const seq = ++relogio;
     if (page) pendentes.delete(page);
     // Foto mais velha que um sucesso não é mais a causa de nada: outra falha não pode herdá-la.
@@ -173,7 +185,9 @@ function criarCaptura({ dir, tribunal, rota, prazoMs = PRAZO_CAPTURA_MS }) {
     if (!alvo) return;
     fotografando = true; // a própria leitura passa por métodos da página
     try {
-      const foto = await lerPagina(alvo.page, PRAZO_FOTO_MS);
+      lendo++;
+      let foto;
+      try { foto = await lerPagina(alvo.page, prazoFotoMs); } finally { lendo--; }
       if (foto.tela || foto.html) ultima = { foto, seq: alvo.seq };
     } catch { /* swallow */ } finally { fotografando = false; }
   }
@@ -182,11 +196,14 @@ function criarCaptura({ dir, tribunal, rota, prazoMs = PRAZO_CAPTURA_MS }) {
   function instalarFoto(page) {
     try {
       envolverMetodos(Object.getPrototypeOf(page), METODOS_PAGE, { aoFalhar: marcar, aoSucesso: sucesso });
+      envolverMetodos(Object.getPrototypeOf(page), LEITURAS_PAGE, { aoSucesso: sucesso });
       envolverMetodos(Object.getPrototypeOf(page), ['close'], { antes: fotografarPendente });
       if (typeof page.locator === 'function') {
         // Locator não carrega a página no `this`: ela vem de `locator.page()`.
-        envolverMetodos(Object.getPrototypeOf(page.locator('html')), METODOS_LOCATOR,
+        const protoLocator = Object.getPrototypeOf(page.locator('html'));
+        envolverMetodos(protoLocator, METODOS_LOCATOR,
           { aoFalhar: (loc) => marcar(loc.page()), aoSucesso: (loc) => sucesso(loc.page()) });
+        envolverMetodos(protoLocator, LEITURAS_LOCATOR, { aoSucesso: (loc) => sucesso(loc.page()) });
       }
       const contexto = typeof page.context === 'function' ? page.context() : null;
       if (contexto) {
@@ -216,7 +233,7 @@ function criarCaptura({ dir, tribunal, rota, prazoMs = PRAZO_CAPTURA_MS }) {
   async function executar() {
     const page = paginaAtual();
     let foto = { tela: null, html: null, url: '', titulo: '' };
-    if (page) foto = await lerPagina(page, prazoMs);
+    if (page) { lendo++; try { foto = await lerPagina(page, prazoMs); } finally { lendo--; } }
     // Sem página aberta (o crawler fechou o browser no finally): vale a foto tirada na falha.
     else if (ultima) foto = ultima.foto;
     const { tela, html, url, titulo } = foto;

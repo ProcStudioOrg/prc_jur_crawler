@@ -150,15 +150,15 @@ for (const modo of ['aberto', 'fecha']) test(`busca que falha no crawler (browse
   } finally { await t.encerrar(); }
 });
 
-test('sem KAIZEN_WEBHOOK_URL a busca funciona igual e a outbox guarda local', async () => {
+test('sem KAIZEN_WEBHOOK_URL a busca funciona igual, a captura e limpa e a outbox nao guarda nada', async () => {
   let chamadas = 0;
   const t = await montar({ comWebhook: false, fetchFn: async () => { chamadas++; return new Response('{}'); } });
   try {
     const job = await t.buscarEEsperar();
     assert.equal(job.status, 'erro');
-    await ate(() => t.kaizen.outbox.pendentes() === 1 && t.diretoriosFalha().length === 0, 'item guardado na outbox');
+    await ate(() => t.diretoriosFalha().length === 0, 'captura limpa');
     await t.kaizen.outbox.drenar();
-    assert.equal(t.kaizen.outbox.pendentes(), 1);
+    assert.equal(t.kaizen.outbox.pendentes(), 0);
     assert.equal(chamadas, 0);
     assert.equal(t.recebidos.length, 0);
   } finally { await t.encerrar(); }

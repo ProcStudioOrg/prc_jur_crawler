@@ -7,6 +7,7 @@ agente-diario
 .superpowers
 .local
 jur/dev
+# NAO ignorar jur/tests/: a sentinela le jur/tests/sentinela-casos.json em producao (load-bearing).
 **/.DS_Store
 
 # jur/human-codegen NAO entra inteiro: bin/jur faz require() em tempo de execucao de
