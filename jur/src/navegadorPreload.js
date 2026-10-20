@@ -95,29 +95,35 @@ function derivarPasso(url, _titulo) {
 }
 
 // Crawler real fecha o browser no `finally` e só depois o catch chama exit(1): na saída não há
-// mais página aberta. Por isso a foto é tirada NA REJEIÇÃO do método do Playwright que falhou,
-// com a página ainda viva, e a saída usa a última foto se não achar página aberta.
+// mais página aberta. Mas ~60 crawlers também ENGOLEM rejeições esperadas (networkidle, fallbacks)
+// em buscas que dão certo, então fotografar a cada rejeição custaria I/O em busca bem-sucedida.
+// Por isso é preguiçoso: a rejeição só MARCA a página como pendente (sem I/O); sucesso de outro
+// método da mesma página desmarca; e a foto sai só no close() de página/contexto/browser que ainda
+// encontre página pendente — a evidência da falha real, tirada com a página ainda viva.
 const METODOS_PAGE = ['goto', 'waitForSelector', 'waitForURL', 'waitForLoadState', 'click', 'fill', 'type',
   'press', 'selectOption', 'check', 'waitForFunction', 'evaluate'];
 const METODOS_LOCATOR = ['click', 'fill', 'waitFor', 'textContent', 'innerText', 'getAttribute'];
 const ENVOLVIDO = Symbol.for('jur.kaizen.envolvido');
 const PRAZO_FOTO_MS = 3000;
 
-// Envolve os métodos que existem em `proto`: na rejeição chama `aoFalhar(this)` (nunca lança) e
-// relança o MESMO erro. Sucesso não paga nada além de um `.then` na promise.
-function envolverMetodos(proto, nomes, aoFalhar) {
+// Envolve os métodos que existem em `proto`. `antes` roda (e é aguardado) antes do original;
+// `aoSucesso`/`aoFalhar` recebem o `this`. Nenhum hook lança, e o erro do crawler volta o MESMO.
+function envolverMetodos(proto, nomes, { aoFalhar, aoSucesso, antes } = {}) {
   if (!proto) return;
   for (const nome of nomes) {
     const original = proto[nome];
     if (typeof original !== 'function' || original[ENVOLVIDO]) continue;
-    const envolvido = function (...args) {
-      const promessa = original.apply(this, args);
+    const executar = function (self, args) {
+      const promessa = original.apply(self, args);
       if (!promessa || typeof promessa.then !== 'function') return promessa;
-      return promessa.then(undefined, async (erro) => {
-        try { await aoFalhar(this); } catch { /* foto nunca troca o erro do crawler */ }
-        throw erro;
-      });
+      return promessa.then(
+        (valor) => { try { aoSucesso?.(self); } catch { /* hook nunca lança */ } return valor; },
+        (erro) => { try { aoFalhar?.(self); } catch { /* hook nunca lança */ } throw erro; },
+      );
     };
+    const envolvido = antes
+      ? async function (...args) { try { await antes(this); } catch { /* foto nunca atrapalha */ } return executar(this, args); }
+      : function (...args) { return executar(this, args); };
     envolvido[ENVOLVIDO] = true;
     try { proto[nome] = envolvido; } catch { /* protótipo congelado */ }
   }
@@ -144,28 +150,49 @@ async function lerPagina(page, prazoMs) {
 function criarCaptura({ dir, tribunal, rota, prazoMs = PRAZO_CAPTURA_MS }) {
   const paginas = [];
   let promessa = null;
-  let ultima = null; // foto da última falha de método do Playwright; a mais nova substitui a anterior
+  let relogio = 0;
+  const pendentes = new Map(); // página -> ordem da rejeição ainda sem sucesso depois
+  let ultima = null; // { foto, seq }: foto de uma página pendente, tirada no close
   let fotografando = false;
 
-  async function fotografar(page) {
-    // Sem reentrada (a própria leitura passa por métodos da página) e sem página já fechada.
-    if (fotografando) return;
-    try { if (page.isClosed()) return; } catch { return; }
-    fotografando = true;
+  const marcar = (page) => { if (page) pendentes.set(page, ++relogio); };
+  const sucesso = (page) => {
+    const seq = ++relogio;
+    if (page) pendentes.delete(page);
+    // Foto mais velha que um sucesso não é mais a causa de nada: outra falha não pode herdá-la.
+    if (ultima && ultima.seq < seq) ultima = null;
+  };
+
+  async function fotografarPendente() {
+    if (fotografando || !pendentes.size) return;
+    let alvo = null;
+    for (const [page, seq] of pendentes) {
+      try { if (page.isClosed()) { pendentes.delete(page); continue; } } catch { pendentes.delete(page); continue; }
+      if (!alvo || seq > alvo.seq) alvo = { page, seq };
+    }
+    if (!alvo) return;
+    fotografando = true; // a própria leitura passa por métodos da página
     try {
-      const foto = await lerPagina(page, PRAZO_FOTO_MS);
-      if (foto.tela || foto.html) ultima = foto;
+      const foto = await lerPagina(alvo.page, PRAZO_FOTO_MS);
+      if (foto.tela || foto.html) ultima = { foto, seq: alvo.seq };
     } catch { /* swallow */ } finally { fotografando = false; }
   }
 
-  // Uma vez só por protótipo: o Playwright compartilha Page e Locator entre todas as instâncias.
+  // Uma vez só por protótipo: o Playwright compartilha Page, Locator, Context e Browser.
   function instalarFoto(page) {
     try {
-      envolverMetodos(Object.getPrototypeOf(page), METODOS_PAGE, fotografar);
+      envolverMetodos(Object.getPrototypeOf(page), METODOS_PAGE, { aoFalhar: marcar, aoSucesso: sucesso });
+      envolverMetodos(Object.getPrototypeOf(page), ['close'], { antes: fotografarPendente });
       if (typeof page.locator === 'function') {
-        const proto = Object.getPrototypeOf(page.locator('html'));
         // Locator não carrega a página no `this`: ela vem de `locator.page()`.
-        envolverMetodos(proto, METODOS_LOCATOR, (loc) => fotografar(loc.page()));
+        envolverMetodos(Object.getPrototypeOf(page.locator('html')), METODOS_LOCATOR,
+          { aoFalhar: (loc) => marcar(loc.page()), aoSucesso: (loc) => sucesso(loc.page()) });
+      }
+      const contexto = typeof page.context === 'function' ? page.context() : null;
+      if (contexto) {
+        envolverMetodos(Object.getPrototypeOf(contexto), ['close'], { antes: fotografarPendente });
+        const browser = typeof contexto.browser === 'function' ? contexto.browser() : null;
+        if (browser) envolverMetodos(Object.getPrototypeOf(browser), ['close'], { antes: fotografarPendente });
       }
     } catch { /* captura nunca derruba a busca */ }
   }
@@ -191,7 +218,7 @@ function criarCaptura({ dir, tribunal, rota, prazoMs = PRAZO_CAPTURA_MS }) {
     let foto = { tela: null, html: null, url: '', titulo: '' };
     if (page) foto = await lerPagina(page, prazoMs);
     // Sem página aberta (o crawler fechou o browser no finally): vale a foto tirada na falha.
-    else if (ultima) foto = ultima;
+    else if (ultima) foto = ultima.foto;
     const { tela, html, url, titulo } = foto;
     const meta = {
       url: sanitizar(urlSemQuery(url)),
