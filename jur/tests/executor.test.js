@@ -9,6 +9,27 @@ const executor = require('../servidor/executor');
 const CLI_FALSA = path.join(__dirname, 'fixtures', 'cli-falsa.js');
 const tmp = () => path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'jur-exec-')), 'r.json');
 
+const KILL = process.kill.bind(process);
+const vivo = (pid) => { try { KILL(pid, 0); return true; } catch (e) { return e.code !== 'ESRCH'; } };
+// Fixture que nunca termina (for(;;), setInterval) depende do SIGTERM/SIGKILL do executor. Com
+// timers mockados, ou com o teste falhando no meio, esse sinal pode nunca sair e o filho fica orfao
+// (reparentado ao PID 1) girando CPU para sempre. Todo teste que a usa registra o pid aqui: o
+// after volta aos timers reais, mata o grupo e confere que nada sobreviveu.
+function garantirMorte(t) {
+  const pids = [];
+  t.after(async () => {
+    t.mock.timers.reset();
+    for (const pid of pids) {
+      try { KILL(-pid, 'SIGKILL'); } catch { /* grupo ja acabou */ }
+      try { KILL(pid, 'SIGKILL'); } catch { /* ja morreu */ }
+      const limite = Date.now() + 3000;
+      while (vivo(pid) && Date.now() < limite) await new Promise((r) => setTimeout(r, 20));
+      assert.ok(!vivo(pid), `o filho ${pid} sobreviveu ao teste`);
+    }
+  });
+  return (pid) => { pids.push(pid); };
+}
+
 describe('executor', () => {
   it('le resultados do arquivo quando a saida e inline', async () => {
     const arquivo = tmp();
@@ -40,8 +61,8 @@ describe('executor', () => {
     assert.strictEqual(r.total, 1);
   });
 
-  it('mata o processo no timeout e reporta erro, nao sucesso vazio', async () => {
-    const r = await executar_(tmp(), 'travado', { timeoutMs: 300 });
+  it('mata o processo no timeout e reporta erro, nao sucesso vazio', async (t) => {
+    const r = await executar_(tmp(), 'travado', { timeoutMs: 300, aoIniciar: garantirMorte(t) });
     assert.strictEqual(r.ok, false);
     assert.match(r.erro, /timeout/i);
   });
@@ -110,11 +131,12 @@ describe('executor', () => {
     const killOriginal = process.kill.bind(process);
     t.mock.method(process, 'kill', (pid, sinal) => { sinais.push([pid, sinal]); return killOriginal(pid, sinal); });
     let pidFilho = null;
+    const registrar = garantirMorte(t);
     // So os sinais deste teste: SIGKILL de garantia de timeouts anteriores ainda pode disparar.
     const meus = () => sinais.filter(([p, s]) => s !== 0 && Math.abs(p) === pidFilho);
 
     const promessa = executor.executar('trava-neto-ignora-sigterm', { query: 'x' },
-      { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 50, aoIniciar: (pid) => { pidFilho = pid; } });
+      { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 50, aoIniciar: (pid) => { pidFilho = pid; registrar(pid); } });
 
     // Busy-poll via setImmediate (NAO mockado) ate o NETO sinalizar que ja
     // instalou o handler de SIGTERM — sem isso ha uma corrida contra o boot
@@ -162,9 +184,10 @@ describe('executor', () => {
     const killOriginal = process.kill.bind(process);
     t.mock.method(process, 'kill', (pid, sinal) => { sinais.push([pid, sinal]); return killOriginal(pid, sinal); });
     let pid = null;
+    const registrar = garantirMorte(t);
     const meus = () => sinais.filter(([p]) => Math.abs(p) === pid);
     const promessa = executor.executar('trava-sincrono', { query: 'x' },
-      { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 50, prazoCapturaMs: 1000, aoIniciar: (p) => { pid = p; } });
+      { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 50, prazoCapturaMs: 1000, aoIniciar: (p) => { pid = p; registrar(p); } });
     while (!fs.existsSync(arquivo + '.pronto')) await new Promise((r) => setImmediate(r));
 
     t.mock.timers.tick(50);
@@ -186,9 +209,10 @@ describe('executor', () => {
     const killOriginal = process.kill.bind(process);
     t.mock.method(process, 'kill', (pid, sinal) => { sinais.push([pid, sinal]); return killOriginal(pid, sinal); });
     let pid = null;
+    const registrar = garantirMorte(t);
     const meus = () => sinais.filter(([p]) => Math.abs(p) === pid);
     const promessa = executor.executar('trava-sincrono', { numero: '1' },
-      { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 50, aoIniciar: (p) => { pid = p; } });
+      { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 50, aoIniciar: (p) => { pid = p; registrar(p); } });
     while (!fs.existsSync(arquivo + '.pronto')) await new Promise((r) => setImmediate(r));
     t.mock.timers.tick(50);
     assert.deepStrictEqual(meus(), [[-pid, 'SIGTERM']]);
@@ -205,18 +229,21 @@ describe('executor', () => {
     assert.ok(fs.existsSync(path.join(dir, 'job1.falha', 'meta.json')), 'preload gravou meta.json no exit(1)');
   });
 
-  it('timeout: SIGUSR2 deixa o filho capturar e o erro continua timeout', async () => {
+  it('timeout: SIGUSR2 deixa o filho capturar e o erro continua timeout', async (t) => {
     const dir = path.dirname(tmp()); const arquivo = path.join(dir, 'job2.json');
-    const r = await executor.executar('travado', { query: 'x' }, { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 300 });
+    const r = await executor.executar('travado', { query: 'x' }, { arquivoSaida: arquivo, cliPath: CLI_FALSA, timeoutMs: 300, aoIniciar: garantirMorte(t) });
     assert.match(r.erro, /^timeout apos 300ms$/);
     assert.ok(fs.existsSync(path.join(dir, 'job2.falha', 'meta.json')));
   });
 
-  it('timeout: filho que nao atende SIGUSR2 morre pelo SIGTERM depois do prazo', async () => {
+  it('timeout: filho que nao atende SIGUSR2 morre pelo SIGTERM depois do prazo', async (t) => {
     const t0 = Date.now();
-    const r = await executor.executar('trava-sincrono', { query: 'x' }, { arquivoSaida: tmp(), cliPath: CLI_FALSA, timeoutMs: 200, prazoCapturaMs: 300 });
+    let pid = null;
+    const registrar = garantirMorte(t);
+    const r = await executor.executar('trava-sincrono', { query: 'x' }, { arquivoSaida: tmp(), cliPath: CLI_FALSA, timeoutMs: 200, prazoCapturaMs: 300, aoIniciar: (p) => { pid = p; registrar(p); } });
     assert.match(r.erro, /timeout/);
     assert.ok(Date.now() - t0 < 5000);
+    assert.ok(!vivo(pid), 'o close so chega com o filho morto: o SIGTERM do prazo bastou');
   });
 
   // O executor conhece os params; o argv nao: em trf1/trf3/trf5 `-n` filtra uma busca com -q.
