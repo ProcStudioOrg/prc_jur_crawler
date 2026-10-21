@@ -110,11 +110,10 @@
       "periodoPublicacao": "falhou na validação ao vivo de 21/10/2026: o STF não emitiu o cookie aws-waf-token (desafio do WAF mudou), do H2 e do Mac — regressão do crawler, não do caso; volta depois do conserto",
       "numero": "falhou na validação ao vivo de 21/10/2026: o STF não emitiu o cookie aws-waf-token (desafio do WAF mudou), do H2 e do Mac — regressão do crawler, não do caso; volta depois do conserto"
     },
-    "tcdf": {
-      "periodoJulgamento": "falhou na validação ao vivo de 21/10/2026: \"unable to verify the first certificate\" (cadeia TLS do TCDF incompleta), do H2 e do Mac — conserto no crawler; volta depois",
-      "periodoPublicacao": "falhou na validação ao vivo de 21/10/2026: \"unable to verify the first certificate\" (cadeia TLS do TCDF incompleta), do H2 e do Mac — conserto no crawler; volta depois",
-      "magistrado": "falhou na validação ao vivo de 21/10/2026: \"unable to verify the first certificate\" (cadeia TLS do TCDF incompleta), do H2 e do Mac — conserto no crawler; volta depois",
-      "numero": "falhou na validação ao vivo de 21/10/2026: \"unable to verify the first certificate\" (cadeia TLS do TCDF incompleta), do H2 e do Mac — conserto no crawler; volta depois"
+    "tjmt": {
+      "periodoJulgamento": "API em manutenção declarada (HTTP 503 \"Site em manutenção — TJMT\") desde 19/10/2026; catálogo instavel (BRU-99). Caso original: query dano moral, 01/08/2026–31/08/2026, minimo 1. Volta quando a API responder",
+      "periodoPublicacao": "API em manutenção declarada desde 19/10/2026; catálogo instavel (BRU-99). Caso original: query dano moral, dataPub 01/08/2026–31/08/2026, minimo 1. Volta quando a API responder",
+      "numero": "API em manutenção declarada desde 19/10/2026; catálogo instavel (BRU-99). Caso original: numero 1022420-19.2025.8.11.0003, encontrado. Volta quando a API responder"
     }
   },
   "casos": [
@@ -147,9 +146,6 @@
     {"tribunal":"tjms","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjms","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjms","capacidade":"numero","params":{"numero":"0804493-50.2023.8.12.0008"},"espera":{"encontrado":true}},
-    {"tribunal":"tjmt","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"tjmt","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"tjmt","capacidade":"numero","params":{"numero":"1022420-19.2025.8.11.0003"},"espera":{"encontrado":true}},
     {"tribunal":"tjpa","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/09/2025","dataFim":"30/09/2025","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjpa","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/05/2026","dataPubFim":"31/05/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjpa","capacidade":"numero","params":{"numero":"0800462-53.2022.8.14.0044"},"espera":{"encontrado":true}},
@@ -194,6 +190,10 @@
     {"tribunal":"tcesp","capacidade":"numero","params":{"numero":"21197/989/25"},"espera":{"encontrado":true}},
     {"tribunal":"carf","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/02/2026","dataFim":"28/02/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"carf","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/05/2026","dataPubFim":"31/05/2026","maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"carf","capacidade":"numero","params":{"numero":"10283.007661/2010-71"},"espera":{"encontrado":true}}
+    {"tribunal":"carf","capacidade":"numero","params":{"numero":"10283.007661/2010-71"},"espera":{"encontrado":true}},
+    {"tribunal":"tcdf","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/10/2025","dataFim":"31/10/2025","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcdf","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/03/2026","dataPubFim":"31/03/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcdf","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"Inácio Magalhães Filho","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tcdf","capacidade":"numero","params":{"numero":"00600-00005654/2023-56"},"espera":{"encontrado":true}}
   ]
 }
