@@ -209,6 +209,10 @@ Object.assign(JURISPRUDENCIA.TJMT, {
   status: 'instavel',
   nota: 'A API (hellsgate-preview) responde HTTP 503 com a página "Site em manutenção — TJMT" em todo caminho desde 19/10/2026; a SPA e o token não mudaram. O crawler nomeia a manutenção em vez de devolver 503 cru.',
 });
+Object.assign(JURISPRUDENCIA.TCEPA, {
+  status: 'sem-acesso',
+  nota: 'Desde 19/10/2026 o WAF F5 Shape devolve o captcha de imagem (HTTP 200, failureConfig) já no PRIMEIRO request de /pesquisaintegrada/, com UA de Chrome e após 5, 18 e 20+ min de silêncio (21/10); a home do portal responde normal. O cooldown de 6–7 min da ressalva 1 não destrava mais. O crawler aborta com erro explícito (exigirRespostaReal); não automatizamos captcha.',
+});
 Object.assign(JURISPRUDENCIA.TJGO, {
   status: 'sem-acesso',
   nota: 'Desde out/2026 o POST da busca exige token do Cloudflare Turnstile (sitekey 0x4AAAAAABeYdOewv6AT0dzB; o #btnBuscar nasce desabilitado e só o callback do widget o habilita). Sem token válido o servidor devolve HTTP 200 com a própria tela do formulário, sem painel de resultados — com token vazio, token falso e com JSESSIONID. As lupas AJAX continuam livres. O Navigator lança erro explícito em vez de "0 resultados"; não automatizamos captcha. Antes (até 27/08/2026) o Turnstile era só para o download do original.',
@@ -564,6 +568,7 @@ const MOTIVO_FALHA = {
   TJPB: 'API pública respondeu HTTP 503 em medições consecutivas.',
   TJMT: 'API em manutenção declarada ("Site em manutenção — TJMT", HTTP 503) desde 19/10/2026.',
   TJGO: 'A busca passou a exigir Cloudflare Turnstile (out/2026); não automatizamos captcha. Lupas seguem livres.',
+  TCEPA: 'WAF F5 Shape devolve captcha de imagem já no primeiro request desde 19/10/2026; não automatizamos captcha.',
   TJRN: 'Domínio bloqueado por 403/Akamai; `-n` confirma somente o processo.',
   TJSC: 'Portal novo bloqueado pela verificação F5/Shape nesta rodada; o legado está congelado.',
   TJSE: 'Os dois módulos exigem captcha e não há comando de busca.',

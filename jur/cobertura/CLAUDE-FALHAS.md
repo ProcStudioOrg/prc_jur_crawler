@@ -19,6 +19,7 @@
 | TJSC | instavel | `jur tjsc` | Portal novo bloqueado pela verificação F5/Shape nesta rodada; o legado está congelado. | [CLAUDE-TJSC.md](../CLAUDE-TJSC.md) |
 | TJSE | sem-acesso | — | Os dois módulos exigem captcha e não há comando de busca. | [CLAUDE-TJSE.md](../CLAUDE-TJSE.md) |
 | TJSP | instavel | `jur tjsp` | Incerto: o reCAPTCHA invisível permite o fluxo em alguns dias e bloqueia em outros. | [CLAUDE-TJSP.md](../CLAUDE-TJSP.md) |
+| TCEPA | sem-acesso | `jur tcepa` | WAF F5 Shape devolve captcha de imagem já no primeiro request desde 19/10/2026; não automatizamos captcha. | [CLAUDE-TCEPA.md](../CLAUDE-TCEPA.md) |
 | CRPS | exige-sessao | `jur crps` | Exige sessão Gov.br em dispositivo validado; busca autônoma indisponível. | [CLAUDE-CRPS.md](../CLAUDE-CRPS.md) |
 
 Tribunal ausente do catálogo não é falha operacional conhecida: é alvo ainda não implementado e deve constar em [`../../TODO.md`](../../TODO.md).
