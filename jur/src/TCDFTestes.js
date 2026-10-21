@@ -33,8 +33,10 @@ t('🔴 `q=` vazio ZERA na API crua — e o Navigator protege disso', async () =
   // A armadilha, medida direto na API, sem passar pelo Navigator:
   const https = require('https');
   const cru = (qs) => new Promise((res, rej) => {
+    // `ca`: o portal manda so a folha (ver cabecalho do Navigator); sem a cadeia
+    // embutida este teste "cru" cai em `unable to verify the first certificate`.
     https.get(`https://${TCDFNavigator.HOST_BUSCA}/jurisprudencia/?${qs}`,
-      { headers: { 'User-Agent': TCDFNavigator.UA } }, (r) => {
+      { ca: TCDFNavigator.CA, headers: { 'User-Agent': TCDFNavigator.UA } }, (r) => {
         let b = ''; r.setEncoding('utf8'); r.on('data', (c) => (b += c));
         r.on('end', () => { try { res(JSON.parse(b).data.hits.total.value); } catch (e) { rej(e); } });
       }).on('error', rej);

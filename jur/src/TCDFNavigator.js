@@ -286,5 +286,7 @@ class TCDFNavigator {
 TCDFNavigator.HOST_BUSCA = HOST_BUSCA;
 TCDFNavigator.HOST_DOC = HOST_DOC;
 TCDFNavigator.UA = UA;
+/** Cadeia completa (raizes do Node + YR1 + Root YR cross-assinada), para quem precisa falar com a API crua. */
+TCDFNavigator.CA = CA;
 
 module.exports = TCDFNavigator;
