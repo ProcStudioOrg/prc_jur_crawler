@@ -204,6 +204,11 @@ Object.assign(JURISPRUDENCIA.TJSC, {
   status: 'instavel',
   nota: 'O portal novo alterna entre acesso funcional e bloqueio pela verificação F5/Shape; o portal antigo está congelado.',
 });
+// Smoke de 19/10/2026, confirmado em 21/10 (BRU-99).
+Object.assign(JURISPRUDENCIA.TJMT, {
+  status: 'instavel',
+  nota: 'A API (hellsgate-preview) responde HTTP 503 com a página "Site em manutenção — TJMT" em todo caminho desde 19/10/2026; a SPA e o token não mudaram. O crawler nomeia a manutenção em vez de devolver 503 cru.',
+});
 
 const REPO = {
   TCECE: { crawler: 'src/TCECECrawler.js', codegen: 'completo', tests: 'src/TCECETestes.js', skills: [], extra: 'TCECENavigator.js (API publica do Contexto) + TCECEChecker.js (indice e consulta processual independente). Relator e ementa completa exigem o PDF publico; o indice nao oferece filtro de relator.' },
@@ -553,6 +558,7 @@ const MOTIVO_FALHA = {
   TJAM: 'Crawler responde, mas a base estadual está congelada em 2025.',
   TJMA: 'Busca por termo bloqueada por captcha; `-n` usa apenas o DataJud.',
   TJPB: 'API pública respondeu HTTP 503 em medições consecutivas.',
+  TJMT: 'API em manutenção declarada ("Site em manutenção — TJMT", HTTP 503) desde 19/10/2026.',
   TJRN: 'Domínio bloqueado por 403/Akamai; `-n` confirma somente o processo.',
   TJSC: 'Portal novo bloqueado pela verificação F5/Shape nesta rodada; o legado está congelado.',
   TJSE: 'Os dois módulos exigem captcha e não há comando de busca.',

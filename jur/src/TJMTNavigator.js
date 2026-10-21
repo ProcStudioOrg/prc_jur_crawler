@@ -84,6 +84,24 @@ class TJMTNavigator {
         'bundle main.*.bundle.js de https://jurisprudencia.tjmt.jus.br.'
       );
     }
+    // 🔴 MANUTENÇÃO DECLARADA PELO PRÓPRIO TJMT, NÃO BUG NOSSO. Medido em 19/10 e
+    // 21/10/2026: TODO caminho de hellsgate-preview (a raiz, /jurisprudencia,
+    // /camaras, /api/Consulta) responde HTTP 503 `Server: BigIP` com a página
+    // "Site em manutenção — TJMT" ("Previsão de retorno: em breve"). O bundle da
+    // SPA (main-*.js) continua apontando para hellsgate-preview com o MESMO
+    // `api_hellsgate_token`, e hellsgate.tjmt.jus.br/jurisprudencia responde 404 —
+    // ou seja, não houve migração de host nem rotação de token: o backend está
+    // fora. Nomear a causa evita que o smoke seja lido como "contrato mudou".
+    if (r.status === 503 && /Site em manuten/i.test(String(r.body))) {
+      const e = new Error(
+        'API do TJMT em MANUTENCAO: hellsgate-preview.tjmt.jus.br respondeu HTTP 503 com a ' +
+        'pagina "Site em manutencao — TJMT" (BigIP). Nao e bug do crawler nem token rodado: ' +
+        'o backend da SPA esta fora. Repita mais tarde; se persistir, o catalogo marca `instavel`.'
+      );
+      e.status = 503;
+      e.manutencao = true;
+      throw e;
+    }
     if (r.status !== 200) {
       const e = new Error(`HTTP ${r.status} da API do TJMT (${String(r.body).slice(0, 120)})`);
       e.status = r.status;

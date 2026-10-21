@@ -12,6 +12,7 @@
 | TJAC | instavel | `jur tjac` | Busca zerou termos amplos em medições repetidas; inteiro teor exige reCAPTCHA. | [CLAUDE-TJAC.md](../CLAUDE-TJAC.md) |
 | TJAM | instavel | `jur tjam` | Crawler responde, mas a base estadual está congelada em 2025. | [CLAUDE-TJAM.md](../CLAUDE-TJAM.md) |
 | TJMA | sem-acesso | `jur tjma` | Busca por termo bloqueada por captcha; `-n` usa apenas o DataJud. | [CLAUDE-TJMA.md](../CLAUDE-TJMA.md) |
+| TJMT | instavel | `jur tjmt` | API em manutenção declarada ("Site em manutenção — TJMT", HTTP 503) desde 19/10/2026. | [CLAUDE-TJMT.md](../CLAUDE-TJMT.md) |
 | TJPB | instavel | `jur tjpb` | API pública respondeu HTTP 503 em medições consecutivas. | [CLAUDE-TJPB.md](../CLAUDE-TJPB.md) |
 | TJRN | sem-acesso | `jur tjrn` | Domínio bloqueado por 403/Akamai; `-n` confirma somente o processo. | [CLAUDE-TJRN.md](../CLAUDE-TJRN.md) |
 | TJSC | instavel | `jur tjsc` | Portal novo bloqueado pela verificação F5/Shape nesta rodada; o legado está congelado. | [CLAUDE-TJSC.md](../CLAUDE-TJSC.md) |
