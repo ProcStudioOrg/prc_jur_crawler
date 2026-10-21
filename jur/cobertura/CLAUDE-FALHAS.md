@@ -11,6 +11,7 @@
 | TRF3 | instavel | `jur trf3` | Host oscila ou fica inacessível mesmo antes da interação. | [CLAUDE-TRF3.md](../CLAUDE-TRF3.md) |
 | TJAC | instavel | `jur tjac` | Busca zerou termos amplos em medições repetidas; inteiro teor exige reCAPTCHA. | [CLAUDE-TJAC.md](../CLAUDE-TJAC.md) |
 | TJAM | instavel | `jur tjam` | Crawler responde, mas a base estadual está congelada em 2025. | [CLAUDE-TJAM.md](../CLAUDE-TJAM.md) |
+| TJGO | sem-acesso | `jur tjgo` | A busca passou a exigir Cloudflare Turnstile (out/2026); não automatizamos captcha. Lupas seguem livres. | [CLAUDE-TJGO.md](../CLAUDE-TJGO.md) |
 | TJMA | sem-acesso | `jur tjma` | Busca por termo bloqueada por captcha; `-n` usa apenas o DataJud. | [CLAUDE-TJMA.md](../CLAUDE-TJMA.md) |
 | TJMT | instavel | `jur tjmt` | API em manutenção declarada ("Site em manutenção — TJMT", HTTP 503) desde 19/10/2026. | [CLAUDE-TJMT.md](../CLAUDE-TJMT.md) |
 | TJPB | instavel | `jur tjpb` | API pública respondeu HTTP 503 em medições consecutivas. | [CLAUDE-TJPB.md](../CLAUDE-TJPB.md) |

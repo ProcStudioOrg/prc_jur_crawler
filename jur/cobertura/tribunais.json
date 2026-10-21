@@ -1082,8 +1082,8 @@
         "url": "https://projudi.tjgo.jus.br/ConsultaJurisprudencia",
         "comando": "tjgo",
         "acesso": "http",
-        "status": "ok",
-        "nota": "POST direto ISO-8859-1; Turnstile só no download do original"
+        "status": "sem-acesso",
+        "nota": "Desde out/2026 o POST da busca exige token do Cloudflare Turnstile (sitekey 0x4AAAAAABeYdOewv6AT0dzB; o #btnBuscar nasce desabilitado e só o callback do widget o habilita). Sem token válido o servidor devolve HTTP 200 com a própria tela do formulário, sem painel de resultados — com token vazio, token falso e com JSESSIONID. As lupas AJAX continuam livres. O Navigator lança erro explícito em vez de \"0 resultados\"; não automatizamos captcha. Antes (até 27/08/2026) o Turnstile era só para o download do original."
       },
       "repo": {
         "crawler": "src/TJGOCrawler.js",
@@ -1094,7 +1094,7 @@
         "skills": [
           "verificador/tjgo"
         ],
-        "working": true
+        "working": false
       }
     },
     {

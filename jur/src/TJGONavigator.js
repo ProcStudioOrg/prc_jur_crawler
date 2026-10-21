@@ -222,7 +222,38 @@ class TJGONavigator {
       ...campos,
     };
     const res = await this._request('POST', SEARCH_URL, formEncodeLatin1(form));
-    return this.parseResultados(res.text);
+    const data = this.parseResultados(res.text);
+    TJGONavigator.exigirPainelDeResultados(res.text, data);
+    return data;
+  }
+
+  /**
+   * 🔴 DESDE OUT/2026 A BUSCA EXIGE TURNSTILE — e o servidor NÃO diz isso.
+   *
+   * Medido em 21/10/2026 (o smoke de 19/10 caiu em "0 resultados"; estava ok em
+   * 27/08): o POST da busca sem token válido devolve HTTP 200 com a PRÓPRIA TELA
+   * do formulário (≈39 KB, campos preenchidos de volta), sem o painel de
+   * resultados — nem "N resultados encontrados", nem "Nenhum resultado". Dá no
+   * mesmo com token vazio, token falso e com JSESSIONID colhido por GET antes.
+   * A lupa (AJAX) continua livre. No HTML novo o `#btnBuscar` nasce desabilitado
+   * e só o callback do Turnstile (sitekey 0x4AAAAAABeYdOewv6AT0dzB) o habilita;
+   * `submitForm()` espera por isso em `aguardarBotaoBuscarAtivo()`
+   * (js/ConsultaJurisprudencia.js v0.0.7). Em headless o widget fica em
+   * "Verificando..." e não emite token. Ver 01-projudi/01.15-turnstile-na-busca.png.
+   *
+   * Sem este gate, o crawler devolvia `success:true` com 0 resultados — o
+   * fallback silencioso que o repo proíbe: zero por bloqueio NÃO é "sem julgado".
+   * Não automatizamos captcha: o catálogo marca `sem-acesso` até o tribunal mudar.
+   */
+  static exigirPainelDeResultados(html, data) {
+    if (data.total !== null || data.resultados.length) return;
+    if (!/challenges\.cloudflare\.com\/turnstile|turnstile\.render/i.test(html)) return;
+    throw new Error(
+      'TJGO: a busca passou a exigir Cloudflare Turnstile (out/2026). O servidor devolveu a ' +
+      'tela do formulario sem painel de resultados — isso NAO e "0 resultados", e bloqueio. ' +
+      'Nao automatizamos captcha; o catalogo marca o TJGO como sem-acesso. ' +
+      'Alternativa para materia federal com origem em GO: trf1.'
+    );
   }
 
   /**

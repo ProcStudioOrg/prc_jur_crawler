@@ -13,13 +13,45 @@ O TJGO tem **três** sistemas de jurisprudência (mapeamento em `human-codegen/T
 3. Jurisprudência Administrativa (Órgão Especial / Conselho Superior) — não implementado
    (o link do Conselho Superior estava em branco no mapeamento de jul/2026)
 
-**Status atual:** 🟡 busca funcional, com campos reduzidos após mudança de markup
+**Status atual:** 🔴 **sem-acesso desde out/2026 — a busca passou a exigir Cloudflare
+Turnstile** (ver ressalva 00). Até 27/08/2026 era 🟡 busca funcional, com campos reduzidos
+após mudança de markup.
 
-**Sem browser**: o formulário aceita POST direto (charset ISO-8859-1) e o
-Cloudflare Turnstile **não é exigido para a busca** — só para baixar o arquivo
+**Sem browser** (enquanto valia): o formulário aceitava POST direto (charset ISO-8859-1) e o
+Cloudflare Turnstile **não era exigido para a busca** — só para baixar o arquivo
 original de um ato. Cada resultado já traz o **texto completo da decisão**,
 então `--fetch-inteiro-teor` grava os .txt sem novo acesso à rede.
 Flags `-v/--headed` são ignoradas.
+
+## 🔴 Ressalva 00 — a busca exige Turnstile desde out/2026 (BRU-99)
+
+O smoke de 19/10/2026 caiu em `success:true` com **0 resultados** (estava ok em 27/08).
+Diagnóstico de 21/10/2026, classe **C — bloqueio** (não é filtro nem encoding):
+
+- `./bin/jur tjgo -q "dano moral"` zera **sem período, com período e com termo alternativo**
+  (`licitação`). Zero em três eixos não é zero legítimo.
+- O POST da busca (`PaginaAtual=2`, mesmos campos de sempre) responde **HTTP 200 com a
+  própria tela do formulário** (≈39 KB, campos ecoados), **sem o painel de resultados** —
+  nem "N resultados encontrados", nem "Nenhum resultado". Dá no mesmo com
+  `g-recaptcha-response` vazio, com token falso e com `JSESSIONID` colhido por GET antes.
+- A tela mudou: `js/ConsultaJurisprudencia.js?v=0.0.7` ganhou `aguardarBotaoBuscarAtivo()`;
+  `submitForm()` só envia depois que o callback do Turnstile (sitekey
+  `0x4AAAAAABeYdOewv6AT0dzB`) habilita o `#btnBuscar`. Print:
+  [`01.15-turnstile-na-busca.png`](human-codegen/TJGO/01-projudi/01.15-turnstile-na-busca.png)
+  — widget em "Verificando..." acima do botão Consultar. Em headless ele **não** emite token.
+- O que **continua livre**: as lupas AJAX (`?AJAX=ajax&Passo=1&PaginaAtual=1802...`
+  respondem JSON) e, portanto, `--listar-*`, `--unidades`, `--magistrados`.
+
+As três perguntas do `jur-fixer` §4: **o que bloqueia?** Cloudflare Turnstile no submit da
+busca (antes era só no download do original). **A busca passa sem resolver?** Não.
+**O download passa?** Não (já não passava).
+
+O `TJGONavigator.exigirPainelDeResultados()` agora lança um erro explícito quando o servidor
+devolve o formulário sem painel — **zero por bloqueio não vira "0 resultados"**. Não
+automatizamos captcha; o catálogo marca `sem-acesso`. Alternativas: matéria federal com
+origem em GO → `trf1`; trabalhista → `trt18`. Se o TJGO liberar a busca de novo, o smoke
+volta a `ok` sozinho — aí remova o `Object.assign(JURISPRUDENCIA.TJGO, ...)` do
+`cobertura/build.js` e rode `npm run docs`.
 
 ## Exemplos
 
