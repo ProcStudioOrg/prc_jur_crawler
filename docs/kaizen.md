@@ -195,9 +195,23 @@ Uma busca conhecida por tribunal x capacidade, montada de resultado real (casos 
 
 ## Pendências
 
-- **TJGO** devolve 0 resultados hoje (a sentinela achou); precisa de `jur-fixer`.
-- **83 dos 89 casos da sentinela ainda não foram validados ao vivo.** Antes de ligar
-  `JUR_SENTINELA=1` em produção, validar no H2 com `cd jur && npm run sentinela --json` e
-  corrigir os casos que falharem por motivo do caso (não do tribunal).
+- **Casos validados ao vivo no H2 em 21/10/2026** (87 locais: 59 ok, 16 falhas, 12 não
+  verificáveis) e `JUR_SENTINELA=1` ligado na 1.2.1. O que falhou por crawler/portal ou IP
+  foi para `_pendentes` em `jur/tests/sentinela-casos.json` com o motivo e volta depois do
+  conserto. Cada item abaixo precisa de `jur-fixer`:
+  - **TJGO** devolve 0 resultados (desde 19/10).
+  - **STF** não emite mais o cookie `aws-waf-token`: o desafio do WAF mudou (3 capacidades).
+  - **TCDF** falha o TLS (`unable to verify the first certificate`: cadeia incompleta no
+    servidor do tribunal; o crawler precisa levar a intermediária) (4 capacidades).
+  - **TJMS** ignora o filtro de relator (83 de 96 resultados de outro relator).
+  - **TJPI** ignora o filtro de data de publicação (25 de 25 fora do período).
+  - **TJRJ (ejuris)** ignora o filtro de data de julgamento (10 de 10 fora do período).
+  - **TJES** bloqueia o IP do H2 (HTTP 403); do Mac funciona.
+  - **TJMT** respondia HTTP 503 na API em 21/10 (do H2 e do Mac): ficou nos casos, a
+    sentinela avisa quando voltar ou se continuar fora.
+- **Não verificáveis por desenho:** `numero` nos TCs e no CARF (número sem forma CNJ, a
+  conferência exige 15 dígitos), `tjrj-ejuris numero` (resultado é a consulta, sem campo de
+  número) e `tceba numero` (prefixo `TCE/` antes da barra: `digitos` lê o trecho antes da
+  barra). Não geram falha; só provam que a busca não quebrou.
 - **Cancelar numa sessão remota (CDP)** deixa a sessão do Kernel/Steel aberta até o timeout do
   provedor (comportamento anterior ao Kaizen).

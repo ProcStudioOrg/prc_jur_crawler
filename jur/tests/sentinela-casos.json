@@ -1,5 +1,5 @@
 {
-  "_comentario": "Casos montados do smoke de 30/08/2026 (resultados/results-<tribunal>.json, termo \"dano moral\" ou o de TERMO_POR_COMANDO, janela 30/08/2025-30/08/2026, -m 1): periodo = mes com julgados nesse resultado; magistrado = relator mais frequente dele; juizados = termo que trouxe turma recursal; numero = processo real dele (TRF4: o do spec). _pendentes: tribunal x capacidade que funciona mas ficou sem caso, com o motivo. Validados ao vivo em 19/10/2026 (node tests/sentinela.js): trf4 (4 casos ok) e tjpr (2 ok). Os demais vieram de resultado real mas ainda não rodaram ao vivo: rode npm run sentinela antes de ligar JUR_SENTINELA=1 e mova para _pendentes o que falhar.",
+  "_comentario": "Casos montados do smoke de 30/08/2026 (resultados/results-<tribunal>.json, termo \"dano moral\" ou o de TERMO_POR_COMANDO, janela 30/08/2025-30/08/2026, -m 1): periodo = mes com julgados nesse resultado; magistrado = relator mais frequente dele; juizados = termo que trouxe turma recursal; numero = processo real dele (TRF4: o do spec). _pendentes: tribunal x capacidade que funciona mas ficou sem caso, com o motivo. Validados ao vivo em 19/10/2026 (node tests/sentinela.js): trf4 (4 casos ok) e tjpr (2 ok). Os demais vieram de resultado real mas ainda não rodaram ao vivo: rode npm run sentinela antes de ligar JUR_SENTINELA=1 e mova para _pendentes o que falhar. Validação ao vivo completa em 21/10/2026 no H2 (87 casos locais, 2 remotos fora): 59 ok, 12 não verificáveis (numero dos TCs/CARF e tjrj-ejuris numero: resultado sem número CNJ legível; tceba numero: prefixo \"TCE/\" antes da barra), 16 falhas; as 12 falhas por crawler/portal ou IP foram para _pendentes com o motivo, e ficaram tjmt (HTTP 503 da API, do H2 e do Mac — queda do tribunal) e tjro (timeout só no H2, ok do Mac).",
   "_pendentes": {
     "trf2": {
       "magistrado": "sem relator legivel no resultado real",
@@ -25,14 +25,17 @@
       "periodoPublicacao": "sem resultado real com termo conhecido"
     },
     "tjes": {
-      "periodoJulgamento": "resultado real sem dataJulgamento legivel"
+      "periodoJulgamento": "resultado real sem dataJulgamento legivel",
+      "juizados": "falhou na validação ao vivo de 21/10/2026: HTTP 403 (bloqueio_ip) do H2; do Mac funciona — IP do H2 bloqueado pelo TJES; volta quando o H2 voltar a passar",
+      "numero": "falhou na validação ao vivo de 21/10/2026: 0 resultado do H2 (mesmo bloqueio do 403); do Mac funciona — volta quando o H2 voltar a passar"
     },
     "tjmg": {
       "periodoPublicacao": "sem resultado real com termo conhecido",
       "numero": "sem numero de processo em resultado real"
     },
     "tjms": {
-      "juizados": "o resultado real nao trouxe turma recursal com este termo"
+      "juizados": "o resultado real nao trouxe turma recursal com este termo",
+      "magistrado": "falhou na validação ao vivo de 21/10/2026: filtro de relator ignorado (83 de 96 resultados de outro relator, H2 e Mac) — regressão do crawler/portal, não do caso; volta depois do conserto"
     },
     "tjpa": {
       "juizados": "o resultado real nao trouxe turma recursal com este termo"
@@ -42,13 +45,15 @@
       "numero": "sem numero de processo em resultado real"
     },
     "tjpi": {
-      "periodoJulgamento": "resultado real sem dataJulgamento legivel"
+      "periodoJulgamento": "resultado real sem dataJulgamento legivel",
+      "periodoPublicacao": "falhou na validação ao vivo de 21/10/2026: filtro de data de publicação ignorado (25 de 25 fora do período, H2 e Mac) — regressão do crawler/portal, não do caso; volta depois do conserto"
     },
     "tjpr": {
       "periodoPublicacao": "resultado real sem dataPublicacao legivel"
     },
     "tjrj-ejuris": {
-      "juizados": "o resultado real nao trouxe turma recursal com este termo"
+      "juizados": "o resultado real nao trouxe turma recursal com este termo",
+      "periodoJulgamento": "falhou na validação ao vivo de 21/10/2026: filtro de data de julgamento ignorado (10 de 10 fora do período, H2 e Mac) — regressão do crawler/portal, não do caso; volta depois do conserto"
     },
     "tjro": {
       "periodoPublicacao": "resultado real sem dataPublicacao legivel"
@@ -99,12 +104,20 @@
     "tjgo": {
       "periodoJulgamento": "falhou na validação ao vivo de 19/10/2026: o TJGO devolve zero até sem filtro de data (regressão do crawler/portal, não do caso) — volta depois do conserto",
       "numero": "falhou na validação ao vivo de 19/10/2026: o TJGO devolve zero até sem filtro de data (regressão do crawler/portal, não do caso) — volta depois do conserto"
+    },
+    "stf": {
+      "periodoJulgamento": "falhou na validação ao vivo de 21/10/2026: o STF não emitiu o cookie aws-waf-token (desafio do WAF mudou), do H2 e do Mac — regressão do crawler, não do caso; volta depois do conserto",
+      "periodoPublicacao": "falhou na validação ao vivo de 21/10/2026: o STF não emitiu o cookie aws-waf-token (desafio do WAF mudou), do H2 e do Mac — regressão do crawler, não do caso; volta depois do conserto",
+      "numero": "falhou na validação ao vivo de 21/10/2026: o STF não emitiu o cookie aws-waf-token (desafio do WAF mudou), do H2 e do Mac — regressão do crawler, não do caso; volta depois do conserto"
+    },
+    "tcdf": {
+      "periodoJulgamento": "falhou na validação ao vivo de 21/10/2026: \"unable to verify the first certificate\" (cadeia TLS do TCDF incompleta), do H2 e do Mac — conserto no crawler; volta depois",
+      "periodoPublicacao": "falhou na validação ao vivo de 21/10/2026: \"unable to verify the first certificate\" (cadeia TLS do TCDF incompleta), do H2 e do Mac — conserto no crawler; volta depois",
+      "magistrado": "falhou na validação ao vivo de 21/10/2026: \"unable to verify the first certificate\" (cadeia TLS do TCDF incompleta), do H2 e do Mac — conserto no crawler; volta depois",
+      "numero": "falhou na validação ao vivo de 21/10/2026: \"unable to verify the first certificate\" (cadeia TLS do TCDF incompleta), do H2 e do Mac — conserto no crawler; volta depois"
     }
   },
   "casos": [
-    {"tribunal":"stf","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/03/2026","dataFim":"31/03/2026","maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"stf","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/03/2026","dataPubFim":"31/03/2026","maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"stf","capacidade":"numero","params":{"numero":"Rcl 88673"},"espera":{"encontrado":true}},
     {"tribunal":"trf2","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"trf2","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"trf2","capacidade":"numero","params":{"numero":"5012650-88.2026.4.02.0000"},"espera":{"encontrado":true}},
@@ -130,12 +143,9 @@
     {"tribunal":"tjce","capacidade":"numero","params":{"numero":"30006187120258060066"},"espera":{"encontrado":true}},
     {"tribunal":"tjdft","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjdft","capacidade":"numero","params":{"numero":"0708965-46.2026.8.07.0000"},"espera":{"encontrado":true}},
-    {"tribunal":"tjes","capacidade":"juizados","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","juizados":true,"maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"tjes","capacidade":"numero","params":{"numero":"0009613-14.2020.8.08.0012"},"espera":{"encontrado":true}},
     {"tribunal":"tjmg","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjms","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjms","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"tjms","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"Elisabeth Rosa Baisch","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjms","capacidade":"numero","params":{"numero":"0804493-50.2023.8.12.0008"},"espera":{"encontrado":true}},
     {"tribunal":"tjmt","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjmt","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
@@ -144,7 +154,6 @@
     {"tribunal":"tjpa","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/05/2026","dataPubFim":"31/05/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjpa","capacidade":"numero","params":{"numero":"0800462-53.2022.8.14.0044"},"espera":{"encontrado":true}},
     {"tribunal":"tjpe","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"tjpi","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjpi","capacidade":"juizados","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","juizados":true,"maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjpi","capacidade":"numero","params":{"numero":"0800400-95.2024.8.18.0152"},"espera":{"encontrado":true}},
     {"tribunal":"tjpr","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
@@ -153,7 +162,6 @@
     {"tribunal":"tjrj","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjrj","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"CESAR FELIPE CURY","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjrj","capacidade":"numero","params":{"numero":"0800120-79.2025.8.19.0082"},"espera":{"encontrado":true}},
-    {"tribunal":"tjrj-ejuris","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/08/2026","dataFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjrj-ejuris","capacidade":"numero","params":{"numero":"0054750-39.2026.8.19.0000"},"espera":{"encontrado":true}},
     {"tribunal":"tjro","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/03/2026","dataFim":"31/03/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tjro","capacidade":"juizados","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","juizados":true,"maxPaginas":1},"espera":{"minimo":1}},
@@ -166,10 +174,6 @@
     {"tribunal":"tjto","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"trt9","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/10/2025","dataFim":"31/10/2025","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"trt9","capacidade":"numero","params":{"numero":"0000860-84.2024.5.09.0195"},"espera":{"encontrado":true}},
-    {"tribunal":"tcdf","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/10/2025","dataFim":"31/10/2025","maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"tcdf","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/03/2026","dataPubFim":"31/03/2026","maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"tcdf","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"Inácio Magalhães Filho","maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"tcdf","capacidade":"numero","params":{"numero":"00600-00005654/2023-56"},"espera":{"encontrado":true}},
     {"tribunal":"tceba","capacidade":"numero","params":{"numero":"TCE/001614/2019"},"espera":{"encontrado":true}},
     {"tribunal":"tcees","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/05/2026","dataFim":"31/05/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"tcees","capacidade":"numero","params":{"numero":"05661/2024"},"espera":{"encontrado":true}},

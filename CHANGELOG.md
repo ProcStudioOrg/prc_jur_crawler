@@ -11,6 +11,17 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
+## 1.2.1 — 21/10/2026
+
+Sentinela ligada em produção (`JUR_SENTINELA=1`), depois da validação ao vivo dos casos no H2
+em 21/10 (87 casos locais: 59 ok, 16 falhas, 12 não verificáveis; detalhes em `docs/kaizen.md`).
+
+- `jur/tests/sentinela-casos.json`: 12 casos que falham por crawler/portal ou IP saem da lista e
+  vão para `_pendentes` com o motivo (STF: desafio do WAF mudou; TCDF: cadeia TLS incompleta;
+  TJMS: filtro de relator ignorado; TJPI: filtro de data de publicação ignorado; TJRJ ejuris:
+  filtro de data de julgamento ignorado; TJES: bloqueia o IP do H2). Ficam 77 casos; TJMT (API
+  em 503 no dia) e TJRO (timeout só no H2) continuam na lista.
+
 ## 1.2.0 — 20/10/2026
 
 Kaizen: o JurCrawler passa a enxergar as próprias falhas (detalhes em `docs/kaizen.md`).
