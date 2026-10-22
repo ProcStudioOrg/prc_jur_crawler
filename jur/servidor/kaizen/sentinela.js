@@ -156,7 +156,11 @@ async function rodarSentinela({
     totais.rodados++;
     if (avaliacao.status === 'ok') totais.ok++;
     else if (avaliacao.status === 'nao_verificavel') totais.nao_verificaveis++;
-    else {
+    if (avaliacao.status !== 'falha' && enviar) {
+      // Busca que deu certo = julgados reais: os números vão ao FFD como alvos do banco de processos.
+      try { kaizen.registrarAlvos?.({ origem: 'sentinela', tribunal: caso.tribunal, resultados: r?.resultados, capacidade: caso.capacidade, params: caso.params }); } catch (e) { logar(e); }
+    }
+    if (avaliacao.status === 'falha') {
       totais.falhas++;
       try { await kaizen.registrarSentinela({ caso, avaliacao, r, arquivo }); } catch (e) { logar(e); }
     }

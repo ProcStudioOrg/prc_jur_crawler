@@ -5,7 +5,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 const { criarKaizen, kaizenNulo } = require('../servidor/kaizen/index');
-const { payloadRelato, payloadFalha, payloadResumo, filtrosDe, hashUsuario } = require('../servidor/kaizen/payload');
+const { payloadRelato, payloadFalha, payloadResumo, payloadAlvos, filtrosDe, hashUsuario } = require('../servidor/kaizen/payload');
 const { dirFalha, assinaturaDaCaptura } = require('../servidor/kaizen/captura');
 
 const FX = path.join(__dirname, 'fixtures', 'kaizen', 'resultados');
@@ -285,4 +285,60 @@ test('kaizen.db, -wal e -shm ficam 0600 depois de um enfileiramento', async () =
       assert.equal(fs.statSync(f).mode & 0o777, 0o600, path.basename(f));
     }
   } finally { k.fechar(); }
+});
+
+// --- jur-processos: alvos do banco de processos ----------------------------------------------
+
+test('payloadAlvos: um numero por resultado, so com forma de CNJ, sem repetir, com capacidade/query/data', () => {
+  const c = payloadAlvos({
+    versao: '1.3.0', revisao: 'abc1234', origem: 'sentinela', tribunal: 'tjrj-ejuris', em: '2026-10-22T07:05:00Z',
+    capacidade: 'periodoJulgamento', params: { query: 'dano moral', dataInicio: '01/08/2026' },
+    resultados: [
+      { numeroProcesso: '5057135-38.2021.4.04.7100/TRF4', dataJulgamento: '15/08/2026', ementa: 'texto longo' },
+      { processo: '5057135-38.2021.4.04.7100' }, // repetido por outro alias
+      { numero: 'TC 012.345/2020' }, // TC: nao e CNJ
+      { numero: '12345620208160001', dataDecisao: '01/08/2026' }, // sem zeros a esquerda (CNJ como Number perderia precisao)
+      null, 'lixo',
+    ],
+  });
+  assert.equal(c.acao, 'alvos');
+  assert.equal(c.servico, 'jurcrawler');
+  assert.equal(c.tribunal, 'tjrj-ejuris');
+  assert.equal(c.origem, 'sentinela');
+  assert.deepEqual(c.numeros, [
+    { numero: '5057135-38.2021.4.04.7100/TRF4', capacidade: 'periodoJulgamento', query: 'dano moral', dataJulgamento: '15/08/2026' },
+    { numero: '12345620208160001', capacidade: 'periodoJulgamento', query: 'dano moral', dataJulgamento: '01/08/2026' },
+  ]);
+  assert.ok(!JSON.stringify(c).includes('texto longo'), 'ementa nunca sai');
+});
+
+test('payloadAlvos: teto de 50, origem busca, lista vazia sem resultados', () => {
+  const muitos = Array.from({ length: 80 }, (_, i) => ({ numeroProcesso: `5057135-38.2021.4.04.${String(7000 + i).padStart(4, '0')}` }));
+  assert.equal(payloadAlvos({ tribunal: 'trf4', resultados: muitos }).numeros.length, 50);
+  assert.equal(payloadAlvos({ tribunal: 'trf4', origem: 'busca', resultados: [] }).origem, 'busca');
+  assert.deepEqual(payloadAlvos({ tribunal: 'trf4', resultados: null }).numeros, []);
+});
+
+test('registrarAlvos: sentinela enfileira em jur-processos; busca so com KAIZEN_ALVOS_BUSCA=1; vazio nao vai', async () => {
+  const resultados = [{ numeroProcesso: '5057135-38.2021.4.04.7100' }];
+  assert.equal(kaizen.registrarAlvos({ origem: 'sentinela', tribunal: 'trf4', resultados, capacidade: 'numero', params: { numero: '5057135-38.2021.4.04.7100' } }), true);
+  assert.equal(kaizen.registrarAlvos({ origem: 'busca', tribunal: 'trf4', resultados }), false);
+  assert.equal(kaizen.registrarAlvos({ origem: 'sentinela', tribunal: 'tcu', resultados: [{ numero: 'TC 1/2020' }] }), false);
+  await kaizen.outbox.drenar();
+  const c = corpos('jur-processos');
+  assert.equal(c.length, 1);
+  assert.equal(c[0].acao, 'alvos');
+  assert.equal(c[0].tribunal, 'trf4');
+  assert.deepEqual(c[0].numeros, [{ numero: '5057135-38.2021.4.04.7100', capacidade: 'numero' }]);
+
+  const comBusca = criarKaizen({ dir: tmp(), env: { ...ENV, KAIZEN_ALVOS_BUSCA: '1' }, fetchFn, versao: '1.3.0' });
+  try {
+    comBusca.registrarConcluido(jobFalso({ status: 'concluido' }), { ok: true, resultados }, { usuarioId: 7 });
+    await comBusca.outbox.drenar();
+    const b = corpos('jur-processos');
+    assert.equal(b.length, 2);
+    assert.equal(b[1].origem, 'busca');
+    assert.ok(!('usuario_hash' in b[1]) && !JSON.stringify(b[1]).includes('"7"'), 'alvo nunca leva usuario');
+  } finally { comBusca.fechar(); }
+  assert.equal(kaizenNulo().registrarAlvos({ tribunal: 'trf4', resultados }), false);
 });

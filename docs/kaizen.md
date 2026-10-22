@@ -35,7 +35,27 @@ crawler (filho) --preload--> <job>.falha/ --executor--> jobs.js --kaizen.registr
 4. **Outbox.** O payload é enfileirado em `kaizen.db` (SQLite no diretório de dados) e a captura
    em disco é sempre apagada, com ou sem FFD configurado.
 5. **FFD.** `POST ${KAIZEN_WEBHOOK_URL}/<source>` com `x-webhook-token`. Sources:
-   `jur-diagnostico` (falhas, resgates, resumo da sentinela) e `user-issues` (relatos).
+   `jur-diagnostico` (falhas, resgates, resumo da sentinela), `user-issues` (relatos) e
+   `jur-processos` (alvos do banco de processos, abaixo).
+
+## Banco de processos (alvos para a captura)
+
+A sentinela já entra em cada tribunal todo dia e volta com julgados reais. Em vez de só
+provar que o crawler funciona, cada caso `ok` ou `nao_verificavel` manda ao FFD os números
+de processo que a busca devolveu (`kaizen.registrarAlvos` → `payload.payloadAlvos` →
+`POST .../jur-processos` com `acao: "alvos"`). O FFD normaliza para a forma CNJ, descarta o
+que não é CNJ (TCs, CARF), ignora repetidos e enfileira como alvo. Quem baixa o processo
+inteiro é o agente de captura da debian2 (`masterFucker/processos`), com a sessão do
+advogado e a extensão do ProcStudio; o FFD mostra a fila em `/jur-processos`.
+
+- Sai: `numero` (como o tribunal exibiu), `capacidade` e `query` do caso, `dataJulgamento`.
+  Não sai ementa, texto, usuário nem hash de usuário. Teto de 50 números por caso.
+- `KAIZEN_ALVOS_BUSCA=1` liga o mesmo envio para buscas de usuário (`registrarConcluido`,
+  `origem: busca`); padrão desligado.
+- Sem `--enviar` na CLI (`tests/sentinela.js`) nada sai; com a outbox desligada,
+  `registrarAlvos` devolve `false` e não guarda nada.
+- A key `jurcrawler` do FFD precisa ter o source `jur-processos` no escopo; sem isso o FFD
+  responde 401 e a outbox descarta o item (4xx não repete).
 
 ### Marcar o `passo`
 

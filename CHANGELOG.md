@@ -11,6 +11,16 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
+## 1.3.0 — 22/10/2026
+
+- Banco de processos: a sentinela passa a mandar ao FFD (source `jur-processos`, `acao: alvos`)
+  os números CNJ que cada busca bem-sucedida devolveu. O FFD enfileira como alvos de captura
+  do processo inteiro (agente da debian2 + extensão do ProcStudio) para o benchmark de IA
+  jurídica. Só número, capacidade, query e data do julgado saem; nem texto nem usuário.
+  Busca de usuário também alimenta a fila quando `KAIZEN_ALVOS_BUSCA=1` (padrão desligado).
+  A key `jurcrawler` do FFD precisa do escopo `jur-processos` (feito em 22/10). Ver
+  `docs/kaizen.md` > Banco de processos.
+
 ## 1.2.1 — 21/10/2026
 
 Sentinela ligada em produção (`JUR_SENTINELA=1`), depois da validação ao vivo dos casos no H2
