@@ -57,17 +57,34 @@ function criarCobranca({
 
   const cacheValido = () => cache && agora() - cacheEm < VALIDADE_CACHE_MS;
 
+  // Erro ou conta inativa apagam o cache: senão um ok antigo seguiria valendo até 30 s.
   async function buscarSaldo() {
-    const b = await chamarRails(() => procstudio.saldo(principal));
+    let b;
+    try {
+      b = await chamarRails(() => procstudio.saldo(principal));
+    } catch (e) {
+      cache = null;
+      throw e;
+    }
     if (b?.ativo === true) {
       cache = b;
       cacheEm = agora();
+    } else {
+      cache = null;
     }
     return b;
   }
 
+  // Recibo em voo é o do turno que ainda está tentando: não bloqueia as outras conversas da conta
+  // nem entra na drenagem (seria enviado duas vezes ao mesmo tempo).
   function pendentes() {
-    return con.prepare('SELECT COUNT(*) AS n FROM cobranca_pendente').get().n;
+    return con.prepare('SELECT COUNT(*) AS n FROM cobranca_pendente WHERE em_voo = 0').get().n;
+  }
+
+  // Depois de uma queda do processo nenhum registro está de fato em voo: o que ficou marcado
+  // volta para a fila do varredor.
+  function recuperarVoos() {
+    con.prepare('UPDATE cobranca_pendente SET em_voo = 0 WHERE em_voo = 1').run();
   }
 
   async function podeOperar() {
@@ -99,37 +116,54 @@ function criarCobranca({
     registrarLog('billing_receipt_dropped', { requestId, motivo: e.code, status: e.status ?? null });
   }
 
+  // O recibo é gravado ANTES da 1ª ida ao Rails (em_voo = 1): se o processo cair no meio das
+  // retentativas, o varredor do próximo boot o encontra. Sucesso ou código terminal apagam.
   async function registrar(uso) {
     const recibo = { principal: { issuer: principal.issuer, userId: principal.userId, teamId: principal.teamId }, uso };
+    const requestId = String(uso.requestId);
+    const apagar = () => con.prepare('DELETE FROM cobranca_pendente WHERE request_id = ?').run(requestId);
+    con.prepare(`INSERT INTO cobranca_pendente (request_id, payload, tentativas, criado_em, em_voo)
+                 VALUES (?, ?, 0, ?, 1)
+                 ON CONFLICT (request_id) DO UPDATE SET em_voo = 1`)
+      .run(requestId, JSON.stringify(recibo), agora());
     let ultimo;
     for (let tentativa = 0; tentativa <= ESPERAS_MS.length; tentativa++) {
       if (tentativa > 0) await esperar(ESPERAS_MS[tentativa - 1]);
       try {
         const r = await chamarRails(() => procstudio.registrarUso(recibo.principal, uso));
+        apagar();
         atualizarCache(r);
         return { cobradoBrl: r.cobradoBrl, saldoBrl: r.saldoBrl, podeOperar: r.podeOperar, duplicado: r.duplicado };
       } catch (e) {
         if (TERMINAIS.has(e?.code)) {
+          apagar();
           descartar(uso.requestId, e);
           throw erroCom('COBRANCA_RECUSADA', MSG_RECUSADA, { status: e.status });
         }
         ultimo = e;
       }
     }
-    con.prepare(`INSERT INTO cobranca_pendente (request_id, payload, tentativas, criado_em, ultimo_erro)
-                 VALUES (?, ?, ?, ?, ?)
-                 ON CONFLICT (request_id) DO UPDATE SET
-                   tentativas = tentativas + excluded.tentativas, ultimo_erro = excluded.ultimo_erro`)
-      .run(String(uso.requestId), JSON.stringify(recibo), ESPERAS_MS.length + 1, agora(), descrever(ultimo));
+    con.prepare(`UPDATE cobranca_pendente SET em_voo = 0, tentativas = tentativas + ?, ultimo_erro = ?
+                 WHERE request_id = ?`)
+      .run(ESPERAS_MS.length + 1, descrever(ultimo), requestId);
     agendar();
     throw erroCom('COBRANCA_PENDENTE', MSG_PENDENTE);
   }
 
   async function drenarAgora() {
     const resultado = { enviados: 0, descartados: 0, adiados: 0 };
-    const linhas = con.prepare('SELECT request_id, payload, criado_em FROM cobranca_pendente ORDER BY criado_em').all();
+    const linhas = con.prepare('SELECT request_id, payload, criado_em FROM cobranca_pendente WHERE em_voo = 0 ORDER BY criado_em').all();
     for (const linha of linhas) {
-      const { principal: p, uso } = JSON.parse(linha.payload);
+      let p, uso;
+      try {
+        ({ principal: p, uso } = JSON.parse(linha.payload));
+      } catch {
+        // Linha ilegível nunca seria aceita e bloquearia a conta para sempre: sai da fila e vai ao log.
+        con.prepare('DELETE FROM cobranca_pendente WHERE request_id = ?').run(linha.request_id);
+        registrarLog('billing_receipt_corrupt', { requestId: linha.request_id });
+        resultado.descartados++;
+        continue;
+      }
       try {
         const r = await chamarRails(() => procstudio.registrarUso(p, uso));
         con.prepare('DELETE FROM cobranca_pendente WHERE request_id = ?').run(linha.request_id);
@@ -168,7 +202,10 @@ function criarCobranca({
     timer.unref?.();
   }
 
+  // Chamado ao abrir o escopo da conta (boot): ainda não há turno em andamento, então todo
+  // recibo marcado em voo é de um processo que caiu.
   function iniciarVarredor() {
+    recuperarVoos();
     varredorLigado = true;
     agendar();
   }
@@ -184,7 +221,7 @@ function criarCobranca({
     return erroCom('PROCSTUDIO_LLM_INDISPONIVEL', MSG_OPERADOR, { status: 503 });
   }
 
-  return { podeOperar, registrar, falhaDoOperador, pendentes, drenar, iniciarVarredor, pararVarredor, saldo };
+  return { podeOperar, registrar, falhaDoOperador, pendentes, drenar, recuperarVoos, iniciarVarredor, pararVarredor, saldo };
 }
 
 module.exports = { criarCobranca };

@@ -17,11 +17,12 @@ const BALANCE = {
 const USO_OK = { cobradoCents: 2, cobradoBrl: '0,02', saldoCents: 998, saldoBrl: '9,98', podeOperar: true, duplicado: false };
 const USO = { requestId: 'c1:0:0', modelId: 'glm', inputTokens: 10, outputTokens: 5 };
 
-// Respostas programáveis: cada item é o valor devolvido ou um Error lançado.
+// Respostas programáveis: cada item é o valor devolvido, um Error lançado ou uma função chamada na hora.
 function procstudioFalso({ saldos = [], usos = [] } = {}) {
   const chamadas = { saldo: 0, registrarUso: [] };
-  const proximo = (fila) => {
-    const r = fila.length > 1 ? fila.shift() : fila[0];
+  const proximo = async (fila) => {
+    let r = fila.length > 1 ? fila.shift() : fila[0];
+    if (typeof r === 'function') r = await r();
     if (r instanceof Error) throw r;
     return structuredClone(r);
   };
@@ -83,6 +84,17 @@ describe('cobranca: pré-checagem', () => {
     ]);
   });
 
+  it('saldo forçado que volta inativo ou falha apaga o cache do podeOperar', async () => {
+    for (const ruim of [{ ativo: false }, erro(503)]) {
+      const procstudio = procstudioFalso({ saldos: [BALANCE, ruim] });
+      const { cobranca } = montar({ procstudio });
+      assert.deepEqual(await cobranca.podeOperar(), { ok: true });
+      await cobranca.saldo({ forcar: true }).catch(() => {});
+      assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'indisponivel' });
+      assert.equal(procstudio.chamadas.saldo, 3);
+    }
+  });
+
   it('dois criarCobranca com con diferentes não compartilham cache', async () => {
     const procstudio = procstudioFalso({ saldos: [BALANCE] });
     const relogio = { t: 5_000 };
@@ -126,18 +138,53 @@ describe('cobranca: registro', () => {
     const linha = con.prepare('SELECT * FROM cobranca_pendente').get();
     assert.equal(linha.request_id, 'c1:0:0');
     assert.equal(linha.tentativas, 3);
+    assert.equal(linha.em_voo, 0);
     assert.deepEqual(JSON.parse(linha.payload).uso, USO);
     assert.equal(JSON.parse(linha.payload).principal.teamId, 't1');
     assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'pendente' });
     assert.equal(procstudio.chamadas.saldo, 0);
   });
 
+  it('recibo é gravado em voo antes da 1ª ida ao Rails e some no sucesso', async () => {
+    const vistos = [];
+    let m;
+    const olhar = () => {
+      const linha = m.con.prepare('SELECT em_voo, payload FROM cobranca_pendente WHERE request_id = ?').get('c1:0:0');
+      vistos.push([linha?.em_voo, JSON.parse(linha.payload).uso.requestId, m.cobranca.pendentes()]);
+    };
+    const procstudio = procstudioFalso({
+      usos: [() => { olhar(); return erro(503); }, () => { olhar(); return erro(503); }, () => { olhar(); return { ...USO_OK, duplicado: true }; }],
+    });
+    m = montar({ procstudio });
+    assert.equal((await m.cobranca.registrar(USO)).duplicado, true);
+    assert.deepEqual(vistos, [[1, 'c1:0:0', 0], [1, 'c1:0:0', 0], [1, 'c1:0:0', 0]]);
+    assert.equal(m.con.prepare('SELECT COUNT(*) AS n FROM cobranca_pendente').get().n, 0);
+  });
+
+  it('recibo em voo não bloqueia a conta nem entra na drenagem', async () => {
+    let m;
+    let durante;
+    const procstudio = procstudioFalso({
+      saldos: [BALANCE],
+      usos: [async () => {
+        durante = { pode: await m.cobranca.podeOperar(), drenagem: await m.cobranca.drenar() };
+        return USO_OK;
+      }],
+    });
+    m = montar({ procstudio });
+    await m.cobranca.registrar(USO);
+    assert.deepEqual(durante, { pode: { ok: true }, drenagem: { enviados: 0, descartados: 0, adiados: 0 } });
+    assert.equal(procstudio.chamadas.registrarUso.length, 1);
+  });
+
   it('códigos terminais não geram pendência: logam billing_receipt_dropped e lançam COBRANCA_RECUSADA', async () => {
     for (const [status, code] of [[410, 'USER_GONE'], [422, 'INVALID_USAGE'], [401, 'SERVICE_AUTH'], [403, 'TEAM_REJECTED'], [404, 'TEAM_REJECTED']]) {
       const procstudio = procstudioFalso({ usos: [erro(status, code)] });
-      const { cobranca, logs, esperas } = montar({ procstudio });
+      const m = montar({ procstudio });
+      const { cobranca, logs, esperas } = m;
       await assert.rejects(cobranca.registrar(USO), { code: 'COBRANCA_RECUSADA' });
       assert.equal(cobranca.pendentes(), 0);
+      assert.equal(m.con.prepare('SELECT COUNT(*) AS n FROM cobranca_pendente').get().n, 0, code);
       assert.equal(procstudio.chamadas.registrarUso.length, 1, code);
       assert.deepEqual(esperas, []);
       assert.deepEqual(logs.map((l) => [l.event, l.motivo, l.requestId]), [['billing_receipt_dropped', code, 'c1:0:0']]);
@@ -215,6 +262,34 @@ describe('cobranca: pendências', () => {
     relogio.t += 24 * 3600e3 + 1;
     await cobranca.drenar();
     assert.equal(logs.filter((l) => l.event === 'billing_pending_stale').length, 1);
+  });
+
+  it('linha ilegível é descartada com log e não impede as demais', async () => {
+    const { cobranca, con, logs, procstudio } = await comPendencia([USO_OK]);
+    con.prepare("INSERT INTO cobranca_pendente (request_id, payload, criado_em) VALUES ('ruim', '{quebrado', 0)").run();
+    assert.equal(cobranca.pendentes(), 2);
+    assert.deepEqual(await cobranca.drenar(), { enviados: 1, descartados: 1, adiados: 0 });
+    assert.equal(cobranca.pendentes(), 0);
+    assert.deepEqual(logs.map((l) => [l.event, l.requestId]), [['billing_receipt_corrupt', 'ruim']]);
+    assert.equal(procstudio.chamadas.registrarUso.at(-1).u.requestId, 'c1:0:0');
+  });
+
+  it('iniciarVarredor recupera recibos em voo de um processo que caiu', async (t) => {
+    t.mock.timers.enable({ apis: ['setTimeout'] });
+    const con = abrirTmp();
+    con.prepare(`INSERT INTO cobranca_pendente (request_id, payload, criado_em, em_voo) VALUES (?, ?, 0, 1)`)
+      .run('c1:0:0', JSON.stringify({ principal, uso: USO }));
+    const procstudio = procstudioFalso({ usos: [USO_OK] });
+    const { cobranca } = montar({ con, procstudio });
+    assert.equal(cobranca.pendentes(), 0);
+    cobranca.iniciarVarredor();
+    assert.equal(con.prepare('SELECT em_voo FROM cobranca_pendente').get().em_voo, 0);
+    assert.equal(cobranca.pendentes(), 1);
+    t.mock.timers.tick(60_000);
+    await new Promise(setImmediate);
+    assert.equal(cobranca.pendentes(), 0);
+    assert.equal(procstudio.chamadas.registrarUso.length, 1);
+    cobranca.pararVarredor();
   });
 
   it('drenar sem principal usa o principal gravado no recibo', async () => {

@@ -16,7 +16,9 @@ const SCHEMA = `
    job.navegador_falhas (por que o fornecedor anterior caiu, quando a busca foi para a
    reserva) — é o que o Kaizen reporta como resgate. Mesmo ALTER condicional da v4.
    v6 acrescenta cobranca_pendente: recibos de uso de IA (conexão ProcStudio) que o Rails
-   não confirmou; o varredor de cobranca.js reenvia. Tabela nova, aditiva. */
+   não confirmou; o varredor de cobranca.js reenvia. em_voo = 1 enquanto o registro do turno
+   ainda tenta (o recibo é gravado antes da 1ª ida ao Rails, para sobreviver a uma queda do
+   processo). Tabela nova, aditiva. */
 PRAGMA user_version = 6;
 
 CREATE TABLE IF NOT EXISTS job (
@@ -91,7 +93,8 @@ CREATE TABLE IF NOT EXISTS cobranca_pendente (
   payload      TEXT NOT NULL,
   tentativas   INTEGER NOT NULL DEFAULT 0,
   criado_em    INTEGER NOT NULL,
-  ultimo_erro  TEXT
+  ultimo_erro  TEXT,
+  em_voo       INTEGER NOT NULL DEFAULT 0
 );
 `;
 
