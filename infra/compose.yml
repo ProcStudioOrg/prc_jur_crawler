@@ -32,6 +32,13 @@ services:
       # Aviso de deploy ao FFD (servidor/aviso-deploy.js). A revisão sai da tag da imagem.
       USAGE_WEBHOOK_URL: "${USAGE_WEBHOOK_URL:-}"
       JUR_IMAGE: "${JUR_IMAGE:-jur:dev}"
+      # IA gerenciada pelo ProcStudio: chave do OPERADOR; vazia = conexão desligada.
+      PROCSTUDIO_LLM_API_KEY: "${PROCSTUDIO_LLM_API_KEY:-}"
+      PROCSTUDIO_LLM_ENDPOINT: "${PROCSTUDIO_LLM_ENDPOINT:-https://openrouter.ai/api/v1}"
+      PROCSTUDIO_LLM_MODELO: "${PROCSTUDIO_LLM_MODELO:-z-ai/glm-5.3-flash}"
+      PROCSTUDIO_LLM_MODELO_CATALOGO: "${PROCSTUDIO_LLM_MODELO_CATALOGO:-glm-5.3-flash}"
+      PROCSTUDIO_LLM_UPSTREAM: "${PROCSTUDIO_LLM_UPSTREAM-z-ai}"
+      PROCSTUDIO_LLM_ROTULO: "${PROCSTUDIO_LLM_ROTULO:-GLM-5.3 Flash}"
       # Kaizen (docs/kaizen.md). Sem KAIZEN_WEBHOOK_URL ou TOKEN a outbox fica desligada: nada e guardado nem sai.
       # Base dos webhooks do FFD; as falhas vao para <url>/jur-diagnostico e os relatos para <url>/user-issues.
       KAIZEN_WEBHOOK_URL: "${KAIZEN_WEBHOOK_URL:-}"

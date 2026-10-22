@@ -31,11 +31,15 @@ function registrar(roteador, deps) {
   }
   roteador.rota("POST", "/api/v1/conexoes-llm", salvar);
   roteador.rota("PATCH", "/api/v1/conexoes-llm/:id", salvar);
-  roteador.rota("DELETE", "/api/v1/conexoes-llm/:id", (req, res) =>
-    repo.apagar(req.params.id)
-      ? json(res, 200, { ok: true })
-      : json(res, 404, { erro: "Conexão não encontrada." }),
-  );
+  roteador.rota("DELETE", "/api/v1/conexoes-llm/:id", (req, res) => {
+    try {
+      return repo.apagar(req.params.id)
+        ? json(res, 200, { ok: true })
+        : json(res, 404, { erro: "Conexão não encontrada." });
+    } catch (e) {
+      return json(res, e.status === 400 ? 400 : 500, { erro: e.message });
+    }
+  });
   async function modelos(req, res) {
     if (!repo.obter(req.params.id))
       return json(res, 404, { erro: "Conexão não encontrada." });

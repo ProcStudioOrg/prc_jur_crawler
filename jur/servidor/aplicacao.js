@@ -46,6 +46,8 @@ function criarAplicacao({
   con.exec("PRAGMA journal_mode=WAL");
   fs.chmodSync(path.join(dir, "acesso.db"), 0o600);
   const cofre = criarCofre(cofreKey);
+  // Conexão de IA do operador (null sem PROCSTUDIO_LLM_API_KEY); lida uma vez por processo.
+  const gerenciada = require("./conexao-procstudio").doAmbiente();
   const sessoes = criarSessoes({ con, cofre, procstudio });
   const chaves = criarChaves(con);
   // Uma instância por processo (uma conexão com kaizen.db), compartilhada por todas as contas.
@@ -164,6 +166,7 @@ function criarAplicacao({
           owner: scope.owner,
           cofre,
           transport: llmTransport,
+          gerenciada,
         });
         scope.app = criarApp({
           ...scope,
