@@ -14,8 +14,10 @@ const SCHEMA = `
    tabela existente não vem com IF NOT EXISTS; abrir() faz o ALTER quando falta.
    v5 acrescenta job.resolvido_pelo_usuario (o usuário destravou o captcha na tela) e
    job.navegador_falhas (por que o fornecedor anterior caiu, quando a busca foi para a
-   reserva) — é o que o Kaizen reporta como resgate. Mesmo ALTER condicional da v4. */
-PRAGMA user_version = 5;
+   reserva) — é o que o Kaizen reporta como resgate. Mesmo ALTER condicional da v4.
+   v6 acrescenta cobranca_pendente: recibos de uso de IA (conexão ProcStudio) que o Rails
+   não confirmou; o varredor de cobranca.js reenvia. Tabela nova, aditiva. */
+PRAGMA user_version = 6;
 
 CREATE TABLE IF NOT EXISTS job (
   id           TEXT PRIMARY KEY,
@@ -82,6 +84,14 @@ CREATE TABLE IF NOT EXISTS chave_conexao (
   criado_em     INTEGER NOT NULL,
   ultimo_uso_em INTEGER,
   revogado_em   INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS cobranca_pendente (
+  request_id   TEXT PRIMARY KEY,
+  payload      TEXT NOT NULL,
+  tentativas   INTEGER NOT NULL DEFAULT 0,
+  criado_em    INTEGER NOT NULL,
+  ultimo_erro  TEXT
 );
 `;
 
