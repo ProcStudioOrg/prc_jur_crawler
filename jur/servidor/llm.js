@@ -96,6 +96,15 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
     throw erro;
   };
 
+  // Rodada abortada por gancho: tool_use sem tool_result faria a API recusar o historico
+  // (400) no turno seguinte, entao so o texto da rodada fica.
+  const guardarRodadaAbortada = (mensagem) => {
+    const content = mensagem.stop_reason === 'tool_use'
+      ? mensagem.content.filter((b) => b.type !== 'tool_use')
+      : mensagem.content;
+    if (content.length) historico.push({ role: 'assistant', content });
+  };
+
   for (let i = 0; i < maxIteracoes; i++) {
     // Checagem propria alem da que o proprio SDK faz ao receber um `signal` ja abortado:
     // garante que paramos de chamar a API mesmo com um `cliente` de teste que nao olha
@@ -125,7 +134,7 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
     rodadas += 1;
 
     if (exigirUso && !mensagem.usage) {
-      historico.push({ role: 'assistant', content: mensagem.content });
+      guardarRodadaAbortada(mensagem);
       console.error(JSON.stringify({ event: 'llm_usage_missing', modelo, rodada: i }));
       falhar(Object.assign(new Error('O provedor não informou o consumo desta resposta.'), { code: 'USAGE_MISSING' }));
     }
@@ -133,7 +142,7 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
       try {
         await aoUsoDaRodada(mensagem.usage, i, { modelo });
       } catch (erro) {
-        historico.push({ role: 'assistant', content: mensagem.content });
+        guardarRodadaAbortada(mensagem);
         falhar(erro);
       }
     }
