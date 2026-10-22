@@ -333,4 +333,74 @@ describe('llm — aviso de resultado de ferramenta', () => {
     assert.strictEqual(r.texto, 'pronto',
       'o vinculo com a conversa e util, mas nao vale perder a resposta inteira por causa dele');
   });
+  describe('ganchos por rodada', () => {
+    const USO = { input_tokens: 1, output_tokens: 2, cache_read_tokens: 0, cache_write_tokens: 0, cost_usd: 0.01, generation_id: 'g' };
+    const filaVazia = {
+      enfileirar: () => ({ id: 'j', status: 'enfileirado' }),
+      obter: () => ({ id: 'j', status: 'concluido', total: 0 }),
+      aguardar: async () => ({ id: 'j', status: 'concluido', total: 0 }),
+    };
+    const rodadaTool = () => ({ stop_reason: 'tool_use', usage: USO, content: [{ type: 'tool_use', id: 't1', name: 'listar_tribunais', input: {} }] });
+    const rodadaFim = (usage = USO) => ({ stop_reason: 'end_turn', usage, content: [{ type: 'text', text: 'ok' }] });
+
+    it('chama antesDaRodada -> stream -> aoUsoDaRodada por rodada, com indices', async () => {
+      const eventos = [];
+      const cliente = clienteFalso([rodadaTool(), rodadaFim()]);
+      const original = cliente.messages.stream.bind(cliente.messages);
+      cliente.messages.stream = (p, o) => { eventos.push('stream'); return original(p, o); };
+      const r = await llm.conversar({
+        mensagens: [{ role: 'user', content: 'x' }], cliente, deps: { fila: filaVazia }, modelo: 'm-x',
+        antesDaRodada: async (i) => { eventos.push(`antes${i}`); },
+        aoUsoDaRodada: async (usage, i, ctx) => { eventos.push(`uso${i}:${usage.generation_id}:${ctx.modelo}`); },
+      });
+      assert.deepStrictEqual(eventos, ['antes0', 'stream', 'uso0:g:m-x', 'antes1', 'stream', 'uso1:g:m-x']);
+      assert.strictEqual(r.rodadas, 2);
+    });
+
+    it('antesDaRodada lancando na 2a rodada aborta sem chamar o provedor e deixa a rodada 1 no historico', async () => {
+      let chamadas = 0;
+      const cliente = clienteFalso([rodadaTool(), rodadaFim()]);
+      const original = cliente.messages.stream.bind(cliente.messages);
+      cliente.messages.stream = (p, o) => { chamadas++; return original(p, o); };
+      const erro = await llm.conversar({
+        mensagens: [{ role: 'user', content: 'x' }], cliente, deps: { fila: filaVazia },
+        antesDaRodada: async (i) => { if (i === 1) throw Object.assign(new Error('sem saldo'), { code: 'SEM_SALDO' }); },
+      }).then(() => null, (e) => e);
+      assert.strictEqual(erro.code, 'SEM_SALDO');
+      assert.strictEqual(chamadas, 1);
+      assert.strictEqual(erro.mensagens.length, 3, 'user + assistant(tool_use) + user(tool_result)');
+    });
+
+    it('aoUsoDaRodada lancando propaga e as ferramentas da rodada nao rodam', async () => {
+      let ferramentaRodou = false;
+      const fila = { ...filaVazia, enfileirar: () => { ferramentaRodou = true; return { id: 'j', status: 'enfileirado' }; } };
+      const erro = await llm.conversar({
+        mensagens: [{ role: 'user', content: 'x' }], cliente: clienteFalso([rodadaTool(), rodadaFim()]), deps: { fila },
+        aoUsoDaRodada: async () => { throw new Error('falha de cobranca'); },
+      }).then(() => null, (e) => e);
+      assert.strictEqual(erro.message, 'falha de cobranca');
+      assert.strictEqual(ferramentaRodou, false);
+    });
+
+    it('exigirUso sem usage lanca USAGE_MISSING e nao chama aoUsoDaRodada', async () => {
+      let chamou = false;
+      const erro = await llm.conversar({
+        mensagens: [{ role: 'user', content: 'x' }], cliente: clienteFalso([rodadaFim(null)]), deps: { fila: filaVazia },
+        exigirUso: true, aoUsoDaRodada: async () => { chamou = true; },
+      }).then(() => null, (e) => e);
+      assert.strictEqual(erro.code, 'USAGE_MISSING');
+      assert.strictEqual(erro.message, 'O provedor não informou o consumo desta resposta.');
+      assert.strictEqual(chamou, false);
+    });
+
+    it('sem exigirUso, usage nulo passa sem chamar aoUsoDaRodada', async () => {
+      let chamou = false;
+      const r = await llm.conversar({
+        mensagens: [{ role: 'user', content: 'x' }], cliente: clienteFalso([rodadaFim(null)]), deps: { fila: filaVazia },
+        aoUsoDaRodada: async () => { chamou = true; },
+      });
+      assert.strictEqual(r.texto, 'ok');
+      assert.strictEqual(chamou, false);
+    });
+  });
 });

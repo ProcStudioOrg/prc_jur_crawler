@@ -80,6 +80,7 @@ function erroAbortado() {
 async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramenta,
                           aoResultadoFerramenta, sinal,
                           modelo = MODELO, esforco = null, escopo = undefined,
+                          antesDaRodada, aoUsoDaRodada, exigirUso = false,
                           maxIteracoes = MAX_ITERACOES }) {
   const anthropic = cliente || new Anthropic(apiKey ? { apiKey } : {});
   const sistema = SISTEMA + blocoEscopo(escopo)
@@ -87,6 +88,13 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
       ? '\nSTJ: tentativa assistida habilitada. Pode buscar se estiver no escopo; a verificacao e resolvida automaticamente e, se falhar, o usuario resolve na tela do painel Navegadores. Leva 1 a 2 minutos a mais; avise o usuario.' : '');
   const historico = [...mensagens];
   let textoFinal = '';
+  let rodadas = 0;
+
+  // Erro dos ganchos sai com o que ja foi gerado, para a rota poder persistir o historico.
+  const falhar = (erro) => {
+    if (erro && typeof erro === 'object') { erro.mensagens = historico; erro.rodadas = rodadas; }
+    throw erro;
+  };
 
   for (let i = 0; i < maxIteracoes; i++) {
     // Checagem propria alem da que o proprio SDK faz ao receber um `signal` ja abortado:
@@ -94,6 +102,10 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
     // pra `signal`, e evita abrir mais uma rodada de tool-use so pra descobrir isso depois
     // (cada rodada e uma chamada paga).
     if (sinal && sinal.aborted) throw erroAbortado();
+
+    if (typeof antesDaRodada === 'function') {
+      try { await antesDaRodada(i); } catch (erro) { falhar(erro); }
+    }
 
     const parametros = {
       model: modelo,
@@ -110,6 +122,21 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
     if (typeof aoTexto === 'function') stream.on('text', (delta) => aoTexto(delta));
 
     const mensagem = await stream.finalMessage();
+    rodadas += 1;
+
+    if (exigirUso && !mensagem.usage) {
+      historico.push({ role: 'assistant', content: mensagem.content });
+      console.error(JSON.stringify({ event: 'llm_usage_missing', modelo, rodada: i }));
+      falhar(Object.assign(new Error('O provedor não informou o consumo desta resposta.'), { code: 'USAGE_MISSING' }));
+    }
+    if (mensagem.usage && typeof aoUsoDaRodada === 'function') {
+      try {
+        await aoUsoDaRodada(mensagem.usage, i, { modelo });
+      } catch (erro) {
+        historico.push({ role: 'assistant', content: mensagem.content });
+        falhar(erro);
+      }
+    }
 
     // textoFinal e o texto da mensagem MAIS RECENTE do loop, nao um acumulado entre
     // turnos: turnos intermediarios (tool-use) nao tem "texto final" que valha a pena
@@ -121,7 +148,7 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
 
     if (mensagem.stop_reason === 'end_turn') {
       historico.push({ role: 'assistant', content: mensagem.content });
-      return { mensagens: historico, texto: textoFinal };
+      return { mensagens: historico, texto: textoFinal, rodadas };
     }
 
     if (mensagem.stop_reason === 'refusal') {
@@ -129,7 +156,7 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
       // texto: '' e o usuario nao saberia se a conversa terminou ou travou.
       historico.push({ role: 'assistant', content: mensagem.content });
       const aviso = 'O modelo recusou responder a esta mensagem.';
-      return { mensagens: historico, texto: textoFinal || aviso };
+      return { mensagens: historico, texto: textoFinal || aviso, rodadas };
     }
 
     if (mensagem.stop_reason === 'pause_turn') {
@@ -140,7 +167,7 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
     const chamadas = mensagem.content.filter((b) => b.type === 'tool_use');
     if (!chamadas.length) {
       historico.push({ role: 'assistant', content: mensagem.content });
-      return { mensagens: historico, texto: textoFinal };
+      return { mensagens: historico, texto: textoFinal, rodadas };
     }
 
     historico.push({ role: 'assistant', content: mensagem.content });
@@ -178,7 +205,7 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
   // que mantem os papeis alternando — sem isso o proximo turno mandaria dois `user`
   // seguidos e a API recusaria com 400.
   historico.push({ role: 'assistant', content: [{ type: 'text', text: textoFinal || aviso }] });
-  return { mensagens: historico, texto: textoFinal || aviso };
+  return { mensagens: historico, texto: textoFinal || aviso, rodadas };
 }
 
 module.exports = { conversar, MODELO, SISTEMA, MAX_ITERACOES };
