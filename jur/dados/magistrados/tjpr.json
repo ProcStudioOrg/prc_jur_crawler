@@ -1,0 +1,2260 @@
+{
+  "tribunal": "tjpr",
+  "nome": "Tribunal de Justiça do Paraná",
+  "coletado_em": "2026-10-24T14:16:50.366Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": false,
+      "forma": null
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 80,
+      "total_no_portal": 14824,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 81,
+      "total_no_portal": 3368,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 80,
+      "total_no_portal": 36228,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--foro",
+        "juizados"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 16970,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 94,
+    "por_grau": {
+      "1": 11,
+      "2": 83
+    },
+    "teste_busca": {
+      "sem_capacidade": 94
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "Antonio Franco Ferreira da Costa Neto",
+      "rotulo_original": "Antonio Franco Ferreira da Costa Neto",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "20ª Câmara Cível",
+      "orgaos": [
+        "20ª Câmara Cível"
+      ],
+      "ocorrencias": 26,
+      "julgados_exemplo": [
+        "0009457-32.2023.8.16.0001",
+        "0010335-35.2026.8.16.0038",
+        "0006628-23.2019.8.16.0194",
+        "0090243-61.2026.8.16.0000",
+        "0001548-30.2018.8.16.0092"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "maria roseli guiessmann",
+      "rotulo_original": "substituta maria roseli guiessmann",
+      "cargo": "substituta",
+      "grau": "2",
+      "orgao": "20ª Câmara Cível",
+      "orgaos": [
+        "20ª Câmara Cível"
+      ],
+      "ocorrencias": 21,
+      "julgados_exemplo": [
+        "0011170-74.2024.8.16.0173",
+        "0010601-39.2026.8.16.0194",
+        "0035618-77.2026.8.16.0000",
+        "0040696-10.2026.8.16.0014",
+        "0007552-09.2026.8.16.0026"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Rosaldo Elias Pacagnan",
+      "rotulo_original": "Rosaldo Elias Pacagnan",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "20ª Câmara Cível",
+      "orgaos": [
+        "20ª Câmara Cível"
+      ],
+      "ocorrencias": 21,
+      "julgados_exemplo": [
+        "0007018-48.2020.8.16.0035",
+        "0008675-83.2021.8.16.0069",
+        "0003197-65.2025.8.16.0098",
+        "0039478-86.2026.8.16.0000",
+        "0001077-62.2025.8.16.0126"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Haroldo Demarchi Mendes",
+      "rotulo_original": "Haroldo Demarchi Mendes",
+      "cargo": "Juiz de Direito da Turma Recursal dos Juizados Especiais",
+      "grau": "1",
+      "orgao": "6ª Turma Recursal dos Juizados Especiais",
+      "orgaos": [
+        "6ª Turma Recursal dos Juizados Especiais"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [
+        "0038903-39.2017.8.16.0018",
+        "0038495-48.2017.8.16.0018",
+        "0037233-63.2017.8.16.0018",
+        "0037280-37.2017.8.16.0018",
+        "0037176-45.2017.8.16.0018"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "marcos vinicius da rocha loures demchuk",
+      "rotulo_original": "substituto marcos vinicius da rocha loures demchuk",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "13ª Câmara Cível",
+      "orgaos": [
+        "13ª Câmara Cível"
+      ],
+      "ocorrencias": 11,
+      "julgados_exemplo": [
+        "0031754-62.2025.8.16.0001",
+        "0011132-12.2024.8.16.0028",
+        "0084649-66.2026.8.16.0000",
+        "0059574-25.2026.8.16.0000",
+        "0009168-66.2024.8.16.0033"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "marcel luis hoffmann",
+      "rotulo_original": "substituto marcel luis hoffmann",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "13ª Câmara Cível",
+      "orgaos": [
+        "13ª Câmara Cível"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0051777-87.2025.8.16.0014",
+        "0008727-19.2026.8.16.0194",
+        "0020575-20.2024.8.16.0017",
+        "0008014-64.2026.8.16.0058",
+        "0007551-31.2026.8.16.0056"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Marcos José Vieira",
+      "rotulo_original": "Marcos José Vieira",
+      "cargo": "Juiz de Direito da Turma Recursal dos Juizados Especiais",
+      "grau": "1",
+      "orgao": "6ª Turma Recursal dos Juizados Especiais",
+      "orgaos": [
+        "6ª Turma Recursal dos Juizados Especiais"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "0038644-44.2017.8.16.0018",
+        "0041720-76.2017.8.16.0018",
+        "0042749-64.2017.8.16.0018",
+        "0013698-42.2016.8.16.0018",
+        "0038945-88.2017.8.16.0018"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Angela Maria Machado Costa",
+      "rotulo_original": "Angela Maria Machado Costa",
+      "cargo": "Desembargadora",
+      "grau": "2",
+      "orgao": "6ª Câmara Cível",
+      "orgaos": [
+        "6ª Câmara Cível"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0123997-91.2026.8.16.0000",
+        "0042001-39.2024.8.16.0001",
+        "0041153-52.2024.8.16.0001",
+        "0053480-53.2025.8.16.0014",
+        "0025968-37.2025.8.16.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fabio Andre Santos Muniz",
+      "rotulo_original": "Fabio Andre Santos Muniz",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "13ª Câmara Cível",
+      "orgaos": [
+        "13ª Câmara Cível"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0004041-86.2023.8.16.0194",
+        "0027618-30.2023.8.16.0021",
+        "0006529-43.2025.8.16.0194",
+        "0003640-11.2026.8.16.0153",
+        "0091128-75.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luciano Campos de Albuquerque",
+      "rotulo_original": "Luciano Campos de Albuquerque",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "7ª Câmara Cível",
+      "orgaos": [
+        "7ª Câmara Cível"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0005940-80.2024.8.16.0131",
+        "0077428-32.2026.8.16.0000",
+        "0000743-15.2025.8.16.0001",
+        "0010447-52.2025.8.16.0001",
+        "0071950-69.2024.8.16.0014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luiz Cezar Nicolau",
+      "rotulo_original": "Luiz Cezar Nicolau",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "15ª Câmara Cível",
+      "orgaos": [
+        "15ª Câmara Cível"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0001354-97.2026.8.16.0173",
+        "0150597-52.2026.8.16.0000",
+        "0000464-17.2026.8.16.0123",
+        "0149604-09.2026.8.16.0000",
+        "0148923-39.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Albino Jacomel Guerios",
+      "rotulo_original": "Albino Jacomel Guerios",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "10ª Câmara Cível",
+      "orgaos": [
+        "10ª Câmara Cível"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0001286-43.2023.8.16.0080",
+        "0002254-68.2024.8.16.0038",
+        "0061815-61.2025.8.16.0014",
+        "0007699-96.2025.8.16.0017",
+        "0064368-89.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fernando Swain Ganem",
+      "rotulo_original": "Fernando Swain Ganem",
+      "cargo": "Juiz de Direito da Turma Recursal dos Juizados Especiais",
+      "grau": "1",
+      "orgao": "3ª Turma Recursal",
+      "orgaos": [
+        "3ª Turma Recursal",
+        "Turma Recursal Reunida dos Juizados Especiais"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0041894-85.2017.8.16.0018",
+        "0042461-19.2017.8.16.0018",
+        "0028181-21.2026.8.16.0182",
+        "0007932-14.2026.8.16.0129",
+        "0044283-43.2017.8.16.0018"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Aldemar Sternadt",
+      "rotulo_original": "Aldemar Sternadt",
+      "cargo": "Juiz de Direito da Turma Recursal dos Juizados Especiais",
+      "grau": "1",
+      "orgao": "4ª Turma Recursal",
+      "orgaos": [
+        "4ª Turma Recursal"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0020493-64.2016.8.16.0018",
+        "0013629-10.2016.8.16.0018",
+        "0028304-75.2016.8.16.0018",
+        "0026150-84.2016.8.16.0018"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Hayton Lee Swain Filho",
+      "rotulo_original": "Hayton Lee Swain Filho",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "1ª Vice-Presidência",
+      "orgaos": [
+        "1ª Vice-Presidência",
+        "Órgão Especial"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0008996-20.2026.8.16.0045",
+        "0001326-22.2026.8.16.0047",
+        "0006445-34.2026.8.16.0056",
+        "0011434-57.2026.8.16.0194"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Rogerio Ribas",
+      "rotulo_original": "Rogerio Ribas",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "9ª Câmara Cível",
+      "orgaos": [
+        "9ª Câmara Cível"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0000206-85.2025.8.16.0173",
+        "0009396-69.2025.8.16.0174",
+        "0042129-88.2022.8.16.0014",
+        "0002779-98.2024.8.16.0119"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Sérgio Luiz Kreuz",
+      "rotulo_original": "Sérgio Luiz Kreuz",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "12ª Câmara Cível",
+      "orgaos": [
+        "12ª Câmara Cível",
+        "Órgão Especial"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0065340-59.2026.8.16.0000",
+        "0008604-05.2022.8.16.0083",
+        "0099272-38.2026.8.16.0000",
+        "0000067-36.2025.8.16.0173"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "adriana de lourdes simette",
+      "rotulo_original": "substituta adriana de lourdes simette",
+      "cargo": "substituta",
+      "grau": "2",
+      "orgao": "8ª Câmara Cível",
+      "orgaos": [
+        "8ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0003017-49.2024.8.16.0077",
+        "0042764-72.2026.8.16.0000",
+        "0015615-04.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ana claudia finger",
+      "rotulo_original": "ana claudia finger",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Câmara Criminal",
+      "orgaos": [
+        "6ª Câmara Criminal"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000403-55.2022.8.16.0105",
+        "0021680-88.2022.8.16.0021",
+        "0001599-48.2025.8.16.0075"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Astrid Maranhão de Carvalho Ruthes",
+      "rotulo_original": "Astrid Maranhão de Carvalho Ruthes",
+      "cargo": "Desembargadora",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0003958-02.2024.8.16.0173",
+        "0002173-25.2023.8.16.0113",
+        "0000191-60.2025.8.16.0030"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Domingos Thadeu Ribeiro da Fonseca",
+      "rotulo_original": "Domingos Thadeu Ribeiro da Fonseca",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "7ª Câmara Cível",
+      "orgaos": [
+        "7ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0101493-91.2026.8.16.0000",
+        "0001506-40.2023.8.16.0145",
+        "0092287-53.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "eduardo lino bueno fagundes junior",
+      "rotulo_original": "substituto eduardo lino bueno fagundes junior",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "7ª Câmara Cível",
+      "orgaos": [
+        "7ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000282-34.2024.8.16.0080",
+        "0024496-84.2024.8.16.0017",
+        "0004554-15.2026.8.16.0173"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fernando Paulino da Silva Wolff Filho",
+      "rotulo_original": "Fernando Paulino da Silva Wolff Filho",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "6ª Câmara Cível",
+      "orgaos": [
+        "6ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000953-86.2013.8.16.0001",
+        "0003520-17.2025.8.16.0148",
+        "0002005-97.2026.8.16.0119"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "jaqueline allievi",
+      "rotulo_original": "jaqueline allievi",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "8ª Câmara Cível",
+      "orgaos": [
+        "8ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0004122-61.2023.8.16.0056",
+        "0002377-80.2017.8.16.0145",
+        "0029929-04.2017.8.16.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "luciana carneiro de lara",
+      "rotulo_original": "luciana carneiro de lara",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "20ª Câmara Cível",
+      "orgaos": [
+        "20ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0012087-63.2022.8.16.0044",
+        "0005817-94.2024.8.16.0030"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "naor de macedo neto",
+      "rotulo_original": "naor de macedo neto",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "13ª Câmara Cível",
+      "orgaos": [
+        "13ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0002392-04.2025.8.16.0134",
+        "0059501-53.2026.8.16.0000",
+        "0074943-59.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Renato Lopes de Paiva",
+      "rotulo_original": "Renato Lopes de Paiva",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "6ª Câmara Cível",
+      "orgaos": [
+        "6ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0028875-53.2023.8.16.0001",
+        "0009387-87.2025.8.16.0019",
+        "0074052-30.2025.8.16.0014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ronaldo sansone guerra",
+      "rotulo_original": "substituto ronaldo sansone guerra",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "17ª Câmara Cível",
+      "orgaos": [
+        "17ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0059015-60.2025.8.16.0014",
+        "0108824-27.2026.8.16.0000",
+        "0150268-40.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "vania maria da silva kramer",
+      "rotulo_original": "substituta vania maria da silva kramer",
+      "cargo": "substituta",
+      "grau": "2",
+      "orgao": "16ª Câmara Cível",
+      "orgaos": [
+        "16ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0026757-02.2026.8.16.0001",
+        "0009716-35.2020.8.16.0194"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Abraham Lincoln Merheb Calixto",
+      "rotulo_original": "Abraham Lincoln Merheb Calixto",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0015023-40.2025.8.16.0017",
+        "0009133-08.2018.8.16.0069"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ana paula kaled accioly rodrigues da costa",
+      "rotulo_original": "substituta ana paula kaled accioly rodrigues da costa",
+      "cargo": "substituta",
+      "grau": "2",
+      "orgao": "18ª Câmara Cível",
+      "orgaos": [
+        "18ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0001589-27.2022.8.16.0069",
+        "0084403-62.2025.8.16.0014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "andrei de oliveira rech",
+      "rotulo_original": "andrei de oliveira rech",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "19ª Câmara Cível",
+      "orgaos": [
+        "19ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0038721-97.2024.8.16.0021",
+        "0138953-15.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "claudio smirne diniz",
+      "rotulo_original": "claudio smirne diniz",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Câmara Cível",
+      "orgaos": [
+        "6ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0009168-80.2025.8.16.0017",
+        "0007126-80.2024.8.16.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Daniel Tempski Ferreira da Costa",
+      "rotulo_original": "Daniel Tempski Ferreira da Costa",
+      "cargo": "Juiz de Direito Substituto",
+      "grau": "1",
+      "orgao": "3ª Turma Recursal",
+      "orgaos": [
+        "3ª Turma Recursal",
+        "5ª Turma Recursal dos Juizados Especiais"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0016711-34.2025.8.16.0018",
+        "0001470-13.2025.8.16.0182"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "eduardo novacki",
+      "rotulo_original": "substituto eduardo novacki",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "14ª Câmara Cível",
+      "orgaos": [
+        "14ª Câmara Cível",
+        "16ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0001233-84.2025.8.16.0050",
+        "0146765-45.2025.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "evandro portugal",
+      "rotulo_original": "substituto evandro portugal",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "7ª Câmara Cível",
+      "orgaos": [
+        "7ª Câmara Cível",
+        "12ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0002131-92.2025.8.16.0084",
+        "0074516-62.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fabian Schweitzer",
+      "rotulo_original": "Fabian Schweitzer",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "7ª Câmara Cível",
+      "orgaos": [
+        "7ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0001278-15.2026.8.16.0063",
+        "0017570-70.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "fabio luis franco",
+      "rotulo_original": "fabio luis franco",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "14ª Câmara Cível",
+      "orgaos": [
+        "14ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0082287-91.2026.8.16.0000",
+        "0084373-35.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Gisele Lara Ribeiro",
+      "rotulo_original": "Desembargadora Substituta Gisele Lara Ribeiro",
+      "cargo": "Desembargadora Substituta",
+      "grau": "2",
+      "orgao": "17ª Câmara Cível",
+      "orgaos": [
+        "17ª Câmara Cível",
+        "6ª Turma Recursal dos Juizados Especiais"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0145291-05.2026.8.16.0000",
+        "0016010-66.2025.8.16.0182"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "guilherme frederico hernandes denz",
+      "rotulo_original": "substituto guilherme frederico hernandes denz",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "9ª Câmara Cível",
+      "orgaos": [
+        "9ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000919-87.2023.8.16.0122",
+        "0002037-42.2019.8.16.0186"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Hamilton Rafael Marins Schwartz",
+      "rotulo_original": "Hamilton Rafael Marins Schwartz",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "5ª Câmara Cível",
+      "orgaos": [
+        "5ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000926-79.2025.8.16.0164",
+        "0003313-11.2021.8.16.0131"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "horacio ribas teixeira",
+      "rotulo_original": "substituto horacio ribas teixeira",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "6ª Câmara Cível",
+      "orgaos": [
+        "6ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0106170-67.2026.8.16.0000",
+        "0098144-80.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "João Antônio De Marchi",
+      "rotulo_original": "João Antônio De Marchi",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "14ª Câmara Cível",
+      "orgaos": [
+        "14ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0028893-72.2026.8.16.0000",
+        "0033312-38.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "José Camacho Santos",
+      "rotulo_original": "José Camacho Santos",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "13ª Câmara Cível",
+      "orgaos": [
+        "13ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0150310-26.2025.8.16.0000",
+        "0074540-90.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Jose Hipolito Xavier da Silva",
+      "rotulo_original": "Jose Hipolito Xavier da Silva",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "19ª Câmara Cível",
+      "orgaos": [
+        "19ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0091110-54.2026.8.16.0000",
+        "0090045-24.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "leticia marina conte",
+      "rotulo_original": "substituta leticia marina conte",
+      "cargo": "substituta",
+      "grau": "2",
+      "orgao": "10ª Câmara Cível",
+      "orgaos": [
+        "10ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0010015-67.2023.8.16.0174",
+        "0037311-59.2023.8.16.0014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Manuela Tallão Benke",
+      "rotulo_original": "Manuela Tallão Benke",
+      "cargo": "Juíza de Direito da Turma Recursal dos Juízaados Especiais",
+      "grau": "1",
+      "orgao": "5ª Turma Recursal dos Juizados Especiais",
+      "orgaos": [
+        "5ª Turma Recursal dos Juizados Especiais"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000656-25.2026.8.16.0195",
+        "0002859-22.2026.8.16.0045"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Marco Antonio Massaneiro",
+      "rotulo_original": "Marco Antonio Massaneiro",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "16ª Câmara Cível",
+      "orgaos": [
+        "16ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0004847-77.2024.8.16.0165",
+        "0061424-17.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "alberto junior veloso",
+      "rotulo_original": "alberto junior veloso",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "18ª Câmara Cível",
+      "orgaos": [
+        "18ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0024426-23.2021.8.16.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Alexandre Barbosa Fabiani",
+      "rotulo_original": "Alexandre Barbosa Fabiani",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "9ª Câmara Cível",
+      "orgaos": [
+        "9ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0029106-27.2022.8.16.0030"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "alexandre kozechen",
+      "rotulo_original": "substituto alexandre kozechen",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "10ª Câmara Cível",
+      "orgaos": [
+        "10ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0009384-58.2025.8.16.0173"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Alvaro Rodrigues Junior",
+      "rotulo_original": "Alvaro Rodrigues Junior",
+      "cargo": "Juiz de Direito da Turma Recursal dos Juizados Especiais",
+      "grau": "1",
+      "orgao": "Turma de Uniformização de Jurisprudência",
+      "orgaos": [
+        "Turma de Uniformização de Jurisprudência"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0006118-29.2026.8.16.9000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "anderson ricardo fogaca",
+      "rotulo_original": "substituto anderson ricardo fogaca",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "5ª Câmara Cível",
+      "orgaos": [
+        "5ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0097043-08.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Angela Khury",
+      "rotulo_original": "Angela Khury",
+      "cargo": "Desembargadora",
+      "grau": "2",
+      "orgao": "9ª Câmara Cível",
+      "orgaos": [
+        "9ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001448-16.2025.8.16.0194"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Antonio Domingos Ramina Junior",
+      "rotulo_original": "Antonio Domingos Ramina Junior",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "8ª Câmara Cível",
+      "orgaos": [
+        "8ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000702-51.2025.8.16.0194"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "claudio franco felix",
+      "rotulo_original": "claudio franco felix",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "17ª Câmara Cível",
+      "orgaos": [
+        "17ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0027200-60.2020.8.16.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Clayton de Albuquerque Maranhao",
+      "rotulo_original": "Clayton de Albuquerque Maranhao",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001079-67.2020.8.16.0171"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "cristiane tereza willy ferrari",
+      "rotulo_original": "cristiane tereza willy ferrari",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª Câmara Criminal",
+      "orgaos": [
+        "5ª Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000874-06.2024.8.16.0007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Dartagnan Serpa Sa",
+      "rotulo_original": "Dartagnan Serpa Sa",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "7ª Câmara Cível",
+      "orgaos": [
+        "7ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0035196-17.2023.8.16.0030"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "davi pinto de almeida",
+      "rotulo_original": "substituto davi pinto de almeida",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "15ª Câmara Cível",
+      "orgaos": [
+        "15ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0080675-21.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "denise hammerschmidt",
+      "rotulo_original": "substituta denise hammerschmidt",
+      "cargo": "substituta",
+      "grau": "2",
+      "orgao": "12ª Câmara Cível",
+      "orgaos": [
+        "12ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0029255-08.2021.8.16.0014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Denise Kruger Pereira",
+      "rotulo_original": "Denise Kruger Pereira",
+      "cargo": "Desembargadora",
+      "grau": "2",
+      "orgao": "15ª Câmara Cível",
+      "orgaos": [
+        "15ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0097542-89.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Dilmari Helena Kessler",
+      "rotulo_original": "Dilmari Helena Kessler",
+      "cargo": "Desembargadora",
+      "grau": "2",
+      "orgao": "5ª Câmara Criminal",
+      "orgaos": [
+        "5ª Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0004563-16.2023.8.16.0097"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Domingos José Perfetto",
+      "rotulo_original": "Domingos José Perfetto",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "20ª Câmara Cível",
+      "orgaos": [
+        "20ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0118178-13.2025.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fernanda Bernert Michielin",
+      "rotulo_original": "Fernanda Bernert Michielin",
+      "cargo": "Juíza de Direito Substituto",
+      "grau": "1",
+      "orgao": "2ª Turma Recursal",
+      "orgaos": [
+        "2ª Turma Recursal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0007250-26.2024.8.16.0098"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Francisco Luiz Macedo Junior",
+      "rotulo_original": "Francisco Luiz Macedo Junior",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "7ª Câmara Cível",
+      "orgaos": [
+        "7ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0098239-13.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Gil Francisco de Paula Xavier Fernandes Guerra",
+      "rotulo_original": "Gil Francisco de Paula Xavier Fernandes Guerra",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "11ª Câmara Cível",
+      "orgaos": [
+        "11ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0032346-38.2023.8.16.0014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Gilberto Ferreira",
+      "rotulo_original": "Gilberto Ferreira",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "8ª Câmara Cível",
+      "orgaos": [
+        "8ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0004977-77.2024.8.16.0194"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "humberto goncalves brito",
+      "rotulo_original": "substituto humberto goncalves brito",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "2ª Câmara Criminal",
+      "orgaos": [
+        "2ª Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0005025-72.2024.8.16.0182"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Iraja Pigatto Ribeiro",
+      "rotulo_original": "Iraja Pigatto Ribeiro",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "14ª Câmara Cível",
+      "orgaos": [
+        "14ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0002155-47.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Irineu Stein Junior",
+      "rotulo_original": "Irineu Stein Junior",
+      "cargo": "Juiz de Direito da Turma Recursal dos Juizados Especiais",
+      "grau": "1",
+      "orgao": "2ª Turma Recursal",
+      "orgaos": [
+        "2ª Turma Recursal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0007161-71.2025.8.16.0064"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Jaime Souza Pinto Sampaio",
+      "rotulo_original": "Jaime Souza Pinto Sampaio",
+      "cargo": "Juiz de Direito da Turma Recursal dos Juizados Especiais",
+      "grau": "1",
+      "orgao": "1ª Turma Recursal",
+      "orgaos": [
+        "1ª Turma Recursal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000447-29.2026.8.16.0204"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "jederson suzin",
+      "rotulo_original": "substituto jederson suzin",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "13ª Câmara Cível",
+      "orgaos": [
+        "13ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0096258-46.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "jefferson alberto johnsson",
+      "rotulo_original": "substituto jefferson alberto johnsson",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "6ª Câmara Cível",
+      "orgaos": [
+        "6ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0034317-63.2024.8.16.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Joeci Machado Camargo",
+      "rotulo_original": "Joeci Machado Camargo",
+      "cargo": "Desembargadora",
+      "grau": "2",
+      "orgao": "11ª Câmara Cível",
+      "orgaos": [
+        "11ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0056088-32.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Jorge de Oliveira Vargas",
+      "rotulo_original": "Jorge de Oliveira Vargas",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0045820-16.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "José Laurindo de Souza Netto",
+      "rotulo_original": "José Laurindo de Souza Netto",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "16ª Câmara Cível",
+      "orgaos": [
+        "16ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0108637-19.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Josely Dittrich Ribas",
+      "rotulo_original": "Josely Dittrich Ribas",
+      "cargo": "Desembargadora",
+      "grau": "2",
+      "orgao": "14ª Câmara Cível",
+      "orgaos": [
+        "14ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0012616-78.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Jucimar Novochadlo",
+      "rotulo_original": "Jucimar Novochadlo",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "15ª Câmara Cível",
+      "orgaos": [
+        "15ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000874-54.2026.8.16.0130"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "julia maria tesseroli de paula rezende",
+      "rotulo_original": "substituta julia maria tesseroli de paula rezende",
+      "cargo": "substituta",
+      "grau": "2",
+      "orgao": "11ª Câmara Cível",
+      "orgaos": [
+        "11ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0003039-29.2022.8.16.0158"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Lilian Romero",
+      "rotulo_original": "Lilian Romero",
+      "cargo": "Desembargadora",
+      "grau": "2",
+      "orgao": "6ª Câmara Cível",
+      "orgaos": [
+        "6ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0006081-96.2026.8.16.0174"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luciane Bortoleto",
+      "rotulo_original": "Luciane Bortoleto",
+      "cargo": "Desembargadora",
+      "grau": "2",
+      "orgao": "15ª Câmara Cível",
+      "orgaos": [
+        "15ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0086646-84.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luis Sergio Swiech",
+      "rotulo_original": "Luis Sergio Swiech",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "9ª Câmara Cível",
+      "orgaos": [
+        "9ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001148-16.2009.8.16.0194"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luiz Fernando Tomasi Keppen",
+      "rotulo_original": "Luiz Fernando Tomasi Keppen",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "5ª Câmara Cível",
+      "orgaos": [
+        "5ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0112646-24.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luiz Henrique Miranda",
+      "rotulo_original": "Luiz Henrique Miranda",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "16ª Câmara Cível",
+      "orgaos": [
+        "16ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0028631-25.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Márcio José Tokars",
+      "rotulo_original": "Márcio José Tokars",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "6ª Câmara Criminal",
+      "orgaos": [
+        "6ª Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0004810-82.2020.8.16.0038"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Mauro Bley Pereira Junior",
+      "rotulo_original": "Mauro Bley Pereira Junior",
+      "cargo": "Juiz de Direito Substituto em Segundo Grau",
+      "grau": "2",
+      "orgao": "2ª Câmara Criminal",
+      "orgaos": [
+        "2ª Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001345-62.2024.8.16.0123"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "osvaldo canela junior",
+      "rotulo_original": "substituto osvaldo canela junior",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "19ª Câmara Cível",
+      "orgaos": [
+        "19ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0052847-50.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "rafael vieira de vasconcellos pedroso",
+      "rotulo_original": "substituto rafael vieira de vasconcellos pedroso",
+      "cargo": "substituto",
+      "grau": "2",
+      "orgao": "10ª Câmara Cível",
+      "orgaos": [
+        "10ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001002-66.2025.8.16.0047"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Rafaela Zarpelon",
+      "rotulo_original": "Rafaela Zarpelon",
+      "cargo": "Juíza de Direito da Turma Recursal dos Juízaados Especiais",
+      "grau": "1",
+      "orgao": "4ª Turma Recursal",
+      "orgaos": [
+        "4ª Turma Recursal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0033629-09.2025.8.16.0182"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Renato Naves Barcellos",
+      "rotulo_original": "Renato Naves Barcellos",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "5ª Câmara Criminal",
+      "orgaos": [
+        "5ª Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001239-86.2021.8.16.0097"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Rosana Andriguetto de Carvalho",
+      "rotulo_original": "Rosana Andriguetto de Carvalho",
+      "cargo": "Desembargadora",
+      "grau": "2",
+      "orgao": "13ª Câmara Cível",
+      "orgaos": [
+        "13ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0014974-62.2016.8.16.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Sigurd Roberto Bengtsson",
+      "rotulo_original": "Sigurd Roberto Bengtsson",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0063661-16.2025.8.16.0014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Victor Martim Batschke",
+      "rotulo_original": "Victor Martim Batschke",
+      "cargo": "Desembargador",
+      "grau": "2",
+      "orgao": "16ª Câmara Cível",
+      "orgaos": [
+        "16ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0098060-79.2026.8.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

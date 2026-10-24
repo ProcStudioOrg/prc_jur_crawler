@@ -1,0 +1,289 @@
+{
+  "tribunal": "trf6",
+  "nome": "Tribunal Regional Federal da 6ª Região",
+  "coletado_em": "2026-10-24T14:15:16.824Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome"
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 1968,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 34219,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 11479,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 1967,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 8,
+    "por_grau": {
+      "2": 8
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 3
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "GRÉGORE MOREIRA DE MOURA",
+      "rotulo_original": "GRÉGORE MOREIRA DE MOURA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma - PREV/SERV",
+      "orgaos": [
+        "1ª Turma - PREV/SERV",
+        "1ª Turma - CRIMINAL"
+      ],
+      "ocorrencias": 11,
+      "julgados_exemplo": [
+        "1002303-69.2020.4.01.3826",
+        "0001101-54.2017.4.01.3802",
+        "6008448-16.2026.4.06.9999",
+        "1005735-35.2020.4.01.3814",
+        "6002136-46.2026.4.06.3816"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 2520
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDILSON VITORELLI DINIZ LIMA",
+      "rotulo_original": "EDILSON VITORELLI DINIZ LIMA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma - PREV/SERV",
+      "orgaos": [
+        "1ª Turma - PREV/SERV"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "6393309-63.2025.4.06.3800",
+        "1003762-78.2022.4.06.3800",
+        "1000127-88.2018.4.01.3826",
+        "1023606-16.2021.4.01.9999",
+        "6006495-17.2026.4.06.9999"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1627
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "RUBENS ROLLO D OLIVEIRA",
+      "rotulo_original": "RUBENS ROLLO D OLIVEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma - PREV/SERV",
+      "orgaos": [
+        "1ª Turma - PREV/SERV"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "0016161-80.2011.4.01.3801",
+        "0000722-94.2009.4.01.3802",
+        "0013833-15.2013.4.01.3800",
+        "1034400-35.2022.4.01.3800",
+        "1000252-11.2022.4.06.0000"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 2728
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GUSTAVO SORATTO ULIANO",
+      "rotulo_original": "GUSTAVO SORATTO ULIANO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª Turma",
+      "orgaos": [
+        "4ª Turma"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "0013522-82.2017.4.01.3800",
+        "0001938-46.2012.4.01.3815",
+        "1006705-48.2018.4.01.3800",
+        "6393069-74.2025.4.06.3800",
+        "0004412-50.2017.4.01.3803"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1695
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DERIVALDO DE FIGUEIREDO BEZERRA FILHO",
+      "rotulo_original": "DERIVALDO DE FIGUEIREDO BEZERRA FILHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma - PREV/SERV",
+      "orgaos": [
+        "1ª Turma - PREV/SERV"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "6001931-90.2025.4.06.3803",
+        "6000355-80.2026.4.06.3818",
+        "1015436-46.2023.4.06.9999",
+        "6007197-60.2026.4.06.9999",
+        "6010179-11.2026.4.06.3803"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1948
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCELO DOLZANY DA COSTA",
+      "rotulo_original": "MARCELO DOLZANY DA COSTA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "6016363-43.2026.4.06.0000",
+        "6014191-31.2026.4.06.0000",
+        "6016761-87.2026.4.06.0000",
+        "6017392-48.2024.4.06.3800",
+        "1000424-58.2018.4.01.3806"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANDRE PRADO DE VASCONCELOS",
+      "rotulo_original": "ANDRE PRADO DE VASCONCELOS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª Turma",
+      "orgaos": [
+        "4ª Turma",
+        "2ª Seção"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0030151-32.2010.4.01.0000",
+        "6016724-60.2026.4.06.0000",
+        "6016731-52.2026.4.06.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "VALLISNEY DE SOUZA OLIVEIRA",
+      "rotulo_original": "VALLISNEY DE SOUZA OLIVEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0009789-36.2016.4.01.3803"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
