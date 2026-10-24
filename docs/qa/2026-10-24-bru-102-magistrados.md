@@ -63,6 +63,20 @@ máquina respondem direto (TRF3 10/10 e TRT9 10/10 em 24/10), o bloqueio de IP �
   varredura: `jur/tests/sentinela-casos.json` está sendo editado em paralelo (BRU-99/BRU-101).
 - [x] Evidência: este relatório, os JSONs e o log da rodada.
 
+## Rodada do runner (`magistrados-cron.sh 3`, 11:18 BRT)
+
+Primeira execução do runner, para provar o ciclo. Pegou os 3 primeiros da fila:
+
+| Tribunal | Resultado |
+|---|---|
+| stf | erro nas 3 buscas: "o STF não emitiu o cookie aws-waf-token" (regressão já em `_pendentes` da sentinela); arquivo gravado com `erro`, remapear com `--refazer` depois do `jur-fixer` |
+| tst | 20 ministros (2º grau), `-r` ok 5/5 (10/10 cada) — Falcão responde desta máquina sem navegador remoto |
+| trf1 | erro nas 4 buscas: `waiting for locator('[id="formulario:textoLivre"]')` após ~63 s (portal instável; catálogo já o marca `instavel`); arquivo gravado com `erro` |
+
+O runner não commitou nessa execução por um bug de caminho (`git status -- jur/dados/magistrados`
+rodando de dentro de `jur/`); corrigido com `git -C "$WT"` e os três arquivos entraram no commit
+seguinte. A segunda execução do runner (trf2, trf3, trf5) é a prova do commit + push automático.
+
 ## Cron
 
 Instalado no crontab de `brpl` (debian2, `CRON_TZ=America/Sao_Paulo`):

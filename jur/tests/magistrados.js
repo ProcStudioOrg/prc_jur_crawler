@@ -9,6 +9,7 @@
  *   node tests/magistrados.js trf4 tjpr tjsc     # esses tribunais
  *   node tests/magistrados.js --proximos 3       # os próximos 3 ainda não mapeados, na ordem do catálogo
  *   node tests/magistrados.js --fila             # mostra mapeados, pendentes e fora do escopo e sai
+ *   node tests/magistrados.js --indice           # só regenera o INDEX.md
  *   node tests/magistrados.js --refazer tjpr     # remapeia mesmo com arquivo existente
  *   node tests/magistrados.js --timeout 180      # segundos por busca (padrão 180)
  *   node tests/magistrados.js --paginas 2        # páginas por busca genérica (padrão 2)
@@ -46,6 +47,7 @@ const flag = (nome, padrao) => {
 const JSON_OUT = argv.includes('--json');
 const REFAZER = argv.includes('--refazer');
 const FILA = argv.includes('--fila');
+const INDICE = argv.includes('--indice');
 const PROXIMOS = argv.includes('--proximos') ? parseInt(flag('--proximos', '3'), 10) : 0;
 const TIMEOUT_MS = parseInt(flag('--timeout', '180'), 10) * 1000;
 const PAGINAS = parseInt(flag('--paginas', '2'), 10);
@@ -120,7 +122,9 @@ function lerResultados(arquivo) {
   } catch { /* sem arquivo */ }
   return [];
 }
-const umaLinha = (s) => String(s ?? '').split('\n').map((l) => l.trim()).filter(Boolean).pop()?.replace(/\s+/g, ' ').slice(0, 200) || '';
+// eslint-disable-next-line no-control-regex
+const semAnsi = (s) => String(s ?? '').replace(/\x1b\[[0-9;]*m/g, '');
+const umaLinha = (s) => semAnsi(s).split('\n').map((l) => l.trim()).filter(Boolean).pop()?.replace(/\s+/g, ' ').slice(0, 200) || '';
 
 /** Roda `bin/jur <cmd> ...` com -o num arquivo bruto; devolve { ok, resultados, erro, ms, args }. */
 function buscar(cmd, consulta, arquivo, relator) {
@@ -381,6 +385,7 @@ async function main() {
     }
     return;
   }
+  if (INDICE) { gerarIndex(); log(`índice regenerado: ${INDEX}`); return; }
   let alvos = pedidos;
   if (PROXIMOS > 0) {
     alvos = f.pendentes.slice(0, PROXIMOS).map((i) => i.comando);

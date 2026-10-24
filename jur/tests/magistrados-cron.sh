@@ -32,10 +32,11 @@ if ! command -v node >/dev/null; then
   # nvm sem shell interativo
   for d in "$HOME"/.nvm/versions/node/*/bin; do [ -x "$d/node" ] && export PATH="$d:$PATH"; done
 fi
-echo "node $(node -v 2>/dev/null || echo ausente) · branch $(git rev-parse --abbrev-ref HEAD)"
+G="git -C $WT"
+echo "node $(node -v 2>/dev/null || echo ausente) · branch $($G rev-parse --abbrev-ref HEAD)"
 
 # Não mexer numa árvore com alterações fora de jur/dados/magistrados (trabalho interativo em andamento).
-SUJO="$(git status --porcelain | /usr/bin/grep -v ' jur/dados/magistrados/' || true)"
+SUJO="$($G status --porcelain | /usr/bin/grep -v ' jur/dados/magistrados/' || true)"
 if [ -n "$SUJO" ]; then
   echo "árvore com alterações fora de jur/dados/magistrados; rodo sem commit:"; echo "$SUJO"
 fi
@@ -45,16 +46,16 @@ CODIGO=$?
 if [ "$CODIGO" -eq 3 ]; then echo "todos mapeados"; exit 0; fi
 if [ "$CODIGO" -ne 0 ]; then echo "magistrados.js saiu com código $CODIGO"; fi
 
-if [ -z "$(git status --porcelain -- jur/dados/magistrados)" ]; then echo "nada a commitar"; exit 0; fi
+if [ -z "$($G status --porcelain -- jur/dados/magistrados)" ]; then echo "nada a commitar"; exit 0; fi
 if [ -n "$SUJO" ]; then echo "commit adiado por causa das alterações acima"; exit 0; fi
 
-git add jur/dados/magistrados
-TRIBS="$(git diff --cached --name-only -- jur/dados/magistrados | sed -n 's#.*/\([a-z0-9-]*\)\.json#\1#p' | tr '\n' ' ' | sed 's/ $//')"
-git -c user.name="${GIT_AUTHOR_NAME:-$(git config user.name)}" commit -q -m "data(magistrados): rodada $(date +%d/%m/%Y) — ${TRIBS:-índice}
+$G add jur/dados/magistrados
+TRIBS="$($G diff --cached --name-only -- jur/dados/magistrados | sed -n 's#.*/\([a-z0-9-]*\)\.json#\1#p' | tr '\n' ' ' | sed 's/ $//')"
+$G commit -q -m "data(magistrados): rodada $(date +%d/%m/%Y) — ${TRIBS:-índice}
 
 Mapeamento automático (tests/magistrados-cron.sh --proximos $PROXIMOS). Ver docs/magistrados.md.
 
-Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>" && echo "commit: $(git rev-parse --short HEAD) ($TRIBS)"
-BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-if git push -q origin "$BRANCH"; then echo "push ok ($BRANCH)"; else echo "push FALHOU ($BRANCH); fica para a próxima rodada"; fi
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>" && echo "commit: $($G rev-parse --short HEAD) ($TRIBS)"
+BRANCH="$($G rev-parse --abbrev-ref HEAD)"
+if $G push -q origin "$BRANCH"; then echo "push ok ($BRANCH)"; else echo "push FALHOU ($BRANCH); fica para a próxima rodada"; fi
 echo "=== $(date -Is) fim"

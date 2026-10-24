@@ -50,6 +50,7 @@ node tests/magistrados.js trf4 tjpr tjsc        # tribunais explícitos (pula os
 node tests/magistrados.js --refazer tjpr        # remapeia
 node tests/magistrados.js --proximos 3          # os 3 próximos pendentes, na ordem do catálogo
 node tests/magistrados.js --fila                # mapeados, pendentes e fora do escopo
+node tests/magistrados.js --indice              # só regenera o INDEX.md
 node tests/magistrados.js --timeout 120 --paginas 1 --json
 ```
 
