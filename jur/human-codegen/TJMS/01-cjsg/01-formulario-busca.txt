@@ -250,9 +250,34 @@ o SAJ resolve contra a base:
 <input type="text" name="codigoCr"><input type="text" name="codigoTr">
 ```
 
-CLI: `-r/--relator` preenche `nmAgente`. Os contadores
+~~CLI: `-r/--relator` preenche `nmAgente`. Os contadores
 (`contadoragente`, `contadorMaioragente`, …) vão em `0` — é o que a tela envia
-quando nada foi escolhido pelo popup de entidades.
+quando nada foi escolhido pelo popup de entidades.~~
+
+**Correção de 24/10/2026 — `nmAgente` sozinho NÃO filtra.** A sentinela de 21/10 pegou:
+`relator: "Elisabeth Rosa Baisch"` em `nmAgente` devolveu o acervo inteiro (83 de 96 de
+outro relator), HTTP 200, sem aviso. O servidor só filtra pela ENTIDADE escolhida no popup
+"Relatores" (botão de procurar ao lado do campo). Capturado no Playwright
+(`01.03-relator-popup-entidades.png`): o popup é `jsp/search/searchAgente.jsp` em iframe,
+casa por TRECHO e lista uma linha por entidade cadastrada — para "Baisch" são três
+(`Desª Elisabeth Rosa Baisch` cód. 94, `Elisabeth Rosa Baisch` cód. 21585, `Juíza Elisabeth
+Rosa Baisch` cód. 155-10110-20237), com `codigoCr`/`codigoTr` em `beanValue` de células
+ocultas. "Selecionar" preenche no formulário pai:
+
+```
+agenteSelectedEntitiesList=DivID=divagente94;94;^dados.agentes[0].codigoCr=94^dados.agentes[0].codigoTr=94^dados.agentes[0].nmAgente=Des%25AA%2520Elisabeth%2520Rosa%2520Baisch$DivID=divagente21585;21585;^dados.agentes[1]...$
+contadoragente=3   contadorMaioragente=3
+codigoCr=  codigoTr=  nmAgente=3 Registros selecionados      (com UMA entidade: os códigos dela e o nome)
+dados.agentes[0].codigoCr=94  dados.agentes[0].codigoTr=94  dados.agentes[0].nmAgente=Desª Elisabeth Rosa Baisch
+dados.agentes[1]... dados.agentes[2]...
+```
+
+Com isso o POST em `resultadoCompleta.do` devolve 424 acórdãos, todos do relator
+(`01.04-resultado-relator-entidade.png`); só a entidade 94 tem acórdãos, 21585 dá 0.
+Detalhe de sessão: a grid só lista linhas DEPOIS que o autocomplete do campo
+(`AjaxServlet.ajax?tagId=agente&property=nmAgente&value=<trecho>&...InputSelectAutoComplete`)
+rodou na mesma JSESSIONID — sem isso ela responde 200 com "Quantidade de registros: 0".
+O crawler faz exatamente isso em `TJMSNavigator.resolverRelatores`.
 
 ## 12. Bloqueio e proteção — as três respostas
 
