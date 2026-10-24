@@ -77,6 +77,17 @@ O runner não commitou nessa execução por um bug de caminho (`git status -- ju
 rodando de dentro de `jur/`); corrigido com `git -C "$WT"` e os três arquivos entraram no commit
 seguinte. A segunda execução do runner (trf2, trf3, trf5) é a prova do commit + push automático.
 
+## Segunda execução do runner (trf2, trf3, trf5) — prova do ciclo
+
+Commit automático `0376ba2` (`data(magistrados): rodada 24/10/2026 — trf2 trf3 trf5`) e push
+feitos pelo runner. Resultado:
+
+| Tribunal | Resultado |
+|---|---|
+| trf2 | 3 buscas + juizados ok (resultados chegam), mas **o crawler não traz o campo `relator`**: 0 magistrados (`erro: buscas sem relator legível`). Mesma limitação que deixou `trf2 magistrado` em `_pendentes` da sentinela; precisa de parser do relator no `TRF2Navigator` |
+| trf3 | erro nas 3 buscas (`waiting for scheduled navigations` / `browser has been closed` após 65–130 s); a sonda das 10h tinha respondido 10/10. Akamai oscilando desta máquina; remapear com `--refazer trf3` noutro dia |
+| trf5 | 14 desembargadores (2º grau), `-r` ok 5/5 (10/10 cada). O órgão vem como gabinete ("GAB 6 - DES. PAULO CORDEIRO"); a inferência de grau passou a ler o cargo dentro do órgão (remapeado uma vez) |
+
 ## Cron
 
 Instalado no crontab de `brpl` (debian2, `CRON_TZ=America/Sao_Paulo`):

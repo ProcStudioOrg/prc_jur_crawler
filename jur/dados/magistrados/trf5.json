@@ -1,7 +1,7 @@
 {
   "tribunal": "trf5",
   "nome": "Tribunal Regional Federal da 5ª Região",
-  "coletado_em": "2026-10-24T14:35:02.676Z",
+  "coletado_em": "2026-10-24T14:41:31.975Z",
   "versao_jur": "1.3.0",
   "capacidade": {
     "magistrado": {
@@ -50,54 +50,28 @@
     }
   ],
   "resumo": {
-    "magistrados": 13,
+    "magistrados": 14,
     "por_grau": {
-      "desconhecido": 13
+      "2": 13,
+      "desconhecido": 1
     },
     "teste_busca": {
       "ok": 5,
-      "nao_testado": 8
+      "nao_testado": 9
     },
     "buscas_com_erro": 0
   },
   "magistrados": [
     {
-      "nome": "WALTER NUNES DA SILVA JUNIOR",
-      "rotulo_original": "WALTER NUNES DA SILVA JUNIOR",
-      "cargo": null,
-      "grau": "desconhecido",
-      "orgao": "GAB 17 - DES. WALTER NUNES",
-      "orgaos": [
-        "GAB 17 - DES. WALTER NUNES"
-      ],
-      "ocorrencias": 18,
-      "julgados_exemplo": [
-        "00009810420224058303",
-        "00127288620264050000",
-        "00124785320264050000",
-        "08006092520224058302",
-        "00008991020264058310"
-      ],
-      "teste_busca": {
-        "consultados": 10,
-        "batem": 10,
-        "status": "ok",
-        "detalhe": "0 de 10 fora do filtro",
-        "ms": 11337
-      },
-      "fonte_query": "aposentadoria",
-      "fonte_recorte": "comum"
-    },
-    {
       "nome": "PAULO MACHADO CORDEIRO",
       "rotulo_original": "PAULO MACHADO CORDEIRO",
       "cargo": null,
-      "grau": "desconhecido",
+      "grau": "2",
       "orgao": "GAB 6 - DES. PAULO CORDEIRO",
       "orgaos": [
         "GAB 6 - DES. PAULO CORDEIRO"
       ],
-      "ocorrencias": 14,
+      "ocorrencias": 15,
       "julgados_exemplo": [
         "08030483520244058400",
         "08006049720224058303",
@@ -110,34 +84,61 @@
         "batem": 10,
         "status": "ok",
         "detalhe": "0 de 10 fora do filtro",
-        "ms": 12012
+        "ms": 11059
       },
       "fonte_query": "dano moral",
       "fonte_recorte": "comum"
     },
     {
-      "nome": "EDILSON PEREIRA NOBRE JUNIOR",
-      "rotulo_original": "EDILSON PEREIRA NOBRE JUNIOR",
+      "nome": "WALTER NUNES DA SILVA JUNIOR",
+      "rotulo_original": "WALTER NUNES DA SILVA JUNIOR",
       "cargo": null,
-      "grau": "desconhecido",
-      "orgao": "GAB 15 - DES. EDILSON NOBRE",
+      "grau": "2",
+      "orgao": "GAB 17 - DES. WALTER NUNES",
       "orgaos": [
-        "GAB 15 - DES. EDILSON NOBRE"
+        "GAB 17 - DES. WALTER NUNES"
       ],
-      "ocorrencias": 9,
+      "ocorrencias": 13,
       "julgados_exemplo": [
-        "08033159520244058500",
-        "00198519220254058400",
-        "00071236220264050000",
-        "00126838220264050000",
-        "00053914620264050000"
+        "00009810420224058303",
+        "00127288620264050000",
+        "08006092520224058302",
+        "00008991020264058310",
+        "00272066520254058300"
       ],
       "teste_busca": {
         "consultados": 10,
         "batem": 10,
         "status": "ok",
         "detalhe": "0 de 10 fora do filtro",
-        "ms": 11193
+        "ms": 10813
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDILSON PEREIRA NOBRE JUNIOR",
+      "rotulo_original": "EDILSON PEREIRA NOBRE JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "GAB 15 - DES. EDILSON NOBRE",
+      "orgaos": [
+        "GAB 15 - DES. EDILSON NOBRE"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "08033159520244058500",
+        "00198519220254058400",
+        "08008485520194058101",
+        "00071236220264050000",
+        "00126838220264050000"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 10249
       },
       "fonte_query": "contrato",
       "fonte_recorte": "comum"
@@ -146,25 +147,25 @@
       "nome": "GERMANA DE OLIVEIRA MORAES",
       "rotulo_original": "GERMANA DE OLIVEIRA MORAES",
       "cargo": null,
-      "grau": "desconhecido",
+      "grau": "2",
       "orgao": "GAB 18 - DES. GERMANA MORAES",
       "orgaos": [
         "GAB 18 - DES. GERMANA MORAES"
       ],
-      "ocorrencias": 5,
+      "ocorrencias": 8,
       "julgados_exemplo": [
         "00411089420254058200",
         "08025159020214058300",
         "00067090620254058502",
-        "00111343720264050000",
-        "00043573620264050000"
+        "08165651920244058300",
+        "00107827920264050000"
       ],
       "teste_busca": {
         "consultados": 10,
         "batem": 10,
         "status": "ok",
         "detalhe": "0 de 10 fora do filtro",
-        "ms": 10755
+        "ms": 10492
       },
       "fonte_query": "aposentadoria",
       "fonte_recorte": "comum"
@@ -173,32 +174,55 @@
       "nome": "IVAN LIRA DE CARVALHO",
       "rotulo_original": "IVAN LIRA DE CARVALHO",
       "cargo": null,
-      "grau": "desconhecido",
+      "grau": "2",
       "orgao": "GAB 25 - DES. IVAN LIRA",
       "orgaos": [
         "GAB 25 - DES. IVAN LIRA"
       ],
       "ocorrencias": 3,
       "julgados_exemplo": [
+        "08047669220234058500",
         "00092691420264058201",
-        "00228441320264058000",
-        "08047669220234058500"
+        "00228441320264058000"
       ],
       "teste_busca": {
         "consultados": 10,
         "batem": 10,
         "status": "ok",
         "detalhe": "0 de 10 fora do filtro",
-        "ms": 10367
+        "ms": 11127
       },
       "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANDRE LUIS MAIA TOBIAS GRANJA",
+      "rotulo_original": "ANDRE LUIS MAIA TOBIAS GRANJA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "GAB 7 - DES. PAULO ROBERTO",
+      "orgaos": [
+        "GAB 7 - DES. PAULO ROBERTO"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "08018367620244058400",
+        "08127833820234058300"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
       "fonte_recorte": "comum"
     },
     {
       "nome": "RUBENS DE MENDONCA CANUTO NETO",
       "rotulo_original": "RUBENS DE MENDONCA CANUTO NETO",
       "cargo": null,
-      "grau": "desconhecido",
+      "grau": "2",
       "orgao": "GAB 10 - DES. RUBENS CANUTO",
       "orgaos": [
         "GAB 10 - DES. RUBENS CANUTO"
@@ -218,17 +242,17 @@
       "fonte_recorte": "comum"
     },
     {
-      "nome": "ANDRE LUIS MAIA TOBIAS GRANJA",
-      "rotulo_original": "ANDRE LUIS MAIA TOBIAS GRANJA",
+      "nome": "BRUNO TEIXEIRA DE PAIVA",
+      "rotulo_original": "BRUNO TEIXEIRA DE PAIVA",
       "cargo": null,
-      "grau": "desconhecido",
-      "orgao": "GAB 7 - DES. PAULO ROBERTO",
+      "grau": "2",
+      "orgao": "GAB 2 - DES. BRUNO TEIXEIRA (CONVOCADO)",
       "orgaos": [
-        "GAB 7 - DES. PAULO ROBERTO"
+        "GAB 2 - DES. BRUNO TEIXEIRA (CONVOCADO)"
       ],
       "ocorrencias": 1,
       "julgados_exemplo": [
-        "08018367620244058400"
+        "08062118220224058500"
       ],
       "teste_busca": {
         "consultados": 0,
@@ -265,7 +289,7 @@
       "nome": "LEONARDO HENRIQUE DE CAVALCANTE CARVALHO",
       "rotulo_original": "LEONARDO HENRIQUE DE CAVALCANTE CARVALHO",
       "cargo": null,
-      "grau": "desconhecido",
+      "grau": "2",
       "orgao": "GAB 4 - DES. LEONARDO CARVALHO",
       "orgaos": [
         "GAB 4 - DES. LEONARDO CARVALHO"
@@ -287,7 +311,7 @@
       "nome": "RAFAEL CHALEGRE DO REGO BARROS",
       "rotulo_original": "RAFAEL CHALEGRE DO REGO BARROS",
       "cargo": null,
-      "grau": "desconhecido",
+      "grau": "2",
       "orgao": "GAB 8 - DES. FERNANDO BRAGA",
       "orgaos": [
         "GAB 8 - DES. FERNANDO BRAGA"
@@ -306,32 +330,10 @@
       "fonte_recorte": "comum"
     },
     {
-      "nome": "ROBERTA WALMSLEY SOARES CARNEIRO PORTO DE BARROS",
-      "rotulo_original": "ROBERTA WALMSLEY SOARES CARNEIRO PORTO DE BARROS",
-      "cargo": null,
-      "grau": "desconhecido",
-      "orgao": "GAB 3 - DES. CID MARCONI",
-      "orgaos": [
-        "GAB 3 - DES. CID MARCONI"
-      ],
-      "ocorrencias": 1,
-      "julgados_exemplo": [
-        "08036745220224058100"
-      ],
-      "teste_busca": {
-        "consultados": 0,
-        "batem": 0,
-        "status": "nao_testado",
-        "detalhe": ""
-      },
-      "fonte_query": "dano moral",
-      "fonte_recorte": "comum"
-    },
-    {
       "nome": "ROBERTO WANDERLEY NOGUEIRA",
       "rotulo_original": "ROBERTO WANDERLEY NOGUEIRA",
       "cargo": null,
-      "grau": "desconhecido",
+      "grau": "2",
       "orgao": "GAB 1 - DES. ROBERTO WANDERLEY",
       "orgaos": [
         "GAB 1 - DES. ROBERTO WANDERLEY"
@@ -350,10 +352,32 @@
       "fonte_recorte": "comum"
     },
     {
+      "nome": "RODRIGO ANTONIO TENORIO CORREIA DA SILVA",
+      "rotulo_original": "RODRIGO ANTONIO TENORIO CORREIA DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "GAB DES. RODRIGO TENÓRIO - JULGAMENTO AMPLIADO ART 942 CPC",
+      "orgaos": [
+        "GAB DES. RODRIGO TENÓRIO - JULGAMENTO AMPLIADO ART 942 CPC"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "08081281720184058100"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
       "nome": "ROGERIO DE MENESES FIALHO MOREIRA",
       "rotulo_original": "ROGERIO DE MENESES FIALHO MOREIRA",
       "cargo": null,
-      "grau": "desconhecido",
+      "grau": "2",
       "orgao": "GAB 13 - DES. ROGÉRIO FIALHO MOREIRA",
       "orgaos": [
         "GAB 13 - DES. ROGÉRIO FIALHO MOREIRA"

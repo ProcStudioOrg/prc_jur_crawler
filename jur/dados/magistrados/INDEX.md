@@ -11,9 +11,9 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | tjsc | 26 | 2 | 22 | 2 | ok 2 · filtro_ignorado 3 | 2026-10-24 |
 | trf1 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam:  - waiting for locator('[id="formulario:textoLivre"]') to be visible | 2026-10-24 |
 | trf2 | 0 | 0 | 0 | 0 | erro: buscas sem relator legível no resultado | 2026-10-24 |
-| trf3 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: ============================================================ | 2026-10-24 |
+| trf3 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: - waiting for scheduled navigations to finish | 2026-10-24 |
 | trf4 | 18 | 4 | 13 | 1 | ok 4 · erro 1 | 2026-10-24 |
-| trf5 | 13 | 0 | 0 | 13 | ok 5 | 2026-10-24 |
+| trf5 | 14 | 0 | 13 | 1 | ok 5 | 2026-10-24 |
 | trf6 | 8 | 0 | 8 | 0 | ok 5 | 2026-10-24 |
 | tst | 20 | 0 | 20 | 0 | ok 5 | 2026-10-24 |
 

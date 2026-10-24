@@ -124,7 +124,8 @@ function lerResultados(arquivo) {
 }
 // eslint-disable-next-line no-control-regex
 const semAnsi = (s) => String(s ?? '').replace(/\x1b\[[0-9;]*m/g, '');
-const umaLinha = (s) => semAnsi(s).split('\n').map((l) => l.trim()).filter(Boolean).pop()?.replace(/\s+/g, ' ').slice(0, 200) || '';
+// última linha com letras: a CLI fecha o stderr com separadores ("=====") que não dizem nada
+const umaLinha = (s) => semAnsi(s).split('\n').map((l) => l.trim()).filter((l) => /[a-z]{3}/i.test(l)).pop()?.replace(/\s+/g, ' ').slice(0, 200) || '';
 
 /** Roda `bin/jur <cmd> ...` com -o num arquivo bruto; devolve { ok, resultados, erro, ms, args }. */
 function buscar(cmd, consulta, arquivo, relator) {
@@ -188,6 +189,8 @@ function inferirGrau({ titulo, cargo, orgao, recorte, grauDoResultado }) {
   if (recorte === 'primeiro_grau') return '1';
   if (/\bvara\b|juizado|turma recursal|turmas recursais|recursal|juizados especiais|uniformizac/.test(o)) return '1';
   if (/camara|\bturma\b|secao|grupo|orgao especial|pleno|plenario|corte especial|vice-?presid|presidencia|conselho da magistratura|tribunal pleno/.test(o)) return '2';
+  // TRF5: o órgão é o gabinete com o cargo dentro ("GAB 6 - DES. PAULO CORDEIRO")
+  if (/\bdes\b|desembargador|ministr/.test(o)) return '2';
   if (/desembargador|ministr|conselheir|\bdes\b|\bmin\b|\bcons\b/.test(t)) return '2';
   if (/\bjuiz/.test(t)) return recorte === 'juizados' ? '1' : 'desconhecido';
   if (recorte === 'juizados') return '1';
