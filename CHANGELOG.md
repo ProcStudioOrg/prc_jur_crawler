@@ -11,6 +11,27 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
+## 1.3.1 — não lançada
+
+BRU-99: as 5 regressões do `npm run smoke` de 19/10 (diagnóstico em
+`docs/qa/2026-10-21-bru-99-smoke-regressoes.md`; revalidação após rebase sobre a 1.3.0 em
+`docs/qa/2026-10-24-bru-99-rebase.md`).
+
+- TCDF volta a funcionar: o portal manda só a folha do certificado, emitida pela intermediária
+  nova do Let's Encrypt (`YR1`), cuja raiz `ISRG Root YR` não está no trust store do Node 22.
+  A cadeia pública entra em `jur/src/certs/` e é passada como `ca` só no `TCDFNavigator`.
+- TCEGO volta a funcionar: a API migrou para o proxy da SPA (`decisoes.tce.go.gov.br/api/proxy`),
+  exige o cookie de contexto `_tce_nav_ctx` com idade mínima e limita a 20 requests por janela.
+  A casca "sem contexto" (HTTP 200 com total 0) vira erro explícito, não "0 resultados".
+- TJMT rebaixado para `instavel`: API em manutenção declarada (HTTP 503 "Site em manutenção —
+  TJMT", BigIP) desde 19/10; o Navigator nomeia a manutenção. Casos da sentinela em `_pendentes`.
+- TJGO rebaixado para `sem-acesso`: a busca passou a exigir Cloudflare Turnstile; zero por bloqueio
+  vira erro explícito. Não automatizamos captcha.
+- TCE-PA rebaixado para `sem-acesso`: captcha do F5 Shape já no primeiro request.
+- `jur/tests/sentinela-casos.json`: TCDF de volta em `casos` (78 casos); TJMT em `_pendentes`.
+  A sentinela do h2 lê os casos da imagem — o TCDF só volta à rodada das 04:00 com esta release.
+  Acompanhamento dos três rebaixados: BRU-100.
+
 ## 1.3.0 — 22/10/2026
 
 - Banco de processos: a sentinela passa a mandar ao FFD (source `jur-processos`, `acao: alvos`)
