@@ -14,7 +14,7 @@ flag `--relator-decisao` da CLI.
 | | |
 |---|---|
 | Módulo | Consulta Ampla de Decisões (`https://decisoes.tce.go.gov.br/`) |
-| API | `https://iago-search-api.tce.go.gov.br` — sem auth, sem cookie, sem captcha, sem WAF |
+| API | `https://decisoes.tce.go.gov.br/api/proxy/decisions/*` (desde out/2026, ver §0) — sem auth, sem captcha; exige o cookie `_tce_nav_ctx` na busca e tem rate limit de 20/janela |
 | Acervo | **383.166 documentos** (medido em 22/08/2026; eram 383.075 em 19/08 — a base cresce) |
 | Anos | 1976–2026 (51 valores no agregado `ano`) |
 | Tipos | Acórdão · Resolução · Resolução Administrativa · Resolução Normativa |
@@ -59,6 +59,46 @@ flag `--relator-decisao` da CLI.
 ---
 
 # 🔴 Ressalvas — leia antes de citar qualquer coisa daqui
+
+## 0. Out/2026: a API mudou de porta, pede cookie de contexto e tem rate limit (BRU-99)
+
+Regressão do smoke de 19/10/2026 (`HTTP 404 em iago-search-api.tce.go.gov.br/decisions/search`;
+estava ok em 27/08). Diagnóstico de 21/10/2026, classe **D — contrato da API mudou**, e
+mudaram **três coisas ao mesmo tempo**:
+
+1. **O host direto morreu.** `iago-search-api.tce.go.gov.br/decisions/{search,aggregations,<id>}`
+   respondem **404** (HTML do Apache); a raiz `/` responde `4.5.0` em `text/plain`. O bundle
+   novo da SPA (`_next/static/chunks/477-*.js`) cria o axios com `baseURL:"/api/proxy"` —
+   a API agora vive atrás de um **proxy na própria origem**:
+   `https://decisoes.tce.go.gov.br/api/proxy/decisions/...`. Os caminhos, o corpo
+   (`{"term":...}`) e os parâmetros de querystring são **os mesmos** de antes.
+2. **A busca exige o cookie `_tce_nav_ctx`** (httpOnly, SameSite=Lax), que o Next.js grava
+   no GET anônimo da home. **Sem ele a busca não erra**: responde HTTP 200
+   `{"content":[],"totalElements":0,"size":10}` — a casca de HTTP 200 deste tribunal. A
+   assinatura é `size` **ignorado** (sempre 10) + total 0; com o cookie o mesmo request
+   devolve `totalElements: 10000` e o `size` pedido. Aggregations, `/decisions/<id>` e
+   `/decisions/url/<id>` **não** exigem o cookie — por isso o "0 resultados" enganava.
+   - 🔴 **O cookie tem idade mínima.** O valor é `<epoch ms>.<hash>` e o proxy recusa a busca
+     feita cedo demais depois da emissão. Medido variando **só** o atraso entre o GET da
+     home e o POST: `0 ms → 0 · 300 ms → 0 · 700 ms → 10.000 · 1.200 ms → 10.000 ·
+     2.500 ms → 10.000` (repetido). É por isso que `curl` "funcionava" e o Node "não". O
+     Navigator espera 1,5 s **uma vez por processo** (`ESPERA_CONTEXTO_MS`).
+   - O proxy manda um `_tce_nav_ctx` **novo** em cada busca, mas o **original continua
+     valendo** (4 páginas rápidas com o mesmo cookie, todas 10.000). O Navigator guarda só o
+     primeiro: um cookie recém-emitido é "fresco" de novo.
+   - A SPA também manda `cookie=<10 chars aleatórios>` na querystring (localStorage
+     `decisoes-user-token`, gerado no cliente). É tracking, **não é exigido** (medido com e
+     sem). Nada disso é credencial: o `_tce_nav_ctx` é emitido para qualquer GET anônimo.
+3. **Rate limit novo**: `x-ratelimit-limit: 20` por janela (~1 min; `x-ratelimit-reset` em
+   epoch). O "30 requisições em 6 s, todas 200" de 22/08 **não vale mais**; quem paginar
+   fundo bate em 429. O Navigator espera até o reset (teto 65 s) e repete uma vez.
+
+Evidências: print [`01.07-iago-proxy-outubro-2026.png`](human-codegen/TCEGO/01-decisoes/01.07-iago-proxy-outubro-2026.png)
+(a tela nova, com o aviso "Decisões agora faz parte do ecossistema Iago" e o banner
+"Exibindo as primeiras 40 páginas (1.000 resultados)"); REQ/RESP capturados no Playwright:
+`POST /api/proxy/decisions/search?page=0&size=25&order=RECENT&cookie=SLRR9UB072` com
+`cookie: _tce_nav_ctx=...` → `{"totalElements":10000,"size":25}`. Contagem exata segue na
+agregação (`aposentadoria` + `year=2024` = **3.112**, igual ao bucket `ano`).
 
 ## 1. `summary` é EMENTA GERADA POR IA. Não é ato do tribunal.
 

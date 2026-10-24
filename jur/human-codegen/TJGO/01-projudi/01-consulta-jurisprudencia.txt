@@ -166,3 +166,42 @@ Após refinar a pesquisa, utilize o campo ''consultar'' para buscar jurisprudên
 
 <input id="formLocalizarBotao" class="formLocalizarBotao" type="submit" name="Localizar" value="Consultar" onclick="javascript:submitForm(0);">
 
+================================================================
+
+ATUALIZAÇÃO 21/10/2026 (BRU-99) — Turnstile passou a bloquear a BUSCA.
+
+Print: 01.15-turnstile-na-busca.png. O widget do Cloudflare Turnstile
+("Verificando...") aparece acima do botão Consultar; o botão nasce desabilitado
+e só o callback do widget o habilita. HTML atual do bloco:
+
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad"></script>
+    <div id="widget-container"></div>
+    <input id="g-recaptcha-response" type="hidden" name="g-recaptcha-response" value=""/>
+    <script>
+      function onTurnstileLoad() {
+        turnstile.render("#widget-container", {
+          sitekey: "0x4AAAAAABeYdOewv6AT0dzB",
+          theme: "light",
+          callback: function (token) {
+            $("#g-recaptcha-response").attr("value",token);
+            const btnBuscarElement = document.querySelector('#btnBuscar');
+            if (btnBuscarElement) { btnBuscarElement.disabled = false; }
+          },
+        });
+      }
+    </script>
+    <input id="btnBuscar" class="formLocalizarBotao" type="submit" name="Localizar" value="Consultar" onclick="javascript:submitForm(0);"/>
+
+E em js/ConsultaJurisprudencia.js?v=0.0.7, submitForm() virou:
+
+    function submitForm(pos){
+        window.formSubmitInProgress = true;
+        AlterarValue('PaginaAtual','2');
+        AlterarValue('PosicaoPaginaAtual', pos);
+        aguardarBotaoBuscarAtivo().then(function(){ FormSubmit('Formulario'); });
+    }
+
+Servidor: POST sem token válido devolve HTTP 200 com a própria tela do
+formulário (≈39 KB), sem "<!-- Painel de resultados -->" preenchido. Igual com
+token vazio, token falso e com JSESSIONID. As lupas AJAX continuam livres.
+Antes (até 27/08/2026) o POST sem token devolvia os cards normalmente.

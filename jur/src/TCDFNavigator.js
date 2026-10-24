@@ -1,5 +1,8 @@
 // src/TCDFNavigator.js
 const https = require('https');
+const fs = require('fs');
+const path = require('path');
+const tls = require('tls');
 
 /**
  * TCDFNavigator — fala com a Busca TCDF (Tribunal de Contas do Distrito Federal).
@@ -47,6 +50,27 @@ const HOST_BUSCA = 'api-busca-publica.tc.df.gov.br';
 const HOST_DOC = 'api-etcdf.tc.df.gov.br';
 
 /**
+ * 🔴 CADEIA TLS INCOMPLETA NOS DOIS HOSTS — medido em 21/10/2026 (smoke de 19/10
+ * caiu com `unable to verify the first certificate`; estava ok em 27/08).
+ * O certificado `*.tc.df.gov.br` (validade ate 28/12/2026) passou a ser emitido
+ * pela intermediaria NOVA do Let's Encrypt, `YR1`, filha da raiz NOVA
+ * `ISRG Root YR` (criada em 13/05/2026). O servidor manda SO a folha, e a raiz YR
+ * nao esta no trust store do Node 22 (so X1 e X2). Logo nem a intermediaria
+ * resolve sozinha: e preciso a `YR1` E a `Root YR` cross-assinada pela
+ * `ISRG Root X1`, que ai fecha na raiz que o Node ja confia. Os dois PEMs foram
+ * baixados do AIA do proprio certificado (http://yr1.i.lencr.org/ e
+ * http://yr.i.lencr.org/) — sao certificados PUBLICOS de CA, nao credencial.
+ * A confianca extra fica restrita a este cliente (como no TJRJ/TCEMG/TCEBA):
+ * nada de NODE_TLS_REJECT_UNAUTHORIZED nem de trust store global.
+ * curl no macOS passa porque o SecureTransport busca a cadeia pelo AIA; o Node nao.
+ */
+const CA_EXTRA = [
+  'certs/lets-encrypt-yr1.pem',
+  'certs/isrg-root-yr-cross-signed-by-x1.pem',
+].map((f) => fs.readFileSync(path.join(__dirname, f), 'utf8'));
+const CA = [...tls.rootCertificates, ...CA_EXTRA];
+
+/**
  * 🔴 OBRIGATORIO. Ver o bloco do F5 acima. Nao remova "por limpeza".
  */
 const UA =
@@ -63,7 +87,7 @@ class TCDFNavigator {
       const t0 = Date.now();
       const req = https.get(
         url,
-        { headers: { 'User-Agent': UA, Accept: 'application/json' } },
+        { ca: CA, headers: { 'User-Agent': UA, Accept: 'application/json' } },
         (res) => {
           let body = '';
           res.setEncoding('utf8');
@@ -262,5 +286,7 @@ class TCDFNavigator {
 TCDFNavigator.HOST_BUSCA = HOST_BUSCA;
 TCDFNavigator.HOST_DOC = HOST_DOC;
 TCDFNavigator.UA = UA;
+/** Cadeia completa (raizes do Node + YR1 + Root YR cross-assinada), para quem precisa falar com a API crua. */
+TCDFNavigator.CA = CA;
 
 module.exports = TCDFNavigator;

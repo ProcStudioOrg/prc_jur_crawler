@@ -51,5 +51,17 @@
   "crps": {
     "resumo": "Exige login Gov.br em dispositivo validado. A busca automática não está disponível.",
     "funcionalidades": {}
+  },
+  "tjmt": {
+    "resumo": "A API do tribunal está em manutenção declarada desde 19/10/2026 e responde erro do servidor em toda consulta. Pode voltar a funcionar sem aviso.",
+    "funcionalidades": {}
+  },
+  "tjgo": {
+    "resumo": "Desde outubro de 2026 a busca exige verificação anti-robô do Cloudflare, que não é resolvida automaticamente. Só as listagens auxiliares (unidades, magistrados, tipos de ato) continuam respondendo.",
+    "funcionalidades": {}
+  },
+  "tcepa": {
+    "resumo": "O portal passou a exibir captcha de imagem já no primeiro acesso à pesquisa, que não é resolvido automaticamente. A busca e o inteiro teor ficam indisponíveis até o tribunal mudar o bloqueio.",
+    "funcionalidades": {}
   }
 }
