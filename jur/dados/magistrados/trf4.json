@@ -1,0 +1,526 @@
+{
+  "tribunal": "trf4",
+  "nome": "Tribunal Regional Federal da 4ª Região",
+  "coletado_em": "2026-10-24T14:12:16.247Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "trecho"
+    },
+    "juizados": true,
+    "primeiro_grau": "Varas Federais (sentenças de 1º grau)"
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 12884,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 103790,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 44456,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas-recursais"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 10095,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "24/10/2025",
+      "dataFim": "24/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--orgaos",
+        "Varas Federais"
+      ],
+      "recorte": "primeiro_grau",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 49,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 18,
+    "por_grau": {
+      "1": 4,
+      "2": 13,
+      "desconhecido": 1
+    },
+    "teste_busca": {
+      "ok": 4,
+      "nao_testado": 13,
+      "erro": 1
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "VIVIAN JOSETE PANTALEÃO CAMINHA",
+      "rotulo_original": "VIVIAN JOSETE PANTALEÃO CAMINHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "VICE-PRESIDÊNCIA",
+      "orgaos": [
+        "VICE-PRESIDÊNCIA"
+      ],
+      "ocorrencias": 18,
+      "julgados_exemplo": [
+        "5041313-27.2025.4.04.0000/TRF4",
+        "5014996-71.2021.4.04.7003/TRF4",
+        "5072539-90.2025.4.04.7100/TRF4",
+        "5024936-07.2019.4.04.7108/TRF4",
+        "5019129-43.2026.4.04.0000/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 12044
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROBERTO FERNANDES JUNIOR",
+      "rotulo_original": "ROBERTO FERNANDES JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [
+        "5015270-30.2024.4.04.7003/TRF4",
+        "5013594-23.2024.4.04.7205/TRF4",
+        "5020947-34.2021.4.04.7201/TRF4",
+        "5046202-55.2025.4.04.7200/TRF4",
+        "5011359-82.2025.4.04.7000/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 11850
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALEX PERES ROCHA",
+      "rotulo_original": "ALEX PERES ROCHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Turma",
+      "orgaos": [
+        "6ª Turma"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "5006598-72.2025.4.04.7108/TRF4",
+        "5007994-09.2024.4.04.7112/TRF4",
+        "5003668-90.2025.4.04.7105/TRF4",
+        "5016678-32.2024.4.04.7108/TRF4",
+        "5001192-48.2023.4.04.7138/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 11821
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PAULO AFONSO BRUM VAZ",
+      "rotulo_original": "PAULO AFONSO BRUM VAZ",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "9ª Turma",
+      "orgaos": [
+        "9ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "5002667-91.2026.4.04.7216/TRF4",
+        "5001697-27.2026.4.04.7205/TRF4",
+        "5002666-09.2026.4.04.7216/TRF4",
+        "5002607-21.2026.4.04.7216/TRF4",
+        "5002598-59.2026.4.04.7216/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 11862
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GUSTAVO CHIES CIGNACHI",
+      "rotulo_original": "GUSTAVO CHIES CIGNACHI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "VICE-PRESIDÊNCIA",
+      "orgaos": [
+        "VICE-PRESIDÊNCIA"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "5000458-78.2019.4.04.7222/TRF4",
+        "5001299-56.2021.4.04.7205/TRF4",
+        "5003426-54.2022.4.04.7100/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LÍLIA CÔRTES DE CARVALHO DE MARTINO",
+      "rotulo_original": "LÍLIA CÔRTES DE CARVALHO DE MARTINO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "3ª Turma Recursal do Paraná",
+      "orgaos": [
+        "3ª Turma Recursal do Paraná"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "5003921-54.2025.4.04.7016/PR",
+        "5013121-33.2025.4.04.7001/PR",
+        "5001981-68.2026.4.04.7000/PR"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "erro",
+        "detalhe": "Relator: nenhuma opção do portal casa com \"LÍLIA CÔRTES DE CARVALHO DE MARTINO\" (parecidos: FABIO NUNES DE MARTINO | FÁBIO NUNES DE MARTINO | PAULO HENRIQUE DE CARVALHO | PEDRO CARVALHO AGUIRRE FILHO ",
+        "ms": 7759
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "LUCIANE MERLIN CLÈVE",
+      "rotulo_original": "LUCIANE MERLIN CLÈVE",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "4ª Turma Recursal do Paraná",
+      "orgaos": [
+        "4ª Turma Recursal do Paraná"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "5013317-25.2024.4.04.7005/PR",
+        "5011419-21.2026.4.04.7000/PR",
+        "5011780-69.2025.4.04.7001/PR"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "SUSANA SBROGIO GALIA",
+      "rotulo_original": "SUSANA SBROGIO GALIA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "3ª Turma Recursal do Rio Grande do Sul",
+      "orgaos": [
+        "3ª Turma Recursal do Rio Grande do Sul"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "5001087-21.2020.4.04.7124/RS",
+        "5059392-94.2025.4.04.7100/RS",
+        "5009753-73.2026.4.04.7100/RS"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "ANDRÉIA CASTRO DIAS MOREIRA",
+      "rotulo_original": "ANDRÉIA CASTRO DIAS MOREIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Turma",
+      "orgaos": [
+        "6ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "5037857-35.2026.4.04.0000/TRF4",
+        "5037380-12.2026.4.04.0000/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CELSO KIPPER",
+      "rotulo_original": "CELSO KIPPER",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "9ª Turma",
+      "orgaos": [
+        "9ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "5018432-53.2026.4.04.7200/TRF4",
+        "5013924-88.2022.4.04.7205/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ELIANA PAGGIARIN MARINHO",
+      "rotulo_original": "ELIANA PAGGIARIN MARINHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "11ª Turma",
+      "orgaos": [
+        "11ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "5037402-70.2026.4.04.0000/TRF4",
+        "5005092-07.2024.4.04.7202/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALEXANDRE PEREIRA DUTRA",
+      "rotulo_original": "ALEXANDRE PEREIRA DUTRA",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": "Central Digital de Auxílio 2",
+      "orgaos": [
+        "Central Digital de Auxílio 2"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5034044-50.2020.4.04.7100/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDUARDO VANDRÉ OLIVEIRA LEMA GARCIA",
+      "rotulo_original": "EDUARDO VANDRÉ OLIVEIRA LEMA GARCIA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5035909-58.2026.4.04.0000/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FRANCISCO DONIZETE GOMES",
+      "rotulo_original": "FRANCISCO DONIZETE GOMES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª Turma",
+      "orgaos": [
+        "5ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5038376-10.2026.4.04.0000/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GILSON LUIZ INÁCIO",
+      "rotulo_original": "GILSON LUIZ INÁCIO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "3ª Turma Recursal do Paraná",
+      "orgaos": [
+        "3ª Turma Recursal do Paraná"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5001225-35.2026.4.04.7008/PR"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "HERMES SIEDLER DA CONCEICAO JUNIOR",
+      "rotulo_original": "HERMES SIEDLER DA CONCEICAO JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª Turma",
+      "orgaos": [
+        "5ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5038514-74.2026.4.04.0000/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "TAIS SCHILLING FERRAZ",
+      "rotulo_original": "TAIS SCHILLING FERRAZ",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Turma",
+      "orgaos": [
+        "6ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5035986-67.2026.4.04.0000/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "VERA LÚCIA FEIL",
+      "rotulo_original": "VERA LÚCIA FEIL",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "12ª Turma",
+      "orgaos": [
+        "12ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5038468-85.2026.4.04.0000/TRF4"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

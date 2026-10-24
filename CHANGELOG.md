@@ -11,6 +11,15 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
+## 1.3.1 — não lançada
+
+- BRU-102 (em andamento): mapeamento de magistrados por tribunal para a busca por magistrado e o
+  perfil do julgador. `jur/tests/magistrados.js` roda buscas genéricas pela CLI, extrai relator e
+  órgão julgador, infere o grau (1º/2º) e testa a capacidade `magistrado` com até 5 nomes por
+  tribunal, com a conferência da sentinela; grava `jur/dados/magistrados/<tribunal>.json` e o
+  `INDEX.md`. `jur/tests/magistrados-cron.sh` mapeia 3 tribunais por dia na debian2 (05:10) e
+  commita na branch. Só nome e cargo públicos; nada sai da máquina. Ver `docs/magistrados.md`.
+
 ## 1.3.0 — 22/10/2026
 
 - Banco de processos: a sentinela passa a mandar ao FFD (source `jur-processos`, `acao: alvos`)

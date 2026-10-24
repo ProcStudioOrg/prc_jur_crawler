@@ -97,6 +97,11 @@ prc_jur_crawler/
 
 Captura de falha, conferência de filtros, sentinela diária e botão Relatar: [`docs/kaizen.md`](docs/kaizen.md).
 
+### Magistrados por tribunal
+
+Amostra de juízes e relatores por tribunal e grau, com teste da busca por magistrado
+(`jur/dados/magistrados/`, `node tests/magistrados.js`, cron diário): [`docs/magistrados.md`](docs/magistrados.md).
+
 ### Ambiente local sem ProcStudio
 
 `cd jur && npm run dev:local` inicia uma conta de desenvolvimento em
