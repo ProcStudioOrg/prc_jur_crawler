@@ -11,7 +11,7 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
-## 1.3.1 — não lançada
+## 1.3.1 — 24/10/2026
 
 BRU-99: as 5 regressões do `npm run smoke` de 19/10 (diagnóstico em
 `docs/qa/2026-10-21-bru-99-smoke-regressoes.md`; revalidação após rebase sobre a 1.3.0 em
