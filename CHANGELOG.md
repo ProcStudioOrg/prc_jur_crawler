@@ -11,6 +11,31 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
+## 1.3.1 — não lançada
+
+Correções da sentinela de 21/10 (BRU-101), validadas da debian2 em 24/10/2026 — ver
+`docs/qa/2026-10-24-bru-101-sentinela.md`. O bump de versão e o deploy ficam com o Bruno.
+
+- STF: o portal saiu do AWS WAF (responde `server: volt-adc`, F5 Distributed Cloud) e deixou de
+  emitir o cookie `aws-waf-token`; o crawler exigia o cookie e falhava. O token virou *lazy* em
+  `STFNavigator` (`cookieAtual`, `_post`): a requisição sai com o cookie que houver e o navegador
+  só abre se o servidor devolver o desafio. Os 3 casos (periodoJulgamento, periodoPublicacao,
+  numero) voltam à sentinela.
+- TJMS: o campo `nmAgente` (texto) não filtra relator — o cjsg ignora em silêncio. `-r` agora
+  resolve o trecho na grid do popup Relatores (`TJMSNavigator.resolverRelatores`: autocomplete +
+  `searchAgente.jsp` na mesma sessão) e manda as entidades em `agenteSelectedEntitiesList` /
+  `dados.agentes[i]`; trecho sem entidade é erro. Caso `magistrado` volta (100 de 100 do relator).
+- TJPI: a CLI descartava `-dpi/-dpf` (só `-di/-df` chegava ao `data_min/data_max`); o portal
+  aplica o filtro normalmente. Caso `periodoPublicacao` volta (25 de 25 em 08/2026).
+- TJRJ eJURIS: o servidor só filtra por ano; com `-di/-df` em DD/MM/AAAA o crawler recorta o
+  dia no cliente sobre as páginas lidas, com aviso (lista do mais novo ao mais antigo, 10 por
+  página). O caso `periodoJulgamento` da sentinela usa a janela do ano, que é o que o portal
+  filtra.
+- TJES: HTTP 403 só do H2 (IP de produção bloqueado); da debian2 e do Mac responde 200. Catálogo
+  `instavel` com nota datada e resumo na ficha; os dois casos ficam em `_pendentes` até o H2
+  voltar a passar.
+- `tests/sentinela-casos.json`: 83 casos ativos (77 + 6 devolvidos), TJES anotado.
+
 ## 1.3.0 — 22/10/2026
 
 - Banco de processos: a sentinela passa a mandar ao FFD (source `jur-processos`, `acao: alvos`)

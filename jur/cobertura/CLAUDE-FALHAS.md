@@ -11,6 +11,7 @@
 | TRF3 | instavel | `jur trf3` | Host oscila ou fica inacessível mesmo antes da interação. | [CLAUDE-TRF3.md](../CLAUDE-TRF3.md) |
 | TJAC | instavel | `jur tjac` | Busca zerou termos amplos em medições repetidas; inteiro teor exige reCAPTCHA. | [CLAUDE-TJAC.md](../CLAUDE-TJAC.md) |
 | TJAM | instavel | `jur tjam` | Crawler responde, mas a base estadual está congelada em 2025. | [CLAUDE-TJAM.md](../CLAUDE-TJAM.md) |
+| TJES | instavel | `jur tjes` | Fora do caminho operacional; leia o guia. | [CLAUDE-TJES.md](../CLAUDE-TJES.md) |
 | TJMA | sem-acesso | `jur tjma` | Busca por termo bloqueada por captcha; `-n` usa apenas o DataJud. | [CLAUDE-TJMA.md](../CLAUDE-TJMA.md) |
 | TJPB | instavel | `jur tjpb` | API pública respondeu HTTP 503 em medições consecutivas. | [CLAUDE-TJPB.md](../CLAUDE-TJPB.md) |
 | TJRN | sem-acesso | `jur tjrn` | Domínio bloqueado por 403/Akamai; `-n` confirma somente o processo. | [CLAUDE-TJRN.md](../CLAUDE-TJRN.md) |

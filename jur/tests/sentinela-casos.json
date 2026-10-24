@@ -1,5 +1,5 @@
 {
-  "_comentario": "Casos montados do smoke de 30/08/2026 (resultados/results-<tribunal>.json, termo \"dano moral\" ou o de TERMO_POR_COMANDO, janela 30/08/2025-30/08/2026, -m 1): periodo = mes com julgados nesse resultado; magistrado = relator mais frequente dele; juizados = termo que trouxe turma recursal; numero = processo real dele (TRF4: o do spec). _pendentes: tribunal x capacidade que funciona mas ficou sem caso, com o motivo. Validados ao vivo em 19/10/2026 (node tests/sentinela.js): trf4 (4 casos ok) e tjpr (2 ok). Os demais vieram de resultado real mas ainda não rodaram ao vivo: rode npm run sentinela antes de ligar JUR_SENTINELA=1 e mova para _pendentes o que falhar. Validação ao vivo completa em 21/10/2026 no H2 (87 casos locais, 2 remotos fora): 59 ok, 12 não verificáveis (numero dos TCs/CARF e tjrj-ejuris numero: resultado sem número CNJ legível; tceba numero: prefixo \"TCE/\" antes da barra), 16 falhas; as 12 falhas por crawler/portal ou IP foram para _pendentes com o motivo, e ficaram tjmt (HTTP 503 da API, do H2 e do Mac — queda do tribunal) e tjro (timeout só no H2, ok do Mac).",
+  "_comentario": "Casos montados do smoke de 30/08/2026 (resultados/results-<tribunal>.json, termo \"dano moral\" ou o de TERMO_POR_COMANDO, janela 30/08/2025-30/08/2026, -m 1): periodo = mes com julgados nesse resultado; magistrado = relator mais frequente dele; juizados = termo que trouxe turma recursal; numero = processo real dele (TRF4: o do spec). _pendentes: tribunal x capacidade que funciona mas ficou sem caso, com o motivo. Validados ao vivo em 19/10/2026 (node tests/sentinela.js): trf4 (4 casos ok) e tjpr (2 ok). Os demais vieram de resultado real mas ainda não rodaram ao vivo: rode npm run sentinela antes de ligar JUR_SENTINELA=1 e mova para _pendentes o que falhar. Validação ao vivo completa em 21/10/2026 no H2 (87 casos locais, 2 remotos fora): 59 ok, 12 não verificáveis (numero dos TCs/CARF e tjrj-ejuris numero: resultado sem número CNJ legível; tceba numero: prefixo \"TCE/\" antes da barra), 16 falhas; as 12 falhas por crawler/portal ou IP foram para _pendentes com o motivo, e ficaram tjmt (HTTP 503 da API, do H2 e do Mac — queda do tribunal) e tjro (timeout só no H2, ok do Mac). Em 24/10/2026 (BRU-101, debian2) voltaram stf (3: o portal saiu do AWS WAF e o token virou lazy), tjms magistrado (relator por entidade do popup), tjpi periodoPublicacao (CLI passava só -di/-df) e tjrj-ejuris periodoJulgamento (recorte de dia no cliente; o caso usa a janela do ANO, que é o que o portal filtra); tjes segue em _pendentes por bloqueio de IP só do H2.",
   "_pendentes": {
     "trf2": {
       "magistrado": "sem relator legivel no resultado real",
@@ -26,16 +26,15 @@
     },
     "tjes": {
       "periodoJulgamento": "resultado real sem dataJulgamento legivel",
-      "juizados": "falhou na validação ao vivo de 21/10/2026: HTTP 403 (bloqueio_ip) do H2; do Mac funciona — IP do H2 bloqueado pelo TJES; volta quando o H2 voltar a passar",
-      "numero": "falhou na validação ao vivo de 21/10/2026: 0 resultado do H2 (mesmo bloqueio do 403); do Mac funciona — volta quando o H2 voltar a passar"
+      "juizados": "HTTP 403 (bloqueio_ip) só do H2 desde 21/10/2026; do Mac (21/10) e da debian2 (24/10, params: query dano moral, dataInicio 30/08/2025, dataFim 30/08/2026, juizados true) passa com 0 de 100 fora — IP do H2 bloqueado pelo TJES, tribunal instavel no catálogo; volta quando o H2 voltar a passar",
+      "numero": "0 resultado só do H2 desde 21/10/2026 (mesmo bloqueio do 403); do Mac (21/10) e da debian2 (24/10, numero 0009613-14.2020.8.08.0012) encontra — volta quando o H2 voltar a passar"
     },
     "tjmg": {
       "periodoPublicacao": "sem resultado real com termo conhecido",
       "numero": "sem numero de processo em resultado real"
     },
     "tjms": {
-      "juizados": "o resultado real nao trouxe turma recursal com este termo",
-      "magistrado": "falhou na validação ao vivo de 21/10/2026: filtro de relator ignorado (83 de 96 resultados de outro relator, H2 e Mac) — regressão do crawler/portal, não do caso; volta depois do conserto"
+      "juizados": "o resultado real nao trouxe turma recursal com este termo"
     },
     "tjpa": {
       "juizados": "o resultado real nao trouxe turma recursal com este termo"
@@ -45,15 +44,13 @@
       "numero": "sem numero de processo em resultado real"
     },
     "tjpi": {
-      "periodoJulgamento": "resultado real sem dataJulgamento legivel",
-      "periodoPublicacao": "falhou na validação ao vivo de 21/10/2026: filtro de data de publicação ignorado (25 de 25 fora do período, H2 e Mac) — regressão do crawler/portal, não do caso; volta depois do conserto"
+      "periodoJulgamento": "resultado real sem dataJulgamento legivel"
     },
     "tjpr": {
       "periodoPublicacao": "resultado real sem dataPublicacao legivel"
     },
     "tjrj-ejuris": {
-      "juizados": "o resultado real nao trouxe turma recursal com este termo",
-      "periodoJulgamento": "falhou na validação ao vivo de 21/10/2026: filtro de data de julgamento ignorado (10 de 10 fora do período, H2 e Mac) — regressão do crawler/portal, não do caso; volta depois do conserto"
+      "juizados": "o resultado real nao trouxe turma recursal com este termo"
     },
     "tjro": {
       "periodoPublicacao": "resultado real sem dataPublicacao legivel"
@@ -104,11 +101,6 @@
     "tjgo": {
       "periodoJulgamento": "falhou na validação ao vivo de 19/10/2026: o TJGO devolve zero até sem filtro de data (regressão do crawler/portal, não do caso) — volta depois do conserto",
       "numero": "falhou na validação ao vivo de 19/10/2026: o TJGO devolve zero até sem filtro de data (regressão do crawler/portal, não do caso) — volta depois do conserto"
-    },
-    "stf": {
-      "periodoJulgamento": "falhou na validação ao vivo de 21/10/2026: o STF não emitiu o cookie aws-waf-token (desafio do WAF mudou), do H2 e do Mac — regressão do crawler, não do caso; volta depois do conserto",
-      "periodoPublicacao": "falhou na validação ao vivo de 21/10/2026: o STF não emitiu o cookie aws-waf-token (desafio do WAF mudou), do H2 e do Mac — regressão do crawler, não do caso; volta depois do conserto",
-      "numero": "falhou na validação ao vivo de 21/10/2026: o STF não emitiu o cookie aws-waf-token (desafio do WAF mudou), do H2 e do Mac — regressão do crawler, não do caso; volta depois do conserto"
     },
     "tcdf": {
       "periodoJulgamento": "falhou na validação ao vivo de 21/10/2026: \"unable to verify the first certificate\" (cadeia TLS do TCDF incompleta), do H2 e do Mac — conserto no crawler; volta depois",
@@ -194,6 +186,12 @@
     {"tribunal":"tcesp","capacidade":"numero","params":{"numero":"21197/989/25"},"espera":{"encontrado":true}},
     {"tribunal":"carf","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/02/2026","dataFim":"28/02/2026","maxPaginas":1},"espera":{"minimo":1}},
     {"tribunal":"carf","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/05/2026","dataPubFim":"31/05/2026","maxPaginas":1},"espera":{"minimo":1}},
-    {"tribunal":"carf","capacidade":"numero","params":{"numero":"10283.007661/2010-71"},"espera":{"encontrado":true}}
+    {"tribunal":"carf","capacidade":"numero","params":{"numero":"10283.007661/2010-71"},"espera":{"encontrado":true}},
+    {"tribunal":"stf","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/03/2026","dataFim":"31/03/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"stf","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/03/2026","dataPubFim":"31/03/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"stf","capacidade":"numero","params":{"numero":"Rcl 88673"},"espera":{"encontrado":true}},
+    {"tribunal":"tjms","capacidade":"magistrado","params":{"query":"dano moral","dataInicio":"30/08/2025","dataFim":"30/08/2026","relator":"Elisabeth Rosa Baisch","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjpi","capacidade":"periodoPublicacao","params":{"query":"dano moral","dataPubInicio":"01/08/2026","dataPubFim":"31/08/2026","maxPaginas":1},"espera":{"minimo":1}},
+    {"tribunal":"tjrj-ejuris","capacidade":"periodoJulgamento","params":{"query":"dano moral","dataInicio":"01/01/2026","dataFim":"31/12/2026","maxPaginas":1},"espera":{"minimo":1}}
   ]
 }

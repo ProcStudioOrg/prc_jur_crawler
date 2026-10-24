@@ -1,7 +1,18 @@
 # TJES — Tribunal de Justiça do Espírito Santo
 
-**Status: 🟢 OK** — API REST pública, HTTP direto, sem browser, **sem captcha em etapa
-nenhuma**. Ementa e inteiro teor já vêm na busca. Mapeado em 07/08/2026.
+**Status: 🟡 INSTÁVEL (bloqueio por IP do servidor de produção, desde 21/10/2026)** — API
+REST pública, HTTP direto, sem browser, **sem captcha em etapa nenhuma**. Ementa e inteiro
+teor já vêm na busca. Mapeado em 07/08/2026.
+
+⚠️ **Bloqueio por IP, só no H2.** Desde a validação da sentinela em 21/10/2026,
+`/consulta-jurisprudencia/api/search` responde **HTTP 403 só do H2** (168.231.91.47,
+Hostinger) e a consulta por número devolve 0 pelo mesmo bloqueio. Do Mac (21/10) e da debian2
+(24/10, IP residencial, IPv4 e IPv6) a mesma URL responde 200: busca por juizados (100 de 100
+em turma recursal) e `-n 0009613-14.2020.8.08.0012` (encontrado) passam. Não há desafio nem
+cookie: é lista de bloqueio de IP. Enquanto o H2 não passar, o catálogo marca `instavel`, os
+casos do TJES ficam em `_pendentes` da sentinela e as opções são pedir liberação ao TJES ou
+rotear o GET da API por navegador remoto (Kernel/Steel), como TRF3/Falcão. Reteste do H2:
+`docker exec jur-jur-1 node tests/sentinela.js tjes` com os casos de volta em `casos`.
 
 - **Portal:** https://sistemas.tjes.jus.br/consulta-jurisprudencia/ (SPA Vue 3 + Vite)
 - **API:** `https://sistemas.tjes.jus.br/consulta-jurisprudencia/api/{cores,facets,search}`
