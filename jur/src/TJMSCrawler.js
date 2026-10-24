@@ -58,12 +58,41 @@ class TJMSCrawler {
       ordem,
       processo: filters.processo || '',
       relator: filters.relator || '',
+      agentes: [], // resolvido em search(): o cjsg só filtra por entidade (ver Navigator.corpo)
       sinonimos: filters.sinonimos !== false,
       dataJulgamentoInicio: filters.dataJulgamentoInicio || '',
       dataJulgamentoFim: filters.dataJulgamentoFim || '',
       dataPublicacaoInicio: filters.dataPublicacaoInicio || '',
       dataPublicacaoFim: filters.dataPublicacaoFim || '',
     };
+  }
+
+  /**
+   * `-r` → entidades da grid Relatores. Vários nomes separados por vírgula; cada um casa
+   * por trecho e TODAS as entidades que casam entram (o cjsg une a seleção múltipla).
+   * Trecho que não casa com nenhuma entidade é ERRO, não busca sem filtro: o cjsg
+   * ignora texto livre em nmAgente e devolveria o acervo inteiro como se filtrado.
+   */
+  async resolverRelatores(relator) {
+    const trechos = String(relator).split(',').map((t) => t.trim()).filter(Boolean);
+    const vistos = new Set();
+    const agentes = [];
+    for (const trecho of trechos) {
+      const achados = await this.navigator.resolverRelatores(trecho);
+      if (!achados.length) {
+        throw new Error(`relator "${trecho}" não consta do cadastro de relatores do cjsg do TJMS. ` +
+          'O filtro casa por trecho do nome cadastrado (acento conta) e o portal ignora texto livre; ' +
+          'confira a grafia como aparece em "Relator(a):" nos resultados.');
+      }
+      for (const a of achados) {
+        if (vistos.has(a.codigoCr)) continue;
+        vistos.add(a.codigoCr);
+        agentes.push(a);
+      }
+    }
+    this.log(`Relator "${relator}" → ${agentes.length} entidade(s) do cadastro: ` +
+      agentes.map((a) => `${a.nome} [${a.codigoCr}]`).join('; '));
+    return agentes;
   }
 
   /**
@@ -101,6 +130,8 @@ class TJMSCrawler {
       this.log(`⚠️  A busca do TJMS NÃO normaliza acento: "${semAcento.join('", "')}" ` +
         'sem acento é outra busca (usucapiao=3 × usucapião=3.885). Reescreva com acento.');
     }
+
+    if (base.relator) base.agentes = await this.resolverRelatores(base.relator);
 
     // intervalo > 365 dias devolve 0 SEM ERRO — fatiamos em janelas em vez de
     // repassar um zero que não é zero

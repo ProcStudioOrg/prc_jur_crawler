@@ -1,0 +1,10 @@
+# jurisprudencia.stf.jus.br — cabeçalhos medidos em 24/10/2026 (debian2, Chromium headless Playwright 1.62)
+
+200 https://jurisprudencia.stf.jus.br/pages/search waf= ct=text/html
+goto status 200 headers {"accept-ranges":"bytes","cache-control":"no-store","content-length":"19422","content-type":"text/html","date":"Sat, 24 Oct 2026 14:05:44 GMT","etag":"\"6a480377-4bde\"","last-modified":"Fri, 03 Jul 2026 18:46:15 GMT","server":"volt-adc","strict-transport-security":"max-age=31536000","x-envoy-upstream-service-time":"404","x-volterra-location":"sp4-sao"}
+t=0s cookies=_ga_EV88SFGNVM,_ga title=Pesquisa de jurisprudência - STF url=https://jurisprudencia.stf.jus.br/pages/search
+200 https://jurisprudencia.stf.jus.br/api/admin/loadConfig waf= ct=application/json
+t=40s cookies=_ga_EV88SFGNVM,_ga title=Pesquisa de jurisprudência - STF url=https://jurisprudencia.stf.jus.br/pages/search
+
+# POST /api/search/search sem cookie (curl):
+{"result":{"took":4,"timed_out":false,"_shards":{"total":5,"successful":5,"skipped":0,"failed":0},"hits":{"total":{"value":10000,"relation":"gte"},"max_score":1.0,"hits":[{"_index":"jurisprudencia-idx20230518","_id":"despacho1278126","_score":1.0,"_source":{"base":"decisoes","id":"despacho1278126","dg_unique":"despacho …(corpo cortado; 25.996 bytes, 1 hit da base decisoes)

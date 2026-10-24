@@ -2309,8 +2309,11 @@ program
         relator: opts.relator || null,
         classe: opts.classe || null,
         orgao: opts.orgao || null,
-        dataInicio: opts.dataInicio || null,
-        dataFim: opts.dataFim || null,
+        // A base só tem data de PUBLICAÇÃO: -dpi/-dpf é a janela real e -di/-df é alias
+        // (CLAUDE-TJPI.md). Até 24/10/2026 só -di/-df chegava aqui e -dpi/-dpf era descartado
+        // em silêncio — a sentinela via "filtro ignorado" com 25 de 25 fora do período.
+        dataInicio: opts.dataPubInicio || opts.dataInicio || null,
+        dataFim: opts.dataPubFim || opts.dataFim || null,
       };
 
       const results = await crawler.search(opts.query, filters, {

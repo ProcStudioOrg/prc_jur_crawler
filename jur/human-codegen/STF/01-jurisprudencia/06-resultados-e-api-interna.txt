@@ -38,6 +38,13 @@ contra a tela: `dano moral` → 2.945 nos dois; `droga ou entorpecente` → 10.1
 ## 15. Bloqueios
 
 Existe restrição?  **Sim: AWS WAF** em `jurisprudencia.stf.jus.br`.
+                   ⚠️ **24/10/2026: NÃO MAIS.** O host passou a responder `server: volt-adc`,
+                   `x-volterra-location: sp4-sao`, `x-envoy-upstream-service-time` (F5
+                   Distributed Cloud). `GET /pages/search` = 200 direto; cookies emitidos
+                   em 45 s de Chromium headless: só `_ga`/`_ga_*` (nada de `aws-waf-token`);
+                   `POST /api/search/search` sem cookie = 200 com os hits. Evidência:
+                   `06-headers-2026-10-24.txt`. A sentinela de 21/10 falhou porque o crawler
+                   EXIGIA o cookie; o token virou lazy (`STFNavigator.cookieAtual`/`_post`).
   Sem o cookie `aws-waf-token`, QUALQUER requisição (inclusive a API) devolve
   `HTTP 202` + cabeçalho `x-amzn-waf-action: challenge` e corpo vazio.
   O desafio é JavaScript (`.../inputs` + `.../mp_verify` em `token.awswaf.com`), resolvido

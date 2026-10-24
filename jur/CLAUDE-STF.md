@@ -2,8 +2,8 @@
 
 Portal: **https://jurisprudencia.stf.jus.br/pages/search** (SPA Angular).
 Acesso do crawler: **`api`** — `POST https://jurisprudencia.stf.jus.br/api/search/search`.
-O Playwright entra **uma vez a cada ~4 dias**, e só para resolver o desafio do AWS WAF; todo o
-resto é HTTP puro (~0,5 s por busca). `-v`/`--headed` só afetam esse momento.
+Tudo é HTTP puro (~0,5 s por busca). O Playwright só entra se o portal devolver o desafio do
+AWS WAF — e desde 24/10/2026 ele não devolve (ressalva 1); `-v`/`--headed` só afetam esse momento.
 
 É a corte constitucional: instância única, jurisdição nacional. **Não existe Juizado Especial
 nem Turma Recursal no STF** — a desambiguação daqui é por **órgão** e por **classe processual**.
@@ -135,10 +135,18 @@ passthrough de Elasticsearch, mais `GET /api/admin/loadConfig` (ministros em exe
 
 ## Ressalvas
 
-1. **AWS WAF.** Sem o cookie `aws-waf-token`, qualquer requisição a `jurisprudencia.stf.jus.br`
-   — inclusive a API — devolve `202` com `x-amzn-waf-action: challenge` e corpo vazio. O desafio
-   é JavaScript e um Chromium headless comum resolve em ~5 s. O token é guardado em
-   `$TMPDIR/jur-stf-waf-token.json` e vale ~4 dias; o navigator renova sozinho ao receber 202.
+1. **AWS WAF — saiu do ar em 24/10/2026.** Até então, sem o cookie `aws-waf-token` qualquer
+   requisição a `jurisprudencia.stf.jus.br` — inclusive a API — devolvia `202` com
+   `x-amzn-waf-action: challenge` e corpo vazio; o desafio era JavaScript e um Chromium headless
+   resolvia em ~5 s, com o token guardado em `$TMPDIR/jur-stf-waf-token.json` por ~4 dias.
+   **Medido em 24/10/2026:** o host responde `server: volt-adc` / `x-volterra-location: sp4-sao`
+   (F5 Distributed Cloud), a página e o `POST /api/search/search` dão **200 sem cookie nenhum** e
+   o cookie `aws-waf-token` **não é mais emitido** — foi isso que derrubou a sentinela em 21/10
+   ("o STF não emitiu o cookie"): o crawler exigia um cookie que o portal deixou de dar. O token
+   agora é *lazy*: `STFNavigator._post` manda a requisição com o cookie que houver (cache ou
+   nenhum) e só abre o navegador se a resposta for um desafio (202/`challenge`/405). Se o WAF
+   voltar, o caminho antigo continua valendo sem mudar código; se o desafio deixar de ser
+   resolvível em headless, vira intervenção humana como STJ/TJSP — nunca automatizar CAPTCHA.
    `portal.stf.jus.br` **não** tem WAF (mas devolve 403 sem User-Agent de navegador).
 
 2. **Corpo pequeno + `) OR (` = HTTP 403.** O WAF inspeciona corpos de **até 8.192 bytes** e

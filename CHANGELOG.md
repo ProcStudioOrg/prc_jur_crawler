@@ -28,9 +28,33 @@ BRU-99: as 5 regressões do `npm run smoke` de 19/10 (diagnóstico em
 - TJGO rebaixado para `sem-acesso`: a busca passou a exigir Cloudflare Turnstile; zero por bloqueio
   vira erro explícito. Não automatizamos captcha.
 - TCE-PA rebaixado para `sem-acesso`: captcha do F5 Shape já no primeiro request.
-- `jur/tests/sentinela-casos.json`: TCDF de volta em `casos` (78 casos); TJMT em `_pendentes`.
-  A sentinela do h2 lê os casos da imagem — o TCDF só volta à rodada das 04:00 com esta release.
-  Acompanhamento dos três rebaixados: BRU-100.
+
+Correções da sentinela de 21/10 (BRU-101), validadas da debian2 em 24/10/2026 — ver
+`docs/qa/2026-10-24-bru-101-sentinela.md`.
+
+- STF: o portal saiu do AWS WAF (responde `server: volt-adc`, F5 Distributed Cloud) e deixou de
+  emitir o cookie `aws-waf-token`; o crawler exigia o cookie e falhava. O token virou *lazy* em
+  `STFNavigator` (`cookieAtual`, `_post`): a requisição sai com o cookie que houver e o navegador
+  só abre se o servidor devolver o desafio. Os 3 casos (periodoJulgamento, periodoPublicacao,
+  numero) voltam à sentinela.
+- TJMS: o campo `nmAgente` (texto) não filtra relator — o cjsg ignora em silêncio. `-r` agora
+  resolve o trecho na grid do popup Relatores (`TJMSNavigator.resolverRelatores`: autocomplete +
+  `searchAgente.jsp` na mesma sessão) e manda as entidades em `agenteSelectedEntitiesList` /
+  `dados.agentes[i]`; trecho sem entidade é erro. Caso `magistrado` volta (100 de 100 do relator).
+- TJPI: a CLI descartava `-dpi/-dpf` (só `-di/-df` chegava ao `data_min/data_max`); o portal
+  aplica o filtro normalmente. Caso `periodoPublicacao` volta (25 de 25 em 08/2026).
+- TJRJ eJURIS: o servidor só filtra por ano; com `-di/-df` em DD/MM/AAAA o crawler recorta o
+  dia no cliente sobre as páginas lidas, com aviso (lista do mais novo ao mais antigo, 10 por
+  página). O caso `periodoJulgamento` da sentinela usa a janela do ano, que é o que o portal
+  filtra.
+- TJES: HTTP 403 só do H2 (IP de produção bloqueado); da debian2 e do Mac responde 200. Catálogo
+  `instavel` com nota datada e resumo na ficha; os dois casos ficam em `_pendentes` até o H2
+  voltar a passar.
+- `jur/tests/sentinela-casos.json`: 84 casos ativos (77 da 1.2.1 + TCDF 4 + STF 3 + TJMS magistrado +
+  TJPI periodoPublicacao + TJRJ-ejuris periodoJulgamento − TJMT 3); TJMT, TJES, TJGO e TCE-PA em
+  `_pendentes` com motivo. A sentinela do h2 lê os casos da imagem — os casos devolvidos só entram
+  na rodada das 04:00 com esta release. Acompanhamento dos rebaixados: BRU-100 (TJMT, TJGO, TCE-PA)
+  e TJES (IP do H2).
 
 ## 1.3.0 — 22/10/2026
 

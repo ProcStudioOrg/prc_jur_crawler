@@ -44,6 +44,19 @@ const URL_CONSULTA = `${BASE}/consultaCompleta.do`;
 const URL_RESULTADO = `${BASE}/resultadoCompleta.do`;
 const URL_PAGINA = `${BASE}/trocaDePagina.do`;
 const URL_ARQUIVO = `${BASE}/getArquivo.do`;
+/**
+ * Grid "Relatores" (popup do botão de procurar ao lado de nmAgente). O GET já
+ * aplica o filtro `nmAgente` por TRECHO do nome e devolve uma linha por entidade
+ * cadastrada, com `codigoCr`/`codigoTr` em `beanValue` de células ocultas.
+ */
+const URL_GRID_AGENTE = `${BASE}/jsp/search/searchAgente.jsp`;
+/**
+ * Autocomplete do mesmo campo (`onchange` de nmAgente). Além de responder, ele GRAVA a
+ * consulta na sessão: a grid só lista linhas depois que ele rodou na mesma JSESSIONID.
+ * Resposta: `<isr><rfs>…</rfs></isr>` com os códigos quando casa UMA entidade,
+ * `<m>Mais de um registro encontrado</m>` quando casa várias, `<cls>Nenhum…</cls>` quando nenhuma.
+ */
+const URL_AJAX_AGENTE = `${BASE}/AjaxServlet.ajax`;
 
 /** Campos que a tela envia sempre, mesmo vazios. Omitir muda o resultado. */
 const CAMPOS_BASE = {
@@ -175,7 +188,24 @@ class TJMSNavigator {
     campos[escopo] = filtros.query ?? '';
 
     if (filtros.processo) campos['dados.nuProcOrigem'] = filtros.processo;
-    if (filtros.relator) campos.nmAgente = filtros.relator;
+    // 🔴 O cjsg NÃO filtra por nmAgente (texto livre): medido em 24/10/2026, "Elisabeth Rosa
+    // Baisch" em nmAgente devolve o acervo inteiro (83 de 96 de outro relator). Quem filtra é
+    // a ENTIDADE escolhida no popup Relatores — agenteSelectedEntitiesList + contadores +
+    // dados.agentes[i].{codigoCr,codigoTr,nmAgente} — e o crawler resolve o trecho do nome
+    // nessa grid (`resolverRelatores`). `relator` solto fica só para espelhar a tela.
+    const agentes = Array.isArray(filtros.agentes) ? filtros.agentes.filter((a) => a && a.codigoCr) : [];
+    if (agentes.length) {
+      campos.agenteSelectedEntitiesList = agentes.map((a, i) =>
+        `DivID=divagente${a.codigoCr};${a.codigoTr};^dados.agentes[${i}].codigoCr=${a.codigoCr}` +
+        `^dados.agentes[${i}].codigoTr=${a.codigoTr}^dados.agentes[${i}].nmAgente=${encodeURIComponent(encodeURIComponent(a.nome))}$`).join('');
+      campos.contadoragente = String(agentes.length);
+      campos.contadorMaioragente = String(agentes.length);
+      campos.codigoCr = agentes.length === 1 ? agentes[0].codigoCr : '';
+      campos.codigoTr = agentes.length === 1 ? agentes[0].codigoTr : '';
+      campos.nmAgente = agentes.length === 1 ? agentes[0].nome : `${agentes.length} Registros selecionados`;
+    } else if (filtros.relator) {
+      campos.nmAgente = filtros.relator;
+    }
     if (filtros.dataJulgamentoInicio) campos['dados.dtJulgamentoInicio'] = filtros.dataJulgamentoInicio;
     if (filtros.dataJulgamentoFim) campos['dados.dtJulgamentoFim'] = filtros.dataJulgamentoFim;
     if (filtros.dataPublicacaoInicio) campos['dados.dtPublicacaoInicio'] = filtros.dataPublicacaoInicio;
@@ -184,9 +214,63 @@ class TJMSNavigator {
     campos['dados.ordenarPor'] = filtros.ordem ?? TJMSNavigator.ORDENS.publicacao;
 
     for (const [k, v] of Object.entries(campos)) p.append(k, v);
+    agentes.forEach((a, i) => {
+      p.append(`dados.agentes[${i}].codigoCr`, a.codigoCr);
+      p.append(`dados.agentes[${i}].codigoTr`, a.codigoTr);
+      p.append(`dados.agentes[${i}].nmAgente`, a.nome);
+    });
     for (const o of filtros.origens ?? ['T']) p.append('dados.origensSelecionadas', o);
     for (const t of filtros.tipos ?? ['A']) p.append('tipoDecisaoSelecionados', t);
     return p.toString();
+  }
+
+  /**
+   * Resolve um trecho de nome na grid "Relatores" do popup — a mesma consulta que a
+   * tela faz. Devolve as entidades que CONTÊM o trecho (a grid casa por trecho), cada
+   * uma `{ codigoCr, codigoTr, nome }`. Um mesmo nome pode ter várias entidades
+   * ("Desª Elisabeth Rosa Baisch" cód. 94, "Elisabeth Rosa Baisch" cód. 21585,
+   * "Juíza Elisabeth Rosa Baisch"): só uma delas tem acórdãos, por isso o crawler
+   * manda todas — o cjsg aceita seleção múltipla e une os resultados.
+   */
+  async resolverRelatores(trecho) {
+    const texto = String(trecho ?? '').trim();
+    if (!texto) return [];
+    await this.iniciar();
+    // 1. autocomplete: prepara a consulta na sessão (sem isto a grid volta vazia, HTTP 200)
+    const ajax = new URLSearchParams({
+      tagId: 'agente', property: 'nmAgente', value: texto, filtroValue: '', component: 'inputSelect',
+      bind_codigoCr: 'codigoCr', bind_codigoTr: 'codigoTr', bind_nmAgente: 'nmAgente', useAction: 'false',
+      SpwInputSelectRequestOrigin: 'InputSelectAutoComplete', currentTime: String(Date.now()),
+    });
+    const ra = await this._fetch(`${URL_AJAX_AGENTE}?${ajax.toString()}`, { method: 'GET' });
+    await ra.arrayBuffer(); // ISO-8859-1; o conteúdo não importa, a grid é quem lista
+    if (ra.status !== 200) throw new Error(`autocomplete de relatores do cjsg respondeu HTTP ${ra.status}`);
+    // 2. grid: as entidades que casam com o trecho, com os códigos
+    const q = new URLSearchParams({
+      nmAgente: texto, reference: 'nmAgente', idObjRetorno: 'agente', multiselection: 'true',
+      inputSelectId: 'agente', CurrentMultSelecaoId: 'agente', multSelecaoProperty: 'dados.agentes',
+      gotInputParam: 'false', bind_codigoCr: 'codigoCr', bind_codigoTr: 'codigoTr', bind_nmAgente: 'nmAgente',
+      useAction: 'false', SpwInputSelectRequestOrigin: 'InputSelectSearchGrid', desabilitarSelecionados: 'false',
+      multiselectinputselect: 'true',
+    });
+    const res = await this._fetch(`${URL_GRID_AGENTE}?${q.toString()}`, { method: 'GET' });
+    const html = await res.text();
+    if (res.status !== 200) throw new Error(`grid de relatores do cjsg respondeu HTTP ${res.status}`);
+    return TJMSNavigator.parsearGridAgentes(html);
+  }
+
+  /** Linhas da grid Relatores → `[{ codigoCr, codigoTr, nome }]`. */
+  static parsearGridAgentes(html) {
+    const out = [];
+    const celula = (tr, prop) => (tr.match(new RegExp(`beanValue="([^"]*)"[^>]*property="${prop}"`, 'i')) || [])[1];
+    for (const m of String(html).matchAll(/<tr[^>]*id="linha_\d+"[^>]*>([\s\S]*?)<\/tr>/gi)) {
+      const tr = m[1];
+      const codigoCr = celula(tr, 'codigoCr');
+      const codigoTr = celula(tr, 'codigoTr') || codigoCr;
+      const nome = (tr.match(/property="nmAgente"[^>]*title="([^"]*)"/i) || [])[1];
+      if (codigoCr && nome) out.push({ codigoCr, codigoTr, nome: nome.trim() });
+    }
+    return out;
   }
 
   /**

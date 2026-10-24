@@ -9,8 +9,12 @@
  *   - o filtro de ANO e o de COMPETÊNCIA só valem na origem `comum`; nas outras
  *     quatro o servidor os ignora e devolve a mesma contagem. O crawler avisa.
  *   - a janela é por ANO (dois combos), não por data. Datas DD/MM/YYYY do repo
- *     são aceitas e reduzidas ao ano, com aviso — senão o usuário acha que
- *     recortou o mês e não recortou.
+ *     são aceitas: o ANO vai ao servidor e o recorte de DIA é aplicado no
+ *     cliente sobre as páginas lidas, com aviso. Sem o recorte de cliente o
+ *     usuário pedia agosto e recebia outubro (sentinela de 21/10/2026: 10 de
+ *     10 fora do período). Como o servidor ordena do mais novo para o mais
+ *     antigo e devolve 10 por página, um mês antigo exige muitas páginas —
+ *     o aviso diz isso.
  *   - página de 10 documentos (20 quando o escopo é `ementario`).
  */
 
@@ -20,19 +24,33 @@ const { ORIGENS, COMPETENCIAS, ORIGEM_NOME } = TJRJEjurisNavigator;
 const ANO_MIN = 1975;
 const ANO_MAX = new Date().getFullYear();
 
-/** Aceita 2024 ou 31/12/2024 e devolve o ano. */
+/** DD/MM/AAAA → timestamp UTC do início do dia; null se não for data completa. */
+function diaUtc(texto) {
+  const m = String(texto).trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  return m ? Date.UTC(Number(m[3]), Number(m[2]) - 1, Number(m[1])) : null;
+}
+
+const DIA_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Aceita 2024 ou 31/12/2024 e devolve `{ ano, dia }`: o ano vai ao combo do
+ * servidor; `dia` (timestamp, só quando veio data completa) é o recorte que o
+ * cliente aplica depois, porque o portal não filtra por dia.
+ */
 function extrairAno(valor, rotulo, avisar) {
-  if (valor === null || valor === undefined || valor === '') return null;
+  if (valor === null || valor === undefined || valor === '') return { ano: null, dia: null };
   const texto = String(valor).trim();
   let ano = null;
+  let dia = null;
   if (/^\d{4}$/.test(texto)) ano = Number(texto);
   else {
     const m = texto.match(/(\d{2})\/(\d{2})\/(\d{4})/);
     if (m) {
       ano = Number(m[3]);
+      dia = diaUtc(texto);
       avisar(
-        `${rotulo}: o eJURIS filtra por ANO, nao por data — "${texto}" virou ${ano}. ` +
-          'Nao ha recorte por mes ou dia nesta base.'
+        `${rotulo}: o eJURIS filtra por ANO, nao por data — ${ano} vai ao servidor e o recorte ` +
+          `de dia (${texto}) e aplicado no cliente, so sobre as paginas lidas.`
       );
     }
   }
@@ -40,7 +58,7 @@ function extrairAno(valor, rotulo, avisar) {
   if (ano < ANO_MIN || ano > ANO_MAX) {
     throw new Error(`${rotulo} fora do combo do portal (${ANO_MIN}–${ANO_MAX}): ${ano}`);
   }
-  return ano;
+  return { ano, dia };
 }
 
 class TJRJEjurisCrawler {
@@ -73,9 +91,14 @@ class TJRJEjurisCrawler {
       throw new Error(`--competencia invalida: "${opts.competencia}". Use: civel, criminal`);
     }
 
-    const anoIni = extrairAno(opts.anoInicio, 'ano inicial', avisar) ?? ANO_MIN;
-    const anoFim = extrairAno(opts.anoFim, 'ano final', avisar) ?? ANO_MAX;
+    const ini = extrairAno(opts.anoInicio, 'ano inicial', avisar);
+    const fim = extrairAno(opts.anoFim, 'ano final', avisar);
+    const anoIni = ini.ano ?? ANO_MIN;
+    const anoFim = fim.ano ?? ANO_MAX;
     if (anoIni > anoFim) throw new Error(`ano inicial (${anoIni}) maior que o final (${anoFim})`);
+    if (ini.dia !== null && fim.dia !== null && ini.dia > fim.dia) {
+      throw new Error(`data inicial (${opts.anoInicio}) maior que a final (${opts.anoFim})`);
+    }
 
     // 🔴 Medido: fora da origem `comum`, ano e competência são ignorados pelo
     // servidor — a contagem não muda. Avisar é obrigatório: a invariante do
@@ -104,6 +127,9 @@ class TJRJEjurisCrawler {
       competencia: COMPETENCIAS[compChave],
       anoInicio: String(anoIni),
       anoFim: String(anoFim),
+      // Recorte de DIA (só no cliente): null quando o usuário pediu só o ano.
+      diaInicio: ini.dia,
+      diaFim: fim.dia,
       numero: opts.numero || '',
       tipoNumeracao: opts.tipoNumeracao || '1',
       acordao: false,
@@ -227,31 +253,65 @@ class TJRJEjurisCrawler {
       this.log(`  pagina ${p + 1}/${alvo}: ${lista.length} documentos (acumulado ${docs.length})`);
     }
 
+    let saida = docs;
+
     // Recorte de ano no cliente onde o servidor ignora o filtro.
     if (f.origem !== '1' && (opts.anoInicio || opts.anoFim)) {
       const ini = Number(f.anoInicio);
       const fim = Number(f.anoFim);
-      const antes = docs.length;
-      const filtrados = docs.filter((d) => {
+      const antes = saida.length;
+      saida = saida.filter((d) => {
         if (!d.dataJulgamento) return false;
         const a = Number(d.dataJulgamento.slice(-4));
         return a >= ini && a <= fim;
       });
-      if (filtrados.length !== antes) {
+      if (saida.length !== antes) {
         this.aviso(
-          `Recorte de ano aplicado no cliente: ${antes} → ${filtrados.length} documentos. ` +
+          `Recorte de ano aplicado no cliente: ${antes} → ${saida.length} documentos. ` +
             'O total do servidor acima NAO reflete esse recorte.'
         );
       }
-      return filtrados;
     }
 
-    const semEmenta = docs.filter((d) => d.semEmenta).length;
-    if (semEmenta) {
-      this.aviso(`${semEmenta} de ${docs.length} documentos vieram sem texto — marcados semEmenta.`);
+    // Recorte de DIA no cliente: o portal só filtra por ano. Sem isto, pedir agosto
+    // devolvia outubro com o total do ano inteiro (sentinela de 21/10/2026).
+    if (f.diaInicio !== null || f.diaFim !== null) {
+      const antes = saida.length;
+      saida = saida.filter((d) => {
+        const t = diaUtc(d.dataJulgamento || '');
+        if (t === null) return false;
+        return (f.diaInicio === null || t >= f.diaInicio) && (f.diaFim === null || t <= f.diaFim);
+      });
+      if (saida.length !== antes) {
+        const ultimo = docs[docs.length - 1]?.dataJulgamento || '?';
+        this.aviso(
+          `Recorte de dia aplicado no cliente: ${antes} → ${saida.length} documentos; ` +
+            `o total do servidor (${busca.total}) e do ANO inteiro. O portal lista do mais novo ao ` +
+            `mais antigo (ultimo lido: ${ultimo}); para alcancar um mes anterior aumente -m, ou ` +
+            'use -di/-df so com o ano.'
+        );
+      }
     }
-    return docs;
+    if (f.diaInicio !== null || f.diaFim !== null) {
+      // Página mais antiga ainda dentro/depois da janela? Avisar que pode haver mais.
+      const ultimo = diaUtc(docs[docs.length - 1]?.dataJulgamento || '');
+      if (f.diaInicio !== null && ultimo !== null && ultimo >= f.diaInicio && docs.length < busca.total) {
+        this.aviso(
+          `As ${docs.length} entradas lidas ainda nao chegaram ao inicio da janela ` +
+            `(${opts.anoInicio}); pode haver mais documentos no periodo em paginas seguintes.`
+        );
+      }
+    }
+
+    const semEmenta = saida.filter((d) => d.semEmenta).length;
+    if (semEmenta) {
+      this.aviso(`${semEmenta} de ${saida.length} documentos vieram sem texto — marcados semEmenta.`);
+    }
+    return saida;
   }
 }
+
+TJRJEjurisCrawler.diaUtc = diaUtc;
+TJRJEjurisCrawler.DIA_MS = DIA_MS;
 
 module.exports = TJRJEjurisCrawler;
