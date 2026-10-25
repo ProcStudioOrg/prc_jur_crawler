@@ -1,0 +1,408 @@
+{
+  "tribunal": "tjac",
+  "nome": "Tribunal de Justiça do Acre",
+  "coletado_em": "2026-10-25T08:10:46.695Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "trecho"
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "25/10/2025",
+      "dataFim": "25/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 1766,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "25/10/2025",
+      "dataFim": "25/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 165,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "25/10/2025",
+      "dataFim": "25/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 1665,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "25/10/2025",
+      "dataFim": "25/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 1393,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 13,
+    "por_grau": {
+      "1": 3,
+      "2": 10
+    },
+    "teste_busca": {
+      "filtro_ignorado": 4,
+      "ok": 1,
+      "nao_testado": 8
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "Lois Arruda",
+      "rotulo_original": "Des. Lois Arruda",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "Primeira Câmara Cível",
+      "orgaos": [
+        "Primeira Câmara Cível",
+        "Tribunal Pleno Jurisdicional"
+      ],
+      "ocorrencias": 35,
+      "julgados_exemplo": [
+        "0701523-10.2025.8.01.0007",
+        "0701406-95.2025.8.01.0014",
+        "0700480-31.2022.8.01.0011",
+        "0702155-30.2020.8.01.0001",
+        "0713749-65.2025.8.01.0001"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 5,
+        "status": "filtro_ignorado",
+        "detalhe": "15 de 20 violam o filtro",
+        "ms": 1923
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Roberto Barros",
+      "rotulo_original": "Des. Roberto Barros",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "Primeira Câmara Cível",
+      "orgaos": [
+        "Primeira Câmara Cível"
+      ],
+      "ocorrencias": 35,
+      "julgados_exemplo": [
+        "0700657-02.2025.8.01.0007",
+        "0700056-42.2024.8.01.0003",
+        "0714471-70.2023.8.01.0001",
+        "0722265-11.2024.8.01.0001",
+        "0708871-97.2025.8.01.0001"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 6,
+        "status": "filtro_ignorado",
+        "detalhe": "14 de 20 violam o filtro",
+        "ms": 1716
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Marcelo Coelho de Carvalho",
+      "rotulo_original": "Juiz de Direito Marcelo Coelho de Carvalho",
+      "cargo": "Juiz de Direito",
+      "grau": "1",
+      "orgao": "2ª Turma Recursal",
+      "orgaos": [
+        "2ª Turma Recursal"
+      ],
+      "ocorrencias": 17,
+      "julgados_exemplo": [
+        "0700132-87.2020.8.01.0009",
+        "0700460-77.2021.8.01.0010",
+        "0702041-05.2022.8.01.0007",
+        "0701897-14.2025.8.01.0011",
+        "0700610-96.2023.8.01.0007"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 17,
+        "status": "ok",
+        "detalhe": "3 de 20 fora do filtro",
+        "ms": 1652
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Júnior Alberto",
+      "rotulo_original": "Des. Júnior Alberto",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "Segunda Câmara Cível",
+      "orgaos": [
+        "Segunda Câmara Cível"
+      ],
+      "ocorrencias": 14,
+      "julgados_exemplo": [
+        "0706005-53.2024.8.01.0001",
+        "0712448-54.2023.8.01.0001",
+        "0718748-95.2024.8.01.0001",
+        "1000330-68.2026.8.01.0000",
+        "0723483-74.2024.8.01.0001"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 2,
+        "status": "filtro_ignorado",
+        "detalhe": "18 de 20 violam o filtro",
+        "ms": 1624
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Elcio Mendes",
+      "rotulo_original": "Des. Elcio Mendes",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "Primeira Câmara Cível",
+      "orgaos": [
+        "Primeira Câmara Cível"
+      ],
+      "ocorrencias": 13,
+      "julgados_exemplo": [
+        "0715895-79.2025.8.01.0001",
+        "0702422-26.2025.8.01.0001",
+        "0700768-71.2025.8.01.0011",
+        "0700005-82.2025.8.01.0007",
+        "0721152-22.2024.8.01.0001"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 4,
+        "status": "filtro_ignorado",
+        "detalhe": "16 de 20 violam o filtro",
+        "ms": 1722
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luís Camolez",
+      "rotulo_original": "Des. Luís Camolez",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "Segunda Câmara Cível",
+      "orgaos": [
+        "Tribunal Pleno Jurisdicional",
+        "Segunda Câmara Cível"
+      ],
+      "ocorrencias": 11,
+      "julgados_exemplo": [
+        "0100651-31.2026.8.01.0000",
+        "0701662-11.2024.8.01.0002",
+        "0716956-72.2025.8.01.0001",
+        "0710097-55.2016.8.01.0001",
+        "1002123-76.2025.8.01.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ª. Waldirene Cordeiro",
+      "rotulo_original": "Desª. Waldirene Cordeiro",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "Segunda Câmara Cível",
+      "orgaos": [
+        "Câmaras Cíveis Reunidas",
+        "Segunda Câmara Cível"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "1001901-11.2025.8.01.0000",
+        "0700172-96.2025.8.01.0008",
+        "0715278-32.2019.8.01.0001",
+        "1001505-34.2025.8.01.0000",
+        "0700502-14.2025.8.01.0002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ª. Regina Ferrari",
+      "rotulo_original": "Desª. Regina Ferrari",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "Tribunal Pleno Jurisdicional",
+      "orgaos": [
+        "Tribunal Pleno Jurisdicional"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0707802-30.2025.8.01.0001",
+        "0707843-94.2025.8.01.0001",
+        "0703050-15.2025.8.01.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Adimaura Souza da Cruz",
+      "rotulo_original": "Juíza de Direito Adimaura Souza da Cruz",
+      "cargo": "Juíza de Direito",
+      "grau": "1",
+      "orgao": "2ª Turma Recursal",
+      "orgaos": [
+        "2ª Turma Recursal"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0700538-14.2025.8.01.0016",
+        "0700812-17.2025.8.01.0003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Laudivon Nogueira",
+      "rotulo_original": "Des. Laudivon Nogueira",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "Conselho da Justiça Estadual",
+      "orgaos": [
+        "Conselho da Justiça Estadual",
+        "Tribunal Pleno Administrativo"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0100647-91.2026.8.01.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ª. Denise Bonfim",
+      "rotulo_original": "Desª. Denise Bonfim",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "Câmara Criminal",
+      "orgaos": [
+        "Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000050-34.2024.8.01.0017"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Danniel Gustavo Bomfim Araújo da Silva",
+      "rotulo_original": "Juiz de Direito Danniel Gustavo Bomfim Araújo da Silva",
+      "cargo": "Juiz de Direito",
+      "grau": "1",
+      "orgao": "1ª Turma Recursal",
+      "orgaos": [
+        "1ª Turma Recursal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0700909-21.2024.8.01.0013"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Francisco Djalma",
+      "rotulo_original": "Des. Francisco Djalma",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "Câmara Criminal",
+      "orgaos": [
+        "Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000172-27.2026.8.01.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

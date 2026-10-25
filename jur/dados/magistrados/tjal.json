@@ -1,0 +1,309 @@
+{
+  "tribunal": "tjal",
+  "nome": "Tribunal de Justiça de Alagoas",
+  "coletado_em": "2026-10-25T08:11:37.268Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "trecho"
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "25/10/2025",
+      "dataFim": "25/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 22626,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "25/10/2025",
+      "dataFim": "25/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 756,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "25/10/2025",
+      "dataFim": "25/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 19592,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "25/10/2025",
+      "dataFim": "25/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 6129,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 9,
+    "por_grau": {
+      "2": 9
+    },
+    "teste_busca": {
+      "ok": 2,
+      "nao_verificavel": 1,
+      "filtro_ignorado": 2,
+      "nao_testado": 4
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "Conv. Maria Verônica C. de C. Souza Araújo",
+      "rotulo_original": "Juíza Conv. Maria Verônica C. de C. Souza Araújo",
+      "cargo": "Juíza",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 66,
+      "julgados_exemplo": [
+        "0724125-83.2025.8.02.0001",
+        "0711394-83.2022.8.02.0058",
+        "0722594-93.2024.8.02.0001",
+        "0716933-65.2026.8.02.0001",
+        "0724471-68.2024.8.02.0001"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 2203
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Conv. Pedro Ivens Simões de França",
+      "rotulo_original": "Juiz Conv. Pedro Ivens Simões de França",
+      "cargo": "Juiz",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 20,
+      "julgados_exemplo": [
+        "0700770-88.2024.8.02.0030",
+        "0001447-30.2009.8.02.0049",
+        "0721136-07.2025.8.02.0001",
+        "0700571-96.2025.8.02.0041",
+        "0700587-65.2025.8.02.0036"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 0,
+        "status": "nao_verificavel",
+        "detalhe": "só 0 resultado(s) com o campo legível (mínimo 3)",
+        "ms": 2136
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Paulo Barros da Silva Lima",
+      "rotulo_original": "Des. Paulo Barros da Silva Lima",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 13,
+      "julgados_exemplo": [
+        "0701081-33.2024.8.02.0013",
+        "0753797-73.2024.8.02.0001",
+        "0734560-53.2024.8.02.0001",
+        "0704071-92.2024.8.02.0046",
+        "0700694-54.2025.8.02.0022"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 12,
+        "status": "ok",
+        "detalhe": "8 de 20 fora do filtro",
+        "ms": 1994
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fábio Costa de Almeida Ferrario",
+      "rotulo_original": "Des. Fábio Costa de Almeida Ferrario",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0745687-51.2025.8.02.0001",
+        "0808776-17.2026.8.02.0000",
+        "0742141-85.2025.8.02.0001",
+        "0762998-55.2025.8.02.0001",
+        "0700919-78.2025.8.02.0053"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 0,
+        "status": "filtro_ignorado",
+        "detalhe": "20 de 20 violam o filtro",
+        "ms": 2430
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Conv. Adriana Carla Feitosa Martins",
+      "rotulo_original": "Juíza Conv. Adriana Carla Feitosa Martins",
+      "cargo": "Juíza",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0721010-93.2021.8.02.0001",
+        "0701232-22.2023.8.02.0049",
+        "0700566-91.2022.8.02.0037",
+        "0726974-67.2021.8.02.0001"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 4,
+        "status": "filtro_ignorado",
+        "detalhe": "12 de 16 violam o filtro",
+        "ms": 2107
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Ana Florinda Mendonça da Silva Dantas",
+      "rotulo_original": "Desa. Ana Florinda Mendonça da Silva Dantas",
+      "cargo": "Desa",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0806975-66.2026.8.02.0000",
+        "0805923-35.2026.8.02.0000",
+        "0700195-24.2025.8.02.0005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Márcio Roberto Tenório de Albuquerque",
+      "rotulo_original": "Des. Márcio Roberto Tenório de Albuquerque",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0704440-95.2022.8.02.0001",
+        "0806369-38.2026.8.02.0000",
+        "0741740-86.2025.8.02.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Manoel Cavalcante de Lima Neto",
+      "rotulo_original": "Juiz Convocado Manoel Cavalcante de Lima Neto",
+      "cargo": "Juiz Convocado",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0721532-86.2022.8.02.0001",
+        "0700162-60.2024.8.02.0040"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fernando Tourinho de Omena Souza",
+      "rotulo_original": "Des. Fernando Tourinho de Omena Souza",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0707181-40.2024.8.02.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
