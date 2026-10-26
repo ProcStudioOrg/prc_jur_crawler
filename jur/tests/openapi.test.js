@@ -151,3 +151,27 @@ describe('openapi documenta as capacidades', () => {
     assert.deepStrictEqual(schema.required, ['tribunal']);
   });
 });
+
+describe('openapi documenta saldo e custo da conexao ProcStudio', () => {
+  const doc = openapi.documento();
+  it('GET /api/v1/saldo com 200 e 503', () => {
+    const op = doc.paths['/api/v1/saldo'].get;
+    assert.ok(op.responses[200] && op.responses[503]);
+    const props = doc.components.schemas.Saldo.properties;
+    for (const k of ['disponivel', 'saldoBrl', 'podeOperar', 'mensagem', 'topupUrl', 'modelo']) assert.ok(props[k], k);
+  });
+  it('POST /api/v1/chat descreve 402, 409, 503, evento custo e custo do fim', () => {
+    const op = doc.paths['/api/v1/chat'].post;
+    for (const c of [402, 409, 503]) assert.ok(op.responses[c], String(c));
+    assert.match(op.responses[200].description, /`custo`/);
+    assert.match(op.responses[200].description, /fim/);
+    assert.match(JSON.stringify(op.responses[402]), /saldo_insuficiente/);
+    assert.ok(doc.components.schemas.CustoTurno.properties.cobradoBrl);
+    assert.ok(doc.components.schemas.CustoRodada.properties.saldoBrl);
+  });
+  it('GET /api/v1/conversas/{id} traz custos e custoTotalBrl', () => {
+    const s = JSON.stringify(doc.paths['/api/v1/conversas/{id}'].get.responses[200]);
+    assert.match(s, /custoTotalBrl/);
+    assert.match(s, /custos/);
+  });
+});

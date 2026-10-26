@@ -18,6 +18,7 @@ function criarApp(deps = {}) {
   require('./rotas/chat').registrar(roteador, deps);
   require('./rotas/chaves').registrar(roteador, deps);
   require('./rotas/conexoes-llm').registrar(roteador, deps);
+  require('./rotas/saldo').registrar(roteador, deps);
   require('./rotas/conversas').registrar(roteador, deps);
   require('./rotas/relatos').registrar(roteador, deps);
   require('./mcp').registrar(roteador, deps);

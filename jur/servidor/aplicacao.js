@@ -60,6 +60,13 @@ function criarAplicacao({
       revisao: revisaoDaImagem(process.env.JUR_IMAGE),
     });
   const scopes = criarEscopos({ dir, executarFn, concorrencia, kaizen: k });
+  // Recibos de cobrança que um processo anterior não confirmou: reenviados já no boot,
+  // sem esperar a conta logar. Sem conexão gerenciada não há o que cobrar.
+  const varredura = gerenciada
+    ? scopes.varrerPendencias({ procstudio, kaizen: k }).catch((e) => {
+        console.error(JSON.stringify({ event: "billing_boot_sweep_failure", erro: String(e.code || e.message).slice(0, 300) }));
+      })
+    : Promise.resolve(null);
   const publicApp = criarApp();
   const secure = new URL(publicUrl).protocol === "https:" ? "; Secure" : "";
   const setCookie = (name, value, age) =>
@@ -172,6 +179,7 @@ function criarAplicacao({
         scope.cobranca = gerenciada
           ? require("./cobranca").criarCobranca({ con: scope.con, procstudio, principal, kaizen: k })
           : null;
+        scope.cobranca?.iniciarVarredor();
         scope.app = criarApp({
           ...scope,
           frontendUrl,
@@ -236,6 +244,7 @@ function criarAplicacao({
   }
   return {
     handler,
+    varredura,
     kaizen: k,
     ocupado: scopes.ocupado,
     fechar() {

@@ -145,3 +145,77 @@ test("kaizen: um por aplicacao, criado no dir de dados se nao vier, fechado no f
   app2.fechar();
   assert.equal(fechou, 1);
 });
+
+test("boot: recibo pendente gravado num jur.db de conta e reenviado pelo varredor", async () => {
+  const { criarEscopos } = require("../servidor/escopo");
+  const db = require("../servidor/db");
+  const { dono, hash } = require("../servidor/sessoes-web");
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "jur-boot-"));
+  const principal = { issuer: "https://rails.example", userId: "u9", teamId: "t9", expiresAt: Date.now() + 60000 };
+  const owner = JSON.stringify(dono(principal));
+  const home = path.join(dir, "usuarios", hash(owner));
+  fs.mkdirSync(home, { recursive: true });
+  const con = db.abrir(path.join(home, "jur.db"));
+  const uso = { requestId: "c1:t1:1", modelId: "glm", inputTokens: 5, outputTokens: 7 };
+  const recibo = { principal: { issuer: principal.issuer, userId: "u9", teamId: "t9" }, uso };
+  // em_voo = 1: processo anterior morreu no meio da tentativa; o boot precisa recuperar.
+  con.prepare("INSERT INTO cobranca_pendente (request_id, payload, tentativas, criado_em, em_voo) VALUES (?,?,0,?,1)")
+    .run(uso.requestId, JSON.stringify(recibo), Date.now());
+  // conta sem pendencia: nao pode gerar chamada.
+  const home2 = path.join(dir, "usuarios", "vazia");
+  fs.mkdirSync(home2, { recursive: true });
+  db.abrir(path.join(home2, "jur.db")).close();
+  con.close();
+  const chamadas = [];
+  const procstudio = {
+    registrarUso: async (p, u) => {
+      chamadas.push({ p, u });
+      return { cobradoBrl: 0.01, saldoBrl: 1, podeOperar: true, duplicado: false };
+    },
+  };
+  const escopos = criarEscopos({ dir });
+  try {
+    const r = await escopos.varrerPendencias({ procstudio });
+    assert.equal(chamadas.length, 1);
+    assert.deepEqual(chamadas[0].u, uso);
+    assert.equal(chamadas[0].p.userId, "u9");
+    assert.deepEqual(r, { contas: 1, enviados: 1, descartados: 0, adiados: 0 });
+    const c2 = db.abrir(path.join(home, "jur.db"));
+    assert.equal(c2.prepare("SELECT COUNT(*) AS n FROM cobranca_pendente").get().n, 0);
+    c2.close();
+  } finally {
+    escopos.fechar();
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("boot: criarAplicacao com conexao gerenciada drena pendencias sem esperar login", async () => {
+  const db = require("../servidor/db");
+  const { dono, hash } = require("../servidor/sessoes-web");
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "jur-boot2-"));
+  const principal = { issuer: "https://rails.example", userId: "u8", teamId: "t8" };
+  const home = path.join(dir, "usuarios", hash(JSON.stringify(dono(principal))));
+  fs.mkdirSync(home, { recursive: true });
+  const con = db.abrir(path.join(home, "jur.db"));
+  const uso = { requestId: "c2:t2:1", modelId: "glm" };
+  con.prepare("INSERT INTO cobranca_pendente (request_id, payload, tentativas, criado_em, em_voo) VALUES (?,?,0,?,0)")
+    .run(uso.requestId, JSON.stringify({ principal, uso }), Date.now());
+  con.close();
+  const antes = process.env.PROCSTUDIO_LLM_API_KEY;
+  process.env.PROCSTUDIO_LLM_API_KEY = "sk-operador";
+  const chamadas = [];
+  let app;
+  try {
+    app = criarAplicacao({
+      dir, cofreKey: Buffer.alloc(32, 8).toString("base64"),
+      procstudio: { registrarUso: async (p, u) => { chamadas.push(u.requestId); return { cobradoBrl: 0, saldoBrl: 1, podeOperar: true }; } },
+      publicUrl: "http://127.0.0.1", frontendUrl: "https://proc.example", clientId: "jur",
+    });
+    await app.varredura;
+    assert.deepEqual(chamadas, ["c2:t2:1"]);
+  } finally {
+    app?.fechar();
+    if (antes === undefined) delete process.env.PROCSTUDIO_LLM_API_KEY; else process.env.PROCSTUDIO_LLM_API_KEY = antes;
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});

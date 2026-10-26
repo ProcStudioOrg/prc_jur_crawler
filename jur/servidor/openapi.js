@@ -89,6 +89,17 @@ const ACCOUNT_PATHS = {
     description: 'Coordenadas normalizadas à imagem; teclas permitidas pelo servidor. Continuar verifica o resultado real do portal. 409 fora da pausa ou desafio não concluído; 429 durante outra operação; 504 por timeout.',
   } },
   '/api/v1/me': { get: operation('Identidade ProcStudio autenticada') },
+  '/api/v1/saldo': { get: {
+    summary: 'Saldo de IA da conexão ProcStudio (compartilhado com a equipe)',
+    description: 'Saldo do ProcStudio que paga a conexão gerenciada do chat. `disponivel: false` quando o servidor não tem conexão ProcStudio configurada. A leitura usa um cache de 30 s; `?forcar=1` consulta o ProcStudio na hora. `podeOperar` é falso com saldo esgotado ou com cobrança pendente de registro. `topupUrl` leva à tela de créditos.',
+    parameters: [{ name: 'forcar', in: 'query', required: false, schema: { type: 'string', enum: ['1'] }, description: 'ignora o cache de 30 s' }],
+    responses: {
+      200: { description: 'Saldo, ou { disponivel: false }.', content: { 'application/json': { schema: { $ref: '#/components/schemas/Saldo' } } } },
+      401: RESPOSTAS.Erro401,
+      403: RESPOSTAS.Erro403,
+      503: { description: 'O ProcStudio não respondeu ou a conta não tem acesso à IA: `{ disponivel: true, erro }`. Nunca devolve um saldo suposto.', content: { 'application/json': { schema: { type: 'object', properties: { disponivel: { type: 'boolean' }, erro: { type: 'string' } }, required: ['disponivel', 'erro'] } } } },
+    },
+  } },
   '/api/v1/relatos/meta': { get: {
     ...operation('Configuração do botão Relatar'),
     description: 'Relato pela interface; chave pessoal é recusada no envio. enabled:false quando o Linear não está configurado (o botão não aparece). Nunca devolve a chave do Linear.',
@@ -263,6 +274,75 @@ function documento() {
             aviso: { type: 'string' },
           },
           required: ['id', 'nome', 'prefixo', 'valor', 'criadoEm', 'aviso'],
+        },
+        Saldo: {
+          type: 'object',
+          properties: {
+            disponivel: { type: 'boolean', description: 'false: o servidor não tem conexão ProcStudio; nenhum outro campo vem.' },
+            saldoBrl: { type: 'number', description: 'saldo de IA da equipe em reais; pode ser negativo dentro do limite do plano' },
+            podeOperar: { type: 'boolean' },
+            mensagem: { type: 'string' },
+            topupUrl: { type: ['string', 'null'], format: 'uri' },
+            modelo: {
+              type: 'object',
+              properties: {
+                rotulo: { type: ['string', 'null'] },
+                entradaPor1MBrl: { type: ['number', 'null'], description: 'R$ por 1 milhão de tokens de entrada' },
+                saidaPor1MBrl: { type: ['number', 'null'], description: 'R$ por 1 milhão de tokens de saída' },
+              },
+            },
+          },
+          required: ['disponivel'],
+        },
+        CustoRodada: {
+          type: 'object',
+          description: 'Evento SSE `custo`, uma vez por rodada do modelo que informou consumo.',
+          properties: {
+            rodada: { type: 'integer' },
+            tokensEntrada: { type: 'integer' },
+            tokensSaida: { type: 'integer' },
+            modelo: { type: 'string', description: 'rótulo na conexão ProcStudio, id do modelo em conexão própria' },
+            cobradoBrl: { type: 'number', description: 'só na conexão ProcStudio' },
+            saldoBrl: { type: 'number', description: 'só na conexão ProcStudio: saldo depois desta cobrança' },
+          },
+          required: ['rodada', 'tokensEntrada', 'tokensSaida', 'modelo'],
+        },
+        CustoTurno: {
+          type: 'object',
+          description: 'Soma do turno: campo `custo` do evento `fim` (null quando nenhuma rodada informou consumo).',
+          properties: {
+            cobradoBrl: { type: ['number', 'null'], description: 'null em conexão própria (só tokens)' },
+            tokensEntrada: { type: 'integer' },
+            tokensSaida: { type: 'integer' },
+            rodadas: { type: 'integer' },
+            modelo: { type: 'string' },
+          },
+          required: ['tokensEntrada', 'tokensSaida', 'rodadas', 'modelo'],
+        },
+        CustoConversa: {
+          type: 'object',
+          description: 'Custo gravado de um turno da conversa.',
+          properties: {
+            turnoId: { type: 'string' },
+            cobradoBrl: { type: ['number', 'null'] },
+            tokensEntrada: { type: 'integer' },
+            tokensSaida: { type: 'integer' },
+            rodadas: { type: 'integer' },
+            modelo: { type: 'string' },
+            conexao: { type: ['string', 'null'] },
+            criadoEm: { type: 'integer' },
+          },
+        },
+        BloqueioCobranca: {
+          type: 'object',
+          description: 'Corpo das recusas da conexão ProcStudio; o mesmo objeto vem no evento `erro` quando o bloqueio acontece no meio do turno.',
+          properties: {
+            erro: { type: 'string' },
+            tipo: { type: 'string', enum: ['saldo_insuficiente', 'cobranca_pendente', 'procstudio_indisponivel'] },
+            saldoBrl: { type: 'number', description: 'só em saldo_insuficiente' },
+            topupUrl: { type: ['string', 'null'], description: 'só em saldo_insuficiente' },
+          },
+          required: ['erro', 'tipo'],
         },
         Conversa: {
           type: 'object',
@@ -615,7 +695,10 @@ function documento() {
                 + '`fim` ({ texto, mensagens }: texto e o array `mensagens` com os blocos NOVOS deste turno — '
                 + 'inclui rodadas de tool_use/tool_result quando houver, não só a resposta final; o cliente '
                 + 'precisa desses blocos para montar o histórico do próximo turno sem perder o `job_id` das '
-                + 'buscas nem a ressalva do tribunal presa no tool_result) e, em falha durante o stream, `erro`',
+                + 'buscas nem a ressalva do tribunal presa no tool_result; `fim.custo` traz o resumo do turno, '
+                + 'CustoTurno, ou null sem consumo informado), `custo` (CustoRodada, uma vez por rodada que '
+                + 'informou consumo; na conexão ProcStudio inclui cobradoBrl e saldoBrl) e, em falha durante o stream, '
+                + '`erro` (com `tipo` quando o bloqueio é de cobrança)',
               content: { 'text/event-stream': { schema: { type: 'string' } } },
             },
             400: RESPOSTAS.Erro400,
@@ -624,10 +707,22 @@ function documento() {
                 'Sessão ProcStudio ou Authorization: Bearer pessoal ausente, inválido ou revogado.',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
             },
+            402: {
+              description: 'Conexão ProcStudio sem saldo de IA (tipo `saldo_insuficiente`, com saldoBrl e topupUrl). Nada é gravado e o provedor não é chamado.',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/BloqueioCobranca' } } },
+            },
             403: RESPOSTAS.Erro403,
             404: {
               description: 'conversaId informado não corresponde a nenhuma conversa existente',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+            },
+            409: {
+              description: 'Conexão ProcStudio com cobrança anterior ainda não registrada (tipo `cobranca_pendente`), ou já há uma resposta em andamento nesta conversa.',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/BloqueioCobranca' } } },
+            },
+            503: {
+              description: 'Conexão ProcStudio indisponível: ProcStudio fora do ar, modelo do operador sem preço ou cobrança não configurada (tipo `procstudio_indisponivel`).',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/BloqueioCobranca' } } },
             },
           },
         },
@@ -748,7 +843,11 @@ function documento() {
                       { $ref: '#/components/schemas/Conversa' },
                       {
                         type: 'object',
-                        properties: { mensagens: { type: 'array', items: { $ref: '#/components/schemas/Mensagem' } } },
+                        properties: {
+                          mensagens: { type: 'array', items: { $ref: '#/components/schemas/Mensagem' } },
+                          custos: { type: 'array', items: { $ref: '#/components/schemas/CustoConversa' }, description: 'custo de cada turno, na ordem em que começaram' },
+                          custoTotalBrl: { type: ['number', 'null'], description: 'soma cobrada na conexão ProcStudio; null se nenhum turno foi cobrado' },
+                        },
                       },
                     ],
                   },

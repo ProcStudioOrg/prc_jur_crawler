@@ -139,8 +139,40 @@ function criarEscopos({ dir, executarFn, limite = 100, concorrencia, kaizen }) {
     cache.set(id, item);
     return item;
   }
+  /**
+   * No boot: recibos de cobranca que um processo anterior deixou em `cobranca_pendente`
+   * nao esperam a conta logar de novo. Percorre usuarios/*\/jur.db; so as contas com
+   * pendencia ganham uma cobranca (sem principal: o payload do recibo traz user/team) e
+   * drenam. Um recibo marcado em voo e de um processo que caiu, entao volta antes para a fila.
+   */
+  async function varrerPendencias({ procstudio, kaizen: kz = kaizen, logar = console.error } = {}) {
+    const total = { contas: 0, enviados: 0, descartados: 0, adiados: 0 };
+    const raiz = path.join(dir, "usuarios");
+    if (!fs.existsSync(raiz)) return total;
+    for (const nome of fs.readdirSync(raiz)) {
+      const arquivo = path.join(raiz, nome, "jur.db");
+      if (!fs.existsSync(arquivo)) continue;
+      let con;
+      try {
+        con = db.abrir(arquivo);
+        if (!con.prepare("SELECT 1 FROM cobranca_pendente LIMIT 1").get()) continue;
+        const cobranca = require("./cobranca").criarCobranca({ con, procstudio, kaizen: kz });
+        cobranca.recuperarVoos();
+        const r = await cobranca.drenar();
+        total.contas++;
+        for (const k of ["enviados", "descartados", "adiados"]) total[k] += r[k];
+      } catch (e) {
+        // Uma conta com banco ilegivel nao impede as outras; o erro fica visivel no log.
+        logar(JSON.stringify({ event: "billing_boot_sweep_failure", conta: nome, erro: String(e.code || e.message).slice(0, 300) }));
+      } finally {
+        try { con?.close(); } catch { /* ja fechado */ }
+      }
+    }
+    return total;
+  }
   return {
     obter,
+    varrerPendencias,
     // Alguma busca rodando ou esperando vaga, em qualquer conta (a sentinela cede a vez).
     ocupado: () => {
       const em = (p) => (p ? p.estado().ocupados + p.estado().naFila > 0 : false);
