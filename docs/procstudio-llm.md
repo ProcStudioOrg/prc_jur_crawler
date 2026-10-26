@@ -74,9 +74,12 @@ Registrar tenta 3 vezes (esperas de 1 s e 3 s). Se todas falham, o recibo fica n
 termina com `cobranca_pendente`; enquanto houver recibo na fila a conta não inicia turnos novos.
 Um varredor reenvia a cada 60 s, por conta aberta, e `escopos.varrerPendencias()` o aciona no
 boot (recibos "em voo" de um processo que caiu voltam à fila). Códigos terminais do Rails
-(`USER_GONE`, `INVALID_USAGE`, `SERVICE_AUTH`, `TEAM_REJECTED`) descartam o recibo com o log
+(`USER_GONE`, `INVALID_USAGE`, `TEAM_REJECTED`) descartam o recibo com o log
 `billing_receipt_dropped`; recibo ilegível sai com `billing_receipt_corrupt`; recibo com mais de
-24 h ainda pendente registra `billing_pending_stale`.
+24 h ainda pendente registra `billing_pending_stale`. Credencial de serviço recusada
+(`SERVICE_AUTH`: 401 do Rails ou emissor desconhecido) **não** é terminal: é erro de operação
+(segredo ou issuer trocado) e o time continua devendo o recibo, então ele fica na fila como num
+5xx, o varredor segue reenviando e o operador recebe o alerta `credencial_servico`.
 
 ### Estados de erro (`erro.tipo`)
 
@@ -91,8 +94,9 @@ boot (recibos "em voo" de um processo que caiu voltam à fila). Códigos termina
 Falhas do operador geram o log `procstudio_llm_operator_failure` e um item `jur-diagnostico` no Kaizen
 (`origem: 'cobranca'`, `tipo: 'falha'`, com `classe`, `erro`, `status` e `suprimidos`), **uma vez por
 recibo**, não por tentativa. A `classe` diz a causa: `rails_indisponivel` (5xx do Rails em
-`ai_balance`/`ai_usage`), `pricing_unavailable` (503 de preço do Rails) e `provedor` (402/429/5xx do
-OpenRouter). Cada classe tem a própria janela de **um aviso por minuto por processo**, então um
+`ai_balance`/`ai_usage`), `pricing_unavailable` (503 de preço do Rails), `credencial_servico` (401 do
+Rails ou emissor desconhecido em `ai_balance`/`ai_usage`: segredo de serviço ou issuer errado) e
+`provedor` (402/429/5xx do OpenRouter). Cada classe tem a própria janela de **um aviso por minuto por processo**, então um
 `pricing_unavailable` não fica escondido atrás de uma queda do Rails. Os avisos cortados na janela
 são contados e o total vai no campo `suprimidos` do aviso seguinte. Esse sinal é o que o operador
 usa para agir (por exemplo, sincronizar o preço do modelo no Rails).

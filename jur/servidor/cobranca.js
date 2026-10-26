@@ -7,7 +7,11 @@ const VALIDADE_CACHE_MS = 30_000;
 const ESPERAS_MS = [1000, 3000]; // 3 tentativas ao todo
 const INTERVALO_VARREDOR_MS = 60_000;
 const PENDENCIA_VELHA_MS = 24 * 3600e3;
-const TERMINAIS = new Set(['USER_GONE', 'INVALID_USAGE', 'SERVICE_AUTH', 'TEAM_REJECTED']);
+// Recusas definitivas do Rails sobre o PRÓPRIO recibo: reenviar nunca muda a resposta. A credencial de
+// serviço recusada (`SERVICE_AUTH`: 401 ou emissor desconhecido) NÃO está aqui: é erro de operação
+// (segredo/issuer rotacionado), corrigível, e o time continua devendo o recibo. Ela fica na fila como
+// um 5xx e avisa o operador (classe `credencial_servico`).
+const TERMINAIS = new Set(['USER_GONE', 'INVALID_USAGE', 'TEAM_REJECTED']);
 
 const MSG_PENDENTE = 'Não foi possível registrar a cobrança desta resposta. Tente novamente em instantes.';
 const MSG_RECUSADA = 'O ProcStudio recusou a cobrança desta resposta.';
@@ -17,10 +21,14 @@ const MSG_SALDO = 'Saldo de IA insuficiente para usar a conexão ProcStudio.';
 const erroCom = (code, message, extra = {}) => Object.assign(new Error(message), { code, ...extra });
 // Só código ou mensagem, curtos: nada de corpo, cabeçalho ou credencial vai para log ou FFD.
 const descrever = (e) => String((e && (e.code || e.message)) || 'erro').slice(0, 300);
-const ehFalhaDoOperador = (e) => e?.code === 'PRICING_UNAVAILABLE' || Number(e?.status) >= 500;
+const ehFalhaDoOperador = (e) => e?.code === 'PRICING_UNAVAILABLE' || e?.code === 'SERVICE_AUTH' || Number(e?.status) >= 500;
 // Classe do alerta por causa (cada uma tem a própria janela do limitador). O Rails 5xx não é
 // `rails_5xx` porque o FFD só aceita [a-z_] na classe.
-const classeDoRails = (e) => (e?.code === 'PRICING_UNAVAILABLE' ? 'pricing_unavailable' : 'rails_indisponivel');
+function classeDoRails(e) {
+  if (e?.code === 'PRICING_UNAVAILABLE') return 'pricing_unavailable';
+  if (e?.code === 'SERVICE_AUTH') return 'credencial_servico';
+  return 'rails_indisponivel';
+}
 const INTERVALO_AVISO_MS = 60_000;
 
 /**
@@ -95,7 +103,8 @@ function criarCobranca({
 
   const cacheValido = () => cache && agora() - cacheEm < VALIDADE_CACHE_MS;
 
-  // Erro ou conta inativa apagam o cache: senão um ok antigo seguiria valendo até 30 s.
+  // Erro ou conta inativa apagam o cache: senão um ok antigo seguiria valendo até 30 s. Conta
+  // inativa nunca entra no cache: cada pergunta seguinte volta ao Rails.
   async function buscarSaldo() {
     let b;
     try {
@@ -134,7 +143,10 @@ function criarCobranca({
       } catch {
         return { ok: false, motivo: 'indisponivel' };
       }
-      if (b?.ativo !== true) return { ok: false, motivo: 'indisponivel' };
+      // `ativo: false` = usuário ou time não vale mais no ProcStudio: a sessão do JurCrawler acaba
+      // (rotas/chat.js responde 401 `sessao_invalida`), não é queda do Rails.
+      // O cliente (procstudio.js) só devolve `ativo` true ou false.
+      if (b.ativo !== true) return { ok: false, motivo: 'inativo' };
     }
     if (b.podeOperar === true) return { ok: true };
     return { ok: false, motivo: 'saldo', saldoBrl: b.saldoBrl, mensagem: b.mensagem || MSG_SALDO, topupPath: b.topupPath };
@@ -181,6 +193,8 @@ function criarCobranca({
           throw erroCom('COBRANCA_RECUSADA', MSG_RECUSADA, { status: e.status });
         }
         if (ehFalhaDoOperador(e)) avisado = true;
+        // Credencial de serviço recusada: o saldo em cache não foi confirmado por ninguém agora.
+        if (e?.code === 'SERVICE_AUTH') cache = null;
         ultimo = e;
       }
     }

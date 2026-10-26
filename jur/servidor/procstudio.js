@@ -75,6 +75,10 @@ function criarCliente({ url, issuer, clientId, secret, fetchFn = fetch }) {
         { user_id: p.userId, team_id: p.teamId },
         { bruto: true },
       );
+      // Credencial de serviço recusada é erro de operação (o operador é avisado com classe
+      // própria), nunca "usuário inativo": esse vem 200 com `active: false`.
+      if (r.status === 401)
+        throw erro(401, "SERVICE_AUTH", "Credencial de serviço recusada.");
       if (r.status !== 200 || !r.body) throw semPrecoOuIndisponivel(r);
       const b = r.body;
       if (b.active !== true) return { ativo: false };

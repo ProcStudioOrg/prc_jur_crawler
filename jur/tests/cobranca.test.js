@@ -79,10 +79,11 @@ describe('cobranca: pré-checagem', () => {
     });
   });
 
-  it('PRICING_UNAVAILABLE, 503 e ativo:false viram indisponivel e não ficam em cache', async () => {
+  it('PRICING_UNAVAILABLE e 503 viram indisponivel, ativo:false vira inativo, e nada fica em cache', async () => {
     const procstudio = procstudioFalso({ saldos: [erro(503, 'PRICING_UNAVAILABLE'), erro(503), { ativo: false }, BALANCE] });
     const { cobranca, logs, kaizen } = montar({ procstudio });
-    for (let i = 0; i < 3; i++) assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'indisponivel' });
+    for (let i = 0; i < 2; i++) assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'indisponivel' });
+    assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'inativo' });
     assert.deepEqual(await cobranca.podeOperar(), { ok: true });
     assert.equal(procstudio.chamadas.saldo, 4);
     // Causas diferentes não se escondem: pricing e Rails 5xx têm janelas próprias.
@@ -94,14 +95,36 @@ describe('cobranca: pré-checagem', () => {
   });
 
   it('saldo forçado que volta inativo ou falha apaga o cache do podeOperar', async () => {
-    for (const ruim of [{ ativo: false }, erro(503)]) {
+    for (const [ruim, motivo] of [[{ ativo: false }, 'inativo'], [erro(503), 'indisponivel'], [erro(401, 'SERVICE_AUTH'), 'indisponivel']]) {
       const procstudio = procstudioFalso({ saldos: [BALANCE, ruim] });
       const { cobranca } = montar({ procstudio });
       assert.deepEqual(await cobranca.podeOperar(), { ok: true });
       await cobranca.saldo({ forcar: true }).catch(() => {});
-      assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'indisponivel' });
+      assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo }, motivo);
       assert.equal(procstudio.chamadas.saldo, 3);
     }
+  });
+
+  it('conta inativa nunca fica em cache: cada checagem volta ao Rails, inclusive dentro dos 30 s', async () => {
+    const procstudio = procstudioFalso({ saldos: [{ ativo: false }] });
+    const { cobranca, relogio } = montar({ procstudio });
+    assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'inativo' });
+    relogio.t += 1_000;
+    assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'inativo' });
+    assert.deepEqual(await cobranca.saldo(), { ativo: false });
+    assert.equal(procstudio.chamadas.saldo, 3);
+  });
+
+  it('SERVICE_AUTH no registro apaga o ok em cache: a próxima checagem pergunta ao Rails', async () => {
+    const procstudio = procstudioFalso({ saldos: [BALANCE], usos: [erro(401, 'SERVICE_AUTH'), erro(401, 'SERVICE_AUTH'), erro(401, 'SERVICE_AUTH'), USO_OK] });
+    const { cobranca } = montar({ procstudio });
+    assert.deepEqual(await cobranca.podeOperar(), { ok: true });
+    await assert.rejects(cobranca.registrar(USO), { code: 'COBRANCA_PENDENTE' });
+    await cobranca.drenar();
+    assert.equal(cobranca.pendentes(), 0);
+    assert.equal(procstudio.chamadas.saldo, 1);
+    assert.deepEqual(await cobranca.podeOperar(), { ok: true });
+    assert.equal(procstudio.chamadas.saldo, 1, 'o sucesso da drenagem atualizou o cache com o saldo do Rails');
   });
 
   it('dois criarCobranca com con diferentes não compartilham cache', async () => {
@@ -187,7 +210,7 @@ describe('cobranca: registro', () => {
   });
 
   it('códigos terminais não geram pendência: logam billing_receipt_dropped e lançam COBRANCA_RECUSADA', async () => {
-    for (const [status, code] of [[410, 'USER_GONE'], [422, 'INVALID_USAGE'], [401, 'SERVICE_AUTH'], [403, 'TEAM_REJECTED'], [404, 'TEAM_REJECTED']]) {
+    for (const [status, code] of [[410, 'USER_GONE'], [422, 'INVALID_USAGE'], [403, 'TEAM_REJECTED'], [404, 'TEAM_REJECTED']]) {
       const procstudio = procstudioFalso({ usos: [erro(status, code)] });
       const m = montar({ procstudio });
       const { cobranca, logs, esperas } = m;
@@ -198,6 +221,23 @@ describe('cobranca: registro', () => {
       assert.deepEqual(esperas, []);
       assert.deepEqual(logs.map((l) => [l.event, l.motivo, l.requestId]), [['billing_receipt_dropped', code, 'c1:0:0']]);
     }
+  });
+
+  it('SERVICE_AUTH não é terminal: recibo fica na fila depois das 3 tentativas, em_voo limpo, um aviso credencial_servico', async () => {
+    const procstudio = procstudioFalso({ usos: [erro(401, 'SERVICE_AUTH')] });
+    const m = montar({ procstudio });
+    const { cobranca, logs, esperas, kaizen } = m;
+    await assert.rejects(cobranca.registrar(USO), { code: 'COBRANCA_PENDENTE' });
+    assert.equal(procstudio.chamadas.registrarUso.length, 3);
+    assert.deepEqual(esperas, [1000, 3000]);
+    const linha = m.con.prepare('SELECT request_id, em_voo, tentativas, ultimo_erro FROM cobranca_pendente').get();
+    assert.deepEqual({ ...linha }, { request_id: 'c1:0:0', em_voo: 0, tentativas: 3, ultimo_erro: 'SERVICE_AUTH' });
+    assert.equal(cobranca.pendentes(), 1);
+    assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'pendente' });
+    assert.equal(logs.some((l) => l.event === 'billing_receipt_dropped'), false, 'nunca descarta recibo devido');
+    assert.deepEqual(logs.map((l) => [l.event, l.classe, l.status, l.erro]), [['procstudio_llm_operator_failure', 'credencial_servico', 401, 'SERVICE_AUTH']]);
+    assert.deepEqual(kaizen.itens.map((i) => [i.source, i.corpo.origem, i.corpo.classe]), [['jur-diagnostico', 'cobranca', 'credencial_servico']]);
+    assert.match(kaizen.itens[0].corpo.classe, /^[a-z_]+$/, 'o FFD só aceita letras e sublinhado na classe');
   });
 
   it('can_operate:false no registro faz podeOperar devolver saldo sem nova ida ao Rails', async () => {
@@ -333,6 +373,45 @@ describe('cobranca: pendências', () => {
     assert.deepEqual(await cobranca.drenar(), { enviados: 0, descartados: 1, adiados: 0 });
     assert.equal(cobranca.pendentes(), 0);
     assert.deepEqual(logs.map((l) => [l.event, l.motivo, l.requestId]), [['billing_receipt_dropped', 'USER_GONE', 'c1:0:0']]);
+  });
+
+  it('SERVICE_AUTH na drenagem adia (nunca descarta); aviso credencial_servico no máximo um por minuto; volta a aceitar e quita', async () => {
+    const { cobranca, con, logs, kaizen, relogio, procstudio } = await comPendencia([
+      erro(401, 'SERVICE_AUTH'), erro(401, 'SERVICE_AUTH'), erro(401, 'SERVICE_AUTH'), USO_OK,
+    ]);
+    const avisos = () => logs.filter((l) => l.event === 'procstudio_llm_operator_failure' && l.classe === 'credencial_servico');
+    assert.deepEqual(await cobranca.drenar(), { enviados: 0, descartados: 0, adiados: 1 });
+    relogio.t += 30_000;
+    assert.deepEqual(await cobranca.drenar(), { enviados: 0, descartados: 0, adiados: 1 });
+    assert.equal(avisos().length, 1, 'segunda falha na mesma janela é suprimida');
+    assert.equal(cobranca.pendentes(), 1);
+    assert.match(con.prepare('SELECT ultimo_erro FROM cobranca_pendente').get().ultimo_erro, /SERVICE_AUTH/);
+    relogio.t += 30_000;
+    assert.deepEqual(await cobranca.drenar(), { enviados: 0, descartados: 0, adiados: 1 });
+    assert.deepEqual(avisos().map((a) => a.suprimidos), [0, 1], 'um minuto depois sai outro aviso, com a contagem do suprimido');
+    assert.equal(kaizen.itens.filter((i) => i.corpo.classe === 'credencial_servico').length, 2);
+    assert.equal(logs.some((l) => l.event === 'billing_receipt_dropped'), false);
+    // Credencial corrigida no operador: o mesmo recibo (mesmo request_id) é aceito e sai da fila.
+    assert.deepEqual(await cobranca.drenar(), { enviados: 1, descartados: 0, adiados: 0 });
+    assert.equal(cobranca.pendentes(), 0);
+    assert.equal(procstudio.chamadas.registrarUso.at(-1).u.requestId, 'c1:0:0');
+    assert.deepEqual(await cobranca.podeOperar(), { ok: true });
+  });
+
+  it('varredor reenvia o recibo da credencial recusada e o quita quando o Rails volta a aceitar', async (t) => {
+    t.mock.timers.enable({ apis: ['setTimeout'] });
+    const procstudio = procstudioFalso({ usos: [erro(401, 'SERVICE_AUTH'), erro(401, 'SERVICE_AUTH'), erro(401, 'SERVICE_AUTH'), erro(401, 'SERVICE_AUTH'), USO_OK] });
+    const { cobranca } = montar({ procstudio });
+    cobranca.iniciarVarredor();
+    await assert.rejects(cobranca.registrar(USO), { code: 'COBRANCA_PENDENTE' });
+    t.mock.timers.tick(60_000);
+    await new Promise(setImmediate);
+    assert.equal(cobranca.pendentes(), 1, 'Rails ainda recusa a credencial: fica');
+    t.mock.timers.tick(60_000);
+    await new Promise(setImmediate);
+    assert.equal(cobranca.pendentes(), 0);
+    assert.equal(procstudio.chamadas.registrarUso.length, 5);
+    cobranca.pararVarredor();
   });
 
   it('503 na drenagem adia, soma tentativa e avisa quando passa de 24 h', async () => {

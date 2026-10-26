@@ -26,6 +26,9 @@ time (detalhes em `docs/procstudio-llm.md`). Exige o PR ProcStudioOrg/ProcStudio
 - interface: saldo, seletor de modelo com "recomendada", custo por resposta e total da conversa, cartão de
   bloqueio com "Adicionar créditos" e "Tentar de novo", reenvio sem duplicar a pergunta;
 - ambiente local com carteira simulada (`JUR_LOCAL_SALDO_INICIAL`);
+- credencial de serviço recusada (`SERVICE_AUTH`, 401 do Rails ou emissor desconhecido) não descarta mais o
+  recibo: ele fica em `cobranca_pendente`, o varredor reenvia e o operador recebe o alerta `credencial_servico`
+  (um por minuto); `ai_balance` com 401 também vira `SERVICE_AUTH`;
 - envs novas: `PROCSTUDIO_LLM_API_KEY`, `PROCSTUDIO_LLM_ENDPOINT`, `PROCSTUDIO_LLM_MODELO`,
   `PROCSTUDIO_LLM_MODELO_CATALOGO`, `PROCSTUDIO_LLM_UPSTREAM`, `PROCSTUDIO_LLM_ROTULO`.
 

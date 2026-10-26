@@ -318,8 +318,9 @@ Quando a conexão do pedido é `procstudio`:
    reenvio nunca cobra duas vezes.
    Estados terminais do varredor (a pendência sai da fila, a conta desbloqueia, e o caso
    vai para o log com `event: "billing_receipt_dropped"` e motivo): 410 `user_gone`,
-   422 (payload que o Rails nunca vai aceitar) e 401 (segredo de serviço inválido,
-   que é erro de operação, não do usuário). 5xx e rede continuam tentando. Usuário que
+   422 (payload que o Rails nunca vai aceitar) e 403/404 (equipe recusada). 401 (segredo de
+   serviço inválido) **não** é terminal (decisão do Bruno em 26/10: nunca perder recibo devido):
+   fica na fila e avisa o operador com a classe `credencial_servico`. 5xx e rede continuam tentando. Usuário que
    trocou de time não é terminal: o Rails aceita e debita o time informado no recibo.
 6. **Falha do lado do operador** (chave do operador sem créditos → 402; 429 do OpenRouter
    na nossa chave; Z.AI fora, sem fallback → 502/503 do OpenRouter): na conexão

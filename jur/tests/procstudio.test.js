@@ -166,10 +166,14 @@ test("saldo: inativo, pricing_unavailable e falhas", async () => {
     }).client.saldo(principalOk),
     (e) => e.status === 503 && e.code === "PRICING_UNAVAILABLE",
   );
+  await assert.rejects(
+    clienteCom({ status: 401 }).client.saldo(principalOk),
+    (e) => e.status === 401 && e.code === "SERVICE_AUTH",
+    "credencial de serviço recusada não se confunde com Rails fora",
+  );
   for (const r of [
     { status: 503, body: { error: "outro" } },
     { status: 500 },
-    { status: 401 },
     new Error("secret-sent"),
   ])
     await assert.rejects(
