@@ -71,6 +71,9 @@
   </aside>
 
   <main id="centro">
+    <!-- Saldo de IA do time no ProcStudio (saldo.js). Fica escondido quando o servidor diz
+         que nao ha conexao gerenciada: nunca mostra um saldo que nao veio do servidor. -->
+    <div id="saldo-ia" hidden></div>
     <section id="navegadores" aria-label="Navegadores de pesquisa" hidden>
       <button id="navegadores-abrir" type="button" aria-expanded="false" aria-controls="navegadores-corpo">
         <span class="navegadores-resumo"><strong>Navegadores</strong><span id="navegadores-capacidade" role="status">Consultando disponibilidade…</span></span>
@@ -134,6 +137,7 @@
     <section id="conversa" hidden>
       <button id="abrir-decisoes" class="abrir-decisoes" type="button" hidden
               aria-controls="decisoes" aria-expanded="false"></button>
+      <p id="custo-conversa" class="custo-conversa" hidden></p>
       <div id="mensagens" role="log" aria-live="polite"></div>
       <div id="caixa-conversa" class="caixa-entrada"></div>
     </section>
@@ -167,6 +171,7 @@
   <script src="/conexoes.js"></script>
   <script src="/seletor-modelo.js"></script>
   <script src="/app.js"></script>
+  <script src="/saldo.js"></script>
   <script src="/escopo.js"></script>
   <script src="/disponibilidade.js"></script>
   <script src="/decisoes.js"></script>

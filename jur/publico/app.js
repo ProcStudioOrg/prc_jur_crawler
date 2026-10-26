@@ -207,7 +207,7 @@ async function carregarHistorico() {
 // BRU-76: conversa que nasceu neste envio e cujo primeiro turno o servidor recusou.
 // Apaga no servidor, volta para a tela inicial com o texto preservado e mostra o
 // erro na propria caixa — sem bolha numa conversa que deixou de existir.
-async function descartarConversaVazia(id, texto, erro) {
+async function descartarConversaVazia(id, texto, corpo) {
   try {
     await window.jurApi.pedir(`/api/v1/conversas/${id}`, { method: 'DELETE' });
   } catch { /* se o servidor nao apagou, a conversa aparece no historico — pior caso e o antigo */ }
@@ -216,7 +216,7 @@ async function descartarConversaVazia(id, texto, erro) {
     irParaInicial();
     const campo = $('#caixa-inicial .entrada');
     if (campo) { campo.value = texto; ajustarAltura(campo); campo.focus(); }
-    avisarNaCaixa(erro || 'Não foi possível iniciar a conversa.');
+    mostrarErro({ ...corpo, erro: corpo.erro || 'Não foi possível iniciar a conversa.' }, texto);
   }
 }
 
@@ -225,6 +225,7 @@ function irParaInicial() {
   // As buscas da conversa anterior nao podem continuar na tela como se fossem desta.
   if (window.jurDecisoes) window.jurDecisoes.sincronizar(null);
   conversaAtual = null;
+  definirCustoConversa(null, null);
   $('#conversa').hidden = true;
   $('#inicial').hidden = false;
   $('#mensagens').innerHTML = '';
@@ -235,6 +236,7 @@ async function abrirConversa(id) {
   encerrarReanexo();
   const dados = await window.jurApi.pedir(`/api/v1/conversas/${id}`);
   conversaAtual = id;
+  definirCustoConversa(id, dados.custoTotalBrl);
   $('#inicial').hidden = true;
   $('#conversa').hidden = false;
   montarCaixa($('#caixa-conversa'));
@@ -280,6 +282,7 @@ async function reanexar(id) {
   const controle = new AbortController();
   reanexado = controle;
   let destino = null;
+  const linhaCusto = acompanharCusto(id, false);
   try {
     const r = await window.jurApi.requisitar(`/api/v1/conversas/${id}/stream`, { signal: controle.signal });
     if (!r.ok) return;
@@ -299,7 +302,12 @@ async function reanexar(id) {
         destino = null;
       } else if (nome === 'busca') {
         if (window.jurDecisoes) window.jurDecisoes.sincronizar(id);
+      } else if (nome === 'custo') {
+        // O total da conversa nao soma aqui: o reanexo reproduz rodadas que o GET da
+        // conversa ja contou. Ele e relido do servidor no `fim`.
+        linhaCusto(dados);
       } else if (nome === 'fim') {
+        recarregarCustoConversa(id);
         // O historico local precisa receber o turno inteiro (com os blocos de
         // ferramenta): e ele que volta ao modelo na proxima pergunta, e sem os blocos
         // vao junto o job_id das buscas e a ressalva do zero.
@@ -309,7 +317,10 @@ async function reanexar(id) {
         for (const m of novas) historicoLocal.push({ role: m.role, content: m.content });
         carregarHistorico();
       } else if (nome === 'erro') {
-        bolha('erro', dados.erro);
+        // O turno foi aberto em outra aba ou antes de recarregar: a pergunta a reenviar e a
+        // ultima do historico, se ela for texto do usuario.
+        const ultima = historicoLocal[historicoLocal.length - 1];
+        mostrarErro(dados, ultima?.role === 'user' && typeof ultima.content === 'string' ? ultima.content : null);
       }
     });
   } catch { /* abortado ou rede caiu: a conversa continua gravada no servidor */ }
@@ -342,15 +353,154 @@ function acrescentarAssistente(div, pedaco) {
  * Erro antes de existir conversa: a bolha iria para #mensagens, que fica oculto na tela
  * inicial, e o usuario nao veria nada. Na conversa aberta e uma bolha comum.
  */
-function avisarNaCaixa(texto) {
-  if (!$('#conversa').hidden) { bolha('erro', texto); return; }
+function avisarNaCaixa(texto, classe = 'erro') {
+  if (!$('#conversa').hidden) return bolha(classe, texto);
   const caixa = caixaAtiva();
   $('.aviso-caixa', caixa)?.remove();
   const div = document.createElement('div');
-  div.className = 'msg erro aviso-caixa';
+  div.className = `msg ${classe} aviso-caixa`;
   div.setAttribute('role', 'alert');
   div.textContent = texto;
   caixa.prepend(div);
+  return div;
+}
+
+// ---------- erros com tipo, bloqueio por saldo e custo ----------
+const centavos = (brl) => Math.round(brl * 100);
+
+/**
+ * Erro do chat com o `tipo` que o servidor manda (no JSON da recusa ou no evento `erro`).
+ * `texto` e a pergunta recusada: e ela que "Tentar de novo" reenvia.
+ */
+function mostrarErro(dados, texto) {
+  if (dados.tipo === 'saldo_insuficiente') { cartaoBloqueio(dados, texto); return; }
+  const div = avisarNaCaixa(dados.erro);
+  if (dados.tipo === 'procstudio_indisponivel') {
+    const link = document.createElement('button');
+    link.type = 'button';
+    link.className = 'link-erro';
+    link.textContent = 'Configurar uma conexão própria';
+    link.addEventListener('click', () => window.jurConfig.abrir({ avancado: true }));
+    div.append(' ', link);
+  }
+}
+
+/**
+ * Cartao de saldo esgotado, igual no 402 antes do turno e no `erro` no meio dele. O link de
+ * recarga e o `topupUrl` do servidor; sem ele o botao nao aparece (nao inventamos endereco).
+ */
+function cartaoBloqueio(dados, texto) {
+  $('#mensagens .bloqueio')?.remove();
+  const cartao = avisarNaCaixa('', 'bloqueio bolha');
+  cartao.setAttribute('role', 'alert');
+  const mensagem = document.createElement('p');
+  mensagem.textContent = dados.erro;
+  const acoes = document.createElement('div');
+  acoes.className = 'bloqueio-acoes';
+  if (dados.topupUrl) {
+    const recarga = document.createElement('a');
+    recarga.className = 'botao-acento';
+    recarga.textContent = 'Adicionar créditos';
+    recarga.href = dados.topupUrl;
+    recarga.target = '_blank';
+    recarga.rel = 'noopener';
+    acoes.append(recarga);
+  }
+  const estado = document.createElement('p');
+  estado.className = 'bloqueio-estado';
+  estado.setAttribute('role', 'status');
+  if (texto) {
+    const tentar = document.createElement('button');
+    tentar.type = 'button';
+    tentar.className = 'botao-secundario';
+    tentar.textContent = 'Tentar de novo';
+    tentar.addEventListener('click', async () => {
+      tentar.disabled = true;
+      estado.textContent = '';
+      const s = await window.jurSaldo.carregar(true);
+      if (!s?.disponivel || s.erro || !s.podeOperar) {
+        estado.textContent = s?.erro || s?.mensagem || 'O saldo ainda não permite continuar.';
+        tentar.disabled = false;
+        return;
+      }
+      cartao.remove();
+      // A pergunta recusada ainda pode estar no fim do historico local (bloqueio no meio do
+      // turno): `enviar` a coloca de novo, entao sai daqui para nao ir duas vezes ao modelo.
+      const ultima = historicoLocal[historicoLocal.length - 1];
+      if (ultima && ultima.role === 'user' && ultima.content === texto) historicoLocal.pop();
+      const campo = $('.entrada', caixaAtiva());
+      campo.value = texto;
+      enviar(campo, window.jurConexoes.selected?.modelo, null);
+    });
+    acoes.append(tentar);
+  }
+  cartao.append(mensagem, acoes, estado);
+  window.jurSaldo.carregar(true);
+}
+
+/** "850 tokens", "19,1 mil tokens", "1,2 mi tokens". */
+function formatarTokens(n) {
+  const umaCasa = (v) => v.toLocaleString('pt-BR', { maximumFractionDigits: 1 });
+  if (n < 1000) return `${n} tokens`;
+  if (n < 1e6) return `${umaCasa(n / 1000)} mil tokens`;
+  return `${umaCasa(n / 1e6)} mi tokens`;
+}
+
+/** Total da conversa aberta: o que o servidor ja somou mais os turnos desta sessao. */
+const custoConversa = { id: null, centavos: 0, cobrado: false };
+function definirCustoConversa(id, totalBrl) {
+  custoConversa.id = id;
+  custoConversa.cobrado = typeof totalBrl === 'number';
+  custoConversa.centavos = custoConversa.cobrado ? centavos(totalBrl) : 0;
+  desenharCustoConversa();
+}
+function desenharCustoConversa() {
+  const alvo = $('#custo-conversa');
+  const visivel = custoConversa.cobrado && custoConversa.id === conversaAtual;
+  alvo.hidden = !visivel;
+  alvo.textContent = visivel ? `Esta conversa: ${window.jurSaldo.formatarBrl(custoConversa.centavos / 100)}` : '';
+}
+async function recarregarCustoConversa(id) {
+  try {
+    const dados = await window.jurApi.pedir(`/api/v1/conversas/${id}`);
+    if (conversaAtual === id) definirCustoConversa(id, dados.custoTotalBrl);
+  } catch { /* o total fica como estava; a proxima abertura relê */ }
+}
+
+/**
+ * Linha de custo da resposta em curso: soma as rodadas do turno a cada evento `custo` e fica
+ * sob a ultima bolha do assistente. Em BYOK nao ha `cobradoBrl`, so tokens. `somarNaConversa`
+ * e falso no reanexo, que reproduz rodadas ja contadas pelo GET da conversa.
+ */
+function acompanharCusto(conversaId, somarNaConversa) {
+  let linha = null;
+  let cobradoCents = 0;
+  let cobrado = false;
+  let tokens = 0;
+  return (dados) => {
+    window.jurSaldo.atualizarDe(dados);
+    const rodadaCents = typeof dados.cobradoBrl === 'number' ? centavos(dados.cobradoBrl) : null;
+    if (rodadaCents !== null) { cobrado = true; cobradoCents += rodadaCents; }
+    tokens += (dados.tokensEntrada || 0) + (dados.tokensSaida || 0);
+    if (somarNaConversa && rodadaCents !== null && custoConversa.id === conversaId) {
+      custoConversa.cobrado = true;
+      custoConversa.centavos += rodadaCents;
+    }
+    if (conversaAtual !== conversaId) return;
+    desenharCustoConversa();
+    if (!linha) {
+      linha = document.createElement('small');
+      linha.className = 'custo-resposta';
+    }
+    linha.textContent = [
+      cobrado ? window.jurSaldo.formatarBrl(cobradoCents / 100) : null,
+      formatarTokens(tokens),
+      dados.modelo,
+    ].filter(Boolean).join(' · ');
+    // Sempre depois do que ja chegou: a rodada seguinte pode ter aberto bolhas novas.
+    $('#mensagens').appendChild(linha);
+    $('#mensagens').scrollTop = $('#mensagens').scrollHeight;
+  };
 }
 
 function bolha(classe, texto) {
@@ -430,6 +580,7 @@ async function enviar(campo, modelo, esforco) {
     }
     conversaCriadaAgora = true;
     conversaAtual = c.id;
+    definirCustoConversa(c.id, null);
     historicoLocal.length = 0;
     $('#inicial').hidden = true;
     $('#conversa').hidden = false;
@@ -446,7 +597,7 @@ async function enviar(campo, modelo, esforco) {
   // Este envio JA e o stream do turno: um reanexo por cima duplicaria cada delta.
   encerrarReanexo();
   campo.value = ''; ajustarAltura(campo);
-  bolha('user', texto);
+  const bolhaPergunta = bolha('user', texto);
   historicoLocal.push({ role: 'user', content: texto });
 
   // Amarra esta resposta a conversa que a originou. Se o usuario trocar de conversa
@@ -460,6 +611,7 @@ async function enviar(campo, modelo, esforco) {
   const conversaDoEnvio = conversaAtual;
 
   let destino = null;
+  const linhaCusto = acompanharCusto(conversaDoEnvio, true);
   // Liga a sondagem da lateral ANTES do POST: a partir daqui existe um turno deste
   // cliente, e e isso que faz o indicador aparecer sem esperar um F5.
   enviosLocais.add(conversaDoEnvio);
@@ -487,10 +639,18 @@ async function enviar(campo, modelo, esforco) {
     if (!r.ok) {
       const corpo = await r.json().catch(() => ({ erro: `HTTP ${r.status}` }));
       if (conversaCriadaAgora) {
-        await descartarConversaVazia(conversaDoEnvio, texto, corpo.erro);
+        await descartarConversaVazia(conversaDoEnvio, texto, corpo);
         return;
       }
-      if (conversaAtual === conversaDoEnvio) bolha('erro', corpo.erro);
+      if (conversaAtual === conversaDoEnvio) {
+        if (corpo.tipo === 'saldo_insuficiente') {
+          // Recusado antes do turno: o servidor nao gravou a pergunta. Sai da tela e do
+          // historico local, e "Tentar de novo" a envia como nova.
+          bolhaPergunta.remove();
+          if (historicoLocal[historicoLocal.length - 1]?.content === texto) historicoLocal.pop();
+        }
+        mostrarErro(corpo, texto);
+      }
       return;
     }
     // O stream abriu: o servidor ja registrou o turno. Recarrega agora para o indicador
@@ -515,6 +675,8 @@ async function enviar(campo, modelo, esforco) {
         // Uma busca acabou de ser vinculada a conversa: o painel de decisoes ja pode
         // mostra-la, mesmo antes de o turno terminar.
         if (aindaNaMesmaConversa && window.jurDecisoes) window.jurDecisoes.sincronizar(conversaDoEnvio);
+      } else if (nome === 'custo') {
+        linhaCusto(dados);
       } else if (nome === 'fim') {
         if (aindaNaMesmaConversa) {
           // C1: o turno inteiro, com os blocos `tool_use`/`tool_result` como vieram do
@@ -535,7 +697,7 @@ async function enviar(campo, modelo, esforco) {
         // Orfa: nada a fazer aqui — o servidor ja gravou a resposta inteira no banco,
         // associada a conversaDoEnvio.
       } else if (nome === 'erro') {
-        if (aindaNaMesmaConversa) bolha('erro', dados.erro);
+        if (aindaNaMesmaConversa) mostrarErro(dados, texto);
       }
     }, renovar);
   } catch (e) {
@@ -566,6 +728,7 @@ document.addEventListener('DOMContentLoaded', () => montarCaixa($('#caixa-inicia
 document.addEventListener('jur:sessao', carregarHistorico);
 document.addEventListener('jur:sair', () => {
   encerrarReanexo(); clearTimeout(relogioHistorico); conversaAtual = null; historicoLocal.length = 0;
+  definirCustoConversa(null, null);
   $('#historico').replaceChildren(); $('#mensagens').replaceChildren();
   $('#conversa').hidden = true; $('#inicial').hidden = false;
   $('#painel-config').hidden = true; if (window.jurDecisoes) window.jurDecisoes.fechar?.();
