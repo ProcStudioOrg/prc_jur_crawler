@@ -130,6 +130,10 @@ function abrir(caminho = caminhoPadrao()) {
     );
   }
   const con = new DatabaseSync(caminho);
+  // Mais de uma conexão escreve no mesmo arquivo (a da conta e a do varredor de cobrança do
+  // boot, por exemplo): sem espera, a segunda falha na hora com SQLITE_BUSY em vez de aguardar
+  // a escrita curta da primeira. Vem antes do journal_mode, que também pode esbarrar no lock.
+  con.exec('PRAGMA busy_timeout = 5000;');
   con.exec('PRAGMA journal_mode = WAL;');
   con.exec('PRAGMA foreign_keys = ON;');
   con.exec(SCHEMA);

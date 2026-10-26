@@ -338,7 +338,8 @@ function documento() {
           description: 'Corpo das recusas da conexão ProcStudio; o mesmo objeto vem no evento `erro` quando o bloqueio acontece no meio do turno.',
           properties: {
             erro: { type: 'string' },
-            tipo: { type: 'string', enum: ['saldo_insuficiente', 'cobranca_pendente', 'procstudio_indisponivel', 'reenvio_invalido'] },
+            tipo: { type: 'string', enum: ['saldo_insuficiente', 'cobranca_pendente', 'procstudio_indisponivel', 'reenvio_invalido', 'usage_missing'] },
+            // usage_missing só chega no evento `erro`: o provedor não informou o consumo da rodada.
             saldoBrl: { type: 'number', description: 'só em saldo_insuficiente' },
             topupUrl: { type: ['string', 'null'], description: 'só em saldo_insuficiente' },
           },
@@ -684,10 +685,13 @@ function documento() {
                     conversaId: { type: 'string', description: 'opcional — se informado, persiste o turno nesta conversa' },
                     reenvio: {
                       type: 'boolean',
-                      description: '"Tentar de novo" depois de um bloqueio no meio do turno: a última mensagem '
-                        + '(a pergunta) já foi gravada e não é gravada outra vez. Exige conversaId, e a última '
-                        + 'mensagem gravada da conversa precisa ser essa mesma pergunta do usuário; senão 409 '
-                        + 'com tipo `reenvio_invalido`.',
+                      description: '"Tentar de novo" depois de um bloqueio no meio do turno: `mensagens` é a '
+                        + 'conversa como foi gravada (a pergunta e as rodadas já pagas, refeitas por '
+                        + 'GET /api/v1/conversas/{id}) e nada é gravado outra vez; o turno continua de onde '
+                        + 'parou — se a última gravada é um tool_result, o modelo responde a ele. Exige '
+                        + 'conversaId, e a última mensagem do pedido precisa ser igual à última mensagem '
+                        + 'gravada, seja qual for o conteúdo (pergunta ou tool_result, ambos role "user"); '
+                        + 'senão 409 com tipo `reenvio_invalido`.',
                     },
                   },
                   required: ['mensagens', 'conexaoId'],
@@ -705,7 +709,7 @@ function documento() {
                 + 'buscas nem a ressalva do tribunal presa no tool_result; `fim.custo` traz o resumo do turno, '
                 + 'CustoTurno, ou null sem consumo informado), `custo` (CustoRodada, uma vez por rodada que '
                 + 'informou consumo; na conexão ProcStudio inclui cobradoBrl e saldoBrl) e, em falha durante o stream, '
-                + '`erro` (com `tipo` quando o bloqueio é de cobrança)',
+                + '`erro` (com `tipo` quando o bloqueio é de cobrança ou `usage_missing` quando o provedor não informou o consumo)',
               content: { 'text/event-stream': { schema: { type: 'string' } } },
             },
             400: RESPOSTAS.Erro400,
@@ -724,7 +728,7 @@ function documento() {
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
             },
             409: {
-              description: 'Conexão ProcStudio com cobrança anterior ainda não registrada (tipo `cobranca_pendente`), já há uma resposta em andamento nesta conversa, ou `reenvio: true` cuja pergunta não é a última mensagem gravada (tipo `reenvio_invalido`).',
+              description: 'Conexão ProcStudio com cobrança anterior ainda não registrada (tipo `cobranca_pendente`), já há uma resposta em andamento nesta conversa, ou `reenvio: true` cuja última mensagem não é a última gravada na conversa — ela mudou desde a interrupção (tipo `reenvio_invalido`).',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/BloqueioCobranca' } } },
             },
             503: {

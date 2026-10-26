@@ -18,12 +18,43 @@ const erroCom = (code, message, extra = {}) => Object.assign(new Error(message),
 // Só código ou mensagem, curtos: nada de corpo, cabeçalho ou credencial vai para log ou FFD.
 const descrever = (e) => String((e && (e.code || e.message)) || 'erro').slice(0, 300);
 const ehFalhaDoOperador = (e) => e?.code === 'PRICING_UNAVAILABLE' || Number(e?.status) >= 500;
+const INTERVALO_AVISO_MS = 60_000;
+
+/**
+ * No máximo um aviso ao operador por classe por intervalo. Com o Rails fora, cada `podeOperar`,
+ * cada `GET /saldo` (toda aba a cada 2 min e no foco) e cada recibo do varredor falham: sem
+ * isto, cada um vira uma linha de log e um item na outbox, que não deduplica. Fica o primeiro
+ * aviso da janela; os seguintes são contados e o total vai no próximo aviso que sair, para
+ * nada sumir em silêncio.
+ */
+function criarLimitadorAvisos({ intervaloMs = INTERVALO_AVISO_MS, agora = Date.now } = {}) {
+  const porClasse = new Map();
+  return {
+    /** null = suprimido (e contado); senão { suprimidos } desde o último aviso desta classe. */
+    liberar(classe) {
+      const estado = porClasse.get(classe);
+      const t = agora();
+      if (estado && t - estado.ultimoEm < intervaloMs) {
+        estado.suprimidos += 1;
+        return null;
+      }
+      const suprimidos = estado ? estado.suprimidos : 0;
+      porClasse.set(classe, { ultimoEm: t, suprimidos: 0 });
+      return { suprimidos };
+    },
+  };
+}
+
+// Um limitador por processo: as instâncias de cobrança são por conta (e o varredor de boot cria
+// uma por passada), mas a enxurrada de uma queda do Rails é do processo inteiro.
+const limitadorDoProcesso = criarLimitadorAvisos();
 
 function criarCobranca({
   con, procstudio, principal, kaizen,
   agora = Date.now,
   esperar = (ms) => new Promise((r) => setTimeout(r, ms)),
   logar = console.error,
+  avisos = limitadorDoProcesso,
 }) {
   // Último ai_balance conhecido desta conta, com podeOperar/saldo atualizados pelos ai_usage.
   let cache = null;
@@ -37,11 +68,14 @@ function criarCobranca({
   };
 
   function avisarOperador(e) {
+    const liberado = avisos.liberar('operador');
+    if (!liberado) return;
     const status = Number.isFinite(e?.status) ? e.status : null;
     const erro = descrever(e);
-    registrarLog('procstudio_llm_operator_failure', { origem: 'cobranca', status, erro });
+    const { suprimidos } = liberado;
+    registrarLog('procstudio_llm_operator_failure', { origem: 'cobranca', status, erro, suprimidos });
     try {
-      if (kaizen?.outbox?.ligado) kaizen.outbox.enfileirar('jur-diagnostico', { origem: 'cobranca', classe: 'operador', erro, status });
+      if (kaizen?.outbox?.ligado) kaizen.outbox.enfileirar('jur-diagnostico', { origem: 'cobranca', classe: 'operador', erro, status, suprimidos });
     } catch { /* outbox nunca derruba a cobrança */ }
   }
 
@@ -233,4 +267,4 @@ function criarCobranca({
   return { podeOperar, registrar, falhaDoOperador, pendentes, drenar, recuperarVoos, iniciarVarredor, pararVarredor, saldo };
 }
 
-module.exports = { criarCobranca };
+module.exports = { criarCobranca, criarLimitadorAvisos };

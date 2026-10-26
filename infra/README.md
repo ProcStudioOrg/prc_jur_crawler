@@ -216,7 +216,9 @@ usa `${PROCSTUDIO_LLM_UPSTREAM-z-ai}`, sem `:`, então variável ausente vira `z
 `PROCSTUDIO_LLM_UPSTREAM=` no `infra/.env` continua vazia. Nas demais, vazio volta ao padrão.
 Publique o PR do Rails (`service_access/ai_balance` e `ai_usage`) antes de ligar a chave, e confira
 no Rails o preço de `glm-5.3-flash`. O container de validação pré-troca roda com
-`-e PROCSTUDIO_LLM_API_KEY=` para não gastar a chave nem cobrar o time.
+`-e PROCSTUDIO_LLM_API_KEY=` para não gastar a chave nem cobrar o time. O motivo que pesa é
+outro: ele compartilha `.env` e volumes com a produção, e com a chave o varredor de cobrança do
+boot dele zeraria o `em_voo` e reenviaria os recibos que a produção ainda está registrando.
 
 ## Releases em produção
 

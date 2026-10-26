@@ -466,6 +466,36 @@ describe('POST /api/v1/chat — cobrança da conexão ProcStudio', () => {
     } finally { a.fechar(); }
   });
 
+  // O caso real: com o cache de saldo de 30 s o bloqueio vem na rodada 2, e a rodada 1 (paga)
+  // já está gravada depois da pergunta. O cliente refaz o histórico pela conversa gravada.
+  it('reenvio depois de uma rodada paga continua do tool_result gravado, sem gravar nada de novo', async () => {
+    const a = await ambiente({ respostas: [final('resposta depois do resultado', USO(30, 5))] });
+    try {
+      const c = a.conversas.criar();
+      const usoFerramenta = { role: 'assistant', content: [{ type: 'text', text: 'vou olhar ' }, { type: 'tool_use', id: 't1', name: 'listar_tribunais', input: {} }] };
+      const resultado = { role: 'user', content: [{ type: 'tool_result', tool_use_id: 't1', content: 'stf, stj' }] };
+      a.conversas.acrescentar(c.id, 'user', 'quais tribunais?');
+      a.conversas.acrescentar(c.id, usoFerramenta.role, usoFerramenta.content);
+      a.conversas.acrescentar(c.id, resultado.role, resultado.content);
+      const historico = a.conversas.mensagens(c.id).map((m) => ({ role: m.papel, content: m.conteudo }));
+      const r = await a.postar({ conexaoId: 'procstudio', conversaId: c.id, reenvio: true, mensagens: historico });
+      assert.strictEqual(r.status, 200);
+      const eventos = analisarSSE(await r.text());
+      const fim = eventos.find((e) => e.evento === 'fim');
+      assert.ok(fim, JSON.stringify(eventos));
+      assert.deepStrictEqual(fim.dado.mensagens.map((m) => m.role), ['assistant'], 'só a resposta é nova neste turno');
+      assert.strictEqual(a.provedor.chamadas.length, 1);
+      // `messages` é o próprio histórico do turno (a resposta entra nele depois): as três
+      // primeiras são o que foi ao modelo, terminando no tool_result.
+      assert.deepStrictEqual(a.provedor.chamadas[0].messages.slice(0, 3), historico, 'o modelo continua depois do tool_result');
+      assert.deepStrictEqual(historico[2], resultado);
+      const gravadas = a.conversas.mensagens(c.id);
+      assert.deepStrictEqual(gravadas.map((m) => m.papel), ['user', 'assistant', 'user', 'assistant'], JSON.stringify(gravadas));
+      assert.strictEqual(gravadas.filter((m) => m.conteudo === 'quais tribunais?').length, 1, 'a pergunta fica uma vez só');
+      assert.strictEqual(gravadas[3].conteudo[0].text, 'resposta depois do resultado');
+    } finally { a.fechar(); }
+  });
+
   it('reenvio cuja pergunta não é a última mensagem gravada → 409 reenvio_invalido, sem gravar nem chamar o provedor', async () => {
     const a = await ambiente({ respostas: [final('nunca', USO(1, 1))] });
     try {
@@ -593,7 +623,7 @@ describe('POST /api/v1/chat — cobrança da conexão ProcStudio', () => {
   });
 
   it('pricing_unavailable do Rails no registro vira procstudio_indisponivel, avisa o operador uma vez e mantém o custo já cobrado', async () => {
-    const { criarCobranca } = require('../servidor/cobranca');
+    const { criarCobranca, criarLimitadorAvisos } = require('../servidor/cobranca');
     const dirCob = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-chat-pricing-'));
     const logs = [];
     const diagnosticos = [];
@@ -612,6 +642,7 @@ describe('POST /api/v1/chat — cobrança da conexão ProcStudio', () => {
       kaizen: { outbox: { ligado: true, enfileirar: (fonte, corpo) => { diagnosticos.push({ fonte, corpo }); return true; } } },
       esperar: async () => {},
       logar: (linha) => logs.push(JSON.parse(linha)),
+      avisos: criarLimitadorAvisos(),
     });
     const a = await ambiente({ respostas: [ferramenta('t1', USO(100, 10)), final('nunca', USO(200, 20))], cobranca });
     try {
@@ -665,6 +696,21 @@ describe('POST /api/v1/chat — cobrança da conexão ProcStudio', () => {
       });
       assert.strictEqual(b.cobranca.espiao.falhaDoOperador.length, 0);
     } finally { b.fechar(); }
+  });
+
+  it('erro do provedor na 2ª rodada mantém a rodada 1, já cobrada, gravada na conversa', async () => {
+    const a = await ambiente({ respostas: [ferramenta('t1', USO(500, 20)), erroProvedor(502)] });
+    try {
+      const c = a.conversas.criar();
+      const eventos = analisarSSE(await (await a.postar({ conexaoId: 'procstudio', conversaId: c.id })).text());
+      assert.strictEqual(eventos.find((e) => e.evento === 'erro').dado.tipo, 'procstudio_indisponivel');
+      const m = a.conversas.mensagens(c.id);
+      assert.deepStrictEqual(m.map((x) => x.papel), ['user', 'assistant', 'user'], `pergunta + tool_use + tool_result: ${JSON.stringify(m)}`);
+      assert.ok(m[1].conteudo.some((b) => b.type === 'tool_use' && b.id === 't1'));
+      assert.strictEqual(m[2].conteudo[0].type, 'tool_result');
+      const custos = a.conversas.custos(c.id);
+      assert.deepStrictEqual([custos[0].cobradoBrl, custos[0].rodadas], [0.04, 1], 'o custo e as mensagens contam a mesma rodada');
+    } finally { a.fechar(); }
   });
 
   it('BYOK não toca na cobrança e emite custo só com tokens', async () => {

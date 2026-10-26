@@ -11,7 +11,7 @@ const ROLES_VALIDOS = new Set(['user', 'assistant']);
 const PROVEDOR_PROCSTUDIO = 'openrouter';
 const MSG_PENDENTE = 'Há uma cobrança pendente nesta conta; aguarde alguns instantes.';
 const MSG_INDISPONIVEL = 'A conexão ProcStudio está temporariamente indisponível. Use uma conexão própria ou tente mais tarde.';
-const MSG_REENVIO_INVALIDO = 'Não foi possível tentar de novo: a última mensagem desta conversa não é esta pergunta. Envie a pergunta novamente.';
+const MSG_REENVIO_INVALIDO = 'Não foi possível tentar de novo: a conversa mudou desde a interrupção. Envie a pergunta novamente.';
 
 /** "R$ 1.234,56" / "R$ −0,52" (sinal de menos tipografico, como no ProcStudio). */
 function formatarBrl(valor) {
@@ -81,8 +81,9 @@ function registrar(roteador, deps) {
 
     const motivoInvalido = validarMensagens(corpo.mensagens);
     if (motivoInvalido) return json(res, 400, { erro: motivoInvalido });
-    // `reenvio: true` = "Tentar de novo" depois de um bloqueio no meio do turno: a pergunta ja
-    // foi gravada por aquele turno e nao e gravada outra vez (ver abaixo).
+    // `reenvio: true` = "Tentar de novo" depois de um bloqueio no meio do turno: a pergunta e as
+    // rodadas ja pagas foram gravadas por aquele turno; nada e gravado outra vez e o turno
+    // continua de onde parou (ver abaixo).
     if (corpo.reenvio !== undefined && typeof corpo.reenvio !== 'boolean') {
       return json(res, 400, { erro: 'reenvio precisa ser true ou false' });
     }
@@ -187,8 +188,11 @@ function registrar(roteador, deps) {
       }
       const ultima = mensagens[mensagens.length - 1];
       if (reenvio) {
-        // Sem adivinhar: so vale se a ultima mensagem GRAVADA e esta mesma pergunta do usuario.
-        // Senao (outra pergunta, ou rodadas parciais gravadas depois dela) o turno e recusado.
+        // Sem adivinhar: so vale se a ultima mensagem GRAVADA e a ultima do pedido, seja qual
+        // for o conteudo. Com o cache de saldo o bloqueio quase sempre vem na rodada >= 2, e a
+        // ultima gravada e o tool_result da rodada paga (papel user): o cliente refez o
+        // historico pela conversa gravada e o modelo continua dali, respondendo ao resultado.
+        // Se a conversa mudou nesse meio tempo (outra aba perguntou ou respondeu), recusa.
         const gravadas = deps.conversas.mensagens(conversaId);
         const gravada = gravadas[gravadas.length - 1];
         if (!gravada || gravada.papel !== 'user'
@@ -223,10 +227,11 @@ function registrar(roteador, deps) {
     // some. Era o contrario, e era a falha relatada: fechar o navegador abortava a chamada
     // e cancelava as buscas, entao o usuario voltava para uma conversa que tinha so a
     // propria pergunta gravada. Buscas de jurisprudencia levam minutos — sair da tela
-    // enquanto rodam e o caso NORMAL. O CUSTO e real e assumido: a chamada continua
-    // gastando a chave da Anthropic sem ninguem ouvindo. Vale porque a chave e do proprio
-    // usuario, porque o turno tem teto de passos (MAX_ITERACOES em llm.js) e porque perder
-    // minutos de crawl custa mais. O trabalho nao se perde: o turno inteiro e persistido,
+    // enquanto rodam e o caso NORMAL. O CUSTO e real e assumido, por decisao: a chamada
+    // continua gastando sem ninguem ouvindo — em BYOK a chave do proprio usuario, e na conexao
+    // ProcStudio o saldo de IA do time, rodada a rodada, com a mesma cobranca e a mesma
+    // checagem de saldo antes de cada rodada de um turno assistido. Vale porque o turno tem
+    // teto de passos (MAX_ITERACOES em llm.js) e porque perder minutos de crawl custa mais. O trabalho nao se perde: o turno inteiro e persistido,
     // GET /api/v1/conversas marca `emAndamento` e GET /api/v1/conversas/:id/stream
     // reconecta ao que ja chegou.
     //
@@ -403,8 +408,9 @@ function registrar(roteador, deps) {
           // mesmos abortamos via AbortController — fluxo normal, nao falha. Nao emitimos
           // 'erro' porque nao ha ninguem ouvindo e nao ha nada de errado a reportar.
         } else {
-          // Bloqueio por gancho (saldo, cobranca, uso ausente) traz o que o turno ja gerou:
-          // as rodadas anteriores ja foram cobradas, entao ficam na conversa.
+          // Bloqueio por gancho (saldo, cobranca, uso ausente) e erro do provedor numa rodada
+          // >= 2 trazem o que o turno ja gerou: as rodadas anteriores ja foram cobradas, entao
+          // ficam na conversa.
           if (conversaId && Array.isArray(e.mensagens)) {
             try {
               for (const m of e.mensagens.slice(mensagens.length)) deps.conversas.acrescentar(conversaId, m.role, m.content);

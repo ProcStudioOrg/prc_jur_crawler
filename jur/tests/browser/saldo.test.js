@@ -248,9 +248,9 @@ describe('saldo compartilhado na interface', () => {
     } finally { await a.fechar(); }
   });
 
-  it('saldo que acaba depois de uma rodada cobrada: reenvio recusado (409) devolve a pergunta à caixa e realinha o histórico', async () => {
-    // Checagens: 1 = antes do turno, 2 = antes da rodada 1 (cobrada), 3 = antes da rodada 2
-    // (sem saldo). Depois disso o time recarregou e tudo libera.
+  it('saldo que acaba depois de uma rodada cobrada: "Tentar de novo" continua do resultado pago, sem repetir a pergunta', async () => {
+    // O caso real (cache de saldo de 30 s): checagens 1 = antes do turno, 2 = antes da rodada 1
+    // (cobrada), 3 = antes da rodada 2 (sem saldo). Depois o time recarregou e tudo libera.
     const cobranca = cobrancaFalsa({
       podeOperar: (n) => (n === 3 ? { ok: false, motivo: 'saldo', saldoBrl: -0.01, topupPath: '/equipe?tab=billing' } : { ok: true }),
     });
@@ -261,9 +261,61 @@ describe('saldo compartilhado na interface', () => {
       await perguntar(page, pergunta);
       await page.locator('#mensagens .bolha.bloqueio').waitFor();
       await esperarRespostaCompleta(page);
+      const id = await page.evaluate(() => window.jurConversa.id);
+      assert.deepStrictEqual(a.conversas.mensagens(id).map((m) => m.papel), ['user', 'assistant', 'user'],
+        'a rodada 1 (tool_use + tool_result) ficou gravada depois da pergunta');
 
       const corpos = [];
       await page.route('**/api/v1/chat', (route) => { corpos.push(route.request().postDataJSON()); route.continue(); });
+      await page.locator('#mensagens .bloqueio button', { hasText: 'Tentar de novo' }).click();
+      await page.waitForFunction(() => /resposta depois do reenvio/.test(document.querySelector('#mensagens').textContent));
+      await esperarRespostaCompleta(page);
+
+      assert.strictEqual(corpos.length, 1);
+      assert.strictEqual(corpos[0].reenvio, true);
+      const enviadas = corpos[0].mensagens;
+      assert.deepStrictEqual(enviadas.map((m) => m.role), ['user', 'assistant', 'user'], JSON.stringify(enviadas));
+      assert.strictEqual(enviadas[2].content[0].type, 'tool_result', 'o reenvio termina no resultado pago');
+      assert.strictEqual(enviadas.filter((m) => m.content === pergunta).length, 1);
+      assert.strictEqual(await page.locator('#mensagens .msg.erro').count(), 0, 'sem 409 nem bolha de erro');
+      assert.strictEqual(await page.locator('.bloqueio').count(), 0);
+      assert.strictEqual(await page.locator('#mensagens .msg.user', { hasText: pergunta }).count(), 1, 'a pergunta aparece uma vez só');
+
+      const { mensagens } = await page.evaluate((c) => window.jurApi.pedir(`/api/v1/conversas/${c}`), id);
+      assert.deepStrictEqual(mensagens.map((m) => m.papel), ['user', 'assistant', 'user', 'assistant'], JSON.stringify(mensagens));
+      assert.strictEqual(mensagens.filter((m) => m.conteudo === pergunta).length, 1, 'a conversa grava a pergunta uma vez só');
+
+      // O turno seguinte leva o histórico inteiro, com a resposta continuada no fim.
+      await perguntar(page, 'e agora?', '#caixa-conversa');
+      await esperarRespostaCompleta(page);
+      assert.deepStrictEqual(corpos[1].mensagens.map((m) => m.role), ['user', 'assistant', 'user', 'assistant', 'user']);
+    } finally { await a.fechar(); }
+  });
+
+  it('conversa que mudou entre o bloqueio e o reenvio: 409 devolve a pergunta à caixa e realinha o histórico', async () => {
+    const cobranca = cobrancaFalsa({
+      podeOperar: (n) => (n === 3 ? { ok: false, motivo: 'saldo', saldoBrl: -0.01, topupPath: '/equipe?tab=billing' } : { ok: true }),
+    });
+    const a = await subir({ cobranca, respostas: [ferramenta('tu_1'), final('resposta depois do reenvio')] });
+    try {
+      const { page } = a;
+      const pergunta = 'pergunta interrompida depois da 1a rodada';
+      await perguntar(page, pergunta);
+      await page.locator('#mensagens .bolha.bloqueio').waitFor();
+      await esperarRespostaCompleta(page);
+      const id = await page.evaluate(() => window.jurConversa.id);
+
+      // Outra aba pergunta e recebe resposta na mesma conversa enquanto o reenvio está a caminho:
+      // a última gravada deixa de ser o tool_result que este cliente manda.
+      const corpos = [];
+      await page.route('**/api/v1/chat', (route) => {
+        corpos.push(route.request().postDataJSON());
+        if (corpos.length === 1) {
+          a.conversas.acrescentar(id, 'user', 'pergunta de outra aba');
+          a.conversas.acrescentar(id, 'assistant', 'resposta de outra aba');
+        }
+        route.continue();
+      });
       await page.locator('#mensagens .bloqueio button', { hasText: 'Tentar de novo' }).click();
       const aviso = page.locator('#mensagens .msg.erro', { hasText: 'Não foi possível tentar de novo' });
       await aviso.waitFor();
@@ -273,7 +325,7 @@ describe('saldo compartilhado na interface', () => {
       assert.strictEqual(await page.locator('#mensagens .msg.user', { hasText: pergunta }).count(), 1);
       assert.strictEqual(await page.locator('.bloqueio').count(), 0);
 
-      // O próximo envio leva o histórico gravado (com a rodada cobrada) e a pergunta uma vez só no fim.
+      // O próximo envio leva o histórico gravado (com a rodada cobrada e a outra aba) e a pergunta no fim.
       await page.click('#caixa-conversa .enviar');
       await page.waitForFunction(() => /resposta depois do reenvio/.test(document.querySelector('#mensagens').textContent));
       await esperarRespostaCompleta(page);
@@ -283,15 +335,47 @@ describe('saldo compartilhado na interface', () => {
       const blocos = enviadas.flatMap((m) => (Array.isArray(m.content) ? m.content : []));
       assert.ok(blocos.some((b) => b.type === 'tool_use' && b.id === 'tu_1'), JSON.stringify(enviadas));
       assert.ok(blocos.some((b) => b.type === 'tool_result' && b.tool_use_id === 'tu_1'), JSON.stringify(enviadas));
-      const temTexto = (m) => typeof m.content === 'string' || m.content.some((b) => b.type === 'text');
-      for (let i = 1; i < enviadas.length; i++) {
-        assert.ok(!(enviadas[i].role === 'user' && enviadas[i - 1].role === 'user' && temTexto(enviadas[i]) && temTexto(enviadas[i - 1])),
-          `duas perguntas seguidas sem resposta entre elas: ${JSON.stringify(enviadas)}`);
-      }
       assert.deepStrictEqual(enviadas[enviadas.length - 1], { role: 'user', content: pergunta });
-      // Do servidor: a 1a pergunta, a rodada cobrada (tool_use + tool_result) e a nova pergunta.
-      assert.deepStrictEqual(enviadas.map((m) => m.role), ['user', 'assistant', 'user', 'user']);
+      assert.deepStrictEqual(enviadas.map((m) => m.role), ['user', 'assistant', 'user', 'user', 'assistant', 'user']);
     } finally { await a.fechar(); }
+  });
+
+  it('recusa antes do stream (409 cobrança pendente, 503 indisponível) tira a pergunta da tela e do histórico', async () => {
+    for (const [motivo, texto] of [['pendente', /cobrança pendente/], ['indisponivel', /temporariamente indisponível/]]) {
+      // 1–2: primeiro turno inteiro; 3: pré-checagem do segundo, recusada; depois libera.
+      const cobranca = cobrancaFalsa({ podeOperar: (n) => (n === 3 ? { ok: false, motivo } : { ok: true }) });
+      const a = await subir({ cobranca, respostas: [final('primeira resposta'), final('segunda resposta')] });
+      try {
+        const { page } = a;
+        await perguntar(page, 'primeira pergunta');
+        await esperarRespostaCompleta(page);
+        const id = await page.evaluate(() => window.jurConversa.id);
+
+        await perguntar(page, 'pergunta recusada', '#caixa-conversa');
+        const aviso = page.locator('#mensagens .msg.erro', { hasText: texto });
+        await aviso.waitFor();
+        await esperarRespostaCompleta(page);
+        assert.strictEqual(await page.locator('#mensagens .msg.user', { hasText: 'pergunta recusada' }).count(), 0, `${motivo}: a bolha sai da tela`);
+        assert.strictEqual(await page.inputValue('#caixa-conversa .entrada'), 'pergunta recusada', `${motivo}: o texto volta para a caixa`);
+        assert.strictEqual(a.conversas.mensagens(id).length, 2, `${motivo}: o servidor não gravou nada`);
+
+        const corpos = [];
+        await page.route('**/api/v1/chat', (route) => { corpos.push(route.request().postDataJSON()); route.continue(); });
+        await page.click('#caixa-conversa .enviar');
+        await page.waitForFunction(() => /segunda resposta/.test(document.querySelector('#mensagens').textContent));
+        await esperarRespostaCompleta(page);
+        assert.deepStrictEqual(corpos[0].mensagens.map((m) => m.role), ['user', 'assistant', 'user'],
+          `${motivo}: sem duas perguntas seguidas: ${JSON.stringify(corpos[0].mensagens)}`);
+        assert.strictEqual(await page.locator('#mensagens .msg.user', { hasText: 'pergunta recusada' }).count(), 1);
+
+        // Depois de um F5 a conversa gravada é a mesma da tela.
+        await page.reload({ waitUntil: 'networkidle' });
+        await page.click('#historico .conversa-item');
+        await page.waitForSelector('#conversa:not([hidden])');
+        const perguntas = await page.locator('#mensagens .msg.user').allTextContents();
+        assert.deepStrictEqual(perguntas, ['primeira pergunta', 'pergunta recusada']);
+      } finally { await a.fechar(); }
+    }
   });
 
   it('seletor com ProcStudio primeiro, selo e preço; Configurações com o bloco do ProcStudio e o avançado recolhido', async () => {

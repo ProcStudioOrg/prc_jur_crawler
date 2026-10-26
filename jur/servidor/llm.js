@@ -126,11 +126,18 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
     // O haiku rejeita output_config.effort; validacao.js devolve esforco null para ele.
     if (esforco) parametros.output_config = { effort: esforco };
 
-    const stream = anthropic.messages.stream(parametros, { signal: sinal });
-
-    if (typeof aoTexto === 'function') stream.on('text', (delta) => aoTexto(delta));
-
-    const mensagem = await stream.finalMessage();
+    // Erro do provedor (ou stream invalido) numa rodada >= 2 sai com o historico, igual aos
+    // ganchos: as rodadas anteriores ja foram cobradas e tem de ficar na conversa. Abort do
+    // cliente segue cru — a rota o reconhece pelo nome e nao ha ninguem para quem gravar.
+    let mensagem;
+    try {
+      const stream = anthropic.messages.stream(parametros, { signal: sinal });
+      if (typeof aoTexto === 'function') stream.on('text', (delta) => aoTexto(delta));
+      mensagem = await stream.finalMessage();
+    } catch (erro) {
+      if (erro && erro.name === 'APIUserAbortError') throw erro;
+      falhar(erro);
+    }
     rodadas += 1;
 
     if (exigirUso && !mensagem.usage) {

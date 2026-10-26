@@ -4,7 +4,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { describe, it } = require('node:test');
 const db = require('../servidor/db');
-const { criarCobranca } = require('../servidor/cobranca');
+const { criarCobranca, criarLimitadorAvisos } = require('../servidor/cobranca');
 
 const abrirTmp = () => db.abrir(path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'jur-cobranca-')), 'jur.db'));
 const principal = { issuer: 'https://procstudio.test', userId: 'u1', teamId: 't1', expiresAt: Date.now() + 3600e3 };
@@ -46,6 +46,8 @@ function montar({ con = abrirTmp(), procstudio, kaizen = kaizenFalso(), relogio 
     agora: () => relogio.t,
     esperar: async (ms) => { esperas.push(ms); },
     logar: (linha) => logs.push(JSON.parse(linha)),
+    // Limitador próprio no relógio do teste: o do processo seria compartilhado entre os testes.
+    avisos: criarLimitadorAvisos({ agora: () => relogio.t }),
   });
   return { cobranca, con, logs, esperas, relogio, kaizen };
 }
@@ -77,9 +79,9 @@ describe('cobranca: pré-checagem', () => {
     for (let i = 0; i < 3; i++) assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'indisponivel' });
     assert.deepEqual(await cobranca.podeOperar(), { ok: true });
     assert.equal(procstudio.chamadas.saldo, 4);
-    assert.equal(logs.filter((l) => l.event === 'procstudio_llm_operator_failure').length, 2);
+    // As duas falhas caem no mesmo minuto: um aviso só (o limitador conta a segunda).
+    assert.equal(logs.filter((l) => l.event === 'procstudio_llm_operator_failure').length, 1);
     assert.deepEqual(kaizen.itens.map((i) => [i.source, i.corpo.origem, i.corpo.classe, i.corpo.status]), [
-      ['jur-diagnostico', 'cobranca', 'operador', 503],
       ['jur-diagnostico', 'cobranca', 'operador', 503],
     ]);
   });
@@ -222,8 +224,56 @@ describe('cobranca: falha do operador', () => {
     assert.equal(e.code, 'PROCSTUDIO_LLM_INDISPONIVEL');
     assert.equal(e.status, 503);
     assert.equal(e.message, 'A conexão ProcStudio está temporariamente indisponível. Use uma conexão própria ou tente mais tarde.');
-    assert.deepEqual(logs, [{ event: 'procstudio_llm_operator_failure', origem: 'cobranca', status: 402, erro: 'Insufficient credits' }]);
-    assert.deepEqual(kaizen.itens, [{ source: 'jur-diagnostico', corpo: { origem: 'cobranca', classe: 'operador', erro: 'Insufficient credits', status: 402 } }]);
+    assert.deepEqual(logs, [{ event: 'procstudio_llm_operator_failure', origem: 'cobranca', status: 402, erro: 'Insufficient credits', suprimidos: 0 }]);
+    assert.deepEqual(kaizen.itens, [{ source: 'jur-diagnostico', corpo: { origem: 'cobranca', classe: 'operador', erro: 'Insufficient credits', status: 402, suprimidos: 0 } }]);
+  });
+
+  it('Rails fora: no máximo um aviso por minuto; os suprimidos vão contados no aviso seguinte', async () => {
+    const procstudio = procstudioFalso({ saldos: [erro(503)] });
+    const { cobranca, logs, kaizen, relogio } = montar({ procstudio });
+    const avisos = () => logs.filter((l) => l.event === 'procstudio_llm_operator_failure');
+    // Uma aba sondando o saldo e um turno checando antes de cada rodada, tudo dentro de 59 s.
+    for (let i = 0; i < 5; i++) {
+      assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'indisponivel' });
+      await assert.rejects(cobranca.saldo({ forcar: true }), { status: 503 });
+      relogio.t += 5_000;
+    }
+    assert.equal(procstudio.chamadas.saldo, 10, 'o limitador corta o aviso, nunca a ida ao Rails');
+    assert.equal(avisos().length, 1, 'o primeiro aviso da janela sai');
+    assert.equal(avisos()[0].suprimidos, 0);
+    assert.equal(kaizen.itens.length, 1);
+
+    relogio.t += 35_000; // 60 s depois do primeiro
+    cobranca.falhaDoOperador(erro(502));
+    assert.equal(avisos().length, 2);
+    assert.deepEqual([avisos()[1].status, avisos()[1].suprimidos], [502, 9]);
+    assert.equal(kaizen.itens[1].corpo.suprimidos, 9);
+
+    relogio.t += 1_000;
+    cobranca.falhaDoOperador(erro(503));
+    assert.equal(avisos().length, 2, 'e a janela recomeça a contar');
+  });
+
+  it('o limitador é por classe e por instância; o padrão vale para o processo inteiro', () => {
+    let t = 0;
+    const limitador = criarLimitadorAvisos({ agora: () => t, intervaloMs: 60_000 });
+    assert.deepEqual(limitador.liberar('operador'), { suprimidos: 0 });
+    assert.equal(limitador.liberar('operador'), null);
+    assert.deepEqual(limitador.liberar('outra'), { suprimidos: 0 }, 'outra classe tem a própria janela');
+    t = 59_999;
+    assert.equal(limitador.liberar('operador'), null);
+    t = 60_000;
+    assert.deepEqual(limitador.liberar('operador'), { suprimidos: 2 });
+
+    // Duas contas (duas instâncias) sem limitador explícito dividem o do processo.
+    const logs = [];
+    const montarPadrao = () => criarCobranca({
+      con: abrirTmp(), procstudio: procstudioFalso(), principal, kaizen: kaizenFalso(),
+      logar: (linha) => logs.push(JSON.parse(linha)),
+    });
+    montarPadrao().falhaDoOperador(erro(503));
+    montarPadrao().falhaDoOperador(erro(503));
+    assert.ok(logs.length <= 1, `duas contas no mesmo minuto não dobram o aviso: ${JSON.stringify(logs)}`);
   });
 });
 

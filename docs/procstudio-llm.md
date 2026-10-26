@@ -59,8 +59,13 @@ trazer o custo real do provedor.
    O evento `fim` carrega `custo` com a soma do turno.
 4. O custo de cada turno fica na tabela `custo_turno`; `GET /api/v1/conversas/:id` devolve
    `custos` e `custoTotalBrl` (null se nada foi cobrado).
-5. Reenviar a mesma pergunta depois de um bloqueio usa `reenvio: true` e **não duplica** a mensagem;
-   se a última mensagem gravada não for essa pergunta, a resposta é **409** `reenvio_invalido`.
+5. "Tentar de novo" depois de um bloqueio no meio do turno refaz o histórico por
+   `GET /api/v1/conversas/:id` (a pergunta e as rodadas já pagas) e o manda com `reenvio: true`:
+   nada é gravado de novo e o turno continua de onde parou (depois de um `tool_result`, o modelo
+   responde a ele). Se a última mensagem do pedido não for a última gravada (a conversa mudou
+   nesse meio tempo), a resposta é **409** `reenvio_invalido`.
+6. Erro do provedor numa rodada ≥ 2 também mantém na conversa as rodadas já cobradas. Recusa
+   antes do stream (402, 409, 503) não grava nada: a pergunta sai da tela e volta para a caixa.
 
 ### Recibos pendentes
 
@@ -81,11 +86,13 @@ boot (recibos "em voo" de um processo que caiu voltam à fila). Códigos termina
 | `cobranca_pendente` | Recibo pendente (409) ou registro que falhou 3 vezes | "Tente novamente em instantes"; o recibo segue na fila |
 | `procstudio_indisponivel` | Rails fora do ar, `pricing_unavailable` (modelo do operador sem preço), erro do provedor na chave do operador | Mensagem com "Configurar uma conexão própria" |
 | `usage_missing` | O provedor não informou o consumo da rodada | Erro no turno; a rodada não é cobrada |
-| `reenvio_invalido` | `reenvio: true` com a última mensagem gravada diferente (409) | Pedido para enviar a pergunta de novo |
+| `reenvio_invalido` | `reenvio: true` com a conversa gravada mudada desde o bloqueio (409) | Pedido para enviar a pergunta de novo |
 
 Falhas do operador (5xx do Rails, `pricing_unavailable`) geram o log `procstudio_llm_operator_failure`
-(e diagnóstico no Kaizen), **uma vez por recibo**, não por tentativa. Esse log é o sinal para o operador
-agir (por exemplo, sincronizar o preço do modelo no Rails).
+(e diagnóstico no Kaizen), **uma vez por recibo**, não por tentativa, e no máximo **um por minuto
+por processo**: com o Rails fora, cada checagem de saldo falharia e inundaria log e outbox. Os
+avisos cortados na janela são contados e o total vai no campo `suprimidos` do aviso seguinte. Esse
+log é o sinal para o operador agir (por exemplo, sincronizar o preço do modelo no Rails).
 
 ### Saldo na interface
 

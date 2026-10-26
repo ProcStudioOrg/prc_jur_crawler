@@ -29,6 +29,7 @@ function clienteFalso(respostas) {
         const p = {
           on(evento, fn) { ouvintes[evento] = fn; return p; },
           async finalMessage() {
+            if (resposta instanceof Error) throw resposta;
             for (const bloco of resposta.content) {
               if (bloco.type === 'text' && ouvintes.text) ouvintes.text(bloco.text);
             }
@@ -440,6 +441,27 @@ describe('ganchos por rodada', () => {
     assert.strictEqual(erro.rodadas, 1);
     assert.strictEqual(erro.mensagens.length, 2);
     assert.strictEqual(erro.mensagens[1].role, 'assistant');
+  });
+
+  it('erro do provedor na 2a rodada sai com o historico: a rodada 1, ja paga, fica para a rota gravar', async () => {
+    const provedor = Object.assign(new Error('502 do provedor'), { code: 'PROVIDER_ERROR', status: 502 });
+    const erro = await llm.conversar({
+      mensagens: [{ role: 'user', content: 'x' }], cliente: clienteFalso([rodadaTool(), provedor]), deps: { fila: filaVazia },
+      exigirUso: true, aoUsoDaRodada: async () => {},
+    }).then(() => null, (e) => e);
+    assert.strictEqual(erro, provedor, 'o erro do provedor segue o mesmo, so ganha o historico');
+    assert.strictEqual(erro.rodadas, 1);
+    assert.deepStrictEqual(erro.mensagens.map((m) => m.role), ['user', 'assistant', 'user'], 'pergunta + tool_use + tool_result');
+    assert.strictEqual(erro.mensagens[2].content[0].type, 'tool_result');
+  });
+
+  it('abort do cliente no stream segue cru, sem historico anexado', async () => {
+    const abortado = Object.assign(new Error('abortado'), { name: 'APIUserAbortError' });
+    const erro = await llm.conversar({
+      mensagens: [{ role: 'user', content: 'x' }], cliente: clienteFalso([rodadaTool(), abortado]), deps: { fila: filaVazia },
+    }).then(() => null, (e) => e);
+    assert.strictEqual(erro, abortado);
+    assert.strictEqual(erro.mensagens, undefined);
   });
 
   it('sem exigirUso, usage nulo passa sem chamar aoUsoDaRodada', async () => {
