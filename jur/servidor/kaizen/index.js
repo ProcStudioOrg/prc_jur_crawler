@@ -194,6 +194,10 @@ function criarKaizen({ dir, env = process.env, fetchFn, agora = Date.now, versao
     try { outbox.enfileirar('jur-diagnostico', P.payloadResumo({ ...comum(), resumo })); } catch (e) { logar(e); }
   }
 
+  function enviarCobranca(aviso) {
+    try { outbox.enfileirar('jur-diagnostico', P.payloadCobranca({ ...comum(), ...aviso })); } catch (e) { logar(e); }
+  }
+
   // true só quando o relato vai de fato ao FFD: sem webhook configurado ele não chegaria a ninguém.
   // Passa sempre por payloadRelato (idempotente): objeto cru nunca vai direto ao FFD.
   function enviarRelato(relato) {
@@ -213,7 +217,7 @@ function criarKaizen({ dir, env = process.env, fetchFn, agora = Date.now, versao
     try { con.close(); } catch { /* já fechado */ }
   }
 
-  return { registrarErro, registrarConcluido, registrarSentinela, enviarResumo, enviarRelato, linkFalha, outbox, fechar };
+  return { registrarErro, registrarConcluido, registrarSentinela, enviarResumo, enviarCobranca, enviarRelato, linkFalha, outbox, fechar };
 }
 
 function kaizenNulo() {
@@ -231,6 +235,7 @@ function kaizenNulo() {
     registrarConcluido: () => ({ avisos: [] }),
     registrarSentinela: async () => {},
     enviarResumo() {},
+    enviarCobranca() {},
     enviarRelato: () => false,
     linkFalha: () => null,
     outbox,

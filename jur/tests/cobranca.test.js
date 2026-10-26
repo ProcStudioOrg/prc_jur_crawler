@@ -5,6 +5,7 @@ const path = require('node:path');
 const { describe, it } = require('node:test');
 const db = require('../servidor/db');
 const { criarCobranca, criarLimitadorAvisos } = require('../servidor/cobranca');
+const { payloadCobranca } = require('../servidor/kaizen/payload');
 
 const abrirTmp = () => db.abrir(path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'jur-cobranca-')), 'jur.db'));
 const principal = { issuer: 'https://procstudio.test', userId: 'u1', teamId: 't1', expiresAt: Date.now() + 3600e3 };
@@ -35,7 +36,12 @@ function procstudioFalso({ saldos = [], usos = [] } = {}) {
 
 function kaizenFalso(ligado = true) {
   const itens = [];
-  return { itens, outbox: { ligado, enfileirar: (source, corpo) => { itens.push({ source, corpo }); return true; } } };
+  // enviarCobranca monta o corpo pelo mesmo builder do Kaizen real (versão fixa, como no criarKaizen).
+  return {
+    itens,
+    enviarCobranca: (aviso) => { itens.push({ source: 'jur-diagnostico', corpo: payloadCobranca({ versao: '9.9.9', em: 1_000_000, ...aviso }) }); },
+    outbox: { ligado, enfileirar: (source, corpo) => { itens.push({ source, corpo }); return true; } },
+  };
 }
 
 function montar({ con = abrirTmp(), procstudio, kaizen = kaizenFalso(), relogio = { t: 1_000_000 } } = {}) {
@@ -79,10 +85,11 @@ describe('cobranca: pré-checagem', () => {
     for (let i = 0; i < 3; i++) assert.deepEqual(await cobranca.podeOperar(), { ok: false, motivo: 'indisponivel' });
     assert.deepEqual(await cobranca.podeOperar(), { ok: true });
     assert.equal(procstudio.chamadas.saldo, 4);
-    // As duas falhas caem no mesmo minuto: um aviso só (o limitador conta a segunda).
-    assert.equal(logs.filter((l) => l.event === 'procstudio_llm_operator_failure').length, 1);
+    // Causas diferentes não se escondem: pricing e Rails 5xx têm janelas próprias.
+    assert.equal(logs.filter((l) => l.event === 'procstudio_llm_operator_failure').length, 2);
     assert.deepEqual(kaizen.itens.map((i) => [i.source, i.corpo.origem, i.corpo.classe, i.corpo.status]), [
-      ['jur-diagnostico', 'cobranca', 'operador', 503],
+      ['jur-diagnostico', 'cobranca', 'pricing_unavailable', 503],
+      ['jur-diagnostico', 'cobranca', 'rails_indisponivel', 503],
     ]);
   });
 
@@ -224,8 +231,34 @@ describe('cobranca: falha do operador', () => {
     assert.equal(e.code, 'PROCSTUDIO_LLM_INDISPONIVEL');
     assert.equal(e.status, 503);
     assert.equal(e.message, 'A conexão ProcStudio está temporariamente indisponível. Use uma conexão própria ou tente mais tarde.');
-    assert.deepEqual(logs, [{ event: 'procstudio_llm_operator_failure', origem: 'cobranca', status: 402, erro: 'Insufficient credits', suprimidos: 0 }]);
-    assert.deepEqual(kaizen.itens, [{ source: 'jur-diagnostico', corpo: { origem: 'cobranca', classe: 'operador', erro: 'Insufficient credits', status: 402, suprimidos: 0 } }]);
+    assert.deepEqual(logs, [{ event: 'procstudio_llm_operator_failure', origem: 'cobranca', classe: 'provedor', status: 402, erro: 'Insufficient credits', suprimidos: 0 }]);
+    assert.equal(kaizen.itens.length, 1);
+    const { source, corpo } = kaizen.itens[0];
+    assert.equal(source, 'jur-diagnostico');
+    // Contrato do FFD (parseItemJurDiagnostico) mais os detalhes do alerta.
+    assert.deepEqual(
+      [corpo.servico, corpo.tipo, corpo.origem, corpo.versao, corpo.classe, corpo.erro, corpo.status, corpo.suprimidos],
+      ['jurcrawler', 'falha', 'cobranca', '9.9.9', 'provedor', 'Insufficient credits', 402, 0],
+    );
+    assert.match(corpo.tribunal, /^[a-z0-9_-]{2,40}$/);
+    assert.match(corpo.classe, /^[a-z_]+(:[A-Za-z0-9_]+)?$/);
+    assert.ok(corpo.passo && corpo.assinatura);
+  });
+
+  it('as três classes (rails, pricing, provedor) têm janelas independentes', async () => {
+    const procstudio = procstudioFalso({ saldos: [erro(503)], usos: [erro(503, 'PRICING_UNAVAILABLE'), USO_OK] });
+    const { cobranca, kaizen } = montar({ procstudio });
+    const classes = () => kaizen.itens.map((i) => i.corpo.classe);
+    await assert.rejects(cobranca.saldo({ forcar: true }), { status: 503 });
+    assert.deepEqual(classes(), ['rails_indisponivel']);
+    await assert.rejects(cobranca.saldo({ forcar: true }), { status: 503 });
+    assert.deepEqual(classes(), ['rails_indisponivel'], 'a segunda do Rails na janela é suprimida');
+    await cobranca.registrar(USO); // pricing na primeira tentativa, depois ok
+    assert.deepEqual(classes(), ['rails_indisponivel', 'pricing_unavailable'], 'pricing não fica atrás da queda do Rails');
+    cobranca.falhaDoOperador(erro(429));
+    cobranca.falhaDoOperador(erro(429));
+    assert.deepEqual(classes(), ['rails_indisponivel', 'pricing_unavailable', 'provedor']);
+    assert.equal(kaizen.itens[1].corpo.suprimidos, 0);
   });
 
   it('Rails fora: no máximo um aviso por minuto; os suprimidos vão contados no aviso seguinte', async () => {
@@ -244,13 +277,13 @@ describe('cobranca: falha do operador', () => {
     assert.equal(kaizen.itens.length, 1);
 
     relogio.t += 35_000; // 60 s depois do primeiro
-    cobranca.falhaDoOperador(erro(502));
+    await assert.rejects(cobranca.saldo({ forcar: true }), { status: 503 });
     assert.equal(avisos().length, 2);
-    assert.deepEqual([avisos()[1].status, avisos()[1].suprimidos], [502, 9]);
+    assert.deepEqual([avisos()[1].status, avisos()[1].suprimidos], [503, 9]);
     assert.equal(kaizen.itens[1].corpo.suprimidos, 9);
 
     relogio.t += 1_000;
-    cobranca.falhaDoOperador(erro(503));
+    await assert.rejects(cobranca.saldo({ forcar: true }), { status: 503 });
     assert.equal(avisos().length, 2, 'e a janela recomeça a contar');
   });
 

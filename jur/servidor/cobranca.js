@@ -18,6 +18,9 @@ const erroCom = (code, message, extra = {}) => Object.assign(new Error(message),
 // Só código ou mensagem, curtos: nada de corpo, cabeçalho ou credencial vai para log ou FFD.
 const descrever = (e) => String((e && (e.code || e.message)) || 'erro').slice(0, 300);
 const ehFalhaDoOperador = (e) => e?.code === 'PRICING_UNAVAILABLE' || Number(e?.status) >= 500;
+// Classe do alerta por causa (cada uma tem a própria janela do limitador). O Rails 5xx não é
+// `rails_5xx` porque o FFD só aceita [a-z_] na classe.
+const classeDoRails = (e) => (e?.code === 'PRICING_UNAVAILABLE' ? 'pricing_unavailable' : 'rails_indisponivel');
 const INTERVALO_AVISO_MS = 60_000;
 
 /**
@@ -67,15 +70,15 @@ function criarCobranca({
     try { logar(JSON.stringify({ event: evento, ...dados })); } catch { /* log nunca derruba a cobrança */ }
   };
 
-  function avisarOperador(e) {
-    const liberado = avisos.liberar('operador');
+  function avisarOperador(e, classe) {
+    const liberado = avisos.liberar(classe);
     if (!liberado) return;
     const status = Number.isFinite(e?.status) ? e.status : null;
     const erro = descrever(e);
     const { suprimidos } = liberado;
-    registrarLog('procstudio_llm_operator_failure', { origem: 'cobranca', status, erro, suprimidos });
+    registrarLog('procstudio_llm_operator_failure', { origem: 'cobranca', classe, status, erro, suprimidos });
     try {
-      if (kaizen?.outbox?.ligado) kaizen.outbox.enfileirar('jur-diagnostico', { origem: 'cobranca', classe: 'operador', erro, status, suprimidos });
+      if (kaizen?.outbox?.ligado) kaizen.enviarCobranca({ classe, erro, status, suprimidos });
     } catch { /* outbox nunca derruba a cobrança */ }
   }
 
@@ -85,7 +88,7 @@ function criarCobranca({
     try {
       return await fn();
     } catch (e) {
-      if (avisar && ehFalhaDoOperador(e)) avisarOperador(e);
+      if (avisar && ehFalhaDoOperador(e)) avisarOperador(e, classeDoRails(e));
       throw e;
     }
   }
@@ -260,7 +263,7 @@ function criarCobranca({
   }
 
   function falhaDoOperador(erro) {
-    avisarOperador(erro);
+    avisarOperador(erro, 'provedor');
     return erroCom('PROCSTUDIO_LLM_INDISPONIVEL', MSG_OPERADOR, { status: 503 });
   }
 

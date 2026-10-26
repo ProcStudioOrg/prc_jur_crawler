@@ -88,11 +88,14 @@ boot (recibos "em voo" de um processo que caiu voltam à fila). Códigos termina
 | `usage_missing` | O provedor não informou o consumo da rodada | Erro no turno; a rodada não é cobrada |
 | `reenvio_invalido` | `reenvio: true` com a conversa gravada mudada desde o bloqueio (409) | Pedido para enviar a pergunta de novo |
 
-Falhas do operador (5xx do Rails, `pricing_unavailable`) geram o log `procstudio_llm_operator_failure`
-(e diagnóstico no Kaizen), **uma vez por recibo**, não por tentativa, e no máximo **um por minuto
-por processo**: com o Rails fora, cada checagem de saldo falharia e inundaria log e outbox. Os
-avisos cortados na janela são contados e o total vai no campo `suprimidos` do aviso seguinte. Esse
-log é o sinal para o operador agir (por exemplo, sincronizar o preço do modelo no Rails).
+Falhas do operador geram o log `procstudio_llm_operator_failure` e um item `jur-diagnostico` no Kaizen
+(`origem: 'cobranca'`, `tipo: 'falha'`, com `classe`, `erro`, `status` e `suprimidos`), **uma vez por
+recibo**, não por tentativa. A `classe` diz a causa: `rails_indisponivel` (5xx do Rails em
+`ai_balance`/`ai_usage`), `pricing_unavailable` (503 de preço do Rails) e `provedor` (402/429/5xx do
+OpenRouter). Cada classe tem a própria janela de **um aviso por minuto por processo**, então um
+`pricing_unavailable` não fica escondido atrás de uma queda do Rails. Os avisos cortados na janela
+são contados e o total vai no campo `suprimidos` do aviso seguinte. Esse sinal é o que o operador
+usa para agir (por exemplo, sincronizar o preço do modelo no Rails).
 
 ### Saldo na interface
 

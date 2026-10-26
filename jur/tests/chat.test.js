@@ -639,7 +639,7 @@ describe('POST /api/v1/chat — cobrança da conexão ProcStudio', () => {
     const cobranca = criarCobranca({
       con: db.abrir(path.join(dirCob, 'jur.db')), procstudio,
       principal: { issuer: 'https://proc.example', userId: 'u1', teamId: 't1' },
-      kaizen: { outbox: { ligado: true, enfileirar: (fonte, corpo) => { diagnosticos.push({ fonte, corpo }); return true; } } },
+      kaizen: { enviarCobranca: (aviso) => { diagnosticos.push({ fonte: 'jur-diagnostico', corpo: aviso }); }, outbox: { ligado: true } },
       esperar: async () => {},
       logar: (linha) => logs.push(JSON.parse(linha)),
       avisos: criarLimitadorAvisos(),

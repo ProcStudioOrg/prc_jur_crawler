@@ -7,6 +7,8 @@ const { createHash } = require('node:crypto');
 const { sanitizar } = require('./assinatura');
 
 const SERVICO = 'jurcrawler';
+// Espelho de ORIGENS_JUR do FFD (lib/jur-diagnostico/contracts.ts).
+const ORIGENS = new Set(['busca', 'sentinela', 'cobranca']);
 const CHAVES_FILTRO = ['query', 'dataInicio', 'dataFim', 'dataPubInicio', 'dataPubFim', 'relator', 'juizados', 'numero'];
 const MAX_FILTROS = 4 * 1024;
 const MAX_LISTA = 8 * 1024;
@@ -126,7 +128,7 @@ function base({ versao, revisao, origem, tipo, em }) {
     servico: SERVICO,
     versao: versaoValida(versao),
     revisao: revisaoValida(revisao),
-    origem: origem === 'sentinela' ? 'sentinela' : 'busca',
+    origem: ORIGENS.has(origem) ? origem : 'busca',
     tipo,
     em: emIso(em),
   };
@@ -184,6 +186,29 @@ function payloadResgate({ versao, revisao, origem, tribunal, tipo, assinatura, e
     filtros: filtrosDe(params),
     job_id: jobIdValido(jobId),
     usuario_hash: hashValido(usuarioHash),
+  };
+}
+
+/**
+ * Alerta ao operador da cobrança (Rails fora, preço ausente, provedor sem saldo). Não vem de
+ * tribunal: o FFD exige os campos de falha, então vão `tribunal: 'procstudio'`, `passo: 'cobranca'`
+ * e a assinatura `cobranca|<classe>`; `status` e `suprimidos` seguem como detalhe.
+ */
+function payloadCobranca({ versao, revisao, em, classe, erro, status, suprimidos }) {
+  const classeOk = classeValida(classe);
+  return {
+    ...base({ versao, revisao, origem: 'cobranca', tipo: 'falha', em }),
+    tribunal: 'procstudio',
+    classe: classeOk,
+    passo: 'cobranca',
+    assinatura: `cobranca|${classeOk}`,
+    erro: erroEnviado(erro),
+    rota: null,
+    filtros: {},
+    job_id: null,
+    usuario_hash: null,
+    status: Number.isFinite(status) ? status : null,
+    suprimidos: contador(suprimidos),
   };
 }
 
@@ -270,6 +295,6 @@ function payloadRelato(dados) {
 }
 
 module.exports = {
-  hashUsuario, filtrosDe, payloadFalha, payloadResgate, payloadResumo, payloadRelato,
+  hashUsuario, filtrosDe, payloadFalha, payloadResgate, payloadResumo, payloadCobranca, payloadRelato,
   tribunalValido, classeValida, passoValido, SERVICO,
 };
