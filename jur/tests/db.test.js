@@ -22,8 +22,9 @@ describe('db', () => {
     const cols = Object.fromEntries(con.prepare('PRAGMA table_info(job)').all().map((c) => [c.name, c]));
     assert.ok(cols.navegador && cols.navegador_falhas && cols.resolvido_pelo_usuario);
     assert.strictEqual(cols.resolvido_pelo_usuario.notnull, 1);
-    assert.strictEqual(con.prepare('PRAGMA user_version').get().user_version, 6);
+    assert.strictEqual(con.prepare('PRAGMA user_version').get().user_version, 7);
     assert.ok(con.prepare("SELECT name FROM sqlite_master WHERE name='cobranca_pendente'").get(), 'v6: banco antigo ganha cobranca_pendente');
+    assert.ok(con.prepare("SELECT name FROM sqlite_master WHERE name='custo_turno'").get(), 'v7: banco antigo ganha custo_turno');
     const l = con.prepare("SELECT resolvido_pelo_usuario, navegador_falhas FROM job WHERE id='v'").get();
     assert.deepStrictEqual([l.resolvido_pelo_usuario, l.navegador_falhas], [0, null]);
     con.close();

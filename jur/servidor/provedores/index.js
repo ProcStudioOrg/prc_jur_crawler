@@ -7,8 +7,10 @@ const ENDPOINTS = {
   openrouter: "https://openrouter.ai/api/v1",
   gemini: "https://generativelanguage.googleapis.com/v1beta",
 };
+// O status HTTP (ou o código numérico do erro no stream) segue no erro: na conexão
+// ProcStudio a rota de chat o repassa ao diagnóstico do operador (402/429/5xx).
 function erroProvedor(status) {
-  return new Error(
+  const erro = new Error(
     status === 401 || status === 403
       ? "Chave recusada pelo provedor. Substitua a credencial."
       : status === 429
@@ -19,6 +21,10 @@ function erroProvedor(status) {
             ? "Modelo ou parâmetros incompatíveis. Escolha um modelo com suporte a ferramentas."
             : "Não foi possível concluir a resposta do provedor.",
   );
+  return Object.assign(erro, {
+    code: "PROVIDER_ERROR",
+    status: typeof status === "number" && Number.isFinite(status) ? status : null,
+  });
 }
 function numeroOuNull(v) {
   return typeof v === "number" && Number.isFinite(v) ? v : null;

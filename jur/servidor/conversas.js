@@ -114,17 +114,50 @@ function criarRepositorio(con) {
                         ORDER BY criado_em ASC, rowid ASC`).all(id).map((l) => l.job_id);
   }
 
+  /**
+   * Custo de um turno do chat. Regravado a cada rodada (upsert pelo turnoId) para que um
+   * turno que termina em erro, ou que o cliente abandonou, deixe na conversa o que ja foi
+   * cobrado. `cobradoBrl` e null em BYOK (so tokens). `criado_em` e o da primeira rodada.
+   */
+  function registrarCusto(conversaId, { turnoId, cobradoBrl, tokensEntrada, tokensSaida, rodadas, modelo, conexao }) {
+    con.prepare(`INSERT INTO custo_turno
+                   (conversa_id, turno_id, cobrado_brl, tokens_entrada, tokens_saida, rodadas, modelo, conexao, criado_em)
+                 VALUES (?,?,?,?,?,?,?,?,?)
+                 ON CONFLICT (turno_id) DO UPDATE SET
+                   cobrado_brl = excluded.cobrado_brl, tokens_entrada = excluded.tokens_entrada,
+                   tokens_saida = excluded.tokens_saida, rodadas = excluded.rodadas,
+                   modelo = excluded.modelo, conexao = excluded.conexao`)
+      .run(conversaId, turnoId, cobradoBrl, tokensEntrada, tokensSaida, rodadas, modelo, conexao, Date.now());
+  }
+
+  /** Os custos dos turnos desta conversa, na ordem em que os turnos comecaram. */
+  function custos(id) {
+    return con.prepare(`SELECT turno_id, cobrado_brl, tokens_entrada, tokens_saida, rodadas, modelo, conexao, criado_em
+                        FROM custo_turno WHERE conversa_id = ? ORDER BY criado_em ASC, rowid ASC`).all(id)
+      .map((l) => ({
+        turnoId: l.turno_id,
+        cobradoBrl: l.cobrado_brl,
+        tokensEntrada: l.tokens_entrada,
+        tokensSaida: l.tokens_saida,
+        rodadas: l.rodadas,
+        modelo: l.modelo,
+        conexao: l.conexao,
+        criadoEm: l.criado_em,
+      }));
+  }
+
   function apagar(id) {
     // O vinculo sai junto: sem isto a tabela cresce para sempre com linhas orfas, e a FK
     // de conversa_busca barraria o DELETE da conversa de qualquer forma.
     con.prepare('DELETE FROM conversa_busca WHERE conversa_id = ?').run(id);
+    con.prepare('DELETE FROM custo_turno WHERE conversa_id = ?').run(id);
     con.prepare('DELETE FROM mensagem WHERE conversa_id = ?').run(id);
     return con.prepare('DELETE FROM conversa WHERE id = ?').run(id).changes > 0;
   }
 
   return {
     criar, listar, obter, mensagens, acrescentar, renomearSePrimeira, apagar,
-    vincularBusca, buscas,
+    vincularBusca, buscas, registrarCusto, custos,
   };
 }
 

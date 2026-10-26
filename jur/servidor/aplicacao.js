@@ -168,8 +168,13 @@ function criarAplicacao({
           transport: llmTransport,
           gerenciada,
         });
+        // Cobrança da conexão ProcStudio, por conta: sem conexão gerenciada não há o que cobrar.
+        scope.cobranca = gerenciada
+          ? require("./cobranca").criarCobranca({ con: scope.con, procstudio, principal, kaizen: k })
+          : null;
         scope.app = criarApp({
           ...scope,
+          frontendUrl,
           cofre,
           chaves: chaves.para(principal),
           clienteLLM,
