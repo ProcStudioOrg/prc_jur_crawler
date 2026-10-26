@@ -21,6 +21,104 @@ o provedor e o modelo precisam suportar chamadas de ferramentas. Falha no catál
 ID manual; a geração pode recusar modelos incompatíveis. Esforço de raciocínio não é enviado
 sem capacidade confirmada. Nenhuma chave de provedor é compartilhada pela instalação. Gemini preserva somente a assinatura opaca exigida para continuidade de ferramentas; não persiste texto de raciocínio privado.
 
+## Conexão ProcStudio e cobrança
+
+Além das conexões próprias (chave do usuário), a instalação pode oferecer a conexão
+**ProcStudio**: a chave do provedor é do operador, vem só do ambiente (nunca vai ao banco do
+usuário nem a rota alguma) e cada resposta é cobrada do saldo de IA do time no ProcStudio.
+Sem `PROCSTUDIO_LLM_API_KEY` a conexão não existe e `GET /api/v1/saldo` devolve `{ "disponivel": false }`.
+
+### Variáveis (operador)
+
+| Variável | Padrão | O que faz |
+| --- | --- | --- |
+| `PROCSTUDIO_LLM_API_KEY` | vazio | Chave do provedor (OpenRouter). Vazia: sem conexão ProcStudio. |
+| `PROCSTUDIO_LLM_ENDPOINT` | `https://openrouter.ai/api/v1` | URL base compatível com OpenAI. |
+| `PROCSTUDIO_LLM_MODELO` | `z-ai/glm-5.3-flash` | ID do modelo enviado ao provedor. O usuário nunca escolhe outro nesta conexão. |
+| `PROCSTUDIO_LLM_MODELO_CATALOGO` | `glm-5.3-flash` | ID do mesmo modelo no catálogo de preços do Rails (`model_id` do `ai_usage`). |
+| `PROCSTUDIO_LLM_UPSTREAM` | `z-ai` | Provedor fixado no OpenRouter (`provider.order`, sem fallback). Vazio desliga a fixação. |
+| `PROCSTUDIO_LLM_ROTULO` | `GLM-5.3 Flash` | Nome mostrado na interface. |
+
+Valor vazio vale como "usar o padrão", exceto em `PROCSTUDIO_LLM_UPSTREAM`, em que vazio é
+válido e significa não fixar o provedor. Por isso o `compose.yml` usa `${PROCSTUDIO_LLM_UPSTREAM-z-ai}`
+(sem `:`): variável ausente vira `z-ai`, variável definida e vazia continua vazia.
+Com endpoint do OpenRouter e `UPSTREAM` preenchido, cada chamada pede `usage.include` para
+trazer o custo real do provedor.
+
+### Fluxo por rodada
+
+1. **Pré-checagem** (antes de gravar a pergunta): o crawler consulta `service_access/ai_balance`
+   no Rails, com cache de 30 s por conta. Recusas: **402** `saldo_insuficiente` (traz `saldoBrl` e
+   `topupUrl`), **409** `cobranca_pendente` (há recibo ainda não registrado), **503**
+   `procstudio_indisponivel` (Rails fora do ar, conta sem acesso à IA ou conexão sem cobrança montada).
+   Falha fechada: sem veredito recente não há chamada ao provedor.
+2. **Antes de cada rodada** do turno o mesmo teste roda de novo, porque o saldo pode acabar no meio.
+3. **Depois de cada rodada** que informou consumo, o crawler registra o uso em
+   `service_access/ai_usage` (5 s de timeout; `request_id = <conversa>:<turno>:<rodada>`, idempotente
+   no Rails) e emite o evento SSE `custo` (`rodada`, tokens, `cobradoBrl`, `saldoBrl`, `modelo`).
+   O evento `fim` carrega `custo` com a soma do turno.
+4. O custo de cada turno fica na tabela `custo_turno`; `GET /api/v1/conversas/:id` devolve
+   `custos` e `custoTotalBrl` (null se nada foi cobrado).
+5. Reenviar a mesma pergunta depois de um bloqueio usa `reenvio: true` e **não duplica** a mensagem;
+   se a última mensagem gravada não for essa pergunta, a resposta é **409** `reenvio_invalido`.
+
+### Recibos pendentes
+
+O recibo é gravado em `cobranca_pendente` (`em_voo = 1`) **antes** da primeira ida ao Rails.
+Registrar tenta 3 vezes (esperas de 1 s e 3 s). Se todas falham, o recibo fica na fila e o turno
+termina com `cobranca_pendente`; enquanto houver recibo na fila a conta não inicia turnos novos.
+Um varredor reenvia a cada 60 s, por conta aberta, e `escopos.varrerPendencias()` o aciona no
+boot (recibos "em voo" de um processo que caiu voltam à fila). Códigos terminais do Rails
+(`USER_GONE`, `INVALID_USAGE`, `SERVICE_AUTH`, `TEAM_REJECTED`) descartam o recibo com o log
+`billing_receipt_dropped`; recibo ilegível sai com `billing_receipt_corrupt`; recibo com mais de
+24 h ainda pendente registra `billing_pending_stale`.
+
+### Estados de erro (`erro.tipo`)
+
+| `tipo` | Quando | O que o usuário vê |
+| --- | --- | --- |
+| `saldo_insuficiente` | Saldo abaixo do limite do plano (402, ou evento `erro` no meio do turno) | Cartão de bloqueio com "Adicionar créditos" e "Tentar de novo" |
+| `cobranca_pendente` | Recibo pendente (409) ou registro que falhou 3 vezes | "Tente novamente em instantes"; o recibo segue na fila |
+| `procstudio_indisponivel` | Rails fora do ar, `pricing_unavailable` (modelo do operador sem preço), erro do provedor na chave do operador | Mensagem com "Configurar uma conexão própria" |
+| `usage_missing` | O provedor não informou o consumo da rodada | Erro no turno; a rodada não é cobrada |
+| `reenvio_invalido` | `reenvio: true` com a última mensagem gravada diferente (409) | Pedido para enviar a pergunta de novo |
+
+Falhas do operador (5xx do Rails, `pricing_unavailable`) geram o log `procstudio_llm_operator_failure`
+(e diagnóstico no Kaizen), **uma vez por recibo**, não por tentativa. Esse log é o sinal para o operador
+agir (por exemplo, sincronizar o preço do modelo no Rails).
+
+### Saldo na interface
+
+`GET /api/v1/saldo` (`?forcar=1` ignora o cache) devolve `disponivel`, `saldoBrl`, `podeOperar`
+(falso também com recibo pendente), `mensagem`, `topupUrl` e `modelo` (rótulo e preços por 1M de
+tokens). A interface mostra o saldo no pill, o seletor de modelo marca a conexão ProcStudio como
+"recomendada", cada resposta mostra seu custo e a conversa mostra o total.
+
+### Ambiente local
+
+`npm run dev:local` simula a carteira (`jur/dev/local.js`): saldo inicial R$ 10,00, ajustável em
+centavos por `JUR_LOCAL_SALDO_INICIAL`; tolerância de −R$ 0,50 (bloqueia estritamente acima do
+limite, como o Rails) e `topupPath` `/equipe?tab=billing`. Detalhes em [ambiente local](ambiente-local.md).
+
+### Como conferir uma cobrança
+
+1. A interface mostra o custo da resposta (e `custo` no SSE).
+2. No ProcStudio, a página `/ia-uso` do time traz a linha do mesmo uso (modelo, tokens, valor cobrado,
+   provedor `openrouter`); o `request_id` é `<conversa>:<turno>:<rodada>`.
+3. No painel do OpenRouter (Activity/Generations) procure a geração pelo `providerGenerationId`
+   enviado no recibo; o custo em USD deve bater com `providerCostUsd`.
+
+Os três valores devem ser coerentes entre si (a cobrança em R$ vem do preço do catálogo do Rails,
+não do custo do provedor). O registro de cada validação em produção vai em `docs/qa/`.
+
+### Pendências conhecidas
+
+- O Rails exposto é o PR ProcStudioOrg/ProcStudio#876; a conexão só funciona com ele em produção.
+- Os turnos vivos e o cache de saldo ficam em memória: reiniciar o container derruba os turnos em
+  andamento (os recibos já gravados sobrevivem e são reenviados).
+- O preço de `glm-5.3-flash` precisa estar sincronizado no catálogo do Rails; sem ele a conexão
+  responde `procstudio_indisponivel`.
+
 ## Armazenamento e isolamento
 
 - `/dados/acesso.db`: hashes de sessão e de chaves pessoais; tokens delegados Rails cifrados.
