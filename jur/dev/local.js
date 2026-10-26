@@ -42,7 +42,8 @@ async function iniciarLocal({
   const brl = cents => cents / 100;
   const erroRails = (status, code, message) => Object.assign(new Error(message), { status, code });
   const exigirEmissor = p => { if (p?.issuer !== identity.issuer) throw erroRails(401, 'SERVICE_AUTH', 'Emissor ProcStudio não reconhecido.'); };
-  const podeOperar = () => saldoCents >= LIMITE_NEGATIVO_CENTS;
+  // Como o check_balance! do Rails: estritamente acima do limite (no limite exato já bloqueia).
+  const podeOperar = () => saldoCents > LIMITE_NEGATIVO_CENTS;
   const tokens = v => Number.isSafeInteger(v) && v >= 0;
   const procstudio = {
     async saldo(p) {
@@ -52,7 +53,7 @@ async function iniciarLocal({
         ativo: true, podeOperar: podeOperar(), saldoCents, saldoBrl: brl(saldoCents),
         limiteNegativoCents: LIMITE_NEGATIVO_CENTS,
         mensagem: podeOperar() ? 'Saldo de IA simulado (ambiente local).' : 'Saldo de IA simulado esgotado. Reinicie com JUR_LOCAL_SALDO_INICIAL maior.',
-        topupPath: '/creditos-ia', modelo: { ...MODELO },
+        topupPath: '/equipe?tab=billing', modelo: { ...MODELO },
       };
     },
     async registrarUso(p, u) {
@@ -62,13 +63,15 @@ async function iniciarLocal({
       const invalido = (motivo) => erroRails(422, 'INVALID_USAGE', `Uso de IA inválido: ${motivo}.`);
       if (typeof u?.requestId !== 'string' || !u.requestId) throw invalido('requestId');
       if (u.modelId !== MODELO.modelId) throw invalido('modelo desconhecido');
-      // Cache de leitura/escrita é aceito mas cobrado como entrada: o Rails ainda não define outro preço.
+      // Cache de leitura/escrita é cobrado como entrada: no Rails isso é só o fallback de quando o modelo
+      // não tem preço de cache sincronizado; o fake não simula preço de cache próprio.
       for (const campo of ['inputTokens', 'outputTokens'])
         if (!tokens(u[campo])) throw invalido(campo);
       for (const campo of ['cacheReadTokens', 'cacheWriteTokens'])
         if (u[campo] !== undefined && u[campo] !== null && !tokens(u[campo])) throw invalido(campo);
       const anterior = cobrancas.get(u.requestId);
-      if (anterior) return { ...anterior, duplicado: true };
+      // Como o Rails: o valor cobrado é o original, saldo e podeOperar são os de agora.
+      if (anterior) return { ...anterior, saldoCents, saldoBrl: brl(saldoCents), podeOperar: podeOperar(), duplicado: true };
       const entrada = u.inputTokens + (u.cacheReadTokens || 0) + (u.cacheWriteTokens || 0);
       // Preços em R$ por 1M de tokens: entrada*preco/1e6 reais = entrada*preco*100/1e6 centavos; arredonda para cima.
       const micro = entrada * MODELO.entradaPor1MBrl * 100 + u.outputTokens * MODELO.saidaPor1MBrl * 100;

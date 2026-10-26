@@ -33,10 +33,10 @@ responde `{ "disponivel": false }`. Com ela definida (e, se quiser, `PROCSTUDIO_
 `PROCSTUDIO_LLM_MODELO` etc.), o chat roda contra o provedor real, por exemplo o OpenRouter, e cada
 rodada é cobrada de uma carteira simulada em memória que imita `ai_balance` e `ai_usage` do Rails:
 
-- saldo inicial R$ 10,00, limite negativo de -R$ 0,50 (opera enquanto o saldo for >= -R$ 0,50);
+- saldo inicial R$ 10,00, limite negativo de -R$ 0,50, que é a tolerância do plano gratuito (planos pagos têm -R$ 3,00); opera só com saldo estritamente acima do limite, como o `check_balance!` do Rails, então no -R$ 0,50 exato já bloqueia;
 - modelo `glm-5.3-flash` a R$ 1,00 (entrada) e R$ 4,00 (saída) por 1M de tokens, cobrança arredondada
-  para cima ao centavo; tokens de cache entram como entrada;
-- idempotência por `requestId`: repetir devolve o mesmo resultado com `duplicado: true`, sem novo débito;
+  para cima ao centavo; tokens de cache são cobrados como entrada, o que no Rails é só o fallback de quando o modelo não tem preço de cache sincronizado (o fake não simula preço de cache próprio);
+- idempotência por `requestId`: repetir devolve o mesmo resultado com `duplicado: true`, sem novo débito (o valor cobrado é o original; saldo e `podeOperar` são os atuais, como no Rails);
 - uso inválido (modelo desconhecido, tokens negativos ou fracionários, `requestId` vazio) é recusado com
   `INVALID_USAGE`; usuário ou equipe diferentes da identidade local são recusados. Nada é aceito às cegas;
 - `JUR_LOCAL_SALDO_INICIAL` (inteiro em centavos, ex.: `-100`) troca o saldo inicial para testar o bloqueio

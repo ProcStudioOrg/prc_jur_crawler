@@ -200,17 +200,27 @@ test('carteira local: JUR_LOCAL_SALDO_INICIAL=-100 bloqueia; dentro do limite de
   assert.equal(b.saldoCents, -100);
   assert.equal(b.limiteNegativoCents, -50);
   assert.ok(b.mensagem);
+  assert.equal(b.topupPath, '/equipe?tab=billing');
   const cookie = await login(bloqueada.base);
   const corpo = await (await fetch(bloqueada.base + '/api/v1/saldo?forcar=1', { headers: { cookie } })).json();
   assert.equal(corpo.podeOperar, false);
   assert.equal(corpo.saldoBrl, -1);
 
-  const limite = await comCarteira(t, { saldoInicial: -50 });
+  // estritamente acima do limite: no -50 exato já bloqueia, um centavo a mais opera
+  const noLimite = await comCarteira(t, { saldoInicial: -50 });
+  assert.equal((await noLimite.procstudio.saldo(principalLocal)).podeOperar, false);
+  const limite = await comCarteira(t, { saldoInicial: -49 });
   assert.equal((await limite.procstudio.saldo(principalLocal)).podeOperar, true);
-  // uma cobrança que cruza o limite devolve podeOperar falso
   const r = await limite.procstudio.registrarUso(principalLocal, uso({ inputTokens: 1 }));
-  assert.equal(r.saldoCents, -51);
+  assert.equal(r.saldoCents, -50);
   assert.equal(r.podeOperar, false);
+  // duplicado devolve o cobrado original, mas o saldo e podeOperar de agora
+  const d = await limite.procstudio.registrarUso(principalLocal, uso({ inputTokens: 1 }));
+  assert.deepEqual(d, { ...r, duplicado: true });
+  await limite.procstudio.registrarUso(principalLocal, uso({ requestId: 'outro', inputTokens: 1 }));
+  const d2 = await limite.procstudio.registrarUso(principalLocal, uso({ inputTokens: 1 }));
+  assert.equal(d2.cobradoCents, 1);
+  assert.equal(d2.saldoCents, -51);
 });
 
 test('carteira local: valor inválido em JUR_LOCAL_SALDO_INICIAL falha o boot e a carteira não é compartilhada entre instâncias', async (t) => {
