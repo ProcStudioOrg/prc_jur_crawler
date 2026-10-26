@@ -25,6 +25,10 @@ const USO = (entrada, saida) => ({
   input_tokens: entrada, output_tokens: saida, cache_read_tokens: 0, cache_write_tokens: 0,
   cost_usd: 0.001, generation_id: 'gen-1',
 });
+const ferramenta = (id, usage = USO(500, 20)) => ({
+  stop_reason: 'tool_use', usage,
+  content: [{ type: 'text', text: 'vou olhar os tribunais' }, { type: 'tool_use', id, name: 'listar_tribunais', input: {} }],
+});
 const final = (texto, usage = USO(1000, 200)) => ({ stop_reason: 'end_turn', usage, content: [{ type: 'text', text: texto }] });
 
 /** Saldo em centavos; cada rodada custa `precoCents`. podeOperar = saldo > 0, salvo `podeOperar` explícito. */
@@ -241,6 +245,52 @@ describe('saldo compartilhado na interface', () => {
       const { mensagens } = await page.evaluate((c) => window.jurApi.pedir(`/api/v1/conversas/${c}`), id);
       assert.strictEqual(mensagens.filter((m) => m.conteudo === 'pergunta que esbarra no saldo').length, 1,
         `a conversa grava a pergunta uma vez só: ${JSON.stringify(mensagens)}`);
+    } finally { await a.fechar(); }
+  });
+
+  it('saldo que acaba depois de uma rodada cobrada: reenvio recusado (409) devolve a pergunta à caixa e realinha o histórico', async () => {
+    // Checagens: 1 = antes do turno, 2 = antes da rodada 1 (cobrada), 3 = antes da rodada 2
+    // (sem saldo). Depois disso o time recarregou e tudo libera.
+    const cobranca = cobrancaFalsa({
+      podeOperar: (n) => (n === 3 ? { ok: false, motivo: 'saldo', saldoBrl: -0.01, topupPath: '/equipe?tab=billing' } : { ok: true }),
+    });
+    const a = await subir({ cobranca, respostas: [ferramenta('tu_1'), final('resposta depois do reenvio')] });
+    try {
+      const { page } = a;
+      const pergunta = 'pergunta interrompida depois da 1a rodada';
+      await perguntar(page, pergunta);
+      await page.locator('#mensagens .bolha.bloqueio').waitFor();
+      await esperarRespostaCompleta(page);
+
+      const corpos = [];
+      await page.route('**/api/v1/chat', (route) => { corpos.push(route.request().postDataJSON()); route.continue(); });
+      await page.locator('#mensagens .bloqueio button', { hasText: 'Tentar de novo' }).click();
+      const aviso = page.locator('#mensagens .msg.erro', { hasText: 'Não foi possível tentar de novo' });
+      await aviso.waitFor();
+      assert.strictEqual(corpos.length, 1);
+      assert.strictEqual(corpos[0].reenvio, true);
+      assert.strictEqual(await page.inputValue('#caixa-conversa .entrada'), pergunta, 'a pergunta volta para a caixa');
+      assert.strictEqual(await page.locator('#mensagens .msg.user', { hasText: pergunta }).count(), 1);
+      assert.strictEqual(await page.locator('.bloqueio').count(), 0);
+
+      // O próximo envio leva o histórico gravado (com a rodada cobrada) e a pergunta uma vez só no fim.
+      await page.click('#caixa-conversa .enviar');
+      await page.waitForFunction(() => /resposta depois do reenvio/.test(document.querySelector('#mensagens').textContent));
+      await esperarRespostaCompleta(page);
+      assert.strictEqual(corpos.length, 2);
+      const enviadas = corpos[1].mensagens;
+      assert.strictEqual(corpos[1].reenvio, undefined);
+      const blocos = enviadas.flatMap((m) => (Array.isArray(m.content) ? m.content : []));
+      assert.ok(blocos.some((b) => b.type === 'tool_use' && b.id === 'tu_1'), JSON.stringify(enviadas));
+      assert.ok(blocos.some((b) => b.type === 'tool_result' && b.tool_use_id === 'tu_1'), JSON.stringify(enviadas));
+      const temTexto = (m) => typeof m.content === 'string' || m.content.some((b) => b.type === 'text');
+      for (let i = 1; i < enviadas.length; i++) {
+        assert.ok(!(enviadas[i].role === 'user' && enviadas[i - 1].role === 'user' && temTexto(enviadas[i]) && temTexto(enviadas[i - 1])),
+          `duas perguntas seguidas sem resposta entre elas: ${JSON.stringify(enviadas)}`);
+      }
+      assert.deepStrictEqual(enviadas[enviadas.length - 1], { role: 'user', content: pergunta });
+      // Do servidor: a 1a pergunta, a rodada cobrada (tool_use + tool_result) e a nova pergunta.
+      assert.deepStrictEqual(enviadas.map((m) => m.role), ['user', 'assistant', 'user', 'user']);
     } finally { await a.fechar(); }
   });
 

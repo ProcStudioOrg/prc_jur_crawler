@@ -445,6 +445,30 @@ function cartaoBloqueio(dados, texto, bolhaGravada) {
   window.jurSaldo.carregar(true);
 }
 
+/**
+ * 409 `reenvio_invalido`: depois da pergunta o servidor ja gravou rodadas cobradas do turno
+ * interrompido (tool_use/tool_result), entao ela nao e mais a ultima mensagem. O historico
+ * local nao tem essas rodadas: e refeito a partir da conversa gravada (que tambem as mostra
+ * na tela), a pergunta volta para a caixa e a mensagem do servidor fica visivel.
+ */
+async function realinharAposReenvioInvalido(id, texto, corpo) {
+  if (conversaAtual !== id) return;
+  try {
+    await abrirConversa(id);
+  } catch {
+    // Sem a conversa gravada nao ha como alinhar: ao menos tira a pergunta velha do fim do
+    // historico, para o proximo envio nao leva-la duas vezes.
+    const ultima = historicoLocal[historicoLocal.length - 1];
+    if (ultima?.role === 'user' && ultima.content === texto) historicoLocal.pop();
+  }
+  if (conversaAtual !== id) return;
+  mostrarErro(corpo, texto);
+  const campo = $('.entrada', caixaAtiva());
+  campo.value = texto;
+  ajustarAltura(campo);
+  campo.focus();
+}
+
 /** "850 tokens", "19,1 mil tokens", "1,2 mi tokens". */
 function formatarTokens(n) {
   const umaCasa = (v) => v.toLocaleString('pt-BR', { maximumFractionDigits: 1 });
@@ -663,7 +687,9 @@ async function enviar(campo, modelo, esforco, reenvio = null) {
         return;
       }
       if (conversaAtual === conversaDoEnvio) {
-        if (reenvio) {
+        if (reenvio && corpo.tipo === 'reenvio_invalido') {
+          await realinharAposReenvioInvalido(conversaDoEnvio, texto, corpo);
+        } else if (reenvio) {
           // A pergunta continua gravada: um novo bloqueio oferece reenvia-la de novo.
           mostrarErro(corpo, texto, bolhaPergunta);
         } else {
