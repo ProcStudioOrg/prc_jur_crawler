@@ -238,3 +238,37 @@ test('sem PROCSTUDIO_LLM_API_KEY não existe conexão gerenciada: /saldo diz ind
   const cookie = await login(base);
   assert.deepEqual(await (await fetch(base + '/api/v1/saldo', { headers: { cookie } })).json(), { disponivel: false });
 });
+
+test('carteira local: JUR_LOCAL_PROCSTUDIO e POST /__local/procstudio simulam conta inativa e credencial recusada', async (t) => {
+  const local = await comCarteira(t);
+  const { base, procstudio: ps } = local;
+  const mudar = (estado) => fetch(base + '/__local/procstudio', { method: 'POST', body: JSON.stringify({ estado }) });
+  const cookie = await login(base);
+
+  assert.equal((await mudar('credencial_recusada')).status, 200);
+  await assert.rejects(() => ps.saldo(principalLocal), { code: 'SERVICE_AUTH', status: 401 });
+  await assert.rejects(() => ps.registrarUso(principalLocal, uso()), { code: 'SERVICE_AUTH', status: 401 });
+  const fora = await fetch(base + '/api/v1/saldo?forcar=1', { headers: { cookie } });
+  assert.equal(fora.status, 503, 'credencial recusada é do operador: a sessão continua');
+  await fora.json();
+
+  assert.equal((await mudar('inativo')).status, 200);
+  assert.deepEqual(await ps.saldo(principalLocal), { ativo: false });
+  await assert.rejects(() => ps.registrarUso(principalLocal, uso()), { code: 'USER_GONE', status: 410 });
+  const inativo = await fetch(base + '/api/v1/saldo?forcar=1', { headers: { cookie } });
+  assert.equal(inativo.status, 401);
+  assert.equal((await inativo.json()).tipo, 'sessao_invalida');
+  const me = await fetch(base + '/api/v1/me', { headers: { cookie } });
+  assert.equal(me.status, 401, 'a sessão local acabou');
+  await me.text();
+
+  assert.equal((await mudar('qualquer')).status, 400);
+  assert.equal((await mudar('normal')).status, 200);
+  assert.equal((await ps.saldo(principalLocal)).ativo, true);
+});
+
+test('carteira local: valor inválido em JUR_LOCAL_PROCSTUDIO falha o boot', async (t) => {
+  process.env.JUR_LOCAL_PROCSTUDIO = 'desligado';
+  try { await assert.rejects(() => comCarteira(t), /JUR_LOCAL_PROCSTUDIO/); }
+  finally { delete process.env.JUR_LOCAL_PROCSTUDIO; }
+});

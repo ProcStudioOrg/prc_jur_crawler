@@ -39,6 +39,21 @@ async function iniciarLocal({
   let saldoCents = inicialBruto === undefined ? 1000 : Number(inicialBruto);
   if (!Number.isSafeInteger(saldoCents)) throw new Error('JUR_LOCAL_SALDO_INICIAL deve ser um inteiro em centavos.');
   const cobrancas = new Map();
+  // Simulação do Rails fora do caminho feliz (JUR_LOCAL_PROCSTUDIO no boot, ou POST /__local/procstudio
+  // com { "estado": ... } em tempo de execução):
+  // - `inativo`: usuário removido no ProcStudio. ai_balance 200 `active: false` (o JurCrawler encerra a
+  //   sessão com 401 `sessao_invalida`) e ai_usage 410 `user_gone`, como o AiBilling do Rails;
+  // - `credencial_recusada`: segredo de serviço errado. ai_balance e ai_usage 401 (`head :unauthorized`
+  //   do authenticate_service), que o cliente traduz para SERVICE_AUTH: recibo fica na fila.
+  const ESTADOS_PROCSTUDIO = ['normal', 'inativo', 'credencial_recusada'];
+  const validarEstado = (v) => {
+    if (!ESTADOS_PROCSTUDIO.includes(v)) throw new Error(`JUR_LOCAL_PROCSTUDIO deve ser ${ESTADOS_PROCSTUDIO.join(', ')}.`);
+    return v;
+  };
+  let estadoProcstudio = validarEstado(process.env.JUR_LOCAL_PROCSTUDIO ?? 'normal');
+  const credencialRecusada = () => {
+    if (estadoProcstudio === 'credencial_recusada') throw erroRails(401, 'SERVICE_AUTH', 'Credencial de serviço recusada.');
+  };
   const brl = cents => cents / 100;
   const erroRails = (status, code, message) => Object.assign(new Error(message), { status, code });
   const exigirEmissor = p => { if (p?.issuer !== identity.issuer) throw erroRails(401, 'SERVICE_AUTH', 'Emissor ProcStudio não reconhecido.'); };
@@ -48,6 +63,8 @@ async function iniciarLocal({
   const procstudio = {
     async saldo(p) {
       exigirEmissor(p);
+      credencialRecusada();
+      if (estadoProcstudio === 'inativo') return { ativo: false };
       if (p.userId !== identity.userId || p.teamId !== identity.teamId) return { ativo: false };
       return {
         ativo: true, podeOperar: podeOperar(), saldoCents, saldoBrl: brl(saldoCents),
@@ -58,6 +75,8 @@ async function iniciarLocal({
     },
     async registrarUso(p, u) {
       exigirEmissor(p);
+      credencialRecusada();
+      if (estadoProcstudio === 'inativo') throw erroRails(410, 'USER_GONE', 'Usuário não existe mais no ProcStudio.');
       if (p.userId !== identity.userId) throw erroRails(410, 'USER_GONE', 'Usuário não existe mais no ProcStudio.');
       if (p.teamId !== identity.teamId) throw erroRails(404, 'TEAM_REJECTED', 'Equipe não pode ser cobrada.');
       const invalido = (motivo) => erroRails(422, 'INVALID_USAGE', `Uso de IA inválido: ${motivo}.`);
@@ -127,6 +146,17 @@ async function iniciarLocal({
     }
     if (req.method === 'GET' && (url.pathname === '/' || url.pathname === '/index.html')) {
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); return res.end(html);
+    }
+    if (url.pathname === '/__local/procstudio' && req.method === 'POST') {
+      let corpo = '';
+      req.on('data', (c) => { corpo += c; if (corpo.length > 1024) req.destroy(); });
+      req.on('end', () => {
+        try { estadoProcstudio = validarEstado(JSON.parse(corpo || '{}').estado); }
+        catch (e) { res.writeHead(400, { 'content-type': 'application/json' }); return res.end(JSON.stringify({ erro: e.message })); }
+        res.writeHead(200, { 'content-type': 'application/json' });
+        res.end(JSON.stringify({ estado: estadoProcstudio }));
+      });
+      return;
     }
     const asset = assets[url.pathname];
     if (asset && req.method === 'GET') {

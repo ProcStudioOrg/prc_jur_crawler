@@ -42,8 +42,20 @@ rodada é cobrada de uma carteira simulada em memória que imita `ai_balance` e 
 - `JUR_LOCAL_SALDO_INICIAL` (inteiro em centavos, ex.: `-100`) troca o saldo inicial para testar o bloqueio
   por saldo; valor inválido impede o boot.
 
+- `JUR_LOCAL_PROCSTUDIO` simula o Rails fora do caminho feliz; valor inválido impede o boot:
+  - `normal` (padrão);
+  - `inativo`: usuário removido no ProcStudio. `ai_balance` devolve `active: false` (o JurCrawler responde 401
+    `sessao_invalida` e encerra a sessão: a tela volta ao login) e `ai_usage` devolve 410 `user_gone`, como o
+    `AiBilling` do Rails;
+  - `credencial_recusada`: segredo de serviço errado. `ai_balance` e `ai_usage` devolvem 401 (`SERVICE_AUTH`):
+    o saldo fica "indisponível", a sessão continua, o recibo fica na fila e o operador recebe o alerta
+    `credencial_servico`.
+  Para trocar com o servidor no ar, sem reiniciar:
+  `curl -X POST http://127.0.0.1:4317/__local/procstudio -d '{"estado":"inativo"}'` (e `"normal"` para voltar).
+
 ```sh
 PROCSTUDIO_LLM_API_KEY=sk-or-... JUR_LOCAL_SALDO_INICIAL=500 npm run dev:local
+PROCSTUDIO_LLM_API_KEY=sk-or-... JUR_LOCAL_PROCSTUDIO=credencial_recusada npm run dev:local
 ```
 
 A carteira vive só no processo: reiniciar volta ao saldo inicial. Os recibos de cobrança pendentes
