@@ -251,6 +251,8 @@ function registrar(roteador, deps) {
     function dadosDoErro(e) {
       if (e.bloqueio) return e.bloqueio;
       if (e.code === 'COBRANCA_PENDENTE') return { erro: e.message, tipo: 'cobranca_pendente' };
+      // A cobranca ja avisou o operador (pricing_unavailable do Rails); aqui so traduz.
+      if (e.code === 'PROCSTUDIO_LLM_INDISPONIVEL') return { erro: e.message, tipo: 'procstudio_indisponivel' };
       if (e.code === 'USAGE_MISSING') return { erro: e.message, tipo: 'usage_missing' };
       if (cobrar && e.code === 'PROVIDER_ERROR') {
         // Erro do provedor na chave do operador nao e problema do usuario: vira

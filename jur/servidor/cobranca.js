@@ -46,11 +46,12 @@ function criarCobranca({
   }
 
   // Toda ida ao Rails passa aqui: falha do operador vira log + diagnóstico, e o erro segue.
-  async function chamarRails(fn) {
+  // `avisar: false` quando o mesmo recibo já avisou o operador numa tentativa anterior.
+  async function chamarRails(fn, { avisar = true } = {}) {
     try {
       return await fn();
     } catch (e) {
-      if (ehFalhaDoOperador(e)) avisarOperador(e);
+      if (avisar && ehFalhaDoOperador(e)) avisarOperador(e);
       throw e;
     }
   }
@@ -127,10 +128,12 @@ function criarCobranca({
                  ON CONFLICT (request_id) DO UPDATE SET em_voo = 1`)
       .run(requestId, JSON.stringify(recibo), agora());
     let ultimo;
+    // Um aviso ao operador por recibo, não um por tentativa.
+    let avisado = false;
     for (let tentativa = 0; tentativa <= ESPERAS_MS.length; tentativa++) {
       if (tentativa > 0) await esperar(ESPERAS_MS[tentativa - 1]);
       try {
-        const r = await chamarRails(() => procstudio.registrarUso(recibo.principal, uso));
+        const r = await chamarRails(() => procstudio.registrarUso(recibo.principal, uso), { avisar: !avisado });
         apagar();
         atualizarCache(r);
         return { cobradoBrl: r.cobradoBrl, saldoBrl: r.saldoBrl, podeOperar: r.podeOperar, duplicado: r.duplicado };
@@ -140,6 +143,7 @@ function criarCobranca({
           descartar(uso.requestId, e);
           throw erroCom('COBRANCA_RECUSADA', MSG_RECUSADA, { status: e.status });
         }
+        if (ehFalhaDoOperador(e)) avisado = true;
         ultimo = e;
       }
     }
@@ -147,6 +151,10 @@ function criarCobranca({
                  WHERE request_id = ?`)
       .run(ESPERAS_MS.length + 1, descrever(ultimo), requestId);
     agendar();
+    // Modelo do operador sem preço no catálogo do Rails: o recibo continua devido (fica na
+    // fila do varredor), mas para o usuário é a conexão ProcStudio que está indisponível,
+    // não uma cobrança dele pendente. O operador já foi avisado acima.
+    if (ultimo?.code === 'PRICING_UNAVAILABLE') throw erroCom('PROCSTUDIO_LLM_INDISPONIVEL', MSG_OPERADOR, { status: 503 });
     throw erroCom('COBRANCA_PENDENTE', MSG_PENDENTE);
   }
 

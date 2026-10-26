@@ -558,6 +558,46 @@ describe('POST /api/v1/chat — cobrança da conexão ProcStudio', () => {
     } finally { a.fechar(); }
   });
 
+  it('pricing_unavailable do Rails no registro vira procstudio_indisponivel, avisa o operador uma vez e mantém o custo já cobrado', async () => {
+    const { criarCobranca } = require('../servidor/cobranca');
+    const dirCob = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-chat-pricing-'));
+    const logs = [];
+    const diagnosticos = [];
+    let idas = 0;
+    const procstudio = {
+      async saldo() { return { ativo: true, podeOperar: true, saldoCents: 1000, saldoBrl: 10, topupPath: '/ia-uso/recarga' }; },
+      async registrarUso() {
+        idas++;
+        if (idas === 1) return { cobradoCents: 4, cobradoBrl: 0.04, saldoCents: 996, saldoBrl: 9.96, podeOperar: true, duplicado: false };
+        throw Object.assign(new Error('pricing_unavailable'), { status: 503, code: 'PRICING_UNAVAILABLE' });
+      },
+    };
+    const cobranca = criarCobranca({
+      con: db.abrir(path.join(dirCob, 'jur.db')), procstudio,
+      principal: { issuer: 'https://proc.example', userId: 'u1', teamId: 't1' },
+      kaizen: { outbox: { ligado: true, enfileirar: (fonte, corpo) => { diagnosticos.push({ fonte, corpo }); return true; } } },
+      esperar: async () => {},
+      logar: (linha) => logs.push(JSON.parse(linha)),
+    });
+    const a = await ambiente({ respostas: [ferramenta('t1', USO(100, 10)), final('nunca', USO(200, 20))], cobranca });
+    try {
+      const c = a.conversas.criar();
+      const eventos = analisarSSE(await (await a.postar({ conexaoId: 'procstudio', conversaId: c.id })).text());
+      assert.deepStrictEqual(eventos.find((e) => e.evento === 'erro').dado, {
+        erro: 'A conexão ProcStudio está temporariamente indisponível. Use uma conexão própria ou tente mais tarde.',
+        tipo: 'procstudio_indisponivel',
+      });
+      assert.strictEqual(idas, 4, 'rodada 1 cobrada + 3 tentativas da rodada 2');
+      assert.strictEqual(logs.filter((l) => l.event === 'procstudio_llm_operator_failure').length, 1);
+      assert.strictEqual(diagnosticos.length, 1);
+      assert.strictEqual(cobranca.pendentes(), 1, 'o recibo continua devido e fica para o varredor');
+      const corpo = await (await fetch(`${a.base}/api/v1/conversas/${c.id}`)).json();
+      assert.strictEqual(corpo.custos.length, 1);
+      assert.deepStrictEqual([corpo.custos[0].cobradoBrl, corpo.custos[0].rodadas], [0.04, 1]);
+      assert.strictEqual(corpo.custoTotalBrl, 0.04);
+    } finally { cobranca.pararVarredor(); a.fechar(); }
+  });
+
   it('USAGE_MISSING encerra com tipo usage_missing', async () => {
     const a = await ambiente({ respostas: [final('sem uso', undefined)] });
     const erroOriginal = console.error;
