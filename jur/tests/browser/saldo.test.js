@@ -442,6 +442,34 @@ describe('saldo compartilhado na interface', () => {
     } finally { await a.fechar(); }
   });
 
+  it('conta inativa no ProcStudio: o saldo responde 401 e a tela volta ao login com o motivo, sem pílula "indisponível"', async () => {
+    const cobranca = { ...cobrancaFalsa(), saldo: async () => ({ ativo: false }) };
+    const a = await subir({ cobranca });
+    try {
+      const { page } = a;
+      await page.waitForSelector('#login-procstudio:not([hidden])');
+      assert.strictEqual(await page.textContent('#login-erro'),
+        'Sua conta do ProcStudio está inativa ou a sessão expirou; entre de novo.');
+      assert.strictEqual(await page.evaluate(() => document.body.classList.contains('aguardando-sessao')), true);
+      assert.strictEqual(await page.$eval('#saldo-ia', (e) => e.hidden), true);
+      assert.doesNotMatch(await page.textContent('#saldo-ia'), /indisponível/);
+    } finally { await a.fechar(); }
+  });
+
+  it('conta que fica inativa ao perguntar: 401 do chat leva ao login com o motivo', async () => {
+    const cobranca = cobrancaFalsa({ podeOperar: () => ({ ok: false, motivo: 'inativo' }) });
+    const a = await subir({ cobranca });
+    try {
+      const { page } = a;
+      await page.waitForSelector('#saldo-ia:not([hidden]) > *');
+      await perguntar(page, 'pergunta com a conta desativada');
+      await page.waitForSelector('#login-procstudio:not([hidden])');
+      assert.strictEqual(await page.textContent('#login-erro'),
+        'Sua conta do ProcStudio está inativa ou a sessão expirou; entre de novo.');
+      await page.waitForFunction(() => document.querySelector('#saldo-ia').hidden);
+    } finally { await a.fechar(); }
+  });
+
   it('sem conexão gerenciada (disponivel: false) a pílula não aparece', async () => {
     const a = await subir({ cobranca: null, gerenciada: null });
     try {

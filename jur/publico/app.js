@@ -16,7 +16,10 @@ window.jurApi = {
     const resposta = await fetch(caminho, { ...opcoes, headers });
     if (resposta.status === 401
         && resposta.headers.get('www-authenticate')?.startsWith('Session')) {
-      document.dispatchEvent(new CustomEvent('jur:autenticacao-negada'));
+      // `tipo: 'sessao_invalida'` = o ProcStudio desativou o usuário/time (ou a sessão acabou lá):
+      // a tela de login explica o motivo. O corpo é lido de um clone; quem chamou lê o original.
+      const corpo = await resposta.clone().json().catch(() => null);
+      document.dispatchEvent(new CustomEvent('jur:autenticacao-negada', { detail: { tipo: corpo?.tipo ?? null } }));
     }
     return resposta;
   },

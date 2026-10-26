@@ -1,4 +1,4 @@
-const { json } = require("../http");
+const { json, sessaoInvalida } = require("../http");
 
 const MSG_INDISPONIVEL = "Não foi possível consultar o saldo de IA do ProcStudio agora. Tente novamente em instantes.";
 const MSG_PENDENTE = "Há uma cobrança desta conta ainda não registrada no ProcStudio. Ela é reenviada automaticamente.";
@@ -13,8 +13,9 @@ function registrar(roteador, deps) {
     } catch {
       return json(res, 503, { disponivel: true, erro: MSG_INDISPONIVEL });
     }
-    // Conta sem acesso à IA no Rails: o bloqueio é do chat também, então não inventa saldo.
-    if (b?.ativo !== true) return json(res, 503, { disponivel: true, erro: MSG_INDISPONIVEL });
+    // `ativo: false`: usuário ou time não vale mais no ProcStudio. Não é queda (essa caiu no catch
+    // acima, 503): a sessão do JurCrawler acaba e a resposta é 401 `sessao_invalida`.
+    if (b.ativo !== true) return sessaoInvalida(req, res);
     const pendente = deps.cobranca.pendentes() > 0;
     const base = deps.frontendUrl ? String(deps.frontendUrl).replace(/\/$/, "") : "";
     return json(res, 200, {

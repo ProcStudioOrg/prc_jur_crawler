@@ -73,7 +73,14 @@
     try {
       const r = await window.jurApi.requisitar(`/api/v1/saldo${forcar ? '?forcar=1' : ''}`);
       const corpo = await r.json().catch(() => null);
-      if (r.ok && corpo) novo = corpo;
+      // 401 do saldo = a conta não vale mais no ProcStudio (ou a sessão acabou): nunca a pílula
+      // "indisponível", e sim o login. O 401 com `www-authenticate: Session` já levou ao login em
+      // jurApi.requisitar; sem ele, o aviso parte daqui.
+      if (r.status === 401) {
+        if (!r.headers.get('www-authenticate')?.startsWith('Session'))
+          document.dispatchEvent(new CustomEvent('jur:autenticacao-negada', { detail: { tipo: 'sessao_invalida' } }));
+        novo = null;
+      } else if (r.ok && corpo) novo = corpo;
       // 503 com `disponivel`: a conexão existe, mas o ProcStudio não respondeu o saldo.
       else if (corpo?.disponivel) novo = { disponivel: true, erro: corpo.erro || `HTTP ${r.status}` };
       else novo = null;

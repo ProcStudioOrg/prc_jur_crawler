@@ -1,5 +1,5 @@
 const { randomUUID } = require('node:crypto');
-const { sse, lerCorpo, json } = require('../http');
+const { sse, lerCorpo, json, sessaoInvalida, MSG_SESSAO_INVALIDA } = require('../http');
 const llm = require('../llm');
 const catalogo = require('../catalogo');
 const validacao = require('../validacao');
@@ -37,6 +37,8 @@ function bloqueioDaCobranca(veredito, frontendUrl) {
   }
   if (veredito.motivo === 'pendente') return { status: 409, corpo: { erro: MSG_PENDENTE, tipo: 'cobranca_pendente' } };
   if (veredito.motivo === 'indisponivel') return { status: 503, corpo: { erro: MSG_INDISPONIVEL, tipo: 'procstudio_indisponivel' } };
+  // Usuário ou time inativo no ProcStudio: quem responde também encerra a sessão (ver sessaoInvalida).
+  if (veredito.motivo === 'inativo') return { status: 401, corpo: { erro: MSG_SESSAO_INVALIDA, tipo: 'sessao_invalida' } };
   throw new Error(`motivo de bloqueio da cobrança desconhecido: ${veredito.motivo}`);
 }
 
@@ -153,6 +155,7 @@ function registrar(roteador, deps) {
     if (cobrar) {
       const veredito = await deps.cobranca.podeOperar();
       if (!veredito.ok) {
+        if (veredito.motivo === 'inativo') return sessaoInvalida(req, res);
         const { status, corpo: recusa } = bloqueioDaCobranca(veredito, deps.frontendUrl);
         return json(res, status, recusa);
       }
@@ -305,6 +308,9 @@ function registrar(roteador, deps) {
         ? async () => {
           const veredito = await deps.cobranca.podeOperar();
           if (!veredito.ok) {
+            // Inativo no meio do turno: o SSE já começou (sem como limpar o cookie), mas a sessão
+            // some do servidor e o próximo pedido da aba volta 401 e leva ao login.
+            if (veredito.motivo === 'inativo' && req.encerrarSessao) await req.encerrarSessao();
             const { corpo: dados } = bloqueioDaCobranca(veredito, deps.frontendUrl);
             throw Object.assign(new Error(dados.erro), { bloqueio: dados });
           }

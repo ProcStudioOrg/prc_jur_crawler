@@ -29,6 +29,9 @@ time (detalhes em `docs/procstudio-llm.md`). Exige o PR ProcStudioOrg/ProcStudio
 - credencial de serviço recusada (`SERVICE_AUTH`, 401 do Rails ou emissor desconhecido) não descarta mais o
   recibo: ele fica em `cobranca_pendente`, o varredor reenvia e o operador recebe o alerta `credencial_servico`
   (um por minuto); `ai_balance` com 401 também vira `SERVICE_AUTH`;
+- usuário ou time inativo no ProcStudio (`ai_balance` com `active: false`) encerra a sessão do JurCrawler:
+  `GET /api/v1/saldo` e o chat respondem 401 `sessao_invalida` (antes, 503 "indisponível") e a tela volta ao
+  login com o motivo; Rails fora continua 503; carteira local simula os dois casos (`JUR_LOCAL_PROCSTUDIO`);
 - envs novas: `PROCSTUDIO_LLM_API_KEY`, `PROCSTUDIO_LLM_ENDPOINT`, `PROCSTUDIO_LLM_MODELO`,
   `PROCSTUDIO_LLM_MODELO_CATALOGO`, `PROCSTUDIO_LLM_UPSTREAM`, `PROCSTUDIO_LLM_ROTULO`.
 

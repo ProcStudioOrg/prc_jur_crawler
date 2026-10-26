@@ -191,6 +191,20 @@ function criarAplicacao({
         });
       }
       req.principal = principal;
+      // Logout pedido pela rota (ProcStudio respondeu `active: false`): o mesmo caminho do
+      // POST /auth/logout. Chave pessoal (bearer) não tem sessão: o `subject` do ProcStudio já a
+      // recusa no próximo pedido.
+      if (!bearer) {
+        req.encerrarSessao = async () => {
+          if (!res.headersSent) res.setHeader("set-cookie", setCookie("jur_session", "", 0));
+          try {
+            await sessoes.sair(session);
+          } catch (e) {
+            // A linha local já saiu antes do revoke: a sessão do JurCrawler acabou mesmo assim.
+            console.error(JSON.stringify({ event: "sessao_revoke_failure", erro: String(e.code || e.message).slice(0, 300) }));
+          }
+        };
+      }
       const controller = new AbortController();
       req.authSignal = controller.signal;
       let validating = false;

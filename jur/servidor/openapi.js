@@ -95,9 +95,12 @@ const ACCOUNT_PATHS = {
     parameters: [{ name: 'forcar', in: 'query', required: false, schema: { type: 'string', enum: ['1'] }, description: 'ignora o cache de 30 s' }],
     responses: {
       200: { description: 'Saldo, ou { disponivel: false }.', content: { 'application/json': { schema: { $ref: '#/components/schemas/Saldo' } } } },
-      401: RESPOSTAS.Erro401,
+      401: {
+        description: 'Sessão ausente/expirada, ou o ProcStudio respondeu que o usuário ou o time não vale mais (`active: false`): nesse caso o corpo é `{ erro, tipo: \'sessao_invalida\' }`, a sessão do JurCrawler é encerrada (cookie apagado e sessão revogada) e o próximo pedido já não autentica. Vem com `www-authenticate: Session`.',
+        content: { 'application/json': { schema: { $ref: '#/components/schemas/BloqueioCobranca' } } },
+      },
       403: RESPOSTAS.Erro403,
-      503: { description: 'O ProcStudio não respondeu ou a conta não tem acesso à IA: `{ disponivel: true, erro }`. Nunca devolve um saldo suposto.', content: { 'application/json': { schema: { type: 'object', properties: { disponivel: { type: 'boolean' }, erro: { type: 'string' } }, required: ['disponivel', 'erro'] } } } },
+      503: { description: 'O ProcStudio não respondeu (5xx, rede, tempo esgotado) ou recusou a credencial de serviço do JurCrawler: `{ disponivel: true, erro }`. A sessão continua. Nunca devolve um saldo suposto.', content: { 'application/json': { schema: { type: 'object', properties: { disponivel: { type: 'boolean' }, erro: { type: 'string' } }, required: ['disponivel', 'erro'] } } } },
     },
   } },
   '/api/v1/relatos/meta': { get: {
@@ -338,7 +341,7 @@ function documento() {
           description: 'Corpo das recusas da conexão ProcStudio; o mesmo objeto vem no evento `erro` quando o bloqueio acontece no meio do turno.',
           properties: {
             erro: { type: 'string' },
-            tipo: { type: 'string', enum: ['saldo_insuficiente', 'cobranca_pendente', 'procstudio_indisponivel', 'reenvio_invalido', 'usage_missing'] },
+            tipo: { type: 'string', enum: ['saldo_insuficiente', 'cobranca_pendente', 'procstudio_indisponivel', 'reenvio_invalido', 'usage_missing', 'sessao_invalida'] },
             // usage_missing só chega no evento `erro`: o provedor não informou o consumo da rodada.
             saldoBrl: { type: 'number', description: 'só em saldo_insuficiente' },
             topupUrl: { type: ['string', 'null'], description: 'só em saldo_insuficiente' },
@@ -715,8 +718,9 @@ function documento() {
             400: RESPOSTAS.Erro400,
             401: {
               description:
-                'Sessão ProcStudio ou Authorization: Bearer pessoal ausente, inválido ou revogado.',
-              content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
+                'Sessão ProcStudio ou Authorization: Bearer pessoal ausente, inválido ou revogado; ou, na conexão ProcStudio, '
+                + 'usuário/time inativo no ProcStudio (tipo `sessao_invalida`): a sessão do JurCrawler é encerrada e nada é gravado.',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/BloqueioCobranca' } } },
             },
             402: {
               description: 'Conexão ProcStudio sem saldo de IA (tipo `saldo_insuficiente`, com saldoBrl e topupUrl). Nada é gravado e o provedor não é chamado.',

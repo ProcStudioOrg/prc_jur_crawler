@@ -5,6 +5,20 @@ const TIPOS = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; ch
                 '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8',
                 '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.webp': 'image/webp' };
 
+const MSG_SESSAO_INVALIDA = 'Sua conta do ProcStudio está inativa ou a sessão expirou; entre de novo.';
+
+/**
+ * O ProcStudio respondeu `active: false` (usuário ou time não vale mais lá): um depende do outro,
+ * então a sessão do JurCrawler acaba aqui. `req.encerrarSessao` é o logout da aplicação
+ * autenticada (servidor/aplicacao.js); o roteador interno de testes não tem sessão a encerrar.
+ * O `www-authenticate: Session` é o mesmo do 401 de sessão ausente: o front volta ao login.
+ */
+async function sessaoInvalida(req, res) {
+  if (req.encerrarSessao) await req.encerrarSessao();
+  res.setHeader('www-authenticate', 'Session realm="jur"');
+  return json(res, 401, { erro: MSG_SESSAO_INVALIDA, tipo: 'sessao_invalida' });
+}
+
 function json(res, codigo, corpo) {
   const texto = JSON.stringify(corpo);
   res.writeHead(codigo, { 'content-type': 'application/json; charset=utf-8' });
@@ -254,4 +268,4 @@ function criarRoteador(opcoes = {}) {
   };
 }
 
-module.exports = { criarRoteador, json, sse, lerCorpo, caminhoDentroDoDiretorio, origemPermitida, bloquearOrigemHostil };
+module.exports = { criarRoteador, json, sessaoInvalida, MSG_SESSAO_INVALIDA, sse, lerCorpo, caminhoDentroDoDiretorio, origemPermitida, bloquearOrigemHostil };

@@ -90,6 +90,7 @@ boot (recibos "em voo" de um processo que caiu voltam à fila). Códigos termina
 | `procstudio_indisponivel` | Rails fora do ar, `pricing_unavailable` (modelo do operador sem preço), erro do provedor na chave do operador | Mensagem com "Configurar uma conexão própria" |
 | `usage_missing` | O provedor não informou o consumo da rodada | Erro no turno; a rodada não é cobrada |
 | `reenvio_invalido` | `reenvio: true` com a conversa gravada mudada desde o bloqueio (409) | Pedido para enviar a pergunta de novo |
+| `sessao_invalida` | `ai_balance` respondeu `active: false` (usuário ou time não vale mais no ProcStudio): 401 no chat e em `GET /api/v1/saldo`, ou evento `erro` no meio do turno | A sessão do JurCrawler é encerrada (mesmo caminho do logout) e a tela volta ao login com "Sua conta do ProcStudio está inativa ou a sessão expirou; entre de novo." |
 
 Falhas do operador geram o log `procstudio_llm_operator_failure` e um item `jur-diagnostico` no Kaizen
 (`origem: 'cobranca'`, `tipo: 'falha'`, com `classe`, `erro`, `status` e `suprimidos`), **uma vez por
@@ -105,14 +106,17 @@ usa para agir (por exemplo, sincronizar o preço do modelo no Rails).
 
 `GET /api/v1/saldo` (`?forcar=1` ignora o cache) devolve `disponivel`, `saldoBrl`, `podeOperar`
 (falso também com recibo pendente), `mensagem`, `topupUrl` e `modelo` (rótulo e preços por 1M de
-tokens). A interface mostra o saldo no pill, o seletor de modelo marca a conexão ProcStudio como
+tokens). `active: false` no ProcStudio responde **401** `sessao_invalida` e encerra a sessão (um depende do
+outro); Rails fora (5xx, rede, tempo esgotado) ou credencial de serviço recusada seguem **503** com
+"indisponível" e a sessão continua. Conta inativa nunca fica no cache de 30 s. A interface mostra o saldo no pill, o seletor de modelo marca a conexão ProcStudio como
 "recomendada", cada resposta mostra seu custo e a conversa mostra o total.
 
 ### Ambiente local
 
 `npm run dev:local` simula a carteira (`jur/dev/local.js`): saldo inicial R$ 10,00, ajustável em
 centavos por `JUR_LOCAL_SALDO_INICIAL`; tolerância de −R$ 0,50 (bloqueia estritamente acima do
-limite, como o Rails) e `topupPath` `/equipe?tab=billing`. Detalhes em [ambiente local](ambiente-local.md).
+limite, como o Rails) e `topupPath` `/equipe?tab=billing`. `JUR_LOCAL_PROCSTUDIO` (ou
+`POST /__local/procstudio`) simula conta inativa e credencial de serviço recusada. Detalhes em [ambiente local](ambiente-local.md).
 
 ### Como conferir uma cobrança
 

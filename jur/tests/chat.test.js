@@ -515,6 +515,36 @@ describe('POST /api/v1/chat — cobrança da conexão ProcStudio', () => {
     } finally { a.fechar(); }
   });
 
+  it('conta inativa no ProcStudio → 401 sessao_invalida com www-authenticate Session, nada gravado', async () => {
+    const cobranca = cobrancaFalsa({ podeOperar: () => ({ ok: false, motivo: 'inativo' }) });
+    const a = await ambiente({ respostas: [final('nunca', USO(1, 1))], cobranca });
+    try {
+      const c = a.conversas.criar();
+      const r = await a.postar({ conexaoId: 'procstudio', conversaId: c.id });
+      assert.strictEqual(r.status, 401);
+      assert.match(r.headers.get('www-authenticate'), /^Session/);
+      assert.deepStrictEqual(await r.json(), {
+        erro: 'Sua conta do ProcStudio está inativa ou a sessão expirou; entre de novo.', tipo: 'sessao_invalida',
+      });
+      assert.strictEqual(a.conversas.mensagens(c.id).length, 0);
+      assert.strictEqual(a.provedor.chamadas.length, 0);
+    } finally { a.fechar(); }
+  });
+
+  it('conta que fica inativa no meio do turno: evento erro sessao_invalida, sem chamar o provedor de novo', async () => {
+    // 1ª checagem (antes do turno) libera; a de antes da rodada encontra a conta inativa.
+    const cobranca = cobrancaFalsa({ podeOperar: (n) => (n === 1 ? { ok: true } : { ok: false, motivo: 'inativo' }) });
+    const a = await ambiente({ respostas: [final('nunca', USO(1, 1))], cobranca });
+    try {
+      const r = await a.postar({ conexaoId: 'procstudio' });
+      assert.strictEqual(r.status, 200);
+      const erro = analisarSSE(await r.text()).find((e) => e.evento === 'erro');
+      assert.strictEqual(erro.dado.tipo, 'sessao_invalida');
+      assert.match(erro.dado.erro, /inativa ou a sessão expirou/);
+      assert.strictEqual(a.provedor.chamadas.length, 0);
+    } finally { a.fechar(); }
+  });
+
   it('cobrança pendente → 409; ProcStudio indisponível → 503', async () => {
     for (const [motivo, status, tipo] of [['pendente', 409, 'cobranca_pendente'], ['indisponivel', 503, 'procstudio_indisponivel']]) {
       const cobranca = cobrancaFalsa({ podeOperar: () => ({ ok: false, motivo }) });
