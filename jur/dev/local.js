@@ -30,7 +30,54 @@ async function iniciarLocal({
   const identity = { issuer: 'urn:jur:local', userId: 'local', teamId: 'desenvolvimento' };
   const sameIdentity = p => p && Object.keys(identity).every(key => p[key] === identity[key]);
   const hash = value => createHash('sha256').update(value).digest('base64url');
+  // Carteira simulada do time: mesmo contrato normalizado que servidor/procstudio.js devolve do Rails.
+  const MODELO = { modelId: 'glm-5.3-flash', nome: 'GLM-5.3 Flash', entradaPor1MBrl: 1, saidaPor1MBrl: 4 };
+  const LIMITE_NEGATIVO_CENTS = -50;
+  const inicialBruto = process.env.JUR_LOCAL_SALDO_INICIAL;
+  if (inicialBruto !== undefined && !/^-?\d+$/.test(inicialBruto.trim()))
+    throw new Error('JUR_LOCAL_SALDO_INICIAL deve ser um inteiro em centavos.');
+  let saldoCents = inicialBruto === undefined ? 1000 : Number(inicialBruto);
+  if (!Number.isSafeInteger(saldoCents)) throw new Error('JUR_LOCAL_SALDO_INICIAL deve ser um inteiro em centavos.');
+  const cobrancas = new Map();
+  const brl = cents => cents / 100;
+  const erroRails = (status, code, message) => Object.assign(new Error(message), { status, code });
+  const exigirEmissor = p => { if (p?.issuer !== identity.issuer) throw erroRails(401, 'SERVICE_AUTH', 'Emissor ProcStudio não reconhecido.'); };
+  const podeOperar = () => saldoCents >= LIMITE_NEGATIVO_CENTS;
+  const tokens = v => Number.isSafeInteger(v) && v >= 0;
   const procstudio = {
+    async saldo(p) {
+      exigirEmissor(p);
+      if (p.userId !== identity.userId || p.teamId !== identity.teamId) return { ativo: false };
+      return {
+        ativo: true, podeOperar: podeOperar(), saldoCents, saldoBrl: brl(saldoCents),
+        limiteNegativoCents: LIMITE_NEGATIVO_CENTS,
+        mensagem: podeOperar() ? 'Saldo de IA simulado (ambiente local).' : 'Saldo de IA simulado esgotado. Reinicie com JUR_LOCAL_SALDO_INICIAL maior.',
+        topupPath: '/creditos-ia', modelo: { ...MODELO },
+      };
+    },
+    async registrarUso(p, u) {
+      exigirEmissor(p);
+      if (p.userId !== identity.userId) throw erroRails(410, 'USER_GONE', 'Usuário não existe mais no ProcStudio.');
+      if (p.teamId !== identity.teamId) throw erroRails(404, 'TEAM_REJECTED', 'Equipe não pode ser cobrada.');
+      const invalido = (motivo) => erroRails(422, 'INVALID_USAGE', `Uso de IA inválido: ${motivo}.`);
+      if (typeof u?.requestId !== 'string' || !u.requestId) throw invalido('requestId');
+      if (u.modelId !== MODELO.modelId) throw invalido('modelo desconhecido');
+      // Cache de leitura/escrita é aceito mas cobrado como entrada: o Rails ainda não define outro preço.
+      for (const campo of ['inputTokens', 'outputTokens'])
+        if (!tokens(u[campo])) throw invalido(campo);
+      for (const campo of ['cacheReadTokens', 'cacheWriteTokens'])
+        if (u[campo] !== undefined && u[campo] !== null && !tokens(u[campo])) throw invalido(campo);
+      const anterior = cobrancas.get(u.requestId);
+      if (anterior) return { ...anterior, duplicado: true };
+      const entrada = u.inputTokens + (u.cacheReadTokens || 0) + (u.cacheWriteTokens || 0);
+      // Preços em R$ por 1M de tokens: entrada*preco/1e6 reais = entrada*preco*100/1e6 centavos; arredonda para cima.
+      const micro = entrada * MODELO.entradaPor1MBrl * 100 + u.outputTokens * MODELO.saidaPor1MBrl * 100;
+      const cobradoCents = Math.ceil(micro / 1e6);
+      saldoCents -= cobradoCents;
+      const r = { cobradoCents, cobradoBrl: brl(cobradoCents), saldoCents, saldoBrl: brl(saldoCents), podeOperar: podeOperar(), duplicado: false };
+      cobrancas.set(u.requestId, r);
+      return r;
+    },
     async exchange(code, verifier, redirectUri) {
       const attempt = codes.get(code); codes.delete(code);
       if (!attempt || attempt.expiresAt < Date.now() || attempt.challenge !== hash(verifier) || redirectUri !== base + '/auth/callback') return null;
@@ -109,7 +156,7 @@ async function iniciarLocal({
     });
   } catch (e) { await new Promise(resolve => server.close(resolve)); throw e; }
   return {
-    base, dir,
+    base, dir, procstudio,
     async fechar() {
       stopping = true;
       const pending = [...running.values()];

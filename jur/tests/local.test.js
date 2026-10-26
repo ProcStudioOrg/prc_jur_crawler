@@ -131,3 +131,100 @@ test('encerramento do processo local aguarda SIGKILL de descendente que ignora S
   }
   assert.equal(alive, false, 'encerramento não pode abandonar descendente que ignora SIGTERM');
 });
+
+// Carteira simulada: o chat gerenciado só existe com PROCSTUDIO_LLM_API_KEY, lida no boot.
+async function comCarteira(t, { saldoInicial } = {}) {
+  const antes = { chave: process.env.PROCSTUDIO_LLM_API_KEY, saldo: process.env.JUR_LOCAL_SALDO_INICIAL };
+  process.env.PROCSTUDIO_LLM_API_KEY = 'chave-de-teste';
+  if (saldoInicial === undefined) delete process.env.JUR_LOCAL_SALDO_INICIAL;
+  else process.env.JUR_LOCAL_SALDO_INICIAL = String(saldoInicial);
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-local-carteira-'));
+  let local;
+  try { local = await iniciarLocal({ port: 0, dir, concorrencia: 1 }); }
+  finally {
+    for (const [nome, valor] of [['PROCSTUDIO_LLM_API_KEY', antes.chave], ['JUR_LOCAL_SALDO_INICIAL', antes.saldo]]) {
+      if (valor === undefined) delete process.env[nome]; else process.env[nome] = valor;
+    }
+  }
+  t.after(async () => { await local.fechar(); fs.rmSync(dir, { recursive: true, force: true }); });
+  return local;
+}
+const principalLocal = { issuer: 'urn:jur:local', userId: 'local', teamId: 'desenvolvimento' };
+const uso = (extra = {}) => ({ requestId: 'c1:t1:r1', modelId: 'glm-5.3-flash', inputTokens: 1_000_000, outputTokens: 0, ...extra });
+
+test('carteira local: GET /saldo devolve R$ 10,00 e o preço fixo do modelo', async (t) => {
+  const { base } = await comCarteira(t);
+  const cookie = await login(base);
+  const r = await fetch(base + '/api/v1/saldo?forcar=1', { headers: { cookie } });
+  assert.equal(r.status, 200);
+  const corpo = await r.json();
+  assert.equal(corpo.disponivel, true);
+  assert.equal(corpo.saldoBrl, 10);
+  assert.equal(corpo.podeOperar, true);
+  assert.equal(corpo.modelo.entradaPor1MBrl, 1);
+  assert.equal(corpo.modelo.saidaPor1MBrl, 4);
+});
+
+test('carteira local: registrarUso desconta, é idempotente por requestId e recusa o que não entende', async (t) => {
+  const local = await comCarteira(t);
+  const ps = local.procstudio;
+  const r1 = await ps.registrarUso(principalLocal, uso({ outputTokens: 250_000 }));
+  // 1M entrada (R$ 1,00) + 250 mil saída (R$ 1,00) = R$ 2,00
+  assert.deepEqual(r1, { cobradoCents: 200, cobradoBrl: 2, saldoCents: 800, saldoBrl: 8, podeOperar: true, duplicado: false });
+  const r2 = await ps.registrarUso(principalLocal, uso({ outputTokens: 250_000 }));
+  assert.deepEqual(r2, { ...r1, duplicado: true });
+  assert.equal((await ps.saldo(principalLocal)).saldoCents, 800);
+  // mesmo requestId com outro corpo continua duplicado: nada é cobrado de novo
+  assert.equal((await ps.registrarUso(principalLocal, uso({ inputTokens: 5 }))).duplicado, true);
+  assert.equal((await ps.saldo(principalLocal)).saldoCents, 800);
+  // arredonda para cima ao centavo
+  const r3 = await ps.registrarUso(principalLocal, uso({ requestId: 'r2', inputTokens: 1, outputTokens: 0 }));
+  assert.equal(r3.cobradoCents, 1);
+  // não entendido: erro explícito, nunca um 200 inventado
+  await assert.rejects(() => ps.registrarUso(principalLocal, uso({ requestId: 'x', modelId: 'outro' })), { code: 'INVALID_USAGE', status: 422 });
+  await assert.rejects(() => ps.registrarUso(principalLocal, uso({ requestId: 'y', inputTokens: -1 })), { code: 'INVALID_USAGE' });
+  await assert.rejects(() => ps.registrarUso(principalLocal, uso({ requestId: 'z', outputTokens: 1.5 })), { code: 'INVALID_USAGE' });
+  await assert.rejects(() => ps.registrarUso(principalLocal, uso({ requestId: '' })), { code: 'INVALID_USAGE' });
+  await assert.rejects(() => ps.registrarUso({ ...principalLocal, userId: 'outro' }, uso({ requestId: 'u' })), { code: 'USER_GONE', status: 410 });
+  await assert.rejects(() => ps.registrarUso({ ...principalLocal, teamId: 'outro' }, uso({ requestId: 't' })), { code: 'TEAM_REJECTED', status: 404 });
+  await assert.rejects(() => ps.registrarUso({ ...principalLocal, issuer: 'outro' }, uso({ requestId: 'i' })), { code: 'SERVICE_AUTH', status: 401 });
+  assert.equal((await ps.saldo(principalLocal)).saldoCents, 799);
+  assert.deepEqual(await ps.saldo({ ...principalLocal, teamId: 'outro' }), { ativo: false });
+  await assert.rejects(() => ps.saldo({ ...principalLocal, issuer: 'outro' }), { code: 'SERVICE_AUTH' });
+});
+
+test('carteira local: JUR_LOCAL_SALDO_INICIAL=-100 bloqueia; dentro do limite de -R$ 0,50 ainda opera', async (t) => {
+  const bloqueada = await comCarteira(t, { saldoInicial: -100 });
+  const b = await bloqueada.procstudio.saldo(principalLocal);
+  assert.equal(b.podeOperar, false);
+  assert.equal(b.saldoCents, -100);
+  assert.equal(b.limiteNegativoCents, -50);
+  assert.ok(b.mensagem);
+  const cookie = await login(bloqueada.base);
+  const corpo = await (await fetch(bloqueada.base + '/api/v1/saldo?forcar=1', { headers: { cookie } })).json();
+  assert.equal(corpo.podeOperar, false);
+  assert.equal(corpo.saldoBrl, -1);
+
+  const limite = await comCarteira(t, { saldoInicial: -50 });
+  assert.equal((await limite.procstudio.saldo(principalLocal)).podeOperar, true);
+  // uma cobrança que cruza o limite devolve podeOperar falso
+  const r = await limite.procstudio.registrarUso(principalLocal, uso({ inputTokens: 1 }));
+  assert.equal(r.saldoCents, -51);
+  assert.equal(r.podeOperar, false);
+});
+
+test('carteira local: valor inválido em JUR_LOCAL_SALDO_INICIAL falha o boot e a carteira não é compartilhada entre instâncias', async (t) => {
+  await assert.rejects(() => comCarteira(t, { saldoInicial: '10,5' }), /JUR_LOCAL_SALDO_INICIAL/);
+  const a = await comCarteira(t);
+  const b = await comCarteira(t);
+  await a.procstudio.registrarUso(principalLocal, uso());
+  assert.equal((await b.procstudio.saldo(principalLocal)).saldoCents, 1000);
+});
+
+test('sem PROCSTUDIO_LLM_API_KEY não existe conexão gerenciada: /saldo diz indisponível', async (t) => {
+  const antes = process.env.PROCSTUDIO_LLM_API_KEY; delete process.env.PROCSTUDIO_LLM_API_KEY;
+  t.after(() => { if (antes !== undefined) process.env.PROCSTUDIO_LLM_API_KEY = antes; });
+  const { base } = await fixture(t);
+  const cookie = await login(base);
+  assert.deepEqual(await (await fetch(base + '/api/v1/saldo', { headers: { cookie } })).json(), { disponivel: false });
+});

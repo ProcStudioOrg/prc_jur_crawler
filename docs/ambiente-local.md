@@ -26,6 +26,29 @@ pode ser alterado por `JUR_LOCAL_DADOS`. Reiniciar exige entrar novamente, mas c
 pesquisas, preferências e conexões de IA. Encerre com Ctrl+C: pesquisas ativas são
 interrompidas e as que aguardam não iniciam novos navegadores.
 
+## Conexão ProcStudio e carteira simulada
+
+Sem `PROCSTUDIO_LLM_API_KEY` a conexão gerenciada do ProcStudio não existe e `GET /api/v1/saldo`
+responde `{ "disponivel": false }`. Com ela definida (e, se quiser, `PROCSTUDIO_LLM_ENDPOINT`,
+`PROCSTUDIO_LLM_MODELO` etc.), o chat roda contra o provedor real, por exemplo o OpenRouter, e cada
+rodada é cobrada de uma carteira simulada em memória que imita `ai_balance` e `ai_usage` do Rails:
+
+- saldo inicial R$ 10,00, limite negativo de -R$ 0,50 (opera enquanto o saldo for >= -R$ 0,50);
+- modelo `glm-5.3-flash` a R$ 1,00 (entrada) e R$ 4,00 (saída) por 1M de tokens, cobrança arredondada
+  para cima ao centavo; tokens de cache entram como entrada;
+- idempotência por `requestId`: repetir devolve o mesmo resultado com `duplicado: true`, sem novo débito;
+- uso inválido (modelo desconhecido, tokens negativos ou fracionários, `requestId` vazio) é recusado com
+  `INVALID_USAGE`; usuário ou equipe diferentes da identidade local são recusados. Nada é aceito às cegas;
+- `JUR_LOCAL_SALDO_INICIAL` (inteiro em centavos, ex.: `-100`) troca o saldo inicial para testar o bloqueio
+  por saldo; valor inválido impede o boot.
+
+```sh
+PROCSTUDIO_LLM_API_KEY=sk-or-... JUR_LOCAL_SALDO_INICIAL=500 npm run dev:local
+```
+
+A carteira vive só no processo: reiniciar volta ao saldo inicial. Os recibos de cobrança pendentes
+ficam no SQLite local como em produção.
+
 ## Validar
 
 1. Em **Navegadores**, ative **Acompanhar navegador** ou **Resolver CAPTCHA manualmente**.
@@ -38,7 +61,8 @@ interrompidas e as que aguardam não iniciam novos navegadores.
 6. Para tentar STJ, ative CAPTCHA manual antes da pesquisa. O bloqueio do portal pode
    persistir mesmo com intervenção; um HTTP 403 não significa CAPTCHA resolvido.
 7. Para conversar com IA, abra **Configurações → IA**, salve uma conexão com sua chave
-   e escolha um modelo. Nenhuma resposta do chat é simulada neste modo.
+   e escolha um modelo, ou use a conexão ProcStudio com a carteira simulada (seção acima).
+   Nenhuma resposta do chat é simulada neste modo.
 
 O CAPTCHA depende de o portal apresentar um desafio interativo; o ambiente não
 fabrica desafios ou resultados de tribunais. Os testes automatizados de CAPTCHA
