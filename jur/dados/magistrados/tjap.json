@@ -1,0 +1,652 @@
+{
+  "tribunal": "tjap",
+  "nome": "Tribunal de Justiça do Amapá",
+  "coletado_em": "2026-10-26T08:10:59.439Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "26/10/2025",
+      "dataFim": "26/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "26/10/2025",
+      "dataFim": "26/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 19,
+      "total_no_portal": 3370,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "26/10/2025",
+      "dataFim": "26/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 25,
+    "por_grau": {
+      "1": 25
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 20
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "EDUARDO NAVARRO MACHADO",
+      "rotulo_original": "EDUARDO NAVARRO MACHADO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "7ª VARA DO JUIZADO ESPECIAL CÍVEL - UNIFAP",
+      "orgaos": [
+        "7ª VARA DO JUIZADO ESPECIAL CÍVEL - UNIFAP"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "6018108-06.2026.8.03.0001",
+        "6053950-47.2026.8.03.0001",
+        "6044785-10.2025.8.03.0001",
+        "6059460-41.2026.8.03.0001",
+        "6042489-78.2026.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 3650
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FABIO SANTANA DOS SANTOS",
+      "rotulo_original": "FABIO SANTANA DOS SANTOS",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "2º JUIZADO ESPECIAL DE FAZENDA PÚBLICA",
+      "orgaos": [
+        "2º JUIZADO ESPECIAL DE FAZENDA PÚBLICA"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "0011936-63.2020.8.03.0001",
+        "6054032-78.2026.8.03.0001",
+        "6025163-42.2025.8.03.0001",
+        "6020392-84.2026.8.03.0001",
+        "6075482-77.2026.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 3437
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALAIDE MARIA DE PAULA",
+      "rotulo_original": "ALAIDE MARIA DE PAULA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "4ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ",
+      "orgaos": [
+        "4ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "6067016-31.2025.8.03.0001",
+        "6000415-09.2026.8.03.0001",
+        "6035851-29.2026.8.03.0001",
+        "6033951-11.2026.8.03.0001",
+        "6042551-55.2025.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 3806
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANTONIO ERNESTO AMORAS COLLARES",
+      "rotulo_original": "ANTONIO ERNESTO AMORAS COLLARES",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "3ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ",
+      "orgaos": [
+        "3ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "6055417-32.2024.8.03.0001",
+        "0001195-90.2022.8.03.0001",
+        "6071460-73.2026.8.03.0001",
+        "6061666-28.2026.8.03.0001",
+        "6049805-45.2026.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 3869
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "HAUNY RODRIGUES DINIZ",
+      "rotulo_original": "HAUNY RODRIGUES DINIZ",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "4ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ",
+      "orgaos": [
+        "4ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ",
+        "2º JUIZADO ESPECIAL DE FAZENDA PÚBLICA",
+        "3ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0022374-90.2016.8.03.0001",
+        "6011376-09.2026.8.03.0001",
+        "6060435-63.2026.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 9,
+        "batem": 9,
+        "status": "ok",
+        "detalhe": "0 de 9 fora do filtro",
+        "ms": 3222
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUCIANA BARROS DE CAMARGO",
+      "rotulo_original": "LUCIANA BARROS DE CAMARGO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "1ª VARA DE LARANJAL DO JARI",
+      "orgaos": [
+        "1ª VARA DE LARANJAL DO JARI"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "6003830-13.2025.8.03.0008",
+        "6003780-84.2025.8.03.0008",
+        "6000724-09.2026.8.03.0008"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALANA COELHO PEDROSA CASTRO",
+      "rotulo_original": "ALANA COELHO PEDROSA CASTRO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "VARA ÚNICA DE PEDRA BRANCA DO AMAPARI",
+      "orgaos": [
+        "VARA ÚNICA DE PEDRA BRANCA DO AMAPARI",
+        "2º JUIZADO ESPECIAL DE FAZENDA PÚBLICA"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "6000065-82.2026.8.03.0013",
+        "6093520-74.2025.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CARLINE REGINA DE NEGREIROS CABRAL NUNES",
+      "rotulo_original": "CARLINE REGINA DE NEGREIROS CABRAL NUNES",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "JUIZADO ESPECIAL CIVEL E CRIMINAL - STN",
+      "orgaos": [
+        "JUIZADO ESPECIAL CIVEL E CRIMINAL - STN",
+        "1ª VARA CÍVEL DE SANTANA"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "6013198-64.2025.8.03.0002",
+        "6006364-79.2024.8.03.0002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ELEUSA DA SILVA MUNIZ",
+      "rotulo_original": "ELEUSA DA SILVA MUNIZ",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "4ª VARA DO JUIZADO ESPECIAL CÍVEL - CENTRO",
+      "orgaos": [
+        "4ª VARA DO JUIZADO ESPECIAL CÍVEL - CENTRO"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "6091482-89.2025.8.03.0001",
+        "6001875-65.2025.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "HERALDO NASCIMENTO DA COSTA",
+      "rotulo_original": "HERALDO NASCIMENTO DA COSTA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "1ª VARA DA COMARCA DE OIAPOQUE",
+      "orgaos": [
+        "1ª VARA DA COMARCA DE OIAPOQUE"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "6005426-29.2025.8.03.0009",
+        "6003010-54.2026.8.03.0009"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MATEUS PAVÃO",
+      "rotulo_original": "MATEUS PAVÃO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "1ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ",
+      "orgaos": [
+        "1ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0061892-87.2016.8.03.0001",
+        "6080512-30.2025.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "NELBA DE SOUZA SIQUEIRA",
+      "rotulo_original": "NELBA DE SOUZA SIQUEIRA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "3ª VARA DO JUIZADO ESPECIAL CÍVEL - CENTRO",
+      "orgaos": [
+        "3ª VARA DO JUIZADO ESPECIAL CÍVEL - CENTRO"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "6004315-97.2026.8.03.0001",
+        "6020263-79.2026.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PAULO CESAR DO VALE MADEIRA",
+      "rotulo_original": "PAULO CESAR DO VALE MADEIRA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "6ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ",
+      "orgaos": [
+        "6ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "6007129-53.2024.8.03.0001",
+        "6028421-26.2026.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PRISCYLLA PEIXOTO MENDES",
+      "rotulo_original": "PRISCYLLA PEIXOTO MENDES",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "1ª JUIZADO ESPECIAL DE FAZENDA PÚBLICA",
+      "orgaos": [
+        "1ª JUIZADO ESPECIAL DE FAZENDA PÚBLICA"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "6047972-60.2024.8.03.0001",
+        "6100458-85.2025.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALMIRO DO SOCORRO AVELAR DENIUR",
+      "rotulo_original": "ALMIRO DO SOCORRO AVELAR DENIUR",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "2ª VARA CRIMINAL DE SANTANA",
+      "orgaos": [
+        "2ª VARA CRIMINAL DE SANTANA"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0005697-06.2021.8.03.0002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANA THERESA MORAES RODRIGUES",
+      "rotulo_original": "ANA THERESA MORAES RODRIGUES",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "6ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ",
+      "orgaos": [
+        "6ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "6016778-71.2026.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANTONIO JOSE DE MENEZES",
+      "rotulo_original": "ANTONIO JOSE DE MENEZES",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "1ª VARA DE LARANJAL DO JARI",
+      "orgaos": [
+        "1ª VARA DE LARANJAL DO JARI"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "6000468-03.2025.8.03.0008"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ESCLEPIADES DE OLIVEIRA NETO",
+      "rotulo_original": "ESCLEPIADES DE OLIVEIRA NETO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "1ª VARA DO JUIZADO ESPECIAL CÍVEL - CENTRO",
+      "orgaos": [
+        "1ª VARA DO JUIZADO ESPECIAL CÍVEL - CENTRO"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "6006475-95.2026.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "KEILA CHRISTINE BANHA BASTOS UTZIG",
+      "rotulo_original": "KEILA CHRISTINE BANHA BASTOS UTZIG",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "5ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ",
+      "orgaos": [
+        "5ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "6026149-59.2026.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUIZA VAZ DOMINGUES MORENO",
+      "rotulo_original": "LUIZA VAZ DOMINGUES MORENO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "JUIZADO ESPECIAL CIVEL E CRIMINAL - STN",
+      "orgaos": [
+        "JUIZADO ESPECIAL CIVEL E CRIMINAL - STN"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "6005111-22.2025.8.03.0002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MICHELLE COSTA FARIAS",
+      "rotulo_original": "MICHELLE COSTA FARIAS",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "3ª VARA CÍVEL DE SANTANA",
+      "orgaos": [
+        "3ª VARA CÍVEL DE SANTANA"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "6015556-02.2025.8.03.0002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MURILO AUGUSTO DE FARIA SANTOS",
+      "rotulo_original": "MURILO AUGUSTO DE FARIA SANTOS",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "VARA ÚNICA DE TARTARUGALZINHO",
+      "orgaos": [
+        "VARA ÚNICA DE TARTARUGALZINHO"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "6000658-38.2026.8.03.0005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROBERVAL PANTOJA PACHECO",
+      "rotulo_original": "ROBERVAL PANTOJA PACHECO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "VARA ÚNICA DE PORTO GRANDE",
+      "orgaos": [
+        "VARA ÚNICA DE PORTO GRANDE"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "6001617-59.2024.8.03.0011"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROBSON TIMOTEO DAMASCENO",
+      "rotulo_original": "ROBSON TIMOTEO DAMASCENO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "2ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ",
+      "orgaos": [
+        "2ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0048261-66.2022.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "THINA LUIZA D ALMEIDA GOMES DOS SANTOS SOUSA",
+      "rotulo_original": "THINA LUIZA D ALMEIDA GOMES DOS SANTOS SOUSA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "3º JUIZADO ESPECIAL DE FAZENDA PÚBLICA",
+      "orgaos": [
+        "3º JUIZADO ESPECIAL DE FAZENDA PÚBLICA"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "6042580-08.2025.8.03.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
