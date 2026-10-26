@@ -219,3 +219,119 @@ test("boot: criarAplicacao com conexao gerenciada drena pendencias sem esperar l
     fs.rmSync(dir, { recursive: true, force: true });
   }
 });
+
+// Prepara uma conta com recibo gravado direto no jur.db; devolve o necessario para conferir.
+function contaComRecibo(dir, userId, { emVoo = 0 } = {}) {
+  const db = require("../servidor/db");
+  const { dono, hash } = require("../servidor/sessoes-web");
+  const principal = { issuer: "https://rails.example", userId, teamId: "t", expiresAt: Date.now() + 60000 };
+  const id = hash(JSON.stringify(dono(principal)));
+  const home = path.join(dir, "usuarios", id);
+  fs.mkdirSync(home, { recursive: true });
+  const con = db.abrir(path.join(home, "jur.db"));
+  const uso = { requestId: `${userId}:t:1`, modelId: "glm" };
+  con.prepare("INSERT INTO cobranca_pendente (request_id, payload, tentativas, criado_em, em_voo) VALUES (?,?,0,?,?)")
+    .run(uso.requestId, JSON.stringify({ principal: { issuer: principal.issuer, userId, teamId: "t" }, uso }), Date.now(), emVoo);
+  if (emVoo === 0) con.close();
+  return { principal, uso, con, id, home };
+}
+const emVooDe = (home, requestId) => {
+  const c = require("../servidor/db").abrir(path.join(home, "jur.db"));
+  try { return c.prepare("SELECT em_voo FROM cobranca_pendente WHERE request_id=?").get(requestId)?.em_voo; } finally { c.close(); }
+};
+
+test("varredura de boot: em_voo e recuperado antes de qualquer await e escopo aberto e pulado", async () => {
+  const { criarEscopos } = require("../servidor/escopo");
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "jur-boot3-"));
+  const aberta = contaComRecibo(dir, "aberta", { emVoo: 1 }); // turno vivo desta conta
+  aberta.con.close();
+  const b = contaComRecibo(dir, "b", { emVoo: 1 });
+  b.con.close();
+  const c = contaComRecibo(dir, "c", { emVoo: 1 });
+  c.con.close();
+  const chamadas = [];
+  let liberar;
+  const trava = new Promise((r) => { liberar = r; });
+  const procstudio = {
+    registrarUso: async (p, u) => { chamadas.push(u.requestId); await trava; return { cobradoBrl: 0, saldoBrl: 1, podeOperar: true }; },
+  };
+  const escopos = criarEscopos({ dir });
+  try {
+    escopos.obter(aberta.principal); // escopo da conta "aberta" no cache
+    const varredura = escopos.varrerPendencias({ procstudio });
+    // Sincrono: a 1a conta ainda esta presa no await, e a ultima ja foi recuperada.
+    assert.equal(emVooDe(b.home, b.uso.requestId), 0);
+    assert.equal(emVooDe(c.home, c.uso.requestId), 0);
+    assert.equal(emVooDe(aberta.home, aberta.uso.requestId), 1, "turno vivo da conta aberta nao e resetado");
+    liberar();
+    await varredura;
+    assert.ok(!chamadas.includes(aberta.uso.requestId), "conta com escopo aberto nao e enviada pela varredura");
+    assert.deepEqual([...chamadas].sort(), [b.uso.requestId, c.uso.requestId].sort());
+    assert.equal(emVooDe(aberta.home, aberta.uso.requestId), 1);
+  } finally {
+    escopos.fechar();
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("despejar escopo com varredor armado cancela o timer: nada dispara no banco fechado", async (t) => {
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  const { criarEscopos } = require("../servidor/escopo");
+  const { criarCobranca } = require("../servidor/cobranca");
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "jur-evict-"));
+  const a = contaComRecibo(dir, "a");
+  const b = contaComRecibo(dir, "b");
+  const chamadas = [];
+  const procstudio = { registrarUso: async (p, u) => { chamadas.push(u.requestId); throw Object.assign(new Error("x"), { status: 503 }); } };
+  const rejeicoes = [];
+  const aoRejeitar = (e) => rejeicoes.push(e);
+  process.on("unhandledRejection", aoRejeitar);
+  const escopos = criarEscopos({ dir, limite: 1 });
+  try {
+    const item = escopos.obter(a.principal);
+    item.cobranca = criarCobranca({ con: item.con, procstudio, principal: a.principal, logar: () => {} });
+    item.cobranca.iniciarVarredor();
+    escopos.obter(b.principal); // limite 1: despeja a conta "a"
+    t.mock.timers.tick(120_000);
+    await new Promise((r) => setImmediate(r));
+    assert.deepEqual(chamadas, []);
+    assert.deepEqual(rejeicoes, []);
+  } finally {
+    process.off("unhandledRejection", aoRejeitar);
+    escopos.fechar();
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("varredura de boot repete a cada intervalo enquanto houver recibo adiado", async () => {
+  const { criarEscopos } = require("../servidor/escopo");
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "jur-retry-"));
+  const a = contaComRecibo(dir, "a");
+  let falhar = true;
+  const chamadas = [];
+  const procstudio = {
+    registrarUso: async (p, u) => {
+      chamadas.push(u.requestId);
+      if (falhar) throw Object.assign(new Error("fora"), { status: 503 });
+      return { cobradoBrl: 0, saldoBrl: 1, podeOperar: true };
+    },
+  };
+  const escopos = criarEscopos({ dir });
+  // Intervalo injetavel curto (timers reais): o varredor de producao usa 60 s.
+  const ate = async (cond) => { for (let i = 0; i < 200 && !cond(); i++) await new Promise((r) => setTimeout(r, 10)); };
+  try {
+    const r = await escopos.varrerPendencias({ procstudio, intervaloMs: 20, logar: () => {} });
+    assert.equal(r.adiados, 1);
+    await ate(() => chamadas.length >= 3);
+    assert.ok(chamadas.length >= 3, "reenviou nos ticks seguintes");
+    falhar = false;
+    await ate(() => emVooDe(a.home, a.uso.requestId) === undefined);
+    assert.equal(emVooDe(a.home, a.uso.requestId), undefined, "recibo enviado e apagado");
+    const n = chamadas.length;
+    await new Promise((r) => setTimeout(r, 100));
+    assert.equal(chamadas.length, n, "sem adiado nao repete");
+  } finally {
+    escopos.fechar();
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});

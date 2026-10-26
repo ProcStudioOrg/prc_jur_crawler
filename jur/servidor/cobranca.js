@@ -205,7 +205,8 @@ function criarCobranca({
     timer = setTimeout(async () => {
       try { await drenar(); } catch (e) { registrarLog('billing_sweep_failure', { erro: descrever(e) }); }
       timer = null;
-      agendar();
+      // Banco ja fechado (conta despejada): nada a reagendar, e nunca uma rejeicao solta no timer.
+      try { agendar(); } catch (e) { registrarLog('billing_sweep_failure', { erro: descrever(e) }); }
     }, INTERVALO_VARREDOR_MS);
     timer.unref?.();
   }
