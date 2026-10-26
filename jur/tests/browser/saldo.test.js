@@ -145,6 +145,20 @@ describe('saldo compartilhado na interface', () => {
       assert.strictEqual(linha, 'R$ 0,04 · 1,2 mil tokens · GLM-5.3 Flash');
       assert.strictEqual(await page.textContent('#custo-conversa'), 'Esta conversa: R$ 0,04');
 
+      // No celular o botão flutuante do menu (e a pílula) não podem cobrir o total.
+      await page.setViewportSize({ width: 400, height: 800 });
+      const caixa = (sel) => page.locator(sel).boundingBox();
+      const sobrepoe = (a, b) => a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
+      // Sem o painel de navegadores (que empurraria a conversa para baixo): é o caso em que o
+      // total encosta no topo, debaixo do botão flutuante.
+      await page.evaluate(() => { document.querySelector('#navegadores').hidden = true; });
+      const total = await caixa('#custo-conversa');
+      for (const outro of ['.abrir-lateral', '#saldo-ia > *']) {
+        const b = await caixa(outro);
+        assert.ok(!sobrepoe(total, b), `${outro} cobre o total em 400px: ${JSON.stringify({ total, b })}`);
+      }
+      await page.setViewportSize({ width: 1280, height: 720 });
+
       // Segundo turno: o total soma; reabrir a conversa traz o total do servidor.
       await perguntar(page, 'e o STJ?', '#caixa-conversa');
       await esperarRespostaCompleta(page);
@@ -198,9 +212,10 @@ describe('saldo compartilhado na interface', () => {
   });
 
   it('saldo que acaba no meio do turno mostra o mesmo cartão dentro da conversa', async () => {
-    // 1ª checagem (antes do turno) libera; a de antes da rodada já encontra o saldo zerado.
+    // 1ª checagem (antes do turno) libera; a de antes da rodada já encontra o saldo zerado; a
+    // partir daí (o time recarregou) libera de novo, para o "Tentar de novo".
     const cobranca = cobrancaFalsa({
-      podeOperar: (n, veredito) => (n === 1 ? { ok: true } : { ok: false, motivo: 'saldo', saldoBrl: -0.01, topupPath: '/equipe?tab=billing' }),
+      podeOperar: (n) => (n === 2 ? { ok: false, motivo: 'saldo', saldoBrl: -0.01, topupPath: '/equipe?tab=billing' } : { ok: true }),
     });
     const a = await subir({ cobranca });
     try {
@@ -211,6 +226,21 @@ describe('saldo compartilhado na interface', () => {
       assert.strictEqual(await page.locator('#mensagens .bloqueio a', { hasText: 'Adicionar créditos' }).count(), 1);
       assert.strictEqual(await page.locator('#mensagens .bloqueio button', { hasText: 'Tentar de novo' }).count(), 1);
       assert.strictEqual(await page.locator('#mensagens .msg.erro').count(), 0, 'é o cartão, não uma bolha de erro comum');
+
+      // "Tentar de novo" reaproveita a pergunta já gravada: nem a tela nem a conversa a repetem.
+      const corpos = [];
+      await page.route('**/api/v1/chat', (route) => { corpos.push(route.request().postDataJSON()); route.continue(); });
+      await page.locator('#mensagens .bloqueio button', { hasText: 'Tentar de novo' }).click();
+      await page.waitForFunction(() => /resposta pronta/.test(document.querySelector('#mensagens').textContent));
+      await esperarRespostaCompleta(page);
+      assert.strictEqual(corpos.length, 1);
+      assert.strictEqual(corpos[0].reenvio, true);
+      assert.strictEqual(corpos[0].mensagens.filter((m) => m.content === 'pergunta que esbarra no saldo').length, 1);
+      assert.strictEqual(await page.locator('#mensagens .msg.user').count(), 1, 'a pergunta aparece uma vez só');
+      const id = await page.evaluate(() => window.jurConversa.id);
+      const { mensagens } = await page.evaluate((c) => window.jurApi.pedir(`/api/v1/conversas/${c}`), id);
+      assert.strictEqual(mensagens.filter((m) => m.conteudo === 'pergunta que esbarra no saldo').length, 1,
+        `a conversa grava a pergunta uma vez só: ${JSON.stringify(mensagens)}`);
     } finally { await a.fechar(); }
   });
 

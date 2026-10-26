@@ -907,6 +907,12 @@ button:disabled { opacity: .55; cursor: not-allowed; }
   font-size: 12.5px; color: var(--fraco); font-variant-numeric: tabular-nums;
 }
 .custo-conversa[hidden] { display: none; }
+/* Abaixo de 860px o botao flutuante do menu (.abrir-lateral) ocupa o topo: o total desce
+   para baixo dele, e #mensagens (que ja recua 58px ali) nao repete o mesmo recuo. */
+@media (max-width: 860px) {
+  .custo-conversa { margin-top: 58px; }
+  #conversa:has(> .custo-conversa:not([hidden])) > #mensagens { padding-top: 16px; }
+}
 
 /* Cartao de bloqueio por saldo */
 .msg.bloqueio {

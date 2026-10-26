@@ -319,8 +319,14 @@ async function reanexar(id) {
       } else if (nome === 'erro') {
         // O turno foi aberto em outra aba ou antes de recarregar: a pergunta a reenviar e a
         // ultima do historico, se ela for texto do usuario.
+        // So oferece o reenvio se a ultima bolha na tela for essa pergunta: sem ela nao ha o
+        // que reaproveitar, e redesenhar duplicaria a pergunta.
         const ultima = historicoLocal[historicoLocal.length - 1];
-        mostrarErro(dados, ultima?.role === 'user' && typeof ultima.content === 'string' ? ultima.content : null);
+        const perguntas = $('#mensagens').querySelectorAll('.msg.user');
+        const bolhaUltima = perguntas[perguntas.length - 1];
+        const texto = ultima?.role === 'user' && typeof ultima.content === 'string'
+          && bolhaUltima?.textContent === ultima.content ? ultima.content : null;
+        mostrarErro(dados, texto, texto ? bolhaUltima : null);
       }
     });
   } catch { /* abortado ou rede caiu: a conversa continua gravada no servidor */ }
@@ -372,8 +378,8 @@ const centavos = (brl) => Math.round(brl * 100);
  * Erro do chat com o `tipo` que o servidor manda (no JSON da recusa ou no evento `erro`).
  * `texto` e a pergunta recusada: e ela que "Tentar de novo" reenvia.
  */
-function mostrarErro(dados, texto) {
-  if (dados.tipo === 'saldo_insuficiente') { cartaoBloqueio(dados, texto); return; }
+function mostrarErro(dados, texto, bolhaGravada = null) {
+  if (dados.tipo === 'saldo_insuficiente') { cartaoBloqueio(dados, texto, bolhaGravada); return; }
   const div = avisarNaCaixa(dados.erro);
   if (dados.tipo === 'procstudio_indisponivel') {
     const link = document.createElement('button');
@@ -389,7 +395,7 @@ function mostrarErro(dados, texto) {
  * Cartao de saldo esgotado, igual no 402 antes do turno e no `erro` no meio dele. O link de
  * recarga e o `topupUrl` do servidor; sem ele o botao nao aparece (nao inventamos endereco).
  */
-function cartaoBloqueio(dados, texto) {
+function cartaoBloqueio(dados, texto, bolhaGravada) {
   $('#mensagens .bloqueio')?.remove();
   const cartao = avisarNaCaixa('', 'bloqueio bolha');
   cartao.setAttribute('role', 'alert');
@@ -424,11 +430,12 @@ function cartaoBloqueio(dados, texto) {
         return;
       }
       cartao.remove();
-      // A pergunta recusada ainda pode estar no fim do historico local (bloqueio no meio do
-      // turno): `enviar` a coloca de novo, entao sai daqui para nao ir duas vezes ao modelo.
-      const ultima = historicoLocal[historicoLocal.length - 1];
-      if (ultima && ultima.role === 'user' && ultima.content === texto) historicoLocal.pop();
       const campo = $('.entrada', caixaAtiva());
+      if (bolhaGravada) {
+        // Bloqueio no meio do turno: a pergunta ja esta gravada e na tela.
+        enviar(campo, window.jurConexoes.selected?.modelo, null, { texto, bolha: bolhaGravada });
+        return;
+      }
       campo.value = texto;
       enviar(campo, window.jurConexoes.selected?.modelo, null);
     });
@@ -536,13 +543,18 @@ async function lerSSE(resposta, aoEvento, aoAtividade) {
   }
 }
 
-async function enviar(campo, modelo, esforco) {
+/**
+ * `reenvio` ({ texto, bolha }): "Tentar de novo" depois de um bloqueio no MEIO do turno. A
+ * pergunta ja esta gravada na conversa, na tela (`bolha`) e no fim do historico local; o POST
+ * vai com `reenvio: true` e o servidor responde a ela sem grava-la de novo.
+ */
+async function enviar(campo, modelo, esforco, reenvio = null) {
   if (!window.jurSessao?.principal) { location.assign('/auth/login'); return; }
   if (!window.jurConexoes.selected) {
     $('#abrir-config').click();
     return;
   }
-  const texto = campo.value.trim();
+  const texto = reenvio ? reenvio.texto : campo.value.trim();
   if (!texto) return;
 
   // Sem catalogo nao ha escopo: `escopo()` devolveria [] e o servidor leria "nenhum
@@ -596,9 +608,16 @@ async function enviar(campo, modelo, esforco) {
 
   // Este envio JA e o stream do turno: um reanexo por cima duplicaria cada delta.
   encerrarReanexo();
-  campo.value = ''; ajustarAltura(campo);
-  const bolhaPergunta = bolha('user', texto);
-  historicoLocal.push({ role: 'user', content: texto });
+  let bolhaPergunta;
+  if (reenvio) {
+    // Reaproveita a bolha e a entrada do historico que ja existem: desenhar de novo
+    // mostraria a mesma pergunta duas vezes.
+    bolhaPergunta = reenvio.bolha;
+  } else {
+    campo.value = ''; ajustarAltura(campo);
+    bolhaPergunta = bolha('user', texto);
+    historicoLocal.push({ role: 'user', content: texto });
+  }
 
   // Amarra esta resposta a conversa que a originou. Se o usuario trocar de conversa
   // enquanto o streaming ainda esta rodando, os deltas que chegarem depois nao podem
@@ -628,6 +647,7 @@ async function enviar(campo, modelo, esforco) {
       method: 'POST', headers: cab, signal: controle.signal,
       body: JSON.stringify({
         mensagens: historicoLocal, modelo, conexaoId: window.jurConexoes.selected?.conexaoId, conversaId: conversaAtual,
+        ...(reenvio ? { reenvio: true } : {}),
         // Tribunais que o usuario deixou ligados na Disponibilidade. Vai sempre que o
         // painel ja carregou: e com isto que o servidor recorta o catalogo no prompt, e
         // e dai que vem a economia de chamada de listar_tribunais.
@@ -643,13 +663,18 @@ async function enviar(campo, modelo, esforco) {
         return;
       }
       if (conversaAtual === conversaDoEnvio) {
-        if (corpo.tipo === 'saldo_insuficiente') {
-          // Recusado antes do turno: o servidor nao gravou a pergunta. Sai da tela e do
-          // historico local, e "Tentar de novo" a envia como nova.
-          bolhaPergunta.remove();
-          if (historicoLocal[historicoLocal.length - 1]?.content === texto) historicoLocal.pop();
+        if (reenvio) {
+          // A pergunta continua gravada: um novo bloqueio oferece reenvia-la de novo.
+          mostrarErro(corpo, texto, bolhaPergunta);
+        } else {
+          if (corpo.tipo === 'saldo_insuficiente') {
+            // Recusado antes do turno: o servidor nao gravou a pergunta. Sai da tela e do
+            // historico local, e "Tentar de novo" a envia como nova.
+            bolhaPergunta.remove();
+            if (historicoLocal[historicoLocal.length - 1]?.content === texto) historicoLocal.pop();
+          }
+          mostrarErro(corpo, texto);
         }
-        mostrarErro(corpo, texto);
       }
       return;
     }
@@ -697,7 +722,8 @@ async function enviar(campo, modelo, esforco) {
         // Orfa: nada a fazer aqui — o servidor ja gravou a resposta inteira no banco,
         // associada a conversaDoEnvio.
       } else if (nome === 'erro') {
-        if (aindaNaMesmaConversa) mostrarErro(dados, texto);
+        // No meio do turno a pergunta ja foi gravada: o reenvio reaproveita a bolha dela.
+        if (aindaNaMesmaConversa) mostrarErro(dados, texto, bolhaPergunta);
       }
     }, renovar);
   } catch (e) {

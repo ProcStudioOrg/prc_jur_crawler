@@ -338,7 +338,7 @@ function documento() {
           description: 'Corpo das recusas da conexão ProcStudio; o mesmo objeto vem no evento `erro` quando o bloqueio acontece no meio do turno.',
           properties: {
             erro: { type: 'string' },
-            tipo: { type: 'string', enum: ['saldo_insuficiente', 'cobranca_pendente', 'procstudio_indisponivel'] },
+            tipo: { type: 'string', enum: ['saldo_insuficiente', 'cobranca_pendente', 'procstudio_indisponivel', 'reenvio_invalido'] },
             saldoBrl: { type: 'number', description: 'só em saldo_insuficiente' },
             topupUrl: { type: ['string', 'null'], description: 'só em saldo_insuficiente' },
           },
@@ -682,6 +682,13 @@ function documento() {
                     modelo: { type: 'string', maxLength: 256, description: 'ID do modelo do provedor; usa o modelo salvo se omitido.' },
                     conexaoId: { type: 'string', description: 'ID de uma conexão de IA pertencente ao titular.' },
                     conversaId: { type: 'string', description: 'opcional — se informado, persiste o turno nesta conversa' },
+                    reenvio: {
+                      type: 'boolean',
+                      description: '"Tentar de novo" depois de um bloqueio no meio do turno: a última mensagem '
+                        + '(a pergunta) já foi gravada e não é gravada outra vez. Exige conversaId, e a última '
+                        + 'mensagem gravada da conversa precisa ser essa mesma pergunta do usuário; senão 409 '
+                        + 'com tipo `reenvio_invalido`.',
+                    },
                   },
                   required: ['mensagens', 'conexaoId'],
                 },
@@ -717,7 +724,7 @@ function documento() {
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Erro' } } },
             },
             409: {
-              description: 'Conexão ProcStudio com cobrança anterior ainda não registrada (tipo `cobranca_pendente`), ou já há uma resposta em andamento nesta conversa.',
+              description: 'Conexão ProcStudio com cobrança anterior ainda não registrada (tipo `cobranca_pendente`), já há uma resposta em andamento nesta conversa, ou `reenvio: true` cuja pergunta não é a última mensagem gravada (tipo `reenvio_invalido`).',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/BloqueioCobranca' } } },
             },
             503: {

@@ -451,6 +451,40 @@ describe('POST /api/v1/chat — cobrança da conexão ProcStudio', () => {
     } finally { a.fechar(); }
   });
 
+  // "Tentar de novo" depois de um bloqueio no meio do turno: a pergunta já está gravada.
+  it('reenvio com a mesma pergunta como última mensagem gravada não grava de novo', async () => {
+    const a = await ambiente({ respostas: [final('resposta do reenvio', USO(10, 2))] });
+    try {
+      const c = a.conversas.criar();
+      a.conversas.acrescentar(c.id, 'user', 'quais tribunais?');
+      const r = await a.postar({ conexaoId: 'procstudio', conversaId: c.id, reenvio: true });
+      assert.strictEqual(r.status, 200);
+      await r.text();
+      const gravadas = a.conversas.mensagens(c.id);
+      assert.deepStrictEqual(gravadas.map((m) => m.papel), ['user', 'assistant'], JSON.stringify(gravadas));
+      assert.strictEqual(gravadas.filter((m) => m.conteudo === 'quais tribunais?').length, 1, 'a pergunta fica uma vez só');
+    } finally { a.fechar(); }
+  });
+
+  it('reenvio cuja pergunta não é a última mensagem gravada → 409 reenvio_invalido, sem gravar nem chamar o provedor', async () => {
+    const a = await ambiente({ respostas: [final('nunca', USO(1, 1))] });
+    try {
+      const c = a.conversas.criar();
+      a.conversas.acrescentar(c.id, 'user', 'outra pergunta');
+      const r = await a.postar({ conexaoId: 'procstudio', conversaId: c.id, reenvio: true });
+      assert.strictEqual(r.status, 409);
+      const corpo = await r.json();
+      assert.strictEqual(corpo.tipo, 'reenvio_invalido');
+      assert.match(corpo.erro, /Não foi possível tentar de novo/);
+      assert.strictEqual(a.conversas.mensagens(c.id).length, 1);
+      assert.strictEqual(a.provedor.chamadas.length, 0);
+
+      const semConversa = await a.postar({ conexaoId: 'procstudio', reenvio: true });
+      assert.strictEqual(semConversa.status, 400, 'reenvio sem conversa não tem o que reaproveitar');
+      await semConversa.text();
+    } finally { a.fechar(); }
+  });
+
   it('cobrança pendente → 409; ProcStudio indisponível → 503', async () => {
     for (const [motivo, status, tipo] of [['pendente', 409, 'cobranca_pendente'], ['indisponivel', 503, 'procstudio_indisponivel']]) {
       const cobranca = cobrancaFalsa({ podeOperar: () => ({ ok: false, motivo }) });

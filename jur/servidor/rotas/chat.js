@@ -11,6 +11,7 @@ const ROLES_VALIDOS = new Set(['user', 'assistant']);
 const PROVEDOR_PROCSTUDIO = 'openrouter';
 const MSG_PENDENTE = 'Há uma cobrança pendente nesta conta; aguarde alguns instantes.';
 const MSG_INDISPONIVEL = 'A conexão ProcStudio está temporariamente indisponível. Use uma conexão própria ou tente mais tarde.';
+const MSG_REENVIO_INVALIDO = 'Não foi possível tentar de novo: a última mensagem desta conversa não é esta pergunta. Envie a pergunta novamente.';
 
 /** "R$ 1.234,56" / "R$ −0,52" (sinal de menos tipografico, como no ProcStudio). */
 function formatarBrl(valor) {
@@ -80,6 +81,15 @@ function registrar(roteador, deps) {
 
     const motivoInvalido = validarMensagens(corpo.mensagens);
     if (motivoInvalido) return json(res, 400, { erro: motivoInvalido });
+    // `reenvio: true` = "Tentar de novo" depois de um bloqueio no meio do turno: a pergunta ja
+    // foi gravada por aquele turno e nao e gravada outra vez (ver abaixo).
+    if (corpo.reenvio !== undefined && typeof corpo.reenvio !== 'boolean') {
+      return json(res, 400, { erro: 'reenvio precisa ser true ou false' });
+    }
+    const reenvio = corpo.reenvio === true;
+    if (reenvio && !(deps.conversas && typeof corpo.conversaId === 'string' && corpo.conversaId)) {
+      return json(res, 400, { erro: 'reenvio exige conversaId: só se reenvia uma pergunta já gravada numa conversa' });
+    }
     const mensagens = corpo.mensagens;
 
     let cliente = deps.clienteLLM;
@@ -176,8 +186,19 @@ function registrar(roteador, deps) {
         return json(res, 404, { erro: 'conversa nao encontrada' });
       }
       const ultima = mensagens[mensagens.length - 1];
-      deps.conversas.acrescentar(conversaId, 'user', ultima.content);
-      deps.conversas.renomearSePrimeira(conversaId, extrairTexto(ultima.content));
+      if (reenvio) {
+        // Sem adivinhar: so vale se a ultima mensagem GRAVADA e esta mesma pergunta do usuario.
+        // Senao (outra pergunta, ou rodadas parciais gravadas depois dela) o turno e recusado.
+        const gravadas = deps.conversas.mensagens(conversaId);
+        const gravada = gravadas[gravadas.length - 1];
+        if (!gravada || gravada.papel !== 'user'
+            || JSON.stringify(gravada.conteudo) !== JSON.stringify(ultima.content)) {
+          return json(res, 409, { erro: MSG_REENVIO_INVALIDO, tipo: 'reenvio_invalido' });
+        }
+      } else {
+        deps.conversas.acrescentar(conversaId, 'user', ultima.content);
+        deps.conversas.renomearSePrimeira(conversaId, extrairTexto(ultima.content));
+      }
     }
 
     // Rastreia so os jobs de busca que ESTA conversa criou, para cancelar so os dela
