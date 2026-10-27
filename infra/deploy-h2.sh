@@ -35,11 +35,18 @@ docker build -q -f infra/Dockerfile -t jur:$SHA \
 echo "imagem $(docker image inspect jur:$SHA --format '{{.Id}}')"
 sed "s|^JUR_IMAGE=.*|JUR_IMAGE=jur:$SHA|" $PREV/infra/.env > infra/.env && chmod 600 infra/.env
 grep -q "^JUR_IMAGE=jur:$SHA$" infra/.env
+# variáveis novas desta release: $A/env.extra (KEY=valor por linha, chmod 600) entra uma vez,
+# só nas chaves que o .env ainda não tem, e fica guardado dentro da release como env.extra.applied
+if [ -f $A/env.extra ]; then
+  while IFS= read -r l; do k=${l%%=*}; [ -n "$k" ] && ! grep -q "^$k=" infra/.env && echo "$l" >> infra/.env; done < $A/env.extra
+  mv $A/env.extra $A/releases/$REL/env.extra.applied && chmod 600 $A/releases/$REL/env.extra.applied
+  echo "env.extra aplicado: $(grep -oE '^[A-Z_]+=' $A/releases/$REL/env.extra.applied | tr -d = | tr '\n' ' ')"
+fi
 # --- validação em container temporário, volumes próprios, sem aviso de deploy ---
 docker rm -f jurpre >/dev/null 2>&1 || true
 docker volume rm jurpre-dados jurpre-cache >/dev/null 2>&1 || true
 docker run -d --name jurpre --init --shm-size=1g --env-file infra/.env \
-  -e PORT=3000 -e JUR_BIND=0.0.0.0 -e JUR_DADOS=/dados -e TMPDIR=/cache -e USAGE_WEBHOOK_URL= -e KAIZEN_WEBHOOK_URL= -e JUR_SENTINELA=0 -e LINEAR_API_KEY= \
+  -e PORT=3000 -e JUR_BIND=0.0.0.0 -e JUR_DADOS=/dados -e TMPDIR=/cache -e USAGE_WEBHOOK_URL= -e KAIZEN_WEBHOOK_URL= -e JUR_SENTINELA=0 -e LINEAR_API_KEY= -e PROCSTUDIO_LLM_API_KEY= \
   -v jurpre-dados:/dados -v jurpre-cache:/cache -p 127.0.0.1:3100:3000 jur:$SHA >/dev/null
 for i in $(seq 1 30); do curl -fsS http://127.0.0.1:3100/api/v1/saude >/dev/null 2>&1 && break; sleep 2; done
 code() { curl -s -o /dev/null -w '%{http_code}' "$@"; }

@@ -234,6 +234,12 @@ com `docker compose -p jur ... up -d --no-build`. O rollback usa a imagem anteri
 já construída, sem apagar volumes. As credenciais e a chave do cofre são preservadas
 entre releases. O acesso de deploy atual está em `AGENTS.md`.
 
+`infra/deploy-h2.sh <sha7> <versão>` faz tudo isso. O `.env` da release nova é o da anterior
+com `JUR_IMAGE` trocado; variável nova entra por `~/apps/prc_jur_crawler/env.extra` no H2
+(`KEY=valor` por linha, `chmod 600`): o script acrescenta só as chaves que o `.env` ainda não
+tem e guarda o arquivo dentro da release como `env.extra.applied`. O container de validação
+(`jurpre`) roda sempre com `PROCSTUDIO_LLM_API_KEY` vazia.
+
 Toda release leva versão nova em `jur/package.json` (regra em [`CHANGELOG.md`](../CHANGELOG.md)).
 Com `USAGE_WEBHOOK_URL` no `infra/.env`, o primeiro boot de cada versão+revisão manda
 `{"service":"jurcrawler","event":"deploy","version":...,"revision":...}` ao FFD; restart
