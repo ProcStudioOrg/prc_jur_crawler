@@ -1,0 +1,1107 @@
+{
+  "tribunal": "tjdft",
+  "nome": "Tribunal de Justiça do Distrito Federal e dos Territórios",
+  "coletado_em": "2026-10-27T08:10:43.810Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "27/10/2025",
+      "dataFim": "27/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 12581,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "27/10/2025",
+      "dataFim": "27/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 2811,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "27/10/2025",
+      "dataFim": "27/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 18959,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 45,
+    "por_grau": {
+      "1": 5,
+      "2": 40
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 40
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "LUIS EDUARDO YATSUDA ARIMA",
+      "rotulo_original": "LUIS EDUARDO YATSUDA ARIMA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "PRIMEIRA TURMA RECURSAL",
+      "orgaos": [
+        "PRIMEIRA TURMA RECURSAL"
+      ],
+      "ocorrencias": 16,
+      "julgados_exemplo": [
+        "0709550-50.2026.8.07.0016",
+        "0724576-88.2026.8.07.0016",
+        "0705866-50.2026.8.07.0006",
+        "0703095-66.2026.8.07.0017",
+        "0754470-12.2026.8.07.0016"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 1606
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EVANDRO NEIVA DE AMORIM",
+      "rotulo_original": "EVANDRO NEIVA DE AMORIM",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "PRIMEIRA TURMA RECURSAL",
+      "orgaos": [
+        "PRIMEIRA TURMA RECURSAL"
+      ],
+      "ocorrencias": 14,
+      "julgados_exemplo": [
+        "0708162-15.2026.8.07.0016",
+        "0729206-90.2026.8.07.0016",
+        "0738359-50.2026.8.07.0016",
+        "0712632-31.2026.8.07.0003",
+        "0738904-23.2026.8.07.0016"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 2537
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JANSEN FIALHO DE ALMEIDA",
+      "rotulo_original": "JANSEN FIALHO DE ALMEIDA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "7ª TURMA CÍVEL",
+      "orgaos": [
+        "7ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0715770-12.2026.8.07.0001",
+        "0754387-75.2025.8.07.0001",
+        "0753606-53.2025.8.07.0001",
+        "0738081-97.2026.8.07.0000",
+        "0740499-57.2026.8.07.0016"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 1540
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUCIANA FREIRE NAVES FERNANDES GONCALVES",
+      "rotulo_original": "LUCIANA FREIRE NAVES FERNANDES GONCALVES",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "SEGUNDA TURMA RECURSAL",
+      "orgaos": [
+        "SEGUNDA TURMA RECURSAL"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0758071-65.2022.8.07.0016",
+        "0701565-44.2026.8.07.9000",
+        "0754758-28.2024.8.07.0016",
+        "0758846-80.2022.8.07.0016",
+        "0745563-92.2019.8.07.0016"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 1547
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARILZA NEVES GEBRIM",
+      "rotulo_original": "MARILZA NEVES GEBRIM",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "SEGUNDA TURMA RECURSAL",
+      "orgaos": [
+        "SEGUNDA TURMA RECURSAL"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0741355-65.2019.8.07.0016",
+        "0759707-71.2019.8.07.0016",
+        "0744976-70.2019.8.07.0016",
+        "0749697-31.2020.8.07.0016",
+        "0759141-25.2019.8.07.0016"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 1660
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FLÁVIO FERNANDO ALMEIDA DA FONSECA",
+      "rotulo_original": "FLÁVIO FERNANDO ALMEIDA DA FONSECA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª TURMA CÍVEL",
+      "orgaos": [
+        "3ª TURMA CÍVEL",
+        "PRIMEIRA TURMA RECURSAL"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0703392-83.2020.8.07.0017",
+        "0707922-56.2026.8.07.0006",
+        "0720037-30.2026.8.07.0000",
+        "0014653-58.2016.8.07.0007",
+        "0700428-95.2026.8.07.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LEILA ARLANCH",
+      "rotulo_original": "LEILA ARLANCH",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª TURMA CRIMINAL",
+      "orgaos": [
+        "1ª TURMA CRIMINAL"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0707774-36.2026.8.07.0009",
+        "0705574-93.2025.8.07.0008",
+        "0766967-97.2022.8.07.0016",
+        "0705727-04.2026.8.07.0005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROBERVAL CASEMIRO BELINATI",
+      "rotulo_original": "ROBERVAL CASEMIRO BELINATI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª TURMA CÍVEL",
+      "orgaos": [
+        "4ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0726824-75.2026.8.07.0000",
+        "0767441-11.2025.8.07.0001",
+        "0719550-91.2025.8.07.0001",
+        "0703642-30.2026.8.07.0010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LEONOR AGUENA",
+      "rotulo_original": "LEONOR AGUENA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª TURMA CÍVEL",
+      "orgaos": [
+        "5ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0700352-93.2024.8.07.0004",
+        "0704039-23.2025.8.07.0011"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MÁRIO-ZAM BELMIRO",
+      "rotulo_original": "MÁRIO-ZAM BELMIRO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª TURMA CÍVEL",
+      "orgaos": [
+        "4ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0732618-77.2026.8.07.0000",
+        "0702458-60.2026.8.07.0003",
+        "0732024-63.2026.8.07.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SÉRGIO ROCHA",
+      "rotulo_original": "SÉRGIO ROCHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª TURMA CÍVEL",
+      "orgaos": [
+        "4ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0703518-33.2024.8.07.0005",
+        "0730741-05.2026.8.07.0000",
+        "0716490-95.2025.8.07.0006"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SONÍRIA ROCHA CAMPOS D'ASSUNÇÃO",
+      "rotulo_original": "SONÍRIA ROCHA CAMPOS D'ASSUNÇÃO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "7ª TURMA CÍVEL",
+      "orgaos": [
+        "7ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0729181-28.2026.8.07.0000",
+        "0734091-98.2026.8.07.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "TEÓFILO CAETANO",
+      "rotulo_original": "TEÓFILO CAETANO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª TURMA CÍVEL",
+      "orgaos": [
+        "1ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0704145-31.2024.8.07.0007",
+        "0722667-84.2025.8.07.0003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "AISTON HENRIQUE DE SOUSA",
+      "rotulo_original": "AISTON HENRIQUE DE SOUSA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª TURMA CÍVEL",
+      "orgaos": [
+        "4ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0719050-25.2025.8.07.0001",
+        "0735185-09.2025.8.07.0003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANA CANTARINO",
+      "rotulo_original": "ANA CANTARINO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª TURMA CÍVEL",
+      "orgaos": [
+        "5ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0757050-94.2025.8.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CARLOS PIRES SOARES NETO",
+      "rotulo_original": "CARLOS PIRES SOARES NETO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª TURMA CÍVEL",
+      "orgaos": [
+        "1ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0729101-64.2026.8.07.0000",
+        "0732790-19.2026.8.07.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CARMEN BITTENCOURT",
+      "rotulo_original": "CARMEN BITTENCOURT",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "8ª TURMA CÍVEL",
+      "orgaos": [
+        "8ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0719466-59.2026.8.07.0000",
+        "0716025-70.2026.8.07.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FRANCISCO ANTONIO ALVES DE OLIVEIRA",
+      "rotulo_original": "FRANCISCO ANTONIO ALVES DE OLIVEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª TURMA CRIMINAL",
+      "orgaos": [
+        "3ª TURMA CRIMINAL",
+        "CÂMARA CRIMINAL"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0711288-98.2025.8.07.0019",
+        "0739049-30.2026.8.07.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE FIRMO REIS SOUB",
+      "rotulo_original": "JOSE FIRMO REIS SOUB",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "8ª TURMA CÍVEL",
+      "orgaos": [
+        "8ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0723271-20.2026.8.07.0000",
+        "0732009-94.2026.8.07.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "RENATO SCUSSEL",
+      "rotulo_original": "RENATO SCUSSEL",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª TURMA CÍVEL",
+      "orgaos": [
+        "2ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0718820-04.2021.8.07.0007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROBERTO FREITAS FILHO",
+      "rotulo_original": "ROBERTO FREITAS FILHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª TURMA CÍVEL",
+      "orgaos": [
+        "3ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0710754-60.2025.8.07.0018",
+        "0741610-34.2020.8.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROMULO DE ARAUJO MENDES",
+      "rotulo_original": "ROMULO DE ARAUJO MENDES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª TURMA CÍVEL",
+      "orgaos": [
+        "1ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0720015-83.2024.8.07.0018",
+        "0728476-30.2026.8.07.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CARLOS ALBERTO MARTINS FILHO",
+      "rotulo_original": "CARLOS ALBERTO MARTINS FILHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª TURMA CÍVEL",
+      "orgaos": [
+        "1ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0714558-56.2026.8.07.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DEMETRIUS GOMES CAVALCANTI",
+      "rotulo_original": "DEMETRIUS GOMES CAVALCANTI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª TURMA CRIMINAL",
+      "orgaos": [
+        "3ª TURMA CRIMINAL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0706473-64.2025.8.07.0017"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DIVA LUCY DE FARIA PEREIRA",
+      "rotulo_original": "DIVA LUCY DE FARIA PEREIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "8ª TURMA CÍVEL",
+      "orgaos": [
+        "8ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0731925-21.2025.8.07.0003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FÁBIO EDUARDO MARQUES",
+      "rotulo_original": "FÁBIO EDUARDO MARQUES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª TURMA CÍVEL",
+      "orgaos": [
+        "5ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0750914-81.2025.8.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FABRÍCIO FONTOURA BEZERRA",
+      "rotulo_original": "FABRÍCIO FONTOURA BEZERRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª TURMA CÍVEL",
+      "orgaos": [
+        "1ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0703780-70.2026.8.07.0018"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FERNANDO HABIBE",
+      "rotulo_original": "FERNANDO HABIBE",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª TURMA CÍVEL",
+      "orgaos": [
+        "4ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0733027-31.2018.8.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FERNANDO TAVERNARD",
+      "rotulo_original": "FERNANDO TAVERNARD",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª TURMA CÍVEL",
+      "orgaos": [
+        "2ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0701308-85.2024.8.07.0012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GISELLE ROCHA RAPOSO",
+      "rotulo_original": "GISELLE ROCHA RAPOSO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "SEGUNDA TURMA RECURSAL",
+      "orgaos": [
+        "SEGUNDA TURMA RECURSAL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0717534-52.2025.8.07.0006"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "HECTOR VALVERDE SANTANNA",
+      "rotulo_original": "HECTOR VALVERDE SANTANNA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª TURMA CÍVEL",
+      "orgaos": [
+        "2ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0708686-13.2024.8.07.0006"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JAIR SOARES",
+      "rotulo_original": "JAIR SOARES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "CONSELHO DA MAGISTRATURA",
+      "orgaos": [
+        "CONSELHO DA MAGISTRATURA"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0702479-28.2025.8.07.0017"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JAMES EDUARDO OLIVEIRA",
+      "rotulo_original": "JAMES EDUARDO OLIVEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª TURMA CÍVEL",
+      "orgaos": [
+        "4ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0752748-56.2024.8.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOÃO EGMONT",
+      "rotulo_original": "JOÃO EGMONT",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª TURMA CÍVEL",
+      "orgaos": [
+        "2ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0726486-04.2026.8.07.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSAPHÁ FRANCISCO DOS SANTOS",
+      "rotulo_original": "JOSAPHÁ FRANCISCO DOS SANTOS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª TURMA CRIMINAL",
+      "orgaos": [
+        "1ª TURMA CRIMINAL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0707386-32.2023.8.07.0012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LEONARDO ROSCOE BESSA",
+      "rotulo_original": "LEONARDO ROSCOE BESSA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª TURMA CÍVEL",
+      "orgaos": [
+        "6ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0713177-10.2026.8.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA IVATÔNIA",
+      "rotulo_original": "MARIA IVATÔNIA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª TURMA CÍVEL",
+      "orgaos": [
+        "5ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0723919-31.2025.8.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARILIA DE AVILA E SILVA SAMPAIO",
+      "rotulo_original": "MARILIA DE AVILA E SILVA SAMPAIO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª TURMA CÍVEL",
+      "orgaos": [
+        "3ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0713408-20.2025.8.07.0018"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "NILSONI DE FREITAS CUSTODIO",
+      "rotulo_original": "NILSONI DE FREITAS CUSTODIO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª TURMA CRIMINAL",
+      "orgaos": [
+        "3ª TURMA CRIMINAL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0706127-30.2026.8.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROBSON BARBOSA DE AZEVEDO",
+      "rotulo_original": "ROBSON BARBOSA DE AZEVEDO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "7ª TURMA CÍVEL",
+      "orgaos": [
+        "7ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0761948-53.2025.8.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SANDOVAL OLIVEIRA",
+      "rotulo_original": "SANDOVAL OLIVEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª TURMA CRIMINAL",
+      "orgaos": [
+        "3ª TURMA CRIMINAL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0821482-77.2025.8.07.0016"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SANDRA REVES",
+      "rotulo_original": "SANDRA REVES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "7ª TURMA CÍVEL",
+      "orgaos": [
+        "7ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0735638-44.2024.8.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SELMA LEITE DO NASCIMENTO SAUERBRONN DE SOUZA",
+      "rotulo_original": "SELMA LEITE DO NASCIMENTO SAUERBRONN DE SOUZA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª TURMA CÍVEL",
+      "orgaos": [
+        "3ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0735343-39.2026.8.07.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SILVANIO BARBOSA DOS SANTOS",
+      "rotulo_original": "SILVANIO BARBOSA DOS SANTOS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª TURMA CRIMINAL",
+      "orgaos": [
+        "2ª TURMA CRIMINAL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0707310-31.2025.8.07.0014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "VERA ANDRIGHI",
+      "rotulo_original": "VERA ANDRIGHI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª TURMA CÍVEL",
+      "orgaos": [
+        "6ª TURMA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0726836-51.2024.8.07.0003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

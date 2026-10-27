@@ -1,0 +1,1480 @@
+{
+  "tribunal": "tjes",
+  "nome": "Tribunal de Justiça do Espírito Santo",
+  "coletado_em": "2026-10-27T08:11:59.319Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "27/10/2025",
+      "dataFim": "27/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 200,
+      "total_no_portal": 20860,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "27/10/2025",
+      "dataFim": "27/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 200,
+      "total_no_portal": 3616,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "27/10/2025",
+      "dataFim": "27/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 200,
+      "total_no_portal": 28307,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "27/10/2025",
+      "dataFim": "27/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 100,
+      "total_no_portal": 12665,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 56,
+    "por_grau": {
+      "2": 56
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 51
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "WALMEA ELYZE CARVALHO",
+      "rotulo_original": "WALMEA ELYZE CARVALHO",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 3ª Turma",
+      "orgaos": [
+        "Turma Recursal - 3ª Turma"
+      ],
+      "ocorrencias": 98,
+      "julgados_exemplo": [
+        "5008173-80.2025.8.08.0024",
+        "5003080-21.2025.8.08.0030",
+        "5015312-11.2025.8.08.0048",
+        "5049625-07.2024.8.08.0024",
+        "5014528-73.2024.8.08.0014"
+      ],
+      "teste_busca": {
+        "consultados": 100,
+        "batem": 100,
+        "status": "ok",
+        "detalhe": "0 de 100 fora do filtro",
+        "ms": 4997
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "RAFAEL DALVI GUEDES PINTO",
+      "rotulo_original": "RAFAEL DALVI GUEDES PINTO",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 3ª Turma",
+      "orgaos": [
+        "Turma Recursal - 3ª Turma"
+      ],
+      "ocorrencias": 43,
+      "julgados_exemplo": [
+        "5029211-87.2025.8.08.0012",
+        "5024738-58.2025.8.08.0012",
+        "5001143-36.2023.8.08.0065",
+        "5012764-63.2021.8.08.0012",
+        "5000748-97.2025.8.08.0057"
+      ],
+      "teste_busca": {
+        "consultados": 100,
+        "batem": 100,
+        "status": "ok",
+        "detalhe": "0 de 100 fora do filtro",
+        "ms": 4308
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PAULO ABIGUENEM ABIB",
+      "rotulo_original": "PAULO ABIGUENEM ABIB",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 1ª Turma",
+      "orgaos": [
+        "Turma Recursal - 1ª Turma"
+      ],
+      "ocorrencias": 40,
+      "julgados_exemplo": [
+        "5000917-14.2025.8.08.0048",
+        "5007831-94.2025.8.08.0048",
+        "5012713-41.2025.8.08.0035",
+        "5004993-92.2025.8.08.0012",
+        "5000514-37.2024.8.08.0062"
+      ],
+      "teste_busca": {
+        "consultados": 100,
+        "batem": 100,
+        "status": "ok",
+        "detalhe": "0 de 100 fora do filtro",
+        "ms": 3643
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "RAFAEL FRACALOSSI MENEZES",
+      "rotulo_original": "RAFAEL FRACALOSSI MENEZES",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 3ª Turma",
+      "orgaos": [
+        "Turma Recursal - 3ª Turma"
+      ],
+      "ocorrencias": 34,
+      "julgados_exemplo": [
+        "5018171-72.2025.8.08.0024",
+        "5008963-89.2025.8.08.0048",
+        "5020058-28.2024.8.08.0024",
+        "5016676-57.2025.8.08.0035",
+        "5032857-06.2024.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 100,
+        "batem": 100,
+        "status": "ok",
+        "detalhe": "0 de 100 fora do filtro",
+        "ms": 4351
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MURILO RIBEIRO FERREIRA",
+      "rotulo_original": "MURILO RIBEIRO FERREIRA",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 5ª Turma",
+      "orgaos": [
+        "Turma Recursal - 5ª Turma",
+        "Turma de Uniformização de Lei"
+      ],
+      "ocorrencias": 33,
+      "julgados_exemplo": [
+        "5010395-85.2025.8.08.0035",
+        "5026420-82.2024.8.08.0012",
+        "5000323-66.2024.8.08.0005",
+        "5013073-79.2024.8.08.0012",
+        "5000946-69.2025.8.08.0014"
+      ],
+      "teste_busca": {
+        "consultados": 100,
+        "batem": 100,
+        "status": "ok",
+        "detalhe": "0 de 100 fora do filtro",
+        "ms": 2586
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROBSON LUIZ ALBANEZ",
+      "rotulo_original": "ROBSON LUIZ ALBANEZ",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 29,
+      "julgados_exemplo": [
+        "0009613-14.2020.8.08.0012",
+        "5003344-09.2023.8.08.0030",
+        "5008498-33.2021.8.08.0012",
+        "5022506-72.2023.8.08.0035",
+        "0009788-08.2020.8.08.0012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DOUGLAS DEMONER FIGUEIREDO",
+      "rotulo_original": "DOUGLAS DEMONER FIGUEIREDO",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 5ª Turma",
+      "orgaos": [
+        "Turma Recursal - 5ª Turma"
+      ],
+      "ocorrencias": 25,
+      "julgados_exemplo": [
+        "5022306-31.2024.8.08.0035",
+        "5045777-12.2024.8.08.0024",
+        "5033195-44.2024.8.08.0035",
+        "5004209-18.2025.8.08.0012",
+        "5023555-86.2024.8.08.0012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SERGIO RICARDO DE SOUZA",
+      "rotulo_original": "SERGIO RICARDO DE SOUZA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 23,
+      "julgados_exemplo": [
+        "5001706-75.2023.8.08.0050",
+        "5014864-23.2023.8.08.0011",
+        "5038029-26.2024.8.08.0024",
+        "0003307-38.2013.8.08.0056",
+        "5008313-22.2022.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FERNANDO ESTEVAM BRAVIN RUY",
+      "rotulo_original": "FERNANDO ESTEVAM BRAVIN RUY",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível",
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 21,
+      "julgados_exemplo": [
+        "5033041-21.2023.8.08.0048",
+        "5034148-42.2023.8.08.0035",
+        "5000808-78.2024.8.08.0001",
+        "5001705-90.2023.8.08.0050",
+        "5005027-95.2021.8.08.0048"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "THAITA CAMPOS TREVIZAN",
+      "rotulo_original": "THAITA CAMPOS TREVIZAN",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 3ª Turma",
+      "orgaos": [
+        "Turma Recursal - 3ª Turma"
+      ],
+      "ocorrencias": 19,
+      "julgados_exemplo": [
+        "5045667-13.2024.8.08.0024",
+        "5012320-77.2025.8.08.0048",
+        "5002034-31.2024.8.08.0030",
+        "5003459-34.2025.8.08.0006",
+        "5010890-07.2025.8.08.0011"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JULIO CESAR COSTA DE OLIVEIRA",
+      "rotulo_original": "JULIO CESAR COSTA DE OLIVEIRA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível",
+        "Reunidas - 1º Grupo Cível"
+      ],
+      "ocorrencias": 18,
+      "julgados_exemplo": [
+        "5007737-74.2023.8.08.0030",
+        "5024887-53.2023.8.08.0035",
+        "5000443-58.2023.8.08.0001",
+        "5001712-82.2023.8.08.0050",
+        "5012668-48.2021.8.08.0012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LEONARDO MANNARINO TEIXEIRA LOPES",
+      "rotulo_original": "LEONARDO MANNARINO TEIXEIRA LOPES",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 3ª Turma",
+      "orgaos": [
+        "Turma Recursal - 3ª Turma"
+      ],
+      "ocorrencias": 18,
+      "julgados_exemplo": [
+        "5016449-03.2025.8.08.0024",
+        "5013371-37.2025.8.08.0012",
+        "5008177-50.2025.8.08.0014",
+        "5012148-77.2025.8.08.0035",
+        "0000092-71.2023.8.08.0131"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ARTHUR JOSE NEIVA DE ALMEIDA",
+      "rotulo_original": "ARTHUR JOSE NEIVA DE ALMEIDA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 17,
+      "julgados_exemplo": [
+        "5000121-17.2023.8.08.0008",
+        "5001894-56.2021.8.08.0012",
+        "5001709-30.2023.8.08.0050",
+        "5018884-20.2024.8.08.0012",
+        "5011707-62.2022.8.08.0048"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALDARY NUNES JUNIOR",
+      "rotulo_original": "ALDARY NUNES JUNIOR",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 16,
+      "julgados_exemplo": [
+        "5005755-50.2021.8.08.0012",
+        "0002234-74.2021.8.08.0048",
+        "5002131-06.2024.8.08.0006",
+        "5001232-06.2024.8.08.0039",
+        "0027750-38.2017.8.08.0048"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ELIANA JUNQUEIRA MUNHOS FERREIRA",
+      "rotulo_original": "ELIANA JUNQUEIRA MUNHOS FERREIRA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 16,
+      "julgados_exemplo": [
+        "5006935-27.2024.8.08.0035",
+        "5017537-13.2024.8.08.0024",
+        "5000482-52.2024.8.08.0023",
+        "5000653-58.2024.8.08.0039",
+        "5011814-81.2022.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FREDERICO IVENS MINA ARRUDA DE CARVALHO",
+      "rotulo_original": "FREDERICO IVENS MINA ARRUDA DE CARVALHO",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 1ª Turma",
+      "orgaos": [
+        "Turma Recursal - 1ª Turma"
+      ],
+      "ocorrencias": 16,
+      "julgados_exemplo": [
+        "5011835-52.2025.8.08.0024",
+        "5002522-86.2025.8.08.0050",
+        "5034236-45.2025.8.08.0024",
+        "5039786-55.2024.8.08.0024",
+        "5007942-92.2025.8.08.0011"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "HELOISA CARIELLO",
+      "rotulo_original": "HELOISA CARIELLO",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 16,
+      "julgados_exemplo": [
+        "5028575-47.2024.8.08.0048",
+        "5001199-33.2022.8.08.0056",
+        "5027269-43.2024.8.08.0048",
+        "0001538-18.2019.8.08.0045",
+        "5000656-48.2022.8.08.0050"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DEBORA MARIA AMBOS CORREA DA SILVA",
+      "rotulo_original": "DEBORA MARIA AMBOS CORREA DA SILVA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 15,
+      "julgados_exemplo": [
+        "5014061-02.2022.8.08.0035",
+        "5000232-68.2024.8.08.0039",
+        "5006951-44.2024.8.08.0014",
+        "5006225-78.2025.8.08.0000",
+        "0015865-41.2013.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FABIO BRASIL NERY",
+      "rotulo_original": "FABIO BRASIL NERY",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 14,
+      "julgados_exemplo": [
+        "5031107-66.2024.8.08.0024",
+        "5004291-63.2023.8.08.0030",
+        "5020528-93.2023.8.08.0024",
+        "0000556-19.2020.8.08.0061",
+        "0037298-91.2019.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JORGE ORREVAN VACCARI FILHO",
+      "rotulo_original": "JORGE ORREVAN VACCARI FILHO",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 4ª Turma",
+      "orgaos": [
+        "Turma Recursal - 4ª Turma"
+      ],
+      "ocorrencias": 14,
+      "julgados_exemplo": [
+        "5003875-45.2025.8.08.0024",
+        "5000785-57.2025.8.08.0047",
+        "5007244-12.2024.8.08.0047",
+        "5000274-96.2025.8.08.0067",
+        "5035032-70.2024.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIANNE JUDICE DE MATTOS",
+      "rotulo_original": "MARIANNE JUDICE DE MATTOS",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [
+        "5005000-98.2023.8.08.0030",
+        "5010519-04.2025.8.08.0024",
+        "5014129-15.2023.8.08.0035",
+        "5007778-41.2023.8.08.0030",
+        "5032438-54.2022.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUIZ GUILHERME RISSO",
+      "rotulo_original": "LUIZ GUILHERME RISSO",
+      "cargo": "Desembargador(a) Removido(a)",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível",
+        "Reunidas - 1º Grupo Cível"
+      ],
+      "ocorrencias": 11,
+      "julgados_exemplo": [
+        "0000393-82.2019.8.08.0058",
+        "0003249-51.2015.8.08.0028",
+        "5026479-68.2023.8.08.0024",
+        "5000013-79.2023.8.08.0010",
+        "0010789-17.2020.8.08.0048"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALCEMIR DOS SANTOS PIMENTEL",
+      "rotulo_original": "ALCEMIR DOS SANTOS PIMENTEL",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 1ª Turma",
+      "orgaos": [
+        "Turma Recursal - 1ª Turma"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "5017252-25.2025.8.08.0011",
+        "5008019-53.2026.8.08.0048",
+        "5025099-06.2025.8.08.0035",
+        "5015382-28.2025.8.08.0048",
+        "5003686-63.2026.8.08.0014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DAIR JOSE BREGUNCE DE OLIVEIRA",
+      "rotulo_original": "DAIR JOSE BREGUNCE DE OLIVEIRA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "5000823-40.2023.8.08.0047",
+        "5005862-40.2021.8.08.0030",
+        "5002871-96.2023.8.08.0038",
+        "5014147-73.2025.8.08.0000",
+        "0002084-87.2019.8.08.0008"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JANETE VARGAS SIMOES",
+      "rotulo_original": "JANETE VARGAS SIMOES",
+      "cargo": "Desembargador(a) Mesa Diretora",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0009224-66.2019.8.08.0011",
+        "5015107-30.2024.8.08.0011",
+        "5002901-38.2023.8.08.0069",
+        "5007614-04.2021.8.08.0012",
+        "5016112-86.2025.8.08.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JORGE HENRIQUE VALLE DOS SANTOS",
+      "rotulo_original": "JORGE HENRIQUE VALLE DOS SANTOS",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0004555-83.2019.8.08.0038",
+        "5005912-10.2024.8.08.0047",
+        "5001464-63.2024.8.08.0024",
+        "5008363-18.2025.8.08.0000",
+        "0016027-89.2020.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "THIAGO ALBANI OLIVEIRA GALVEAS",
+      "rotulo_original": "THIAGO ALBANI OLIVEIRA GALVEAS",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 2ª Turma",
+      "orgaos": [
+        "Turma Recursal - 2ª Turma"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "5045572-71.2025.8.08.0048",
+        "5036306-69.2024.8.08.0024",
+        "5004458-60.2026.8.08.0035",
+        "5000435-36.2024.8.08.0037",
+        "5001107-66.2024.8.08.0062"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "INES VELLO CORREA",
+      "rotulo_original": "INES VELLO CORREA",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 2ª Turma",
+      "orgaos": [
+        "Turma Recursal - 2ª Turma"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "5000456-06.2024.8.08.0039",
+        "0001011-87.2022.8.08.0004",
+        "5031951-16.2024.8.08.0024",
+        "5016078-10.2023.8.08.0024",
+        "5038897-04.2024.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALEXANDRE PUPPIM",
+      "rotulo_original": "ALEXANDRE PUPPIM",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível",
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "5001711-97.2023.8.08.0050",
+        "5001708-45.2023.8.08.0050",
+        "5003141-61.2025.8.08.0035",
+        "5003143-40.2024.8.08.0011",
+        "0006012-78.2012.8.08.0012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE PAULO CALMON NOGUEIRA DA GAMA",
+      "rotulo_original": "JOSE PAULO CALMON NOGUEIRA DA GAMA",
+      "cargo": "Desembargador(a) Removido(a)",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível",
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "5000451-81.2024.8.08.0039",
+        "0007154-73.2019.8.08.0012",
+        "5007620-54.2021.8.08.0030",
+        "0030889-36.2018.8.08.0024",
+        "0002876-02.2019.8.08.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "BRUNO SILVEIRA DE OLIVEIRA",
+      "rotulo_original": "BRUNO SILVEIRA DE OLIVEIRA",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 4ª Turma",
+      "orgaos": [
+        "Turma Recursal - 4ª Turma"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "5036155-70.2024.8.08.0035",
+        "5005678-29.2026.8.08.0024",
+        "5006043-83.2026.8.08.0024",
+        "5022357-08.2025.8.08.0035"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANA FLAVIA MELO VELLO",
+      "rotulo_original": "ANA FLAVIA MELO VELLO",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 2ª Turma",
+      "orgaos": [
+        "Turma Recursal - 2ª Turma"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "5002213-34.2024.8.08.0007",
+        "5043247-35.2024.8.08.0024",
+        "5039760-57.2024.8.08.0024",
+        "5004558-28.2024.8.08.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDNALVA DA PENHA BINDA",
+      "rotulo_original": "EDNALVA DA PENHA BINDA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "5000296-91.2023.8.08.0046",
+        "5017745-95.2023.8.08.0035",
+        "0008796-74.2021.8.08.0024",
+        "0000064-57.2020.8.08.0051"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EWERTON SCHWAB PINTO JUNIOR",
+      "rotulo_original": "EWERTON SCHWAB PINTO JUNIOR",
+      "cargo": "Desembargador(a) Mesa Diretora",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0019633-87.2019.8.08.0048",
+        "0017578-07.2020.8.08.0024",
+        "5000013-57.2025.8.08.0027",
+        "5007601-86.2024.8.08.0048"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROMILTON ALVES VIEIRA JUNIOR",
+      "rotulo_original": "ROMILTON ALVES VIEIRA JUNIOR",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 5ª Turma",
+      "orgaos": [
+        "Turma Recursal - 5ª Turma",
+        "Turma de Uniformização de Lei"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "5011541-25.2025.8.08.0048",
+        "5027506-52.2024.8.08.0024",
+        "0000124-06.2021.8.08.9101",
+        "5000037-21.2025.8.08.0016"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SAMUEL MEIRA BRASIL JUNIOR",
+      "rotulo_original": "SAMUEL MEIRA BRASIL JUNIOR",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "5000438-82.2024.8.08.0039",
+        "5024997-17.2025.8.08.0024",
+        "5012431-77.2022.8.08.0012",
+        "5002625-27.2023.8.08.0030"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CARLOS MAGNO MOULIN LIMA",
+      "rotulo_original": "CARLOS MAGNO MOULIN LIMA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0001741-45.2020.8.08.0012",
+        "5005022-76.2021.8.08.0047",
+        "5010883-89.2024.8.08.0030"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CHRISTINA ALMEIDA COSTA",
+      "rotulo_original": "CHRISTINA ALMEIDA COSTA",
+      "cargo": "Desembargador(a) Removido(a)",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível",
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0035859-89.2012.8.08.0024",
+        "0016172-97.2014.8.08.0011",
+        "5007244-29.2025.8.08.0030"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCOS VALLS FEU ROSA",
+      "rotulo_original": "MARCOS VALLS FEU ROSA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "2ª Câmara Criminal",
+      "orgaos": [
+        "2ª Câmara Criminal"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0001965-69.2024.8.08.0035",
+        "0004048-78.2021.8.08.0030",
+        "0007151-10.2023.8.08.0035"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MOACYR CALDONAZZI DE FIGUEIREDO CORTES",
+      "rotulo_original": "MOACYR CALDONAZZI DE FIGUEIREDO CORTES",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0014482-24.2015.8.08.0035",
+        "0040474-54.2014.8.08.0024",
+        "5000089-13.2024.8.08.0061"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "NAMYR CARLOS DE SOUZA FILHO",
+      "rotulo_original": "NAMYR CARLOS DE SOUZA FILHO",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "5014360-07.2025.8.08.0024",
+        "5029743-59.2024.8.08.0024",
+        "0018740-49.2015.8.08.0012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "VLADSON COUTO BITTENCOURT",
+      "rotulo_original": "VLADSON COUTO BITTENCOURT",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 3ª Turma",
+      "orgaos": [
+        "Turma Recursal - 3ª Turma"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "5000419-43.2023.8.08.0029",
+        "5001255-05.2023.8.08.0065",
+        "5004656-06.2025.8.08.0012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ADEMAR JOAO BERMOND",
+      "rotulo_original": "ADEMAR JOAO BERMOND",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 1ª Turma",
+      "orgaos": [
+        "Turma Recursal - 1ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "5004040-23.2025.8.08.0047",
+        "5017602-08.2024.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FERNANDA CORREA MARTINS",
+      "rotulo_original": "FERNANDA CORREA MARTINS",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0003056-28.2017.8.08.0008",
+        "5007325-55.2024.8.08.0048"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GRECIO NOGUEIRA GREGIO",
+      "rotulo_original": "GRECIO NOGUEIRA GREGIO",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 4ª Turma",
+      "orgaos": [
+        "Turma Recursal - 4ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "5028006-51.2025.8.08.0035",
+        "5007186-44.2025.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PAULO CESAR DE CARVALHO",
+      "rotulo_original": "PAULO CESAR DE CARVALHO",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "5000693-21.2024.8.08.0013",
+        "5015351-42.2024.8.08.0048"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "RODRIGO FERREIRA MIRANDA",
+      "rotulo_original": "RODRIGO FERREIRA MIRANDA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "5000308-97.2024.8.08.0005",
+        "5014804-22.2025.8.08.0030"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDER PONTES DA SILVA",
+      "rotulo_original": "EDER PONTES DA SILVA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5029993-63.2022.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FABIO CLEM DE OLIVEIRA",
+      "rotulo_original": "FABIO CLEM DE OLIVEIRA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5006566-73.2022.8.08.0012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FABIO PRETTI",
+      "rotulo_original": "FABIO PRETTI",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 2ª Turma",
+      "orgaos": [
+        "Turma Recursal - 2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5047176-09.2025.8.08.0035"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GUSTAVO HENRIQUE PROCOPIO SILVA",
+      "rotulo_original": "GUSTAVO HENRIQUE PROCOPIO SILVA",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 4ª Turma",
+      "orgaos": [
+        "Turma Recursal - 4ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5040558-86.2022.8.08.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "IDELSON SANTOS RODRIGUES",
+      "rotulo_original": "IDELSON SANTOS RODRIGUES",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 1ª Turma",
+      "orgaos": [
+        "Turma Recursal - 1ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5000237-17.2023.8.08.0010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE PEDRO DE SOUZA NETTO",
+      "rotulo_original": "JOSE PEDRO DE SOUZA NETTO",
+      "cargo": "Juiz Membro",
+      "grau": "2",
+      "orgao": "Turma Recursal - 4ª Turma",
+      "orgaos": [
+        "Turma Recursal - 4ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5001762-41.2026.8.08.0006"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PEDRO VALLS FEU ROSA",
+      "rotulo_original": "PEDRO VALLS FEU ROSA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "1ª Câmara Criminal",
+      "orgaos": [
+        "1ª Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5036419-53.2025.8.08.0035"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "WALACE PANDOLPHO KIFFER",
+      "rotulo_original": "WALACE PANDOLPHO KIFFER",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001512-42.2018.8.08.0049"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "WILLIAN SILVA",
+      "rotulo_original": "WILLIAN SILVA",
+      "cargo": "Desembargador(a)",
+      "grau": "2",
+      "orgao": "1ª Câmara Criminal",
+      "orgaos": [
+        "1ª Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "5007642-24.2026.8.08.0035"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
