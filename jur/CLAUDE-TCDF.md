@@ -71,6 +71,33 @@ jur tcdf -q "nepotismo" -m 1 --verificar 3 --fetch-inteiro-teor
 
 # Ressalvas — leia antes de citar qualquer coisa
 
+## 🔴 Cadeia TLS incompleta: o portal manda só a folha, e a raiz nova do Let's Encrypt não está no Node
+
+Regressão do smoke de 19/10/2026 (`unable to verify the first certificate`; estava ok em
+27/08). Medido em 21/10/2026 nos dois hosts (`api-busca-publica` e `api-etcdf`):
+
+```
+openssl s_client -connect api-busca-publica.tc.df.gov.br:443
+  0 s:CN=*.tc.df.gov.br            (validade até 28/12/2026)
+    i:C=US, O=Let's Encrypt, CN=YR1    ← intermediária NOVA, filha de "ISRG Root YR"
+  Verify return code: 21 (unable to verify the first certificate)
+```
+
+- O servidor entrega **só a folha** (cadeia incompleta — infra do tribunal, não bug nosso).
+- A folha é da intermediária **`YR1`**, e a raiz dela, **`ISRG Root YR`** (criada em
+  13/05/2026), **não está no trust store do Node 22** (só X1 e X2). Logo embutir só a
+  intermediária não bastaria: a `Root YR` é cross-assinada pela `ISRG Root X1`, e é essa
+  cross-assinatura que fecha a cadeia numa raiz que o Node já confia.
+- `curl` no macOS passa porque o SecureTransport baixa a cadeia pelo AIA; o Node não faz isso.
+
+O conserto, no padrão do TJRJ/TCEMG/TCEBA: os dois PEMs **públicos** (baixados do AIA do
+próprio certificado, `http://yr1.i.lencr.org/` e `http://yr.i.lencr.org/`) ficam em
+`src/certs/lets-encrypt-yr1.pem` e `src/certs/isrg-root-yr-cross-signed-by-x1.pem`, e o
+`TCDFNavigator` passa `ca: [...tls.rootCertificates, ...]` **só neste cliente** — nada de
+`NODE_TLS_REJECT_UNAUTHORIZED` nem trust store global. Se o tribunal passar a mandar a
+cadeia completa, os PEMs ficam inofensivos; se trocar de CA, o erro volta com outro emissor
+e o diagnóstico é o mesmo `openssl s_client` acima.
+
 ## 🔴 O WAF F5 bloqueia pelo User-Agent `curl` e devolve 403 com página de 35 KB
 
 ```

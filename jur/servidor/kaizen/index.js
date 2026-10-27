@@ -151,6 +151,7 @@ function criarKaizen({ dir, env = process.env, fetchFn, agora = Date.now, versao
       }
       if (/\(reserva\)/i.test(String(job?.navegador || ''))) enfileirarResgate('reserva', job.navegadorFalhas, base);
       if (job?.resolvidoPeloUsuario) enfileirarResgate('captcha_manual', null, base);
+      registrarAlvos({ origem, tribunal, resultados, params: job?.params });
       return { avisos };
     } catch (e) {
       logar(e);
@@ -198,6 +199,21 @@ function criarKaizen({ dir, env = process.env, fetchFn, agora = Date.now, versao
     try { outbox.enfileirar('jur-diagnostico', P.payloadCobranca({ ...comum(), ...aviso })); } catch (e) { logar(e); }
   }
 
+  /**
+   * Banco de processos: os números que uma busca bem-sucedida devolveu viram alvos de captura
+   * no FFD (source `jur-processos`). Sentinela sempre; busca de usuário só com
+   * KAIZEN_ALVOS_BUSCA=1 (vai só número e data do julgado, nunca o usuário). Síncrono e barato.
+   */
+  function registrarAlvos({ origem = 'sentinela', tribunal, resultados, capacidade, params } = {}) {
+    try {
+      if (!outbox.ligado) return false;
+      if (origem === 'busca' && env.KAIZEN_ALVOS_BUSCA !== '1') return false;
+      const corpo = P.payloadAlvos({ ...comum(), origem, tribunal, resultados, capacidade, params });
+      if (!corpo.numeros.length) return false;
+      return outbox.enfileirar('jur-processos', corpo) === true;
+    } catch (e) { logar(e); return false; }
+  }
+
   // true só quando o relato vai de fato ao FFD: sem webhook configurado ele não chegaria a ninguém.
   // Passa sempre por payloadRelato (idempotente): objeto cru nunca vai direto ao FFD.
   function enviarRelato(relato) {
@@ -217,7 +233,7 @@ function criarKaizen({ dir, env = process.env, fetchFn, agora = Date.now, versao
     try { con.close(); } catch { /* já fechado */ }
   }
 
-  return { registrarErro, registrarConcluido, registrarSentinela, enviarResumo, enviarCobranca, enviarRelato, linkFalha, outbox, fechar };
+  return { registrarErro, registrarConcluido, registrarSentinela, registrarAlvos, enviarResumo, enviarCobranca, enviarRelato, linkFalha, outbox, fechar };
 }
 
 function kaizenNulo() {
@@ -234,6 +250,7 @@ function kaizenNulo() {
     registrarErro: async () => {},
     registrarConcluido: () => ({ avisos: [] }),
     registrarSentinela: async () => {},
+    registrarAlvos: () => false,
     enviarResumo() {},
     enviarCobranca() {},
     enviarRelato: () => false,

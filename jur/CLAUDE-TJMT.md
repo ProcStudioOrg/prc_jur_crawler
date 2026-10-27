@@ -1,6 +1,7 @@
 # TJMT — Tribunal de Justiça de Mato Grosso (portal de jurisprudência)
 
-**Status: 🟢 OK** — HTTP direto, sem browser, **sem captcha em etapa nenhuma**.
+**Status: 🟡 instável desde 19/10/2026 — API em manutenção** (ver ressalva 0). Quando
+responde: HTTP direto, sem browser, **sem captcha em etapa nenhuma**.
 Portal: `https://jurisprudencia.tjmt.jus.br` (SPA Angular). API:
 `https://hellsgate-preview.tjmt.jus.br/jurisprudencia`.
 Mapeado em **08/08/2026**, crawler fechado em **10/08/2026**.
@@ -14,6 +15,32 @@ Mapeamento completo em [`human-codegen/TJMT/01-jurisprudencia/`](human-codegen/T
 ./bin/jur tjmt --listar-filtros          # câmaras, classes, relatores
 ./bin/jur tjmt --ultima-atualizacao      # prova que a base está corrente
 ```
+
+## 🔴 Ressalva 0 — a API está em manutenção declarada (19/10/2026 →)
+
+Regressão do smoke de 19/10/2026, reconfirmada em 21/10 (BRU-99):
+
+```
+GET https://hellsgate-preview.tjmt.jus.br/jurisprudencia/api/Consulta?...  → HTTP 503
+GET https://hellsgate-preview.tjmt.jus.br/jurisprudencia/camaras            → HTTP 503
+GET https://hellsgate-preview.tjmt.jus.br/                                  → HTTP 503
+Server: BigIP · text/html 11.809 B · <title>Site em manutenção — TJMT</title>
+"Este site ... está temporariamente indisponível devido a serviços de manutenção
+ e atualização. Previsão de retorno: em breve."
+```
+
+O que **não** mudou, medido no mesmo dia: a SPA `jurisprudencia.tjmt.jus.br` carrega
+(HTTP 200, 60 KB, build Angular novo `main-*.js`), o bundle continua apontando para
+`hellsgate-preview` e o `api_hellsgate_token` é o **mesmo** do Navigator;
+`hellsgate.tjmt.jus.br/jurisprudencia` responde 404 (não houve migração de host);
+`www.tjmt.jus.br` está no ar. Ou seja: **não é contrato novo nem token rodado — o backend
+está fora, para humanos também.**
+
+O `TJMTNavigator._json` reconhece essa página e lança `API do TJMT em MANUTENCAO ...` em
+vez do `HTTP 503` cru, para que o smoke e o chat nomeiem a causa. Catálogo: `instavel`.
+**Quando voltar:** `./bin/jur tjmt -q "dano moral" -m 1 --json` deve responder; aí
+remova o `Object.assign(JURISPRUDENCIA.TJMT, ...)` do `cobertura/build.js`, rode
+`npm run docs` e volte este status para 🟢.
 
 ## Escopo — o que a base cobre e o que não cobre
 

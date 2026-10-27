@@ -180,8 +180,9 @@ como antes (a captura de falha local continua, mas nada sai do servidor).
 
 | Env | O que faz | Padrão | Sem ela |
 |---|---|---|---|
-| `KAIZEN_WEBHOOK_URL` | Base dos webhooks do FFD (`https://ffd.belzinhos.com.br/api/webhooks`); recebe `/jur-diagnostico` e `/user-issues` | vazio | Outbox desligada: nada é guardado nem enviado, a captura é apagada |
-| `KAIZEN_WEBHOOK_TOKEN` | Endpoint key `jurcrawler` do FFD (sources `jur-diagnostico,user-issues`), no cabeçalho `x-webhook-token` | vazio | Outbox desligada (URL ou token vazio basta): nada é guardado nem enviado, a captura é apagada |
+| `KAIZEN_WEBHOOK_URL` | Base dos webhooks do FFD (`https://ffd.belzinhos.com.br/api/webhooks`); recebe `/jur-diagnostico`, `/user-issues` e `/jur-processos` | vazio | Outbox desligada: nada é guardado nem enviado, a captura é apagada |
+| `KAIZEN_WEBHOOK_TOKEN` | Endpoint key `jurcrawler` do FFD (sources `jur-diagnostico,user-issues,jur-processos`), no cabeçalho `x-webhook-token` | vazio | Outbox desligada (URL ou token vazio basta): nada é guardado nem enviado, a captura é apagada |
+| `KAIZEN_ALVOS_BUSCA` | `1` manda também os números das buscas de usuário ao banco de processos (`/jur-processos`); a sentinela manda sempre | `0` | Só a sentinela alimenta o banco de processos |
 | `KAIZEN_SALT` | Sal do `usuario_hash` = SHA256(`usuario_id` + sal). `openssl rand -base64 32` | vazio | `usuario_hash` vai `null` |
 | `LINEAR_API_KEY` | Chave de API do Linear para o card do botão Relatar | vazio | Relato não vira card: vai só ao FFD. Sem Linear e sem outbox ligada, o botão Relatar some |
 | `LINEAR_TEAM_ID` | Id do time BRU (BrunoDev) | vazio | Idem |

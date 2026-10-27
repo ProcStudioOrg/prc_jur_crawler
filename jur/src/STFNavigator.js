@@ -14,10 +14,16 @@
 //
 // Três armadilhas do portal, todas confirmadas ao vivo em 25/07/2026:
 //
-//  1. **AWS WAF** — `jurisprudencia.stf.jus.br` responde `202 + x-amzn-waf-action:
+//  1. **AWS WAF** — `jurisprudencia.stf.jus.br` respondia `202 + x-amzn-waf-action:
 //     challenge` a qualquer cliente sem o cookie `aws-waf-token`. O desafio é
 //     JavaScript; resolvemos UMA vez com Playwright e guardamos o cookie em
 //     disco (validade ~4 dias). Depois disso tudo roda em HTTP puro.
+//     ⚠️ 24/10/2026: o host saiu do AWS WAF — responde `server: volt-adc` /
+//     `x-volterra-location` (F5 Distributed Cloud), a página e a API dão 200
+//     sem cookie nenhum e o cookie `aws-waf-token` NÃO é mais emitido. Por
+//     isso o token é LAZY: a requisição sai com o cookie que houver (cache ou
+//     nenhum) e o navegador só entra se o servidor devolver um desafio. Se o
+//     WAF voltar, o caminho antigo continua valendo sem mudar código.
 //  2. **Cadeia TLS incompleta** — o servidor manda só o certificado folha, sem o
 //     intermediário GlobalSign. `curl` no macOS passa (keychain), Node não.
 //     `_garantirCA()` busca o intermediário pela extensão AIA do próprio
@@ -284,16 +290,35 @@ class STFNavigator {
   // ---------------- AWS WAF: cookie aws-waf-token -----------------
 
   /**
-   * Obtém (do cache em disco, ou resolvendo o desafio no Playwright) o cookie
-   * `aws-waf-token`. É a ÚNICA etapa que precisa de browser; vale ~4 dias.
+   * Cookie que já temos (memória ou cache em disco), SEM abrir navegador. Desde
+   * 24/10/2026 o portal não desafia mais, então na maior parte do tempo isto é ''.
    */
-  async token({ forcar = false } = {}) {
-    if (!forcar && this._cookie) return this._cookie;
-    if (!forcar && fs.existsSync(CACHE_TOKEN)) {
+  cookieAtual() {
+    if (this._cookie) return this._cookie;
+    if (fs.existsSync(CACHE_TOKEN)) {
       try {
         const t = JSON.parse(fs.readFileSync(CACHE_TOKEN, 'utf8'));
         if (t.expira * 1000 > Date.now() + 10 * 60 * 1000) { this._cookie = t.cookie; return t.cookie; }
-      } catch (e) { /* cache corrompido: renova */ }
+      } catch (e) { /* cache corrompido: ignora */ }
+    }
+    return '';
+  }
+
+  /** Resposta do portal que pede o desafio do WAF (202/challenge; 405 foi visto no mesmo papel). */
+  static ehDesafio(resp) {
+    return resp.status === 202 || resp.waf === 'challenge' || resp.status === 405;
+  }
+
+  /**
+   * Obtém (do cache em disco, ou resolvendo o desafio no Playwright) o cookie
+   * `aws-waf-token`. É a ÚNICA etapa que precisa de browser; vale ~4 dias.
+   * Só é chamada quando o servidor DESAFIOU (`_post`): sem desafio, não há
+   * cookie a buscar e o navegador não abre.
+   */
+  async token({ forcar = false } = {}) {
+    if (!forcar) {
+      const c = this.cookieAtual();
+      if (c) return c;
     }
     this.log('  resolvendo o desafio do AWS WAF no navegador (uma vez a cada ~4 dias)...');
     const { chromium } = require('playwright');
@@ -320,9 +345,9 @@ class STFNavigator {
     }
   }
 
-  /** POST JSON com renovação automática do token quando o WAF desafia. @private */
+  /** POST JSON; só busca/renova o token do WAF quando o servidor devolve o desafio. @private */
   async _post(url, body, tentativa = 0) {
-    const cookie = await this.token();
+    const cookie = this.cookieAtual();
     const agent = await this._getAgent();
     const data = JSON.stringify(body);
     const resp = await new Promise((res, rej) => {
@@ -350,8 +375,8 @@ class STFNavigator {
       r.end(data);
     });
 
-    if ((resp.status === 202 || resp.waf === 'challenge' || resp.status === 405) && tentativa < 1) {
-      this.log('  token do WAF expirou; renovando...');
+    if (STFNavigator.ehDesafio(resp) && tentativa < 1) {
+      this.log(cookie ? '  token do WAF expirou; renovando...' : '  o STF voltou a desafiar pelo WAF; resolvendo no navegador...');
       await this.token({ forcar: true });
       return this._post(url, body, tentativa + 1);
     }
@@ -368,7 +393,7 @@ class STFNavigator {
   /** GET de texto/HTML/PDF em qualquer host do STF (inteiro teor, portal). */
   async _get(url, { binario = false } = {}) {
     const agent = await this._getAgent();
-    const cookie = url.includes(HOST) ? await this.token() : '';
+    const cookie = url.includes(HOST) ? this.cookieAtual() : '';
     return new Promise((res, rej) => {
       const r = https.request(url, {
         method: 'GET',
@@ -583,7 +608,7 @@ class STFNavigator {
   /** Lista os ministros ativos (endpoint público da SPA). */
   async ministrosAtivos() {
     const agent = await this._getAgent();
-    const cookie = await this.token();
+    const cookie = this.cookieAtual();
     return new Promise((res, rej) => {
       https.get(CONFIG_URL, { agent, headers: { 'user-agent': UA, cookie, accept: 'application/json' } }, (rs) => {
         let d = '';

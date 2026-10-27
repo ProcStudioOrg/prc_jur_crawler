@@ -498,3 +498,53 @@ não no código.
 6. ⚠️ Os prints `01.02`/`01.03` mostram o **feed** (Resultados Recentes), não a busca
    filtrada: o botão do Ant `Sender` não recebeu o termo via Playwright (§1). O contrato
    foi medido direto na API, que é a fonte autoritativa do crawler.
+
+---
+
+## Atualização 21/10/2026 (BRU-99) — proxy, cookie de contexto e rate limit
+
+Print: `01.07-iago-proxy-outubro-2026.png` (tela nova com o aviso "Decisões agora faz
+parte do ecossistema Iago" e o banner "Exibindo as primeiras 40 páginas (1.000
+resultados)").
+
+Cliente axios no bundle `_next/static/chunks/477-*.js` (módulo 64982):
+
+    let n = l(82651).A.create({ baseURL: "/api/proxy" });
+    a = {
+      feed:         e      => n.get("/decisions/feed", { params: {...e} }),
+      search:       (e, t) => n.post("/decisions/search", { term: e }, { params: {...t} }),
+      export:       (e, t) => n.post("/decisions/export", { term: e }, { params: {...t} }),
+      aggregations: (e, t, l) => n.post("/decisions/aggregations", { term: e }, { params: {...l, model: t} }),
+      find:         e      => n.get("/decisions/" + e),
+      url:          (e, t) => n.get("/decisions/url/" + e, { params: { type: t } }),
+      download:     (e, t) => n.get("/decisions/download", { params: { id: e, type: t }, responseType: "blob" }),
+    };
+    o = { save() { /* 10 chars A-Z0-9 aleatórios */ localStorage.setItem("decisoes-user-token", t) },
+          get()  { return localStorage.getItem("decisoes-user-token") || this.save() } };
+
+Parâmetros que a tela manda na busca (módulo 394-*.js): page, size, order,
+cookie (= o token do localStorage acima), year, number, process, type,
+session, collegiate, reporter, rapporteur, interested, start, end,
+understandBetter/understand_better.
+
+Requisição real capturada (Playwright, aba Network):
+
+    POST https://decisoes.tce.go.gov.br/api/proxy/decisions/search?page=0&size=25&order=RECENT&cookie=SLRR9UB072
+    cookie: _tce_nav_ctx=1792589608235.7a32c1940f01bc259da4fbe29f7ed263e4e621113cada9301832c5a80e202280
+    {"term":"licitação"}
+    → 200 {"totalElements":10000,"size":25,...}
+    x-ratelimit-limit: 20 · x-ratelimit-remaining: 17 · x-ratelimit-reset: 1792589679
+
+Medições de 21/10/2026 (curl/Node, UA de Chrome):
+
+| Variação | Resultado |
+|---|---|
+| iago-search-api.tce.go.gov.br/decisions/search (host antigo) | HTTP 404 (HTML Apache) |
+| /api/proxy/decisions/search sem cookie | 200, content [], total 0, size 10 (pedido 2) |
+| idem com `cookie=ABCDEFGHIJ` na querystring, sem `_tce_nav_ctx` | igual: casca |
+| idem com `_tce_nav_ctx` 0 ms / 300 ms após a emissão | casca |
+| idem com `_tce_nav_ctx` 700 / 1.200 / 2.500 ms após a emissão | 200, total 10.000, size 2 |
+| cookie original fixo, 4 páginas rápidas | todas 10.000 |
+| aggregations / /decisions/<id> / /decisions/url/<id> sem cookie | funcionam |
+| `dano moral` + start=2025-10-21&end=2026-10-21 (janela do smoke) | total 1 |
+

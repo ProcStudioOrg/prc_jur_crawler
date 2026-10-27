@@ -24,6 +24,10 @@
     "resumo": "A busca responde, mas a base estadual está congelada em 2025. Decisões mais recentes não aparecem.",
     "funcionalidades": {}
   },
+  "tjes": {
+    "resumo": "O portal responde de redes comuns, mas bloqueia o endereço do servidor de produção (HTTP 403) desde 21/10/2026. Daqui, a busca e a consulta por número podem falhar até o endereço ser liberado ou a consulta passar por outro caminho.",
+    "funcionalidades": {}
+  },
   "tjma": {
     "resumo": "A busca por termo está bloqueada por captcha. Só a consulta por número de processo funciona, e ela confirma o processo, não a decisão.",
     "funcionalidades": {
@@ -50,6 +54,18 @@
   },
   "crps": {
     "resumo": "Exige login Gov.br em dispositivo validado. A busca automática não está disponível.",
+    "funcionalidades": {}
+  },
+  "tjmt": {
+    "resumo": "A API do tribunal está em manutenção declarada desde 19/10/2026 e responde erro do servidor em toda consulta. Pode voltar a funcionar sem aviso.",
+    "funcionalidades": {}
+  },
+  "tjgo": {
+    "resumo": "Desde outubro de 2026 a busca exige verificação anti-robô do Cloudflare, que não é resolvida automaticamente. Só as listagens auxiliares (unidades, magistrados, tipos de ato) continuam respondendo.",
+    "funcionalidades": {}
+  },
+  "tcepa": {
+    "resumo": "O portal passou a exibir captcha de imagem já no primeiro acesso à pesquisa, que não é resolvido automaticamente. A busca e o inteiro teor ficam indisponíveis até o tribunal mudar o bloqueio.",
     "funcionalidades": {}
   }
 }

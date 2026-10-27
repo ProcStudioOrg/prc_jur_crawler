@@ -46,7 +46,7 @@ jurisprudência. (⚠️ O 2025 baixo, 37.713 contra 99.400 de 2024, não foi ex
 |---|---|
 | `-q` | Query. Operadores em **português** — ver ressalva 1 |
 | `-n` | Consulta por número de processo (aplica o contorno da ressalva 4) |
-| `-dpi` / `-dpf` | Janela de **publicação** (DD/MM/YYYY). **Use as duas juntas** — ressalva 3. `-di`/`-df` são **alias**, porque não há data de julgamento |
+| `-dpi` / `-dpf` | Janela de **publicação** (DD/MM/YYYY). **Use as duas juntas** — ressalva 3. `-di`/`-df` são **alias**, porque não há data de julgamento. ⚠️ Até 24/10/2026 a CLI descartava `-dpi/-dpf` em silêncio (só `-di/-df` chegava ao `data_min/data_max`) — era o "filtro ignorado" da sentinela de 21/10; corrigido em `bin/jur` |
 | `-t` | `todos` (default) · `acordao` · `terminativa` · `sumula` |
 | `-r` | Relator — **nome exato** do combo (87 opções) |
 | `-c` | Classe judicial — **nome exato** (94 opções) |

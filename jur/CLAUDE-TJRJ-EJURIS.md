@@ -23,7 +23,7 @@ Irmão de [`CLAUDE-TJRJ.md`](CLAUDE-TJRJ.md) (`jur tjrj`, base nova do e-Proc).
 | Turmas Recursais | ❌ não tem | ✅ tem (mas pequeno — ver ressalva 3) |
 | Inteiro teor | HTML ~1 MB | **PDF público, com permalink** |
 | Data de publicação | ✅ filtra | ❌ **não existe** |
-| Recorte de data | dia (DD/MM/AAAA) | **só ANO** |
+| Recorte de data | dia (DD/MM/AAAA) | **só ANO no servidor**; DD/MM/AAAA é recortado no cliente (ressalva 4) |
 
 **Pedido histórico do RJ (antes de 2023) só tem resposta aqui.** Pedido recente
 de Justiça Comum é melhor no `jur tjrj`, que recorta por dia.
@@ -95,9 +95,18 @@ são resquícios. Não prometa acervo de Tribunal de Alçada.
 ### 4. 🔴 Não existe data de publicação
 
 `TemDataPublicacao` vem **false em 100% da amostra** e `DtHrPubl` é sempre o
-`DateTime.MinValue` do .NET. Só há data de **julgamento**, e o recorte é **por
+`DateTime.MinValue` do .NET. Só há data de **julgamento**, e o recorte do servidor é **por
 ano**, não por dia. **Nunca apresente a data do eJURIS como publicação**, e não
 prometa recorte mensal.
+
+**Recorte de dia no cliente (24/10/2026).** Quando `-di`/`-df` vêm como DD/MM/AAAA, o ano
+vai ao combo e o crawler descarta, das páginas lidas, o que cai fora do dia pedido — com aviso.
+Antes disso pedir agosto devolvia outubro (sentinela de 21/10/2026: 10 de 10 fora do período).
+Como o servidor lista do **mais novo ao mais antigo**, 10 por página, um mês antigo exige
+muitas páginas (`-m`): com `-m 1` agosto de 2026 volta 0 documentos e o aviso diz que as
+páginas lidas ainda não chegaram ao início da janela. Para o acervo do ano, use só o ano
+(`-di 2026 -df 2026`). A sentinela testa o período com a janela do ano, que é o que o portal
+honra de fato.
 
 ### 5. 🔴 Os operadores ingleses DERRUBAM a busca (HTTP 500)
 

@@ -291,3 +291,22 @@ test('disjuntor so conta duvidas seguidas: um ok no meio zera', async () => {
   assert.equal(r.pulados, 0);
   assert.equal(r.rodados, 3);
 });
+
+test('rodada: caso ok manda os numeros como alvos (banco de processos); falha nao manda; enviar=false nao manda', async () => {
+  const alvos = [];
+  const espiaoComAlvos = { ...espiao, registrarAlvos(d) { alvos.push(d); return true; } };
+  // numero: o executor devolve o proprio numero pedido (conferencia ok); periodoJulgamento: okCom(5)
+  const exec = async (tribunal, params, extra) => (params.numero
+    ? { ok: true, total: 1, erro: null, resultados: [{ numeroProcesso: params.numero, dataJulgamento: '15/08/2026' }] }
+    : falsoQueFalhaEm('tjpr')(tribunal, params, extra));
+  await rodarSentinela({ casos: [caso('trf4'), caso('tjpr'), caso('trf4', 'numero')], executarFn: exec, kaizen: espiaoComAlvos, esperaEntreMs: 0, home: tmp() });
+  assert.deepEqual(alvos.map((a) => [a.origem, a.tribunal, a.capacidade, a.resultados.length]), [['sentinela', 'trf4', 'periodoJulgamento', 5], ['sentinela', 'trf4', 'numero', 1]]);
+  assert.equal(alvos[1].params.numero, '5057135-38.2021.4.04.7100');
+
+  alvos.length = 0;
+  await rodarSentinela({ casos: [caso('trf4')], executarFn: async () => okCom(3), kaizen: espiaoComAlvos, esperaEntreMs: 0, home: tmp(), enviar: false });
+  assert.equal(alvos.length, 0, 'sem --enviar nada sai da maquina');
+  // kaizen antigo sem registrarAlvos nao quebra a rodada
+  const r = await rodarSentinela({ casos: [caso('trf4')], executarFn: async () => okCom(3), kaizen: espiao, esperaEntreMs: 0, home: tmp() });
+  assert.equal(r.ok, 1);
+});

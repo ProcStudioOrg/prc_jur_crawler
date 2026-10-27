@@ -5,6 +5,7 @@
 // Módulo puro: sem I/O, sem relógio próprio além do fallback de `em`.
 const { createHash } = require('node:crypto');
 const { sanitizar } = require('./assinatura');
+const { ALIASES } = require('./normalizar');
 
 const SERVICO = 'jurcrawler';
 // Espelho de ORIGENS_JUR do FFD (lib/jur-diagnostico/contracts.ts).
@@ -234,6 +235,51 @@ function payloadResumo({ versao, revisao, em, resumo }) {
   };
 }
 
+// --- jur-processos (banco de processos) --------------------------------------------------------
+
+const MAX_ALVOS = 50; // uma página de resultado da sentinela tem 10-20; o FFD aceita 200
+const MIN_DIGITOS_CNJ = 15; // o FFD decide a forma CNJ; aqui só se evita mandar lixo óbvio
+const digitosDe = (v) => String(v).split('/')[0].replace(/\D/g, '');
+
+/**
+ * Números de processo de uma busca que deu certo, para o FFD enfileirar como alvos de captura.
+ * Só identificadores públicos de julgado (número, data de julgamento) saem daqui: nem texto do
+ * acórdão, nem usuário. Resultado sem número com forma de CNJ (TCs, CARF) fica de fora.
+ */
+function payloadAlvos({ versao, revisao, origem, tribunal, em, resultados, capacidade, params }) {
+  const vistos = new Set();
+  const numeros = [];
+  for (const r of Array.isArray(resultados) ? resultados : []) {
+    if (!r || typeof r !== 'object') continue;
+    for (const k of ALIASES.numeroProcesso) {
+      const v = r[k];
+      if (typeof v !== 'string' && typeof v !== 'number') continue;
+      const d = digitosDe(v);
+      if (d.length < MIN_DIGITOS_CNJ || d.length > 20 || vistos.has(d)) continue;
+      vistos.add(d);
+      const item = { numero: cortar(limparTexto(String(v)), 40) };
+      if (capacidade) item.capacidade = cortar(String(capacidade), 40);
+      const q = params && typeof params.query === 'string' ? params.query : null;
+      if (q) item.query = cortar(limparTexto(sanitizar(q)), 200);
+      const dj = ALIASES.dataJulgamento.map((a) => r[a]).find((x) => typeof x === 'string' && x);
+      if (dj) item.dataJulgamento = cortar(limparTexto(dj), 40);
+      numeros.push(item);
+      break; // um número por resultado: o primeiro alias preenchido vence
+    }
+    if (numeros.length >= MAX_ALVOS) break;
+  }
+  return {
+    acao: 'alvos',
+    servico: SERVICO,
+    versao: versaoValida(versao),
+    revisao: revisaoValida(revisao),
+    origem: origem === 'busca' ? 'busca' : 'sentinela',
+    tribunal: tribunalValido(tribunal),
+    em: emIso(em),
+    numeros,
+  };
+}
+
 // --- user-issues ------------------------------------------------------------------------------
 
 function textoObrigatorio(v, max, padrao) {
@@ -295,6 +341,6 @@ function payloadRelato(dados) {
 }
 
 module.exports = {
-  hashUsuario, filtrosDe, payloadFalha, payloadResgate, payloadResumo, payloadCobranca, payloadRelato,
+  hashUsuario, filtrosDe, payloadFalha, payloadResgate, payloadResumo, payloadCobranca, payloadRelato, payloadAlvos,
   tribunalValido, classeValida, passoValido, SERVICO,
 };

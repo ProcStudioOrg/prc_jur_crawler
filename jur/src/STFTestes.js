@@ -37,9 +37,15 @@ function assert(cond, msg) { if (!cond) throw new Error(msg); }
   const crawler = new STFCrawler({ navigator, log: () => {} });
   const checker = new STFChecker({ navigator, log: () => {} });
 
-  await teste('Token do AWS WAF: obtido (browser) ou reaproveitado do cache', async () => {
-    const c = await navigator.token();
-    assert(/aws-waf-token=/.test(c), 'cookie aws-waf-token ausente');
+  await teste('WAF: a API responde sem navegador; o token só entra se o portal desafiar', async () => {
+    // 24/10/2026: o host saiu do AWS WAF (server: volt-adc) e não emite mais aws-waf-token.
+    // O contrato agora é lazy: cookieAtual() não abre navegador, e contar() tem de responder
+    // com o cookie que houver (cache antigo ou nenhum). Se o WAF voltar, _post renova sozinho.
+    const antes = navigator.cookieAtual();
+    const n = await navigator.contar({ query: 'dano moral', pageSize: 1 });
+    assert(n > 0, `contagem zero (cookie ${antes ? 'em cache' : 'vazio'})`);
+    const depois = navigator.cookieAtual();
+    assert(!depois || /aws-waf-token=/.test(depois), `cookie inesperado: ${depois.slice(0, 40)}`);
   });
 
   await teste('Pré-processamento traduz os operadores em português', () => {

@@ -1,6 +1,6 @@
 # TCE-PA — Tribunal de Contas do Estado do Pará
 
-**Comando:** `jur tcepa` · **Acesso:** `http` (GET puro, sem browser) · **Status:** 🟢
+**Comando:** `jur tcepa` · **Acesso:** `http` (GET puro, sem browser) · **Status:** 🔴 **sem-acesso desde 19/10/2026** (ver ressalva 0)
 **Portal:** Pesquisa Integrada — `https://www.tcepa.tc.br/pesquisaintegrada`
 **Mapeado em:** 21/08/2026 (slot 1600) · `human-codegen/TCEPA/01-pesquisa-integrada/`
 
@@ -53,7 +53,34 @@ jur tcepa --listar-filtros
 
 ## 🔴 Ressalvas — leia antes de confiar num número
 
-### 1. O WAF devolve **captcha de imagem com HTTP 200**, e o gatilho é **ritmo**
+### 0. Desde 19/10/2026 o captcha vem **na primeira visita** — não é mais ritmo (BRU-99)
+Regressão do smoke de 19/10/2026 (`bloqueio: CAPTCHA`; estava ok em 27/08), reconfirmada
+em 21/10 **três vezes com intervalos de silêncio de 5, 18 e 20+ minutos**, sempre o
+primeiro request da sessão, `curl` puro com UA de Chrome:
+
+```
+GET /pesquisaintegrada/pesquisa/resultados?b=acordaos&q=licita%C3%A7%C3%A3o&...  (10:02)
+GET ...?b=acordaos&q=licita%C3%A7%C3%A3o&...                                     (10:07)
+GET ...?b=acordaos&q=aposentadoria&...                                            (10:28)
+→ HTTP 200 text/html 5.0–5.6 KB com window["failureConfig"] + "O que está escrito na imagem?"
+   Set-Cookie: TS01d17900=..., TSb0611f0b029=..., TSe551aea7027=...   (F5 Shape)
+```
+
+Controle no mesmo minuto: `GET https://www.tcepa.tc.br/` responde HTTP 200 com os 94 KB
+do Joomla, **sem** `failureConfig`. Ou seja, o F5 não está barrando o host inteiro — passou
+a desafiar o caminho `/pesquisaintegrada/` **de cara**, e o cooldown de 6–7 minutos da
+ressalva 1 já não destrava. A classe é **C — bloqueio** (`jur-fixer` §4): o que bloqueia é
+o captcha de imagem do F5 Shape; a busca **não** passa sem resolver; o download do PDF
+também não (o WAF vale para tudo). Não automatizamos captcha.
+
+O crawler continua abortando com o erro explícito do `exigirRespostaReal` (nunca "0
+resultados"), e o catálogo marca `sem-acesso`. **Para reavaliar:** rode
+`./bin/jur tcepa -q "aposentadoria" -m 1 --json` depois de ≥10 min sem tocar no host; se
+voltar JSON, remova o `Object.assign(JURISPRUDENCIA.TCEPA, ...)` do `cobertura/build.js`,
+rode `npm run docs` e volte este status para 🟢. Para contas **municipais** do Pará o
+tribunal é outro (TCM-PA, fora do catálogo); não há plano B para o TCE-PA.
+
+### 1. O WAF devolve **captcha de imagem com HTTP 200**, e o gatilho era **ritmo** (até set/2026)
 O host está atrás de um **F5 Shape** (`/TSPD/`, `<APM_DO_NOT_TOUCH>`, cookies `TS…`).
 Ele não barra na primeira visita — barra depois. Medido: a **mesma URL** que devolveu
 573.798 bytes de JSON às 16:02 devolveu, às 16:06, HTTP **200** `text/html` de ~46 KB

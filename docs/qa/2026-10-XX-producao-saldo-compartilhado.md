@@ -1,4 +1,4 @@
-# Produção — saldo compartilhado, versão 1.3.0 (PREENCHER NO DEPLOY)
+# Produção — saldo compartilhado, versão 1.4.0 (PREENCHER NO DEPLOY)
 
 > Modelo. Nada abaixo foi executado ainda: preencher no deploy, com os valores reais.
 > Pré-requisitos: PR ProcStudioOrg/ProcStudio#876 em produção e preço de `glm-5.3-flash` conferido no Rails.
@@ -12,7 +12,7 @@
 
 | Verificação | Esperado | Resultado |
 |---|---|---|
-| `/api/v1/saude` | 200, `versao` 1.3.0 | preencher no deploy |
+| `/api/v1/saude` | 200, `versao` 1.4.0 | preencher no deploy |
 | `/api/v1/me` | 401 | preencher no deploy |
 | `/__local/painel.js` | 404 | preencher no deploy |
 | container | `healthy` | preencher no deploy |

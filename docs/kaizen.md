@@ -35,7 +35,27 @@ crawler (filho) --preload--> <job>.falha/ --executor--> jobs.js --kaizen.registr
 4. **Outbox.** O payload é enfileirado em `kaizen.db` (SQLite no diretório de dados) e a captura
    em disco é sempre apagada, com ou sem FFD configurado.
 5. **FFD.** `POST ${KAIZEN_WEBHOOK_URL}/<source>` com `x-webhook-token`. Sources:
-   `jur-diagnostico` (falhas, resgates, resumo da sentinela) e `user-issues` (relatos).
+   `jur-diagnostico` (falhas, resgates, resumo da sentinela), `user-issues` (relatos) e
+   `jur-processos` (alvos do banco de processos, abaixo).
+
+## Banco de processos (alvos para a captura)
+
+A sentinela já entra em cada tribunal todo dia e volta com julgados reais. Em vez de só
+provar que o crawler funciona, cada caso `ok` ou `nao_verificavel` manda ao FFD os números
+de processo que a busca devolveu (`kaizen.registrarAlvos` → `payload.payloadAlvos` →
+`POST .../jur-processos` com `acao: "alvos"`). O FFD normaliza para a forma CNJ, descarta o
+que não é CNJ (TCs, CARF), ignora repetidos e enfileira como alvo. Quem baixa o processo
+inteiro é o agente de captura da debian2 (`masterFucker/processos`), com a sessão do
+advogado e a extensão do ProcStudio; o FFD mostra a fila em `/jur-processos`.
+
+- Sai: `numero` (como o tribunal exibiu), `capacidade` e `query` do caso, `dataJulgamento`.
+  Não sai ementa, texto, usuário nem hash de usuário. Teto de 50 números por caso.
+- `KAIZEN_ALVOS_BUSCA=1` liga o mesmo envio para buscas de usuário (`registrarConcluido`,
+  `origem: busca`); padrão desligado.
+- Sem `--enviar` na CLI (`tests/sentinela.js`) nada sai; com a outbox desligada,
+  `registrarAlvos` devolve `false` e não guarda nada.
+- A key `jurcrawler` do FFD precisa ter o source `jur-processos` no escopo; sem isso o FFD
+  responde 401 e a outbox descarta o item (4xx não repete).
 
 ### Marcar o `passo`
 
@@ -200,13 +220,18 @@ Uma busca conhecida por tribunal x capacidade, montada de resultado real (casos 
   foi para `_pendentes` em `jur/tests/sentinela-casos.json` com o motivo e volta depois do
   conserto. Cada item abaixo precisa de `jur-fixer`:
   - **TJGO** devolve 0 resultados (desde 19/10).
-  - **STF** não emite mais o cookie `aws-waf-token`: o desafio do WAF mudou (3 capacidades).
+  - ~~**STF** não emite mais o cookie `aws-waf-token`~~ — resolvido em 24/10 (BRU-101): o portal
+    saiu do AWS WAF e o token virou *lazy*; os 3 casos voltaram.
   - **TCDF** falha o TLS (`unable to verify the first certificate`: cadeia incompleta no
     servidor do tribunal; o crawler precisa levar a intermediária) (4 capacidades).
-  - **TJMS** ignora o filtro de relator (83 de 96 resultados de outro relator).
-  - **TJPI** ignora o filtro de data de publicação (25 de 25 fora do período).
-  - **TJRJ (ejuris)** ignora o filtro de data de julgamento (10 de 10 fora do período).
-  - **TJES** bloqueia o IP do H2 (HTTP 403); do Mac funciona.
+  - ~~**TJMS** ignora o filtro de relator~~ — resolvido em 24/10 (BRU-101): `-r` resolve a entidade
+    do popup Relatores; o caso voltou.
+  - ~~**TJPI** ignora o filtro de data de publicação~~ — resolvido em 24/10 (BRU-101): a CLI
+    descartava `-dpi/-dpf`; o caso voltou.
+  - ~~**TJRJ (ejuris)** ignora o filtro de data de julgamento~~ — resolvido em 24/10 (BRU-101):
+    recorte de dia no cliente com aviso; o caso usa a janela do ano.
+  - **TJES** bloqueia o IP do H2 (HTTP 403); do Mac (21/10) e da debian2 (24/10) funciona.
+    Catálogo `instavel` desde 24/10 (BRU-101); falta liberar o IP ou rotear por navegador remoto.
   - **TJMT** respondia HTTP 503 na API em 21/10 (do H2 e do Mac): ficou nos casos, a
     sentinela avisa quando voltar ou se continuar fora.
 - **Não verificáveis por desenho:** `numero` nos TCs e no CARF (número sem forma CNJ, a

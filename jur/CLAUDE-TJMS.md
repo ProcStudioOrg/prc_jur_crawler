@@ -104,7 +104,7 @@ Por isso o acesso é `http` (POST direto no cjsg), não `api-oficial`.
 | `-t, --tipo` | `acordao` · `homologacao` · `monocratica` · `todos` | `acordao` | aba de tipo de publicação |
 | `--escopo` | `ementa` · `inteiroTeor` | `ementa` | qual campo recebe o termo |
 | `-ord, --ordem` | `publicacao` · `relevancia` | `publicacao` | ordenação |
-| `-r, --relator` | nome/trecho | — | campo `nmAgente` |
+| `-r, --relator` | nome/trecho (vários por vírgula) | — | **entidade** do popup Relatores, resolvida pelo trecho — ver ressalva 12. Trecho sem entidade é erro |
 | `--sem-sinonimos` | — | ligado | **não tem efeito**, ver ressalva 7 |
 | `-di/-df` | DD/MM/AAAA | — | data de **julgamento** |
 | `-dpi/-dpf` | DD/MM/AAAA | — | data de **publicação** |
@@ -245,6 +245,23 @@ O inteiro teor é PDF (~330–530 KB, ~23–29 mil caracteres de texto) e exige 
 o PDF e diz que não extraiu).
 
 ---
+
+## 12. 🔴 O campo `nmAgente` (texto) NÃO filtra: só a entidade do popup Relatores
+
+Medido em 24/10/2026 (sentinela de 21/10: `relator: "Elisabeth Rosa Baisch"` devolveu 104 julgados,
+83 de 96 de outro relator). Mandar o nome em `nmAgente` dá HTTP 200 e o **acervo inteiro** — o
+filtro é ignorado em silêncio. Quem filtra é a entidade que a tela escolhe no popup "Relatores":
+`agenteSelectedEntitiesList` + `contadoragente`/`contadorMaioragente` +
+`dados.agentes[i].{codigoCr,codigoTr,nmAgente}`. Com a entidade: 93 de 93 julgados do relator.
+
+O crawler resolve o trecho na própria grid do popup (`TJMSNavigator.resolverRelatores`): primeiro
+`AjaxServlet.ajax?...InputSelectAutoComplete` (que grava a consulta na sessão — sem isso a grid
+volta vazia com 200), depois `jsp/search/searchAgente.jsp?nmAgente=<trecho>`, que casa por
+**trecho** e lista uma linha por entidade. Um nome costuma ter **três entidades**
+("Desª Elisabeth Rosa Baisch" cód. 94, "Elisabeth Rosa Baisch" cód. 21585, "Juíza Elisabeth Rosa
+Baisch" cód. 155-10110-20237) e **só uma tem acórdãos**; o crawler manda todas (o cjsg aceita
+seleção múltipla e une). Trecho que não casa com nenhuma entidade é **erro**, não busca sem
+filtro. Acento conta: use a grafia que aparece em "Relator(a):" nos resultados.
 
 ## Manutenção
 

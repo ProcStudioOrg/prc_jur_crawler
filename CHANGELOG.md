@@ -11,7 +11,7 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
-## 1.3.0 — 26/10/2026
+## 1.4.0 — 27/10/2026
 
 Saldo compartilhado: a conexão de IA nativa do ProcStudio, cobrada por rodada do saldo de IA do
 time (detalhes em `docs/procstudio-llm.md`). Exige o PR ProcStudioOrg/ProcStudio#876 em produção.
@@ -34,6 +34,61 @@ time (detalhes em `docs/procstudio-llm.md`). Exige o PR ProcStudioOrg/ProcStudio
   login com o motivo; Rails fora continua 503; carteira local simula os dois casos (`JUR_LOCAL_PROCSTUDIO`);
 - envs novas: `PROCSTUDIO_LLM_API_KEY`, `PROCSTUDIO_LLM_ENDPOINT`, `PROCSTUDIO_LLM_MODELO`,
   `PROCSTUDIO_LLM_MODELO_CATALOGO`, `PROCSTUDIO_LLM_UPSTREAM`, `PROCSTUDIO_LLM_ROTULO`.
+
+## 1.3.1 — 24/10/2026
+
+BRU-99: as 5 regressões do `npm run smoke` de 19/10 (diagnóstico em
+`docs/qa/2026-10-21-bru-99-smoke-regressoes.md`; revalidação após rebase sobre a 1.3.0 em
+`docs/qa/2026-10-24-bru-99-rebase.md`).
+
+- TCDF volta a funcionar: o portal manda só a folha do certificado, emitida pela intermediária
+  nova do Let's Encrypt (`YR1`), cuja raiz `ISRG Root YR` não está no trust store do Node 22.
+  A cadeia pública entra em `jur/src/certs/` e é passada como `ca` só no `TCDFNavigator`.
+- TCEGO volta a funcionar: a API migrou para o proxy da SPA (`decisoes.tce.go.gov.br/api/proxy`),
+  exige o cookie de contexto `_tce_nav_ctx` com idade mínima e limita a 20 requests por janela.
+  A casca "sem contexto" (HTTP 200 com total 0) vira erro explícito, não "0 resultados".
+- TJMT rebaixado para `instavel`: API em manutenção declarada (HTTP 503 "Site em manutenção —
+  TJMT", BigIP) desde 19/10; o Navigator nomeia a manutenção. Casos da sentinela em `_pendentes`.
+- TJGO rebaixado para `sem-acesso`: a busca passou a exigir Cloudflare Turnstile; zero por bloqueio
+  vira erro explícito. Não automatizamos captcha.
+- TCE-PA rebaixado para `sem-acesso`: captcha do F5 Shape já no primeiro request.
+
+Correções da sentinela de 21/10 (BRU-101), validadas da debian2 em 24/10/2026 — ver
+`docs/qa/2026-10-24-bru-101-sentinela.md`.
+
+- STF: o portal saiu do AWS WAF (responde `server: volt-adc`, F5 Distributed Cloud) e deixou de
+  emitir o cookie `aws-waf-token`; o crawler exigia o cookie e falhava. O token virou *lazy* em
+  `STFNavigator` (`cookieAtual`, `_post`): a requisição sai com o cookie que houver e o navegador
+  só abre se o servidor devolver o desafio. Os 3 casos (periodoJulgamento, periodoPublicacao,
+  numero) voltam à sentinela.
+- TJMS: o campo `nmAgente` (texto) não filtra relator — o cjsg ignora em silêncio. `-r` agora
+  resolve o trecho na grid do popup Relatores (`TJMSNavigator.resolverRelatores`: autocomplete +
+  `searchAgente.jsp` na mesma sessão) e manda as entidades em `agenteSelectedEntitiesList` /
+  `dados.agentes[i]`; trecho sem entidade é erro. Caso `magistrado` volta (100 de 100 do relator).
+- TJPI: a CLI descartava `-dpi/-dpf` (só `-di/-df` chegava ao `data_min/data_max`); o portal
+  aplica o filtro normalmente. Caso `periodoPublicacao` volta (25 de 25 em 08/2026).
+- TJRJ eJURIS: o servidor só filtra por ano; com `-di/-df` em DD/MM/AAAA o crawler recorta o
+  dia no cliente sobre as páginas lidas, com aviso (lista do mais novo ao mais antigo, 10 por
+  página). O caso `periodoJulgamento` da sentinela usa a janela do ano, que é o que o portal
+  filtra.
+- TJES: HTTP 403 só do H2 (IP de produção bloqueado); da debian2 e do Mac responde 200. Catálogo
+  `instavel` com nota datada e resumo na ficha; os dois casos ficam em `_pendentes` até o H2
+  voltar a passar.
+- `jur/tests/sentinela-casos.json`: 84 casos ativos (77 da 1.2.1 + TCDF 4 + STF 3 + TJMS magistrado +
+  TJPI periodoPublicacao + TJRJ-ejuris periodoJulgamento − TJMT 3); TJMT, TJES, TJGO e TCE-PA em
+  `_pendentes` com motivo. A sentinela do h2 lê os casos da imagem — os casos devolvidos só entram
+  na rodada das 04:00 com esta release. Acompanhamento dos rebaixados: BRU-100 (TJMT, TJGO, TCE-PA)
+  e TJES (IP do H2).
+
+## 1.3.0 — 22/10/2026
+
+- Banco de processos: a sentinela passa a mandar ao FFD (source `jur-processos`, `acao: alvos`)
+  os números CNJ que cada busca bem-sucedida devolveu. O FFD enfileira como alvos de captura
+  do processo inteiro (agente da debian2 + extensão do ProcStudio) para o benchmark de IA
+  jurídica. Só número, capacidade, query e data do julgado saem; nem texto nem usuário.
+  Busca de usuário também alimenta a fila quando `KAIZEN_ALVOS_BUSCA=1` (padrão desligado).
+  A key `jurcrawler` do FFD precisa do escopo `jur-processos` (feito em 22/10). Ver
+  `docs/kaizen.md` > Banco de processos.
 
 ## 1.2.1 — 21/10/2026
 
