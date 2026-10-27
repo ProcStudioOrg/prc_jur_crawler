@@ -7,8 +7,10 @@ const ENDPOINTS = {
   openrouter: "https://openrouter.ai/api/v1",
   gemini: "https://generativelanguage.googleapis.com/v1beta",
 };
+// O status HTTP (ou o código numérico do erro no stream) segue no erro: na conexão
+// ProcStudio a rota de chat o repassa ao diagnóstico do operador (402/429/5xx).
 function erroProvedor(status) {
-  return new Error(
+  const erro = new Error(
     status === 401 || status === 403
       ? "Chave recusada pelo provedor. Substitua a credencial."
       : status === 429
@@ -19,6 +21,49 @@ function erroProvedor(status) {
             ? "Modelo ou parâmetros incompatíveis. Escolha um modelo com suporte a ferramentas."
             : "Não foi possível concluir a resposta do provedor.",
   );
+  return Object.assign(erro, {
+    code: "PROVIDER_ERROR",
+    status: typeof status === "number" && Number.isFinite(status) ? status : null,
+  });
+}
+function numeroOuNull(v) {
+  return typeof v === "number" && Number.isFinite(v) ? v : null;
+}
+function normalizarUso(provider, bruto, generationId = null) {
+  if (!bruto || typeof bruto !== "object") return null;
+  let uso;
+  if (provider === "anthropic")
+    uso = {
+      input_tokens: bruto.input_tokens,
+      output_tokens: bruto.output_tokens,
+      cache_read_tokens: bruto.cache_read_input_tokens,
+      cache_write_tokens: bruto.cache_creation_input_tokens,
+      cost_usd: null,
+    };
+  else if (provider === "gemini")
+    uso = {
+      input_tokens: bruto.promptTokenCount,
+      output_tokens: bruto.candidatesTokenCount,
+      cache_read_tokens: bruto.cachedContentTokenCount,
+      cache_write_tokens: null,
+      cost_usd: null,
+    };
+  else
+    uso = {
+      input_tokens: bruto.prompt_tokens,
+      output_tokens: bruto.completion_tokens,
+      cache_read_tokens: bruto.prompt_tokens_details?.cached_tokens,
+      cache_write_tokens: bruto.prompt_tokens_details?.cache_write_tokens,
+      cost_usd: bruto.cost,
+    };
+  return {
+    input_tokens: numeroOuNull(uso.input_tokens),
+    output_tokens: numeroOuNull(uso.output_tokens),
+    cache_read_tokens: numeroOuNull(uso.cache_read_tokens),
+    cache_write_tokens: numeroOuNull(uso.cache_write_tokens),
+    cost_usd: numeroOuNull(uso.cost_usd),
+    generation_id: typeof generationId === "string" ? generationId : null,
+  };
 }
 function blocos(content) {
   return typeof content === "string"
@@ -192,7 +237,11 @@ function criarCliente(
             },
             finalMessage: async () => {
               try {
-                return await stream.finalMessage();
+                const mensagem = await stream.finalMessage();
+                return {
+                  ...mensagem,
+                  usage: normalizarUso("anthropic", mensagem.usage, mensagem.id),
+                };
               } catch (e) {
                 if (e.name === "APIUserAbortError") throw e;
                 throw erroProvedor(e.status);
@@ -241,6 +290,7 @@ function criarCliente(
               body = {
                 model,
                 stream: true,
+                stream_options: { include_usage: true },
                 messages: paraOpenAI(params.messages, params.system),
                 ...(params.tools.length
                   ? {
@@ -253,6 +303,9 @@ function criarCliente(
                         },
                       })),
                     }
+                  : {}),
+                ...(connection.extras && typeof connection.extras === "object"
+                  ? connection.extras
                   : {}),
               };
             }
@@ -281,6 +334,7 @@ function criarCliente(
               finished = false,
               stop = "end_turn";
             let generationId = null;
+            let usoBruto = null;
             try {
               for await (const raw of eventos(response)) {
                 if (signal?.aborted) throw erroAbortado();
@@ -298,6 +352,8 @@ function criarCliente(
                   generationId = idGeracao.slice(0, 256);
                 }
                 if (data.error) throw erroProvedor(data.error.code);
+                const usoChunk = gemini ? data.usageMetadata : data.usage;
+                if (usoChunk && typeof usoChunk === "object") usoBruto = usoChunk;
                 if (gemini) {
                   const candidate = data.candidates?.[0];
                   if (data.promptFeedback?.blockReason)
@@ -396,7 +452,11 @@ function criarCliente(
             }
             if (text) content.unshift({ type: "text", text });
             if (content.some((b) => b.type === "tool_use")) stop = "tool_use";
-            return { content, stop_reason: stop };
+            return {
+              content,
+              stop_reason: stop,
+              usage: normalizarUso(connection.provider, usoBruto, generationId),
+            };
           },
         };
         return stream;
@@ -461,6 +521,7 @@ module.exports = {
   paraOpenAI,
   paraGemini,
   listarModelos,
+  normalizarUso,
   ENDPOINTS,
   erroProvedor,
 };

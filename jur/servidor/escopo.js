@@ -86,6 +86,7 @@ function criarEscopos({ dir, executarFn, limite = 100, concorrencia, kaizen }) {
           !item.turnos.conversasEmAndamento().length &&
           !item.emUso
         ) {
+          item.cobranca?.pararVarredor();
           item.con.close();
           cache.delete(key);
           break;
@@ -139,15 +140,86 @@ function criarEscopos({ dir, executarFn, limite = 100, concorrencia, kaizen }) {
     cache.set(id, item);
     return item;
   }
+  /**
+   * No boot: recibos de cobranca que um processo anterior deixou em `cobranca_pendente`
+   * nao esperam a conta logar de novo. Percorre usuarios/*\/jur.db; so as contas com
+   * pendencia ganham uma cobranca (sem principal: o payload do recibo traz user/team) e
+   * drenam. Um recibo marcado em voo e de um processo que caiu: `recuperarVoos()` roda
+   * SINCRONO, em todas as contas, antes do primeiro await — depois disso ja pode haver turno
+   * vivo e o em_voo passa a ser verdade. Conta com escopo aberto e do escopo (varredor dele).
+   * Enquanto sobrar recibo adiado, repete a cada `intervaloMs` so nas contas sem escopo.
+   */
+  let timerBoot = null;
+  let encerrado = false;
+  const pendentesDe = (con) => Boolean(con.prepare("SELECT 1 FROM cobranca_pendente LIMIT 1").get());
+  function contasComArquivo() {
+    const raiz = path.join(dir, "usuarios");
+    if (!fs.existsSync(raiz)) return [];
+    return fs.readdirSync(raiz).filter((n) => fs.existsSync(path.join(raiz, n, "jur.db")));
+  }
+  function comConta(nome, fn) {
+    let con;
+    try {
+      con = db.abrir(path.join(dir, "usuarios", nome, "jur.db"));
+      return fn(con);
+    } finally {
+      try { con?.close(); } catch { /* ja fechado */ }
+    }
+  }
+  async function varrerPendencias({ procstudio, kaizen: kz = kaizen, logar = console.error, intervaloMs = 60_000 } = {}) {
+    const falhou = (nome, e) => logar(JSON.stringify({ event: "billing_boot_sweep_failure", conta: nome, erro: String(e.code || e.message).slice(0, 300) }));
+    const { criarCobranca } = require("./cobranca");
+    for (const nome of contasComArquivo()) {
+      if (cache.has(nome)) continue;
+      try {
+        comConta(nome, (con) => { if (pendentesDe(con)) criarCobranca({ con, procstudio, kaizen: kz }).recuperarVoos(); });
+      } catch (e) { falhou(nome, e); }
+    }
+    async function passada() {
+      const total = { contas: 0, enviados: 0, descartados: 0, adiados: 0 };
+      for (const nome of contasComArquivo()) {
+        if (cache.has(nome)) continue;
+        let con;
+        try {
+          con = db.abrir(path.join(dir, "usuarios", nome, "jur.db"));
+          if (!pendentesDe(con)) continue;
+          const r = await criarCobranca({ con, procstudio, kaizen: kz }).drenar();
+          total.contas++;
+          for (const k of ["enviados", "descartados", "adiados"]) total[k] += r[k];
+        } catch (e) {
+          falhou(nome, e);
+          total.adiados++;
+        } finally {
+          try { con?.close(); } catch { /* ja fechado */ }
+        }
+      }
+      return total;
+    }
+    function repetir(total) {
+      if (encerrado || total.adiados === 0) return;
+      timerBoot = setTimeout(async () => {
+        timerBoot = null;
+        try { repetir(await passada()); } catch (e) { falhou("*", e); }
+      }, intervaloMs);
+      timerBoot.unref?.();
+    }
+    const total = await passada();
+    repetir(total);
+    return total;
+  }
   return {
     obter,
+    varrerPendencias,
     // Alguma busca rodando ou esperando vaga, em qualquer conta (a sentinela cede a vez).
     ocupado: () => {
       const em = (p) => (p ? p.estado().ocupados + p.estado().naFila > 0 : false);
       return em(pool) || em(poolRemoto);
     },
     fechar() {
-      for (const item of cache.values()) { item.navegadores.fechar(); item.con.close(); }
+      encerrado = true;
+      if (timerBoot) clearTimeout(timerBoot);
+      timerBoot = null;
+      for (const item of cache.values()) { item.cobranca?.pararVarredor(); item.navegadores.fechar(); item.con.close(); }
       cache.clear();
     },
   };

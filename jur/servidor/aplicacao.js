@@ -46,6 +46,8 @@ function criarAplicacao({
   con.exec("PRAGMA journal_mode=WAL");
   fs.chmodSync(path.join(dir, "acesso.db"), 0o600);
   const cofre = criarCofre(cofreKey);
+  // Conexão de IA do operador (null sem PROCSTUDIO_LLM_API_KEY); lida uma vez por processo.
+  const gerenciada = require("./conexao-procstudio").doAmbiente();
   const sessoes = criarSessoes({ con, cofre, procstudio });
   const chaves = criarChaves(con);
   // Uma instância por processo (uma conexão com kaizen.db), compartilhada por todas as contas.
@@ -58,6 +60,13 @@ function criarAplicacao({
       revisao: revisaoDaImagem(process.env.JUR_IMAGE),
     });
   const scopes = criarEscopos({ dir, executarFn, concorrencia, kaizen: k });
+  // Recibos de cobrança que um processo anterior não confirmou: reenviados já no boot,
+  // sem esperar a conta logar. Sem conexão gerenciada não há o que cobrar.
+  const varredura = gerenciada
+    ? scopes.varrerPendencias({ procstudio, kaizen: k }).catch((e) => {
+        console.error(JSON.stringify({ event: "billing_boot_sweep_failure", erro: String(e.code || e.message).slice(0, 300) }));
+      })
+    : Promise.resolve(null);
   const publicApp = criarApp();
   const secure = new URL(publicUrl).protocol === "https:" ? "; Secure" : "";
   const setCookie = (name, value, age) =>
@@ -164,9 +173,16 @@ function criarAplicacao({
           owner: scope.owner,
           cofre,
           transport: llmTransport,
+          gerenciada,
         });
+        // Cobrança da conexão ProcStudio, por conta: sem conexão gerenciada não há o que cobrar.
+        scope.cobranca = gerenciada
+          ? require("./cobranca").criarCobranca({ con: scope.con, procstudio, principal, kaizen: k })
+          : null;
+        scope.cobranca?.iniciarVarredor();
         scope.app = criarApp({
           ...scope,
+          frontendUrl,
           cofre,
           chaves: chaves.para(principal),
           clienteLLM,
@@ -175,6 +191,20 @@ function criarAplicacao({
         });
       }
       req.principal = principal;
+      // Logout pedido pela rota (ProcStudio respondeu `active: false`): o mesmo caminho do
+      // POST /auth/logout. Chave pessoal (bearer) não tem sessão: o `subject` do ProcStudio já a
+      // recusa no próximo pedido.
+      if (!bearer) {
+        req.encerrarSessao = async () => {
+          if (!res.headersSent) res.setHeader("set-cookie", setCookie("jur_session", "", 0));
+          try {
+            await sessoes.sair(session);
+          } catch (e) {
+            // A linha local já saiu antes do revoke: a sessão do JurCrawler acabou mesmo assim.
+            console.error(JSON.stringify({ event: "sessao_revoke_failure", erro: String(e.code || e.message).slice(0, 300) }));
+          }
+        };
+      }
       const controller = new AbortController();
       req.authSignal = controller.signal;
       let validating = false;
@@ -228,6 +258,7 @@ function criarAplicacao({
   }
   return {
     handler,
+    varredura,
     kaizen: k,
     ocupado: scopes.ocupado,
     fechar() {

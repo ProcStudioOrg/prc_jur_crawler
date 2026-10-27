@@ -5,7 +5,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 const { criarKaizen, kaizenNulo } = require('../servidor/kaizen/index');
-const { payloadRelato, payloadFalha, payloadResumo, payloadAlvos, filtrosDe, hashUsuario } = require('../servidor/kaizen/payload');
+const { payloadRelato, payloadFalha, payloadResumo, payloadCobranca, payloadAlvos, filtrosDe, hashUsuario } = require('../servidor/kaizen/payload');
 const { dirFalha, assinaturaDaCaptura } = require('../servidor/kaizen/captura');
 
 const FX = path.join(__dirname, 'fixtures', 'kaizen', 'resultados');
@@ -285,6 +285,20 @@ test('kaizen.db, -wal e -shm ficam 0600 depois de um enfileiramento', async () =
       assert.equal(fs.statSync(f).mode & 0o777, 0o600, path.basename(f));
     }
   } finally { k.fechar(); }
+});
+
+test('cobranca: alerta ao operador sai no contrato do jur-diagnostico, com os detalhes', async () => {
+  kaizen.enviarCobranca({ classe: 'pricing_unavailable', erro: 'PRICING_UNAVAILABLE', status: 503, suprimidos: 4 });
+  await kaizen.outbox.drenar();
+  const [c] = corpos('jur-diagnostico');
+  assert.deepEqual(
+    [c.servico, c.tipo, c.origem, c.versao, c.classe, c.erro, c.status, c.suprimidos],
+    ['jurcrawler', 'falha', 'cobranca', '1.1.0', 'pricing_unavailable', 'PRICING_UNAVAILABLE', 503, 4],
+  );
+  assert.match(c.tribunal, /^[a-z0-9_-]{2,40}$/);
+  assert.match(c.classe, /^[a-z_]+(:[A-Za-z0-9_]+)?$/);
+  assert.equal(c.assinatura, 'cobranca|pricing_unavailable');
+  assert.equal(payloadCobranca({ versao: '1', classe: 'x', status: undefined }).status, null);
 });
 
 // --- jur-processos: alvos do banco de processos ----------------------------------------------

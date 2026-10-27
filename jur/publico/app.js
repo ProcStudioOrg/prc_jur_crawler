@@ -16,7 +16,10 @@ window.jurApi = {
     const resposta = await fetch(caminho, { ...opcoes, headers });
     if (resposta.status === 401
         && resposta.headers.get('www-authenticate')?.startsWith('Session')) {
-      document.dispatchEvent(new CustomEvent('jur:autenticacao-negada'));
+      // `tipo: 'sessao_invalida'` = o ProcStudio desativou o usuário/time (ou a sessão acabou lá):
+      // a tela de login explica o motivo. O corpo é lido de um clone; quem chamou lê o original.
+      const corpo = await resposta.clone().json().catch(() => null);
+      document.dispatchEvent(new CustomEvent('jur:autenticacao-negada', { detail: { tipo: corpo?.tipo ?? null } }));
     }
     return resposta;
   },
@@ -207,7 +210,7 @@ async function carregarHistorico() {
 // BRU-76: conversa que nasceu neste envio e cujo primeiro turno o servidor recusou.
 // Apaga no servidor, volta para a tela inicial com o texto preservado e mostra o
 // erro na propria caixa — sem bolha numa conversa que deixou de existir.
-async function descartarConversaVazia(id, texto, erro) {
+async function descartarConversaVazia(id, texto, corpo) {
   try {
     await window.jurApi.pedir(`/api/v1/conversas/${id}`, { method: 'DELETE' });
   } catch { /* se o servidor nao apagou, a conversa aparece no historico — pior caso e o antigo */ }
@@ -216,7 +219,7 @@ async function descartarConversaVazia(id, texto, erro) {
     irParaInicial();
     const campo = $('#caixa-inicial .entrada');
     if (campo) { campo.value = texto; ajustarAltura(campo); campo.focus(); }
-    avisarNaCaixa(erro || 'Não foi possível iniciar a conversa.');
+    mostrarErro({ ...corpo, erro: corpo.erro || 'Não foi possível iniciar a conversa.' }, texto);
   }
 }
 
@@ -225,6 +228,7 @@ function irParaInicial() {
   // As buscas da conversa anterior nao podem continuar na tela como se fossem desta.
   if (window.jurDecisoes) window.jurDecisoes.sincronizar(null);
   conversaAtual = null;
+  definirCustoConversa(null, null);
   $('#conversa').hidden = true;
   $('#inicial').hidden = false;
   $('#mensagens').innerHTML = '';
@@ -235,6 +239,7 @@ async function abrirConversa(id) {
   encerrarReanexo();
   const dados = await window.jurApi.pedir(`/api/v1/conversas/${id}`);
   conversaAtual = id;
+  definirCustoConversa(id, dados.custoTotalBrl);
   $('#inicial').hidden = true;
   $('#conversa').hidden = false;
   montarCaixa($('#caixa-conversa'));
@@ -280,6 +285,7 @@ async function reanexar(id) {
   const controle = new AbortController();
   reanexado = controle;
   let destino = null;
+  const linhaCusto = acompanharCusto(id, false);
   try {
     const r = await window.jurApi.requisitar(`/api/v1/conversas/${id}/stream`, { signal: controle.signal });
     if (!r.ok) return;
@@ -299,7 +305,12 @@ async function reanexar(id) {
         destino = null;
       } else if (nome === 'busca') {
         if (window.jurDecisoes) window.jurDecisoes.sincronizar(id);
+      } else if (nome === 'custo') {
+        // O total da conversa nao soma aqui: o reanexo reproduz rodadas que o GET da
+        // conversa ja contou. Ele e relido do servidor no `fim`.
+        linhaCusto(dados);
       } else if (nome === 'fim') {
+        recarregarCustoConversa(id);
         // O historico local precisa receber o turno inteiro (com os blocos de
         // ferramenta): e ele que volta ao modelo na proxima pergunta, e sem os blocos
         // vao junto o job_id das buscas e a ressalva do zero.
@@ -309,7 +320,16 @@ async function reanexar(id) {
         for (const m of novas) historicoLocal.push({ role: m.role, content: m.content });
         carregarHistorico();
       } else if (nome === 'erro') {
-        bolha('erro', dados.erro);
+        // O turno foi aberto em outra aba ou antes de recarregar: o historico local e o da
+        // abertura e nao tem as rodadas que o turno gravou depois. Refaz pela conversa gravada;
+        // a pergunta a reenviar e a ultima do usuario em texto, e so ha reenvio se a ultima
+        // bolha de pergunta na tela for ela (redesenhar duplicaria a pergunta).
+        mostrarErroNoMeioDoTurno(id, dados, () => {
+          const texto = perguntaDoTurnoInterrompido();
+          const perguntas = $('#mensagens').querySelectorAll('.msg.user');
+          const bolhaUltima = perguntas[perguntas.length - 1];
+          return texto !== null && bolhaUltima?.textContent === texto ? { texto, bolha: bolhaUltima } : null;
+        });
       }
     });
   } catch { /* abortado ou rede caiu: a conversa continua gravada no servidor */ }
@@ -342,15 +362,235 @@ function acrescentarAssistente(div, pedaco) {
  * Erro antes de existir conversa: a bolha iria para #mensagens, que fica oculto na tela
  * inicial, e o usuario nao veria nada. Na conversa aberta e uma bolha comum.
  */
-function avisarNaCaixa(texto) {
-  if (!$('#conversa').hidden) { bolha('erro', texto); return; }
+function avisarNaCaixa(texto, classe = 'erro') {
+  if (!$('#conversa').hidden) return bolha(classe, texto);
   const caixa = caixaAtiva();
   $('.aviso-caixa', caixa)?.remove();
   const div = document.createElement('div');
-  div.className = 'msg erro aviso-caixa';
+  div.className = `msg ${classe} aviso-caixa`;
   div.setAttribute('role', 'alert');
   div.textContent = texto;
   caixa.prepend(div);
+  return div;
+}
+
+// ---------- erros com tipo, bloqueio por saldo e custo ----------
+const centavos = (brl) => Math.round(brl * 100);
+const MSG_CONVERSA_MUDOU = 'Não foi possível tentar de novo: a conversa mudou desde a interrupção. Envie a pergunta novamente.';
+
+/**
+ * Refaz o historico local a partir da conversa GRAVADA. Depois de um erro no meio do turno o
+ * servidor ja gravou as rodadas pagas (tool_use/tool_result) que o historico local nao tem;
+ * e com elas que o reenvio continua o turno. Lanca se o servidor nao responder: quem chama
+ * mostra isso, nunca segue com um historico que sabe estar velho.
+ */
+async function ressincronizarHistorico(id) {
+  const dados = await window.jurApi.pedir(`/api/v1/conversas/${id}`);
+  if (conversaAtual !== id) return false;
+  historicoLocal.length = 0;
+  for (const m of dados.mensagens) historicoLocal.push({ role: m.papel, content: m.conteudo });
+  return true;
+}
+
+/** A pergunta do turno interrompido: a ultima entrada do usuario em texto (tool_result e lista). */
+function perguntaDoTurnoInterrompido() {
+  for (let i = historicoLocal.length - 1; i >= 0; i--) {
+    const m = historicoLocal[i];
+    if (m.role === 'user' && typeof m.content === 'string') return m.content;
+  }
+  return null;
+}
+
+/**
+ * Evento `erro` no meio do turno: primeiro alinha o historico com o que o servidor gravou,
+ * depois mostra o erro. `reenvio()` diz qual pergunta/bolha o "Tentar de novo" reaproveita.
+ */
+async function mostrarErroNoMeioDoTurno(id, dados, reenvio) {
+  try {
+    if (!(await ressincronizarHistorico(id))) return;
+  } catch {
+    if (conversaAtual !== id) return;
+    bolha('erro', 'Não foi possível recarregar a conversa gravada. Recarregue a página antes de continuar.');
+  }
+  if (conversaAtual !== id) return;
+  const r = reenvio();
+  mostrarErro(dados, r ? r.texto : null, r ? r.bolha : null);
+}
+
+/**
+ * Erro do chat com o `tipo` que o servidor manda (no JSON da recusa ou no evento `erro`).
+ * `texto` e a pergunta recusada: e ela que "Tentar de novo" reenvia.
+ */
+function mostrarErro(dados, texto, bolhaGravada = null) {
+  if (dados.tipo === 'saldo_insuficiente') { cartaoBloqueio(dados, texto, bolhaGravada); return; }
+  const div = avisarNaCaixa(dados.erro);
+  if (dados.tipo === 'procstudio_indisponivel') {
+    const link = document.createElement('button');
+    link.type = 'button';
+    link.className = 'link-erro';
+    link.textContent = 'Configurar uma conexão própria';
+    link.addEventListener('click', () => window.jurConfig.abrir({ avancado: true }));
+    div.append(' ', link);
+  }
+}
+
+/**
+ * Cartao de saldo esgotado, igual no 402 antes do turno e no `erro` no meio dele. O link de
+ * recarga e o `topupUrl` do servidor; sem ele o botao nao aparece (nao inventamos endereco).
+ */
+function cartaoBloqueio(dados, texto, bolhaGravada) {
+  $('#mensagens .bloqueio')?.remove();
+  const cartao = avisarNaCaixa('', 'bloqueio bolha');
+  cartao.setAttribute('role', 'alert');
+  const mensagem = document.createElement('p');
+  mensagem.textContent = dados.erro;
+  const acoes = document.createElement('div');
+  acoes.className = 'bloqueio-acoes';
+  if (dados.topupUrl) {
+    const recarga = document.createElement('a');
+    recarga.className = 'botao-acento';
+    recarga.textContent = 'Adicionar créditos';
+    recarga.href = dados.topupUrl;
+    recarga.target = '_blank';
+    recarga.rel = 'noopener';
+    acoes.append(recarga);
+  }
+  const estado = document.createElement('p');
+  estado.className = 'bloqueio-estado';
+  estado.setAttribute('role', 'status');
+  if (texto) {
+    const tentar = document.createElement('button');
+    tentar.type = 'button';
+    tentar.className = 'botao-secundario';
+    tentar.textContent = 'Tentar de novo';
+    tentar.addEventListener('click', async () => {
+      tentar.disabled = true;
+      estado.textContent = '';
+      const s = await window.jurSaldo.carregar(true);
+      if (!s?.disponivel || s.erro || !s.podeOperar) {
+        estado.textContent = s?.erro || s?.mensagem || 'O saldo ainda não permite continuar.';
+        tentar.disabled = false;
+        return;
+      }
+      const campo = $('.entrada', caixaAtiva());
+      if (bolhaGravada) {
+        // Bloqueio no meio do turno: a pergunta e as rodadas ja pagas estao gravadas. O reenvio
+        // manda a conversa gravada como esta e o servidor continua dali (depois do tool_result,
+        // o modelo responde); por isso o historico e refeito agora, nao no momento do bloqueio.
+        const id = conversaAtual;
+        try {
+          if (!(await ressincronizarHistorico(id))) return;
+        } catch (e) {
+          estado.textContent = `Não foi possível recarregar a conversa: ${e.message}`;
+          tentar.disabled = false;
+          return;
+        }
+        cartao.remove();
+        if (historicoLocal[historicoLocal.length - 1]?.role !== 'user') {
+          // A conversa ganhou uma resposta depois do bloqueio (outra aba): nao ha o que continuar.
+          await realinharAposReenvioInvalido(id, texto, { erro: MSG_CONVERSA_MUDOU, tipo: 'reenvio_invalido' });
+          return;
+        }
+        enviar(campo, window.jurConexoes.selected?.modelo, null, { texto, bolha: bolhaGravada });
+        return;
+      }
+      cartao.remove();
+      campo.value = texto;
+      enviar(campo, window.jurConexoes.selected?.modelo, null);
+    });
+    acoes.append(tentar);
+  }
+  cartao.append(mensagem, acoes, estado);
+  window.jurSaldo.carregar(true);
+}
+
+/**
+ * 409 `reenvio_invalido`: a conversa gravada mudou entre o bloqueio e o reenvio (outra aba
+ * respondeu ou perguntou nela), entao o turno interrompido nao tem mais de onde continuar. O
+ * historico e refeito a partir da conversa gravada (que tambem e redesenhada), a pergunta
+ * volta para a caixa e a mensagem do servidor fica visivel.
+ */
+async function realinharAposReenvioInvalido(id, texto, corpo) {
+  if (conversaAtual !== id) return;
+  try {
+    await abrirConversa(id);
+  } catch {
+    // Sem a conversa gravada nao ha como alinhar: ao menos tira a pergunta velha do fim do
+    // historico, para o proximo envio nao leva-la duas vezes.
+    const ultima = historicoLocal[historicoLocal.length - 1];
+    if (ultima?.role === 'user' && ultima.content === texto) historicoLocal.pop();
+  }
+  if (conversaAtual !== id) return;
+  mostrarErro(corpo, texto);
+  const campo = $('.entrada', caixaAtiva());
+  campo.value = texto;
+  ajustarAltura(campo);
+  campo.focus();
+}
+
+/** "850 tokens", "19,1 mil tokens", "1,2 mi tokens". */
+function formatarTokens(n) {
+  const umaCasa = (v) => v.toLocaleString('pt-BR', { maximumFractionDigits: 1 });
+  if (n < 1000) return `${n} tokens`;
+  if (n < 1e6) return `${umaCasa(n / 1000)} mil tokens`;
+  return `${umaCasa(n / 1e6)} mi tokens`;
+}
+
+/** Total da conversa aberta: o que o servidor ja somou mais os turnos desta sessao. */
+const custoConversa = { id: null, centavos: 0, cobrado: false };
+function definirCustoConversa(id, totalBrl) {
+  custoConversa.id = id;
+  custoConversa.cobrado = typeof totalBrl === 'number';
+  custoConversa.centavos = custoConversa.cobrado ? centavos(totalBrl) : 0;
+  desenharCustoConversa();
+}
+function desenharCustoConversa() {
+  const alvo = $('#custo-conversa');
+  const visivel = custoConversa.cobrado && custoConversa.id === conversaAtual;
+  alvo.hidden = !visivel;
+  alvo.textContent = visivel ? `Esta conversa: ${window.jurSaldo.formatarBrl(custoConversa.centavos / 100)}` : '';
+}
+async function recarregarCustoConversa(id) {
+  try {
+    const dados = await window.jurApi.pedir(`/api/v1/conversas/${id}`);
+    if (conversaAtual === id) definirCustoConversa(id, dados.custoTotalBrl);
+  } catch { /* o total fica como estava; a proxima abertura relê */ }
+}
+
+/**
+ * Linha de custo da resposta em curso: soma as rodadas do turno a cada evento `custo` e fica
+ * sob a ultima bolha do assistente. Em BYOK nao ha `cobradoBrl`, so tokens. `somarNaConversa`
+ * e falso no reanexo, que reproduz rodadas ja contadas pelo GET da conversa.
+ */
+function acompanharCusto(conversaId, somarNaConversa) {
+  let linha = null;
+  let cobradoCents = 0;
+  let cobrado = false;
+  let tokens = 0;
+  return (dados) => {
+    window.jurSaldo.atualizarDe(dados);
+    const rodadaCents = typeof dados.cobradoBrl === 'number' ? centavos(dados.cobradoBrl) : null;
+    if (rodadaCents !== null) { cobrado = true; cobradoCents += rodadaCents; }
+    tokens += (dados.tokensEntrada || 0) + (dados.tokensSaida || 0);
+    if (somarNaConversa && rodadaCents !== null && custoConversa.id === conversaId) {
+      custoConversa.cobrado = true;
+      custoConversa.centavos += rodadaCents;
+    }
+    if (conversaAtual !== conversaId) return;
+    desenharCustoConversa();
+    if (!linha) {
+      linha = document.createElement('small');
+      linha.className = 'custo-resposta';
+    }
+    linha.textContent = [
+      cobrado ? window.jurSaldo.formatarBrl(cobradoCents / 100) : null,
+      formatarTokens(tokens),
+      dados.modelo,
+    ].filter(Boolean).join(' · ');
+    // Sempre depois do que ja chegou: a rodada seguinte pode ter aberto bolhas novas.
+    $('#mensagens').appendChild(linha);
+    $('#mensagens').scrollTop = $('#mensagens').scrollHeight;
+  };
 }
 
 function bolha(classe, texto) {
@@ -386,13 +626,19 @@ async function lerSSE(resposta, aoEvento, aoAtividade) {
   }
 }
 
-async function enviar(campo, modelo, esforco) {
+/**
+ * `reenvio` ({ texto, bolha }): "Tentar de novo" depois de um bloqueio no MEIO do turno. A
+ * pergunta (e as rodadas pagas depois dela) ja estao gravadas, na tela (`bolha`) e no
+ * historico local, refeito pela conversa gravada; o POST vai com `reenvio: true` e o servidor
+ * continua o turno dali sem gravar nada de novo.
+ */
+async function enviar(campo, modelo, esforco, reenvio = null) {
   if (!window.jurSessao?.principal) { location.assign('/auth/login'); return; }
   if (!window.jurConexoes.selected) {
     $('#abrir-config').click();
     return;
   }
-  const texto = campo.value.trim();
+  const texto = reenvio ? reenvio.texto : campo.value.trim();
   if (!texto) return;
 
   // Sem catalogo nao ha escopo: `escopo()` devolveria [] e o servidor leria "nenhum
@@ -430,6 +676,7 @@ async function enviar(campo, modelo, esforco) {
     }
     conversaCriadaAgora = true;
     conversaAtual = c.id;
+    definirCustoConversa(c.id, null);
     historicoLocal.length = 0;
     $('#inicial').hidden = true;
     $('#conversa').hidden = false;
@@ -445,9 +692,16 @@ async function enviar(campo, modelo, esforco) {
 
   // Este envio JA e o stream do turno: um reanexo por cima duplicaria cada delta.
   encerrarReanexo();
-  campo.value = ''; ajustarAltura(campo);
-  bolha('user', texto);
-  historicoLocal.push({ role: 'user', content: texto });
+  let bolhaPergunta;
+  if (reenvio) {
+    // Reaproveita a bolha e a entrada do historico que ja existem: desenhar de novo
+    // mostraria a mesma pergunta duas vezes.
+    bolhaPergunta = reenvio.bolha;
+  } else {
+    campo.value = ''; ajustarAltura(campo);
+    bolhaPergunta = bolha('user', texto);
+    historicoLocal.push({ role: 'user', content: texto });
+  }
 
   // Amarra esta resposta a conversa que a originou. Se o usuario trocar de conversa
   // enquanto o streaming ainda esta rodando, os deltas que chegarem depois nao podem
@@ -460,6 +714,7 @@ async function enviar(campo, modelo, esforco) {
   const conversaDoEnvio = conversaAtual;
 
   let destino = null;
+  const linhaCusto = acompanharCusto(conversaDoEnvio, true);
   // Liga a sondagem da lateral ANTES do POST: a partir daqui existe um turno deste
   // cliente, e e isso que faz o indicador aparecer sem esperar um F5.
   enviosLocais.add(conversaDoEnvio);
@@ -476,6 +731,7 @@ async function enviar(campo, modelo, esforco) {
       method: 'POST', headers: cab, signal: controle.signal,
       body: JSON.stringify({
         mensagens: historicoLocal, modelo, conexaoId: window.jurConexoes.selected?.conexaoId, conversaId: conversaAtual,
+        ...(reenvio ? { reenvio: true } : {}),
         // Tribunais que o usuario deixou ligados na Disponibilidade. Vai sempre que o
         // painel ja carregou: e com isto que o servidor recorta o catalogo no prompt, e
         // e dai que vem a economia de chamada de listar_tribunais.
@@ -487,15 +743,36 @@ async function enviar(campo, modelo, esforco) {
     if (!r.ok) {
       const corpo = await r.json().catch(() => ({ erro: `HTTP ${r.status}` }));
       if (conversaCriadaAgora) {
-        await descartarConversaVazia(conversaDoEnvio, texto, corpo.erro);
+        await descartarConversaVazia(conversaDoEnvio, texto, corpo);
         return;
       }
-      if (conversaAtual === conversaDoEnvio) bolha('erro', corpo.erro);
+      if (conversaAtual === conversaDoEnvio) {
+        if (reenvio && corpo.tipo === 'reenvio_invalido') {
+          await realinharAposReenvioInvalido(conversaDoEnvio, texto, corpo);
+        } else if (reenvio) {
+          // A pergunta continua gravada: um novo bloqueio oferece reenvia-la de novo.
+          mostrarErro(corpo, texto, bolhaPergunta);
+        } else {
+          // Toda recusa antes do stream (402, 409 de cobranca pendente ou turno em andamento,
+          // 503, validacao) acontece antes de o servidor gravar qualquer coisa: a pergunta sai
+          // da tela e do historico local e volta para a caixa. Sem isso o proximo envio levava
+          // duas perguntas seguidas e, depois de um F5, a primeira sumia.
+          bolhaPergunta.remove();
+          if (historicoLocal[historicoLocal.length - 1]?.content === texto) historicoLocal.pop();
+          const caixa = $('.entrada', caixaAtiva());
+          caixa.value = texto;
+          ajustarAltura(caixa);
+          mostrarErro(corpo, texto);
+        }
+      }
       return;
     }
     // O stream abriu: o servidor ja registrou o turno. Recarrega agora para o indicador
     // aparecer de imediato, em vez de esperar a proxima sondagem.
     carregarHistorico();
+    // `erro` no meio do turno e tratado depois do stream: antes de mostra-lo o historico local
+    // e refeito pela conversa gravada (await, que o leitor de eventos nao pode fazer).
+    let erroNoMeio = null;
     await lerSSE(r, (nome, dados) => {
       const aindaNaMesmaConversa = conversaAtual === conversaDoEnvio;
       if (nome === 'texto') {
@@ -515,6 +792,8 @@ async function enviar(campo, modelo, esforco) {
         // Uma busca acabou de ser vinculada a conversa: o painel de decisoes ja pode
         // mostra-la, mesmo antes de o turno terminar.
         if (aindaNaMesmaConversa && window.jurDecisoes) window.jurDecisoes.sincronizar(conversaDoEnvio);
+      } else if (nome === 'custo') {
+        linhaCusto(dados);
       } else if (nome === 'fim') {
         if (aindaNaMesmaConversa) {
           // C1: o turno inteiro, com os blocos `tool_use`/`tool_result` como vieram do
@@ -535,9 +814,13 @@ async function enviar(campo, modelo, esforco) {
         // Orfa: nada a fazer aqui — o servidor ja gravou a resposta inteira no banco,
         // associada a conversaDoEnvio.
       } else if (nome === 'erro') {
-        if (aindaNaMesmaConversa) bolha('erro', dados.erro);
+        // No meio do turno a pergunta ja foi gravada: o reenvio reaproveita a bolha dela.
+        if (aindaNaMesmaConversa) erroNoMeio = dados;
       }
     }, renovar);
+    if (erroNoMeio) {
+      await mostrarErroNoMeioDoTurno(conversaDoEnvio, erroNoMeio, () => ({ texto, bolha: bolhaPergunta }));
+    }
   } catch (e) {
     if (conversaAtual === conversaDoEnvio) {
       bolha('erro', e.name === 'AbortError' ? 'A resposta demorou demais e foi interrompida.' : e.message);
@@ -566,6 +849,7 @@ document.addEventListener('DOMContentLoaded', () => montarCaixa($('#caixa-inicia
 document.addEventListener('jur:sessao', carregarHistorico);
 document.addEventListener('jur:sair', () => {
   encerrarReanexo(); clearTimeout(relogioHistorico); conversaAtual = null; historicoLocal.length = 0;
+  definirCustoConversa(null, null);
   $('#historico').replaceChildren(); $('#mensagens').replaceChildren();
   $('#conversa').hidden = true; $('#inicial').hidden = false;
   $('#painel-config').hidden = true; if (window.jurDecisoes) window.jurDecisoes.fechar?.();

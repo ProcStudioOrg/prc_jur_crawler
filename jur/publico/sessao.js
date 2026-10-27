@@ -17,6 +17,8 @@
       if (k.startsWith("jur.tribunaisDesligados.")) localStorage.removeItem(k);
     }
   } catch {}
+  const MSG_SESSAO_INVALIDA =
+    "Sua conta do ProcStudio está inativa ou a sessão expirou; entre de novo.";
   function sair() {
     principal = null;
     window.jurConexoes.limpar();
@@ -29,7 +31,14 @@
       return principal;
     },
   };
-  document.addEventListener("jur:autenticacao-negada", sair);
+  // 401 de sessão em qualquer pedido: volta ao login. Com `sessao_invalida` (ProcStudio respondeu
+  // que o usuário/time não vale mais) a tela diz por quê, em vez de só pedir o login de novo.
+  document.addEventListener("jur:autenticacao-negada", (e) => {
+    const veioDeSessaoAtiva = principal !== null;
+    sair();
+    if (e.detail?.tipo === "sessao_invalida" || veioDeSessaoAtiva)
+      document.querySelector("#login-erro").textContent = MSG_SESSAO_INVALIDA;
+  });
   document.querySelector("#sair-conta").addEventListener("click", async () => {
     try {
       await window.jurApi.pedir("/auth/logout", { method: "POST", body: "{}" });

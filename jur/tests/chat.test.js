@@ -321,3 +321,491 @@ describe('POST /api/v1/chat — escopo de tribunais', () => {
     await r.text();
   });
 });
+
+/**
+ * Conexão ProcStudio: o chat cobra o saldo de IA do time por rodada. `cobranca` é falsa
+ * (saldo em centavos, espiões em cada método); `conexoes` é o repositório real com a
+ * conexão gerenciada, trocando só o cliente do provedor pelo falso.
+ */
+describe('POST /api/v1/chat — cobrança da conexão ProcStudio', () => {
+  const conversasMod = require('../servidor/conversas');
+  const turnosMod = require('../servidor/turnos');
+  const { criarConexoes } = require('../servidor/conexoes-llm');
+  const { erroProvedor } = require('../servidor/provedores');
+  const GERENCIADA = {
+    apiKey: 'sk-operador', endpoint: 'https://openrouter.ai/api/v1', modelo: 'z-ai/glm-5.3-flash',
+    modeloCatalogo: 'glm-5.3-flash', upstream: 'z-ai', rotulo: 'GLM-5.3 Flash', extras: {},
+  };
+  const USO = (entrada, saida) => ({
+    input_tokens: entrada, output_tokens: saida, cache_read_tokens: 0, cache_write_tokens: 0,
+    cost_usd: 0.001, generation_id: 'gen-1',
+  });
+  const ferramenta = (id, usage) => ({ stop_reason: 'tool_use', usage, content: [{ type: 'text', text: 'vou olhar ' }, { type: 'tool_use', id, name: 'listar_tribunais', input: {} }] });
+  const final = (texto, usage) => ({ stop_reason: 'end_turn', usage, content: [{ type: 'text', text: texto }] });
+
+  let chaveOriginal;
+  before(() => { chaveOriginal = process.env.ANTHROPIC_API_KEY; delete process.env.ANTHROPIC_API_KEY; });
+  after(() => {
+    if (chaveOriginal === undefined) delete process.env.ANTHROPIC_API_KEY;
+    else process.env.ANTHROPIC_API_KEY = chaveOriginal;
+  });
+
+  /** Saldo em centavos; cada rodada custa `precoCents`. podeOperar = saldo > 0. */
+  function cobrancaFalsa({ saldoCents = 1000, precoCents = 4, registrar, podeOperar } = {}) {
+    const estado = { saldoCents };
+    const espiao = { podeOperar: 0, registrar: [], falhaDoOperador: [] };
+    return {
+      espiao,
+      estado,
+      async podeOperar() {
+        espiao.podeOperar++;
+        if (podeOperar) return podeOperar(espiao.podeOperar);
+        if (estado.saldoCents > 0) return { ok: true };
+        return { ok: false, motivo: 'saldo', saldoBrl: estado.saldoCents / 100, mensagem: 'msg do Rails', topupPath: '/ia-uso/recarga' };
+      },
+      async registrar(uso) {
+        espiao.registrar.push(uso);
+        if (registrar) return registrar(uso, espiao.registrar.length);
+        estado.saldoCents -= precoCents;
+        return { cobradoBrl: precoCents / 100, saldoBrl: estado.saldoCents / 100, podeOperar: estado.saldoCents > 0, duplicado: false };
+      },
+      falhaDoOperador(erro) {
+        espiao.falhaDoOperador.push(erro);
+        return Object.assign(new Error('A conexão ProcStudio está temporariamente indisponível. Use uma conexão própria ou tente mais tarde.'), { code: 'PROCSTUDIO_LLM_INDISPONIVEL', status: 503 });
+      },
+    };
+  }
+
+  /** Cliente do provedor: cada item é uma resposta, uma função (params) => resposta, ou um Error a lançar. */
+  function provedorFalso(respostas) {
+    const chamadas = [];
+    let i = 0;
+    return {
+      chamadas,
+      messages: {
+        stream(params) {
+          chamadas.push(params);
+          const item = respostas[i++];
+          const ouvintes = {};
+          const p = {
+            on(evento, fn) { ouvintes[evento] = fn; return p; },
+            async finalMessage() {
+              const resposta = typeof item === 'function' ? await item(params) : item;
+              if (resposta instanceof Error) throw resposta;
+              for (const bloco of resposta.content) {
+                if (bloco.type === 'text' && ouvintes.text) ouvintes.text(bloco.text);
+              }
+              return resposta;
+            },
+          };
+          return p;
+        },
+      },
+    };
+  }
+
+  async function ambiente({ respostas, cobranca = cobrancaFalsa(), turnos } = {}) {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-chat-cobranca-'));
+    const con = db.abrir(path.join(dir, 'jur.db'));
+    const conversas = conversasMod.criarRepositorio(con);
+    const cofre = { cifrar: (v) => v, decifrar: (v) => v };
+    const reais = criarConexoes({
+      con, owner: 'dono', cofre, gerenciada: GERENCIADA,
+      transport: async () => { throw new Error('rede proibida neste teste'); },
+    });
+    const byok = reais.salvar({ provider: 'openai', name: 'minha', model: 'gpt-x', apiKey: 'sk-usuario' });
+    const provedor = provedorFalso(respostas);
+    const usados = [];
+    const conexoes = { ...reais, cliente: (id) => { usados.push(id); return provedor; } };
+    const fila = jobs.criarFila({
+      con, dirResultados: dir,
+      executarFn: async () => ({ ok: true, total: 0, resultados: [], arquivo: null, erro: null }),
+    });
+    const srv = http.createServer(criarApp({
+      fila, conexoes, cobranca, conversas, frontendUrl: 'https://proc.example', ...(turnos ? { turnos } : {}),
+    }).handler);
+    await new Promise((r) => srv.listen(0, r));
+    const base = `http://127.0.0.1:${srv.address().port}`;
+    const postar = (corpo, extra = {}) => fetch(`${base}/api/v1/chat`, {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ mensagens: [{ role: 'user', content: 'quais tribunais?' }], ...corpo }), ...extra,
+    });
+    return { srv, base, postar, conversas, cobranca, provedor, usados, byok, fechar: () => srv.close() };
+  }
+
+  it('sem saldo: 402 antes de gravar a mensagem, sem chamar o provedor', async () => {
+    const cobranca = cobrancaFalsa({ saldoCents: -52 });
+    const a = await ambiente({ respostas: [final('nunca', USO(1, 1))], cobranca });
+    try {
+      const c = a.conversas.criar();
+      const r = await a.postar({ conexaoId: 'procstudio', conversaId: c.id });
+      assert.strictEqual(r.status, 402);
+      assert.deepStrictEqual(await r.json(), {
+        erro: 'Seu saldo de IA do ProcStudio acabou (R$ −0,52). Adicione créditos para continuar.',
+        tipo: 'saldo_insuficiente',
+        saldoBrl: -0.52,
+        topupUrl: 'https://proc.example/ia-uso/recarga',
+      });
+      assert.deepStrictEqual(a.conversas.mensagens(c.id), [], 'nada pode ser gravado quando o turno é recusado');
+      assert.strictEqual(a.provedor.chamadas.length, 0);
+    } finally { a.fechar(); }
+  });
+
+  // "Tentar de novo" depois de um bloqueio no meio do turno: a pergunta já está gravada.
+  it('reenvio com a mesma pergunta como última mensagem gravada não grava de novo', async () => {
+    const a = await ambiente({ respostas: [final('resposta do reenvio', USO(10, 2))] });
+    try {
+      const c = a.conversas.criar();
+      a.conversas.acrescentar(c.id, 'user', 'quais tribunais?');
+      const r = await a.postar({ conexaoId: 'procstudio', conversaId: c.id, reenvio: true });
+      assert.strictEqual(r.status, 200);
+      await r.text();
+      const gravadas = a.conversas.mensagens(c.id);
+      assert.deepStrictEqual(gravadas.map((m) => m.papel), ['user', 'assistant'], JSON.stringify(gravadas));
+      assert.strictEqual(gravadas.filter((m) => m.conteudo === 'quais tribunais?').length, 1, 'a pergunta fica uma vez só');
+    } finally { a.fechar(); }
+  });
+
+  // O caso real: com o cache de saldo de 30 s o bloqueio vem na rodada 2, e a rodada 1 (paga)
+  // já está gravada depois da pergunta. O cliente refaz o histórico pela conversa gravada.
+  it('reenvio depois de uma rodada paga continua do tool_result gravado, sem gravar nada de novo', async () => {
+    const a = await ambiente({ respostas: [final('resposta depois do resultado', USO(30, 5))] });
+    try {
+      const c = a.conversas.criar();
+      const usoFerramenta = { role: 'assistant', content: [{ type: 'text', text: 'vou olhar ' }, { type: 'tool_use', id: 't1', name: 'listar_tribunais', input: {} }] };
+      const resultado = { role: 'user', content: [{ type: 'tool_result', tool_use_id: 't1', content: 'stf, stj' }] };
+      a.conversas.acrescentar(c.id, 'user', 'quais tribunais?');
+      a.conversas.acrescentar(c.id, usoFerramenta.role, usoFerramenta.content);
+      a.conversas.acrescentar(c.id, resultado.role, resultado.content);
+      const historico = a.conversas.mensagens(c.id).map((m) => ({ role: m.papel, content: m.conteudo }));
+      const r = await a.postar({ conexaoId: 'procstudio', conversaId: c.id, reenvio: true, mensagens: historico });
+      assert.strictEqual(r.status, 200);
+      const eventos = analisarSSE(await r.text());
+      const fim = eventos.find((e) => e.evento === 'fim');
+      assert.ok(fim, JSON.stringify(eventos));
+      assert.deepStrictEqual(fim.dado.mensagens.map((m) => m.role), ['assistant'], 'só a resposta é nova neste turno');
+      assert.strictEqual(a.provedor.chamadas.length, 1);
+      // `messages` é o próprio histórico do turno (a resposta entra nele depois): as três
+      // primeiras são o que foi ao modelo, terminando no tool_result.
+      assert.deepStrictEqual(a.provedor.chamadas[0].messages.slice(0, 3), historico, 'o modelo continua depois do tool_result');
+      assert.deepStrictEqual(historico[2], resultado);
+      const gravadas = a.conversas.mensagens(c.id);
+      assert.deepStrictEqual(gravadas.map((m) => m.papel), ['user', 'assistant', 'user', 'assistant'], JSON.stringify(gravadas));
+      assert.strictEqual(gravadas.filter((m) => m.conteudo === 'quais tribunais?').length, 1, 'a pergunta fica uma vez só');
+      assert.strictEqual(gravadas[3].conteudo[0].text, 'resposta depois do resultado');
+    } finally { a.fechar(); }
+  });
+
+  it('reenvio cuja pergunta não é a última mensagem gravada → 409 reenvio_invalido, sem gravar nem chamar o provedor', async () => {
+    const a = await ambiente({ respostas: [final('nunca', USO(1, 1))] });
+    try {
+      const c = a.conversas.criar();
+      a.conversas.acrescentar(c.id, 'user', 'outra pergunta');
+      const r = await a.postar({ conexaoId: 'procstudio', conversaId: c.id, reenvio: true });
+      assert.strictEqual(r.status, 409);
+      const corpo = await r.json();
+      assert.strictEqual(corpo.tipo, 'reenvio_invalido');
+      assert.match(corpo.erro, /Não foi possível tentar de novo/);
+      assert.strictEqual(a.conversas.mensagens(c.id).length, 1);
+      assert.strictEqual(a.provedor.chamadas.length, 0);
+
+      const semConversa = await a.postar({ conexaoId: 'procstudio', reenvio: true });
+      assert.strictEqual(semConversa.status, 400, 'reenvio sem conversa não tem o que reaproveitar');
+      await semConversa.text();
+    } finally { a.fechar(); }
+  });
+
+  it('conta inativa no ProcStudio → 401 sessao_invalida com www-authenticate Session, nada gravado', async () => {
+    const cobranca = cobrancaFalsa({ podeOperar: () => ({ ok: false, motivo: 'inativo' }) });
+    const a = await ambiente({ respostas: [final('nunca', USO(1, 1))], cobranca });
+    try {
+      const c = a.conversas.criar();
+      const r = await a.postar({ conexaoId: 'procstudio', conversaId: c.id });
+      assert.strictEqual(r.status, 401);
+      assert.match(r.headers.get('www-authenticate'), /^Session/);
+      assert.deepStrictEqual(await r.json(), {
+        erro: 'Sua conta do ProcStudio está inativa ou a sessão expirou; entre de novo.', tipo: 'sessao_invalida',
+      });
+      assert.strictEqual(a.conversas.mensagens(c.id).length, 0);
+      assert.strictEqual(a.provedor.chamadas.length, 0);
+    } finally { a.fechar(); }
+  });
+
+  it('conta que fica inativa no meio do turno: evento erro sessao_invalida, sem chamar o provedor de novo', async () => {
+    // 1ª checagem (antes do turno) libera; a de antes da rodada encontra a conta inativa.
+    const cobranca = cobrancaFalsa({ podeOperar: (n) => (n === 1 ? { ok: true } : { ok: false, motivo: 'inativo' }) });
+    const a = await ambiente({ respostas: [final('nunca', USO(1, 1))], cobranca });
+    try {
+      const r = await a.postar({ conexaoId: 'procstudio' });
+      assert.strictEqual(r.status, 200);
+      const erro = analisarSSE(await r.text()).find((e) => e.evento === 'erro');
+      assert.strictEqual(erro.dado.tipo, 'sessao_invalida');
+      assert.match(erro.dado.erro, /inativa ou a sessão expirou/);
+      assert.strictEqual(a.provedor.chamadas.length, 0);
+    } finally { a.fechar(); }
+  });
+
+  it('cobrança pendente → 409; ProcStudio indisponível → 503', async () => {
+    for (const [motivo, status, tipo] of [['pendente', 409, 'cobranca_pendente'], ['indisponivel', 503, 'procstudio_indisponivel']]) {
+      const cobranca = cobrancaFalsa({ podeOperar: () => ({ ok: false, motivo }) });
+      const a = await ambiente({ respostas: [final('nunca', USO(1, 1))], cobranca });
+      try {
+        const r = await a.postar({ conexaoId: 'procstudio' });
+        assert.strictEqual(r.status, status);
+        const corpo = await r.json();
+        assert.strictEqual(corpo.tipo, tipo);
+        assert.match(corpo.erro, motivo === 'pendente' ? /cobrança pendente/ : /temporariamente indisponível/);
+        assert.strictEqual(a.provedor.chamadas.length, 0);
+      } finally { a.fechar(); }
+    }
+  });
+
+  it('feliz: modelo do provedor, custo por rodada antes do fim, fim.custo soma e request_id por turno', async () => {
+    const a = await ambiente({ respostas: [ferramenta('t1', USO(1000, 50)), final('pronto', USO(1200, 80))] });
+    try {
+      const c = a.conversas.criar();
+      const r = await a.postar({ conexaoId: 'procstudio', conversaId: c.id, modelo: 'qualquer-coisa' });
+      assert.strictEqual(r.status, 200);
+      const eventos = analisarSSE(await r.text());
+      assert.deepStrictEqual(a.provedor.chamadas.map((p) => p.model), ['z-ai/glm-5.3-flash', 'z-ai/glm-5.3-flash'],
+        'o provedor recebe o id do provedor, nunca o do catálogo nem o que veio no corpo');
+      const custos = eventos.filter((e) => e.evento === 'custo').map((e) => e.dado);
+      assert.deepStrictEqual(custos, [
+        { rodada: 1, tokensEntrada: 1000, tokensSaida: 50, cobradoBrl: 0.04, saldoBrl: 9.96, modelo: 'GLM-5.3 Flash' },
+        { rodada: 2, tokensEntrada: 1200, tokensSaida: 80, cobradoBrl: 0.04, saldoBrl: 9.92, modelo: 'GLM-5.3 Flash' },
+      ]);
+      const nomes = eventos.map((e) => e.evento);
+      assert.ok(nomes.lastIndexOf('custo') < nomes.indexOf('fim'), 'custo sai antes do fim');
+      const fim = eventos.find((e) => e.evento === 'fim').dado;
+      assert.deepStrictEqual(fim.custo, { cobradoBrl: 0.08, tokensEntrada: 2200, tokensSaida: 130, rodadas: 2, modelo: 'GLM-5.3 Flash' });
+
+      const usos = a.cobranca.espiao.registrar;
+      assert.strictEqual(usos.length, 2);
+      const [conv, turno, rodada] = usos[0].requestId.split(':');
+      assert.strictEqual(conv, c.id);
+      assert.match(turno, /^[0-9a-f-]{36}$/);
+      assert.strictEqual(rodada, '1');
+      assert.strictEqual(usos[1].requestId, `${c.id}:${turno}:2`);
+      assert.deepStrictEqual({ ...usos[0], requestId: undefined }, {
+        requestId: undefined, modelId: 'glm-5.3-flash', inputTokens: 1000, outputTokens: 50, cacheReadTokens: 0,
+        cacheWriteTokens: 0, provider: 'openrouter', providerModel: 'z-ai/glm-5.3-flash', providerCostUsd: 0.001,
+        providerGenerationId: 'gen-1', conversationId: c.id,
+      });
+
+      const corpo = await (await fetch(`${a.base}/api/v1/conversas/${c.id}`)).json();
+      assert.strictEqual(corpo.custos.length, 1);
+      assert.strictEqual(corpo.custos[0].turnoId, turno);
+      assert.strictEqual(corpo.custoTotalBrl, 0.08);
+      assert.ok(a.cobranca.espiao.podeOperar >= 3, 'pré-checagem + uma checagem antes de cada rodada');
+    } finally { a.fechar(); }
+  });
+
+  it('turno sem conversa usa request_id avulso-<uuid>', async () => {
+    const a = await ambiente({ respostas: [final('ok', USO(1, 1))] });
+    try {
+      await (await a.postar({ conexaoId: 'procstudio' })).text();
+      assert.match(a.cobranca.espiao.registrar[0].requestId, /^avulso-[0-9a-f-]{36}:[0-9a-f-]{36}:1$/);
+      assert.strictEqual(a.cobranca.espiao.registrar[0].conversationId, null);
+    } finally { a.fechar(); }
+  });
+
+  it('saldo acaba no meio: 2ª rodada bloqueada, 1ª gravada e custo persistido', async () => {
+    const cobranca = cobrancaFalsa({ saldoCents: 3 });
+    const a = await ambiente({ respostas: [ferramenta('t1', USO(500, 20)), final('nunca', USO(1, 1))], cobranca });
+    try {
+      const c = a.conversas.criar();
+      const eventos = analisarSSE(await (await a.postar({ conexaoId: 'procstudio', conversaId: c.id })).text());
+      assert.strictEqual(a.provedor.chamadas.length, 1, 'sem saldo nenhuma rodada nova vai ao provedor');
+      const erro = eventos.find((e) => e.evento === 'erro');
+      assert.ok(erro, JSON.stringify(eventos));
+      assert.deepStrictEqual(erro.dado, {
+        erro: 'Seu saldo de IA do ProcStudio acabou (R$ −0,01). Adicione créditos para continuar.',
+        tipo: 'saldo_insuficiente', saldoBrl: -0.01, topupUrl: 'https://proc.example/ia-uso/recarga',
+      });
+      assert.ok(!eventos.some((e) => e.evento === 'fim'));
+      assert.ok(eventos.some((e) => e.evento === 'custo'));
+      const m = a.conversas.mensagens(c.id);
+      assert.strictEqual(m.length, 3, 'pergunta + rodada 1 (tool_use) + tool_result');
+      assert.strictEqual(m[1].papel, 'assistant');
+      const custos = a.conversas.custos(c.id);
+      assert.strictEqual(custos.length, 1);
+      assert.strictEqual(custos[0].cobradoBrl, 0.04);
+      assert.strictEqual(custos[0].rodadas, 1);
+      assert.strictEqual(custos[0].conexao, 'procstudio');
+    } finally { a.fechar(); }
+  });
+
+  it('registro que não se confirma encerra o turno com cobranca_pendente', async () => {
+    const cobranca = cobrancaFalsa({
+      registrar: () => { throw Object.assign(new Error('Não foi possível registrar a cobrança desta resposta. Tente novamente em instantes.'), { code: 'COBRANCA_PENDENTE' }); },
+    });
+    const a = await ambiente({ respostas: [ferramenta('t1', USO(5, 5)), final('nunca', USO(1, 1))], cobranca });
+    try {
+      const eventos = analisarSSE(await (await a.postar({ conexaoId: 'procstudio' })).text());
+      const erro = eventos.find((e) => e.evento === 'erro');
+      assert.deepStrictEqual(erro.dado, {
+        erro: 'Não foi possível registrar a cobrança desta resposta. Tente novamente em instantes.',
+        tipo: 'cobranca_pendente',
+      });
+      assert.ok(eventos.some((e) => e.evento === 'texto'), 'o texto já transmitido fica');
+      assert.strictEqual(a.provedor.chamadas.length, 1);
+    } finally { a.fechar(); }
+  });
+
+  it('pricing_unavailable do Rails no registro vira procstudio_indisponivel, avisa o operador uma vez e mantém o custo já cobrado', async () => {
+    const { criarCobranca, criarLimitadorAvisos } = require('../servidor/cobranca');
+    const dirCob = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-chat-pricing-'));
+    const logs = [];
+    const diagnosticos = [];
+    let idas = 0;
+    const procstudio = {
+      async saldo() { return { ativo: true, podeOperar: true, saldoCents: 1000, saldoBrl: 10, topupPath: '/ia-uso/recarga' }; },
+      async registrarUso() {
+        idas++;
+        if (idas === 1) return { cobradoCents: 4, cobradoBrl: 0.04, saldoCents: 996, saldoBrl: 9.96, podeOperar: true, duplicado: false };
+        throw Object.assign(new Error('pricing_unavailable'), { status: 503, code: 'PRICING_UNAVAILABLE' });
+      },
+    };
+    const cobranca = criarCobranca({
+      con: db.abrir(path.join(dirCob, 'jur.db')), procstudio,
+      principal: { issuer: 'https://proc.example', userId: 'u1', teamId: 't1' },
+      kaizen: { enviarCobranca: (aviso) => { diagnosticos.push({ fonte: 'jur-diagnostico', corpo: aviso }); }, outbox: { ligado: true } },
+      esperar: async () => {},
+      logar: (linha) => logs.push(JSON.parse(linha)),
+      avisos: criarLimitadorAvisos(),
+    });
+    const a = await ambiente({ respostas: [ferramenta('t1', USO(100, 10)), final('nunca', USO(200, 20))], cobranca });
+    try {
+      const c = a.conversas.criar();
+      const eventos = analisarSSE(await (await a.postar({ conexaoId: 'procstudio', conversaId: c.id })).text());
+      assert.deepStrictEqual(eventos.find((e) => e.evento === 'erro').dado, {
+        erro: 'A conexão ProcStudio está temporariamente indisponível. Use uma conexão própria ou tente mais tarde.',
+        tipo: 'procstudio_indisponivel',
+      });
+      assert.strictEqual(idas, 4, 'rodada 1 cobrada + 3 tentativas da rodada 2');
+      assert.strictEqual(logs.filter((l) => l.event === 'procstudio_llm_operator_failure').length, 1);
+      assert.strictEqual(diagnosticos.length, 1);
+      assert.strictEqual(cobranca.pendentes(), 1, 'o recibo continua devido e fica para o varredor');
+      const corpo = await (await fetch(`${a.base}/api/v1/conversas/${c.id}`)).json();
+      assert.strictEqual(corpo.custos.length, 1);
+      assert.deepStrictEqual([corpo.custos[0].cobradoBrl, corpo.custos[0].rodadas], [0.04, 1]);
+      assert.strictEqual(corpo.custoTotalBrl, 0.04);
+    } finally { cobranca.pararVarredor(); a.fechar(); }
+  });
+
+  it('USAGE_MISSING encerra com tipo usage_missing', async () => {
+    const a = await ambiente({ respostas: [final('sem uso', undefined)] });
+    const erroOriginal = console.error;
+    console.error = () => {}; // llm.js loga llm_usage_missing; o teste não precisa poluir a saída
+    try {
+      const eventos = analisarSSE(await (await a.postar({ conexaoId: 'procstudio' })).text());
+      const erro = eventos.find((e) => e.evento === 'erro');
+      assert.strictEqual(erro.dado.tipo, 'usage_missing');
+      assert.match(erro.dado.erro, /consumo/);
+      assert.strictEqual(a.cobranca.espiao.registrar.length, 0);
+    } finally { console.error = erroOriginal; a.fechar(); }
+  });
+
+  it('erro do provedor na conexão ProcStudio vira procstudio_indisponivel e avisa o operador; em BYOK segue igual', async () => {
+    const a = await ambiente({ respostas: [erroProvedor(402)] });
+    try {
+      const eventos = analisarSSE(await (await a.postar({ conexaoId: 'procstudio' })).text());
+      assert.deepStrictEqual(eventos.find((e) => e.evento === 'erro').dado, {
+        erro: 'A conexão ProcStudio está temporariamente indisponível. Use uma conexão própria ou tente mais tarde.',
+        tipo: 'procstudio_indisponivel',
+      });
+      assert.strictEqual(a.cobranca.espiao.falhaDoOperador.length, 1);
+      assert.strictEqual(a.cobranca.espiao.falhaDoOperador[0].status, 402, 'o status do provedor precisa chegar ao diagnóstico');
+    } finally { a.fechar(); }
+
+    const b = await ambiente({ respostas: [erroProvedor(402)] });
+    try {
+      const eventos = analisarSSE(await (await b.postar({ conexaoId: b.byok.id })).text());
+      assert.deepStrictEqual(eventos.find((e) => e.evento === 'erro').dado, {
+        erro: erroProvedor(402).message, tipo: 'Error',
+      });
+      assert.strictEqual(b.cobranca.espiao.falhaDoOperador.length, 0);
+    } finally { b.fechar(); }
+  });
+
+  it('erro do provedor na 2ª rodada mantém a rodada 1, já cobrada, gravada na conversa', async () => {
+    const a = await ambiente({ respostas: [ferramenta('t1', USO(500, 20)), erroProvedor(502)] });
+    try {
+      const c = a.conversas.criar();
+      const eventos = analisarSSE(await (await a.postar({ conexaoId: 'procstudio', conversaId: c.id })).text());
+      assert.strictEqual(eventos.find((e) => e.evento === 'erro').dado.tipo, 'procstudio_indisponivel');
+      const m = a.conversas.mensagens(c.id);
+      assert.deepStrictEqual(m.map((x) => x.papel), ['user', 'assistant', 'user'], `pergunta + tool_use + tool_result: ${JSON.stringify(m)}`);
+      assert.ok(m[1].conteudo.some((b) => b.type === 'tool_use' && b.id === 't1'));
+      assert.strictEqual(m[2].conteudo[0].type, 'tool_result');
+      const custos = a.conversas.custos(c.id);
+      assert.deepStrictEqual([custos[0].cobradoBrl, custos[0].rodadas], [0.04, 1], 'o custo e as mensagens contam a mesma rodada');
+    } finally { a.fechar(); }
+  });
+
+  it('BYOK não toca na cobrança e emite custo só com tokens', async () => {
+    const a = await ambiente({ respostas: [ferramenta('t1', USO(10, 2)), final('ok', null)] });
+    try {
+      const c = a.conversas.criar();
+      const eventos = analisarSSE(await (await a.postar({ conexaoId: a.byok.id, conversaId: c.id })).text());
+      assert.deepStrictEqual(a.cobranca.espiao, { podeOperar: 0, registrar: [], falhaDoOperador: [] });
+      assert.deepStrictEqual(a.provedor.chamadas.map((p) => p.model), ['gpt-x', 'gpt-x']);
+      assert.deepStrictEqual(eventos.filter((e) => e.evento === 'custo').map((e) => e.dado),
+        [{ rodada: 1, tokensEntrada: 10, tokensSaida: 2, modelo: 'gpt-x' }]);
+      assert.deepStrictEqual(eventos.find((e) => e.evento === 'fim').dado.custo,
+        { cobradoBrl: null, tokensEntrada: 10, tokensSaida: 2, rodadas: 1, modelo: 'gpt-x' });
+      assert.deepStrictEqual(a.conversas.custos(c.id).map((x) => [x.cobradoBrl, x.conexao]), [[null, a.byok.id]]);
+    } finally { a.fechar(); }
+  });
+
+  /** Porteira: a rodada só responde quando o teste abrir. */
+  function porteira() {
+    let abrir; let chegou;
+    const aberta = new Promise((r) => { abrir = r; });
+    const chamada = new Promise((r) => { chegou = r; });
+    return { abrir, chamada, segurar: (resposta) => async () => { chegou(); await aberta; return resposta; } };
+  }
+
+  it('reanexar ao stream reproduz o custo', async () => {
+    const p = porteira();
+    const a = await ambiente({ respostas: [ferramenta('t1', USO(7, 3)), p.segurar(final('fim', USO(9, 4)))] });
+    try {
+      const c = a.conversas.criar();
+      const req = a.postar({ conexaoId: 'procstudio', conversaId: c.id });
+      await p.chamada; // a 1ª rodada já foi cobrada e emitiu `custo`
+      const fluxo = await fetch(`${a.base}/api/v1/conversas/${c.id}/stream`);
+      const lendo = fluxo.text();
+      p.abrir();
+      await (await req).text();
+      const custos = analisarSSE(await lendo).filter((e) => e.evento === 'custo').map((e) => e.dado.rodada);
+      assert.deepStrictEqual(custos, [1, 2]);
+    } finally { a.fechar(); }
+  });
+
+  it('cliente que fecha a conexão no meio: todas as rodadas são cobradas e o custo fica na conversa', async () => {
+    const p = porteira();
+    const registro = turnosMod.criarRegistro();
+    let terminou;
+    const fimDoTurno = new Promise((r) => { terminou = r; });
+    const turnos = { ...registro, executar: (id, tarefa) => { const x = registro.executar(id, tarefa); x.then(terminou); return x; } };
+    const a = await ambiente({ respostas: [ferramenta('t1', USO(7, 3)), p.segurar(final('fim', USO(9, 4)))], turnos });
+    try {
+      const c = a.conversas.criar();
+      const controlador = new AbortController();
+      const req = a.postar({ conexaoId: 'procstudio', conversaId: c.id }, { signal: controlador.signal }).then((r) => r.text()).catch(() => {});
+      await p.chamada;
+      controlador.abort(); // fecha a aba
+      await req;
+      p.abrir();
+      await fimDoTurno;
+      assert.strictEqual(a.cobranca.espiao.registrar.length, 2);
+      const corpo = await (await fetch(`${a.base}/api/v1/conversas/${c.id}`)).json();
+      assert.strictEqual(corpo.custos.length, 1);
+      assert.deepStrictEqual(
+        { cobradoBrl: corpo.custos[0].cobradoBrl, rodadas: corpo.custos[0].rodadas, tokensEntrada: corpo.custos[0].tokensEntrada },
+        { cobradoBrl: 0.08, rodadas: 2, tokensEntrada: 16 },
+      );
+      assert.strictEqual(corpo.custoTotalBrl, 0.08);
+    } finally { a.fechar(); }
+  });
+});

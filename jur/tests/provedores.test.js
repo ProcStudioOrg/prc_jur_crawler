@@ -448,3 +448,133 @@ test("Gemini preserva thoughtSignature opaca e vínculo de tool após salvar/rec
     con.close();
   }
 });
+
+function clienteSse(conn, chunks, capturar) {
+  const content = chunks.map(event).join("") + "data: [DONE]\n\n";
+  return criarCliente(conn, async (u, o) => {
+    capturar?.(JSON.parse(o.body));
+    return new Response(content);
+  });
+}
+const paramsUso = {
+  model: "z-ai/glm",
+  system: "s",
+  messages: [{ role: "user", content: "oi" }],
+  tools: [],
+};
+test("OpenAI-compatível envia stream_options e captura usage com cost do OpenRouter", async () => {
+  let sent;
+  const c = clienteSse(
+    {
+      provider: "openrouter",
+      apiKey: "fixture",
+      extras: {
+        provider: { order: ["z-ai"], allow_fallbacks: false },
+        usage: { include: true },
+      },
+    },
+    [
+      { id: "gen-abc", choices: [{ delta: { content: "oi" } }] },
+      { id: "gen-abc", choices: [{ delta: {}, finish_reason: "stop" }] },
+      {
+        id: "gen-abc",
+        choices: [],
+        usage: {
+          prompt_tokens: 120,
+          completion_tokens: 30,
+          prompt_tokens_details: { cached_tokens: 20 },
+          cost: 0.0042,
+        },
+      },
+    ],
+    (b) => (sent = b),
+  );
+  const r = await c.messages.stream(paramsUso, {}).finalMessage();
+  assert.deepEqual(sent.stream_options, { include_usage: true });
+  assert.deepEqual(sent.provider, { order: ["z-ai"], allow_fallbacks: false });
+  assert.deepEqual(sent.usage, { include: true });
+  assert.deepEqual(r.usage, {
+    input_tokens: 120,
+    output_tokens: 30,
+    cache_read_tokens: 20,
+    cache_write_tokens: null,
+    cost_usd: 0.0042,
+    generation_id: "gen-abc",
+  });
+});
+test("OpenAI-compatível sem chunk de usage devolve usage null", async () => {
+  const c = clienteSse({ provider: "openai", apiKey: "fixture" }, [
+    { id: "g1", choices: [{ delta: { content: "oi" }, finish_reason: "stop" }] },
+  ]);
+  const r = await c.messages.stream(paramsUso, {}).finalMessage();
+  assert.equal(r.usage, null);
+});
+test("Anthropic devolve usage a partir de finalMessage().usage", async () => {
+  const { normalizarUso } = require("../servidor/provedores");
+  assert.deepEqual(
+    normalizarUso(
+      "anthropic",
+      {
+        input_tokens: 10,
+        output_tokens: 5,
+        cache_read_input_tokens: 3,
+        cache_creation_input_tokens: 1,
+      },
+      "msg_1",
+    ),
+    {
+      input_tokens: 10,
+      output_tokens: 5,
+      cache_read_tokens: 3,
+      cache_write_tokens: 1,
+      cost_usd: null,
+      generation_id: "msg_1",
+    },
+  );
+  assert.equal(normalizarUso("anthropic", null, "msg_1"), null);
+});
+test("Anthropic via SDK: wrapper anexa usage e id da mensagem", async () => {
+  const body = [
+    ["message_start", { type: "message_start", message: { id: "msg_9", type: "message", role: "assistant", model: "m", content: [], stop_reason: null, usage: { input_tokens: 10, output_tokens: 1, cache_read_input_tokens: 3, cache_creation_input_tokens: 1 } } }],
+    ["content_block_start", { type: "content_block_start", index: 0, content_block: { type: "text", text: "" } }],
+    ["content_block_delta", { type: "content_block_delta", index: 0, delta: { type: "text_delta", text: "oi" } }],
+    ["content_block_stop", { type: "content_block_stop", index: 0 }],
+    ["message_delta", { type: "message_delta", delta: { stop_reason: "end_turn" }, usage: { output_tokens: 5 } }],
+    ["message_stop", { type: "message_stop" }],
+  ].map(([e, d]) => `event: ${e}\ndata: ${JSON.stringify(d)}\n\n`).join("");
+  const c = criarCliente(
+    { provider: "anthropic", apiKey: "fixture" },
+    async () => new Response(body, { headers: { "content-type": "text/event-stream" } }),
+  );
+  const r = await c.messages.stream(paramsUso, {}).finalMessage();
+  assert.deepEqual(r.usage, {
+    input_tokens: 10,
+    output_tokens: 5,
+    cache_read_tokens: 3,
+    cache_write_tokens: 1,
+    cost_usd: null,
+    generation_id: "msg_9",
+  });
+});
+test("Gemini devolve usage a partir de usageMetadata", async () => {
+  const c = clienteSse({ provider: "gemini", apiKey: "fixture" }, [
+    {
+      responseId: "gem-1",
+      candidates: [{ content: { parts: [{ text: "oi" }] }, finishReason: "STOP" }],
+      usageMetadata: {
+        promptTokenCount: 50,
+        candidatesTokenCount: 7,
+        cachedContentTokenCount: 4,
+      },
+    },
+  ]);
+  const r = await c.messages.stream(paramsUso, {}).finalMessage();
+  assert.deepEqual(r.usage, {
+    input_tokens: 50,
+    output_tokens: 7,
+    cache_read_tokens: 4,
+    cache_write_tokens: null,
+    cost_usd: null,
+    generation_id: "gem-1",
+  });
+});

@@ -850,3 +850,81 @@ button:disabled { opacity: .55; cursor: not-allowed; }
   .entrada-pilha { transform: rotateX(14deg) rotateY(-30deg); }
   #login-procstudio::after { animation: none; }
 }
+
+/* ---------- saldo de IA do ProcStudio ---------- */
+/* Linha de altura zero e grudada no topo de #centro: a pilula fica no canto direito sem
+   empurrar a conversa (que ocupa 100% da altura) nem rolar junto com a tela inicial. */
+#saldo-ia {
+  position: sticky; top: 0; z-index: 6; height: 0; overflow: visible;
+  display: flex; justify-content: flex-end; padding: 0 16px; pointer-events: none;
+}
+#saldo-ia[hidden] { display: none; }
+#saldo-ia > * {
+  pointer-events: auto; margin-top: 12px; font-size: 12.5px; padding: 5px 11px; border-radius: 999px;
+  white-space: nowrap; background: var(--superficie); color: var(--fraco); border: 1px solid var(--borda);
+  text-decoration: none; height: fit-content;
+}
+#saldo-ia > a:hover { border-color: var(--acento); color: var(--texto); }
+#saldo-ia.saldo-baixo > * { background: var(--ressalva-fundo); border-color: var(--ressalva-borda); color: var(--ressalva); }
+#saldo-ia.saldo-zerado > * { background: var(--erro-fundo); border-color: var(--erro-borda); color: var(--erro); font-weight: 600; }
+#saldo-ia.saldo-erro > * { background: var(--neutro-fundo); border-color: var(--neutro-borda); color: var(--neutro); }
+/* O botao "Decisoes" e o cabecalho dos navegadores moram no mesmo canto: descem uma linha. */
+#centro:has(> #saldo-ia:not([hidden])) .abrir-decisoes { top: 52px; }
+#centro:has(> #saldo-ia:not([hidden])) > #navegadores { margin-top: 52px; }
+
+/* Seletor: a conexao ProcStudio primeiro, as proprias abaixo do separador. */
+.modelo-gerenciada { display: grid; gap: 4px; padding: 12px; border: 1px solid var(--borda); border-radius: var(--raio); }
+.modelo-gerenciada.selecionada { border-color: var(--acento); }
+.modelo-gerenciada-topo { display: flex; align-items: center; gap: 8px; }
+.modelo-gerenciada small { color: var(--fraco); font-size: 12px; }
+.modelo-gerenciada .botao-acento { justify-self: start; margin-top: 6px; padding: 7px 12px; font-size: 12.5px; }
+.selo {
+  font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 999px;
+  background: var(--ok-fundo); color: var(--ok); border: 1px solid var(--ok-borda);
+}
+.modelo-separador {
+  display: flex; align-items: center; gap: 10px; margin: 16px 0 12px;
+  font-size: 12px; color: var(--fraco); font-weight: 600;
+}
+.modelo-separador::before, .modelo-separador::after { content: ""; flex: 1; border-top: 1px solid var(--borda); }
+.modelo-separador[hidden], .modelo-proprias[hidden], .modelo-gerenciada[hidden] { display: none; }
+
+/* Configuracoes -> IA */
+.ia-procstudio { padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid var(--borda); }
+.ia-procstudio .config-descricao { margin-bottom: 12px; }
+.ia-procstudio-saldo { margin: 0 0 14px; font-size: 14px; }
+.ia-procstudio .botao-acento { display: inline-block; text-decoration: none; }
+.config-avancado > summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--fraco); margin-bottom: 16px; }
+.config-avancado[open] > summary { color: var(--texto); }
+
+/* Custo por resposta e total da conversa */
+.custo-resposta {
+  display: block; max-width: 740px; margin: -14px auto 22px;
+  font-size: 12px; color: var(--fraco); font-variant-numeric: tabular-nums;
+}
+.custo-conversa {
+  width: min(740px, calc(100% - 48px)); margin: 14px auto 0;
+  font-size: 12.5px; color: var(--fraco); font-variant-numeric: tabular-nums;
+}
+.custo-conversa[hidden] { display: none; }
+/* Abaixo de 860px o botao flutuante do menu (.abrir-lateral) ocupa o topo: o total desce
+   para baixo dele, e #mensagens (que ja recua 58px ali) nao repete o mesmo recuo. */
+@media (max-width: 860px) {
+  .custo-conversa { margin-top: 58px; }
+  #conversa:has(> .custo-conversa:not([hidden])) > #mensagens { padding-top: 16px; }
+}
+
+/* Cartao de bloqueio por saldo */
+.msg.bloqueio {
+  border: 1px solid var(--ressalva-borda); background: var(--ressalva-fundo); color: var(--texto);
+  border-radius: var(--raio); padding: 14px 16px;
+}
+.msg.bloqueio > p { margin: 0 0 12px; }
+.bloqueio-acoes { display: flex; flex-wrap: wrap; gap: 8px; }
+.bloqueio-acoes .botao-acento { text-decoration: none; display: inline-block; }
+.msg.bloqueio > .bloqueio-estado { margin: 10px 0 0; font-size: 13px; color: var(--fraco); }
+.msg.bloqueio > .bloqueio-estado:empty { display: none; }
+.link-erro {
+  background: none; border: 0; padding: 0; font: inherit; color: var(--acento);
+  text-decoration: underline; text-underline-offset: 2px; cursor: pointer;
+}

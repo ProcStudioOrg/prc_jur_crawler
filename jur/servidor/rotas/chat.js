@@ -1,9 +1,46 @@
-const { sse, lerCorpo, json } = require('../http');
+const { randomUUID } = require('node:crypto');
+const { sse, lerCorpo, json, sessaoInvalida, MSG_SESSAO_INVALIDA } = require('../http');
 const llm = require('../llm');
 const catalogo = require('../catalogo');
 const validacao = require('../validacao');
 
 const ROLES_VALIDOS = new Set(['user', 'assistant']);
+
+// Quem cobra a chamada da conexao ProcStudio. Vai no recibo do ai_usage: o Rails guarda em
+// metadata e o FFD resolve o cartao do custo por provider.
+const PROVEDOR_PROCSTUDIO = 'openrouter';
+const MSG_PENDENTE = 'Há uma cobrança pendente nesta conta; aguarde alguns instantes.';
+const MSG_INDISPONIVEL = 'A conexão ProcStudio está temporariamente indisponível. Use uma conexão própria ou tente mais tarde.';
+const MSG_REENVIO_INVALIDO = 'Não foi possível tentar de novo: a conversa mudou desde a interrupção. Envie a pergunta novamente.';
+
+/** "R$ 1.234,56" / "R$ −0,52" (sinal de menos tipografico, como no ProcStudio). */
+function formatarBrl(valor) {
+  const absoluto = Math.abs(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return `R$ ${valor < 0 ? '\u2212' : ''}${absoluto}`;
+}
+
+/**
+ * Resposta para um `podeOperar()` negado: o corpo serve tanto ao JSON da recusa antes do
+ * turno quanto ao evento `erro` quando o bloqueio vem no meio dele.
+ */
+function bloqueioDaCobranca(veredito, frontendUrl) {
+  if (veredito.motivo === 'saldo') {
+    return {
+      status: 402,
+      corpo: {
+        erro: `Seu saldo de IA do ProcStudio acabou (${formatarBrl(veredito.saldoBrl)}). Adicione créditos para continuar.`,
+        tipo: 'saldo_insuficiente',
+        saldoBrl: veredito.saldoBrl,
+        topupUrl: frontendUrl && veredito.topupPath ? frontendUrl.replace(/\/$/, '') + veredito.topupPath : null,
+      },
+    };
+  }
+  if (veredito.motivo === 'pendente') return { status: 409, corpo: { erro: MSG_PENDENTE, tipo: 'cobranca_pendente' } };
+  if (veredito.motivo === 'indisponivel') return { status: 503, corpo: { erro: MSG_INDISPONIVEL, tipo: 'procstudio_indisponivel' } };
+  // Usuário ou time inativo no ProcStudio: quem responde também encerra a sessão (ver sessaoInvalida).
+  if (veredito.motivo === 'inativo') return { status: 401, corpo: { erro: MSG_SESSAO_INVALIDA, tipo: 'sessao_invalida' } };
+  throw new Error(`motivo de bloqueio da cobrança desconhecido: ${veredito.motivo}`);
+}
 
 function validarMensagens(mensagens) {
   if (!Array.isArray(mensagens) || !mensagens.length) return 'campo obrigatorio: mensagens';
@@ -46,14 +83,40 @@ function registrar(roteador, deps) {
 
     const motivoInvalido = validarMensagens(corpo.mensagens);
     if (motivoInvalido) return json(res, 400, { erro: motivoInvalido });
+    // `reenvio: true` = "Tentar de novo" depois de um bloqueio no meio do turno: a pergunta e as
+    // rodadas ja pagas foram gravadas por aquele turno; nada e gravado outra vez e o turno
+    // continua de onde parou (ver abaixo).
+    if (corpo.reenvio !== undefined && typeof corpo.reenvio !== 'boolean') {
+      return json(res, 400, { erro: 'reenvio precisa ser true ou false' });
+    }
+    const reenvio = corpo.reenvio === true;
+    if (reenvio && !(deps.conversas && typeof corpo.conversaId === 'string' && corpo.conversaId)) {
+      return json(res, 400, { erro: 'reenvio exige conversaId: só se reenvia uma pergunta já gravada numa conversa' });
+    }
     const mensagens = corpo.mensagens;
 
     let cliente = deps.clienteLLM;
     let vModelo; let vEsforco;
+    // Conexao ProcStudio: a chave e do operador e cada rodada e cobrada do saldo de IA do time.
+    let cobrar = false;
+    // O que identifica o modelo para quem le o custo: o rotulo na ProcStudio, o id em BYOK.
+    let rotuloModelo;
+    let conexaoId = null;
+    let modeloCatalogo = null;
     if (deps.conexoes) {
       const connection = typeof corpo.conexaoId === 'string' && deps.conexoes.obter(corpo.conexaoId);
       if (!connection) return json(res, 400, { erro: 'Configure uma conexão de IA antes de conversar.' });
-      const modelo = corpo.modelo || connection.model;
+      conexaoId = corpo.conexaoId;
+      cobrar = deps.conexoes.ehProcstudio(conexaoId);
+      if (cobrar && !deps.cobranca) {
+        // Conexao gerenciada sem cobranca montada e erro de configuracao: nunca chama o
+        // provedor com a chave do operador sem ter como cobrar.
+        return json(res, 503, { erro: MSG_INDISPONIVEL, tipo: 'procstudio_indisponivel' });
+      }
+      // Na ProcStudio o modelo e o do operador, nunca o que veio no corpo.
+      const modelo = cobrar ? deps.conexoes.modeloEnviado() : (corpo.modelo || connection.model);
+      modeloCatalogo = connection.model;
+      rotuloModelo = cobrar ? connection.rotulo : modelo;
       if (typeof modelo !== 'string' || !modelo || modelo.length > 256 || /\s/.test(modelo)) {
         return json(res, 400, { erro: 'Escolha um modelo válido para esta conexão.' });
       }
@@ -66,6 +129,7 @@ function registrar(roteador, deps) {
       if (!vModelo.ok) return json(res, 400, { erro: vModelo.erro });
       vEsforco = validacao.validarEsforco(corpo.esforco, vModelo.valor);
       if (!vEsforco.ok) return json(res, 400, { erro: vEsforco.erro });
+      rotuloModelo = vModelo.valor;
     }
 
     // Tribunais que o usuario deixou LIGADOS no painel de disponibilidade. Vai para dois
@@ -82,6 +146,19 @@ function registrar(roteador, deps) {
     const apiKey = deps.conexoes ? undefined : req.headers['x-api-key'];
     if (!apiKey && !cliente) {
       return json(res, 401, { erro: 'sem chave da Anthropic: configure uma conexão de IA' });
+    }
+
+    // Sem saldo (ou com cobranca pendente, ou ProcStudio fora) o turno e recusado antes de
+    // qualquer gravacao: a pergunta nao fica na conversa sem resposta. Fica ANTES do porteiro de
+    // turno abaixo porque e o unico `await` do caminho: dali ate `turnos.executar` tudo e
+    // sincrono, e um await no meio deixaria dois POSTs da mesma conversa passarem juntos.
+    if (cobrar) {
+      const veredito = await deps.cobranca.podeOperar();
+      if (!veredito.ok) {
+        if (veredito.motivo === 'inativo') return sessaoInvalida(req, res);
+        const { status, corpo: recusa } = bloqueioDaCobranca(veredito, deps.frontendUrl);
+        return json(res, status, recusa);
+      }
     }
 
     // Persistencia de conversa e opcional: so grava se o cliente mandou conversaId E o
@@ -113,8 +190,22 @@ function registrar(roteador, deps) {
         return json(res, 404, { erro: 'conversa nao encontrada' });
       }
       const ultima = mensagens[mensagens.length - 1];
-      deps.conversas.acrescentar(conversaId, 'user', ultima.content);
-      deps.conversas.renomearSePrimeira(conversaId, extrairTexto(ultima.content));
+      if (reenvio) {
+        // Sem adivinhar: so vale se a ultima mensagem GRAVADA e a ultima do pedido, seja qual
+        // for o conteudo. Com o cache de saldo o bloqueio quase sempre vem na rodada >= 2, e a
+        // ultima gravada e o tool_result da rodada paga (papel user): o cliente refez o
+        // historico pela conversa gravada e o modelo continua dali, respondendo ao resultado.
+        // Se a conversa mudou nesse meio tempo (outra aba perguntou ou respondeu), recusa.
+        const gravadas = deps.conversas.mensagens(conversaId);
+        const gravada = gravadas[gravadas.length - 1];
+        if (!gravada || gravada.papel !== 'user'
+            || JSON.stringify(gravada.conteudo) !== JSON.stringify(ultima.content)) {
+          return json(res, 409, { erro: MSG_REENVIO_INVALIDO, tipo: 'reenvio_invalido' });
+        }
+      } else {
+        deps.conversas.acrescentar(conversaId, 'user', ultima.content);
+        deps.conversas.renomearSePrimeira(conversaId, extrairTexto(ultima.content));
+      }
     }
 
     // Rastreia so os jobs de busca que ESTA conversa criou, para cancelar so os dela
@@ -139,10 +230,11 @@ function registrar(roteador, deps) {
     // some. Era o contrario, e era a falha relatada: fechar o navegador abortava a chamada
     // e cancelava as buscas, entao o usuario voltava para uma conversa que tinha so a
     // propria pergunta gravada. Buscas de jurisprudencia levam minutos — sair da tela
-    // enquanto rodam e o caso NORMAL. O CUSTO e real e assumido: a chamada continua
-    // gastando a chave da Anthropic sem ninguem ouvindo. Vale porque a chave e do proprio
-    // usuario, porque o turno tem teto de passos (MAX_ITERACOES em llm.js) e porque perder
-    // minutos de crawl custa mais. O trabalho nao se perde: o turno inteiro e persistido,
+    // enquanto rodam e o caso NORMAL. O CUSTO e real e assumido, por decisao: a chamada
+    // continua gastando sem ninguem ouvindo — em BYOK a chave do proprio usuario, e na conexao
+    // ProcStudio o saldo de IA do time, rodada a rodada, com a mesma cobranca e a mesma
+    // checagem de saldo antes de cada rodada de um turno assistido. Vale porque o turno tem
+    // teto de passos (MAX_ITERACOES em llm.js) e porque perder minutos de crawl custa mais. O trabalho nao se perde: o turno inteiro e persistido,
     // GET /api/v1/conversas marca `emAndamento` e GET /api/v1/conversas/:id/stream
     // reconecta ao que ja chegou.
     //
@@ -169,6 +261,37 @@ function registrar(roteador, deps) {
 
     const canal = sse(res);
 
+    // request_id do ai_usage = <conversa ou avulso-uuid>:<turno>:<rodada>. O turno e um UUID
+    // por tentativa, nunca derivado da contagem de mensagens: reenviar a mesma pergunta e
+    // outro turno e precisa ser outra cobranca.
+    const turnoId = randomUUID();
+    const prefixoPedido = `${conversaId || `avulso-${randomUUID()}`}:${turnoId}`;
+    // Soma do turno. Centavos para a soma das rodadas nao acumular erro de ponto flutuante.
+    const custoTurno = { cobradoCents: 0, tokensEntrada: 0, tokensSaida: 0, rodadas: 0 };
+    const resumoCusto = () => ({
+      cobradoBrl: cobrar ? custoTurno.cobradoCents / 100 : null,
+      tokensEntrada: custoTurno.tokensEntrada,
+      tokensSaida: custoTurno.tokensSaida,
+      rodadas: custoTurno.rodadas,
+      modelo: rotuloModelo,
+    });
+
+    /** Erro do turno -> dados do evento `erro`, com o `tipo` que a interface trata. */
+    function dadosDoErro(e) {
+      if (e.bloqueio) return e.bloqueio;
+      if (e.code === 'COBRANCA_PENDENTE') return { erro: e.message, tipo: 'cobranca_pendente' };
+      // A cobranca ja avisou o operador (pricing_unavailable do Rails); aqui so traduz.
+      if (e.code === 'PROCSTUDIO_LLM_INDISPONIVEL') return { erro: e.message, tipo: 'procstudio_indisponivel' };
+      if (e.code === 'USAGE_MISSING') return { erro: e.message, tipo: 'usage_missing' };
+      if (cobrar && e.code === 'PROVIDER_ERROR') {
+        // Erro do provedor na chave do operador nao e problema do usuario: vira
+        // "indisponivel" e o operador e avisado (log + diagnostico pelo Kaizen).
+        const falha = deps.cobranca.falhaDoOperador(e);
+        return { erro: falha.message, tipo: 'procstudio_indisponivel' };
+      }
+      return { erro: e.message, tipo: e.constructor ? e.constructor.name : 'Error' };
+    }
+
     /**
      * O turno em si. Recebe `emitir` em vez de escrever no `canal` direto: com
      * persistencia ligada, `emitir` e o do registro de turnos (servidor/turnos.js), que
@@ -179,6 +302,54 @@ function registrar(roteador, deps) {
      * marcado como falho sem ninguem receber a explicacao.
      */
     async function correrTurno(emitir) {
+      // Antes de cada rodada: o saldo pode acabar no meio do turno (a pre-checagem acima so
+      // decide se a pergunta entra).
+      const antesDaRodada = cobrar
+        ? async () => {
+          const veredito = await deps.cobranca.podeOperar();
+          if (!veredito.ok) {
+            // Inativo no meio do turno: o SSE já começou (sem como limpar o cookie), mas a sessão
+            // some do servidor e o próximo pedido da aba volta 401 e leva ao login.
+            if (veredito.motivo === 'inativo' && req.encerrarSessao) await req.encerrarSessao();
+            const { corpo: dados } = bloqueioDaCobranca(veredito, deps.frontendUrl);
+            throw Object.assign(new Error(dados.erro), { bloqueio: dados });
+          }
+        }
+        : undefined;
+
+      // Depois de cada rodada que informou consumo: cobra (ProcStudio), emite `custo` e
+      // regrava o custo do turno na conversa — assim ele fica mesmo se o turno morrer
+      // depois, ou se ninguem estiver mais ouvindo.
+      async function aoUsoDaRodada(usage, indice) {
+        const rodada = indice + 1;
+        const evento = { rodada, tokensEntrada: usage.input_tokens, tokensSaida: usage.output_tokens, modelo: rotuloModelo };
+        if (cobrar) {
+          const r = await deps.cobranca.registrar({
+            requestId: `${prefixoPedido}:${rodada}`,
+            modelId: modeloCatalogo,
+            inputTokens: usage.input_tokens,
+            outputTokens: usage.output_tokens,
+            cacheReadTokens: usage.cache_read_tokens,
+            cacheWriteTokens: usage.cache_write_tokens,
+            provider: PROVEDOR_PROCSTUDIO,
+            providerModel: vModelo.valor,
+            providerCostUsd: usage.cost_usd,
+            providerGenerationId: usage.generation_id,
+            conversationId: conversaId,
+          });
+          custoTurno.cobradoCents += Math.round(r.cobradoBrl * 100);
+          evento.cobradoBrl = r.cobradoBrl;
+          evento.saldoBrl = r.saldoBrl;
+        }
+        custoTurno.tokensEntrada += usage.input_tokens || 0;
+        custoTurno.tokensSaida += usage.output_tokens || 0;
+        custoTurno.rodadas += 1;
+        if (conversaId) {
+          deps.conversas.registrarCusto(conversaId, { turnoId, ...resumoCusto(), conexao: conexaoId });
+        }
+        emitir('custo', evento);
+      }
+
       try {
         const r = await llm.conversar({
           mensagens,
@@ -192,6 +363,9 @@ function registrar(roteador, deps) {
           modelo: vModelo.valor,
           esforco: vEsforco.valor,
           escopo,
+          antesDaRodada,
+          aoUsoDaRodada,
+          exigirUso: cobrar,
           aoTexto: (t) => emitir('texto', { texto: t }),
           aoFerramenta: (nome, entrada) => emitir('ferramenta', { nome, entrada }),
           // Vincula a busca a conversa ASSIM QUE ela e despachada, nao no fim do turno:
@@ -233,14 +407,24 @@ function registrar(roteador, deps) {
         // GET /conversas/:id, porque esta e a MESMA lista que acabou de ser persistida
         // (uma fonte so), vale mesmo sem persistencia ligada (conversaId null), nao custa
         // ida-e-volta extra e nao abre corrida com a troca de conversa no meio do stream.
-        emitir('fim', { texto: r.texto, mensagens: novas });
+        emitir('fim', { texto: r.texto, mensagens: novas, custo: custoTurno.rodadas ? resumoCusto() : null });
       } catch (e) {
         if (e && e.name === 'APIUserAbortError') {
           // So chega aqui no caminho SEM persistencia: la o cliente desconectou e nos
           // mesmos abortamos via AbortController — fluxo normal, nao falha. Nao emitimos
           // 'erro' porque nao ha ninguem ouvindo e nao ha nada de errado a reportar.
         } else {
-          emitir('erro', { erro: e.message, tipo: e.constructor ? e.constructor.name : 'Error' });
+          // Bloqueio por gancho (saldo, cobranca, uso ausente) e erro do provedor numa rodada
+          // >= 2 trazem o que o turno ja gerou: as rodadas anteriores ja foram cobradas, entao
+          // ficam na conversa.
+          if (conversaId && Array.isArray(e.mensagens)) {
+            try {
+              for (const m of e.mensagens.slice(mensagens.length)) deps.conversas.acrescentar(conversaId, m.role, m.content);
+            } catch (eGravar) {
+              console.error(JSON.stringify({ event: 'chat_turno_parcial_nao_gravado', erro: String(eGravar.message).slice(0, 300) }));
+            }
+          }
+          emitir('erro', dadosDoErro(e));
         }
       }
     }

@@ -26,6 +26,41 @@ pode ser alterado por `JUR_LOCAL_DADOS`. Reiniciar exige entrar novamente, mas c
 pesquisas, preferências e conexões de IA. Encerre com Ctrl+C: pesquisas ativas são
 interrompidas e as que aguardam não iniciam novos navegadores.
 
+## Conexão ProcStudio e carteira simulada
+
+Sem `PROCSTUDIO_LLM_API_KEY` a conexão gerenciada do ProcStudio não existe e `GET /api/v1/saldo`
+responde `{ "disponivel": false }`. Com ela definida (e, se quiser, `PROCSTUDIO_LLM_ENDPOINT`,
+`PROCSTUDIO_LLM_MODELO` etc.), o chat roda contra o provedor real, por exemplo o OpenRouter, e cada
+rodada é cobrada de uma carteira simulada em memória que imita `ai_balance` e `ai_usage` do Rails:
+
+- saldo inicial R$ 10,00, limite negativo de -R$ 0,50, que é a tolerância do plano gratuito (planos pagos têm -R$ 3,00); opera só com saldo estritamente acima do limite, como o `check_balance!` do Rails, então no -R$ 0,50 exato já bloqueia;
+- modelo `glm-5.3-flash` a R$ 1,00 (entrada) e R$ 4,00 (saída) por 1M de tokens, cobrança arredondada
+  para cima ao centavo; tokens de cache são cobrados como entrada, o que no Rails é só o fallback de quando o modelo não tem preço de cache sincronizado (o fake não simula preço de cache próprio);
+- idempotência por `requestId`: repetir devolve o mesmo resultado com `duplicado: true`, sem novo débito (o valor cobrado é o original; saldo e `podeOperar` são os atuais, como no Rails);
+- uso inválido (modelo desconhecido, tokens negativos ou fracionários, `requestId` vazio) é recusado com
+  `INVALID_USAGE`; usuário ou equipe diferentes da identidade local são recusados. Nada é aceito às cegas;
+- `JUR_LOCAL_SALDO_INICIAL` (inteiro em centavos, ex.: `-100`) troca o saldo inicial para testar o bloqueio
+  por saldo; valor inválido impede o boot.
+
+- `JUR_LOCAL_PROCSTUDIO` simula o Rails fora do caminho feliz; valor inválido impede o boot:
+  - `normal` (padrão);
+  - `inativo`: usuário removido no ProcStudio. `ai_balance` devolve `active: false` (o JurCrawler responde 401
+    `sessao_invalida` e encerra a sessão: a tela volta ao login) e `ai_usage` devolve 410 `user_gone`, como o
+    `AiBilling` do Rails;
+  - `credencial_recusada`: segredo de serviço errado. `ai_balance` e `ai_usage` devolvem 401 (`SERVICE_AUTH`):
+    o saldo fica "indisponível", a sessão continua, o recibo fica na fila e o operador recebe o alerta
+    `credencial_servico`.
+  Para trocar com o servidor no ar, sem reiniciar:
+  `curl -X POST http://127.0.0.1:4317/__local/procstudio -d '{"estado":"inativo"}'` (e `"normal"` para voltar).
+
+```sh
+PROCSTUDIO_LLM_API_KEY=sk-or-... JUR_LOCAL_SALDO_INICIAL=500 npm run dev:local
+PROCSTUDIO_LLM_API_KEY=sk-or-... JUR_LOCAL_PROCSTUDIO=credencial_recusada npm run dev:local
+```
+
+A carteira vive só no processo: reiniciar volta ao saldo inicial. Os recibos de cobrança pendentes
+ficam no SQLite local como em produção.
+
 ## Validar
 
 1. Em **Navegadores**, ative **Acompanhar navegador** ou **Resolver CAPTCHA manualmente**.
@@ -38,7 +73,8 @@ interrompidas e as que aguardam não iniciam novos navegadores.
 6. Para tentar STJ, ative CAPTCHA manual antes da pesquisa. O bloqueio do portal pode
    persistir mesmo com intervenção; um HTTP 403 não significa CAPTCHA resolvido.
 7. Para conversar com IA, abra **Configurações → IA**, salve uma conexão com sua chave
-   e escolha um modelo. Nenhuma resposta do chat é simulada neste modo.
+   e escolha um modelo, ou use a conexão ProcStudio com a carteira simulada (seção acima).
+   Nenhuma resposta do chat é simulada neste modo.
 
 O CAPTCHA depende de o portal apresentar um desafio interativo; o ambiente não
 fabrica desafios ou resultados de tribunais. Os testes automatizados de CAPTCHA

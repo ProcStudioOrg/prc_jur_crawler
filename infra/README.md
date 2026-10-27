@@ -198,6 +198,29 @@ O container de validação pré-troca (o teste de `/api/v1/saude` antes do `ln -
 `-e KAIZEN_WEBHOOK_URL= -e JUR_SENTINELA=0 -e LINEAR_API_KEY=`: ele compartilha `.env` e
 volumes com a produção e não pode mandar falha nem abrir card, nem rodar a sentinela.
 
+## Conexão ProcStudio (saldo compartilhado)
+
+Fluxo e estados de erro em [`docs/procstudio-llm.md`](../docs/procstudio-llm.md). Todas as envs são
+repassadas pelo `compose.yml`; sem `PROCSTUDIO_LLM_API_KEY` a conexão não existe e o resto funciona como antes.
+
+| Env | O que faz | Padrão |
+|---|---|---|
+| `PROCSTUDIO_LLM_API_KEY` | Chave do provedor do operador (OpenRouter) | vazio (sem conexão ProcStudio) |
+| `PROCSTUDIO_LLM_ENDPOINT` | URL base compatível com OpenAI | `https://openrouter.ai/api/v1` |
+| `PROCSTUDIO_LLM_MODELO` | ID do modelo enviado ao provedor | `z-ai/glm-5.3-flash` |
+| `PROCSTUDIO_LLM_MODELO_CATALOGO` | ID do modelo no catálogo de preços do Rails | `glm-5.3-flash` |
+| `PROCSTUDIO_LLM_UPSTREAM` | Provedor fixado no OpenRouter, sem fallback | `z-ai` |
+| `PROCSTUDIO_LLM_ROTULO` | Nome mostrado na interface | `GLM-5.3 Flash` |
+
+`PROCSTUDIO_LLM_UPSTREAM` aceita valor **vazio de propósito** (não fixar provedor): o `compose.yml`
+usa `${PROCSTUDIO_LLM_UPSTREAM-z-ai}`, sem `:`, então variável ausente vira `z-ai` e
+`PROCSTUDIO_LLM_UPSTREAM=` no `infra/.env` continua vazia. Nas demais, vazio volta ao padrão.
+Publique o PR do Rails (`service_access/ai_balance` e `ai_usage`) antes de ligar a chave, e confira
+no Rails o preço de `glm-5.3-flash`. O container de validação pré-troca roda com
+`-e PROCSTUDIO_LLM_API_KEY=` para não gastar a chave nem cobrar o time. O motivo que pesa é
+outro: ele compartilha `.env` e volumes com a produção, e com a chave o varredor de cobrança do
+boot dele zeraria o `em_voo` e reenviaria os recibos que a produção ainda está registrando.
+
 ## Releases em produção
 
 Use `JUR_IMAGE=jur:<commit>` no `infra/.env` privado de cada release para manter a
@@ -210,6 +233,12 @@ guarde a release anterior em `.previous-release` e faça backup dos volumes. Sub
 com `docker compose -p jur ... up -d --no-build`. O rollback usa a imagem anterior
 já construída, sem apagar volumes. As credenciais e a chave do cofre são preservadas
 entre releases. O acesso de deploy atual está em `AGENTS.md`.
+
+`infra/deploy-h2.sh <sha7> <versão>` faz tudo isso. O `.env` da release nova é o da anterior
+com `JUR_IMAGE` trocado; variável nova entra por `~/apps/prc_jur_crawler/env.extra` no H2
+(`KEY=valor` por linha, `chmod 600`): o script acrescenta só as chaves que o `.env` ainda não
+tem e guarda o arquivo dentro da release como `env.extra.applied`. O container de validação
+(`jurpre`) roda sempre com `PROCSTUDIO_LLM_API_KEY` vazia.
 
 Toda release leva versão nova em `jur/package.json` (regra em [`CHANGELOG.md`](../CHANGELOG.md)).
 Com `USAGE_WEBHOOK_URL` no `infra/.env`, o primeiro boot de cada versão+revisão manda

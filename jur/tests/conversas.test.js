@@ -757,3 +757,52 @@ describe('buscas da conversa — do chat ate a rota', () => {
     } finally { srv.close(); }
   });
 });
+
+describe('conversas — custo por turno', () => {
+  it('registrarCusto grava por turno, regrava o mesmo turno e custos() devolve em ordem', () => {
+    const c = repo.criar();
+    assert.deepStrictEqual(repo.custos(c.id), []);
+    repo.registrarCusto(c.id, { turnoId: 't1', cobradoBrl: 0.04, tokensEntrada: 100, tokensSaida: 10, rodadas: 1, modelo: 'GLM-5.3 Flash', conexao: 'procstudio' });
+    // A mesma rodada seguinte do turno regrava a linha (upsert pelo turnoId), não duplica.
+    repo.registrarCusto(c.id, { turnoId: 't1', cobradoBrl: 0.09, tokensEntrada: 250, tokensSaida: 30, rodadas: 2, modelo: 'GLM-5.3 Flash', conexao: 'procstudio' });
+    repo.registrarCusto(c.id, { turnoId: 't2', cobradoBrl: null, tokensEntrada: 7, tokensSaida: 3, rodadas: 1, modelo: 'gpt-x', conexao: 'byok-1' });
+    const custos = repo.custos(c.id);
+    assert.strictEqual(custos.length, 2);
+    assert.deepStrictEqual(
+      custos.map(({ criadoEm, ...resto }) => resto),
+      [
+        { turnoId: 't1', cobradoBrl: 0.09, tokensEntrada: 250, tokensSaida: 30, rodadas: 2, modelo: 'GLM-5.3 Flash', conexao: 'procstudio' },
+        { turnoId: 't2', cobradoBrl: null, tokensEntrada: 7, tokensSaida: 3, rodadas: 1, modelo: 'gpt-x', conexao: 'byok-1' },
+      ],
+    );
+    assert.ok(Number.isFinite(custos[0].criadoEm));
+  });
+
+  it('apagar a conversa leva os custos junto', () => {
+    const c = repo.criar();
+    repo.registrarCusto(c.id, { turnoId: 'ta', cobradoBrl: 0.01, tokensEntrada: 1, tokensSaida: 1, rodadas: 1, modelo: 'm', conexao: 'procstudio' });
+    assert.strictEqual(repo.apagar(c.id), true);
+    assert.deepStrictEqual(repo.custos(c.id), []);
+  });
+
+  it('GET /api/v1/conversas/:id traz custos e custoTotalBrl', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-conv-custo-'));
+    const r2 = conversas.criarRepositorio(db.abrir(path.join(dir, 'jur.db')));
+    const c = r2.criar();
+    const semCusto = r2.criar();
+    r2.registrarCusto(c.id, { turnoId: 't1', cobradoBrl: 0.1, tokensEntrada: 1, tokensSaida: 1, rodadas: 1, modelo: 'm', conexao: 'procstudio' });
+    r2.registrarCusto(c.id, { turnoId: 't2', cobradoBrl: 0.2, tokensEntrada: 1, tokensSaida: 1, rodadas: 1, modelo: 'm', conexao: 'procstudio' });
+    r2.registrarCusto(c.id, { turnoId: 't3', cobradoBrl: null, tokensEntrada: 5, tokensSaida: 5, rodadas: 1, modelo: 'gpt-x', conexao: 'byok' });
+    const srv = http.createServer(criarApp({ conversas: r2 }).handler);
+    await new Promise((r) => srv.listen(0, r));
+    const base = `http://127.0.0.1:${srv.address().port}`;
+    try {
+      const corpo = await (await fetch(`${base}/api/v1/conversas/${c.id}`)).json();
+      assert.deepStrictEqual(corpo.custos.map((x) => x.turnoId), ['t1', 't2', 't3']);
+      assert.strictEqual(corpo.custoTotalBrl, 0.3, 'soma em centavos: 0,1 + 0,2 não pode virar 0,30000000000000004');
+      const vazio = await (await fetch(`${base}/api/v1/conversas/${semCusto.id}`)).json();
+      assert.deepStrictEqual(vazio.custos, []);
+      assert.strictEqual(vazio.custoTotalBrl, null, 'sem nada cobrado não há total a mostrar');
+    } finally { srv.close(); }
+  });
+});

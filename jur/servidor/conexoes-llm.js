@@ -1,6 +1,20 @@
 const { randomUUID } = require("node:crypto");
 const { ENDPOINTS, listarModelos, criarCliente } = require("./provedores");
-function criarConexoes({ con, owner, cofre, transport }) {
+const ID_PROCSTUDIO = "procstudio";
+const GERENCIADA = () =>
+  Object.assign(new Error("Conexão gerenciada pelo ProcStudio."), { status: 400 });
+function criarConexoes({ con, owner, cofre, transport, gerenciada = null }) {
+  const ehProcstudio = (id) => !!gerenciada && id === ID_PROCSTUDIO;
+  const metaProcstudio = () => ({
+    id: ID_PROCSTUDIO,
+    provider: "procstudio",
+    name: "ProcStudio",
+    model: gerenciada.modeloCatalogo,
+    endpoint: null,
+    maskedKey: null,
+    fixa: true,
+    rotulo: gerenciada.rotulo,
+  });
   con.exec(
     `CREATE TABLE IF NOT EXISTS conexao_llm(id TEXT PRIMARY KEY,provider TEXT NOT NULL,nome TEXT NOT NULL,modelo TEXT NOT NULL,endpoint TEXT,segredo TEXT NOT NULL,mascara TEXT NOT NULL);`,
   );
@@ -30,6 +44,7 @@ function criarConexoes({ con, owner, cofre, transport }) {
       : null;
   }
   function salvar(input, id) {
+    if (ehProcstudio(id)) throw GERENCIADA();
     const old = id ? row(id) : null;
     if (id && !old)
       throw Object.assign(new Error("Conexão não encontrada."), {
@@ -89,12 +104,20 @@ function criarConexoes({ con, owner, cofre, transport }) {
     const p = con
       .prepare("SELECT conexao,modelo FROM preferencia_llm WHERE id=1")
       .get();
-    return p && row(p.conexao)
-      ? { conexaoId: p.conexao, modelo: p.modelo }
+    if (p && (ehProcstudio(p.conexao) || row(p.conexao)))
+      return { conexaoId: p.conexao, modelo: p.modelo };
+    return gerenciada
+      ? { conexaoId: ID_PROCSTUDIO, modelo: gerenciada.modeloCatalogo }
       : null;
   }
   function selecionar(conexaoId, modelo) {
-    if (!row(conexaoId)) throw new Error("Conexão não encontrada.");
+    if (!ehProcstudio(conexaoId) && !row(conexaoId))
+      throw new Error("Conexão não encontrada.");
+    if (
+      ehProcstudio(conexaoId) &&
+      modelo !== gerenciada.modeloCatalogo
+    )
+      throw new Error("Modelo inválido.");
     if (
       typeof modelo !== "string" ||
       !modelo ||
@@ -114,17 +137,30 @@ function criarConexoes({ con, owner, cofre, transport }) {
     selecionar,
     salvar,
     obterSegredo,
-    obter: (id) => meta(row(id)),
-    listar: () =>
-      con.prepare("SELECT * FROM conexao_llm ORDER BY rowid").all().map(meta),
-    apagar: (id) =>
-      con.prepare("DELETE FROM conexao_llm WHERE id=?").run(id).changes > 0,
+    ehProcstudio,
+    modeloEnviado: () => gerenciada?.modelo,
+    obter: (id) => (ehProcstudio(id) ? metaProcstudio() : meta(row(id))),
+    listar: () => [
+      ...(gerenciada ? [metaProcstudio()] : []),
+      ...con.prepare("SELECT * FROM conexao_llm ORDER BY rowid").all().map(meta),
+    ],
+    apagar: (id) => {
+      if (ehProcstudio(id)) throw GERENCIADA();
+      return con.prepare("DELETE FROM conexao_llm WHERE id=?").run(id).changes > 0;
+    },
     async modelos(id) {
+      if (ehProcstudio(id))
+        return [{ id: gerenciada.modeloCatalogo, name: gerenciada.rotulo, tools: true }];
       const c = obterSegredo(id);
       if (!c) throw new Error("Conexão não encontrada.");
       return listarModelos(c, transport);
     },
     cliente(id) {
+      if (ehProcstudio(id))
+        return criarCliente(
+          { provider: "custom", endpoint: gerenciada.endpoint, apiKey: gerenciada.apiKey, extras: gerenciada.extras },
+          transport,
+        );
       const c = obterSegredo(id);
       if (!c) throw new Error("Conexão não encontrada.");
       return criarCliente(c, transport);

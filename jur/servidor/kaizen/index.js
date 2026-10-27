@@ -195,6 +195,10 @@ function criarKaizen({ dir, env = process.env, fetchFn, agora = Date.now, versao
     try { outbox.enfileirar('jur-diagnostico', P.payloadResumo({ ...comum(), resumo })); } catch (e) { logar(e); }
   }
 
+  function enviarCobranca(aviso) {
+    try { outbox.enfileirar('jur-diagnostico', P.payloadCobranca({ ...comum(), ...aviso })); } catch (e) { logar(e); }
+  }
+
   /**
    * Banco de processos: os números que uma busca bem-sucedida devolveu viram alvos de captura
    * no FFD (source `jur-processos`). Sentinela sempre; busca de usuário só com
@@ -229,7 +233,7 @@ function criarKaizen({ dir, env = process.env, fetchFn, agora = Date.now, versao
     try { con.close(); } catch { /* já fechado */ }
   }
 
-  return { registrarErro, registrarConcluido, registrarSentinela, registrarAlvos, enviarResumo, enviarRelato, linkFalha, outbox, fechar };
+  return { registrarErro, registrarConcluido, registrarSentinela, registrarAlvos, enviarResumo, enviarCobranca, enviarRelato, linkFalha, outbox, fechar };
 }
 
 function kaizenNulo() {
@@ -248,6 +252,7 @@ function kaizenNulo() {
     registrarSentinela: async () => {},
     registrarAlvos: () => false,
     enviarResumo() {},
+    enviarCobranca() {},
     enviarRelato: () => false,
     linkFalha: () => null,
     outbox,

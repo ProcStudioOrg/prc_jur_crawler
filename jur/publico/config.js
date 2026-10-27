@@ -7,7 +7,9 @@
     if (cls) node.className = cls;
     return node;
   };
-  function abrir() {
+  // `avancado: true` abre ja com "Avancado: minha propria chave" expandido — e o destino do
+  // link "Configurar uma conexao propria" quando a conexao ProcStudio esta indisponivel.
+  function abrir({ avancado = false } = {}) {
     const opener = document.activeElement;
     const panel = $("#painel-config");
     panel.replaceChildren();
@@ -49,7 +51,7 @@
         finish();
       }
       if (e.key === "Tab") {
-        const focus = [...box.querySelectorAll("button,input,select,a")].filter(
+        const focus = [...box.querySelectorAll("button,input,select,a,summary")].filter(
           (n) => !n.disabled && n.getClientRects().length,
         );
         if (!focus.length) return;
@@ -101,9 +103,64 @@
         b.disabled = false;
       }
     }
+    /**
+     * Bloco "IA do ProcStudio": o saldo vem de GET /api/v1/saldo (saldo.js) e some quando o
+     * servidor diz que nao ha conexao gerenciada. Preenchido depois do carregamento, sem
+     * segurar o resto da aba.
+     */
+    async function blocoProcstudio(alvo) {
+      const s = await window.jurSaldo.carregar();
+      if (!alvo.isConnected) return;
+      if (!s?.disponivel) {
+        alvo.remove();
+        return;
+      }
+      const saldo = el("p", null, "ia-procstudio-saldo");
+      if (s.erro) saldo.textContent = s.erro;
+      else
+        saldo.append(
+          "Saldo do time: ",
+          el("strong", window.jurSaldo.formatarBrl(s.saldoBrl)),
+        );
+      alvo.replaceChildren(
+        el("h3", "IA do ProcStudio"),
+        el(
+          "p",
+          "O chat usa o saldo de IA do seu time no ProcStudio.",
+          "config-descricao",
+        ),
+        saldo,
+      );
+      if (s.topupUrl) {
+        const recarga = el("a", "Adicionar créditos", "botao-acento");
+        recarga.href = s.topupUrl;
+        recarga.target = "_blank";
+        recarga.rel = "noopener";
+        alvo.append(recarga);
+      }
+      alvo.hidden = false;
+    }
     function renderIA() {
       tab(ia);
-      body.append(
+      const conexoes = window.jurConexoes;
+      const gerenciada = conexoes.lista.some((c) => c.provider === "procstudio");
+      const proprias = conexoes.lista.filter((c) => c.provider !== "procstudio");
+      if (gerenciada) {
+        const bloco = el("section", null, "ia-procstudio");
+        bloco.hidden = true;
+        body.append(bloco);
+        blocoProcstudio(bloco);
+      }
+      // As conexoes proprias ficam recolhidas quando a ProcStudio existe e esta escolhida;
+      // sem ela, sao o unico caminho para o chat e ficam abertas.
+      const selecionada = conexoes.lista.find(
+        (c) => c.id === conexoes.selected?.conexaoId,
+      );
+      const avancadoBloco = el("details", null, "config-avancado");
+      avancadoBloco.open =
+        avancado || !gerenciada || (selecionada && selecionada.provider !== "procstudio");
+      avancadoBloco.append(
+        el("summary", "Avançado: minha própria chave"),
         el("h3", "Suas conexões de IA"),
         el(
           "p",
@@ -111,15 +168,12 @@
           "config-descricao",
         ),
       );
-      for (const c of window.jurConexoes.lista) {
+      for (const c of proprias) {
         const row = el("div", null, "conexao-linha");
         const info = el("div");
         info.append(
           el("strong", c.name),
-          el(
-            "small",
-            `${window.jurConexoes.names[c.provider]} · ${c.maskedKey}`,
-          ),
+          el("small", `${conexoes.names[c.provider]} · ${c.maskedKey}`),
         );
         row.append(
           info,
@@ -132,10 +186,13 @@
             });
           }),
         );
-        body.append(row);
+        avancadoBloco.append(row);
       }
-      body.append(button("Adicionar conexão", () => wizard(), "botao-acento"));
-      if (!window.jurConexoes.lista.length) wizard();
+      avancadoBloco.append(
+        button("Adicionar conexão", () => wizard(), "botao-acento"),
+      );
+      body.append(avancadoBloco);
+      if (!conexoes.lista.length) wizard();
     }
     function wizard(existing) {
       body.replaceChildren();
@@ -164,7 +221,7 @@
         const select = el("select", null, "campo");
         select.setAttribute("aria-label", "Provedor");
         for (const [id, name] of Object.entries(window.jurConexoes.names))
-          select.add(new Option(name, id));
+          if (id !== "procstudio") select.add(new Option(name, id));
         select.value = provider;
         label.append(select);
         const url = field("Endpoint da API", "url", endpoint);
@@ -362,5 +419,6 @@
     renderIA();
     close.focus();
   }
-  $("#abrir-config").addEventListener("click", abrir);
+  window.jurConfig = { abrir };
+  $("#abrir-config").addEventListener("click", () => abrir());
 })();

@@ -11,6 +11,30 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
+## 1.4.0 — 27/10/2026
+
+Saldo compartilhado: a conexão de IA nativa do ProcStudio, cobrada por rodada do saldo de IA do
+time (detalhes em `docs/procstudio-llm.md`). Exige o PR ProcStudioOrg/ProcStudio#876 em produção.
+
+- conexão `procstudio` gerenciada pelo operador (chave só no ambiente); modelo fixo `glm-5.3-flash`;
+- cobrança por rodada em `service_access/ai_usage` (idempotente), pré-checagem de saldo em
+  `service_access/ai_balance` (402 `saldo_insuficiente`, 409 `cobranca_pendente`, 503 `procstudio_indisponivel`);
+- recibos não registrados ficam em `cobranca_pendente` e são reenviados por um varredor (60 s e no boot);
+  alerta ao operador `procstudio_llm_operator_failure`, uma vez por recibo;
+- evento SSE `custo`, `fim.custo`, tabela `custo_turno`, `custos`/`custoTotalBrl` em `GET /api/v1/conversas/:id`
+  e rota nova `GET /api/v1/saldo`;
+- interface: saldo, seletor de modelo com "recomendada", custo por resposta e total da conversa, cartão de
+  bloqueio com "Adicionar créditos" e "Tentar de novo", reenvio sem duplicar a pergunta;
+- ambiente local com carteira simulada (`JUR_LOCAL_SALDO_INICIAL`);
+- credencial de serviço recusada (`SERVICE_AUTH`, 401 do Rails ou emissor desconhecido) não descarta mais o
+  recibo: ele fica em `cobranca_pendente`, o varredor reenvia e o operador recebe o alerta `credencial_servico`
+  (um por minuto); `ai_balance` com 401 também vira `SERVICE_AUTH`;
+- usuário ou time inativo no ProcStudio (`ai_balance` com `active: false`) encerra a sessão do JurCrawler:
+  `GET /api/v1/saldo` e o chat respondem 401 `sessao_invalida` (antes, 503 "indisponível") e a tela volta ao
+  login com o motivo; Rails fora continua 503; carteira local simula os dois casos (`JUR_LOCAL_PROCSTUDIO`);
+- envs novas: `PROCSTUDIO_LLM_API_KEY`, `PROCSTUDIO_LLM_ENDPOINT`, `PROCSTUDIO_LLM_MODELO`,
+  `PROCSTUDIO_LLM_MODELO_CATALOGO`, `PROCSTUDIO_LLM_UPSTREAM`, `PROCSTUDIO_LLM_ROTULO`.
+
 ## 1.3.1 — 24/10/2026
 
 BRU-99: as 5 regressões do `npm run smoke` de 19/10 (diagnóstico em

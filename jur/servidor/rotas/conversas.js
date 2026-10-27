@@ -1,5 +1,16 @@
 const { json, lerCorpo, sse } = require('../http');
 
+/**
+ * Soma do que foi cobrado na conversa, em centavos para 0,1 + 0,2 nao virar
+ * 0,30000000000000004. Null quando nenhum turno foi cobrado (so BYOK ou nada ainda):
+ * nao ha total em reais a mostrar.
+ */
+function totalCobrado(custos) {
+  const cobrados = custos.filter((c) => c.cobradoBrl !== null);
+  if (!cobrados.length) return null;
+  return cobrados.reduce((soma, c) => soma + Math.round(c.cobradoBrl * 100), 0) / 100;
+}
+
 function registrar(roteador, deps) {
   const repo = deps.conversas;
   if (!repo) return;
@@ -54,7 +65,8 @@ function registrar(roteador, deps) {
     // das N mais recentes, ao contrario de listar(N).find(...).
     const conversa = repo.obter(req.params.id);
     if (!conversa) return json(res, 404, { erro: 'conversa nao encontrada' });
-    json(res, 200, { ...conversa, mensagens: repo.mensagens(req.params.id) });
+    const custos = repo.custos(req.params.id);
+    json(res, 200, { ...conversa, mensagens: repo.mensagens(req.params.id), custos, custoTotalBrl: totalCobrado(custos) });
   });
 
   /**
