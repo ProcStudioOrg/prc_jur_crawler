@@ -1,0 +1,1121 @@
+{
+  "tribunal": "tjms",
+  "nome": "Tribunal de Justiça de Mato Grosso do Sul",
+  "coletado_em": "2026-10-28T08:11:00.806Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "trecho"
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "28/10/2025",
+      "dataFim": "28/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 200,
+      "total_no_portal": 6330,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "28/10/2025",
+      "dataFim": "28/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 200,
+      "total_no_portal": 968,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "28/10/2025",
+      "dataFim": "28/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 200,
+      "total_no_portal": 10205,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "28/10/2025",
+      "dataFim": "28/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 100,
+      "total_no_portal": 1823,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 41,
+    "por_grau": {
+      "1": 13,
+      "2": 28
+    },
+    "teste_busca": {
+      "filtro_ignorado": 5,
+      "nao_testado": 36
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "Alexandre Branco Pucci",
+      "rotulo_original": "Des. Alexandre Branco Pucci",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 65,
+      "julgados_exemplo": [
+        "0832914-08.2022.8.12.0001",
+        "0840749-42.2025.8.12.0001",
+        "0801990-09.2025.8.12.0001",
+        "0847531-65.2025.8.12.0001",
+        "0800825-61.2025.8.12.0021"
+      ],
+      "teste_busca": {
+        "consultados": 100,
+        "batem": 11,
+        "status": "filtro_ignorado",
+        "detalhe": "88 de 99 violam o filtro",
+        "ms": 1807
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Alexandre Raslan",
+      "rotulo_original": "Des. Alexandre Raslan",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "5ª Câmara Cível",
+      "orgaos": [
+        "5ª Câmara Cível"
+      ],
+      "ocorrencias": 62,
+      "julgados_exemplo": [
+        "0804135-46.2023.8.12.0021",
+        "0809990-92.2025.8.12.0002",
+        "0801844-75.2021.8.12.0043",
+        "0801696-94.2025.8.12.0020",
+        "0839821-96.2022.8.12.0001"
+      ],
+      "teste_busca": {
+        "consultados": 100,
+        "batem": 1,
+        "status": "filtro_ignorado",
+        "detalhe": "88 de 89 violam o filtro",
+        "ms": 1746
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Geraldo de Almeida Santiago",
+      "rotulo_original": "Des. Geraldo de Almeida Santiago",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "5ª Câmara Cível",
+      "orgaos": [
+        "5ª Câmara Cível",
+        "3ª Seção Cível"
+      ],
+      "ocorrencias": 56,
+      "julgados_exemplo": [
+        "0813637-98.2025.8.12.0001",
+        "0800404-20.2024.8.12.0017",
+        "1405192-11.2026.8.12.0000",
+        "0801463-24.2025.8.12.0012",
+        "0800475-82.2021.8.12.0031"
+      ],
+      "teste_busca": {
+        "consultados": 100,
+        "batem": 3,
+        "status": "filtro_ignorado",
+        "detalhe": "97 de 100 violam o filtro",
+        "ms": 1709
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "João Maria Lós",
+      "rotulo_original": "Des. João Maria Lós",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 46,
+      "julgados_exemplo": [
+        "0800999-61.2025.8.12.0024",
+        "0866009-58.2024.8.12.0001",
+        "0801431-93.2025.8.12.0052",
+        "0824519-56.2024.8.12.0001",
+        "0801231-95.2024.8.12.0028"
+      ],
+      "teste_busca": {
+        "consultados": 100,
+        "batem": 2,
+        "status": "filtro_ignorado",
+        "detalhe": "88 de 90 violam o filtro",
+        "ms": 1977
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ª Elisabeth Rosa Baisch",
+      "rotulo_original": "Desª Elisabeth Rosa Baisch",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 43,
+      "julgados_exemplo": [
+        "0805355-45.2024.8.12.0021",
+        "0800893-95.2023.8.12.0048",
+        "0800928-60.2024.8.12.0035",
+        "0830178-46.2024.8.12.0001",
+        "0803326-85.2025.8.12.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Vitor Luis de Oliveira Guibo",
+      "rotulo_original": "Juiz Vitor Luis de Oliveira Guibo",
+      "cargo": "Juiz",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 40,
+      "julgados_exemplo": [
+        "0826475-73.2025.8.12.0001",
+        "0807224-19.2019.8.12.0021",
+        "0802693-50.2024.8.12.0008",
+        "0803013-12.2025.8.12.0026",
+        "0802724-94.2025.8.12.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Paulo Alberto de Oliveira",
+      "rotulo_original": "Des. Paulo Alberto de Oliveira",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 33,
+      "julgados_exemplo": [
+        "0818729-57.2025.8.12.0001",
+        "0805538-44.2022.8.12.0002",
+        "0803168-50.2018.8.12.0029",
+        "0800164-58.2024.8.12.0008",
+        "0804503-94.2023.8.12.0008"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Denize de Barros Dodero",
+      "rotulo_original": "Juíza Denize de Barros Dodero",
+      "cargo": "Juíza",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 26,
+      "julgados_exemplo": [
+        "0800918-74.2024.8.12.0048",
+        "0810160-67.2025.8.12.0001",
+        "0801020-73.2025.8.12.0012",
+        "0815430-09.2024.8.12.0001",
+        "0801223-56.2025.8.12.0005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Eliane de Freitas Lima Vicente",
+      "rotulo_original": "Juíza Eliane de Freitas Lima Vicente",
+      "cargo": "Juíza",
+      "grau": "2",
+      "orgao": "5ª Câmara Cível",
+      "orgaos": [
+        "5ª Câmara Cível"
+      ],
+      "ocorrencias": 26,
+      "julgados_exemplo": [
+        "0804751-84.2024.8.12.0021",
+        "0802049-43.2025.8.12.0018",
+        "0822450-17.2025.8.12.0001",
+        "0800826-69.2026.8.12.0002",
+        "0802595-92.2015.8.12.0004"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fábio Possik Salamene",
+      "rotulo_original": "Juiz Fábio Possik Salamene",
+      "cargo": "Juiz",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 26,
+      "julgados_exemplo": [
+        "0801428-18.2022.8.12.0029",
+        "0000515-54.2026.8.12.0021",
+        "0802466-44.2025.8.12.0002",
+        "0836456-29.2025.8.12.0001",
+        "0800132-37.2025.8.12.0002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Nélio Stábile",
+      "rotulo_original": "Des. Nélio Stábile",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 26,
+      "julgados_exemplo": [
+        "0802049-68.2024.8.12.0021",
+        "0807013-22.2020.8.12.0029",
+        "0804218-74.2023.8.12.0017",
+        "0825624-34.2025.8.12.0001",
+        "0804854-57.2025.8.12.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Vilson Bertelli",
+      "rotulo_original": "Des. Vilson Bertelli",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "5ª Câmara Cível",
+      "orgaos": [
+        "5ª Câmara Cível"
+      ],
+      "ocorrencias": 24,
+      "julgados_exemplo": [
+        "0804321-47.2024.8.12.0017",
+        "0804355-22.2024.8.12.0017",
+        "0804353-52.2024.8.12.0017",
+        "0803670-15.2024.8.12.0017",
+        "0800327-10.2025.8.12.0006"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Francisco Vieira de Andrade Neto",
+      "rotulo_original": "Juiz Francisco Vieira de Andrade Neto",
+      "cargo": "Juiz",
+      "grau": "1",
+      "orgao": "2ª Turma Recursal Mista",
+      "orgaos": [
+        "2ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 23,
+      "julgados_exemplo": [
+        "0001896-74.2024.8.12.0019",
+        "0801175-37.2024.8.12.0101",
+        "0808184-86.2025.8.12.0110",
+        "0804944-26.2024.8.12.0110",
+        "0805474-93.2025.8.12.0110"
+      ],
+      "teste_busca": {
+        "consultados": 100,
+        "batem": 23,
+        "status": "filtro_ignorado",
+        "detalhe": "77 de 100 violam o filtro",
+        "ms": 1839
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Silvia Eliane Tedardi da Silva",
+      "rotulo_original": "Juíza Silvia Eliane Tedardi da Silva",
+      "cargo": "Juíza",
+      "grau": "1",
+      "orgao": "2ª Turma Recursal Mista",
+      "orgaos": [
+        "2ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 22,
+      "julgados_exemplo": [
+        "0801599-16.2025.8.12.0046",
+        "0801971-46.2025.8.12.0019",
+        "0803362-54.2025.8.12.0110",
+        "0812176-55.2025.8.12.0110",
+        "0806744-55.2025.8.12.0110"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "José Eduardo Neder Meneghelli",
+      "rotulo_original": "Des. José Eduardo Neder Meneghelli",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 19,
+      "julgados_exemplo": [
+        "0801723-10.2025.8.12.0010",
+        "0808015-40.2022.8.12.0002",
+        "0867051-45.2024.8.12.0001",
+        "0804723-13.2023.8.12.0002",
+        "0839038-70.2023.8.12.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Amaury da Silva Kuklinski",
+      "rotulo_original": "Des. Amaury da Silva Kuklinski",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 15,
+      "julgados_exemplo": [
+        "0847990-67.2025.8.12.0001",
+        "0812944-14.2025.8.12.0002",
+        "2000527-97.2026.8.12.0000",
+        "0800493-92.2024.8.12.0033",
+        "1408783-78.2026.8.12.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Cezar Luiz Miozzo",
+      "rotulo_original": "Des. Cezar Luiz Miozzo",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 15,
+      "julgados_exemplo": [
+        "0810936-04.2024.8.12.0001",
+        "0815901-30.2021.8.12.0001",
+        "0808062-92.2024.8.12.0018",
+        "0801381-73.2024.8.12.0029",
+        "0801572-04.2021.8.12.0004"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ª Ana Carolina Ali Garcia",
+      "rotulo_original": "Desª Ana Carolina Ali Garcia",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 14,
+      "julgados_exemplo": [
+        "1415968-70.2026.8.12.0000",
+        "0802115-23.2025.8.12.0018",
+        "0800187-71.2021.8.12.0052",
+        "0800230-27.2022.8.12.0002",
+        "0817486-78.2025.8.12.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luiz Antônio Cavassa de Almeida",
+      "rotulo_original": "Des. Luiz Antônio Cavassa de Almeida",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "5ª Câmara Cível",
+      "orgaos": [
+        "5ª Câmara Cível"
+      ],
+      "ocorrencias": 11,
+      "julgados_exemplo": [
+        "1415371-04.2026.8.12.0000",
+        "0800884-12.2022.8.12.0035",
+        "0804345-68.2021.8.12.0021",
+        "0803274-40.2025.8.12.0005",
+        "0863204-35.2024.8.12.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fábio Henrique Calazans Ramos",
+      "rotulo_original": "Juiz Fábio Henrique Calazans Ramos",
+      "cargo": "Juiz",
+      "grau": "1",
+      "orgao": "2ª Turma Recursal Mista",
+      "orgaos": [
+        "2ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0801679-73.2025.8.12.0015",
+        "0807250-94.2026.8.12.0110",
+        "0806545-60.2025.8.12.0101",
+        "0804083-33.2025.8.12.0101",
+        "0806118-02.2026.8.12.0110"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "André Luiz Monteiro",
+      "rotulo_original": "Juiz André Luiz Monteiro",
+      "cargo": "Juiz",
+      "grau": "1",
+      "orgao": "1ª Turma Recursal Mista",
+      "orgaos": [
+        "1ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0818976-02.2025.8.12.0110",
+        "0859847-13.2025.8.12.0001",
+        "0819869-90.2025.8.12.0110",
+        "0000533-02.2026.8.12.0110",
+        "0800338-79.2026.8.12.0046"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Penélope Mota Calarge Regasso",
+      "rotulo_original": "Juíza Penélope Mota Calarge Regasso",
+      "cargo": "Juíza",
+      "grau": "1",
+      "orgao": "4ª Turma Recursal Mista",
+      "orgaos": [
+        "4ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0832350-85.2025.8.12.0110",
+        "0826856-45.2025.8.12.0110",
+        "0830832-60.2025.8.12.0110",
+        "0006999-53.2023.8.12.0001",
+        "0807817-89.2025.8.12.0101"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Cássio Roberto dos Santos",
+      "rotulo_original": "Juiz Cássio Roberto dos Santos",
+      "cargo": "Juiz",
+      "grau": "1",
+      "orgao": "3ª Turma Recursal Mista",
+      "orgaos": [
+        "3ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0006477-19.2025.8.12.0110",
+        "0801180-61.2026.8.12.0110",
+        "0803423-14.2026.8.12.0001",
+        "0804760-63.2025.8.12.0101",
+        "0006606-24.2025.8.12.0110"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Paulinne Simões de Souza",
+      "rotulo_original": "Juíza Paulinne Simões de Souza",
+      "cargo": "Juíza",
+      "grau": "1",
+      "orgao": "4ª Turma Recursal Mista",
+      "orgaos": [
+        "4ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0801161-02.2025.8.12.0042",
+        "0820896-11.2025.8.12.0110",
+        "0800490-30.2026.8.12.0046",
+        "0800339-63.2026.8.12.0014",
+        "0800278-82.2024.8.12.0109"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Odemilson Roberto Castro Fassa",
+      "rotulo_original": "Des. Odemilson Roberto Castro Fassa",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0803165-06.2023.8.12.0002",
+        "0034126-93.2005.8.12.0001",
+        "0809200-84.2020.8.12.0002",
+        "1409569-25.2026.8.12.0000",
+        "0852692-56.2025.8.12.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Patrícia Kelling Karloh",
+      "rotulo_original": "Juíza Patrícia Kelling Karloh",
+      "cargo": "Juíza",
+      "grau": "1",
+      "orgao": "3ª Turma Recursal Mista",
+      "orgaos": [
+        "3ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0803656-24.2025.8.12.0008",
+        "0004195-08.2025.8.12.0110",
+        "0819828-26.2025.8.12.0110",
+        "0802359-86.2024.8.12.0114",
+        "0800926-86.2025.8.12.0025"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Robson Celeste Candeloro",
+      "rotulo_original": "Juiz Robson Celeste Candeloro",
+      "cargo": "Juiz",
+      "grau": "1",
+      "orgao": "3ª Turma Recursal Mista",
+      "orgaos": [
+        "3ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0800443-41.2025.8.12.0030",
+        "0808085-46.2025.8.12.0101",
+        "0800593-73.2025.8.12.0110",
+        "0814410-10.2025.8.12.0110",
+        "0800654-71.2025.8.12.0032"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Sérgio Fernandes Martins",
+      "rotulo_original": "Des. Sérgio Fernandes Martins",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "1ª Câmara Cível",
+      "orgaos": [
+        "1ª Câmara Cível"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0813301-62.2023.8.12.0002",
+        "0800875-49.2024.8.12.0045",
+        "0802292-09.2023.8.12.0001",
+        "0800503-13.2023.8.12.0053",
+        "0874379-60.2023.8.12.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ª Sandra Regina da Silva R. Artioli",
+      "rotulo_original": "Desª Sandra Regina da Silva R. Artioli",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "2ª Câmara Cível",
+      "orgaos": [
+        "2ª Câmara Cível"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0819221-49.2025.8.12.0001",
+        "0803127-72.2025.8.12.0018",
+        "0804571-94.2025.8.12.0001",
+        "0806133-72.2024.8.12.0002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Giuliano Máximo Martins",
+      "rotulo_original": "Juiz Giuliano Máximo Martins",
+      "cargo": "Juiz",
+      "grau": "1",
+      "orgao": "2ª Turma Recursal Mista",
+      "orgaos": [
+        "2ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0801510-02.2025.8.12.0043",
+        "0802989-81.2025.8.12.0026",
+        "0800625-84.2025.8.12.0011",
+        "0804672-25.2025.8.12.0101"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Luiz Tadeu Barbosa Silva",
+      "rotulo_original": "Des. Luiz Tadeu Barbosa Silva",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0839281-92.2015.8.12.0001",
+        "0848224-83.2024.8.12.0001",
+        "1413854-61.2026.8.12.0000",
+        "0801413-64.2023.8.12.0045"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Marco André Nogueira Hanson",
+      "rotulo_original": "Des. Marco André Nogueira Hanson",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "3ª Câmara Cível",
+      "orgaos": [
+        "3ª Câmara Cível"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0019858-09.2020.8.12.0001",
+        "0860391-35.2024.8.12.0001",
+        "0824564-65.2021.8.12.0001",
+        "0800924-93.2022.8.12.0002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Wagner Mansur Saad",
+      "rotulo_original": "Juiz Wagner Mansur Saad",
+      "cargo": "Juiz",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0800556-47.2025.8.12.0045",
+        "0806799-81.2021.8.12.0001",
+        "0802802-16.2025.8.12.0045",
+        "1415183-11.2026.8.12.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Cíntia Xavier Letteriello",
+      "rotulo_original": "Juíza Cíntia Xavier Letteriello",
+      "cargo": "Juíza",
+      "grau": "2",
+      "orgao": "4ª Câmara Cível",
+      "orgaos": [
+        "4ª Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "1415980-84.2026.8.12.0000",
+        "1416790-59.2026.8.12.0000",
+        "0800764-21.2025.8.12.0016"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fernando Paes de Campos",
+      "rotulo_original": "Des. Fernando Paes de Campos",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "3ª Câmara Criminal",
+      "orgaos": [
+        "3ª Câmara Criminal"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0900185-88.2025.8.12.0046",
+        "0900086-91.2024.8.12.0034"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Marcelo Ivo de Oliveira",
+      "rotulo_original": "Juiz Marcelo Ivo de Oliveira",
+      "cargo": "Juiz",
+      "grau": "1",
+      "orgao": "4ª Turma Recursal Mista",
+      "orgaos": [
+        "4ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0801152-28.2024.8.12.0025",
+        "0005897-23.2024.8.12.0110"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Walter Arthur Alge Netto",
+      "rotulo_original": "Juiz Walter Arthur Alge Netto",
+      "cargo": "Juiz",
+      "grau": "1",
+      "orgao": "4ª Turma Recursal Mista",
+      "orgaos": [
+        "4ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0820381-10.2024.8.12.0110",
+        "0800436-63.2026.8.12.0014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Alexandre Corrêa Leite",
+      "rotulo_original": "Juiz Alexandre Corrêa Leite",
+      "cargo": "Juiz",
+      "grau": "2",
+      "orgao": "2ª Câmara Criminal",
+      "orgaos": [
+        "2ª Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0938922-04.2025.8.12.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Aluizio Pereira dos Santos",
+      "rotulo_original": "Juiz Aluizio Pereira dos Santos",
+      "cargo": "Juiz",
+      "grau": "1",
+      "orgao": "1ª Turma Recursal Mista",
+      "orgaos": [
+        "1ª Turma Recursal Mista"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0802643-58.2024.8.12.0029"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Jonas Hass Silva Júnior",
+      "rotulo_original": "Des. Jonas Hass Silva Júnior",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "1ª Câmara Criminal",
+      "orgaos": [
+        "1ª Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0900123-96.2024.8.12.0009"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luiz Claudio Bonassini da Silva",
+      "rotulo_original": "Des. Luiz Claudio Bonassini da Silva",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "3ª Câmara Criminal",
+      "orgaos": [
+        "3ª Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0021431-14.2022.8.12.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
