@@ -29,6 +29,16 @@ function erroProvedor(status) {
 function numeroOuNull(v) {
   return typeof v === "number" && Number.isFinite(v) ? v : null;
 }
+// Tokens de entrada SEM a parte servida pelo cache. O contrato com o Rails (e o RubyLLM que
+// ele usa) é o da Anthropic: input_tokens exclui cache_read/cache_write, que vêm à parte e
+// têm preço próprio. OpenAI/OpenRouter (prompt_tokens) e Gemini (promptTokenCount) contam o
+// cache DENTRO do total — mandar o total faria o Rails cobrar o cache duas vezes (1.4.0 em
+// produção cobrou assim em 28/10: docs/qa/2026-10-29-producao-1.4.1-cache-tokens.md).
+function entradaSemCache(total, ...parcelasDeCache) {
+  if (typeof total !== "number" || !Number.isFinite(total)) return total;
+  const cache = parcelasDeCache.reduce((s, v) => s + (typeof v === "number" && Number.isFinite(v) ? v : 0), 0);
+  return Math.max(total - cache, 0);
+}
 function normalizarUso(provider, bruto, generationId = null) {
   if (!bruto || typeof bruto !== "object") return null;
   let uso;
@@ -42,7 +52,7 @@ function normalizarUso(provider, bruto, generationId = null) {
     };
   else if (provider === "gemini")
     uso = {
-      input_tokens: bruto.promptTokenCount,
+      input_tokens: entradaSemCache(bruto.promptTokenCount, bruto.cachedContentTokenCount),
       output_tokens: bruto.candidatesTokenCount,
       cache_read_tokens: bruto.cachedContentTokenCount,
       cache_write_tokens: null,
@@ -50,7 +60,11 @@ function normalizarUso(provider, bruto, generationId = null) {
     };
   else
     uso = {
-      input_tokens: bruto.prompt_tokens,
+      input_tokens: entradaSemCache(
+        bruto.prompt_tokens,
+        bruto.prompt_tokens_details?.cached_tokens,
+        bruto.prompt_tokens_details?.cache_write_tokens,
+      ),
       output_tokens: bruto.completion_tokens,
       cache_read_tokens: bruto.prompt_tokens_details?.cached_tokens,
       cache_write_tokens: bruto.prompt_tokens_details?.cache_write_tokens,
