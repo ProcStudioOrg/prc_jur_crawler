@@ -1,0 +1,816 @@
+{
+  "tribunal": "tjpa",
+  "nome": "Tribunal de Justiça do Pará",
+  "coletado_em": "2026-10-29T08:10:53.642Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "29/10/2025",
+      "dataFim": "29/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "29/10/2025",
+      "dataFim": "29/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 2239,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "29/10/2025",
+      "dataFim": "29/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "29/10/2025",
+      "dataFim": "29/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 173,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 30,
+    "por_grau": {
+      "1": 7,
+      "2": 23
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 25
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "RICARDO FERREIRA NUNES",
+      "rotulo_original": "RICARDO FERREIRA NUNES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargador RICARDO FERREIRA NUNES",
+      "orgaos": [
+        "Desembargador RICARDO FERREIRA NUNES"
+      ],
+      "ocorrencias": 15,
+      "julgados_exemplo": [
+        "0066086-97.2016.8.14.0301",
+        "0802067-34.2025.8.14.0107",
+        "0800588-84.2022.8.14.0018",
+        "0824255-02.2017.8.14.0301",
+        "0100699-80.2015.8.14.0301"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 2034
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EZILDA PASTANA MUTRAN",
+      "rotulo_original": "EZILDA PASTANA MUTRAN",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora EZILDA PASTANA MUTRAN",
+      "orgaos": [
+        "Desembargadora EZILDA PASTANA MUTRAN"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [
+        "0802061-95.2023.8.14.0107",
+        "0001204-75.2016.8.14.0027",
+        "0800101-77.2020.8.14.0053",
+        "0802129-55.2024.8.14.0060",
+        "0803069-86.2023.8.14.0017"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 2384
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALVARO JOSE NORAT DE VASCONCELOS",
+      "rotulo_original": "ALVARO JOSE NORAT DE VASCONCELOS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargador ALVARO JOSE NORAT DE VASCONCELOS",
+      "orgaos": [
+        "Desembargador ALVARO JOSE NORAT DE VASCONCELOS"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0006760-26.2013.8.14.0201",
+        "0820590-94.2025.8.14.0301",
+        "0847441-78.2022.8.14.0301",
+        "0809953-91.2025.8.14.0040",
+        "0801387-79.2025.8.14.0097"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 2046
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROSILEIDE MARIA DA COSTA CUNHA",
+      "rotulo_original": "ROSILEIDE MARIA DA COSTA CUNHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora ROSILEIDE MARIA DA COSTA CUNHA",
+      "orgaos": [
+        "Desembargadora ROSILEIDE MARIA DA COSTA CUNHA"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0800462-53.2022.8.14.0044",
+        "0812366-41.2023.8.14.0301",
+        "0809915-45.2026.8.14.0040",
+        "0803621-74.2026.8.14.0040",
+        "0815876-71.2024.8.14.0028"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 2630
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MAIRTON MARQUES CARNEIRO",
+      "rotulo_original": "MAIRTON MARQUES CARNEIRO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargador MAIRTON MARQUES CARNEIRO",
+      "orgaos": [
+        "Desembargador MAIRTON MARQUES CARNEIRO"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "0803032-66.2021.8.14.0005",
+        "0047688-73.2014.8.14.0301",
+        "0800053-34.2020.8.14.0081",
+        "0800902-30.2023.8.14.0039",
+        "0827610-51.2025.8.14.0006"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARGUI GASPAR BITTENCOURT",
+      "rotulo_original": "MARGUI GASPAR BITTENCOURT",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora MARGUI GASPAR BITTENCOURT",
+      "orgaos": [
+        "Desembargadora MARGUI GASPAR BITTENCOURT"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "0013348-18.2014.8.14.0006",
+        "0832386-19.2024.8.14.0301",
+        "0807413-60.2022.8.14.0045",
+        "0835571-36.2022.8.14.0301",
+        "0801670-10.2023.8.14.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALEX PINHEIRO CENTENO",
+      "rotulo_original": "ALEX PINHEIRO CENTENO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargador ALEX PINHEIRO CENTENO",
+      "orgaos": [
+        "Desembargador ALEX PINHEIRO CENTENO"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "0041426-78.2012.8.14.0301",
+        "0811980-50.2019.8.14.0301",
+        "0805011-53.2024.8.14.0136",
+        "0801247-67.2025.8.14.0025",
+        "0803353-95.2021.8.14.0201"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANETE MARQUES PENNA DE CARVALHO",
+      "rotulo_original": "ANETE MARQUES PENNA DE CARVALHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora ANETE MARQUES PENNA DE CARVALHO",
+      "orgaos": [
+        "Desembargadora ANETE MARQUES PENNA DE CARVALHO"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "0000304-24.2005.8.14.0045",
+        "0803253-92.2025.8.14.0107",
+        "0801536-45.2025.8.14.0107",
+        "0802771-55.2024.8.14.0051",
+        "0802015-87.2024.8.14.0005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE ROBERTO PINHEIRO MAIA BEZERRA JUNIOR",
+      "rotulo_original": "JOSE ROBERTO PINHEIRO MAIA BEZERRA JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargador JOSÉ ROBERTO PINHEIRO MAIA BEZERRA JUNIOR",
+      "orgaos": [
+        "Desembargador JOSÉ ROBERTO PINHEIRO MAIA BEZERRA JUNIOR"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0801155-68.2020.8.14.0024",
+        "0824639-64.2023.8.14.0006",
+        "0002551-34.2015.8.14.0301",
+        "0821076-86.2025.8.14.0040",
+        "0903572-39.2023.8.14.0301"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CHARLES MENEZES BARROS",
+      "rotulo_original": "CHARLES MENEZES BARROS",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Gabinete CHARLES MENEZES BARROS",
+      "orgaos": [
+        "Gabinete CHARLES MENEZES BARROS",
+        "Gabinete do Juiz CHARLES MENEZES BARROS da 2ª TRPJE Cível e Criminal"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0801152-09.2019.8.14.0070",
+        "0802294-39.2023.8.14.0060",
+        "0820215-10.2023.8.14.0028",
+        "0800881-87.2023.8.14.0125",
+        "0800560-92.2024.8.14.0068"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 2454
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "AMILCAR ROBERTO BEZERRA GUIMARAES",
+      "rotulo_original": "AMILCAR ROBERTO BEZERRA GUIMARAES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargador AMILCAR ROBERTO BEZERRA GUIMARÃES",
+      "orgaos": [
+        "Desembargador AMILCAR ROBERTO BEZERRA GUIMARÃES"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0801813-85.2022.8.14.0133",
+        "0024115-06.2014.8.14.0301",
+        "0812204-55.2024.8.14.0028",
+        "0802155-72.2025.8.14.0107"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE MARIA TEIXEIRA DO ROSARIO",
+      "rotulo_original": "JOSE MARIA TEIXEIRA DO ROSARIO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargador JOSÉ MARIA TEIXEIRA DO ROSÁRIO",
+      "orgaos": [
+        "Desembargador JOSÉ MARIA TEIXEIRA DO ROSÁRIO"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0000305-30.2009.8.14.0025",
+        "0813645-29.2022.8.14.0000",
+        "0810442-34.2019.8.14.0301",
+        "0801204-97.2021.8.14.0049"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE TORQUATO ARAUJO DE ALENCAR",
+      "rotulo_original": "JOSE TORQUATO ARAUJO DE ALENCAR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargador JOSÉ TORQUATO ARAÚJO DE ALENCAR",
+      "orgaos": [
+        "Desembargador JOSÉ TORQUATO ARAÚJO DE ALENCAR"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0885875-68.2024.8.14.0301",
+        "0809313-77.2026.8.14.0000",
+        "0822128-20.2025.8.14.0040",
+        "0821462-19.2025.8.14.0040"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANA LUCIA BENTES LYNCH",
+      "rotulo_original": "ANA LUCIA BENTES LYNCH",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Gabinete da Juíza ANA LUCIA BENTES LYNCH da 1ª TRPJE Cível e Criminal",
+      "orgaos": [
+        "Gabinete da Juíza ANA LUCIA BENTES LYNCH da 1ª TRPJE Cível e Criminal"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0800113-45.2017.8.14.0070",
+        "0802551-62.2019.8.14.0009",
+        "0800557-94.2025.8.14.0071"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "ANA PATRICIA NUNES ALVES FERNANDES",
+      "rotulo_original": "ANA PATRICIA NUNES ALVES FERNANDES",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Gabinete ANA PATRÍCIA NUNES ALVES FERNANDES",
+      "orgaos": [
+        "Gabinete ANA PATRÍCIA NUNES ALVES FERNANDES"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0809733-66.2024.8.14.0028",
+        "0807428-76.2024.8.14.0039",
+        "0800096-98.2020.8.14.0071"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "JOAO BATISTA LOPES DO NASCIMENTO",
+      "rotulo_original": "JOAO BATISTA LOPES DO NASCIMENTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargador JOÃO BATISTA LOPES DO NASCIMENTO",
+      "orgaos": [
+        "Desembargador JOÃO BATISTA LOPES DO NASCIMENTO"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0818223-30.2025.8.14.0000",
+        "0816037-79.2023.8.14.0040",
+        "0810548-32.2021.8.14.0040"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUANA DE NAZARETH AMARAL HENRIQUES SANTALICES",
+      "rotulo_original": "LUANA DE NAZARETH AMARAL HENRIQUES SANTALICES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora LUANA DE NAZARETH AMARAL HENRIQUES SANTALICES",
+      "orgaos": [
+        "Desembargadora LUANA DE NAZARETH AMARAL HENRIQUES SANTALICES"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0800196-89.2021.8.14.0080",
+        "0019917-23.2014.8.14.0301",
+        "0815371-33.2025.8.14.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUCIO BARRETO GUERREIRO",
+      "rotulo_original": "LUCIO BARRETO GUERREIRO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Gabinete LÚCIO BARRETO GUERREIRO",
+      "orgaos": [
+        "Gabinete ANA LÚCIA BENTES LYNCH",
+        "Gabinete LÚCIO BARRETO GUERREIRO"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0802744-43.2025.8.14.0017",
+        "0810236-27.2022.8.14.0006",
+        "0800248-62.2025.8.14.0301"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "LUZIA NADJA GUIMARAES NASCIMENTO",
+      "rotulo_original": "LUZIA NADJA GUIMARAES NASCIMENTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora LUZIA NADJA GUIMARÃES NASCIMENTO",
+      "orgaos": [
+        "Desembargadora LUZIA NADJA GUIMARÃES NASCIMENTO"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0194236-96.2016.8.14.0301",
+        "0800467-27.2025.8.14.0123",
+        "0801570-22.2023.8.14.0032"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA FILOMENA DE ALMEIDA BUARQUE",
+      "rotulo_original": "MARIA FILOMENA DE ALMEIDA BUARQUE",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora MARIA FILOMENA DE ALMEIDA BUARQUE",
+      "orgaos": [
+        "Desembargadora MARIA FILOMENA DE ALMEIDA BUARQUE"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0821926-10.2025.8.14.0051",
+        "0800608-80.2025.8.14.0144",
+        "0802132-29.2025.8.14.0107"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SILVIA MARA BENTES DE SOUZA COSTA",
+      "rotulo_original": "SILVIA MARA BENTES DE SOUZA COSTA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Gabinete SÍLVIA MARA BENTES DE SOUZA COSTA",
+      "orgaos": [
+        "Gabinete SÍLVIA MARA BENTES DE SOUZA COSTA"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0800234-87.2022.8.14.0138",
+        "0859494-57.2023.8.14.0301",
+        "0800328-57.2025.8.14.0032"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "CELIA REGINA DE LIMA PINHEIRO",
+      "rotulo_original": "CELIA REGINA DE LIMA PINHEIRO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora CÉLIA REGINA DE LIMA PINHEIRO",
+      "orgaos": [
+        "Desembargadora CÉLIA REGINA DE LIMA PINHEIRO"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0800454-28.2025.8.14.0123",
+        "0802559-36.2025.8.14.0039"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GLEIDE PEREIRA DE MOURA",
+      "rotulo_original": "GLEIDE PEREIRA DE MOURA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora GLEIDE PEREIRA DE MOURA",
+      "orgaos": [
+        "Desembargadora GLEIDE PEREIRA DE MOURA"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0800267-34.2018.8.14.0133",
+        "0801261-83.2023.8.14.0037"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MONICA MAUES NAIF DAIBES",
+      "rotulo_original": "MONICA MAUES NAIF DAIBES",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Gabinete MARIA DAS GRAÇAS ALFAIA DA FONSECA SALDANHA",
+      "orgaos": [
+        "Gabinete MARIA DAS GRAÇAS ALFAIA DA FONSECA SALDANHA"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0801592-89.2022.8.14.0008",
+        "0801623-57.2024.8.14.0035"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "ANTONIETA MARIA FERRARI MILEO",
+      "rotulo_original": "ANTONIETA MARIA FERRARI MILEO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora ANTONIETA MARIA FERRARI MILEO",
+      "orgaos": [
+        "Desembargadora ANTONIETA MARIA FERRARI MILEO"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0021066-54.2014.8.14.0301"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "KEDIMA LYRA",
+      "rotulo_original": "KEDIMA LYRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora KÉDIMA LYRA",
+      "orgaos": [
+        "Desembargadora KÉDIMA LYRA"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0803047-34.2019.8.14.0028"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LEONARDO DE NORONHA TAVARES",
+      "rotulo_original": "LEONARDO DE NORONHA TAVARES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargador LEONARDO DE NORONHA TAVARES",
+      "orgaos": [
+        "Desembargador LEONARDO DE NORONHA TAVARES"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0814710-66.2023.8.14.0051"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA ELVINA GEMAQUE TAVEIRA",
+      "rotulo_original": "MARIA ELVINA GEMAQUE TAVEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargadora MARIA ELVINA GEMAQUE TAVEIRA",
+      "orgaos": [
+        "Desembargadora MARIA ELVINA GEMAQUE TAVEIRA"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0804247-53.2025.8.14.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SHERIDA KEILA PACHECO TEIXEIRA BAUER",
+      "rotulo_original": "SHERIDA KEILA PACHECO TEIXEIRA BAUER",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Gabinete ANA ANGÉLICA ABDULMASSIH OLEGÁRIO",
+      "orgaos": [
+        "Gabinete ANA ANGÉLICA ABDULMASSIH OLEGÁRIO"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0815764-66.2024.8.14.0040"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "VANDERLEY DE OLIVEIRA SILVA",
+      "rotulo_original": "VANDERLEY DE OLIVEIRA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Desembargador VANDERLEY DE OLIVEIRA SILVA",
+      "orgaos": [
+        "Desembargador VANDERLEY DE OLIVEIRA SILVA"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0815749-70.2023.8.14.0028"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
