@@ -494,7 +494,7 @@ test("OpenAI-compatível envia stream_options e captura usage com cost do OpenRo
   assert.deepEqual(sent.provider, { order: ["z-ai"], allow_fallbacks: false });
   assert.deepEqual(sent.usage, { include: true });
   assert.deepEqual(r.usage, {
-    input_tokens: 120,
+    input_tokens: 100,
     output_tokens: 30,
     cache_read_tokens: 20,
     cache_write_tokens: null,
@@ -570,11 +570,38 @@ test("Gemini devolve usage a partir de usageMetadata", async () => {
   ]);
   const r = await c.messages.stream(paramsUso, {}).finalMessage();
   assert.deepEqual(r.usage, {
-    input_tokens: 50,
+    input_tokens: 46,
     output_tokens: 7,
     cache_read_tokens: 4,
     cache_write_tokens: null,
     cost_usd: null,
     generation_id: "gem-1",
   });
+});
+test("OpenAI/OpenRouter: input_tokens exclui o cache (prompt_tokens traz o cache dentro)", () => {
+  const { normalizarUso } = require("../servidor/provedores");
+  // Rodada real de 28/10/2026 (gen-1793191256): prompt 65189 com 42176 em cache. O Rails
+  // (RubyLLM) cobra input_tokens + cache_read_tokens, então a entrada vai sem o cache.
+  assert.deepEqual(
+    normalizarUso(
+      "openai",
+      { prompt_tokens: 65189, completion_tokens: 4902, prompt_tokens_details: { cached_tokens: 42176 }, cost: 0.00716823 },
+      "gen-1793191256",
+    ),
+    {
+      input_tokens: 23013,
+      output_tokens: 4902,
+      cache_read_tokens: 42176,
+      cache_write_tokens: null,
+      cost_usd: 0.00716823,
+      generation_id: "gen-1793191256",
+    },
+  );
+  // Sem detalhe de cache, prompt_tokens segue inteiro; cache maior que o total não vai negativo.
+  assert.equal(normalizarUso("openai", { prompt_tokens: 10, completion_tokens: 1 }).input_tokens, 10);
+  assert.equal(
+    normalizarUso("openai", { prompt_tokens: 10, completion_tokens: 1, prompt_tokens_details: { cached_tokens: 8, cache_write_tokens: 5 } }).input_tokens,
+    0,
+  );
+  assert.equal(normalizarUso("gemini", { promptTokenCount: 50, candidatesTokenCount: 7, cachedContentTokenCount: 4 }).input_tokens, 46);
 });

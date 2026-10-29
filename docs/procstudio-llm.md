@@ -205,3 +205,13 @@ Contrato HTTP atualizado em `/api/v1/openapi.json`; exemplos Bruno em `collectio
 Referências de protocolo: [OpenAI Chat Completions](https://developers.openai.com/api/reference/resources/chat),
 [OpenRouter](https://openrouter.ai/docs/api/reference/overview),
 [Gemini function calling](https://ai.google.dev/gemini-api/docs/function-calling).
+
+## Tokens enviados ao Rails
+
+`input_tokens` **exclui** o que foi servido pelo cache; `cache_read_tokens` e `cache_write_tokens`
+vão à parte, com preço próprio no catálogo (convenção da Anthropic, a mesma do RubyLLM que o Rails usa:
+`prompt_tokens − cached − cache_write`). OpenAI/OpenRouter (`prompt_tokens`) e Gemini (`promptTokenCount`)
+trazem o cache dentro do total, e `normalizarUso` desconta (`entradaSemCache`). Até a 1.4.0 o total ia
+inteiro e o Rails cobrava a parte em cache duas vezes (`docs/qa/2026-10-29-producao-1.4.1-cache-tokens.md`).
+Conferência: `raw_cost_brl ÷ usd_to_brl_rate` do `AiUsageLog` tem de bater com `provider_cost_usd` (o
+`usage` da geração no OpenRouter) a menos de arredondamento.

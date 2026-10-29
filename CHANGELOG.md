@@ -11,6 +11,13 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
+## 1.4.1 — 29/10/2026
+
+- Cobrança do saldo compartilhado: `input_tokens` enviado ao Rails passa a excluir os tokens servidos pelo
+  cache (OpenAI/OpenRouter `prompt_tokens` e Gemini `promptTokenCount` trazem o cache dentro do total; o
+  Rails, via RubyLLM, soma `input_tokens` + `cache_read_tokens`). Em 1.4.0 a parte em cache era cobrada duas
+  vezes — na primeira conversa real (28/10, 4 rodadas) R$ 0,22 em vez de R$ 0,16. Sem mudança de contrato.
+
 ## 1.4.0 — 27/10/2026
 
 Saldo compartilhado: a conexão de IA nativa do ProcStudio, cobrada por rodada do saldo de IA do
