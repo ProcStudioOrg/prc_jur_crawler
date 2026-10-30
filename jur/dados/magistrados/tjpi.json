@@ -1,0 +1,633 @@
+{
+  "tribunal": "tjpi",
+  "nome": "Tribunal de Justiça do Piauí",
+  "coletado_em": "2026-10-30T08:11:01.202Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "30/10/2025",
+      "dataFim": "30/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 50,
+      "total_no_portal": 54046,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "30/10/2025",
+      "dataFim": "30/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 50,
+      "total_no_portal": 5935,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "30/10/2025",
+      "dataFim": "30/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 50,
+      "total_no_portal": 46678,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "30/10/2025",
+      "dataFim": "30/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 4,
+      "total_no_portal": 54046,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 22,
+    "por_grau": {
+      "1": 5,
+      "2": 17
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 17
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "AGRIMAR RODRIGUES DE ARAUJO",
+      "rotulo_original": "AGRIMAR RODRIGUES DE ARAUJO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Câmara Especializada Cível",
+      "orgaos": [
+        "3ª Câmara Especializada Cível",
+        "3ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 40,
+      "julgados_exemplo": [
+        "0801417-64.2022.8.18.0047",
+        "0802844-72.2023.8.18.0076",
+        "0800795-85.2024.8.18.0088",
+        "0800847-55.2026.8.18.0074",
+        "0803181-41.2024.8.18.0039"
+      ],
+      "teste_busca": {
+        "consultados": 25,
+        "batem": 25,
+        "status": "ok",
+        "detalhe": "0 de 25 fora do filtro",
+        "ms": 3025
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUCICLEIDE PEREIRA BELO",
+      "rotulo_original": "LUCICLEIDE PEREIRA BELO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Câmara Especializada Cível",
+      "orgaos": [
+        "3ª Câmara Especializada Cível",
+        "3ª Câmara Especializada Cível - Data 20/12/2022) No mesmo rumo, a higidez da contratação ganha contornos inquestionáveis diante da inconteste demonstração do efetivo repasse e disponibilização dos recursos mutuados na esfera patrimonial da requerente. Com efeito, a instituição financeira juntou aos autos o comprovante eletrônico de Transferência Eletrônica Disponível (TED) liquidado pelo Sistema de Pagamentos Brasileiro (ID 36761680), o qual confirma que a quantia líquida contratada de R$ 596,75 foi creditada diretamente na conta bancária de titularidade exclusiva de Maria Oliveira do Rego Araújo, mantida perante a Caixa Econômica Federal (banco 104), agência 0699 (Piripiri), conta nº 001300074589-1. Os dados bancários de destino do crédito coincidem exatamente com a conta informada na proposta contratual (ID 36761679, fl. 2) e com o cartão bancário de titularidade da autora apresentado à fl. 6 do ID 36761679. A apelante auferiu integralmente a vantagem pecuniária decorrente do negócio jurídico em janeiro de 2018 e, ao longo de quase sete anos, arcou com a amortização gradual do financiamento até a sua liquidação completa das 72 parcelas (ID 30744671, fl. 16; ID 36761679, fls. 10-11), vindo a questionar a existência do contrato somente após o término dos abatimentos. A insurgência serôdia, manifestada anos após a fruição e exaustão do contrato, caracteriza vedado comportamento contraditório (venire contra factum proprium), atentando contra os ditames da boa-fé objetiva e dos deveres de probidade insculpidos no art. 422 do Código Civil. Nesse sentido, a jurisprudência desta Colenda 3ª Câmara Especializada Cível do Tribunal de Justiça do Estado do Piauí assenta que a exibição do instrumento assinado e a demonstração da transferência bancária desautorizam a declaração de nulidade do mútuo, conforme acórdão da lavra do eminente Desembargador Ricardo Gentil Eulálio Dantas: EMENTA: APELAÇÃO CÍVEL. EMPRESTIMO CONSIGNADO. REGULARIDADE NA CONTRATAÇÃO. APELO CONHECIDO E IMPROVIDO. 1-A instituição financeira apelada juntou a cédula de credito bancário em questão, em que é possível colher a assinatura da apelante.2- Da referida cédula constam expressamente valor liquido a liberar.3- Tal valor foi devidamente transferido para o apelante via TED, conforme comprovante juntado pelo apelado.4-Os documentos acima referidos são dotados de informações objetivas e claras, sendo possível concluir pela legitimidade da manifestação de vontade do apelante, tanto na cédula de crédito bancário, com comprovante de TED enviado para sua conta. APELO CONHECIDO E IMPROVIDO. SENTENÇA DE IMPROCEDÊNCIA MANTIDA. (TJPI - APELAÇÃO CÍVEL - No 0000088-64.2015.8.18.0057 - Relator(a): RICARDO GENTIL EULALIO DANTAS - 3ª Câmara Especializada Cível - Data 31/05/2023) Por conseguinte, demonstrada a regularidade formal e material do mútuo consignado e comprovada a ausência de fraude ou defeito no serviço prestado pelo banco recorrido (art. 14, § 3º, inciso II, do Código de Defesa do Consumidor), impõe-se a preservação integral da sentença que julgou improcedentes os pedidos autorais. Restando legítimos os descontos efetuados no benefício previdenciário da apelante em decorrência do pagamento de empréstimo contratado e usufruído, descabe qualquer pretensão de repetição de indébito (art. 42, parágrafo único, do Código de Defesa do Consumidor), bem como resta inviabilizada a condenação por dano moral, em virtude da ausência de ato ilícito indenizável. DISPOSITIVO Ante o exposto, com fundamento no art. 932, inciso IV, do Código de Processo Civil, CONHEÇO do recurso de apelação e NEGO-LHE PROVIMENTO, mantendo incólume a respeitável sentença de primeiro grau por seus próprios e jurídicos fundamentos. Em atenção ao comando preconizado no art. 85, § 11, do Código de Processo Civil, majoro os honorários advocatícios sucumbenciais devidos pela parte autora de 10% (dez por cento) para 12% (doze por cento) sobre o valor atualizado da causa, considerando o trabalho adicional desempenhado em grau recursal. Contudo, fica suspensa a exigibilidade da verba de sucumbência (custas processuais e honorários advocatícios), com espeque no art. 98, § 3º, do Código de Processo Civil, em face da concessão dos benefícios da assistência judiciária gratuita à apelante. Publique-se. Registre-se. Intimem-se. Transcorrido o prazo legal sem a interposição de recurso, certifique-se o trânsito em julgado e baixem-se os autos à vara de origem com as cautelas de praxe. Teresina, datado e assinado eletronicamente. Desembargadora LUCICLEIDE PEREIRA BELO Relatora (TJPI - APELAÇÃO CÍVEL 0801636-17.2025.8.18.0033 - Relator: LUCICLEIDE PEREIRA BELO - 3ª Câmara Especializada Cível"
+      ],
+      "ocorrencias": 17,
+      "julgados_exemplo": [
+        "0802620-64.2024.8.18.0088",
+        "0800727-85.2025.8.18.0061",
+        "0801636-17.2025.8.18.0033",
+        "0845067-71.2025.8.18.0140",
+        "0806702-67.2023.8.18.0026"
+      ],
+      "teste_busca": {
+        "consultados": 25,
+        "batem": 22,
+        "status": "ok",
+        "detalhe": "3 de 25 fora do filtro",
+        "ms": 2708
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DIOCLECIO SOUSA DA SILVA",
+      "rotulo_original": "DIOCLECIO SOUSA DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Câmara Especializada Cível",
+      "orgaos": [
+        "1ª Câmara Especializada Cível",
+        "1ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 14,
+      "julgados_exemplo": [
+        "0800949-05.2025.8.18.0077",
+        "0800217-95.2026.8.18.0042",
+        "0808095-39.2024.8.18.0140",
+        "0809185-48.2025.8.18.0140",
+        "0764760-65.2025.8.18.0000"
+      ],
+      "teste_busca": {
+        "consultados": 25,
+        "batem": 23,
+        "status": "ok",
+        "detalhe": "2 de 25 fora do filtro",
+        "ms": 2804
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ELVANICE PEREIRA DE SOUSA",
+      "rotulo_original": "ELVANICE PEREIRA DE SOUSA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "2ª Turma Recursal",
+      "orgaos": [
+        "2ª Turma Recursal"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [
+        "0802137-89.2025.8.18.0123",
+        "0802547-60.2025.8.18.0152",
+        "0800951-63.2023.8.18.0135",
+        "0800593-15.2024.8.18.0119",
+        "0800018-68.2024.8.18.0131"
+      ],
+      "teste_busca": {
+        "consultados": 25,
+        "batem": 25,
+        "status": "ok",
+        "detalhe": "0 de 25 fora do filtro",
+        "ms": 2614
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JULIO CESAR MENEZES GARCEZ",
+      "rotulo_original": "JULIO CESAR MENEZES GARCEZ",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "3ª Turma Recursal",
+      "orgaos": [
+        "3ª Turma Recursal"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "0800106-63.2026.8.18.0155",
+        "0800297-84.2026.8.18.0066",
+        "0806083-74.2022.8.18.0026",
+        "0800110-81.2020.8.18.0003",
+        "0800659-77.2023.8.18.0103"
+      ],
+      "teste_busca": {
+        "consultados": 25,
+        "batem": 25,
+        "status": "ok",
+        "detalhe": "0 de 25 fora do filtro",
+        "ms": 2930
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIO BASILIO DE MELO",
+      "rotulo_original": "MARIO BASILIO DE MELO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Câmara Especializada Cível",
+      "orgaos": [
+        "1ª Câmara Especializada Cível",
+        "1ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "0800680-89.2025.8.18.0036",
+        "0801326-78.2025.8.18.0140",
+        "0763202-58.2025.8.18.0000",
+        "0800269-76.2022.8.18.0060",
+        "0801767-13.2022.8.18.0060"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE WILSON FERREIRA DE ARAUJO JUNIOR",
+      "rotulo_original": "JOSE WILSON FERREIRA DE ARAUJO JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Câmara Especializada Cível",
+      "orgaos": [
+        "2ª Câmara Especializada Cível - Data 17/03/2026) Assim, a comunicação periódica constante das faturas confere ciência prévia adequada ao devedor, atestando a regularidade formal e substancial do apontamento no SCR. 2.4. DO EXERCÍCIO REGULAR DE DIREITO E DA INOCORRÊNCIA DE DANOS MORAIS Diante da licitude da dívida e do cumprimento do dever de informação, a atuação da instituição financeira configurou estrito exercício regular de direito e cumprimento de obrigação legal (art. 188, I, do Código Civil), afastando a hipótese de ato ilícito (art. 186 do Código Civil). A existência de inadimplemento real obsta a presunção de dano moral (in re ipsa), cabível apenas em anotações lastreadas em dívidas inexistentes ou fraudulentas. Ademais, os extratos do Registrato (ID 35920646) demonstram histórico de outros débitos vencidos e apontamentos contemporâneos do consumidor em diversas instituições, circunstância que igualmente desautoriza a compensação moral à luz da Súmula nº 385 do Superior Tribunal de Justiça. Ausente demonstração de repercussão concreta danosa, a manutenção da sentença de improcedência é medida que se impõe. 3. DISPOSITIVO Ante o exposto, CONHEÇO do recurso e NEGO PROVIMENTO, mantendo integralmente a sentença recorrida. Majoro os honorários advocatícios recursais em favor do patrono da apelada para 12% (doze por cento) sobre o valor atualizado da causa (art. 85, § 11, do CPC), ressalvada a gratuidade de justiça (art. 98, § 3º, do CPC). Publique-se. Intimem-se. Teresina/PI, data registrada no sistema. Desembargador MANOEL DE SOUSA DOURADO Relator (TJPI - APELAÇÃO CÍVEL 0821734-90.2025.8.18.0140 - Relator: MANOEL DE SOUSA DOURADO - 2ª Câmara Especializada Cível",
+        "2ª Câmara Especializada Cível",
+        "2ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "0821734-90.2025.8.18.0140",
+        "0802083-64.2025.8.18.0078",
+        "0753801-98.2026.8.18.0000",
+        "0819428-51.2025.8.18.0140",
+        "0843332-37.2024.8.18.0140"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MANOEL DE SOUSA DOURADO",
+      "rotulo_original": "MANOEL DE SOUSA DOURADO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Câmara Especializada Cível - Data 07/07/2026 ) DIREITO PROCESSUAL CIVIL E DIREITO DO CONSUMIDOR. AGRAVO INTERNO. EMPRÉSTIMO CONSIGNADO ELETRÔNICO. CONTRATAÇÃO DIGITAL. VALIDADE DO CONTRATO. BIOMETRIA FACIAL. COMPROVANTE DE TRANSFERÊNCIA BANCÁRIA. INVERSÃO DO ÔNUS DA PROVA. LITIGÂNCIA DE MÁ-FÉ. MANUTENÇÃO DA DECISÃO MONOCRÁTICA. RECURSO DESPROVIDO. I. CASO EM EXAME 1. Agravo Interno interposto contra decisão monocrática que negou provimento à apelação e manteve sentença de improcedência em ação declaratória de inexistência de débito cumulada com repetição de indébito e indenização por danos morais, ajuizada em razão de alegada nulidade de contrato eletrônico de empréstimo consignado. O agravante sustenta a invalidade da contratação por ausência de certificação digital idônea, fragilidade da biometria facial, inconsistências nos dados de geolocalização e inexistência de manifestação válida de vontade, além de requerer o afastamento da condenação por litigância de má-fé. II. QUESTÃO EM DISCUSSÃO 2. Há duas questões em discussão: (i) definir se a contratação eletrônica do empréstimo consignado observou os requisitos legais e probatórios necessários à validade do negócio jurídico; e (ii) estabelecer se deve ser mantida a condenação da parte autora por litigância de má-fé diante da negativa de contratação comprovadamente realizada. III. RAZÕES DE DECIDIR 3. O relator pode decidir monocraticamente recurso contrário à jurisprudência consolidada do tribunal, nos termos do art. 932, IV e V, do CPC, em observância aos princípios da celeridade, eficiência e racionalização da atividade jurisdicional. 4. A jurisprudência do tribunal, consolidada nas Súmulas 18, 26 e 30, admite a validade da contratação bancária eletrônica quando demonstradas a celebração regular do contrato e a efetiva disponibilização do valor em conta de titularidade do consumidor. 5. A instituição financeira se desincumbiu do ônus probatório ao apresentar instrumento contratual eletrônico regularmente celebrado, acompanhado de comprovante de transferência bancária com identificação válida da operação no Sistema de Pagamentos Brasileiro. 6. Os elementos constantes dos autos demonstram que a hipótese não envolve contratação com pessoa analfabeta, afastando a incidência da formalidade prevista no art. 595 do Código Civil. 7. A comprovação documental robusta da contratação e da disponibilização dos valores afasta a pretensão de declaração de nulidade do contrato, bem como os pedidos de repetição de indébito e indenização por danos morais. 8. A negativa da contratação pela parte autora, em confronto com prova documental inequívoca da celebração do negócio jurídico e da liberação do crédito, caracteriza alteração da verdade dos fatos e justifica a manutenção da condenação por litigância de má-fé. IV. DISPOSITIVO E TESE 9. Recurso desprovido. Tese de julgamento: 1. A contratação eletrônica de empréstimo consignado é válida quando acompanhada de elementos probatórios aptos a demonstrar a manifestação de vontade e a efetiva disponibilização do crédito ao consumidor. 2. A apresentação de instrumento contratual eletrônico e comprovante de transferência bancária idôneo satisfaz o ônus probatório da instituição financeira em ações declaratórias de inexistência de débito. 3. A condenação por litigância de má-fé é cabível quando a parte nega contratação comprovadamente demonstrada por prova documental robusta e inequívoca. Dispositivos relevantes citados: CPC, arts. 6º, 927, V, 932, IV e V, e 1.011, I; CDC, art. 6º, VIII; CC, art. 595. Jurisprudência relevante citada: Súmula 18 do Tribunal de Justiça; Súmula 26 do Tribunal de Justiça; Súmula 30 do Tribunal de Justiça. (TJPI - AGRAVO INTERNO CÍVEL 0800943-84.2021.8.18.0029 - Relator: MARIO BASILIO DE MELO - 1ª Câmara Especializada Cível - Data 25/06/2026 ) Ademais, resta incontroverso nos autos que a parte autora não negou o recebimento dos valores do empréstimo. O numerário contratado no importe de R$ 1.158,90 foi disponibilizado diretamente na conta bancária de titularidade do apelante indicada no instrumento contratual (Bancoob/Sicoob, agência 6044, conta nº 0014578620) (ID 22724670), fato também corroborado pelos extratos de créditos previdenciários do INSS (ID 22724606). Intimado para especificar provas e demonstrar eventual recusa ou restituição do montante disponibilizado, o autor absteve-se de juntar extratos bancários e requereu o julgamento antecipado da lide (ID 36893543). A ausência de impugnação específica quanto à disponibilização financeira e a efetiva fruição do crédito consolidam o proveito econômico da operação e corroboram a aceitação do negócio jurídico. Demonstrada a validade do contrato e a disponibilização do numerário, os descontos efetuados no benefício previdenciário decorrem do exercício regular de direito do credor (artigo 188, inciso I, do Código Civil), inexistindo defeito na prestação do serviço (artigo 14, § 3º, inciso I, do CDC). Descabe, por conseguinte, a repetição do indébito e a condenação ao pagamento de indenização por danos morais. Dos Honorários Advocatícios Recursais Em virtude do desprovimento integral do recurso interposto sob a égide do Código de Processo Civil de 2015, impõe-se a majoração da verba honorária sucumbencial fixada na origem em favor dos patronos do apelado, ex vi do artigo 85, § 11, do Código de Processo Civil. O juízo singular arbitrou os honorários advocatícios em 10% (dez por cento) sobre o valor atualizado da causa (ID 36893552). Atento aos parâmetros previstos nos incisos I a IV do § 2º do artigo 85 do CPC, majoro a verba em 2% (dois por cento), totalizando a condenação sucumbencial em 12% (doze por cento) sobre o valor atualizado da causa. Fica, contudo, expressamente suspensa a exigibilidade da condenação por ser o apelante beneficiário da justiça gratuita, na esteira do artigo 98, § 3º, do Código de Processo Civil. III. DISPOSITIVO Ante o exposto, com fundamento no artigo 932, inciso IV, alínea \"a\", do Código de Processo Civil, e na jurisprudência sedimentada deste Egrégio Tribunal de Justiça, CONHEÇO da insurgência recursal de ID 36893554 como recurso de apelação cível, com fundamento no princípio da fungibilidade recursal, para, no mérito, NEGAR-LHE PROVIMENTO, mantendo integralmente a sentença de primeiro grau (ID 36893552) que julgou improcedentes os pedidos autorais; Em razão do desprovimento do recurso, MAJORO os honorários advocatícios de sucumbência em sede recursal para o percentual global de 12% (doze por cento) sobre o valor atualizado da causa, nos termos do artigo 85, § 11, do CPC, ficando suspensa a exigibilidade por força da gratuidade da justiça (artigo 98, § 3º, do CPC). Publique-se. Registre-se. Intimem-se. Preclusas as vias impugnativas, certifique-se o trânsito em julgado, dê-se baixa na distribuição e remetam-se os autos eletrônicos ao juízo de origem. Teresina/PI, datado e assinado eletronicamente. Desembargadora LUCICLEIDE PEREIRA BELO Relatora (TJPI - APELAÇÃO CÍVEL 0806979-31.2024.8.18.0032 - Relator: LUCICLEIDE PEREIRA BELO - 3ª Câmara Especializada Cível",
+      "orgaos": [
+        "2ª Câmara Especializada Cível - Data 07/07/2026 ) DIREITO PROCESSUAL CIVIL E DIREITO DO CONSUMIDOR. AGRAVO INTERNO. EMPRÉSTIMO CONSIGNADO ELETRÔNICO. CONTRATAÇÃO DIGITAL. VALIDADE DO CONTRATO. BIOMETRIA FACIAL. COMPROVANTE DE TRANSFERÊNCIA BANCÁRIA. INVERSÃO DO ÔNUS DA PROVA. LITIGÂNCIA DE MÁ-FÉ. MANUTENÇÃO DA DECISÃO MONOCRÁTICA. RECURSO DESPROVIDO. I. CASO EM EXAME 1. Agravo Interno interposto contra decisão monocrática que negou provimento à apelação e manteve sentença de improcedência em ação declaratória de inexistência de débito cumulada com repetição de indébito e indenização por danos morais, ajuizada em razão de alegada nulidade de contrato eletrônico de empréstimo consignado. O agravante sustenta a invalidade da contratação por ausência de certificação digital idônea, fragilidade da biometria facial, inconsistências nos dados de geolocalização e inexistência de manifestação válida de vontade, além de requerer o afastamento da condenação por litigância de má-fé. II. QUESTÃO EM DISCUSSÃO 2. Há duas questões em discussão: (i) definir se a contratação eletrônica do empréstimo consignado observou os requisitos legais e probatórios necessários à validade do negócio jurídico; e (ii) estabelecer se deve ser mantida a condenação da parte autora por litigância de má-fé diante da negativa de contratação comprovadamente realizada. III. RAZÕES DE DECIDIR 3. O relator pode decidir monocraticamente recurso contrário à jurisprudência consolidada do tribunal, nos termos do art. 932, IV e V, do CPC, em observância aos princípios da celeridade, eficiência e racionalização da atividade jurisdicional. 4. A jurisprudência do tribunal, consolidada nas Súmulas 18, 26 e 30, admite a validade da contratação bancária eletrônica quando demonstradas a celebração regular do contrato e a efetiva disponibilização do valor em conta de titularidade do consumidor. 5. A instituição financeira se desincumbiu do ônus probatório ao apresentar instrumento contratual eletrônico regularmente celebrado, acompanhado de comprovante de transferência bancária com identificação válida da operação no Sistema de Pagamentos Brasileiro. 6. Os elementos constantes dos autos demonstram que a hipótese não envolve contratação com pessoa analfabeta, afastando a incidência da formalidade prevista no art. 595 do Código Civil. 7. A comprovação documental robusta da contratação e da disponibilização dos valores afasta a pretensão de declaração de nulidade do contrato, bem como os pedidos de repetição de indébito e indenização por danos morais. 8. A negativa da contratação pela parte autora, em confronto com prova documental inequívoca da celebração do negócio jurídico e da liberação do crédito, caracteriza alteração da verdade dos fatos e justifica a manutenção da condenação por litigância de má-fé. IV. DISPOSITIVO E TESE 9. Recurso desprovido. Tese de julgamento: 1. A contratação eletrônica de empréstimo consignado é válida quando acompanhada de elementos probatórios aptos a demonstrar a manifestação de vontade e a efetiva disponibilização do crédito ao consumidor. 2. A apresentação de instrumento contratual eletrônico e comprovante de transferência bancária idôneo satisfaz o ônus probatório da instituição financeira em ações declaratórias de inexistência de débito. 3. A condenação por litigância de má-fé é cabível quando a parte nega contratação comprovadamente demonstrada por prova documental robusta e inequívoca. Dispositivos relevantes citados: CPC, arts. 6º, 927, V, 932, IV e V, e 1.011, I; CDC, art. 6º, VIII; CC, art. 595. Jurisprudência relevante citada: Súmula 18 do Tribunal de Justiça; Súmula 26 do Tribunal de Justiça; Súmula 30 do Tribunal de Justiça. (TJPI - AGRAVO INTERNO CÍVEL 0800943-84.2021.8.18.0029 - Relator: MARIO BASILIO DE MELO - 1ª Câmara Especializada Cível - Data 25/06/2026 ) Ademais, resta incontroverso nos autos que a parte autora não negou o recebimento dos valores do empréstimo. O numerário contratado no importe de R$ 1.158,90 foi disponibilizado diretamente na conta bancária de titularidade do apelante indicada no instrumento contratual (Bancoob/Sicoob, agência 6044, conta nº 0014578620) (ID 22724670), fato também corroborado pelos extratos de créditos previdenciários do INSS (ID 22724606). Intimado para especificar provas e demonstrar eventual recusa ou restituição do montante disponibilizado, o autor absteve-se de juntar extratos bancários e requereu o julgamento antecipado da lide (ID 36893543). A ausência de impugnação específica quanto à disponibilização financeira e a efetiva fruição do crédito consolidam o proveito econômico da operação e corroboram a aceitação do negócio jurídico. Demonstrada a validade do contrato e a disponibilização do numerário, os descontos efetuados no benefício previdenciário decorrem do exercício regular de direito do credor (artigo 188, inciso I, do Código Civil), inexistindo defeito na prestação do serviço (artigo 14, § 3º, inciso I, do CDC). Descabe, por conseguinte, a repetição do indébito e a condenação ao pagamento de indenização por danos morais. Dos Honorários Advocatícios Recursais Em virtude do desprovimento integral do recurso interposto sob a égide do Código de Processo Civil de 2015, impõe-se a majoração da verba honorária sucumbencial fixada na origem em favor dos patronos do apelado, ex vi do artigo 85, § 11, do Código de Processo Civil. O juízo singular arbitrou os honorários advocatícios em 10% (dez por cento) sobre o valor atualizado da causa (ID 36893552). Atento aos parâmetros previstos nos incisos I a IV do § 2º do artigo 85 do CPC, majoro a verba em 2% (dois por cento), totalizando a condenação sucumbencial em 12% (doze por cento) sobre o valor atualizado da causa. Fica, contudo, expressamente suspensa a exigibilidade da condenação por ser o apelante beneficiário da justiça gratuita, na esteira do artigo 98, § 3º, do Código de Processo Civil. III. DISPOSITIVO Ante o exposto, com fundamento no artigo 932, inciso IV, alínea \"a\", do Código de Processo Civil, e na jurisprudência sedimentada deste Egrégio Tribunal de Justiça, CONHEÇO da insurgência recursal de ID 36893554 como recurso de apelação cível, com fundamento no princípio da fungibilidade recursal, para, no mérito, NEGAR-LHE PROVIMENTO, mantendo integralmente a sentença de primeiro grau (ID 36893552) que julgou improcedentes os pedidos autorais; Em razão do desprovimento do recurso, MAJORO os honorários advocatícios de sucumbência em sede recursal para o percentual global de 12% (doze por cento) sobre o valor atualizado da causa, nos termos do artigo 85, § 11, do CPC, ficando suspensa a exigibilidade por força da gratuidade da justiça (artigo 98, § 3º, do CPC). Publique-se. Registre-se. Intimem-se. Preclusas as vias impugnativas, certifique-se o trânsito em julgado, dê-se baixa na distribuição e remetam-se os autos eletrônicos ao juízo de origem. Teresina/PI, datado e assinado eletronicamente. Desembargadora LUCICLEIDE PEREIRA BELO Relatora (TJPI - APELAÇÃO CÍVEL 0806979-31.2024.8.18.0032 - Relator: LUCICLEIDE PEREIRA BELO - 3ª Câmara Especializada Cível",
+        "1ª Câmara Especializada Cível",
+        "2ª Câmara Especializada Cível",
+        "3ª Câmara Especializada Cível"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0806979-31.2024.8.18.0032",
+        "0825043-22.2025.8.18.0140",
+        "0801948-64.2025.8.18.0074",
+        "0801933-31.2024.8.18.0042"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANTONIO DE PAIVA SALES",
+      "rotulo_original": "ANTONIO DE PAIVA SALES",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "2ª Turma Recursal",
+      "orgaos": [
+        "2ª Turma Recursal"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0800475-62.2025.8.18.0003",
+        "0800175-03.2025.8.18.0003",
+        "0800829-87.2025.8.18.0003",
+        "0000439-47.2013.8.18.0044",
+        "0801616-65.2022.8.18.0054"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LITELTON VIEIRA DE OLIVEIRA",
+      "rotulo_original": "LITELTON VIEIRA DE OLIVEIRA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "1ª Turma Recursal",
+      "orgaos": [
+        "1ª Turma Recursal"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0800405-79.2024.8.18.0003",
+        "0801268-69.2023.8.18.0100",
+        "0801646-64.2021.8.18.0045",
+        "0801167-96.2024.8.18.0132",
+        "0800576-62.2019.8.18.0051"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "OLIMPIO JOSE PASSOS GALVAO",
+      "rotulo_original": "OLIMPIO JOSE PASSOS GALVAO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª Câmara Especializada Cível - Data 25/03/2026) Dessa forma, desprovida de qualquer suporte a tese de exclusão de nexo de causalidade por fato de terceiro, impõe-se a manutenção do decreto de inexistência do negócio jurídico e de sua inexigibilidade perante a parte autora. 3.2. DO DANO MORAL A imposição arbitrária de uma dívida de dezenas de milhares de reais sobre pessoa simples, trabalhadora rural desprovida de patrimônio e subsistente mediante benefício do Programa Bolsa Família (Id. 34713785), com vinculação de seu nome a contrato fraudulento e a geração de cobranças ilegítimas, extrapola as fronteiras do aborrecimento cotidiano. A jurisprudência pátria reconhece que a celebração fraudulenta de financiamento com inserção de restrições e ameaça creditícia constante atinge a dignidade, honra e integridade psíquica da vítima, configurando dano moral: Ementa: DIREITO DO CONSUMIDOR E PROCESSUAL CIVIL. APELAÇÃO CÍVEL. AÇÃO DECLARATÓRIA DE INEXISTÊNCIA DE RELAÇÃO JURÍDICA C/C INDENIZAÇÃO POR DANOS MORAIS. FRAUDE BANCÁRIA . FINANCIAMENTO DE VEÍCULO CONTRATADO MEDIANTE USO INDEVIDO DE DADOS PESSOAIS E BIOMETRIA FACIAL. RESPONSABILIDADE OBJETIVA DA INSTITUIÇÃO FINANCEIRA. FORTUITO INTERNO. FALHA NO DEVER DE SEGURANÇA . DANO MORAL CONFIGURADO. RECURSO DESPROVIDO. I. CASO EM EXAME Recursos de Apelação Cível interpostos por BANCO ITAUCARD S .A. e PLANET CAR COMÉRCIO E FINANCIAMENTO DE VEÍCULOS LTDA. contra sentença que julgou parcialmente procedente Ação Declaratória de Inexistência de Relação Jurídica c/c Indenização por Danos Morais ajuizada por NILMAR SILVA PEREIRA, para declarar nulo contrato de financiamento de veículo firmado fraudulentamente em nome do autor e condenar os réus, solidariamente, ao pagamento de indenização por danos morais no valor de R$ 7.000,00 . O autor alegou ter sido vítima de golpe de engenharia social mediante falsa promessa de emprego, ocasião em que forneceu documentos pessoais e imagens posteriormente utilizados para contratação fraudulenta de financiamento perante a instituição financeira apelante. II. QUESTÃO EM DISCUSSÃO Há quatro questões em discussão: (i) definir se o BANCO ITAUCARD S.A . possui legitimidade passiva para responder pelos danos decorrentes da contratação fraudulenta; (ii) estabelecer se a fraude praticada por terceiros configura fortuito interno ou fortuito externo apto a afastar a responsabilidade objetiva da instituição financeira; (iii) determinar se houve culpa exclusiva da vítima em razão do fornecimento de dados pessoais aos fraudadores; e (iv) verificar se a resolução administrativa posterior da fraude afasta o dever de indenizar por danos morais. III. RAZÕES DE DECIDIR A legitimidade passiva da instituição financeira decorre da Teoria da Asserção e da sua condição de integrante da cadeia de consumo, uma vez que o financiamento fraudulento foi formalizado em seu ambiente negocial e mediante concessão de crédito de sua titularidade. As instituições financeiras respondem objetivamente pelos danos decorrentes de fraudes perpetradas por terceiros no âmbito das operações bancárias, por se tratar de fortuito interno inerente ao risco do empreendimento, nos termos da Súmula 479 do STJ . A adoção de mecanismos digitais de contratação impõe às instituições financeiras o dever qualificado de implementar sistemas eficazes de autenticação, validação biométrica e conferência cadastral capazes de impedir operações incompatíveis com o perfil do consumidor. A aprovação de financiamento vultoso mediante utilização de endereço eletrônico e dados cadastrais incompatíveis com o histórico do consumidor evidencia falha na prestação do serviço e deficiência dos protocolos de segurança da instituição financeira. O fornecimento de documentos e imagens pelo consumidor, quando realizado sob induzimento fraudulento decorrente de golpe de engenharia social, não configura culpa exclusiva da vítima apta a romper o nexo causal da responsabilidade objetiva do fornecedor. A pronta lavratura de boletim de ocorrência e a imediata contestação administrativa da contratação reforçam a boa-fé do consumidor e demonstram que o evento danoso decorreu de vulnerabilidade sistêmica do processo de contratação bancária digital . A baixa administrativa posterior do contrato fraudulento não afasta a configuração do dano moral, pois o ilícito já se consumara com a utilização indevida dos dados pessoais do consumidor, formalização da avença fraudulenta e envio de cobranças indevidas. O dano moral, na hipótese de contratação bancária fraudulenta, configura-se in re ipsa, dispensando prova específica do prejuízo extrapatrimonial, sendo adequado o valor indenizatório fixado em R$ 7.000,00 diante das circunstâncias do caso concreto e dos princípios da razoabilidade e proporcionalidade. IV . DISPOSITIVO E TESE Recurso conhecido e desprovido. Sentença integralmente mantida. Tese de julgamento: As instituições financeiras respondem objetivamente por fraudes praticadas por terceiros em contratos bancários digitais, por se tratar de fortuito interno inerente ao risco da atividade econômica. A utilização de biometria facial e contratação eletrônica não afasta a responsabilidade da instituição financeira quando demonstrada falha nos mecanismos de validação e segurança da operação . O fornecimento de dados pessoais pelo consumidor mediante induzimento fraudulento não configura culpa exclusiva da vítima apta a excluir a responsabilidade objetiva do fornecedor. A resolução administrativa posterior da fraude não afasta o dano moral decorrente da contratação bancária indevida e das cobranças realizadas em desfavor do consumidor. O dano moral decorrente de financiamento fraudulento configura hipótese de dano moral in re ipsa. Dispositivos relevantes citados: CDC, arts . 7º, parágrafo único, 14, caput e § 3º, II, 17 e 25, § 1º; CC, arts. 186, 927 e 944; CPC, art. 85, § 11. Jurisprudência relevante citada: STJ, Súmula 479; STJ, REsp nº 1 .197.929/PR, Rel. Min. Luis Felipe Salomão, Segunda Seção, j . 24.08.2011; STJ, REsp nº 2.052 .228/DF, Rel. Min. Nancy Andrighi, Terceira Turma, j. 12 .09.2023; STJ, REsp nº 2.077.278/SP, Rel . Min. Nancy Andrighi, Terceira Turma, j. 03.10 .2023; STJ, AgInt no AREsp nº 1.299.783/RJ, Rel. Min . Lázaro Guimarães, Quarta Turma, j. 13.12.2018 . (TJPI - APELAÇÃO CÍVEL 0836135-02.2022.8.18 .0140 - Relator.: MANOEL DE SOUSA DOURADO - 2ª Câmara Especializada Cível - Data 07/07/2026 ) (TJ-PI - APELAÇÃO CÍVEL: 08361350220228180140, Relator: MANOEL DE SOUSA DOURADO, Data de Julgamento: 07/07/2026, 2ª Câmara Especializada Cível, Data de Publicação: 07/07/2026) Quanto à quantificação do dano, o arbitramento deve pautar-se nos postulados da razoabilidade e da proporcionalidade, orientando-se pelo critério bifásico delineado pelo Superior Tribunal de Justiça. No caso concreto, o montante arbitrado pelo juízo singular em R$ 5.000,00 (cinco mil reais) mostra-se estritamente moderado e proporcional, coadunando-se com a função compensatória em relação à vítima e pedagógica em face da instituição financeira, sem jamais constituir enriquecimento sem causa. Portanto, descabe qualquer redução na verba indenizatória fixada na origem. 3.3. CONSECTÁRIOS LEGAIS E ENCARGOS SUCUMBENCIAIS No tocante aos consectários legais, o apelante postula genericamente a incidência isolada da Taxa SELIC com amparo na novel Lei nº 14.905/2024. Todavia, cumpre observar que a r. sentença de primeiro grau estabeleceu que a indenização por dano moral fosse atualizada monetariamente pelo IPCA desde a data do arbitramento e acrescida de juros de mora pela Taxa SELIC deduzida a variação do IPCA a contar do evento danoso, sistemática que já harmonizou o cálculo com os novos ditames do art. 406 do Código Civil. No que se refere ao termo inicial, cuidando-se de responsabilidade extracontratual originada de ato ilícito fundado em contratação inexistente, os juros moratórios fluem a partir do evento danoso, nos termos da Súmula 54 do Superior Tribunal de Justiça, parâmetro fielmente respeitado pelo pronunciamento monocrático. Por fim, no que concerne aos honorários de sucumbência, o recorrente pugnou pela sua fixação equitativa ou pela alteração da base de cálculo para o valor da condenação. Contudo, a regra do art. 85, § 2º, do CPC estabelece uma ordem estrita e sucessiva de preferência: 1º) valor da condenação; 2º) proveito econômico obtido; 3º) não sendo possível mensurá-lo, valor atualizado da causa. Ao obter o reconhecimento da inexistência de financiamento, cumulado com indenização moral no importe de R$ 5.000,00 (cinco mil reais), a parte autora auferiu proveito econômico certo, mensurável e líquido, sobre o qual incide necessariamente a verba honorária em seu piso de 10% (dez por cento). Inexistindo proveito econômico inestimável, irrisório ou valor da causa excessivamente baixo, veda-se o arbitramento por apreciação equitativa, devendo ser mantida hígida a condenação de sucumbência arbitrada na primeira instância. IV - DISPOSITIVO Ante o exposto, nos termos do art. 932, IV, \"a\", do Código de Processo Civil e da Súmula 568 do Superior Tribunal de Justiça, conheço do recurso de apelação e nego-lhe provimento, mantendo incólume a sentença guerreada. Com fundamento no art. 85, § 11, do CPC, majoro os honorários advocatícios sucumbenciais devidos pela instituição financeira apelante para o importe de 15% (quinze por cento) sobre o valor atualizado do proveito econômico obtido pela demandante. Intimem-se. Publique-se. Cumpra-se. Teresina/PI, data da assinatura eletrônica. Des. Dioclécio Sousa da Silva Relator (TJPI - APELAÇÃO CÍVEL 0801013-68.2018.8.18.0074 - Relator: DIOCLECIO SOUSA DA SILVA - 1ª Câmara Especializada Cível",
+      "orgaos": [
+        "4ª Câmara Especializada Cível - Data 25/03/2026) Dessa forma, desprovida de qualquer suporte a tese de exclusão de nexo de causalidade por fato de terceiro, impõe-se a manutenção do decreto de inexistência do negócio jurídico e de sua inexigibilidade perante a parte autora. 3.2. DO DANO MORAL A imposição arbitrária de uma dívida de dezenas de milhares de reais sobre pessoa simples, trabalhadora rural desprovida de patrimônio e subsistente mediante benefício do Programa Bolsa Família (Id. 34713785), com vinculação de seu nome a contrato fraudulento e a geração de cobranças ilegítimas, extrapola as fronteiras do aborrecimento cotidiano. A jurisprudência pátria reconhece que a celebração fraudulenta de financiamento com inserção de restrições e ameaça creditícia constante atinge a dignidade, honra e integridade psíquica da vítima, configurando dano moral: Ementa: DIREITO DO CONSUMIDOR E PROCESSUAL CIVIL. APELAÇÃO CÍVEL. AÇÃO DECLARATÓRIA DE INEXISTÊNCIA DE RELAÇÃO JURÍDICA C/C INDENIZAÇÃO POR DANOS MORAIS. FRAUDE BANCÁRIA . FINANCIAMENTO DE VEÍCULO CONTRATADO MEDIANTE USO INDEVIDO DE DADOS PESSOAIS E BIOMETRIA FACIAL. RESPONSABILIDADE OBJETIVA DA INSTITUIÇÃO FINANCEIRA. FORTUITO INTERNO. FALHA NO DEVER DE SEGURANÇA . DANO MORAL CONFIGURADO. RECURSO DESPROVIDO. I. CASO EM EXAME Recursos de Apelação Cível interpostos por BANCO ITAUCARD S .A. e PLANET CAR COMÉRCIO E FINANCIAMENTO DE VEÍCULOS LTDA. contra sentença que julgou parcialmente procedente Ação Declaratória de Inexistência de Relação Jurídica c/c Indenização por Danos Morais ajuizada por NILMAR SILVA PEREIRA, para declarar nulo contrato de financiamento de veículo firmado fraudulentamente em nome do autor e condenar os réus, solidariamente, ao pagamento de indenização por danos morais no valor de R$ 7.000,00 . O autor alegou ter sido vítima de golpe de engenharia social mediante falsa promessa de emprego, ocasião em que forneceu documentos pessoais e imagens posteriormente utilizados para contratação fraudulenta de financiamento perante a instituição financeira apelante. II. QUESTÃO EM DISCUSSÃO Há quatro questões em discussão: (i) definir se o BANCO ITAUCARD S.A . possui legitimidade passiva para responder pelos danos decorrentes da contratação fraudulenta; (ii) estabelecer se a fraude praticada por terceiros configura fortuito interno ou fortuito externo apto a afastar a responsabilidade objetiva da instituição financeira; (iii) determinar se houve culpa exclusiva da vítima em razão do fornecimento de dados pessoais aos fraudadores; e (iv) verificar se a resolução administrativa posterior da fraude afasta o dever de indenizar por danos morais. III. RAZÕES DE DECIDIR A legitimidade passiva da instituição financeira decorre da Teoria da Asserção e da sua condição de integrante da cadeia de consumo, uma vez que o financiamento fraudulento foi formalizado em seu ambiente negocial e mediante concessão de crédito de sua titularidade. As instituições financeiras respondem objetivamente pelos danos decorrentes de fraudes perpetradas por terceiros no âmbito das operações bancárias, por se tratar de fortuito interno inerente ao risco do empreendimento, nos termos da Súmula 479 do STJ . A adoção de mecanismos digitais de contratação impõe às instituições financeiras o dever qualificado de implementar sistemas eficazes de autenticação, validação biométrica e conferência cadastral capazes de impedir operações incompatíveis com o perfil do consumidor. A aprovação de financiamento vultoso mediante utilização de endereço eletrônico e dados cadastrais incompatíveis com o histórico do consumidor evidencia falha na prestação do serviço e deficiência dos protocolos de segurança da instituição financeira. O fornecimento de documentos e imagens pelo consumidor, quando realizado sob induzimento fraudulento decorrente de golpe de engenharia social, não configura culpa exclusiva da vítima apta a romper o nexo causal da responsabilidade objetiva do fornecedor. A pronta lavratura de boletim de ocorrência e a imediata contestação administrativa da contratação reforçam a boa-fé do consumidor e demonstram que o evento danoso decorreu de vulnerabilidade sistêmica do processo de contratação bancária digital . A baixa administrativa posterior do contrato fraudulento não afasta a configuração do dano moral, pois o ilícito já se consumara com a utilização indevida dos dados pessoais do consumidor, formalização da avença fraudulenta e envio de cobranças indevidas. O dano moral, na hipótese de contratação bancária fraudulenta, configura-se in re ipsa, dispensando prova específica do prejuízo extrapatrimonial, sendo adequado o valor indenizatório fixado em R$ 7.000,00 diante das circunstâncias do caso concreto e dos princípios da razoabilidade e proporcionalidade. IV . DISPOSITIVO E TESE Recurso conhecido e desprovido. Sentença integralmente mantida. Tese de julgamento: As instituições financeiras respondem objetivamente por fraudes praticadas por terceiros em contratos bancários digitais, por se tratar de fortuito interno inerente ao risco da atividade econômica. A utilização de biometria facial e contratação eletrônica não afasta a responsabilidade da instituição financeira quando demonstrada falha nos mecanismos de validação e segurança da operação . O fornecimento de dados pessoais pelo consumidor mediante induzimento fraudulento não configura culpa exclusiva da vítima apta a excluir a responsabilidade objetiva do fornecedor. A resolução administrativa posterior da fraude não afasta o dano moral decorrente da contratação bancária indevida e das cobranças realizadas em desfavor do consumidor. O dano moral decorrente de financiamento fraudulento configura hipótese de dano moral in re ipsa. Dispositivos relevantes citados: CDC, arts . 7º, parágrafo único, 14, caput e § 3º, II, 17 e 25, § 1º; CC, arts. 186, 927 e 944; CPC, art. 85, § 11. Jurisprudência relevante citada: STJ, Súmula 479; STJ, REsp nº 1 .197.929/PR, Rel. Min. Luis Felipe Salomão, Segunda Seção, j . 24.08.2011; STJ, REsp nº 2.052 .228/DF, Rel. Min. Nancy Andrighi, Terceira Turma, j. 12 .09.2023; STJ, REsp nº 2.077.278/SP, Rel . Min. Nancy Andrighi, Terceira Turma, j. 03.10 .2023; STJ, AgInt no AREsp nº 1.299.783/RJ, Rel. Min . Lázaro Guimarães, Quarta Turma, j. 13.12.2018 . (TJPI - APELAÇÃO CÍVEL 0836135-02.2022.8.18 .0140 - Relator.: MANOEL DE SOUSA DOURADO - 2ª Câmara Especializada Cível - Data 07/07/2026 ) (TJ-PI - APELAÇÃO CÍVEL: 08361350220228180140, Relator: MANOEL DE SOUSA DOURADO, Data de Julgamento: 07/07/2026, 2ª Câmara Especializada Cível, Data de Publicação: 07/07/2026) Quanto à quantificação do dano, o arbitramento deve pautar-se nos postulados da razoabilidade e da proporcionalidade, orientando-se pelo critério bifásico delineado pelo Superior Tribunal de Justiça. No caso concreto, o montante arbitrado pelo juízo singular em R$ 5.000,00 (cinco mil reais) mostra-se estritamente moderado e proporcional, coadunando-se com a função compensatória em relação à vítima e pedagógica em face da instituição financeira, sem jamais constituir enriquecimento sem causa. Portanto, descabe qualquer redução na verba indenizatória fixada na origem. 3.3. CONSECTÁRIOS LEGAIS E ENCARGOS SUCUMBENCIAIS No tocante aos consectários legais, o apelante postula genericamente a incidência isolada da Taxa SELIC com amparo na novel Lei nº 14.905/2024. Todavia, cumpre observar que a r. sentença de primeiro grau estabeleceu que a indenização por dano moral fosse atualizada monetariamente pelo IPCA desde a data do arbitramento e acrescida de juros de mora pela Taxa SELIC deduzida a variação do IPCA a contar do evento danoso, sistemática que já harmonizou o cálculo com os novos ditames do art. 406 do Código Civil. No que se refere ao termo inicial, cuidando-se de responsabilidade extracontratual originada de ato ilícito fundado em contratação inexistente, os juros moratórios fluem a partir do evento danoso, nos termos da Súmula 54 do Superior Tribunal de Justiça, parâmetro fielmente respeitado pelo pronunciamento monocrático. Por fim, no que concerne aos honorários de sucumbência, o recorrente pugnou pela sua fixação equitativa ou pela alteração da base de cálculo para o valor da condenação. Contudo, a regra do art. 85, § 2º, do CPC estabelece uma ordem estrita e sucessiva de preferência: 1º) valor da condenação; 2º) proveito econômico obtido; 3º) não sendo possível mensurá-lo, valor atualizado da causa. Ao obter o reconhecimento da inexistência de financiamento, cumulado com indenização moral no importe de R$ 5.000,00 (cinco mil reais), a parte autora auferiu proveito econômico certo, mensurável e líquido, sobre o qual incide necessariamente a verba honorária em seu piso de 10% (dez por cento). Inexistindo proveito econômico inestimável, irrisório ou valor da causa excessivamente baixo, veda-se o arbitramento por apreciação equitativa, devendo ser mantida hígida a condenação de sucumbência arbitrada na primeira instância. IV - DISPOSITIVO Ante o exposto, nos termos do art. 932, IV, \"a\", do Código de Processo Civil e da Súmula 568 do Superior Tribunal de Justiça, conheço do recurso de apelação e nego-lhe provimento, mantendo incólume a sentença guerreada. Com fundamento no art. 85, § 11, do CPC, majoro os honorários advocatícios sucumbenciais devidos pela instituição financeira apelante para o importe de 15% (quinze por cento) sobre o valor atualizado do proveito econômico obtido pela demandante. Intimem-se. Publique-se. Cumpra-se. Teresina/PI, data da assinatura eletrônica. Des. Dioclécio Sousa da Silva Relator (TJPI - APELAÇÃO CÍVEL 0801013-68.2018.8.18.0074 - Relator: DIOCLECIO SOUSA DA SILVA - 1ª Câmara Especializada Cível",
+        "4ª Câmara Especializada Cível"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0801013-68.2018.8.18.0074",
+        "0801951-30.2025.8.18.0038"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "HILO DE ALMEIDA SOUSA",
+      "rotulo_original": "HILO DE ALMEIDA SOUSA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Câmara Especializada Cível - Data 23/04/2026) Destarte, resta evidenciada a nulidade absoluta do contrato de empréstimo consignado nº 226030532, devendo a instituição financeira apelada cessar em definitivo qualquer desconto a ele relativo. DA REPETIÇÃO DO INDÉBITO EM DOBRO Declarada a nulidade da avença, os descontos perpetrados no benefício previdenciário da apelante mostram-se ilegítimos. A repetição do indébito deve operar-se na forma dobrada, com arrimo no art. 42, parágrafo único, do Código de Defesa do Consumidor, haja vista a configuração de conduta contrária à boa-fé objetiva por parte da instituição financeira, ao efetivar deduções continuadas em verba alimentar sem respaldo contratual válido. Com efeito, a restituição em dobro independe da prova de dolo ou má-fé subjetiva, bastando a constatação de cobrança indevida desprovida de engano justificável. DOS DANOS MORAIS E QUANTIFICAÇÃO A privação indevida de valores integrantes de benefício previdenciário de subsistência de pessoa idosa e vulnerável ultrapassa o mero aborrecimento, atingindo diretamente a dignidade e a tranquilidade da parte consumidora. Trata-se de dano moral caracterizado pela violação ao mínimo existencial e à integridade psíquica da aposentada, que se viu privada de parcela de seus parcos proventos sem ter contratado a operação. No que tange ao arbitramento do valor indenizatório, sopesando o método bifásico, a extensão do gravame, o caráter pedagógico e punitivo da sanção, a capacidade econômica da instituição financeira e a vedação ao enriquecimento sem causa, fixa-se a indenização por danos morais no montante de R$ 5.000,00 (cinco mil reais), patamar consentâneo com a jurisprudência desta Corte em casos análogos. DO AFASTAMENTO DA MULTA POR LITIGÂNCIA DE MÁ-FÉ A imposição de multa por litigância de má-fé exige a demonstração cabal e inequívoca de dolo processual ou intuito deliberado de alterar a verdade dos fatos, ex vi dos arts. 80 e 81 do Código de Processo Civil. A simples propositura de ação judicial para salvaguardar direitos patrimoniais e combater descontos indevidos em benefício previdenciário decorre do legítimo exercício do direito de ação (art. 5º, inciso XXXV, da CF/88), inexistindo substrato fático para sancionar a consumidora. Impõe-se, por conseguinte, o afastamento integral da multa por litigância de má-fé aplicada na sentença recorrida. DOS CONSECTÁRIOS LEGAIS (TEMA 1368 DO STJ E ART. 406 DO CÓDIGO CIVIL) No que se refere à correção monetária e aos juros de mora incidentes sobre as verbas condenatórias, impõe-se a estrita adequação ao julgamento vinculante do Tema Repetitivo nº 1368 do Superior Tribunal de Justiça e à nova redação do art. 406 do Código Civil conferida pela Lei nº 14.905/2024. O Superior Tribunal de Justiça firmou a seguinte tese vinculante perante a Corte Especial: TEMA REPETITIVO STJ Tema 1368 (CORTE ESPECIAL) [DIREITO CIVIL]: O art. 406 Código Civil de 2002, antes da entrada em vigor da Lei n° 14.905/2024, deve ser interpretado no sentido de que é a SELIC a taxa de juros de mora aplicável às dívidas de natureza civil, por ser esta a taxa em vigor para a atualização monetária e a mora no pagamento de impostos devidos à Fazenda Nacional. — Paradigma: REsp 2199164/PR Dessa forma, a fixação dos consectários legais deve observar a seguinte modulação temporal: Para a repetição do indébito: incide correção monetária pelo IPCA a partir de cada desconto indevido (Súmula nº 43 do STJ) e juros de mora desde o evento danoso (Súmula nº 54 do STJ), calculados à taxa de 1% (um por cento) ao mês até a data anterior à vigência da Lei nº 14.905/2024; a partir da vigência da Lei nº 14.905/2024, a atualização monetária e os juros de mora passam a ser regulados pelo art. 406 do Código Civil (taxa legal baseada na taxa Selic deduzida do índice de atualização monetária oficial). Para a indenização por danos morais: a correção monetária incide a partir da data do presente arbitramento (Súmula nº 362 do STJ) e os juros de mora fluem a partir do evento danoso (primeiro desconto indevido, nos moldes da Súmula nº 54 do STJ), aplicando-se a taxa legal do art. 406 do Código Civil (regime da Lei nº 14.905/2024 / Tema 1368 do STJ). DISPOSITIVO Ante o exposto, CONHEÇO do recurso de apelação e, no mérito, DOU-LHE PROVIMENTO para reformar integralmente a r. sentença de primeiro grau (ID 35840337) e: a) Declarar a nulidade e inexistência do Contrato de Empréstimo Consignado nº 226030532 no valor de R$ 907,00 (ID 24433522 e ID 35840338), determinando ao banco apelado a imediata e definitiva abstenção/cessação de qualquer desconto no benefício previdenciário da autora (NB 167.209.045-5) a ele referente; b) Condenar o BANCO SANTANDER (BRASIL) S.A. à repetição do indébito, em dobro, de todos os valores indevidamente descontados do benefício previdenciário da apelante em razão do referido contrato, acrescidos de correção monetária (IPCA) desde a data de cada desconto e juros de mora a partir do evento danoso (primeiro desconto), observando-se a taxa de 1% ao mês até a vigência da Lei nº 14.905/2024 e, a partir de então, a taxa legal do art. 406 do Código Civil (Tema 1368 do STJ); c) Condenar o BANCO SANTANDER (BRASIL) S.A. ao pagamento de indenização por danos morais no importe de R$ 5.000,00 (cinco mil reais), com correção monetária a contar da data deste julgamento (Súmula nº 362 do STJ) e juros de mora a contar do evento danoso (Súmula nº 54 do STJ), calculados conforme o art. 406 do Código Civil / Tema 1368 do STJ; d) Afastar integralmente a condenação da autora ao pagamento de multa por litigância de má-fé; e) Inverter os ônus da sucumbência, condenando o banco apelado ao pagamento das custas processuais e dos honorários advocatícios em favor do patrono da autora, fixados em 15% (quinze por cento) sobre o valor da condenação, nos termos do art. 85, § 2º, do CPC. É como voto. Teresina, datado e assinado eletronicamente. Desembargadora LUCICLEIDE PEREIRA BELO Relatora (TJPI - APELAÇÃO CÍVEL 0827199-51.2023.8.18.0140 - Relator: LUCICLEIDE PEREIRA BELO - 3ª Câmara Especializada Cível",
+      "orgaos": [
+        "1ª Câmara Especializada Cível - Data 23/04/2026) Destarte, resta evidenciada a nulidade absoluta do contrato de empréstimo consignado nº 226030532, devendo a instituição financeira apelada cessar em definitivo qualquer desconto a ele relativo. DA REPETIÇÃO DO INDÉBITO EM DOBRO Declarada a nulidade da avença, os descontos perpetrados no benefício previdenciário da apelante mostram-se ilegítimos. A repetição do indébito deve operar-se na forma dobrada, com arrimo no art. 42, parágrafo único, do Código de Defesa do Consumidor, haja vista a configuração de conduta contrária à boa-fé objetiva por parte da instituição financeira, ao efetivar deduções continuadas em verba alimentar sem respaldo contratual válido. Com efeito, a restituição em dobro independe da prova de dolo ou má-fé subjetiva, bastando a constatação de cobrança indevida desprovida de engano justificável. DOS DANOS MORAIS E QUANTIFICAÇÃO A privação indevida de valores integrantes de benefício previdenciário de subsistência de pessoa idosa e vulnerável ultrapassa o mero aborrecimento, atingindo diretamente a dignidade e a tranquilidade da parte consumidora. Trata-se de dano moral caracterizado pela violação ao mínimo existencial e à integridade psíquica da aposentada, que se viu privada de parcela de seus parcos proventos sem ter contratado a operação. No que tange ao arbitramento do valor indenizatório, sopesando o método bifásico, a extensão do gravame, o caráter pedagógico e punitivo da sanção, a capacidade econômica da instituição financeira e a vedação ao enriquecimento sem causa, fixa-se a indenização por danos morais no montante de R$ 5.000,00 (cinco mil reais), patamar consentâneo com a jurisprudência desta Corte em casos análogos. DO AFASTAMENTO DA MULTA POR LITIGÂNCIA DE MÁ-FÉ A imposição de multa por litigância de má-fé exige a demonstração cabal e inequívoca de dolo processual ou intuito deliberado de alterar a verdade dos fatos, ex vi dos arts. 80 e 81 do Código de Processo Civil. A simples propositura de ação judicial para salvaguardar direitos patrimoniais e combater descontos indevidos em benefício previdenciário decorre do legítimo exercício do direito de ação (art. 5º, inciso XXXV, da CF/88), inexistindo substrato fático para sancionar a consumidora. Impõe-se, por conseguinte, o afastamento integral da multa por litigância de má-fé aplicada na sentença recorrida. DOS CONSECTÁRIOS LEGAIS (TEMA 1368 DO STJ E ART. 406 DO CÓDIGO CIVIL) No que se refere à correção monetária e aos juros de mora incidentes sobre as verbas condenatórias, impõe-se a estrita adequação ao julgamento vinculante do Tema Repetitivo nº 1368 do Superior Tribunal de Justiça e à nova redação do art. 406 do Código Civil conferida pela Lei nº 14.905/2024. O Superior Tribunal de Justiça firmou a seguinte tese vinculante perante a Corte Especial: TEMA REPETITIVO STJ Tema 1368 (CORTE ESPECIAL) [DIREITO CIVIL]: O art. 406 Código Civil de 2002, antes da entrada em vigor da Lei n° 14.905/2024, deve ser interpretado no sentido de que é a SELIC a taxa de juros de mora aplicável às dívidas de natureza civil, por ser esta a taxa em vigor para a atualização monetária e a mora no pagamento de impostos devidos à Fazenda Nacional. — Paradigma: REsp 2199164/PR Dessa forma, a fixação dos consectários legais deve observar a seguinte modulação temporal: Para a repetição do indébito: incide correção monetária pelo IPCA a partir de cada desconto indevido (Súmula nº 43 do STJ) e juros de mora desde o evento danoso (Súmula nº 54 do STJ), calculados à taxa de 1% (um por cento) ao mês até a data anterior à vigência da Lei nº 14.905/2024; a partir da vigência da Lei nº 14.905/2024, a atualização monetária e os juros de mora passam a ser regulados pelo art. 406 do Código Civil (taxa legal baseada na taxa Selic deduzida do índice de atualização monetária oficial). Para a indenização por danos morais: a correção monetária incide a partir da data do presente arbitramento (Súmula nº 362 do STJ) e os juros de mora fluem a partir do evento danoso (primeiro desconto indevido, nos moldes da Súmula nº 54 do STJ), aplicando-se a taxa legal do art. 406 do Código Civil (regime da Lei nº 14.905/2024 / Tema 1368 do STJ). DISPOSITIVO Ante o exposto, CONHEÇO do recurso de apelação e, no mérito, DOU-LHE PROVIMENTO para reformar integralmente a r. sentença de primeiro grau (ID 35840337) e: a) Declarar a nulidade e inexistência do Contrato de Empréstimo Consignado nº 226030532 no valor de R$ 907,00 (ID 24433522 e ID 35840338), determinando ao banco apelado a imediata e definitiva abstenção/cessação de qualquer desconto no benefício previdenciário da autora (NB 167.209.045-5) a ele referente; b) Condenar o BANCO SANTANDER (BRASIL) S.A. à repetição do indébito, em dobro, de todos os valores indevidamente descontados do benefício previdenciário da apelante em razão do referido contrato, acrescidos de correção monetária (IPCA) desde a data de cada desconto e juros de mora a partir do evento danoso (primeiro desconto), observando-se a taxa de 1% ao mês até a vigência da Lei nº 14.905/2024 e, a partir de então, a taxa legal do art. 406 do Código Civil (Tema 1368 do STJ); c) Condenar o BANCO SANTANDER (BRASIL) S.A. ao pagamento de indenização por danos morais no importe de R$ 5.000,00 (cinco mil reais), com correção monetária a contar da data deste julgamento (Súmula nº 362 do STJ) e juros de mora a contar do evento danoso (Súmula nº 54 do STJ), calculados conforme o art. 406 do Código Civil / Tema 1368 do STJ; d) Afastar integralmente a condenação da autora ao pagamento de multa por litigância de má-fé; e) Inverter os ônus da sucumbência, condenando o banco apelado ao pagamento das custas processuais e dos honorários advocatícios em favor do patrono da autora, fixados em 15% (quinze por cento) sobre o valor da condenação, nos termos do art. 85, § 2º, do CPC. É como voto. Teresina, datado e assinado eletronicamente. Desembargadora LUCICLEIDE PEREIRA BELO Relatora (TJPI - APELAÇÃO CÍVEL 0827199-51.2023.8.18.0140 - Relator: LUCICLEIDE PEREIRA BELO - 3ª Câmara Especializada Cível",
+        "1ª Câmara de Direito Público",
+        "1ª Câmara Especializada Cível"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0827199-51.2023.8.18.0140",
+        "0828286-18.2018.8.18.0140",
+        "0801161-48.2019.8.18.0073"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE VIDAL DE FREITAS FILHO",
+      "rotulo_original": "JOSE VIDAL DE FREITAS FILHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Câmara de Direito Público",
+      "orgaos": [
+        "6ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0802082-26.2025.8.18.0031",
+        "0827088-67.2023.8.18.0140",
+        "0800702-10.2022.8.18.0051",
+        "0842142-44.2021.8.18.0140"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LIRTON NOGUEIRA SANTOS",
+      "rotulo_original": "LIRTON NOGUEIRA SANTOS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª Câmara Especializada Cível",
+      "orgaos": [
+        "4ª Câmara Especializada Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0801106-44.2025.8.18.0055",
+        "0847215-60.2022.8.18.0140",
+        "0804624-61.2023.8.18.0039"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALINY MARIANNY COSTA LEAL",
+      "rotulo_original": "ALINY MARIANNY COSTA LEAL",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Câmara Especializada Criminal",
+      "orgaos": [
+        "2ª Câmara Especializada Criminal"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0800885-84.2021.8.18.0028"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDSON ALVES DA SILVA",
+      "rotulo_original": "EDSON ALVES DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Câmara Especializada Cível",
+      "orgaos": [
+        "2ª Câmara Especializada Cível",
+        "6ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0801526-15.2023.8.18.0089",
+        "0855709-74.2023.8.18.0140"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PAULO ROBERTO DE ARAUJO BARROS",
+      "rotulo_original": "PAULO ROBERTO DE ARAUJO BARROS",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "1ª Turma Recursal",
+      "orgaos": [
+        "1ª Turma Recursal"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0801279-86.2025.8.18.0146",
+        "0801174-12.2025.8.18.0146"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PEDRO DE ALCANTARA DA SILVA MACEDO",
+      "rotulo_original": "PEDRO DE ALCANTARA DA SILVA MACEDO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª Câmara de Direito Público",
+      "orgaos": [
+        "5ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0751599-51.2026.8.18.0000",
+        "0803802-59.2024.8.18.0032"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ADERSON ANTONIO BRITO NOGUEIRA",
+      "rotulo_original": "ADERSON ANTONIO BRITO NOGUEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0755646-68.2026.8.18.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FRANCISCO GOMES DA COSTA NETO",
+      "rotulo_original": "FRANCISCO GOMES DA COSTA NETO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª Câmara de Direito Público",
+      "orgaos": [
+        "4ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0800171-53.2023.8.18.0029"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA LUIZA DE MOURA MELLO E FREITAS",
+      "rotulo_original": "MARIA LUIZA DE MOURA MELLO E FREITAS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Câmara de Direito Público",
+      "orgaos": [
+        "6ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0818070-90.2021.8.18.0140"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SEBASTIAO RIBEIRO MARTINS",
+      "rotulo_original": "SEBASTIAO RIBEIRO MARTINS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª Câmara de Direito Público",
+      "orgaos": [
+        "5ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0837391-43.2023.8.18.0140"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

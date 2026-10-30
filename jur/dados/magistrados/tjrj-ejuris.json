@@ -1,0 +1,876 @@
+{
+  "tribunal": "tjrj-ejuris",
+  "nome": "TJ do Rio de Janeiro — módulo eJURIS (legado)",
+  "coletado_em": "2026-10-30T08:12:12.415Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": false,
+      "forma": null
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "30/10/2025",
+      "dataFim": "30/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 103679,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "30/10/2025",
+      "dataFim": "30/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 7632,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "30/10/2025",
+      "dataFim": "30/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 19,
+      "total_no_portal": 68573,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "30/10/2025",
+      "dataFim": "30/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 1375,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 35,
+    "por_grau": {
+      "1": 1,
+      "2": 34
+    },
+    "teste_busca": {
+      "sem_capacidade": 35
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "(a) CRISTIANE TELES MOURA MARQUES",
+      "rotulo_original": "Juiz(a) CRISTIANE TELES MOURA MARQUES",
+      "cargo": "Juiz",
+      "grau": "1",
+      "orgao": "CAPITAL 3a. TURMA RECURSAL DOS JUI ESP CIVEIS",
+      "orgaos": [
+        "CAPITAL 3a. TURMA RECURSAL DOS JUI ESP CIVEIS"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0802681-14.2026.8.19.0253",
+        "0802623-80.2026.8.19.0036",
+        "0805610-58.2026.8.19.0208",
+        "0819537-19.2026.8.19.0038",
+        "0815338-05.2026.8.19.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "(a). LUCIA HELENA DO PASSO",
+      "rotulo_original": "Des(a). LUCIA HELENA DO PASSO",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA PRIMEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 27ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA PRIMEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 27ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0009005-15.2017.8.19.0206",
+        "0013739-44.2010.8.19.0209",
+        "0823653-26.2024.8.19.0204",
+        "0087974-33.2024.8.19.0001",
+        "0307299-15.2021.8.19.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). FERNANDO CESAR FERREIRA VIANA",
+      "rotulo_original": "Des(a). FERNANDO CESAR FERREIRA VIANA",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "SÉTIMA CÂMARA DE DIREITO PÚBLICO",
+      "orgaos": [
+        "SÉTIMA CÂMARA DE DIREITO PÚBLICO"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0081779-55.2013.8.19.0021",
+        "0053778-69.2026.8.19.0000",
+        "0254138-95.2018.8.19.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). GUILHERME BRAGA PEÑA DE MORAES",
+      "rotulo_original": "Des(a). GUILHERME BRAGA PEÑA DE MORAES",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "SEXTA CAMARA DE DIREITO PUBLICO (ANTIGA 21ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "SEXTA CAMARA DE DIREITO PUBLICO (ANTIGA 21ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0017808-52.2020.8.19.0021",
+        "0000066-55.1994.8.19.0011",
+        "0180397-12.2024.8.19.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). LIDIA MARIA SODRE DE MORAES",
+      "rotulo_original": "Des(a). LIDIA MARIA SODRE DE MORAES",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "SEXTA CAMARA DE DIREITO PUBLICO (ANTIGA 21ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "SEXTA CAMARA DE DIREITO PUBLICO (ANTIGA 21ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0163629-16.2021.8.19.0001",
+        "0010557-12.2022.8.19.0021",
+        "0020741-51.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). MARCELO LIMA BUHATEM",
+      "rotulo_original": "Des(a). MARCELO LIMA BUHATEM",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "VIGESIMA TERCEIRA CAMARA DE DIREITO PRIVADO",
+      "orgaos": [
+        "VIGESIMA TERCEIRA CAMARA DE DIREITO PRIVADO"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0827609-63.2024.8.19.0038",
+        "0066240-58.2026.8.19.0000",
+        "0008103-55.2015.8.19.0037"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). MARCOS ALCINO DE AZEVEDO TORRES",
+      "rotulo_original": "Des(a). MARCOS ALCINO DE AZEVEDO TORRES",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA PRIMEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 27ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA PRIMEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 27ª CÂMARA CÍVEL)",
+        "SEÇAO DE DIREITO PRIVADO"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0054269-40.2012.8.19.0203",
+        "0061174-68.2024.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). ROGÉRIO DE OLIVEIRA SOUZA",
+      "rotulo_original": "Des(a). ROGÉRIO DE OLIVEIRA SOUZA",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "TERCEIRA CAMARA DE DIREITO PUBLICO (ANTIGA 6ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "TERCEIRA CAMARA DE DIREITO PUBLICO (ANTIGA 6ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0515160-78.2015.8.19.0001",
+        "0038260-39.2026.8.19.0000",
+        "0100155-42.2019.8.19.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). ANA MARIA PEREIRA DE OLIVEIRA",
+      "rotulo_original": "Des(a). ANA MARIA PEREIRA DE OLIVEIRA",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA SETIMA CAMARA DE DIREITO PRIVADO (ANTIGA 26ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA SETIMA CAMARA DE DIREITO PRIVADO (ANTIGA 26ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0804267-79.2025.8.19.0202",
+        "0043571-11.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). ANDRE LUIZ CIDRA",
+      "rotulo_original": "Des(a). ANDRE LUIZ CIDRA",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "VIGESIMA CAMARA DE DIREITO PRIVADO (ANTIGA 11ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "VIGESIMA CAMARA DE DIREITO PRIVADO (ANTIGA 11ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0004479-36.2014.8.19.0068",
+        "0005085-94.2021.8.19.0205"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). CLEBER GHELFENSTEIN",
+      "rotulo_original": "Des(a). CLEBER GHELFENSTEIN",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 14ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 14ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0003513-29.2021.8.19.0068",
+        "0803454-87.2023.8.19.0213"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). GILBERTO CLÓVIS FARIAS MATOS",
+      "rotulo_original": "Des(a). GILBERTO CLÓVIS FARIAS MATOS",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA TERCEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 22ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA TERCEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 22ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000070-58.2026.8.19.0080",
+        "0064748-31.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). LUCIANO SABOIA RINALDI DE CARVALHO",
+      "rotulo_original": "Des(a). LUCIANO SABOIA RINALDI DE CARVALHO",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA NONA CAMARA DE DIREITO PRIVADO (ANTIGA 25ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA NONA CAMARA DE DIREITO PRIVADO (ANTIGA 25ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0808794-67.2022.8.19.0206",
+        "0870040-78.2025.8.19.0038"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). MARIA LUIZA DE FREITAS CARVALHO",
+      "rotulo_original": "Des(a). MARIA LUIZA DE FREITAS CARVALHO",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA PRIMEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 27ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA PRIMEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 27ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0050688-89.2022.8.19.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). REGINA LUCIA PASSOS",
+      "rotulo_original": "Des(a). REGINA LUCIA PASSOS",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "QUINTA CAMARA DE DIREITO PRIVADO (ANTIGA 24ª CÂMARA  CÍVEL)",
+      "orgaos": [
+        "QUINTA CAMARA DE DIREITO PRIVADO (ANTIGA 24ª CÂMARA  CÍVEL)"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0823728-62.2024.8.19.0205"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). SÉRGIO NOGUEIRA DE AZEREDO",
+      "rotulo_original": "Des(a). SÉRGIO NOGUEIRA DE AZEREDO",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "VIGESIMA CAMARA DE DIREITO PRIVADO (ANTIGA 11ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "VIGESIMA CAMARA DE DIREITO PRIVADO (ANTIGA 11ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0055555-89.2026.8.19.0000",
+        "0053108-31.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). ALEXANDRE DE CARVALHO MESQUITA",
+      "rotulo_original": "Des(a). ALEXANDRE DE CARVALHO MESQUITA",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "VIGESIMA TERCEIRA CAMARA DE DIREITO PRIVADO",
+      "orgaos": [
+        "VIGESIMA TERCEIRA CAMARA DE DIREITO PRIVADO"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0190267-86.2021.8.19.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). ANDRÉ LUÍS MANÇANO MARQUES",
+      "rotulo_original": "Des(a). ANDRÉ LUÍS MANÇANO MARQUES",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA NONA CAMARA DE DIREITO PRIVADO (ANTIGA 25ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA NONA CAMARA DE DIREITO PRIVADO (ANTIGA 25ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0062018-47.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). ARTHUR NARCISO DE OLIVEIRA NETO",
+      "rotulo_original": "Des(a). ARTHUR NARCISO DE OLIVEIRA NETO",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA SETIMA CAMARA DE DIREITO PRIVADO (ANTIGA 26ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA SETIMA CAMARA DE DIREITO PRIVADO (ANTIGA 26ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0020859-65.2020.8.19.0023"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). BENEDICTO ULTRA ABICAIR",
+      "rotulo_original": "Des(a). BENEDICTO ULTRA  ABICAIR",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA TERCEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 22ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA TERCEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 22ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0006317-61.2017.8.19.0083"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). CARLOS GUSTAVO VIANNA DIREITO",
+      "rotulo_original": "Des(a). CARLOS GUSTAVO VIANNA DIREITO",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA SEXTA CAMARA DE DIREITO PRIVADO (ANTIGA 4ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA SEXTA CAMARA DE DIREITO PRIVADO (ANTIGA 4ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0052400-78.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). CARLOS SANTOS DE OLIVEIRA",
+      "rotulo_original": "Des(a). CARLOS SANTOS DE OLIVEIRA",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "1° NÚCLEO DIGITAL EM SEGUNDO GRAU - EXECUÇÃO FISCAL",
+      "orgaos": [
+        "1° NÚCLEO DIGITAL EM SEGUNDO GRAU - EXECUÇÃO FISCAL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0043718-37.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). CUSTÓDIO DE BARROS TOSTES",
+      "rotulo_original": "Des(a). CUSTÓDIO DE BARROS TOSTES",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA CAMARA DE DIREITO PRIVADO (ANTIGA 1ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA CAMARA DE DIREITO PRIVADO (ANTIGA 1ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0035062-91.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). EDUARDO DE AZEVEDO PAIVA",
+      "rotulo_original": "Des(a). EDUARDO DE AZEVEDO PAIVA",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "TERCEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 18ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "TERCEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 18ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0004828-96.2021.8.19.0002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). INÊS DA TRINDADE CHAVES DE MELO",
+      "rotulo_original": "Des(a). INÊS DA TRINDADE CHAVES DE MELO",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "TERCEIRA CAMARA DE DIREITO PUBLICO (ANTIGA 6ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "TERCEIRA CAMARA DE DIREITO PUBLICO (ANTIGA 6ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0058928-31.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). JDS. ALEXANDRE OLIVEIRA CAMACHO DE FRANÇA",
+      "rotulo_original": "Des(a). JDS. ALEXANDRE OLIVEIRA CAMACHO DE FRANÇA",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "1° NÚCLEO DIGITAL EM SEGUNDO GRAU - EXECUÇÃO FISCAL",
+      "orgaos": [
+        "1° NÚCLEO DIGITAL EM SEGUNDO GRAU - EXECUÇÃO FISCAL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0017191-48.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). JUAN LUIZ SOUZA VAZQUEZ",
+      "rotulo_original": "Des(a). JUAN LUIZ SOUZA VAZQUEZ",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA QUINTA CAMARA DE DIREITO PRIVADO (ANTIGA 20ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA QUINTA CAMARA DE DIREITO PRIVADO (ANTIGA 20ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0039343-37.2020.8.19.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). LUIZ ROLDAO DE FREITAS GOMES FILHO",
+      "rotulo_original": "Des(a). LUIZ ROLDAO DE FREITAS GOMES FILHO",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "NONA CAMARA DE DIREITO PRIVADO (ANTIGA 2ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "NONA CAMARA DE DIREITO PRIVADO (ANTIGA 2ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0005766-49.2016.8.19.0008"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). MARCO ANTONIO IBRAHIM",
+      "rotulo_original": "Des(a). MARCO ANTONIO IBRAHIM",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "VIGESIMA TERCEIRA CAMARA DE DIREITO PRIVADO",
+      "orgaos": [
+        "VIGESIMA TERCEIRA CAMARA DE DIREITO PRIVADO"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0800718-20.2024.8.19.0033"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). MÔNICA MARIA COSTA DI PIERO",
+      "rotulo_original": "Des(a). MÔNICA MARIA COSTA DI PIERO",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "PRIMEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 8ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "PRIMEIRA CAMARA DE DIREITO PRIVADO (ANTIGA 8ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0303463-34.2021.8.19.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). NATACHA NASCIMENTO GOMES TOSTES GONÇALVES DE OLIVEIRA",
+      "rotulo_original": "Des(a). NATACHA NASCIMENTO GOMES TOSTES GONÇALVES DE OLIVEIRA",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "SEÇAO DE DIREITO PRIVADO",
+      "orgaos": [
+        "SEÇAO DE DIREITO PRIVADO"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0103853-49.2025.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). RENATA SILVARES FRANÇA FADEL",
+      "rotulo_original": "Des(a). RENATA SILVARES FRANÇA FADEL",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "DECIMA SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 14ª CÂMARA CÍVEL)",
+      "orgaos": [
+        "DECIMA SEGUNDA CAMARA DE DIREITO PRIVADO (ANTIGA 14ª CÂMARA CÍVEL)"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0044665-91.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). RICARDO ALBERTO PEREIRA",
+      "rotulo_original": "Des(a). RICARDO ALBERTO PEREIRA",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "VIGÉSIMA SEXTA CÂMARA CÍVEL",
+      "orgaos": [
+        "VIGÉSIMA SEXTA CÂMARA CÍVEL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0041269-33.2013.8.19.0204"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). ROSSIDELIO LOPES",
+      "rotulo_original": "Des(a). ROSSIDELIO LOPES",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "SÉTIMA CÂMARA DE DIREITO PÚBLICO",
+      "orgaos": [
+        "SÉTIMA CÂMARA DE DIREITO PÚBLICO"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0028672-43.2010.8.19.0202"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "(a). SERGIO RICARDO DE ARRUDA FERNANDES",
+      "rotulo_original": "Des(a). SERGIO RICARDO DE ARRUDA FERNANDES",
+      "cargo": "Des",
+      "grau": "2",
+      "orgao": "1° NÚCLEO DIGITAL EM SEGUNDO GRAU - EXECUÇÃO FISCAL",
+      "orgaos": [
+        "1° NÚCLEO DIGITAL EM SEGUNDO GRAU - EXECUÇÃO FISCAL"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0046398-92.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

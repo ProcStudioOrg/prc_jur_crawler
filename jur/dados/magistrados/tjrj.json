@@ -1,0 +1,518 @@
+{
+  "tribunal": "tjrj",
+  "nome": "Tribunal de Justiça do Rio de Janeiro",
+  "coletado_em": "2026-10-30T08:11:44.794Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "trecho"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "30/10/2025",
+      "dataFim": "30/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 14409,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "30/10/2025",
+      "dataFim": "30/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 1608,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "30/10/2025",
+      "dataFim": "30/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 12913,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 19,
+    "por_grau": {
+      "2": 18,
+      "desconhecido": 1
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 14
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "LUIZ HENRIQUE OLIVEIRA MARQUES",
+      "rotulo_original": "LUIZ HENRIQUE OLIVEIRA MARQUES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "20ª Câmara de Direito Privado",
+      "orgaos": [
+        "20ª Câmara de Direito Privado"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "0800687-56.2025.8.19.0003",
+        "0822176-55.2025.8.19.0002",
+        "0806698-23.2024.8.19.0008",
+        "0824966-23.2023.8.19.0021",
+        "0800585-90.2023.8.19.0007"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1975
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "VALÉRIA DACHEUX NASCIMENTO",
+      "rotulo_original": "VALÉRIA DACHEUX NASCIMENTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Câmara de Direito Privado",
+      "orgaos": [
+        "6ª Câmara de Direito Privado"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "0801783-48.2025.8.19.0087",
+        "0806611-40.2024.8.19.0211",
+        "0839128-25.2024.8.19.0203",
+        "0818179-08.2023.8.19.0205",
+        "0802986-83.2025.8.19.0042"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1986
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANTONIO DA ROCHA LOURENCO NETO",
+      "rotulo_original": "ANTONIO DA ROCHA LOURENCO NETO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Câmara de Direito Privado",
+      "orgaos": [
+        "6ª Câmara de Direito Privado"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0806354-16.2022.8.19.0007",
+        "0838120-08.2022.8.19.0001",
+        "0825327-29.2025.8.19.0002",
+        "0808577-47.2024.8.19.0208",
+        "0823389-08.2023.8.19.0054"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 2357
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANDRÉ LUIZ CIDRA",
+      "rotulo_original": "ANDRÉ LUIZ CIDRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "20ª Câmara de Direito Privado",
+      "orgaos": [
+        "20ª Câmara de Direito Privado"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0810365-58.2022.8.19.0211",
+        "0812313-78.2025.8.19.0001",
+        "0801492-06.2025.8.19.0004",
+        "0873960-74.2025.8.19.0001",
+        "0882197-68.2023.8.19.0001"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 2033
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CESAR FELIPE CURY",
+      "rotulo_original": "CESAR FELIPE CURY",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "20ª Câmara de Direito Privado",
+      "orgaos": [
+        "20ª Câmara de Direito Privado"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0811555-71.2024.8.19.0054",
+        "0823963-32.2024.8.19.0204",
+        "0824428-08.2025.8.19.0042",
+        "0845972-35.2023.8.19.0038",
+        "0825441-18.2023.8.19.0202"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 2149
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA DA PENHA NOBRE MAURO",
+      "rotulo_original": "MARIA DA PENHA NOBRE MAURO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Câmara de Direito Privado",
+      "orgaos": [
+        "6ª Câmara de Direito Privado"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0878506-75.2025.8.19.0001",
+        "0874622-38.2025.8.19.0001",
+        "0809481-16.2025.8.19.0052",
+        "3021070-12.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GUILHERME BRAGA PEÑA DE MORAES",
+      "rotulo_original": "GUILHERME BRAGA PEÑA DE MORAES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Câmara de Direito Público",
+      "orgaos": [
+        "6ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "3130841-19.2026.8.19.0001",
+        "0815786-80.2024.8.19.0042",
+        "0809762-53.2024.8.19.0004"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROSELI NALIN",
+      "rotulo_original": "ROSELI NALIN",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Câmara de Direito Privado",
+      "orgaos": [
+        "6ª Câmara de Direito Privado"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0811965-18.2025.8.19.0209",
+        "3020732-38.2026.8.19.0000",
+        "3023332-32.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LEILA MARIA R P DE C E ALBUQUERQUE",
+      "rotulo_original": "LEILA MARIA R P DE C E ALBUQUERQUE",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "8ª Câmara de Direito Público",
+      "orgaos": [
+        "8ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0810084-64.2025.8.19.0028",
+        "0803148-86.2025.8.19.0007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SÉRGIO SEABRA VARELLA",
+      "rotulo_original": "SÉRGIO SEABRA VARELLA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª Câmara de Direito Público",
+      "orgaos": [
+        "4ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "3011341-90.2025.8.19.0001",
+        "0801654-09.2025.8.19.0066"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALEXANDRE DE CARVALHO MESQUITA",
+      "rotulo_original": "ALEXANDRE DE CARVALHO MESQUITA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "23ª Câmara de Direito Privado",
+      "orgaos": [
+        "23ª Câmara de Direito Privado"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "3036286-13.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDUARDO DE AZEVEDO PAIVA",
+      "rotulo_original": "EDUARDO DE AZEVEDO PAIVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Câmara de Direito Privado",
+      "orgaos": [
+        "3ª Câmara de Direito Privado"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0945122-66.2024.8.19.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GEORGIA DE CARVALHO LIMA",
+      "rotulo_original": "GEORGIA DE CARVALHO LIMA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "7ª Câmara de Direito Público",
+      "orgaos": [
+        "7ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0820993-51.2025.8.19.0066"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSÉ ROBERTO PORTUGAL COMPASSO",
+      "rotulo_original": "JOSÉ ROBERTO PORTUGAL COMPASSO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "8ª Câmara de Direito Público",
+      "orgaos": [
+        "8ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0821904-97.2024.8.19.0066"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUIZ ALBERTO CARVALHO ALVES",
+      "rotulo_original": "LUIZ ALBERTO CARVALHO ALVES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "7ª Câmara de Direito Público",
+      "orgaos": [
+        "7ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "3014302-04.2025.8.19.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUIZ FERNANDO PINTO",
+      "rotulo_original": "LUIZ FERNANDO PINTO",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": "1º Núcleo Digital em Segundo Grau - Execução Fiscal",
+      "orgaos": [
+        "1º Núcleo Digital em Segundo Grau - Execução Fiscal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "3000206-70.2026.8.19.0058"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCELO LIMA BUHATEM",
+      "rotulo_original": "MARCELO LIMA BUHATEM",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "23ª Câmara de Direito Privado",
+      "orgaos": [
+        "23ª Câmara de Direito Privado"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "3096209-64.2026.8.19.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCO ANTÔNIO IBRAHIM",
+      "rotulo_original": "MARCO ANTÔNIO IBRAHIM",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "7ª Câmara de Direito Público",
+      "orgaos": [
+        "7ª Câmara de Direito Público"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "3017092-27.2026.8.19.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROSA MARIA CIRIGLIANO MANESCHY",
+      "rotulo_original": "ROSA MARIA CIRIGLIANO MANESCHY",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "19ª Câmara de Direito Privado",
+      "orgaos": [
+        "19ª Câmara de Direito Privado"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0801396-85.2025.8.19.0005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

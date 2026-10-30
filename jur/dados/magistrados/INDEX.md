@@ -22,7 +22,10 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | tjpa | 30 | 7 | 23 | 0 | ok 5 | 2026-10-29 |
 | tjpb | 0 | 0 | 0 | 0 | sem capacidade (filtro por código) | 2026-10-29 |
 | tjpe | 34 | 3 | 31 | 0 | ok 5 | 2026-10-29 |
+| tjpi | 22 | 5 | 17 | 0 | ok 5 | 2026-10-30 |
 | tjpr | 94 | 11 | 83 | 0 | sem capacidade | 2026-10-24 |
+| tjrj | 19 | 0 | 18 | 1 | ok 5 | 2026-10-30 |
+| tjrj-ejuris | 35 | 1 | 34 | 0 | sem capacidade | 2026-10-30 |
 | tjsc | 26 | 2 | 22 | 2 | ok 2 · filtro_ignorado 3 | 2026-10-24 |
 | trf1 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam:  - waiting for locator('[id="formulario:textoLivre"]') to be visible | 2026-10-24 |
 | trf2 | 0 | 0 | 0 | 0 | erro: buscas sem relator legível no resultado | 2026-10-24 |
@@ -32,9 +35,9 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | trf6 | 8 | 0 | 8 | 0 | ok 5 | 2026-10-24 |
 | tst | 20 | 0 | 20 | 0 | ok 5 | 2026-10-24 |
 
-## Fila (48 pendentes, ordem do catálogo)
+## Fila (45 pendentes, ordem do catálogo)
 
-`tjpi`, `tjrj`, `tjrj-ejuris`, `tjro`, `tjrr`, `tjrs`, `tjsp`, `tjto`, `trt1`, `trt2`, `trt3`, `trt4`, `trt5`, `trt6`, `trt7`, `trt8`, `trt9`, `trt10`, `trt11`, `trt12`, `trt13`, `trt14`, `trt15`, `trt16`, `trt17`, `trt18`, `trt19`, `trt20`, `trt21`, `trt22`, `trt23`, `trt24`, `tcdf`, `tceba`, `tcece`, `tcees`, `tcego`, `tcemg`, `tcepa`, `tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
+`tjro`, `tjrr`, `tjrs`, `tjsp`, `tjto`, `trt1`, `trt2`, `trt3`, `trt4`, `trt5`, `trt6`, `trt7`, `trt8`, `trt9`, `trt10`, `trt11`, `trt12`, `trt13`, `trt14`, `trt15`, `trt16`, `trt17`, `trt18`, `trt19`, `trt20`, `trt21`, `trt22`, `trt23`, `trt24`, `tcdf`, `tceba`, `tcece`, `tcees`, `tcego`, `tcemg`, `tcepa`, `tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
 
 ## Fora do escopo do cron (4)
 
