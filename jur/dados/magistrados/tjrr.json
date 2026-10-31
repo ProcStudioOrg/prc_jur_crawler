@@ -1,0 +1,414 @@
+{
+  "tribunal": "tjrr",
+  "nome": "Tribunal de Justiça de Roraima",
+  "coletado_em": "2026-10-31T08:12:00.676Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": false,
+      "forma": null
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 120,
+      "total_no_portal": 3203,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 120,
+      "total_no_portal": 417,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 120,
+      "total_no_portal": 3784,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 49,
+      "total_no_portal": 1507,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 13,
+    "por_grau": {
+      "1": 5,
+      "2": 8
+    },
+    "teste_busca": {
+      "sem_capacidade": 13
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "CRISTÓVÃO SUTER",
+      "rotulo_original": "CRISTÓVÃO SUTER",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Câmara Cível",
+      "orgaos": [
+        "Câmara Cível",
+        "Câmaras Reunidas"
+      ],
+      "ocorrencias": 80,
+      "julgados_exemplo": [
+        "08010403420258230020",
+        "08138833220238230010",
+        "08388172020248230010",
+        "08423828920248230010",
+        "08179348120268230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALMIRO PADILHA",
+      "rotulo_original": "ALMIRO PADILHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Câmara Cível",
+      "orgaos": [
+        "Câmara Cível",
+        "Vice-Presidência"
+      ],
+      "ocorrencias": 73,
+      "julgados_exemplo": [
+        "08015158320268230010",
+        "08000626820268230005",
+        "08368086120198230010",
+        "08454804820258230010",
+        "00105695820168230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CLÁUDIO ROBERTO BARBOSA DE ARAÚJO",
+      "rotulo_original": "CLÁUDIO ROBERTO BARBOSA DE ARAÚJO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Turma Recursal",
+      "orgaos": [
+        "Turma Recursal"
+      ],
+      "ocorrencias": 72,
+      "julgados_exemplo": [
+        "08034280320268230010",
+        "08111854820268230010",
+        "08553849220258230010",
+        "08111880320268230010",
+        "08148870220268230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "ELAINE BIANCHI",
+      "rotulo_original": "ELAINE BIANCHI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Câmara Cível",
+      "orgaos": [
+        "Câmara Cível"
+      ],
+      "ocorrencias": 49,
+      "julgados_exemplo": [
+        "08114739320268230010",
+        "08005763120228230047",
+        "08338953320248230010",
+        "08532786020258230010",
+        "90030790720268230000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "TÂNIA VASCONCELOS",
+      "rotulo_original": "TÂNIA VASCONCELOS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Câmara Cível",
+      "orgaos": [
+        "Câmara Cível",
+        "Tribunal Pleno",
+        "Vice-Presidência"
+      ],
+      "ocorrencias": 46,
+      "julgados_exemplo": [
+        "08433444920238230010",
+        "90036247720268230000",
+        "08169786520268230010",
+        "08013263420258230045",
+        "08129063520268230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MOZARILDO CAVALCANTI",
+      "rotulo_original": "MOZARILDO CAVALCANTI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Câmara Cível",
+      "orgaos": [
+        "Câmara Cível"
+      ],
+      "ocorrencias": 33,
+      "julgados_exemplo": [
+        "08009277620268230010",
+        "08304134320258230010",
+        "08477931620248230010",
+        "90005597420268230000",
+        "08047907420258230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SISSI MARLENE DIETRICH SCHWANTES",
+      "rotulo_original": "SISSI MARLENE DIETRICH SCHWANTES",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Turma Recursal",
+      "orgaos": [
+        "Turma Recursal"
+      ],
+      "ocorrencias": 24,
+      "julgados_exemplo": [
+        "08294264120248230010",
+        "08570555320258230010",
+        "08109464420268230010",
+        "08128240420268230010",
+        "08162736720268230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "BRUNO FERNANDO ALVES COSTA",
+      "rotulo_original": "BRUNO FERNANDO ALVES COSTA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Turma Recursal",
+      "orgaos": [
+        "Turma Recursal"
+      ],
+      "ocorrencias": 14,
+      "julgados_exemplo": [
+        "08025950520258230047",
+        "08428770220258230010",
+        "08319593620258230010",
+        "08239395620258230010",
+        "08092345320258230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "PHILLIP BARBIEUX SAMPAIO BRAGA DE MACEDO",
+      "rotulo_original": "PHILLIP BARBIEUX SAMPAIO BRAGA DE MACEDO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Turma Recursal",
+      "orgaos": [
+        "Turma Recursal"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "08210676820258230010",
+        "08546617320258230010",
+        "08237013720258230010",
+        "08042612120268230010",
+        "08170447920258230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "BRUNA GUIMARÃES FIALHO ZAGALLO",
+      "rotulo_original": "BRUNA GUIMARÃES FIALHO ZAGALLO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Turma Recursal",
+      "orgaos": [
+        "Turma Recursal"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "08375057220258230010",
+        "08362776220258230010",
+        "08227131620258230010",
+        "08237005220258230010",
+        "08219562220258230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JÉSUS NASCIMENTO",
+      "rotulo_original": "JÉSUS NASCIMENTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Câmara Criminal",
+      "orgaos": [
+        "Câmara Criminal"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "08298681220218230010",
+        "08526977920248230010",
+        "08000440820218230010",
+        "00014837320108230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALESSANDRO TRAMUJAS",
+      "rotulo_original": "ALESSANDRO TRAMUJAS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Câmara Criminal",
+      "orgaos": [
+        "Câmara Criminal"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "08016679420248230045",
+        "08230105720248230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUIZ FERNANDO MALLET",
+      "rotulo_original": "LUIZ FERNANDO MALLET",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Câmara Criminal",
+      "orgaos": [
+        "Câmara Criminal"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "08155703920268230010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

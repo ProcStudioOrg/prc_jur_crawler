@@ -1,0 +1,875 @@
+{
+  "tribunal": "tjro",
+  "nome": "Tribunal de Justiça de Rondônia",
+  "coletado_em": "2026-10-31T08:11:27.291Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 39,
+      "total_no_portal": 120527,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 23602,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 86114,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 24515,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 34,
+    "por_grau": {
+      "1": 9,
+      "2": 25
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 29
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "GUILHERME RIBEIRO BALDAN",
+      "rotulo_original": "GUILHERME RIBEIRO BALDAN",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma Recursal - Gabinete 03",
+      "orgaos": [
+        "2ª Turma Recursal - Gabinete 03"
+      ],
+      "ocorrencias": 29,
+      "julgados_exemplo": [
+        "70000243420258220004",
+        "70759113320258220001",
+        "70064505920258220005",
+        "70385914620258220001",
+        "70041295420258220004"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 2146
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "URSULA GONCALVES THEODORO DE FARIA SOUZA",
+      "rotulo_original": "URSULA GONCALVES THEODORO DE FARIA SOUZA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma Recursal - Gabinete 02",
+      "orgaos": [
+        "1ª Turma Recursal - Gabinete 02"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "70097344820258220014",
+        "70000260420258220004",
+        "70007076820258220005",
+        "70027696320258220011",
+        "70168442820258220005"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 2720
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "INES MOREIRA DA COSTA",
+      "rotulo_original": "INES MOREIRA DA COSTA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Desa. Inês Moreira",
+      "orgaos": [
+        "Gabinete Desa. Inês Moreira"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "70108919220258220002",
+        "70025851620218220022",
+        "70684085820258220001",
+        "70009163420258220006"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 2574
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ENIO SALVADOR VAZ",
+      "rotulo_original": "ENIO SALVADOR VAZ",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma Recursal - Gabinete 01",
+      "orgaos": [
+        "2ª Turma Recursal - Gabinete 01"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "70037753520258220002",
+        "70679763920258220001",
+        "70191393820258220005"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 2214
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FLAVIO HENRIQUE DE MELO",
+      "rotulo_original": "FLAVIO HENRIQUE DE MELO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Alexandre Corbacho",
+      "orgaos": [
+        "Gabinete Des. Alexandre Corbacho",
+        "Gabinete Titularidade Vaga. Ocupado por Juíza Convocada Úrsula Gonçalves Theodoro de Faria Souza"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "70050008120258220005",
+        "70029073320258220010",
+        "70000996720258220006"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PAULO KIYOCHI MORI",
+      "rotulo_original": "PAULO KIYOCHI MORI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Kiyochi Mori",
+      "orgaos": [
+        "Gabinete Des. José Antonio Robles",
+        "Gabinete Des. Kiyochi Mori"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "70013677620238220023",
+        "70584074820248220001",
+        "70106733820238220001",
+        "70573618720258220001",
+        "70081395020258220002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "RADUAN MIGUEL FILHO",
+      "rotulo_original": "RADUAN MIGUEL FILHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Raduan Miguel",
+      "orgaos": [
+        "Gabinete Des. Raduan Miguel"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "70012989320268220005",
+        "70070247020258220009",
+        "70066045020258220014",
+        "70014922720258220006",
+        "70028338220258220008"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DALMO ANTONIO DE CASTRO BEZERRA",
+      "rotulo_original": "DALMO ANTONIO DE CASTRO BEZERRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma Recursal - Gabinete 03",
+      "orgaos": [
+        "1ª Turma Recursal - Gabinete 03"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "70039744820258220005",
+        "70004043920258220010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DANIEL RIBEIRO LAGOS",
+      "rotulo_original": "DANIEL RIBEIRO LAGOS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Daniel Ribeiro Lagos",
+      "orgaos": [
+        "Gabinete Des. Daniel Ribeiro Lagos"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "70045504420258220004",
+        "70138875320228220007",
+        "70455823820258220001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE ANTONIO ROBLES",
+      "rotulo_original": "JOSE ANTONIO ROBLES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. José Antonio Robles",
+      "orgaos": [
+        "Gabinete Des. José Antonio Robles"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "70010946920248220021",
+        "70010077920258220021",
+        "70189775220258220002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE TORRES FERREIRA",
+      "rotulo_original": "JOSE TORRES FERREIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Torres Ferreira",
+      "orgaos": [
+        "Gabinete Des. Torres Ferreira"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "70011872220258220013",
+        "70026425820258220001",
+        "70305976420258220001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCOS ALAOR DINIZ GRANGEIA",
+      "rotulo_original": "MARCOS ALAOR DINIZ GRANGEIA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Marcos Alaor Diniz Grangeia",
+      "orgaos": [
+        "Gabinete Des. Marcos Alaor Diniz Grangeia"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "70040669620258220014",
+        "70022758020258220018",
+        "70034607120258220013",
+        "70019102520268220007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MIGUEL MONICO NETO",
+      "rotulo_original": "MIGUEL MONICO NETO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Alexandre Corbacho",
+      "orgaos": [
+        "Gabinete Des. Alexandre Corbacho"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "70001196820248220014",
+        "70036767320228220001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GILBERTO BARBOSA",
+      "rotulo_original": "GILBERTO BARBOSA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Gilberto Barbosa",
+      "orgaos": [
+        "Gabinete Des. Gilberto Barbosa"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "08075314720258220000",
+        "08110737320258220000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GLODNER LUIZ PAULETTO",
+      "rotulo_original": "GLODNER LUIZ PAULETTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Glodner Pauletto",
+      "orgaos": [
+        "Gabinete Des. Glodner Pauletto"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "08090099020258220000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ISAIAS FONSECA MORAES",
+      "rotulo_original": "ISAIAS FONSECA MORAES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Isaias Fonseca Moraes",
+      "orgaos": [
+        "Gabinete Des. Isaias Fonseca Moraes"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "70162614320258220005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JORGE LUIZ DE MOURA GURGEL DO AMARAL",
+      "rotulo_original": "JORGE LUIZ DE MOURA GURGEL DO AMARAL",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Raduan Miguel",
+      "orgaos": [
+        "Gabinete Des. Kiyochi Mori",
+        "Gabinete Des. Raduan Miguel"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "70000274120258220019",
+        "70070447320258220005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SILVANA MARIA DE FREITAS",
+      "rotulo_original": "SILVANA MARIA DE FREITAS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma Recursal - Gabinete 02",
+      "orgaos": [
+        "2ª Turma Recursal - Gabinete 02"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "70003703620268220008",
+        "70158127920258220007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ACIR TEIXEIRA GRECIA",
+      "rotulo_original": "ACIR TEIXEIRA GRECIA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma Recursal - Gabinete 01",
+      "orgaos": [
+        "1ª Turma Recursal - Gabinete 01"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "70292188820258220001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "HIRAM SOUZA MARQUES",
+      "rotulo_original": "HIRAM SOUZA MARQUES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Hiram Souza Marques",
+      "orgaos": [
+        "Gabinete Des. Hiram Souza Marques"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "70014951620248220006",
+        "70100222320258220005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOAO LUIZ ROLIM SAMPAIO",
+      "rotulo_original": "JOAO LUIZ ROLIM SAMPAIO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma Recursal - Gabinete 03",
+      "orgaos": [
+        "1ª Turma Recursal - Gabinete 03"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "70023401420258220006"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE AUGUSTO ALVES MARTINS",
+      "rotulo_original": "JOSE AUGUSTO ALVES MARTINS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma Recursal - Gabinete 01",
+      "orgaos": [
+        "2ª Turma Recursal - Gabinete 01"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "70021554220268220005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROOSEVELT QUEIROZ COSTA",
+      "rotulo_original": "ROOSEVELT QUEIROZ COSTA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Roosevelt Queiroz",
+      "orgaos": [
+        "Gabinete Des. Roosevelt Queiroz"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "70069950720178220007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROWILSON TEIXEIRA",
+      "rotulo_original": "ROWILSON TEIXEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Rowilson Teixeira",
+      "orgaos": [
+        "Gabinete Des. Rowilson Teixeira"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "70044707120258220007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDENIR SEBASTIAO ALBUQUERQUE DA ROSA",
+      "rotulo_original": "EDENIR SEBASTIAO ALBUQUERQUE DA ROSA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Porto Velho - 2ª Vara de Fazenda e Saúde Pública",
+      "orgaos": [
+        "Porto Velho - 2ª Vara de Fazenda e Saúde Pública"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "70455823820258220001"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 3179
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDUARDO ABILIO KERBER DINIZ",
+      "rotulo_original": "EDUARDO ABILIO KERBER DINIZ",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Guajará-Mirim - 1ª Vara Cível",
+      "orgaos": [
+        "Guajará-Mirim - 1ª Vara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "70019776320268220015"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ELOISE MOREIRA CAMPOS MONTEIRO BARRETO",
+      "rotulo_original": "ELOISE MOREIRA CAMPOS MONTEIRO BARRETO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Cerejeiras - 2ª Vara Genérica",
+      "orgaos": [
+        "Cerejeiras - 2ª Vara Genérica"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "70022975620258220013"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ELSON PEREIRA DE OLIVEIRA BASTOS",
+      "rotulo_original": "ELSON PEREIRA DE OLIVEIRA BASTOS",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Cacoal - 3ª Vara Cível",
+      "orgaos": [
+        "Cacoal - 3ª Vara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "70019102520268220007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EMY KARLA YAMAMOTO",
+      "rotulo_original": "EMY KARLA YAMAMOTO",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Cacoal - 1ª Vara Cível",
+      "orgaos": [
+        "Cacoal - 1ª Vara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "70156793720258220007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "HARUO MIZUSAKI",
+      "rotulo_original": "HARUO MIZUSAKI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Gabinete Des. Kiyochi Mori",
+      "orgaos": [
+        "Gabinete Des. Kiyochi Mori"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "70252331420258220001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUIS MARCELO BATISTA DA SILVA",
+      "rotulo_original": "LUIS MARCELO BATISTA DA SILVA",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Jaru - 1ª Vara Cível",
+      "orgaos": [
+        "Jaru - 1ª Vara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "70031107920268220003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCIA ADRIANA ARAUJO FREITAS",
+      "rotulo_original": "MARCIA ADRIANA ARAUJO FREITAS",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Ouro Preto do Oeste - 2ª Vara Cível",
+      "orgaos": [
+        "Ouro Preto do Oeste - 2ª Vara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "70060236520258220004"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCIA CRISTINA RODRIGUES MASIOLI MORAIS",
+      "rotulo_original": "MARCIA CRISTINA RODRIGUES MASIOLI MORAIS",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Porto Velho - 1ª Vara Cível",
+      "orgaos": [
+        "Porto Velho - 1ª Vara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "70467239220258220001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MAXIMILIANO DARCY DAVID DEITOS",
+      "rotulo_original": "MAXIMILIANO DARCY DAVID DEITOS",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Ji-Paraná - 1º Juizado Especial",
+      "orgaos": [
+        "Ji-Paraná - 1º Juizado Especial"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "70018644220268220005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

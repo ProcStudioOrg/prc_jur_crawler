@@ -1,0 +1,864 @@
+{
+  "tribunal": "tjrs",
+  "nome": "Tribunal de Justiça do Rio Grande do Sul",
+  "coletado_em": "2026-10-31T08:13:06.083Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome"
+    },
+    "juizados": true,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 47358,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 9073,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 178138,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "31/10/2025",
+      "dataFim": "31/10/2026",
+      "maxPaginas": 1,
+      "args": [
+        "--origem",
+        "turmas"
+      ],
+      "recorte": "juizados",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 8560,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 34,
+    "por_grau": {
+      "1": 6,
+      "2": 24,
+      "desconhecido": 4
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 29
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "Ana Paula Dalbosco",
+      "rotulo_original": "Ana Paula Dalbosco",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Terceira Vice-Presidência",
+      "orgaos": [
+        "Terceira Vice-Presidência"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [
+        "50002161620238210063",
+        "50114994920238213001",
+        "50006913320168210025",
+        "52486364420258217000",
+        "51313831720248210001"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 2632
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Antônio Maria Rodrigues de Freitas Iserhard",
+      "rotulo_original": "Antônio Maria Rodrigues de Freitas Iserhard",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Terceira Câmara Cível",
+      "orgaos": [
+        "Décima Terceira Câmara Cível"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "50109060520258210041",
+        "50009147720258210119",
+        "52239063220268217000",
+        "53537884720268217000",
+        "53555084920268217000"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 3660
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Eduardo Kraemer",
+      "rotulo_original": "Eduardo Kraemer",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Nona Câmara Cível",
+      "orgaos": [
+        "Nona Câmara Cível",
+        "Primeiro Núcleo Especial de Julgamento Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "50056535120248210015",
+        "52584728620258210001"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 3223
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Elisabete Correa Hoeveler",
+      "rotulo_original": "Elisabete Correa Hoeveler",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Terceira Câmara Cível",
+      "orgaos": [
+        "Décima Terceira Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "50008265520258210146",
+        "50095583720248214001",
+        "50018367320258210134"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 3565
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luis Antonio Behrensdorf Gomes da Silva",
+      "rotulo_original": "Luis Antonio Behrensdorf Gomes da Silva",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Primeira Câmara Cível",
+      "orgaos": [
+        "Décima Primeira Câmara Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "50046005620248210008",
+        "50070335720258210021",
+        "53849376120268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Maria Claudia Cachapuz",
+      "rotulo_original": "Maria Claudia Cachapuz",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Primeira Turma Recursal Cível",
+      "orgaos": [
+        "Primeira Turma Recursal Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "50190078820248210001",
+        "50007807520258210046",
+        "50038407620238210159"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 9,
+        "status": "ok",
+        "detalhe": "1 de 10 fora do filtro",
+        "ms": 3416
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Ricardo Torres Hermann",
+      "rotulo_original": "Ricardo Torres Hermann",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": "Segundo Núcleo Especial de Julgamento Cível",
+      "orgaos": [
+        "Segunda Câmara Cível",
+        "Segundo Núcleo Especial de Julgamento Cível"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "53882659620268217000",
+        "52199453120268210001",
+        "50095052520268210141"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Alessandra Abrao Bertoluci",
+      "rotulo_original": "Alessandra Abrao Bertoluci",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Sétima Câmara Cível",
+      "orgaos": [
+        "Décima Sétima Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "52272927020268217000",
+        "53829230720268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Ana Cláudia Cachapuz Silva Raabe",
+      "rotulo_original": "Ana Cláudia Cachapuz Silva Raabe",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Segunda Turma Recursal Cível",
+      "orgaos": [
+        "Segunda Turma Recursal Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "50146834320258210026",
+        "50473865820248210027"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Antônio Vinícius Amaro da Silveira",
+      "rotulo_original": "Antônio Vinícius Amaro da Silveira",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Vigésima Terceira Câmara Cível",
+      "orgaos": [
+        "Vigésima Terceira Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "53615857420268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Eliziana da Silveira Perez",
+      "rotulo_original": "Eliziana da Silveira Perez",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": "Segundo Núcleo Especial de Julgamento Cível",
+      "orgaos": [
+        "Segundo Núcleo Especial de Julgamento Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "50160859720268210003",
+        "50174924820268210033"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Ema Denize Massing",
+      "rotulo_original": "Ema Denize Massing",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Primeira Turma Recursal Cível",
+      "orgaos": [
+        "Primeira Turma Recursal Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "50068603520248210064",
+        "50107928020258210004"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Fabiana Azevedo da Cunha Barth",
+      "rotulo_original": "Fabiana Azevedo da Cunha Barth",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Sexta Câmara Cível",
+      "orgaos": [
+        "Sexta Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "50212861420258210033",
+        "53804946720268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fernando Antônio Jardim Porto",
+      "rotulo_original": "Fernando Antônio Jardim Porto",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Primeira Câmara Cível",
+      "orgaos": [
+        "Décima Primeira Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "50159799220258212001",
+        "50057371920248210026"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "José Vinícius Andrade Jappur",
+      "rotulo_original": "José Vinícius Andrade Jappur",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Segunda Câmara Cível",
+      "orgaos": [
+        "Décima Segunda Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "50120193120258212001",
+        "50055532620248210006"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Maria Ines Claraz de Souza Linck",
+      "rotulo_original": "Maria Ines Claraz de Souza Linck",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Primeira Câmara Cível",
+      "orgaos": [
+        "Décima Primeira Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "53811147920268217000",
+        "51020228120268210001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Maria Lucia Boutros Buchain Zoch Rodrigues",
+      "rotulo_original": "Maria Lucia Boutros Buchain Zoch Rodrigues",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Nona Câmara Cível",
+      "orgaos": [
+        "Décima Nona Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "50151629420258210039",
+        "50205701720258210023"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Tasso Caubi Soares Delabary",
+      "rotulo_original": "Tasso Caubi Soares Delabary",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Nona Câmara Cível",
+      "orgaos": [
+        "Nona Câmara Cível"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "50047073320228210053",
+        "50089617120248210023"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Antonio Carlos De Castro Neves Tavares",
+      "rotulo_original": "Antonio Carlos De Castro Neves Tavares",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Quarta Turma Recursal Cível",
+      "orgaos": [
+        "Quarta Turma Recursal Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "50079523120248210005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Carlos Eduardo Zietlow Duro",
+      "rotulo_original": "Carlos Eduardo Zietlow Duro",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Sétima Câmara Cível",
+      "orgaos": [
+        "Sétima Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "53813997220268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Diego Carvalho Locatelli",
+      "rotulo_original": "Diego Carvalho Locatelli",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Vigésima Quinta Câmara Cível",
+      "orgaos": [
+        "Vigésima Quinta Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "53822008520268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Fabiana Zilles",
+      "rotulo_original": "Fabiana Zilles",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Nona Câmara Cível",
+      "orgaos": [
+        "Décima Nona Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "53677287920268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Francesco Conti",
+      "rotulo_original": "Francesco Conti",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Quarta Câmara Cível",
+      "orgaos": [
+        "Quarta Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "50253604520238210013"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Gelson Rolim Stocker",
+      "rotulo_original": "Gelson Rolim Stocker",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Sexta Câmara Cível",
+      "orgaos": [
+        "Sexta Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "53715663020268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Glaucia Dipp Dreher",
+      "rotulo_original": "Glaucia Dipp Dreher",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Câmara Especial Cível",
+      "orgaos": [
+        "Primeira Câmara Especial Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "53871633920268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Katia Elenise Oliveira da Silva",
+      "rotulo_original": "Katia Elenise Oliveira da Silva",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": "Primeiro Núcleo Especial de Julgamento Cível",
+      "orgaos": [
+        "Primeiro Núcleo Especial de Julgamento Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "51977513720268210001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Mara Lúcia Coccaro Martins",
+      "rotulo_original": "Mara Lúcia Coccaro Martins",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Primeira Câmara Cível",
+      "orgaos": [
+        "Décima Primeira Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "53859933220268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Marcelo Bandeira Pereira",
+      "rotulo_original": "Marcelo Bandeira Pereira",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Vigésima Primeira Câmara Cível",
+      "orgaos": [
+        "Vigésima Primeira Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "51696659020258210001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Maurício Ramires",
+      "rotulo_original": "Maurício Ramires",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Quarta Turma Recursal Cível",
+      "orgaos": [
+        "Quarta Turma Recursal Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "50039356720258210020"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Rada Maria Metzger Képes Zaman",
+      "rotulo_original": "Rada Maria Metzger Képes Zaman",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Câmara Especial Cível",
+      "orgaos": [
+        "Primeira Câmara Especial Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "51532427320268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Roberto Behrensdorf Gomes da Silva",
+      "rotulo_original": "Roberto Behrensdorf Gomes da Silva",
+      "cargo": null,
+      "grau": "1",
+      "orgao": "Segunda Turma Recursal Cível",
+      "orgaos": [
+        "Segunda Turma Recursal Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "50185512020258210029"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "juizados"
+    },
+    {
+      "nome": "Roberto Carvalho Fraga",
+      "rotulo_original": "Roberto Carvalho Fraga",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Quinta Câmara Cível",
+      "orgaos": [
+        "Décima Quinta Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "53602026120268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Rogerio Gesta Leal",
+      "rotulo_original": "Rogerio Gesta Leal",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": "Primeiro Núcleo Especial de Julgamento Cível",
+      "orgaos": [
+        "Primeiro Núcleo Especial de Julgamento Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "53767168920268217000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Túlio de Oliveira Martins",
+      "rotulo_original": "Túlio de Oliveira Martins",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Décima Câmara Cível",
+      "orgaos": [
+        "Décima Câmara Cível"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "50114244620258214001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
