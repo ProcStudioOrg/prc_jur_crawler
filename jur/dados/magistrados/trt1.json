@@ -1,0 +1,882 @@
+{
+  "tribunal": "trt1",
+  "nome": "TRT da 1ª Região",
+  "coletado_em": "2026-11-01T08:12:28.859Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": "Varas do Trabalho (sentenças, -g 1)"
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "01/11/2025",
+      "dataFim": "01/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "01/11/2025",
+      "dataFim": "01/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 7164,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "01/11/2025",
+      "dataFim": "01/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "01/11/2025",
+      "dataFim": "01/11/2026",
+      "maxPaginas": 1,
+      "args": [
+        "-g",
+        "1"
+      ],
+      "recorte": "primeiro_grau",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 10000,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 35,
+    "por_grau": {
+      "2": 35
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 30
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "ALVARO ANTONIO BORGES FARIA",
+      "rotulo_original": "ALVARO ANTONIO BORGES FARIA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª Turma",
+      "orgaos": [
+        "4ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0101020-72.2024.5.01.0282",
+        "0101112-76.2024.5.01.0047",
+        "0101439-29.2025.5.01.0033",
+        "0101028-42.2022.5.01.0016",
+        "0101138-94.2024.5.01.0202"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1404
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CARLOS HENRIQUE CHERNICHARO",
+      "rotulo_original": "CARLOS HENRIQUE CHERNICHARO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0100557-03.2024.5.01.0001",
+        "0100946-55.2022.5.01.0066",
+        "0101118-34.2023.5.01.0204",
+        "0100025-02.2024.5.01.0204"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1601
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LEONARDO DIAS BORGES",
+      "rotulo_original": "LEONARDO DIAS BORGES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "10ª Turma",
+      "orgaos": [
+        "10ª Turma"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0100622-49.2024.5.01.0081",
+        "0101312-77.2024.5.01.0243",
+        "0101529-07.2017.5.01.0069",
+        "0101885-92.2025.5.01.0401"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1512
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CLAUDIA REGINA VIANNA MARQUES BARROZO",
+      "rotulo_original": "CLAUDIA REGINA VIANNA MARQUES BARROZO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "9ª Turma",
+      "orgaos": [
+        "9ª Turma",
+        "3ª Turma"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0100729-04.2023.5.01.0025",
+        "0100621-35.2025.5.01.0047",
+        "0100598-26.2024.5.01.0047"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1349
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSÉ NASCIMENTO ARAUJO NETTO",
+      "rotulo_original": "JOSÉ NASCIMENTO ARAUJO NETTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0100138-05.2025.5.01.0047",
+        "0100707-31.2022.5.01.0008",
+        "0100998-80.2024.5.01.0551"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1524
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALBA VALERIA GUEDES FERNANDES DA SILVA",
+      "rotulo_original": "ALBA VALERIA GUEDES FERNANDES DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "10ª Turma",
+      "orgaos": [
+        "10ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0101077-29.2023.5.01.0055",
+        "0100390-19.2025.5.01.0302"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANDRE GUSTAVO BITTENCOURT VILLELA",
+      "rotulo_original": "ANDRE GUSTAVO BITTENCOURT VILLELA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0100225-46.2025.5.01.0342",
+        "0100281-96.2025.5.01.0401"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANTONIO PAES ARAUJO",
+      "rotulo_original": "ANTONIO PAES ARAUJO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "8ª Turma",
+      "orgaos": [
+        "8ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0101262-78.2024.5.01.0040",
+        "0000210-72.2012.5.01.0068"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CLAUDIO JOSE MONTESSO",
+      "rotulo_original": "CLAUDIO JOSE MONTESSO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Turma",
+      "orgaos": [
+        "6ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0101215-95.2024.5.01.0431",
+        "0100410-28.2025.5.01.0005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ENOQUE RIBEIRO DOS SANTOS",
+      "rotulo_original": "ENOQUE RIBEIRO DOS SANTOS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª Turma",
+      "orgaos": [
+        "5ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0100076-28.2025.5.01.0511",
+        "0100860-41.2024.5.01.0284"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EVELYN CORREA DE GUAMA GUIMARAES",
+      "rotulo_original": "EVELYN CORREA DE GUAMA GUIMARAES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Turma",
+      "orgaos": [
+        "6ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0101383-96.2024.5.01.0011",
+        "0100348-75.2025.5.01.0461"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JORGE FERNANDO GONÇALVES DA FONTE",
+      "rotulo_original": "JORGE FERNANDO GONÇALVES DA FONTE",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma",
+        "Órgão Especial"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0100729-18.2025.5.01.0030",
+        "0100025-61.2026.5.01.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA HELENA MOTTA",
+      "rotulo_original": "MARIA HELENA MOTTA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0100700-94.2022.5.01.0022",
+        "0100132-80.2022.5.01.0571"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MAUREN XAVIER SEELING",
+      "rotulo_original": "MAUREN XAVIER SEELING",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0100328-02.2025.5.01.0068",
+        "0100206-68.2019.5.01.0045"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "THEOCRITO BORGES DOS SANTOS FILHO",
+      "rotulo_original": "THEOCRITO BORGES DOS SANTOS FILHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Orgao Especial",
+      "orgaos": [
+        "Orgao Especial",
+        "Órgão Especial"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0106624-50.2025.5.01.0000",
+        "0109289-39.2025.5.01.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALEXANDRE TEIXEIRA DE FREITAS BASTOS CUNHA",
+      "rotulo_original": "ALEXANDRE TEIXEIRA DE FREITAS BASTOS CUNHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "8ª Turma",
+      "orgaos": [
+        "8ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100534-28.2025.5.01.0064"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANTONIO CESAR COUTINHO DAIHA",
+      "rotulo_original": "ANTONIO CESAR COUTINHO DAIHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100223-15.2026.5.01.0060"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CARINA RODRIGUES BICALHO",
+      "rotulo_original": "CARINA RODRIGUES BICALHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "7ª Turma",
+      "orgaos": [
+        "7ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0101302-90.2023.5.01.0203"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CELIO JUACABA CAVALCANTE",
+      "rotulo_original": "CELIO JUACABA CAVALCANTE",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0101353-85.2024.5.01.0003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDITH MARIA CORREA TOURINHO",
+      "rotulo_original": "EDITH MARIA CORREA TOURINHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "10ª Turma",
+      "orgaos": [
+        "10ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0011037-84.2015.5.01.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDUARDO HENRIQUE RAYMUNDO VON ADAMOVICH",
+      "rotulo_original": "EDUARDO HENRIQUE RAYMUNDO VON ADAMOVICH",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100774-42.2024.5.01.0261"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GABRIELA CANELLAS CAVALCANTI",
+      "rotulo_original": "GABRIELA CANELLAS CAVALCANTI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "7ª Turma",
+      "orgaos": [
+        "7ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0101415-84.2024.5.01.0049"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GLAUCIA ZUCCARI FERNANDES BRAGA",
+      "rotulo_original": "GLAUCIA ZUCCARI FERNANDES BRAGA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª Turma",
+      "orgaos": [
+        "5ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100762-70.2024.5.01.0247"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GUSTAVO TADEU ALKMIM",
+      "rotulo_original": "GUSTAVO TADEU ALKMIM",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100255-58.2024.5.01.0070"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JORGE ORLANDO SERENO RAMOS",
+      "rotulo_original": "JORGE ORLANDO SERENO RAMOS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Turma",
+      "orgaos": [
+        "6ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100559-51.2025.5.01.0481"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE LUIS CAMPOS XAVIER",
+      "rotulo_original": "JOSE LUIS CAMPOS XAVIER",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100319-59.2022.5.01.0225"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE MATEUS ALEXANDRE ROMANO",
+      "rotulo_original": "JOSE MATEUS ALEXANDRE ROMANO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª Turma",
+      "orgaos": [
+        "4ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100411-69.2024.5.01.0030"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE MONTEIRO LOPES",
+      "rotulo_original": "JOSE MONTEIRO LOPES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100632-69.2023.5.01.0068"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCELO AUGUSTO SOUTO DE OLIVEIRA",
+      "rotulo_original": "MARCELO AUGUSTO SOUTO DE OLIVEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "9ª Turma",
+      "orgaos": [
+        "9ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100532-90.2023.5.01.0076"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA APARECIDA COUTINHO MAGALHAES",
+      "rotulo_original": "MARIA APARECIDA COUTINHO MAGALHAES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª Turma",
+      "orgaos": [
+        "4ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0101504-07.2024.5.01.0244"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA THEREZA DA COSTA PRATA",
+      "rotulo_original": "MARIA THEREZA DA COSTA PRATA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "10ª Turma",
+      "orgaos": [
+        "10ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100462-80.2025.5.01.0051"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MAURICIO MADEU",
+      "rotulo_original": "MAURICIO MADEU",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "6ª Turma",
+      "orgaos": [
+        "6ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0101931-89.2023.5.01.0421"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "OTAVIO TORRES CALVET",
+      "rotulo_original": "OTAVIO TORRES CALVET",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0101761-85.2017.5.01.0241"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "RAQUEL DE OLIVEIRA MACIEL",
+      "rotulo_original": "RAQUEL DE OLIVEIRA MACIEL",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "7ª Turma",
+      "orgaos": [
+        "7ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100064-97.2025.5.01.0451"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROSANE RIBEIRO CATRIB",
+      "rotulo_original": "ROSANE RIBEIRO CATRIB",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0100631-35.2024.5.01.0461"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

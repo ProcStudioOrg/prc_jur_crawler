@@ -30,17 +30,20 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | tjrr | 13 | 5 | 8 | 0 | sem capacidade | 2026-10-31 |
 | tjrs | 34 | 6 | 24 | 4 | ok 5 | 2026-10-31 |
 | tjsc | 26 | 2 | 22 | 2 | ok 2 · filtro_ignorado 3 | 2026-10-24 |
+| tjsp | 0 | 0 | 0 | 0 | sem capacidade | 2026-11-01 |
+| tjto | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: Jurisprudência 4.0 respondeu HTTP 503 na busca | 2026-11-01 |
 | trf1 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam:  - waiting for locator('[id="formulario:textoLivre"]') to be visible | 2026-10-24 |
 | trf2 | 0 | 0 | 0 | 0 | erro: buscas sem relator legível no resultado | 2026-10-24 |
 | trf3 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: - waiting for scheduled navigations to finish | 2026-10-24 |
 | trf4 | 18 | 4 | 13 | 1 | ok 4 · erro 1 | 2026-10-24 |
 | trf5 | 14 | 0 | 13 | 1 | ok 5 | 2026-10-24 |
 | trf6 | 8 | 0 | 8 | 0 | ok 5 | 2026-10-24 |
+| trt1 | 35 | 0 | 35 | 0 | ok 5 | 2026-11-01 |
 | tst | 20 | 0 | 20 | 0 | ok 5 | 2026-10-24 |
 
-## Fila (42 pendentes, ordem do catálogo)
+## Fila (39 pendentes, ordem do catálogo)
 
-`tjsp`, `tjto`, `trt1`, `trt2`, `trt3`, `trt4`, `trt5`, `trt6`, `trt7`, `trt8`, `trt9`, `trt10`, `trt11`, `trt12`, `trt13`, `trt14`, `trt15`, `trt16`, `trt17`, `trt18`, `trt19`, `trt20`, `trt21`, `trt22`, `trt23`, `trt24`, `tcdf`, `tceba`, `tcece`, `tcees`, `tcego`, `tcemg`, `tcepa`, `tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
+`trt2`, `trt3`, `trt4`, `trt5`, `trt6`, `trt7`, `trt8`, `trt9`, `trt10`, `trt11`, `trt12`, `trt13`, `trt14`, `trt15`, `trt16`, `trt17`, `trt18`, `trt19`, `trt20`, `trt21`, `trt22`, `trt23`, `trt24`, `tcdf`, `tceba`, `tcece`, `tcees`, `tcego`, `tcemg`, `tcepa`, `tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
 
 ## Fora do escopo do cron (4)
 
