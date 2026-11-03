@@ -1,0 +1,562 @@
+{
+  "tribunal": "trt6",
+  "nome": "TRT da 6ª Região",
+  "coletado_em": "2026-11-03T08:11:26.977Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": "Varas do Trabalho (sentenças, -g 1)"
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "03/11/2025",
+      "dataFim": "03/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "03/11/2025",
+      "dataFim": "03/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 6552,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "03/11/2025",
+      "dataFim": "03/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "03/11/2025",
+      "dataFim": "03/11/2026",
+      "maxPaginas": 1,
+      "args": [
+        "-g",
+        "1"
+      ],
+      "recorte": "primeiro_grau",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 10000,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 20,
+    "por_grau": {
+      "2": 20
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 15
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "NISE PEDROSO LINS DE SOUSA",
+      "rotulo_original": "NISE PEDROSO LINS DE SOUSA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Turma",
+      "orgaos": [
+        "Primeira Turma",
+        "1ª Seção Especializada"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0000359-11.2025.5.06.0121",
+        "0001271-83.2016.5.06.0101",
+        "0000592-68.2025.5.06.0004",
+        "0000505-09.2025.5.06.0006",
+        "0000166-19.2017.5.06.0010"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1453
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SOLANGE MOURA DE ANDRADE",
+      "rotulo_original": "SOLANGE MOURA DE ANDRADE",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Segunda Turma",
+      "orgaos": [
+        "Segunda Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000688-62.2025.5.06.0011",
+        "0000444-45.2025.5.06.0008",
+        "0000636-90.2021.5.06.0016",
+        "0000079-13.2021.5.06.0143",
+        "0000640-64.2024.5.06.0003"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1345
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "VIRGINIO HENRIQUES DE SA E BENEVIDES",
+      "rotulo_original": "VIRGINIO HENRIQUES DE SA E BENEVIDES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Segunda Turma",
+      "orgaos": [
+        "Segunda Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000577-57.2025.5.06.0018",
+        "0001290-79.2024.5.06.0143",
+        "0000299-09.2022.5.06.0003",
+        "0000721-53.2024.5.06.0313",
+        "0000654-92.2025.5.06.0171"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1607
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CARMEN LUCIA VIEIRA DO NASCIMENTO",
+      "rotulo_original": "CARMEN LUCIA VIEIRA DO NASCIMENTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Turma",
+      "orgaos": [
+        "Primeira Turma"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0000269-81.2025.5.06.0192",
+        "0000120-76.2025.5.06.0001",
+        "0001080-57.2024.5.06.0101",
+        "0000753-27.2025.5.06.0312",
+        "0000753-53.2025.5.06.0271"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1875
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "IVAN DE SOUZA VALENCA ALVES",
+      "rotulo_original": "IVAN DE SOUZA VALENCA ALVES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Turma",
+      "orgaos": [
+        "Primeira Turma"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0001034-88.2016.5.06.0282",
+        "0000204-40.2017.5.06.0201",
+        "0000009-77.2016.5.06.0011",
+        "0123300-41.1998.5.06.0013",
+        "0001356-76.2015.5.06.0013"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1348
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FABIO ANDRE DE FARIAS",
+      "rotulo_original": "FABIO ANDRE DE FARIAS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Terceira Turma",
+      "orgaos": [
+        "Terceira Turma"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0000605-64.2025.5.06.0102",
+        "0000682-91.2018.5.06.0143",
+        "0000573-35.2025.5.06.0401"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANA CRISTINA DA SILVA",
+      "rotulo_original": "ANA CRISTINA DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Quarta Turma",
+      "orgaos": [
+        "Quarta Turma"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000692-48.2024.5.06.0104",
+        "0000057-84.2025.5.06.0281",
+        "0001009-85.2011.5.06.0012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "AURELIO DA SILVA",
+      "rotulo_original": "AURELIO DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Terceira Turma",
+      "orgaos": [
+        "Terceira Turma"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000480-96.2025.5.06.0102",
+        "0000391-76.2025.5.06.0101",
+        "0000772-27.2025.5.06.0411"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GILVANILDO DE ARAUJO LIMA",
+      "rotulo_original": "GILVANILDO DE ARAUJO LIMA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Quarta Turma",
+      "orgaos": [
+        "Quarta Turma",
+        "Primeira Turma"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000611-53.2025.5.06.0011",
+        "0000374-37.2025.5.06.0005",
+        "0000506-34.2025.5.06.0413"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SERGIO TORRES TEIXEIRA",
+      "rotulo_original": "SERGIO TORRES TEIXEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Segunda Turma",
+      "orgaos": [
+        "Segunda Turma",
+        "1ª Seção Especializada"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000286-67.2025.5.06.0241",
+        "0001377-09.2025.5.06.0011",
+        "0002896-52.2025.5.06.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GISANE BARBOSA DE ARAUJO",
+      "rotulo_original": "GISANE BARBOSA DE ARAUJO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Quarta Turma",
+      "orgaos": [
+        "Quarta Turma",
+        "1ª Seção Especializada"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000114-63.2025.5.06.0391",
+        "0003255-02.2025.5.06.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MAYARD DE FRANCA SABOYA ALBUQUERQUE",
+      "rotulo_original": "MAYARD DE FRANCA SABOYA ALBUQUERQUE",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Quarta Turma",
+      "orgaos": [
+        "Quarta Turma",
+        "Primeira Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000982-78.2024.5.06.0002",
+        "0001192-89.2025.5.06.0004"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANA CATARINA CISNEIROS BARBOSA",
+      "rotulo_original": "ANA CATARINA CISNEIROS BARBOSA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Terceira Turma",
+      "orgaos": [
+        "Terceira Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000049-27.2025.5.06.0146"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANA CLAUDIA PETRUCCELLI DE LIMA",
+      "rotulo_original": "ANA CLAUDIA PETRUCCELLI DE LIMA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Quarta Turma",
+      "orgaos": [
+        "Quarta Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000888-83.2024.5.06.0341"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DIONE NUNES FURTADO DA SILVA",
+      "rotulo_original": "DIONE NUNES FURTADO DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Turma",
+      "orgaos": [
+        "Primeira Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000427-76.2024.5.06.0191"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDMILSON ALVES DA SILVA",
+      "rotulo_original": "EDMILSON ALVES DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Quarta Turma",
+      "orgaos": [
+        "Quarta Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001058-28.2025.5.06.0371"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FERNANDO CABRAL DE ANDRADE FILHO",
+      "rotulo_original": "FERNANDO CABRAL DE ANDRADE FILHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Seção Especializada",
+      "orgaos": [
+        "1ª Seção Especializada"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001736-89.2025.5.06.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "IBRAHIM ALVES",
+      "rotulo_original": "IBRAHIM ALVES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Quarta Turma",
+      "orgaos": [
+        "Quarta Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001092-98.2025.5.06.0016"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROBERTA CORREA DE ARAUJO",
+      "rotulo_original": "ROBERTA CORREA DE ARAUJO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Quarta Turma",
+      "orgaos": [
+        "Quarta Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001138-90.2025.5.06.0015"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "VALDIR JOSE SILVA DE CARVALHO",
+      "rotulo_original": "VALDIR JOSE SILVA DE CARVALHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Terceira Turma",
+      "orgaos": [
+        "Terceira Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000572-63.2024.5.06.0311"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

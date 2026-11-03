@@ -1,0 +1,392 @@
+{
+  "tribunal": "trt7",
+  "nome": "TRT da 7ª Região",
+  "coletado_em": "2026-11-03T08:12:09.830Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": "Varas do Trabalho (sentenças, -g 1)"
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "03/11/2025",
+      "dataFim": "03/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "03/11/2025",
+      "dataFim": "03/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 1367,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "03/11/2025",
+      "dataFim": "03/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "03/11/2025",
+      "dataFim": "03/11/2026",
+      "maxPaginas": 1,
+      "args": [
+        "-g",
+        "1"
+      ],
+      "recorte": "primeiro_grau",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 10000,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 12,
+    "por_grau": {
+      "2": 12
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 7
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "EMMANUEL TEOFILO FURTADO",
+      "rotulo_original": "EMMANUEL TEOFILO FURTADO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma",
+        "Seção Especializada II"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "0001236-17.2022.5.07.0027",
+        "0001978-31.2016.5.07.0034",
+        "0001581-79.2024.5.07.0037",
+        "0000112-30.2025.5.07.0015",
+        "0001020-15.2025.5.07.0039"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1381
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FRANCISCO TARCISIO GUEDES LIMA VERDE JUNIOR",
+      "rotulo_original": "FRANCISCO TARCISIO GUEDES LIMA VERDE JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "0001652-80.2025.5.07.0026",
+        "0001278-06.2025.5.07.0013",
+        "0001207-89.2025.5.07.0017",
+        "0001529-61.2024.5.07.0012",
+        "0000960-72.2024.5.07.0008"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 2214
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA ROSELI MENDES ALENCAR",
+      "rotulo_original": "MARIA ROSELI MENDES ALENCAR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma",
+        "Seção Especializada I"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0000291-53.2024.5.07.0029",
+        "0000544-10.2024.5.07.0007",
+        "0001199-36.2025.5.07.0010",
+        "0000317-62.2025.5.07.0014",
+        "0001296-49.2014.5.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1383
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "REGINA GLAUCIA CAVALCANTE NEPOMUCENO",
+      "rotulo_original": "REGINA GLAUCIA CAVALCANTE NEPOMUCENO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0001528-12.2024.5.07.0001",
+        "0000027-14.2025.5.07.0025",
+        "0001425-57.2025.5.07.0037",
+        "0001338-50.2024.5.07.0033",
+        "0001394-21.2025.5.07.0010"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1404
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CARLOS ALBERTO TRINDADE REBONATTO",
+      "rotulo_original": "CARLOS ALBERTO TRINDADE REBONATTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000643-16.2025.5.07.0016",
+        "0001452-43.2024.5.07.0015",
+        "0001823-09.2025.5.07.0003",
+        "0001106-92.2024.5.07.0015",
+        "0000896-28.2025.5.07.0008"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1609
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE ANTONIO PARENTE DA SILVA",
+      "rotulo_original": "JOSE ANTONIO PARENTE DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Seção Especializada I",
+      "orgaos": [
+        "Seção Especializada I",
+        "3ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000940-16.2017.5.07.0012",
+        "0001005-45.2016.5.07.0012",
+        "0113200-75.1999.5.07.0009",
+        "0000114-75.2026.5.07.0011",
+        "0000396-62.2025.5.07.0007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PAULO REGIS MACHADO BOTELHO",
+      "rotulo_original": "PAULO REGIS MACHADO BOTELHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma",
+        "Seção Especializada I",
+        "Tribunal Pleno"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0000631-42.2024.5.07.0014",
+        "0197000-37.2009.5.07.0013",
+        "0001329-32.2025.5.07.0008",
+        "0000595-51.2025.5.07.0018",
+        "0003828-13.2025.5.07.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PLAUTO CARNEIRO PORTO",
+      "rotulo_original": "PLAUTO CARNEIRO PORTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma",
+        "Seção Especializada I"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0000612-40.2023.5.07.0024",
+        "0000145-41.2021.5.07.0021",
+        "0000976-72.2023.5.07.0004",
+        "0000079-90.2013.5.07.0005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CLÓVIS VALENÇA ALVES FILHO",
+      "rotulo_original": "CLÓVIS VALENÇA ALVES FILHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000276-62.2025.5.07.0025",
+        "0000387-22.2025.5.07.0033",
+        "0001113-84.2024.5.07.0015"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DURVAL CESAR DE VASCONCELOS MAIA",
+      "rotulo_original": "DURVAL CESAR DE VASCONCELOS MAIA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma",
+        "Seção Especializada II"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000006-11.2025.5.07.0034",
+        "0000191-58.2010.5.07.0007",
+        "0001449-81.2025.5.07.0006"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FRANCISCO JOSÉ GOMES DA SILVA",
+      "rotulo_original": "FRANCISCO JOSÉ GOMES DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000295-47.2025.5.07.0032",
+        "0001227-13.2025.5.07.0007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "HERMANO QUEIROZ JUNIOR",
+      "rotulo_original": "HERMANO QUEIROZ JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000755-30.2025.5.07.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
