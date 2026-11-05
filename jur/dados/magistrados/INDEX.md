@@ -40,6 +40,9 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | trf6 | 8 | 0 | 8 | 0 | ok 5 | 2026-10-24 |
 | trt1 | 35 | 0 | 35 | 0 | ok 5 | 2026-11-01 |
 | trt10 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: getaddrinfo EAI_AGAIN jurisprudencia.jt.jus.br | 2026-11-04 |
+| trt11 | 16 | 0 | 16 | 0 | ok 5 | 2026-11-05 |
+| trt12 | 19 | 0 | 19 | 0 | ok 5 | 2026-11-05 |
+| trt13 | 11 | 0 | 11 | 0 | ok 5 | 2026-11-05 |
 | trt2 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: <p>The document has moved <a href="https://jurisprudenci | 2026-11-02 |
 | trt3 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: <p>The document has moved <a href="https://jurisprudenci | 2026-11-02 |
 | trt4 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: <p>The document has moved <a href="https://jurisprudenci | 2026-11-02 |
@@ -50,9 +53,9 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | trt9 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: getaddrinfo EAI_AGAIN jurisprudencia.jt.jus.br | 2026-11-04 |
 | tst | 20 | 0 | 20 | 0 | ok 5 | 2026-10-24 |
 
-## Fila (30 pendentes, ordem do catálogo)
+## Fila (27 pendentes, ordem do catálogo)
 
-`trt11`, `trt12`, `trt13`, `trt14`, `trt15`, `trt16`, `trt17`, `trt18`, `trt19`, `trt20`, `trt21`, `trt22`, `trt23`, `trt24`, `tcdf`, `tceba`, `tcece`, `tcees`, `tcego`, `tcemg`, `tcepa`, `tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
+`trt14`, `trt15`, `trt16`, `trt17`, `trt18`, `trt19`, `trt20`, `trt21`, `trt22`, `trt23`, `trt24`, `tcdf`, `tceba`, `tcece`, `tcees`, `tcego`, `tcemg`, `tcepa`, `tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
 
 ## Fora do escopo do cron (4)
 

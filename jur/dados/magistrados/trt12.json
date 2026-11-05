@@ -1,0 +1,539 @@
+{
+  "tribunal": "trt12",
+  "nome": "TRT da 12ª Região",
+  "coletado_em": "2026-11-05T08:11:24.131Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": "Varas do Trabalho (sentenças, -g 1)"
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "05/11/2025",
+      "dataFim": "05/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "05/11/2025",
+      "dataFim": "05/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 3011,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "05/11/2025",
+      "dataFim": "05/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "05/11/2025",
+      "dataFim": "05/11/2026",
+      "maxPaginas": 1,
+      "args": [
+        "-g",
+        "1"
+      ],
+      "recorte": "primeiro_grau",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 10000,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 19,
+    "por_grau": {
+      "2": 19
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 14
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "MARIA DE LOURDES LEIRIA",
+      "rotulo_original": "MARIA DE LOURDES LEIRIA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma",
+        "Seção Especializada 2"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0000609-28.2025.5.12.0040",
+        "0000326-41.2025.5.12.0028",
+        "0000217-43.2025.5.12.0055",
+        "0001545-96.2025.5.12.0058",
+        "0000195-30.2025.5.12.0040"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1262
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "NIVALDO STANKIEWICZ",
+      "rotulo_original": "NIVALDO STANKIEWICZ",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª Turma",
+      "orgaos": [
+        "4ª Turma"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0001874-78.2024.5.12.0047",
+        "0000774-90.2024.5.12.0014",
+        "0000662-58.2025.5.12.0056",
+        "0385100-10.2005.5.12.0002",
+        "0000170-20.2025.5.12.0039"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1287
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA APARECIDA FERREIRA JERONIMO",
+      "rotulo_original": "MARIA APARECIDA FERREIRA JERONIMO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "4ª Turma",
+      "orgaos": [
+        "4ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000776-27.2025.5.12.0046",
+        "0000723-26.2022.5.12.0022",
+        "0000461-29.2025.5.12.0036",
+        "0000469-42.2025.5.12.0024",
+        "0001867-63.2022.5.12.0045"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1253
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "WANDERLEY GODOY JUNIOR",
+      "rotulo_original": "WANDERLEY GODOY JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000062-15.2025.5.12.0031",
+        "0000074-07.2025.5.12.0006",
+        "0001766-35.2025.5.12.0008",
+        "0000977-18.2025.5.12.0014",
+        "0000946-25.2025.5.12.0005"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 2099
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CESAR LUIZ PASOLD JUNIOR",
+      "rotulo_original": "CESAR LUIZ PASOLD JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª Turma",
+      "orgaos": [
+        "5ª Turma"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0000401-92.2024.5.12.0003",
+        "0001390-13.2025.5.12.0020",
+        "0000243-41.2024.5.12.0034",
+        "0000009-70.2025.5.12.0019"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1273
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "HELIO BASTIDA LOPES",
+      "rotulo_original": "HELIO BASTIDA LOPES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0001544-78.2024.5.12.0048",
+        "0225300-60.2008.5.12.0027",
+        "0001223-63.2025.5.12.0030",
+        "0000009-05.2024.5.12.0052"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROBERTO LUIZ GUGLIELMETTO",
+      "rotulo_original": "ROBERTO LUIZ GUGLIELMETTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0000015-83.2025.5.12.0017",
+        "0100500-86.2009.5.12.0006",
+        "0000631-73.2025.5.12.0012",
+        "0000143-10.2025.5.12.0048"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE ERNESTO MANZI",
+      "rotulo_original": "JOSE ERNESTO MANZI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000014-80.2025.5.12.0023",
+        "0001954-33.2024.5.12.0050",
+        "0001789-61.2024.5.12.0025"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA BEATRIZ VIEIRA DA SILVA GUBERT",
+      "rotulo_original": "MARIA BEATRIZ VIEIRA DA SILVA GUBERT",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000399-92.2025.5.12.0034",
+        "0000897-92.2019.5.12.0037",
+        "0000604-87.2025.5.12.0013"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "AMARILDO CARLOS DE LIMA",
+      "rotulo_original": "AMARILDO CARLOS DE LIMA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0015700-12.2006.5.12.0013",
+        "0000454-72.2026.5.12.0013"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "KAREM MIRIAN DIDONE",
+      "rotulo_original": "KAREM MIRIAN DIDONE",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª Turma",
+      "orgaos": [
+        "5ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000300-03.2025.5.12.0009",
+        "0000894-61.2024.5.12.0038"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCOS VINICIO ZANCHETTA",
+      "rotulo_original": "MARCOS VINICIO ZANCHETTA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª Turma",
+      "orgaos": [
+        "5ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0001496-31.2024.5.12.0045",
+        "0000337-42.2025.5.12.0005"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARI ELEDA MIGLIORINI",
+      "rotulo_original": "MARI ELEDA MIGLIORINI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "5ª Turma",
+      "orgaos": [
+        "5ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000498-10.2025.5.12.0019",
+        "0000095-51.2025.5.12.0048"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "REINALDO BRANCO DE MORAES",
+      "rotulo_original": "REINALDO BRANCO DE MORAES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0001206-03.2025.5.12.0038",
+        "0001200-76.2024.5.12.0055"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SANDRA SILVA DOS SANTOS",
+      "rotulo_original": "SANDRA SILVA DOS SANTOS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0001942-19.2024.5.12.0050",
+        "0002697-39.2016.5.12.0045"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MIRNA ULIANO BERTOLDI",
+      "rotulo_original": "MIRNA ULIANO BERTOLDI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000301-92.2020.5.12.0031"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "NARBAL ANTONIO DE MENDONCA FILETI",
+      "rotulo_original": "NARBAL ANTONIO DE MENDONCA FILETI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0002368-57.2025.5.12.0030"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROBERTO BASILONE LEITE",
+      "rotulo_original": "ROBERTO BASILONE LEITE",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001051-13.2024.5.12.0045"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "TERESA REGINA COTOSKY",
+      "rotulo_original": "TERESA REGINA COTOSKY",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000946-81.2024.5.12.0030"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
