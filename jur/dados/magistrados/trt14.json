@@ -1,0 +1,307 @@
+{
+  "tribunal": "trt14",
+  "nome": "TRT da 14ª Região",
+  "coletado_em": "2026-11-06T08:10:49.110Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": "Varas do Trabalho (sentenças, -g 1)"
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "06/11/2025",
+      "dataFim": "06/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 4370,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "06/11/2025",
+      "dataFim": "06/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 523,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "06/11/2025",
+      "dataFim": "06/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 6339,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "06/11/2025",
+      "dataFim": "06/11/2026",
+      "maxPaginas": 1,
+      "args": [
+        "-g",
+        "1"
+      ],
+      "recorte": "primeiro_grau",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 8511,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 9,
+    "por_grau": {
+      "2": 9
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 4
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "MARIA CESARINEIDE DE SOUZA LIMA",
+      "rotulo_original": "MARIA CESARINEIDE DE SOUZA LIMA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "SEGUNDA TURMA",
+      "orgaos": [
+        "SEGUNDA TURMA"
+      ],
+      "ocorrencias": 13,
+      "julgados_exemplo": [
+        "0000596-71.2025.5.14.0008",
+        "0001164-13.2024.5.14.0141",
+        "0000227-41.2015.5.14.0004",
+        "0000142-04.2025.5.14.0425",
+        "0000661-73.2025.5.14.0426"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 2373
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANDREA ALEXANDRA BARRETO FERREIRA",
+      "rotulo_original": "ANDREA ALEXANDRA BARRETO FERREIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "SEGUNDA TURMA",
+      "orgaos": [
+        "SEGUNDA TURMA"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [
+        "0000243-57.2025.5.14.0161",
+        "0000845-64.2025.5.14.0091",
+        "0000312-98.2025.5.14.0061",
+        "0000509-03.2025.5.14.0401",
+        "0000183-68.2025.5.14.0425"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1602
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SHIKOU SADAHIRO",
+      "rotulo_original": "SHIKOU SADAHIRO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "PRIMEIRA TURMA",
+      "orgaos": [
+        "PRIMEIRA TURMA"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0000886-28.2025.5.14.0092",
+        "0000695-83.2025.5.14.0091",
+        "0001040-49.2025.5.14.0091",
+        "0000082-77.2025.5.14.0151",
+        "0000160-41.2025.5.14.0161"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 2533
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "VANIA MARIA DA ROCHA ABENSUR",
+      "rotulo_original": "VANIA MARIA DA ROCHA ABENSUR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "PRIMEIRA TURMA",
+      "orgaos": [
+        "PRIMEIRA TURMA"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0000589-68.2025.5.14.0141",
+        "0000194-90.2025.5.14.0007",
+        "0000415-22.2020.5.14.0404",
+        "0000076-24.2025.5.14.0425",
+        "0000325-02.2025.5.14.0416"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1633
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FRANCISCO JOSE PINHEIRO CRUZ",
+      "rotulo_original": "FRANCISCO JOSE PINHEIRO CRUZ",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "SEGUNDA TURMA",
+      "orgaos": [
+        "SEGUNDA TURMA"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0000563-84.2025.5.14.0007",
+        "0000213-05.2025.5.14.0005",
+        "0000740-19.2023.5.14.0007",
+        "0000482-91.2025.5.14.0151",
+        "0000722-42.2025.5.14.0002"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1776
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SOCORRO GUIMARÃES",
+      "rotulo_original": "SOCORRO GUIMARÃES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "PRIMEIRA TURMA",
+      "orgaos": [
+        "PRIMEIRA TURMA"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0000732-57.2025.5.14.0141",
+        "0000453-97.2025.5.14.0003",
+        "0001122-61.2024.5.14.0141",
+        "0000529-24.2025.5.14.0003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANDRE SOUSA PEREIRA",
+      "rotulo_original": "ANDRE SOUSA PEREIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "PRIMEIRA TURMA",
+      "orgaos": [
+        "PRIMEIRA TURMA"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000285-62.2025.5.14.0111",
+        "0000035-20.2015.5.14.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CHRISTIANA DARC DAMASCENO OLIVEIRA ANDRADE SANDIM",
+      "rotulo_original": "CHRISTIANA DARC DAMASCENO OLIVEIRA ANDRADE SANDIM",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "PRIMEIRA TURMA",
+      "orgaos": [
+        "PRIMEIRA TURMA"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000777-51.2025.5.14.0403"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ILSON ALVES PEQUENO JUNIOR",
+      "rotulo_original": "ILSON ALVES PEQUENO JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "SEGUNDA TURMA",
+      "orgaos": [
+        "SEGUNDA TURMA"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000249-80.2021.5.14.0007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

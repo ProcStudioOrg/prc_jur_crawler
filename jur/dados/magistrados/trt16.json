@@ -1,0 +1,291 @@
+{
+  "tribunal": "trt16",
+  "nome": "TRT da 16ª Região",
+  "coletado_em": "2026-11-06T08:12:15.227Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": "Varas do Trabalho (sentenças, -g 1)"
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "06/11/2025",
+      "dataFim": "06/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 931,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "06/11/2025",
+      "dataFim": "06/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 115,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "06/11/2025",
+      "dataFim": "06/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 1510,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "06/11/2025",
+      "dataFim": "06/11/2026",
+      "maxPaginas": 1,
+      "args": [
+        "-g",
+        "1"
+      ],
+      "recorte": "primeiro_grau",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 9553,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 8,
+    "por_grau": {
+      "2": 8
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 3
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "SOLANGE CRISTINA PASSOS DE CASTRO",
+      "rotulo_original": "SOLANGE CRISTINA PASSOS DE CASTRO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 13,
+      "julgados_exemplo": [
+        "0016065-82.2025.5.16.0015",
+        "0018067-22.2025.5.16.0016",
+        "0016189-44.2025.5.16.0022",
+        "0016030-40.2025.5.16.0010",
+        "0017434-48.2024.5.16.0015"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1815
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GERSON DE OLIVEIRA COSTA FILHO",
+      "rotulo_original": "GERSON DE OLIVEIRA COSTA FILHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [
+        "0016933-30.2024.5.16.0004",
+        "0017572-85.2023.5.16.0003",
+        "0016313-45.2025.5.16.0016",
+        "0016885-65.2024.5.16.0006",
+        "0017423-19.2024.5.16.0015"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1652
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ILKA ESDRA SILVA ARAUJO",
+      "rotulo_original": "ILKA ESDRA SILVA ARAUJO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0016171-20.2025.5.16.0023",
+        "0016874-15.2024.5.16.0013",
+        "0017208-22.2024.5.16.0022",
+        "0019900-40.2013.5.16.0002",
+        "0016259-83.2019.5.16.0018"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1400
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JAMES MAGNO ARAUJO FARIAS",
+      "rotulo_original": "JAMES MAGNO ARAUJO FARIAS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma",
+        "Pleno"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "0016145-43.2025.5.16.0016",
+        "0017697-16.2024.5.16.0004",
+        "0016296-19.2023.5.16.0003",
+        "0016826-50.2024.5.16.0015",
+        "0016137-05.2025.5.16.0004"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1509
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE EVANDRO DE SOUZA",
+      "rotulo_original": "JOSÉ EVANDRO DE SOUZA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0017707-06.2024.5.16.0022",
+        "0016953-21.2024.5.16.0004",
+        "0016161-13.2024.5.16.0022",
+        "0016403-83.2025.5.16.0006",
+        "0016270-27.2024.5.16.0022"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1782
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUIZ COSMO DA SILVA JUNIOR",
+      "rotulo_original": "LUIZ COSMO DA SILVA JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma",
+        "Pleno"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0016451-88.2024.5.16.0002",
+        "0016373-26.2022.5.16.0015",
+        "0017524-03.2017.5.16.0015",
+        "0017114-09.2025.5.16.0000",
+        "0016464-61.2023.5.16.0022"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PAULO SERGIO MONT ALVERNE FROTA",
+      "rotulo_original": "PAULO SERGIO MONT ALVERNE FROTA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0016649-95.2024.5.16.0012",
+        "0017671-27.2024.5.16.0001",
+        "0016712-41.2024.5.16.0006",
+        "0016404-57.2024.5.16.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCIA ANDREA FARIAS DA SILVA",
+      "rotulo_original": "MARCIA ANDREA FARIAS DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Pleno",
+      "orgaos": [
+        "Pleno"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0016021-11.2025.5.16.0000",
+        "0017051-81.2025.5.16.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
