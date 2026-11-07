@@ -1,0 +1,369 @@
+{
+  "tribunal": "trt17",
+  "nome": "TRT da 17ª Região",
+  "coletado_em": "2026-11-07T08:10:46.400Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": "Varas do Trabalho (sentenças, -g 1)"
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "07/11/2025",
+      "dataFim": "07/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "07/11/2025",
+      "dataFim": "07/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 2880,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "07/11/2025",
+      "dataFim": "07/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "07/11/2025",
+      "dataFim": "07/11/2026",
+      "maxPaginas": 1,
+      "args": [
+        "-g",
+        "1"
+      ],
+      "recorte": "primeiro_grau",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 10000,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 11,
+    "por_grau": {
+      "2": 11
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 6
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "CLAUDIO ARMANDO COUCE DE MENEZES",
+      "rotulo_original": "CLAUDIO ARMANDO COUCE DE MENEZES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "0000675-45.2025.5.17.0015",
+        "0000384-36.2017.5.17.0141",
+        "0000589-04.2025.5.17.0006",
+        "0000582-21.2025.5.17.0003",
+        "0040600-41.2012.5.17.0003"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1681
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CLAUDIA CARDOSO DE SOUZA",
+      "rotulo_original": "CLAUDIA CARDOSO DE SOUZA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0000690-47.2025.5.17.0101",
+        "0000149-65.2025.5.17.0181",
+        "0000316-16.2025.5.17.0009",
+        "0000216-23.2025.5.17.0151",
+        "0000573-65.2025.5.17.0001"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1523
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DANIELE CORREA SANTA CATARINA",
+      "rotulo_original": "DANIELE CORREA SANTA CATARINA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma",
+        "Pleno"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0001266-68.2024.5.17.0006",
+        "0000276-50.2024.5.17.0015",
+        "0044900-24.1990.5.17.0001",
+        "0001653-59.2024.5.17.0014",
+        "0001259-29.2024.5.17.0151"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 2188
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIO RIBEIRO CANTARINO NETO",
+      "rotulo_original": "MARIO RIBEIRO CANTARINO NETO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma",
+        "Pleno"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0001385-80.2022.5.17.0141",
+        "0001151-32.2024.5.17.0011",
+        "0000307-72.2025.5.17.0003",
+        "0000310-38.2025.5.17.0161",
+        "0000917-15.2023.5.17.0131"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1786
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARISE MEDEIROS CAVALCANTI CHAMBERLAIN",
+      "rotulo_original": "MARISE MEDEIROS CAVALCANTI CHAMBERLAIN",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma",
+        "Pleno"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000548-20.2025.5.17.0141",
+        "0000695-46.2025.5.17.0141",
+        "0000851-60.2025.5.17.0003",
+        "0000228-37.2025.5.17.0151",
+        "0001904-85.2025.5.17.0000"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1414
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "VALDIR DONIZETTI CAIXETA",
+      "rotulo_original": "VALDIR DONIZETTI CAIXETA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0001083-20.2024.5.17.0161",
+        "0000398-47.2025.5.17.0009",
+        "0000126-65.2025.5.17.0005",
+        "0000732-90.2025.5.17.0006",
+        "0001542-46.2017.5.17.0006"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCELLO MACIEL MANCILHA",
+      "rotulo_original": "MARCELLO MACIEL MANCILHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0001034-39.2022.5.17.0002",
+        "0001021-96.2025.5.17.0014",
+        "0000379-50.2025.5.17.0006",
+        "0001369-39.2014.5.17.0002",
+        "0000639-36.2025.5.17.0004"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "VALERIO SOARES HERINGER",
+      "rotulo_original": "VALERIO SOARES HERINGER",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Pleno",
+      "orgaos": [
+        "3ª Turma",
+        "Pleno"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0091900-79.2013.5.17.0141",
+        "0000118-85.2025.5.17.0006",
+        "0001844-15.2025.5.17.0000",
+        "0001639-83.2025.5.17.0000",
+        "0001654-52.2025.5.17.0000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ANA PAULA TAUCEDA BRANCO",
+      "rotulo_original": "ANA PAULA TAUCEDA BRANCO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0000528-29.2025.5.17.0141",
+        "0000559-55.2020.5.17.0131",
+        "0003085-74.2014.5.17.0011",
+        "0000318-09.2022.5.17.0003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "WANDA LUCIA COSTA LEITE FRANCA DECUZZI",
+      "rotulo_original": "WANDA LUCIA COSTA LEITE FRANCA DECUZZI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000580-90.2022.5.17.0121",
+        "0001259-98.2023.5.17.0010",
+        "0000313-55.2025.5.17.0011"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SONIA DAS DORES DIONISIO MENDES",
+      "rotulo_original": "SONIA DAS DORES DIONISIO MENDES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "3ª Turma",
+      "orgaos": [
+        "3ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000748-15.2023.5.17.0006",
+        "0000742-64.2025.5.17.0191"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
