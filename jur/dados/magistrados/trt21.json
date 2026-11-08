@@ -1,0 +1,315 @@
+{
+  "tribunal": "trt21",
+  "nome": "TRT da 21ª Região",
+  "coletado_em": "2026-11-08T08:11:29.463Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": "Varas do Trabalho (sentenças, -g 1)"
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "08/11/2025",
+      "dataFim": "08/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 6762,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "08/11/2025",
+      "dataFim": "08/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 559,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "08/11/2025",
+      "dataFim": "08/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 10000,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "08/11/2025",
+      "dataFim": "08/11/2026",
+      "maxPaginas": 1,
+      "args": [
+        "-g",
+        "1"
+      ],
+      "recorte": "primeiro_grau",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 10000,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 9,
+    "por_grau": {
+      "2": 9
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 4
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "JOSÉ BARBOSA FILHO",
+      "rotulo_original": "JOSÉ BARBOSA FILHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Segunda Turma de Julgamento",
+      "orgaos": [
+        "Segunda Turma de Julgamento"
+      ],
+      "ocorrencias": 13,
+      "julgados_exemplo": [
+        "0000325-39.2026.5.21.0006",
+        "0000032-56.2023.5.21.0012",
+        "0001173-30.2025.5.21.0016",
+        "0000527-98.2021.5.21.0003",
+        "0001212-51.2025.5.21.0008"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1593
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "BENTO HERCULANO DUARTE NETO",
+      "rotulo_original": "BENTO HERCULANO DUARTE NETO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Turma de Julgamento",
+      "orgaos": [
+        "Primeira Turma de Julgamento"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0000580-37.2025.5.21.0004",
+        "0000496-91.2025.5.21.0018",
+        "0000321-51.2025.5.21.0001",
+        "0000906-11.2024.5.21.0043",
+        "0000432-32.2025.5.21.0002"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1601
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA AUXILIADORA BARROS DE MEDEIROS RODRIGUES",
+      "rotulo_original": "MARIA AUXILIADORA BARROS DE MEDEIROS RODRIGUES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Segunda Turma de Julgamento",
+      "orgaos": [
+        "Segunda Turma de Julgamento",
+        "Primeira Turma de Julgamento"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "0000387-04.2025.5.21.0010",
+        "0000235-91.2024.5.21.0041",
+        "0000948-50.2024.5.21.0014",
+        "0000823-66.2025.5.21.0008",
+        "0000424-25.2025.5.21.0012"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1897
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "RONALDO MEDEIROS DE SOUZA",
+      "rotulo_original": "RONALDO MEDEIROS DE SOUZA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Segunda Turma de Julgamento",
+      "orgaos": [
+        "Segunda Turma de Julgamento"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0000755-41.2024.5.21.0012",
+        "0000609-73.2025.5.21.0041",
+        "0000835-72.2025.5.21.0043",
+        "0001074-90.2025.5.21.0006",
+        "0000726-53.2022.5.21.0014"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1738
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ERIDSON JOAO FERNANDES MEDEIROS",
+      "rotulo_original": "ERIDSON JOAO FERNANDES MEDEIROS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Turma de Julgamento",
+      "orgaos": [
+        "Primeira Turma de Julgamento"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000157-86.2025.5.21.0001",
+        "0000504-98.2025.5.21.0008",
+        "0000626-26.2025.5.21.0004",
+        "0000394-78.2017.5.21.0041",
+        "0000453-82.2025.5.21.0042"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1680
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "RICARDO LUIS ESPINDOLA BORGES",
+      "rotulo_original": "RICARDO LUIS ESPINDOLA BORGES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Turma de Julgamento",
+      "orgaos": [
+        "Primeira Turma de Julgamento"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000602-75.2025.5.21.0043",
+        "0001474-07.2025.5.21.0006",
+        "0000230-70.2026.5.21.0018",
+        "0000153-97.2026.5.21.0006",
+        "0000128-45.2026.5.21.0019"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CARLOS NEWTON DE SOUZA PINTO",
+      "rotulo_original": "CARLOS NEWTON DE SOUZA PINTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Segunda Turma de Julgamento",
+      "orgaos": [
+        "Segunda Turma de Julgamento"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0001153-95.2024.5.21.0041",
+        "0000917-03.2023.5.21.0002",
+        "0000771-91.2025.5.21.0001",
+        "0001305-35.2025.5.21.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MANOEL MEDEIROS SOARES DE SOUSA",
+      "rotulo_original": "MANOEL MEDEIROS SOARES DE SOUSA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Turma de Julgamento",
+      "orgaos": [
+        "Primeira Turma de Julgamento"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000463-28.2025.5.21.0010",
+        "0001291-28.2025.5.21.0041",
+        "0000549-23.2025.5.21.0002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUCIANO ATHAYDE CHAVES",
+      "rotulo_original": "LUCIANO ATHAYDE CHAVES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Segunda Turma de Julgamento",
+      "orgaos": [
+        "Segunda Turma de Julgamento",
+        "Primeira Turma de Julgamento"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0000684-11.2025.5.21.0010",
+        "0000007-02.2026.5.21.0024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

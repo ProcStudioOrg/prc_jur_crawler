@@ -50,6 +50,9 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | trt18 | 16 | 0 | 16 | 0 | ok 5 | 2026-11-07 |
 | trt19 | 7 | 0 | 7 | 0 | ok 5 | 2026-11-07 |
 | trt2 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: <p>The document has moved <a href="https://jurisprudenci | 2026-11-02 |
+| trt20 | 8 | 0 | 8 | 0 | ok 5 | 2026-11-08 |
+| trt21 | 9 | 0 | 9 | 0 | ok 5 | 2026-11-08 |
+| trt22 | 8 | 0 | 8 | 0 | ok 5 | 2026-11-08 |
 | trt3 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: <p>The document has moved <a href="https://jurisprudenci | 2026-11-02 |
 | trt4 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: <p>The document has moved <a href="https://jurisprudenci | 2026-11-02 |
 | trt5 | 27 | 0 | 27 | 0 | ok 5 | 2026-11-03 |
@@ -59,9 +62,9 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | trt9 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: getaddrinfo EAI_AGAIN jurisprudencia.jt.jus.br | 2026-11-04 |
 | tst | 20 | 0 | 20 | 0 | ok 5 | 2026-10-24 |
 
-## Fila (21 pendentes, ordem do catálogo)
+## Fila (18 pendentes, ordem do catálogo)
 
-`trt20`, `trt21`, `trt22`, `trt23`, `trt24`, `tcdf`, `tceba`, `tcece`, `tcees`, `tcego`, `tcemg`, `tcepa`, `tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
+`trt23`, `trt24`, `tcdf`, `tceba`, `tcece`, `tcees`, `tcego`, `tcemg`, `tcepa`, `tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
 
 ## Fora do escopo do cron (4)
 

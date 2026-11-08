@@ -1,0 +1,290 @@
+{
+  "tribunal": "trt22",
+  "nome": "TRT da 22ª Região",
+  "coletado_em": "2026-11-08T08:12:11.357Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": "Varas do Trabalho (sentenças, -g 1)"
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "08/11/2025",
+      "dataFim": "08/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 3700,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "08/11/2025",
+      "dataFim": "08/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 522,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "08/11/2025",
+      "dataFim": "08/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 6953,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "08/11/2025",
+      "dataFim": "08/11/2026",
+      "maxPaginas": 1,
+      "args": [
+        "-g",
+        "1"
+      ],
+      "recorte": "primeiro_grau",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 5787,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 8,
+    "por_grau": {
+      "2": 8
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 3
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "LIANA FERRAZ DE CARVALHO",
+      "rotulo_original": "LIANA FERRAZ DE CARVALHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma",
+        "Tribunal Pleno"
+      ],
+      "ocorrencias": 22,
+      "julgados_exemplo": [
+        "0000122-66.2025.5.22.0109",
+        "0000111-55.2025.5.22.0006",
+        "0000570-60.2025.5.22.0005",
+        "0000242-30.2025.5.22.0006",
+        "0000026-69.2025.5.22.0006"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1456
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FRANCISCO METON MARQUES DE LIMA",
+      "rotulo_original": "FRANCISCO METON MARQUES DE LIMA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "0000172-19.2025.5.22.0004",
+        "0000741-14.2025.5.22.0006",
+        "0000598-28.2025.5.22.0102",
+        "0000796-68.2025.5.22.0004",
+        "0001429-73.2025.5.22.0006"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1620
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "BASILICA ALVES DA SILVA",
+      "rotulo_original": "BASILICA ALVES DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "0000250-13.2025.5.22.0004",
+        "0000466-74.2025.5.22.0003",
+        "0001285-42.2024.5.22.0004",
+        "0000578-43.2025.5.22.0003",
+        "0001061-98.2024.5.22.0006"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1367
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ARNALDO BOSON PAES",
+      "rotulo_original": "ARNALDO BOSON PAES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno",
+        "1ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000811-59.2024.5.22.0105",
+        "0083247-65.2025.5.22.0000",
+        "0000553-21.2025.5.22.0006",
+        "0001315-43.2025.5.22.0004",
+        "0001298-13.2025.5.22.0002"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1424
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCO AURÉLIO LUSTOSA CAMINHA",
+      "rotulo_original": "MARCO AURÉLIO LUSTOSA CAMINHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000375-03.2024.5.22.0105",
+        "0000388-16.2021.5.22.0005",
+        "0001185-84.2024.5.22.0005",
+        "0000607-93.2025.5.22.0003",
+        "0001530-25.2025.5.22.0002"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1589
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MANOEL EDILSON CARDOSO",
+      "rotulo_original": "MANOEL EDILSON CARDOSO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "Tribunal Pleno",
+        "2ª Turma"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0000441-71.2024.5.22.0108",
+        "0000006-72.2025.5.22.0105",
+        "0000417-30.2025.5.22.0004",
+        "0000388-59.2025.5.22.0107",
+        "0000956-96.2025.5.22.0003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GIORGI ALAN MACHADO ARAUJO",
+      "rotulo_original": "GIORGI ALAN MACHADO ARAUJO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "0000010-24.2025.5.22.0004",
+        "0001143-81.2023.5.22.0001",
+        "0000073-58.2025.5.22.0001"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "TÉSSIO DA SILVA TÔRRES",
+      "rotulo_original": "TÉSSIO DA SILVA TÔRRES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0001451-46.2025.5.22.0002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
