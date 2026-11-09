@@ -1,0 +1,386 @@
+{
+  "tribunal": "trt23",
+  "nome": "TRT da 23ª Região",
+  "coletado_em": "2026-11-09T08:10:44.508Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": "Varas do Trabalho (sentenças, -g 1)"
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "09/11/2025",
+      "dataFim": "09/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 6197,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "09/11/2025",
+      "dataFim": "09/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 422,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "09/11/2025",
+      "dataFim": "09/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 20,
+      "total_no_portal": 9940,
+      "erro": null
+    },
+    {
+      "query": "dano moral",
+      "dataInicio": "09/11/2025",
+      "dataFim": "09/11/2026",
+      "maxPaginas": 1,
+      "args": [
+        "-g",
+        "1"
+      ],
+      "recorte": "primeiro_grau",
+      "ok": true,
+      "resultados": 10,
+      "total_no_portal": 10000,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 12,
+    "por_grau": {
+      "2": 12
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 7
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "JOAO CARLOS RIBEIRO DE SOUZA",
+      "rotulo_original": "JOAO CARLOS RIBEIRO DE SOUZA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "0000505-39.2025.5.23.0037",
+        "0000237-96.2024.5.23.0076",
+        "0000388-47.2025.5.23.0102",
+        "0000612-73.2025.5.23.0008",
+        "0001275-28.2025.5.23.0006"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1653
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "AGUIMAR MARTINS PEIXOTO",
+      "rotulo_original": "AGUIMAR MARTINS PEIXOTO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0001120-53.2024.5.23.0008",
+        "0001632-56.2024.5.23.0066",
+        "0000194-95.2025.5.23.0086",
+        "0000032-04.2025.5.23.0021",
+        "0001057-28.2024.5.23.0008"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1500
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "HAMILTON SIQUEIRA JUNIOR",
+      "rotulo_original": "HAMILTON SIQUEIRA JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0001081-09.2024.5.23.0056",
+        "0000245-88.2024.5.23.0071",
+        "0001105-81.2024.5.23.0009",
+        "0000864-78.2024.5.23.0051",
+        "0001083-44.2024.5.23.0002"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1587
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "TARCISIO REGIS VALENTE",
+      "rotulo_original": "TARCISIO REGIS VALENTE",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "0000357-39.2025.5.23.0001",
+        "0000044-72.2025.5.23.0003",
+        "0000586-87.2025.5.23.0004",
+        "0000369-55.2024.5.23.0141",
+        "0000324-83.2025.5.23.0022"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1679
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ELEONORA ALVES LACERDA",
+      "rotulo_original": "ELEONORA ALVES LACERDA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000247-34.2025.5.23.0003",
+        "0000545-58.2024.5.23.0036",
+        "0000579-62.2017.5.23.0041",
+        "0000264-20.2024.5.23.0031",
+        "0000194-50.2025.5.23.0101"
+      ],
+      "teste_busca": {
+        "consultados": 10,
+        "batem": 10,
+        "status": "ok",
+        "detalhe": "0 de 10 fora do filtro",
+        "ms": 1472
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARIA BEATRIZ THEODORO GOMES",
+      "rotulo_original": "MARIA BEATRIZ THEODORO GOMES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "0000187-49.2025.5.23.0007",
+        "0000049-39.2021.5.23.0002",
+        "0000668-53.2024.5.23.0037",
+        "0001320-12.2024.5.23.0121",
+        "0000913-97.2024.5.23.0026"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "PAULO ROBERTO RAMOS BARRIONUEVO",
+      "rotulo_original": "PAULO ROBERTO RAMOS BARRIONUEVO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "0000003-11.2025.5.23.0002",
+        "0000314-81.2025.5.23.0008",
+        "0000200-55.2025.5.23.0037",
+        "0000270-80.2022.5.23.0036",
+        "0000079-32.2025.5.23.0003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ADENIR ALVES DA SILVA CARRUESCO",
+      "rotulo_original": "ADENIR ALVES DA SILVA CARRUESCO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "Tribunal Pleno",
+        "1ª Turma"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0000491-35.2026.5.23.0000",
+        "0000310-07.2026.5.23.0009",
+        "0000054-80.2020.5.23.0007",
+        "0208200-09.2005.5.23.0022"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ELINEY BEZERRA VELOSO",
+      "rotulo_original": "ELINEY BEZERRA VELOSO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma",
+        "Tribunal Pleno"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "0001482-46.2016.5.23.0037",
+        "0000523-74.2025.5.23.0000",
+        "0001076-80.2014.5.23.0009",
+        "0000746-50.2024.5.23.0036"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "WILLIAM GUILHERME CORREIA RIBEIRO",
+      "rotulo_original": "WILLIAM GUILHERME CORREIA RIBEIRO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "0001121-98.2025.5.23.0106",
+        "0000579-28.2021.5.23.0007"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE HORTENCIO RIBEIRO JUNIOR",
+      "rotulo_original": "JOSE HORTENCIO RIBEIRO JUNIOR",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Turma",
+      "orgaos": [
+        "2ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000278-34.2024.5.23.0021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "WANDERLEY PIANO DA SILVA",
+      "rotulo_original": "WANDERLEY PIANO DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Turma",
+      "orgaos": [
+        "1ª Turma"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "0000139-55.2025.5.23.0051"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

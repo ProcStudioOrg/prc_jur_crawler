@@ -7,6 +7,7 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | Tribunal | Magistrados | 1º grau | 2º grau | desc. | Teste da busca por magistrado | Coletado em |
 |---|---|---|---|---|---|---|
 | stf | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: o STF não emitiu o cookie aws-waf-token — o desafio do WAF pode ter mudado | 2026-10-24 |
+| tcdf | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: unable to verify the first certificate | 2026-11-09 |
 | tjac | 13 | 3 | 10 | 0 | ok 1 · filtro_ignorado 4 | 2026-10-25 |
 | tjal | 9 | 0 | 9 | 0 | ok 2 · filtro_ignorado 2 · nao_verificavel 1 | 2026-10-25 |
 | tjam | 0 | 0 | 0 | 0 | erro: buscas sem relator legível no resultado | 2026-10-25 |
@@ -53,6 +54,8 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | trt20 | 8 | 0 | 8 | 0 | ok 5 | 2026-11-08 |
 | trt21 | 9 | 0 | 9 | 0 | ok 5 | 2026-11-08 |
 | trt22 | 8 | 0 | 8 | 0 | ok 5 | 2026-11-08 |
+| trt23 | 12 | 0 | 12 | 0 | ok 5 | 2026-11-09 |
+| trt24 | 7 | 0 | 7 | 0 | ok 5 | 2026-11-09 |
 | trt3 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: <p>The document has moved <a href="https://jurisprudenci | 2026-11-02 |
 | trt4 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: <p>The document has moved <a href="https://jurisprudenci | 2026-11-02 |
 | trt5 | 27 | 0 | 27 | 0 | ok 5 | 2026-11-03 |
@@ -62,9 +65,9 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | trt9 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: getaddrinfo EAI_AGAIN jurisprudencia.jt.jus.br | 2026-11-04 |
 | tst | 20 | 0 | 20 | 0 | ok 5 | 2026-10-24 |
 
-## Fila (18 pendentes, ordem do catálogo)
+## Fila (15 pendentes, ordem do catálogo)
 
-`trt23`, `trt24`, `tcdf`, `tceba`, `tcece`, `tcees`, `tcego`, `tcemg`, `tcepa`, `tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
+`tceba`, `tcece`, `tcees`, `tcego`, `tcemg`, `tcepa`, `tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
 
 ## Fora do escopo do cron (4)
 
