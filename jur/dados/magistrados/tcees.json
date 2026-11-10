@@ -1,0 +1,333 @@
+{
+  "tribunal": "tcees",
+  "nome": "Tribunal de Contas do Estado do Espírito Santo",
+  "coletado_em": "2026-11-10T08:17:09.038Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "10/11/2025",
+      "dataFim": "10/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 5,
+      "total_no_portal": 5,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "10/11/2025",
+      "dataFim": "10/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 30,
+      "total_no_portal": 30,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "10/11/2025",
+      "dataFim": "10/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 50,
+      "total_no_portal": 301,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 10,
+    "por_grau": {
+      "2": 10
+    },
+    "teste_busca": {
+      "ok": 3,
+      "nao_verificavel": 2,
+      "nao_testado": 5
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "Donato Volkers Moutinho",
+      "rotulo_original": "Donato Volkers Moutinho",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Ordinária/1ª Câmara",
+      "orgaos": [
+        "Ordinária/1ª Câmara",
+        "Ordinária/Plenário"
+      ],
+      "ocorrencias": 16,
+      "julgados_exemplo": [
+        "04258/2016",
+        "06594/2025",
+        "01484/2026",
+        "05707/2018",
+        "05739/2025"
+      ],
+      "teste_busca": {
+        "consultados": 15,
+        "batem": 15,
+        "status": "ok",
+        "detalhe": "0 de 15 fora do filtro",
+        "ms": 1886
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "o Carlos Ranna de Macedo",
+      "rotulo_original": "o Carlos Ranna de Macedo",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Ordinária/Plenário",
+      "orgaos": [
+        "Ordinária/1ª Câmara",
+        "Ordinária/Plenário"
+      ],
+      "ocorrencias": 13,
+      "julgados_exemplo": [
+        "09000/2024",
+        "01007/2026",
+        "07872/2025",
+        "07255/2023",
+        "05818/2025"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_verificavel",
+        "detalhe": "0 resultados com o filtro",
+        "ms": 1077
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "vio Freire Farias Chamoun",
+      "rotulo_original": "vio Freire Farias Chamoun",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Ordinária/Plenário",
+      "orgaos": [
+        "Ordinária/Plenário",
+        "Ordinária/1ª Câmara"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "00160/2025",
+        "03450/2025",
+        "07684/2025",
+        "05517/2025",
+        "04148/2025"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_verificavel",
+        "detalhe": "0 resultados com o filtro",
+        "ms": 1287
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Davi Diniz de Carvalho",
+      "rotulo_original": "Davi Diniz de Carvalho",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Ordinária/Plenário",
+      "orgaos": [
+        "Ordinária/1ª Câmara",
+        "Ordinária/Plenário"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "05661/2024",
+        "01233/2026",
+        "04024/2025",
+        "00967/2026",
+        "01522/2026"
+      ],
+      "teste_busca": {
+        "consultados": 25,
+        "batem": 25,
+        "status": "ok",
+        "detalhe": "0 de 25 fora do filtro",
+        "ms": 2973
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Domingos Augusto Taufner",
+      "rotulo_original": "Domingos Augusto Taufner",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Ordinária/2ª Câmara",
+      "orgaos": [
+        "Ordinária/2ª Câmara",
+        "Ordinária/Plenário"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "01056/2025",
+        "01512/2026",
+        "01359/2026",
+        "00624/2026",
+        "02733/2026"
+      ],
+      "teste_busca": {
+        "consultados": 25,
+        "batem": 25,
+        "status": "ok",
+        "detalhe": "0 de 25 fora do filtro",
+        "ms": 2886
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "nio da Silva",
+      "rotulo_original": "nio da Silva",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Ordinária/2ª Câmara",
+      "orgaos": [
+        "Ordinária/Plenário",
+        "Ordinária/2ª Câmara"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "07012/2024",
+        "01009/2025",
+        "00099/2021",
+        "05001/2019",
+        "00096/2021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "rcia Jaccoud Freitas",
+      "rotulo_original": "rcia Jaccoud Freitas",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Ordinária/Plenário",
+      "orgaos": [
+        "Ordinária/Plenário",
+        "Ordinária/1ª Câmara"
+      ],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "05821/2025",
+        "04371/2025",
+        "06692/2025",
+        "04079/2025",
+        "04015/2021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Rodrigo Coelho do Carmo",
+      "rotulo_original": "Rodrigo Coelho do Carmo",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Ordinária/Plenário",
+      "orgaos": [
+        "Ordinária/Plenário"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "01786/2026",
+        "02507/2026",
+        "07139/2025",
+        "02719/2026",
+        "08131/2025"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "rgio Aboudib Ferreira Pinto",
+      "rotulo_original": "rgio Aboudib Ferreira Pinto",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Ordinária/1ª Câmara",
+      "orgaos": [
+        "Ordinária/1ª Câmara",
+        "Ordinária/Plenário"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "00909/2025",
+        "06918/2025",
+        "01360/2026"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luiz Carlos Ciciliotti da Cunha",
+      "rotulo_original": "Luiz Carlos Ciciliotti da Cunha",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Ordinária/Plenário",
+      "orgaos": [
+        "Ordinária/Plenário"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "07594/2024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

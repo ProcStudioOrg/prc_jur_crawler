@@ -1,0 +1,495 @@
+{
+  "tribunal": "tceba",
+  "nome": "Tribunal de Contas do Estado da Bahia",
+  "coletado_em": "2026-11-10T08:16:04.438Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "codigo"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "10/11/2025",
+      "dataFim": "10/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 1,
+      "total_no_portal": null,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "10/11/2025",
+      "dataFim": "10/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": false,
+      "resultados": 0,
+      "total_no_portal": null,
+      "erro": "timeout após 180s"
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "10/11/2025",
+      "dataFim": "10/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 3707,
+      "total_no_portal": null,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 16,
+    "por_grau": {
+      "2": 16
+    },
+    "teste_busca": {
+      "sem_capacidade": 16
+    },
+    "buscas_com_erro": 1
+  },
+  "magistrados": [
+    {
+      "nome": "Pedro Henrique Lino de Souza",
+      "rotulo_original": "Pedro Henrique Lino de Souza",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "2ª Câmara"
+      ],
+      "ocorrencias": 597,
+      "julgados_exemplo": [
+        "TCE/006617/2012",
+        "TCE/011446/2015",
+        "TCE/011445/2015",
+        "TCE/006875/2013",
+        "TCE/005316/2008"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Carolina Matos",
+      "rotulo_original": "Carolina Matos",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "1ª Câmara"
+      ],
+      "ocorrencias": 592,
+      "julgados_exemplo": [
+        "TCE/001614/2019",
+        "TCE/003268/2006",
+        "TCE/000449/2008",
+        "TCE/009659/2021",
+        "TCE/000557/2012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Joao Evilasio Vasconcelos Bonfim",
+      "rotulo_original": "Joao Evilasio Vasconcelos Bonfim",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "1ª Câmara",
+        "2ª Câmara"
+      ],
+      "ocorrencias": 398,
+      "julgados_exemplo": [
+        "TCE/007177/2024",
+        "TCE/001113/2016",
+        "TCE/007438/2020",
+        "TCE/008729/2021",
+        "TCE/002992/2014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Antonio Honorato de Castro Neto",
+      "rotulo_original": "Antonio Honorato de Castro Neto",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "1ª Câmara"
+      ],
+      "ocorrencias": 371,
+      "julgados_exemplo": [
+        "TCE/002283/2014",
+        "TCE/005805/2012",
+        "TCE/004371/2021",
+        "TCE/007111/2013",
+        "TCE/011593/2019"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Inaldo da Paixão Santos Araújo",
+      "rotulo_original": "Inaldo da Paixão Santos Araújo",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "1ª Câmara",
+        "Plenário",
+        "2ª Câmara"
+      ],
+      "ocorrencias": 348,
+      "julgados_exemplo": [
+        "TCE/007988/2019",
+        "TCE/000499/2009",
+        "TCE/001624/2019",
+        "TCE/004802/2008",
+        "TCE/001668/2010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Gildasio Penedo Filho",
+      "rotulo_original": "Gildasio Penedo Filho",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "2ª Câmara"
+      ],
+      "ocorrencias": 335,
+      "julgados_exemplo": [
+        "TCE/000903/2012",
+        "TCE/002377/2024",
+        "TCE/001121/2016",
+        "TCE/002492/2017",
+        "TCE/007169/2019"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Filemon Neto Matos",
+      "rotulo_original": "Filemon Neto Matos",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Câmara",
+      "orgaos": [
+        "1ª Câmara",
+        "Plenário"
+      ],
+      "ocorrencias": 273,
+      "julgados_exemplo": [
+        "TCE/007327/2002",
+        "TCE/001122/2008",
+        "TCE/000663/2002",
+        "TCE/006571/2011",
+        "TCE/002406/2011"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Antônio França Teixeira",
+      "rotulo_original": "Antônio França Teixeira",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Câmara",
+      "orgaos": [
+        "2ª Câmara",
+        "Plenário",
+        "1ª Câmara"
+      ],
+      "ocorrencias": 140,
+      "julgados_exemplo": [
+        "TCE/004417/2002",
+        "TCE/002711/2006",
+        "TCE/005549/2004",
+        "TCE/004976/2004",
+        "TCE/007735/2003"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "URSICINO PINTO DE QUEIROZ",
+      "rotulo_original": "URSICINO PINTO DE QUEIROZ",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "1ª Câmara"
+      ],
+      "ocorrencias": 51,
+      "julgados_exemplo": [
+        "TCE/007526/2005",
+        "TCE/003323/2004",
+        "TCE/008937/2002",
+        "TCE/006056/2003",
+        "TCE/004216/2004"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MANOEL FIGUEIREDO CASTRO",
+      "rotulo_original": "MANOEL FIGUEIREDO CASTRO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2ª Câmara",
+      "orgaos": [
+        "2ª Câmara",
+        "Plenário",
+        "1ª Câmara"
+      ],
+      "ocorrencias": 42,
+      "julgados_exemplo": [
+        "TCE/014135/2002",
+        "TCE/011129/2002",
+        "TCE/005467/2004",
+        "TCE/005555/2004",
+        "TCE/001053/2010"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "José Eduardo Vieira Zezéu Ribeiro",
+      "rotulo_original": "José Eduardo Vieira Zezéu Ribeiro",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "2ª Câmara"
+      ],
+      "ocorrencias": 36,
+      "julgados_exemplo": [
+        "TCE/004342/2014",
+        "TCE/000663/2011",
+        "TCE/006228/2014",
+        "TCE/000116/2010",
+        "TCE/006335/2014"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Otto Roberto Mendonça de Alencar Filho",
+      "rotulo_original": "Otto Roberto Mendonça de Alencar Filho",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "2ª Câmara"
+      ],
+      "ocorrencias": 19,
+      "julgados_exemplo": [
+        "TCE/002293/2025",
+        "TCE/009997/2025",
+        "TCE/002612/2023",
+        "TCE/007190/2025",
+        "TCE/011380/2023"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JUSTINIANO ZILTON ROCHA",
+      "rotulo_original": "JUSTINIANO ZILTON ROCHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "2ª Câmara"
+      ],
+      "ocorrencias": 15,
+      "julgados_exemplo": [
+        "TCE/002168/2011",
+        "TCE/003596/2008",
+        "TCE/001569/2007",
+        "TCE/002286/2008",
+        "TCE/000710/2004"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSIAS GOMES DA SILVA",
+      "rotulo_original": "JOSIAS GOMES DA SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "1ª Câmara"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [
+        "TCE/012619/2014",
+        "TCE/000567/2019",
+        "TCE/002946/2026",
+        "TCE/004509/2026",
+        "TCE/000650/2012"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Ridalva Correa de Melo Figueiredo",
+      "rotulo_original": "Ridalva Correa de Melo Figueiredo",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1ª Câmara",
+      "orgaos": [
+        "1ª Câmara",
+        "Plenário"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [
+        "TCE/000618/2006",
+        "TCE/008860/2002",
+        "TCE/002391/2012",
+        "TCE/000481/2008",
+        "TCE/002837/2008"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ADHEMAR MARTINS BENTO GOMES",
+      "rotulo_original": "ADHEMAR MARTINS BENTO GOMES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "TCE/013109/2002"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
