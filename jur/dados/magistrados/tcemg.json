@@ -1,0 +1,271 @@
+{
+  "tribunal": "tcemg",
+  "nome": "Tribunal de Contas do Estado de Minas Gerais",
+  "coletado_em": "2026-11-11T08:11:21.213Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "codigo"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "licitação",
+      "dataInicio": "11/11/2025",
+      "dataFim": "11/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 11,
+      "total_no_portal": null,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "11/11/2025",
+      "dataFim": "11/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 11,
+      "total_no_portal": null,
+      "erro": null
+    },
+    {
+      "query": "convênio",
+      "dataInicio": "11/11/2025",
+      "dataFim": "11/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 5,
+      "total_no_portal": null,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 9,
+    "por_grau": {
+      "2": 9
+    },
+    "teste_busca": {
+      "sem_capacidade": 9
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "EM EXERC. LICURGO MOURÃO",
+      "rotulo_original": "CONS. EM EXERC. LICURGO MOURÃO",
+      "cargo": "CONS",
+      "grau": "2",
+      "orgao": "Tribunal Pleno — TCE-MG",
+      "orgaos": [
+        "Tribunal Pleno — TCE-MG"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "1210457",
+        "1204157",
+        "1174305",
+        "1188173"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EM EXERC. HAMILTON COELHO",
+      "rotulo_original": "CONS. EM EXERC. HAMILTON COELHO",
+      "cargo": "CONS",
+      "grau": "2",
+      "orgao": "Tribunal Pleno — TCE-MG",
+      "orgaos": [
+        "Tribunal Pleno — TCE-MG"
+      ],
+      "ocorrencias": 6,
+      "julgados_exemplo": [
+        "1199805",
+        "1188189",
+        "1196328",
+        "1204161"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALENCAR DA SILVEIRA JR",
+      "rotulo_original": "CONS. ALENCAR DA SILVEIRA JR",
+      "cargo": "CONS",
+      "grau": "2",
+      "orgao": "Tribunal Pleno — TCE-MG",
+      "orgaos": [
+        "Tribunal Pleno — TCE-MG"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "1214514",
+        "1207961"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "convênio",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EM EXERC. TELMO PASSARELI",
+      "rotulo_original": "CONS. EM EXERC. TELMO PASSARELI",
+      "cargo": "CONS",
+      "grau": "2",
+      "orgao": "Tribunal Pleno — TCE-MG",
+      "orgaos": [
+        "Tribunal Pleno — TCE-MG"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "1196070",
+        "1192297"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SUBST. TELMO PASSARELI",
+      "rotulo_original": "CONS. SUBST. TELMO PASSARELI",
+      "cargo": "CONS",
+      "grau": "2",
+      "orgao": "Tribunal Pleno — TCE-MG",
+      "orgaos": [
+        "Tribunal Pleno — TCE-MG"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "1196107",
+        "1156684"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "GILBERTO DINIZ",
+      "rotulo_original": "CONS. GILBERTO DINIZ",
+      "cargo": "CONS",
+      "grau": "2",
+      "orgao": "Tribunal Pleno — TCE-MG",
+      "orgaos": [
+        "Tribunal Pleno — TCE-MG"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "1127139"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "AGOSTINHO PATRUS",
+      "rotulo_original": "CONS. AGOSTINHO PATRUS",
+      "cargo": "CONS",
+      "grau": "2",
+      "orgao": "Tribunal Pleno — TCE-MG",
+      "orgaos": [
+        "Tribunal Pleno — TCE-MG"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "1188139"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EM EXERC. ADONIAS MONTEIRO",
+      "rotulo_original": "CONS. EM EXERC. ADONIAS MONTEIRO",
+      "cargo": "CONS",
+      "grau": "2",
+      "orgao": "Tribunal Pleno — TCE-MG",
+      "orgaos": [
+        "Tribunal Pleno — TCE-MG"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "1200008"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SUBST. HAMILTON COELHO",
+      "rotulo_original": "CONS. SUBST. HAMILTON COELHO",
+      "cargo": "CONS",
+      "grau": "2",
+      "orgao": "Tribunal Pleno — TCE-MG",
+      "orgaos": [
+        "Tribunal Pleno — TCE-MG"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "1135518"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

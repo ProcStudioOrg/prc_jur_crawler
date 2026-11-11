@@ -11,6 +11,9 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | tceba | 16 | 0 | 16 | 0 | sem capacidade (filtro por código) | 2026-11-10 |
 | tcece | 0 | 0 | 0 | 0 | sem capacidade | 2026-11-10 |
 | tcees | 10 | 0 | 10 | 0 | ok 3 · nao_verificavel 2 | 2026-11-10 |
+| tcego | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: <p>The requested URL was not found | 2026-11-11 |
+| tcemg | 9 | 0 | 9 | 0 | sem capacidade (filtro por código) | 2026-11-11 |
+| tcepa | 11 | 0 | 0 | 11 | ok 5 | 2026-11-11 |
 | tjac | 13 | 3 | 10 | 0 | ok 1 · filtro_ignorado 4 | 2026-10-25 |
 | tjal | 9 | 0 | 9 | 0 | ok 2 · filtro_ignorado 2 · nao_verificavel 1 | 2026-10-25 |
 | tjam | 0 | 0 | 0 | 0 | erro: buscas sem relator legível no resultado | 2026-10-25 |
@@ -68,9 +71,9 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | trt9 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: getaddrinfo EAI_AGAIN jurisprudencia.jt.jus.br | 2026-11-04 |
 | tst | 20 | 0 | 20 | 0 | ok 5 | 2026-10-24 |
 
-## Fila (12 pendentes, ordem do catálogo)
+## Fila (9 pendentes, ordem do catálogo)
 
-`tcego`, `tcemg`, `tcepa`, `tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
+`tcepe`, `tcepr`, `tcerj`, `tcers`, `tcesc`, `tcesp`, `tcu`, `carf`, `csjt`
 
 ## Fora do escopo do cron (4)
 

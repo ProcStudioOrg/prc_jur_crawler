@@ -1,0 +1,331 @@
+{
+  "tribunal": "tcepa",
+  "nome": "Tribunal de Contas do Estado do Pará",
+  "coletado_em": "2026-11-11T08:12:13.951Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "licitação",
+      "dataInicio": "11/11/2025",
+      "dataFim": "11/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 50,
+      "total_no_portal": 93,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "11/11/2025",
+      "dataFim": "11/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 50,
+      "total_no_portal": 219,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "11/11/2025",
+      "dataFim": "11/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 50,
+      "total_no_portal": 313,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 11,
+    "por_grau": {
+      "desconhecido": 11
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 6
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "MARIA DE LOURDES LIMA DE OLIVEIRA",
+      "rotulo_original": "MARIA DE LOURDES LIMA DE OLIVEIRA",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 25,
+      "julgados_exemplo": [
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69043/acordao-n-69-043",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69231/acordao-n-69-231",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69601/acordao-n-69-601",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69426/acordao-n-69-426",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69401/acordao-n-69-401"
+      ],
+      "teste_busca": {
+        "consultados": 25,
+        "batem": 25,
+        "status": "ok",
+        "detalhe": "0 de 25 fora do filtro",
+        "ms": 2825
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CIPRIANO SABINO DE OLIVEIRA JUNIOR",
+      "rotulo_original": "CIPRIANO SABINO DE OLIVEIRA JUNIOR",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 23,
+      "julgados_exemplo": [
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69496/acordao-n-69-496",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/68923/acordao-n-68-923",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69188/acordao-n-69-188",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69236/acordao-n-69-236",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/68897/acordao-n-68-897"
+      ],
+      "teste_busca": {
+        "consultados": 21,
+        "batem": 21,
+        "status": "ok",
+        "detalhe": "0 de 21 fora do filtro",
+        "ms": 3192
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FERNANDO DE CASTRO RIBEIRO",
+      "rotulo_original": "FERNANDO DE CASTRO RIBEIRO",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 21,
+      "julgados_exemplo": [
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69496/acordao-n-69-496",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/68841/acordao-n-68-841",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69339/acordao-n-69-339",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69308/acordao-n-69-308",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69358/acordao-n-69-358"
+      ],
+      "teste_busca": {
+        "consultados": 18,
+        "batem": 18,
+        "status": "ok",
+        "detalhe": "0 de 18 fora do filtro",
+        "ms": 2856
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MILENE DIAS DA CUNHA",
+      "rotulo_original": "MILENE DIAS DA CUNHA",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 19,
+      "julgados_exemplo": [
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69635/acordao-n-69-635",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69302/acordao-n-69-302",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69634/acordao-n-69-634",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69368/acordao-n-69-368",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69369/acordao-n-69-369"
+      ],
+      "teste_busca": {
+        "consultados": 25,
+        "batem": 25,
+        "status": "ok",
+        "detalhe": "0 de 25 fora do filtro",
+        "ms": 2949
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ODILON INÁCIO TEIXEIRA",
+      "rotulo_original": "ODILON INÁCIO TEIXEIRA",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 16,
+      "julgados_exemplo": [
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69066/acordao-n-69-066",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69151/acordao-n-69-151",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69310/acordao-n-69-310",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69287/acordao-n-69-287",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69067/acordao-n-69-067"
+      ],
+      "teste_busca": {
+        "consultados": 21,
+        "batem": 21,
+        "status": "ok",
+        "detalhe": "0 de 21 fora do filtro",
+        "ms": 2757
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JULIVAL SILVA ROCHA",
+      "rotulo_original": "JULIVAL SILVA ROCHA",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 14,
+      "julgados_exemplo": [
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69318/acordao-n-69-318",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69633/acordao-n-69-633",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/68893/acordao-n-68-893",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69666/acordao-n-69-666",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69096/acordao-n-69-096"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUIS DA CUNHA TEIXEIRA",
+      "rotulo_original": "LUIS DA CUNHA TEIXEIRA",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69211/acordao-n-69-211",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69030/acordao-n-69-030",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69233/acordao-n-69-233",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69051/acordao-n-69-051",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69306/acordao-n-69-306"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DANIEL MELLO",
+      "rotulo_original": "DANIEL MELLO",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69079/acordao-n-69-079",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69288/acordao-n-69-288",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69067/acordao-n-69-067",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69235/acordao-n-69-235",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69098/acordao-n-69-098"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "EDVALDO FERNANDES DE SOUZA",
+      "rotulo_original": "EDVALDO FERNANDES DE SOUZA",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69178/acordao-n-69-178",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69494/acordao-n-69-494",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/68877/acordao-n-68-877",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69343/acordao-n-69-343",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69535/acordao-n-69-535"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ROSA EGÍDIA CRISPINO CALHEIROS LOPES",
+      "rotulo_original": "ROSA EGÍDIA CRISPINO CALHEIROS LOPES",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69122/acordao-n-69-122",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69553/acordao-n-69-553",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69493/acordao-n-69-493",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69501/acordao-n-69-501",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69478/acordao-n-69-478"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DANIELA LIMA BARBALHO",
+      "rotulo_original": "DANIELA LIMA BARBALHO",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69602/acordao-n-69-602",
+        "http://www.tcepa.tc.br/pesquisaintegrada/bases-dados/acordaos/numeroacordao/69587/acordao-n-69-587"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
