@@ -352,9 +352,10 @@ function documento() {
           type: 'object',
           properties: {
             id: { type: 'string', format: 'uuid' },
-            titulo: { type: ['string', 'null'], description: 'renomeada automaticamente com o texto da primeira mensagem' },
+            titulo: { type: ['string', 'null'], description: 'derivado da primeira mensagem; o usuário pode trocar com `PATCH /api/v1/conversas/{id}`' },
             criadoEm: { type: 'integer' },
             atualizadoEm: { type: 'integer' },
+            fixada: { type: 'boolean', description: 'fixada no topo da lateral; a listagem traz as fixadas primeiro' },
             emAndamento: {
               type: 'boolean',
               description: 'há um turno de chat rodando nesta conversa AGORA. Só aparece na listagem '
@@ -874,6 +875,38 @@ function documento() {
             404: RESPOSTAS.Erro404,
           },
         },
+        patch: {
+          summary: 'Renomeia e/ou fixa uma conversa',
+          description:
+            'Envie `titulo`, `fixada` ou os dois; o que não vier fica como está. O título é '
+            + 'normalizado (espaços) e cortado em 60 caracteres. Nenhum dos dois conta como '
+            + 'atividade: a conversa não sobe na lista por ter sido renomeada.',
+          parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    titulo: { type: 'string', minLength: 1 },
+                    fixada: { type: 'boolean' },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            200: {
+              description: 'conversa atualizada',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Conversa' } } },
+            },
+            400: { description: 'corpo sem `titulo` nem `fixada`, ou com valor inválido' },
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
+            404: RESPOSTAS.Erro404,
+          },
+        },
         delete: {
           summary: 'Apaga uma conversa e suas mensagens',
           parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
@@ -922,13 +955,39 @@ function documento() {
           },
         },
       },
+      '/api/v1/conversas/{id}/interromper': {
+        post: {
+          summary: 'Interrompe a resposta em andamento (botão parar)',
+          description:
+            'O turno sobrevive ao cliente desconectar, então fechar a aba não o encerra: este é o '
+            + 'pedido explícito. Aborta a chamada ao modelo e cancela as buscas que o turno disparou. '
+            + 'O que já veio fica gravado (rodadas completas e o texto parcial, fechado por um aviso de '
+            + 'interrupção), e os streams anexados recebem o evento `interrompido`, com `mensagens` '
+            + 'no mesmo formato do `fim`.',
+          parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+          responses: {
+            200: {
+              description: 'interrupção pedida',
+              content: {
+                'application/json': {
+                  schema: { type: 'object', properties: { id: { type: 'string' }, interrompido: { type: 'boolean', enum: [true] } } },
+                },
+              },
+            },
+            401: RESPOSTAS.Erro401,
+            403: RESPOSTAS.Erro403,
+            404: RESPOSTAS.Erro404,
+            409: { description: 'não há turno em andamento nesta conversa' },
+          },
+        },
+      },
       '/api/v1/conversas/{id}/stream': {
         get: {
           summary: 'Reconecta ao turno em andamento de uma conversa (SSE)',
           description:
             'text/event-stream. Reproduz na hora tudo o que o turno já emitiu e depois segue ao '
             + 'vivo, com os mesmos eventos de `POST /api/v1/chat` (`texto`, `ferramenta`, `fim`, '
-            + '`erro`). Existe porque o turno NÃO morre mais junto com a conexão que o pediu: '
+            + '`erro`, `interrompido`). Existe porque o turno NÃO morre mais junto com a conexão que o pediu: '
             + 'fechar o navegador deixa a resposta rodando, e reabrir a conversa reconecta ao que '
             + 'já chegou em vez de mostrar uma tela parada. '
             + 'Se não houver turno em andamento (inclusive um que acabou de terminar), emite '

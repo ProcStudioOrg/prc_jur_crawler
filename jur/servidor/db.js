@@ -21,8 +21,10 @@ const SCHEMA = `
    processo). Tabela nova, aditiva.
    v7 acrescenta custo_turno: o custo de cada turno do chat (cobrado em R$ na conexão
    ProcStudio, só tokens em BYOK), regravado a cada rodada para sobreviver a um turno que
-   termina em erro ou que o cliente abandonou. Tabela nova, aditiva. */
-PRAGMA user_version = 7;
+   termina em erro ou que o cliente abandonou. Tabela nova, aditiva.
+   v8 acrescenta conversa.fixada (o usuário fixa a conversa no topo da lateral). Mesmo ALTER
+   condicional da v4, agora na tabela conversa. */
+PRAGMA user_version = 8;
 
 CREATE TABLE IF NOT EXISTS job (
   id           TEXT PRIMARY KEY,
@@ -48,7 +50,8 @@ CREATE TABLE IF NOT EXISTS conversa (
   id           TEXT PRIMARY KEY,
   titulo       TEXT,
   criado_em    INTEGER NOT NULL,
-  atualizado_em INTEGER
+  atualizado_em INTEGER,
+  fixada       INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS mensagem (
@@ -145,6 +148,8 @@ function abrir(caminho = caminhoPadrao()) {
   };
   for (const [nome, def] of Object.entries(faltando))
     if (!colunas.has(nome)) con.exec(`ALTER TABLE job ADD COLUMN ${def}`);
+  const colunasConversa = new Set(con.prepare('PRAGMA table_info(conversa)').all().map((c) => c.name));
+  if (!colunasConversa.has('fixada')) con.exec('ALTER TABLE conversa ADD COLUMN fixada INTEGER NOT NULL DEFAULT 0');
 
   // Garante permissão 600 no arquivo de banco e nos arquivos WAL (segredo)
   try {

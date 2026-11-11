@@ -163,6 +163,8 @@ describe('I5 — apagar conversa nao depende de hover', () => {
       assert.strictEqual(await apagar.isVisible(), true);
       assert.ok(await apagar.getAttribute('aria-label'), 'o "x" precisa de rotulo acessivel');
 
+      // Apagar pede confirmacao (nao da para desfazer); o Playwright recusa dialogos por padrao.
+      page.once('dialog', (d) => d.accept());
       await apagar.click();
       await page.waitForSelector('#historico .vazio');
       const { conversas: lista } = await page.evaluate(() => window.jurApi.pedir('/api/v1/conversas'));
@@ -218,6 +220,46 @@ describe('I5 — apagar conversa nao depende de hover', () => {
       const opacidade = await page.$eval('#historico .apagar', (el) => getComputedStyle(el).opacity);
       assert.strictEqual(opacidade, '1',
         `em @media (hover: none) o "x" nao pode depender de hover; veio ${opacidade}`);
+    } finally {
+      await page.close();
+    }
+  });
+});
+
+describe('lateral — renomear e fixar conversa', () => {
+  it('renomeia pelo lapis (Enter salva, Esc desiste) e fixa no topo', async () => {
+    const page = await abrirPagina(1280, 900);
+    try {
+      await page.evaluate(() => window.jurApi.pedir('/api/v1/conversas', { method: 'POST', body: '{}' }));
+      await page.reload({ waitUntil: 'networkidle' });
+      await page.waitForFunction(() => document.querySelectorAll('#historico .conversa-item').length === 2);
+
+      const primeiro = page.locator('#historico .conversa-item').first();
+      await primeiro.locator('.renomear').click();
+      await page.fill('#historico .renomear-campo', 'Tema 1102 — revisão da vida toda');
+      await page.keyboard.press('Enter');
+      await page.waitForSelector('#historico .conversa-titulo:text-is("Tema 1102 — revisão da vida toda")');
+      assert.strictEqual(await page.isVisible('#conversa'), false, 'renomear nao pode abrir a conversa');
+
+      const item = page.locator('#historico .conversa-item:has(.conversa-titulo:text-is("Tema 1102 — revisão da vida toda"))');
+      await item.locator('.renomear').click();
+      await page.fill('#historico .renomear-campo', 'descartado');
+      await page.keyboard.press('Escape');
+      await page.waitForSelector('#historico .renomear-campo', { state: 'detached' });
+      assert.strictEqual(await page.locator('#historico .conversa-titulo:text-is("descartado")').count(), 0, 'Esc desiste');
+
+      // Fixa a de baixo: ela passa para a secao "Fixadas", acima das demais.
+      const ultimo = page.locator('#historico .conversa-item').last();
+      const idTitulo = await ultimo.locator('.conversa-titulo').textContent();
+      await ultimo.locator('.fixar').click();
+      await page.waitForFunction(() => document.querySelector('#historico h2')?.textContent === 'Fixadas');
+      const primeiroAgora = page.locator('#historico .conversa-item').first();
+      assert.strictEqual(await primeiroAgora.locator('.conversa-titulo').textContent(), idTitulo);
+      assert.strictEqual(await primeiroAgora.locator('.fixar').getAttribute('aria-pressed'), 'true');
+
+      const { conversas: lista } = await page.evaluate(() => window.jurApi.pedir('/api/v1/conversas'));
+      assert.deepStrictEqual(lista.map((c) => c.fixada), [true, false]);
+      assert.ok(lista.some((c) => c.titulo === 'Tema 1102 — revisão da vida toda'), 'o titulo foi gravado no servidor');
     } finally {
       await page.close();
     }

@@ -22,11 +22,26 @@ describe('db', () => {
     const cols = Object.fromEntries(con.prepare('PRAGMA table_info(job)').all().map((c) => [c.name, c]));
     assert.ok(cols.navegador && cols.navegador_falhas && cols.resolvido_pelo_usuario);
     assert.strictEqual(cols.resolvido_pelo_usuario.notnull, 1);
-    assert.strictEqual(con.prepare('PRAGMA user_version').get().user_version, 7);
+    assert.strictEqual(con.prepare('PRAGMA user_version').get().user_version, 8);
     assert.ok(con.prepare("SELECT name FROM sqlite_master WHERE name='cobranca_pendente'").get(), 'v6: banco antigo ganha cobranca_pendente');
     assert.ok(con.prepare("SELECT name FROM sqlite_master WHERE name='custo_turno'").get(), 'v7: banco antigo ganha custo_turno');
+    const colsConversa = con.prepare('PRAGMA table_info(conversa)').all().map((c) => c.name);
+    assert.ok(colsConversa.includes('fixada'), 'v8: banco antigo ganha conversa.fixada');
     const l = con.prepare("SELECT resolvido_pelo_usuario, navegador_falhas FROM job WHERE id='v'").get();
     assert.deepStrictEqual([l.resolvido_pelo_usuario, l.navegador_falhas], [0, null]);
+    con.close();
+    db.abrir(arquivo).close(); // reabrir não tenta o ALTER de novo
+  });
+
+  it('v8: conversa antiga ganha fixada = 0', () => {
+    const { DatabaseSync } = require('node:sqlite');
+    const arquivo = arquivoTmp();
+    const velho = new DatabaseSync(arquivo);
+    velho.exec(`CREATE TABLE conversa (id TEXT PRIMARY KEY, titulo TEXT, criado_em INTEGER NOT NULL, atualizado_em INTEGER);
+      INSERT INTO conversa (id, titulo, criado_em) VALUES ('c', 't', 1);`);
+    velho.close();
+    const con = db.abrir(arquivo);
+    assert.strictEqual(con.prepare("SELECT fixada FROM conversa WHERE id='c'").get().fixada, 0);
     con.close();
     db.abrir(arquivo).close(); // reabrir não tenta o ALTER de novo
   });

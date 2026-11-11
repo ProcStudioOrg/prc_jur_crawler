@@ -78,10 +78,10 @@ function abrirLateral() {
 botaoLateral.addEventListener('click', () => (lateralAberta() ? fecharLateral(true) : abrirLateral()));
 fundoLateral.addEventListener('click', () => fecharLateral());
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fecharLateral(true); });
-// Escolher qualquer coisa dentro da gaveta fecha a gaveta — menos o "×" de apagar, que
-// deixa o usuario na lista para apagar mais de uma conversa.
+// Escolher qualquer coisa dentro da gaveta fecha a gaveta — menos as acoes do item (fixar,
+// renomear, apagar) e o campo de renomear, que deixam o usuario na lista.
 $('#lateral').addEventListener('click', (e) => {
-  if (e.target.closest('.apagar')) return;
+  if (e.target.closest('.acoes-conversa, .renomear-campo')) return;
   if (e.target.closest('#nova-conversa, .conversa-item, #abrir-config')) fecharLateral();
 });
 
@@ -119,7 +119,51 @@ function montarCaixa(destino) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
   });
   form.addEventListener('submit', (e) => { e.preventDefault(); enviar(campo, window.jurConexoes.selected?.modelo, null); });
+  const parar = $('.parar', destino);
+  parar.addEventListener('click', () => interromperResposta(parar));
   return destino;
+}
+
+// ---------- parar ----------
+/**
+ * Troca o botao de enviar pelo de parar enquanto ha resposta desta conversa chegando
+ * (do proprio envio ou de um reanexo). So mexe na caixa se a conversa ainda e a da tela.
+ */
+function mostrarParar(id, rodando) {
+  if (conversaAtual !== id) return;
+  const caixa = $('#caixa-conversa');
+  const parar = $('.parar', caixa);
+  const enviarBtn = $('.enviar', caixa);
+  if (!parar || !enviarBtn) return;
+  parar.hidden = !rodando;
+  parar.disabled = false;
+  enviarBtn.hidden = rodando;
+}
+
+/**
+ * O turno sobrevive a aba fechar (servidor/turnos.js), entao parar e um pedido ao
+ * servidor, nao um abort do fetch. O desfecho chega pelo stream como `interrompido`;
+ * 409 quer dizer que o turno acabou sozinho nesse meio tempo — nada a fazer.
+ */
+async function interromperResposta(botao) {
+  const id = conversaAtual;
+  if (!id) return;
+  botao.disabled = true;
+  try {
+    await window.jurApi.pedir(`/api/v1/conversas/${id}/interromper`, { method: 'POST', body: '{}' });
+  } catch (e) {
+    if (e.status === 409) return;
+    botao.disabled = false;
+    if (conversaAtual === id) bolha('erro', `Não foi possível interromper: ${e.message}`);
+  }
+}
+
+const AVISO_INTERROMPIDA = '\n\n_Resposta interrompida pelo usuário._';
+
+/** `interrompido` na tela: o mesmo fechamento que o servidor gravou, na bolha que ja existe. */
+function marcarInterrompida(destino) {
+  if (destino) acrescentarAssistente(destino, AVISO_INTERROMPIDA);
+  else bolha('assistant', AVISO_INTERROMPIDA.trim());
 }
 
 function ajustarAltura(campo) {
@@ -164,46 +208,140 @@ function agendarRecargaHistorico(precisa) {
   relogioHistorico = setTimeout(() => { relogioHistorico = null; carregarHistorico(); }, 5000);
 }
 
+const ICONE_FIXAR = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M6 1.5h4l-.5 4 2.5 2.5v1.5H8.75V15h-1.5V9.5H4V8l2.5-2.5z" fill="currentColor"/></svg>';
+const ICONE_RENOMEAR = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M11.3 1.9a1.5 1.5 0 0 1 2.1 0l.7.7a1.5 1.5 0 0 1 0 2.1L6 12.8 2.5 13.5l.7-3.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+
+function botaoAcao(classe, html, rotulo, aoClicar) {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = classe;
+  b.innerHTML = html;
+  b.title = rotulo;
+  b.setAttribute('aria-label', rotulo);
+  b.addEventListener('click', (e) => { e.stopPropagation(); aoClicar(); });
+  return b;
+}
+
+async function alterarConversa(id, corpo) {
+  try {
+    await window.jurApi.pedir(`/api/v1/conversas/${id}`, { method: 'PATCH', body: JSON.stringify(corpo) });
+  } catch (e) {
+    alert(`Não foi possível salvar: ${e.message}`);
+  }
+  carregarHistorico();
+}
+
+/**
+ * Troca o titulo do item por um campo. Enter ou sair do campo salva; Esc desiste. Titulo
+ * igual ou vazio nao vai ao servidor (vazio seria recusado com 400).
+ */
+function iniciarRenomear(item, c) {
+  if (item.querySelector('.renomear-campo')) return;
+  const titulo = item.querySelector('.conversa-titulo');
+  const campo = document.createElement('input');
+  campo.type = 'text';
+  campo.className = 'renomear-campo';
+  campo.maxLength = 60;
+  campo.value = c.titulo || '';
+  campo.setAttribute('aria-label', 'Novo título da conversa');
+  titulo.replaceWith(campo);
+  campo.focus();
+  campo.select();
+  let feito = false;
+  const concluir = (salvar) => {
+    if (feito) return;
+    feito = true;
+    const novo = campo.value.replace(/\s+/g, ' ').trim();
+    const salvarNovo = salvar && novo && novo !== c.titulo;
+    // O campo sai do DOM ANTES de recarregar: enquanto ele existe, carregarHistorico
+    // entende que ha um renomear em curso e nao redesenha. Mostra o novo titulo ja.
+    if (salvarNovo) titulo.textContent = novo;
+    campo.replaceWith(titulo);
+    if (salvarNovo) alterarConversa(c.id, { titulo: novo });
+    else carregarHistorico();
+  };
+  campo.addEventListener('click', (e) => e.stopPropagation());
+  campo.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); concluir(true); }
+    else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); concluir(false); }
+  });
+  campo.addEventListener('blur', () => concluir(true));
+}
+
+async function apagarConversa(c) {
+  const nome = c.titulo || 'Sem título';
+  const aviso = c.emAndamento
+    ? `Apagar "${nome}"? A resposta em andamento será interrompida. Não dá para desfazer.`
+    : `Apagar "${nome}"? Não dá para desfazer.`;
+  if (!window.confirm(aviso)) return;
+  try {
+    await window.jurApi.pedir(`/api/v1/conversas/${c.id}`, { method: 'DELETE' });
+  } catch (e) {
+    alert(`Não foi possível apagar: ${e.message}`);
+  }
+  if (c.id === conversaAtual) irParaInicial();
+  else carregarHistorico();
+}
+
+function itemConversa(c) {
+  const item = document.createElement('div');
+  item.className = 'conversa-item';
+  if (c.fixada) item.classList.add('fixada');
+  item.setAttribute('aria-current', String(c.id === conversaAtual));
+  const titulo = document.createElement('span');
+  titulo.className = 'conversa-titulo';
+  titulo.textContent = c.titulo || 'Sem título';
+  titulo.title = c.titulo || 'Sem título';
+  item.appendChild(titulo);
+  if (c.emAndamento) {
+    // O rotulo importa tanto quanto o desenho: um circulo girando nao diz nada a quem
+    // usa leitor de tela, e e justamente quem nao ve a animacao que mais precisa saber
+    // que a conversa nao morreu.
+    const girando = document.createElement('span');
+    girando.className = 'em-andamento';
+    girando.setAttribute('role', 'img');
+    girando.setAttribute('aria-label', 'respondendo agora');
+    girando.title = 'Respondendo — continua mesmo se você fechar esta aba';
+    item.appendChild(girando);
+  }
+  const nome = c.titulo || 'Sem título';
+  const acoes = document.createElement('span');
+  acoes.className = 'acoes-conversa';
+  const fixar = botaoAcao(`fixar${c.fixada ? ' ativo' : ''}`, ICONE_FIXAR,
+    c.fixada ? `Desafixar conversa: ${nome}` : `Fixar conversa no topo: ${nome}`,
+    () => alterarConversa(c.id, { fixada: !c.fixada }));
+  fixar.setAttribute('aria-pressed', String(Boolean(c.fixada)));
+  acoes.append(
+    fixar,
+    botaoAcao('renomear', ICONE_RENOMEAR, `Renomear conversa: ${nome}`, () => iniciarRenomear(item, c)),
+    // I5: os botoes ficam visiveis sempre (ver estilo.css); o rotulo acessivel importa
+    // porque um icone sozinho nao diz nada a quem chega nele por teclado ou leitor de tela.
+    botaoAcao('apagar', '×', `Apagar conversa: ${nome}`, () => apagarConversa(c)),
+  );
+  item.appendChild(acoes);
+  titulo.addEventListener('dblclick', (e) => { e.stopPropagation(); iniciarRenomear(item, c); });
+  item.addEventListener('click', () => abrirConversa(c.id));
+  return item;
+}
+
 async function carregarHistorico() {
   const alvo = $('#historico');
   let lista = [];
   try { lista = (await window.jurApi.pedir('/api/v1/conversas')).conversas; } catch { /* segue vazio */ }
   agendarRecargaHistorico(enviosLocais.size > 0 || lista.some((c) => c.emAndamento));
+  // Redesenhar no meio de um renomear jogaria fora o que o usuario esta digitando (a
+  // sondagem roda a cada 5 s enquanto ha conversa respondendo). Fica para a proxima.
+  if (alvo.querySelector('.renomear-campo')) { agendarRecargaHistorico(true); return; }
   if (!lista.length) { alvo.innerHTML = '<p class="vazio">Nenhuma conversa ainda.</p>'; return; }
-  alvo.innerHTML = '<h2>Conversas</h2>';
-  for (const c of lista) {
-    const item = document.createElement('div');
-    item.className = 'conversa-item';
-    item.setAttribute('aria-current', String(c.id === conversaAtual));
-    const titulo = document.createElement('span');
-    titulo.textContent = c.titulo || 'Sem título';
-    item.appendChild(titulo);
-    if (c.emAndamento) {
-      // O rotulo importa tanto quanto o desenho: um circulo girando nao diz nada a quem
-      // usa leitor de tela, e e justamente quem nao ve a animacao que mais precisa saber
-      // que a conversa nao morreu.
-      const girando = document.createElement('span');
-      girando.className = 'em-andamento';
-      girando.setAttribute('role', 'img');
-      girando.setAttribute('aria-label', 'respondendo agora');
-      girando.title = 'Respondendo — continua mesmo se você fechar esta aba';
-      item.appendChild(girando);
-    }
-    const apagar = document.createElement('button');
-    apagar.className = 'apagar'; apagar.textContent = '×';
-    apagar.title = 'Apagar conversa';
-    // I5: o botao e visivel sempre (ver estilo.css); o rotulo acessivel importa porque
-    // "×" sozinho nao diz nada a quem chega nele por teclado ou leitor de tela.
-    apagar.setAttribute('aria-label', `Apagar conversa: ${c.titulo || 'Sem título'}`);
-    apagar.addEventListener('click', async (e) => {
-      e.stopPropagation();
-      await window.jurApi.pedir(`/api/v1/conversas/${c.id}`, { method: 'DELETE' });
-      if (c.id === conversaAtual) irParaInicial();
-      carregarHistorico();
-    });
-    item.appendChild(apagar);
-    item.addEventListener('click', () => abrirConversa(c.id));
-    alvo.appendChild(item);
+  alvo.replaceChildren();
+  const fixadas = lista.filter((c) => c.fixada);
+  const demais = lista.filter((c) => !c.fixada);
+  for (const [rotulo, grupo] of [['Fixadas', fixadas], ['Conversas', demais]]) {
+    if (!grupo.length) continue;
+    const h = document.createElement('h2');
+    h.textContent = rotulo;
+    alvo.appendChild(h);
+    for (const c of grupo) alvo.appendChild(itemConversa(c));
   }
 }
 
@@ -259,6 +397,9 @@ async function abrirConversa(id) {
   }
   carregarHistorico();
   if (window.jurDecisoes) window.jurDecisoes.sincronizar(id);
+  // O envio deste cliente continua transmitindo (o reanexo nao abre um segundo stream):
+  // o botao de parar precisa voltar com a caixa recem-montada.
+  if (enviosLocais.has(id)) mostrarParar(id, true);
   reanexar(id);
 }
 
@@ -285,6 +426,7 @@ async function reanexar(id) {
   const controle = new AbortController();
   reanexado = controle;
   let destino = null;
+  let mostrandoParar = false;
   const linhaCusto = acompanharCusto(id, false);
   try {
     const r = await window.jurApi.requisitar(`/api/v1/conversas/${id}/stream`, { signal: controle.signal });
@@ -293,6 +435,7 @@ async function reanexar(id) {
       // Trocou de conversa no meio: o abort ja veio, mas um chunk em voo ainda pode
       // cair aqui. Nao pode escrever na conversa que estiver aberta AGORA.
       if (conversaAtual !== id) return;
+      if (nome !== 'encerrado' && !mostrandoParar) { mostrandoParar = true; mostrarParar(id, true); }
       if (nome === 'texto') {
         if (!destino) destino = bolha('assistant', '');
         acrescentarAssistente(destino, dados.texto);
@@ -309,7 +452,8 @@ async function reanexar(id) {
         // O total da conversa nao soma aqui: o reanexo reproduz rodadas que o GET da
         // conversa ja contou. Ele e relido do servidor no `fim`.
         linhaCusto(dados);
-      } else if (nome === 'fim') {
+      } else if (nome === 'fim' || nome === 'interrompido') {
+        if (nome === 'interrompido') marcarInterrompida(destino);
         recarregarCustoConversa(id);
         // O historico local precisa receber o turno inteiro (com os blocos de
         // ferramenta): e ele que volta ao modelo na proxima pergunta, e sem os blocos
@@ -335,6 +479,7 @@ async function reanexar(id) {
   } catch { /* abortado ou rede caiu: a conversa continua gravada no servidor */ }
   finally {
     if (reanexado === controle) reanexado = null;
+    if (mostrandoParar) mostrarParar(id, false);
   }
 }
 
@@ -770,6 +915,7 @@ async function enviar(campo, modelo, esforco, reenvio = null) {
     // O stream abriu: o servidor ja registrou o turno. Recarrega agora para o indicador
     // aparecer de imediato, em vez de esperar a proxima sondagem.
     carregarHistorico();
+    mostrarParar(conversaDoEnvio, true);
     // `erro` no meio do turno e tratado depois do stream: antes de mostra-lo o historico local
     // e refeito pela conversa gravada (await, que o leitor de eventos nao pode fazer).
     let erroNoMeio = null;
@@ -794,7 +940,8 @@ async function enviar(campo, modelo, esforco, reenvio = null) {
         if (aindaNaMesmaConversa && window.jurDecisoes) window.jurDecisoes.sincronizar(conversaDoEnvio);
       } else if (nome === 'custo') {
         linhaCusto(dados);
-      } else if (nome === 'fim') {
+      } else if (nome === 'fim' || nome === 'interrompido') {
+        if (aindaNaMesmaConversa && nome === 'interrompido') marcarInterrompida(destino);
         if (aindaNaMesmaConversa) {
           // C1: o turno inteiro, com os blocos `tool_use`/`tool_result` como vieram do
           // servidor — NAO `{role:'assistant', content: dados.texto}`. Achatar aqui era o
@@ -828,6 +975,7 @@ async function enviar(campo, modelo, esforco, reenvio = null) {
   } finally {
     clearTimeout(relogio);
     enviosLocais.delete(conversaDoEnvio);
+    mostrarParar(conversaDoEnvio, false);
     // Aqui o stream ja fechou, e o servidor so fecha depois de tirar o turno do registro
     // — entao esta leitura e a que apaga o indicador na hora certa, sem esperar a
     // proxima sondagem.

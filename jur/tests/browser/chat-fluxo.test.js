@@ -165,7 +165,7 @@ describe('chat: regressao da revisao da Task 7', () => {
       //    lateral se atualiza assim que o turno abre, entao X tambem esta listada — e
       //    listada em primeiro, por atualizado_em. Clicar no "primeiro item" abriria X e
       //    o teste passaria a afirmar algo sobre a tela errada.
-      await page.waitForFunction(() => [...document.querySelectorAll('#historico .conversa-item span')]
+      await page.waitForFunction(() => [...document.querySelectorAll('#historico .conversa-item .conversa-titulo')]
         .some((e) => e.textContent.startsWith('pergunta Y')), null, { timeout: 10000 });
       await page.click('#historico .conversa-item:has(span:text-is("pergunta Y"))');
       await page.waitForTimeout(200);
@@ -199,7 +199,7 @@ describe('chat: regressao da revisao da Task 7', () => {
       //    resposta de X mesmo com o cliente tendo trocado de tela no meio do streaming.
       await page.reload({ waitUntil: 'networkidle' });
       await page.waitForSelector('#historico .conversa-item', { timeout: 10000 });
-      const itens = await page.$$eval('#historico .conversa-item span', (els) => els.map((e) => e.textContent));
+      const itens = await page.$$eval('#historico .conversa-item .conversa-titulo', (els) => els.map((e) => e.textContent));
       const idxX = itens.findIndex((t) => t.startsWith('pergunta X'));
       assert.ok(idxX >= 0, `conversa X precisa aparecer na lateral apos reload: ${JSON.stringify(itens)}`);
       const itensEls = await page.$$('#historico .conversa-item');
@@ -380,6 +380,61 @@ describe('chat: conversa vazia apos erro no primeiro turno (BRU-76)', () => {
       await page.close();
       await browser.close();
       await new Promise((r) => servidor.close(r));
+    }
+  });
+});
+
+describe('chat: botao de parar', () => {
+  it('parar troca o enviar pelo ■ durante a resposta, interrompe e mantem o parcial', async () => {
+    // Transmite um pedaco e so termina quando o servidor abortar a chamada.
+    const cliente = {
+      messages: {
+        stream(params, opcoes) {
+          const ouvintes = {};
+          const p = {
+            on(evento, fn) { ouvintes[evento] = fn; return p; },
+            finalMessage() {
+              if (ouvintes.text) ouvintes.text('texto parcial da resposta');
+              return new Promise((resolve, reject) => {
+                const abortar = () => reject(Object.assign(new Error('abortado'), { name: 'APIUserAbortError' }));
+                if (opcoes.signal.aborted) return abortar();
+                opcoes.signal.addEventListener('abort', abortar);
+              });
+            },
+          };
+          return p;
+        },
+      },
+    };
+    const { servidor, base, chaveBrowser } = await subirServidor({ clienteLLM: cliente });
+    const browser = await chromium.launch();
+    const page = await browser.newPage();
+    try {
+      await injetarChave(page, chaveBrowser);
+      await page.goto(base + '/', { waitUntil: 'networkidle' });
+      await page.fill('#caixa-inicial .entrada', 'pergunta longa');
+      await page.click('#caixa-inicial .enviar');
+
+      await page.waitForSelector('#caixa-conversa .parar', { state: 'visible' });
+      assert.strictEqual(await page.isVisible('#caixa-conversa .enviar'), false, 'enviar sai enquanto ha resposta');
+      await page.waitForSelector('#mensagens .msg.assistant:has-text("texto parcial")');
+
+      await page.click('#caixa-conversa .parar');
+      await page.waitForSelector('#caixa-conversa .enviar', { state: 'visible' });
+      assert.strictEqual(await page.isVisible('#caixa-conversa .parar'), false);
+      const textoBolha = await page.locator('#mensagens .msg.assistant').last().textContent();
+      assert.match(textoBolha, /texto parcial[\s\S]*interrompida/);
+      assert.strictEqual(await page.locator('#mensagens .msg.erro').count(), 0, 'parar a pedido nao e erro');
+
+      // O que ficou gravado e o mesmo que a tela mostra, e a conversa aceita a proxima pergunta.
+      const id = await page.evaluate(() => window.jurConversa.id);
+      const dados = await page.evaluate((i) => window.jurApi.pedir(`/api/v1/conversas/${i}`), id);
+      assert.deepStrictEqual(dados.mensagens.map((m) => m.papel), ['user', 'assistant']);
+      const { conversas: lista } = await page.evaluate(() => window.jurApi.pedir('/api/v1/conversas'));
+      assert.strictEqual(lista[0].emAndamento, false);
+    } finally {
+      await browser.close();
+      servidor.close();
     }
   });
 });

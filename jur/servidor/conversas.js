@@ -26,12 +26,15 @@ function criarRepositorio(con) {
   }
 
   function linhaParaConversa(l) {
-    return { id: l.id, titulo: l.titulo, criadoEm: l.criado_em, atualizadoEm: l.atualizado_em };
+    return {
+      id: l.id, titulo: l.titulo, criadoEm: l.criado_em, atualizadoEm: l.atualizado_em, fixada: Boolean(l.fixada),
+    };
   }
 
+  /** Fixadas primeiro (o usuario as pos no topo de proposito), depois por atividade. */
   function listar(limite = 100) {
-    return con.prepare(`SELECT id, titulo, criado_em, atualizado_em FROM conversa
-                        ORDER BY atualizado_em DESC LIMIT ?`).all(limite)
+    return con.prepare(`SELECT id, titulo, criado_em, atualizado_em, fixada FROM conversa
+                        ORDER BY fixada DESC, atualizado_em DESC LIMIT ?`).all(limite)
       .map(linhaParaConversa);
   }
 
@@ -44,7 +47,7 @@ function criarRepositorio(con) {
    * do SQLite).
    */
   function obter(id) {
-    const l = con.prepare('SELECT id, titulo, criado_em, atualizado_em FROM conversa WHERE id = ?').get(id);
+    const l = con.prepare('SELECT id, titulo, criado_em, atualizado_em, fixada FROM conversa WHERE id = ?').get(id);
     return l ? linhaParaConversa(l) : null;
   }
 
@@ -91,6 +94,25 @@ function criarRepositorio(con) {
     if (!limpo) return;
     const titulo = truncarPorCodePoint(limpo, TITULO_MAX);
     con.prepare('UPDATE conversa SET titulo = ? WHERE id = ?').run(titulo, conversaId);
+  }
+
+  /**
+   * Titulo escolhido pelo usuario. Mesma normalizacao e mesmo teto do titulo automatico;
+   * vazio depois de normalizar devolve null (a rota responde 400). NAO mexe em
+   * `atualizado_em`: renomear nao e atividade da conversa e nao deve pula-la para o topo.
+   * Devolve a conversa atualizada, ou null se ela nao existe.
+   */
+  function renomear(id, texto) {
+    const limpo = String(texto ?? '').replace(/\s+/g, ' ').trim();
+    if (!limpo) return null;
+    const r = con.prepare('UPDATE conversa SET titulo = ? WHERE id = ?').run(truncarPorCodePoint(limpo, TITULO_MAX), id);
+    return r.changes ? obter(id) : null;
+  }
+
+  /** Fixa ou desafixa no topo da lateral. Tambem sem mexer em `atualizado_em`. */
+  function fixar(id, fixada) {
+    const r = con.prepare('UPDATE conversa SET fixada = ? WHERE id = ?').run(fixada ? 1 : 0, id);
+    return r.changes ? obter(id) : null;
   }
 
   /**
@@ -156,7 +178,7 @@ function criarRepositorio(con) {
   }
 
   return {
-    criar, listar, obter, mensagens, acrescentar, renomearSePrimeira, apagar,
+    criar, listar, obter, mensagens, acrescentar, renomearSePrimeira, renomear, fixar, apagar,
     vincularBusca, buscas, registrarCusto, custos,
   };
 }

@@ -243,13 +243,25 @@ function registrar(roteador, deps) {
     // ninguem jamais leria. Aqui vale a politica antiga — abortar a chamada e cancelar as
     // buscas desta conversa.
     const sobreviveAoCliente = Boolean(conversaId && deps.turnos);
-    function aoDesconectar() {
-      if (sobreviveAoCliente) return;
+    function abortarTurno() {
       controlador.abort();
       for (const id of jobsDesteChat) {
         const job = deps.fila.obter(id);
         if (job && !['concluido', 'erro', 'cancelado'].includes(job.status)) deps.fila.cancelar(id);
       }
+    }
+    function aoDesconectar() {
+      if (sobreviveAoCliente) return;
+      abortarTurno();
+    }
+    // Botao de parar (POST /api/v1/conversas/:id/interromper). Como o turno sobrevive ao
+    // cliente, este e o unico jeito de encerra-lo antes do fim. Cancelar as buscas e o que
+    // destrava `buscar_jurisprudencia` (que espera o job) — sem isso o turno so pararia
+    // quando o crawl terminasse.
+    let interrompidoPeloUsuario = false;
+    function interromperTurno() {
+      interrompidoPeloUsuario = true;
+      abortarTurno();
     }
     // Usa 'close' do RES, nao do REQ: o req (IncomingMessage) emite 'close' assim que o
     // corpo termina de ser lido (lerCorpo ja consumiu 'end' logo acima) — e isso e
@@ -409,7 +421,25 @@ function registrar(roteador, deps) {
         // ida-e-volta extra e nao abre corrida com a troca de conversa no meio do stream.
         emitir('fim', { texto: r.texto, mensagens: novas, custo: custoTurno.rodadas ? resumoCusto() : null });
       } catch (e) {
-        if (e && e.name === 'APIUserAbortError') {
+        if (e && e.name === 'APIUserAbortError' && interrompidoPeloUsuario) {
+          // O usuario apertou "parar". O que ja veio fica na conversa: as rodadas completas
+          // (ja cobradas) e o texto parcial da rodada cortada, fechados por uma mensagem do
+          // assistente que diz que parou. Esse fechamento mantem os papeis alternando — o
+          // historico pode terminar na pergunta ou num tool_result, e o proximo turno
+          // mandaria dois `user` seguidos.
+          const historico = Array.isArray(e.mensagens) ? e.mensagens : mensagens;
+          const novas = historico.slice(mensagens.length);
+          const ultimaRole = (novas.length ? novas[novas.length - 1] : mensagens[mensagens.length - 1])?.role;
+          const parcial = String(e.textoParcial || '').trim();
+          const texto = `${parcial ? `${parcial}\n\n` : ''}_Resposta interrompida pelo usuário._`;
+          if (ultimaRole !== 'assistant') novas.push({ role: 'assistant', content: [{ type: 'text', text: texto }] });
+          try {
+            if (conversaId) for (const m of novas) deps.conversas.acrescentar(conversaId, m.role, m.content);
+          } catch (eGravar) {
+            console.error(JSON.stringify({ event: 'chat_interrompido_nao_gravado', erro: String(eGravar.message).slice(0, 300) }));
+          }
+          emitir('interrompido', { texto, mensagens: novas, custo: custoTurno.rodadas ? resumoCusto() : null });
+        } else if (e && e.name === 'APIUserAbortError') {
           // So chega aqui no caminho SEM persistencia: la o cliente desconectou e nos
           // mesmos abortamos via AbortController — fluxo normal, nao falha. Nao emitimos
           // 'erro' porque nao ha ninguem ouvindo e nao ha nada de errado a reportar.
@@ -438,7 +468,7 @@ function registrar(roteador, deps) {
         // so entao comeca a tarefa — por isso o `anexar` logo abaixo sempre encontra o
         // turno. E o que a tarefa tiver emitido antes deste ponto nao se perde: `anexar`
         // reproduz o buffer inteiro ao entrar.
-        const rodando = deps.turnos.executar(conversaId, correrTurno);
+        const rodando = deps.turnos.executar(conversaId, correrTurno, { aoInterromper: interromperTurno });
         desanexar = deps.turnos.anexar(
           conversaId,
           (nome, dados) => canal.enviar(nome, dados),
