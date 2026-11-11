@@ -92,7 +92,45 @@ function registrar(roteador, deps) {
     json(res, 200, { buscas });
   });
 
+  /**
+   * Renomear e fixar. Os dois campos sao opcionais, mas ao menos um precisa vir; o que
+   * nao vier fica como esta. Valida tudo antes de gravar qualquer coisa: um `fixada`
+   * invalido nao pode deixar o titulo trocado pela metade.
+   */
+  roteador.rota('PATCH', '/api/v1/conversas/:id', async (req, res) => {
+    let corpo;
+    try { corpo = (await lerCorpo(req)) || {}; } catch (e) { return json(res, 400, { erro: e.message }); }
+    const temTitulo = Object.hasOwn(corpo, 'titulo');
+    const temFixada = Object.hasOwn(corpo, 'fixada');
+    if (!temTitulo && !temFixada) return json(res, 400, { erro: 'envie titulo e/ou fixada' });
+    if (temTitulo && (typeof corpo.titulo !== 'string' || !corpo.titulo.trim())) {
+      return json(res, 400, { erro: 'titulo precisa ser um texto nao vazio' });
+    }
+    if (temFixada && typeof corpo.fixada !== 'boolean') return json(res, 400, { erro: 'fixada precisa ser true ou false' });
+    if (!repo.obter(req.params.id)) return json(res, 404, { erro: 'conversa nao encontrada' });
+    if (temTitulo) repo.renomear(req.params.id, corpo.titulo);
+    if (temFixada) repo.fixar(req.params.id, corpo.fixada);
+    json(res, 200, repo.obter(req.params.id));
+  });
+
+  /**
+   * Para o turno em andamento. A resposta parcial fica gravada e os clientes anexados
+   * recebem `interrompido` (com as mensagens, como no `fim`). 409 quando nao ha turno
+   * vivo — inclusive um que acabou de terminar sozinho.
+   */
+  roteador.rota('POST', '/api/v1/conversas/:id/interromper', async (req, res) => {
+    try { await lerCorpo(req); } catch (e) { return json(res, 400, { erro: e.message }); }
+    if (!repo.obter(req.params.id)) return json(res, 404, { erro: 'conversa nao encontrada' });
+    if (!deps.turnos || !deps.turnos.interromper(req.params.id)) {
+      return json(res, 409, { erro: 'nao ha resposta em andamento nesta conversa' });
+    }
+    json(res, 200, { id: req.params.id, interrompido: true });
+  });
+
   roteador.rota('DELETE', '/api/v1/conversas/:id', (req, res) => {
+    // Turno vivo numa conversa apagada continuaria gastando (e cancelando nada) para
+    // gravar numa conversa que nao existe mais.
+    if (deps.turnos) deps.turnos.interromper(req.params.id);
     if (!repo.apagar(req.params.id)) return json(res, 404, { erro: 'conversa nao encontrada' });
     json(res, 200, { id: req.params.id, apagada: true });
   });

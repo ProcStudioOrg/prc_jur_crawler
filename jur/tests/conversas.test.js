@@ -61,6 +61,31 @@ describe('conversas', () => {
     assert.ok(ids.indexOf(a.id) < ids.indexOf(b.id), 'a conversa com atividade recente vem antes');
   });
 
+  it('renomear troca o titulo (normalizado e cortado) sem mexer em atualizadoEm', () => {
+    const c = repo.criar();
+    repo.renomearSePrimeira(c.id, 'automatico');
+    const antes = repo.obter(c.id).atualizadoEm;
+    assert.strictEqual(repo.renomear(c.id, '  Meu   titulo  ').titulo, 'Meu titulo');
+    assert.strictEqual(repo.obter(c.id).atualizadoEm, antes, 'renomear nao e atividade: nao pode subir a conversa');
+    assert.ok(Array.from(repo.renomear(c.id, 'x'.repeat(200)).titulo).length <= 60);
+    assert.strictEqual(repo.renomear(c.id, '   '), null, 'vazio nao apaga o titulo');
+    assert.strictEqual(repo.renomear('nao-existe', 'a'), null);
+  });
+
+  it('fixadas vem primeiro na lista, mesmo sem atividade recente', async () => {
+    const velha = repo.criar(); const nova = repo.criar();
+    // Mesmo milissegundo empataria `atualizado_em` e a ordem do desempate seria acaso.
+    await new Promise((r) => setTimeout(r, 5));
+    repo.acrescentar(nova.id, 'user', 'atividade');
+    assert.strictEqual(repo.fixar(velha.id, true).fixada, true);
+    const ids = repo.listar().map((x) => x.id);
+    assert.ok(ids.indexOf(velha.id) < ids.indexOf(nova.id));
+    repo.fixar(velha.id, false);
+    const ids2 = repo.listar().map((x) => x.id);
+    assert.ok(ids2.indexOf(nova.id) < ids2.indexOf(velha.id), 'desafixar devolve a ordem por atividade');
+    assert.strictEqual(repo.fixar('nao-existe', true), null);
+  });
+
   it('mensagens de conversa inexistente e lista vazia, nao erro', () => {
     assert.deepStrictEqual(repo.mensagens('nao-existe'), []);
   });
@@ -74,7 +99,7 @@ describe('conversas', () => {
 
   it('obter busca direto por PK, sem depender de estar entre as N mais recentes', () => {
     const c = repo.criar();
-    assert.deepStrictEqual(repo.obter(c.id), { id: c.id, titulo: null, criadoEm: c.criadoEm, atualizadoEm: c.criadoEm });
+    assert.deepStrictEqual(repo.obter(c.id), { id: c.id, titulo: null, criadoEm: c.criadoEm, atualizadoEm: c.criadoEm, fixada: false });
     assert.strictEqual(repo.obter('nao-existe'), null);
   });
 
@@ -207,6 +232,23 @@ describe('rotas HTTP de conversas (POST/GET/DELETE /api/v1/conversas)', () => {
     const apagada = await fetch(`${base}/api/v1/conversas/${conversa.id}`, { method: 'DELETE' });
     assert.strictEqual(apagada.status, 200);
     assert.deepStrictEqual(await apagada.json(), { id: conversa.id, apagada: true });
+  });
+
+  it('PATCH renomeia e fixa; valida antes de gravar', async () => {
+    const c = repoHttp.criar();
+    const patch = (corpo, id = c.id) => fetch(`${base}/api/v1/conversas/${id}`, {
+      method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify(corpo),
+    });
+    let r = await patch({ titulo: 'Tema 1102' });
+    assert.strictEqual(r.status, 200);
+    assert.strictEqual((await r.json()).titulo, 'Tema 1102');
+    r = await patch({ fixada: true });
+    assert.deepStrictEqual([(await r.json()).fixada, repoHttp.obter(c.id).titulo], [true, 'Tema 1102']);
+    assert.strictEqual((await patch({})).status, 400);
+    assert.strictEqual((await patch({ titulo: '  ' })).status, 400);
+    assert.strictEqual((await patch({ titulo: 'novo', fixada: 'sim' })).status, 400);
+    assert.strictEqual(repoHttp.obter(c.id).titulo, 'Tema 1102', 'fixada invalida nao pode deixar o titulo trocado');
+    assert.strictEqual((await patch({ titulo: 'a' }, 'nao-existe')).status, 404);
   });
 
   it('GET e DELETE por id inexistente devolvem 404', async () => {
@@ -588,6 +630,97 @@ describe('continuidade — o turno sobrevive ao cliente ir embora', () => {
     try {
       const r = await fetch(`http://127.0.0.1:${srv.address().port}/api/v1/conversas/nao-existe/stream`);
       assert.strictEqual(r.status, 404);
+    } finally { srv.close(); }
+  });
+
+  /** Transmite 'parcial ' e so termina (rejeitando) quando o signal abortar. */
+  function clienteQueParaNoAbort() {
+    let chegou;
+    const chamado = new Promise((r) => { chegou = r; });
+    return {
+      chamado,
+      cliente: {
+        messages: {
+          stream(params, opcoes) {
+            const ouvintes = {};
+            const p = {
+              on(evento, fn) { ouvintes[evento] = fn; return p; },
+              finalMessage() {
+                if (ouvintes.text) ouvintes.text('parcial ');
+                chegou();
+                return new Promise((resolve, reject) => {
+                  const sinal = opcoes.signal;
+                  if (sinal.aborted) return rejeitarAbortado(reject);
+                  sinal.addEventListener('abort', () => rejeitarAbortado(reject));
+                });
+              },
+            };
+            return p;
+          },
+        },
+      },
+    };
+  }
+
+  it('interromper para o turno, grava o parcial fechado e libera a conversa', async () => {
+    const repoC = ambiente('interromper');
+    const c = repoC.criar();
+    const { cliente, chamado } = clienteQueParaNoAbort();
+    const srv = await subir({ conversas: repoC, clienteLLM: cliente });
+    const base = `http://127.0.0.1:${srv.address().port}`;
+    try {
+      const req = fetch(`${base}/api/v1/chat`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ conversaId: c.id, mensagens: [{ role: 'user', content: 'pergunta' }] }),
+      });
+      await chamado;
+      const r = await fetch(`${base}/api/v1/conversas/${c.id}/interromper`, { method: 'POST' });
+      assert.strictEqual(r.status, 200);
+
+      const eventos = analisarSSE(await (await req).text());
+      const fim = eventos.find((e) => e.evento === 'interrompido');
+      assert.ok(fim, 'o cliente precisa saber que parou, nao so ver o stream fechar');
+      assert.ok(!eventos.some((e) => e.evento === 'erro'), 'parar a pedido nao e erro');
+
+      const m = repoC.mensagens(c.id);
+      assert.deepStrictEqual(m.map((x) => x.papel), ['user', 'assistant'], 'os papeis precisam alternar');
+      assert.match(JSON.stringify(m[1].conteudo), /parcial[\s\S]*interrompida/);
+      assert.deepStrictEqual(fim.dado.mensagens.map((x) => x.role), ['assistant']);
+
+      assert.strictEqual((await fetch(`${base}/api/v1/conversas/${c.id}/interromper`, { method: 'POST' })).status, 409,
+        'sem turno vivo nao ha o que interromper');
+      assert.strictEqual((await fetch(`${base}/api/v1/conversas/nao-existe/interromper`, { method: 'POST' })).status, 404);
+    } finally { srv.close(); }
+  });
+
+  it('interromper cancela a busca do turno em vez de esperar o crawl terminar', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jur-cont-parar-'));
+    const con = db.abrir(path.join(dir, 'jur.db'));
+    const repoC = conversas.criarRepositorio(con);
+    const filaLenta = jobs.criarFila({ con, dirResultados: dir, executarFn: () => new Promise(() => {}) });
+    const c = repoC.criar();
+    const clienteLLM = clienteFalso([
+      { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 't1', name: 'buscar_jurisprudencia', input: { tribunal: 'stf', query: 'x' } }] },
+    ]);
+    const srv = await subir({ conversas: repoC, fila: filaLenta, clienteLLM });
+    const base = `http://127.0.0.1:${srv.address().port}`;
+    try {
+      const req = fetch(`${base}/api/v1/chat`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ conversaId: c.id, mensagens: [{ role: 'user', content: 'busca no stf' }] }),
+      });
+      let job;
+      for (let i = 0; i < 200 && !job; i++) {
+        await adormecer(10);
+        job = filaLenta.listar().find((j) => j.comando === 'stf');
+      }
+      assert.ok(job);
+      assert.strictEqual((await fetch(`${base}/api/v1/conversas/${c.id}/interromper`, { method: 'POST' })).status, 200);
+      const eventos = analisarSSE(await (await req).text());
+      assert.ok(eventos.some((e) => e.evento === 'interrompido'));
+      assert.strictEqual(filaLenta.obter(job.id).status, 'cancelado');
+      const papeis = repoC.mensagens(c.id).map((x) => x.papel);
+      assert.strictEqual(papeis[papeis.length - 1], 'assistant', 'o historico nao pode terminar no tool_result');
     } finally { srv.close(); }
   });
 

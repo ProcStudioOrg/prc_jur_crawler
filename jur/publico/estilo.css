@@ -108,16 +108,32 @@ body {
    este projeto ja reprovou uma vez na ressalva do tribunal, e que o spec §2.3 proibe
    ("sem depender de hover"). Agora: sempre visivel (discreto), reforcado no hover do item
    e no foco de teclado, e em cheio onde nao existe hover. */
-.conversa-item .apagar {
-  margin-left: auto; flex: 0 0 auto; border: 0; background: none;
-  color: var(--fraco); cursor: pointer; opacity: .6;
-  line-height: 1; padding: 4px 6px; border-radius: 6px; font-size: 15px;
+.conversa-titulo { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.acoes-conversa { margin-left: auto; flex: 0 0 auto; display: flex; align-items: center; gap: 1px; }
+.acoes-conversa button {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 0; background: none; color: var(--fraco); cursor: pointer; opacity: .6;
+  line-height: 1; padding: 4px 5px; border-radius: 6px; font-size: 15px;
 }
-.conversa-item:hover .apagar,
-.conversa-item .apagar:hover,
-.conversa-item .apagar:focus-visible { opacity: 1; color: var(--texto); }
-.conversa-item .apagar:focus-visible { outline: 2px solid var(--acento); outline-offset: 1px; }
-@media (hover: none) { .conversa-item .apagar { opacity: 1; } }
+/* Fixar e renomear so aparecem com hover/foco no desktop, para a lista nao virar uma
+   fileira de icones; apagar fica sempre (I5). Fixada ativa fica sempre, e e o que marca o item. */
+.acoes-conversa .fixar:not(.ativo), .acoes-conversa .renomear { opacity: 0; }
+.conversa-item:hover .acoes-conversa button,
+.conversa-item:focus-within .acoes-conversa button,
+.acoes-conversa button:hover,
+.acoes-conversa button:focus-visible { opacity: 1; color: var(--texto); }
+.acoes-conversa .fixar.ativo { opacity: 1; color: var(--acento); }
+.acoes-conversa button:focus-visible { outline: 2px solid var(--acento); outline-offset: 1px; }
+@media (hover: none) { .acoes-conversa button, .acoes-conversa .fixar:not(.ativo), .acoes-conversa .renomear { opacity: 1; } }
+.renomear-campo {
+  flex: 1 1 auto; min-width: 0; font: inherit; font-size: 14px; color: var(--texto);
+  background: var(--superficie); border: 1px solid var(--acento); border-radius: 6px; padding: 3px 6px;
+}
+.parar {
+  width: 30px; height: 30px; flex: 0 0 30px; border: 0; border-radius: 8px;
+  background: var(--texto); color: var(--fundo); cursor: pointer; font-size: 12px;
+}
+.parar:disabled { opacity: .45; cursor: default; }
 .vazio { color: var(--fraco); font-size: 13px; padding: 8px 10px; }
 
 .config {

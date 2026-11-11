@@ -455,13 +455,18 @@ describe('ganchos por rodada', () => {
     assert.strictEqual(erro.mensagens[2].content[0].type, 'tool_result');
   });
 
-  it('abort do cliente no stream segue cru, sem historico anexado', async () => {
+  // O abort continua sendo o MESMO erro (a rota o reconhece pelo nome e, sem pedido de
+  // parar, nao grava nada). O historico vai junto para o botao de parar: ali a rota grava
+  // as rodadas completas e o texto parcial que ja estava na tela.
+  it('abort no stream segue como o mesmo erro, com historico e texto parcial para o botao de parar', async () => {
     const abortado = Object.assign(new Error('abortado'), { name: 'APIUserAbortError' });
     const erro = await llm.conversar({
       mensagens: [{ role: 'user', content: 'x' }], cliente: clienteFalso([rodadaTool(), abortado]), deps: { fila: filaVazia },
     }).then(() => null, (e) => e);
     assert.strictEqual(erro, abortado);
-    assert.strictEqual(erro.mensagens, undefined);
+    assert.deepStrictEqual(erro.mensagens.map((m) => m.role), ['user', 'assistant', 'user'],
+      'a rodada de ferramenta que terminou fica; a cortada nao entra no historico');
+    assert.strictEqual(erro.textoParcial, '');
   });
 
   it('sem exigirUso, usage nulo passa sem chamar aoUsoDaRodada', async () => {

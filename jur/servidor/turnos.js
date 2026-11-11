@@ -40,12 +40,12 @@ function criarRegistro() {
    * ali: dois turnos concorrentes na mesma conversa gravariam mensagens intercaladas, e
    * o historico que volta para o modelo no turno seguinte sairia fora de ordem.
    */
-  function executar(conversaId, tarefa) {
+  function executar(conversaId, tarefa, { aoInterromper } = {}) {
     if (vivos.has(conversaId)) {
       return Promise.reject(new Error(`ja ha um turno em andamento nesta conversa (${conversaId})`));
     }
 
-    const turno = { eventos: [], ouvintes: new Set(), iniciadoEm: Date.now() };
+    const turno = { eventos: [], ouvintes: new Set(), iniciadoEm: Date.now(), aoInterromper, interrompido: false };
     vivos.set(conversaId, turno);
 
     function emitir(nome, dados) {
@@ -93,7 +93,24 @@ function criarRegistro() {
     return () => turno.ouvintes.delete(ouvinte);
   }
 
-  return { emAndamento, conversasEmAndamento, executar, anexar };
+  /**
+   * Botao de parar. O turno sobrevive ao cliente ir embora (ver o topo), entao fechar a aba
+   * nao e mais um jeito de interromper: precisa de um pedido explicito. Chama o
+   * `aoInterromper` que quem abriu o turno registrou (aborta a chamada ao LLM e cancela as
+   * buscas dele) e devolve true; false se nao ha turno vivo. Um segundo pedido no mesmo
+   * turno e inofensivo: devolve true sem chamar de novo.
+   */
+  function interromper(conversaId) {
+    const turno = vivos.get(conversaId);
+    if (!turno) return false;
+    if (!turno.interrompido && typeof turno.aoInterromper === 'function') {
+      turno.interrompido = true;
+      turno.aoInterromper();
+    }
+    return true;
+  }
+
+  return { emAndamento, conversasEmAndamento, executar, anexar, interromper };
 }
 
 module.exports = { criarRegistro };

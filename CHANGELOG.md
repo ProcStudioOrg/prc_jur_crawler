@@ -11,6 +11,19 @@ Suba com `cd jur && npm version <patch|minor|major> --no-git-tag-version` e regi
 aqui. No primeiro boot de cada release o servidor avisa o FFD
 (`Deploy: jurcrawler v<versão>`), via `USAGE_WEBHOOK_URL` — ver `jur/servidor/aviso-deploy.js`.
 
+## 1.5.0 — 11/11/2026
+
+Controle das conversas no chat. Sem quebra de contrato: rotas e campo novos.
+
+- **Parar resposta.** Durante a resposta o botão de enviar vira ■. Como o turno sobrevive à aba
+  fechada, parar é um pedido explícito: `POST /api/v1/conversas/{id}/interromper` aborta a chamada ao
+  modelo e cancela as buscas do turno. O que já chegou fica gravado (rodadas completas + texto parcial,
+  fechado por "Resposta interrompida pelo usuário."); os streams recebem o evento `interrompido`.
+- **Renomear e fixar** na lateral: `PATCH /api/v1/conversas/{id}` com `titulo` e/ou `fixada`. Fixadas
+  aparecem primeiro (seção "Fixadas"); renomear/fixar não conta como atividade.
+- **Apagar** pede confirmação, e apagar uma conversa que está respondendo interrompe o turno antes.
+- Banco: `conversa.fixada` (schema v8), acrescentada sozinha em banco antigo.
+
 ## 1.4.1 — 29/10/2026
 
 - Cobrança do saldo compartilhado: `input_tokens` enviado ao Rails passa a excluir os tokens servidos pelo

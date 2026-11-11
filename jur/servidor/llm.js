@@ -105,12 +105,19 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
     if (content.length) historico.push({ role: 'assistant', content });
   };
 
+  // Abort tambem sai com o historico (e o texto que a rodada interrompida ja tinha
+  // transmitido): quando foi o usuario quem apertou "parar", a rota grava o que ja veio —
+  // as rodadas anteriores ja foram cobradas e o texto parcial ja estava na tela.
+  let textoDaRodada = '';
+  const abortado = (erro) => Object.assign(erro, { mensagens: historico, rodadas, textoParcial: textoDaRodada });
+
   for (let i = 0; i < maxIteracoes; i++) {
+    textoDaRodada = '';
     // Checagem propria alem da que o proprio SDK faz ao receber um `signal` ja abortado:
     // garante que paramos de chamar a API mesmo com um `cliente` de teste que nao olha
     // pra `signal`, e evita abrir mais uma rodada de tool-use so pra descobrir isso depois
     // (cada rodada e uma chamada paga).
-    if (sinal && sinal.aborted) throw erroAbortado();
+    if (sinal && sinal.aborted) throw abortado(erroAbortado());
 
     if (typeof antesDaRodada === 'function') {
       try { await antesDaRodada(i); } catch (erro) { falhar(erro); }
@@ -132,10 +139,16 @@ async function conversar({ mensagens, apiKey, cliente, deps, aoTexto, aoFerramen
     let mensagem;
     try {
       const stream = anthropic.messages.stream(parametros, { signal: sinal });
-      if (typeof aoTexto === 'function') stream.on('text', (delta) => aoTexto(delta));
+      // Guarda: clientes de teste sem `on` funcionavam quando ninguem passava `aoTexto`.
+      if (typeof stream.on === 'function') {
+        stream.on('text', (delta) => {
+          textoDaRodada += delta;
+          if (typeof aoTexto === 'function') aoTexto(delta);
+        });
+      }
       mensagem = await stream.finalMessage();
     } catch (erro) {
-      if (erro && erro.name === 'APIUserAbortError') throw erro;
+      if (erro && erro.name === 'APIUserAbortError') throw abortado(erro);
       falhar(erro);
     }
     rodadas += 1;
