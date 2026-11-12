@@ -1,0 +1,255 @@
+{
+  "tribunal": "tcerj",
+  "nome": "Tribunal de Contas do Estado do Rio de Janeiro",
+  "coletado_em": "2026-11-12T08:13:31.317Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "licitação",
+      "dataInicio": "12/11/2025",
+      "dataFim": "12/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 53,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "12/11/2025",
+      "dataFim": "12/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 39,
+      "total_no_portal": 39,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "12/11/2025",
+      "dataFim": "12/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 1,
+      "total_no_portal": 1,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 8,
+    "por_grau": {
+      "desconhecido": 8
+    },
+    "teste_busca": {
+      "filtro_ignorado": 5,
+      "nao_testado": 3
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "Marianna Montebello Willeman",
+      "rotulo_original": "Marianna Montebello Willeman",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 21,
+      "julgados_exemplo": [
+        "22900512026",
+        "24103662025",
+        "21441992026",
+        "11329952025",
+        "23958792025"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 5,
+        "status": "filtro_ignorado",
+        "detalhe": "15 de 20 violam o filtro",
+        "ms": 1223
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "José Gomes Graciosa",
+      "rotulo_original": "José Gomes Graciosa",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 13,
+      "julgados_exemplo": [
+        "10046732026",
+        "23940552025",
+        "23414202025",
+        "20064322026",
+        "24552912025"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 0,
+        "status": "filtro_ignorado",
+        "detalhe": "20 de 20 violam o filtro",
+        "ms": 1474
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Marcelo Verdini Maia",
+      "rotulo_original": "Marcelo Verdini Maia",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 13,
+      "julgados_exemplo": [
+        "22333702026",
+        "21437072026",
+        "21648002025",
+        "22781622025",
+        "24363022025"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 3,
+        "status": "filtro_ignorado",
+        "detalhe": "17 de 20 violam o filtro",
+        "ms": 1303
+      },
+      "fonte_query": "licitação",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Andrea Siqueira Martins",
+      "rotulo_original": "Andrea Siqueira Martins",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 11,
+      "julgados_exemplo": [
+        "24481452024",
+        "21523802026",
+        "22243772025",
+        "23298722024",
+        "24495432025"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 3,
+        "status": "filtro_ignorado",
+        "detalhe": "17 de 20 violam o filtro",
+        "ms": 1200
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Christiano Lacerda Ghuerren",
+      "rotulo_original": "Christiano Lacerda Ghuerren",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "24806922025",
+        "21204142026",
+        "20000482025",
+        "20106832026",
+        "23243192022"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 5,
+        "status": "filtro_ignorado",
+        "detalhe": "15 de 20 violam o filtro",
+        "ms": 1196
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Thiago Pampolha Gonçalves",
+      "rotulo_original": "Thiago Pampolha Gonçalves",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "23612922025",
+        "11191252025",
+        "10484692025"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Marcio Henrique Cruz Pacheco",
+      "rotulo_original": "Márcio Henrique Cruz Pacheco",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "10406112025",
+        "11969512023",
+        "10511992024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Rodrigo Melo do Nascimento",
+      "rotulo_original": "Rodrigo Melo do Nascimento",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "20287452025",
+        "23425912021"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

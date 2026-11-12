@@ -1,0 +1,347 @@
+{
+  "tribunal": "tcepr",
+  "nome": "Tribunal de Contas do Estado do Paraná",
+  "coletado_em": "2026-11-12T08:12:56.635Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome-exato"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "12/11/2025",
+      "dataFim": "12/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 208,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "12/11/2025",
+      "dataFim": "12/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 409,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "12/11/2025",
+      "dataFim": "12/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 1773,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 11,
+    "por_grau": {
+      "2": 11
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 6
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "FABIO DE SOUZA CAMARGO",
+      "rotulo_original": "FABIO DE SOUZA CAMARGO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno",
+        "Segunda Câmara"
+      ],
+      "ocorrencias": 24,
+      "julgados_exemplo": [
+        "16373/2025",
+        "616072/2025",
+        "784072/2025",
+        "432897/2026",
+        "567284/2025"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 3455
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MAURÍCIO REQUIÃO DE MELLO E SILVA",
+      "rotulo_original": "MAURÍCIO REQUIÃO DE MELLO E SILVA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno",
+        "Primeira Câmara"
+      ],
+      "ocorrencias": 22,
+      "julgados_exemplo": [
+        "50282/2026",
+        "765964/2022",
+        "207451/2026",
+        "258249/2025",
+        "403730/2026"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 3445
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "IVAN LELIS BONILHA",
+      "rotulo_original": "IVAN LELIS BONILHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno",
+        "Primeira Câmara"
+      ],
+      "ocorrencias": 21,
+      "julgados_exemplo": [
+        "581272/2026",
+        "231654/2026",
+        "85930/2026",
+        "679341/2025",
+        "454714/2025"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 3435
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "FERNANDO AUGUSTO MELLO GUIMARÃES",
+      "rotulo_original": "FERNANDO AUGUSTO MELLO GUIMARÃES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno",
+        "Segunda Câmara"
+      ],
+      "ocorrencias": 18,
+      "julgados_exemplo": [
+        "272756/2025",
+        "738488/2025",
+        "214113/2026",
+        "104164/2026",
+        "271206/2026"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 4927
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "AUGUSTINHO ZUCCHI",
+      "rotulo_original": "AUGUSTINHO ZUCCHI",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno"
+      ],
+      "ocorrencias": 13,
+      "julgados_exemplo": [
+        "772619/2025",
+        "332299/2026",
+        "519677/2024",
+        "535811/2025",
+        "805649/2025"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 3642
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE DURVAL MATTOS DO AMARAL",
+      "rotulo_original": "JOSE DURVAL MATTOS DO AMARAL",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "449048/2026",
+        "604372/2024",
+        "163930/2025",
+        "752650/2025",
+        "693670/2025"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "IVENS ZSCHOERPER LINHARES",
+      "rotulo_original": "IVENS ZSCHOERPER LINHARES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "730050/2025",
+        "431840/2026",
+        "724835/2025"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JOSE MAURICIO DE ANDRADE NETO",
+      "rotulo_original": "JOSE MAURICIO DE ANDRADE NETO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Câmara",
+      "orgaos": [
+        "Primeira Câmara"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "577840/2025",
+        "774070/2023"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "SÉRGIO RICARDO VALADARES FONSECA",
+      "rotulo_original": "SÉRGIO RICARDO VALADARES FONSECA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "388432/2024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "THIAGO BARBOSA CORDEIRO",
+      "rotulo_original": "THIAGO BARBOSA CORDEIRO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Câmara",
+      "orgaos": [
+        "Primeira Câmara",
+        "Tribunal Pleno"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "401116/2020",
+        "328992/2026"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "TIAGO ALVAREZ PEDROSO",
+      "rotulo_original": "TIAGO ALVAREZ PEDROSO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Tribunal Pleno",
+      "orgaos": [
+        "Tribunal Pleno",
+        "Segunda Câmara"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "703792/2023",
+        "312444/2024"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

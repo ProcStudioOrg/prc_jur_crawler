@@ -1,0 +1,282 @@
+{
+  "tribunal": "tcepe",
+  "nome": "Tribunal de Contas do Estado de Pernambuco",
+  "coletado_em": "2026-11-12T08:11:51.418Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "trecho"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "12/11/2025",
+      "dataFim": "12/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 17,
+      "total_no_portal": null,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "12/11/2025",
+      "dataFim": "12/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": false,
+      "resultados": 0,
+      "total_no_portal": null,
+      "erro": "socket hang up"
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "12/11/2025",
+      "dataFim": "12/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": false,
+      "resultados": 0,
+      "total_no_portal": null,
+      "erro": "socket hang up"
+    }
+  ],
+  "resumo": {
+    "magistrados": 9,
+    "por_grau": {
+      "2": 9
+    },
+    "teste_busca": {
+      "ok": 2,
+      "nao_verificavel": 3,
+      "nao_testado": 4
+    },
+    "buscas_com_erro": 2
+  },
+  "magistrados": [
+    {
+      "nome": "RUY RICARDO",
+      "rotulo_original": "RUY RICARDO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2a. Câmara",
+      "orgaos": [
+        "1a. Câmara",
+        "2a. Câmara"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "21100713-4",
+        "20100045-3",
+        "21100006-1",
+        "21100148-0",
+        "20100332-6"
+      ],
+      "teste_busca": {
+        "consultados": 5,
+        "batem": 5,
+        "status": "ok",
+        "detalhe": "0 de 5 fora do filtro",
+        "ms": 3481
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "DIRCEU RODOLFO",
+      "rotulo_original": "DIRCEU RODOLFO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Pleno",
+      "orgaos": [
+        "Pleno",
+        "1a. Câmara",
+        "2a. Câmara"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "22100088-4RO002",
+        "26100283-1",
+        "24100569-3ED001"
+      ],
+      "teste_busca": {
+        "consultados": 3,
+        "batem": 3,
+        "status": "ok",
+        "detalhe": "0 de 3 fora do filtro",
+        "ms": 3081
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "LUIZ ARCOVERDE FILHO",
+      "rotulo_original": "LUIZ ARCOVERDE FILHO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2a. Câmara",
+      "orgaos": [
+        "2a. Câmara",
+        "1a. Câmara"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "25101276-1",
+        "26100169-3"
+      ],
+      "teste_busca": {
+        "consultados": 2,
+        "batem": 2,
+        "status": "nao_verificavel",
+        "detalhe": "só 2 resultado(s) com o campo legível (mínimo 3)",
+        "ms": 1871
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCOS LORETO",
+      "rotulo_original": "MARCOS LORETO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2a. Câmara",
+      "orgaos": [
+        "2a. Câmara",
+        "Pleno"
+      ],
+      "ocorrencias": 2,
+      "julgados_exemplo": [
+        "25100313-9",
+        "23100056-0RO002"
+      ],
+      "teste_busca": {
+        "consultados": 2,
+        "batem": 2,
+        "status": "nao_verificavel",
+        "detalhe": "só 2 resultado(s) com o campo legível (mínimo 3)",
+        "ms": 5562
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ALDA MAGALHÃES",
+      "rotulo_original": "ALDA MAGALHÃES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1a. Câmara",
+      "orgaos": [
+        "1a. Câmara"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "20100499-9"
+      ],
+      "teste_busca": {
+        "consultados": 1,
+        "batem": 1,
+        "status": "nao_verificavel",
+        "detalhe": "só 1 resultado(s) com o campo legível (mínimo 3)",
+        "ms": 2462
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "CARLOS NEVES",
+      "rotulo_original": "CARLOS NEVES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1a. Câmara",
+      "orgaos": [
+        "1a. Câmara"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "20100751-4"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCOS NÓBREGA",
+      "rotulo_original": "MARCOS NÓBREGA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "1a. Câmara",
+      "orgaos": [
+        "1a. Câmara"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "19100287-2"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "RICARDO RIOS",
+      "rotulo_original": "RICARDO RIOS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2a. Câmara",
+      "orgaos": [
+        "2a. Câmara"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "23100388-2"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "VALDECIR PASCOAL",
+      "rotulo_original": "VALDECIR PASCOAL",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "2a. Câmara",
+      "orgaos": [
+        "2a. Câmara"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "25101204-9"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
