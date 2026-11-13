@@ -1,0 +1,278 @@
+{
+  "tribunal": "tcesc",
+  "nome": "Tribunal de Contas do Estado de Santa Catarina",
+  "coletado_em": "2026-11-13T08:10:58.208Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "codigo"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "13/11/2025",
+      "dataFim": "13/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 359,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "13/11/2025",
+      "dataFim": "13/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 31,
+      "total_no_portal": 31,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "13/11/2025",
+      "dataFim": "13/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 586,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 9,
+    "por_grau": {
+      "desconhecido": 9
+    },
+    "teste_busca": {
+      "sem_capacidade": 9
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "Sabrina Nunes Iocken",
+      "rotulo_original": "Sabrina Nunes Iocken",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 21,
+      "julgados_exemplo": [
+        "DEN 26/00053632",
+        "TCE 26/00004003",
+        "TCE 26/00002990",
+        "REP 26/00014653",
+        "RLI 26/00004267"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Aderson Flores",
+      "rotulo_original": "Aderson Flores",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 19,
+      "julgados_exemplo": [
+        "RLI 26/00001080",
+        "REC 26/00059240",
+        "RLI 26/80005303",
+        "REP 25/00207859",
+        "REC 26/00121492"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luiz Eduardo Cherem",
+      "rotulo_original": "Luiz Eduardo Cherem",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 16,
+      "julgados_exemplo": [
+        "RLI 26/00008769",
+        "CON 25/00212003",
+        "DEN 26/00134802",
+        "REP 26/00085836",
+        "REP 26/00000199"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "José Nei Alberton Ascari",
+      "rotulo_original": "José Nei Alberton Ascari",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 14,
+      "julgados_exemplo": [
+        "REP 26/00002809",
+        "REP 26/00120844",
+        "REP 25/00202547",
+        "REP 26/00019965",
+        "REP 25/00207182"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Cleber Muniz Gavi",
+      "rotulo_original": "Cleber Muniz Gavi",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "REP 26/00085593",
+        "DEN 26/00067501",
+        "REC 26/00123940",
+        "REP 26/00011638",
+        "REP 26/00053551"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Luiz Roberto Herbst",
+      "rotulo_original": "Luiz Roberto Herbst",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 10,
+      "julgados_exemplo": [
+        "CON 26/00055333",
+        "TCE 26/00001160",
+        "REC 26/00070057",
+        "REP 26/00076500",
+        "RLI 25/00212500"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Adircélio de Moraes Ferreira Júnior",
+      "rotulo_original": "Adircélio de Moraes Ferreira Júnior",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 9,
+      "julgados_exemplo": [
+        "REC 25/00198680",
+        "REP 25/00198760",
+        "REC 26/00175665",
+        "REP 26/00134713",
+        "RLI 26/00047748"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Wilson Rogério Wan-Dall",
+      "rotulo_original": "Wilson Rogério Wan-Dall",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 8,
+      "julgados_exemplo": [
+        "REP 26/00079356",
+        "REC 26/00103672",
+        "REC 26/00096790",
+        "REC 26/00150409",
+        "CON 26/00001322"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Gerson dos Santos Sicca",
+      "rotulo_original": "Gerson dos Santos Sicca",
+      "cargo": null,
+      "grau": "desconhecido",
+      "orgao": null,
+      "orgaos": [],
+      "ocorrencias": 4,
+      "julgados_exemplo": [
+        "CON 26/00010585",
+        "REP 25/00204671",
+        "REC 26/00144000"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "filtro por código, não por nome"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

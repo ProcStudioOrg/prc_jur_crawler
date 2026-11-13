@@ -1,0 +1,302 @@
+{
+  "tribunal": "tcers",
+  "nome": "Tribunal de Contas do Estado do Rio Grande do Sul",
+  "coletado_em": "2026-11-13T08:10:41.342Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": true,
+      "forma": "nome"
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "13/11/2025",
+      "dataFim": "13/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 49,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "13/11/2025",
+      "dataFim": "13/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 184,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "13/11/2025",
+      "dataFim": "13/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": 65,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 9,
+    "por_grau": {
+      "2": 9
+    },
+    "teste_busca": {
+      "ok": 5,
+      "nao_testado": 4
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "Marco Peixoto",
+      "rotulo_original": "Marco Peixoto",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "SEGUNDA CÂMARA",
+      "orgaos": [
+        "SEGUNDA CÂMARA",
+        "TRIBUNAL PLENO"
+      ],
+      "ocorrencias": 43,
+      "julgados_exemplo": [
+        "000406-0200/24-6",
+        "000477-0200/24-1",
+        "000505-0200/24-1",
+        "000169-0200/23-2",
+        "009765-0200/21-0"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 1485
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Alexandre Postal",
+      "rotulo_original": "Alexandre Postal",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "SEGUNDA CÂMARA",
+      "orgaos": [
+        "SEGUNDA CÂMARA",
+        "TRIBUNAL PLENO"
+      ],
+      "ocorrencias": 32,
+      "julgados_exemplo": [
+        "001039-0200/24-4",
+        "000481-0200/24-7",
+        "013478-0200/25-0",
+        "000131-0200/24-3",
+        "000803-0200/23-2"
+      ],
+      "teste_busca": {
+        "consultados": 20,
+        "batem": 20,
+        "status": "ok",
+        "detalhe": "0 de 20 fora do filtro",
+        "ms": 1643
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Edson Brum",
+      "rotulo_original": "Edson Brum",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "SEGUNDA CÂMARA",
+      "orgaos": [
+        "SEGUNDA CÂMARA"
+      ],
+      "ocorrencias": 19,
+      "julgados_exemplo": [
+        "000750-0200/24-3",
+        "000932-0200/23-3",
+        "000050-0200/24-6",
+        "001424-0200/24-1",
+        "001945-0200/19-2"
+      ],
+      "teste_busca": {
+        "consultados": 14,
+        "batem": 14,
+        "status": "ok",
+        "detalhe": "0 de 14 fora do filtro",
+        "ms": 1701
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Cezar Miola",
+      "rotulo_original": "Cezar Miola",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "PRIMEIRA CÂMARA",
+      "orgaos": [
+        "PRIMEIRA CÂMARA",
+        "TRIBUNAL PLENO"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "009540-0200/26-7",
+        "006304-0200/26-2",
+        "012411-0200/25-3",
+        "012519-0200/25-3",
+        "012604-0200/25-6"
+      ],
+      "teste_busca": {
+        "consultados": 9,
+        "batem": 9,
+        "status": "ok",
+        "detalhe": "0 de 9 fora do filtro",
+        "ms": 1100
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Daniela Zago Gonçalves da Cunda",
+      "rotulo_original": "Daniela Zago Gonçalves da Cunda",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "SEGUNDA CÂMARA ESPECIAL",
+      "orgaos": [
+        "TRIBUNAL PLENO",
+        "SEGUNDA CÂMARA ESPECIAL"
+      ],
+      "ocorrencias": 7,
+      "julgados_exemplo": [
+        "019256-0200/24-0",
+        "000317-0200/24-2",
+        "000639-0200/24-6",
+        "000467-0200/24-0",
+        "000501-0200/24-0"
+      ],
+      "teste_busca": {
+        "consultados": 7,
+        "batem": 7,
+        "status": "ok",
+        "detalhe": "0 de 7 fora do filtro",
+        "ms": 1250
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Alexandre Mariotti",
+      "rotulo_original": "Alexandre Mariotti",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "PRIMEIRA CÂMARA",
+      "orgaos": [
+        "PRIMEIRA CÂMARA",
+        "SEGUNDA CÂMARA ESPECIAL"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [
+        "000889-0200/24-1",
+        "000702-0200/24-0",
+        "025130-0210/22-9",
+        "017518-0200/25-7"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Letícia Ayres Ramos",
+      "rotulo_original": "Letícia Ayres Ramos",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "SEGUNDA CÂMARA",
+      "orgaos": [
+        "SEGUNDA CÂMARA",
+        "PRIMEIRA CÂMARA"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "006668-0200/26-9",
+        "009292-0210/21-1",
+        "032666-0200/23-9"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Renato Luís Bordin de Azeredo",
+      "rotulo_original": "Renato Luís Bordin de Azeredo",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "PRIMEIRA CÂMARA",
+      "orgaos": [
+        "PRIMEIRA CÂMARA",
+        "TRIBUNAL PLENO"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [
+        "001037-0200/23-0",
+        "032215-0200/23-4",
+        "016058-0200/25-6"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "Estilac Martins Rodrigues Xavier",
+      "rotulo_original": "Estilac Martins Rodrigues Xavier",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "PRIMEIRA CÂMARA",
+      "orgaos": [
+        "PRIMEIRA CÂMARA"
+      ],
+      "ocorrencias": 1,
+      "julgados_exemplo": [
+        "026135-0200/21-6"
+      ],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "nao_testado",
+        "detalhe": ""
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    }
+  ]
+}
