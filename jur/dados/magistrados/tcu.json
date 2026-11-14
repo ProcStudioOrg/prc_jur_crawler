@@ -1,0 +1,315 @@
+{
+  "tribunal": "tcu",
+  "nome": "Tribunal de Contas da União",
+  "coletado_em": "2026-11-14T08:10:58.020Z",
+  "versao_jur": "1.3.0",
+  "capacidade": {
+    "magistrado": {
+      "suportado": false,
+      "forma": null
+    },
+    "juizados": false,
+    "primeiro_grau": null
+  },
+  "fonte": [
+    {
+      "query": "dano moral",
+      "dataInicio": "14/11/2025",
+      "dataFim": "14/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": null,
+      "erro": null
+    },
+    {
+      "query": "aposentadoria",
+      "dataInicio": "14/11/2025",
+      "dataFim": "14/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": null,
+      "erro": null
+    },
+    {
+      "query": "contrato",
+      "dataInicio": "14/11/2025",
+      "dataFim": "14/11/2026",
+      "maxPaginas": 2,
+      "args": [],
+      "recorte": "comum",
+      "ok": true,
+      "resultados": 40,
+      "total_no_portal": null,
+      "erro": null
+    }
+  ],
+  "resumo": {
+    "magistrados": 12,
+    "por_grau": {
+      "2": 12
+    },
+    "teste_busca": {
+      "sem_capacidade": 12
+    },
+    "buscas_com_erro": 0
+  },
+  "magistrados": [
+    {
+      "nome": "ANTONIO ANASTASIA",
+      "rotulo_original": "ANTONIO ANASTASIA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "Segunda Câmara"
+      ],
+      "ocorrencias": 16,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "BENJAMIN ZYMLER",
+      "rotulo_original": "BENJAMIN ZYMLER",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Câmara",
+      "orgaos": [
+        "Primeira Câmara"
+      ],
+      "ocorrencias": 16,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "RODRIGO PACHECO",
+      "rotulo_original": "RODRIGO PACHECO",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Câmara",
+      "orgaos": [
+        "Primeira Câmara",
+        "Plenário"
+      ],
+      "ocorrencias": 14,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JHONATAN DE JESUS",
+      "rotulo_original": "JHONATAN DE JESUS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "Segunda Câmara",
+        "Primeira Câmara"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "MARCOS BEMQUERER",
+      "rotulo_original": "MARCOS BEMQUERER",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário"
+      ],
+      "ocorrencias": 12,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "AUGUSTO NARDES",
+      "rotulo_original": "AUGUSTO NARDES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Segunda Câmara",
+        "Plenário"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "JORGE OLIVEIRA",
+      "rotulo_original": "JORGE OLIVEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "Segunda Câmara"
+      ],
+      "ocorrencias": 10,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "ODAIR CUNHA",
+      "rotulo_original": "ODAIR CUNHA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "Primeira Câmara"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "WALTON ALENCAR RODRIGUES",
+      "rotulo_original": "WALTON ALENCAR RODRIGUES",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Câmara",
+      "orgaos": [
+        "Plenário",
+        "Primeira Câmara"
+      ],
+      "ocorrencias": 9,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "aposentadoria",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "WEDER DE OLIVEIRA",
+      "rotulo_original": "WEDER DE OLIVEIRA",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Primeira Câmara",
+      "orgaos": [
+        "Primeira Câmara",
+        "Plenário"
+      ],
+      "ocorrencias": 5,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "contrato",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "BRUNO DANTAS",
+      "rotulo_original": "BRUNO DANTAS",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Plenário",
+        "Primeira Câmara"
+      ],
+      "ocorrencias": 4,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    },
+    {
+      "nome": "AUGUSTO SHERMAN",
+      "rotulo_original": "AUGUSTO SHERMAN",
+      "cargo": null,
+      "grau": "2",
+      "orgao": "Plenário",
+      "orgaos": [
+        "Primeira Câmara",
+        "Plenário"
+      ],
+      "ocorrencias": 3,
+      "julgados_exemplo": [],
+      "teste_busca": {
+        "consultados": 0,
+        "batem": 0,
+        "status": "sem_capacidade",
+        "detalhe": "tribunal sem filtro de magistrado"
+      },
+      "fonte_query": "dano moral",
+      "fonte_recorte": "comum"
+    }
+  ]
+}

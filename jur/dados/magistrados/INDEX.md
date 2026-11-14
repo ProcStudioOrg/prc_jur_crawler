@@ -6,6 +6,8 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 
 | Tribunal | Magistrados | 1º grau | 2º grau | desc. | Teste da busca por magistrado | Coletado em |
 |---|---|---|---|---|---|---|
+| carf | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: Timeout após 60000ms: https://acordaos.economia.gov.br/solr/acordaos2/browse?q=dano+moral&wt=json&rows=20&start=0&fq=dt_sessao_tdt%3A%5B2025-11-14T00%3A00%3A00Z+TO+2026-11-14T23%3A59%3A59Z%5D | 2026-11-14 |
+| csjt | 15 | 0 | 15 | 0 | ok 4 · nao_verificavel 1 | 2026-11-14 |
 | stf | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: o STF não emitiu o cookie aws-waf-token — o desafio do WAF pode ter mudado | 2026-10-24 |
 | tcdf | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: unable to verify the first certificate | 2026-11-09 |
 | tceba | 16 | 0 | 16 | 0 | sem capacidade (filtro por código) | 2026-11-10 |
@@ -20,6 +22,7 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | tcers | 9 | 0 | 9 | 0 | ok 5 | 2026-11-13 |
 | tcesc | 9 | 0 | 0 | 9 | sem capacidade (filtro por código) | 2026-11-13 |
 | tcesp | 0 | 0 | 0 | 0 | erro: buscas sem relator legível no resultado | 2026-11-13 |
+| tcu | 12 | 0 | 12 | 0 | sem capacidade | 2026-11-14 |
 | tjac | 13 | 3 | 10 | 0 | ok 1 · filtro_ignorado 4 | 2026-10-25 |
 | tjal | 9 | 0 | 9 | 0 | ok 2 · filtro_ignorado 2 · nao_verificavel 1 | 2026-10-25 |
 | tjam | 0 | 0 | 0 | 0 | erro: buscas sem relator legível no resultado | 2026-10-25 |
@@ -77,9 +80,9 @@ só nome e cargo públicos, sem texto de julgado. Grau inferido pelo órgão jul
 | trt9 | 0 | 0 | 0 | 0 | erro: todas as buscas falharam: getaddrinfo EAI_AGAIN jurisprudencia.jt.jus.br | 2026-11-04 |
 | tst | 20 | 0 | 20 | 0 | ok 5 | 2026-10-24 |
 
-## Fila (3 pendentes, ordem do catálogo)
+## Fila (0 pendentes, ordem do catálogo)
 
-`tcu`, `carf`, `csjt`
+todos mapeados
 
 ## Fora do escopo do cron (4)
 
