@@ -1,0 +1,1230 @@
+{
+ "_comentario": "SEMrush phrase_these, base br, colhido em 10/11/2026. volume = buscas/mes no Google Brasil.",
+ "termos": {
+  "homicídio qualificado": {
+   "volume": 12100,
+   "cpc": 0.32,
+   "dificuldade": 31
+  },
+  "feminicídio": {
+   "volume": 27100,
+   "cpc": 0.0,
+   "dificuldade": 46
+  },
+  "latrocínio": {
+   "volume": 18100,
+   "cpc": 0.0,
+   "dificuldade": 25
+  },
+  "roubo majorado": {
+   "volume": 8100,
+   "cpc": 0.14,
+   "dificuldade": 18
+  },
+  "furto qualificado": {
+   "volume": 9900,
+   "cpc": 0.06,
+   "dificuldade": 18
+  },
+  "extorsão mediante sequestro": {
+   "volume": 1300,
+   "cpc": 0.0,
+   "dificuldade": 15
+  },
+  "estupro de vulnerável": {
+   "volume": 9900,
+   "cpc": 0.5,
+   "dificuldade": 26
+  },
+  "importunação sexual": {
+   "volume": 14800,
+   "cpc": 0.25,
+   "dificuldade": 25
+  },
+  "tráfico de drogas": {
+   "volume": 1900,
+   "cpc": 0.25,
+   "dificuldade": 42
+  },
+  "associação para o tráfico": {
+   "volume": 1300,
+   "cpc": 0.2,
+   "dificuldade": 19
+  },
+  "organização criminosa": {
+   "volume": 4400,
+   "cpc": 0.23,
+   "dificuldade": 26
+  },
+  "lavagem de dinheiro": {
+   "volume": 14800,
+   "cpc": 0.0,
+   "dificuldade": 53
+  },
+  "estelionato": {
+   "volume": 60500,
+   "cpc": 0.17,
+   "dificuldade": 34
+  },
+  "receptação": {
+   "volume": 12100,
+   "cpc": 0.19,
+   "dificuldade": 29
+  },
+  "porte ilegal de arma de fogo": {
+   "volume": 320,
+   "cpc": 0.0,
+   "dificuldade": 17
+  },
+  "tortura": {
+   "volume": 27100,
+   "cpc": 0.0,
+   "dificuldade": 27
+  },
+  "injúria racial": {
+   "volume": 2900,
+   "cpc": 0.14,
+   "dificuldade": 32
+  },
+  "racismo": {
+   "volume": 33100,
+   "cpc": 4.22,
+   "dificuldade": 37
+  },
+  "violência doméstica": {
+   "volume": 6600,
+   "cpc": 0.0,
+   "dificuldade": 26
+  },
+  "descumprimento de medida protetiva": {
+   "volume": 2400,
+   "cpc": 0.29,
+   "dificuldade": 20
+  },
+  "lesão corporal grave": {
+   "volume": 1900,
+   "cpc": 0.14,
+   "dificuldade": 21
+  },
+  "ameaça": {
+   "volume": 4400,
+   "cpc": 0.23,
+   "dificuldade": 20
+  },
+  "embriaguez ao volante": {
+   "volume": 1900,
+   "cpc": 0.22,
+   "dificuldade": 25
+  },
+  "homicídio culposo na direção de veículo": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "peculato": {
+   "volume": 27100,
+   "cpc": 0.02,
+   "dificuldade": 31
+  },
+  "corrupção passiva": {
+   "volume": 6600,
+   "cpc": 0.07,
+   "dificuldade": 17
+  },
+  "concussão": {
+   "volume": 18100,
+   "cpc": 0.0,
+   "dificuldade": 32
+  },
+  "prevaricação": {
+   "volume": 27100,
+   "cpc": 0.04,
+   "dificuldade": 33
+  },
+  "crime de responsabilidade de prefeito": {
+   "volume": 140,
+   "cpc": 0.0,
+   "dificuldade": 18
+  },
+  "crime ambiental": {
+   "volume": 2400,
+   "cpc": 0.18,
+   "dificuldade": 20
+  },
+  "crime contra a ordem tributária": {
+   "volume": 390,
+   "cpc": 0.35,
+   "dificuldade": 17
+  },
+  "falsidade ideológica": {
+   "volume": 2900,
+   "cpc": 0.09,
+   "dificuldade": 20
+  },
+  "prisão preventiva excesso de prazo": {
+   "volume": 170,
+   "cpc": 0.13,
+   "dificuldade": 14
+  },
+  "execução penal progressão de regime": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "remição de pena": {
+   "volume": 3600,
+   "cpc": 0.0,
+   "dificuldade": 26
+  },
+  "ato infracional": {
+   "volume": 1900,
+   "cpc": 0.0,
+   "dificuldade": 21
+  },
+  "dano moral": {
+   "volume": 4400,
+   "cpc": 0.0,
+   "dificuldade": 29
+  },
+  "danos emergentes": {
+   "volume": 1300,
+   "cpc": 0.19,
+   "dificuldade": 19
+  },
+  "lucros cessantes": {
+   "volume": 5400,
+   "cpc": 0.04,
+   "dificuldade": 20
+  },
+  "dano estético": {
+   "volume": 390,
+   "cpc": 0.1,
+   "dificuldade": 18
+  },
+  "perda de uma chance": {
+   "volume": 720,
+   "cpc": 0.0,
+   "dificuldade": 19
+  },
+  "erro médico": {
+   "volume": 1600,
+   "cpc": 0.0,
+   "dificuldade": 26
+  },
+  "acidente de trânsito indenização": {
+   "volume": 140,
+   "cpc": 0.26,
+   "dificuldade": 15
+  },
+  "responsabilidade civil do Estado": {
+   "volume": 2400,
+   "cpc": 0.05,
+   "dificuldade": 16
+  },
+  "morte de detento": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "dano moral coletivo": {
+   "volume": 210,
+   "cpc": 0.06,
+   "dificuldade": 16
+  },
+  "pensão por ato ilícito": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "rescisão contratual": {
+   "volume": 18100,
+   "cpc": 0.07,
+   "dificuldade": 35
+  },
+  "inadimplemento contratual": {
+   "volume": 590,
+   "cpc": 0.18,
+   "dificuldade": 17
+  },
+  "cláusula penal": {
+   "volume": 720,
+   "cpc": 0.0,
+   "dificuldade": 19
+  },
+  "revisão contratual": {
+   "volume": 260,
+   "cpc": 0.62,
+   "dificuldade": 31
+  },
+  "distrato imobiliário": {
+   "volume": 590,
+   "cpc": 0.71,
+   "dificuldade": 19
+  },
+  "despejo por falta de pagamento": {
+   "volume": 590,
+   "cpc": 0.09,
+   "dificuldade": 22
+  },
+  "ação renovatória de locação": {
+   "volume": 90,
+   "cpc": 0.2,
+   "dificuldade": 15
+  },
+  "revisional de aluguel": {
+   "volume": 50,
+   "cpc": 0.37,
+   "dificuldade": 0
+  },
+  "fiança locatícia": {
+   "volume": 590,
+   "cpc": 0.54,
+   "dificuldade": 38
+  },
+  "cobrança de cotas condominiais": {
+   "volume": 20,
+   "cpc": 0.48,
+   "dificuldade": 0
+  },
+  "usucapião": {
+   "volume": 74000,
+   "cpc": 0.19,
+   "dificuldade": 33
+  },
+  "reintegração de posse": {
+   "volume": 5400,
+   "cpc": 0.17,
+   "dificuldade": 23
+  },
+  "adjudicação compulsória": {
+   "volume": 12100,
+   "cpc": 0.13,
+   "dificuldade": 25
+  },
+  "alienação fiduciária busca e apreensão": {
+   "volume": 170,
+   "cpc": 0.36,
+   "dificuldade": 19
+  },
+  "corretagem comissão": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "seguro de vida negativa de cobertura": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "seguro de veículo": {
+   "volume": 590,
+   "cpc": 1.57,
+   "dificuldade": 38
+  },
+  "negativação indevida": {
+   "volume": 590,
+   "cpc": 0.65,
+   "dificuldade": 18
+  },
+  "empréstimo consignado fraude": {
+   "volume": 20,
+   "cpc": 0.28,
+   "dificuldade": 0
+  },
+  "cartão de crédito consignado RMC": {
+   "volume": 20,
+   "cpc": 0.41,
+   "dificuldade": 0
+  },
+  "juros abusivos": {
+   "volume": 6600,
+   "cpc": 1.03,
+   "dificuldade": 39
+  },
+  "superendividamento": {
+   "volume": 33100,
+   "cpc": 0.43,
+   "dificuldade": 25
+  },
+  "plano de saúde negativa de cobertura": {
+   "volume": 50,
+   "cpc": 0.37,
+   "dificuldade": 0
+  },
+  "reajuste por faixa etária": {
+   "volume": 20,
+   "cpc": 0.66,
+   "dificuldade": 0
+  },
+  "vício do produto": {
+   "volume": 90,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "cancelamento de voo": {
+   "volume": 390,
+   "cpc": 0.82,
+   "dificuldade": 37
+  },
+  "extravio de bagagem": {
+   "volume": 1000,
+   "cpc": 0.56,
+   "dificuldade": 30
+  },
+  "corte de energia elétrica": {
+   "volume": 20,
+   "cpc": 0.11,
+   "dificuldade": 0
+  },
+  "cobrança indevida repetição em dobro": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "telefonia cobrança indevida": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "alimentos revisional": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "execução de alimentos prisão civil": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "guarda compartilhada": {
+   "volume": 12100,
+   "cpc": 0.09,
+   "dificuldade": 32
+  },
+  "alienação parental": {
+   "volume": 27100,
+   "cpc": 0.04,
+   "dificuldade": 37
+  },
+  "divórcio partilha de bens": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "união estável reconhecimento": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "investigação de paternidade": {
+   "volume": 590,
+   "cpc": 0.37,
+   "dificuldade": 20
+  },
+  "inventário": {
+   "volume": 18100,
+   "cpc": 0.0,
+   "dificuldade": 33
+  },
+  "anulação de testamento": {
+   "volume": 30,
+   "cpc": 0.28,
+   "dificuldade": 0
+  },
+  "interdição curatela": {
+   "volume": 260,
+   "cpc": 0.09,
+   "dificuldade": 18
+  },
+  "adoção": {
+   "volume": 14800,
+   "cpc": 0.59,
+   "dificuldade": 51
+  },
+  "alimentos gravídicos": {
+   "volume": 2400,
+   "cpc": 0.14,
+   "dificuldade": 18
+  },
+  "dano ambiental": {
+   "volume": 170,
+   "cpc": 0.0,
+   "dificuldade": 14
+  },
+  "área de preservação permanente": {
+   "volume": 720,
+   "cpc": 0.0,
+   "dificuldade": 28
+  },
+  "reserva legal": {
+   "volume": 2900,
+   "cpc": 0.4,
+   "dificuldade": 23
+  },
+  "desmatamento": {
+   "volume": 14800,
+   "cpc": 0.15,
+   "dificuldade": 53
+  },
+  "auto de infração ambiental": {
+   "volume": 170,
+   "cpc": 0.42,
+   "dificuldade": 22
+  },
+  "licenciamento ambiental": {
+   "volume": 5400,
+   "cpc": 0.56,
+   "dificuldade": 18
+  },
+  "poluição sonora": {
+   "volume": 8100,
+   "cpc": 0.38,
+   "dificuldade": 35
+  },
+  "queimada": {
+   "volume": 6600,
+   "cpc": 0.0,
+   "dificuldade": 36
+  },
+  "maus-tratos a animais": {
+   "volume": 110,
+   "cpc": 0.0,
+   "dificuldade": 15
+  },
+  "pesca ilegal": {
+   "volume": 170,
+   "cpc": 0.0,
+   "dificuldade": 21
+  },
+  "recuperação de área degradada": {
+   "volume": 390,
+   "cpc": 0.73,
+   "dificuldade": 22
+  },
+  "unidade de conservação": {
+   "volume": 2900,
+   "cpc": 5.6,
+   "dificuldade": 34
+  },
+  "ICMS base de cálculo": {
+   "volume": 70,
+   "cpc": 0.24,
+   "dificuldade": 0
+  },
+  "ISS local da prestação": {
+   "volume": 10,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "IPTU progressivo": {
+   "volume": 390,
+   "cpc": 0.0,
+   "dificuldade": 21
+  },
+  "ITBI base de cálculo": {
+   "volume": 260,
+   "cpc": 0.0,
+   "dificuldade": 27
+  },
+  "ITCMD": {
+   "volume": 60500,
+   "cpc": 0.04,
+   "dificuldade": 30
+  },
+  "IPVA": {
+   "volume": 450000,
+   "cpc": 0.0,
+   "dificuldade": 62
+  },
+  "execução fiscal prescrição intercorrente": {
+   "volume": 880,
+   "cpc": 0.08,
+   "dificuldade": 17
+  },
+  "exceção de pré-executividade": {
+   "volume": 4400,
+   "cpc": 0.07,
+   "dificuldade": 25
+  },
+  "redirecionamento da execução fiscal": {
+   "volume": 70,
+   "cpc": 0.44,
+   "dificuldade": 0
+  },
+  "imunidade tributária": {
+   "volume": 1600,
+   "cpc": 0.08,
+   "dificuldade": 31
+  },
+  "isenção de imposto de renda moléstia grave": {
+   "volume": 20,
+   "cpc": 0.12,
+   "dificuldade": 0
+  },
+  "contribuição previdenciária verbas indenizatórias": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "compensação tributária": {
+   "volume": 320,
+   "cpc": 1.24,
+   "dificuldade": 26
+  },
+  "certidão negativa de débito": {
+   "volume": 8100,
+   "cpc": 0.28,
+   "dificuldade": 11
+  },
+  "taxa de coleta de lixo": {
+   "volume": 210,
+   "cpc": 0.0,
+   "dificuldade": 15
+  },
+  "Simples Nacional exclusão": {
+   "volume": 90,
+   "cpc": 0.09,
+   "dificuldade": 0
+  },
+  "substituição tributária": {
+   "volume": 4400,
+   "cpc": 0.27,
+   "dificuldade": 13
+  },
+  "aposentadoria especial": {
+   "volume": 74000,
+   "cpc": 0.06,
+   "dificuldade": 31
+  },
+  "tempo especial ruído": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "aposentadoria por idade rural": {
+   "volume": 4400,
+   "cpc": 0.06,
+   "dificuldade": 20
+  },
+  "aposentadoria por tempo de contribuição": {
+   "volume": 22200,
+   "cpc": 0.05,
+   "dificuldade": 21
+  },
+  "aposentadoria por incapacidade permanente": {
+   "volume": 6600,
+   "cpc": 0.07,
+   "dificuldade": 29
+  },
+  "auxílio por incapacidade temporária": {
+   "volume": 18100,
+   "cpc": 0.12,
+   "dificuldade": 19
+  },
+  "auxílio-acidente": {
+   "volume": 1900,
+   "cpc": 0.21,
+   "dificuldade": 24
+  },
+  "benefício assistencial BPC LOAS": {
+   "volume": 0,
+   "cpc": 0.1,
+   "dificuldade": 0
+  },
+  "pensão por morte": {
+   "volume": 14800,
+   "cpc": 0.07,
+   "dificuldade": 17
+  },
+  "salário-maternidade": {
+   "volume": 1600,
+   "cpc": 0.27,
+   "dificuldade": 32
+  },
+  "revisão da vida toda": {
+   "volume": 14800,
+   "cpc": 0.1,
+   "dificuldade": 26
+  },
+  "aposentadoria da pessoa com deficiência": {
+   "volume": 1600,
+   "cpc": 0.06,
+   "dificuldade": 25
+  },
+  "atividade especial vigilante": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "desaposentação": {
+   "volume": 720,
+   "cpc": 0.11,
+   "dificuldade": 18
+  },
+  "devolução de valores recebidos de boa-fé": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "regime próprio de previdência": {
+   "volume": 210,
+   "cpc": 0.22,
+   "dificuldade": 16
+  },
+  "servidor público adicional de insalubridade": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "desvio de função": {
+   "volume": 5400,
+   "cpc": 0.2,
+   "dificuldade": 24
+  },
+  "processo administrativo disciplinar demissão": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "concurso público nomeação": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "preterição em concurso": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "piso salarial do magistério": {
+   "volume": 480,
+   "cpc": 0.0,
+   "dificuldade": 27
+  },
+  "licença-prêmio conversão em pecúnia": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "improbidade administrativa": {
+   "volume": 27100,
+   "cpc": 0.03,
+   "dificuldade": 23
+  },
+  "desapropriação indenização": {
+   "volume": 40,
+   "cpc": 0.53,
+   "dificuldade": 0
+  },
+  "fornecimento de medicamento": {
+   "volume": 10,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "vaga em creche": {
+   "volume": 1300,
+   "cpc": 0.37,
+   "dificuldade": 34
+  },
+  "concessão de serviço público": {
+   "volume": 260,
+   "cpc": 0.0,
+   "dificuldade": 17
+  },
+  "recuperação judicial": {
+   "volume": 14800,
+   "cpc": 0.2,
+   "dificuldade": 45
+  },
+  "falência": {
+   "volume": 22200,
+   "cpc": 0.34,
+   "dificuldade": 36
+  },
+  "desconsideração da personalidade jurídica": {
+   "volume": 6600,
+   "cpc": 0.07,
+   "dificuldade": 19
+  },
+  "dissolução parcial de sociedade": {
+   "volume": 210,
+   "cpc": 0.2,
+   "dificuldade": 15
+  },
+  "apuração de haveres": {
+   "volume": 720,
+   "cpc": 0.24,
+   "dificuldade": 15
+  },
+  "protesto indevido": {
+   "volume": 110,
+   "cpc": 0.25,
+   "dificuldade": 20
+  },
+  "duplicata sem aceite": {
+   "volume": 50,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "cheque prescrito ação monitória": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "representação comercial indenização": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "arrendamento rural": {
+   "volume": 480,
+   "cpc": 0.14,
+   "dificuldade": 16
+  },
+  "parceria agrícola": {
+   "volume": 140,
+   "cpc": 0.17,
+   "dificuldade": 21
+  },
+  "cédula de crédito rural": {
+   "volume": 170,
+   "cpc": 0.42,
+   "dificuldade": 22
+  },
+  "alongamento de dívida rural": {
+   "volume": 140,
+   "cpc": 0.27,
+   "dificuldade": 18
+  },
+  "conflito fundiário": {
+   "volume": 110,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "servidão administrativa": {
+   "volume": 1600,
+   "cpc": 0.0,
+   "dificuldade": 21
+  },
+  "demarcação de terra indígena": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "seguro agrícola": {
+   "volume": 260,
+   "cpc": 0.96,
+   "dificuldade": 25
+  },
+  "funrural": {
+   "volume": 4400,
+   "cpc": 4.32,
+   "dificuldade": 17
+  },
+  "internação compulsória": {
+   "volume": 5400,
+   "cpc": 0.75,
+   "dificuldade": 19
+  },
+  "leito de UTI": {
+   "volume": 260,
+   "cpc": 0.0,
+   "dificuldade": 25
+  },
+  "tratamento fora do domicílio": {
+   "volume": 210,
+   "cpc": 0.82,
+   "dificuldade": 15
+  },
+  "home care": {
+   "volume": 33100,
+   "cpc": 0.69,
+   "dificuldade": 39
+  },
+  "medicamento de alto custo": {
+   "volume": 880,
+   "cpc": 0.66,
+   "dificuldade": 36
+  },
+  "cumprimento de sentença impugnação": {
+   "volume": 1900,
+   "cpc": 0.11,
+   "dificuldade": 24
+  },
+  "penhora de salário": {
+   "volume": 480,
+   "cpc": 0.04,
+   "dificuldade": 23
+  },
+  "impenhorabilidade bem de família": {
+   "volume": 480,
+   "cpc": 0.05,
+   "dificuldade": 31
+  },
+  "fraude à execução": {
+   "volume": 390,
+   "cpc": 0.08,
+   "dificuldade": 16
+  },
+  "honorários advocatícios sucumbenciais": {
+   "volume": 480,
+   "cpc": 0.0,
+   "dificuldade": 17
+  },
+  "gratuidade da justiça indeferimento": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "tutela de urgência": {
+   "volume": 5400,
+   "cpc": 0.04,
+   "dificuldade": 16
+  },
+  "prescrição intercorrente": {
+   "volume": 14800,
+   "cpc": 0.04,
+   "dificuldade": 21
+  },
+  "precatório": {
+   "volume": 18100,
+   "cpc": 0.46,
+   "dificuldade": 53
+  },
+  "requisição de pequeno valor": {
+   "volume": 720,
+   "cpc": 0.33,
+   "dificuldade": 26
+  },
+  "ação rescisória": {
+   "volume": 8100,
+   "cpc": 0.05,
+   "dificuldade": 20
+  },
+  "vínculo de emprego": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "horas extras": {
+   "volume": 9900,
+   "cpc": 0.09,
+   "dificuldade": 27
+  },
+  "adicional de insalubridade": {
+   "volume": 5400,
+   "cpc": 0.09,
+   "dificuldade": 21
+  },
+  "assédio moral": {
+   "volume": 14800,
+   "cpc": 0.05,
+   "dificuldade": 36
+  },
+  "acidente de trabalho": {
+   "volume": 6600,
+   "cpc": 0.25,
+   "dificuldade": 32
+  },
+  "rescisão indireta": {
+   "volume": 49500,
+   "cpc": 0.24,
+   "dificuldade": 21
+  },
+  "terceirização responsabilidade subsidiária": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "justa causa reversão": {
+   "volume": 20,
+   "cpc": 0.09,
+   "dificuldade": 0
+  },
+  "estabilidade gestante": {
+   "volume": 8100,
+   "cpc": 0.2,
+   "dificuldade": 25
+  },
+  "prestação de contas de prefeito": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "tomada de contas especial": {
+   "volume": 590,
+   "cpc": 0.38,
+   "dificuldade": 17
+  },
+  "dano ao erário": {
+   "volume": 1000,
+   "cpc": 0.0,
+   "dificuldade": 18
+  },
+  "dispensa de licitação irregular": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "admissão de pessoal": {
+   "volume": 20,
+   "cpc": 0.49,
+   "dificuldade": 0
+  },
+  "aposentadoria registro": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "sobrepreço": {
+   "volume": 390,
+   "cpc": 0.0,
+   "dificuldade": 18
+  },
+  "omissão de receitas": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "glosa de despesas": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "multa qualificada": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "preço de transferência": {
+   "volume": 320,
+   "cpc": 1.52,
+   "dificuldade": 18
+  },
+  "recurso especial aposentadoria especial": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "aposentadoria por idade": {
+   "volume": 60500,
+   "cpc": 0.05,
+   "dificuldade": 21
+  },
+  "aposentadoria por invalidez": {
+   "volume": 18100,
+   "cpc": 0.08,
+   "dificuldade": 28
+  },
+  "auxílio doença": {
+   "volume": 2400,
+   "cpc": 0.26,
+   "dificuldade": 33
+  },
+  "bpc loas": {
+   "volume": 49500,
+   "cpc": 0.15,
+   "dificuldade": 17
+  },
+  "aposentadoria rural": {
+   "volume": 5400,
+   "cpc": 0.06,
+   "dificuldade": 27
+  },
+  "ppp aposentadoria especial": {
+   "volume": 320,
+   "cpc": 0.07,
+   "dificuldade": 19
+  },
+  "auxílio acidente": {
+   "volume": 6600,
+   "cpc": 0.23,
+   "dificuldade": 28
+  },
+  "aposentadoria do professor": {
+   "volume": 2900,
+   "cpc": 0.04,
+   "dificuldade": 22
+  },
+  "aposentadoria pcd": {
+   "volume": 9900,
+   "cpc": 0.06,
+   "dificuldade": 22
+  },
+  "planejamento previdenciário": {
+   "volume": 1900,
+   "cpc": 0.36,
+   "dificuldade": 35
+  },
+  "advogado previdenciário": {
+   "volume": 3600,
+   "cpc": 0.89,
+   "dificuldade": 11
+  },
+  "inss negou benefício": {
+   "volume": 0,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "perícia inss": {
+   "volume": 1900,
+   "cpc": 0.23,
+   "dificuldade": 21
+  },
+  "aposentadoria por insalubridade": {
+   "volume": 720,
+   "cpc": 0.04,
+   "dificuldade": 20
+  },
+  "ltcat": {
+   "volume": 18100,
+   "cpc": 0.6,
+   "dificuldade": 27
+  },
+  "aposentadoria híbrida": {
+   "volume": 1300,
+   "cpc": 0.07,
+   "dificuldade": 26
+  },
+  "pente fino inss": {
+   "volume": 3600,
+   "cpc": 0.31,
+   "dificuldade": 15
+  },
+  "cessação de benefício": {
+   "volume": 320,
+   "cpc": 0.0,
+   "dificuldade": 21
+  },
+  "mandado de segurança inss": {
+   "volume": 720,
+   "cpc": 0.11,
+   "dificuldade": 12
+  },
+  "aposentadoria do vigilante": {
+   "volume": 720,
+   "cpc": 0.11,
+   "dificuldade": 14
+  },
+  "aposentadoria do motorista": {
+   "volume": 20,
+   "cpc": 0.05,
+   "dificuldade": 0
+  },
+  "aposentadoria do enfermeiro": {
+   "volume": 480,
+   "cpc": 0.06,
+   "dificuldade": 16
+  },
+  "aposentadoria do eletricista": {
+   "volume": 30,
+   "cpc": 0.09,
+   "dificuldade": 0
+  },
+  "aposentadoria por periculosidade": {
+   "volume": 480,
+   "cpc": 0.06,
+   "dificuldade": 26
+  },
+  "regra de transição aposentadoria": {
+   "volume": 1300,
+   "cpc": 0.02,
+   "dificuldade": 30
+  },
+  "aposentadoria especial frentista": {
+   "volume": 90,
+   "cpc": 0.09,
+   "dificuldade": 14
+  },
+  "aposentadoria especial médico": {
+   "volume": 90,
+   "cpc": 0.12,
+   "dificuldade": 0
+  },
+  "aposentadoria especial dentista": {
+   "volume": 210,
+   "cpc": 0.12,
+   "dificuldade": 13
+  },
+  "aposentadoria especial soldador": {
+   "volume": 90,
+   "cpc": 0.12,
+   "dificuldade": 0
+  },
+  "aposentadoria especial metalúrgico": {
+   "volume": 20,
+   "cpc": 0.0,
+   "dificuldade": 0
+  },
+  "tempo rural aposentadoria": {
+   "volume": 20,
+   "cpc": 0.07,
+   "dificuldade": 0
+  },
+  "averbação de tempo de serviço": {
+   "volume": 720,
+   "cpc": 0.08,
+   "dificuldade": 16
+  },
+  "certidão de tempo de contribuição": {
+   "volume": 1900,
+   "cpc": 0.0,
+   "dificuldade": 23
+  },
+  "auxílio reclusão": {
+   "volume": 4400,
+   "cpc": 0.1,
+   "dificuldade": 24
+  },
+  "revisão de aposentadoria": {
+   "volume": 1300,
+   "cpc": 0.15,
+   "dificuldade": 34
+  },
+  "aposentadoria negada": {
+   "volume": 110,
+   "cpc": 0.43,
+   "dificuldade": 15
+  },
+  "benefício indeferido inss": {
+   "volume": 110,
+   "cpc": 0.27,
+   "dificuldade": 15
+  },
+  "laudo pericial inss": {
+   "volume": 20,
+   "cpc": 0.52,
+   "dificuldade": 0
+  },
+  "doença ocupacional": {
+   "volume": 4400,
+   "cpc": 0.08,
+   "dificuldade": 32
+  },
+  "acidente de trabalho inss": {
+   "volume": 140,
+   "cpc": 0.19,
+   "dificuldade": 21
+  },
+  "fibromialgia aposentadoria": {
+   "volume": 6600,
+   "cpc": 0.06,
+   "dificuldade": 20
+  },
+  "autismo bpc": {
+   "volume": 140,
+   "cpc": 0.14,
+   "dificuldade": 24
+  },
+  "tema 1102 stf": {
+   "volume": 2900,
+   "cpc": 0.17,
+   "dificuldade": 28
+  },
+  "epi eficaz aposentadoria especial": {
+   "volume": 20,
+   "cpc": 0.04,
+   "dificuldade": 0
+  }
+ }
+}
