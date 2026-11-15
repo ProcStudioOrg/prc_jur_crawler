@@ -11,6 +11,21 @@ test('timeout do Playwright em locator: classe seletor, numeros viram #', () => 
 test('timeout do executor vence o seletor', () => {
   assert.equal(classificar({ erro: 'timeout apos 600000ms', rota: 'local' }), 'timeout');
 });
+test('timeout dos Navigators tambem e timeout, com acento e com URL', () => {
+  // Sem isso a falha vira 'desconhecido' e a sentinela nao retenta nem abre o disjuntor.
+  assert.equal(classificar({ erro: 'Timeout após 60000ms: https://acordaos.economia.gov.br/solr', rota: 'local' }), 'timeout');
+  assert.equal(classificar({ erro: 'Timeout após 30000ms (STF)', rota: 'remoto' }), 'timeout');
+  assert.equal(classificar({ erro: 'timeout apos 180000 ms', rota: 'local' }), 'timeout');
+  assert.equal(classificar({ erro: 'timeout apos 60000ms. No MapJuris isso quase sempre e JANELA DE DATA', rota: 'local' }), 'timeout');
+  assert.equal(classificar({ erro: 'falha ao buscar: Timeout após 60000ms', rota: 'local' }), 'timeout');
+  // redacoes reais que estavam caindo em 'desconhecido' no painel do FFD
+  assert.equal(classificar({ erro: 'timeout em /search/varios_parametros/', rota: 'local' }), 'timeout');
+  assert.equal(classificar({ erro: 'timeout falando com o graphql do TJBA', rota: 'local' }), 'timeout');
+  assert.equal(classificar({ erro: 'timeout de 30000ms em /jurisprudences/search', rota: 'local' }), 'timeout');
+  assert.equal(classificar({ erro: 'http 500 em {"timestamp":"2026-11-10T03:00:00"}', rota: 'local' }), 'desconhecido');
+  // o call log do Playwright continua vencendo: o seletor diz mais do que o estouro
+  assert.equal(classificar({ erro: "locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('#x')", rota: 'local' }), 'seletor');
+});
 test('403 na rota local e bloqueio_ip; na remota e fornecedor_remoto', () => {
   assert.equal(classificar({ erro: 'page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://web.trf3.jus.br/x', rota: 'local' }), 'bloqueio_ip');
   assert.equal(classificar({ erro: 'HTTP 403', rota: 'remoto' }), 'fornecedor_remoto');
