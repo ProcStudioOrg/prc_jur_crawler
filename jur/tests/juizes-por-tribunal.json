@@ -1,0 +1,903 @@
+{
+ "_comentario": "Relatores colhidos em 10/11/2026 rodando a CLI (6 temas, janela 10/11/2025-10/11/2026, -m 1). filtro_relator = rebusca com -r no nome; batem = resultados cujo relator confere. Ainda nao ligado a sentinela.",
+ "tjac": {
+  "relatores": [
+   {
+    "nome": "Des. Lois Arruda",
+    "vezes": 21,
+    "orgao": "Primeira Câmara Cível"
+   },
+   {
+    "nome": "Des. Roberto Barros",
+    "vezes": 21,
+    "orgao": "Primeira Câmara Cível"
+   },
+   {
+    "nome": "Des. Luís Camolez",
+    "vezes": 13,
+    "orgao": "Segunda Câmara Cível"
+   },
+   {
+    "nome": "Desª. Waldirene Cordeiro",
+    "vezes": 9,
+    "orgao": "Segunda Câmara Cível"
+   },
+   {
+    "nome": "Desª. Denise Bonfim",
+    "vezes": 7,
+    "orgao": "Câmara Criminal"
+   },
+   {
+    "nome": "Des. Samoel Evangelista",
+    "vezes": 7,
+    "orgao": "Câmara Criminal"
+   },
+   {
+    "nome": "Desª. Regina Ferrari",
+    "vezes": 6,
+    "orgao": "Tribunal Pleno Jurisdicional"
+   },
+   {
+    "nome": "Des. Francisco Djalma",
+    "vezes": 6,
+    "orgao": "Câmara Criminal"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "Des. Lois Arruda",
+    "ok": true,
+    "n": 20,
+    "batem": 7,
+    "erro": null
+   },
+   {
+    "relator": "Des. Roberto Barros",
+    "ok": true,
+    "n": 20,
+    "batem": 0,
+    "erro": null
+   }
+  ],
+  "falhas": []
+ },
+ "tjam": {
+  "relatores": [],
+  "filtro_relator": [],
+  "falhas": [
+   {
+    "tema": "aposentadoria especial",
+    "erro": "zero resultados"
+   },
+   {
+    "tema": "tráfico de drogas",
+    "erro": "zero resultados"
+   },
+   {
+    "tema": "despejo por falta de pagamento",
+    "erro": "zero resultados"
+   },
+   {
+    "tema": "execução fiscal",
+    "erro": "zero resultados"
+   },
+   {
+    "tema": "servidor público adicional de insalubridade",
+    "erro": "zero resultados"
+   },
+   {
+    "tema": "dano ambiental",
+    "erro": "zero resultados"
+   }
+  ]
+ },
+ "tjap": {
+  "relatores": [
+   {
+    "nome": "FABIO SANTANA DOS SANTOS",
+    "vezes": 11,
+    "orgao": "2º JUIZADO ESPECIAL DE FAZENDA PÚBLICA"
+   },
+   {
+    "nome": "KEILA CHRISTINE BANHA BASTOS UTZIG",
+    "vezes": 4,
+    "orgao": "5ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ"
+   },
+   {
+    "nome": "TRIBUNAL DE JUSTICA DO ESTADO DO AMAPA",
+    "vezes": 3,
+    "orgao": "3ª VARA CRIMINAL E DE AUDITORIA MILITAR DE MACAPÁ"
+   },
+   {
+    "nome": "THINA LUIZA D ALMEIDA GOMES DOS SANTOS SOUSA",
+    "vezes": 3,
+    "orgao": "3º JUIZADO ESPECIAL DE FAZENDA PÚBLICA"
+   },
+   {
+    "nome": "ROBERVAL PANTOJA PACHECO",
+    "vezes": 3,
+    "orgao": "VARA ÚNICA DE PEDRA BRANCA DO AMAPARI"
+   },
+   {
+    "nome": "PRISCYLLA PEIXOTO MENDES",
+    "vezes": 2,
+    "orgao": "1ª JUIZADO ESPECIAL DE FAZENDA PÚBLICA"
+   },
+   {
+    "nome": "DIEGO MOURA DE ARAUJO",
+    "vezes": 2,
+    "orgao": "1ª VARA CRIMINAL DE MACAPÁ"
+   },
+   {
+    "nome": "ALAIDE MARIA DE PAULA",
+    "vezes": 2,
+    "orgao": "4ª VARA CÍVEL E DE FAZENDA PÚBLICA DE MACAPÁ"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "FABIO SANTANA DOS SANTOS",
+    "ok": true,
+    "n": 10,
+    "batem": 10,
+    "erro": null
+   },
+   {
+    "relator": "KEILA CHRISTINE BANHA BASTOS UTZIG",
+    "ok": true,
+    "n": 10,
+    "batem": 10,
+    "erro": null
+   }
+  ],
+  "falhas": []
+ },
+ "tjba": {
+  "relatores": [
+   {
+    "nome": "MANUEL CARNEIRO BAHIA DE ARAUJO",
+    "vezes": 48,
+    "orgao": "SEGUNDA CAMARA CÍVEL"
+   },
+   {
+    "nome": "JOSE JORGE LOPES BARRETO DA SILVA",
+    "vezes": 38,
+    "orgao": "SEGUNDA CAMARA CÍVEL"
+   },
+   {
+    "nome": "MARCELO SILVA BRITTO",
+    "vezes": 34,
+    "orgao": "QUARTA CAMARA CÍVEL"
+   },
+   {
+    "nome": "RICARDO REGIS DOURADO",
+    "vezes": 20,
+    "orgao": "QUARTA CAMARA CÍVEL"
+   },
+   {
+    "nome": "CYNTHIA MARIA PINA RESENDE",
+    "vezes": 17,
+    "orgao": "PRIMEIRA CAMARA CÍVEL"
+   },
+   {
+    "nome": "ANGELO JERONIMO E SILVA VITA",
+    "vezes": 17,
+    "orgao": "QUARTA CAMARA CÍVEL"
+   },
+   {
+    "nome": "FRANCISCO DE OLIVEIRA BISPO",
+    "vezes": 16,
+    "orgao": "TERCEIRA CAMARA CÍVEL"
+   },
+   {
+    "nome": "NAGILA MARIA SALES BRITO",
+    "vezes": 15,
+    "orgao": "SEGUNDA CAMARA CRIMINAL - SEGUNDA TURMA"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "MANUEL CARNEIRO BAHIA DE ARAUJO",
+    "ok": true,
+    "n": 50,
+    "batem": 50,
+    "erro": null
+   },
+   {
+    "relator": "JOSE JORGE LOPES BARRETO DA SILVA",
+    "ok": true,
+    "n": 50,
+    "batem": 50,
+    "erro": null
+   }
+  ],
+  "falhas": []
+ },
+ "tjce": {
+  "relatores": [
+   {
+    "nome": "LISETE DE SOUSA GADELHA",
+    "vezes": 14,
+    "orgao": "1ª Câmara de Direito Público"
+   },
+   {
+    "nome": "INACIO DE ALENCAR CORTEZ NETO",
+    "vezes": 8,
+    "orgao": "1ª Câmara de Direito Público"
+   },
+   {
+    "nome": "ROBERTO SOARES BULCAO COUTINHO",
+    "vezes": 7,
+    "orgao": "1ª Turma do Núcleo de Justiça 4.0 - Direito Privado"
+   },
+   {
+    "nome": "JOSE TARCILIO SOUZA DA SILVA",
+    "vezes": 6,
+    "orgao": "6ª Câmara de Direito Privado"
+   },
+   {
+    "nome": "FERNANDO LUIZ XIMENES ROCHA",
+    "vezes": 5,
+    "orgao": "1ª Câmara de Direito Público"
+   },
+   {
+    "nome": "MANTOVANNI COLARES CAVALCANTE",
+    "vezes": 3,
+    "orgao": "5ª Câmara de Direito Privado"
+   },
+   {
+    "nome": "FRANCISCO LUCIANO LIMA RODRIGUES",
+    "vezes": 3,
+    "orgao": "6ª Câmara de Direito Privado"
+   },
+   {
+    "nome": "VANESSA MARIA QUARIGUASY PEREIRA VERAS",
+    "vezes": 2,
+    "orgao": "1ª Turma do Núcleo de Justiça 4.0 - Direito Privado"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "LISETE DE SOUSA GADELHA",
+    "ok": true,
+    "n": 20,
+    "batem": 20,
+    "erro": null
+   },
+   {
+    "relator": "INACIO DE ALENCAR CORTEZ NETO",
+    "ok": true,
+    "n": 20,
+    "batem": 20,
+    "erro": null
+   }
+  ],
+  "falhas": [
+   {
+    "tema": "tráfico de drogas",
+    "erro": "HTTP 504 em https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/?page=0&size=20: {\"timestamp\":\"2026-11-10T13:03:31.744+00:00\",\"status\":504,\"error\":\"Gateway Timeout\",\"message\":\"\"}"
+   },
+   {
+    "tema": "despejo por falta de pagamento",
+    "erro": "HTTP 504 em https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/?page=0&size=20: {\"timestamp\":\"2026-11-10T13:04:00.118+00:00\",\"status\":504,\"error\":\"Gateway Timeout\",\"message\":\"\"}"
+   },
+   {
+    "tema": "servidor público adicional de insalubridade",
+    "erro": "HTTP 504 em https://gateway.tjce.jus.br/sjuris/api/v1/jurisprudencia/?page=0&size=20: {\"timestamp\":\"2026-11-10T13:04:37.716+00:00\",\"status\":504,\"error\":\"Gateway Timeout\",\"message\":\"\"}"
+   }
+  ]
+ },
+ "tjdft": {
+  "relatores": [
+   {
+    "nome": "MARILZA NEVES GEBRIM",
+    "vezes": 6,
+    "orgao": "SEGUNDA TURMA RECURSAL"
+   },
+   {
+    "nome": "DIAULAS COSTA RIBEIRO",
+    "vezes": 6,
+    "orgao": "2ª TURMA CRIMINAL"
+   },
+   {
+    "nome": "VERA ANDRIGHI",
+    "vezes": 5,
+    "orgao": "6ª TURMA CÍVEL"
+   },
+   {
+    "nome": "MARILIA DE AVILA E SILVA SAMPAIO",
+    "vezes": 4,
+    "orgao": "3ª TURMA CÍVEL"
+   },
+   {
+    "nome": "LUCIANA FREIRE NAVES FERNANDES GONCALVES",
+    "vezes": 4,
+    "orgao": "SEGUNDA TURMA RECURSAL"
+   },
+   {
+    "nome": "SILVANA DA SILVA CHAVES",
+    "vezes": 4,
+    "orgao": "SEGUNDA TURMA RECURSAL"
+   },
+   {
+    "nome": "FÁTIMA RAFAEL",
+    "vezes": 4,
+    "orgao": "7ª TURMA CÍVEL"
+   },
+   {
+    "nome": "SIMONE LUCINDO",
+    "vezes": 4,
+    "orgao": "1ª TURMA CRIMINAL"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "MARILZA NEVES GEBRIM",
+    "ok": true,
+    "n": 20,
+    "batem": 20,
+    "erro": null
+   },
+   {
+    "relator": "DIAULAS COSTA RIBEIRO",
+    "ok": true,
+    "n": 20,
+    "batem": 20,
+    "erro": null
+   }
+  ],
+  "falhas": []
+ },
+ "tjes": {
+  "relatores": [
+   {
+    "nome": "SERGIO RICARDO DE SOUZA",
+    "vezes": 36,
+    "orgao": "3ª Câmara Cível"
+   },
+   {
+    "nome": "ROBSON LUIZ ALBANEZ",
+    "vezes": 35,
+    "orgao": "4ª Câmara Cível"
+   },
+   {
+    "nome": "RACHEL DURAO CORREIA LIMA",
+    "vezes": 31,
+    "orgao": "1ª Câmara Criminal"
+   },
+   {
+    "nome": "UBIRATAN ALMEIDA AZEVEDO",
+    "vezes": 29,
+    "orgao": "2ª Câmara Criminal"
+   },
+   {
+    "nome": "RAPHAEL AMERICANO CAMARA",
+    "vezes": 27,
+    "orgao": "2ª Câmara Cível"
+   },
+   {
+    "nome": "ALDARY NUNES JUNIOR",
+    "vezes": 27,
+    "orgao": "3ª Câmara Cível"
+   },
+   {
+    "nome": "ALEXANDRE PUPPIM",
+    "vezes": 23,
+    "orgao": "1ª Câmara Cível"
+   },
+   {
+    "nome": "MARIANNE JUDICE DE MATTOS",
+    "vezes": 23,
+    "orgao": "3ª Câmara Cível"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "SERGIO RICARDO DE SOUZA",
+    "ok": true,
+    "n": 100,
+    "batem": 100,
+    "erro": null
+   },
+   {
+    "relator": "ROBSON LUIZ ALBANEZ",
+    "ok": true,
+    "n": 100,
+    "batem": 100,
+    "erro": null
+   }
+  ],
+  "falhas": []
+ },
+ "tjma": {
+  "relatores": [],
+  "filtro_relator": [],
+  "falhas": [
+   {
+    "tema": "aposentadoria especial",
+    "erro": "Expecting value: line 1 column 1 (char 0) | error: unknown option '-di' "
+   },
+   {
+    "tema": "tráfico de drogas",
+    "erro": "Expecting value: line 1 column 1 (char 0) | error: unknown option '-di' "
+   },
+   {
+    "tema": "despejo por falta de pagamento",
+    "erro": "Expecting value: line 1 column 1 (char 0) | error: unknown option '-di' "
+   },
+   {
+    "tema": "execução fiscal",
+    "erro": "Expecting value: line 1 column 1 (char 0) | error: unknown option '-di' "
+   },
+   {
+    "tema": "servidor público adicional de insalubridade",
+    "erro": "Expecting value: line 1 column 1 (char 0) | error: unknown option '-di' "
+   },
+   {
+    "tema": "dano ambiental",
+    "erro": "Expecting value: line 1 column 1 (char 0) | error: unknown option '-di' "
+   }
+  ]
+ },
+ "tjpa": {
+  "relatores": [
+   {
+    "nome": "MAIRTON MARQUES CARNEIRO",
+    "vezes": 18,
+    "orgao": "Desembargador MAIRTON MARQUES CARNEIRO"
+   },
+   {
+    "nome": "ROSILEIDE MARIA DA COSTA CUNHA",
+    "vezes": 14,
+    "orgao": "Desembargadora ROSILEIDE MARIA DA COSTA CUNHA"
+   },
+   {
+    "nome": "CELIA REGINA DE LIMA PINHEIRO",
+    "vezes": 11,
+    "orgao": "Desembargadora CÉLIA REGINA DE LIMA PINHEIRO"
+   },
+   {
+    "nome": "JOSE MARIA TEIXEIRA DO ROSARIO",
+    "vezes": 10,
+    "orgao": "Desembargador JOSÉ MARIA TEIXEIRA DO ROSÁRIO"
+   },
+   {
+    "nome": "RICARDO FERREIRA NUNES",
+    "vezes": 8,
+    "orgao": "Desembargador RICARDO FERREIRA NUNES"
+   },
+   {
+    "nome": "EZILDA PASTANA MUTRAN",
+    "vezes": 6,
+    "orgao": "Desembargadora EZILDA PASTANA MUTRAN"
+   },
+   {
+    "nome": "JOSE TORQUATO ARAUJO DE ALENCAR",
+    "vezes": 5,
+    "orgao": "Desembargador JOSÉ TORQUATO ARAÚJO DE ALENCAR"
+   },
+   {
+    "nome": "SERGIO AUGUSTO DE ANDRADE LIMA",
+    "vezes": 4,
+    "orgao": "Desembargador SERGIO AUGUSTO DE ANDRADE LIMA"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "MAIRTON MARQUES CARNEIRO",
+    "ok": true,
+    "n": 20,
+    "batem": 20,
+    "erro": null
+   },
+   {
+    "relator": "ROSILEIDE MARIA DA COSTA CUNHA",
+    "ok": true,
+    "n": 20,
+    "batem": 20,
+    "erro": null
+   }
+  ],
+  "falhas": []
+ },
+ "tjpb": {
+  "relatores": [],
+  "filtro_relator": [],
+  "falhas": [
+   {
+    "tema": "aposentadoria especial",
+    "erro": "HTTP 403 da API do TJPB (<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA)"
+   },
+   {
+    "tema": "tráfico de drogas",
+    "erro": "HTTP 403 da API do TJPB (<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA)"
+   },
+   {
+    "tema": "despejo por falta de pagamento",
+    "erro": "HTTP 403 da API do TJPB (<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA)"
+   },
+   {
+    "tema": "execução fiscal",
+    "erro": "HTTP 403 da API do TJPB (<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA)"
+   },
+   {
+    "tema": "servidor público adicional de insalubridade",
+    "erro": "HTTP 403 da API do TJPB (<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA)"
+   },
+   {
+    "tema": "dano ambiental",
+    "erro": "HTTP 403 da API do TJPB (<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA)"
+   }
+  ]
+ },
+ "tjpe": {
+  "relatores": [
+   {
+    "nome": "CARLOS FREDERICO GONCALVES DE MORAES",
+    "vezes": 53,
+    "orgao": "3ª Câmara de Direito Público - 3º Gabinete"
+   },
+   {
+    "nome": "ANA CAROLINA FERNANDES PAIVA",
+    "vezes": 51,
+    "orgao": "2º Gabinete da 2ª Turma Recursal do I Colégio Recursal da Capital"
+   },
+   {
+    "nome": "ANDREA EPAMINONDAS TENORIO DE BRITO",
+    "vezes": 51,
+    "orgao": "5ª Câmara Cível - 3º Gabinete"
+   },
+   {
+    "nome": "ANDRE OLIVEIRA DA SILVA GUIMARAES",
+    "vezes": 47,
+    "orgao": "4ª Câmara de Direito Público - 2º Gabinete"
+   },
+   {
+    "nome": "CARLOS GIL RODRIGUES FILHO",
+    "vezes": 45,
+    "orgao": "2ª Câmara de Direito Público - 1º Gabinete"
+   },
+   {
+    "nome": "CANDIDO JOSE DA FONTE SARAIVA DE MORAES",
+    "vezes": 43,
+    "orgao": "6ª Câmara Cível - 2º Gabinete"
+   },
+   {
+    "nome": "DEMOCRITO RAMOS REINALDO FILHO",
+    "vezes": 41,
+    "orgao": "4ª Câmara Criminal - 3º Gabinete"
+   },
+   {
+    "nome": "ABELARDO TADEU DA SILVA SANTOS",
+    "vezes": 39,
+    "orgao": "3º Gabinete da 2ª Turma Recursal do I Colégio Recursal da Capital"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "CARLOS FREDERICO GONCALVES DE MORAES",
+    "ok": true,
+    "n": 100,
+    "batem": 100,
+    "erro": null
+   },
+   {
+    "relator": "ANA CAROLINA FERNANDES PAIVA",
+    "ok": true,
+    "n": 100,
+    "batem": 100,
+    "erro": null
+   }
+  ],
+  "falhas": []
+ },
+ "tjpi": {
+  "relatores": [
+   {
+    "nome": "SEBASTIAO RIBEIRO MARTINS",
+    "vezes": 18,
+    "orgao": "1ª Câmara Especializada Criminal"
+   },
+   {
+    "nome": "AGRIMAR RODRIGUES DE ARAUJO",
+    "vezes": 15,
+    "orgao": "3ª Câmara Especializada Cível"
+   },
+   {
+    "nome": "ELVANICE PEREIRA DE SOUSA",
+    "vezes": 13,
+    "orgao": "2ª Turma Recursal"
+   },
+   {
+    "nome": "DIOCLECIO SOUSA DA SILVA",
+    "vezes": 12,
+    "orgao": "1ª Câmara de Direito Público"
+   },
+   {
+    "nome": "EDSON ALVES DA SILVA",
+    "vezes": 12,
+    "orgao": "6ª Câmara de Direito Público"
+   },
+   {
+    "nome": "JOSE VIDAL DE FREITAS FILHO",
+    "vezes": 11,
+    "orgao": "2ª Câmara Especializada Criminal"
+   },
+   {
+    "nome": "JOSE WILSON FERREIRA DE ARAUJO JUNIOR",
+    "vezes": 8,
+    "orgao": "2ª Câmara de Direito Público"
+   },
+   {
+    "nome": "FERNANDO LOPES E SILVA NETO",
+    "vezes": 8,
+    "orgao": "3ª Câmara Especializada Cível"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "SEBASTIAO RIBEIRO MARTINS",
+    "ok": true,
+    "n": 25,
+    "batem": 25,
+    "erro": null
+   },
+   {
+    "relator": "AGRIMAR RODRIGUES DE ARAUJO",
+    "ok": true,
+    "n": 25,
+    "batem": 25,
+    "erro": null
+   }
+  ],
+  "falhas": []
+ },
+ "tjro": {
+  "relatores": [
+   {
+    "nome": "GILBERTO BARBOSA",
+    "vezes": 9,
+    "orgao": "Gabinete Des. Gilberto Barbosa"
+   },
+   {
+    "nome": "RADUAN MIGUEL FILHO",
+    "vezes": 8,
+    "orgao": "Gabinete Des. Raduan Miguel"
+   },
+   {
+    "nome": "ACIR TEIXEIRA GRECIA",
+    "vezes": 7,
+    "orgao": "1ª Turma Recursal - Gabinete 01"
+   },
+   {
+    "nome": "URSULA GONCALVES THEODORO DE FARIA SOUZA",
+    "vezes": 7,
+    "orgao": "1ª Turma Recursal - Gabinete 02"
+   },
+   {
+    "nome": "ILISIR BUENO RODRIGUES",
+    "vezes": 7,
+    "orgao": "Gabinete Des. Glodner Pauletto"
+   },
+   {
+    "nome": "JORGE LUIZ DOS SANTOS LEAL",
+    "vezes": 6,
+    "orgao": "Gabinete Des. Jorge Leal"
+   },
+   {
+    "nome": "ALVARO KALIX FERRO",
+    "vezes": 5,
+    "orgao": "Gabinete Des. Álvaro Kalix Ferro"
+   },
+   {
+    "nome": "DANIEL RIBEIRO LAGOS",
+    "vezes": 5,
+    "orgao": "Gabinete Des. Daniel Ribeiro Lagos"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "GILBERTO BARBOSA",
+    "ok": true,
+    "n": 20,
+    "batem": 20,
+    "erro": null
+   },
+   {
+    "relator": "RADUAN MIGUEL FILHO",
+    "ok": true,
+    "n": 20,
+    "batem": 20,
+    "erro": null
+   }
+  ],
+  "falhas": []
+ },
+ "tjrs": {
+  "relatores": [],
+  "filtro_relator": [],
+  "falhas": [
+   {
+    "tema": "aposentadoria especial",
+    "erro": "Erro do servidor de busca: no servers hosting shard: shard6"
+   },
+   {
+    "tema": "tráfico de drogas",
+    "erro": "Erro do servidor de busca: no servers hosting shard: shard6"
+   },
+   {
+    "tema": "despejo por falta de pagamento",
+    "erro": "Erro do servidor de busca: no servers hosting shard: shard6"
+   },
+   {
+    "tema": "execução fiscal",
+    "erro": "Erro do servidor de busca: no servers hosting shard: shard6"
+   },
+   {
+    "tema": "servidor público adicional de insalubridade",
+    "erro": "Erro do servidor de busca: no servers hosting shard: shard6"
+   },
+   {
+    "tema": "dano ambiental",
+    "erro": "Erro do servidor de busca: no servers hosting shard: shard6"
+   }
+  ]
+ },
+ "tjsc": {
+  "relatores": [
+   {
+    "nome": "JOSÉ AGENOR DE ARAGÃO",
+    "vezes": 16,
+    "orgao": "2ª Vice-Presidência"
+   },
+   {
+    "nome": "DENISE DE SOUZA LUIZ FRANCOSKI",
+    "vezes": 9,
+    "orgao": "5ª Câmara de Direito Público"
+   },
+   {
+    "nome": "QUITERIA TAMANINI VIEIRA",
+    "vezes": 4,
+    "orgao": "6ª Câmara de Direito Civil"
+   },
+   {
+    "nome": "FERNANDA SELL DE SOUTO GOULART",
+    "vezes": 4,
+    "orgao": "8ª Câmara de Direito Civil"
+   },
+   {
+    "nome": "LUIZ CESAR SCHWEITZER",
+    "vezes": 3,
+    "orgao": "04º Núcleo Criminal de Justiça 4.0"
+   },
+   {
+    "nome": "ALTAMIRO DE OLIVEIRA",
+    "vezes": 2,
+    "orgao": "6ª Câmara de Direito Comercial"
+   },
+   {
+    "nome": "JOSÉ MAURÍCIO LISBOA",
+    "vezes": 2,
+    "orgao": "1ª Câmara de Direito Comercial"
+   },
+   {
+    "nome": "MAURO FERRANDIN",
+    "vezes": 2,
+    "orgao": "2ª Câmara de Direito Civil"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "JOSÉ AGENOR DE ARAGÃO",
+    "ok": true,
+    "n": 10,
+    "batem": 0,
+    "erro": null
+   },
+   {
+    "relator": "DENISE DE SOUZA LUIZ FRANCOSKI",
+    "ok": true,
+    "n": 10,
+    "batem": 5,
+    "erro": null
+   }
+  ],
+  "falhas": []
+ },
+ "tjto": {
+  "relatores": [
+   {
+    "nome": "MARCO ANTHONY STEVESON VILLAS BOAS",
+    "vezes": 43,
+    "orgao": "TURMAS DE DIREITO PÚBLICO"
+   },
+   {
+    "nome": "HÉLVIA TÚLIA SANDES PEDREIRA",
+    "vezes": 30,
+    "orgao": "TURMAS DE DIREITO PÚBLICO"
+   },
+   {
+    "nome": "JACQUELINE ADORNO DE LA CRUZ BARBOSA",
+    "vezes": 27,
+    "orgao": "TURMAS DE DIREITO PÚBLICO"
+   },
+   {
+    "nome": "GIL DE ARAÚJO CORRÊA",
+    "vezes": 25,
+    "orgao": "TURMAS DE DIREITO PÚBLICO"
+   },
+   {
+    "nome": "NELSON COELHO FILHO",
+    "vezes": 21,
+    "orgao": "TURMAS DE DIREITO PÚBLICO"
+   },
+   {
+    "nome": "ANA PAULA BRANDAO BRASIL",
+    "vezes": 18,
+    "orgao": "TURMAS DAS CAMARAS CRIMINAIS"
+   },
+   {
+    "nome": "MARCIO BARCELOS COSTA",
+    "vezes": 14,
+    "orgao": "TURMAS DAS CAMARAS CRIMINAIS"
+   },
+   {
+    "nome": "ETELVINA MARIA SAMPAIO FELIPE",
+    "vezes": 12,
+    "orgao": "TURMAS DAS CAMARAS CIVEIS"
+   }
+  ],
+  "filtro_relator": [
+   {
+    "relator": "MARCO ANTHONY STEVESON VILLAS BOAS",
+    "ok": false,
+    "n": 0,
+    "batem": 0,
+    "erro": "Jurisprudência 4.0 respondeu HTTP 202 na busca"
+   },
+   {
+    "relator": "HÉLVIA TÚLIA SANDES PEDREIRA",
+    "ok": false,
+    "n": 0,
+    "batem": 0,
+    "erro": "Jurisprudência 4.0 respondeu HTTP 202 na busca"
+   }
+  ],
+  "falhas": []
+ },
+ "trf1": {
+  "relatores": [],
+  "filtro_relator": [],
+  "falhas": [
+   {
+    "tema": "aposentadoria especial",
+    "erro": "page.waitForSelector: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[id=\"formulario:textoLivre\"]') to be visible\u001b[22m\n"
+   },
+   {
+    "tema": "tráfico de drogas",
+    "erro": "page.waitForSelector: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[id=\"formulario:textoLivre\"]') to be visible\u001b[22m\n"
+   },
+   {
+    "tema": "despejo por falta de pagamento",
+    "erro": "page.waitForSelector: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[id=\"formulario:textoLivre\"]') to be visible\u001b[22m\n"
+   },
+   {
+    "tema": "execução fiscal",
+    "erro": "page.waitForSelector: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[id=\"formulario:textoLivre\"]') to be visible\u001b[22m\n"
+   },
+   {
+    "tema": "servidor público adicional de insalubridade",
+    "erro": "page.waitForSelector: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[id=\"formulario:textoLivre\"]') to be visible\u001b[22m\n"
+   },
+   {
+    "tema": "dano ambiental",
+    "erro": "page.waitForSelector: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[id=\"formulario:textoLivre\"]') to be visible\u001b[22m\n"
+   }
+  ]
+ },
+ "trf2": {
+  "relatores": [],
+  "filtro_relator": [],
+  "falhas": []
+ }
+}
